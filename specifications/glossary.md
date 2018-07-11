@@ -6,10 +6,10 @@ Types are versions of an element that modify the element's standard appearance.
 
 Types cannot be used simultaneously on the same element. For example, "cats" and "dogs" are types of animals, but are mutually exclusive.
 
-<b>Comment</b>: We should use types for defining the standard appearance of the component. What we have so far is using the primary and secondary as types, which in my opinion are variations of the component that are only between themselves mutually exclusive. So, we can define those as enum variation of the component, but sadly we so far come up with the name 'type' for the prop that can be confusing. I propose we change the name of this prop with something like suiStyle (bootstrap has something similar – bsStyle). Should we add here the positive and negative props as well? After this we can use one prop with enum for defining all different types of the component (similar in a way of the shape property in the current Menu component)
+<b>Comment</b>: We should use types for defining the standard appearance of the component. What we have so far is using the primary and secondary as types, which in my opinion are variations of the component that are only between themselves mutually exclusive. So, we can define those as enum variation of the component, but sadly we so far come up with the name 'type' for the prop that can be confusing. I propose we change the name of this prop with something like suiStyle (bootstrap has something similar – bsStyle). Should we add here the positive and negative props as well? After this we can use one prop with enum for defining all different types of the component (similar in a way of the shape property in the current [Menu component](https://github.com/stardust-ui/stardust/pull/68)
 
 ###State
-States are modifications to an element that help indicate a change in affordance. Common states include loading, disabled, and active.
+States are modifications to an element that help indicate a change in [affordance](http://www.usabilityfirst.com/glossary/affordance/). Common states include loading, disabled, and active.
 
 ###Content
 Content are parts which only have meaning in the context of a component. Content use names which describe the type of expected content like header, description, menu, or item.
