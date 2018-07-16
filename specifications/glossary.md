@@ -57,10 +57,10 @@ We use boolean for properties when multiple values are mutually inclusive and do
 
 |Term|Description|
 --- | ---
-suiStyle: primary | Used to emphasize a componet's appearance and catch user's attention.
-suiStyle: secondary | Used to de-emphasize a component's appearance.
-suiStyle: positive ? | Used to hint towards a positive consequence.
-suiStyle: negative ? | Used to hint towards a negative consequence.
+type: primary | Used to emphasize a componet's appearance and catch user's attention.
+type: secondary | Used to de-emphasize a component's appearance.
+type: positive ? | Used to hint towards a positive consequence.
+type: negative ? | Used to hint towards a negative consequence.
 children | The primary content of the component.
 content | Shorthand for primary content.
 as | An element type to render as, that can be a function or string.
@@ -82,3 +82,4 @@ fluid | Used to make the component takes the width from the parent.
 fixed | Used to make the component fixed to a side of it's content. ('left', 'right', 'top', 'bottom')
 textAlign | Align the content. ('left', 'right', 'center', 'justified')
 vertical | Used to make the component display it's content vertically.
+shape | Used to describe the shape of the component. For example for the Menu component, beside the default, we have the following shapes: ('pills', 'pointing', 'underlined')
