@@ -18,11 +18,17 @@ class Header extends UIComponent<any, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
+    /** Background color of the header. */
+    background: PropTypes.string,
+
     /** Primary content. */
     children: PropTypes.node,
 
     /** Additional classes. */
     className: PropTypes.string,
+
+    /** Color of the header. */
+    color: PropTypes.string,
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
@@ -30,11 +36,28 @@ class Header extends UIComponent<any, any> {
     /** Shorthand for Header.Subheader. */
     subheader: customPropTypes.itemShorthand,
 
+    /** Background color for the subheader. */
+    subheaderBackground: PropTypes.string,
+
+    /** Color for the subheader. */
+    subheaderColor: PropTypes.string,
+
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
+  static handledProps = [
+    'as',
+    'background',
+    'children',
+    'className',
+    'color',
+    'content',
+    'subheader',
+    'subheaderBackground',
+    'subheaderColor',
+    'textAlign',
+  ]
 
   static rules = headerRules
 
@@ -42,8 +65,12 @@ class Header extends UIComponent<any, any> {
 
   static Subheader = HeaderSubheader
 
+  static defaultProps = {
+    as: 'h1',
+  }
+
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, subheader } = this.props
+    const { children, content, subheader, subheaderColor, subheaderBackground } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -53,7 +80,10 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+    const subheaderElement = HeaderSubheader.create(
+      { content: subheader, color: subheaderColor, background: subheaderBackground },
+      { autoGenerateKey: false },
+    )
 
     return (
       <ElementType {...rest} className={classes.root}>

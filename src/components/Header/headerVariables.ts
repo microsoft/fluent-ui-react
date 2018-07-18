@@ -1,1 +1,4 @@
-export default () => ({})
+export default () => ({
+  color: 'black',
+  background: undefined,
+})

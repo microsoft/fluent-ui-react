@@ -4,6 +4,7 @@ import React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import headerSubheaderRules from './headerSubheaderRules'
+import headerSubheaderVariables from './headerSubheaderVariables'
 
 /**
  * Headers may contain subheaders.
@@ -19,19 +20,27 @@ class HeaderSubheader extends UIComponent<any, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
+    /** Background color of the header. */
+    background: PropTypes.string,
+
     /** Primary content. */
     children: PropTypes.node,
 
     /** Additional classes. */
     className: PropTypes.string,
 
+    /** Color of the subheader. */
+    color: PropTypes.string,
+
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
   }
 
-  static handledProps = ['as', 'children', 'className', 'content']
+  static handledProps = ['as', 'background', 'children', 'className', 'color', 'content']
 
   static rules = headerSubheaderRules
+
+  static variables = headerSubheaderVariables
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
