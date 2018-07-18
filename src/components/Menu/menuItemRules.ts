@@ -1,7 +1,7 @@
 import { pxToRem } from '../../lib'
 
 const underlinedItem = (color: string) => ({
-  borderBottom: `solid 5px ${color}`,
+  borderBottom: `solid 4px ${color}`,
   transition: 'color .1s ease',
 })
 
@@ -21,7 +21,11 @@ export default {
         borderRadius: pxToRem(5),
       }),
       ...(shape === 'underlined' && {
-        margin: '0',
+        padding: '0',
+        margin: `0 ${pxToRem(10)} 0 0`,
+        ':nth-child(n+2)': {
+          marginLeft: `${pxToRem(10)}`,
+        },
         background: 'transparent',
         boxShadow: 'none',
         color: variables.defaultColor,
@@ -101,12 +105,15 @@ export default {
         }),
         ...(shape === 'underlined' && {
           color: variables.defaultColor,
-          fontWeight: '700',
           ...underlinedItem(variables.defaultActiveColor),
-          ...(type === 'primary' && {
-            color: variables.typePrimaryActiveColor,
-            ...underlinedItem(variables.typePrimaryActiveColor),
-          }),
+          ...(type === 'primary'
+            ? {
+                color: variables.typePrimaryActiveColor,
+                ...underlinedItem(variables.typePrimaryActiveColor),
+              }
+            : {
+                fontWeight: '700',
+              }),
         }),
       }),
     }

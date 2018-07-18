@@ -18,9 +18,9 @@ export default {
           borderRadius: pxToRem(4),
         }),
       ...(shape === 'underlined' && {
-        borderBottom: `1px solid ${variables.defaultBorderColor}`,
+        borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
       }),
-      minHeight: pxToRem(28),
+      minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
       listStyleType: 'none',
