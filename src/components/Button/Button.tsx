@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { ReactNode, CSSProperties } from 'react'
+import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
@@ -16,9 +16,11 @@ export interface IButtonProps {
   circular?: boolean
   className?: string
   content?: ReactNode
+  disabled?: boolean
   fluid?: boolean
   icon?: boolean | string
   iconPosition?: IconPosition
+  onClick?: (e: SyntheticEvent, props: IButtonProps) => void
   style?: CSSProperties
   type?: ButtonType
 }
@@ -50,6 +52,9 @@ class Button extends UIComponent<IButtonProps, any> {
     /** Additional classes. */
     className: PropTypes.string,
 
+    /** A button can show it is currently unable to be interacted with. */
+    disabled: PropTypes.bool,
+
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
@@ -62,6 +67,13 @@ class Button extends UIComponent<IButtonProps, any> {
     /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),
 
+    /**
+     * Called after user's click.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onClick: PropTypes.func,
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
   }
@@ -72,9 +84,11 @@ class Button extends UIComponent<IButtonProps, any> {
     'circular',
     'className',
     'content',
+    'disabled',
     'fluid',
     'icon',
     'iconPosition',
+    'onClick',
     'type',
   ]
 
@@ -87,7 +101,7 @@ class Button extends UIComponent<IButtonProps, any> {
     classes,
     rest,
   }: IRenderResultConfig<IButtonProps>): ReactNode {
-    const { children, content, icon, iconPosition, type } = this.props
+    const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
     const getContent = (): ReactNode => {
@@ -113,10 +127,28 @@ class Button extends UIComponent<IButtonProps, any> {
     }
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        className={classes.root}
+        disabled={disabled}
+        onClick={this.handleClick}
+        {...rest}
+      >
         {getContent()}
       </ElementType>
     )
+  }
+
+  private handleClick = (e: SyntheticEvent) => {
+    const { onClick, disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
+    if (onClick) {
+      onClick(e, this.props)
+    }
   }
 }
 
