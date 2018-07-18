@@ -1,7 +1,7 @@
 export default {
-  root: ({ props: { textAlign, background, color }, variables }) => {
-    const headerColor = color || variables.color
-    const headerBackground = background || variables.background
+  root: ({ props: { textAlign, background, color }, variables: v }) => {
+    const headerColor = color || v.color
+    const headerBackground = background || v.background
     return {
       display: 'block',
       textAlign,
