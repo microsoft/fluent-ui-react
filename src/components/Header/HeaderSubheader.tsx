@@ -31,10 +31,6 @@ class HeaderSubheader extends UIComponent<any, any> {
 
   static handledProps = ['as', 'children', 'className', 'content']
 
-  static defaultProps = {
-    as: 'small',
-  }
-
   static rules = headerSubheaderRules
 
   renderComponent({ ElementType, classes, rest }) {

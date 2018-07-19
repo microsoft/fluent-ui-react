@@ -1,10 +1,9 @@
 import { pxToRem } from '../../lib'
 
 export default {
-  root: ({ props }) => ({
+  root: () => ({
+    fontSize: pxToRem(22),
     color: 'rgba(0,0,0,.6)',
-    textAlign: props.textAlign,
-    display: 'block',
-    margin: '0px',
+    fontWeight: 400,
   }),
 }
