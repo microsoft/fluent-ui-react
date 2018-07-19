@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from '@stardust-ui/react'
 
-const HeaderExampleSubheaderProp = () => (
+const HeaderExampleSubheaderShorthand = () => (
   <Header
     as="h2"
     content="Account Settings"
@@ -9,4 +9,4 @@ const HeaderExampleSubheaderProp = () => (
   />
 )
 
-export default HeaderExampleSubheaderProp
+export default HeaderExampleSubheaderShorthand

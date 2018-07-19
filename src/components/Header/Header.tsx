@@ -30,11 +30,27 @@ class Header extends UIComponent<any, any> {
     /** Shorthand for Header.Subheader. */
     subheader: customPropTypes.itemShorthand,
 
+    /** An element type to render as for the  for Header.Subheader. */
+    subheaderAs: PropTypes.string,
+
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'content',
+    'subheader',
+    'subheaderAs',
+    'textAlign',
+  ]
+
+  static defaultProps = {
+    as: 'h1',
+    subheaderAs: 'h2',
+  }
 
   static rules = headerRules
 
@@ -43,7 +59,7 @@ class Header extends UIComponent<any, any> {
   static Subheader = HeaderSubheader
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, subheader } = this.props
+    const { children, content, subheader, subheaderAs, textAlign } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -53,13 +69,18 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+    const subheaderElement = HeaderSubheader.create(
+      { content: subheader, as: subheaderAs, textAlign },
+      { autoGenerateKey: false },
+    )
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {content}
-        {subheaderElement}
-      </ElementType>
+      <React.Fragment>
+        <ElementType {...rest} className={classes.root}>
+          {content}
+        </ElementType>
+        {subheader && subheaderElement}
+      </React.Fragment>
     )
   }
 }
