@@ -9,6 +9,16 @@ const Variations = () => (
       description="Headers may contain subheaders."
       examplePath="components/Header/Variations/HeaderExampleSubheader"
     />
+    <ComponentExample
+      title="Subheader customizations"
+      description="Subheaders can be customize according to the needs of the user."
+      examplePath="components/Header/Variations/HeaderExampleSubheaderCustomization"
+    />
+    <ComponentExample
+      title="TextAlign"
+      description="Headers may be aligned to the left, right, center or be justified."
+      examplePath="components/Header/Variations/HeaderExampleTextAlign"
+    />
   </ExampleSection>
 )
 

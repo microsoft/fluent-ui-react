@@ -5,7 +5,7 @@ const HeaderExampleSubheaderShorthand = () => (
   <Header
     as="h2"
     content="Account Settings"
-    subheader="Manage your account settings and set email preferences"
+    subheader={{ content: 'Manage your account settings and set email preferences' }}
   />
 )
 

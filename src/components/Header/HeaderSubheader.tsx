@@ -27,12 +27,13 @@ class HeaderSubheader extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
-
-    /** Align subheader content. */
-    textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'textAlign']
+  static handledProps = ['as', 'children', 'className', 'content']
+
+  static defaultProps = {
+    as: 'small',
+  }
 
   static rules = headerSubheaderRules
 

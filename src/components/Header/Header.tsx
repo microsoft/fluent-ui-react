@@ -8,6 +8,9 @@ import headerVariables from './headerVariables'
 
 /**
  * A header provides a short summary of content
+ * @accessibility
+ * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.
+ * Nest headings by their rank (or level). The most important heading has the rank 1 (<h1>), the least important heading rank 6 (<h6>). Headings with an equal or higher rank start a new section, headings with a lower rank start new subsections that are part of the higher ranked section.
  */
 class Header extends UIComponent<any, any> {
   static className = 'ui-header'
@@ -30,27 +33,11 @@ class Header extends UIComponent<any, any> {
     /** Shorthand for Header.Subheader. */
     subheader: customPropTypes.itemShorthand,
 
-    /** An element type to render as for the  for Header.Subheader. */
-    subheaderAs: PropTypes.string,
-
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'subheader',
-    'subheaderAs',
-    'textAlign',
-  ]
-
-  static defaultProps = {
-    as: 'h1',
-    subheaderAs: 'h2',
-  }
+  static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
 
   static rules = headerRules
 
@@ -59,7 +46,7 @@ class Header extends UIComponent<any, any> {
   static Subheader = HeaderSubheader
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, subheader, subheaderAs, textAlign } = this.props
+    const { children, content, subheader } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -69,18 +56,13 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(
-      { content: subheader, as: subheaderAs, textAlign },
-      { autoGenerateKey: false },
-    )
+    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
 
     return (
-      <React.Fragment>
-        <ElementType {...rest} className={classes.root}>
-          {content}
-        </ElementType>
-        {subheader && subheaderElement}
-      </React.Fragment>
+      <ElementType {...rest} className={classes.root}>
+        {content}
+        {subheaderElement}
+      </ElementType>
     )
   }
 }
