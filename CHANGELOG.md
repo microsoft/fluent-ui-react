@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove broken normalize.css button styles @levithomason ([#79](https://github.com/stardust-ui/react/pulls/79))
 - Add missing Button styles @levithomason ([#82](https://github.com/stardust-ui/react/pulls/82))
 - Fix Accordion to hide the content provided as nested children when closed ([#108](https://github.com/stardust-ui/react/pull/108))
+- Fix Header to render well-formed HTML for subheader @mnajdova ([#123](https://github.com/stardust-ui/react/pull/123))
 
 ### Features
 - Add `rtl` flag to rules (styles) function @kuzhelov ([#109](https://github.com/stardust-ui/react/pull/109))
