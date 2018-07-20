@@ -124,7 +124,7 @@ class Accordion extends AutoControlledComponent<any, any> {
 
       children.push(
         AccordionTitle.create(title, {
-          autoGenerateKey: true,
+          generateKey: true,
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
         }),
@@ -133,7 +133,7 @@ class Accordion extends AutoControlledComponent<any, any> {
         AccordionContent.create(
           { content },
           {
-            autoGenerateKey: true,
+            generateKey: true,
             defaultProps: { active },
           },
         ),

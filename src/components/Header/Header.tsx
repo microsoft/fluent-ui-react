@@ -53,7 +53,7 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+    const subheaderElement = HeaderSubheader.create(subheader, { generateKey: false })
 
     return (
       <ElementType {...rest} className={classes.root}>
