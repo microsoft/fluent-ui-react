@@ -60,23 +60,15 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    if (subheader) {
-      const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
-
-      return (
-        <div>
-          <ElementType {...rest} className={classes.root}>
-            {content}
-          </ElementType>
-          {subheaderElement}
-        </div>
-      )
-    }
+    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {content}
-      </ElementType>
+      <React.Fragment>
+        <ElementType {...rest} className={classes.root}>
+          {content}
+        </ElementType>
+        {subheaderElement}
+      </React.Fragment>
     )
   }
 }
