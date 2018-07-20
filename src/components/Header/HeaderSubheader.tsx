@@ -29,6 +29,10 @@ class HeaderSubheader extends UIComponent<any, any> {
     content: customPropTypes.contentShorthand,
   }
 
+  static defaultProps = {
+    as: 'p',
+  }
+
   static handledProps = ['as', 'children', 'className', 'content']
 
   static rules = headerSubheaderRules

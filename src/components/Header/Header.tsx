@@ -37,6 +37,10 @@ class Header extends UIComponent<any, any> {
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }
 
+  static defaultProps = {
+    as: 'h1',
+  }
+
   static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
 
   static rules = headerRules
@@ -56,12 +60,22 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+    if (subheader) {
+      const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+
+      return (
+        <div>
+          <ElementType {...rest} className={classes.root}>
+            {content}
+          </ElementType>
+          {subheaderElement}
+        </div>
+      )
+    }
 
     return (
       <ElementType {...rest} className={classes.root}>
         {content}
-        {subheaderElement}
       </ElementType>
     )
   }
