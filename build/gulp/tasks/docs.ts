@@ -57,7 +57,7 @@ task(
 
 const componentsSrc = [`${config.paths.src()}/components/*/[A-Z]*.tsx`]
 const examplesSrc = `${paths.docsSrc()}/examples/*/*/*/index.tsx`
-const markdownSrc = ['.github/CONTRIBUTING.md', 'README.md', 'specifications/*.md']
+const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })
