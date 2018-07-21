@@ -1,6 +1,6 @@
 <!-- Logo -->
 <p align="center">
-  <a href="https://react.semantic-ui.com">
+  <a href="https://stardust-ui.github.io/react">
     <img height="128" width="128" src="https://github.com/stardust-ui/react/raw/master/docs/src/logo.png">
   </a>
 </p>
