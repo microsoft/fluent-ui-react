@@ -64,7 +64,7 @@ class List extends UIComponent<any, any> {
 
   constructor(p, s) {
     super(p, s)
-    this.accBehavior = new ListBehavior()
+    this.accBehavior = new ListBehavior('vertical')
   }
 
   // List props that are passed to each individual Item props

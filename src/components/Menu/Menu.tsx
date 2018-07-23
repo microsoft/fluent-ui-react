@@ -66,7 +66,7 @@ class Menu extends AutoControlledComponent<any, any> {
 
   constructor(p, s) {
     super(p, s)
-    this.accBehavior = new MenuBehavior()
+    this.accBehavior = new MenuBehavior('horizontal')
   }
 
   handleItemOverrides = predefinedProps => ({

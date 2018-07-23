@@ -41,6 +41,12 @@ export default {
         },
       }),
 
+      ':focus': {
+        outlineWidth: '1px',
+        outlineStyle: 'dashed',
+        outlineColor: 'red',
+      },
+
       ':hover': {
         color: variables.defaultActiveColor,
         // all menus should have gray background on hover except the underlined menu
