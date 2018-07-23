@@ -1,13 +1,14 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ImageBehavior implements IAccessibilityBehavior<{}, {}> {
+export class ImageBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('image')
+  }
+
   private attributes = {
     'ms-acc-behavior': this.name,
     alt: '',
-  }
-
-  public get name(): string {
-    return 'image'
   }
 
   public generateAriaAttributes(props, state): object {

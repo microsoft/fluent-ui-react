@@ -1,13 +1,15 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class SelectableListBehavior implements IAccessibilityBehavior<{}, {}> {
+export class SelectableListBehavior extends AbstractBehavior
+  implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('selectable-list')
+  }
+
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'listbox',
-  }
-
-  public get name(): string {
-    return 'selectable-list'
   }
 
   public generateAriaAttributes(props, state): object {

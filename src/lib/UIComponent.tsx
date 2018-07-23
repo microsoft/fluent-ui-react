@@ -13,6 +13,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
   static handledProps: any
 
   public accBehavior: IAccessibilityBehavior<P, S>
+  private actions: { [name: string]: (params: any) => void }
 
   constructor(props, context) {
     super(props, context)
@@ -26,7 +27,19 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.accBehavior = new DefaultBehavior()
+    this.accBehavior = new DefaultBehavior<P, S>()
+  }
+
+  registerAction(name: string, action: (params: any) => void) {
+    this.actions = this.actions || {}
+    this.actions[name] = action
+  }
+
+  executeAction(name: string, params: any) {
+    // TODO: make it typesafe
+    if (this.actions && this.actions[name]) {
+      this.actions[name](params)
+    }
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {

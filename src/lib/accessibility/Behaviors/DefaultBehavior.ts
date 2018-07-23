@@ -1,8 +1,10 @@
 import { IAccessibilityBehavior, ComponentState } from '../interfaces'
+import { AbstractBehavior } from './AbstractBehavior'
 
-export class DefaultBehavior implements IAccessibilityBehavior<{}, {}> {
-  public get name(): string {
-    return 'default'
+export class DefaultBehavior<P, S> extends AbstractBehavior
+  implements IAccessibilityBehavior<P, S> {
+  constructor() {
+    super('default')
   }
 
   public generateAriaAttributes(): object {

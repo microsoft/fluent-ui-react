@@ -1,6 +1,11 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ButtonBehavior implements IAccessibilityBehavior<{}, {}> {
+export class ButtonBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('button')
+  }
+
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'button',
@@ -12,10 +17,6 @@ export class ButtonBehavior implements IAccessibilityBehavior<{}, {}> {
     //   'aria-hidden': false,
     //   'tab-index': 0,
     // },
-  }
-
-  public get name(): string {
-    return 'button'
   }
 
   public generateAriaAttributes(props, state): object {

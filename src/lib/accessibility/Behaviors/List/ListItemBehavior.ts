@@ -1,14 +1,15 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ListItemBehavior implements IAccessibilityBehavior<{}, {}> {
+export class ListItemBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('listitem')
+  }
+
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'listitem',
     //   tabIndex: -1,
-  }
-
-  public get name(): string {
-    return 'listitem'
   }
 
   public generateAriaAttributes(props, state): object {

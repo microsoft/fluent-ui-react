@@ -1,6 +1,12 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ToggleButtonBehavior implements IAccessibilityBehavior<{}, {}> {
+export class ToggleButtonBehavior extends AbstractBehavior
+  implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('toggle-button')
+  }
+
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'button',

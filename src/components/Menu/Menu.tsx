@@ -25,6 +25,9 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Index of the currently active item. */
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
+    /** Index of the currently focusable item. */
+    focusableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+
     /** Primary content. */
     children: PropTypes.node,
 
@@ -33,6 +36,9 @@ class Menu extends AutoControlledComponent<any, any> {
 
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+
+    /** Initial focusableIndex value. */
+    defaultFocusableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
@@ -49,16 +55,18 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static handledProps = [
     'activeIndex',
+    'focusableIndex',
     'as',
     'children',
     'className',
     'defaultActiveIndex',
+    'defaultFocusableIndex',
     'items',
     'shape',
     'type',
   ]
 
-  static autoControlledProps = ['activeIndex']
+  static autoControlledProps = ['activeIndex', 'focusableIndex']
 
   static rules = menuRules
 
@@ -67,13 +75,27 @@ class Menu extends AutoControlledComponent<any, any> {
   constructor(p, s) {
     super(p, s)
     this.accBehavior = new MenuBehavior()
+    this.registerAction('setFocusableChild', params => {
+      const { index } = params
+      console.error(index)
+      if (index < 0 || index >= p.items.length) {
+        return false
+      }
+      this.setState({ focusableIndex: index })
+
+      return true
+    })
+  }
+
+  getInitialAutoControlledState({ activeIndex }) {
+    return { focusableIndex: activeIndex || 0 }
   }
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      this.trySetState({ activeIndex: index })
+      this.trySetState({ activeIndex: index, focusableIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
@@ -81,7 +103,7 @@ class Menu extends AutoControlledComponent<any, any> {
 
   renderItems = () => {
     const { items, type, shape } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex, focusableIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
@@ -90,6 +112,7 @@ class Menu extends AutoControlledComponent<any, any> {
           shape,
           index,
           active: parseInt(activeIndex, 10) === index,
+          focusable: parseInt(focusableIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -101,6 +124,7 @@ class Menu extends AutoControlledComponent<any, any> {
     return (
       <ElementType
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...this.accBehavior.generateKeyHandlers(this, this.props, this.state)} // TODO: this only works for shorthand
         {...rest}
         className={classes.root}
       >

@@ -1,12 +1,13 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
+import { AbstractBehavior } from '../AbstractBehavior'
 
-export class InputBehavior implements IAccessibilityBehavior<{}, {}> {
-  private attributes = {
-    'ms-acc-behavior': this.name,
+export class InputBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+  constructor() {
+    super('input')
   }
 
-  public get name(): string {
-    return 'input'
+  private attributes = {
+    'ms-acc-behavior': this.name,
   }
 
   public generateAriaAttributes(props, state): object {
