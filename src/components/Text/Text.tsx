@@ -67,7 +67,7 @@ class Text extends UIComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} dir="auto">
         {childrenExist(children) ? children : content}
       </ElementType>
     )
