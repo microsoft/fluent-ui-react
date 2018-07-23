@@ -1,7 +1,9 @@
 import React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
+import { IAccessibilityBehavior } from './accessibility/interfaces'
+import { DefaultBehavior } from './accessibility/Behaviors/behaviors'
 
-class UIComponent<P, S> extends React.Component<P, S> {
+abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
@@ -9,6 +11,8 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static variables?: any
   static rules?: any
   static handledProps: any
+
+  public accBehavior: IAccessibilityBehavior<P, S>
 
   constructor(props, context) {
     super(props, context)
@@ -22,6 +26,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
+    this.accBehavior = new DefaultBehavior()
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {

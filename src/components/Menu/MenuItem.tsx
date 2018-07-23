@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
@@ -73,6 +74,11 @@ class MenuItem extends UIComponent<any, any> {
     'type',
   ]
 
+  constructor(p, s) {
+    super(p, s)
+    this.accBehavior = new MenuItemBehavior()
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -81,7 +87,12 @@ class MenuItem extends UIComponent<any, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        {...rest}
+        className={classes.root}
+        onClick={this.handleClick}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+      >
         {childrenExist(children) ? (
           children
         ) : (

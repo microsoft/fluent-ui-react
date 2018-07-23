@@ -5,6 +5,8 @@ import React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
+
+import { MenuBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 import menuVariables from './menuVariables'
 
 class Menu extends AutoControlledComponent<any, any> {
@@ -62,6 +64,11 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static Item = MenuItem
 
+  constructor(p, s) {
+    super(p, s)
+    this.accBehavior = new MenuBehavior()
+  }
+
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
@@ -92,7 +99,11 @@ class Menu extends AutoControlledComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

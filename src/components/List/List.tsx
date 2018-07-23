@@ -6,6 +6,7 @@ import { customPropTypes, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
+import { ListBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -61,6 +62,11 @@ class List extends UIComponent<any, any> {
 
   static Item = ListItem
 
+  constructor(p, s) {
+    super(p, s)
+    this.accBehavior = new ListBehavior()
+  }
+
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
@@ -69,7 +75,11 @@ class List extends UIComponent<any, any> {
     const itemProps = _.pick(this.props, List.itemProps)
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {_.map(items, item => ListItem.create(item, { defaultProps: itemProps }))}
       </ElementType>
     )

@@ -6,6 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
+import { ListItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -47,6 +48,11 @@ class ListItem extends UIComponent<any, any> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+  }
+
+  constructor(p, s) {
+    super(p, s)
+    this.accBehavior = new ListItemBehavior()
   }
 
   static handledProps = [
@@ -172,6 +178,7 @@ class ListItem extends UIComponent<any, any> {
         end={endArea}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
       />
     )

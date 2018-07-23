@@ -4,6 +4,7 @@ import React from 'react'
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
+import { ButtonBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * A button.
@@ -42,10 +43,19 @@ class Button extends UIComponent<any, any> {
     as: 'button',
   }
 
+  constructor(p, s) {
+    super(p, s)
+    this.accBehavior = new ButtonBehavior()
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
