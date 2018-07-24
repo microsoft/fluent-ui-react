@@ -1,12 +1,12 @@
 import React from 'react'
 import { List } from '@stardust-ui/react'
 
-const items = [
-  { key: 'irving', header: 'Irving Kuhic', headerMedia: '7:26:56 AM' },
-  { key: 'skyler', header: 'Skyler Parks', headerMedia: '11:30:17 PM' },
-  { key: 'dante', header: 'Dante Schneider', headerMedia: '5:22:40 PM' },
-]
-
-const ListExample = () => <List items={items} />
+const ListExample = () => (
+  <List>
+    <List.Item key="irving" header="Irving Kuhic" headerMedia="7:26:56 AM" />
+    <List.Item key="skyler" header="Skyler Parks" headerMedia="11:30:17 PM" />
+    <List.Item key="dante" header="Dante Schneider" headerMedia="5:22:40 PM" />
+  </List>
+)
 
 export default ListExample
