@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import HeaderSubheader from './HeaderSubheader'
+import HeaderDescription from './HeaderDescription'
 import headerRules from './headerRules'
 import headerVariables from './headerVariables'
 
@@ -30,8 +30,8 @@ class Header extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Shorthand for Header.Subheader. */
-    subheader: customPropTypes.itemShorthand,
+    /** Shorthand for Header.Description. */
+    description: customPropTypes.itemShorthand,
 
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
@@ -41,16 +41,16 @@ class Header extends UIComponent<any, any> {
     as: 'h1',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
+  static handledProps = ['as', 'children', 'className', 'content', 'description', 'textAlign']
 
   static rules = headerRules
 
   static variables = headerVariables
 
-  static Subheader = HeaderSubheader
+  static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, subheader } = this.props
+    const { children, content, description } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -60,15 +60,13 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { autoGenerateKey: false })
+    const descriptionElement = HeaderDescription.create(description, { autoGenerateKey: false })
 
     return (
-      <React.Fragment>
-        <ElementType {...rest} className={classes.root}>
-          {content}
-        </ElementType>
-        {subheaderElement}
-      </React.Fragment>
+      <ElementType {...rest} className={classes.root}>
+        {content}
+        {descriptionElement}
+      </ElementType>
     )
   }
 }

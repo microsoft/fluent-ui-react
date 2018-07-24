@@ -5,14 +5,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Subheader"
-      description="Headers may contain subheaders."
-      examplePath="components/Header/Variations/HeaderExampleSubheader"
+      title="Description"
+      description="Headers may contain description."
+      examplePath="components/Header/Variations/HeaderExampleDescription"
     />
     <ComponentExample
-      title="Subheader customizations"
-      description="Subheaders can be customize according to the needs of the user."
-      examplePath="components/Header/Variations/HeaderExampleSubheaderCustomization"
+      title="Description customizations"
+      description="Descriptions can be customize according to the needs of the user."
+      examplePath="components/Header/Variations/HeaderExampleDescriptionCustomization"
     />
     <ComponentExample
       title="TextAlign"

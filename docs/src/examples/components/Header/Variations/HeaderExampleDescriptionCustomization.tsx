@@ -4,9 +4,9 @@ import { Header } from '@stardust-ui/react'
 const HeaderExampleSubheader = () => (
   <Header as="h2">
     Account Settings
-    <Header.Subheader as="span">
+    <Header.Description as="span">
       Manage your account settings and set email preferences
-    </Header.Subheader>
+    </Header.Description>
   </Header>
 )
 
