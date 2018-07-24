@@ -1,27 +1,43 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode, CSSProperties } from 'react'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
+
+export type ButtonType = 'primary' | 'secondary'
+
+export interface IButtonProps {
+  as?: string
+  children?: ReactNode
+  circular?: boolean
+  className?: string
+  content?: ReactNode
+  fluid?: boolean
+  style?: CSSProperties
+  type?: ButtonType
+}
 
 /**
  * A button.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<any, any> {
-  static displayName = 'Button'
+class Button extends UIComponent<IButtonProps, any> {
+  public static displayName = 'Button'
 
-  static className = 'ui-button'
+  public static className = 'ui-button'
 
-  static rules = buttonRules
+  public static rules = buttonRules
 
-  static variables = buttonVariables
+  public static variables = buttonVariables
 
-  static propTypes = {
+  public static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
+
+    /** Primary content. */
+    children: PropTypes.node,
 
     /** A button can appear circular. */
     circular: PropTypes.bool,
@@ -32,18 +48,34 @@ class Button extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
+    /** A button can take the width of its container. */
+    fluid: PropTypes.bool,
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
   }
 
-  static handledProps = ['as', 'circular', 'className', 'content', 'type']
+  public static handledProps = [
+    'as',
+    'children',
+    'circular',
+    'className',
+    'content',
+    'fluid',
+    'type',
+  ]
 
-  static defaultProps = {
+  public static defaultProps = {
     as: 'button',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  public renderComponent({
+    ElementType,
+    classes,
+    rest,
+  }: IRenderResultConfig<IButtonProps>): ReactNode {
     const { children, content } = this.props
+
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? children : content}
@@ -51,4 +83,5 @@ class Button extends UIComponent<any, any> {
     )
   }
 }
+
 export default Button
