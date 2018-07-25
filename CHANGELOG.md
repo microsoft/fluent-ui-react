@@ -24,6 +24,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Make Chat.Messages position relative to contain absolutely positioned children @levithomason (7625becc55fc051175fa3143bdfbc212de2d436c)
 
+### Features
+- Add Button `fluid` prop @Bugaa92 ([#6](https://github.com/stardust-ui/react/pull/6))
+
 <!--------------------------------[ v0.2.2 ]------------------------------- -->
 ## [v0.2.2](https://github.com/stardust-ui/react/tree/v0.2.2) (2018-07-24)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.1...v0.2.2)
