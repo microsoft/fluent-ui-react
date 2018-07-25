@@ -17,6 +17,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.2.3 ]------------------------------- -->
+## [v0.2.3](https://github.com/stardust-ui/react/tree/v0.2.3) (2018-07-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.2...v0.2.3)
+
+### Fixes
+- Make Chat.Messages position relative to contain absolutely positioned children @levithomason (7625becc55fc051175fa3143bdfbc212de2d436c)
+
+<!--------------------------------[ v0.2.2 ]------------------------------- -->
+## [v0.2.2](https://github.com/stardust-ui/react/tree/v0.2.2) (2018-07-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.1...v0.2.2)
+
 ### Fixes
 - Fix Layout vertical prop not making layouts vertical @levithomason ([#10](https://github.com/stardust-ui/react/pulls/10))
 
