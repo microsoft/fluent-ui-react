@@ -43,6 +43,9 @@ class Icon extends UIComponent<any, any> {
       'black',
     ]),
 
+    /** An icon can show it is currently unable to be interacted with. */
+    disabled: PropTypes.bool,
+
     /** The type of font that needs to be used */
     kind: PropTypes.string,
 
@@ -53,7 +56,17 @@ class Icon extends UIComponent<any, any> {
     size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
   }
 
-  static handledProps = ['as', 'bordered', 'circular', 'className', 'color', 'kind', 'name', 'size']
+  static handledProps = [
+    'as',
+    'bordered',
+    'circular',
+    'className',
+    'color',
+    'disabled',
+    'kind',
+    'name',
+    'size',
+  ]
 
   static defaultProps = {
     as: 'i',
