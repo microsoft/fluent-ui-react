@@ -1,7 +1,8 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ButtonBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+export class ButtonBehavior extends AbstractBehavior<{}, {}>
+  implements IAccessibilityBehavior<{}, {}> {
   constructor() {
     super('button')
   }

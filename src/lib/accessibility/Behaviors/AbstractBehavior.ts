@@ -1,12 +1,12 @@
 import { ComponentState } from '../interfaces'
 import UIComponent from '../../UIComponent'
 
-export abstract class AbstractBehavior {
+export abstract class AbstractBehavior<P, S> {
   private keyHandlers: {
     [key: string]: (
       key: string,
       event: Event,
-      component: UIComponent<{}, {}>,
+      component: UIComponent<P, S>,
       props: any,
       state: any,
     ) => boolean,
@@ -14,7 +14,7 @@ export abstract class AbstractBehavior {
 
   constructor(public readonly name: string) {}
 
-  protected handleKey<P, S>(
+  protected handleKey(
     key: string,
     callback: (key: string, event: Event, sender: UIComponent<P, S>, props: P, state: S) => boolean,
   ): void {
@@ -24,7 +24,7 @@ export abstract class AbstractBehavior {
 
   public abstract changeState(newState: ComponentState): void
 
-  public generateKeyHandlers<P, S>(component: UIComponent<P, S>, props, state): object {
+  public generateKeyHandlers(component: UIComponent<P, S>, props, state): object {
     return {
       onKeyDown: event => {
         if (this.keyHandlers && this.keyHandlers[event.key]) {

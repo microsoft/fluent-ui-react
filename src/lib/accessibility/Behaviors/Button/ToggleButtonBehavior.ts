@@ -1,7 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 
-export class ToggleButtonBehavior extends AbstractBehavior
+export class ToggleButtonBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
   constructor() {
     super('toggle-button')

@@ -1,12 +1,14 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { UIComponent } from '../../..'
 import { AbstractBehavior } from '../AbstractBehavior'
+import ClickAction from '../../../../components/actions/ClickAction'
 
-export class MenuItemBehavior extends AbstractBehavior implements IAccessibilityBehavior<{}, {}> {
+export class MenuItemBehavior extends AbstractBehavior<{}, {}>
+  implements IAccessibilityBehavior<{}, {}> {
   constructor() {
     super('menuitem')
     this.handleKey('Enter', (key, event, component, props, state) =>
-      this.handleEnter(key, event, component, props, state),
+      component.executeAction(ClickAction.execute()),
     )
   }
 
@@ -22,15 +24,4 @@ export class MenuItemBehavior extends AbstractBehavior implements IAccessibility
   }
 
   public changeState(newState: ComponentState): void {}
-
-  private handleEnter<P, S>(
-    key: string,
-    event: Event,
-    component: UIComponent<P, S>,
-    props: P,
-    state: S,
-  ): boolean {
-    component.executeAction('click', undefined)
-    return true
-  }
 }

@@ -1,7 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../interfaces'
 import { AbstractBehavior } from './AbstractBehavior'
 
-export class DefaultBehavior<P, S> extends AbstractBehavior
+export class DefaultBehavior<P, S> extends AbstractBehavior<P, S>
   implements IAccessibilityBehavior<P, S> {
   constructor() {
     super('default')

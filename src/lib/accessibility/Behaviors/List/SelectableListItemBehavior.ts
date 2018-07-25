@@ -1,7 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 
-export class SelectableListItemBehavior extends AbstractBehavior
+export class SelectableListItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
   constructor() {
     super('selectable-listitem')

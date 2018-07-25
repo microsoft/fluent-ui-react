@@ -8,6 +8,8 @@ import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
+import ClickAction from '../actions/ClickAction'
+import FocusGrab from '../../lib/accessibility/FocusGrab'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -58,6 +60,8 @@ class MenuItem extends UIComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
+    submenu: PropTypes.node,
   }
 
   static defaultProps = {
@@ -80,19 +84,27 @@ class MenuItem extends UIComponent<any, any> {
 
   private elementRef: HTMLElement
 
+  onClickActionHandler = ClickAction.handler(() => {
+    FocusGrab.focusWithin(this.elementRef)
+    this.handleClick(undefined)
+    return true
+  })
+
   constructor(p, s) {
     super(p, s)
     this.accBehavior = new MenuItemBehavior()
 
-    this.registerAction('click', params => {
-      this.handleClick(undefined)
-      return true
-    })
+    this.registerActionHandler(this.onClickActionHandler)
   }
 
   componentDidUpdate(prevProps: any) {
-    // this grabs focus every time the focusable flag changes to true. are we sure that we want to grab the focus every time?
-    if (!prevProps.focusable && this.props.focusable && this.elementRef) {
+    if (this.elementRef && FocusGrab.tokenShouldGrabFocus(this.props[FocusGrab.tokenProperty])) {
+      this.elementRef.focus()
+    }
+  }
+
+  componentDidMount() {
+    if (FocusGrab.elementShouldGrabFocus(this.elementRef)) {
       this.elementRef.focus()
     }
   }
@@ -126,6 +138,8 @@ class MenuItem extends UIComponent<any, any> {
             // <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
           )}
         </div>
+
+        {this.props.submenu}
       </ElementType>
     )
   }

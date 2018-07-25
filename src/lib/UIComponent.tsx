@@ -2,6 +2,7 @@ import React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { IAccessibilityBehavior } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility/Behaviors/behaviors'
+import { ActionHandler } from '../components/actions/Action'
 
 abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -13,7 +14,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
   static handledProps: any
 
   public accBehavior: IAccessibilityBehavior<P, S>
-  private actions: { [name: string]: (params: any) => void }
+  private actionHandlers: { [name: string]: (params: any) => boolean }
 
   constructor(props, context) {
     super(props, context)
@@ -30,16 +31,16 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     this.accBehavior = new DefaultBehavior<P, S>()
   }
 
-  registerAction(name: string, action: (params: any) => void) {
-    this.actions = this.actions || {}
-    this.actions[name] = action
+  registerActionHandler<A>(handler: ActionHandler<A>) {
+    this.actionHandlers = this.actionHandlers || {}
+    this.actionHandlers[handler.name] = handler.call
   }
 
-  executeAction(name: string, params: any) {
-    // TODO: make it typesafe
-    if (this.actions && this.actions[name]) {
-      this.actions[name](params)
+  executeAction<A>(args: { name: string; params: A }): boolean {
+    if (this.actionHandlers && this.actionHandlers[args.name]) {
+      return this.actionHandlers[args.name](args.params)
     }
+    return false
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {

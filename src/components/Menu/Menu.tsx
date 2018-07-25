@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -8,8 +8,14 @@ import menuRules from './menuRules'
 
 import { MenuBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 import menuVariables from './menuVariables'
+import SetFocusableChild, { FocusableIndexState } from '../actions/SetFocusableChild'
+import FocusGrab from '../../lib/accessibility/FocusGrab'
 
-class Menu extends AutoControlledComponent<any, any> {
+interface MenuState extends FocusableIndexState {
+  activeIndex: number
+}
+
+class Menu extends AutoControlledComponent<any, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -25,9 +31,6 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Index of the currently active item. */
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Index of the currently focusable item. */
-    focusableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-
     /** Primary content. */
     children: PropTypes.node,
 
@@ -36,9 +39,6 @@ class Menu extends AutoControlledComponent<any, any> {
 
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-
-    /** Initial focusableIndex value. */
-    defaultFocusableIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
@@ -55,36 +55,31 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static handledProps = [
     'activeIndex',
-    'focusableIndex',
     'as',
     'children',
     'className',
     'defaultActiveIndex',
-    'defaultFocusableIndex',
     'items',
     'shape',
     'type',
   ]
 
-  static autoControlledProps = ['activeIndex', 'focusableIndex']
+  static autoControlledProps = ['activeIndex']
 
   static rules = menuRules
 
   static Item = MenuItem
 
+  private childrenCount: number
+
   constructor(p, s) {
     super(p, s)
     this.accBehavior = new MenuBehavior()
-    this.registerAction('setFocusableChild', params => {
-      const { index } = params
-      console.error(index)
-      if (index < 0 || index >= p.items.length) {
-        return false
-      }
-      this.setState({ focusableIndex: index })
-
-      return true
-    })
+    this.registerActionHandler(
+      SetFocusableChild.handler(params =>
+        SetFocusableChild.updateState(params, this.childrenCount, this.setState.bind(this)),
+      ),
+    )
   }
 
   getInitialAutoControlledState({ activeIndex }) {
@@ -111,8 +106,10 @@ class Menu extends AutoControlledComponent<any, any> {
           type,
           shape,
           index,
-          active: parseInt(activeIndex, 10) === index,
-          focusable: parseInt(focusableIndex, 10) === index,
+          active: activeIndex === index,
+          focusable: focusableIndex === index,
+          [FocusGrab.tokenProperty]:
+            focusableIndex === index && this.state[FocusGrab.tokenProperty],
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -120,7 +117,8 @@ class Menu extends AutoControlledComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children } = this.props
+    const { children, items } = this.props
+    this.childrenCount = childrenExist(children) ? React.Children.count(children) : items.lenght
     return (
       <ElementType
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
@@ -128,9 +126,20 @@ class Menu extends AutoControlledComponent<any, any> {
         {...rest}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems()}
+        {childrenExist(children) ? this.renderChildren(children) : this.renderItems()}
       </ElementType>
     )
+  }
+
+  renderChildren(children) {
+    return React.Children.map(children, (child, index) => {
+      return React.cloneElement(child as ReactElement<any>, {
+        index,
+        focusable: this.state.focusableIndex === index,
+        [FocusGrab.tokenProperty]:
+          this.state.focusableIndex === index && this.state[FocusGrab.tokenProperty],
+      })
+    })
   }
 }
 
