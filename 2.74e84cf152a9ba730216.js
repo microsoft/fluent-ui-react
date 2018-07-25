@@ -1,6 +1,0 @@
-webpackJsonp([2],{1615:/*!**************************************************!*\
-  !*** ./docs/src/exampleMenus/List.examples.json ***!
-  \**************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-function(e,t){e.exports=[{sectionName:"Types",examples:[{title:"Default",examplePath:"components/List/Types/ListExample"},{title:"Selection",examplePath:"components/List/Types/ListExampleSelection"}]},{sectionName:"Content",examples:[{title:"Header",examplePath:"components/List/Content/ListExampleHeader"},{title:"Content",examplePath:"components/List/Content/ListExampleContent"},{title:"Header & Content",examplePath:"components/List/Content/ListExampleHeaderContent"},{title:"Media",examplePath:"components/List/Content/ListExampleMedia"},{title:"Header Media",examplePath:"components/List/Content/ListExampleHeaderMedia"},{title:"Content Media",examplePath:"components/List/Content/ListExampleContentMedia"},{title:"End Media",examplePath:"components/List/Content/ListExampleEndMedia"}]},{sectionName:"Variations",examples:[{title:"Truncate",examplePath:"components/List/Variations/ListExampleTruncate"}]}]}});

@@ -1,6 +1,0 @@
-webpackJsonp([1],{1616:/*!**************************************************!*\
-  !*** ./docs/src/exampleMenus/Menu.examples.json ***!
-  \**************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-function(e,n){e.exports=[{sectionName:"Types",examples:[{title:"Menu",examplePath:"components/Menu/Types/MenuExample"},{title:"Default Primary",examplePath:"components/Menu/Types/MenuExamplePrimary"}]},{sectionName:"Variations",examples:[{title:"Pills",examplePath:"components/Menu/Variations/MenuExamplePills"},{title:"Pills Primary",examplePath:"components/Menu/Variations/MenuExamplePillsPrimary"},{title:"Pointing",examplePath:"components/Menu/Variations/MenuExamplePointing"},{title:"Pointing Primary",examplePath:"components/Menu/Variations/MenuExamplePointingPrimary"},{title:"Underlined",examplePath:"components/Menu/Variations/MenuExampleUnderlined"},{title:"Underlined primary",examplePath:"components/Menu/Variations/MenuExampleUnderlinedPrimary"}]}]}});
