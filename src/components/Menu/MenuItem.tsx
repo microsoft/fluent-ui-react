@@ -9,9 +9,9 @@ import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 import ClickAction from '../actions/ClickAction'
-import FocusGrab from '../../lib/accessibility/FocusGrab'
+import FocusItem from '../../lib/focus/FocusItem'
 
-class MenuItem extends UIComponent<any, any> {
+class MenuItem extends FocusItem<any, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -23,11 +23,10 @@ class MenuItem extends UIComponent<any, any> {
   static rules = menuItemRules
 
   static propTypes = {
+    ...FocusItem.propTypes,
+
     /** A menu item can be active. */
     active: PropTypes.bool,
-
-    /** A menu item can be focusable. */
-    focusable: PropTypes.bool,
 
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
@@ -69,8 +68,9 @@ class MenuItem extends UIComponent<any, any> {
   }
 
   static handledProps = [
+    ...FocusItem.handledProps,
+
     'active',
-    'focusable',
     'as',
     'children',
     'className',
@@ -82,10 +82,8 @@ class MenuItem extends UIComponent<any, any> {
     'type',
   ]
 
-  private elementRef: HTMLElement
-
   onClickActionHandler = ClickAction.handler(() => {
-    FocusGrab.focusWithin(this.elementRef)
+    this.focusWithin()
     this.handleClick(undefined)
     return true
   })
@@ -95,22 +93,6 @@ class MenuItem extends UIComponent<any, any> {
     this.accBehavior = new MenuItemBehavior()
 
     this.registerActionHandler(this.onClickActionHandler)
-  }
-
-  componentDidUpdate(prevProps: any) {
-    if (this.elementRef && FocusGrab.tokenShouldGrabFocus(this.props[FocusGrab.tokenProperty])) {
-      this.elementRef.focus()
-    }
-  }
-
-  componentDidMount() {
-    if (FocusGrab.elementShouldGrabFocus(this.elementRef)) {
-      this.elementRef.focus()
-    }
-  }
-
-  setElementRef = (elementRef: HTMLElement) => {
-    this.elementRef = elementRef
   }
 
   handleClick = e => {
@@ -127,8 +109,8 @@ class MenuItem extends UIComponent<any, any> {
           className={classes.root}
           onClick={this.handleClick}
           {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-          {...this.accBehavior.generateKeyHandlers(this, this.props, this.state)} // TODO: this only works for shorthand
-          ref={this.setElementRef} // TODO: can/should we add ref only to focusable elements?
+          {...this.accBehavior.generateKeyHandlers(this, this.props, this.state)}
+          ref={this.setFocusableElementRef} // TODO: can/should we add ref only to focusable elements?
         >
           {childrenExist(children) ? (
             children

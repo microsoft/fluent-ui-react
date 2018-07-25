@@ -4,8 +4,6 @@ export default class FocusGrab {
   private static parentElementRestriction: Element
   private static token: string
 
-  public static readonly tokenProperty = 'focusToken'
-
   public static elementShouldGrabFocus(element: HTMLElement) {
     if (
       FocusGrab.parentElementRestriction &&

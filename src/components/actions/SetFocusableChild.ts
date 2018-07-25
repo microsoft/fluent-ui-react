@@ -1,14 +1,12 @@
 import { Action, ActionHandler } from './Action'
-import FocusGrab from '../../lib/accessibility/FocusGrab'
-
-export const indexProperty = 'index'
-export const focusableIndexProperty = 'focusableIndex'
-export const defaultFocusableIndexProperty = 'defaultFocusableIndex'
-
-export interface FocusableIndexState {
-  [focusableIndexProperty]: number
-  [FocusGrab.tokenProperty]: string
-}
+import FocusGrab from '../../lib/focus/FocusGrab'
+import {
+  focusTokenProperty,
+  indexProperty,
+  focusableIndexProperty,
+  defaultFocusableIndexProperty,
+  IFocusAreaState,
+} from '../../lib/focus/interfaces'
 
 export enum Direction {
   Current,
@@ -19,7 +17,7 @@ export enum Direction {
 }
 
 export interface SetFocusableChildParams {
-  state: FocusableIndexState
+  state: IFocusAreaState
   direction?: Direction
 }
 
@@ -61,7 +59,7 @@ export default class SetFocusableChild {
   public static updateState: (
     params: SetFocusableChildParams,
     count: number,
-    updateState: (state: FocusableIndexState) => void,
+    updateState: (state: IFocusAreaState) => void,
   ) => boolean = (params, count, updateState) => {
     const index = SetFocusableChild.getNewIndex(params, count)
     if (index < 0 || index >= count) {
@@ -69,7 +67,7 @@ export default class SetFocusableChild {
     }
     updateState({
       [focusableIndexProperty]: index,
-      [FocusGrab.tokenProperty]: FocusGrab.focusOnce(),
+      [focusTokenProperty]: FocusGrab.focusOnce(),
     })
     return true
   }

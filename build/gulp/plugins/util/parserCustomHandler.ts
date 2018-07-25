@@ -18,6 +18,18 @@ const amendPropTypes = (documentation, path) => {
   if (!namedTypes.ObjectExpression.check(path.node)) return
 
   path.get('properties').each(propertyPath => {
+    // based on https://github.com/siddharthkp/react-docgen-external-proptypes-handler/blob/master/index.js
+    if (propertyPath.node.type === types.namedTypes.SpreadProperty.name) {
+      // but not yet working so skip for now.
+      return
+      // resolvedValuePath = utils.resolveToValue(propertyPath.get('argument'))
+      // // normal object literal
+      // if (resolvedValuePath.node.type === types.namedTypes.ObjectExpression.name) {
+      //   amendPropTypes(documentation, resolvedValuePath)
+      //   return
+      // }
+    }
+
     const propertyName = getPropertyName(propertyPath)
     const propDescriptor = documentation.getPropDescriptor(propertyName)
     const valuePath = propertyPath.get('value')

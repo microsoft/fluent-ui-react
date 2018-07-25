@@ -1,10 +1,10 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { UIComponent } from '../../..'
 import { AbstractBehavior } from '../AbstractBehavior'
 import ClickAction from '../../../../components/actions/ClickAction'
+import { IFocusableProps, focusableProperty } from '../../../focus/interfaces'
 
-export class MenuItemBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
+export class MenuItemBehavior extends AbstractBehavior<IFocusableProps, {}>
+  implements IAccessibilityBehavior<IFocusableProps, {}> {
   constructor() {
     super('menuitem')
     this.handleKey('Enter', (key, event, component, props, state) =>
@@ -18,8 +18,8 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
     tabIndex: 0,
   }
 
-  public generateAriaAttributes(props, state): object {
-    this.attributes.tabIndex = props['focusable'] ? 0 : -1
+  public generateAriaAttributes(props: IFocusableProps, state: any): object {
+    this.attributes.tabIndex = props[focusableProperty] ? 0 : -1
     return this.attributes
   }
 

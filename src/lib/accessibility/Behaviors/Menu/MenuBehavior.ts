@@ -1,12 +1,10 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
-import SetFocusableChild, {
-  Direction,
-  FocusableIndexState,
-} from '../../../../components/actions/SetFocusableChild'
+import SetFocusableChild, { Direction } from '../../../../components/actions/SetFocusableChild'
+import { IFocusAreaState } from '../../../focus/interfaces'
 
-export class MenuBehavior extends AbstractBehavior<{}, FocusableIndexState>
-  implements IAccessibilityBehavior<{}, FocusableIndexState> {
+export class MenuBehavior extends AbstractBehavior<{}, IFocusAreaState>
+  implements IAccessibilityBehavior<{}, IFocusAreaState> {
   constructor() {
     super('menu')
     this.handleKey('ArrowRight', (key, event, component, props, state) => {
