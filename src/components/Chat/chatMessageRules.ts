@@ -1,5 +1,6 @@
 const chatMessageRules = {
   root: ({ props, variables }) => ({
+    position: 'relative',
     padding: '1rem',
     marginTop: '1rem',
     marginBottom: '1rem',
