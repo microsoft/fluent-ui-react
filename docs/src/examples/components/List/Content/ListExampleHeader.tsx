@@ -3,9 +3,9 @@ import { List } from '@stardust-ui/react'
 
 const ListExample = () => (
   <List>
-    <List.Item key="irving" header="Irving Kuhic" />
-    <List.Item key="skyler" header="Skyler Parks" />
-    <List.Item key="dante" header="Dante Schneider" />
+    <List.Item header="Irving Kuhic" />
+    <List.Item header="Skyler Parks" />
+    <List.Item header="Dante Schneider" />
   </List>
 )
 

@@ -65,17 +65,20 @@ class List extends UIComponent<any, any> {
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
-    const { items, children } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
-    const shorthandContent = _.map(items, item =>
-      ListItem.create(item, { defaultProps: itemProps }),
-    )
+    const { children } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : shorthandContent}
+        {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
+  }
+
+  renderItems() {
+    const { items } = this.props
+    const itemProps = _.pick(this.props, List.itemProps)
+
+    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
   }
 }
 

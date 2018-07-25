@@ -1,7 +1,5 @@
 import React from 'react'
-import { List } from '@stardust-ui/react'
-
-const imgStyle = { display: 'block', width: '2rem', borderRadius: '999rem' }
+import { List, Image } from '@stardust-ui/react'
 
 const ListExample = ({ knobs }) => (
   <div style={{ width: knobs.width }}>
@@ -11,24 +9,21 @@ const ListExample = ({ knobs }) => (
       truncateContent={knobs.truncateContent}
     >
       <List.Item
-        key="irving"
-        media={<img src="public/images/avatar/small/matt.jpg" style={imgStyle} />}
+        media={<Image src="public/images/avatar/small/matt.jpg" avatar />}
         header="Irving Kuhic - Super long title here"
         headerMedia="7:26:56 AM"
         content="Program the sensor to the SAS alarm through the haptic SQL card!"
         contentMedia="!!"
       />
       <List.Item
-        key="skyler"
-        media={<img src="public/images/avatar/small/steve.jpg" style={imgStyle} />}
+        media={<Image src="public/images/avatar/small/steve.jpg" avatar />}
         header="Skyler Parks - Super long title here"
         headerMedia="11:30:17 PM"
         content="Use the online FTP application to input the multi-byte application!"
         contentMedia="!!"
       />
       <List.Item
-        key="dante"
-        media={<img src="public/images/avatar/small/nom.jpg" style={imgStyle} />}
+        media={<Image src="public/images/avatar/small/nom.jpg" avatar />}
         header="Dante Schneider - Super long title here"
         headerMedia="5:22:40 PM"
         content="The GB pixel is down, navigate the virtual interface!"
