@@ -1,8 +1,15 @@
 import { pxToRem } from '../../../../lib'
 
-export default () => ({
-  width: undefined,
-  height: undefined,
+export interface IImageVariables {
+  width: string
+  height: string
+  avatarRadius: string
+  avatarSize: string
+}
+
+export default (): IImageVariables => ({
+  width: '100%',
+  height: '100%',
   avatarRadius: pxToRem(9999),
   avatarSize: pxToRem(32),
 })
