@@ -3,7 +3,9 @@ import { pxToRem } from 'src/lib'
 
 const KnobsControl = createComponent(
   () => ({
-    padding: `0 ${pxToRem(10)}`,
+    marginRight: pxToRem(5),
+    verticalAlign: 'middle',
+    textAlign: 'center',
   }),
   'span',
 )

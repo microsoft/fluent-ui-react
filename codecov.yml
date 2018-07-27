@@ -2,3 +2,4 @@ coverage:
   ignore:
     - docs/*
     - src/lib/*
+    - test/*

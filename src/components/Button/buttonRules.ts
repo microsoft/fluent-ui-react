@@ -1,8 +1,13 @@
 import { pxToRem } from '../../lib'
 import { IButtonVariables } from './buttonVariables'
+import { IButtonProps } from './Button'
 
 export default {
-  root: ({ props, theme, variables }) => {
+  root: ({ props, variables }: { props: IButtonProps; variables: IButtonVariables }) => {
+    const { children, circular, content, fluid, type } = props
+    const primary = type === 'primary'
+    const secondary = type === 'secondary'
+
     const {
       backgroundColor,
       backgroundColorHover,
@@ -31,9 +36,11 @@ export default {
       ':hover': {
         backgroundColor: backgroundColorHover,
       },
-      ...(props.circular && { borderRadius: circularRadius, width: circularWidth }),
+      ...(circular && { borderRadius: circularRadius, width: circularWidth }),
 
-      ...(props.type === 'primary' && {
+      ...(fluid && { display: 'block', width: '100%' }),
+
+      ...(type === 'primary' && {
         color: typePrimaryColor,
         backgroundColor: typePrimaryBackgroundColor,
         borderColor: typePrimaryBorderColor,
@@ -42,7 +49,7 @@ export default {
         },
       }),
 
-      ...(props.type === 'secondary' && {
+      ...(type === 'secondary' && {
         color: typeSecondaryColor,
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,

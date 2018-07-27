@@ -10,7 +10,7 @@ import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
 
 import sh from '../sh'
-import config from '../../config'
+import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
@@ -57,7 +57,7 @@ task(
 
 const componentsSrc = [`${config.paths.src()}/components/*/[A-Z]*.tsx`]
 const examplesSrc = `${paths.docsSrc()}/examples/*/*/*/index.tsx`
-const markdownSrc = ['.github/CONTRIBUTING.md', 'README.md', 'specifications/*.md']
+const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })
@@ -97,7 +97,7 @@ task('build:docs:toc', () =>
 )
 
 task('build:docs:webpack', cb => {
-  const webpackConfig = require('../../webpack.config').default
+  const webpackConfig = require('../../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
   compiler.run((err, stats) => {
@@ -147,7 +147,7 @@ task('deploy:docs', cb => {
 
 task('serve:docs', cb => {
   const app = express()
-  const webpackConfig = require('../../webpack.config').default
+  const webpackConfig = require('../../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
   app
