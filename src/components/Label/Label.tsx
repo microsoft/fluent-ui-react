@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
+import { Icon } from '../..'
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
 
@@ -31,9 +33,28 @@ class Label extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /**
+     * Adds an "x" icon, called when "x" is clicked.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onRemove: PropTypes.func,
+
+    /** Shorthand for Icon to appear as the last child and trigger onRemove. */
+    removeIcon: customPropTypes.itemShorthand,
   }
 
-  static handledProps = ['as', 'children', 'circular', 'className', 'content']
+  static handledProps = [
+    'as',
+    'children',
+    'circular',
+    'className',
+    'content',
+    'onRemove',
+    'removeIcon',
+  ]
 
   static defaultProps = {
     as: 'label',
@@ -43,11 +64,29 @@ class Label extends UIComponent<any, any> {
 
   static variables = labelVariables
 
+  handleIconOverrides = predefinedProps => ({
+    onClick: e => {
+      _.invoke(predefinedProps, 'onClick', e)
+      _.invoke(this.props, 'onRemove', e, this.props)
+    },
+  })
+
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+    const { children, content, onRemove, removeIcon } = this.props
+
+    const removeIconShorthand = removeIcon || 'close'
+
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? children : content}
+        {onRemove &&
+          Icon.create(
+            { name: removeIconShorthand, className: classes.removeIcon },
+            {
+              generateKey: false,
+              overrideProps: this.handleIconOverrides,
+            },
+          )}
       </ElementType>
     )
   }

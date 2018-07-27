@@ -11,4 +11,9 @@ export default {
       borderRadius: variables.circularRadius,
     }),
   }),
+  removeIcon: () => ({
+    position: 'relative',
+    top: '-0.15em',
+    cursor: 'pointer',
+  }),
 }
