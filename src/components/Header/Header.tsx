@@ -60,7 +60,7 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const descriptionElement = HeaderDescription.create(description, { autoGenerateKey: false })
+    const descriptionElement = HeaderDescription.create(description, { generateKey: false })
 
     return (
       <ElementType {...rest} className={classes.root}>

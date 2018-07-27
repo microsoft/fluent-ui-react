@@ -89,7 +89,6 @@ class Layout extends UIComponent<any, any> {
   ]
 
   static defaultProps = {
-    as: 'div',
     startSize: 'auto',
     mainSize: '1fr',
     endSize: 'auto',

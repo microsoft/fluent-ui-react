@@ -12,7 +12,7 @@ export * from './factories'
 export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
-export { default as renderComponent } from './renderComponent'
+export { default as renderComponent, IRenderResultConfig } from './renderComponent'
 export {
   useKeyOnly,
   useKeyOrValueAndKey,
