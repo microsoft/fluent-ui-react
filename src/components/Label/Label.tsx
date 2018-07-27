@@ -81,7 +81,11 @@ class Label extends UIComponent<any, any> {
         {childrenExist(children) ? children : content}
         {onRemove &&
           Icon.create(
-            { name: removeIconShorthand, className: classes.removeIcon },
+            {
+              name: removeIconShorthand,
+              className: classes.removeIcon,
+              variables: { color: classes.root.color },
+            },
             {
               generateKey: false,
               overrideProps: this.handleIconOverrides,

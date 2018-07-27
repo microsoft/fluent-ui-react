@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-class LabelExampleCircular extends React.Component<{}, { display: string }> {
+class LabelExampleOnRemoveShorthand extends React.Component<{}, { display: string }> {
   constructor() {
     super({})
     this.state = {
@@ -19,4 +19,4 @@ class LabelExampleCircular extends React.Component<{}, { display: string }> {
   }
 }
 
-export default LabelExampleCircular
+export default LabelExampleOnRemoveShorthand
