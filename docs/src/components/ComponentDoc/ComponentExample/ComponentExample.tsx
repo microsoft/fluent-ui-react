@@ -1,3 +1,4 @@
+// tslint:disable:linebreak-style
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { PureComponent, isValidElement, CSSProperties } from 'react'
@@ -7,6 +8,7 @@ import { html } from 'js-beautify'
 import copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
+import axe from 'axe-core'
 
 import {
   examplePathToHash,
@@ -45,6 +47,7 @@ interface IComponentExampleState {
   showHTML: boolean
   showRtl: boolean
   showVariables: boolean
+  runAccValidator: boolean
   isHovering: boolean
   copiedCode: boolean
 }
@@ -83,6 +86,8 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
   private anchorName: string
   private kebabExamplePath: string
   private KnobsComponent: any
+  private exampleRef: HTMLElement
+  private accValidationResults: string
 
   public state = { knobs: {} } as IComponentExampleState
 
@@ -112,6 +117,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       showCode: this.isActiveHash(),
+      runAccValidator: false,
       showHTML: false,
       sourceCode: this.sourceCodeMgr.currentCode,
       markup: renderToStaticMarkup(exampleElement),
@@ -135,6 +141,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
       showHTML: false,
       showRtl: false,
       showVariables: false,
+      runAccValidator: false,
     })
   }
 
@@ -233,6 +240,16 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
+  private handleRunAccValidator = e => {
+    e.preventDefault()
+
+    const { runAccValidator } = this.state
+
+    this.setState({ runAccValidator: !runAccValidator }, () => {
+      this.runAccValidatorOnElement()
+    })
+  }
+
   private handleShowVariablesClick = e => {
     e.preventDefault()
 
@@ -314,6 +331,41 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
       this.setErrorDebounced(err.message)
     }
   }, 250)
+
+  private runAccValidatorOnElement = () => {
+    return axe.run(this.exampleRef).then(results => {
+      this.accValidationResults = this.processResultsFromAxe(results)
+    })
+  }
+
+  private processResultsFromAxe = (results: axe.AxeResults): string => {
+    if (results.violations.length === 0) {
+      return 'Accessibilty check was successfull, there are no violations.'
+    }
+
+    const validationMessage = []
+    results.violations.forEach(violation => {
+      validationMessage.push(`ID: ${violation.id}`)
+      validationMessage.push(`Desription: ${violation.description}`)
+      validationMessage.push(`Help: ${violation.help}`)
+      validationMessage.push(`Help URL: ${violation.helpUrl}`)
+      validationMessage.push(this.getNodes(violation.nodes))
+      validationMessage.push('')
+    })
+
+    return validationMessage.join('\n')
+  }
+
+  private getNodes(nodesArray: axe.NodeResult[]): string {
+    const nodeText = []
+    nodesArray.forEach(node => {
+      nodeText.push(`Failure summary: ${node.failureSummary}`)
+      nodeText.push(`Affected Node target: ${node.target}`)
+      nodeText.push('')
+    })
+    const nodesTextJoined = nodeText.join('\n')
+    return nodesTextJoined
+  }
 
   private handleKnobChange = knobs => {
     this.setState(
@@ -488,6 +540,36 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     )
   }
 
+  private setExampleRef = (ref: HTMLElement) => {
+    this.exampleRef = ref
+  }
+
+  private renderAccValidator = () => {
+    const { error, showCode, markup, runAccValidator } = this.state
+
+    if (error || !runAccValidator) return null
+
+    return (
+      <div>
+        <Divider inverted horizontal>
+          <span style={{ opacity: 0.5 }}>Accessibilty validator</span>
+        </Divider>
+        <div style={{ padding: '1rem', filter: 'grayscale()' } as CSSProperties}>
+          <Editor
+            mode="html"
+            showGutter={false}
+            showCursor={false}
+            readOnly
+            highlightActiveLine={false}
+            id={`${this.getKebabExamplePath()}-html`}
+            onOutsideClick={this.handleShowHTMLInactive}
+            value={this.accValidationResults}
+          />
+        </div>
+      </div>
+    )
+  }
+
   private renderHTML = () => {
     const { error, showCode, markup } = this.state
     if (error || !showCode) return null
@@ -598,6 +680,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
       showCode,
       showHTML,
       showRtl,
+      runAccValidator,
       showVariables,
     } = this.state
 
@@ -656,6 +739,8 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
                   showHTML={showHTML}
                   showRtl={showRtl}
                   showVariables={showVariables}
+                  onRunAccValidator={this.handleRunAccValidator}
+                  runAccValidator={runAccValidator}
                   visible
                 />
               </div>
@@ -674,13 +759,16 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
             className={`rendered-example ${this.getKebabExamplePath()}`}
             style={{ padding: '2rem' }}
           >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
+            <div ref={this.setExampleRef} dir={showRtl ? 'rtl' : undefined}>
+              {exampleElement}
+            </div>
           </Grid.Column>
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}
             {this.renderError()}
             {this.renderHTML()}
             {this.renderVariables()}
+            {this.renderAccValidator()}
           </Grid.Column>
         </Grid>
         <Divider section horizontal />
