@@ -5,6 +5,30 @@ const underlinedItem = (color: string) => ({
   transition: 'color .1s ease',
 })
 
+const itemSeparator = ({ props, variables }) => {
+  const { active, shape, type, vertical } = props
+  return {
+    ...((!shape || shape === 'pointing') && {
+      ':before': {
+        position: 'absolute',
+        content: '""',
+        top: 0,
+        right: 0,
+        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+        background: variables.defaultBorderColor,
+        ...(type === 'primary' && {
+          background: variables.typePrimaryBorderColor,
+        }),
+      },
+      ...(vertical && {
+        ':first-child:before': {
+          display: 'none',
+        },
+      }),
+    }),
+  }
+}
+
 export default {
   root: ({ props, variables }) => {
     const { active, shape, type } = props
@@ -26,20 +50,7 @@ export default {
         boxShadow: 'none',
         color: variables.defaultColor,
       }),
-      ...((!shape || shape === 'pointing') && {
-        ':before': {
-          position: 'absolute',
-          content: '""',
-          top: 0,
-          right: 0,
-          height: '100%',
-          width: '1px',
-          background: variables.defaultBorderColor,
-          ...(type === 'primary' && {
-            background: variables.typePrimaryBorderColor,
-          }),
-        },
-      }),
+      ...itemSeparator({ props, variables }),
 
       ':hover': {
         color: variables.defaultActiveColor,

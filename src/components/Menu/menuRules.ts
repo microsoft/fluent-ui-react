@@ -6,9 +6,12 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }) => {
-    const { type, shape } = props
+    const { type, shape, vertical } = props
     return {
       display: 'flex',
+      ...(vertical && {
+        flexDirection: 'column',
+      }),
       ...(shape !== 'pills' &&
         shape !== 'underlined' && {
           ...solidBorder(variables.defaultBorderColor),

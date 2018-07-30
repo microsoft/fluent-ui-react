@@ -35,10 +35,13 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
+    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A vertical menu displays elements vertically. */
+    vertical: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -54,6 +57,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'items',
     'shape',
     'type',
+    'vertical',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -73,7 +77,7 @@ class Menu extends AutoControlledComponent<any, any> {
   })
 
   renderItems = () => {
-    const { items, type, shape } = this.props
+    const { items, type, shape, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -81,6 +85,7 @@ class Menu extends AutoControlledComponent<any, any> {
         defaultProps: {
           type,
           shape,
+          vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
         },
