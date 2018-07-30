@@ -85,7 +85,7 @@ class Label extends UIComponent<any, any> {
               name: removeIconShorthand,
               className: classes.removeIcon,
               variables: { color: classes.root.color },
-              tabindex: '0',
+              tabIndex: '0',
             },
             {
               generateKey: false,
