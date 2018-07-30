@@ -1,4 +1,3 @@
-// tslint:disable:linebreak-style
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Menu } from 'semantic-ui-react'
@@ -28,9 +27,9 @@ const ComponentControls: any = props => {
 
   return (
     <Menu color="green" icon="labeled" size="tiny" fitted compact text>
-      <ComponentControlsRunAccValidator active={runAccValidator} onClick={onRunAccValidator} />
       <ComponentControlsShowCode active={showCode} onClick={onShowCode} />
       <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
+      <ComponentControlsRunAccValidator active={runAccValidator} onClick={onRunAccValidator} />
       <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
       <ComponentControlsMaximize examplePath={examplePath} />
       <ComponentControlsCopyLink anchorName={anchorName} onClick={onCopyLink} />

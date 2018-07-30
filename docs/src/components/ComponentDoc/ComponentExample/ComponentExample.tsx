@@ -1,4 +1,3 @@
-// tslint:disable:linebreak-style
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { PureComponent, isValidElement, CSSProperties } from 'react'
