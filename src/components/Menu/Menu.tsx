@@ -32,6 +32,9 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
+    /** A vertical menu may take the size of its container. */
+    fluid: PropTypes.bool,
+
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
@@ -54,6 +57,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'children',
     'className',
     'defaultActiveIndex',
+    'fluid',
     'items',
     'shape',
     'type',
