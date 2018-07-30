@@ -86,6 +86,7 @@ class Label extends UIComponent<any, any> {
               className: classes.removeIcon,
               variables: { color: classes.root.color },
               tabIndex: '0',
+              xSpacing: 'before',
             },
             {
               generateKey: false,
