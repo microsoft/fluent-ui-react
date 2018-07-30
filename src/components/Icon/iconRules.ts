@@ -1,5 +1,13 @@
 import fontAwesomeIcons from './fontAwesomeIconRules'
-import { disabledStyles } from '../../styles/customCSS'
+import { disabledStyle, fittedStyle } from '../../styles/customCSS'
+import { IconProps, IconXSpacing } from './Icon'
+import { IconVariables } from './iconVariables'
+import { CSSProperties } from '../../../node_modules/@types/react'
+
+interface IconRulesParams {
+  props: IconProps
+  variables: IconVariables
+}
 
 const sizes = new Map([
   ['mini', 0.4],
@@ -29,7 +37,20 @@ const getIcon = (kind, name) => {
 
 const getSize = size => `${sizes.get(size)}em` || '1em'
 
-const getBorderedStyles = (circular, borderColor, color) => ({
+const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): CSSProperties => {
+  switch (xSpacing) {
+    case 'none':
+      return fittedStyle
+    case 'before':
+      return { ...fittedStyle, marginLeft: horizontalSpace }
+    case 'after':
+      return { ...fittedStyle, marginRight: horizontalSpace }
+    case 'both':
+      return { ...fittedStyle, margin: `0 ${horizontalSpace}` }
+  }
+}
+
+const getBorderedStyles = (circular, borderColor, color): CSSProperties => ({
   lineHeight: '1',
   padding: '0.5em 0',
   boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
@@ -39,7 +60,10 @@ const getBorderedStyles = (circular, borderColor, color) => ({
 })
 
 const iconRules = {
-  root: ({ props: { color, disabled, kind, name, size, bordered, circular }, variables: v }) => {
+  root: ({
+    props: { color, disabled, kind, name, size, bordered, circular, xSpacing },
+    variables: v,
+  }: IconRulesParams) => {
     const { fontFamily, content } = getIcon(kind, name)
     const iconColor = color || v.color
 
@@ -48,7 +72,7 @@ const iconRules = {
       color: iconColor,
       display: 'inline-block',
       opacity: 1,
-      margin: '0 0.25em 0 0',
+      margin: v.margin,
       width: '1.18em',
       height: '1em',
       fontSize: getSize(size),
@@ -69,9 +93,11 @@ const iconRules = {
         background: '0 0',
       },
 
-      ...((bordered || circular) && getBorderedStyles(circular, v.borderColor, iconColor)),
+      ...(disabled && disabledStyle),
 
-      ...(disabled && disabledStyles),
+      ...getXSpacingStyles(xSpacing, v.horizontalSpace),
+
+      ...((bordered || circular) && getBorderedStyles(circular, v.borderColor, iconColor)),
     }
   },
 }
