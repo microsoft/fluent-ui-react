@@ -11,6 +11,7 @@ export default {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
+        width: pxToRem(200),
       }),
       ...(shape !== 'pills' &&
         shape !== 'underlined' && {
