@@ -32,7 +32,7 @@ const itemSeparator = ({ props, variables }: { props: IMenuItemProps; variables:
 
 export default {
   root: ({ props, variables }: { props: IMenuItemProps; variables: any }) => {
-    const { active, shape, type } = props
+    const { active, shape, type, vertical } = props
     return {
       color: variables.defaultColor,
       lineHeight: 1,
@@ -42,7 +42,7 @@ export default {
       cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
-        margin: `0 ${pxToRem(8)} 0 0`,
+        ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
       }),
       ...(shape === 'underlined' && {
