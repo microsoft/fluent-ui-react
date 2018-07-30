@@ -6,6 +6,7 @@ import { AutoControlledComponent, customPropTypes, childrenExist } from '../../l
 import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
 
 /**
  * A standard Accordion.
@@ -60,6 +61,8 @@ class Accordion extends AutoControlledComponent<any, any> {
         }),
       ),
     ]),
+
+    a11yType: PropTypes.string,
   }
 
   static rules = accordionRules
@@ -73,6 +76,7 @@ class Accordion extends AutoControlledComponent<any, any> {
     'exclusive',
     'onTitleClick',
     'panels',
+    'a11yType',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -81,6 +85,12 @@ class Accordion extends AutoControlledComponent<any, any> {
   static Content = AccordionContent
 
   state: any = { activeIndex: [0] }
+
+  constructor(props, state) {
+    super(props, state)
+    const a11yType: string = props.a11yType
+    this.accBehavior = A11yBehaviorFactory.createBehavior(A11yBehaviorType[a11yType])
+  }
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -147,7 +157,11 @@ class Accordion extends AutoControlledComponent<any, any> {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

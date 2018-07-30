@@ -10,7 +10,6 @@ export class DefaultBehavior<P, S> extends AbstractBehavior<P, S>
   public generateAriaAttributes(): object {
     return {
       'ms-acc-behavior': this.name,
-      role: 'default',
     }
   }
 

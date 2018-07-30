@@ -4,7 +4,7 @@ import React from 'react'
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
-import { ButtonBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
 
 /**
  * A button.
@@ -35,17 +35,22 @@ class Button extends UIComponent<any, any> {
 
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    a11yType: PropTypes.string,
   }
 
-  static handledProps = ['as', 'circular', 'className', 'content', 'type']
+  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'a11yType']
 
   static defaultProps = {
     as: 'button',
   }
 
-  constructor(p, s) {
-    super(p, s)
-    this.accBehavior = new ButtonBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const a11yType: string = props.a11yType
+    this.accBehavior = A11yBehaviorFactory.createBehavior(
+      A11yBehaviorType[a11yType] || A11yBehaviorType.button,
+    )
   }
 
   renderComponent({ ElementType, classes, rest }) {

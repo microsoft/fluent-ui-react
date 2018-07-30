@@ -11,13 +11,6 @@ export class ButtonBehavior extends AbstractBehavior<{}, {}>
     'ms-acc-behavior': this.name,
     role: 'button',
     'aria-hidden': false,
-
-    // child: {
-    //   'ms-acc-behavior': this.name,
-    //   role: 'menu-item',
-    //   'aria-hidden': false,
-    //   'tab-index': 0,
-    // },
   }
 
   public generateAriaAttributes(props, state): object {

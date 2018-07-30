@@ -4,7 +4,7 @@ import React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
-import { ImageBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
 
 /**
  * An image is a graphic representation of something.
@@ -14,7 +14,7 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static handledProps = ['as', 'avatar', 'circular', 'className']
+  static handledProps = ['as', 'avatar', 'circular', 'className', 'a11yType']
 
   static rules = imageRules
 
@@ -31,16 +31,20 @@ class Image extends UIComponent<any, any> {
     circular: PropTypes.bool,
 
     className: PropTypes.string,
+
+    a11yType: PropTypes.string,
   }
 
   static defaultProps = {
     as: 'img',
   }
 
-  constructor(p, s) {
-    super(p, s)
-
-    this.accBehavior = new ImageBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const a11yType: string = props.a11yType
+    this.accBehavior = A11yBehaviorFactory.createBehavior(
+      A11yBehaviorType[a11yType] || A11yBehaviorType.image,
+    )
   }
 
   renderComponent({ ElementType, classes, rest }) {

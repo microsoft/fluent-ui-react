@@ -7,6 +7,8 @@ export enum ComponentState {
   focused,
   active,
   inactive,
+  expanded,
+  collapsed,
 }
 
 export interface IAccessibilityBehavior<P, S> {
