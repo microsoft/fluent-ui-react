@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improve UX for "knobs" form on component examples @levithomason ([#20](https://github.com/stardust-ui/react/pull/20))
 
 ### Features
+- Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
 - Add Label `onRemove` and `removeIcon` props @mnajdova ([#19](https://github.com/stardust-ui/react/pull/19))
 
 <!--------------------------------[ v0.2.3 ]------------------------------- -->
@@ -33,7 +34,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add Button `fluid` prop @Bugaa92 ([#6](https://github.com/stardust-ui/react/pull/6))
 - Add Icon `disabled` prop @Bugaa92 ([#12](https://github.com/stardust-ui/react/pull/12))
-- Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
 
 <!--------------------------------[ v0.2.2 ]------------------------------- -->
 ## [v0.2.2](https://github.com/stardust-ui/react/tree/v0.2.2) (2018-07-24)
