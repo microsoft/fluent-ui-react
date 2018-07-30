@@ -2,6 +2,7 @@ import React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { IAccessibilityBehavior } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility/Behaviors/behaviors'
+import { ActionHandler } from '../lib/actions/Action'
 
 abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -13,6 +14,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
   static handledProps: any
 
   public accBehavior: IAccessibilityBehavior<P, S>
+  private actionHandlers: { [name: string]: (params: any) => void }
 
   constructor(props, context) {
     super(props, context)
@@ -26,7 +28,19 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.accBehavior = new DefaultBehavior()
+    this.accBehavior = new DefaultBehavior<P, S>()
+  }
+
+  // state machine should be used instead, for now allow simple actions on components
+  registerActionHandler<A>(handler: ActionHandler<A>) {
+    this.actionHandlers = this.actionHandlers || {}
+    this.actionHandlers[handler.name] = handler.call
+  }
+
+  executeAction<A>(args: { name: string; params: A }): void {
+    if (this.actionHandlers && this.actionHandlers[args.name]) {
+      this.actionHandlers[args.name](args.params)
+    }
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {

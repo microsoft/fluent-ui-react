@@ -315,6 +315,10 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
     }
   }
 
+  private preventDefaultWhenHandled(ev: React.KeyboardEvent<HTMLElement>): void {
+    this.props.preventDefaultWhenHandled && ev.preventDefault()
+  }
+
   /**
    * Handle the keystrokes.
    */
@@ -376,26 +380,38 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
           return
 
         case KeyCodes.left:
-          if (direction !== FocusZoneDirection.vertical && this.moveFocusLeft()) {
-            break
+          if (direction !== FocusZoneDirection.vertical) {
+            this.preventDefaultWhenHandled(ev)
+            if (this.moveFocusLeft()) {
+              break
+            }
           }
           return
 
         case KeyCodes.right:
-          if (direction !== FocusZoneDirection.vertical && this.moveFocusRight()) {
-            break
+          if (direction !== FocusZoneDirection.vertical) {
+            this.preventDefaultWhenHandled(ev)
+            if (this.moveFocusRight()) {
+              break
+            }
           }
           return
 
         case KeyCodes.up:
-          if (direction !== FocusZoneDirection.horizontal && this.moveFocusUp()) {
-            break
+          if (direction !== FocusZoneDirection.horizontal) {
+            this.preventDefaultWhenHandled(ev)
+            if (this.moveFocusUp()) {
+              break
+            }
           }
           return
 
         case KeyCodes.down:
-          if (direction !== FocusZoneDirection.horizontal && this.moveFocusDown()) {
-            break
+          if (direction !== FocusZoneDirection.horizontal) {
+            this.preventDefaultWhenHandled(ev)
+            if (this.moveFocusDown()) {
+              break
+            }
           }
           return
 

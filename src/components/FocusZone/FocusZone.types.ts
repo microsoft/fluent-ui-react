@@ -144,6 +144,11 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
    * Callback to notify creators that focus has been set on the FocusZone
    */
   onFocusNotification?: () => void
+
+  /**
+   * Whether the FocusZone prevents default when handled a key event
+   */
+  preventDefaultWhenHandled?: boolean
 }
 
 export const enum FocusZoneTabbableElements {

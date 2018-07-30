@@ -3,13 +3,27 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  AutoControlledComponent,
+} from '../../lib'
 import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
+import ClickAction from '../../lib/actions/ClickAction'
+import MenuCloseSubmenuAction, {
+  MenuCloseSubmenuActionParams,
+} from '../../lib/actions/MenuCloseSubmenuAction'
+import { focusFirstChild } from '../../lib/fabric'
 
-class MenuItem extends UIComponent<any, any> {
+interface MenuItemState {
+  submenuOpened: boolean
+}
+
+class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -55,6 +69,12 @@ class MenuItem extends UIComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
+    submenu: PropTypes.node,
+
+    submenuOpened: PropTypes.bool,
+
+    defaultSubmenuOpened: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -72,32 +92,75 @@ class MenuItem extends UIComponent<any, any> {
     'pointing',
     'shape',
     'type',
+    'submenu',
   ]
 
-  constructor(p, s) {
-    super(p, s)
+  static autoControlledProps = ['submenuOpened']
+
+  elementRef: HTMLElement
+  setElementRef = ref => (this.elementRef = ref)
+
+  clickHandler = ClickAction.handler(() => {
+    this.handleClick(undefined)
+  })
+
+  closeSubmenuHandler = MenuCloseSubmenuAction.handler((params: MenuCloseSubmenuActionParams) => {
+    if (this.props['submenu'] && this.state['submenuOpened']) {
+      this.setState({ submenuOpened: false })
+      if (params.moveFocus) {
+        focusFirstChild(this.elementRef)
+      }
+    }
+  })
+
+  onEscActionHandler = undefined // TODO: if has submenu and submenu is open, close it and make parent focusable
+
+  constructor(p, context) {
+    super(p, context)
     this.accBehavior = new MenuItemBehavior()
+
+    this.registerActionHandler(this.clickHandler)
+    this.registerActionHandler(this.closeSubmenuHandler)
+  }
+
+  getInitialAutoControlledState() {
+    return { submenuOpened: false }
   }
 
   handleClick = e => {
+    if (this.props.submenu) {
+      this.setState({ submenuOpened: !this.state.submenuOpened })
+    }
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
+    const submenuIndicator = this.props.submenu && (this.state.submenuOpened ? '<' : '>')
     return (
       <ElementType
-        {...rest}
-        className={classes.root}
-        onClick={this.handleClick}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        ref={this.setElementRef}
+        role="presentation"
+        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
       >
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
-        )}
+        <div // this is an attempt to mimic the acc prototype
+          {...rest}
+          className={classes.root}
+          onClick={this.handleClick}
+          {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        >
+          {childrenExist(children) ? (
+            children
+          ) : (
+            // this is an attempt to mimic the prototype
+            <span>{content}</span>
+            // <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          )}
+          {submenuIndicator}
+        </div>
+
+        {this.state.submenuOpened && this.props.submenu}
       </ElementType>
     )
   }

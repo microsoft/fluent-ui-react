@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -8,8 +8,13 @@ import menuRules from './menuRules'
 
 import { MenuBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 import menuVariables from './menuVariables'
+import { FocusZone } from '../FocusZone'
 
-class Menu extends AutoControlledComponent<any, any> {
+interface MenuState {
+  activeIndex: number
+}
+
+class Menu extends AutoControlledComponent<any, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -41,6 +46,10 @@ class Menu extends AutoControlledComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
+    grabFocus: PropTypes.bool,
+
+    componentRef: PropTypes.object,
   }
 
   static defaultProps = {
@@ -56,6 +65,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'items',
     'shape',
     'type',
+    'grabFocus',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -64,9 +74,29 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static Item = MenuItem
 
+  focusGrabbed = false
+
+  focusZone: FocusZone
+  setFocusZone = fz => (this.focusZone = fz)
+
   constructor(p, s) {
     super(p, s)
     this.accBehavior = new MenuBehavior()
+  }
+
+  componentDidMount() {
+    this.grabFocusIfNeeded()
+  }
+
+  componentDidUpdate() {
+    this.grabFocusIfNeeded()
+  }
+
+  grabFocusIfNeeded() {
+    if (this.props.grabFocus && !this.focusGrabbed && this.focusZone) {
+      this.focusGrabbed = true
+      this.focusZone.focus()
+    }
   }
 
   handleItemOverrides = predefinedProps => ({
@@ -89,7 +119,7 @@ class Menu extends AutoControlledComponent<any, any> {
           type,
           shape,
           index,
-          active: parseInt(activeIndex, 10) === index,
+          active: activeIndex === index,
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -99,13 +129,16 @@ class Menu extends AutoControlledComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { children } = this.props
     return (
-      <ElementType
+      <FocusZone
+        elementType={ElementType}
+        preventDefaultWhenHandled={true}
+        ref={this.setFocusZone}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems()}
-      </ElementType>
+      </FocusZone>
     )
   }
 }

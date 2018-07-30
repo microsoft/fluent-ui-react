@@ -166,7 +166,7 @@ export default abstract class AutoControlledComponent<P, S> extends UIComponent<
     this.state = { ...state, ...initialAutoControlledState }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextContext) {
     const { autoControlledProps } = this.constructor as any
 
     // Solve the next state for autoControlledProps
