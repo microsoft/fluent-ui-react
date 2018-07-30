@@ -1,18 +1,22 @@
 import { pxToRem } from '../../lib'
+import { truncateStyle } from '../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
 import { IButtonProps } from './Button'
 
 export default {
   root: ({ props, variables }: { props: IButtonProps; variables: IButtonVariables }) => {
-    const { children, circular, content, fluid, type } = props
+    const { circular, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
     const {
+      height,
+      minWidth,
+      maxWidth,
       backgroundColor,
       backgroundColorHover,
       circularRadius,
-      circularWidth,
+      paddingLeftRightValue,
       typePrimaryColor,
       typePrimaryBackgroundColor,
       typePrimaryBackgroundColorHover,
@@ -21,26 +25,50 @@ export default {
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
-    }: IButtonVariables = variables
+    } = variables
 
     return {
+      height,
+      minWidth,
+      maxWidth,
       backgroundColor,
       display: 'inline-block',
+      position: 'relative',
+      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
-      height: pxToRem(32),
-      width: pxToRem(96),
       verticalAlign: 'middle',
       cursor: 'pointer',
-      borderWidth: 0,
-      borderRadius: pxToRem(4),
+      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      borderRadius: pxToRem(2),
       ':hover': {
         backgroundColor: backgroundColorHover,
       },
-      ...(circular && { borderRadius: circularRadius, width: circularWidth }),
 
-      ...(fluid && { display: 'block', width: '100%' }),
+      ...truncateStyle,
 
-      ...(type === 'primary' && {
+      ...(icon &&
+        (iconPosition
+          ? {
+              display: 'inline-flex',
+              justifyContent: 'center',
+            }
+          : {
+              minWidth: height,
+              padding: 0,
+            })),
+
+      ...(circular && {
+        minWidth: height,
+        padding: 0,
+        borderRadius: circularRadius,
+      }),
+
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
+      }),
+
+      ...(primary && {
         color: typePrimaryColor,
         backgroundColor: typePrimaryBackgroundColor,
         borderColor: typePrimaryBorderColor,
@@ -49,11 +77,10 @@ export default {
         },
       }),
 
-      ...(type === 'secondary' && {
+      ...(secondary && {
         color: typeSecondaryColor,
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
-        borderWidth: '2px',
         ':hover': {
           borderColor: 'transparent',
           backgroundColor: typeSecondaryBackgroundColorHover,

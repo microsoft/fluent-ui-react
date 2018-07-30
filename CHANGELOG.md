@@ -23,6 +23,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
 
+### Features
+- Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
+- Add Button `icon` prop and Text `truncated` prop @Bugaa92 ([#13](https://github.com/stardust-ui/react/pull/13))
+
 <!--------------------------------[ v0.2.3 ]------------------------------- -->
 ## [v0.2.3](https://github.com/stardust-ui/react/tree/v0.2.3) (2018-07-24)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.2...v0.2.3)
@@ -33,7 +37,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add Button `fluid` prop @Bugaa92 ([#6](https://github.com/stardust-ui/react/pull/6))
 - Add Icon `disabled` prop @Bugaa92 ([#12](https://github.com/stardust-ui/react/pull/12))
-- Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
 
 <!--------------------------------[ v0.2.2 ]------------------------------- -->
 ## [v0.2.2](https://github.com/stardust-ui/react/tree/v0.2.2) (2018-07-24)

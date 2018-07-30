@@ -1,14 +1,30 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import textRules from './textRules'
 import textVariables from './textVariables'
+
+export type ITextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+
+export interface ITextProps {
+  as?: string
+  atMention?: boolean
+  className?: string
+  content?: ReactNode
+  disabled?: boolean
+  error?: boolean
+  size?: ITextSize
+  important?: boolean
+  success?: boolean
+  timestamp?: boolean
+  truncated?: boolean
+}
 
 /**
  * A component containing text
  */
-class Text extends UIComponent<any, any> {
+class Text extends UIComponent<ITextProps, {}> {
   static className = 'ui-text'
 
   static propTypes = {
@@ -41,6 +57,9 @@ class Text extends UIComponent<any, any> {
 
     /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
+
+    /** Truncates text as needed */
+    truncated: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -58,13 +77,14 @@ class Text extends UIComponent<any, any> {
     'important',
     'success',
     'timestamp',
+    'truncated',
   ]
 
   static rules = textRules
 
   static variables = textVariables
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ITextProps>): ReactNode {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>

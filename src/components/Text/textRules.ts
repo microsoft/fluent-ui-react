@@ -23,44 +23,56 @@ import {
 } from '../../themes/teams/siteVariables'
 
 import { Sizes } from '../../lib/enums'
+import { truncateStyle } from '../../styles/customCSS'
+import { ITextVariables } from './textVariables'
+import { ITextProps } from './Text'
+
+interface TextRulesParams {
+  props: ITextProps
+  variables: ITextVariables
+}
 
 export default {
-  root: ({ props, variables: v }) => ({
-    ...(props.atMention && { color: atMentionTextColor }),
-    ...(props.disabled && { color: disabledTextColor }),
-    ...(props.error && { color: errorTextColor }),
-    ...(props.success && { color: successTextColor }),
-    ...(props.timestamp && { color: timestampTextColor }),
-    ...(props.important && { fontWeight: v.importantWeight }),
-    ...(props.size === Sizes.ExtraSmall && {
+  root: ({
+    props: { atMention, disabled, error, size, important, success, timestamp, truncated },
+    variables: v,
+  }: TextRulesParams) => ({
+    ...(truncated && truncateStyle),
+    ...(atMention && { color: atMentionTextColor }),
+    ...(disabled && { color: disabledTextColor }),
+    ...(error && { color: errorTextColor }),
+    ...(success && { color: successTextColor }),
+    ...(timestamp && { color: timestampTextColor }),
+    ...(important && { fontWeight: v.importantWeight }),
+    ...(size === Sizes.ExtraSmall && {
       fontSize: textExtraSmallFontSize,
       lineHeight: textExtraSmallLineHeight,
     }),
-    ...(props.size === Sizes.Small && {
+    ...(size === Sizes.Small && {
       fontSize: textSmallFontSize,
       lineHeight: textSmallLineHeight,
     }),
-    ...(props.size === Sizes.Medium && {
+    ...(size === Sizes.Medium && {
       fontSize: textMediumFontSize,
       lineHeight: textMediumLineHeight,
     }),
-    ...(props.size === Sizes.Large && {
+    ...(size === Sizes.Large && {
       fontSize: textLargeFontSize,
       lineHeight: textLargeLineHeight,
     }),
-    ...(props.size === Sizes.ExtraLarge && {
+    ...(size === Sizes.ExtraLarge && {
       fontSize: textExtraLargeFontSize,
       lineHeight: textExtraLargeLineHeight,
     }),
-    ...(props.size === Sizes['2x'] && {
+    ...(size === Sizes['2x'] && {
       fontSize: textX2FontSize,
       lineHeight: textX2LineHeight,
     }),
-    ...(props.size === Sizes['3x'] && {
+    ...(size === Sizes['3x'] && {
       fontSize: textX3FontSize,
       lineHeight: textX3LineHeight,
     }),
-    ...(props.size === Sizes['4x'] && {
+    ...(size === Sizes['4x'] && {
       fontSize: textX4FontSize,
       lineHeight: textX4LineHeight,
     }),

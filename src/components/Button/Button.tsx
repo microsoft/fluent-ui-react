@@ -4,7 +4,10 @@ import React, { ReactNode, CSSProperties } from 'react'
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
+import Icon from '../Icon'
+import Text from '../Text'
 
+export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
 
 export interface IButtonProps {
@@ -14,6 +17,8 @@ export interface IButtonProps {
   className?: string
   content?: ReactNode
   fluid?: boolean
+  icon?: boolean | string
+  iconPosition?: IconPosition
   style?: CSSProperties
   type?: ButtonType
 }
@@ -51,6 +56,12 @@ class Button extends UIComponent<IButtonProps, any> {
     /** A button can take the width of its container. */
     fluid: PropTypes.bool,
 
+    /** Button can have an icon. */
+    icon: customPropTypes.some([PropTypes.bool, PropTypes.string]),
+
+    /** An icon button can format an Icon to appear before or after the button */
+    iconPosition: PropTypes.oneOf(['before', 'after']),
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
   }
@@ -62,6 +73,8 @@ class Button extends UIComponent<IButtonProps, any> {
     'className',
     'content',
     'fluid',
+    'icon',
+    'iconPosition',
     'type',
   ]
 
@@ -74,11 +87,34 @@ class Button extends UIComponent<IButtonProps, any> {
     classes,
     rest,
   }: IRenderResultConfig<IButtonProps>): ReactNode {
-    const { children, content } = this.props
+    const { children, content, icon, iconPosition, type } = this.props
+    const primary = type === 'primary'
+
+    const getContent = (): ReactNode => {
+      if (childrenExist(children)) {
+        return children
+      }
+
+      const iconIsAfterButton = iconPosition === 'after'
+      const renderedContent = [
+        content && <Text key="btn-content" truncated content={content} />,
+        icon &&
+          typeof icon === 'string' && (
+            <Icon
+              key="btn-icon"
+              name={icon}
+              xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
+              color={primary ? 'white' : 'black'}
+            />
+          ),
+      ].filter(Boolean)
+
+      return iconIsAfterButton ? renderedContent : renderedContent.reverse()
+    }
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {getContent()}
       </ElementType>
     )
   }
