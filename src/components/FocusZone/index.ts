@@ -1,2 +1,2 @@
-export * from './FocusZone';
-export * from './FocusZone.types';
+export * from './FocusZone'
+export * from './FocusZone.types'

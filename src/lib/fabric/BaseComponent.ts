@@ -1,11 +1,16 @@
-import * as React from 'react';
-import { Async } from './Async';
-import { EventGroup } from './EventGroup';
-import { IDisposable } from './IDisposable';
-import { warnDeprecations, warnMutuallyExclusive, warnConditionallyRequiredProps, ISettingsMap } from './warn';
-import { initializeFocusRects } from './initializeFocusRects';
-import { initializeDir } from './initializeDir';
-import { IRefObject } from './createRef';
+import * as React from 'react'
+import { Async } from './Async'
+import { EventGroup } from './EventGroup'
+import { IDisposable } from './IDisposable'
+import {
+  warnDeprecations,
+  warnMutuallyExclusive,
+  warnConditionallyRequiredProps,
+  ISettingsMap,
+} from './warn'
+import { initializeFocusRects } from './initializeFocusRects'
+import { initializeDir } from './initializeDir'
+import { IRefObject } from './createRef'
 
 /**
  * BaseProps interface.
@@ -14,7 +19,7 @@ import { IRefObject } from './createRef';
  */
 // tslint:disable-next-line:no-any
 export interface IBaseProps<T = any> {
-  componentRef?: IRefObject<T>;
+  componentRef?: IRefObject<T>
 }
 
 /**
@@ -22,26 +27,29 @@ export interface IBaseProps<T = any> {
  *
  * @public
  */
-export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends React.Component<TProps, TState> {
+export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends React.Component<
+  TProps,
+  TState
+> {
   /**
    * @deprecated Use React's error boundaries instead.
    */
   // tslint:disable-next-line:no-any
-  public static onError: ((errorMessage?: string, ex?: any) => void);
+  public static onError: ((errorMessage?: string, ex?: any) => void)
 
   /**
    * Controls whether the componentRef prop will be resolved by this component instance. If you are
    * implementing a passthrough (higher-order component), you would set this to false and pass through
    * the props to the inner component, allowing it to resolve the componentRef.
    */
-  protected _skipComponentRefResolution: boolean;
+  protected _skipComponentRefResolution: boolean
 
   // tslint:disable:variable-name
-  private __async: Async;
-  private __events: EventGroup;
-  private __disposables: IDisposable[] | null;
-  private __resolves: { [name: string]: (ref: React.ReactNode) => React.ReactNode };
-  private __className: string;
+  private __async: Async
+  private __events: EventGroup
+  private __disposables: IDisposable[] | null
+  private __resolves: { [name: string]: (ref: React.ReactNode) => React.ReactNode }
+  private __className: string
   // tslint:enable:variable-name
 
   /**
@@ -51,13 +59,13 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   // tslint:disable-next-line:no-any
   constructor(props: TProps, context?: any) {
-    super(props, context);
+    super(props, context)
 
     // Ensure basic assumptions about the environment.
-    initializeFocusRects();
-    initializeDir();
+    initializeFocusRects()
+    initializeDir()
 
-    _makeAllSafe(this, BaseComponent.prototype, [
+    makeAllSafe(this, BaseComponent.prototype, [
       'componentWillMount',
       'componentDidMount',
       'shouldComponentUpdate',
@@ -65,8 +73,8 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
       'componentWillReceiveProps',
       'render',
       'componentDidUpdate',
-      'componentWillUnmount'
-    ]);
+      'componentWillUnmount',
+    ])
   }
 
   /**
@@ -74,31 +82,31 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   // tslint:disable-next-line:no-any
   public componentWillReceiveProps(newProps: Readonly<TProps>, newContext: any): void {
-    this._updateComponentRef(this.props, newProps);
+    this.updateComponentRef(this.props, newProps)
   }
 
   /**
    * When the component has mounted, update the componentRef.
    */
   public componentDidMount(): void {
-    this._setComponentRef(this.props.componentRef, this);
+    this.setComponentRef(this.props.componentRef, this)
   }
 
   /**
    * If we have disposables, dispose them automatically on unmount.
    */
   public componentWillUnmount(): void {
-    this._setComponentRef(this.props.componentRef, null);
+    this.setComponentRef(this.props.componentRef, null)
 
     if (this.__disposables) {
       for (let i = 0, len = this._disposables.length; i < len; i++) {
-        let disposable = this.__disposables[i];
+        const disposable = this.__disposables[i]
 
         if (disposable.dispose) {
-          disposable.dispose();
+          disposable.dispose()
         }
       }
-      this.__disposables = null;
+      this.__disposables = null
     }
   }
 
@@ -107,13 +115,13 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   public get className(): string {
     if (!this.__className) {
-      let funcNameRegex = /function (.{1,})\(/;
-      let results = funcNameRegex.exec(this.constructor.toString());
+      const funcNameRegex = /function (.{1,})\(/
+      const results = funcNameRegex.exec(this.constructor.toString())
 
-      this.__className = results && results.length > 1 ? results[1] : '';
+      this.__className = results && results.length > 1 ? results[1] : ''
     }
 
-    return this.__className;
+    return this.__className
   }
 
   /**
@@ -121,9 +129,9 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   protected get _disposables(): IDisposable[] {
     if (!this.__disposables) {
-      this.__disposables = [];
+      this.__disposables = []
     }
-    return this.__disposables;
+    return this.__disposables
   }
 
   /**
@@ -134,11 +142,11 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   protected get _async(): Async {
     if (!this.__async) {
-      this.__async = new Async(this);
-      this._disposables.push(this.__async);
+      this.__async = new Async(this)
+      this._disposables.push(this.__async)
     }
 
-    return this.__async;
+    return this.__async
   }
 
   /**
@@ -149,11 +157,11 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    */
   protected get _events(): EventGroup {
     if (!this.__events) {
-      this.__events = new EventGroup(this);
-      this._disposables.push(this.__events);
+      this.__events = new EventGroup(this)
+      this._disposables.push(this.__events)
     }
 
-    return this.__events;
+    return this.__events
   }
 
   /**
@@ -162,29 +170,29 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    * @returns A function instance keyed from the given refname.
    * @deprecated Use `createRef` from React.createRef.
    */
-  protected _resolveRef(refName: string): (ref: React.ReactNode) => React.ReactNode {
+  protected resolveRef(refName: string): (ref: React.ReactNode) => React.ReactNode {
     if (!this.__resolves) {
-      this.__resolves = {};
+      this.__resolves = {}
     }
 
     if (!this.__resolves[refName]) {
       // tslint:disable-next-line:no-any
       this.__resolves[refName] = (ref: React.ReactNode) => {
         // tslint:disable-next-line:no-any
-        return ((this as any)[refName] = ref);
-      };
+        return ((this as any)[refName] = ref)
+      }
     }
 
-    return this.__resolves[refName];
+    return this.__resolves[refName]
   }
 
   /**
    * Updates the componentRef (by calling it with "this" when necessary.)
    */
-  protected _updateComponentRef(currentProps: IBaseProps, newProps: IBaseProps = {}): void {
+  protected updateComponentRef(currentProps: IBaseProps, newProps: IBaseProps = {}): void {
     if (currentProps.componentRef !== newProps.componentRef) {
-      this._setComponentRef(currentProps.componentRef, null);
-      this._setComponentRef(newProps.componentRef, this);
+      this.setComponentRef(currentProps.componentRef, null)
+      this.setComponentRef(newProps.componentRef, this)
     }
   }
 
@@ -194,8 +202,8 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    * @param deprecationMap - The map of deprecations, where key is the prop name and the value is
    * either null or a replacement prop name.
    */
-  protected _warnDeprecations(deprecationMap: ISettingsMap<TProps>): void {
-    warnDeprecations(this.className, this.props, deprecationMap);
+  protected warnDeprecations(deprecationMap: ISettingsMap<TProps>): void {
+    warnDeprecations(this.className, this.props, deprecationMap)
   }
 
   /**
@@ -203,8 +211,8 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    *
    * @param mutuallyExclusiveMap - The map of mutually exclusive props.
    */
-  protected _warnMutuallyExclusive(mutuallyExclusiveMap: ISettingsMap<TProps>): void {
-    warnMutuallyExclusive(this.className, this.props, mutuallyExclusiveMap);
+  protected warnMutuallyExclusive(mutuallyExclusiveMap: ISettingsMap<TProps>): void {
+    warnMutuallyExclusive(this.className, this.props, mutuallyExclusiveMap)
   }
 
   /**
@@ -214,26 +222,32 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
    * @param conditionalPropName - The name of the prop that the condition is based on.
    * @param condition - Whether the condition is met.
    */
-  protected _warnConditionallyRequiredProps(
+  protected warnConditionallyRequiredProps(
     requiredProps: string[],
     conditionalPropName: string,
-    condition: boolean
+    condition: boolean,
   ): void {
-    warnConditionallyRequiredProps(this.className, this.props, requiredProps, conditionalPropName, condition);
+    warnConditionallyRequiredProps(
+      this.className,
+      this.props,
+      requiredProps,
+      conditionalPropName,
+      condition,
+    )
   }
 
-  private _setComponentRef<TRefInterface>(
+  private setComponentRef<TRefInterface>(
     ref: IRefObject<TRefInterface> | undefined,
-    value: TRefInterface | null
+    value: TRefInterface | null,
   ): void {
     if (!this._skipComponentRefResolution && ref) {
       if (typeof ref === 'function') {
-        ref(value);
+        ref(value)
       }
 
       if (typeof ref === 'object') {
         // tslint:disable:no-any
-        (ref as any).current = value;
+         (ref as any).current = value
       }
     }
   }
@@ -244,32 +258,32 @@ export class BaseComponent<TProps extends IBaseProps = {}, TState = {}> extends 
  * ensures that the BaseComponent's methods are called before the subclass's. This ensures that
  * componentWillUnmount in the base is called and that things in the _disposables array are disposed.
  */
-function _makeAllSafe(obj: BaseComponent<{}, {}>, prototype: Object, methodNames: string[]): void {
+function makeAllSafe(obj: BaseComponent<{}, {}>, prototype: Object, methodNames: string[]): void {
   for (let i = 0, len = methodNames.length; i < len; i++) {
-    _makeSafe(obj, prototype, methodNames[i]);
+    makeSafe(obj, prototype, methodNames[i])
   }
 }
 
-function _makeSafe(obj: BaseComponent<{}, {}>, prototype: Object, methodName: string): void {
+function makeSafe(obj: BaseComponent<{}, {}>, prototype: Object, methodName: string): void {
   // tslint:disable:no-any
-  let classMethod = (obj as any)[methodName];
-  let prototypeMethod = (prototype as any)[methodName];
+  const classMethod = (obj as any)[methodName]
+  const prototypeMethod = (prototype as any)[methodName]
   // tslint:enable:no-any
 
   if (classMethod || prototypeMethod) {
     // tslint:disable-next-line:no-any
-    (obj as any)[methodName] = function(): any {
-      let retVal;
+     (obj as any)[methodName] = function (): any {
+      let retVal
 
       if (prototypeMethod) {
-        retVal = prototypeMethod.apply(this, arguments);
+        retVal = prototypeMethod.apply(this, arguments)
       }
       if (classMethod !== prototypeMethod) {
-        retVal = classMethod.apply(this, arguments);
+        retVal = classMethod.apply(this, arguments)
       }
 
-      return retVal;
-    };
+      return retVal
+    }
   }
 }
 
@@ -279,5 +293,5 @@ function _makeSafe(obj: BaseComponent<{}, {}>, prototype: Object, methodName: st
  * @public
  */
 export function nullRender(): JSX.Element | null {
-  return null;
+  return null
 }

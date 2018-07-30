@@ -1,5 +1,5 @@
 /* tslint:disable:no-string-literal */
-import { assign } from './object';
+import { assign } from './object'
 
 /**
  * EventRecord interface.
@@ -8,13 +8,13 @@ import { assign } from './object';
  */
 // tslint:disable:no-any
 export interface IEventRecord {
-  target: any;
-  eventName: string;
-  parent: any;
-  callback: (args?: any) => void;
-  elementCallback?: (...args: any[]) => void;
-  objectCallback?: (args?: any) => void;
-  useCapture: boolean;
+  target: any
+  eventName: string
+  parent: any
+  callback: (args?: any) => void
+  elementCallback?: (...args: any[]) => void
+  objectCallback?: (args?: any) => void
+  useCapture: boolean
 }
 // tslint:enable:no-any
 
@@ -24,7 +24,7 @@ export interface IEventRecord {
  * @internal
  */
 export interface IEventRecordsByName {
-  [eventName: string]: IEventRecordList;
+  [eventName: string]: IEventRecordList
 }
 
 /**
@@ -33,8 +33,8 @@ export interface IEventRecordsByName {
  * @internal
  */
 export interface IEventRecordList {
-  [id: string]: IEventRecord[] | number;
-  count: number;
+  [id: string]: IEventRecord[] | number
+  count: number
 }
 
 /**
@@ -43,7 +43,7 @@ export interface IEventRecordList {
  * @internal
  */
 export interface IDeclaredEventsByName {
-  [eventName: string]: boolean;
+  [eventName: string]: boolean
 }
 
 /** An instance of EventGroup allows anything with a handle to it to trigger events on it.
@@ -58,12 +58,12 @@ export interface IDeclaredEventsByName {
  */
 export class EventGroup {
   // tslint:disable-next-line:no-inferrable-types
-  private static _uniqueId: number = 0;
+  private static _uniqueId: number = 0
   // tslint:disable-next-line:no-any
-  private _parent: any;
-  private _eventRecords: IEventRecord[];
-  private _id: number = EventGroup._uniqueId++;
-  private _isDisposed: boolean;
+  private _parent: any
+  private _eventRecords: IEventRecord[]
+  private _id: number = EventGroup._uniqueId++
+  private _isDisposed: boolean
 
   /** For IE8, bubbleEvent is ignored here and must be dealt with by the handler.
    *  Events raised here by default have bubbling set to false and cancelable set to true.
@@ -73,46 +73,51 @@ export class EventGroup {
    */
   public static raise(
     // tslint:disable-next-line:no-any
-    target: any,
+    forTarget: any,
     eventName: string,
     // tslint:disable-next-line:no-any
     eventArgs?: any,
-    bubbleEvent?: boolean
+    bubbleEvent?: boolean,
   ): boolean | undefined {
-    let retVal;
+    let retVal
+    let target = forTarget
 
-    if (EventGroup._isElement(target)) {
+    if (EventGroup.isElement(target)) {
       if (document.createEvent) {
-        let ev = document.createEvent('HTMLEvents');
+        const ev = document.createEvent('HTMLEvents')
 
-        ev.initEvent(eventName, bubbleEvent || false, true);
+        ev.initEvent(eventName, bubbleEvent || false, true)
 
-        assign(ev, eventArgs);
+        assign(ev, eventArgs)
 
-        retVal = target.dispatchEvent(ev);
+        retVal = target.dispatchEvent(ev)
         // tslint:disable-next-line:no-any
       } else if ((document as any)['createEventObject']) {
         // IE8
         // tslint:disable-next-line:no-any
-        let evObj = (document as any)['createEventObject'](eventArgs);
+        const evObj = (document as any)['createEventObject'](eventArgs)
         // cannot set cancelBubble on evObj, fireEvent will overwrite it
-        target.fireEvent('on' + eventName, evObj);
+        target.fireEvent('on' + eventName, evObj)
       }
     } else {
       while (target && retVal !== false) {
-        let events = <IEventRecordsByName>target.__events__;
-        let eventRecords = events ? events[eventName] : null;
+        const events = <IEventRecordsByName>target.__events__
+        const eventRecords = events ? events[eventName] : null
 
         if (eventRecords) {
-          for (let id in eventRecords) {
+          for (const id in eventRecords) {
             if (eventRecords.hasOwnProperty(id)) {
-              let eventRecordList = <IEventRecord[]>eventRecords[id];
+              const eventRecordList = <IEventRecord[]>eventRecords[id]
 
-              for (let listIndex = 0; retVal !== false && listIndex < eventRecordList.length; listIndex++) {
-                let record = eventRecordList[listIndex];
+              for (
+                let listIndex = 0;
+                retVal !== false && listIndex < eventRecordList.length;
+                listIndex++
+              ) {
+                const record = eventRecordList[listIndex]
 
                 if (record.objectCallback) {
-                  retVal = record.objectCallback.call(record.parent, eventArgs);
+                  retVal = record.objectCallback.call(record.parent, eventArgs)
                 }
               }
             }
@@ -120,66 +125,72 @@ export class EventGroup {
         }
 
         // If the target has a parent, bubble the event up.
-        target = bubbleEvent ? target.parent : null;
+        target = bubbleEvent ? target.parent : null
       }
     }
 
-    return retVal;
+    return retVal
   }
 
   // tslint:disable-next-line:no-any
   public static isObserved(target: any, eventName: string): boolean {
-    let events = target && <IEventRecordsByName>target.__events__;
+    const events = target && <IEventRecordsByName>target.__events__
 
-    return !!events && !!events[eventName];
+    return !!events && !!events[eventName]
   }
 
   /** Check to see if the target has declared support of the given event. */
   // tslint:disable-next-line:no-any
   public static isDeclared(target: any, eventName: string): boolean {
-    let declaredEvents = target && <IDeclaredEventsByName>target.__declaredEvents;
+    const declaredEvents = target && <IDeclaredEventsByName>target.__declaredEvents
 
-    return !!declaredEvents && !!declaredEvents[eventName];
+    return !!declaredEvents && !!declaredEvents[eventName]
   }
 
   // tslint:disable-next-line:no-any
   public static stopPropagation(event: any): void {
     if (event.stopPropagation) {
-      event.stopPropagation();
+      event.stopPropagation()
     } else {
       // IE8
-      event.cancelBubble = true;
+      event.cancelBubble = true
     }
   }
 
-  private static _isElement(target: HTMLElement): boolean {
+  private static isElement(target: HTMLElement): boolean {
     return (
-      !!target && (!!target.addEventListener || (typeof HTMLElement !== 'undefined' && target instanceof HTMLElement))
-    );
+      !!target &&
+      (!!target.addEventListener ||
+        (typeof HTMLElement !== 'undefined' && target instanceof HTMLElement))
+    )
   }
 
   /** parent: the context in which events attached to non-HTMLElements are called */
   // tslint:disable-next-line:no-any
   public constructor(parent: any) {
-    this._parent = parent;
-    this._eventRecords = [];
+    this._parent = parent
+    this._eventRecords = []
   }
 
   public dispose(): void {
     if (!this._isDisposed) {
-      this._isDisposed = true;
+      this._isDisposed = true
 
-      this.off();
-      this._parent = null;
+      this.off()
+      this._parent = null
     }
   }
 
   /** On the target, attach a set of events, where the events object is a name to function mapping. */
   // tslint:disable-next-line:no-any
-  public onAll(target: any, events: { [key: string]: (args?: any) => void }, useCapture?: boolean): void {
-    for (let eventName in events) {
+  public onAll(
+    target: any,
+    events: { [key: string]: (args?: any) => void },
+    useCapture?: boolean,
+  ): void {
+    for (const eventName in events) {
       if (events.hasOwnProperty(eventName)) {
-        this.on(target, eventName, events[eventName], useCapture);
+        this.on(target, eventName, events[eventName], useCapture)
       }
     }
   }
@@ -188,118 +199,128 @@ export class EventGroup {
    * of this instance of EventGroup.
    */
   // tslint:disable-next-line:no-any
-  public on(target: any, eventName: string, callback: (args?: any) => void, useCapture?: boolean): void {
+  public on(
+    target: any,
+    eventName: string,
+    callback: (args?: any) => void,
+    useCapture?: boolean,
+  ): void {
     if (eventName.indexOf(',') > -1) {
-      let events = eventName.split(/[ ,]+/);
+      const events = eventName.split(/[ ,]+/)
 
       for (let i = 0; i < events.length; i++) {
-        this.on(target, events[i], callback, useCapture);
+        this.on(target, events[i], callback, useCapture)
       }
     } else {
-      let parent = this._parent;
-      let eventRecord: IEventRecord = {
-        target: target,
-        eventName: eventName,
-        parent: parent,
-        callback: callback,
-        useCapture: useCapture || false
-      };
+      const parent = this._parent
+      const eventRecord: IEventRecord = {
+        target,
+        eventName,
+        parent,
+        callback,
+        useCapture: useCapture || false,
+      }
 
       // Initialize and wire up the record on the target, so that it can call the callback if the event fires.
-      let events = <IEventRecordsByName>(target.__events__ = target.__events__ || {});
+      const events = <IEventRecordsByName>(target.__events__ = target.__events__ || {})
       events[eventName] =
         events[eventName] ||
         <IEventRecordList>{
-          count: 0
-        };
-      events[eventName][this._id] = events[eventName][this._id] || [];
-      (<IEventRecord[]>events[eventName][this._id]).push(eventRecord);
-      events[eventName].count++;
+          count: 0,
+        }
+      events[eventName][this._id] = events[eventName][this._id] || []
+      ; (<IEventRecord[]>events[eventName][this._id]).push(eventRecord)
+      events[eventName].count++
 
-      if (EventGroup._isElement(target)) {
+      if (EventGroup.isElement(target)) {
         // tslint:disable-next-line:no-any
-        let processElementEvent = (...args: any[]) => {
+        const processElementEvent = (...args: any[]) => {
           if (this._isDisposed) {
-            return;
+            return
           }
 
-          let result;
+          let result
           try {
-            result = callback.apply(parent, args);
+            result = callback.apply(parent, args)
             if (result === false && args[0]) {
-              let e = args[0];
+              const e = args[0]
 
               if (e.preventDefault) {
-                e.preventDefault();
+                e.preventDefault()
               }
 
               if (e.stopPropagation) {
-                e.stopPropagation();
+                e.stopPropagation()
               }
 
-              e.cancelBubble = true;
+              e.cancelBubble = true
             }
           } catch (e) {
             /* ErrorHelper.log(e); */
           }
 
-          return result;
-        };
+          return result
+        }
 
-        eventRecord.elementCallback = processElementEvent;
+        eventRecord.elementCallback = processElementEvent
 
         if (target.addEventListener) {
           /* tslint:disable:ban-native-functions */
-          (<EventTarget>target).addEventListener(eventName, processElementEvent, useCapture);
+           (<EventTarget>target).addEventListener(eventName, processElementEvent, useCapture)
           /* tslint:enable:ban-native-functions */
         } else if (target.attachEvent) {
           // IE8
-          target.attachEvent('on' + eventName, processElementEvent);
+          target.attachEvent('on' + eventName, processElementEvent)
         }
       } else {
         // tslint:disable-next-line:no-any
-        let processObjectEvent = (...args: any[]) => {
+        const processObjectEvent = (...args: any[]) => {
           if (this._isDisposed) {
-            return;
+            return
           }
 
-          return callback.apply(parent, args);
-        };
+          return callback.apply(parent, args)
+        }
 
-        eventRecord.objectCallback = processObjectEvent;
+        eventRecord.objectCallback = processObjectEvent
       }
 
       // Remember the record locally, so that it can be removed.
-      this._eventRecords.push(eventRecord);
+      this._eventRecords.push(eventRecord)
     }
   }
 
   // tslint:disable-next-line:no-any
-  public off(target?: any, eventName?: string, callback?: (args?: any) => void, useCapture?: boolean): void {
+  public off(
+    target?: any,
+    eventName?: string,
+    callback?: (args?: any) => void,
+    useCapture?: boolean,
+  ): void {
     for (let i = 0; i < this._eventRecords.length; i++) {
-      let eventRecord = this._eventRecords[i];
+      const eventRecord = this._eventRecords[i]
       if (
         (!target || target === eventRecord.target) &&
         (!eventName || eventName === eventRecord.eventName) &&
         (!callback || callback === eventRecord.callback) &&
         (typeof useCapture !== 'boolean' || useCapture === eventRecord.useCapture)
       ) {
-        let events = <IEventRecordsByName>eventRecord.target.__events__;
-        let targetArrayLookup = events[eventRecord.eventName];
-        let targetArray = targetArrayLookup ? <IEventRecord[]>targetArrayLookup[this._id] : null;
+        const events = <IEventRecordsByName>eventRecord.target.__events__
+        const targetArrayLookup = events[eventRecord.eventName]
+        const targetArray = targetArrayLookup ? <IEventRecord[]>targetArrayLookup[this._id] : null
 
         // We may have already target's entries, so check for null.
         if (targetArray) {
           if (targetArray.length === 1 || !callback) {
-            targetArrayLookup.count -= targetArray.length;
-            delete events[eventRecord.eventName][this._id];
+            targetArrayLookup.count -= targetArray.length
+            delete events[eventRecord.eventName][this._id]
           } else {
-            targetArrayLookup.count--;
-            targetArray.splice(targetArray.indexOf(eventRecord), 1);
+            targetArrayLookup.count--
+            targetArray.splice(targetArray.indexOf(eventRecord), 1)
           }
 
           if (!targetArrayLookup.count) {
-            delete events[eventRecord.eventName];
+            delete events[eventRecord.eventName]
           }
         }
 
@@ -308,15 +329,18 @@ export class EventGroup {
             eventRecord.target.removeEventListener(
               eventRecord.eventName,
               eventRecord.elementCallback,
-              eventRecord.useCapture
-            );
+              eventRecord.useCapture,
+            )
           } else if (eventRecord.target.detachEvent) {
             // IE8
-            eventRecord.target.detachEvent('on' + eventRecord.eventName, eventRecord.elementCallback);
+            eventRecord.target.detachEvent(
+              'on' + eventRecord.eventName,
+              eventRecord.elementCallback,
+            )
           }
         }
 
-        this._eventRecords.splice(i--, 1);
+        this._eventRecords.splice(i--, 1)
       }
     }
   }
@@ -324,18 +348,18 @@ export class EventGroup {
   /** Trigger the given event in the context of this instance of EventGroup. */
   // tslint:disable-next-line:no-any
   public raise(eventName: string, eventArgs?: any, bubbleEvent?: boolean): boolean | undefined {
-    return EventGroup.raise(this._parent, eventName, eventArgs, bubbleEvent);
+    return EventGroup.raise(this._parent, eventName, eventArgs, bubbleEvent)
   }
 
   /** Declare an event as being supported by this instance of EventGroup. */
   public declare(event: string | string[]): void {
-    let declaredEvents = (this._parent.__declaredEvents = this._parent.__declaredEvents || {});
+    const declaredEvents = (this._parent.__declaredEvents = this._parent.__declaredEvents || {})
 
     if (typeof event === 'string') {
-      declaredEvents[event] = true;
+      declaredEvents[event] = true
     } else {
       for (let i = 0; i < event.length; i++) {
-        declaredEvents[event[i]] = true;
+        declaredEvents[event[i]] = true
       }
     }
   }

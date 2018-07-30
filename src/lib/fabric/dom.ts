@@ -1,4 +1,4 @@
-import { IRectangle } from './IRectangle';
+import { IRectangle } from './IRectangle'
 
 /**
  * Attached interface for elements which support virtual references.
@@ -6,9 +6,9 @@ import { IRectangle } from './IRectangle';
  */
 interface IVirtualElement extends HTMLElement {
   _virtual: {
-    parent?: IVirtualElement;
-    children: IVirtualElement[];
-  };
+    parent?: IVirtualElement
+    children: IVirtualElement[],
+  }
 }
 
 /**
@@ -18,36 +18,36 @@ interface IVirtualElement extends HTMLElement {
  * @public
  */
 export function setVirtualParent(child: HTMLElement, parent: HTMLElement): void {
-  let virtualChild = <IVirtualElement>child;
-  let virtualParent = <IVirtualElement>parent;
+  const virtualChild = <IVirtualElement>child
+  const virtualParent = <IVirtualElement>parent
 
   if (!virtualChild._virtual) {
     virtualChild._virtual = {
-      children: []
-    };
-  }
-
-  let oldParent = virtualChild._virtual.parent;
-
-  if (oldParent && oldParent !== parent) {
-    // Remove the child from its old parent.
-    let index = oldParent._virtual.children.indexOf(virtualChild);
-
-    if (index > -1) {
-      oldParent._virtual.children.splice(index, 1);
+      children: [],
     }
   }
 
-  virtualChild._virtual.parent = virtualParent || undefined;
+  const oldParent = virtualChild._virtual.parent
+
+  if (oldParent && oldParent !== parent) {
+    // Remove the child from its old parent.
+    const index = oldParent._virtual.children.indexOf(virtualChild)
+
+    if (index > -1) {
+      oldParent._virtual.children.splice(index, 1)
+    }
+  }
+
+  virtualChild._virtual.parent = virtualParent || undefined
 
   if (virtualParent) {
     if (!virtualParent._virtual) {
       virtualParent._virtual = {
-        children: []
-      };
+        children: [],
+      }
     }
 
-    virtualParent._virtual.children.push(virtualChild);
+    virtualParent._virtual.children.push(virtualChild)
   }
 }
 
@@ -57,13 +57,13 @@ export function setVirtualParent(child: HTMLElement, parent: HTMLElement): void 
  * @public
  */
 export function getVirtualParent(child: HTMLElement): HTMLElement | undefined {
-  let parent: HTMLElement | undefined;
+  let parent: HTMLElement | undefined
 
   if (child && isVirtualElement(child)) {
-    parent = child._virtual.parent;
+    parent = child._virtual.parent
   }
 
-  return parent;
+  return parent
 }
 
 /**
@@ -73,11 +73,15 @@ export function getVirtualParent(child: HTMLElement): HTMLElement | undefined {
  *
  * @public
  */
-export function getParent(child: HTMLElement, allowVirtualParents: boolean = true): HTMLElement | null {
+export function getParent(
+  child: HTMLElement,
+  allowVirtualParents: boolean = true,
+): HTMLElement | null {
   return (
     child &&
-    ((allowVirtualParents && getVirtualParent(child)) || (child.parentNode && (child.parentNode as HTMLElement)))
-  );
+    ((allowVirtualParents && getVirtualParent(child)) ||
+      (child.parentNode && (child.parentNode as HTMLElement)))
+  )
 }
 
 /**
@@ -87,20 +91,23 @@ export function getParent(child: HTMLElement, allowVirtualParents: boolean = tru
  * @param parent
  * @param allowVirtualChildren
  */
-export function getChildren(parent: HTMLElement, allowVirtualChildren: boolean = true): HTMLElement[] {
-  const children: HTMLElement[] = [];
+export function getChildren(
+  parent: HTMLElement,
+  allowVirtualChildren: boolean = true,
+): HTMLElement[] {
+  const children: HTMLElement[] = []
 
   if (parent) {
     for (let i = 0; i < parent.children.length; i++) {
-      children.push(parent.children.item(i) as HTMLElement);
+      children.push(parent.children.item(i) as HTMLElement)
     }
 
     if (allowVirtualChildren && isVirtualElement(parent)) {
-      children.push(...parent._virtual.children);
+      children.push(...parent._virtual.children)
     }
   }
 
-  return children;
+  return children
 }
 
 /**
@@ -112,34 +119,35 @@ export function getChildren(parent: HTMLElement, allowVirtualChildren: boolean =
  */
 export function elementContains(
   parent: HTMLElement | null,
-  child: HTMLElement | null,
-  allowVirtualParents: boolean = true
+  theChild: HTMLElement | null,
+  allowVirtualParents: boolean = true,
 ): boolean {
-  let isContained = false;
+  let child = theChild
+  let isContained = false
 
   if (parent && child) {
     if (allowVirtualParents) {
-      isContained = false;
+      isContained = false
 
       while (child) {
-        let nextParent: HTMLElement | null = getParent(child);
+        const nextParent: HTMLElement | null = getParent(child)
 
         if (nextParent === parent) {
-          isContained = true;
-          break;
+          isContained = true
+          break
         }
 
-        child = nextParent;
+        child = nextParent
       }
     } else if (parent.contains) {
-      isContained = parent.contains(child);
+      isContained = parent.contains(child)
     }
   }
 
-  return isContained;
+  return isContained
 }
 
-let _isSSR = false;
+let _isSSR = false
 
 /**
  * Helper to set ssr mode to simulate no window object returned from getWindow helper.
@@ -147,7 +155,7 @@ let _isSSR = false;
  * @public
  */
 export function setSSR(isEnabled: boolean): void {
-  _isSSR = isEnabled;
+  _isSSR = isEnabled
 }
 
 /**
@@ -157,12 +165,12 @@ export function setSSR(isEnabled: boolean): void {
  */
 export function getWindow(rootElement?: Element | null): Window | undefined {
   if (_isSSR || typeof window === 'undefined') {
-    return undefined;
-  } else {
-    return rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView
-      ? rootElement.ownerDocument.defaultView
-      : window;
+    return undefined
   }
+
+  return rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView
+    ? rootElement.ownerDocument.defaultView
+    : window
 }
 
 /**
@@ -172,10 +180,10 @@ export function getWindow(rootElement?: Element | null): Window | undefined {
  */
 export function getDocument(rootElement?: HTMLElement | null): Document | undefined {
   if (_isSSR || typeof document === 'undefined') {
-    return undefined;
-  } else {
-    return rootElement && rootElement.ownerDocument ? rootElement.ownerDocument : document;
+    return undefined
   }
+
+  return rootElement && rootElement.ownerDocument ? rootElement.ownerDocument : document
 }
 
 /**
@@ -184,7 +192,7 @@ export function getDocument(rootElement?: HTMLElement | null): Document | undefi
  * @public
  */
 export function getRect(element: HTMLElement | Window | null): IRectangle | undefined {
-  let rect: IRectangle | undefined;
+  let rect: IRectangle | undefined
 
   if (element) {
     if (element === window) {
@@ -194,14 +202,14 @@ export function getRect(element: HTMLElement | Window | null): IRectangle | unde
         width: window.innerWidth,
         height: window.innerHeight,
         right: window.innerWidth,
-        bottom: window.innerHeight
-      };
+        bottom: window.innerHeight,
+      }
     } else if ((element as HTMLElement).getBoundingClientRect) {
-      rect = (element as HTMLElement).getBoundingClientRect();
+      rect = (element as HTMLElement).getBoundingClientRect()
     }
   }
 
-  return rect;
+  return rect
 }
 
 /**
@@ -212,13 +220,13 @@ export function getRect(element: HTMLElement | Window | null): IRectangle | unde
  */
 export function findElementRecursive(
   element: HTMLElement | null,
-  matchFunction: (element: HTMLElement) => boolean
+  matchFunction: (element: HTMLElement) => boolean,
 ): HTMLElement | null {
   if (!element || element === document.body) {
-    return null;
+    return null
   }
 
-  return matchFunction(element) ? element : findElementRecursive(getParent(element), matchFunction);
+  return matchFunction(element) ? element : findElementRecursive(getParent(element), matchFunction)
 }
 
 /**
@@ -228,8 +236,10 @@ export function findElementRecursive(
  * @returns the value of the first instance found
  */
 export function elementContainsAttribute(element: HTMLElement, attribute: string): string | null {
-  let elementMatch = findElementRecursive(element, (testElement: HTMLElement) => testElement.hasAttribute(attribute));
-  return elementMatch && elementMatch.getAttribute(attribute);
+  const elementMatch = findElementRecursive(element, (testElement: HTMLElement) =>
+    testElement.hasAttribute(attribute),
+  )
+  return elementMatch && elementMatch.getAttribute(attribute)
 }
 
 /**
@@ -238,5 +248,5 @@ export function elementContainsAttribute(element: HTMLElement, attribute: string
  * @public
  */
 function isVirtualElement(element: HTMLElement | IVirtualElement): element is IVirtualElement {
-  return element && !!(<IVirtualElement>element)._virtual;
+  return element && !!(<IVirtualElement>element)._virtual
 }

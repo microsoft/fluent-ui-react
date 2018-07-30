@@ -1,7 +1,7 @@
-import { getWindow } from './dom';
-import { isDirectionalKeyCode } from './keyboard';
+import { getWindow } from './dom'
+import { isDirectionalKeyCode } from './keyboard'
 
-export const IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible';
+export const IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible'
 
 /**
  * Initializes the logic which:
@@ -18,35 +18,35 @@ export const IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible';
  * @param window
  */
 export function initializeFocusRects(window?: Window): void {
-  const win = (window || getWindow()) as Window & { __hasInitializeFocusRects__: boolean };
+  const win = (window || getWindow()) as Window & { __hasInitializeFocusRects__: boolean }
 
   if (win && !win.__hasInitializeFocusRects__) {
-    win.__hasInitializeFocusRects__ = true;
-    win.addEventListener('mousedown', _onMouseDown, true);
-    win.addEventListener('keydown', _onKeyDown as () => void, true);
+    win.__hasInitializeFocusRects__ = true
+    win.addEventListener('mousedown', onMouseDown, true)
+    win.addEventListener('keydown', onKeyDown as () => void, true)
   }
 }
 
-function _onMouseDown(ev: MouseEvent): void {
-  const win = getWindow(ev.target as Element);
+function onMouseDown(ev: MouseEvent): void {
+  const win = getWindow(ev.target as Element)
 
   if (win) {
-    const { classList } = win.document.body;
+    const { classList } = win.document.body
 
     if (classList.contains(IsFocusVisibleClassName)) {
-      classList.remove(IsFocusVisibleClassName);
+      classList.remove(IsFocusVisibleClassName)
     }
   }
 }
 
-function _onKeyDown(ev: KeyboardEvent): void {
-  const win = getWindow(ev.target as Element);
+function onKeyDown(ev: KeyboardEvent): void {
+  const win = getWindow(ev.target as Element)
 
   if (win) {
-    const { classList } = win.document.body;
+    const { classList } = win.document.body
 
     if (isDirectionalKeyCode(ev.which) && !classList.contains(IsFocusVisibleClassName)) {
-      classList.add(IsFocusVisibleClassName);
+      classList.add(IsFocusVisibleClassName)
     }
   }
 }

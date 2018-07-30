@@ -1,5 +1,5 @@
-declare function setTimeout(cb: Function, delay: number): number;
-declare function setInterval(cb: Function, delay: number): number;
+declare function setTimeout(cb: Function, delay: number): number
+declare function setInterval(cb: Function, delay: number): number
 
 /**
  * Bugs often appear in async code when stuff gets disposed, but async operations don't get canceled.
@@ -11,75 +11,75 @@ declare function setInterval(cb: Function, delay: number): number;
  * @public
  */
 export class Async {
-  private _timeoutIds: { [id: number]: boolean } | null = null;
-  private _immediateIds: { [id: number]: boolean } | null = null;
-  private _intervalIds: { [id: number]: boolean } | null = null;
-  private _animationFrameIds: { [id: number]: boolean } | null = null;
-  private _isDisposed: boolean;
-  private _parent: object | null;
+  private _timeoutIds: { [id: number]: boolean } | null = null
+  private _immediateIds: { [id: number]: boolean } | null = null
+  private _intervalIds: { [id: number]: boolean } | null = null
+  private _animationFrameIds: { [id: number]: boolean } | null = null
+  private _isDisposed: boolean
+  private _parent: object | null
   // tslint:disable-next-line:no-any
-  private _onErrorHandler: ((e: any) => void) | undefined;
-  private _noop: () => void;
+  private _onErrorHandler: ((e: any) => void) | undefined
+  private _noop: () => void
   // tslint:disable-next-line:no-any
   constructor(parent?: object, onError?: (e: any) => void) {
-    this._isDisposed = false;
-    this._parent = parent || null;
-    this._onErrorHandler = onError;
+    this._isDisposed = false
+    this._parent = parent || null
+    this._onErrorHandler = onError
     this._noop = () => {
       /* do nothing */
-    };
+    }
   }
 
   /**
    * Dispose function, clears all async operations.
    */
   public dispose(): void {
-    let id;
+    let id
 
-    this._isDisposed = true;
-    this._parent = null;
+    this._isDisposed = true
+    this._parent = null
 
     // Clear timeouts.
     if (this._timeoutIds) {
       for (id in this._timeoutIds) {
         if (this._timeoutIds.hasOwnProperty(id)) {
-          this.clearTimeout(parseInt(id, 10));
+          this.clearTimeout(parseInt(id, 10))
         }
       }
 
-      this._timeoutIds = null;
+      this._timeoutIds = null
     }
 
     // Clear immediates.
     if (this._immediateIds) {
       for (id in this._immediateIds) {
         if (this._immediateIds.hasOwnProperty(id)) {
-          this.clearImmediate(parseInt(id, 10));
+          this.clearImmediate(parseInt(id, 10))
         }
       }
 
-      this._immediateIds = null;
+      this._immediateIds = null
     }
 
     // Clear intervals.
     if (this._intervalIds) {
       for (id in this._intervalIds) {
         if (this._intervalIds.hasOwnProperty(id)) {
-          this.clearInterval(parseInt(id, 10));
+          this.clearInterval(parseInt(id, 10))
         }
       }
-      this._intervalIds = null;
+      this._intervalIds = null
     }
 
     // Clear animation frames.
     if (this._animationFrameIds) {
       for (id in this._animationFrameIds) {
         if (this._animationFrameIds.hasOwnProperty(id)) {
-          this.cancelAnimationFrame(parseInt(id, 10));
+          this.cancelAnimationFrame(parseInt(id, 10))
         }
       }
 
-      this._animationFrameIds = null;
+      this._animationFrameIds = null
     }
   }
 
@@ -90,11 +90,11 @@ export class Async {
    * @returns The setTimeout id.
    */
   public setTimeout(callback: () => void, duration: number): number {
-    let timeoutId = 0;
+    let timeoutId = 0
 
     if (!this._isDisposed) {
       if (!this._timeoutIds) {
-        this._timeoutIds = {};
+        this._timeoutIds = {}
       }
 
       /* tslint:disable:ban-native-functions */
@@ -104,21 +104,21 @@ export class Async {
         try {
           // Now delete the record and call the callback.
           if (this._timeoutIds) {
-            delete this._timeoutIds[timeoutId];
+            delete this._timeoutIds[timeoutId]
           }
-          callback.apply(this._parent);
+          callback.apply(this._parent)
         } catch (e) {
           if (this._onErrorHandler) {
-            this._onErrorHandler(e);
+            this._onErrorHandler(e)
           }
         }
-      }, duration);
+      }, duration)
       /* tslint:enable:ban-native-functions */
 
-      this._timeoutIds[timeoutId] = true;
+      this._timeoutIds[timeoutId] = true
     }
 
-    return timeoutId;
+    return timeoutId
   }
 
   /**
@@ -128,8 +128,8 @@ export class Async {
   public clearTimeout(id: number): void {
     if (this._timeoutIds && this._timeoutIds[id]) {
       /* tslint:disable:ban-native-functions */
-      clearTimeout(id);
-      delete this._timeoutIds[id];
+      clearTimeout(id)
+      delete this._timeoutIds[id]
       /* tslint:enable:ban-native-functions */
     }
   }
@@ -140,37 +140,37 @@ export class Async {
    * @returns The setTimeout id.
    */
   public setImmediate(callback: () => void): number {
-    let immediateId = 0;
+    let immediateId = 0
 
     if (!this._isDisposed) {
       if (!this._immediateIds) {
-        this._immediateIds = {};
+        this._immediateIds = {}
       }
 
       /* tslint:disable:ban-native-functions */
-      let setImmediateCallback = () => {
+      const setImmediateCallback = () => {
         // Time to execute the timeout, enqueue it as a foreground task to be executed.
 
         try {
           // Now delete the record and call the callback.
           if (this._immediateIds) {
-            delete this._immediateIds[immediateId];
+            delete this._immediateIds[immediateId]
           }
-          callback.apply(this._parent);
+          callback.apply(this._parent)
         } catch (e) {
-          this._logError(e);
+          this.logError(e)
         }
-      };
+      }
 
       immediateId = window.setImmediate
         ? window.setImmediate(setImmediateCallback)
-        : window.setTimeout(setImmediateCallback, 0);
+        : window.setTimeout(setImmediateCallback, 0)
       /* tslint:enable:ban-native-functions */
 
-      this._immediateIds[immediateId] = true;
+      this._immediateIds[immediateId] = true
     }
 
-    return immediateId;
+    return immediateId
   }
 
   /**
@@ -180,8 +180,8 @@ export class Async {
   public clearImmediate(id: number): void {
     if (this._immediateIds && this._immediateIds[id]) {
       /* tslint:disable:ban-native-functions */
-      window.clearImmediate ? window.clearImmediate(id) : window.clearTimeout(id);
-      delete this._immediateIds[id];
+      window.clearImmediate ? window.clearImmediate(id) : window.clearTimeout(id)
+      delete this._immediateIds[id]
       /* tslint:enable:ban-native-functions */
     }
   }
@@ -193,28 +193,28 @@ export class Async {
    * @returns The setTimeout id.
    */
   public setInterval(callback: () => void, duration: number): number {
-    let intervalId = 0;
+    let intervalId = 0
 
     if (!this._isDisposed) {
       if (!this._intervalIds) {
-        this._intervalIds = {};
+        this._intervalIds = {}
       }
 
       /* tslint:disable:ban-native-functions */
       intervalId = setInterval(() => {
         // Time to execute the interval callback, enqueue it as a foreground task to be executed.
         try {
-          callback.apply(this._parent);
+          callback.apply(this._parent)
         } catch (e) {
-          this._logError(e);
+          this.logError(e)
         }
-      }, duration);
+      }, duration)
       /* tslint:enable:ban-native-functions */
 
-      this._intervalIds[intervalId] = true;
+      this._intervalIds[intervalId] = true
     }
 
-    return intervalId;
+    return intervalId
   }
 
   /**
@@ -224,8 +224,8 @@ export class Async {
   public clearInterval(id: number): void {
     if (this._intervalIds && this._intervalIds[id]) {
       /* tslint:disable:ban-native-functions */
-      clearInterval(id);
-      delete this._intervalIds[id];
+      clearInterval(id)
+      delete this._intervalIds[id]
       /* tslint:enable:ban-native-functions */
     }
   }
@@ -248,56 +248,56 @@ export class Async {
     func: T,
     wait?: number,
     options?: {
-      leading?: boolean;
-      trailing?: boolean;
-    }
+      leading?: boolean
+      trailing?: boolean,
+    },
   ): T | (() => void) {
     if (this._isDisposed) {
-      return this._noop;
+      return this._noop
     }
 
-    let waitMS = wait || 0;
-    let leading = true;
-    let trailing = true;
-    let lastExecuteTime = 0;
-    let lastResult: T;
+    const waitMS = wait || 0
+    let leading = true
+    let trailing = true
+    let lastExecuteTime = 0
+    let lastResult: T
     // tslint:disable-next-line:no-any
-    let lastArgs: any[];
-    let timeoutId: number | null = null;
+    let lastArgs: any[]
+    let timeoutId: number | null = null
 
     if (options && typeof options.leading === 'boolean') {
-      leading = options.leading;
+      leading = options.leading
     }
 
     if (options && typeof options.trailing === 'boolean') {
-      trailing = options.trailing;
+      trailing = options.trailing
     }
 
-    let callback = (userCall?: boolean) => {
-      let now = new Date().getTime();
-      let delta = now - lastExecuteTime;
-      let waitLength = leading ? waitMS - delta : waitMS;
+    const callback = (userCall?: boolean) => {
+      const now = new Date().getTime()
+      const delta = now - lastExecuteTime
+      const waitLength = leading ? waitMS - delta : waitMS
       if (delta >= waitMS && (!userCall || leading)) {
-        lastExecuteTime = now;
+        lastExecuteTime = now
         if (timeoutId) {
-          this.clearTimeout(timeoutId);
-          timeoutId = null;
+          this.clearTimeout(timeoutId)
+          timeoutId = null
         }
-        lastResult = func.apply(this._parent, lastArgs);
+        lastResult = func.apply(this._parent, lastArgs)
       } else if (timeoutId === null && trailing) {
-        timeoutId = this.setTimeout(callback, waitLength);
+        timeoutId = this.setTimeout(callback, waitLength)
       }
 
-      return lastResult;
-    };
+      return lastResult
+    }
 
     // tslint:disable-next-line:no-any
-    let resultFunction: () => T = (...args: any[]) => {
-      lastArgs = args;
-      return callback(true);
-    };
+    const resultFunction: () => T = (...args: any[]) => {
+      lastArgs = args
+      return callback(true)
+    }
 
-    return resultFunction;
+    return resultFunction
   }
 
   /**
@@ -319,179 +319,179 @@ export class Async {
     func: T,
     wait?: number,
     options?: {
-      leading?: boolean;
-      maxWait?: number;
-      trailing?: boolean;
-    }
+      leading?: boolean
+      maxWait?: number
+      trailing?: boolean,
+    },
   ): ICancelable<T> & (() => void) {
     if (this._isDisposed) {
-      let noOpFunction: ICancelable<T> & (() => T) = (() => {
+      const noOpFunction: ICancelable<T> & (() => T) = (() => {
         /** Do nothing */
-      }) as ICancelable<T> & (() => T);
+      }) as ICancelable<T> & (() => T)
 
       noOpFunction.cancel = () => {
-        return;
-      };
+        return
+      }
       /* tslint:disable:no-any */
-      noOpFunction.flush = (() => null) as any;
+      noOpFunction.flush = (() => null) as any
       /* tslint:enable:no-any */
-      noOpFunction.pending = () => false;
+      noOpFunction.pending = () => false
 
-      return noOpFunction;
+      return noOpFunction
     }
 
-    let waitMS = wait || 0;
-    let leading = false;
-    let trailing = true;
-    let maxWait: number | null = null;
-    let lastCallTime = 0;
-    let lastExecuteTime = new Date().getTime();
-    let lastResult: T;
+    const waitMS = wait || 0
+    let leading = false
+    let trailing = true
+    let maxWait: number | null = null
+    let lastCallTime = 0
+    let lastExecuteTime = new Date().getTime()
+    let lastResult: T
     // tslint:disable-next-line:no-any
-    let lastArgs: any[];
-    let timeoutId: number | null = null;
+    let lastArgs: any[]
+    let timeoutId: number | null = null
 
     if (options && typeof options.leading === 'boolean') {
-      leading = options.leading;
+      leading = options.leading
     }
 
     if (options && typeof options.trailing === 'boolean') {
-      trailing = options.trailing;
+      trailing = options.trailing
     }
 
     if (options && typeof options.maxWait === 'number' && !isNaN(options.maxWait)) {
-      maxWait = options.maxWait;
+      maxWait = options.maxWait
     }
 
-    let markExecuted = (time: number) => {
+    const markExecuted = (time: number) => {
       if (timeoutId) {
-        this.clearTimeout(timeoutId);
-        timeoutId = null;
+        this.clearTimeout(timeoutId)
+        timeoutId = null
       }
-      lastExecuteTime = time;
-    };
+      lastExecuteTime = time
+    }
 
-    let invokeFunction = (time: number) => {
-      markExecuted(time);
-      lastResult = func.apply(this._parent, lastArgs);
-    };
+    const invokeFunction = (time: number) => {
+      markExecuted(time)
+      lastResult = func.apply(this._parent, lastArgs)
+    }
 
-    let callback = (userCall?: boolean) => {
-      let now = new Date().getTime();
-      let executeImmediately = false;
+    const callback = (userCall?: boolean) => {
+      const now = new Date().getTime()
+      let executeImmediately = false
       if (userCall) {
         if (leading && now - lastCallTime >= waitMS) {
-          executeImmediately = true;
+          executeImmediately = true
         }
-        lastCallTime = now;
+        lastCallTime = now
       }
-      let delta = now - lastCallTime;
-      let waitLength = waitMS - delta;
-      let maxWaitDelta = now - lastExecuteTime;
-      let maxWaitExpired = false;
+      const delta = now - lastCallTime
+      let waitLength = waitMS - delta
+      const maxWaitDelta = now - lastExecuteTime
+      let maxWaitExpired = false
 
       if (maxWait !== null) {
         // maxWait only matters when there is a pending callback
         if (maxWaitDelta >= maxWait && timeoutId) {
-          maxWaitExpired = true;
+          maxWaitExpired = true
         } else {
-          waitLength = Math.min(waitLength, maxWait - maxWaitDelta);
+          waitLength = Math.min(waitLength, maxWait - maxWaitDelta)
         }
       }
 
       if (delta >= waitMS || maxWaitExpired || executeImmediately) {
-        invokeFunction(now);
+        invokeFunction(now)
       } else if ((timeoutId === null || !userCall) && trailing) {
-        timeoutId = this.setTimeout(callback, waitLength);
+        timeoutId = this.setTimeout(callback, waitLength)
       }
 
-      return lastResult;
-    };
+      return lastResult
+    }
 
-    let pending = (): boolean => {
-      return !!timeoutId;
-    };
+    const pending = (): boolean => {
+      return !!timeoutId
+    }
 
-    let cancel = (): void => {
+    const cancel = (): void => {
       if (pending()) {
         // Mark the debounced function as having executed
-        markExecuted(new Date().getTime());
+        markExecuted(new Date().getTime())
       }
-    };
+    }
 
-    let flush = (): T => {
+    const flush = (): T => {
       if (pending()) {
-        invokeFunction(new Date().getTime());
+        invokeFunction(new Date().getTime())
       }
 
-      return lastResult;
-    };
+      return lastResult
+    }
 
     // tslint:disable-next-line:no-any
-    let resultFunction: ICancelable<T> & (() => T) = ((...args: any[]) => {
-      lastArgs = args;
-      return callback(true);
-    }) as ICancelable<T> & (() => T);
+    const resultFunction: ICancelable<T> & (() => T) = ((...args: any[]) => {
+      lastArgs = args
+      return callback(true)
+    }) as ICancelable<T> & (() => T)
 
-    resultFunction.cancel = cancel;
-    resultFunction.flush = flush;
-    resultFunction.pending = pending;
+    resultFunction.cancel = cancel
+    resultFunction.flush = flush
+    resultFunction.pending = pending
 
-    return resultFunction;
+    return resultFunction
   }
 
   public requestAnimationFrame(callback: () => void): number {
-    let animationFrameId = 0;
+    let animationFrameId = 0
 
     if (!this._isDisposed) {
       if (!this._animationFrameIds) {
-        this._animationFrameIds = {};
+        this._animationFrameIds = {}
       }
 
       /* tslint:disable:ban-native-functions */
-      let animationFrameCallback = () => {
+      const animationFrameCallback = () => {
         try {
           // Now delete the record and call the callback.
           if (this._animationFrameIds) {
-            delete this._animationFrameIds[animationFrameId];
+            delete this._animationFrameIds[animationFrameId]
           }
 
-          callback.apply(this._parent);
+          callback.apply(this._parent)
         } catch (e) {
-          this._logError(e);
+          this.logError(e)
         }
-      };
+      }
 
       animationFrameId = window.requestAnimationFrame
         ? window.requestAnimationFrame(animationFrameCallback)
-        : window.setTimeout(animationFrameCallback, 0);
+        : window.setTimeout(animationFrameCallback, 0)
       /* tslint:enable:ban-native-functions */
 
-      this._animationFrameIds[animationFrameId] = true;
+      this._animationFrameIds[animationFrameId] = true
     }
 
-    return animationFrameId;
+    return animationFrameId
   }
 
   public cancelAnimationFrame(id: number): void {
     if (this._animationFrameIds && this._animationFrameIds[id]) {
       /* tslint:disable:ban-native-functions */
-      window.cancelAnimationFrame ? window.cancelAnimationFrame(id) : window.clearTimeout(id);
+      window.cancelAnimationFrame ? window.cancelAnimationFrame(id) : window.clearTimeout(id)
       /* tslint:enable:ban-native-functions */
-      delete this._animationFrameIds[id];
+      delete this._animationFrameIds[id]
     }
   }
 
   // tslint:disable-next-line:no-any
-  protected _logError(e: any): void {
+  protected logError(e: any): void {
     if (this._onErrorHandler) {
-      this._onErrorHandler(e);
+      this._onErrorHandler(e)
     }
   }
 }
 
 export type ICancelable<T> = {
-  flush: () => T;
-  cancel: () => void;
-  pending: () => boolean;
-};
+  flush: () => T
+  cancel: () => void
+  pending: () => boolean,
+}
