@@ -1,11 +1,12 @@
 import { pxToRem } from '../../lib'
+import { IMenuItemProps } from './MenuItem'
 
 const underlinedItem = (color: string) => ({
   borderBottom: `solid 5px ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({ props, variables }) => {
+const itemSeparator = ({ props, variables }: { props: IMenuItemProps; variables: any }) => {
   const { active, shape, type, vertical } = props
   return {
     ...((!shape || shape === 'pointing') && {
@@ -30,7 +31,7 @@ const itemSeparator = ({ props, variables }) => {
 }
 
 export default {
-  root: ({ props, variables }) => {
+  root: ({ props, variables }: { props: IMenuItemProps; variables: any }) => {
     const { active, shape, type } = props
     return {
       color: variables.defaultColor,
