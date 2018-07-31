@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
@@ -34,16 +34,19 @@ class Label extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
+    /** Label can have an icon. */
+    icon: customPropTypes.some([PropTypes.bool, PropTypes.string, PropTypes.object]),
+
+    /** An icon label can format an Icon to appear before or after the text in the label */
+    iconPosition: PropTypes.oneOf(['before', 'after']),
+
     /**
-     * Adds an "x" icon, called when "x" is clicked.
+     * Function called when the icon is clicked.
      *
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
-    onRemove: PropTypes.func,
-
-    /** Shorthand for Icon to appear as the last child and trigger onRemove. */
-    removeIcon: customPropTypes.itemShorthand,
+    onIconClick: PropTypes.func,
   }
 
   static handledProps = [
@@ -52,8 +55,9 @@ class Label extends UIComponent<any, any> {
     'circular',
     'className',
     'content',
-    'onRemove',
-    'removeIcon',
+    'icon',
+    'iconPosition',
+    'onIconClick',
   ]
 
   static defaultProps = {
@@ -67,32 +71,54 @@ class Label extends UIComponent<any, any> {
   handleIconOverrides = predefinedProps => ({
     onClick: e => {
       _.invoke(predefinedProps, 'onClick', e)
-      _.invoke(this.props, 'onRemove', e, this.props)
+      _.invoke(this.props, 'onIconClick', e, this.props)
     },
   })
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, onRemove, removeIcon } = this.props
+    const { children, content, icon, iconPosition, onIconClick } = this.props
+    const getContent = (): ReactNode => {
+      if (childrenExist(children)) {
+        return children
+      }
 
-    const removeIconShorthand = removeIcon || 'close'
+      const iconIsAfterContent = iconPosition === 'after'
 
-    return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
-        {onRemove &&
+      const iconProps = {
+        className: classes.icon,
+        ...(icon &&
+          typeof icon === 'string' && {
+            name: icon,
+            ...(onIconClick && { tabIndex: '0' }),
+            variables: { color: classes.root.color },
+            xSpacing: !content ? 'none' : iconIsAfterContent ? 'before' : 'after',
+          }),
+        ...(icon &&
+          typeof icon === 'object' && {
+            ...icon,
+            ...(icon.onClick && { tabIndex: '0' }),
+          }),
+      }
+
+      const renderedContent = [
+        content,
+        icon &&
           Icon.create(
             {
-              name: removeIconShorthand,
-              className: classes.removeIcon,
-              variables: { color: classes.root.color },
-              tabIndex: '0',
-              xSpacing: 'before',
+              ...iconProps,
             },
             {
               generateKey: false,
               overrideProps: this.handleIconOverrides,
             },
-          )}
+          ),
+      ].filter(Boolean)
+      return iconIsAfterContent ? renderedContent : renderedContent.reverse()
+    }
+
+    return (
+      <ElementType {...rest} className={classes.root}>
+        {getContent()}
       </ElementType>
     )
   }

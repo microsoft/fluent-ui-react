@@ -11,9 +11,12 @@ export default {
       borderRadius: variables.circularRadius,
     }),
   }),
-  removeIcon: () => ({
+  icon: ({ props }) => ({
     position: 'relative',
     top: '-0.15em',
-    cursor: 'pointer',
+    ...((props.onIconClick ||
+      (props.icon && typeof props.icon === 'object' && props.icon.onClick)) && {
+      cursor: 'pointer',
+    }),
   }),
 }

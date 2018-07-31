@@ -10,14 +10,24 @@ const Variations = () => (
       examplePath="components/Label/Variations/LabelExampleCircular"
     />
     <ComponentExample
-      title="On remove"
-      description="A label can have removable icon and receive a callback to be invoked on removing"
-      examplePath="components/Label/Variations/LabelExampleOnRemove"
+      title="Icon"
+      description="The label can contain an icon"
+      examplePath="components/Label/Variations/LabelExampleIcon"
     />
     <ComponentExample
-      title="Remove icon"
-      description="The removable icon can be defined by the user"
-      examplePath="components/Label/Variations/LabelExampleRemoveIcon"
+      title="Icon position"
+      description="The icon inside the label can be aligned before or after the content"
+      examplePath="components/Label/Variations/LabelExampleIconPosition"
+    />
+    <ComponentExample
+      title="Clickable icon"
+      description="The icon inside the label can be clickable"
+      examplePath="components/Label/Variations/LabelExampleOnIconClick"
+    />
+    <ComponentExample
+      title="The Icon inside Label can be customized"
+      description="The Icon component inside the Label can be defined with customizing it's prop"
+      examplePath="components/Label/Variations/LabelExampleIconShorthand"
     />
   </ExampleSection>
 )
