@@ -86,6 +86,7 @@ class Input extends UIComponent<any, any> {
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = cx(classes.input)
+    const iconClasses = cx(classes.icon)
 
     // Render with children
     // ----------------------------------------
@@ -110,7 +111,7 @@ class Input extends UIComponent<any, any> {
             defaultProps: htmlInputProps,
             overrideProps: { className: inputClasses },
           })}
-          <Icon name={this.computeIcon()} />
+          <Icon name={this.computeIcon()} className={iconClasses} />
         </ElementType>
       )
     }

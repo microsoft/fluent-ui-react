@@ -5,15 +5,7 @@ const inputRules = {
       position: 'relative',
       alignItems: 'center',
       justifyContent: 'flex-end',
-      border: variables.defaultBorder,
-      borderRadius: variables.borderRadius,
       outline: 0,
-      padding: variables.defaultPadding,
-      backgroundColor: variables.backgroundColor,
-      ':focus-within': {
-        borderColor: 'transparent',
-        borderBottom: variables.focusBorderBottom,
-      },
     }
   },
 
@@ -21,10 +13,24 @@ const inputRules = {
     return {
       outline: 0,
       border: 0,
+      borderRadius: variables.borderRadius,
+      borderBottom: variables.borderBottom,
       color: variables.fontColor,
       backgroundColor: variables.backgroundColor,
       height: variables.height,
       padding: variables.inputPadding,
+
+      ':focus': {
+        borderColor: variables.inputFocusBorderColor,
+        borderRadius: variables.inputFocusBorderRadius,
+      },
+    }
+  },
+
+  icon: ({ props, variables }) => {
+    return {
+      position: variables.iconPosition,
+      right: variables.iconRight,
     }
   },
 }
