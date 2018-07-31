@@ -1,11 +1,11 @@
 import { pxToRem } from '../../lib'
-import { truncateStyle } from '../../styles/customCSS'
+import { disabledStyle, truncateStyle } from '../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
 import { IButtonProps } from './Button'
 
 export default {
   root: ({ props, variables }: { props: IButtonProps; variables: IButtonVariables }) => {
-    const { circular, fluid, icon, iconPosition, type } = props
+    const { circular, disabled, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -27,7 +27,7 @@ export default {
       typeSecondaryBorderColor,
     } = variables
 
-    return {
+    const rules = {
       height,
       minWidth,
       maxWidth,
@@ -37,12 +37,8 @@ export default {
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
-      cursor: 'pointer',
-      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
       borderRadius: pxToRem(2),
-      ':hover': {
-        backgroundColor: backgroundColorHover,
-      },
+      borderWidth: 0,
 
       ...truncateStyle,
 
@@ -67,6 +63,23 @@ export default {
         width: '100%',
         maxWidth: '100%',
       }),
+    }
+
+    if (disabled) {
+      return {
+        ...rules,
+        ...disabledStyle,
+      }
+    }
+
+    return {
+      ...rules,
+
+      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: backgroundColorHover,
+      },
 
       ...(primary && {
         color: typePrimaryColor,
