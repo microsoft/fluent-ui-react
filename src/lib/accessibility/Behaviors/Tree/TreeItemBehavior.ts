@@ -13,10 +13,6 @@ export class TreeItemBehavior extends AbstractBehavior<{}, {}>
   }
 
   public generateAriaAttributes(props, state): object {
-    // check if props.subtree exists
-    // if yes, then
-    // this.attributes['aria-expanded'] = false
-
     return this.attributes
   }
 
