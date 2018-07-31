@@ -6,7 +6,7 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 
-import { MenuBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
 
 class Menu extends AutoControlledComponent<any, any> {
@@ -41,6 +41,8 @@ class Menu extends AutoControlledComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -56,6 +58,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'items',
     'shape',
     'type',
+    'accBehavior',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -64,9 +67,12 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static Item = MenuItem
 
-  constructor(p, s) {
-    super(p, s)
-    this.accBehavior = new MenuBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.menu,
+    )
   }
 
   handleItemOverrides = predefinedProps => ({

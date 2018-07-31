@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
@@ -55,6 +55,8 @@ class MenuItem extends UIComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -72,11 +74,15 @@ class MenuItem extends UIComponent<any, any> {
     'pointing',
     'shape',
     'type',
+    'accBehavior',
   ]
 
-  constructor(p, s) {
-    super(p, s)
-    this.accBehavior = new MenuItemBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.menuItem,
+    )
   }
 
   handleClick = e => {

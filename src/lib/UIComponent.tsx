@@ -1,7 +1,7 @@
 import React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { IAccessibilityBehavior } from './accessibility/interfaces'
-import { DefaultBehavior } from './accessibility/Behaviors/behaviors'
+import { AccBehaviorFactory } from './accessibility/AccBehaviorFactory'
 
 abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -26,7 +26,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.accBehavior = new DefaultBehavior()
+    this.accBehavior = AccBehaviorFactory.getBehavior()
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {

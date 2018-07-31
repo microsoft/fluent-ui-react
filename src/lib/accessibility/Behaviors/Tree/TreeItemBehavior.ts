@@ -1,14 +1,13 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 
-export class MenuItemBehavior implements IAccessibilityBehavior<{}, {}> {
+export class TreeItemBehavior implements IAccessibilityBehavior<{}, {}> {
   private attributes = {
     'ms-acc-behavior': this.name,
-    role: 'menuitem',
-    // tabIndex: -1,
+    role: 'treeitem',
   }
 
   public get name(): string {
-    return 'menuitem'
+    return 'treeitem'
   }
 
   public generateAriaAttributes(props, state): object {

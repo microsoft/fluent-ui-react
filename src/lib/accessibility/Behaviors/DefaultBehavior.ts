@@ -8,7 +8,6 @@ export class DefaultBehavior implements IAccessibilityBehavior<{}, {}> {
   public generateAriaAttributes(): object {
     return {
       'ms-acc-behavior': this.name,
-      role: 'default',
     }
   }
 

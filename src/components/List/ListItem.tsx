@@ -6,7 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
-import { ListItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -48,11 +48,16 @@ class ListItem extends UIComponent<any, any> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+
+    accBehavior: PropTypes.string,
   }
 
-  constructor(p, s) {
-    super(p, s)
-    this.accBehavior = new ListItemBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.listItem,
+    )
   }
 
   static handledProps = [
@@ -72,6 +77,7 @@ class ListItem extends UIComponent<any, any> {
     'selection',
     'truncateContent',
     'truncateHeader',
+    'accBehavior',
   ]
 
   static defaultProps = {
