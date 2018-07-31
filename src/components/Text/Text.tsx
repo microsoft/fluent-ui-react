@@ -8,9 +8,7 @@ import textVariables from './textVariables'
 export type ITextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
 
 export interface ITextProps {
-  as?: string
   atMention?: boolean
-  className?: string
   content?: ReactNode
   disabled?: boolean
   error?: boolean

@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import React, { HTMLAttributes } from 'react'
 import PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, SUI } from '../../lib'
 
@@ -25,19 +25,15 @@ export type IconSize = 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'm
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
-export interface IconProps {
-  as?: string
+export interface IconProps extends HTMLAttributes<HTMLElement> {
   bordered?: boolean
   circular?: boolean
-  className?: string
   color?: IconColor
   disabled?: boolean
   kind?: string
   name?: string
   size?: IconSize
   xSpacing?: IconXSpacing
-  style?: CSSProperties
-  title?: string
 }
 
 class Icon extends UIComponent<IconProps, {}> {

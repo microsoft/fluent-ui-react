@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { HTMLAttributes } from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 
-class UIComponent<P, S> extends React.Component<P, S> {
+export interface UIComponentProps extends HTMLAttributes<HTMLElement> {
+  as?: string | Function
+  variables?: (siteVariables: object) => object
+}
+
+class UIComponent<P, S> extends React.Component<P & UIComponentProps, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string

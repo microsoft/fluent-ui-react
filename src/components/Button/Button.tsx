@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
+import React, { ReactNode, SyntheticEvent } from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
@@ -11,7 +11,6 @@ export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
 
 export interface IButtonProps {
-  as?: string
   children?: ReactNode
   circular?: boolean
   className?: string
@@ -21,7 +20,6 @@ export interface IButtonProps {
   icon?: boolean | string
   iconPosition?: IconPosition
   onClick?: (e: SyntheticEvent, props: IButtonProps) => void
-  style?: CSSProperties
   type?: ButtonType
 }
 
