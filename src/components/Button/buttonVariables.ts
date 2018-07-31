@@ -1,10 +1,13 @@
 import { pxToRem } from '../../lib'
 
 export interface IButtonVariables {
+  height: string
+  minWidth: string
+  maxWidth: string
   backgroundColor: string
   backgroundColorHover: string
   circularRadius: string
-  circularWidth: string
+  paddingLeftRightValue: number
   typePrimaryColor: string
   typePrimaryBackgroundColor: string
   typePrimaryBackgroundColorHover: string
@@ -17,10 +20,13 @@ export interface IButtonVariables {
 
 export default (siteVars: any): IButtonVariables => {
   return {
+    height: pxToRem(32),
+    minWidth: pxToRem(96),
+    maxWidth: pxToRem(280),
     backgroundColor: siteVars.gray08,
     backgroundColorHover: siteVars.gray06,
+    paddingLeftRightValue: 20,
     circularRadius: pxToRem(999),
-    circularWidth: '32px',
     typePrimaryColor: siteVars.white,
     typePrimaryBackgroundColor: siteVars.brand,
     typePrimaryBackgroundColorHover: siteVars.brand04,
