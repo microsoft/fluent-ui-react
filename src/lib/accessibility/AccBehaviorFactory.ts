@@ -51,7 +51,6 @@ export class AccBehaviorFactory {
 
   public static getBehavior(
     accBehavior?: AccBehaviorType | string,
-    useDefault: boolean = true,
   ): IAccessibilityBehavior<{}, {}> {
     let accBehaviorName: string = accBehavior as string
 
@@ -60,9 +59,7 @@ export class AccBehaviorFactory {
     }
     return this.BehaviorsMap.get(accBehaviorName)
       ? this.BehaviorsMap.get(accBehaviorName)()
-      : useDefault
-        ? new DefaultBehavior()
-        : null
+      : new DefaultBehavior()
   }
 
   public static registerBehavior(
