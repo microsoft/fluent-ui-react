@@ -4,7 +4,8 @@ import React from 'react'
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
-import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { ToggleButtonBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * A button.
@@ -36,7 +37,7 @@ class Button extends UIComponent<any, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    a11yType: PropTypes.string,
+    accBehavior: PropTypes.string,
   }
 
   static handledProps = ['as', 'circular', 'className', 'content', 'type', 'a11yType']
@@ -47,9 +48,9 @@ class Button extends UIComponent<any, any> {
 
   constructor(props, state) {
     super(props, state)
-    const a11yType: string = props.a11yType
-    this.accBehavior = A11yBehaviorFactory.createBehavior(
-      A11yBehaviorType[a11yType] || A11yBehaviorType.button,
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.button,
     )
   }
 

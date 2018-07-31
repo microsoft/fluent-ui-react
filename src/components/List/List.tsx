@@ -6,7 +6,7 @@ import { customPropTypes, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
-import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -43,7 +43,7 @@ class List extends UIComponent<any, any> {
     /** Variables */
     variables: PropTypes.object,
 
-    a11yType: PropTypes.string,
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -60,16 +60,16 @@ class List extends UIComponent<any, any> {
     'truncateContent',
     'truncateHeader',
     'variables',
-    'a11yType',
+    'accBehavior',
   ]
 
   static Item = ListItem
 
   constructor(props, state) {
     super(props, state)
-    const a11yType: string = props.a11yType
-    this.accBehavior = A11yBehaviorFactory.createBehavior(
-      A11yBehaviorType[a11yType] || A11yBehaviorType.list,
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.list,
     )
   }
 

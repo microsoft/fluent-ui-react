@@ -9,7 +9,7 @@ import {
   customPropTypes,
   AutoControlledComponent,
 } from '../../lib'
-import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
@@ -76,7 +76,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
 
     defaultSubmenuOpened: PropTypes.bool,
 
-    a11yType: PropTypes.string,
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -95,7 +95,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     'shape',
     'type',
     'submenu',
-    'a11yType',
+    'accBehavior',
   ]
 
   static autoControlledProps = ['submenuOpened']
@@ -120,9 +120,9 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
 
   constructor(props, state) {
     super(props, state)
-    const a11yType: string = props.a11yType
-    this.accBehavior = A11yBehaviorFactory.createBehavior(
-      A11yBehaviorType[a11yType] || A11yBehaviorType.menuItem,
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.menuItem,
     )
 
     this.registerActionHandler(this.clickHandler)

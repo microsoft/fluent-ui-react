@@ -1,7 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
-import ClickAction from '../../../../lib/actions/ClickAction'
-import MenuCloseSubmenuAction from '../../../../lib/actions/MenuCloseSubmenuAction'
+import ClickAction from '../../../actions/ClickAction'
+import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 
 export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {

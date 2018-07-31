@@ -1,9 +1,8 @@
 import React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { IAccessibilityBehavior } from './accessibility/interfaces'
-import { DefaultBehavior } from './accessibility/Behaviors/behaviors'
-import { ActionHandler } from '../lib/actions/Action'
-import { A11yBehaviorFactory } from './accessibility/A11yBehaviorFactory'
+import { ActionHandler } from './actions/Action'
+import { AccBehaviorFactory } from './accessibility/AccBehaviorFactory'
 
 abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -29,7 +28,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.accBehavior = A11yBehaviorFactory.createBehavior()
+    this.accBehavior = AccBehaviorFactory.getBehavior()
   }
 
   // state machine should be used instead, for now allow simple actions on components

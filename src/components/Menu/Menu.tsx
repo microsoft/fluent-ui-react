@@ -6,7 +6,7 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 
-import { A11yBehaviorType, A11yBehaviorFactory } from '../../lib/accessibility/A11yBehaviorFactory'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
 import { FocusZone } from '../FocusZone'
 
@@ -51,7 +51,7 @@ class Menu extends AutoControlledComponent<any, MenuState> {
 
     componentRef: PropTypes.object,
 
-    a11yType: PropTypes.string,
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -68,7 +68,7 @@ class Menu extends AutoControlledComponent<any, MenuState> {
     'shape',
     'type',
     'grabFocus',
-    'a11yType',
+    'accBehavior',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -84,9 +84,9 @@ class Menu extends AutoControlledComponent<any, MenuState> {
 
   constructor(props, state) {
     super(props, state)
-    const a11yType: string = props.a11yType
-    this.accBehavior = A11yBehaviorFactory.createBehavior(
-      A11yBehaviorType[a11yType] || A11yBehaviorType.menu,
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.menu,
     )
   }
 
