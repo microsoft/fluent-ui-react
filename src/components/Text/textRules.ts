@@ -27,7 +27,7 @@ import { truncateStyle } from '../../styles/customCSS'
 import { ITextVariables } from './textVariables'
 import { ITextProps } from './Text'
 
-interface TextRulesParams {
+export interface TextRulesParams {
   props: ITextProps
   variables: ITextVariables
 }
