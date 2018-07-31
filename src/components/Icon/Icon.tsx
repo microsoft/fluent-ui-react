@@ -38,6 +38,7 @@ export interface IconProps {
   xSpacing?: IconXSpacing
   style?: CSSProperties
   title?: string
+  variables?: (siteVariables: object) => object
 }
 
 class Icon extends UIComponent<IconProps, {}> {
