@@ -40,7 +40,7 @@ class Button extends UIComponent<any, any> {
     accBehavior: PropTypes.string,
   }
 
-  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'a11yType']
+  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'accBehavior']
 
   static defaultProps = {
     as: 'button',
