@@ -5,7 +5,7 @@ const HeaderExampleDescriptionShorthand = () => (
   <Header
     as="h2"
     content="Account Settings"
-    description={{ content: 'Manage your account settings and set email preferences' }}
+    description="Manage your account settings and set email preferences"
   />
 )
 
