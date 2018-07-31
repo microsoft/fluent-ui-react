@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Improve UX for "knobs" form on component examples @levithomason ([#20](https://github.com/stardust-ui/react/pull/20))
 
+### Fixes
+- Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
+
 <!--------------------------------[ v0.2.3 ]------------------------------- -->
 ## [v0.2.3](https://github.com/stardust-ui/react/tree/v0.2.3) (2018-07-24)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.2...v0.2.3)
