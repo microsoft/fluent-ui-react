@@ -4,7 +4,7 @@ import { IconProps, IconXSpacing } from './Icon'
 import { IconVariables } from './iconVariables'
 import { CSSProperties } from '../../../node_modules/@types/react'
 
-interface IconRulesParams {
+export interface IconRulesParams {
   props: IconProps
   variables: IconVariables
 }

@@ -3,17 +3,17 @@ import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import headerSubheaderRules from './headerSubheaderRules'
+import headerDescriptionRules from './headerDescriptionRules'
 
 /**
- * Headers may contain subheaders.
+ * Headers may contain description.
  */
-class HeaderSubheader extends UIComponent<any, any> {
+class HeaderDescription extends UIComponent<any, any> {
   static create: Function
 
-  static className = 'ui-header__subheader'
+  static className = 'ui-header__description'
 
-  static displayName = 'HeaderSubheader'
+  static displayName = 'HeaderDescription'
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -29,9 +29,13 @@ class HeaderSubheader extends UIComponent<any, any> {
     content: customPropTypes.contentShorthand,
   }
 
+  static defaultProps = {
+    as: 'p',
+  }
+
   static handledProps = ['as', 'children', 'className', 'content']
 
-  static rules = headerSubheaderRules
+  static rules = headerDescriptionRules
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
@@ -43,6 +47,6 @@ class HeaderSubheader extends UIComponent<any, any> {
   }
 }
 
-HeaderSubheader.create = createShorthandFactory(HeaderSubheader, content => ({ content }))
+HeaderDescription.create = createShorthandFactory(HeaderDescription, content => ({ content }))
 
-export default HeaderSubheader
+export default HeaderDescription

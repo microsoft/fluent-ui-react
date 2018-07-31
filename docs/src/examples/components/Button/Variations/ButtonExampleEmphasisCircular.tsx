@@ -1,13 +1,13 @@
 import React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button, Icon } from '@stardust-ui/react'
 
 const ButtonExampleEmphasisCircular = () => (
   <div>
-    <Button type="primary" circular>
-      P
+    <Button type="primary" circular icon>
+      <Icon name="coffee" color="white" xSpacing="none" />
     </Button>
-    <Button type="secondary" circular>
-      S
+    <Button type="secondary" circular icon>
+      <Icon name="book" xSpacing="none" />
     </Button>
   </div>
 )

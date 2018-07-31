@@ -10,7 +10,7 @@ const IconExampleSpace = () => (
     <Label content="Before" />
     <Icon xSpacing="before" name="help" />
     <Label content="After" />
-    <Icon xSpacing="before" name="help" />
+    <Icon xSpacing="after" name="help" />
     <Label content="Both" />
     <Icon xSpacing="both" name="help" />
     <Label content="End" />
