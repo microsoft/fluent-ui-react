@@ -147,7 +147,11 @@ class Accordion extends AutoControlledComponent<any, any> {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

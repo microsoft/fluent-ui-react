@@ -4,7 +4,6 @@ import React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
-import { ImageBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * An image is a graphic representation of something.
@@ -35,12 +34,6 @@ class Image extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'img',
-  }
-
-  constructor(p, s) {
-    super(p, s)
-
-    this.accBehavior = new ImageBehavior()
   }
 
   renderComponent({ ElementType, classes, rest }) {

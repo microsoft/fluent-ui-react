@@ -1,7 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
-import ClickAction from '../../../../lib/actions/ClickAction'
-import MenuCloseSubmenuAction from '../../../../lib/actions/MenuCloseSubmenuAction'
+import ClickAction from '../../../actions/ClickAction'
+import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 
 export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
@@ -27,8 +27,24 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   }
 
   public generateAriaAttributes(props: any, state: any): object {
+    if (props.submenu) {
+      this.attributes['aria-expanded'] = false
+    }
     return this.attributes
   }
 
-  public changeState(newState: ComponentState): void {}
+  public changeState(newState: ComponentState): void {
+    switch (newState) {
+      case ComponentState.expanded:
+        if (this.attributes.hasOwnProperty('aria-expanded')) {
+          this.attributes['aria-expanded'] = true
+        }
+        break
+      case ComponentState.collapsed:
+        if (this.attributes.hasOwnProperty('aria-expanded')) {
+          this.attributes['aria-expanded'] = false
+        }
+        break
+    }
+  }
 }

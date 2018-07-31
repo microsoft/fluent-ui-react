@@ -9,7 +9,7 @@ import {
   customPropTypes,
   AutoControlledComponent,
 } from '../../lib'
-import { MenuItemBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
@@ -75,6 +75,8 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     submenuOpened: PropTypes.bool,
 
     defaultSubmenuOpened: PropTypes.bool,
+
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
@@ -93,6 +95,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     'shape',
     'type',
     'submenu',
+    'accBehavior',
   ]
 
   static autoControlledProps = ['submenuOpened']
@@ -115,9 +118,12 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
 
   onEscActionHandler = undefined // TODO: if has submenu and submenu is open, close it and make parent focusable
 
-  constructor(p, context) {
-    super(p, context)
-    this.accBehavior = new MenuItemBehavior()
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.menuItem,
+    )
 
     this.registerActionHandler(this.clickHandler)
     this.registerActionHandler(this.closeSubmenuHandler)
