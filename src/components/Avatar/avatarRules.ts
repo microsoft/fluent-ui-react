@@ -1,5 +1,5 @@
 import { pxToRem } from '../../lib'
-import { PositionProperty } from '../../../node_modules/csstype'
+import { PositionProperty } from 'csstype'
 
 const getAvatarDimension = (size: number) => {
   return 12 + size * 4
@@ -56,7 +56,7 @@ export default {
   }),
   presenceSpan: ({ props, variables }) => ({
     display: 'block',
-    position: 'relative',
+    position: 'relative' as PositionProperty,
     background: 'inherit',
     padding: pxToRem(getPresenceIconPadding(props.size, variables.presenceIconPadding)),
     margin: '0px',
@@ -83,7 +83,7 @@ export default {
     ),
   }),
   presenceIconLabel: ({ props }) => ({
-    position: 'relative',
+    position: 'relative' as PositionProperty,
     height: pxToRem(getPresenceIconSize(props.size)),
     width: pxToRem(getPresenceIconSize(props.size)),
     padding: '0px',
