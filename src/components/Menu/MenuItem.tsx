@@ -19,7 +19,7 @@ import ClickAction from '../../lib/actions/ClickAction'
 import MenuCloseSubmenuAction, {
   MenuCloseSubmenuActionParams,
 } from '../../lib/actions/MenuCloseSubmenuAction'
-import { focusFirstChild } from '../../lib/fabric'
+import { focusFirstChild } from '@uifabric/utilities'
 
 interface MenuItemState {
   submenuOpened: boolean
