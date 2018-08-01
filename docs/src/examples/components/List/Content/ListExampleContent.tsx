@@ -3,9 +3,9 @@ import { List } from '@stardust-ui/react'
 
 const ListExample = () => (
   <List>
-    <List.Item content="Program the sensor to the SAS alarm through the haptic SQL card!" />
-    <List.Item content="Use the online FTP application to input the multi-byte application!" />
-    <List.Item content="The GB pixel is down, navigate the virtual interface!" />
+    <List.Item header="Program the sensor to the SAS alarm through the haptic SQL card!" />
+    <List.Item header="Use the online FTP application to input the multi-byte application!" />
+    <List.Item header="The GB pixel is down, navigate the virtual interface!" />
   </List>
 )
 
