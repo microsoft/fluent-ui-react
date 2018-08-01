@@ -14,6 +14,11 @@ const Types = () => (
       description="A list can be formatted to indicate that its items can be selected."
       examplePath="components/List/Types/ListExampleSelection"
     />
+    <ComponentExample
+      title="List with react virtualized"
+      description="Example list using react virtualized."
+      examplePath="components/List/Types/ListExampleWithReactVirtualized"
+    />
   </ExampleSection>
 )
 

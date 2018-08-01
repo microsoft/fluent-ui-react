@@ -6,9 +6,24 @@ import { customPropTypes, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
-import VirtualList from 'react-virtual-list'
+import {
+  List as VirtualizedList,
+  AutoSizer,
+  CellMeasurerCache,
+  CellMeasurer,
+} from 'react-virtualized'
 
-class List extends UIComponent<any, any> {
+class ListWithReactVirtualized extends UIComponent<any, any> {
+  private cache: CellMeasurerCache
+
+  constructor(props, context) {
+    super(props, context)
+    this.cache = new CellMeasurerCache({
+      fixedWidth: true,
+      defaultHeight: 100,
+    })
+  }
+
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -65,19 +80,39 @@ class List extends UIComponent<any, any> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  renderRow = ({ index, key, style, parent }) => {
+    console.log('Invoked')
+    const { items } = this.props
+    const itemProps = _.pick(this.props, ListWithReactVirtualized.itemProps)
+    return (
+      <CellMeasurer key={key} cache={this.cache} parent={parent} columnIndex={0} rowIndex={index}>
+        {/*{items[index]}*/}
+        {ListItem.create(items[index], { defaultProps: itemProps })}
+      </CellMeasurer>
+    )
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { items } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
+    const itemProps = _.pick(this.props, ListWithReactVirtualized.itemProps)
 
-    const MyList = ({ virtual, itemHeight }) => (
-      <ElementType {...rest} className={classes.root}>
-        {_.map(virtual.items, item => ListItem.create(item, { defaultProps: itemProps }))}
-      </ElementType>
+    return (
+      <AutoSizer disableHeight>
+        {({ width, height }) => {
+          return (
+            <VirtualizedList
+              height={height || 100}
+              width={width}
+              rowHeight={this.cache.rowHeight}
+              rowRenderer={this.renderRow}
+              rowCount={items.length}
+              overscanRowCount={3}
+            />
+          )
+        }}
+      </AutoSizer>
     )
-
-    const MyVirtualList = VirtualList()(MyList)
-    return <MyVirtualList items={items} itemHeight={100} />
   }
 }
 
-export default List
+export default ListWithReactVirtualized
