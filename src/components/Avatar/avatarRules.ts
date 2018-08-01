@@ -1,4 +1,5 @@
 import { pxToRem } from '../../lib'
+import { PositionProperty } from '../../../node_modules/csstype'
 
 const getAvatarDimension = (size: number) => {
   return 12 + size * 4
@@ -93,6 +94,6 @@ export default {
   presenceIcon: () => ({
     margin: 'auto',
     bottom: pxToRem(2),
-    position: 'relative',
+    position: 'relative' as PositionProperty,
   }),
 }

@@ -1,14 +1,19 @@
 import { pxToRem } from '../../lib'
+import { IMenuProps } from './Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }) => {
-    const { type, shape } = props
+  root: ({ props, variables }: { props: IMenuProps; variables: any }) => {
+    const { type, shape, vertical } = props
     return {
       display: 'flex',
+      ...(vertical && {
+        flexDirection: 'column',
+        width: pxToRem(200),
+      }),
       ...(shape !== 'pills' &&
         shape !== 'underlined' && {
           ...solidBorder(variables.defaultBorderColor),
