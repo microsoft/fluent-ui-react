@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from '@stardust-ui/react'
 
-const PageHeadersExample = () => (
+const HeaderExample = () => (
   <div>
     <Header as="h1">First Header</Header>
     <Header as="h2">Second Header</Header>
@@ -12,4 +12,4 @@ const PageHeadersExample = () => (
   </div>
 )
 
-export default PageHeadersExample
+export default HeaderExample
