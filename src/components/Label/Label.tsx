@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { HTMLAttributes, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
@@ -37,8 +37,8 @@ class Label extends UIComponent<LabelProps, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Function for overriding the variables for the component. */
-    variables: PropTypes.func,
+    /** Function or object for overriding the variables for the component. */
+    variables: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }
 
   static handledProps = ['as', 'children', 'circular', 'className', 'content', 'variables']
