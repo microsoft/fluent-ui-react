@@ -40,6 +40,22 @@ class Input extends UIComponent<any, any> {
     /** Shorthand for creating the HTML Input. */
     input: customPropTypes.itemShorthand,
 
+    /**
+     * Called on change.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onChange: PropTypes.func,
+
+    /**
+     * Function called when the icon is clicked.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onIconClick: PropTypes.func,
+
     /** The HTML input type. */
     type: PropTypes.string,
 
@@ -74,6 +90,12 @@ class Input extends UIComponent<any, any> {
     if (props.onClick) return 0
   }
 
+  handleChange = e => {
+    const value = _.get(e, 'target.value')
+
+    _.invoke(this.props, 'onChange', e, { ...this.props, value })
+  }
+
   handleChildOverrides = (child, defaultProps) => ({
     ...defaultProps,
     ...child.props,
@@ -90,6 +112,7 @@ class Input extends UIComponent<any, any> {
     return [
       {
         ...htmlInputProps,
+        onChange: this.handleChange,
         type,
       },
       rest,

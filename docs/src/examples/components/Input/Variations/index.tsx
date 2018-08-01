@@ -14,6 +14,11 @@ const Variations = () => (
       description="An input can take the full width of the parent element."
       examplePath="components/Input/Variations/InputExampleFluid"
     />
+    <ComponentExample
+      title="Clearable icon"
+      description="An input can have a search icon that can change into clear button on typing."
+      examplePath="components/Input/Variations/InputExampleIconChange"
+    />
   </ExampleSection>
 )
 
