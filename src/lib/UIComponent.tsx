@@ -3,7 +3,7 @@ import renderComponent, { IRenderResultConfig } from './renderComponent'
 
 export interface UIComponentProps extends HTMLAttributes<HTMLElement> {
   as?: string | Function
-  variables?: (siteVariables: object) => object
+  variables?: ((siteVariables: object) => object) | object
 }
 
 class UIComponent<P, S> extends React.Component<P & UIComponentProps, S> {

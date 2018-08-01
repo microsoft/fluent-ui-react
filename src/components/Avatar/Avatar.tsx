@@ -100,7 +100,7 @@ class Avatar extends UIComponent<any, any> {
             className={classes.avatarLabel}
             as="div"
             content={this.getInitials(name)}
-            variables={() => ({ padding: '0px' })}
+            variables={{ padding: '0px' }}
             circular
             title={name}
           />
@@ -110,7 +110,7 @@ class Avatar extends UIComponent<any, any> {
             <Label
               className={classes.presenceIconLabel}
               as="div"
-              variables={() => ({ padding: '0px' })}
+              variables={{ padding: '0px' }}
               style={{ background: color }}
               circular
               title={name}
