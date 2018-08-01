@@ -6,7 +6,7 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
 
-export interface LabelProps extends HTMLAttributes<HTMLElement> {
+export interface LabelProps {
   circular?: boolean
   content?: ReactNode
 }

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, SUI } from '../../lib'
 
@@ -25,7 +25,7 @@ export type IconSize = 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'm
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
-export interface IconProps extends HTMLAttributes<HTMLElement> {
+export interface IconProps {
   bordered?: boolean
   circular?: boolean
   color?: IconColor
