@@ -11,7 +11,7 @@ const AvatarExampleSizeShorthand = () =>
         <Avatar
           key={size}
           size={size}
-          src="/public/images/avatar/small/matt.jpg"
+          src="public/images/avatar/small/matt.jpg"
           status="Available"
         />
       </div>
