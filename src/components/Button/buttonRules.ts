@@ -1,13 +1,22 @@
 import { pxToRem } from '../../lib'
+import { disabledStyle, truncateStyle } from '../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
+import { IButtonProps } from './Button'
 
 export default {
-  root: ({ props, theme, variables }) => {
+  root: ({ props, variables }: { props: IButtonProps; variables: IButtonVariables }) => {
+    const { circular, disabled, fluid, icon, iconPosition, type } = props
+    const primary = type === 'primary'
+    const secondary = type === 'secondary'
+
     const {
+      height,
+      minWidth,
+      maxWidth,
       backgroundColor,
       backgroundColorHover,
       circularRadius,
-      circularWidth,
+      paddingLeftRightValue,
       typePrimaryColor,
       typePrimaryBackgroundColor,
       typePrimaryBackgroundColorHover,
@@ -16,24 +25,63 @@ export default {
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
-    }: IButtonVariables = variables
+    } = variables
 
-    return {
+    const rules = {
+      height,
+      minWidth,
+      maxWidth,
       backgroundColor,
       display: 'inline-block',
+      position: 'relative',
+      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
-      height: pxToRem(32),
-      width: pxToRem(96),
       verticalAlign: 'middle',
-      cursor: 'pointer',
+      borderRadius: pxToRem(2),
       borderWidth: 0,
-      borderRadius: pxToRem(4),
+
+      ...truncateStyle,
+
+      ...(icon &&
+        (iconPosition
+          ? {
+              display: 'inline-flex',
+              justifyContent: 'center',
+            }
+          : {
+              minWidth: height,
+              padding: 0,
+            })),
+
+      ...(circular && {
+        minWidth: height,
+        padding: 0,
+        borderRadius: circularRadius,
+      }),
+
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
+      }),
+    }
+
+    if (disabled) {
+      return {
+        ...rules,
+        ...disabledStyle,
+      }
+    }
+
+    return {
+      ...rules,
+
+      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      cursor: 'pointer',
       ':hover': {
         backgroundColor: backgroundColorHover,
       },
-      ...(props.circular && { borderRadius: circularRadius, width: circularWidth }),
 
-      ...(props.type === 'primary' && {
+      ...(primary && {
         color: typePrimaryColor,
         backgroundColor: typePrimaryBackgroundColor,
         borderColor: typePrimaryBorderColor,
@@ -42,11 +90,10 @@ export default {
         },
       }),
 
-      ...(props.type === 'secondary' && {
+      ...(secondary && {
         color: typeSecondaryColor,
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
-        borderWidth: '2px',
         ':hover': {
           borderColor: 'transparent',
           backgroundColor: typeSecondaryBackgroundColorHover,

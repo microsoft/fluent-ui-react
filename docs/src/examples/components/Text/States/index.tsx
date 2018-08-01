@@ -19,6 +19,11 @@ const States = () => (
       description="The success state for a Text component"
       examplePath="components/Text/States/TextExampleSuccess"
     />
+    <ComponentExample
+      title="Truncated"
+      description="Truncated text in a Text component"
+      examplePath="components/Text/States/TextExampleTruncated"
+    />
   </ExampleSection>
 )
 
