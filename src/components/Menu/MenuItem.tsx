@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import {
   childrenExist,
@@ -10,6 +10,8 @@ import {
   AutoControlledComponent,
 } from '../../lib'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+
+import { MenuType, MenuShape } from './Menu'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
@@ -23,7 +25,24 @@ interface MenuItemState {
   submenuOpened: boolean
 }
 
-class MenuItem extends AutoControlledComponent<any, MenuItemState> {
+export interface IMenuItemProps {
+  active?: boolean
+  as?: string
+  children?: ReactNode
+  className?: string
+  content?: ReactNode
+  index?: number
+  onClick?: (any, IMenuItemProps) => void
+  shape?: MenuShape
+  type?: MenuType
+  vertical?: boolean
+  submenu?: ReactNode
+  submenuOpened?: boolean
+  defaultSubmenuOpened?: boolean
+  accBehavior?: string
+}
+
+class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -62,13 +81,13 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
      */
     onClick: PropTypes.func,
 
-    /** A menu can point to show its relationship to nearby content. */
-    pointing: PropTypes.bool,
+    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A vertical menu displays elements vertically. */
+    vertical: PropTypes.bool,
 
     submenu: PropTypes.node,
 
@@ -91,9 +110,9 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     'content',
     'index',
     'onClick',
-    'pointing',
     'shape',
     'type',
+    'vertical',
     'submenu',
     'accBehavior',
   ]

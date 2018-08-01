@@ -7,7 +7,7 @@ const truncateRule = {
 }
 
 const layoutRules = {
-  root: ({ props, vertical }) => {
+  root: ({ props }) => {
     const {
       alignItems,
       debug,
@@ -20,7 +20,9 @@ const layoutRules = {
       rootCSS,
       start,
       startSize,
+      vertical,
     } = props
+
     return {
       ...(debug && debugRoot()),
       justifyItems,

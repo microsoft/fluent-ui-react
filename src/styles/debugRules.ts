@@ -31,7 +31,6 @@ export const debugArea = () => ({
 export const debugGap = ({ vertical }) => ({
   display: 'grid',
   background: '#ccc',
-  // border: '2px solid gray',
   '::before': {
     content: '"GAP"',
     ...(vertical

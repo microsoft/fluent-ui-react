@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { isConformant } from 'test/specs/commonTests'
-import { getTestingRenderedComponent } from 'test/utils'
+import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
 
@@ -45,6 +45,16 @@ describe('Button', () => {
       )
 
       expect(btnCircular).toEqual(true)
+    })
+  })
+
+  describe('onClick', () => {
+    it('does not call onClick when the button is disabled', () => {
+      const onClick = jest.fn()
+      const button = mountWithProvider(<Button disabled onClick={onClick} />).find('Button')
+      button.simulate('click')
+
+      expect(onClick).not.toHaveBeenCalled()
     })
   })
 })
