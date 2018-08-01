@@ -40,6 +40,7 @@ class Provider extends Component<any, any> {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
     const { siteVariables, staticStyles } = this.props
 
@@ -72,6 +73,7 @@ class Provider extends Component<any, any> {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
     const { siteVariables, fontFaces } = this.props
 
