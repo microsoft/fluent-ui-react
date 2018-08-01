@@ -31,9 +31,12 @@ class Label extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** Function for overriding the variables for the component. */
+    variables: PropTypes.func,
   }
 
-  static handledProps = ['as', 'children', 'circular', 'className', 'content']
+  static handledProps = ['as', 'children', 'circular', 'className', 'content', 'variables']
 
   static defaultProps = {
     as: 'label',
