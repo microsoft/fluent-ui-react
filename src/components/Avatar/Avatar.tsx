@@ -16,7 +16,16 @@ class Avatar extends UIComponent<any, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = ['alt', 'as', 'className', 'name', 'size', 'src', 'status']
+  static handledProps = [
+    'alt',
+    'as',
+    'className',
+    'generateInitials',
+    'name',
+    'size',
+    'src',
+    'status',
+  ]
 
   static rules = avatarRules
 
@@ -51,6 +60,8 @@ class Avatar extends UIComponent<any, any> {
       'Offline',
       'PresenceUnknown',
     ]),
+
+    generateInitials: PropTypes.func,
   }
 
   static defaultProps = {
@@ -89,24 +100,32 @@ class Avatar extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { src, alt, name, status } = this.props
+    const { src, alt, name, status, generateInitials } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+    const generateInitialsFunc = generateInitials || this.generateInitials
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image className={classes.imageAvatar} avatar src={src} alt={alt} title={name} />
+          <Image
+            className={classes.imageAvatar}
+            avatar
+            src={src}
+            alt={alt}
+            title={name}
+            style={{ verticalAlign: 'top' }}
+          />
         ) : (
           <Label
             className={classes.avatarLabel}
             as="div"
-            content={this.getInitials(name)}
+            content={generateInitialsFunc(name)}
             variables={{ padding: '0px' }}
             circular
             title={name}
           />
         )}
         {status && (
-          <span className={classes.presenceSpan}>
+          <div className={classes.presenceDiv}>
             <Label
               className={classes.presenceIconLabel}
               as="div"
@@ -123,20 +142,33 @@ class Avatar extends UIComponent<any, any> {
                 title={status}
               />
             </Label>
-          </span>
+          </div>
         )}
       </ElementType>
     )
   }
 
-  getInitials(name: string): string {
-    if (!name) {
+  generateInitials(nameParam: string): string {
+    if (!nameParam) {
       return ''
     }
-    const names = name.split(' ')
-    return names
+
+    const name = nameParam
+      .replace(/\s*\(.*?\)\s*/g, ' ')
+      .replace(/\s*{.*?}\s*/g, ' ')
+      .replace(/\s*\[.*?]\s*/g, ' ')
+
+    let names = name.split(' ')
+    names = names.filter(item => item !== '')
+
+    const initials = names
       .map(name => (name.length ? name.charAt(0) : ''))
       .reduce((accumulator, currentValue) => accumulator + currentValue)
+
+    if (initials.length > 2) {
+      return initials.charAt(0) + initials.charAt(initials.length - 1)
+    }
+    return initials
   }
 }
 

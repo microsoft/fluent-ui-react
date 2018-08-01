@@ -25,6 +25,11 @@ const Variations = () => (
       examplePath="components/Avatar/Variations/AvatarExampleName"
     />
     <ComponentExample
+      title="Generate initials"
+      description="An Avatar can be provided with custom logic for generating the initials shown in the label."
+      examplePath="components/Avatar/Variations/AvatarExampleGenerateInitials"
+    />
+    <ComponentExample
       title="Size"
       description="An Avatar can have different sizes."
       examplePath="components/Avatar/Variations/AvatarExampleSize"

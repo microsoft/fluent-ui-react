@@ -1,5 +1,5 @@
 import { pxToRem } from '../../lib'
-import { PositionProperty } from '../../../node_modules/csstype'
+import { PositionProperty } from 'csstype'
 
 const getAvatarDimension = (size: number) => {
   return 12 + size * 4
@@ -33,15 +33,20 @@ const getPresenceSpanLeft = (size: number, presenceIconPadding: number) => {
   )
 }
 
-const getPresenceSpanTop = (size: number, presenceIconPadding: number) => {
+const getPresenceSpanTop = (size: number, presenceIconPadding: number, src: string) => {
+  // TODO check why we need this ?!
+  if (src && size === 1) {
+    return getPresenceIconSize(size) * 1.5 + getPresenceIconPadding(size, presenceIconPadding) * 2
+  }
   return getPresenceIconSize(size) + getPresenceIconPadding(size, presenceIconPadding)
 }
 
 export default {
-  root: () => ({
+  root: ({ props }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     background: 'inherit',
+    height: pxToRem(getAvatarDimension(props.size)),
   }),
   imageAvatar: ({ props }) => ({
     width: pxToRem(getAvatarDimension(props.size)),
@@ -54,9 +59,8 @@ export default {
     verticalAlign: 'middle',
     textAlign: 'center',
   }),
-  presenceSpan: ({ props, variables }) => ({
-    display: 'block',
-    position: 'relative',
+  presenceDiv: ({ props, variables }) => ({
+    position: 'relative' as PositionProperty,
     background: 'inherit',
     padding: pxToRem(getPresenceIconPadding(props.size, variables.presenceIconPadding)),
     margin: '0px',
@@ -73,6 +77,7 @@ export default {
       getPresenceSpanTop(
         props.size,
         getPresenceIconPadding(props.size, variables.presenceIconPadding),
+        props.src,
       ),
     )}`,
     left: pxToRem(
@@ -83,7 +88,7 @@ export default {
     ),
   }),
   presenceIconLabel: ({ props }) => ({
-    position: 'relative',
+    position: 'relative' as PositionProperty,
     height: pxToRem(getPresenceIconSize(props.size)),
     width: pxToRem(getPresenceIconSize(props.size)),
     padding: '0px',
