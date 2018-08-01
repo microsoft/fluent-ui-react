@@ -4,6 +4,7 @@ import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import accordionTitleRules from './accordionTitleRules'
+import { AccordionTitleBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * A standard AccordionTitle.
@@ -47,8 +48,16 @@ class AccordionTitle extends UIComponent<any, any> {
 
   static rules = accordionTitleRules
 
+  constructor(p, context) {
+    super(p, context)
+    this.accBehavior = new AccordionTitleBehavior()
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+  handleKeyDown = e => {
+    _.invoke(this.props, 'onKeyDown', e, this.props)
   }
 
   renderComponent({ ElementType, classes, rest }) {
@@ -63,7 +72,13 @@ class AccordionTitle extends UIComponent<any, any> {
     }
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        {...rest}
+        className={classes.root}
+        onClick={this.handleClick}
+        onKeyDown={this.handleKeyDown}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+      >
         {active ? <span>&#9660;</span> : <span>&#9654;</span>}
         {content}
       </ElementType>

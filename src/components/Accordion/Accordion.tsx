@@ -1,11 +1,13 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
+import keyboardKey from 'keyboard-key'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { FocusZone } from '../FocusZone'
 
 /**
  * A standard Accordion.
@@ -60,6 +62,9 @@ class Accordion extends AutoControlledComponent<any, any> {
         }),
       ),
     ]),
+
+    grabFocus: PropTypes.bool,
+    componentRef: PropTypes.object,
   }
 
   static rules = accordionRules
@@ -73,6 +78,7 @@ class Accordion extends AutoControlledComponent<any, any> {
     'exclusive',
     'onTitleClick',
     'panels',
+    'grabFocus',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -81,6 +87,25 @@ class Accordion extends AutoControlledComponent<any, any> {
   static Content = AccordionContent
 
   state: any = { activeIndex: [0] }
+
+  focusGrabbed = false
+  focusZone: FocusZone
+  setFocusZone = fz => (this.focusZone = fz)
+  constructor(p, s) {
+    super(p, s)
+  }
+  componentDidMount() {
+    this.grabFocusIfNeeded()
+  }
+  componentDidUpdate() {
+    this.grabFocusIfNeeded()
+  }
+  grabFocusIfNeeded() {
+    if (this.props.grabFocus && !this.focusGrabbed && this.focusZone) {
+      this.focusGrabbed = true
+      this.focusZone.focus()
+    }
+  }
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -105,7 +130,57 @@ class Accordion extends AutoControlledComponent<any, any> {
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
     },
+    onKeyDown: (e, titleProps) => {
+      const code = keyboardKey.getCode(e)
+      if (code === keyboardKey.ArrowRight) {
+        this.handleRightKey(e, titleProps)
+      } else if (code === keyboardKey.ArrowLeft) {
+        this.handleLeftKey(e, titleProps)
+      }
+    },
   })
+
+  handleRightKey = (e: Event, titleProps) => {
+    let { activeIndex } = this.state
+    const { index } = titleProps
+    const { exclusive } = this.props
+
+    e.preventDefault()
+    if (exclusive) {
+      if (index === activeIndex) {
+        return
+      }
+      activeIndex = index
+    } else {
+      if (_.includes(activeIndex, index)) {
+        return
+      }
+      activeIndex = [...activeIndex, index]
+    }
+
+    this.trySetState({ activeIndex }, index)
+  }
+
+  handleLeftKey = (e: Event, titleProps) => {
+    let { activeIndex } = this.state
+    const { index } = titleProps
+    const { exclusive } = this.props
+
+    e.preventDefault()
+    if (exclusive) {
+      if (index !== activeIndex) {
+        return
+      }
+      activeIndex = -1
+    } else {
+      if (!_.includes(activeIndex, index)) {
+        return
+      }
+      activeIndex = _.without(activeIndex, index)
+    }
+
+    this.trySetState({ activeIndex }, index)
+  }
 
   isIndexActive = (index): boolean => {
     const { exclusive } = this.props
@@ -147,13 +222,16 @@ class Accordion extends AutoControlledComponent<any, any> {
     const { children } = this.props
 
     return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+      <FocusZone
+        elementType={ElementType}
+        preventDefaultWhenHandled={true}
+        ref={this.setFocusZone}
         {...rest}
         className={classes.root}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
       >
         {childrenExist(children) ? children : this.renderPanels()}
-      </ElementType>
+      </FocusZone>
     )
   }
 }
