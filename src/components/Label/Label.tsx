@@ -1,15 +1,20 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { HTMLAttributes, ReactNode } from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
 
+export interface LabelProps extends HTMLAttributes<HTMLElement> {
+  circular?: boolean
+  content?: ReactNode
+}
+
 /**
  * A label displays content classification
  */
-class Label extends UIComponent<any, any> {
+class Label extends UIComponent<LabelProps, any> {
   static displayName = 'Label'
 
   static create: Function
