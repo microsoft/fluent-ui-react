@@ -102,7 +102,7 @@ class Avatar extends UIComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { src, alt, name, status, generateInitials } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
-    const generateInitialsFunc = generateInitials || this.generateInitials
+    const generateInitialsFunc = generateInitials || Avatar.generateInitials
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
@@ -148,7 +148,7 @@ class Avatar extends UIComponent<any, any> {
     )
   }
 
-  generateInitials(nameParam: string): string {
+  static generateInitials = (nameParam: string): string => {
     if (!nameParam) {
       return ''
     }
