@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import accordionContentRules from './accordionContentRules'
@@ -38,19 +39,25 @@ class AccordionContent extends UIComponent<any, any> {
      * @param {object} data - All props.
      */
     onClick: PropTypes.func,
+
+    onKeyDown: PropTypes.func,
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
+  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick', 'onKeyDown']
 
   static rules = accordionContentRules
 
   static variables = accordionContentVariables
 
+  handleKeyDown = e => {
+    _.invoke(this.props, 'onKeyDown', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} onKeyDown={this.handleKeyDown}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

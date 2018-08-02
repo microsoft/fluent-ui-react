@@ -42,9 +42,23 @@ class AccordionTitle extends UIComponent<any, any> {
      * @param {object} data - All props.
      */
     onClick: PropTypes.func,
+
+    onKeyDown: PropTypes.func,
+
+    addAccordionTitle: PropTypes.func,
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
+  static handledProps = [
+    'as',
+    'active',
+    'children',
+    'className',
+    'content',
+    'index',
+    'onClick',
+    'onKeyDown',
+    'addAccordionTitle',
+  ]
 
   static rules = accordionTitleRules
 
@@ -58,6 +72,9 @@ class AccordionTitle extends UIComponent<any, any> {
   }
   handleKeyDown = e => {
     _.invoke(this.props, 'onKeyDown', e, this.props)
+  }
+  addAccordionTitle = ref => {
+    _.invoke(this.props, 'addAccordionTitle', ref)
   }
 
   renderComponent({ ElementType, classes, rest }) {
@@ -78,6 +95,7 @@ class AccordionTitle extends UIComponent<any, any> {
         onClick={this.handleClick}
         onKeyDown={this.handleKeyDown}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        ref={this.addAccordionTitle}
       >
         {active ? <span>&#9660;</span> : <span>&#9654;</span>}
         {content}

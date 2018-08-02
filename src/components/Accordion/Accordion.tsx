@@ -88,24 +88,12 @@ class Accordion extends AutoControlledComponent<any, any> {
 
   state: any = { activeIndex: [0] }
 
-  focusGrabbed = false
+  // Need the title elements to focus from content to active title on left key.
+  accordionTitles: HTMLElement[] = []
+  addAccordionTitle = title => this.accordionTitles.push(title)
+
   focusZone: FocusZone
   setFocusZone = fz => (this.focusZone = fz)
-  constructor(p, s) {
-    super(p, s)
-  }
-  componentDidMount() {
-    this.grabFocusIfNeeded()
-  }
-  componentDidUpdate() {
-    this.grabFocusIfNeeded()
-  }
-  grabFocusIfNeeded() {
-    if (this.props.grabFocus && !this.focusGrabbed && this.focusZone) {
-      this.focusGrabbed = true
-      this.focusZone.focus()
-    }
-  }
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -130,22 +118,31 @@ class Accordion extends AutoControlledComponent<any, any> {
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
     },
-    onKeyDown: (e, titleProps) => {
-      const code = keyboardKey.getCode(e)
-      if (code === keyboardKey.ArrowRight) {
-        this.handleRightKey(e, titleProps)
-      } else if (code === keyboardKey.ArrowLeft) {
-        this.handleLeftKey(e, titleProps)
-      }
-    },
   })
 
-  handleRightKey = (e: Event, titleProps) => {
+  onTitleKeyDown = (e, titleProps) => {
+    const code = keyboardKey.getCode(e)
+    if (code === keyboardKey.ArrowRight) {
+      this.handleTileRightKey(e, titleProps)
+    } else if (code === keyboardKey.ArrowLeft) {
+      this.handleTitleLeftKey(e, titleProps)
+    }
+  }
+
+  onContentKeyDown = (e, titleProps) => {
+    const code = keyboardKey.getCode(e)
+    if (code === keyboardKey.ArrowRight) {
+      this.handleContentRightKey(e, titleProps)
+    } else if (code === keyboardKey.ArrowLeft) {
+      this.handleContentLeftKey(e, titleProps)
+    }
+  }
+
+  handleTileRightKey = (e: Event, titleProps) => {
     let { activeIndex } = this.state
     const { index } = titleProps
     const { exclusive } = this.props
 
-    e.preventDefault()
     if (exclusive) {
       if (index === activeIndex) {
         return
@@ -158,10 +155,11 @@ class Accordion extends AutoControlledComponent<any, any> {
       activeIndex = [...activeIndex, index]
     }
 
+    e.preventDefault()
     this.trySetState({ activeIndex }, index)
   }
 
-  handleLeftKey = (e: Event, titleProps) => {
+  handleTitleLeftKey = (e: Event, titleProps) => {
     let { activeIndex } = this.state
     const { index } = titleProps
     const { exclusive } = this.props
@@ -182,6 +180,15 @@ class Accordion extends AutoControlledComponent<any, any> {
     this.trySetState({ activeIndex }, index)
   }
 
+  handleContentLeftKey = (e, contentProps) => {
+    const { activeIndex } = this.state
+
+    e.preventDefault()
+    this.focusZone.focusElement(this.accordionTitles[activeIndex])
+  }
+
+  handleContentRightKey = (e, contentProps) => e.preventDefault()
+
   isIndexActive = (index): boolean => {
     const { exclusive } = this.props
     const { activeIndex } = this.state
@@ -200,7 +207,12 @@ class Accordion extends AutoControlledComponent<any, any> {
       children.push(
         AccordionTitle.create(title, {
           generateKey: true,
-          defaultProps: { active, index },
+          defaultProps: {
+            active,
+            index,
+            onKeyDown: this.onTitleKeyDown,
+            addAccordionTitle: this.addAccordionTitle,
+          },
           overrideProps: this.handleTitleOverrides,
         }),
       )
@@ -209,7 +221,7 @@ class Accordion extends AutoControlledComponent<any, any> {
           { content },
           {
             generateKey: true,
-            defaultProps: { active },
+            defaultProps: { active, onKeyDown: this.onContentKeyDown },
           },
         ),
       )
@@ -225,9 +237,9 @@ class Accordion extends AutoControlledComponent<any, any> {
       <FocusZone
         elementType={ElementType}
         preventDefaultWhenHandled={true}
-        ref={this.setFocusZone}
         {...rest}
         className={classes.root}
+        ref={this.setFocusZone}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
       >
         {childrenExist(children) ? children : this.renderPanels()}
