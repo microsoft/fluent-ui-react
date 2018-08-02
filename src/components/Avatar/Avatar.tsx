@@ -61,11 +61,33 @@ class Avatar extends UIComponent<any, any> {
       'PresenceUnknown',
     ]),
 
+    /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     generateInitials: PropTypes.func,
   }
 
   static defaultProps = {
     size: 5,
+    generateInitials(name: string) {
+      if (!name) {
+        return ''
+      }
+
+      const reducedName = name
+        .replace(/\s*\(.*?\)\s*/g, ' ')
+        .replace(/\s*{.*?}\s*/g, ' ')
+        .replace(/\s*\[.*?]\s*/g, ' ')
+
+      const initials = reducedName
+        .split(' ')
+        .filter(item => item !== '')
+        .map(name => name.charAt(0))
+        .reduce((accumulator, currentValue) => accumulator + currentValue)
+
+      if (initials.length > 2) {
+        return initials.charAt(0) + initials.charAt(initials.length - 1)
+      }
+      return initials
+    },
   }
 
   static statusToIcon = {
@@ -102,7 +124,6 @@ class Avatar extends UIComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { src, alt, name, status, generateInitials } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
-    const generateInitialsFunc = generateInitials || Avatar.generateInitials
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
@@ -116,18 +137,18 @@ class Avatar extends UIComponent<any, any> {
           />
         ) : (
           <Label
-            className={classes.avatarLabel}
+            className={classes.avatarNameContainer}
             as="div"
-            content={generateInitialsFunc(name)}
+            content={generateInitials(name)}
             variables={{ padding: '0px' }}
             circular
             title={name}
           />
         )}
         {status && (
-          <div className={classes.presenceDiv}>
+          <div className={classes.presenceIndicatorContainer}>
             <Label
-              className={classes.presenceIconLabel}
+              className={classes.presenceIndicatorWrapper}
               as="div"
               variables={{ padding: '0px' }}
               style={{ background: color }}
@@ -138,7 +159,7 @@ class Avatar extends UIComponent<any, any> {
                 size="mini"
                 name={icon}
                 color="white"
-                style={avatarRules.presenceIcon()}
+                style={avatarRules.presenceIndicator()}
                 title={status}
               />
             </Label>
@@ -146,29 +167,6 @@ class Avatar extends UIComponent<any, any> {
         )}
       </ElementType>
     )
-  }
-
-  static generateInitials = (nameParam: string): string => {
-    if (!nameParam) {
-      return ''
-    }
-
-    const name = nameParam
-      .replace(/\s*\(.*?\)\s*/g, ' ')
-      .replace(/\s*{.*?}\s*/g, ' ')
-      .replace(/\s*\[.*?]\s*/g, ' ')
-
-    let names = name.split(' ')
-    names = names.filter(item => item !== '')
-
-    const initials = names
-      .map(name => (name.length ? name.charAt(0) : ''))
-      .reduce((accumulator, currentValue) => accumulator + currentValue)
-
-    if (initials.length > 2) {
-      return initials.charAt(0) + initials.charAt(initials.length - 1)
-    }
-    return initials
   }
 }
 

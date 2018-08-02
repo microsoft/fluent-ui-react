@@ -7,7 +7,7 @@ const AvatarExampleSizeShorthand = () =>
     const size = i + 1
 
     return (
-      <div style={{ background: 'white' }}>
+      <div style={{ background: 'white', marginBottom: '10px' }}>
         <Avatar
           key={size}
           size={size}

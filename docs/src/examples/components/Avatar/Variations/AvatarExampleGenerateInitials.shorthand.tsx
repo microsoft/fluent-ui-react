@@ -6,11 +6,10 @@ const generateInitials = (name: string) => {
     return ''
   }
 
-  let names = name.split(' ')
-  names = names.filter(item => item !== '')
-
-  return names
-    .map(name => (name.length ? name.charAt(0) + '.' : ''))
+  return name
+    .split(' ')
+    .filter(item => item !== '')
+    .map(name => `${name.charAt(0)}.`)
     .reduce((accumulator, currentValue) => accumulator + currentValue)
 }
 

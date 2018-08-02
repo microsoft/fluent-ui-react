@@ -1,5 +1,5 @@
-export default (siteVars: any) => {
+export default () => {
   return {
-    presenceIconPadding: 2,
+    presenceIndicatorPadding: 2,
   }
 }
