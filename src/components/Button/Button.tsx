@@ -5,7 +5,6 @@ import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
-import { ToggleButtonBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * A button.
