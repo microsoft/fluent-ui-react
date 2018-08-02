@@ -68,39 +68,33 @@ class Label extends UIComponent<any, any> {
 
   static variables = labelVariables
 
-  handleIconOverrides = predefinedProps => ({
-    onClick: e => {
-      _.invoke(predefinedProps, 'onClick', e)
-      _.invoke(this.props, 'onIconClick', e, this.props)
-    },
-  })
+  handleIconOverrides = predefinedProps => {
+    const { onIconClick, iconPosition, content } = this.props
+    const { onClick, variables, xSpacing } = predefinedProps
+
+    return {
+      onClick: e => {
+        _.invoke(predefinedProps, 'onClick', e)
+        _.invoke(this.props, 'onIconClick', e, this.props)
+      },
+      ...((onClick || onIconClick) && { tabIndex: '0' }),
+      ...((!variables || !variables.color) && { variables: { color: Label.variables().color } }),
+      ...(!xSpacing && {
+        xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
+      }),
+    }
+  }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, icon, iconPosition, onIconClick } = this.props
+    const { children, content, icon, iconPosition } = this.props
     const getContent = (): ReactNode => {
       const iconAtEnd = iconPosition === 'end'
       const iconAtStart = !iconAtEnd
 
-      const iconProps = {
-        className: classes.icon,
-        ...(icon && {
-          ...((icon.onClick || onIconClick) && { tabIndex: '0' }),
-        }),
-        ...(icon &&
-          typeof icon === 'string' && {
-            name: icon,
-            variables: { color: Label.variables().color },
-            xSpacing: !content ? 'none' : iconAtEnd ? 'before' : 'after',
-          }),
-        ...(icon &&
-          typeof icon === 'object' && {
-            ...icon,
-          }),
-      }
-
       const iconElement = Icon.create(
         {
-          ...iconProps,
+          className: classes.icon,
+          ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
         },
         {
           generateKey: false,
