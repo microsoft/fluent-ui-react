@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -9,7 +9,22 @@ import menuRules from './menuRules'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
 
-class Menu extends AutoControlledComponent<any, any> {
+export type MenuType = 'primary' | 'secondary'
+export type MenuShape = 'pills' | 'pointing' | 'underlined'
+
+export interface IMenuProps {
+  as?: string
+  activeIndex?: number | string
+  children?: ReactNode
+  className?: string
+  defaultActiveIndex?: number | string
+  items?: any
+  shape?: MenuShape
+  type?: MenuType
+  vertical?: boolean
+}
+
+class Menu extends AutoControlledComponent<IMenuProps, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -37,10 +52,13 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
+    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A vertical menu displays elements vertically. */
+    vertical: PropTypes.bool,
 
     accBehavior: PropTypes.string,
   }
@@ -58,6 +76,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'items',
     'shape',
     'type',
+    'vertical',
     'accBehavior',
   ]
 
@@ -86,7 +105,7 @@ class Menu extends AutoControlledComponent<any, any> {
   })
 
   renderItems = () => {
-    const { items, type, shape } = this.props
+    const { items, type, shape, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -94,6 +113,7 @@ class Menu extends AutoControlledComponent<any, any> {
         defaultProps: {
           type,
           shape,
+          vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
         },

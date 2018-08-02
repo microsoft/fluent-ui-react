@@ -2,7 +2,7 @@ export interface ITextVariables {
   importantWeight: number
 }
 
-export default (siteVars: any): ITextVariables => {
+export default (): ITextVariables => {
   return {
     importantWeight: 600,
   }

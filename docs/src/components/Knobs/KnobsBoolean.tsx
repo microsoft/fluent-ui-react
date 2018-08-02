@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 import KnobsField from './KnobsField'
 import KnobsLabel from './KnobsLabel'
-import KnobsValue from './KnobsValue'
 import KnobsControl from './KnobsControl'
 
 class KnobsBoolean extends Component<any, any> {
@@ -28,8 +27,7 @@ class KnobsBoolean extends Component<any, any> {
         <KnobsControl>
           <input type="checkbox" defaultChecked={booleanValue} onChange={this.handleChange} />
         </KnobsControl>
-        <KnobsLabel>{name}</KnobsLabel>
-        <KnobsValue>{value}</KnobsValue>
+        <KnobsLabel value={value} name={name} />
       </KnobsField>
     )
   }

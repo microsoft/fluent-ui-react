@@ -1,5 +1,3 @@
-import renderer from './felaRenderer'
-
 export interface IClasses {
   [key: string]: string
 }
@@ -11,7 +9,13 @@ export interface IClasses {
  * @param theme
  * @returns {{}}
  */
-const getClasses = (props, rules, variables: any = () => {}, theme: any = {}): IClasses => {
+const getClasses = (
+  renderer,
+  props,
+  rules,
+  variables: any = () => {},
+  theme: any = {},
+): IClasses => {
   const { renderRule } = renderer
   const ruleProps = {
     props,

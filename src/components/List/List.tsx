@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
@@ -77,8 +77,7 @@ class List extends UIComponent<any, any> {
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
-    const { items } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
+    const { children } = this.props
 
     return (
       <ElementType
@@ -86,9 +85,16 @@ class List extends UIComponent<any, any> {
         {...rest}
         className={classes.root}
       >
-        {_.map(items, item => ListItem.create(item, { defaultProps: itemProps }))}
+        {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
+  }
+
+  renderItems() {
+    const { items } = this.props
+    const itemProps = _.pick(this.props, List.itemProps)
+
+    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
   }
 }
 
