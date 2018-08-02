@@ -25,7 +25,7 @@ class LabelExampleIconShorthandShorthand extends React.Component<{}, { display: 
           onClick: this.hide,
           variables: { color: 'rgba(0, 0, 0, 0.6)' },
         }}
-        iconPosition="after"
+        iconPosition="end"
         content="Removable label"
       />
     )

@@ -35,10 +35,10 @@ class Label extends UIComponent<any, any> {
     content: customPropTypes.contentShorthand,
 
     /** Label can have an icon. */
-    icon: customPropTypes.some([PropTypes.bool, PropTypes.string, PropTypes.object]),
+    icon: customPropTypes.some([PropTypes.string, PropTypes.object]),
 
     /** An icon label can format an Icon to appear before or after the text in the label */
-    iconPosition: PropTypes.oneOf(['before', 'after']),
+    iconPosition: PropTypes.oneOf(['start', 'end']),
 
     /**
      * Function called when the icon is clicked.
@@ -78,47 +78,42 @@ class Label extends UIComponent<any, any> {
   renderComponent({ ElementType, classes, rest }) {
     const { children, content, icon, iconPosition, onIconClick } = this.props
     const getContent = (): ReactNode => {
-      if (childrenExist(children)) {
-        return children
-      }
-
-      const iconIsAfterContent = iconPosition === 'after'
+      const iconAtEnd = iconPosition === 'end'
+      const iconAtStart = !iconAtEnd
 
       const iconProps = {
         className: classes.icon,
+        ...(icon && {
+          ...((icon.onClick || onIconClick) && { tabIndex: '0' }),
+        }),
         ...(icon &&
           typeof icon === 'string' && {
             name: icon,
-            ...(onIconClick && { tabIndex: '0' }),
-            variables: { color: classes.root.color },
-            xSpacing: !content ? 'none' : iconIsAfterContent ? 'before' : 'after',
+            variables: { color: Label.variables().color },
+            xSpacing: !content ? 'none' : iconAtEnd ? 'before' : 'after',
           }),
         ...(icon &&
           typeof icon === 'object' && {
             ...icon,
-            ...(icon.onClick && { tabIndex: '0' }),
           }),
       }
 
-      const renderedContent = [
-        content,
-        icon &&
-          Icon.create(
-            {
-              ...iconProps,
-            },
-            {
-              generateKey: false,
-              overrideProps: this.handleIconOverrides,
-            },
-          ),
-      ].filter(Boolean)
-      return iconIsAfterContent ? renderedContent : renderedContent.reverse()
+      const iconElement = Icon.create(
+        {
+          ...iconProps,
+        },
+        {
+          generateKey: false,
+          overrideProps: this.handleIconOverrides,
+        },
+      )
+
+      return [iconAtStart && icon && iconElement, content, iconAtEnd && icon && iconElement]
     }
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {getContent()}
+        {childrenExist(children) ? children : getContent()}
       </ElementType>
     )
   }

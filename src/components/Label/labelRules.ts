@@ -5,7 +5,7 @@ export default {
     padding: variables.padding,
     fontWeight: '500',
     backgroundColor: 'rgb(232, 232, 232)',
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: variables.color,
     borderRadius: pxToRem(3),
     ...(props.circular && {
       borderRadius: variables.circularRadius,

@@ -20,7 +20,7 @@ class LabelExampleIconShorthand extends React.Component<{}, { display: string }>
         circular
         style={{ display }}
         icon="close"
-        iconPosition="after"
+        iconPosition="end"
         onIconClick={this.hide}
         content="Removable label"
       />
