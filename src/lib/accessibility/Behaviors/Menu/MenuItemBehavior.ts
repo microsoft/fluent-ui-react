@@ -4,7 +4,7 @@ import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 import MenuOpenSubmenuAction from '../../../actions/MenuOpenSubmenuAction'
 
-import { KeyCodes } from '../../../fabric/KeyCodes'
+import { KeyCodes } from '@uifabric/utilities'
 
 export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {

@@ -8,6 +8,8 @@ import {
   createShorthandFactory,
   customPropTypes,
   AutoControlledComponent,
+  eventStack,
+  doesNodeContainClick,
 } from '../../lib'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
@@ -23,9 +25,8 @@ import MenuOpenSubmenuAction, {
   MenuOpenSubmenuActionParams,
 } from '../../lib/actions/MenuOpenSubmenuAction'
 
-import { focusFirstChild, focusLastChild } from '../../lib/fabric'
-
-import { eventStack, doesNodeContainClick } from 'src/lib'
+import { focusLastChild } from '../../lib/fabric/focus'
+import { focusFirstChild } from '@uifabric/utilities'
 
 interface MenuItemState {
   submenuOpened: boolean

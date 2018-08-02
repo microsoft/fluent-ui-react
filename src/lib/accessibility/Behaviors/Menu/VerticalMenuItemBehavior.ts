@@ -3,7 +3,7 @@ import { AbstractBehavior } from '../AbstractBehavior'
 import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 
-import { KeyCodes } from '../../../fabric/KeyCodes'
+import { KeyCodes } from '@uifabric/utilities'
 
 export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {

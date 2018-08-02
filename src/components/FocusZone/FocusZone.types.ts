@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FocusZone } from './FocusZone'
-import { IRefObject } from '../../lib/fabric'
+import { IRefObject } from '@uifabric/utilities'
 
 /**
  * FocusZone component class interface.

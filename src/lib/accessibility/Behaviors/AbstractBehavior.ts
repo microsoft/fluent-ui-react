@@ -1,6 +1,6 @@
 import { ComponentState } from '../interfaces'
 import UIComponent from '../../UIComponent'
-import { KeyCodes } from '../../fabric/KeyCodes'
+import { KeyCodes } from '@uifabric/utilities'
 
 export abstract class AbstractBehavior<P, S> {
   private keyHandlers: {

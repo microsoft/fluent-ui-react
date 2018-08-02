@@ -25,7 +25,7 @@ import {
   isElementTabbable,
   shouldWrapFocus,
   createRef,
-} from '../../lib/fabric'
+} from '@uifabric/utilities'
 
 const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter'
@@ -74,7 +74,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
   constructor(props: IFocusZoneProps) {
     super(props)
 
-    this.warnDeprecations({
+    this._warnDeprecations({
       rootProps: undefined,
       allowTabKey: 'handleTabKey',
     })

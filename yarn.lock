@@ -62,6 +62,12 @@
   version "10.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.2.tgz#f19f05314d5421fe37e74153254201a7bf00a707"
 
+"@types/prop-types@^15.5.2":
+  version "15.5.4"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.4.tgz#9e6199bad131786e24c2baa2a82705a02139fbf8"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^16.0.6":
   version "16.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.6.tgz#f1a65a4e7be8ed5d123f8b3b9eacc913e35a1a3c"
@@ -81,6 +87,21 @@
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.6.tgz#5024957c6bcef4f02823accf5974faba2e54fada"
   dependencies:
     csstype "^2.2.0"
+
+"@uifabric/merge-styles@>=6.6.0 <7.0.0":
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-6.7.0.tgz#35ced1e204279998d358332ada70fd3a2792692d"
+  dependencies:
+    tslib "^1.7.1"
+
+"@uifabric/utilities@^6.12.1":
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-6.12.1.tgz#e868d6cac5cea1b769219309acf8aff36e81cb1c"
+  dependencies:
+    "@types/prop-types" "^15.5.2"
+    "@uifabric/merge-styles" ">=6.6.0 <7.0.0"
+    prop-types "^15.5.10"
+    tslib "^1.7.1"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -5754,7 +5775,7 @@ prompts@^0.1.9:
     clorox "^1.0.3"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
