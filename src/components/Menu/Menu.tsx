@@ -8,11 +8,12 @@ import menuRules from './menuRules'
 
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
-import { FocusZone } from '../FocusZone'
-import { OffsetBlockEndProperty } from '../../../node_modules/csstype'
+import { OffsetBlockEndProperty } from 'csstype'
+import { FocusZone, FocusZoneDirection } from '../FocusZone'
 
 interface MenuState {
   activeIndex: number
+  isManagingFocus: boolean
 }
 
 export type MenuType = 'primary' | 'secondary'
@@ -41,6 +42,8 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
   static variables = menuVariables
 
   static create: Function
+
+  private navDirection: FocusZoneDirection
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -111,6 +114,10 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     this.accBehavior = AccBehaviorFactory.getBehavior(
       AccBehaviorType[accBehavior] || AccBehaviorType.menu,
     )
+
+    this.navDirection = this.props.vertical
+      ? FocusZoneDirection.vertical
+      : FocusZoneDirection.horizontal
   }
 
   componentDidMount() {
@@ -158,14 +165,18 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
   renderComponent({ ElementType, classes, rest }) {
     const { children } = this.props
+
     return (
       <FocusZone
+        direction={this.navDirection}
         elementType={ElementType}
         preventDefaultWhenHandled={true}
         ref={this.setFocusZone}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
+        onBlur={this.accBehavior.onBlur(this, this.props, this.state)}
+        onFocus={this.accBehavior.onFocus(this, this.props, this.state)}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </FocusZone>

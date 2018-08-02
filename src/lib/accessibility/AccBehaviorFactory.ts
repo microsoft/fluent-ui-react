@@ -7,12 +7,13 @@ import {
   ListItemBehavior,
   SelectableListBehavior,
   SelectableListItemBehavior,
-  MenuItemBehavior,
   MenuBehavior,
   DefaultBehavior,
   TreeBehavior,
   TreeItemBehavior,
   GroupBehavior,
+  MenuItemBehavior,
+  VerticalMenuItemBehavior,
 } from './Behaviors/behaviors'
 import { IAccessibilityBehavior } from './interfaces'
 
@@ -27,6 +28,7 @@ export enum AccBehaviorType {
   selectableListItem,
   menu,
   menuItem,
+  verticalMenuItem,
   tree,
   treeItem,
   group,
@@ -44,6 +46,7 @@ export class AccBehaviorFactory {
     [AccBehaviorType[AccBehaviorType.selectableListItem], () => new SelectableListItemBehavior()],
     [AccBehaviorType[AccBehaviorType.menu], () => new MenuBehavior()],
     [AccBehaviorType[AccBehaviorType.menuItem], () => new MenuItemBehavior()],
+    [AccBehaviorType[AccBehaviorType.verticalMenuItem], () => new VerticalMenuItemBehavior()],
     [AccBehaviorType[AccBehaviorType.tree], () => new TreeBehavior()],
     [AccBehaviorType[AccBehaviorType.treeItem], () => new TreeItemBehavior()],
     [AccBehaviorType[AccBehaviorType.group], () => new GroupBehavior()],

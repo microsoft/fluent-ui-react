@@ -15,11 +15,15 @@ import { MenuType, MenuShape } from './Menu'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
-import ClickAction from '../../lib/actions/ClickAction'
+import ClickAction, { ClickActionParams } from '../../lib/actions/ClickAction'
 import MenuCloseSubmenuAction, {
   MenuCloseSubmenuActionParams,
 } from '../../lib/actions/MenuCloseSubmenuAction'
-import { focusFirstChild } from '../../lib/fabric'
+import MenuOpenSubmenuAction, {
+  MenuOpenSubmenuActionParams,
+} from '../../lib/actions/MenuOpenSubmenuAction'
+
+import { focusFirstChild, focusLastChild } from '../../lib/fabric'
 
 interface MenuItemState {
   submenuOpened: boolean
@@ -52,6 +56,10 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   static create: Function
 
   static rules = menuItemRules
+
+  private postRenderCallback: Function = () => {}
+
+  private preventBlurEvent: boolean
 
   static propTypes = {
     /** A menu item can be active. */
@@ -122,20 +130,34 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   elementRef: HTMLElement
   setElementRef = ref => (this.elementRef = ref)
 
-  clickHandler = ClickAction.handler(() => {
-    this.handleClick(undefined)
+  clickHandler = ClickAction.handler((params: ClickActionParams) => {
+    this.handleClick(params.event)
+    console.log('click handler menu item', params.event)
   })
 
   closeSubmenuHandler = MenuCloseSubmenuAction.handler((params: MenuCloseSubmenuActionParams) => {
     if (this.props['submenu'] && this.state['submenuOpened']) {
       this.setState({ submenuOpened: false })
       if (params.moveFocus) {
-        focusFirstChild(this.elementRef)
+        this.postRenderCallback = () => focusFirstChild(this.elementRef)
       }
     }
   })
 
-  onEscActionHandler = undefined // TODO: if has submenu and submenu is open, close it and make parent focusable
+  openSubmenuHandler = MenuOpenSubmenuAction.handler((params: MenuOpenSubmenuActionParams) => {
+    if (!this.props['submenu']) return
+
+    if (!this.state['submenuOpened']) {
+      this.setState({ submenuOpened: true })
+      if (params.moveFocus) {
+        this.postRenderCallback = () => focusLastChild(this.elementRef)
+      }
+    } else {
+      if (params.moveFocus) {
+        focusLastChild(this.elementRef)
+      }
+    }
+  })
 
   constructor(props, state) {
     super(props, state)
@@ -146,6 +168,12 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
     this.registerActionHandler(this.clickHandler)
     this.registerActionHandler(this.closeSubmenuHandler)
+    this.registerActionHandler(this.openSubmenuHandler)
+  }
+
+  componentDidUpdate() {
+    this.postRenderCallback()
+    this.postRenderCallback = () => {}
   }
 
   getInitialAutoControlledState() {
@@ -155,6 +183,8 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   handleClick = e => {
     if (this.props.submenu) {
       this.setState({ submenuOpened: !this.state.submenuOpened })
+    } else {
+      alert(this.props.content)
     }
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -162,12 +192,14 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
-    const submenuIndicator = this.props.submenu && (this.state.submenuOpened ? '<' : '>')
+    const submenuIndicator = this.props.submenu && (this.state.submenuOpened ? ' <' : ' >')
     return (
       <ElementType
         ref={this.setElementRef}
         role="presentation"
         onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
+        onBlur={this.accBehavior.onBlur(this, this.props, this.state)}
+        onFocus={this.accBehavior.onBlur(this, this.props, this.state)}
       >
         <div // this is an attempt to mimic the acc prototype
           {...rest}
