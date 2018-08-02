@@ -6,6 +6,8 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import chatRules from './chatRules'
 import ChatMessage from './ChatMessage'
 
+import { FocusZone } from '../FocusZone'
+
 class Chat extends UIComponent<any, any> {
   static className = 'ui-chat'
 
@@ -31,15 +33,35 @@ class Chat extends UIComponent<any, any> {
 
   static Message = ChatMessage
 
+  focusZone: FocusZone
+  setFocusZone = fz => (this.focusZone = fz)
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, messages } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <FocusZone
+        elementType={ElementType}
+        preventDefaultWhenHandled={true}
+        defaultActiveElement=":last-child"
+        ref={this.setFocusZone}
+        onActiveElementChanged={(element, ev) => {
+          console.error('on active element changed', 'element', element, 'ev', ev)
+        }}
+        onBeforeFocus={childElement => {
+          console.error('on before focus', 'childElement', childElement)
+          return true
+        }}
+        onFocusNotification={() => {
+          console.error('on focus notification')
+        }}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children)
           ? children
           : _.map(messages, message => ChatMessage.create(message))}
-      </ElementType>
+      </FocusZone>
     )
   }
 }

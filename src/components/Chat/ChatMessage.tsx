@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
+import {} from '../../lib/accessibility/Behaviors/behaviors'
 import chatMessageRules from './chatMessageRules'
 import chatMessageVariables from './chatMessageVariables'
+import { AccBehaviorFactory, AccBehaviorType } from '../../lib/accessibility/AccBehaviorFactory'
 
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'
@@ -39,11 +41,23 @@ class ChatMessage extends UIComponent<any, any> {
 
   static variables = chatMessageVariables
 
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.chatMessage,
+    )
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

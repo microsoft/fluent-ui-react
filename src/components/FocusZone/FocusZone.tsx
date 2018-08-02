@@ -112,7 +112,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
       this.updateTabIndexes()
 
       if (this.props.defaultActiveElement) {
-        this._activeElement = getDocument()!.querySelector(
+        this._activeElement = this._root.current.querySelector(
           this.props.defaultActiveElement,
         ) as HTMLElement
         this.focus()
