@@ -15,6 +15,7 @@ export interface ITextProps {
   disabled?: boolean
   error?: boolean
   size?: ITextSize
+  style?: any
   important?: boolean
   success?: boolean
   timestamp?: boolean
