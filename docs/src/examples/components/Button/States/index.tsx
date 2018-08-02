@@ -5,6 +5,11 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const States = () => (
   <ExampleSection title="States">
     <ComponentExample
+      title="Active"
+      description="A button can show it is currently the active user selection."
+      examplePath="components/Button/States/ButtonExampleActive"
+    />
+    <ComponentExample
       title="Disabled"
       description="A button can show it is currently unable to be interacted with."
       examplePath="components/Button/States/ButtonExampleDisabled"

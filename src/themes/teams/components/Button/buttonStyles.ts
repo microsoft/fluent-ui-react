@@ -1,10 +1,15 @@
 import { pxToRem } from '../../../../lib'
-import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
+import {
+  disabledStyle,
+  primaryActiveStyle,
+  secondaryActiveStyle,
+  truncateStyle,
+} from '../../../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
 
 export default {
   root: ({ props, variables }: { props: any; variables: IButtonVariables }) => {
-    const { circular, disabled, fluid, icon, iconPosition, type } = props
+    const { active, circular, disabled, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -79,10 +84,12 @@ export default {
       ':hover': {
         backgroundColor: backgroundColorHover,
       },
-
+      ...(active && {
+        backgroundColor: secondaryActiveStyle.backgroundColor,
+      }),
       ...(primary && {
         color: typePrimaryColor,
-        backgroundColor: typePrimaryBackgroundColor,
+        backgroundColor: active ? primaryActiveStyle.backgroundColor : typePrimaryBackgroundColor,
         borderColor: typePrimaryBorderColor,
         ':hover': {
           backgroundColor: typePrimaryBackgroundColorHover,
@@ -91,12 +98,15 @@ export default {
 
       ...(secondary && {
         color: typeSecondaryColor,
-        backgroundColor: typeSecondaryBackgroundColor,
+        backgroundColor: active
+          ? secondaryActiveStyle.backgroundColor
+          : typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
         ':hover': {
           borderColor: 'transparent',
           backgroundColor: typeSecondaryBackgroundColorHover,
         },
+        borderWidth: `${!active ? (circular ? 1 : 2) : 0}px`,
       }),
     }
   },
