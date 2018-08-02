@@ -59,10 +59,6 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
   static rules = menuItemRules
 
-  private postRenderCallback: Function = () => {}
-
-  private preventBlurEvent: boolean
-
   static propTypes = {
     /** A menu item can be active. */
     active: PropTypes.bool,
@@ -138,10 +134,11 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
   closeSubmenuHandler = MenuCloseSubmenuAction.handler((params: MenuCloseSubmenuActionParams) => {
     if (this.props['submenu'] && this.state['submenuOpened']) {
-      this.setState({ submenuOpened: false })
-      if (params.moveFocus) {
-        this.postRenderCallback = () => focusFirstChild(this.elementRef)
-      }
+      this.setState({ submenuOpened: false }, () => {
+        if (params.moveFocus) {
+          focusFirstChild(this.elementRef)
+        }
+      })
     }
   })
 
@@ -149,11 +146,11 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     if (!this.props['submenu']) return
 
     if (!this.state['submenuOpened']) {
-      this.setState({ submenuOpened: true })
-      if (params.moveFocus) {
-        this.postRenderCallback = () =>
+      this.setState({ submenuOpened: true }, () => {
+        if (params.moveFocus) {
           this.moveFocusInSubmenu(this.elementRef.lastElementChild as HTMLElement, params.focusLast)
-      }
+        }
+      })
     } else if (params.moveFocus) {
       this.moveFocusInSubmenu(this.elementRef.lastElementChild as HTMLElement, params.focusLast)
     }
@@ -205,11 +202,6 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
   private removeDocumentListener() {
     eventStack.unsub('click', this.handleDocumentClick)
-  }
-
-  componentDidUpdate() {
-    this.postRenderCallback()
-    this.postRenderCallback = () => {}
   }
 
   getInitialAutoControlledState() {
