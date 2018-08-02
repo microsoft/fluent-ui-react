@@ -174,6 +174,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
         direction={this.navDirection}
         elementType={ElementType}
         preventDefaultWhenHandled={true}
+        isCircularNavigation={true}
         ref={this.setFocusZone}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}

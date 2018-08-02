@@ -14,6 +14,7 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
 
     this.handleKey(KeyCodes.enter, (key, event, component, props, state) => {
       event.preventDefault()
+      event.stopPropagation()
       component.executeAction(ClickAction.execute({ event }))
     })
 

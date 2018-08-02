@@ -25,8 +25,7 @@ import MenuOpenSubmenuAction, {
   MenuOpenSubmenuActionParams,
 } from '../../lib/actions/MenuOpenSubmenuAction'
 
-import { focusLastChild } from '../../lib/fabric/focus'
-import { focusFirstChild } from '@uifabric/utilities'
+import { focusFirstChild, focusAsync, getPreviousElement } from '@uifabric/utilities'
 
 interface MenuItemState {
   submenuOpened: boolean
@@ -135,7 +134,6 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
   clickHandler = ClickAction.handler((params: ClickActionParams) => {
     this.handleClick(params.event)
-    console.log('click handler menu item', params.event)
   })
 
   closeSubmenuHandler = MenuCloseSubmenuAction.handler((params: MenuCloseSubmenuActionParams) => {
@@ -153,10 +151,11 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     if (!this.state['submenuOpened']) {
       this.setState({ submenuOpened: true })
       if (params.moveFocus) {
-        this.postRenderCallback = () => this.moveFocusInSubmenu(this.elementRef, params.focusLast)
+        this.postRenderCallback = () =>
+          this.moveFocusInSubmenu(this.elementRef.lastElementChild as HTMLElement, params.focusLast)
       }
     } else if (params.moveFocus) {
-      this.moveFocusInSubmenu(this.elementRef, params.focusLast)
+      this.moveFocusInSubmenu(this.elementRef.lastElementChild as HTMLElement, params.focusLast)
     }
   })
 
@@ -180,11 +179,17 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     this.removeDocumentListener()
   }
 
-  private moveFocusInSubmenu(ref: HTMLElement, focusLast?: boolean) {
+  private moveFocusInSubmenu(submenuElement: HTMLElement, focusLast?: boolean) {
     if (focusLast) {
-      focusLastChild(ref.lastElementChild as HTMLElement)
+      focusAsync(getPreviousElement(
+        submenuElement as HTMLElement,
+        submenuElement.lastElementChild as HTMLElement,
+        true,
+        true,
+        true,
+      ) as HTMLElement)
     } else {
-      focusFirstChild(ref.lastElementChild as HTMLElement)
+      focusFirstChild(submenuElement as HTMLElement)
     }
   }
 
