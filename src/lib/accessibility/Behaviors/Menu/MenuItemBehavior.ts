@@ -10,9 +10,6 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
   _async: any
 
-  private isManagingFocus: boolean = false
-  private timeoutId: any
-
   constructor() {
     super('menuitem')
 
@@ -38,35 +35,6 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
     this.handleKey(KeyCodes.left, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
-
-    // this.handleBlur((event, component, props, state) => {
-
-    //   console.warn('blur handler behavior item', event, component)
-
-    //   this.timeoutId = setTimeout(() => {
-    //     if (this.isManagingFocus) {
-    //       this.isManagingFocus = false;
-    //     }
-
-    //    console.warn('isManagingFocus blur', this.isManagingFocus)
-    //     return;
-    //   }, 0);
-
-    //   console.warn('event.stopPropagation()')
-
-    // })
-
-    // this.handleFocus((event, component, props, state) => {
-    //   console.warn('focus handler behavior', event, component)
-
-    //   clearTimeout(this.timeoutId);
-    //   if (!this.isManagingFocus) {
-    //     this.isManagingFocus = true;
-    //   }
-
-    //   console.warn('isManagingFocus focus', this.isManagingFocus)
-
-    // })
   }
 
   private attributes = {

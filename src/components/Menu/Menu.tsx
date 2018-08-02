@@ -175,8 +175,6 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
-        onBlur={this.accBehavior.onBlur(this, this.props, this.state)}
-        onFocus={this.accBehavior.onFocus(this, this.props, this.state)}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </FocusZone>

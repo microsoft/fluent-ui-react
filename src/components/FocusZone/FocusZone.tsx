@@ -231,10 +231,6 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
       onFocusNotification()
     }
 
-    if (this.props.onFocus) {
-      this.props.onFocus(ev)
-    }
-
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement
       this.setFocusAlignment(this._activeElement)

@@ -25,6 +25,8 @@ import MenuOpenSubmenuAction, {
 
 import { focusFirstChild, focusLastChild } from '../../lib/fabric'
 
+import { eventStack, doesNodeContainClick } from 'src/lib'
+
 interface MenuItemState {
   submenuOpened: boolean
 }
@@ -171,6 +173,28 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     this.registerActionHandler(this.openSubmenuHandler)
   }
 
+  componentDidMount() {
+    this.addDocumentListener()
+  }
+
+  public componentWillUnmount() {
+    this.removeDocumentListener()
+  }
+
+  private handleDocumentClick = (e: Event) => {
+    e.stopPropagation()
+    if (this.elementRef && doesNodeContainClick(this.elementRef, e)) return
+    this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+  }
+
+  private addDocumentListener() {
+    eventStack.sub('click', this.handleDocumentClick)
+  }
+
+  private removeDocumentListener() {
+    eventStack.unsub('click', this.handleDocumentClick)
+  }
+
   componentDidUpdate() {
     this.postRenderCallback()
     this.postRenderCallback = () => {}
@@ -198,8 +222,6 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
         ref={this.setElementRef}
         role="presentation"
         onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
-        onBlur={this.accBehavior.onBlur(this, this.props, this.state)}
-        onFocus={this.accBehavior.onBlur(this, this.props, this.state)}
       >
         <div // this is an attempt to mimic the acc prototype
           {...rest}

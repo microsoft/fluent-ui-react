@@ -29,10 +29,6 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
     this.handleKey(KeyCodes.down, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
-
-    this.handleBlur((event, component, props, state) => {
-      console.error('blur handler behavior VERTICAL item', event, component)
-    })
   }
 
   private attributes = {
