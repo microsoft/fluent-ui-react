@@ -4,6 +4,7 @@ import React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
+import { AccBehaviorFactory, AccBehaviorType } from '../../lib/accessibility/AccBehaviorFactory'
 
 /**
  * An image is a graphic representation of something.
@@ -34,6 +35,14 @@ class Image extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'img',
+  }
+
+  constructor(props, state) {
+    super(props, state)
+    const accBehavior: string = props.accBehavior
+    this.accBehavior = AccBehaviorFactory.getBehavior(
+      AccBehaviorType[accBehavior] || AccBehaviorType.image,
+    )
   }
 
   renderComponent({ ElementType, classes, rest }) {
