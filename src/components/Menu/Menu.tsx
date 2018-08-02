@@ -143,6 +143,9 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
+    accBehavior: this.props.vertical
+      ? AccBehaviorType[AccBehaviorType.verticalMenuItem]
+      : AccBehaviorType[AccBehaviorType.menuItem],
   })
 
   renderItems = () => {

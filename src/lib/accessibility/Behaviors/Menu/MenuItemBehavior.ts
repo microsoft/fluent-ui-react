@@ -23,17 +23,22 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.down, (key, event, component, props, state) => {
-      event.preventDefault()
-      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
-    })
-
     this.handleKey(KeyCodes.right, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
     this.handleKey(KeyCodes.left, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+    })
+
+    this.handleKey(KeyCodes.down, (key, event, component, props, state) => {
+      event.preventDefault()
+      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
+    })
+
+    this.handleKey(KeyCodes.up, (key, event, component, props, state) => {
+      event.preventDefault()
+      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
     })
   }
 

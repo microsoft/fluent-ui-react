@@ -2,6 +2,7 @@ import { Action, ActionHandler } from './Action'
 
 export interface MenuOpenSubmenuActionParams {
   moveFocus: boolean
+  focusLast?: boolean
 }
 
 export default class MenuOpenSubmenuAction {

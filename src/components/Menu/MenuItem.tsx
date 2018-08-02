@@ -153,12 +153,10 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     if (!this.state['submenuOpened']) {
       this.setState({ submenuOpened: true })
       if (params.moveFocus) {
-        this.postRenderCallback = () => focusLastChild(this.elementRef)
+        this.postRenderCallback = () => this.moveFocusInSubmenu(this.elementRef, params.focusLast)
       }
-    } else {
-      if (params.moveFocus) {
-        focusLastChild(this.elementRef)
-      }
+    } else if (params.moveFocus) {
+      this.moveFocusInSubmenu(this.elementRef, params.focusLast)
     }
   })
 
@@ -178,8 +176,16 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     this.addDocumentListener()
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.removeDocumentListener()
+  }
+
+  private moveFocusInSubmenu(ref: HTMLElement, focusLast?: boolean) {
+    if (focusLast) {
+      focusLastChild(ref.lastElementChild as HTMLElement)
+    } else {
+      focusFirstChild(ref.lastElementChild as HTMLElement)
+    }
   }
 
   private handleDocumentClick = (e: Event) => {
