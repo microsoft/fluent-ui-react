@@ -19,12 +19,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
+- Resolved issues ([#32](https://github.com/stardust-ui/react/issues/32)) and ([#31](https://github.com/stardust-ui/react/issues/31)) @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
 
 ### Features
 - Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
 - Add Button `icon` prop and Text `truncated` prop @Bugaa92 ([#13](https://github.com/stardust-ui/react/pull/13))
 - Add Button `disabled` prop @Bugaa92 ([#14](https://github.com/stardust-ui/react/pull/14))
 - Add Menu `vertical` prop @miroslavstastny ([#21](https://github.com/stardust-ui/react/pull/21))
+- Add Avatar `generateInitials` prop @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
+
 
 ### Documentation
 - Improve UX for "knobs" form on component examples @levithomason ([#20](https://github.com/stardust-ui/react/pull/20))
