@@ -15,7 +15,12 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
 
     this.handleKey(KeyCodes.enter, (key, event, component, props, state) => {
       event.preventDefault()
-      component.executeAction(ClickAction.execute({ event }))
+      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
+    })
+
+    this.handleKey(KeyCodes.space, (key, event, component, props, state) => {
+      event.preventDefault()
+      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
     })
 
     this.handleKey(KeyCodes.escape, (key, event, component, props, state) => {

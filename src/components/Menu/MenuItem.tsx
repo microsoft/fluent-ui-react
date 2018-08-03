@@ -129,7 +129,11 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
   setElementRef = ref => (this.elementRef = ref)
 
   clickHandler = ClickAction.handler((params: ClickActionParams) => {
-    this.handleClick(params.event)
+    this.handleClick(params.event, () => {
+      if (params.moveFocus) {
+        this.moveFocusInSubmenu(this.elementRef.lastElementChild as HTMLElement)
+      }
+    })
   })
 
   closeSubmenuHandler = MenuCloseSubmenuAction.handler((params: MenuCloseSubmenuActionParams) => {
@@ -208,9 +212,11 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     return { submenuOpened: false }
   }
 
-  handleClick = e => {
+  handleClick = (e: Event, clbk?: Function) => {
     if (this.props.submenu) {
-      this.setState({ submenuOpened: !this.state.submenuOpened })
+      this.setState({ submenuOpened: !this.state.submenuOpened }, () => {
+        clbk && clbk()
+      })
     } else {
       alert(this.props.content)
     }

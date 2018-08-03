@@ -3,10 +3,6 @@ import { AbstractBehavior } from '../AbstractBehavior'
 
 export class MenuBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
-  private timeoutId: any
-  private isManagingFocus: boolean = false
-  private stopPropagation: boolean = true
-  private func: Function
   constructor() {
     super('menu')
   }

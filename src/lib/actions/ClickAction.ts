@@ -2,6 +2,7 @@ import { Action, ActionHandler } from './Action'
 
 export interface ClickActionParams {
   event?: Event
+  moveFocus?: boolean
 }
 
 export default class ClickAction {
