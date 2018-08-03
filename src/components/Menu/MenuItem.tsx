@@ -22,6 +22,7 @@ export interface IMenuItemProps {
   shape?: MenuShape
   type?: MenuType
   vertical?: boolean
+  accBehavior?: string
 }
 
 class MenuItem extends UIComponent<IMenuItemProps, any> {
@@ -71,6 +72,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
+    /** Accessibility behavior name */
     accBehavior: PropTypes.string,
   }
 
@@ -79,6 +81,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
   }
 
   static handledProps = [
+    'accBehavior',
     'active',
     'as',
     'children',
@@ -89,7 +92,6 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     'shape',
     'type',
     'vertical',
-    'accBehavior',
   ]
 
   constructor(props, state) {

@@ -14,7 +14,7 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static handledProps = ['as', 'avatar', 'circular', 'className']
+  static handledProps = ['accBehavior', 'as', 'avatar', 'circular', 'className']
 
   static rules = imageRules
 
@@ -31,6 +31,9 @@ class Image extends UIComponent<any, any> {
     circular: PropTypes.bool,
 
     className: PropTypes.string,
+
+    /** Accessibility behavior name */
+    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {

@@ -22,6 +22,7 @@ export interface IMenuProps {
   shape?: MenuShape
   type?: MenuType
   vertical?: boolean
+  accBehavior?: string
 }
 
 class Menu extends AutoControlledComponent<IMenuProps, any> {
@@ -60,6 +61,7 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
+    /** Accessibility behavior name */
     accBehavior: PropTypes.string,
   }
 
@@ -68,6 +70,7 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
   }
 
   static handledProps = [
+    'accBehavior',
     'activeIndex',
     'as',
     'children',
@@ -77,7 +80,6 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     'shape',
     'type',
     'vertical',
-    'accBehavior',
   ]
 
   static autoControlledProps = ['activeIndex']

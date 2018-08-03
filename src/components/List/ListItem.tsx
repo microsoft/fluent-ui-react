@@ -49,6 +49,7 @@ class ListItem extends UIComponent<any, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
+    /** Accessibility behavior name */
     accBehavior: PropTypes.string,
   }
 
@@ -61,6 +62,7 @@ class ListItem extends UIComponent<any, any> {
   }
 
   static handledProps = [
+    'accBehavior',
     'as',
     'className',
     'content',
@@ -77,7 +79,6 @@ class ListItem extends UIComponent<any, any> {
     'selection',
     'truncateContent',
     'truncateHeader',
-    'accBehavior',
   ]
 
   static defaultProps = {

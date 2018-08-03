@@ -43,6 +43,7 @@ class List extends UIComponent<any, any> {
     /** Variables */
     variables: PropTypes.object,
 
+    /** Accessibility behavior name */
     accBehavior: PropTypes.string,
   }
 
@@ -51,6 +52,7 @@ class List extends UIComponent<any, any> {
   }
 
   static handledProps = [
+    'accBehavior',
     'as',
     'children',
     'className',
@@ -60,7 +62,6 @@ class List extends UIComponent<any, any> {
     'truncateContent',
     'truncateHeader',
     'variables',
-    'accBehavior',
   ]
 
   static Item = ListItem

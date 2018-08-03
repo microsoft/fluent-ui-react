@@ -24,6 +24,7 @@ export interface IButtonProps {
   onClick?: (e: SyntheticEvent, props: IButtonProps) => void
   style?: CSSProperties
   type?: ButtonType
+  accBehavior?: string
 }
 
 /**
@@ -78,10 +79,24 @@ class Button extends UIComponent<IButtonProps, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
+    /** Accessibility behavior name */
     accBehavior: PropTypes.string,
   }
 
-  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'accBehavior']
+  static handledProps = [
+    'accBehavior',
+    'as',
+    'children',
+    'circular',
+    'className',
+    'content',
+    'disabled',
+    'fluid',
+    'icon',
+    'iconPosition',
+    'onClick',
+    'type',
+  ]
 
   public static defaultProps = {
     as: 'button',
