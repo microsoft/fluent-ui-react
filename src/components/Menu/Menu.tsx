@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -13,7 +13,7 @@ export type MenuShape = 'pills' | 'pointing' | 'underlined'
 export interface IMenuProps {
   as?: string
   activeIndex?: number | string
-  children?: ReactNode
+  children?: React.ReactNode
   className?: string
   defaultActiveIndex?: number | string
   items?: any

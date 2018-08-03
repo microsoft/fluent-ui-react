@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
@@ -12,16 +12,16 @@ export type ButtonType = 'primary' | 'secondary'
 
 export interface IButtonProps {
   as?: string
-  children?: ReactNode
+  children?: React.ReactNode
   circular?: boolean
   className?: string
-  content?: ReactNode
+  content?: React.ReactNode
   disabled?: boolean
   fluid?: boolean
   icon?: boolean | string
   iconPosition?: IconPosition
-  onClick?: (e: SyntheticEvent, props: IButtonProps) => void
-  style?: CSSProperties
+  onClick?: (e: React.SyntheticEvent, props: IButtonProps) => void
+  style?: React.CSSProperties
   type?: ButtonType
 }
 
@@ -100,11 +100,11 @@ class Button extends UIComponent<IButtonProps, any> {
     ElementType,
     classes,
     rest,
-  }: IRenderResultConfig<IButtonProps>): ReactNode {
+  }: IRenderResultConfig<IButtonProps>): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
-    const getContent = (): ReactNode => {
+    const getContent = (): React.ReactNode => {
       if (childrenExist(children)) {
         return children
       }
@@ -138,7 +138,7 @@ class Button extends UIComponent<IButtonProps, any> {
     )
   }
 
-  private handleClick = (e: SyntheticEvent) => {
+  private handleClick = (e: React.SyntheticEvent) => {
     const { onClick, disabled } = this.props
 
     if (disabled) {

@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as cx from 'classnames'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
@@ -13,9 +13,9 @@ import menuVariables from './menuVariables'
 export interface IMenuItemProps {
   active?: boolean
   as?: string
-  children?: ReactNode
+  children?: React.ReactNode
   className?: string
-  content?: ReactNode
+  content?: React.ReactNode
   index?: number
   onClick?: (any, IMenuItemProps) => void
   shape?: MenuShape
@@ -100,7 +100,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
         {childrenExist(children) ? (
           children
         ) : (
-          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          <a className={(cx as any)('ui-menu__item__anchor', classes.anchor)}>{content}</a>
         )}
       </ElementType>
     )

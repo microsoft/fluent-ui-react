@@ -1,5 +1,5 @@
-import React, { CSSProperties } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, SUI } from '../../lib'
 
 import iconRules from './iconRules'
@@ -36,7 +36,7 @@ export interface IconProps {
   name?: string
   size?: IconSize
   xSpacing?: IconXSpacing
-  style?: CSSProperties
+  style?: React.CSSProperties
   title?: string
 }
 

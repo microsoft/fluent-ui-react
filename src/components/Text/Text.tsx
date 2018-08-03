@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import textRules from './textRules'
@@ -11,7 +11,7 @@ export interface ITextProps {
   as?: string
   atMention?: boolean
   className?: string
-  content?: ReactNode
+  content?: React.ReactNode
   disabled?: boolean
   error?: boolean
   size?: ITextSize
@@ -84,7 +84,11 @@ class Text extends UIComponent<ITextProps, {}> {
 
   static variables = textVariables
 
-  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ITextProps>): ReactNode {
+  renderComponent({
+    ElementType,
+    classes,
+    rest,
+  }: IRenderResultConfig<ITextProps>): React.ReactNode {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>
