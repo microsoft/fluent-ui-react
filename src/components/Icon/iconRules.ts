@@ -50,26 +50,29 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): CSS
   }
 }
 
-const getBorderedStyles = (circular, borderColor, color): CSSProperties => ({
-  lineHeight: '1',
+const paddedStyle: CSSProperties = {
   padding: '0.5em 0',
-  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
   width: '2em',
   height: '2em',
-  ...(circular ? { borderRadius: '50%' } : { verticalAlign: 'baseline' }),
+}
+
+const getBorderedStyles = (circular, borderColor, color): CSSProperties => ({
+  ...paddedStyle,
+  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
+  ...(circular ? { borderRadius: '50%' } : {}),
 })
 
 const iconRules = {
   root: ({
-    props: { color, disabled, kind, name, size, bordered, circular, xSpacing },
+    props: { disabled, kind, name, size, bordered, circular, xSpacing },
     variables: v,
   }: IconRulesParams) => {
     const { fontFamily, content } = getIcon(kind, name)
-    const iconColor = color || v.color
 
     return {
       fontFamily,
-      color: iconColor,
+      color: v.color,
+      backgroundColor: v.backgroundColor,
       display: 'inline-block',
       opacity: 1,
       margin: v.margin,
@@ -87,6 +90,16 @@ const iconRules = {
       verticalAlign: 'middle',
       lineHeight: 1,
 
+      ...getXSpacingStyles(xSpacing, v.horizontalSpace),
+
+      ...((bordered || v.borderColor || circular) &&
+        getBorderedStyles(circular, v.borderColor, v.color)),
+
+      ...(v.backgroundColor && {
+        ...paddedStyle,
+        ...(bordered || v.borderColor || { boxShadow: 'none' }),
+      }),
+
       '::before': {
         content,
         boxSizing: 'inherit',
@@ -94,10 +107,6 @@ const iconRules = {
       },
 
       ...(disabled && disabledStyle),
-
-      ...getXSpacingStyles(xSpacing, v.horizontalSpace),
-
-      ...((bordered || circular) && getBorderedStyles(circular, v.borderColor, iconColor)),
     }
   },
 }
