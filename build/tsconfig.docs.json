@@ -4,5 +4,9 @@
     "module": "esnext",
     "allowSyntheticDefaultImports": true    
   },
-  "include": ["../src", "../docs/src", "../types"]
+  "include": [
+    "../src", 
+    "../docs/src", 
+    "../types"
+  ]
 }
