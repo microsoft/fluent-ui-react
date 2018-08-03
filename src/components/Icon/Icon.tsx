@@ -29,24 +29,6 @@ class Icon extends UIComponent<any, any> {
     /** Additional classes. */
     className: PropTypes.string,
 
-    /** Color of the icon. */
-    color: PropTypes.oneOf([
-      'white',
-      'red',
-      'orange',
-      'yellow',
-      'olive',
-      'green',
-      'teal',
-      'blue',
-      'violet',
-      'purple',
-      'pink',
-      'brown',
-      'grey',
-      'black',
-    ]),
-
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
@@ -68,7 +50,6 @@ class Icon extends UIComponent<any, any> {
     'bordered',
     'circular',
     'className',
-    'color',
     'disabled',
     'kind',
     'name',
