@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.2.4 ]------------------------------- -->
+## [v0.2.4](https://github.com/stardust-ui/react/tree/v0.2.4) (2018-08-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.3...v0.2.4)
+
 ### Fixes
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
 - Removed allowSyntheticDefaultImports from shared tsconfig but allow it on docs @aniknafs ([#46](https://github.com/stardust-ui/react/pull/46))
