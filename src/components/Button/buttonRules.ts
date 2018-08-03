@@ -1,10 +1,9 @@
 import { pxToRem } from '../../lib'
 import { disabledStyle, truncateStyle } from '../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
-import { IButtonProps } from './Button'
 
 export default {
-  root: ({ props, variables }: { props: IButtonProps; variables: IButtonVariables }) => {
+  root: ({ props, variables }: { props: any; variables: IButtonVariables }) => {
     const { circular, disabled, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'

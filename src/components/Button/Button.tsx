@@ -1,36 +1,18 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
-
-export type IconPosition = 'before' | 'after'
-export type ButtonType = 'primary' | 'secondary'
-
-export interface IButtonProps {
-  as?: string
-  children?: React.ReactNode
-  circular?: boolean
-  className?: string
-  content?: React.ReactNode
-  disabled?: boolean
-  fluid?: boolean
-  icon?: boolean | string
-  iconPosition?: IconPosition
-  onClick?: (e: React.SyntheticEvent, props: IButtonProps) => void
-  style?: React.CSSProperties
-  type?: ButtonType
-}
 
 /**
  * A button.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<IButtonProps, any> {
+class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -96,11 +78,7 @@ class Button extends UIComponent<IButtonProps, any> {
     as: 'button',
   }
 
-  public renderComponent({
-    ElementType,
-    classes,
-    rest,
-  }: IRenderResultConfig<IButtonProps>): React.ReactNode {
+  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 

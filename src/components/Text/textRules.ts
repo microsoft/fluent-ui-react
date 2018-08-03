@@ -25,10 +25,9 @@ import {
 import { Sizes } from '../../lib/enums'
 import { truncateStyle } from '../../styles/customCSS'
 import { ITextVariables } from './textVariables'
-import { ITextProps } from './Text'
 
 export interface TextRulesParams {
-  props: ITextProps
+  props: any
   variables: ITextVariables
 }
 
