@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import layoutRules from './layoutRules'
@@ -96,21 +96,21 @@ class Layout extends UIComponent<any, any> {
     // TODO: when an area is another Layout, do not wrap them in an extra div
     // TODO: option 1) higher value layouts could use start={Layout.create(start)} to ensure Areas are layout root
     renderStartArea({ start, classes }) {
-      return start && <div className={(cx as any)('ui-layout__start', classes.start)}>{start}</div>
+      return start && <div className={cx('ui-layout__start', classes.start)}>{start}</div>
     },
 
     renderMainArea({ main, classes }) {
-      return main && <div className={(cx as any)('ui-layout__main', classes.main)}>{main}</div>
+      return main && <div className={cx('ui-layout__main', classes.main)}>{main}</div>
     },
 
     renderEndArea({ end, classes }) {
-      return end && <div className={(cx as any)('ui-layout__end', classes.end)}>{end}</div>
+      return end && <div className={cx('ui-layout__end', classes.end)}>{end}</div>
     },
 
     // Heads up!
     // IE11 Doesn't support grid-gap, insert virtual columns instead
     renderGap({ gap, classes }) {
-      return gap && <span className={(cx as any)('ui-layout__gap', classes.gap)} />
+      return gap && <span className={cx('ui-layout__gap', classes.gap)} />
     },
   }
 
@@ -144,7 +144,7 @@ class Layout extends UIComponent<any, any> {
     }
 
     if (reducing && isSingleArea) {
-      const composedClasses = (cx as any)(
+      const composedClasses = cx(
         classes.root,
         startArea && 'ui-layout--reduced__start',
         mainArea && 'ui-layout--reduced__main',

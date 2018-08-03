@@ -1,4 +1,4 @@
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
@@ -46,7 +46,7 @@ const renderComponent = <P extends {}>(
           Object.assign({}, variablesFromFile, variablesFromTheme, variablesFromProp)
 
         const classes = getClasses(renderer, props, rules, mergedVariables, theme)
-        classes.root = (cx as any)(className, classes.root, props.className)
+        classes.root = cx(className, classes.root, props.className)
 
         const config: IRenderResultConfig<P> = { ElementType, rest, classes }
 

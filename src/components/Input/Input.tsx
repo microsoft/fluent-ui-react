@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -85,7 +85,7 @@ class Input extends UIComponent<any, any> {
     const { children, className, icon, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
-    const inputClasses = (cx as any)(classes.input)
+    const inputClasses = cx(classes.input)
 
     // Render with children
     // ----------------------------------------

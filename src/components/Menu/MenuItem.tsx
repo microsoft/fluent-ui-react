@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -100,7 +100,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
         {childrenExist(children) ? (
           children
         ) : (
-          <a className={(cx as any)('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
         )}
       </ElementType>
     )

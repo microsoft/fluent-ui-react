@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
@@ -101,8 +101,8 @@ class ListItem extends UIComponent<any, any> {
       const { debug, header, headerMedia, truncateHeader, selection } = props
       const { isHovering } = state
 
-      const mergedClasses = (cx as any)('ui-list__item__header', classes.header)
-      const mediaClasses = (cx as any)('ui-list__item__headerMedia', classes.headerMedia)
+      const mergedClasses = cx('ui-list__item__header', classes.header)
+      const mediaClasses = cx('ui-list__item__headerMedia', classes.headerMedia)
       const headerMediaStyle =
         headerMedia && selection && isHovering ? { color: 'inherit' } : undefined
 
@@ -131,7 +131,7 @@ class ListItem extends UIComponent<any, any> {
       const { debug, content, contentMedia, truncateContent, selection } = props
       const { isHovering } = state
 
-      const mergedClasses = (cx as any)('ui-list__item__content', classes.content)
+      const mergedClasses = cx('ui-list__item__content', classes.content)
 
       return !content && !contentMedia ? null : (
         <Layout
