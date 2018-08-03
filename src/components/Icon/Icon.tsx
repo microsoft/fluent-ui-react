@@ -8,6 +8,7 @@ export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 class Icon extends UIComponent<any, any> {
   static create: Function
+
   static className = 'ui-icon'
 
   static displayName = 'Icon'

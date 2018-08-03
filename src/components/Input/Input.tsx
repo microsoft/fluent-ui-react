@@ -104,7 +104,7 @@ class Input extends AutoControlledComponent<any, any> {
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    clearable && this.trySetState({ value })
+    this.trySetState({ value })
   }
 
   handleChildOverrides = (child, defaultProps) => ({
@@ -114,7 +114,7 @@ class Input extends AutoControlledComponent<any, any> {
 
   handleInputRef = c => (this.inputRef = c)
 
-  handleOnIconClick = e => {
+  handleOnClear = e => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
@@ -157,7 +157,7 @@ class Input extends AutoControlledComponent<any, any> {
   handleIconOverrides = predefinedProps => {
     return {
       onClick: e => {
-        this.handleOnIconClick(e)
+        this.handleOnClear(e)
 
         this.inputRef.focus()
         _.invoke(predefinedProps, 'onClick', e, this.props)
