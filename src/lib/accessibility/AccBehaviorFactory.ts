@@ -13,6 +13,7 @@ import {
   TreeBehavior,
   TreeItemBehavior,
   GroupBehavior,
+  ChatBehavior,
   ChatMessageBehavior,
 } from './Behaviors/behaviors'
 import { IAccessibilityBehavior } from './interfaces'
@@ -31,6 +32,7 @@ export enum AccBehaviorType {
   tree,
   treeItem,
   group,
+  chat,
   chatMessage,
 }
 
@@ -49,6 +51,7 @@ export class AccBehaviorFactory {
     [AccBehaviorType[AccBehaviorType.tree], () => new TreeBehavior()],
     [AccBehaviorType[AccBehaviorType.treeItem], () => new TreeItemBehavior()],
     [AccBehaviorType[AccBehaviorType.group], () => new GroupBehavior()],
+    [AccBehaviorType[AccBehaviorType.chat], () => new ChatBehavior()],
     [AccBehaviorType[AccBehaviorType.chatMessage], () => new ChatMessageBehavior()],
   ] as [string, () => IAccessibilityBehavior<{}, {}>][])
 

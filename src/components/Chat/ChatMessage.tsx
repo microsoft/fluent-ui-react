@@ -7,6 +7,7 @@ import {} from '../../lib/accessibility/Behaviors/behaviors'
 import chatMessageRules from './chatMessageRules'
 import chatMessageVariables from './chatMessageVariables'
 import { AccBehaviorFactory, AccBehaviorType } from '../../lib/accessibility/AccBehaviorFactory'
+import { FocusZone } from '../FocusZone'
 
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'
@@ -53,13 +54,15 @@ class ChatMessage extends UIComponent<any, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType
+      <FocusZone
+        elementType={ElementType}
+        preventDefaultWhenHandled={true}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
       >
         {childrenExist(children) ? children : content}
-      </ElementType>
+      </FocusZone>
     )
   }
 }
