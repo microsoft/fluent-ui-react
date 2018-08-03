@@ -1,3 +1,5 @@
-const callable = val => (typeof val !== 'function' ? () => val : val)
+const callable = (possibleFunction: any) => (...args: any[]) => {
+  return typeof possibleFunction === 'function' ? possibleFunction(...args) : possibleFunction
+}
 
 export default callable

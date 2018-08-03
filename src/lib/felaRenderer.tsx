@@ -4,6 +4,8 @@ import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import rtl from 'fela-plugin-rtl'
 
+import { IRenderer } from '../../types/theme'
+
 const createRendererConfig = (options: any = {}) => ({
   plugins: [
     felaPluginPlaceholderPrefixer(),
@@ -17,7 +19,7 @@ const createRendererConfig = (options: any = {}) => ({
   ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
 })
 
-export const felaRenderer = createRenderer(createRendererConfig())
-export const felaRtlRenderer = createRenderer(createRendererConfig({ isRtl: true }))
+export const felaRenderer: IRenderer = createRenderer(createRendererConfig())
+export const felaRtlRenderer: IRenderer = createRenderer(createRendererConfig({ isRtl: true }))
 
 export default felaRenderer

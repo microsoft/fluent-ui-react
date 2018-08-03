@@ -4,8 +4,6 @@ import cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
-import listVariables from './listVariables'
-import listItemRules from './listItemRules'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -13,10 +11,6 @@ class ListItem extends UIComponent<any, any> {
   static displayName = 'ListItem'
 
   static className = 'ui-list__item'
-
-  static rules = listItemRules
-
-  static variables = listVariables
 
   static propTypes = {
     as: customPropTypes.as,

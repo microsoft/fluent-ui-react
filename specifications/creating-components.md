@@ -46,7 +46,7 @@ We explored the following approaches.  The below code snippets simplified for ea
 A HOC that wraps the provided component and passes features through props.
 
 ```jsx
-import imageRules from './imageRules'
+import imageStyles from './imageStyles'
 import imageVariables from './imageVariables'
 
 const Image = (props) => {
@@ -56,7 +56,7 @@ const Image = (props) => {
 }
 
 export default createComponent(Image, {
-  rules: imageRules,
+  styles: imageStyles,
   variables: imageVariables,
 })
 ```
@@ -73,7 +73,7 @@ class Image extends Component {
         handledProps={[ ... ]}
         state={StateMachine}
         props={this.props}
-        rules={...}
+        styles={...}
         variables={...}
         render={({ ElementType, rest, classes }) => (
           <ElementType {...rest} className={classes.root} />
@@ -90,7 +90,7 @@ Directly import context consumers and use them in the render method to access th
 
 ```jsx
 import Provider from '../Provider'
-import imageRules from './imageRules'
+import imageStyles from './imageStyles'
 import imageVariables from './imageVariables'
 
 class Image extends Component {
@@ -98,7 +98,7 @@ class Image extends Component {
     return (
       <Provider.Consumer
         render={(theme) => {
-          const classes = getClasses(this.props, imageRules, imageVariables, theme)
+          const classes = getClasses(this.props, imageStyles, imageVariables, theme)
 
           return <img className={classes.root} />
         }}
@@ -114,12 +114,12 @@ A function to be returned in the render method. Calls back with the theme.  Impl
 
 ```jsx
 import Provider from '../Provider'
-import imageRules from './imageRules'
+import imageStyles from './imageStyles'
 import imageVariables from './imageVariables'
 
 const Image = (props) => {
   return hocContext((theme) => {
-    const classes = getClasses(props, imageRules, imageVariables, theme)
+    const classes = getClasses(props, imageStyles, imageVariables, theme)
 
     return <img className={classes.root} />
   })

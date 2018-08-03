@@ -11,8 +11,6 @@ import {
   partitionHTMLProps,
   UIComponent,
 } from '../../lib'
-import inputRules from './inputRules'
-import inputVariables from './inputVariables'
 import Icon from '../Icon'
 
 /**
@@ -23,9 +21,6 @@ class Input extends UIComponent<any, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'
-
-  static rules = inputRules
-  static variables = inputVariables
 
   static propTypes = {
     /** An element type to render as (string or function). */

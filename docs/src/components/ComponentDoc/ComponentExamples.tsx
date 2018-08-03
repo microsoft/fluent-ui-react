@@ -2,7 +2,7 @@ import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React, { Component, createElement } from 'react'
 
-import { exampleContext, truncateStyle } from 'docs/src/utils'
+import { exampleContext } from 'docs/src/utils'
 import { Grid, List } from 'semantic-ui-react'
 import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
@@ -59,9 +59,7 @@ export default class ComponentExamples extends Component<IComponentExamples, any
 
     return this.renderElementWrappedInGrid(
       <ContributionPrompt>
-        <div style={truncateStyle}>
-          Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code> examples.
-        </div>
+        Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code> examples.
       </ContributionPrompt>,
     )
   }

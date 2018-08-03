@@ -3,9 +3,6 @@ import PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import chatMessageRules from './chatMessageRules'
-import chatMessageVariables from './chatMessageVariables'
-
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'
 
@@ -34,10 +31,6 @@ class ChatMessage extends UIComponent<any, any> {
   static defaultProps = {
     as: 'li',
   }
-
-  static rules = chatMessageRules
-
-  static variables = chatMessageVariables
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

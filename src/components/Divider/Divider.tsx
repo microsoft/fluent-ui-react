@@ -1,9 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import dividerRules from './dividerRules'
-import dividerVariables from './dividerVariables'
-
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 /**
@@ -16,10 +13,6 @@ class Divider extends UIComponent<any, any> {
   static create: Function
 
   static className = 'ui-divider'
-
-  static rules = dividerRules
-
-  static variables = dividerVariables
 
   static propTypes = {
     as: customPropTypes.as,

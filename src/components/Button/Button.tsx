@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import buttonRules from './buttonRules'
-import buttonVariables from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
 
@@ -34,10 +32,6 @@ class Button extends UIComponent<IButtonProps, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
-
-  public static rules = buttonRules
-
-  public static variables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */

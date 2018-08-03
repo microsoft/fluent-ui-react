@@ -175,8 +175,11 @@ class Sidebar extends Component<any, any> {
             </small>
           </strong>
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/" activeClassName="active">
+        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
+        </Menu.Item>
+        <Menu.Item as={NavLink} exact to="/component-anatomy" activeClassName="active">
+          Component Anatomy
         </Menu.Item>
         <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
           <Icon name="github" /> GitHub

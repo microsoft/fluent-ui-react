@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import imageRules from './imageRules'
-import imageVariables from './imageVariables'
 
 /**
  * An image is a graphic representation of something.
@@ -14,10 +12,6 @@ class Image extends UIComponent<any, any> {
   static displayName = 'Image'
 
   static handledProps = ['as', 'avatar', 'circular', 'className']
-
-  static rules = imageRules
-
-  static variables = imageVariables
 
   static propTypes = {
     /**  */

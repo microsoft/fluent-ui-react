@@ -3,8 +3,6 @@ import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import headerDescriptionRules from './headerDescriptionRules'
-
 /**
  * Headers may contain description.
  */
@@ -34,8 +32,6 @@ class HeaderDescription extends UIComponent<any, any> {
   }
 
   static handledProps = ['as', 'children', 'className', 'content']
-
-  static rules = headerDescriptionRules
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { ReactNode } from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
-import textRules from './textRules'
-import textVariables from './textVariables'
+import { childrenExist, customPropTypes, IRenderResultConfig, UIComponent } from '../../lib'
 
 export type ITextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
 
@@ -79,10 +77,6 @@ class Text extends UIComponent<ITextProps, {}> {
     'timestamp',
     'truncated',
   ]
-
-  static rules = textRules
-
-  static variables = textVariables
 
   renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ITextProps>): ReactNode {
     const { children, content } = this.props

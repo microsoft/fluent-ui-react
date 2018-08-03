@@ -3,9 +3,6 @@ import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import labelRules from './labelRules'
-import labelVariables from './labelVariables'
-
 /**
  * A label displays content classification
  */
@@ -38,10 +35,6 @@ class Label extends UIComponent<any, any> {
   static defaultProps = {
     as: 'label',
   }
-
-  static rules = labelRules
-
-  static variables = labelVariables
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
-import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 
@@ -61,8 +60,6 @@ class Accordion extends AutoControlledComponent<any, any> {
       ),
     ]),
   }
-
-  static rules = accordionRules
 
   static handledProps = [
     'activeIndex',

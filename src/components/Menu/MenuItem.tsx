@@ -7,9 +7,6 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 import { MenuType, MenuShape } from './Menu'
 
-import menuItemRules from './menuItemRules'
-import menuVariables from './menuVariables'
-
 export interface IMenuItemProps {
   active?: boolean
   as?: string
@@ -28,11 +25,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
 
   static className = 'ui-menu__item'
 
-  static variables = menuVariables
-
   static create: Function
-
-  static rules = menuItemRules
 
   static propTypes = {
     /** A menu item can be active. */

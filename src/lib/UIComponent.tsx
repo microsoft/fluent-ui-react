@@ -6,8 +6,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static variables?: any
-  static rules?: any
   static handledProps: any
 
   constructor(props, context) {
@@ -36,8 +34,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,
-        rules: this.childClass.rules,
-        variables: this.childClass.variables,
       },
       this.renderComponent,
     )
