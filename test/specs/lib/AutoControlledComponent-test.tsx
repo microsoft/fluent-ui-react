@@ -1,19 +1,21 @@
-import _ from 'lodash'
-import React from 'react'
+import * as _ from 'lodash'
+import * as React from 'react'
 import { shallow } from 'enzyme'
 import { AutoControlledComponent } from 'src/lib'
 import { consoleUtil } from 'test/utils'
 
 let TestClass
 
-const createTestClass = (options = {}) =>
+const createTestClass = (options = {} as any) =>
   class Test extends AutoControlledComponent {
     static autoControlledProps = options.autoControlledProps
     static defaultProps = options.defaultProps
     getInitialAutoControlledState() {
       return options.state
     }
-    render = () => <div />
+    render() {
+      return <div />
+    }
   }
 
 const toDefaultName = prop => `default${prop.slice(0, 1).toUpperCase() + prop.slice(1)}`

@@ -2,7 +2,7 @@ import fontAwesomeIcons from './fontAwesomeIconRules'
 import { disabledStyle, fittedStyle } from '../../styles/customCSS'
 import { IconXSpacing } from './Icon'
 import { IconVariables } from './iconVariables'
-import { CSSProperties } from 'react'
+import * as React from 'react'
 
 export interface IconRulesParams {
   props: any
@@ -37,7 +37,10 @@ const getIcon = (kind, name) => {
 
 const getSize = size => `${sizes.get(size)}em` || '1em'
 
-const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): CSSProperties => {
+const getXSpacingStyles = (
+  xSpacing: IconXSpacing,
+  horizontalSpace: string,
+): React.CSSProperties => {
   switch (xSpacing) {
     case 'none':
       return fittedStyle
@@ -50,13 +53,13 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): CSS
   }
 }
 
-const paddedStyle: CSSProperties = {
+const paddedStyle: React.CSSProperties = {
   padding: '0.5em 0',
   width: '2em',
   height: '2em',
 }
 
-const getBorderedStyles = (circular, borderColor, color): CSSProperties => ({
+const getBorderedStyles = (circular, borderColor, color): React.CSSProperties => ({
   ...paddedStyle,
   boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
   ...(circular ? { borderRadius: '50%' } : {}),

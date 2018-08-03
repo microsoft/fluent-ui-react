@@ -1,22 +1,22 @@
-import { CSSProperties } from 'react'
+import * as React from 'react'
 
-export const disabledStyle: CSSProperties = {
+export const disabledStyle: React.CSSProperties = {
   opacity: 0.45,
   cursor: 'not-allowed',
 }
 
-export const fittedStyle: CSSProperties = {
+export const fittedStyle: React.CSSProperties = {
   margin: 0,
   width: 'auto',
 }
 
-export const truncateStyle: CSSProperties = {
+export const truncateStyle: React.CSSProperties = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 }
 
-export const overflowWrapStyle: CSSProperties = {
+export const overflowWrapStyle: React.CSSProperties = {
   overflow: 'overlay',
   overflowWrap: 'break-word',
 }

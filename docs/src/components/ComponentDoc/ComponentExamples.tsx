@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { Component, createElement } from 'react'
+import * as React from 'react'
 
 import { exampleContext, truncateStyle } from 'docs/src/utils'
 import { Grid, List } from 'semantic-ui-react'
@@ -11,7 +11,7 @@ interface IComponentExamples {
   displayName: string
 }
 
-export default class ComponentExamples extends Component<IComponentExamples, any> {
+export default class ComponentExamples extends React.Component<IComponentExamples, any> {
   public static propTypes = {
     displayName: PropTypes.string.isRequired,
   }
@@ -38,7 +38,7 @@ export default class ComponentExamples extends Component<IComponentExamples, any
       return null
     }
 
-    const ExamplesElement = createElement(exampleContext(indexPath).default) as any
+    const ExamplesElement = React.createElement(exampleContext(indexPath).default) as any
     if (!ExamplesElement) {
       return null
     }

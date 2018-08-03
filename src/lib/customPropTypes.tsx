@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import * as PropTypes from 'prop-types'
 import leven from './leven'
 

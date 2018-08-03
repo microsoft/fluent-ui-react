@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import KnobsField from './KnobsField'
 import KnobsLabel from './KnobsLabel'
 import KnobsControl from './KnobsControl'
 
-class KnobsScalar extends Component<any, any> {
+class KnobsScalar extends React.Component<any, any> {
   static propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string.isRequired,
