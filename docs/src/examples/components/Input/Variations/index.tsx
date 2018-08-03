@@ -17,7 +17,7 @@ const Variations = () => (
     <ComponentExample
       title="Clearable icon"
       description="An input can have a search icon that can change into clear button on typing."
-      examplePath="components/Input/Variations/InputExampleIconChange"
+      examplePath="components/Input/Variations/InputExampleIconClearable"
     />
   </ExampleSection>
 )
