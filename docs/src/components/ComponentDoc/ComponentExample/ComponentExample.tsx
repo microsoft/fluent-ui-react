@@ -18,13 +18,13 @@ import {
   scrollToAnchor,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, pxToRem, doesNodeContainClick } from 'src/lib'
+import { callable, pxToRem, doesNodeContainClick, resolveComponentVariables } from 'src/lib'
 import Editor from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { ITheme } from '../../../../../src/../types/theme'
+import { IMergedThemes, ITheme } from 'types/theme'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -539,8 +539,13 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables, componentVariables }) => {
-            const variables = componentVariables[name]
+          render={({ siteVariables, componentVariables }: ITheme | IMergedThemes) => {
+            // TODO: refactor to handle variables as a call stack once mergeThemes is updated
+            // TODO: refactor to handle variables as a call stack once mergeThemes is updated
+            // TODO: refactor to handle variables as a call stack once mergeThemes is updated
+            const variables = resolveComponentVariables(componentVariables, siteVariables)
+
+            debugger
 
             if (!variables) {
               return (

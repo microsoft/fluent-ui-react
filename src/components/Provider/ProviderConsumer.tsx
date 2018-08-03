@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { ITheme } from '../../../types/theme'
+import { FelaTheme } from 'react-fela'
 
-// TODO fix typings for react-fela
-const { FelaTheme } = require('react-fela')
+import { IMergedThemes, ITheme } from '../../../types/theme'
 
 export interface IProviderConsumerProps {
-  render: (theme: ITheme) => React.ReactNode
+  render: (theme: ITheme | IMergedThemes) => React.ReactNode
 }
 
 /**

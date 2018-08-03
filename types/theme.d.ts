@@ -127,8 +127,6 @@ export interface IMergedThemes {
 }
 
 export interface IThemeComponentStyles {
-  [key: string]: any
-
   Accordion?: IComponentStyles
   Avatar?: IComponentStyles
   Button?: IComponentStyles
@@ -146,8 +144,6 @@ export interface IThemeComponentStyles {
 }
 
 export interface IThemeComponentVariables {
-  [key: string]: any
-
   Accordion?: ComponentVariables
   Avatar?: ComponentVariables
   Button?: ComponentVariables

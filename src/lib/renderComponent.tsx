@@ -1,21 +1,19 @@
-import _ from 'lodash'
 import cx from 'classnames'
-import { combineRules } from 'fela'
 import React from 'react'
 import { FelaTheme } from 'react-fela'
+
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
-import callable from './callable'
+import toCompactArray from './toCompactArray'
+import { renderComponentStyles, resolveComponentVariables } from './themeUtils'
+
 import {
-  ComponentStyleFunctionArg,
   ComponentVariables,
   ComponentVariablesObject,
-  IComponentStyleClasses,
   IComponentStyles,
-  IRenderer,
-  ISiteVariables,
+  IMergedThemes,
+  ITheme,
 } from '../../types/theme'
-import { toCompactArray } from './index'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -39,39 +37,6 @@ export interface IRenderConfig {
   props: IRenderConfigProps
 }
 
-const resolveComponentVariables = (
-  componentVariables: ComponentVariables[],
-  siteVariables: ISiteVariables,
-): ComponentVariablesObject => {
-  return toCompactArray(componentVariables).reduce((acc, next) => {
-    return { ...acc, ...callable(next)(siteVariables) }
-  }, {})
-}
-
-const renderComponentStyles = (
-  renderer: IRenderer,
-  componentStyles: IComponentStyles[],
-  styleArg: ComponentStyleFunctionArg,
-): IComponentStyleClasses => {
-  const componentParts: string[] = componentStyles.reduce((acc, next) => {
-    return next ? _.union(acc, _.keys(next)) : acc
-  }, [])
-
-  return componentParts.reduce((classes, partName) => {
-    const styleFunctionsForPart = componentStyles.reduce((stylesForPart, nextStyle) => {
-      if (nextStyle[partName]) stylesForPart.push(callable(nextStyle[partName]))
-
-      return stylesForPart
-    }, [])
-
-    const combinedFunctions = combineRules(...styleFunctionsForPart)
-
-    classes[partName] = renderer.renderRule(combinedFunctions, styleArg)
-
-    return classes
-  }, {})
-}
-
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
@@ -80,7 +45,7 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={theme => {
+      render={(theme: ITheme | IMergedThemes) => {
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
 

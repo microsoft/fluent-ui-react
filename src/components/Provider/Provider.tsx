@@ -40,12 +40,18 @@ const mergeThemes = (...themes: ITheme[]): IMergedThemes => {
     // Component variable objects have no ability to apply siteVariables.
     // Therefore, componentVariables must be resolved by the component at render time.
     // We instead pass down an array of variables to be resolved at the end of the tree.
+    // TODO: refactor to call stack, variables should always be a single function
+    // TODO: refactor to call stack, variables should always be a single function
+    // TODO: refactor to call stack, variables should always be a single function
     if (next.componentVariables) {
       acc.componentVariables = acc.componentVariables.concat(next.componentVariables)
     }
 
     // See component variables reasoning above.
     // (Component styles are just like component variables, except they return style objects.)
+    // TODO: refactor to call stack, styles should always be a single function
+    // TODO: refactor to call stack, styles should always be a single function
+    // TODO: refactor to call stack, styles should always be a single function
     if (next.componentStyles) {
       acc.componentStyles = acc.componentStyles.concat(next.componentStyles)
     }
