@@ -5,8 +5,8 @@
     "allowSyntheticDefaultImports": true    
   },
   "include": [
-    "../src", 
-    "../docs/src", 
+    "../src",
+    "../docs/src",
     "../types"
   ]
 }
