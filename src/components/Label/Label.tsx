@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
-import _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import * as _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
@@ -95,7 +95,7 @@ class Label extends UIComponent<any, any> {
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content, icon, iconPosition } = this.props
-    const getContent = (): ReactNode => {
+    const getContent = (): React.ReactNode => {
       const iconAtEnd = iconPosition === 'end'
       const iconAtStart = !iconAtEnd
 

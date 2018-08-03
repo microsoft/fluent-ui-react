@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, felaRtlRenderer } from '../../lib'
@@ -9,7 +9,7 @@ import ProviderConsumer from './ProviderConsumer'
 /**
  * The Provider passes the CSS in JS renderer and theme down context.
  */
-class Provider extends Component<any, any> {
+class Provider extends React.Component<any, any> {
   static propTypes = {
     fontFaces: PropTypes.arrayOf(
       PropTypes.shape({

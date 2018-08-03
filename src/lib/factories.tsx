@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import cx from 'classnames'
-import React, { cloneElement, isValidElement } from 'react'
+import * as React from 'react'
 
 interface IProps {
   [key: string]: any
@@ -49,7 +49,7 @@ export function createShorthand(
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
-  const valIsReactElement = isValidElement(value)
+  const valIsReactElement = React.isValidElement(value)
   const valIsFunction = typeof value === 'function'
 
   // unhandled type return null
@@ -119,7 +119,7 @@ export function createShorthand(
   // ----------------------------------------
 
   // Clone ReactElements
-  if (valIsReactElement) return cloneElement(value, props)
+  if (valIsReactElement) return React.cloneElement(value, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />

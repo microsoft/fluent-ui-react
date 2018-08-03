@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import textRules from './textRules'
@@ -68,7 +68,7 @@ class Text extends UIComponent<any, any> {
 
   static variables = textVariables
 
-  renderComponent({ ElementType, classes, rest }): ReactNode {
+  renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>

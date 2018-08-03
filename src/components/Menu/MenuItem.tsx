@@ -1,10 +1,9 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 

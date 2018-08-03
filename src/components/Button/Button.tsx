@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode, SyntheticEvent } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
@@ -78,11 +78,11 @@ class Button extends UIComponent<any, any> {
     as: 'button',
   }
 
-  public renderComponent({ ElementType, classes, rest }): ReactNode {
+  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
-    const getContent = (): ReactNode => {
+    const getContent = (): React.ReactNode => {
       if (childrenExist(children)) {
         return children
       }
@@ -116,7 +116,7 @@ class Button extends UIComponent<any, any> {
     )
   }
 
-  private handleClick = (e: SyntheticEvent) => {
+  private handleClick = (e: React.SyntheticEvent) => {
     const { onClick, disabled } = this.props
 
     if (disabled) {
