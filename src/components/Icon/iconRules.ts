@@ -1,11 +1,11 @@
 import fontAwesomeIcons from './fontAwesomeIconRules'
 import { disabledStyle, fittedStyle } from '../../styles/customCSS'
-import { IconProps, IconXSpacing } from './Icon'
+import { IconXSpacing } from './Icon'
 import { IconVariables } from './iconVariables'
-import { CSSProperties } from '../../../node_modules/@types/react'
+import { CSSProperties } from 'react'
 
 export interface IconRulesParams {
-  props: IconProps
+  props: any
   variables: IconVariables
 }
 
