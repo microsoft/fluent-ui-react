@@ -3,7 +3,7 @@ import { AbstractBehavior } from '../AbstractBehavior'
 import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 
-import { KeyCodes } from '@uifabric/utilities'
+import keyboardKey from 'keyboard-key'
 
 export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
@@ -12,22 +12,22 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
   constructor() {
     super('vertical-menuitem')
 
-    this.handleKey(KeyCodes.enter, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.Enter, (key, event, component, props, state) => {
       event.preventDefault()
       event.stopPropagation()
       component.executeAction(ClickAction.execute({ event }))
     })
 
-    this.handleKey(KeyCodes.escape, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.Escape, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.up, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowUp, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
-    this.handleKey(KeyCodes.down, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowDwon, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
   }

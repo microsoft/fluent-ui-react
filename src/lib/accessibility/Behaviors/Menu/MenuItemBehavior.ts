@@ -4,7 +4,7 @@ import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 import MenuOpenSubmenuAction from '../../../actions/MenuOpenSubmenuAction'
 
-import { KeyCodes } from '@uifabric/utilities'
+import keyboardKey from 'keyboard-key'
 
 export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
@@ -13,35 +13,35 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
   constructor() {
     super('menuitem')
 
-    this.handleKey(KeyCodes.enter, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.Enter, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(ClickAction.execute({ event, moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.space, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.Spacebar, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(ClickAction.execute({ event, moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.escape, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.Escape, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.right, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowRight, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
-    this.handleKey(KeyCodes.left, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowLeft, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
-    this.handleKey(KeyCodes.down, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowDown, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(KeyCodes.up, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowUp, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
     })
