@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, SUI } from '../../lib'
+import { customPropTypes, UIComponent, SUI, createShorthandFactory } from '../../lib'
 
 import iconRules from './iconRules'
 import iconVariables from './iconVariables'
@@ -8,6 +8,8 @@ import iconVariables from './iconVariables'
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 class Icon extends UIComponent<any, any> {
+  static create: Function
+
   static className = 'ui-icon'
 
   static displayName = 'Icon'
@@ -85,5 +87,7 @@ class Icon extends UIComponent<any, any> {
     return <ElementType className={classes.root} {...rest} />
   }
 }
+
+Icon.create = createShorthandFactory(Icon, name => ({ name }))
 
 export default Icon
