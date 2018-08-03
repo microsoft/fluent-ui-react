@@ -7,6 +7,7 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 import { Icon } from '../..'
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
+import callable from '../../lib/callable'
 
 /**
  * A label displays content classification
@@ -69,8 +70,13 @@ class Label extends UIComponent<any, any> {
   static variables = labelVariables
 
   handleIconOverrides = predefinedProps => {
-    const { onIconClick, iconPosition, content } = this.props
+    const { onIconClick, iconPosition, content, variables: labelPropVariables } = this.props
     const { onClick, variables, xSpacing } = predefinedProps
+
+    const iconVariables = callable(variables)()
+    const labelVariables = labelPropVariables
+      ? callable(labelPropVariables)()
+      : callable(Label.variables)()
 
     return {
       onClick: e => {
@@ -78,7 +84,9 @@ class Label extends UIComponent<any, any> {
         _.invoke(this.props, 'onIconClick', e, this.props)
       },
       ...((onClick || onIconClick) && { tabIndex: '0' }),
-      ...((!variables || !variables.color) && { variables: { color: Label.variables().color } }),
+      ...((!iconVariables || !iconVariables.color) && {
+        variables: { color: labelVariables.color },
+      }),
       ...(!xSpacing && {
         xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
       }),
@@ -102,7 +110,13 @@ class Label extends UIComponent<any, any> {
         },
       )
 
-      return [iconAtStart && icon && iconElement, content, iconAtEnd && icon && iconElement]
+      return (
+        <React.Fragment>
+          {iconAtStart && icon && iconElement}
+          {content}
+          {iconAtEnd && icon && iconElement}
+        </React.Fragment>
+      )
     }
 
     return (

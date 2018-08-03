@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-class LabelExampleIconShorthandShorthand extends React.Component<{}, { display: string }> {
+class LabelExampleIconAsShorthand extends React.Component<{}, { display: string }> {
   constructor(props) {
     super(props)
     this.state = {
@@ -30,4 +30,4 @@ class LabelExampleIconShorthandShorthand extends React.Component<{}, { display: 
   }
 }
 
-export default LabelExampleIconShorthandShorthand
+export default LabelExampleIconAsShorthand
