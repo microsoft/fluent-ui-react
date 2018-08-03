@@ -19,6 +19,11 @@ const Types = () => (
       description="Example list using react virtualized."
       examplePath="components/List/Types/ListExampleWithReactVirtualized"
     />
+    <ComponentExample
+      title="ListExampleVirtualized"
+      description="Example list using react virtualized - standalone example."
+      examplePath="components/List/Types/ListExampleVirtualized"
+    />
   </ExampleSection>
 )
 

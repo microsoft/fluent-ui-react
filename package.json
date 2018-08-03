@@ -87,6 +87,7 @@
     "hoist-non-react-statics": "^2.5.0",
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
+    "lorem-ipsum": "^1.0.5",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react-fela": "^7.2.0",
