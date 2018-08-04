@@ -4,14 +4,15 @@ import PropTypes from 'prop-types'
 import React, { ReactNode } from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 
 import { MenuType, MenuShape } from './Menu'
 
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 export interface IMenuItemProps {
+  accessibility?: string
   active?: boolean
   as?: string
   children?: ReactNode
@@ -22,7 +23,6 @@ export interface IMenuItemProps {
   shape?: MenuShape
   type?: MenuType
   vertical?: boolean
-  accBehavior?: string
 }
 
 class MenuItem extends UIComponent<IMenuItemProps, any> {
@@ -72,16 +72,17 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static defaultProps = {
     as: 'li',
+    accessibility: AccessibilityType[AccessibilityType.menuItem],
   }
 
   static handledProps = [
-    'accBehavior',
+    'accessibility',
     'active',
     'as',
     'children',
@@ -92,6 +93,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     'shape',
     'type',
     'vertical',
+    'accBehavior',
   ]
 
   constructor(props, state) {
@@ -106,20 +108,25 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children, content } = this.props
 
     return (
       <ElementType
-        {...rest}
         className={classes.root}
         onClick={this.handleClick}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
+        {...rest}
       >
         {childrenExist(children) ? (
           children
         ) : (
-          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          <a
+            className={cx('ui-menu__item__anchor', classes.anchor)}
+            {...accessibility.attributes.anchor}
+          >
+            {content}
+          </a>
         )}
       </ElementType>
     )

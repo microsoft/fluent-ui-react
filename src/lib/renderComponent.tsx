@@ -6,11 +6,14 @@ import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import callable from './callable'
+import { IAccessibilityDef } from './accessibility/interfaces'
+import { AccessibilityFactory } from './accessibility/AccessibilityFactory'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
   rest: { [key: string]: any }
   classes: { [key: string]: string }
+  accessibility: IAccessibilityDef
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -21,15 +24,27 @@ export interface IRenderConfig {
   displayName?: string
   handledProps: string[]
   props: { [key: string]: any }
+  state: { [key: string]: any }
   rules?: { [key: string]: Function }
   variables?: (siteVariables: object) => object
+  defaultAccessibility: string
 }
 
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
-  const { className, defaultProps, displayName, handledProps, props, rules, variables } = config
+  const {
+    className,
+    defaultProps,
+    displayName,
+    handledProps,
+    props,
+    rules,
+    variables,
+    defaultAccessibility,
+    state,
+  } = config
 
   return (
     <FelaTheme
@@ -48,7 +63,16 @@ const renderComponent = <P extends {}>(
         const classes = getClasses(renderer, props, rules, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
-        const config: IRenderResultConfig<P> = { ElementType, rest, classes }
+        let accessibility = AccessibilityFactory.getAccessibility(
+          props['accessibility'] || defaultAccessibility,
+        )
+        if (typeof accessibility === 'function') {
+          accessibility = accessibility({ ...props, ...state })
+        }
+
+        // TODO: make accessibility safe, check for undefined attributes and keyhandlers
+
+        const config: IRenderResultConfig<P> = { ElementType, rest, classes, accessibility }
 
         return render(config)
       }}

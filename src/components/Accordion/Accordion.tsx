@@ -143,15 +143,11 @@ class Accordion extends AutoControlledComponent<any, any> {
     return children
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children } = this.props
 
     return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-        {...rest}
-        className={classes.root}
-      >
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

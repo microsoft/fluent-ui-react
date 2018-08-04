@@ -4,7 +4,7 @@ import React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
-import { AccBehaviorFactory, AccBehaviorType } from '../../lib/accessibility/AccBehaviorFactory'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 /**
  * An image is a graphic representation of something.
@@ -14,7 +14,7 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static handledProps = ['accBehavior', 'as', 'avatar', 'circular', 'className']
+  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className']
 
   static rules = imageRules
 
@@ -32,30 +32,16 @@ class Image extends UIComponent<any, any> {
 
     className: PropTypes.string,
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static defaultProps = {
     as: 'img',
   }
 
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.image,
-    )
-  }
-
-  renderComponent({ ElementType, classes, rest }) {
-    return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-        {...rest}
-        className={classes.root}
-      />
-    )
+  renderComponent({ ElementType, classes, rest, accessibility }) {
+    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
 

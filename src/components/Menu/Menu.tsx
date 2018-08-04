@@ -5,14 +5,14 @@ import React, { ReactNode } from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
-
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 export type MenuType = 'primary' | 'secondary'
 export type MenuShape = 'pills' | 'pointing' | 'underlined'
 
 export interface IMenuProps {
+  accessibility?: string
   as?: string
   activeIndex?: number | string
   children?: ReactNode
@@ -22,7 +22,6 @@ export interface IMenuProps {
   shape?: MenuShape
   type?: MenuType
   vertical?: boolean
-  accBehavior?: string
 }
 
 class Menu extends AutoControlledComponent<IMenuProps, any> {
@@ -61,16 +60,17 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: AccessibilityType[AccessibilityType.menu],
   }
 
   static handledProps = [
-    'accBehavior',
+    'accessibility',
     'activeIndex',
     'as',
     'children',
@@ -87,14 +87,6 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
   static rules = menuRules
 
   static Item = MenuItem
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.menu,
-    )
-  }
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
@@ -124,14 +116,10 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children } = this.props
     return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-        {...rest}
-        className={classes.root}
-      >
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

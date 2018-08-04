@@ -6,7 +6,7 @@ import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -43,8 +43,8 @@ class List extends UIComponent<any, any> {
     /** Variables */
     variables: PropTypes.object,
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static defaultProps = {
@@ -52,7 +52,7 @@ class List extends UIComponent<any, any> {
   }
 
   static handledProps = [
-    'accBehavior',
+    'accessibility',
     'as',
     'children',
     'className',
@@ -66,26 +66,20 @@ class List extends UIComponent<any, any> {
 
   static Item = ListItem
 
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.list,
-    )
-  }
-
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  renderComponent({ ElementType, classes, rest }) {
+  getDefaultAccessibility() {
+    return this.props.selection
+      ? AccessibilityType[AccessibilityType.selectableList]
+      : AccessibilityType[AccessibilityType.list]
+  }
+
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children } = this.props
 
     return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-        {...rest}
-        className={classes.root}
-      >
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

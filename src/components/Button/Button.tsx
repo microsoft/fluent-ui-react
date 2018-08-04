@@ -6,12 +6,13 @@ import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
 
 export interface IButtonProps {
+  accessibility?: string
   as?: string
   children?: ReactNode
   circular?: boolean
@@ -24,7 +25,6 @@ export interface IButtonProps {
   onClick?: (e: SyntheticEvent, props: IButtonProps) => void
   style?: CSSProperties
   type?: ButtonType
-  accBehavior?: string
 }
 
 /**
@@ -79,12 +79,12 @@ class Button extends UIComponent<IButtonProps, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static handledProps = [
-    'accBehavior',
+    'accessibility',
     'as',
     'children',
     'circular',
@@ -100,20 +100,14 @@ class Button extends UIComponent<IButtonProps, any> {
 
   public static defaultProps = {
     as: 'button',
-  }
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.button,
-    )
+    accessibility: AccessibilityType[AccessibilityType.button],
   }
 
   public renderComponent({
     ElementType,
     classes,
     rest,
+    accessibility,
   }: IRenderResultConfig<IButtonProps>): ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
@@ -145,7 +139,7 @@ class Button extends UIComponent<IButtonProps, any> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
       >
         {getContent()}

@@ -6,7 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -49,20 +49,12 @@ class ListItem extends UIComponent<any, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Accessibility behavior name */
-    accBehavior: PropTypes.string,
-  }
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.listItem,
-    )
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
   static handledProps = [
-    'accBehavior',
+    'accessibility',
     'as',
     'className',
     'content',
@@ -172,8 +164,14 @@ class ListItem extends UIComponent<any, any> {
     this.setState({ isHovering: false })
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { as, debug, endMedia, media, renderMainArea, selection } = this.props
+  getDefaultAccessibility() {
+    return this.props.selection
+      ? AccessibilityType[AccessibilityType.selectableListItem]
+      : AccessibilityType[AccessibilityType.listItem]
+  }
+
+  renderComponent({ ElementType, classes, rest, accessibility }) {
+    const { as, debug, endMedia, media, renderMainArea } = this.props
     const { isHovering } = this.state
 
     const startArea = media
@@ -193,7 +191,7 @@ class ListItem extends UIComponent<any, any> {
         end={endArea}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
       />
     )
