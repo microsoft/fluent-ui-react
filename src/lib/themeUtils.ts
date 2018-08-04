@@ -3,11 +3,12 @@ import { combineRules } from 'fela'
 import callable from './callable'
 
 import {
-  ComponentStyleFunctionArg,
-  ComponentVariables,
+  ComponentPartStyleFunction,
+  ComponentStyleFunctionParam,
+  ComponentVariablesInput,
   ComponentVariablesObject,
-  IComponentStyleClasses,
-  IComponentStyles,
+  IComponentPartClasses,
+  IComponentPartStylesInput,
   IRenderer,
   ISiteVariables,
   OneOrArray,
@@ -20,7 +21,7 @@ import { toCompactArray } from './index'
  * Component variables objects are merged as-is.
  */
 export const resolveComponentVariables = (
-  componentVariables: OneOrArray<ComponentVariables>,
+  componentVariables: OneOrArray<ComponentVariablesInput>,
   siteVariables: ISiteVariables,
 ): ComponentVariablesObject => {
   return toCompactArray(componentVariables).reduce((acc, next) => {
@@ -37,9 +38,9 @@ export const resolveComponentVariables = (
  */
 export const renderComponentStyles = (
   renderer: IRenderer,
-  componentStyles: IComponentStyles[],
-  styleArg: ComponentStyleFunctionArg,
-): IComponentStyleClasses => {
+  componentStyles: OneOrArray<IComponentPartStylesInput>,
+  styleParam: ComponentStyleFunctionParam,
+): IComponentPartClasses => {
   const stylesArr = toCompactArray(componentStyles)
 
   // root, icon, etc.
@@ -48,15 +49,18 @@ export const renderComponentStyles = (
   }, [])
 
   return componentParts.reduce((classes, partName) => {
-    const styleFunctionsForPart = stylesArr.reduce((stylesForPart, nextStyle) => {
-      if (nextStyle[partName]) stylesForPart.push(callable(nextStyle[partName]))
+    const styleFunctionsForPart = stylesArr.reduce(
+      (stylesForPart: ComponentPartStyleFunction[], nextStyle) => {
+        if (nextStyle[partName]) stylesForPart.push(callable(nextStyle[partName]))
 
-      return stylesForPart
-    }, [])
+        return stylesForPart
+      },
+      [],
+    )
 
     const combinedFunctions = combineRules(...styleFunctionsForPart)
 
-    classes[partName] = renderer.renderRule(combinedFunctions, styleArg)
+    classes[partName] = renderer.renderRule(combinedFunctions, styleParam)
 
     return classes
   }, {})

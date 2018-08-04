@@ -24,7 +24,7 @@ import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { IMergedThemes, ITheme } from 'types/theme'
+import { IThemePrepared, IThemeInput } from 'types/theme'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -35,7 +35,7 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
 
 interface IComponentExampleState {
   knobs: Object
-  theme: ITheme
+  theme: IThemeInput
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
@@ -345,7 +345,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
   renderWithProvider(ExampleComponent) {
     const { showRtl, theme } = this.state
 
-    const newTheme: ITheme = {
+    const newTheme: IThemeInput = {
       siteVariables: teamsTheme.siteVariables,
       componentVariables: [teamsTheme.componentVariables, theme.componentVariables],
       componentStyles: teamsTheme.componentStyles,
@@ -539,7 +539,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables, componentVariables }: ITheme | IMergedThemes) => {
+          render={({ siteVariables, componentVariables }: IThemeInput | IThemePrepared) => {
             // TODO: refactor to handle variables as a call stack once mergeThemes is updated
             // TODO: refactor to handle variables as a call stack once mergeThemes is updated
             // TODO: refactor to handle variables as a call stack once mergeThemes is updated

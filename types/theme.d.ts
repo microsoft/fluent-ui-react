@@ -1,6 +1,13 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
-import React from 'react'
+import * as React from 'react'
+
+// Themes go through 3 phases.
+// 1. Input - (from the user), variable and style objects/functions, some values optional
+// 2. Prepared - (on context), variable and style functions only, all values required
+// 3. Resolved - (for rendering), plain object variables and styles, all values required
+//
+// We use these terms in typings to indicate which phase the typings apply to.
 
 // ========================================================
 // Utilities
@@ -22,17 +29,19 @@ export type IProps = ObjectOf<any>
 export interface ISiteVariables {
   [key: string]: any
 
-  brand: string
-  htmlFontSize: string
+  brand?: string
+  htmlFontSize?: string
 }
 
-export type ComponentVariableValue = any
+export type ComponentVariableValue = string | number | boolean
 
 export type ComponentVariablesObject = ObjectOf<ComponentVariableValue>
 
-export type ComponentVariablesFunction = (siteVariables: ISiteVariables) => ComponentVariablesObject
+export type ComponentVariablesFunction = (
+  siteVariables?: ISiteVariables,
+) => ComponentVariablesObject
 
-export type ComponentVariables = ComponentVariablesObject | ComponentVariablesFunction
+export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesFunction
 
 // ========================================================
 // Styles
@@ -59,28 +68,34 @@ export interface ICSSInJSStyle extends React.CSSProperties {
   ':last-child'?: ICSSInJSStyle
 }
 
-export type ComponentPartStyle = ComponentStyleFunction | ICSSInJSStyle
-
-export interface IComponentStyles {
-  [part: string]: ComponentPartStyle
-
-  root?: ComponentPartStyle
-}
-
-export interface IComponentStyleClasses {
-  [part: string]: string
-
-  root?: string
-}
-
-export interface ComponentStyleFunctionArg {
+export interface ComponentStyleFunctionParam {
   props: IProps
   variables: ComponentVariablesObject
   siteVariables: ISiteVariables
   rtl: boolean
 }
 
-export type ComponentStyleFunction = (arg: ComponentStyleFunctionArg) => ICSSInJSStyle
+export type ComponentPartStyleFunction = (styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle
+
+export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
+
+export interface IComponentPartStylesInput {
+  [part: string]: ComponentPartStyle
+
+  root?: ComponentPartStyle
+}
+
+export interface IComponentPartStylesPrepared {
+  [part: string]: ComponentPartStyleFunction
+
+  root?: ComponentPartStyleFunction
+}
+
+export interface IComponentPartClasses {
+  [part: string]: string
+
+  root?: string
+}
 
 // ========================================================
 // Static Styles
@@ -101,12 +116,11 @@ export type StaticStyles = OneOrArray<StaticStyle>
 // ========================================================
 // Theme
 // ========================================================
-
-export interface ITheme {
-  siteVariables: ISiteVariables
-  componentVariables: IThemeComponentVariables
-  componentStyles: IThemeComponentStyles
-  rtl: boolean
+export interface IThemeInput {
+  siteVariables?: ISiteVariables
+  componentVariables?: IThemeComponentVariablesInput
+  componentStyles?: IThemeComponentStylesInput
+  rtl?: boolean
   renderer?: IRenderer
 }
 
@@ -118,46 +132,82 @@ export interface ITheme {
 //
 // As a theme cascades down the tree and is merged with the previous theme on
 // context, the resulting theme takes this shape.
-export interface IMergedThemes {
+export interface IThemePrepared {
   siteVariables: ISiteVariables
-  componentVariables: IThemeComponentVariables[]
-  componentStyles: IThemeComponentStyles[]
+  componentVariables: {
+    [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesFunction
+  }
+  componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
   rtl: boolean
-  renderer?: IRenderer
+  renderer: IRenderer
 }
 
-export interface IThemeComponentStyles {
-  Accordion?: IComponentStyles
-  Avatar?: IComponentStyles
-  Button?: IComponentStyles
-  Chat?: IComponentStyles
-  Divider?: IComponentStyles
-  Header?: IComponentStyles
-  Icon?: IComponentStyles
-  Image?: IComponentStyles
-  Input?: IComponentStyles
-  Label?: IComponentStyles
-  Layout?: IComponentStyles
-  List?: IComponentStyles
-  Menu?: IComponentStyles
-  Text?: IComponentStyles
+export interface IThemeComponentStylesInput {
+  Accordion?: IComponentPartStylesInput
+  Avatar?: IComponentPartStylesInput
+  Button?: IComponentPartStylesInput
+  Chat?: IComponentPartStylesInput
+  Divider?: IComponentPartStylesInput
+  Header?: IComponentPartStylesInput
+  Icon?: IComponentPartStylesInput
+  Image?: IComponentPartStylesInput
+  Input?: IComponentPartStylesInput
+  Label?: IComponentPartStylesInput
+  Layout?: IComponentPartStylesInput
+  List?: IComponentPartStylesInput
+  Menu?: IComponentPartStylesInput
+  Text?: IComponentPartStylesInput
 }
 
-export interface IThemeComponentVariables {
-  Accordion?: ComponentVariables
-  Avatar?: ComponentVariables
-  Button?: ComponentVariables
-  Chat?: ComponentVariables
-  Divider?: ComponentVariables
-  Header?: ComponentVariables
-  Icon?: ComponentVariables
-  Image?: ComponentVariables
-  Input?: ComponentVariables
-  Label?: ComponentVariables
-  Layout?: ComponentVariables
-  List?: ComponentVariables
-  Menu?: ComponentVariables
-  Text?: ComponentVariables
+export interface IThemeComponentStylesPrepared {
+  Accordion?: IComponentPartStylesPrepared
+  Avatar?: IComponentPartStylesPrepared
+  Button?: IComponentPartStylesPrepared
+  Chat?: IComponentPartStylesPrepared
+  Divider?: IComponentPartStylesPrepared
+  Header?: IComponentPartStylesPrepared
+  Icon?: IComponentPartStylesPrepared
+  Image?: IComponentPartStylesPrepared
+  Input?: IComponentPartStylesPrepared
+  Label?: IComponentPartStylesPrepared
+  Layout?: IComponentPartStylesPrepared
+  List?: IComponentPartStylesPrepared
+  Menu?: IComponentPartStylesPrepared
+  Text?: IComponentPartStylesPrepared
+}
+
+export interface IThemeComponentVariablesInput {
+  Accordion?: ComponentVariablesInput
+  Avatar?: ComponentVariablesInput
+  Button?: ComponentVariablesInput
+  Chat?: ComponentVariablesInput
+  Divider?: ComponentVariablesInput
+  Header?: ComponentVariablesInput
+  Icon?: ComponentVariablesInput
+  Image?: ComponentVariablesInput
+  Input?: ComponentVariablesInput
+  Label?: ComponentVariablesInput
+  Layout?: ComponentVariablesInput
+  List?: ComponentVariablesInput
+  Menu?: ComponentVariablesInput
+  Text?: ComponentVariablesInput
+}
+
+export interface IThemeComponentVariablesPrepared {
+  Accordion?: ComponentVariablesFunction
+  Avatar?: ComponentVariablesFunction
+  Button?: ComponentVariablesFunction
+  Chat?: ComponentVariablesFunction
+  Divider?: ComponentVariablesFunction
+  Header?: ComponentVariablesFunction
+  Icon?: ComponentVariablesFunction
+  Image?: ComponentVariablesFunction
+  Input?: ComponentVariablesFunction
+  Label?: ComponentVariablesFunction
+  Layout?: ComponentVariablesFunction
+  List?: ComponentVariablesFunction
+  Menu?: ComponentVariablesFunction
+  Text?: ComponentVariablesFunction
 }
 
 export interface IRenderer extends IFelaRenderer {}

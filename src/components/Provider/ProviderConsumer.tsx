@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FelaTheme } from 'react-fela'
 
-import { IMergedThemes, ITheme } from '../../../types/theme'
+import { IThemePrepared } from '../../../types/theme'
 
 export interface IProviderConsumerProps {
-  render: (theme: ITheme | IMergedThemes) => React.ReactNode
+  render: (theme: IThemePrepared) => React.ReactNode
 }
 
 /**

@@ -1,10 +1,10 @@
-import { ITheme } from '../../../types/theme'
+import { IThemeInput } from '../../../types/theme'
 
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 
-export const theme: ITheme = {
+export const theme: IThemeInput = {
   rtl: false,
   siteVariables,
   componentVariables,

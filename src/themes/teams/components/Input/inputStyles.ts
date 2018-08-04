@@ -1,6 +1,6 @@
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const inputStyles: IComponentStyles = {
+const inputStyles: IComponentPartStylesInput = {
   root: ({ props, variables }): ICSSInJSStyle => {
     return {
       display: 'inline-flex',

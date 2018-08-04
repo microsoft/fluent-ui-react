@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
 const getAvatarDimension = size => {
   return 12 + size * 4
@@ -37,7 +37,7 @@ const getPresenceSpanTop = (size, presenceIconPadding) => {
   return getPresenceIconSize(size) + getPresenceIconPadding(size, presenceIconPadding)
 }
 
-const avatarStyles: IComponentStyles = {
+const avatarStyles: IComponentPartStylesInput = {
   root: (): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',

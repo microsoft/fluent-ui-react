@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const labelStyles: IComponentStyles = {
+const labelStyles: IComponentPartStylesInput = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
     fontWeight: 500,

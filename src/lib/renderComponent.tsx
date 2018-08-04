@@ -1,18 +1,20 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React from 'react'
 import { FelaTheme } from 'react-fela'
 
+import callable from './callable'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import toCompactArray from './toCompactArray'
-import { renderComponentStyles, resolveComponentVariables } from './themeUtils'
-
+import { renderComponentStyles } from './themeUtils'
 import {
-  ComponentVariables,
+  ComponentStyleFunctionParam,
+  ComponentVariablesInput,
   ComponentVariablesObject,
-  IComponentStyles,
-  IMergedThemes,
-  ITheme,
+  IComponentPartStylesInput,
+  IThemeInput,
+  IThemePrepared,
 } from '../../types/theme'
 
 export interface IRenderResultConfig<P> {
@@ -25,8 +27,8 @@ export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 
 type IRenderConfigProps = {
   [key: string]: any
-  variables?: ComponentVariables
-  styles?: IComponentStyles
+  variables?: ComponentVariablesInput
+  styles?: IComponentPartStylesInput
 }
 
 export interface IRenderConfig {
@@ -45,22 +47,17 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={(theme: ITheme | IMergedThemes) => {
+      render={(theme: IThemeInput | IThemePrepared) => {
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
 
         //
-        // Resolve variables using final siteVariables, allow props.variables to override
+        // Resolve variables for this component, allow props.variables to override
         //
-        const variablesForComponent = toCompactArray(theme.componentVariables)
-          .map(variables => variables[displayName])
-          .concat(props.variables)
-          .filter(Boolean)
-
-        const variables: ComponentVariablesObject = resolveComponentVariables(
-          variablesForComponent,
-          theme.siteVariables,
-        )
+        const variables: ComponentVariablesObject = {
+          ...callable(theme.componentVariables[displayName])(theme.siteVariables),
+          ...callable(props.variables)(theme.siteVariables),
+        }
 
         //
         // Resolve styles using resolved variables, merge results, allow props.styles to override
@@ -70,7 +67,7 @@ const renderComponent = <P extends {}>(
           .concat(props.styles)
           .filter(Boolean)
 
-        const styleArg = {
+        const styleParam: ComponentStyleFunctionParam = {
           props,
           variables,
           siteVariables: theme.siteVariables,
@@ -80,7 +77,7 @@ const renderComponent = <P extends {}>(
         const classes: ComponentVariablesObject = renderComponentStyles(
           theme.renderer,
           stylesForComponent,
-          styleArg,
+          styleParam,
         )
         classes.root = cx(className, classes.root, props.className)
 

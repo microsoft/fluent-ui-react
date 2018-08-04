@@ -1,6 +1,6 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
 const sizes = new Map([
@@ -53,7 +53,7 @@ const getBorderedStyles = (circular, borderColor, color): ICSSInJSStyle => ({
   ...(circular ? { borderRadius: '50%' } : { verticalAlign: 'baseline' }),
 })
 
-const iconStyles: IComponentStyles = {
+const iconStyles: IComponentPartStylesInput = {
   root: ({
     props: { color, disabled, kind, name, size, bordered, circular, xSpacing },
     variables,

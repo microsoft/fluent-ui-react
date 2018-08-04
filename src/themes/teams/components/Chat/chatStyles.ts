@@ -1,6 +1,6 @@
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const chatStyles: IComponentStyles = {
+const chatStyles: IComponentPartStylesInput = {
   root: (): ICSSInJSStyle => ({
     display: 'flex',
     flexDirection: 'column',

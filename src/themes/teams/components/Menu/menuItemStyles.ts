@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentStyles, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IMenuItemProps } from '../../../../components/Menu/MenuItem'
 
 const underlinedItem = (color): ICSSInJSStyle => ({
@@ -39,7 +39,7 @@ const itemSeparator = ({
   }
 }
 
-const menuItemStyles: IComponentStyles = {
+const menuItemStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: IMenuItemProps; variables: any }): ICSSInJSStyle => {
     const { active, shape, type } = props
     return {

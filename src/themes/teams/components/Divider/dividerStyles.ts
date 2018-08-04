@@ -1,5 +1,9 @@
 import { childrenExist, pxToRem } from '../../../../lib'
-import { IComponentStyles, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../../../types/theme'
+import {
+  IComponentPartStylesInput,
+  ICSSInJSStyle,
+  ICSSPseudoElementStyle,
+} from '../../../../../types/theme'
 
 const dividerBorderRule = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
@@ -18,7 +22,7 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   }),
 })
 
-const dividerStyles: IComponentStyles = {
+const dividerStyles: IComponentPartStylesInput = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {

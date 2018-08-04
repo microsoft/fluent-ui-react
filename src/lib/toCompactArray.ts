@@ -1,4 +1,4 @@
-const toCompactArray = (...values: any[]): any[] => {
+const toCompactArray = <T = any>(...values: T[]): T[] => {
   return [].concat(...values).filter(Boolean)
 }
 
