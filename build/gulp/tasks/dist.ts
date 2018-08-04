@@ -27,14 +27,17 @@ task('build:dist:commonjs', () => {
 
   const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
 
-  return merge2([dts.pipe(dest(paths.dist('types'))), js.pipe(dest(paths.dist('commonjs')))])
+  return merge2([dts.pipe(dest(paths.dist('commonjs'))), js.pipe(dest(paths.dist('commonjs')))])
 })
 
 task('build:dist:es', () => {
-  const typescript = g.typescript.createProject(paths.base('build/tsconfig.es.json'))
-  return src(paths.src('**/*.{ts,tsx}'))
-    .pipe(typescript())
-    .pipe(dest(paths.dist('es')))
+  const tsConfig = paths.base('build/tsconfig.es.json')
+  const settings = { declaration: true }
+  const typescript = g.typescript.createProject(tsConfig, settings)
+
+  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+
+  return merge2([dts.pipe(dest(paths.dist('es'))), js.pipe(dest(paths.dist('es')))])
 })
 
 task('build:dist:umd', cb => {

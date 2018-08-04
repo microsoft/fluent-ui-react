@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.2.5 ]------------------------------- -->
+## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.4...v0.2.5)
+
+### Fixes
+- Include typings for each module target in dist @levithomason ([#48](https://github.com/stardust-ui/react/pull/48))
+
 <!--------------------------------[ v0.2.4 ]------------------------------- -->
 ## [v0.2.4](https://github.com/stardust-ui/react/tree/v0.2.4) (2018-08-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.3...v0.2.4)
@@ -32,7 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add Label `icon`, `onIconClick` and `iconPosition` props @mnajdova ([#19](https://github.com/stardust-ui/react/pull/19))
 - Add Menu `vertical` prop @miroslavstastny ([#21](https://github.com/stardust-ui/react/pull/21))
 - Add Menu support for `shape="pills" vertical` @miroslavstastny ([#36](https://github.com/stardust-ui/react/pull/36))
-- Add Icon support for `background` variable @kuzhelov ([#47])((https://github.com/stardust-ui/react/pull/47))
+- Add Icon support for `background` variable @kuzhelov ([#47](https://github.com/stardust-ui/react/pull/47))
 
 ### Documentation
 - Improve UX for "knobs" form on component examples @levithomason ([#20](https://github.com/stardust-ui/react/pull/20))
