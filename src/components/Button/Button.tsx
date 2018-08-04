@@ -6,7 +6,7 @@ import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
 export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
@@ -78,27 +78,22 @@ class Button extends UIComponent<IButtonProps, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    accBehavior: PropTypes.string,
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.string,
   }
 
-  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'accBehavior']
+  static handledProps = ['as', 'circular', 'className', 'content', 'type', 'accessibility']
 
   public static defaultProps = {
     as: 'button',
-  }
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.button,
-    )
+    accessibility: AccessibilityType[AccessibilityType.button],
   }
 
   public renderComponent({
     ElementType,
     classes,
     rest,
+    accessibility,
   }: IRenderResultConfig<IButtonProps>): ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
@@ -130,7 +125,7 @@ class Button extends UIComponent<IButtonProps, any> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
       >
         {getContent()}
