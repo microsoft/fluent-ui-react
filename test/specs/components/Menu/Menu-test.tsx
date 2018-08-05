@@ -2,11 +2,12 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import Menu from 'src/components/Menu/Menu'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 
 describe('Menu', () => {
   isConformant(Menu)
+  handlesAccessibility(Menu, { defaultRootRole: 'menu' })
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },

@@ -17,6 +17,7 @@ import {
 import { Accessibility } from './interfaces'
 
 export enum AccessibilityType {
+  default,
   button,
   toggleButton,
   image,
@@ -34,6 +35,7 @@ export enum AccessibilityType {
 
 export class AccessibilityFactory {
   private static BehaviorsMap: Map<string, Accessibility> = new Map([
+    [AccessibilityType[AccessibilityType.default], DefaultBehavior],
     [AccessibilityType[AccessibilityType.button], ButtonBehavior],
     [AccessibilityType[AccessibilityType.toggleButton], ToggleButtonBehavior],
     [AccessibilityType[AccessibilityType.image], ImageBehavior],

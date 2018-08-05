@@ -4,4 +4,5 @@ import Image from '../../../../src/components/Image/Image'
 
 describe('Image', () => {
   common.isConformant(Image)
+  handlesAccessibility(Image, {defaultRootRole: 'presentation'})
 })

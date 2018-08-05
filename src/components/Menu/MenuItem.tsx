@@ -93,16 +93,7 @@ class MenuItem extends UIComponent<IMenuItemProps, any> {
     'shape',
     'type',
     'vertical',
-    'accBehavior',
   ]
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.menuItem,
-    )
-  }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

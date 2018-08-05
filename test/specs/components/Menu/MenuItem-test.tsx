@@ -1,11 +1,13 @@
 import React from 'react'
 
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 
 describe('MenuItem', () => {
   isConformant(MenuItem)
+  handlesAccessibility(MenuItem, { defaultRootRole: 'presentation' })
+  handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 
   it('content renders as `li > a`', () => {
     const menuItem = getTestingRenderedComponent(MenuItem, <MenuItem content="Home" />).find(

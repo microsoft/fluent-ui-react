@@ -30,20 +30,29 @@ export interface IRenderConfig {
   defaultAccessibility: string
 }
 
+const getAccessibility = <P extends {}>(props, state, defaultAccessibility) => {
+  const accessibilityName = props['accessibility'] || defaultAccessibility
+  let accessibility = AccessibilityFactory.getAccessibility(accessibilityName)
+  if (typeof accessibility === 'function') {
+    accessibility = accessibility({ ...props, ...state })
+  }
+  return accessibility
+}
+
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
   const {
     className,
+    defaultAccessibility,
     defaultProps,
     displayName,
     handledProps,
     props,
     rules,
-    variables,
-    defaultAccessibility,
     state,
+    variables,
   } = config
 
   return (
@@ -63,14 +72,7 @@ const renderComponent = <P extends {}>(
         const classes = getClasses(renderer, props, rules, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
-        let accessibility = AccessibilityFactory.getAccessibility(
-          props['accessibility'] || defaultAccessibility,
-        )
-        if (typeof accessibility === 'function') {
-          accessibility = accessibility({ ...props, ...state })
-        }
-
-        // TODO: make accessibility safe, check for undefined attributes and keyhandlers
+        const accessibility = getAccessibility(props, state, defaultAccessibility)
 
         const config: IRenderResultConfig<P> = { ElementType, rest, classes, accessibility }
 
