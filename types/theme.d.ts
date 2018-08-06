@@ -108,7 +108,7 @@ export type StaticStyleObject = {
 
 export type StaticStyleRenderable = string | StaticStyleObject
 
-export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleRenderable
+export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleObject
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 

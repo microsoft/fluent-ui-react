@@ -3,8 +3,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
-import { FontFaces, IThemePrepared, IThemeInput, StaticStyles } from '../../../types/theme'
+import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import {
+  FontFaces,
+  IThemePrepared,
+  IThemeInput,
+  StaticStyles,
+  StaticStyleObject,
+  StaticStyle,
+  StaticStyleFunction,
+} from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
 
 export interface IProviderProps {
@@ -60,21 +68,21 @@ class Provider extends React.Component<IProviderProps, any> {
 
     if (!staticStyles) return
 
-    const renderObject = object => {
+    const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
         felaLtrRenderer.renderStatic(style, selector)
       })
     }
 
-    const staticStylesArr = [].concat(staticStyles).filter(Boolean)
+    const staticStylesArr = toCompactArray(staticStyles)
 
-    staticStylesArr.forEach(staticStyle => {
+    staticStylesArr.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
         felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
-        renderObject(staticStyle)
+        renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject(staticStyle(theme.siteVariables))
+        renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables))
       } else {
         throw new Error(
           `staticStyles array must contain CSS strings, style objects, or rule functions, got: ${typeof staticStyle}`,
