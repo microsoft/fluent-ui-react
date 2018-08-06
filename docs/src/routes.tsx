@@ -5,7 +5,6 @@ import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 
-import ComponentAnatomy from './views/ComponentAnatomy'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 
@@ -15,7 +14,6 @@ const Router = () => (
       <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
-        <DocsLayout exact path="/component-anatomy" component={ComponentAnatomy} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
