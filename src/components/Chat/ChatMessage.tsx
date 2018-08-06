@@ -57,6 +57,7 @@ class ChatMessage extends UIComponent<any, any> {
       <FocusZone
         elementType={ElementType}
         preventDefaultWhenHandled={true}
+        isCircularNavigation={true}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
