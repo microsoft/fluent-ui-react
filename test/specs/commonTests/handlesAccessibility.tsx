@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
 
@@ -65,7 +65,7 @@ export default (Component, options: any = {}) => {
       expect(role).toBe(testRole)
     })
 
-    test('gets correct role when overrides both accessibility andr role', () => {
+    test('gets correct role when overrides both accessibility and role', () => {
       const testRole = 'test-role'
       const rendered = getTestingRenderedComponent(
         Component,
