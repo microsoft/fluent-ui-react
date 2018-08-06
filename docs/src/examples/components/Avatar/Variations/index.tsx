@@ -25,9 +25,14 @@ const Variations = () => (
       examplePath="components/Avatar/Variations/AvatarExampleName"
     />
     <ComponentExample
-      title="Generate initials"
+      title="Excluded Initials"
+      description="Avatar initials exclude content in parens, braces, and brackets, as well as all middle names."
+      examplePath="components/Avatar/Variations/AvatarExampleExcludedInitials"
+    />
+    <ComponentExample
+      title="Get initials"
       description="An Avatar can be provided with custom logic for generating the initials shown in the label."
-      examplePath="components/Avatar/Variations/AvatarExampleGenerateInitials"
+      examplePath="components/Avatar/Variations/AvatarExampleGetInitials"
     />
     <ComponentExample
       title="Size"

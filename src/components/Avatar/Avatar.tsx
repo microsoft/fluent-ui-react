@@ -15,16 +15,7 @@ class Avatar extends UIComponent<any, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = [
-    'alt',
-    'as',
-    'className',
-    'generateInitials',
-    'name',
-    'size',
-    'src',
-    'status',
-  ]
+  static handledProps = ['alt', 'as', 'className', 'getInitials', 'name', 'size', 'src', 'status']
 
   static rules = avatarRules
 
@@ -59,12 +50,12 @@ class Avatar extends UIComponent<any, any> {
     ]),
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
-    generateInitials: PropTypes.func,
+    getInitials: PropTypes.func,
   }
 
   static defaultProps = {
     size: 5,
-    generateInitials(name: string) {
+    getInitials(name: string) {
       if (!name) {
         return ''
       }
@@ -119,7 +110,7 @@ class Avatar extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { src, alt, name, status, generateInitials, size } = this.props
+    const { src, alt, name, status, getInitials, size } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
 
     const iconVariables = {
@@ -135,7 +126,7 @@ class Avatar extends UIComponent<any, any> {
           <Label
             className={classes.avatarNameContainer}
             as="div"
-            content={generateInitials(name)}
+            content={getInitials(name)}
             variables={{ padding: '0px' }}
             circular
             title={name}
