@@ -7,7 +7,6 @@ export const disabledStyle: React.CSSProperties = {
 
 export const fittedStyle: React.CSSProperties = {
   margin: 0,
-  width: 'auto',
 }
 
 export const truncateStyle: React.CSSProperties = {

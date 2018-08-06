@@ -4,6 +4,7 @@ import { customPropTypes, UIComponent, SUI, createShorthandFactory } from '../..
 
 import iconRules from './iconRules'
 import iconVariables from './iconVariables'
+import svgIcons from './svgIcons'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -32,14 +33,14 @@ class Icon extends UIComponent<any, any> {
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
-    /** The type of font that needs to be used */
-    kind: PropTypes.string,
+    /** Use font icons (instead of SVG that are used by default). Icons font will be used by default, other font variants could be provided.  */
+    font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
 
     /** Name of the icon. */
-    name: customPropTypes.suggest(SUI.ALL_ICONS_IN_ALL_CONTEXTS),
+    name: PropTypes.string,
 
     /** Size of the icon. */
-    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
+    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'normal', 'large', 'big', 'huge', 'massive']),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -51,21 +52,39 @@ class Icon extends UIComponent<any, any> {
     'circular',
     'className',
     'disabled',
-    'kind',
+    'font',
     'name',
     'size',
     'xSpacing',
   ]
 
   static defaultProps = {
-    as: 'i',
-    kind: 'FontAwesome',
+    as: 'span',
+    size: 'normal',
   }
 
   static rules = iconRules
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderFontIcon(ElementType, classes, rest): React.ReactNode {
     return <ElementType className={classes.root} {...rest} />
+  }
+
+  renderSvgIcon(ElementType, classes, rest): React.ReactNode {
+    const icon = svgIcons[this.props.name]
+
+    return (
+      <ElementType className={classes.root} {...rest}>
+        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
+          {icon && icon.element}
+        </svg>
+      </ElementType>
+    )
+  }
+
+  renderComponent({ ElementType, classes, rest }) {
+    return this.props.font
+      ? this.renderFontIcon(ElementType, classes, rest)
+      : this.renderSvgIcon(ElementType, classes, rest)
   }
 }
 

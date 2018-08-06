@@ -3,15 +3,15 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleCircular = () => (
   <div>
-    <Icon name="chess rock" circular />
-    <Icon name="book" circular />
-    <Icon name="expand" circular />
-    <Icon name="play" circular />
-    <Icon name="stop" circular />
-    <Icon name="calendar alternate outline" circular />
-    <Icon name="coffee" circular />
-    <Icon name="compass outline" circular />
-    <Icon name="area chart" circular />
+    <Icon font="FontAwesome" name="chess rock" circular />
+    <Icon font="FontAwesome" name="book" circular />
+    <Icon font="FontAwesome" name="expand" circular />
+    <Icon font="FontAwesome" name="play" circular />
+    <Icon font="FontAwesome" name="stop" circular />
+    <Icon font="FontAwesome" name="calendar alternate outline" circular />
+    <Icon font="FontAwesome" name="coffee" circular />
+    <Icon font="FontAwesome" name="compass outline" circular />
+    <Icon font="FontAwesome" name="area chart" circular />
   </div>
 )
 
