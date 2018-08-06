@@ -4,8 +4,6 @@ import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import avatarRules from './avatarRules'
-import avatarVariables from './avatarVariables'
-import callable from '../../lib/callable'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
@@ -29,8 +27,6 @@ class Avatar extends UIComponent<any, any> {
   ]
 
   static rules = avatarRules
-
-  static variables = avatarVariables
 
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */
@@ -123,17 +119,12 @@ class Avatar extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { src, alt, name, status, generateInitials, size, variables } = this.props
+    const { src, alt, name, status, generateInitials, size } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
-
-    const evaluatedAvatarVariables = variables && callable(variables)()
-    const presenceIndicatorBackground =
-      evaluatedAvatarVariables && evaluatedAvatarVariables.presenceIndicatorBackground
 
     const iconVariables = {
       color: 'white',
       backgroundColor: color,
-      ...(presenceIndicatorBackground && { borderColor: presenceIndicatorBackground }),
     }
 
     return (
@@ -151,14 +142,16 @@ class Avatar extends UIComponent<any, any> {
           />
         )}
         {status && (
-          <Icon
-            className={classes.presenceIndicator}
-            size={size < 3 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
-            circular
-            name={icon}
-            variables={iconVariables}
-            title={status}
-          />
+          <div className={classes.presenceIndicatorWrapper}>
+            <Icon
+              className={classes.presenceIndicator}
+              size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
+              circular
+              name={icon}
+              variables={iconVariables}
+              title={status}
+            />
+          </div>
         )}
       </ElementType>
     )
