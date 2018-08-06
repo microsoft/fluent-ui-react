@@ -38,7 +38,7 @@ class Image extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'img',
-    //    accessibility: ImageBehavior,
+    accessibility: ImageBehavior,
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
