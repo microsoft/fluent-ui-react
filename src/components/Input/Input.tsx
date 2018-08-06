@@ -95,8 +95,6 @@ class Input extends UIComponent<any, any> {
     this.state = {
       value: props.value || '',
     }
-
-    this.handleChange = this.handleChange.bind(this)
   }
 
   computeTabIndex = props => {
@@ -105,12 +103,12 @@ class Input extends UIComponent<any, any> {
   }
 
   handleChange = e => {
-    const inputValue = _.get(e, 'target.value')
+    const value = _.get(e, 'target.value')
     const { clearable } = this.props
 
-    _.invoke(this.props, 'onChange', e, { ...this.props, inputValue })
+    _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.setState({ value: inputValue })
+    this.setState({ value })
   }
 
   handleChildOverrides = (child, defaultProps) => ({
