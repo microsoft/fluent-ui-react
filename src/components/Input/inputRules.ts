@@ -31,6 +31,7 @@ const inputRules = {
     return {
       position: variables.iconPosition,
       right: variables.iconRight,
+      outline: 0,
     }
   },
 }
