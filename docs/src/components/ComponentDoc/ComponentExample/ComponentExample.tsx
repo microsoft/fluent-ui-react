@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { PureComponent, isValidElement, CSSProperties } from 'react'
+import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
@@ -52,7 +52,7 @@ interface IComponentExampleState {
 const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 const EDITOR_GUTTER_COLOR = '#26282d'
 
-const childrenStyle: CSSProperties = {
+const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
   maxWidth: pxToRem(500),
 }
@@ -77,7 +77,7 @@ const variableInputStyle = {
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-class ComponentExample extends PureComponent<IComponentExampleProps, IComponentExampleState> {
+class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
   private componentRef: React.Component
   private sourceCodeMgr: ISourceCodeManager
   private anchorName: string
@@ -295,7 +295,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     try {
       const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
 
-      if (!isValidElement(exampleElement)) {
+      if (!React.isValidElement(exampleElement)) {
         this.setErrorDebounced(
           `Default export is not a valid React element. Check the example syntax.`,
         )
@@ -391,13 +391,13 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
 
     return (
       // match code editor background and gutter size and colors
-      <div style={{ background: EDITOR_BACKGROUND_COLOR } as CSSProperties}>
+      <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
           style={
             {
               borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
               paddingBottom: '1rem',
-            } as CSSProperties
+            } as React.CSSProperties
           }
         >
           <Menu size="small" inverted secondary pointing items={menuItems} />
@@ -409,7 +409,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
   private renderCodeEditorMenu = (): JSX.Element => {
     const { copiedCode } = this.state
     const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
-    const codeEditorStyle: CSSProperties = {
+    const codeEditorStyle: React.CSSProperties = {
       position: 'absolute',
       margin: 0,
       top: '2px',
@@ -509,7 +509,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
         <Divider inverted horizontal>
           <span style={{ opacity: 0.5 }}>HTML</span>
         </Divider>
-        <div style={{ padding: '1rem', filter: 'grayscale()' } as CSSProperties}>
+        <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
           <Editor
             mode="html"
             showGutter={false}
@@ -603,7 +603,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
 
     const isActive = this.isActiveHash() || this.isActiveState()
 
-    const exampleStyle: CSSProperties = {
+    const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
       background: '#fff',

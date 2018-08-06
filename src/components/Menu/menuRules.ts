@@ -1,12 +1,11 @@
 import { pxToRem } from '../../lib'
-import { IMenuProps } from './Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }: { props: IMenuProps; variables: any }) => {
+  root: ({ props, variables }) => {
     const { type, shape, vertical } = props
     return {
       display: 'flex',

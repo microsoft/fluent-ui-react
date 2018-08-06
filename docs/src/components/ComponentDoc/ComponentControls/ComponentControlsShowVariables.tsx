@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 
 import { updateForKeys } from 'docs/src/hoc'

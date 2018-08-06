@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import React, { createElement } from 'react'
+import * as React from 'react'
 
 import { createShorthand } from 'src/lib'
 import { consoleUtil } from 'test/utils'
@@ -59,7 +59,7 @@ export default (Component, options: any = {}) => {
         overrideProps: shorthandOverrideProps,
         generateKey,
       })
-      const element = createElement(Component, { ...requiredProps, [propKey]: value })
+      const element = React.createElement(Component, { ...requiredProps, [propKey]: value })
       const wrapper = shallow(element)
 
       wrapper.should[assertMethod](expectedShorthandElement)
@@ -86,7 +86,7 @@ export default (Component, options: any = {}) => {
     if (!alwaysPresent) {
       it(`has no ${name} when null`, () => {
         shallow(
-          createElement(Component, { ...requiredProps, [propKey]: null }),
+          React.createElement(Component, { ...requiredProps, [propKey]: null }),
         ).should.not.have.descendants(ShorthandComponent)
       })
     }

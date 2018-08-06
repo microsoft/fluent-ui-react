@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import layoutRules from './layoutRules'

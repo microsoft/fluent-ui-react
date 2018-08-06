@@ -1,5 +1,5 @@
-import cx from 'classnames'
-import React from 'react'
+import * as cx from 'classnames'
+import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
 import getClasses from './getClasses'
@@ -34,7 +34,7 @@ const renderComponent = <P extends {}>(
   return (
     <FelaTheme
       render={theme => {
-        const { siteVariables = {}, componentVariables = {} } = theme
+        const { siteVariables = {}, componentVariables = {}, renderer } = theme
 
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
@@ -45,7 +45,7 @@ const renderComponent = <P extends {}>(
         const mergedVariables = () =>
           Object.assign({}, variablesFromFile, variablesFromTheme, variablesFromProp)
 
-        const classes = getClasses(props, rules, mergedVariables, theme)
+        const classes = getClasses(renderer, props, rules, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
         const config: IRenderResultConfig<P> = { ElementType, rest, classes }

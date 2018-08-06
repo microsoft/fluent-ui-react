@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Accordion, Menu, Sticky } from 'semantic-ui-react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'
@@ -13,7 +13,7 @@ const sidebarStyle = {
   paddingTop: '0.1em',
 }
 
-class ComponentSidebar extends Component<any, any> {
+class ComponentSidebar extends React.Component<any, any> {
   static propTypes = {
     activePath: PropTypes.string,
     displayName: PropTypes.string,

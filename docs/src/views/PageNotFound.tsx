@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Grid, Segment, Header, Icon } from 'semantic-ui-react'
 
 const PageNotFound = () => (

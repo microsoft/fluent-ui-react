@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import isBrowser from './isBrowser'
 
 const DEFAULT_FONT_SIZE = '16px'

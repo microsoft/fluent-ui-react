@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, felaRtlRenderer } from '../../lib'
@@ -9,7 +9,7 @@ import ProviderConsumer from './ProviderConsumer'
 /**
  * The Provider passes the CSS in JS renderer and theme down context.
  */
-class Provider extends Component<any, any> {
+class Provider extends React.Component<any, any> {
   static propTypes = {
     fontFaces: PropTypes.arrayOf(
       PropTypes.shape({
@@ -36,14 +36,19 @@ class Provider extends Component<any, any> {
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = felaRenderer => {
+  renderStaticStyles = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
     const { siteVariables, staticStyles } = this.props
 
     if (!staticStyles) return
 
     const renderObject = object => {
       _.forEach(object, (style, selector) => {
-        felaRenderer.renderStatic(style, selector)
+        felaLtrRenderer.renderStatic(style, selector)
       })
     }
 
@@ -51,7 +56,7 @@ class Provider extends Component<any, any> {
 
     staticStylesArr.forEach(staticStyle => {
       if (_.isString(staticStyle)) {
-        felaRenderer.renderStatic(staticStyle)
+        felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle)
       } else if (_.isFunction(staticStyle)) {
@@ -64,7 +69,12 @@ class Provider extends Component<any, any> {
     })
   }
 
-  renderFontFaces = felaRenderer => {
+  renderFontFaces = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
     const { siteVariables, fontFaces } = this.props
 
     if (!fontFaces) return
@@ -73,7 +83,7 @@ class Provider extends Component<any, any> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.path, font.style)
     }
 
     const fontFaceArr = [].concat(_.isFunction(fontFaces) ? fontFaces(siteVariables) : fontFaces)
@@ -84,17 +94,21 @@ class Provider extends Component<any, any> {
   }
 
   componentDidMount() {
-    const felaRenderer = this.props.rtl ? felaRtlRenderer : felaLtrRenderer
-    this.renderStaticStyles(felaRenderer)
-    this.renderFontFaces(felaRenderer)
+    this.renderStaticStyles()
+    this.renderFontFaces()
   }
 
   render() {
     const { componentVariables, siteVariables, children, rtl } = this.props
+    const renderer = rtl ? felaRtlRenderer : felaLtrRenderer
 
     // ensure we don't assign `undefined` values to the theme context
     // they will override values down stream
-    const theme: any = { rtl: !!rtl }
+    const theme: any = {
+      renderer,
+      rtl: !!rtl,
+    }
+
     if (siteVariables) {
       theme.siteVariables = siteVariables
     }
@@ -103,7 +117,7 @@ class Provider extends Component<any, any> {
     }
 
     return (
-      <RendererProvider renderer={this.props.rtl ? felaRtlRenderer : felaLtrRenderer}>
+      <RendererProvider renderer={renderer}>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </RendererProvider>
     )

@@ -1,5 +1,5 @@
-import { createElement } from 'react'
-import _ from 'lodash'
+import * as React from 'react'
+import * as _ from 'lodash'
 import { shallow } from 'enzyme'
 
 import { consoleUtil } from 'test/utils'
@@ -52,7 +52,7 @@ export const propKeyOnlyToClassName = (Component, propKey, options: any = {}) =>
 
     it('adds prop name to className', () => {
       shallow(
-        createElement(Component, { ...requiredProps, [propKey]: true }),
+        React.createElement(Component, { ...requiredProps, [propKey]: true }),
       ).should.have.className(className)
     })
 
@@ -61,7 +61,7 @@ export const propKeyOnlyToClassName = (Component, propKey, options: any = {}) =>
 
       const value = 'foo-bar-baz'
       shallow(
-        createElement(Component, { ...requiredProps, [propKey]: value }),
+        React.createElement(Component, { ...requiredProps, [propKey]: value }),
       ).should.not.have.className(value)
     })
   })
@@ -98,7 +98,7 @@ export const propKeyOrValueAndKeyToClassName = (
 
     it('adds only the name to className when true', () => {
       shallow(
-        createElement(Component, { ...requiredProps, [propKey]: true }),
+        React.createElement(Component, { ...requiredProps, [propKey]: true }),
       ).should.have.className(className)
     })
 
@@ -139,7 +139,7 @@ export const propValueOnlyToClassName = (Component, propKey, propValues, options
     it('adds prop value to className', () => {
       propValues.forEach(propValue => {
         shallow(
-          createElement(Component, { ...requiredProps, [propKey]: propValue }),
+          React.createElement(Component, { ...requiredProps, [propKey]: propValue }),
         ).should.have.className(propValue)
       })
     })
@@ -149,7 +149,7 @@ export const propValueOnlyToClassName = (Component, propKey, propValues, options
 
       propValues.forEach(propValue => {
         shallow(
-          createElement(Component, { ...requiredProps, [propKey]: propValue }),
+          React.createElement(Component, { ...requiredProps, [propKey]: propValue }),
         ).should.not.have.className(propKey)
       })
     })
