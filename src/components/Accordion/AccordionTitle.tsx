@@ -4,7 +4,7 @@ import React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import accordionTitleRules from './accordionTitleRules'
-import { AccordionTitleBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { ChatPaneTitleBehavior } from '../../lib/accessibility/Behaviors/behaviors'
 
 /**
  * A standard AccordionTitle.
@@ -43,7 +43,7 @@ class AccordionTitle extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    onKeyDown: PropTypes.func,
+    updateActiveIndex: PropTypes.func,
 
     addAccordionTitle: PropTypes.func,
   }
@@ -56,7 +56,7 @@ class AccordionTitle extends UIComponent<any, any> {
     'content',
     'index',
     'onClick',
-    'onKeyDown',
+    'updateActiveIndex',
     'addAccordionTitle',
   ]
 
@@ -64,14 +64,11 @@ class AccordionTitle extends UIComponent<any, any> {
 
   constructor(p, context) {
     super(p, context)
-    this.accBehavior = new AccordionTitleBehavior()
+    this.accBehavior = new ChatPaneTitleBehavior()
   }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-  handleKeyDown = e => {
-    _.invoke(this.props, 'onKeyDown', e, this.props)
   }
   addAccordionTitle = ref => {
     _.invoke(this.props, 'addAccordionTitle', ref)
@@ -93,7 +90,7 @@ class AccordionTitle extends UIComponent<any, any> {
         {...rest}
         className={classes.root}
         onClick={this.handleClick}
-        onKeyDown={this.handleKeyDown}
+        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         ref={this.addAccordionTitle}
       >

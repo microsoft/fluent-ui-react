@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
-import keyboardKey from 'keyboard-key'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import accordionRules from './accordionRules'
@@ -120,80 +119,41 @@ class Accordion extends AutoControlledComponent<any, any> {
     },
   })
 
-  onTitleKeyDown = (e, titleProps) => {
-    const code = keyboardKey.getCode(e)
-    if (code === keyboardKey.ArrowRight) {
-      this.handleTileRightKey(e, titleProps)
-    } else if (code === keyboardKey.ArrowLeft) {
-      this.handleTitleLeftKey(e, titleProps)
-    }
-  }
-
-  onContentKeyDown = (e, titleProps) => {
-    const code = keyboardKey.getCode(e)
-    if (code === keyboardKey.ArrowRight) {
-      this.handleContentRightKey(e, titleProps)
-    } else if (code === keyboardKey.ArrowLeft) {
-      this.handleContentLeftKey(e, titleProps)
-    }
-  }
-
-  handleTileRightKey = (e: Event, titleProps) => {
-    let { activeIndex } = this.state
-    const { index } = titleProps
-    const { exclusive } = this.props
-
-    if (exclusive) {
-      if (index === activeIndex) {
-        return
-      }
-      activeIndex = index
-    } else {
-      if (_.includes(activeIndex, index)) {
-        return
-      }
-      activeIndex = [...activeIndex, index]
-    }
-
-    e.preventDefault()
-    this.trySetState({ activeIndex }, index)
-  }
-
-  handleTitleLeftKey = (e: Event, titleProps) => {
-    let { activeIndex } = this.state
-    const { index } = titleProps
-    const { exclusive } = this.props
-
-    e.preventDefault()
-    if (exclusive) {
-      if (index !== activeIndex) {
-        return
-      }
-      activeIndex = -1
-    } else {
-      if (!_.includes(activeIndex, index)) {
-        return
-      }
-      activeIndex = _.without(activeIndex, index)
-    }
-
-    this.trySetState({ activeIndex }, index)
-  }
-
-  handleContentLeftKey = (e, contentProps) => {
-    const { activeIndex } = this.state
-
-    e.preventDefault()
-    this.focusZone.focusElement(this.accordionTitles[activeIndex])
-  }
-
-  handleContentRightKey = (e, contentProps) => e.preventDefault()
-
   isIndexActive = (index): boolean => {
     const { exclusive } = this.props
     const { activeIndex } = this.state
 
     return exclusive ? activeIndex === index : _.includes(activeIndex, index)
+  }
+
+  focusFromContentToTitle = () => {
+    const { activeIndex } = this.state
+    this.focusZone.focusElement(this.accordionTitles[activeIndex])
+  }
+
+  updateActiveIndex = (index: number, markAsInactive: boolean) => {
+    let { activeIndex } = this.state
+    const { exclusive } = this.props
+
+    if (exclusive) {
+      if (markAsInactive && index === activeIndex) {
+        activeIndex = -1
+      } else if (!markAsInactive && index !== activeIndex) {
+        activeIndex = index
+      } else {
+        return
+      }
+    } else {
+      if (markAsInactive && _.includes(activeIndex, index)) {
+        activeIndex = _.without(activeIndex, index)
+      } else if (!markAsInactive && !_.includes(activeIndex, index)) {
+        activeIndex = [...activeIndex, index]
+      } else {
+        return
+      }
+    }
+
+    this.trySetState({ activeIndex }, index)
   }
 
   renderPanels = () => {
@@ -210,8 +170,8 @@ class Accordion extends AutoControlledComponent<any, any> {
           defaultProps: {
             active,
             index,
-            onKeyDown: this.onTitleKeyDown,
             addAccordionTitle: this.addAccordionTitle,
+            updateActiveIndex: this.updateActiveIndex,
           },
           overrideProps: this.handleTitleOverrides,
         }),
@@ -221,7 +181,10 @@ class Accordion extends AutoControlledComponent<any, any> {
           { content },
           {
             generateKey: true,
-            defaultProps: { active, onKeyDown: this.onContentKeyDown },
+            defaultProps: {
+              active,
+              focusFromContentToTitle: this.focusFromContentToTitle,
+            },
           },
         ),
       )

@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import accordionContentRules from './accordionContentRules'
 import accordionContentVariables from './accordionContentVariables'
+import { ChatPaneContentBehavior } from '../../lib/accessibility/Behaviors/Accordion/ChatPaneContentBehavior'
 
 /**
  * A standard AccordionContent.
@@ -40,24 +41,38 @@ class AccordionContent extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    onKeyDown: PropTypes.func,
+    focusFromContentToTitle: PropTypes.func,
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick', 'onKeyDown']
+  static handledProps = [
+    'as',
+    'active',
+    'children',
+    'className',
+    'content',
+    'onClick',
+    'focusFromContentToTitle',
+  ]
 
   static rules = accordionContentRules
 
   static variables = accordionContentVariables
 
-  handleKeyDown = e => {
-    _.invoke(this.props, 'onKeyDown', e, this.props)
+  constructor(p, context) {
+    super(p, context)
+    this.accBehavior = new ChatPaneContentBehavior()
   }
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} onKeyDown={this.handleKeyDown}>
+      <ElementType
+        {...rest}
+        className={classes.root}
+        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
