@@ -6,7 +6,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -56,12 +56,12 @@ class MenuItem extends UIComponent<any, any> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'li',
-    accessibility: AccessibilityType[AccessibilityType.menuItem],
+    accessibility: MenuItemBehavior,
   }
 
   static handledProps = [
@@ -82,7 +82,7 @@ class MenuItem extends UIComponent<any, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content } = this.props
 
     return (

@@ -1,7 +1,9 @@
 import { Accessibility } from '../interfaces'
 
-export const DefaultBehavior: Accessibility = {
+const DefaultBehavior: Accessibility = {
   attributes: {
     root: {},
   },
 }
+
+export default DefaultBehavior

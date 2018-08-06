@@ -6,8 +6,8 @@ import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import callable from './callable'
-import { IAccessibilityDef } from './accessibility/interfaces'
-import { AccessibilityFactory } from './accessibility/AccessibilityFactory'
+import { IAccessibilityDef, Accessibility } from './accessibility/interfaces'
+import { DefaultBehavior } from './accessibility'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -27,12 +27,11 @@ export interface IRenderConfig {
   state: { [key: string]: any }
   rules?: { [key: string]: Function }
   variables?: (siteVariables: object) => object
-  defaultAccessibility: string
+  defaultAccessibility: Accessibility
 }
 
 const getAccessibility = <P extends {}>(props, state, defaultAccessibility) => {
-  const accessibilityName = props['accessibility'] || defaultAccessibility
-  let accessibility = AccessibilityFactory.getAccessibility(accessibilityName)
+  let accessibility = props['accessibility'] || defaultAccessibility || DefaultBehavior
   if (typeof accessibility === 'function') {
     accessibility = accessibility({ ...props, ...state })
   }

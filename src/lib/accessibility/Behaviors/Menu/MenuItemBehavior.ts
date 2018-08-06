@@ -1,6 +1,6 @@
 import { Accessibility } from '../../interfaces'
 
-export const MenuItemBehavior: Accessibility = (props: any) => ({
+const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -12,3 +12,5 @@ export const MenuItemBehavior: Accessibility = (props: any) => ({
     },
   },
 })
+
+export default MenuItemBehavior

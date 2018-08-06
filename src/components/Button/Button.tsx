@@ -6,7 +6,7 @@ import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { ButtonBehavior } from '../../lib/accessibility'
 
 /**
  * A button.
@@ -61,7 +61,7 @@ class Button extends UIComponent<any, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -81,10 +81,10 @@ class Button extends UIComponent<any, any> {
 
   public static defaultProps = {
     as: 'button',
-    accessibility: AccessibilityType[AccessibilityType.button],
+    accessibility: ButtonBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest, accessibility }): React.ReactNode {
+  public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 

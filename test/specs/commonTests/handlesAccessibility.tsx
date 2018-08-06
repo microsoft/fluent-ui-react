@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
+import { ButtonBehavior, DefaultBehavior } from 'src/lib/accessibility'
 
 const getProp = (renderedComponent, propName, partSelector) => {
   const target = partSelector
@@ -16,15 +17,15 @@ const getProp = (renderedComponent, propName, partSelector) => {
  * @param {Object} [options={}]
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  * @param {string} [options.defaultRootRole=''] Default root role rendered when no override provided
- * @param {string} [options.accessibilityOverride='button'] Override to test accessibility property override
- * @param {string} [options.overridenRootRole='button'] Overriden root role when accessibility property overriden
+ * @param {string} [options.accessibilityOverride=ButtonBehavior] Override to test accessibility property override
+ * @param {string} [options.overridenRootRole=ButtonBehavior] Overriden root role when accessibility property overriden
  * @param {string} [options.partSelector=''] Selector to scope the test to a part
  */
 export default (Component, options: any = {}) => {
   const {
     requiredProps = {},
-    defaultRootRole = '',
-    accessibilityOverride = 'button',
+    defaultRootRole = ButtonBehavior,
+    accessibilityOverride = ButtonBehavior,
     overridenRootRole = 'button',
     partSelector = '',
   } = options
@@ -38,7 +39,7 @@ export default (Component, options: any = {}) => {
   test('does not get role when overrides to default', () => {
     const rendered = getTestingRenderedComponent(
       Component,
-      <Component {...requiredProps} accessibility="default" />,
+      <Component {...requiredProps} accessibility={DefaultBehavior} />,
     )
     const role = getProp(rendered, 'role', partSelector)
     expect(role).toBeFalsy()

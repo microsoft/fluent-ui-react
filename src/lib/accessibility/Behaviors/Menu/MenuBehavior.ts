@@ -1,9 +1,11 @@
 import { Accessibility } from '../../interfaces'
 
-export const MenuBehavior: Accessibility = {
+const MenuBehavior: Accessibility = {
   attributes: {
     root: {
       role: 'menu',
     },
   },
 }
+
+export default MenuBehavior

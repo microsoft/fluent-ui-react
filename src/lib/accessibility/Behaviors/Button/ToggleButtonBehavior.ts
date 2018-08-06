@@ -1,6 +1,6 @@
 import { Accessibility } from '../../interfaces'
 
-export const ToggleButtonBehavior: Accessibility = (props: any) => ({
+const ToggleButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'button',
@@ -9,3 +9,5 @@ export const ToggleButtonBehavior: Accessibility = (props: any) => ({
     },
   },
 })
+
+export default ToggleButtonBehavior

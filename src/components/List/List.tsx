@@ -6,7 +6,7 @@ import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { SelectableListBehavior, ListBehavior } from '../../lib/accessibility'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -44,7 +44,7 @@ class List extends UIComponent<any, any> {
     variables: PropTypes.object,
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -70,12 +70,10 @@ class List extends UIComponent<any, any> {
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
   getDefaultAccessibility() {
-    return this.props.selection
-      ? AccessibilityType[AccessibilityType.selectableList]
-      : AccessibilityType[AccessibilityType.list]
+    return this.props.selection ? SelectableListBehavior : ListBehavior
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (

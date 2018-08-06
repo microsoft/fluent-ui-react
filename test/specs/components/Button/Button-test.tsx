@@ -4,12 +4,13 @@ import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
+import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
   isConformant(Button)
   handlesAccessibility(Button, {
     defaultRootRole: 'button',
-    accessibilityOverride: 'menu',
+    accessibilityOverride: MenuBehavior,
     overridenRootRole: 'menu',
   })
 

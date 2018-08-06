@@ -4,7 +4,7 @@ import * as React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { ImageBehavior } from '../../lib/accessibility'
 
 /**
  * An image is a graphic representation of something.
@@ -33,14 +33,15 @@ class Image extends UIComponent<any, any> {
     className: PropTypes.string,
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'img',
+    //    accessibility: ImageBehavior,
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }

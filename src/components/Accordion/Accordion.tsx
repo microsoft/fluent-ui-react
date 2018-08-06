@@ -6,7 +6,7 @@ import { AutoControlledComponent, customPropTypes, childrenExist } from '../../l
 import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { DefaultBehavior } from '../../lib/accessibility'
 
 /**
  * A standard Accordion.
@@ -63,7 +63,7 @@ class Accordion extends AutoControlledComponent<any, any> {
     ]),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static rules = accordionRules
@@ -81,7 +81,7 @@ class Accordion extends AutoControlledComponent<any, any> {
   ]
 
   public static defaultProps = {
-    accessibility: AccessibilityType[AccessibilityType.default],
+    accessibility: DefaultBehavior,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -152,7 +152,7 @@ class Accordion extends AutoControlledComponent<any, any> {
     return children
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (

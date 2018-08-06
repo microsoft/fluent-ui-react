@@ -6,7 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
-import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
+import { SelectableListItemBehavior, ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -50,7 +50,7 @@ class ListItem extends UIComponent<any, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.string,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -165,12 +165,10 @@ class ListItem extends UIComponent<any, any> {
   }
 
   getDefaultAccessibility() {
-    return this.props.selection
-      ? AccessibilityType[AccessibilityType.selectableListItem]
-      : AccessibilityType[AccessibilityType.listItem]
+    return this.props.selection ? SelectableListItemBehavior : ListItemBehavior
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { as, debug, endMedia, media, renderMainArea } = this.props
     const { isHovering } = this.state
 

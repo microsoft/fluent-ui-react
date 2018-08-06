@@ -1,9 +1,11 @@
 import { Accessibility } from '../../interfaces'
 
-export const SelectableListBehavior: Accessibility = {
+const SelectableListBehavior: Accessibility = {
   attributes: {
     root: {
       role: 'listbox',
     },
   },
 }
+
+export default SelectableListBehavior

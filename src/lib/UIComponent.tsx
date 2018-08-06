@@ -1,5 +1,6 @@
 import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
+import { Accessibility } from './accessibility/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -25,7 +26,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   }
 
   // allows changing the (default) accessibility
-  getDefaultAccessibility(): string {
+  getDefaultAccessibility(): Accessibility {
     return this.childClass.defaultProps['accessibility']
   }
 

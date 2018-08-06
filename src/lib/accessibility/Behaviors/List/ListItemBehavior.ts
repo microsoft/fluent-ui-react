@@ -1,9 +1,11 @@
 import { Accessibility } from '../../interfaces'
 
-export const ListItemBehavior: Accessibility = {
+const ListItemBehavior: Accessibility = {
   attributes: {
     root: {
       role: 'listitem',
     },
   },
 }
+
+export default ListItemBehavior

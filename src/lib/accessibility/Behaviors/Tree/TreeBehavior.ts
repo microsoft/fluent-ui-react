@@ -1,9 +1,11 @@
 import { Accessibility } from '../../interfaces'
 
-export const TreeBehavior: Accessibility = {
+const TreeBehavior: Accessibility = {
   attributes: {
     root: {
       role: 'tree',
     },
   },
 }
+
+export default TreeBehavior

@@ -1,6 +1,6 @@
 import { Accessibility } from '../../interfaces'
 
-export const TreeItemBehavior: Accessibility = (props: any) => ({
+const TreeItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'treeitem',
@@ -8,3 +8,5 @@ export const TreeItemBehavior: Accessibility = (props: any) => ({
     },
   },
 })
+
+export default TreeItemBehavior
