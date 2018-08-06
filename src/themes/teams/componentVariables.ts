@@ -18,7 +18,7 @@ export { default as Label } from './components/Label/labelVariables'
 
 export { default as Layout } from './components/Layout/layoutVariables'
 
-export { default as List } from './components/List/listVariables'
+export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
 

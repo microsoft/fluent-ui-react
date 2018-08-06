@@ -154,7 +154,7 @@ class ListItem extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { as, debug, endMedia, media, renderMainArea, selection } = this.props
+    const { as, debug, endMedia, media, renderMainArea } = this.props
     const { isHovering } = this.state
 
     const startArea = media

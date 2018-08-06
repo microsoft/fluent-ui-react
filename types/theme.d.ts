@@ -156,6 +156,7 @@ export interface IThemeComponentStylesInput {
   Label?: IComponentPartStylesInput
   Layout?: IComponentPartStylesInput
   List?: IComponentPartStylesInput
+  ListItem?: IComponentPartStylesInput
   Menu?: IComponentPartStylesInput
   Text?: IComponentPartStylesInput
 }
@@ -173,6 +174,7 @@ export interface IThemeComponentStylesPrepared {
   Label?: IComponentPartStylesPrepared
   Layout?: IComponentPartStylesPrepared
   List?: IComponentPartStylesPrepared
+  ListItem?: IComponentPartStylesPrepared
   Menu?: IComponentPartStylesPrepared
   Text?: IComponentPartStylesPrepared
 }
@@ -189,7 +191,7 @@ export interface IThemeComponentVariablesInput {
   Input?: ComponentVariablesInput
   Label?: ComponentVariablesInput
   Layout?: ComponentVariablesInput
-  List?: ComponentVariablesInput
+  ListItem?: ComponentVariablesInput
   Menu?: ComponentVariablesInput
   Text?: ComponentVariablesInput
 }
@@ -206,7 +208,7 @@ export interface IThemeComponentVariablesPrepared {
   Input?: ComponentVariablesFunction
   Label?: ComponentVariablesFunction
   Layout?: ComponentVariablesFunction
-  List?: ComponentVariablesFunction
+  ListItem?: ComponentVariablesFunction
   Menu?: ComponentVariablesFunction
   Text?: ComponentVariablesFunction
 }

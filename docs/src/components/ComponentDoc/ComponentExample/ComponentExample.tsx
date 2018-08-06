@@ -3,12 +3,10 @@ import { html } from 'js-beautify'
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
-
-import { theme as teamsTheme } from 'src/themes/teams'
 
 import {
   examplePathToHash,
@@ -18,13 +16,14 @@ import {
   scrollToAnchor,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, pxToRem, doesNodeContainClick, mergeThemes } from 'src/lib'
+import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
 import Editor from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { IThemePrepared, IThemeInput } from 'types/theme'
+import { IThemeInput, IThemePrepared } from 'types/theme'
+import { theme as teamsTheme } from '../../../../../src/themes/teams'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
