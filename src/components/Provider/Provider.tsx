@@ -34,12 +34,9 @@ class Provider extends React.Component<IProviderProps, any> {
       }),
     ),
     theme: PropTypes.shape({
-      siteVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
-      componentVariables: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object),
-      ]),
-      componentStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.arrayOf(PropTypes.object)]),
+      siteVariables: PropTypes.object,
+      componentVariables: PropTypes.object,
+      componentStyles: PropTypes.object,
       rtl: PropTypes.bool,
     }),
     staticStyles: PropTypes.oneOfType([
