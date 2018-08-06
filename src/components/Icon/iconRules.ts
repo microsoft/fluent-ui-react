@@ -10,6 +10,7 @@ export interface IconRulesParams {
 }
 
 const sizes = new Map([
+  ['micro', 0.3],
   ['mini', 0.4],
   ['tiny', 0.5],
   ['small', 0.75],
@@ -59,9 +60,9 @@ const paddedStyle: React.CSSProperties = {
   height: '2em',
 }
 
-const getBorderedStyles = (circular, borderColor, color): React.CSSProperties => ({
+const getBorderedStyles = (circular, borderColor, borderSize, color): React.CSSProperties => ({
   ...paddedStyle,
-  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
+  boxShadow: `0 0 0 ${borderSize} ${borderColor || color || 'black'} inset`,
   ...(circular ? { borderRadius: '50%' } : {}),
 })
 
@@ -96,7 +97,7 @@ const iconRules = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor, v.color)),
+        getBorderedStyles(circular, v.borderColor, v.borderSize, v.color)),
 
       ...(v.backgroundColor && {
         ...paddedStyle,

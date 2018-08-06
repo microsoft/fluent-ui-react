@@ -5,6 +5,7 @@ import { Image, Label, Icon } from '../../'
 import { customPropTypes, UIComponent } from '../../lib'
 import avatarRules from './avatarRules'
 import avatarVariables from './avatarVariables'
+import callable from '../../lib/callable'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
@@ -122,19 +123,24 @@ class Avatar extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { src, alt, name, status, generateInitials } = this.props
+    const { src, alt, name, status, generateInitials, size, variables } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+
+    const evaluatedAvatarVariables = variables && callable(variables)()
+    const presenceIndicatorBackground =
+      evaluatedAvatarVariables && evaluatedAvatarVariables.presenceIndicatorBackground
+
+    const iconVariables = {
+      color: 'white',
+      backgroundColor: color,
+      ...(presenceIndicatorBackground && { borderColor: presenceIndicatorBackground }),
+      borderSize: '0.3em',
+    }
+
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image
-            className={classes.imageAvatar}
-            avatar
-            src={src}
-            alt={alt}
-            title={name}
-            style={{ verticalAlign: 'top' }}
-          />
+          <Image className={classes.imageAvatar} avatar src={src} alt={alt} title={name} />
         ) : (
           <Label
             className={classes.avatarNameContainer}
@@ -146,24 +152,14 @@ class Avatar extends UIComponent<any, any> {
           />
         )}
         {status && (
-          <div className={classes.presenceIndicatorContainer}>
-            <Label
-              className={classes.presenceIndicatorWrapper}
-              as="div"
-              variables={{ padding: '0px' }}
-              style={{ background: color }}
-              circular
-              title={name}
-            >
-              <Icon
-                size="mini"
-                name={icon}
-                color="white"
-                style={avatarRules.presenceIndicator()}
-                title={status}
-              />
-            </Label>
-          </div>
+          <Icon
+            className={classes.presenceIndicator}
+            size={size < 3 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
+            circular
+            name={icon}
+            variables={iconVariables}
+            title={status}
+          />
         )}
       </ElementType>
     )

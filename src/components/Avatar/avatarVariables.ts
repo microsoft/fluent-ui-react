@@ -1,5 +1,5 @@
 export default () => {
   return {
-    presenceIndicatorPadding: 2,
+    presenceIndicatorBackground: undefined,
   }
 }
