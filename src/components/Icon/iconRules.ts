@@ -60,9 +60,9 @@ const paddedStyle: React.CSSProperties = {
   height: '2em',
 }
 
-const getBorderedStyles = (circular, borderColor, borderSize, color): React.CSSProperties => ({
+const getBorderedStyles = (circular, borderColor, color): React.CSSProperties => ({
   ...paddedStyle,
-  boxShadow: `0 0 0 ${borderSize} ${borderColor || color || 'black'} inset`,
+  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
   ...(circular ? { borderRadius: '50%' } : {}),
 })
 
@@ -97,7 +97,7 @@ const iconRules = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor, v.borderSize, v.color)),
+        getBorderedStyles(circular, v.borderColor, v.color)),
 
       ...(v.backgroundColor && {
         ...paddedStyle,

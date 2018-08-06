@@ -134,7 +134,6 @@ class Avatar extends UIComponent<any, any> {
       color: 'white',
       backgroundColor: color,
       ...(presenceIndicatorBackground && { borderColor: presenceIndicatorBackground }),
-      borderSize: '0.3em',
     }
 
     return (
