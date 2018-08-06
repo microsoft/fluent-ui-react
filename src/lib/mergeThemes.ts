@@ -115,7 +115,7 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     acc.rtl = mergeRTL(acc.rtl, next.rtl)
 
     // Use the correct renderer for RTL
-    acc.renderer = acc.rtl === true ? felaRtlRenderer : felaRenderer
+    acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
 
     return acc
   }, emptyTheme)
