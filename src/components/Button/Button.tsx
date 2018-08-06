@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
+import {
+  AutoControlledComponent,
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  IRenderResultConfig,
+} from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
@@ -10,6 +16,10 @@ import Text from '../Text'
 
 export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
+
+export interface IButtonState {
+  active?: boolean
+}
 
 export interface IButtonProps {
   as?: string
@@ -21,9 +31,13 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: boolean | string
   iconPosition?: IconPosition
-  onClick?: (e: SyntheticEvent, props: IButtonProps) => void
+  onClick?: (e: SyntheticEvent, props: IButtonProps, state: IButtonState) => void
+  onKeyDown?: (e: KeyboardEvent) => void
   style?: CSSProperties
   type?: ButtonType
+  accBehavior?: string
+  active?: boolean
+  defaultActive?: boolean
 }
 
 /**
@@ -31,7 +45,7 @@ export interface IButtonProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<IButtonProps, any> {
+class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -79,6 +93,12 @@ class Button extends UIComponent<IButtonProps, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     accBehavior: PropTypes.string,
+
+    active: PropTypes.bool,
+
+    defaultActive: PropTypes.bool,
+
+    onKeyDown: PropTypes.func,
   }
 
   public static handledProps = [
@@ -94,11 +114,22 @@ class Button extends UIComponent<IButtonProps, any> {
     'onClick',
     'type',
     'accBehavior',
+    'active',
+    'onKeyDown',
   ]
 
   public static defaultProps = {
     as: 'button',
   }
+
+  static autoControlledProps = ['active']
+
+  getInitialAutoControlledState() {
+    return { active: false }
+  }
+
+  elementRef: HTMLElement
+  setElementRef = ref => (this.elementRef = ref)
 
   constructor(props, state) {
     super(props, state)
@@ -141,8 +172,10 @@ class Button extends UIComponent<IButtonProps, any> {
     return (
       <ElementType
         className={classes.root}
+        ref={this.setElementRef}
         disabled={disabled}
         onClick={this.handleClick}
+        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
       >
@@ -160,7 +193,7 @@ class Button extends UIComponent<IButtonProps, any> {
     }
 
     if (onClick) {
-      onClick(e, this.props)
+      onClick(e, this.props, this.state)
     }
   }
 }

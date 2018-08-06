@@ -19,7 +19,6 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
     })
 
     this.handleKey(keyboardKey.Escape, (key, event, component, props, state) => {
-      event.preventDefault()
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
@@ -27,7 +26,7 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
-    this.handleKey(keyboardKey.ArrowDwon, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowDown, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
   }
@@ -35,7 +34,7 @@ export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'menuitem',
-    tabIndex: 0,
+    tabIndex: -1,
     'data-is-focusable': true,
   }
 

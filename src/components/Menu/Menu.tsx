@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, SyntheticEvent } from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -13,7 +13,6 @@ import { FocusZone, FocusZoneDirection } from '../FocusZone'
 
 interface MenuState {
   activeIndex: number
-  isManagingFocus: boolean
 }
 
 export type MenuType = 'primary' | 'secondary'
@@ -32,6 +31,7 @@ export interface IMenuProps {
   grabFocus?: boolean
   componentRef?: object
   accBehavior?: string
+  onKeyDown?: (e: SyntheticEvent, props: IMenuProps) => void
 }
 
 class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
@@ -77,6 +77,8 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     componentRef: PropTypes.object,
 
     accBehavior: PropTypes.string,
+
+    onKeyDown: PropTypes.func,
   }
 
   static defaultProps = {
@@ -95,6 +97,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     'vertical',
     'grabFocus',
     'accBehavior',
+    'onKeyDown',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -179,6 +182,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
+        onKeyDown={this.props.onKeyDown}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </FocusZone>

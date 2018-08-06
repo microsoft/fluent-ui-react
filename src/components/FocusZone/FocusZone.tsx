@@ -195,6 +195,27 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
   }
 
   /**
+   * Sets focus to the last tabbable item in the zone.
+   * @param {boolean} forceIntoFirstElement If true, focus will be forced into the first element, even if focus is already in the focus zone.
+   * @returns True if focus could be set to an active element, false if no operation was taken.
+   */
+  public focusLast(): boolean {
+    if (this._root.current) {
+      const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
+
+      this.focusElement(getPreviousElement(
+        this._root.current,
+        lastChild,
+        true,
+        true,
+        true,
+      ) as HTMLElement)
+    }
+
+    return false
+  }
+
+  /**
    * Sets focus to a specific child element within the zone. This can be used in conjunction with
    * onBeforeFocus to created delayed focus scenarios (like animate the scroll position to the correct
    * location and then focus.)

@@ -3,6 +3,9 @@ import UIComponent from '../../UIComponent'
 import keyboardKey from 'keyboard-key'
 
 export abstract class AbstractBehavior<P, S> {
+  public component: UIComponent<P, S>
+  public elementRef: HTMLElement
+
   private keyHandlers: {
     [key: number]: (
       key: number,

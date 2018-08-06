@@ -1,6 +1,6 @@
 import React from 'react'
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Types = () => (
   <ExampleSection title="Types">
@@ -19,11 +19,15 @@ const Types = () => (
       description="A vertical menu displays elements vertically."
       examplePath="components/Menu/Types/MenuExampleVertical"
     />
-
     <ComponentExample
       title="Menu with submenu"
       description="Menu with submenu"
       examplePath="components/Menu/Types/MenuExampleWithSubMenu"
+    />
+    <ComponentExample
+      title="Popup button with submenu"
+      description="Popup button with submenu"
+      examplePath="components/Menu/Types/MenuExampleButton"
     />
   </ExampleSection>
 )
