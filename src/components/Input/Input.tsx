@@ -14,6 +14,7 @@ import {
 import inputRules from './inputRules'
 import inputVariables from './inputVariables'
 import Icon from '../Icon'
+import callable from '../../lib/callable'
 
 /**
  * An Input
@@ -54,10 +55,19 @@ class Input extends UIComponent<any, any> {
     type: 'text',
   }
 
+  inputRef: any
+
+  computeTabIndex = props => {
+    if (!_.isNil(props.tabIndex)) return props.tabIndex
+    if (props.onClick) return 0
+  }
+
   handleChildOverrides = (child, defaultProps) => ({
     ...defaultProps,
     ...child.props,
   })
+
+  handleInputRef = c => (this.inputRef = c)
 
   partitionProps = () => {
     const { type } = this.props
@@ -69,6 +79,7 @@ class Input extends UIComponent<any, any> {
       {
         ...htmlInputProps,
         type,
+        onClick: () => this.inputRef.focus(),
       },
       rest,
     ]
@@ -79,6 +90,12 @@ class Input extends UIComponent<any, any> {
 
     if (!_.isNil(icon)) return icon
     return null
+  }
+
+  handleIconOverrides = predefinedProps => {
+    return {
+      tabIndex: this.computeTabIndex,
+    }
   }
 
   renderComponent({ ElementType, classes, rest }) {
@@ -109,9 +126,15 @@ class Input extends UIComponent<any, any> {
         <ElementType {...rest} className={classes.root} {...htmlInputProps}>
           {createHTMLInput(input || type, {
             defaultProps: htmlInputProps,
-            overrideProps: { className: inputClasses },
+            overrideProps: {
+              className: inputClasses,
+              ref: this.handleInputRef,
+            },
           })}
-          <Icon name={this.computeIcon()} className={iconClasses} />
+          {Icon.create(this.computeIcon(), {
+            defaultProps: { className: iconClasses },
+            overrideProps: predefinedProps => this.handleIconOverrides,
+          })}
         </ElementType>
       )
     }
@@ -120,7 +143,10 @@ class Input extends UIComponent<any, any> {
       <ElementType {...rest} className={classes.root} {...htmlInputProps}>
         {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
-          overrideProps: { className: inputClasses },
+          overrideProps: {
+            className: inputClasses,
+            ref: this.handleInputRef,
+          },
         })}
       </ElementType>
     )
