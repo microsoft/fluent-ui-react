@@ -1,12 +1,11 @@
 import { pxToRem } from '../../lib'
-import { IMenuItemProps } from './MenuItem'
 
 const underlinedItem = (color: string) => ({
-  borderBottom: `solid 5px ${color}`,
+  borderBottom: `solid 4px ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({ props, variables }: { props: IMenuItemProps; variables: any }) => {
+const itemSeparator = ({ props, variables }) => {
   const { active, shape, type, vertical } = props
   return {
     ...((!shape || shape === 'pointing') && {
@@ -31,8 +30,8 @@ const itemSeparator = ({ props, variables }: { props: IMenuItemProps; variables:
 }
 
 export default {
-  root: ({ props, variables }: { props: IMenuItemProps; variables: any }) => {
-    const { active, shape, type } = props
+  root: ({ props, variables }) => {
+    const { active, shape, type, vertical } = props
     return {
       color: variables.defaultColor,
       lineHeight: 1,
@@ -42,11 +41,15 @@ export default {
       cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
-        margin: `0 ${pxToRem(8)} 0 0`,
+        ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
       }),
       ...(shape === 'underlined' && {
-        margin: '0',
+        padding: '0',
+        margin: `0 ${pxToRem(10)} 0 0`,
+        ':nth-child(n+2)': {
+          marginLeft: `${pxToRem(10)}`,
+        },
         background: 'transparent',
         boxShadow: 'none',
         color: variables.defaultColor,
@@ -113,12 +116,15 @@ export default {
         }),
         ...(shape === 'underlined' && {
           color: variables.defaultColor,
-          fontWeight: '700',
           ...underlinedItem(variables.defaultActiveColor),
-          ...(type === 'primary' && {
-            color: variables.typePrimaryActiveColor,
-            ...underlinedItem(variables.typePrimaryActiveColor),
-          }),
+          ...(type === 'primary'
+            ? {
+                color: variables.typePrimaryActiveColor,
+                ...underlinedItem(variables.typePrimaryActiveColor),
+              }
+            : {
+                fontWeight: '700',
+              }),
         }),
       }),
     }

@@ -1,6 +1,6 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import _ from 'lodash'
-import webpack from 'webpack'
+import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+import * as _ from 'lodash'
+import * as webpack from 'webpack'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'

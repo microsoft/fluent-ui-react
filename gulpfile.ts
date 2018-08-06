@@ -1,5 +1,5 @@
 import { task, series, parallel } from 'gulp'
-import path from 'path'
+import * as path from 'path'
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =

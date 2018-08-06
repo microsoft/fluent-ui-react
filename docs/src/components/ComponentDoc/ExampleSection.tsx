@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types'
-import React, { CSSProperties } from 'react'
+import * as React from 'react'
 
 import { Grid, Header } from 'semantic-ui-react'
 
-const headerStyle: CSSProperties = {
+const headerStyle: React.CSSProperties = {
   textAlign: 'center',
   marginBottom: '1.5em',
   color: '#999',
   textTransform: 'uppercase',
 }
 
-const sectionStyle: CSSProperties = {
+const sectionStyle: React.CSSProperties = {
   paddingBottom: '5em',
 }
 

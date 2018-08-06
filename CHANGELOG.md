@@ -17,16 +17,32 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Update styles for Menu underlined primary @miroslavstastny ([#20](https://github.com/stardust-ui/react/pull/20))
+  
+<!--------------------------------[ v0.2.5 ]------------------------------- -->
+## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.4...v0.2.5)
+
+### Fixes
+- Include typings for each module target in dist @levithomason ([#48](https://github.com/stardust-ui/react/pull/48))
+
+<!--------------------------------[ v0.2.4 ]------------------------------- -->
+## [v0.2.4](https://github.com/stardust-ui/react/tree/v0.2.4) (2018-08-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.3...v0.2.4)
+
 ### Fixes
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
-- Resolved issues ([#32](https://github.com/stardust-ui/react/issues/32)) and ([#31](https://github.com/stardust-ui/react/issues/31)) @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
+- Removed allowSyntheticDefaultImports from shared tsconfig but allow it on docs @aniknafs ([#46](https://github.com/stardust-ui/react/pull/46))
 
 ### Features
 - Add Icon `xSpacing` prop @Bugaa92 ([#22](https://github.com/stardust-ui/react/pull/22))
 - Add Button `icon` prop and Text `truncated` prop @Bugaa92 ([#13](https://github.com/stardust-ui/react/pull/13))
 - Add Button `disabled` prop @Bugaa92 ([#14](https://github.com/stardust-ui/react/pull/14))
+- Add Label `icon`, `onIconClick` and `iconPosition` props @mnajdova ([#19](https://github.com/stardust-ui/react/pull/19))
 - Add Menu `vertical` prop @miroslavstastny ([#21](https://github.com/stardust-ui/react/pull/21))
-- Add Avatar `generateInitials` prop @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
+- Add Menu support for `shape="pills" vertical` @miroslavstastny ([#36](https://github.com/stardust-ui/react/pull/36))
+- Add Icon support for `background` variable @kuzhelov ([#47](https://github.com/stardust-ui/react/pull/47))
 
 ### Documentation
 - Improve UX for "knobs" form on component examples @levithomason ([#20](https://github.com/stardust-ui/react/pull/20))

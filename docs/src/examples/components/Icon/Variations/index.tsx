@@ -15,11 +15,6 @@ const Variations = () => (
       examplePath="components/Icon/Variations/IconExampleSize"
     />
     <ComponentExample
-      title="Colored"
-      description="An icon can be formatted with different colors."
-      examplePath="components/Icon/Variations/IconExampleColored"
-    />
-    <ComponentExample
       title="Bordered"
       description="An icon can be formatted to appear with rectangular border."
       examplePath="components/Icon/Variations/IconExampleBordered"
