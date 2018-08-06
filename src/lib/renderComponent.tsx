@@ -4,10 +4,10 @@ import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
 import felaRenderer from './felaRenderer'
+import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import toCompactArray from './toCompactArray'
-import { renderComponentStyles } from './themeUtils'
 
 import {
   ComponentStyleFunctionParam,
@@ -76,11 +76,7 @@ const renderComponent = <P extends {}>(
           rtl,
         }
 
-        const classes: IComponentPartClasses = renderComponentStyles(
-          renderer,
-          stylesForComponent,
-          styleParam,
-        )
+        const classes: IComponentPartClasses = getClasses(renderer, stylesForComponent, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
         const config: IRenderResultConfig<P> = { ElementType, rest, classes }

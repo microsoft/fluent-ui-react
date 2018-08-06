@@ -16,7 +16,7 @@ import { toCompactArray } from './index'
  * Returns a string of HTML classes.
  * Renders one or many component styles (objects of component parts) to the DOM.
  */
-export const renderComponentStyles = (
+const getClasses = (
   renderer: IRenderer,
   componentStyles: OneOrArray<IComponentPartStylesInput>,
   styleParam: ComponentStyleFunctionParam,
@@ -45,3 +45,5 @@ export const renderComponentStyles = (
     return classes
   }, {})
 }
+
+export default getClasses
