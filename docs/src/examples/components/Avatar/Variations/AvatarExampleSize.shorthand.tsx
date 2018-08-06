@@ -2,6 +2,12 @@ import _ from 'lodash'
 import React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
+const divider = {
+  width: '50px',
+  height: 'auto',
+  display: 'inline-block',
+}
+
 const AvatarExampleSizeShorthand = () =>
   _.times(10, i => {
     const size = i + 1
@@ -14,16 +20,16 @@ const AvatarExampleSizeShorthand = () =>
           src="public/images/avatar/small/matt.jpg"
           status="Available"
           variables={{ presenceIndicatorBackground: 'white' }}
-          style={{ marginRight: '10px' }}
         />
+        <span style={divider} />
         <Avatar
           key={size * 100}
           size={size}
           name="John Doe"
           status="Available"
           variables={{ presenceIndicatorBackground: 'white' }}
-          style={{ marginRight: '10px' }}
         />
+        <span style={divider} />
         <Avatar key={size * 1000} size={size} src="public/images/avatar/small/matt.jpg" />
       </div>
     )
