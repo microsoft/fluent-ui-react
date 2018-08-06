@@ -1,5 +1,5 @@
 import React from 'react'
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { Menu, MenuItem } from '@stardust-ui/react'
 
 const items = [
