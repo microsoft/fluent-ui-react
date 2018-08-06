@@ -36,8 +36,7 @@ const getFontIcon = (font, name) => {
   return { content, fontFamily }
 }
 
-const getSize = (size, isFontBased) =>
-  isFontBased ? `${sizes.get(size)}em` : `${sizes.get(size)}rem`
+const getSize = size => `${sizes.get(size)}em`
 
 const getFontStyles = (font, name, size) => {
   const { fontFamily, content } = getFontIcon(font, name)
@@ -45,8 +44,6 @@ const getFontStyles = (font, name, size) => {
   return {
     fontFamily,
     width: '1.18em',
-    height: '1em',
-    fontSize: getSize(size, true),
     fontStyle: 'normal',
     fontWeight: 400,
     textDecoration: 'inherit',
@@ -82,27 +79,19 @@ const getXSpacingStyles = (
   }
 }
 
-const getBorderedStyles = (
-  isFontBased,
-  circular,
-  borderColor,
-  color,
-  size,
-): React.CSSProperties => {
-  const borderWidth = isFontBased ? '0.05em' : `${0.05 * sizes.get(size)}rem`
-
+const getBorderedStyles = (isFontBased, circular, borderColor, color): React.CSSProperties => {
   return {
-    ...getPaddedStyle(isFontBased, size),
+    ...getPaddedStyle(isFontBased),
 
-    boxShadow: `0 0 0 ${borderWidth} ${borderColor || color || 'black'} inset`,
+    boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
 
-const getPaddedStyle = (isFontBased, size) => ({
-  padding: isFontBased ? '0.5em 0' : `${0.5 * sizes.get(size)}rem`,
-  width: isFontBased ? '2em' : `${2 * sizes.get(size)}rem`,
-  height: isFontBased ? '2em' : `${2 * sizes.get(size)}rem`,
+const getPaddedStyle = isFontBased => ({
+  padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
+  width: '2em',
+  height: '2em',
 })
 
 const iconRules = {
@@ -114,8 +103,10 @@ const iconRules = {
 
     return {
       display: 'inline-block',
-      width: getSize(size, isFontBased),
-      height: getSize(size, isFontBased),
+      fontSize: getSize(size),
+
+      width: '1em',
+      height: '1em',
 
       ...(isFontBased ? getFontStyles(font, name, size) : {}),
 
@@ -133,10 +124,10 @@ const iconRules = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(isFontBased, circular, v.borderColor, v.color, size)),
+        getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
 
       ...(v.backgroundColor && {
-        ...getPaddedStyle(isFontBased, size),
+        ...getPaddedStyle(isFontBased),
         ...(bordered || v.borderColor || { boxShadow: 'none' }),
       }),
 
