@@ -1,11 +1,11 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/es/index.d.ts",
   "files": [
     "src",
     "dist"
@@ -93,6 +93,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",
+    "@types/gulp-load-plugins": "^0.0.31",
     "@types/jest": "^23.1.0",
     "@types/node": "^10.3.2",
     "@types/react": "^16.3.17",

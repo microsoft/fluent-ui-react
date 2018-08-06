@@ -1,7 +1,7 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
 const inputStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
     return {
       display: 'inline-flex',
       position: 'relative',

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Container } from 'semantic-ui-react'
 import { Header, Divider } from '@stardust-ui/react'
 

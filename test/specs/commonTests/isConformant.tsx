@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import React from 'react'
+import * as _ from 'lodash'
+import * as React from 'react'
 import { shallow, mount as enzymeMount, render } from 'enzyme'
-import ReactDOMServer from 'react-dom/server'
+import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
 import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'

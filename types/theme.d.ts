@@ -66,6 +66,7 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 
   ':first-child'?: ICSSInJSStyle
   ':last-child'?: ICSSInJSStyle
+  ':nth-child(n+2)'?: ICSSInJSStyle
 }
 
 export interface ComponentStyleFunctionParam {

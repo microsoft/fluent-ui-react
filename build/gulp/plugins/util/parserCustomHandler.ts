@@ -1,8 +1,8 @@
-import _ from 'lodash'
-import { types } from 'recast'
+import * as _ from 'lodash'
+import * as recast from 'recast'
 import { utils } from 'react-docgen'
 
-const { namedTypes } = types
+const { namedTypes } = recast.types
 const { getMemberValuePath, getPropertyName, resolveToValue } = utils
 
 const getObjectName = path => `${_.get(path, 'object.name')}.${_.get(path, 'property.name')}`

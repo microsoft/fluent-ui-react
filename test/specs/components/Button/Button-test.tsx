@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { isConformant } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'

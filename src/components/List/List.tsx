@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as _ from 'lodash'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'

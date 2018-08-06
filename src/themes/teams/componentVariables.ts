@@ -4,7 +4,6 @@ export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
 
-export { default as Chat } from './components/Chat/chatVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Divider } from './components/Divider/dividerVariables'

@@ -3,7 +3,7 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
     const { circular, disabled, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'

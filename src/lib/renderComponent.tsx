@@ -1,26 +1,29 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import React from 'react'
+import * as cx from 'classnames'
+import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
+import felaRenderer from './felaRenderer'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import toCompactArray from './toCompactArray'
 import { renderComponentStyles } from './themeUtils'
+
 import {
   ComponentStyleFunctionParam,
   ComponentVariablesInput,
   ComponentVariablesObject,
+  IComponentPartClasses,
   IComponentPartStylesInput,
+  IProps,
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
-  rest: { [key: string]: any }
-  classes: { [key: string]: string }
+  classes: IComponentPartClasses
+  rest: IProps
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -47,35 +50,34 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={(theme: IThemeInput | IThemePrepared) => {
+      render={({
+        siteVariables = {},
+        componentVariables = {},
+        componentStyles = {},
+        rtl = false,
+        renderer = felaRenderer,
+      }: IThemeInput | IThemePrepared = {}) => {
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
 
-        //
         // Resolve variables for this component, allow props.variables to override
-        //
         const variables: ComponentVariablesObject = {
-          ...callable(theme.componentVariables[displayName])(theme.siteVariables),
-          ...callable(props.variables)(theme.siteVariables),
+          ...callable(componentVariables[displayName])(siteVariables),
+          ...callable(props.variables)(siteVariables),
         }
 
-        //
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        //
-        const stylesForComponent = toCompactArray(theme.componentStyles)
-          .map(styles => styles[displayName])
-          .concat(props.styles)
-          .filter(Boolean)
+        const stylesForComponent = toCompactArray(componentStyles[displayName], props.styles)
 
         const styleParam: ComponentStyleFunctionParam = {
           props,
           variables,
-          siteVariables: theme.siteVariables,
-          rtl: theme.rtl,
+          siteVariables,
+          rtl,
         }
 
-        const classes: ComponentVariablesObject = renderComponentStyles(
-          theme.renderer,
+        const classes: IComponentPartClasses = renderComponentStyles(
+          renderer,
           stylesForComponent,
           styleParam,
         )

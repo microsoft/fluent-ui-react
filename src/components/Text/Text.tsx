@@ -1,28 +1,12 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, IRenderResultConfig, UIComponent } from '../../lib'
-
-export type ITextSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
-
-export interface ITextProps {
-  as?: string
-  atMention?: boolean
-  className?: string
-  content?: ReactNode
-  disabled?: boolean
-  error?: boolean
-  size?: ITextSize
-  important?: boolean
-  success?: boolean
-  timestamp?: boolean
-  truncated?: boolean
-}
 
 /**
  * A component containing text
  */
-class Text extends UIComponent<ITextProps, {}> {
+class Text extends UIComponent<any, any> {
   static className = 'ui-text'
 
   static propTypes = {
@@ -78,7 +62,7 @@ class Text extends UIComponent<ITextProps, {}> {
     'truncated',
   ]
 
-  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ITextProps>): ReactNode {
+  renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>

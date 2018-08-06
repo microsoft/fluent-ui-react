@@ -1,12 +1,12 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import ComponentDoc from '../components/ComponentDoc'
 import PageNotFound from '../views/PageNotFound'
 import componentInfoContext from '../utils/componentInfoContext'
 
-class DocsRoot extends Component<any, any> {
+class DocsRoot extends React.Component<any, any> {
   static propTypes = {
     children: PropTypes.node,
     match: PropTypes.shape({

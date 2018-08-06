@@ -2,6 +2,10 @@ import mergeThemes from '../../../src/lib/mergeThemes'
 import { felaRtlRenderer, felaRenderer } from '../../../src/lib'
 
 describe('mergeThemes', () => {
+  test('gracefully handles undefined themes', () => {
+    expect(() => mergeThemes(undefined, undefined)).not.toThrow()
+  })
+
   describe('siteVariables', () => {
     test('merges top level keys', () => {
       const target = { siteVariables: { overridden: false, keep: true } }

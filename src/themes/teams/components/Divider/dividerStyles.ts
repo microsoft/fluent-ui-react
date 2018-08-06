@@ -23,7 +23,7 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
 })
 
 const dividerStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {
       marginTop: pxToRem(5 + size * 7.5),

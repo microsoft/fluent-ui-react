@@ -1,36 +1,16 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { combineRules } from 'fela'
 import callable from './callable'
 
 import {
   ComponentPartStyleFunction,
   ComponentStyleFunctionParam,
-  ComponentVariablesInput,
-  ComponentVariablesObject,
   IComponentPartClasses,
   IComponentPartStylesInput,
   IRenderer,
-  ISiteVariables,
   OneOrArray,
 } from '../../types/theme'
 import { toCompactArray } from './index'
-
-/**
- * Returns a single component variable object from one or many component variable objects or functions.
- * Component variable functions are called with the site variables.
- * Component variables objects are merged as-is.
- */
-export const resolveComponentVariables = (
-  componentVariables: OneOrArray<ComponentVariablesInput>,
-  siteVariables: ISiteVariables,
-): ComponentVariablesObject => {
-  return toCompactArray(componentVariables).reduce((acc, next) => {
-    const called = callable(next)(siteVariables)
-    const res = { ...acc, ...called }
-    console.log({ acc, next, called, res })
-    return res
-  }, {})
-}
 
 /**
  * Returns a string of HTML classes.

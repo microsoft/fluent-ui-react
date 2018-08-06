@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 
 class UIComponent<P, S> extends React.Component<P, S> {

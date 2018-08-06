@@ -1,20 +1,14 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IMenuItemProps } from '../../../../components/Menu/MenuItem'
+import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IMenuVariables } from './menuVariables'
 
 const underlinedItem = (color): ICSSInJSStyle => ({
-  borderBottom: `solid 5px ${color}`,
+  borderBottom: `solid 4px ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({
-  props,
-  variables,
-}: {
-  props: IMenuItemProps
-  variables
-}): ICSSInJSStyle => {
-  const { shape, type, vertical } = props
+const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
+  const { active, shape, type, vertical } = props
   return {
     ...((!shape || shape === 'pointing') && {
       '::before': {
@@ -39,9 +33,9 @@ const itemSeparator = ({
   }
 }
 
-const menuItemStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }: { props: IMenuItemProps; variables: any }): ICSSInJSStyle => {
-    const { active, shape, type } = props
+const menuItemStyles = {
+  root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
+    const { active, shape, type, vertical } = props
     return {
       color: variables.defaultColor,
       lineHeight: 1,
@@ -51,11 +45,15 @@ const menuItemStyles: IComponentPartStylesInput = {
       cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
-        margin: `0 ${pxToRem(8)} 0 0`,
+        ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
       }),
       ...(shape === 'underlined' && {
-        margin: '0',
+        padding: '0',
+        margin: `0 ${pxToRem(10)} 0 0`,
+        ':nth-child(n+2)': {
+          marginLeft: `${pxToRem(10)}`,
+        },
         background: 'transparent',
         boxShadow: 'none',
         color: variables.defaultColor,
@@ -122,12 +120,15 @@ const menuItemStyles: IComponentPartStylesInput = {
         }),
         ...(shape === 'underlined' && {
           color: variables.defaultColor,
-          fontWeight: 700,
           ...underlinedItem(variables.defaultActiveColor),
-          ...(type === 'primary' && {
-            color: variables.typePrimaryActiveColor,
-            ...underlinedItem(variables.typePrimaryActiveColor),
-          }),
+          ...(type === 'primary'
+            ? {
+                color: variables.typePrimaryActiveColor,
+                ...underlinedItem(variables.typePrimaryActiveColor),
+              }
+            : {
+                fontWeight: 700,
+              }),
         }),
       }),
     }

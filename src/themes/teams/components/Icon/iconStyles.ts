@@ -44,26 +44,32 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (circular, borderColor, color): ICSSInJSStyle => ({
-  lineHeight: '1',
+const paddedStyle: ICSSInJSStyle = {
   padding: '0.5em 0',
-  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
   width: '2em',
   height: '2em',
-  ...(circular ? { borderRadius: '50%' } : { verticalAlign: 'baseline' }),
+}
+
+const getBorderedStyles = (circular, borderColor, color): ICSSInJSStyle => ({
+  ...paddedStyle,
+  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
+  ...(circular ? { borderRadius: '50%' } : {}),
 })
 
 const iconStyles: IComponentPartStylesInput = {
   root: ({
-    props: { color, disabled, kind, name, size, bordered, circular, xSpacing },
+    props: { disabled, kind, name, size, bordered, circular, xSpacing },
     variables,
+  }: {
+    props: any
+    variables: any
   }): ICSSInJSStyle => {
     const { fontFamily, content } = getIcon(kind, name)
-    const iconColor = color || variables.color
 
     return {
       fontFamily,
-      color: iconColor,
+      color: variables.color,
+      backgroundColor: variables.backgroundColor,
       display: 'inline-block',
       opacity: 1,
       margin: variables.margin,
@@ -79,6 +85,16 @@ const iconStyles: IComponentPartStylesInput = {
       verticalAlign: 'middle',
       lineHeight: 1,
 
+      ...getXSpacingStyles(xSpacing, variables.horizontalSpace),
+
+      ...((bordered || variables.borderColor || circular) &&
+        getBorderedStyles(circular, variables.borderColor, variables.color)),
+
+      ...(variables.backgroundColor && {
+        ...paddedStyle,
+        ...(bordered || variables.borderColor || { boxShadow: 'none' }),
+      }),
+
       '::before': {
         content,
         boxSizing: 'inherit',
@@ -86,10 +102,6 @@ const iconStyles: IComponentPartStylesInput = {
       },
 
       ...(disabled && disabledStyle),
-
-      ...getXSpacingStyles(xSpacing, variables.horizontalSpace),
-
-      ...((bordered || circular) && getBorderedStyles(circular, variables.borderColor, iconColor)),
     }
   },
 }

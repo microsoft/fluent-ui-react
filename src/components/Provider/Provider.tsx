@@ -1,27 +1,10 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import {
-  callable,
-  felaRenderer as felaLtrRenderer,
-  felaRtlRenderer,
-  mergeThemes,
-  toCompactArray,
-} from '../../lib'
-import {
-  FontFaces,
-  IThemePrepared,
-  IThemeInput,
-  StaticStyles,
-  ComponentVariablesInput,
-  IThemeComponentStylesInput,
-  IComponentPartStylesInput,
-  IThemeComponentVariablesInput,
-  ComponentStyleFunctionParam,
-  ComponentPartStyleFunction,
-} from '../../../types/theme'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
+import { FontFaces, IThemePrepared, IThemeInput, StaticStyles } from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
 
 export interface IProviderProps {
@@ -34,7 +17,7 @@ export interface IProviderProps {
 /**
  * The Provider passes the CSS in JS renderer and theme down context.
  */
-class Provider extends Component<IProviderProps, any> {
+class Provider extends React.Component<IProviderProps, any> {
   static propTypes = {
     fontFaces: PropTypes.arrayOf(
       PropTypes.shape({
@@ -133,15 +116,9 @@ class Provider extends Component<IProviderProps, any> {
   render() {
     const { theme, children } = this.props
 
-    console.log('Provider props.theme', theme)
-
     return (
       <ProviderConsumer
         render={(incomingTheme: IThemePrepared) => {
-          // The provider must:
-          //   1. Normalize it's theme props, reducing and merging where possible.
-          //   2. Merge prop values onto any incoming context values.
-          //   3. Provide the result down stream.
           const outgoingTheme: IThemePrepared = mergeThemes(incomingTheme, theme)
 
           return (

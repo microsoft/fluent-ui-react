@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
 import { IThemePrepared } from '../../../types/theme'

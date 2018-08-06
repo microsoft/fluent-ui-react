@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'
-import React, { Children, cloneElement } from 'react'
-import cx from 'classnames'
-import _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import * as cx from 'classnames'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -86,9 +86,9 @@ class Input extends UIComponent<any, any> {
     // ----------------------------------------
     if (childrenExist(children)) {
       // add htmlInputProps to the `<input />` child
-      const childElements = _.map(Children.toArray(children), child => {
+      const childElements = _.map(React.Children.toArray(children), child => {
         if (child.type !== 'input') return child
-        return cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
+        return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
       })
 
       return (

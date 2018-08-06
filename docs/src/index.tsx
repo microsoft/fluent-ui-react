@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 // TODO make themes a monorepo of packages
@@ -14,8 +14,6 @@ import Router from './routes'
 
 const mountNode = document.createElement('div')
 document.body.appendChild(mountNode)
-
-console.log('THEME', theme)
 
 const render = NewApp =>
   ReactDOM.render(

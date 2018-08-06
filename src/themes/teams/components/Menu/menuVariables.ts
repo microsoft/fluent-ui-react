@@ -12,6 +12,7 @@ export interface IMenuVariables {
   typePrimaryBackgroundColorHover: string
   typePrimaryBorderColor: string
   typePrimaryActiveBorderColor: string
+  typePrimaryUnderlinedBorderColor: string
 }
 
 export default (siteVars: any): IMenuVariables => {
@@ -27,5 +28,6 @@ export default (siteVars: any): IMenuVariables => {
     typePrimaryBackgroundColorHover: siteVars.brand16,
     typePrimaryBorderColor: siteVars.brand08,
     typePrimaryActiveBorderColor: siteVars.brand12,
+    typePrimaryUnderlinedBorderColor: siteVars.gray12,
   }
 }

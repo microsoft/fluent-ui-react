@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import {
   ISiteVariables,
   IThemeComponentStylesInput,
@@ -100,6 +100,8 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
+    if (!next) return acc
+
     acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
 
     acc.componentVariables = mergeComponentVariables(

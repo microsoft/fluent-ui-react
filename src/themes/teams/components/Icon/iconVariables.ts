@@ -1,15 +1,19 @@
 import { pxToRem } from '../../../../lib'
 
 export interface IconVariables {
-  borderColor: string
+  [key: string]: string | number
+
   color: string
+  backgroundColor: string
+  borderColor: string
   horizontalSpace: string
   margin: string
 }
 
 export default (): IconVariables => ({
-  borderColor: undefined,
   color: 'black',
+  backgroundColor: undefined,
+  borderColor: undefined,
   horizontalSpace: pxToRem(10),
   margin: '0 0.25em 0 0',
 })

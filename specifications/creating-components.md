@@ -66,7 +66,7 @@ export default createComponent(Image, {
 A component that takes config as props and computes all the values necessary to create your component.
 
 ```jsx
-class Image extends Component {
+class Image extends React.Component {
   render() {
     return (
       <Render
@@ -93,7 +93,7 @@ import Provider from '../Provider'
 import imageStyles from './imageStyles'
 import imageVariables from './imageVariables'
 
-class Image extends Component {
+class Image extends React.Component {
   render() {
     return (
       <Provider.Consumer

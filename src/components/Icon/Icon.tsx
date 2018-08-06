@@ -1,43 +1,12 @@
-import React, { CSSProperties } from 'react'
-import PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, SUI } from '../../lib'
-
-export type IconColor =
-  | 'white'
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'olive'
-  | 'green'
-  | 'teal'
-  | 'blue'
-  | 'violet'
-  | 'purple'
-  | 'pink'
-  | 'brown'
-  | 'grey'
-  | 'black'
-
-export type IconSize = 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'massive'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import { customPropTypes, UIComponent, SUI, createShorthandFactory } from '../../lib'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
-export interface IconProps {
-  as?: string
-  bordered?: boolean
-  circular?: boolean
-  className?: string
-  color?: IconColor
-  disabled?: boolean
-  kind?: string
-  name?: string
-  size?: IconSize
-  xSpacing?: IconXSpacing
-  style?: CSSProperties
-  title?: string
-}
+class Icon extends UIComponent<any, any> {
+  static create: Function
 
-class Icon extends UIComponent<IconProps, {}> {
   static className = 'ui-icon'
 
   static displayName = 'Icon'
@@ -54,24 +23,6 @@ class Icon extends UIComponent<IconProps, {}> {
 
     /** Additional classes. */
     className: PropTypes.string,
-
-    /** Color of the icon. */
-    color: PropTypes.oneOf([
-      'white',
-      'red',
-      'orange',
-      'yellow',
-      'olive',
-      'green',
-      'teal',
-      'blue',
-      'violet',
-      'purple',
-      'pink',
-      'brown',
-      'grey',
-      'black',
-    ]),
 
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
@@ -94,7 +45,6 @@ class Icon extends UIComponent<IconProps, {}> {
     'bordered',
     'circular',
     'className',
-    'color',
     'disabled',
     'kind',
     'name',
@@ -111,5 +61,7 @@ class Icon extends UIComponent<IconProps, {}> {
     return <ElementType className={classes.root} {...rest} />
   }
 }
+
+Icon.create = createShorthandFactory(Icon, name => ({ name }))
 
 export default Icon
