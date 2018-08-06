@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -8,23 +8,7 @@ import menuRules from './menuRules'
 import menuVariables from './menuVariables'
 import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
-export type MenuType = 'primary' | 'secondary'
-export type MenuShape = 'pills' | 'pointing' | 'underlined'
-
-export interface IMenuProps {
-  accessibility?: string
-  as?: string
-  activeIndex?: number | string
-  children?: ReactNode
-  className?: string
-  defaultActiveIndex?: number | string
-  items?: any
-  shape?: MenuShape
-  type?: MenuType
-  vertical?: boolean
-}
-
-class Menu extends AutoControlledComponent<IMenuProps, any> {
+class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'

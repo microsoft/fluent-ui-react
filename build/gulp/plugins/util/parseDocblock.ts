@@ -1,4 +1,4 @@
-import doctrine from 'doctrine'
+import * as doctrine from 'doctrine'
 
 export default docblock => {
   const { description = '', tags = [], ...rest } = doctrine.parse(docblock || '', { unwrap: true })

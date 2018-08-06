@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
+import * as React from 'react'
+import * as _ from 'lodash'
 import { Header, Message } from 'semantic-ui-react'
 
 const headerStyle = {
   whiteSpace: 'pre-line',
 }
 
-class ComponentDocTag extends Component<any, any> {
+class ComponentDocTag extends React.Component<any, any> {
   getTagDescription = (forTag, fromInfo) => {
     const tags = (fromInfo.docblock && fromInfo.docblock.tags) || []
     return _.result(_.find(tags, 'title', forTag), 'description')

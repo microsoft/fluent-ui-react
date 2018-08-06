@@ -1,31 +1,14 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as cx from 'classnames'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
-import { MenuType, MenuShape } from './Menu'
-
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 import { AccessibilityType } from '../../lib/accessibility/AccessibilityFactory'
 
-export interface IMenuItemProps {
-  accessibility?: string
-  active?: boolean
-  as?: string
-  children?: ReactNode
-  className?: string
-  content?: ReactNode
-  index?: number
-  onClick?: (any, IMenuItemProps) => void
-  shape?: MenuShape
-  type?: MenuType
-  vertical?: boolean
-}
-
-class MenuItem extends UIComponent<IMenuItemProps, any> {
+class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
