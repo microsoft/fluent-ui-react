@@ -4,6 +4,7 @@ import * as React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
+import { ImageBehavior } from '../../lib/accessibility'
 
 /**
  * An image is a graphic representation of something.
@@ -18,6 +19,9 @@ class Image extends UIComponent<any, any> {
   static variables = imageVariables
 
   static propTypes = {
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** An element type to render as. */
     as: customPropTypes.as,
 
@@ -34,14 +38,15 @@ class Image extends UIComponent<any, any> {
     fluid: PropTypes.bool,
   }
 
-  static handledProps = ['as', 'avatar', 'circular', 'className', 'fluid']
+  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className', 'fluid']
 
   static defaultProps = {
     as: 'img',
+    accessibility: ImageBehavior,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    return <ElementType {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
 

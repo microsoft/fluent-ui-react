@@ -6,6 +6,7 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 import menuVariables from './menuVariables'
+import { MenuBehavior } from '../../lib/accessibility'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -42,13 +43,18 @@ class Menu extends AutoControlledComponent<any, any> {
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: MenuBehavior,
   }
 
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
@@ -94,10 +100,10 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

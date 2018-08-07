@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Changing the default styles for Input component @alinais ([#25](https://github.com/stardust-ui/react/pull/25))
 
 ### Features
+- Behaviors for accessibility roles and other ARIA attributes @smykhailov, @jurokapsiar, @sophieH29 ([#29](https://github.com/stardust-ui/react/pull/29))
 - Update styles for Menu underlined primary @miroslavstastny ([#20](https://github.com/stardust-ui/react/pull/20))
 - Add Avatar `getInitials` prop and `presenceIndicatorBackground` variable @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
 - Add 'fluid' variant and size variables to Image @kuzhelov ([#54](https://github.com/stardust-ui/react/pull/54))

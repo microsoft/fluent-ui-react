@@ -36,6 +36,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,
+        state: this.state,
         rules: this.childClass.rules,
         variables: this.childClass.variables,
       },
