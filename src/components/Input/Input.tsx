@@ -1,6 +1,5 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -102,8 +101,8 @@ class Input extends UIComponent<any, any> {
     const { children, className, icon, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
-    const inputClasses = cx(classes.input)
-    const iconClasses = cx(classes.icon)
+    const inputClasses = classes.input
+    const iconClasses = classes.icon
 
     // Render with children
     // ----------------------------------------
@@ -121,24 +120,6 @@ class Input extends UIComponent<any, any> {
       )
     }
 
-    if (this.computeIcon()) {
-      return (
-        <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-          {createHTMLInput(input || type, {
-            defaultProps: htmlInputProps,
-            overrideProps: {
-              className: inputClasses,
-              ref: this.handleInputRef,
-            },
-          })}
-          {Icon.create(this.computeIcon(), {
-            defaultProps: { className: iconClasses },
-            overrideProps: predefinedProps => this.handleIconOverrides,
-          })}
-        </ElementType>
-      )
-    }
-
     return (
       <ElementType {...rest} className={classes.root} {...htmlInputProps}>
         {createHTMLInput(input || type, {
@@ -148,6 +129,11 @@ class Input extends UIComponent<any, any> {
             ref: this.handleInputRef,
           },
         })}
+        {this.computeIcon() &&
+          Icon.create(this.computeIcon(), {
+            defaultProps: { className: iconClasses },
+            overrideProps: predefinedProps => this.handleIconOverrides,
+          })}
       </ElementType>
     )
   }
