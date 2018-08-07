@@ -1,7 +1,7 @@
 import {
   ButtonBehavior,
   ToggleButtonBehavior,
-  PopupButtonBehavior,
+  MenuButtonBehavior,
   ImageBehavior,
   InputBehavior,
   ListBehavior,
@@ -21,7 +21,7 @@ import { IAccessibilityBehavior } from './interfaces'
 export enum AccBehaviorType {
   button,
   toggleButton,
-  popupButton,
+  menuButton,
   image,
   input,
   list,
@@ -40,7 +40,7 @@ export class AccBehaviorFactory {
   private static BehaviorsMap: Map<string, () => IAccessibilityBehavior<{}, {}>> = new Map([
     [AccBehaviorType[AccBehaviorType.button], () => new ButtonBehavior()],
     [AccBehaviorType[AccBehaviorType.toggleButton], () => new ToggleButtonBehavior()],
-    [AccBehaviorType[AccBehaviorType.popupButton], () => new PopupButtonBehavior()],
+    [AccBehaviorType[AccBehaviorType.menuButton], () => new MenuButtonBehavior()],
     [AccBehaviorType[AccBehaviorType.image], () => new ImageBehavior()],
     [AccBehaviorType[AccBehaviorType.input], () => new InputBehavior()],
     [AccBehaviorType[AccBehaviorType.list], () => new ListBehavior()],

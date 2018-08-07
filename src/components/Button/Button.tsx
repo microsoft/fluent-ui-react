@@ -1,13 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
 
-import {
-  AutoControlledComponent,
-  UIComponent,
-  childrenExist,
-  customPropTypes,
-  IRenderResultConfig,
-} from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import buttonRules from './buttonRules'
 import buttonVariables from './buttonVariables'
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
@@ -31,13 +25,10 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: boolean | string
   iconPosition?: IconPosition
-  onClick?: (e: SyntheticEvent, props: IButtonProps, state: IButtonState) => void
-  onKeyDown?: (e: KeyboardEvent) => void
+  onClick?: (e: SyntheticEvent) => void
   style?: CSSProperties
   type?: ButtonType
   accBehavior?: string
-  active?: boolean
-  defaultActive?: boolean
 }
 
 /**
@@ -45,7 +36,7 @@ export interface IButtonProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
+class Button extends UIComponent<IButtonProps, IButtonState> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -114,7 +105,6 @@ class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
     'onClick',
     'type',
     'accBehavior',
-    'active',
     'onKeyDown',
   ]
 
@@ -122,14 +112,8 @@ class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
     as: 'button',
   }
 
-  static autoControlledProps = ['active']
-
-  getInitialAutoControlledState() {
-    return { active: false }
-  }
-
-  elementRef: HTMLElement
-  setElementRef = ref => (this.elementRef = ref)
+  private elementRef: HTMLElement
+  private setElementRef = ref => (this.elementRef = ref)
 
   constructor(props, state) {
     super(props, state)
@@ -137,6 +121,10 @@ class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
     this.accBehavior = AccBehaviorFactory.getBehavior(
       AccBehaviorType[accBehavior] || AccBehaviorType.button,
     )
+  }
+
+  public focus() {
+    this.elementRef && this.elementRef.focus()
   }
 
   public renderComponent({
@@ -172,10 +160,9 @@ class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
     return (
       <ElementType
         className={classes.root}
-        ref={this.setElementRef}
         disabled={disabled}
         onClick={this.handleClick}
-        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
+        ref={this.setElementRef}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
       >
@@ -193,7 +180,7 @@ class Button extends AutoControlledComponent<IButtonProps, IButtonState> {
     }
 
     if (onClick) {
-      onClick(e, this.props, this.state)
+      onClick(e)
     }
   }
 }

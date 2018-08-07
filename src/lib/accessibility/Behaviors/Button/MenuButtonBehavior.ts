@@ -1,26 +1,38 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 import keyboardKey from 'keyboard-key'
+import ClickAction from '../../../actions/ClickAction'
+import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
+import MenuOpenSubmenuAction from '../../../actions/MenuOpenSubmenuAction'
 
-export class PopupButtonBehavior extends AbstractBehavior<{}, {}>
+export class MenuButtonBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
   constructor() {
     super('popup-button')
 
     this.handleKey(keyboardKey.Enter, (key, event, component, props, state) => {
-      this.onKeyDownHandler(event, component, props, state)
+      event.preventDefault()
+      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
     })
 
     this.handleKey(keyboardKey.Spacebar, (key, event, component, props, state) => {
-      this.onKeyDownHandler(event, component, props, state)
+      event.preventDefault()
+      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
+    })
+
+    this.handleKey(keyboardKey.Escape, (key, event, component, props, state) => {
+      event.preventDefault()
+      component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
     this.handleKey(keyboardKey.ArrowDown, (key, event, component, props, state) => {
-      this.onKeyDownHandler(event, component, props, state)
+      event.preventDefault()
+      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
     })
 
     this.handleKey(keyboardKey.ArrowUp, (key, event, component, props, state) => {
-      this.onKeyDownHandler(event, component, props, state)
+      event.preventDefault()
+      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
     })
   }
 
@@ -33,7 +45,7 @@ export class PopupButtonBehavior extends AbstractBehavior<{}, {}>
   }
 
   public generateAriaAttributes(props, state): object {
-    this.attributes['aria-expanded'] = state['active']
+    this.attributes['aria-expanded'] = state['submenuOpened']
     return this.attributes
   }
 
@@ -43,16 +55,5 @@ export class PopupButtonBehavior extends AbstractBehavior<{}, {}>
     } else if (newState === ComponentState.enabled) {
       delete this.attributes['aria-disabled']
     }
-  }
-
-  private onKeyDownHandler = (event, component, props, state) => {
-    if (props['disabled']) {
-      event.preventDefault()
-      return
-    }
-
-    component.setState({ active: !state['active'] })
-
-    props['onKeyDown'] && props['onKeyDown'](event)
   }
 }
