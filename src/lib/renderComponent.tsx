@@ -30,11 +30,11 @@ export interface IRenderConfig {
 }
 
 const getAccessibility = <P extends {}>(props, state) => {
-  let accessibility = props['accessibility'] || props['defaultAccessibility'] || DefaultBehavior
-  if (typeof accessibility === 'function') {
-    accessibility = accessibility({ ...props, ...state })
-  }
-  return accessibility
+  const { accessibility: customAccessibility, defaultAccessibility } = props
+  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
+    ...props,
+    ...state,
+  })
 }
 
 const renderComponent = <P extends {}>(
