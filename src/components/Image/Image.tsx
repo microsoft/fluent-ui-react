@@ -21,7 +21,7 @@ class Image extends UIComponent<any, any> {
   static propTypes = {
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    
+
     /** An element type to render as. */
     as: customPropTypes.as,
 
