@@ -43,8 +43,7 @@ class AccordionTitle extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    updateActiveIndex: PropTypes.func,
-
+    titleExpandHandler: PropTypes.object,
     addAccordionTitle: PropTypes.func,
   }
 
@@ -56,7 +55,7 @@ class AccordionTitle extends UIComponent<any, any> {
     'content',
     'index',
     'onClick',
-    'updateActiveIndex',
+    'titleExpandHandler',
     'addAccordionTitle',
   ]
 
@@ -64,6 +63,8 @@ class AccordionTitle extends UIComponent<any, any> {
 
   constructor(p, context) {
     super(p, context)
+
+    this.registerActionHandler(this.props.titleExpandHandler)
     this.accBehavior = new ChatPaneTitleBehavior()
   }
 

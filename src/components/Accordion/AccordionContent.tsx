@@ -33,15 +33,10 @@ class AccordionContent extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /**
-     * Called on click.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
+    contentReturnHandler: PropTypes.object,
 
-    focusFromContentToTitle: PropTypes.func,
+    /** AccordionTitle index inside Accordion. */
+    titleIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
   static handledProps = [
@@ -50,8 +45,8 @@ class AccordionContent extends UIComponent<any, any> {
     'children',
     'className',
     'content',
-    'onClick',
-    'focusFromContentToTitle',
+    'contentReturnHandler',
+    'titleIndex',
   ]
 
   static rules = accordionContentRules
@@ -60,6 +55,8 @@ class AccordionContent extends UIComponent<any, any> {
 
   constructor(p, context) {
     super(p, context)
+
+    this.registerActionHandler(this.props.contentReturnHandler)
     this.accBehavior = new ChatPaneContentBehavior()
   }
 

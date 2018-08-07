@@ -7,6 +7,8 @@ import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { FocusZone } from '../FocusZone'
+import ChatPaneTitleExpandAction from '../../lib/actions/ChatPaneTitleExpandAction'
+import ChatPaneContentReturnAction from '../../lib/actions/ChatPaneContentReturnAction'
 
 /**
  * A standard Accordion.
@@ -94,6 +96,42 @@ class Accordion extends AutoControlledComponent<any, any> {
   focusZone: FocusZone
   setFocusZone = fz => (this.focusZone = fz)
 
+  titleExpandHandler = ChatPaneTitleExpandAction.handler(params => {
+    let { activeIndex } = this.state
+    const { exclusive } = this.props
+    const { index, expand, event } = params
+
+    if (exclusive) {
+      if (!expand && index === activeIndex) {
+        activeIndex = -1
+      } else if (expand) {
+        if (index !== activeIndex) {
+          activeIndex = index
+        } else {
+          return
+        }
+      }
+    } else {
+      if (!expand && _.includes(activeIndex, index)) {
+        activeIndex = _.without(activeIndex, index)
+      } else if (expand) {
+        if (!_.includes(activeIndex, index)) {
+          activeIndex = [...activeIndex, index]
+        } else {
+          return
+        }
+      }
+    }
+
+    event.preventDefault()
+    this.trySetState({ activeIndex }, index)
+  })
+
+  contentReturnHandler = ChatPaneContentReturnAction.handler(params => {
+    const { index } = params
+    this.focusZone.focusElement(this.accordionTitles[index])
+  })
+
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
   }
@@ -126,36 +164,6 @@ class Accordion extends AutoControlledComponent<any, any> {
     return exclusive ? activeIndex === index : _.includes(activeIndex, index)
   }
 
-  focusFromContentToTitle = () => {
-    const { activeIndex } = this.state
-    this.focusZone.focusElement(this.accordionTitles[activeIndex])
-  }
-
-  updateActiveIndex = (index: number, markAsInactive: boolean) => {
-    let { activeIndex } = this.state
-    const { exclusive } = this.props
-
-    if (exclusive) {
-      if (markAsInactive && index === activeIndex) {
-        activeIndex = -1
-      } else if (!markAsInactive && index !== activeIndex) {
-        activeIndex = index
-      } else {
-        return
-      }
-    } else {
-      if (markAsInactive && _.includes(activeIndex, index)) {
-        activeIndex = _.without(activeIndex, index)
-      } else if (!markAsInactive && !_.includes(activeIndex, index)) {
-        activeIndex = [...activeIndex, index]
-      } else {
-        return
-      }
-    }
-
-    this.trySetState({ activeIndex }, index)
-  }
-
   renderPanels = () => {
     const children = []
     const { panels } = this.props
@@ -170,8 +178,8 @@ class Accordion extends AutoControlledComponent<any, any> {
           defaultProps: {
             active,
             index,
+            titleExpandHandler: this.titleExpandHandler,
             addAccordionTitle: this.addAccordionTitle,
-            updateActiveIndex: this.updateActiveIndex,
           },
           overrideProps: this.handleTitleOverrides,
         }),
@@ -183,7 +191,8 @@ class Accordion extends AutoControlledComponent<any, any> {
             generateKey: true,
             defaultProps: {
               active,
-              focusFromContentToTitle: this.focusFromContentToTitle,
+              index,
+              contentReturnHandler: this.contentReturnHandler,
             },
           },
         ),

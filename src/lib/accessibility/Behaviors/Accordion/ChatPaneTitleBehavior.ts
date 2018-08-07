@@ -1,6 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 import AutoControlledComponent from '../../../AutoControlledComponent'
+import ChatPaneTitleExpandAction from '../../../actions/ChatPaneTitleExpandAction'
 
 export class ChatPaneTitleBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
@@ -20,34 +21,18 @@ export class ChatPaneTitleBehavior extends AbstractBehavior<{}, {}>
     this.handleKey(
       'ArrowRight',
       (key, event: Event, component: AutoControlledComponent<any, any>, props, state): void => {
-        const activeIndex: boolean = props['active']
-
-        if (activeIndex) {
-          return
-        }
-
-        event.preventDefault()
-        const index: number = props['index']
-        const updateActiveIndex: (index: number, markAsInactive: boolean) => void =
-          props['updateActiveIndex']
-        updateActiveIndex(index, false)
+        component.executeAction(
+          ChatPaneTitleExpandAction.execute({ index: props['index'], expand: true, event }),
+        )
       },
     )
 
     this.handleKey(
       'ArrowLeft',
       (key, event: Event, component: AutoControlledComponent<any, any>, props, state): void => {
-        const activeIndex: boolean = props['active']
-        event.preventDefault()
-
-        if (!activeIndex) {
-          return
-        }
-
-        const index: number = props['index']
-        const updateActiveIndex: (index: number, markAsInactive: boolean) => void =
-          props['updateActiveIndex']
-        updateActiveIndex(index, true)
+        component.executeAction(
+          ChatPaneTitleExpandAction.execute({ index: props['index'], expand: false, event }),
+        )
       },
     )
   }

@@ -1,6 +1,7 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 import AutoControlledComponent from '../../../AutoControlledComponent'
+import ChatPaneContentReturnAction from '../../../actions/ChatPaneContentReturnAction'
 
 export class ChatPaneContentBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
@@ -25,15 +26,9 @@ export class ChatPaneContentBehavior extends AbstractBehavior<{}, {}>
     this.handleKey(
       'ArrowLeft',
       (key, event: Event, component: AutoControlledComponent<any, any>, props, state): void => {
-        const activeIndex: boolean = props['active']
         event.preventDefault()
 
-        if (!activeIndex) {
-          return
-        }
-
-        const focusFromContentToTitle: () => void = props['focusFromContentToTitle']
-        focusFromContentToTitle()
+        component.executeAction(ChatPaneContentReturnAction.execute({ index: props['titleIndex'] }))
       },
     )
   }
