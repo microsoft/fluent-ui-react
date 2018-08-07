@@ -70,14 +70,14 @@ export default {
     verticalAlign: 'top',
     textAlign: 'center',
   }),
-  presenceIndicatorWrapper: ({ props: { size } }) => ({
+  presenceIndicatorWrapper: ({ props: { size }, variables: v }) => ({
     position: 'relative' as PositionProperty,
     top: `-${pxToRem(getPresenceIndicatorWrapperTop(size))}`,
     left: pxToRem(getPresenceIndicatorWrapperLeft(size)),
     display: 'table',
     padding: pxToRem(getPresenceIndicatorWrapperPadding(size)),
     borderRadius: '9999px',
-    backgroundColor: 'inherit',
+    backgroundColor: v.presenceIndicatorBackground,
   }),
   presenceIndicator: () => ({
     display: 'table-cell',
