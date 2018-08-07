@@ -13,14 +13,12 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static handledProps = ['as', 'avatar', 'circular', 'className']
-
   static rules = imageRules
 
   static variables = imageVariables
 
   static propTypes = {
-    /**  */
+    /** An element type to render as. */
     as: customPropTypes.as,
 
     /** An image may be formatted to appear inline with text as an avatar. */
@@ -29,8 +27,14 @@ class Image extends UIComponent<any, any> {
     /** An image can appear circular. */
     circular: PropTypes.bool,
 
+    /** Additional classes. */
     className: PropTypes.string,
+
+    /** An image can take up the width of its container. */
+    fluid: PropTypes.boolean,
   }
+
+  static handledProps = ['as', 'avatar', 'circular', 'className', 'fluid']
 
   static defaultProps = {
     as: 'img',
