@@ -78,7 +78,6 @@ class Input extends UIComponent<any, any> {
       {
         ...htmlInputProps,
         type,
-        onClick: () => this.inputRef.focus(),
       },
       rest,
     ]
@@ -93,6 +92,10 @@ class Input extends UIComponent<any, any> {
 
   handleIconOverrides = predefinedProps => {
     return {
+      onClick: e => {
+        this.inputRef.focus()
+        _.invoke(predefinedProps, 'onClick', e, this.props)
+      },
       tabIndex: this.computeTabIndex,
     }
   }
@@ -132,7 +135,7 @@ class Input extends UIComponent<any, any> {
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
             defaultProps: { className: iconClasses },
-            overrideProps: predefinedProps => this.handleIconOverrides,
+            overrideProps: this.handleIconOverrides,
           })}
       </ElementType>
     )
