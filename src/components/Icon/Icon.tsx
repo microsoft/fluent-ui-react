@@ -33,7 +33,7 @@ class Icon extends UIComponent<any, any> {
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
-    /** Use font icons (instead of SVG that are used by default). Icons font will be used by default, other font variants could be provided.  */
+    /** Sets font for a font-based icon.  */
     font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
 
     /** Name of the icon. */
@@ -41,6 +41,9 @@ class Icon extends UIComponent<any, any> {
 
     /** Size of the icon. */
     size: PropTypes.oneOf(['mini', 'tiny', 'small', 'normal', 'large', 'big', 'huge', 'massive']),
+
+    /** Render icon from SVGs collection.  */
+    svg: PropTypes.bool,
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -55,6 +58,7 @@ class Icon extends UIComponent<any, any> {
     'font',
     'name',
     'size',
+    'svg',
     'xSpacing',
   ]
 

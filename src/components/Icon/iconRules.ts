@@ -96,10 +96,10 @@ const getPaddedStyle = isFontBased => ({
 
 const iconRules = {
   root: ({
-    props: { disabled, font, name, size, bordered, circular, xSpacing },
+    props: { disabled, font, svg, name, size, bordered, circular, xSpacing },
     variables: v,
   }: IconRulesParams) => {
-    const isFontBased = !!font
+    const isFontBased = !svg
 
     return {
       display: 'inline-block',

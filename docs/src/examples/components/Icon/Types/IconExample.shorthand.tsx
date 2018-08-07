@@ -3,10 +3,10 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExample = () => (
   <div>
-    <Icon name="umbrella" size="big" />
-    <Icon font="FontAwesome" name="chess rook" size="big" />
-    <Icon font="FontAwesome" name="book" size="big" />
-    <Icon font="FontAwesome" name="circle" size="big" />
+    <Icon svg name="umbrella" size="big" />
+    <Icon name="chess rook" size="big" />
+    <Icon name="book" size="big" />
+    <Icon name="circle" size="big" />
   </div>
 )
 
