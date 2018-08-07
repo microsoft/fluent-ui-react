@@ -3,7 +3,7 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleCircular = () => (
   <div>
-    <Icon font="FontAwesome" name="chess rock" circular />
+    <Icon font="FontAwesome" name="chess rook" circular />
     <Icon font="FontAwesome" name="book" circular />
     <Icon font="FontAwesome" name="expand" circular />
     <Icon font="FontAwesome" name="play" circular />
