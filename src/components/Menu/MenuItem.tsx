@@ -5,14 +5,14 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import menuItemRules from './menuItemRules'
-import menuVariables from './menuVariables'
+import menuVariables, { IMenuVariables } from './menuVariables'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
 
-  static variables = menuVariables
+  static variables: (x) => IMenuVariables = menuVariables
 
   static create: Function
 

@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import textRules from './textRules'
-import textVariables from './textVariables'
+import textVariables, { ITextVariables } from './textVariables'
 
 /**
  * A component containing text
@@ -66,7 +66,7 @@ class Text extends UIComponent<any, any> {
 
   static rules = textRules
 
-  static variables = textVariables
+  static variables: () => ITextVariables = textVariables
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
