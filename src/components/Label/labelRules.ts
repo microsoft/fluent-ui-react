@@ -1,13 +1,17 @@
 import { pxToRem } from '../../lib'
 
+const getLabelHeight = () => {
+  return pxToRem(20)
+}
+
 export default {
   root: ({ props, variables }) => ({
-    height: pxToRem(20),
+    height: getLabelHeight(),
     margin: `${pxToRem(4)} 0 0 ${pxToRem(4)}`,
     padding: variables.padding,
     display: 'inline-block',
     fontSize: pxToRem(14),
-    lineHeight: pxToRem(20),
+    lineHeight: getLabelHeight(),
     verticalAlign: 'middle',
     backgroundColor: 'rgb(232, 232, 232)',
     color: variables.color,
@@ -26,8 +30,8 @@ export default {
     }),
   }),
   image: () => ({
-    height: `${pxToRem(20)} !important`,
-    width: `${pxToRem(20)} !important`,
+    height: `${getLabelHeight()} !important`,
+    width: `${getLabelHeight()} !important`,
     verticalAlign: 'top',
     position: 'relative',
     left: `-${pxToRem(4)}`,
