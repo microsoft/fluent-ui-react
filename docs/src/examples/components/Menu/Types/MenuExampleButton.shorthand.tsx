@@ -1,16 +1,16 @@
+import { MenuButton, Menu } from '@stardust-ui/react'
 import React from 'react'
-import { Menu } from '@stardust-ui/react'
 
-const items = [
+const menuItems = [
   { key: 'editorials', content: 'Editorials' },
   { key: 'review', content: 'Reviews' },
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-class MenuExampleShorthand extends React.Component {
+class MenuButtonExampleShorthand extends React.Component {
   render() {
-    return <Menu defaultActiveIndex={0} items={items} />
+    return <MenuButton menuItems={menuItems} content={<span>Menu button ▾</span>} />
   }
 }
 
-export default MenuExampleShorthand
+export default MenuButtonExampleShorthand
