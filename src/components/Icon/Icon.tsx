@@ -39,7 +39,7 @@ class Icon extends UIComponent<any, any> {
     name: customPropTypes.suggest(SUI.ALL_ICONS_IN_ALL_CONTEXTS),
 
     /** Size of the icon. */
-    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
+    size: PropTypes.oneOf(['micro', 'mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),

@@ -10,6 +10,7 @@ export interface IconRulesParams {
 }
 
 const sizes = new Map([
+  ['micro', 0.3],
   ['mini', 0.4],
   ['tiny', 0.5],
   ['small', 0.75],
