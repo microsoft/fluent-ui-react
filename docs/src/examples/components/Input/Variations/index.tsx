@@ -6,7 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Icon"
-      description="An input can have a search icon."
+      description="An input can have an icon."
       examplePath="components/Input/Variations/InputExampleIcon"
     />
   </ExampleSection>
