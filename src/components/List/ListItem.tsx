@@ -6,7 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
-import { SelectableListItemBehavior, ListItemBehavior } from '../../lib/accessibility'
+import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -75,6 +75,7 @@ class ListItem extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'li',
+    accessibility: ListItemBehavior,
 
     renderMainArea: (props, state, classes) => {
       const { renderHeaderArea, renderContentArea } = props
@@ -162,10 +163,6 @@ class ListItem extends UIComponent<any, any> {
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
-  }
-
-  getDefaultAccessibility() {
-    return this.props.selection ? SelectableListItemBehavior : ListItemBehavior
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

@@ -27,11 +27,10 @@ export interface IRenderConfig {
   state: { [key: string]: any }
   rules?: { [key: string]: Function }
   variables?: (siteVariables: object) => object
-  defaultAccessibility: Accessibility
 }
 
-const getAccessibility = <P extends {}>(props, state, defaultAccessibility) => {
-  let accessibility = props['accessibility'] || defaultAccessibility || DefaultBehavior
+const getAccessibility = <P extends {}>(props, state) => {
+  let accessibility = props['accessibility'] || props['defaultAccessibility'] || DefaultBehavior
   if (typeof accessibility === 'function') {
     accessibility = accessibility({ ...props, ...state })
   }
@@ -44,7 +43,6 @@ const renderComponent = <P extends {}>(
 ): React.ReactNode => {
   const {
     className,
-    defaultAccessibility,
     defaultProps,
     displayName,
     handledProps,
@@ -71,7 +69,7 @@ const renderComponent = <P extends {}>(
         const classes = getClasses(renderer, props, rules, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
-        const accessibility = getAccessibility(props, state, defaultAccessibility)
+        const accessibility = getAccessibility(props, state)
 
         const config: IRenderResultConfig<P> = { ElementType, rest, classes, accessibility }
 

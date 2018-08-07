@@ -1,6 +1,6 @@
-import { Accessibility } from '../../interfaces'
+import { IAccessibilityDef } from '../../interfaces'
 
-const SelectableListBehavior: Accessibility = {
+const SelectableListBehavior: IAccessibilityDef = {
   attributes: {
     root: {
       role: 'listbox',

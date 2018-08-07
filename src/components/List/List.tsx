@@ -49,6 +49,7 @@ class List extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'ul',
+    accessibility: ListBehavior,
   }
 
   static handledProps = [
@@ -68,10 +69,6 @@ class List extends UIComponent<any, any> {
 
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
-
-  getDefaultAccessibility() {
-    return this.props.selection ? SelectableListBehavior : ListBehavior
-  }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props

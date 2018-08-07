@@ -1,6 +1,6 @@
-import { Accessibility } from '../../interfaces'
+import { IAccessibilityFunc } from '../../interfaces'
 
-const SelectableListItemBehavior: Accessibility = (props: any) => ({
+const SelectableListItemBehavior: IAccessibilityFunc = (props: any) => ({
   attributes: {
     root: {
       role: 'option',

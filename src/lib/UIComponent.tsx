@@ -25,11 +25,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
     this.renderComponent = this.renderComponent.bind(this)
   }
 
-  // allows changing the (default) accessibility
-  getDefaultAccessibility(): Accessibility {
-    return this.childClass.defaultProps['accessibility']
-  }
-
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {
     throw new Error('renderComponent is not implemented.')
   }
@@ -45,7 +40,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
         state: this.state,
         rules: this.childClass.rules,
         variables: this.childClass.variables,
-        defaultAccessibility: this.getDefaultAccessibility(),
       },
       this.renderComponent,
     )
