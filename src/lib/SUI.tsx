@@ -1807,7 +1807,7 @@ export const ICONS = _.uniq([
 ])
 
 export const ICON_ALIASES = [
-  'chess rock',
+  'chess rook',
   'ordered list',
   'unordered list',
   'user doctor',

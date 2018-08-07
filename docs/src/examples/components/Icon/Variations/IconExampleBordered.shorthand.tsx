@@ -3,7 +3,7 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleBordered = () => (
   <div>
-    <Icon name="chess rock" bordered />
+    <Icon name="chess rook" bordered />
     <Icon name="book" bordered />
     <Icon name="expand" bordered />
     <Icon name="play" bordered />
