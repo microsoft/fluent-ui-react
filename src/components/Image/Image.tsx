@@ -31,7 +31,7 @@ class Image extends UIComponent<any, any> {
     className: PropTypes.string,
 
     /** An image can take up the width of its container. */
-    fluid: PropTypes.boolean,
+    fluid: PropTypes.bool,
   }
 
   static handledProps = ['as', 'avatar', 'circular', 'className', 'fluid']
