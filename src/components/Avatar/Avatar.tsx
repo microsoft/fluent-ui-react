@@ -113,6 +113,7 @@ class Avatar extends UIComponent<any, any> {
                 size="mini"
                 name={icon}
                 color="white"
+                // TODO missing styles here will be fixed in https://github.com/stardust-ui/react/pull/38
                 className={classes.presenceIcon}
                 title={status}
               />
