@@ -1,6 +1,6 @@
-import { Accessibility, IAccessibilityDef } from '../../interfaces'
+import { IAccessibilityDefinition } from '../../interfaces'
 
-const BasicListBehavior: IAccessibilityDef = {
+const BasicListBehavior: IAccessibilityDefinition = {
   attributes: {
     root: {
       role: 'list',

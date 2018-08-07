@@ -1,8 +1,8 @@
-import { IAccessibilityFunc } from '../../interfaces'
 import SelectableListItemBehavior from './SelectableListItemBehavior'
 import BasicListItemBehavior from './BasicListItemBehavior'
+import { IAccessibilityDefinition } from '../../interfaces'
 
-const ListItemBehavior: IAccessibilityFunc = (props: any) =>
+const ListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) =>
   props.selection ? SelectableListItemBehavior(props) : BasicListItemBehavior
 
 export default ListItemBehavior

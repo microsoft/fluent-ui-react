@@ -6,14 +6,14 @@ import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import callable from './callable'
-import { IAccessibilityDef, Accessibility } from './accessibility/interfaces'
+import { IAccessibilityDefinition } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
   rest: { [key: string]: any }
   classes: { [key: string]: string }
-  accessibility: IAccessibilityDef
+  accessibility: IAccessibilityDefinition
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any

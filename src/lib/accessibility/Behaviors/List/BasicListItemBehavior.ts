@@ -1,6 +1,6 @@
-import { IAccessibilityDef } from '../../interfaces'
+import { IAccessibilityDefinition } from '../../interfaces'
 
-const BasicListItemBehavior: IAccessibilityDef = {
+const BasicListItemBehavior: IAccessibilityDefinition = {
   attributes: {
     root: {
       role: 'listitem',

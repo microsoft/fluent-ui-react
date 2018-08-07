@@ -6,7 +6,7 @@ import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
-import { SelectableListBehavior, ListBehavior } from '../../lib/accessibility'
+import { ListBehavior } from '../../lib/accessibility'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'

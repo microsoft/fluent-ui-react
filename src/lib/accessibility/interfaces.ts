@@ -107,15 +107,12 @@ export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   tabIndex?: string
 }
 
-export type AccessibilityKeyHandlers = undefined
+export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
+export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
 
-export type AccessibilityAttributesDef = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlersDef = { [partName: string]: AccessibilityKeyHandlers }
-
-export interface IAccessibilityDef {
-  attributes?: AccessibilityAttributesDef
-  keyHandlers?: AccessibilityKeyHandlersDef
+export interface IAccessibilityDefinition {
+  attributes?: AccessibilityAttributes
+  keyHandlers?: AccessibilityKeyHandlers
 }
 
-export type IAccessibilityFunc = (props: any) => IAccessibilityDef
-export type Accessibility = IAccessibilityDef | IAccessibilityFunc
+export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
