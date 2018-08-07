@@ -86,9 +86,9 @@ class Icon extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    return this.props.font
-      ? this.renderFontIcon(ElementType, classes, rest)
-      : this.renderSvgIcon(ElementType, classes, rest)
+    return this.props.svg
+      ? this.renderSvgIcon(ElementType, classes, rest)
+      : this.renderFontIcon(ElementType, classes, rest)
   }
 }
 
