@@ -19,9 +19,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Remove unused dependencies and move development dependencies to devDependencies @levithomason ([#51](https://github.com/stardust-ui/react/pull/51))
+- Fixed issues ([#31](https://github.com/stardust-ui/react/issues/31)) and ([#32](https://github.com/stardust-ui/react/issues/32)) @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
 
 ### Features
 - Update styles for Menu underlined primary @miroslavstastny ([#20](https://github.com/stardust-ui/react/pull/20))
+- Add Avatar `getInitials` prop and `presenceIndicatorBackground` variable @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
   
 <!--------------------------------[ v0.2.5 ]------------------------------- -->
 ## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)
