@@ -1,12 +1,10 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-class LabelExampleIconAsShorthand extends React.Component<{}, { display: string }> {
+class LabelExampleIconAsShorthand extends React.Component<any, any> {
   constructor(props) {
     super(props)
-    this.state = {
-      display: 'inline-block',
-    }
+    this.state = {}
   }
 
   public hide = () => {

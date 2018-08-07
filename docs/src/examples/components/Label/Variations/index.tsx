@@ -29,6 +29,11 @@ const Variations = () => (
       description="The Icon component inside the Label can be defined with customizing it's prop"
       examplePath="components/Label/Variations/LabelExampleIconAsShorthand"
     />
+    <ComponentExample
+      title="Image"
+      description="The Label can contain an image"
+      examplePath="components/Label/Variations/LabelExampleImage"
+    />
   </ExampleSection>
 )
 

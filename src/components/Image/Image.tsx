@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import imageRules from './imageRules'
 import imageVariables from './imageVariables'
 
@@ -9,6 +9,8 @@ import imageVariables from './imageVariables'
  * An image is a graphic representation of something.
  */
 class Image extends UIComponent<any, any> {
+  static create: Function
+
   static className = 'ui-image'
 
   static displayName = 'Image'
@@ -40,5 +42,7 @@ class Image extends UIComponent<any, any> {
     return <ElementType {...rest} className={classes.root} />
   }
 }
+
+Image.create = createShorthandFactory(Image, src => ({ src }))
 
 export default Image

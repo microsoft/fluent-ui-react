@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import { Icon } from '../..'
+import { Icon, Image } from '../..'
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
 import callable from '../../lib/callable'
@@ -41,6 +41,9 @@ class Label extends UIComponent<any, any> {
     /** An icon label can format an Icon to appear before or after the text in the label */
     iconPosition: PropTypes.oneOf(['start', 'end']),
 
+    /** Label can have an icon. */
+    image: customPropTypes.some([PropTypes.string, PropTypes.object]),
+
     /**
      * Function called when the icon is clicked.
      *
@@ -58,6 +61,7 @@ class Label extends UIComponent<any, any> {
     'content',
     'icon',
     'iconPosition',
+    'image',
     'onIconClick',
   ]
 
@@ -94,7 +98,7 @@ class Label extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, icon, iconPosition } = this.props
+    const { children, content, icon, iconPosition, image } = this.props
     const getContent = (): React.ReactNode => {
       const iconAtEnd = iconPosition === 'end'
       const iconAtStart = !iconAtEnd
@@ -110,8 +114,19 @@ class Label extends UIComponent<any, any> {
         },
       )
 
+      const imageElement = Image.create(
+        {
+          className: classes.image,
+          ...(typeof image === 'string' ? { src: image } : { ...image }),
+        },
+        {
+          generateKey: false,
+        },
+      )
+
       return (
         <React.Fragment>
+          {image && imageElement}
           {iconAtStart && icon && iconElement}
           {content}
           {iconAtEnd && icon && iconElement}
