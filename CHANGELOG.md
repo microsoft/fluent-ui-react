@@ -17,9 +17,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Features
-- Add SVG icons support @kuzhelov ([#50](https://github.com/stardust-ui/react/pull/50))
+### Fixes
 
+- Remove unused dependencies and move development dependencies to devDependencies @levithomason ([#51](https://github.com/stardust-ui/react/pull/51))
+- Fixed issues ([#31](https://github.com/stardust-ui/react/issues/31)) and ([#32](https://github.com/stardust-ui/react/issues/32)) @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
+- Changing the default styles for Input component @alinais ([#25](https://github.com/stardust-ui/react/pull/25))
+
+### Features
+- Update styles for Menu underlined primary @miroslavstastny ([#20](https://github.com/stardust-ui/react/pull/20))
+- Add Avatar `getInitials` prop and `presenceIndicatorBackground` variable @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
+- Add 'fluid' variant and size variables to Image @kuzhelov ([#54](https://github.com/stardust-ui/react/pull/54))
+- Add SVG icons support @kuzhelov ([#50](https://github.com/stardust-ui/react/pull/50))
+  
 <!--------------------------------[ v0.2.5 ]------------------------------- -->
 ## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.4...v0.2.5)
@@ -32,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.3...v0.2.4)
 
 ### Fixes
+
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
 - Removed allowSyntheticDefaultImports from shared tsconfig but allow it on docs @aniknafs ([#46](https://github.com/stardust-ui/react/pull/46))
 

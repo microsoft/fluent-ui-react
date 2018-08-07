@@ -40,7 +40,7 @@ class Icon extends UIComponent<any, any> {
     name: PropTypes.string,
 
     /** Size of the icon. */
-    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'normal', 'large', 'big', 'huge', 'massive']),
+    size: PropTypes.oneOf(['micro', 'mini', 'tiny', 'small', 'normal', 'large', 'big', 'huge', 'massive']),
 
     /** Render icon from SVGs collection.  */
     svg: PropTypes.bool,

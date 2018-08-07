@@ -1,6 +1,5 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -14,6 +13,7 @@ import {
 import inputRules from './inputRules'
 import inputVariables from './inputVariables'
 import Icon from '../Icon'
+import callable from '../../lib/callable'
 
 /**
  * An Input
@@ -54,10 +54,19 @@ class Input extends UIComponent<any, any> {
     type: 'text',
   }
 
+  inputRef: any
+
+  computeTabIndex = props => {
+    if (!_.isNil(props.tabIndex)) return props.tabIndex
+    if (props.onClick) return 0
+  }
+
   handleChildOverrides = (child, defaultProps) => ({
     ...defaultProps,
     ...child.props,
   })
+
+  handleInputRef = c => (this.inputRef = c)
 
   partitionProps = () => {
     const { type } = this.props
@@ -81,11 +90,22 @@ class Input extends UIComponent<any, any> {
     return null
   }
 
+  handleIconOverrides = predefinedProps => {
+    return {
+      onClick: e => {
+        this.inputRef.focus()
+        _.invoke(predefinedProps, 'onClick', e, this.props)
+      },
+      tabIndex: this.computeTabIndex,
+    }
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, className, icon, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
-    const inputClasses = cx(classes.input)
+    const inputClasses = classes.input
+    const iconClasses = classes.icon
 
     // Render with children
     // ----------------------------------------
@@ -103,24 +123,20 @@ class Input extends UIComponent<any, any> {
       )
     }
 
-    if (this.computeIcon()) {
-      return (
-        <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-          {createHTMLInput(input || type, {
-            defaultProps: htmlInputProps,
-            overrideProps: { className: inputClasses },
-          })}
-          <Icon name={this.computeIcon()} />
-        </ElementType>
-      )
-    }
-
     return (
       <ElementType {...rest} className={classes.root} {...htmlInputProps}>
         {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
-          overrideProps: { className: inputClasses },
+          overrideProps: {
+            className: inputClasses,
+            ref: this.handleInputRef,
+          },
         })}
+        {this.computeIcon() &&
+          Icon.create(this.computeIcon(), {
+            defaultProps: { className: iconClasses },
+            overrideProps: this.handleIconOverrides,
+          })}
       </ElementType>
     )
   }
