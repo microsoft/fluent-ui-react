@@ -2,8 +2,8 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, SUI, createShorthandFactory } from '../../lib'
 
-import iconRules from './iconRules'
-import iconVariables from './iconVariables'
+import iconRules, { IconRulesParams } from './iconRules'
+import iconVariables, { IconVariables } from './iconVariables'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -14,7 +14,7 @@ class Icon extends UIComponent<any, any> {
 
   static displayName = 'Icon'
 
-  static variables = iconVariables
+  static variables: (x) => IconVariables = iconVariables
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -62,7 +62,7 @@ class Icon extends UIComponent<any, any> {
     kind: 'FontAwesome',
   }
 
-  static rules = iconRules
+  static rules: { root: (x) => IconRulesParams } = iconRules
 
   renderComponent({ ElementType, classes, rest }) {
     return <ElementType className={classes.root} {...rest} />

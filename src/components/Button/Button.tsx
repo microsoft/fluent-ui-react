@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonRules from './buttonRules'
-import buttonVariables from './buttonVariables'
+import buttonVariables, { IButtonVariables } from './buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
 
@@ -19,7 +19,7 @@ class Button extends UIComponent<any, any> {
 
   public static rules = buttonRules
 
-  public static variables = buttonVariables
+  public static variables: (x) => IButtonVariables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */

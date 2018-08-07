@@ -5,14 +5,14 @@ import * as React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import menuRules from './menuRules'
-import menuVariables from './menuVariables'
+import menuVariables, { IMenuVariables } from './menuVariables'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
 
-  static variables = menuVariables
+  static variables: (x) => IMenuVariables = menuVariables
 
   static create: Function
 
