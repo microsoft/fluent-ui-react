@@ -10,6 +10,7 @@ export class ChatMessageBehavior extends AbstractBehavior<{}, {}>
   private attributes = {
     'ms-acc-behavior': this.name,
     'data-is-focusable': true,
+    role: '',
   }
 
   public generateAriaAttributes(props, state): object {

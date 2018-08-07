@@ -15,6 +15,7 @@ export class ChatBehavior extends AbstractBehavior<{}, {}>
 
   private attributes = {
     'ms-acc-behavior': this.name,
+    role: '',
   }
 
   public generateAriaAttributes(props, state): object {
