@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import { Icon, Image } from '../..'
+import { Icon, Image, ItemLayout } from '../..'
 import labelRules from './labelRules'
 import labelVariables from './labelVariables'
 import callable from '../../lib/callable'
@@ -35,22 +35,9 @@ class Label extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Label can have an icon. */
-    icon: customPropTypes.some([PropTypes.string, PropTypes.object]),
+    startMedia: PropTypes.any,
 
-    /** An icon label can format an Icon to appear before or after the text in the label */
-    iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Label can have an icon. */
-    image: customPropTypes.some([PropTypes.string, PropTypes.object]),
-
-    /**
-     * Function called when the icon is clicked.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onIconClick: PropTypes.func,
+    endMedia: PropTypes.any,
   }
 
   static handledProps = [
@@ -59,10 +46,8 @@ class Label extends UIComponent<any, any> {
     'circular',
     'className',
     'content',
-    'icon',
-    'iconPosition',
-    'image',
-    'onIconClick',
+    'endMedia',
+    'startMedia',
   ]
 
   static defaultProps = {
@@ -73,70 +58,25 @@ class Label extends UIComponent<any, any> {
 
   static variables = labelVariables
 
-  handleIconOverrides = predefinedProps => {
-    const { onIconClick, iconPosition, content, variables: labelPropVariables } = this.props
-    const { onClick, variables, xSpacing } = predefinedProps
-
-    const iconVariables = callable(variables)()
-    const labelVariables = labelPropVariables
-      ? callable(labelPropVariables)()
-      : callable(Label.variables)()
-
-    return {
-      onClick: e => {
-        _.invoke(predefinedProps, 'onClick', e)
-        _.invoke(this.props, 'onIconClick', e, this.props)
-      },
-      ...((onClick || onIconClick) && { tabIndex: '0' }),
-      ...((!iconVariables || !iconVariables.color) && {
-        variables: { color: labelVariables.color },
-      }),
-      ...(!xSpacing && {
-        xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
-      }),
-    }
-  }
-
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, icon, iconPosition, image } = this.props
-    const getContent = (): React.ReactNode => {
-      const iconAtEnd = iconPosition === 'end'
-      const iconAtStart = !iconAtEnd
-
-      const iconElement = Icon.create(
-        {
-          className: classes.icon,
-          ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
-        },
-        {
-          generateKey: false,
-          overrideProps: this.handleIconOverrides,
-        },
-      )
-
-      const imageElement = Image.create(
-        {
-          className: classes.image,
-          ...(typeof image === 'string' ? { src: image } : { ...image }),
-        },
-        {
-          generateKey: false,
-        },
-      )
-
-      return (
-        <React.Fragment>
-          {image && imageElement}
-          {iconAtStart && icon && iconElement}
-          {content}
-          {iconAtEnd && icon && iconElement}
-        </React.Fragment>
-      )
-    }
+    const { children, content, startMedia, endMedia } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : getContent()}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <ItemLayout
+            media={startMedia}
+            header={content}
+            headerMedia={endMedia}
+            variables={{
+              itemHeight: '20px',
+              itemPaddingLeft: startMedia ? '0px' : '8px',
+              itemPaddingRight: endMedia ? '0px' : '8px',
+            }}
+          />
+        )}
       </ElementType>
     )
   }
