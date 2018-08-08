@@ -1,3 +1,6 @@
+/**
+ * Checks whether provided CSS property value is safe for being rendered by Fela engine.
+ */
 const isValidCssValue = (value: any) => {
   if (typeof value !== 'string') {
     return true
@@ -8,6 +11,12 @@ const isValidCssValue = (value: any) => {
 
   const openingBracketsStack = []
 
+  /**
+   * This loop logic checks whether braces sequence of input argument is valid.
+   * Essentially, it ensures that each of the '(', '{', '[' braces
+   * - is properly matched by its complementary closing character
+   * - closing brace properly corresponds to the last opened one
+   */
   for (let i = 0; i < value.length; ++i) {
     const currentCharacter = value[i]
     if (openingBrackets.includes(currentCharacter)) {

@@ -1,20 +1,5 @@
 import sanitizeCss from 'src/lib/felaSanitizeCssPlugin'
 
-const validStringStyle = {
-  display: 'block',
-  margin: '0 0 0 0',
-}
-
-const validNumericStyle = {
-  top: 0,
-}
-
-const invalidCssValue = 'rgba('
-
-const invalidCssStyle = {
-  color: invalidCssValue,
-}
-
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
   test(`assert that '${value}' is ${isValid ? 'valid' : 'invalid'}`, () => {
     const sanitize = sanitizeCss()
@@ -28,47 +13,43 @@ const assertCssPropertyValue = (value: string, isValid: boolean) => {
 
 const sanitize = sanitizeCss()
 
-describe('tests', () => {
+describe('felaSanitizeCssPlugin', () => {
   test('should ensure there are no non-closed brackets in CSS property value', () => {
     const style = {
-      ...validStringStyle,
-      ...invalidCssStyle,
+      display: 'block',
+      backgroundImage: 'url(../../',
     }
 
-    expect(sanitize(style)).toEqual(validStringStyle)
+    expect(sanitize(style)).toEqual({ display: 'block' })
   })
 
   test('should skip numeric CSS property values', () => {
-    expect(sanitize(validNumericStyle)).toEqual(validNumericStyle)
+    expect(sanitize({ top: 0 })).toEqual({ top: 0 })
   })
 
   test('should recursively process nested objects', () => {
     const style = {
-      ...validStringStyle,
+      display: 'inline',
       '::before': {
-        ...validStringStyle,
-        ...invalidCssStyle,
+        color: 'rgba(',
       },
     }
 
     expect(sanitize(style)).toEqual({
-      ...validStringStyle,
-      '::before': {
-        ...validStringStyle,
-      },
+      display: 'inline',
+      '::before': {},
     })
   })
 
   test('should skip excluded CSS props', () => {
-    const cssPropertyToExclude = 'myProperty'
-
     const sanitize = sanitizeCss({
-      skip: [cssPropertyToExclude],
+      skip: ['propertyWithInvalidValue'],
     })
 
     const style = {
-      validStringStyle,
-      [cssPropertyToExclude]: invalidCssValue,
+      display: 'block',
+      margin: '0 0 0 0',
+      propertyWithInvalidValue: 'rgba(',
     }
 
     expect(sanitize(style)).toEqual(style)
