@@ -26,6 +26,7 @@ import MenuOpenSubmenuAction, {
 } from '../../lib/actions/MenuOpenSubmenuAction'
 
 import { focusFirstChild, focusAsync, getPreviousElement } from '@uifabric/utilities'
+import { IAccessibilityBehavior } from '../../lib/accessibility/interfaces'
 
 interface MenuItemState {
   submenuOpened: boolean
@@ -174,10 +175,12 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
 
   componentDidMount() {
     this.addDocumentListener()
+    this.accBehavior.attachEventHandlers(this.elementRef, this)
   }
 
   componentWillUnmount() {
     this.removeDocumentListener()
+    this.accBehavior.detachEventHandlers(this.elementRef)
   }
 
   private moveFocusInSubmenu(submenuElement: HTMLElement, focusLast?: boolean) {

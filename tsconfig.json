@@ -7,5 +7,9 @@
     "gulp",
     "test",
     "types"
-  ]
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "allowJs": true
+  }
 }

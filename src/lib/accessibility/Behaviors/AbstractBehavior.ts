@@ -4,7 +4,6 @@ import keyboardKey from 'keyboard-key'
 
 export abstract class AbstractBehavior<P, S> {
   public component: UIComponent<P, S>
-  public elementRef: HTMLElement
 
   private keyHandlers: {
     [key: number]: (
@@ -27,6 +26,8 @@ export abstract class AbstractBehavior<P, S> {
   }
 
   public abstract changeState(newState: ComponentState): void
+  public abstract attachEventHandlers(target?: HTMLElement): void
+  public abstract detachEventHandlers(target?: HTMLElement): void
 
   public onKeyDown(component: UIComponent<P, S>, props, state): object {
     return event => {

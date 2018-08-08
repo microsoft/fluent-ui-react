@@ -27,6 +27,9 @@ import {
   createRef,
 } from '@uifabric/utilities'
 
+import keyListener from '../../lib/keyListenerDecorator'
+import { eventStack } from '../../lib'
+
 const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter'
 const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
@@ -59,7 +62,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
     direction: FocusZoneDirection.bidirectional,
   }
 
-  private _root = createRef<HTMLElement>()
+  public _root = createRef<HTMLElement>()
   private _id: string
   /** The most recently focused child element. */
   private _activeElement: HTMLElement | null
@@ -92,6 +95,23 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
   public componentDidMount(): void {
     _allInstances[this._id] = this
     if (this._root.current) {
+      eventStack.sub('mousedown', [this._onMouseDown.bind(this)], { target: this._root.current })
+
+      eventStack.sub(
+        'keydown',
+        [
+          this._triggerClickAction.bind(this),
+          this._moveDown.bind(this),
+          this._moveUp.bind(this),
+          this._moveRight.bind(this),
+          this._moveLeft.bind(this),
+          this._moveFirst.bind(this),
+          this._moveLast.bind(this),
+          this._moveOnTab.bind(this),
+        ],
+        { target: this._root.current },
+      )
+
       const windowElement = this._root.current.ownerDocument.defaultView
 
       let parentElement = getParent(this._root.current, ALLOW_VIRTUAL_ELEMENTS)
@@ -122,6 +142,22 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
 
   public componentWillUnmount() {
     delete _allInstances[this._id]
+
+    eventStack.unsub('mousedown', [this._onMouseDown.bind(this)], { target: this._root.current })
+
+    eventStack.unsub(
+      'keydown'[
+        (this._triggerClickAction.bind(this),
+        this._moveDown.bind(this),
+        this._moveUp.bind(this),
+        this._moveRight.bind(this),
+        this._moveLeft.bind(this),
+        this._moveFirst.bind(this),
+        this._moveLast.bind(this),
+        this._moveOnTab.bind(this))
+      ],
+      { target: this._root.current },
+    )
   }
 
   public render() {
@@ -145,9 +181,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
         data-focuszone-id={this._id}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
-        onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}
-        onMouseDownCapture={this._onMouseDown}
       >
         {this.props.children}
       </Tag>
@@ -343,17 +377,18 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
   /**
    * Handle the keystrokes.
    */
-  private _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
-    const { direction, disabled, isInnerZoneKeystroke } = this.props
+
+  private _onKeyDownCheck = (ev: React.KeyboardEvent<HTMLElement>): boolean => {
+    const { disabled, isInnerZoneKeystroke } = this.props
 
     if (disabled) {
-      return
+      return false
     }
 
     if (document.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
-      return
+      return false
     }
 
     if (this.props.onKeyDown) {
@@ -361,8 +396,8 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
     }
 
     // If the default has been prevented, do not process keyboard events.
-    if (ev.isDefaultPrevented()) {
-      return
+    if (ev.isDefaultPrevented && ev.isDefaultPrevented()) {
+      return false
     }
 
     if (
@@ -375,7 +410,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
 
       if (innerZone) {
         if (!innerZone.focus(true)) {
-          return
+          return false
         }
       } else if (isElementFocusSubZone(ev.target as HTMLElement)) {
         if (
@@ -385,139 +420,159 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
             true,
           ) as HTMLElement)
         ) {
-          return
+          return false
         }
       } else {
-        return
+        return false
       }
     } else if (ev.altKey) {
-      return
-    } else {
-      switch (ev.which) {
-        case KeyCodes.space:
-          if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
-            break
-          }
-          return
-
-        case KeyCodes.left:
-          if (direction !== FocusZoneDirection.vertical) {
-            this.preventDefaultWhenHandled(ev)
-            if (this.moveFocusLeft()) {
-              break
-            }
-          }
-          return
-
-        case KeyCodes.right:
-          if (direction !== FocusZoneDirection.vertical) {
-            this.preventDefaultWhenHandled(ev)
-            if (this.moveFocusRight()) {
-              break
-            }
-          }
-          return
-
-        case KeyCodes.up:
-          if (direction !== FocusZoneDirection.horizontal) {
-            this.preventDefaultWhenHandled(ev)
-            if (this.moveFocusUp()) {
-              break
-            }
-          }
-          return
-
-        case KeyCodes.down:
-          if (direction !== FocusZoneDirection.horizontal) {
-            this.preventDefaultWhenHandled(ev)
-            if (this.moveFocusDown()) {
-              break
-            }
-          }
-          return
-
-        case KeyCodes.tab:
-          if (
-            this.props.allowTabKey ||
-            this.props.handleTabKey === FocusZoneTabbableElements.all ||
-            (this.props.handleTabKey === FocusZoneTabbableElements.inputOnly &&
-              this.isElementInput(ev.target as HTMLElement))
-          ) {
-            let focusChanged = false
-            this._processingTabKey = true
-            if (
-              direction === FocusZoneDirection.vertical ||
-              !this.shouldWrapFocus(this._activeElement as HTMLElement, NO_HORIZONTAL_WRAP)
-            ) {
-              focusChanged = ev.shiftKey ? this.moveFocusUp() : this.moveFocusDown()
-            } else if (
-              direction === FocusZoneDirection.horizontal ||
-              direction === FocusZoneDirection.bidirectional
-            ) {
-              focusChanged = ev.shiftKey ? this.moveFocusLeft() : this.moveFocusRight()
-            }
-            this._processingTabKey = false
-            if (focusChanged) {
-              break
-            }
-          }
-          return
-
-        case KeyCodes.home:
-          if (
-            this.isElementInput(ev.target as HTMLElement) &&
-            !this.shouldInputLoseFocus(ev.target as HTMLInputElement, false)
-          ) {
-            return false
-          }
-          const firstChild =
-            this._root.current && (this._root.current.firstChild as HTMLElement | null)
-          if (
-            this._root.current &&
-            firstChild &&
-            this.focusElement(getNextElement(this._root.current, firstChild, true) as HTMLElement)
-          ) {
-            break
-          }
-          return
-
-        case KeyCodes.end:
-          if (
-            this.isElementInput(ev.target as HTMLElement) &&
-            !this.shouldInputLoseFocus(ev.target as HTMLInputElement, true)
-          ) {
-            return false
-          }
-
-          const lastChild =
-            this._root.current && (this._root.current.lastChild as HTMLElement | null)
-          if (
-            this._root.current &&
-            this.focusElement(getPreviousElement(
-              this._root.current,
-              lastChild,
-              true,
-              true,
-              true,
-            ) as HTMLElement)
-          ) {
-            break
-          }
-          return
-
-        case KeyCodes.enter:
-          if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
-            break
-          }
-          return
-
-        default:
-          return
-      }
+      return false
     }
 
-    ev.preventDefault()
-    ev.stopPropagation()
+    return true
+  }
+
+  @keyListener([KeyCodes.space, KeyCodes.enter])
+  private _triggerClickAction(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this._onKeyDownCheck(ev)) {
+      this.tryInvokeClickForFocusable(ev.target as HTMLElement)
+    }
+  }
+
+  @keyListener([KeyCodes.right])
+  private _moveRight(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this.props.direction === FocusZoneDirection.vertical) return false
+
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+      if (this.moveFocusRight()) {
+        ev.stopPropagation()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.left])
+  private _moveLeft(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this.props.direction === FocusZoneDirection.vertical) return false
+
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+      if (this.moveFocusLeft()) {
+        ev.stopPropagation()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.up])
+  private _moveUp(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this.props.direction === FocusZoneDirection.horizontal) return false
+
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+      if (this.moveFocusUp()) {
+        ev.stopPropagation()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.down])
+  private _moveDown(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this.props.direction === FocusZoneDirection.horizontal) return false
+
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+      if (this.moveFocusDown()) {
+        ev.stopPropagation()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.home])
+  private _moveFirst(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+
+      if (
+        this.isElementInput(ev.target as HTMLElement) &&
+        !this.shouldInputLoseFocus(ev.target as HTMLInputElement, false)
+      ) {
+        return false
+      }
+      const firstChild = this._root.current && (this._root.current.firstChild as HTMLElement | null)
+      if (
+        this._root.current &&
+        firstChild &&
+        this.focusElement(getNextElement(this._root.current, firstChild, true) as HTMLElement)
+      ) {
+        ev.preventDefault()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.end])
+  private _moveLast(ev: React.KeyboardEvent<HTMLElement>) {
+    if (this._onKeyDownCheck(ev)) {
+      this.preventDefaultWhenHandled(ev)
+
+      if (
+        this.isElementInput(ev.target as HTMLElement) &&
+        !this.shouldInputLoseFocus(ev.target as HTMLInputElement, true)
+      ) {
+        return false
+      }
+
+      const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
+      if (
+        this._root.current &&
+        this.focusElement(getPreviousElement(
+          this._root.current,
+          lastChild,
+          true,
+          true,
+          true,
+        ) as HTMLElement)
+      ) {
+        ev.preventDefault()
+        ev.stopPropagation()
+      }
+    }
+  }
+
+  @keyListener([KeyCodes.tab])
+  private _moveOnTab(ev: React.KeyboardEvent<HTMLElement>) {
+    const { direction } = this.props
+
+    if (this._onKeyDownCheck(ev)) {
+      if (
+        this.props.allowTabKey ||
+        this.props.handleTabKey === FocusZoneTabbableElements.all ||
+        (this.props.handleTabKey === FocusZoneTabbableElements.inputOnly &&
+          this.isElementInput(ev.target as HTMLElement))
+      ) {
+        let focusChanged = false
+        this._processingTabKey = true
+        if (
+          direction === FocusZoneDirection.vertical ||
+          !this.shouldWrapFocus(this._activeElement as HTMLElement, NO_HORIZONTAL_WRAP)
+        ) {
+          focusChanged = ev.shiftKey ? this.moveFocusUp() : this.moveFocusDown()
+        } else if (
+          direction === FocusZoneDirection.horizontal ||
+          direction === FocusZoneDirection.bidirectional
+        ) {
+          focusChanged = ev.shiftKey ? this.moveFocusLeft() : this.moveFocusRight()
+        }
+        this._processingTabKey = false
+        if (focusChanged) {
+          return
+        }
+      }
+    }
   }
 
   /**
