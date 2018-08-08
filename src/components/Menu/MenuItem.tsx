@@ -4,6 +4,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+
+import Icon from '../Icon'
+
 import menuItemStyles from '../../themes/teams/components/Menu/menuItemStyles'
 import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
@@ -34,6 +37,9 @@ class MenuItem extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** Name or shorthand for Menu Item Icon */
+    icon: customPropTypes.itemShorthand,
 
     /** MenuItem index inside Menu. */
     index: PropTypes.number,
@@ -71,6 +77,7 @@ class MenuItem extends UIComponent<any, any> {
     'children',
     'className',
     'content',
+    'icon',
     'index',
     'onClick',
     'shape',
@@ -95,6 +102,10 @@ class MenuItem extends UIComponent<any, any> {
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
           >
+            {this.props.icon &&
+              Icon.create(this.props.icon, {
+                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              })}
             {content}
           </a>
         )}

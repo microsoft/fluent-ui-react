@@ -49,6 +49,16 @@ const Variations = () => (
       description="A vertical menu may take the size of its container."
       examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
     />
+    <ComponentExample
+      title="Menu with Icons"
+      description="Menu items can contain icons."
+      examplePath="components/Menu/Variations/MenuExampleWithIcons"
+    />
+    <ComponentExample
+      title="Vertical Menu with Icons"
+      description="Vertical menu items can contain icons."
+      examplePath="components/Menu/Variations/MenuExampleWithIconsVertical"
+    />
   </ExampleSection>
 )
 
