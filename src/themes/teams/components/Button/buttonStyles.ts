@@ -79,7 +79,7 @@ export default {
     return {
       ...styles,
 
-      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      borderWidth: `${secondary ? pxToRem(circular ? 1 : 2) : 0}`,
       cursor: 'pointer',
       ':hover': {
         backgroundColor: backgroundColorHover,
@@ -106,7 +106,7 @@ export default {
           borderColor: 'transparent',
           backgroundColor: typeSecondaryBackgroundColorHover,
         },
-        borderWidth: `${!active ? (circular ? 1 : 2) : 0}px`,
+        borderWidth: `${active ? 0 : pxToRem(circular ? 1 : 2)}`,
       }),
     }
   },
