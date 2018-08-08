@@ -1,9 +1,9 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionTitleRules from './accordionTitleRules'
+import accordionTitleStyles from '../../themes/teams/components/Accordion/accordionTitleStyles'
 
 /**
  * A standard AccordionTitle.
@@ -45,7 +45,7 @@ class AccordionTitle extends UIComponent<any, any> {
 
   static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
 
-  static rules = accordionTitleRules
+  static styles = accordionTitleStyles
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

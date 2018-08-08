@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { Component, CSSProperties } from 'react'
+import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
 import { Grid, Header, Icon } from 'semantic-ui-react'
@@ -16,13 +16,13 @@ import ComponentSidebar from './ComponentSidebar'
 import ComponentDocTag from './ComponentDocTag'
 
 const topRowStyle = { margin: '1em' }
-const exampleEndStyle: CSSProperties = {
+const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
   opacity: 0.5,
   paddingTop: '75vh',
 }
 
-class ComponentDoc extends Component<any, any> {
+class ComponentDoc extends React.Component<any, any> {
   static childContextTypes = {
     onPassed: PropTypes.func,
   }
@@ -103,7 +103,7 @@ class ComponentDoc extends Component<any, any> {
           </Grid.Row>
 
           <Grid.Row columns="equal">
-            <Grid.Column style={{ padding: '0 0 0 28px' } as CSSProperties}>
+            <Grid.Column style={{ padding: '0 0 0 28px' } as React.CSSProperties}>
               <div ref={this.handleExamplesRef}>
                 <ComponentExamples displayName={info.displayName} />
               </div>

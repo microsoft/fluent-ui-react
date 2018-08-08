@@ -4,8 +4,8 @@ import config from '../../../../config'
 import rename from 'gulp-rename'
 import replace from 'gulp-replace'
 import inquirer from 'inquirer'
-import path from 'path'
-import fs from 'fs'
+import * as path from 'path'
+import * as fs from 'fs'
 
 const { paths } = config
 const TEMPLATE_PLACEHOLDER = 'TEMPLATE_COMPONENT__'

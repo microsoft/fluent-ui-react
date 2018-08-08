@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
-import dividerRules from './dividerRules'
-import dividerVariables from './dividerVariables'
+import dividerStyles from '../../themes/teams/components/Divider/dividerStyles'
+import dividerVariables from '../../themes/teams/components/Divider/dividerVariables'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
@@ -17,7 +17,7 @@ class Divider extends UIComponent<any, any> {
 
   static className = 'ui-divider'
 
-  static rules = dividerRules
+  static styles = dividerStyles
 
   static variables = dividerVariables
 

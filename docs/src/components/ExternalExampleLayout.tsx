@@ -1,6 +1,6 @@
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 
 import { exampleContext } from 'docs/src/utils'
 import PageNotFound from '../views/PageNotFound'

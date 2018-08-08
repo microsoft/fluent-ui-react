@@ -1,11 +1,12 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 
 import Editor from 'docs/src/components/Editor'
-import pkg from 'package.json'
 import { Container, Divider, Grid, Header, Icon, Label, List, Segment } from 'semantic-ui-react'
 import Logo from '../components/Logo/Logo'
+
+const pkg = require('package.json')
 
 const Comparison: any = ({ jsx, html }) => (
   <Segment className="code-example">

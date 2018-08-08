@@ -10,7 +10,6 @@
     - [Ownership](#ownership)
   - [Intuition & Effort](#intuition--effort)
 - [Proposals](#proposals)
-  - [Goal](#goal)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -1,12 +1,21 @@
-import _ from 'lodash'
-import React from 'react'
-import { shallow, mount, render } from 'enzyme'
-import ReactDOMServer from 'react-dom/server'
+import * as _ from 'lodash'
+import * as React from 'react'
+import { shallow, mount as enzymeMount, render } from 'enzyme'
+import * as ReactDOMServer from 'react-dom/server'
+import { ThemeProvider } from 'react-fela'
 
 import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
+import { felaRenderer } from 'src/lib'
+
+const mount = (node, options?) => {
+  return enzymeMount(
+    <ThemeProvider theme={{ renderer: felaRenderer }}>{node}</ThemeProvider>,
+    options,
+  )
+}
 
 /**
  * Assert Component conforms to guidelines that are applicable to all components.
@@ -24,7 +33,10 @@ export default (Component, options: any = {}) => {
 
   // This is added because of the FelaTheme wrapper and the component itself, because it is mounted
   const getComponent = wrapper => {
-    return wrapper.childAt(0).childAt(0)
+    return wrapper
+      .childAt(0)
+      .childAt(0)
+      .childAt(0)
   }
 
   // make sure components are properly exported
@@ -260,7 +272,7 @@ export default (Component, options: any = {}) => {
           'data-simulate-event-here': true,
         }
 
-        const component = mount(<Component {...props} />)
+        const component = mount(<Component {...props} />).childAt(0)
 
         const eventTarget = eventTargets[listenerName]
           ? component

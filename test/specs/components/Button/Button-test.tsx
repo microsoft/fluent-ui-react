@@ -1,12 +1,18 @@
-import React from 'react'
+import * as React from 'react'
 
-import { isConformant } from 'test/specs/commonTests'
-import { getTestingRenderedComponent } from 'test/utils'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
+import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
   isConformant(Button)
+  handlesAccessibility(Button, {
+    defaultRootRole: 'button',
+    accessibilityOverride: MenuBehavior,
+    overridenRootRole: 'menu',
+  })
 
   describe('type', () => {
     const typeProp = 'type'
@@ -45,6 +51,16 @@ describe('Button', () => {
       )
 
       expect(btnCircular).toEqual(true)
+    })
+  })
+
+  describe('onClick', () => {
+    it('does not call onClick when the button is disabled', () => {
+      const onClick = jest.fn()
+      const button = mountWithProvider(<Button disabled onClick={onClick} />).find('Button')
+      button.simulate('click')
+
+      expect(onClick).not.toHaveBeenCalled()
     })
   })
 })
