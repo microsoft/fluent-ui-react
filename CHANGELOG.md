@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove unused dependencies and move development dependencies to devDependencies @levithomason ([#51](https://github.com/stardust-ui/react/pull/51))
 - Fixed issues ([#31](https://github.com/stardust-ui/react/issues/31)) and ([#32](https://github.com/stardust-ui/react/issues/32)) @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
 - Changing the default styles for Input component @alinais ([#25](https://github.com/stardust-ui/react/pull/25))
+- Prevent Fela from rendering CSS property values that could crash all styling on the page @kuzhelov ([#65](https://github.com/stardust-ui/react/pull/65))
 
 ### Features
 - Behaviors for accessibility roles and other ARIA attributes @smykhailov, @jurokapsiar, @sophieH29 ([#29](https://github.com/stardust-ui/react/pull/29))
