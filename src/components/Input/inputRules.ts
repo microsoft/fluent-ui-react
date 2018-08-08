@@ -1,11 +1,17 @@
 const inputRules = {
   root: ({ props, variables }) => {
+    const { fluid } = props
+
     return {
       display: 'inline-flex',
       position: 'relative',
       alignItems: 'center',
       justifyContent: 'flex-end',
       outline: 0,
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
+      }),
     }
   },
 
@@ -19,7 +25,8 @@ const inputRules = {
       backgroundColor: variables.backgroundColor,
       height: variables.height,
       padding: variables.inputPadding,
-
+      width: variables.inputWidth,
+      maxWidth: variables.inputMaxWidth,
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,

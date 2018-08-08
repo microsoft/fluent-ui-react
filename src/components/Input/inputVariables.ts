@@ -14,6 +14,8 @@ export default (siteVars: any) => {
   vars.inputPadding = `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`
   vars.inputFocusBorderColor = siteVars.brand
   vars.inputFocusBorderRadius = `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`
+  vars.inputMaxWidth = '100%'
+  vars.inputWidth = '100%'
 
   vars.iconPosition = 'absolute'
   vars.iconRight = `${pxToRem(2)}`
