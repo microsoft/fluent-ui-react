@@ -6,9 +6,9 @@ const listItemRules = {
     const { debugLayout, important, selection } = props
     return {
       ...(debugLayout && debugRoot()),
-      gridTemplateRows: `minmax(${variables.itemHeight}, max-content)`,
-      paddingLeft: variables.itemPaddingLeft,
-      paddingRight: variables.itemPaddingRight,
+      gridTemplateRows: `minmax(${variables.height}, max-content)`,
+      paddingLeft: variables.paddingLeft,
+      paddingRight: variables.paddingRight,
 
       ...(important && {
         fontWeight: 'bold',
