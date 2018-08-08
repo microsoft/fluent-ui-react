@@ -1,11 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, SUI } from '../../lib'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 
-import iconRules from './iconRules'
-import iconVariables from './iconVariables'
+import iconStyles from '../../themes/teams/components/Icon/iconStyles'
+import iconVariables from '../../themes/teams/components/Icon/iconVariables'
+import svgIcons from './svgIcons'
+
+export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 class Icon extends UIComponent<any, any> {
+  static create: Function
+
   static className = 'ui-icon'
 
   static displayName = 'Icon'
@@ -25,46 +30,78 @@ class Icon extends UIComponent<any, any> {
     /** Additional classes. */
     className: PropTypes.string,
 
-    /** Color of the icon. */
-    color: PropTypes.oneOf([
-      'white',
-      'red',
-      'orange',
-      'yellow',
-      'olive',
-      'green',
-      'teal',
-      'blue',
-      'violet',
-      'purple',
-      'pink',
-      'brown',
-      'grey',
-      'black',
-    ]),
+    /** An icon can show it is currently unable to be interacted with. */
+    disabled: PropTypes.bool,
 
-    /** The type of font that needs to be used */
-    kind: PropTypes.string,
+    /** Sets font for a font-based icon.  */
+    font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
 
     /** Name of the icon. */
-    name: customPropTypes.suggest(SUI.ALL_ICONS_IN_ALL_CONTEXTS),
+    name: PropTypes.string,
 
     /** Size of the icon. */
-    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
+    size: PropTypes.oneOf([
+      'micro',
+      'mini',
+      'tiny',
+      'small',
+      'normal',
+      'large',
+      'big',
+      'huge',
+      'massive',
+    ]),
+
+    /** Render icon from SVGs collection.  */
+    svg: PropTypes.bool,
+
+    /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
+    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
 
-  static handledProps = ['as', 'bordered', 'circular', 'className', 'color', 'kind', 'name', 'size']
+  static handledProps = [
+    'as',
+    'bordered',
+    'circular',
+    'className',
+    'disabled',
+    'font',
+    'name',
+    'size',
+    'svg',
+    'xSpacing',
+  ]
 
   static defaultProps = {
-    as: 'i',
-    kind: 'FontAwesome',
+    as: 'span',
+    size: 'normal',
   }
 
-  static rules = iconRules
+  static styles = iconStyles
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderFontIcon(ElementType, classes, rest): React.ReactNode {
     return <ElementType className={classes.root} {...rest} />
   }
+
+  renderSvgIcon(ElementType, classes, rest): React.ReactNode {
+    const icon = svgIcons[this.props.name]
+
+    return (
+      <ElementType className={classes.root} {...rest}>
+        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
+          {icon && icon.element}
+        </svg>
+      </ElementType>
+    )
+  }
+
+  renderComponent({ ElementType, classes, rest }) {
+    return this.props.svg
+      ? this.renderSvgIcon(ElementType, classes, rest)
+      : this.renderFontIcon(ElementType, classes, rest)
+  }
 }
+
+Icon.create = createShorthandFactory(Icon, name => ({ name }))
 
 export default Icon

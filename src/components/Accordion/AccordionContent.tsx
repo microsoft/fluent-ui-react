@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionContentRules from './accordionContentRules'
-import accordionContentVariables from './accordionContentVariables'
+import accordionContentStyles from '../../themes/teams/components/Accordion/accordionContentStyles'
+import accordionContentVariables from '../../themes/teams/components/Accordion/accordionContentVariables'
 
 /**
  * A standard AccordionContent.
@@ -42,7 +42,7 @@ class AccordionContent extends UIComponent<any, any> {
 
   static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
 
-  static rules = accordionContentRules
+  static styles = accordionContentStyles
 
   static variables = accordionContentVariables
 

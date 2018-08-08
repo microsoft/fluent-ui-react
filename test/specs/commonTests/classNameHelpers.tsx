@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import React, { createElement } from 'react'
+import * as React from 'react'
 
 import { consoleUtil } from 'test/utils'
 
@@ -10,7 +10,7 @@ export const classNamePropValueBeforePropName = (Component, propKey, propValues,
   propValues.forEach(propVal => {
     it(`adds "${propVal} ${className}" to className`, () => {
       shallow(
-        createElement(Component, { ...requiredProps, [propKey]: propVal }),
+        React.createElement(Component, { ...requiredProps, [propKey]: propVal }),
       ).should.have.className(`${propVal} ${className}`)
     })
   })
@@ -23,7 +23,7 @@ export const noClassNameFromBoolProps = (Component, propKey, propValues, options
     it(`does not add any className when ${bool}`, () => {
       consoleUtil.disableOnce()
 
-      const wrapper = shallow(createElement(Component, { ...requiredProps, [propKey]: bool }))
+      const wrapper = shallow(React.createElement(Component, { ...requiredProps, [propKey]: bool }))
 
       wrapper.should.not.have.className(className)
       wrapper.should.not.have.className('true')

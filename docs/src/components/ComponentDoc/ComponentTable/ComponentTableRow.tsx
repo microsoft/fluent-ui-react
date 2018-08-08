@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Table } from 'semantic-ui-react'
 
 import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValue'
@@ -8,7 +8,7 @@ import ComponentPropEnum from '../ComponentProp/ComponentPropEnum'
 import ComponentPropFunctionSignature from '../ComponentProp/ComponentPropFunctionSignature'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
 
-export default class ComponentTableRow extends Component<any, any> {
+export default class ComponentTableRow extends React.Component<any, any> {
   static propTypes = {
     defaultValue: PropTypes.string,
     description: PropTypes.arrayOf(PropTypes.string),

@@ -1,11 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
-import listVariables from './listVariables'
-import listItemRules from './listItemRules'
+import listVariables from '../../themes/teams/components/List/listItemVariables'
+import listItemStyles from '../../themes/teams/components/List/listItemStyles'
+import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -14,7 +15,7 @@ class ListItem extends UIComponent<any, any> {
 
   static className = 'ui-list__item'
 
-  static rules = listItemRules
+  static styles = listItemStyles
 
   static variables = listVariables
 
@@ -47,9 +48,13 @@ class ListItem extends UIComponent<any, any> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'className',
     'content',
@@ -70,6 +75,7 @@ class ListItem extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'li',
+    accessibility: ListItemBehavior,
 
     renderMainArea: (props, state, classes) => {
       const { renderHeaderArea, renderContentArea } = props
@@ -98,11 +104,13 @@ class ListItem extends UIComponent<any, any> {
     },
 
     renderHeaderArea: (props, state, classes) => {
-      const { debug, header, headerMedia, truncateHeader } = props
+      const { debug, header, headerMedia, truncateHeader, selection } = props
       const { isHovering } = state
 
       const mergedClasses = cx('ui-list__item__header', classes.header)
       const mediaClasses = cx('ui-list__item__headerMedia', classes.headerMedia)
+      const headerMediaStyle =
+        headerMedia && selection && isHovering ? { color: 'inherit' } : undefined
 
       return !header && !headerMedia ? null : (
         <Layout
@@ -112,15 +120,21 @@ class ListItem extends UIComponent<any, any> {
           debug={debug}
           // disappearing={!truncateHeader}
           truncateMain={truncateHeader}
-          rootCSS={isHovering && { color: 'inherit' }}
+          rootCSS={selection && isHovering ? { color: 'inherit' } : undefined}
           main={header}
-          end={!isHovering && headerMedia && <span className={mediaClasses}>{headerMedia}</span>}
+          end={
+            headerMedia && (
+              <span style={headerMediaStyle} className={mediaClasses}>
+                {headerMedia}
+              </span>
+            )
+          }
         />
       )
     },
 
     renderContentArea: (props, state, classes) => {
-      const { debug, content, contentMedia, truncateContent } = props
+      const { debug, content, contentMedia, truncateContent, selection } = props
       const { isHovering } = state
 
       const mergedClasses = cx('ui-list__item__content', classes.content)
@@ -133,7 +147,7 @@ class ListItem extends UIComponent<any, any> {
           debug={debug}
           // disappearing={!truncateContent}
           truncateMain={truncateContent}
-          rootCSS={isHovering && { color: 'inherit' }}
+          rootCSS={selection && isHovering ? { color: 'inherit' } : undefined}
           main={content}
           end={!isHovering && contentMedia}
         />
@@ -151,7 +165,7 @@ class ListItem extends UIComponent<any, any> {
     this.setState({ isHovering: false })
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { as, debug, endMedia, media, renderMainArea } = this.props
     const { isHovering } = this.state
 
@@ -172,6 +186,7 @@ class ListItem extends UIComponent<any, any> {
         end={endArea}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        {...accessibility.attributes.root}
         {...rest}
       />
     )

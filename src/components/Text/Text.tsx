@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import textRules from './textRules'
-import textVariables from './textVariables'
+import textStyles from '../../themes/teams/components/Text/textStyles'
+import textVariables from '../../themes/teams/components/Text/textVariables'
 
 /**
  * A component containing text
@@ -41,6 +41,9 @@ class Text extends UIComponent<any, any> {
 
     /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
+
+    /** Truncates text as needed */
+    truncated: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -58,13 +61,14 @@ class Text extends UIComponent<any, any> {
     'important',
     'success',
     'timestamp',
+    'truncated',
   ]
 
-  static rules = textRules
+  static styles = textStyles
 
   static variables = textVariables
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>

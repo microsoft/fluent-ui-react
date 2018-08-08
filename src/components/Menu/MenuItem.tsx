@@ -1,12 +1,12 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as cx from 'classnames'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
-import menuItemRules from './menuItemRules'
-import menuVariables from './menuVariables'
+import menuItemStyles from '../../themes/teams/components/Menu/menuItemStyles'
+import menuVariables from '../../themes/teams/components/Menu/menuVariables'
+import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -17,7 +17,7 @@ class MenuItem extends UIComponent<any, any> {
 
   static create: Function
 
-  static rules = menuItemRules
+  static styles = menuItemStyles
 
   static propTypes = {
     /** A menu item can be active. */
@@ -47,20 +47,25 @@ class MenuItem extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    /** A menu can point to show its relationship to nearby content. */
-    pointing: PropTypes.bool,
+    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A vertical menu displays elements vertically. */
+    vertical: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'li',
+    accessibility: MenuItemBehavior,
   }
 
   static handledProps = [
+    'accessibility',
     'active',
     'as',
     'children',
@@ -68,24 +73,34 @@ class MenuItem extends UIComponent<any, any> {
     'content',
     'index',
     'onClick',
-    'pointing',
     'shape',
     'type',
+    'vertical',
   ]
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        className={classes.root}
+        onClick={this.handleClick}
+        {...accessibility.attributes.root}
+        {...rest}
+      >
         {childrenExist(children) ? (
           children
         ) : (
-          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          <a
+            className={cx('ui-menu__item__anchor', classes.anchor)}
+            {...accessibility.attributes.anchor}
+          >
+            {content}
+          </a>
         )}
       </ElementType>
     )

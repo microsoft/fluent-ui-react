@@ -121,7 +121,7 @@ Stateful components should be classes:
 ```js
 import { AutoControlledComponent as Component } from '../../lib'
 
-class Dropdown extends Component {
+class Dropdown extends React.Component {
   // ...
 }
 ```
@@ -168,7 +168,8 @@ class MyComponent {
 Every component must have fully described `propTypes`.
 
  ```js
- import React, { PropTypes } from 'react'
+ import * as React from 'react'
+ import PropTypes from 'prop-types'
 
  function MyComponent(props) {
    return <div className={props.position}>{props.children}</div>
@@ -239,7 +240,7 @@ Each group has an API pattern and prop util for building up the `className` and 
 Use [`classNameBuilders`][4] to extract the prop values and build up the `className`.  Grouped classes like `color` and `size` simply use the prop value as the `className`.
 
 ```js
-import cx from 'classnames'
+import * as cx from 'classnames'
 import { useKeyOnly, useValueAndKey, useKeyOrValueAndKey } from '../../lib'
 
 function Segment({ size, color, basic, floated, padded }) {
@@ -412,7 +413,7 @@ common.propKeyOrValueAndKeyToClassName()
 Every common test receives your component as its first argument.
 
 ```js
-import React from 'react'
+import * as React from 'react'
 import * as common from 'test/specs/commonTests'
 import Menu from 'src/collections/Menu/Menu'
 import MenuItem from 'src/collections/Menu/MenuItem'
@@ -483,7 +484,7 @@ function MyComponent(props) {
 If you're component requires event handlers, it is a stateful class component. Want to know [why][15]?
 
 ```js
-class MyComponent extends Component {
+class MyComponent extends React.Component {
   handleClick = (e) => {
     console.log('Clicked my component!')
   }

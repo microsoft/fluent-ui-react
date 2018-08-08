@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import imageRules from './imageRules'
-import imageVariables from './imageVariables'
+import imageStyles from '../../themes/teams/components/Image/imageStyles'
+import imageVariables from '../../themes/teams/components/Image/imageVariables'
+import { ImageBehavior } from '../../lib/accessibility'
 
 /**
  * An image is a graphic representation of something.
@@ -13,14 +14,15 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static handledProps = ['as', 'avatar', 'circular', 'className']
-
-  static rules = imageRules
+  static styles = imageStyles
 
   static variables = imageVariables
 
   static propTypes = {
-    /**  */
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** An element type to render as. */
     as: customPropTypes.as,
 
     /** An image may be formatted to appear inline with text as an avatar. */
@@ -29,15 +31,22 @@ class Image extends UIComponent<any, any> {
     /** An image can appear circular. */
     circular: PropTypes.bool,
 
+    /** Additional classes. */
     className: PropTypes.string,
+
+    /** An image can take up the width of its container. */
+    fluid: PropTypes.bool,
   }
+
+  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className', 'fluid']
 
   static defaultProps = {
     as: 'img',
+    accessibility: ImageBehavior,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    return <ElementType {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
 

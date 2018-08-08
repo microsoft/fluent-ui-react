@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import * as React from 'react'
 import { Icon, Popup } from 'semantic-ui-react'
 
-export default class ComponentPropName extends PureComponent<any, any> {
+export default class ComponentPropName extends React.PureComponent<any, any> {
   static propTypes = {
     name: PropTypes.string,
     required: PropTypes.bool,

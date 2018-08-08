@@ -1,11 +1,11 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.2.1",
+  "version": "0.2.5",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/es/index.d.ts",
   "files": [
     "src",
     "dist"
@@ -78,21 +78,19 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "fbjs": "^0.8.16",
     "fela": "^6.1.7",
     "fela-plugin-fallback-value": "^5.0.17",
     "fela-plugin-placeholder-prefixer": "^5.0.18",
     "fela-plugin-prefixer": "^5.0.18",
     "fela-plugin-rtl": "^1.0.6",
-    "hoist-non-react-statics": "^2.5.0",
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
-    "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react-fela": "^7.2.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",
+    "@types/gulp-load-plugins": "^0.0.31",
     "@types/jest": "^23.1.0",
     "@types/node": "^10.3.2",
     "@types/react": "^16.3.17",
@@ -108,6 +106,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "express": "^4.15.4",
+    "fbjs": "^0.8.17",
     "gh-pages": "^1.0.0",
     "gulp": "^4.0.0",
     "gulp-debug": "^4.0.0",
@@ -125,6 +124,7 @@
     "leven": "^2.1.0",
     "lint-staged": "^7.0.2",
     "merge2": "^1.2.2",
+    "normalize.css": "^8.0.0",
     "prettier": "1.12.0",
     "raw-loader": "^0.5.1",
     "react": "^16.0.0",

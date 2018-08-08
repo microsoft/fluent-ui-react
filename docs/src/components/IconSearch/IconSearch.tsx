@@ -1,7 +1,7 @@
 import copyToClipboard from 'copy-to-clipboard'
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import leven from 'leven'
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import { SUI } from 'src/lib'
 import { Form, Grid, Header, Icon, Message, Popup } from 'semantic-ui-react'
@@ -87,7 +87,7 @@ const similarityScore = (strA, strB) => {
 
   return _.flow(_.map(a => _.map(b => leven(a, b), bWords)), _.map(_.min), _.sum)(aWords)
 }
-export default class IconSearch extends Component<any, any> {
+export default class IconSearch extends React.Component<any, any> {
   state: any = { search: '', includeSimilar: true }
 
   componentDidMount() {

@@ -5,14 +5,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
+      title="Space"
+      description="An icon can have space before, after or on both sides. 'none' value removes the default space around the icon"
+      examplePath="components/Icon/Variations/IconExampleSpace"
+    />
+    <ComponentExample
       title="Size"
       description="An icon can vary in size."
       examplePath="components/Icon/Variations/IconExampleSize"
-    />
-    <ComponentExample
-      title="Colored"
-      description="An icon can be formatted with different colors."
-      examplePath="components/Icon/Variations/IconExampleColored"
     />
     <ComponentExample
       title="Bordered"

@@ -1,4 +1,4 @@
-import React, { isValidElement } from 'react'
+import * as React from 'react'
 import { consoleUtil } from 'test/utils'
 
 /**
@@ -15,29 +15,29 @@ export default Component => {
     })
 
     it(`creates a ${name} from a string`, () => {
-      isValidElement(Component.create('foo')).should.equal(true)
+      React.isValidElement(Component.create('foo')).should.equal(true)
     })
 
     it(`creates a ${name} from a number`, () => {
-      isValidElement(Component.create(123)).should.equal(true)
+      React.isValidElement(Component.create(123)).should.equal(true)
     })
 
     it(`creates a ${name} from a number 0`, () => {
-      isValidElement(Component.create(0)).should.equal(true)
+      React.isValidElement(Component.create(0)).should.equal(true)
     })
 
     it(`creates a ${name} from a props object`, () => {
-      isValidElement(Component.create({ 'data-foo': 'bar' })).should.equal(true)
+      React.isValidElement(Component.create({ 'data-foo': 'bar' })).should.equal(true)
     })
 
     it(`creates a ${name} from an array`, () => {
       // not all components support array shorthand, suppress warnings
       consoleUtil.disableOnce()
-      isValidElement(Component.create(['foo', 123, { 'data-foo': 'bar' }])).should.equal(true)
+      React.isValidElement(Component.create(['foo', 123, { 'data-foo': 'bar' }])).should.equal(true)
     })
 
     it(`creates a ${name} from an element`, () => {
-      isValidElement(Component.create(<div />)).should.equal(true)
+      React.isValidElement(Component.create(<div />)).should.equal(true)
     })
 
     it('returns null when passed null', () => {
