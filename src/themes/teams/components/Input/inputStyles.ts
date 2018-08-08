@@ -1,11 +1,16 @@
 const inputStyles = {
   root: ({ props, variables }) => {
+    const { fluid } = props
+
     return {
       display: 'inline-flex',
       position: 'relative',
       alignItems: 'center',
       justifyContent: 'flex-end',
       outline: 0,
+      ...(fluid && {
+        width: '100%',
+      }),
     }
   },
 
@@ -19,7 +24,7 @@ const inputStyles = {
       backgroundColor: variables.backgroundColor,
       height: variables.height,
       padding: variables.inputPadding,
-
+      width: '100%',
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,

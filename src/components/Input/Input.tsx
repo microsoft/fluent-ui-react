@@ -37,6 +37,9 @@ class Input extends UIComponent<any, any> {
     /** Additional classes. */
     className: PropTypes.string,
 
+    /** A button can take the width of its container. */
+    fluid: PropTypes.bool,
+
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
@@ -47,7 +50,7 @@ class Input extends UIComponent<any, any> {
     type: PropTypes.string,
   }
 
-  static handledProps = ['as', 'children', 'className', 'icon', 'input', 'type']
+  static handledProps = ['as', 'children', 'className', 'fluid', 'icon', 'input', 'type']
 
   static defaultProps = {
     as: 'div',
