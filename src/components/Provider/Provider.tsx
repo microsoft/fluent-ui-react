@@ -63,7 +63,7 @@ class Provider extends React.Component<any, any> {
         renderObject(staticStyle(siteVariables))
       } else {
         throw new Error(
-          `staticStyles array must contain CSS strings, style objects, or rule functions, got: ${typeof staticStyle}`,
+          `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
         )
       }
     })
