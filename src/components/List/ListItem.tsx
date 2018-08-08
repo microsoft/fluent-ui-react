@@ -6,6 +6,7 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout'
 import listVariables from './listVariables'
 import listItemRules from './listItemRules'
+import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -47,9 +48,13 @@ class ListItem extends UIComponent<any, any> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'className',
     'content',
@@ -70,6 +75,7 @@ class ListItem extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'li',
+    accessibility: ListItemBehavior,
 
     renderMainArea: (props, state, classes) => {
       const { renderHeaderArea, renderContentArea } = props
@@ -159,8 +165,8 @@ class ListItem extends UIComponent<any, any> {
     this.setState({ isHovering: false })
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { as, debug, endMedia, media, renderMainArea, selection } = this.props
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    const { as, debug, endMedia, media, renderMainArea } = this.props
     const { isHovering } = this.state
 
     const startArea = media
@@ -180,6 +186,7 @@ class ListItem extends UIComponent<any, any> {
         end={endArea}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        {...accessibility.attributes.root}
         {...rest}
       />
     )
