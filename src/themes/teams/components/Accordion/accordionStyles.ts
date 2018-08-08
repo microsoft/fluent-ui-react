@@ -1,4 +1,4 @@
-const accordionRules = {
+const accordionStyles = {
   root: () => ({
     verticalAlign: 'middle',
     display: 'flex',
@@ -6,4 +6,4 @@ const accordionRules = {
   }),
 }
 
-export default accordionRules
+export default accordionStyles

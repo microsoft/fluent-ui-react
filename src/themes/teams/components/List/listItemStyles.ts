@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
-import { debugRoot } from '../../../../styles/debugRules'
+import { debugRoot } from '../../../../styles/debugStyles'
 
-const listItemRules = {
+const listItemStyles = {
   root: ({ props, variables }) => {
     const { debugLayout, important, selection } = props
     return {
@@ -60,4 +60,4 @@ const listItemRules = {
   contentMedia: () => ({}),
 }
 
-export default listItemRules
+export default listItemStyles

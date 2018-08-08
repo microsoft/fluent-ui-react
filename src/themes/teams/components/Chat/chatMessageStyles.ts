@@ -1,4 +1,4 @@
-const chatMessageRules = {
+const chatMessageStyles = {
   root: ({ props, variables }) => ({
     position: 'relative',
     padding: '1rem',
@@ -18,4 +18,4 @@ const chatMessageRules = {
   }),
 }
 
-export default chatMessageRules
+export default chatMessageStyles

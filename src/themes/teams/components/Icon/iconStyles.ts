@@ -1,10 +1,10 @@
-import fontAwesomeIcons from './fontAwesomeIconRules'
+import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 import { IconVariables } from './iconVariables'
 import * as React from 'react'
 
-export interface IconRulesParams {
+export interface IconStylesParams {
   props: any
   variables: IconVariables
 }
@@ -95,11 +95,11 @@ const getPaddedStyle = isFontBased => ({
   height: '2em',
 })
 
-const iconRules = {
+const iconStyles = {
   root: ({
     props: { disabled, font, svg, name, size, bordered, circular, xSpacing },
     variables: v,
-  }: IconRulesParams) => {
+  }: IconStylesParams) => {
     const isFontBased = !svg
 
     return {
@@ -141,4 +141,4 @@ const iconRules = {
   }),
 }
 
-export default iconRules
+export default iconStyles

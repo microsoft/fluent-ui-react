@@ -26,7 +26,7 @@ export default {
       typeSecondaryBorderColor,
     } = variables
 
-    const rules = {
+    const styles = {
       height,
       minWidth,
       maxWidth,
@@ -66,13 +66,13 @@ export default {
 
     if (disabled) {
       return {
-        ...rules,
+        ...styles,
         ...disabledStyle,
       }
     }
 
     return {
-      ...rules,
+      ...styles,
 
       borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
       cursor: 'pointer',

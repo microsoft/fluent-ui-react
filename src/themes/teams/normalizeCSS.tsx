@@ -208,7 +208,7 @@ button::-moz-focus-inner,
 }
 
 /**
- * Restore the focus styles unset by the previous rule.
+ * Restore the focus styles unset by the previous style.
  */
 
 button:-moz-focusring,

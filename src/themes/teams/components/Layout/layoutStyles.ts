@@ -1,12 +1,12 @@
-import { debugRoot, debugArea, debugGap } from '../../../../styles/debugRules'
+import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
 
-const truncateRule = {
+const truncateStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 }
 
-const layoutRules = {
+const layoutStyles = {
   root: ({ props }) => {
     const {
       alignItems,
@@ -52,21 +52,21 @@ const layoutRules = {
 
   start: ({ props }) => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateStart && truncateRule),
+    ...(props.truncateStart && truncateStyle),
     ...props.startCSS,
   }),
 
   main: ({ props }) => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateMain && truncateRule),
+    ...(props.truncateMain && truncateStyle),
     ...props.mainCSS,
   }),
 
   end: ({ props }) => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateEnd && truncateRule),
+    ...(props.truncateEnd && truncateStyle),
     ...props.endCSS,
   }),
 }
 
-export default layoutRules
+export default layoutStyles

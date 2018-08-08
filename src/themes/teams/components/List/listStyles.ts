@@ -1,10 +1,10 @@
-import { debugRoot } from '../../../../styles/debugRules'
+import { debugRoot } from '../../../../styles/debugStyles'
 
 // ----------------------------------------
 // Root
 // ----------------------------------------
 
-const listRules = {
+const listStyles = {
   root: ({ props }) => {
     const { as, debugLayout } = props
     return {
@@ -19,4 +19,4 @@ const listRules = {
   },
 }
 
-export default listRules
+export default listStyles

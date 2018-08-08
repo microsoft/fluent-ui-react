@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import imageRules from '../../themes/teams/components/Image/imageRules'
+import imageStyles from '../../themes/teams/components/Image/imageStyles'
 import imageVariables from '../../themes/teams/components/Image/imageVariables'
 import { ImageBehavior } from '../../lib/accessibility'
 
@@ -14,7 +14,7 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static rules = imageRules
+  static styles = imageStyles
 
   static variables = imageVariables
 

@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import menuRules from '../../themes/teams/components/Menu/menuRules'
+import menuStyles from '../../themes/teams/components/Menu/menuStyles'
 import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
 
@@ -72,7 +72,7 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static autoControlledProps = ['activeIndex']
 
-  static rules = menuRules
+  static styles = menuStyles
 
   static Item = MenuItem
 

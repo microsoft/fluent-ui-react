@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import textRules from '../../themes/teams/components/Text/textRules'
+import textStyles from '../../themes/teams/components/Text/textStyles'
 import textVariables from '../../themes/teams/components/Text/textVariables'
 
 /**
@@ -64,7 +64,7 @@ class Text extends UIComponent<any, any> {
     'truncated',
   ]
 
-  static rules = textRules
+  static styles = textStyles
 
   static variables = textVariables
 

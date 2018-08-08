@@ -1,4 +1,4 @@
-const debugRule = ({ name, color, style }) => ({
+const debugStyle = ({ name, color, style }) => ({
   position: 'relative',
   border: `2px ${style} ${color}`,
   '::before': {
@@ -17,13 +17,13 @@ const debugRule = ({ name, color, style }) => ({
 })
 
 export const debugRoot = () => ({
-  ...debugRule({ name: 'LAYOUT', color: 'cornflowerblue', style: 'solid' }),
+  ...debugStyle({ name: 'LAYOUT', color: 'cornflowerblue', style: 'solid' }),
   padding: '8px',
   margin: '2px',
 })
 
 export const debugArea = () => ({
-  ...debugRule({ name: 'AREA', color: 'lightsalmon', style: 'dashed' }),
+  ...debugStyle({ name: 'AREA', color: 'lightsalmon', style: 'dashed' }),
   padding: '8px',
   margin: '2px',
 })

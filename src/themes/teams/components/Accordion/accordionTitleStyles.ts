@@ -1,4 +1,4 @@
-const accordionTitleRules = {
+const accordionTitleStyles = {
   root: () => ({
     display: 'inline-block',
     verticalAlign: 'middle',
@@ -7,4 +7,4 @@ const accordionTitleRules = {
   }),
 }
 
-export default accordionTitleRules
+export default accordionTitleStyles

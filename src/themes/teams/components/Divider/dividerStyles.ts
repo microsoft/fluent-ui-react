@@ -1,6 +1,6 @@
 import { childrenExist, pxToRem } from '../../../../lib'
 
-const dividerBorderRule = (size, color) => ({
+const dividerBorderStyle = (size, color) => ({
   height: `${size + 1}px`,
   background: color,
 })
@@ -8,12 +8,12 @@ const dividerBorderRule = (size, color) => ({
 const beforeAndAfter = (size, type, variables) => ({
   content: '""',
   flex: 1,
-  ...dividerBorderRule(size, variables.defaultBackgroundColor), // the default border rule
+  ...dividerBorderStyle(size, variables.defaultBackgroundColor), // the default border style
   ...(type === 'primary' && {
-    ...dividerBorderRule(size, variables.typePrimaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
   }),
   ...(type === 'secondary' && {
-    ...dividerBorderRule(size, variables.typeSecondaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
   }),
 })
 
@@ -51,12 +51,12 @@ export default {
             }),
           }
         : {
-            ...dividerBorderRule(size, variables.typeSecondaryBackgroundColor), // the default border rule
+            ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor), // the default border style
             ...(type === 'primary' && {
-              ...dividerBorderRule(size, variables.typePrimaryBackgroundColor),
+              ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
             }),
             ...(type === 'secondary' && {
-              ...dividerBorderRule(size, variables.defaultBackgroundColor),
+              ...dividerBorderStyle(size, variables.defaultBackgroundColor),
             }),
           }),
     }

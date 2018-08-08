@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import headerRules from '../../themes/teams/components/Header/headerRules'
+import headerStyles from '../../themes/teams/components/Header/headerStyles'
 
 /**
  * A header provides a short summary of content
@@ -42,7 +42,7 @@ class Header extends UIComponent<any, any> {
 
   static handledProps = ['as', 'children', 'className', 'content', 'description', 'textAlign']
 
-  static rules = headerRules
+  static styles = headerStyles
 
   static Description = HeaderDescription
 

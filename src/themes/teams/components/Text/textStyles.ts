@@ -2,7 +2,7 @@ import { Sizes } from '../../../../lib/enums'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
 
-export interface TextRulesParams {
+export interface TextStylesParams {
   props: any
   variables: ITextVariables
 }
@@ -11,7 +11,7 @@ export default {
   root: ({
     props: { atMention, disabled, error, size, important, success, timestamp, truncated },
     variables: v,
-  }: TextRulesParams) => {
+  }: TextStylesParams) => {
     return {
       ...(truncated && truncateStyle),
       ...(atMention && { color: v.atMentionTextColor }),

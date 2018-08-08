@@ -10,7 +10,7 @@ import {
   partitionHTMLProps,
   UIComponent,
 } from '../../lib'
-import inputRules from '../../themes/teams/components/Input/inputRules'
+import inputStyles from '../../themes/teams/components/Input/inputStyles'
 import inputVariables from '../../themes/teams/components/Input/inputVariables'
 import Icon from '../Icon'
 import callable from '../../lib/callable'
@@ -24,7 +24,7 @@ class Input extends UIComponent<any, any> {
 
   static displayName = 'Input'
 
-  static rules = inputRules
+  static styles = inputStyles
   static variables = inputVariables
 
   static propTypes = {

@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import headerDescriptionRules from '../../themes/teams/components/Header/headerDescriptionRules'
+import headerDescriptionStyles from '../../themes/teams/components/Header/headerDescriptionStyles'
 
 /**
  * Headers may contain description.
@@ -35,7 +35,7 @@ class HeaderDescription extends UIComponent<any, any> {
 
   static handledProps = ['as', 'children', 'className', 'content']
 
-  static rules = headerDescriptionRules
+  static styles = headerDescriptionStyles
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

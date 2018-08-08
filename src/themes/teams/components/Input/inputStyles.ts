@@ -1,4 +1,4 @@
-const inputRules = {
+const inputStyles = {
   root: ({ props, variables }) => {
     return {
       display: 'inline-flex',
@@ -36,4 +36,4 @@ const inputRules = {
   },
 }
 
-export default inputRules
+export default inputStyles

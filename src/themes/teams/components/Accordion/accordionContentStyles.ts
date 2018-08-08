@@ -1,4 +1,4 @@
-const accordionContentRules = {
+const accordionContentStyles = {
   root: ({ props }) => ({
     display: 'none',
     verticalAlign: 'middle',
@@ -6,4 +6,4 @@ const accordionContentRules = {
   }),
 }
 
-export default accordionContentRules
+export default accordionContentStyles

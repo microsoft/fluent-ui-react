@@ -1,4 +1,4 @@
-const chatRules = {
+const chatStyles = {
   root: () => ({
     display: 'flex',
     flexDirection: 'column',
@@ -8,4 +8,4 @@ const chatRules = {
   }),
 }
 
-export default chatRules
+export default chatStyles
