@@ -6,6 +6,7 @@ import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
 import listVariables from './listVariables'
+import { ListBehavior } from '../../lib/accessibility'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -41,13 +42,18 @@ class List extends UIComponent<any, any> {
 
     /** Variables */
     variables: PropTypes.object,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: ListBehavior,
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'children',
     'className',
@@ -64,11 +70,11 @@ class List extends UIComponent<any, any> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

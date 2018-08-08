@@ -18,6 +18,7 @@ export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray12 = blackRgbaFormat(0.05)
 export const gray14 = '#FAF9F8'
+export const fontBlack = '#252424'
 
 export const white = '#FFF'
 
