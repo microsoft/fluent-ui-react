@@ -10,7 +10,6 @@ const inputRules = {
       outline: 0,
       ...(fluid && {
         width: '100%',
-        maxWidth: '100%',
       }),
     }
   },
@@ -25,8 +24,7 @@ const inputRules = {
       backgroundColor: variables.backgroundColor,
       height: variables.height,
       padding: variables.inputPadding,
-      width: variables.inputWidth,
-      maxWidth: variables.inputMaxWidth,
+      width: '100%',
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,
