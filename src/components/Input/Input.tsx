@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
+  callable,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -13,7 +14,6 @@ import {
 import inputStyles from '../../themes/teams/components/Input/inputStyles'
 import inputVariables from '../../themes/teams/components/Input/inputVariables'
 import Icon from '../Icon'
-import callable from '../../lib/callable'
 
 /**
  * An Input
