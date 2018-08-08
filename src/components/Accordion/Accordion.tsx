@@ -191,7 +191,7 @@ class Accordion extends AutoControlledComponent<any, any> {
             generateKey: true,
             defaultProps: {
               active,
-              index,
+              titleIndex: index,
               contentReturnHandler: this.contentReturnHandler,
             },
           },
