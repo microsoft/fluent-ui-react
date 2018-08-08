@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import chatRules from './chatRules'
+import chatRules from '../../themes/teams/components/Chat/chatRules'
 import ChatMessage from './ChatMessage'
 
 class Chat extends UIComponent<any, any> {

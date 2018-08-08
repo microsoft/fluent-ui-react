@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import headerRules from './headerRules'
+import headerRules from '../../themes/teams/components/Header/headerRules'
 
 /**
  * A header provides a short summary of content

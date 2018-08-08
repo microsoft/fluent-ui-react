@@ -1,4 +1,4 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../../../lib'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,

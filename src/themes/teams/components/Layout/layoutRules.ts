@@ -1,4 +1,4 @@
-import { debugRoot, debugArea, debugGap } from '../../styles/debugRules'
+import { debugRoot, debugArea, debugGap } from '../../../../styles/debugRules'
 
 const truncateRule = {
   overflow: 'hidden',

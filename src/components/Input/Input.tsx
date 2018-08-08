@@ -10,8 +10,8 @@ import {
   partitionHTMLProps,
   UIComponent,
 } from '../../lib'
-import inputRules from './inputRules'
-import inputVariables from './inputVariables'
+import inputRules from '../../themes/teams/components/Input/inputRules'
+import inputVariables from '../../themes/teams/components/Input/inputVariables'
 import Icon from '../Icon'
 import callable from '../../lib/callable'
 

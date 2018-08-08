@@ -20,10 +20,10 @@ import {
   textX3LineHeight,
   textX4FontSize,
   textX4LineHeight,
-} from '../../themes/teams/siteVariables'
+} from '../../siteVariables'
 
-import { Sizes } from '../../lib/enums'
-import { truncateStyle } from '../../styles/customCSS'
+import { Sizes } from '../../../../lib/enums'
+import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
 
 export interface TextRulesParams {

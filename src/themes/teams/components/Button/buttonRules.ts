@@ -1,5 +1,5 @@
-import { pxToRem } from '../../lib'
-import { disabledStyle, truncateStyle } from '../../styles/customCSS'
+import { pxToRem } from '../../../../lib'
+import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 import { IButtonVariables } from './buttonVariables'
 
 export default {

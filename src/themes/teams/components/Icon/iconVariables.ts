@@ -1,4 +1,4 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../../../lib'
 
 export interface IconVariables {
   color: string

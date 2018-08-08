@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionContentRules from './accordionContentRules'
-import accordionContentVariables from './accordionContentVariables'
+import accordionContentRules from '../../themes/teams/components/Accordion/accordionContentRules'
+import accordionContentVariables from '../../themes/teams/components/Accordion/accordionContentVariables'
 
 /**
  * A standard AccordionContent.

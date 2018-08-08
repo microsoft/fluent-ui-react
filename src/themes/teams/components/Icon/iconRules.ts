@@ -1,6 +1,6 @@
 import fontAwesomeIcons from './fontAwesomeIconRules'
-import { disabledStyle, fittedStyle } from '../../styles/customCSS'
-import { IconXSpacing } from './Icon'
+import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
+import { IconXSpacing } from '../../../../components/Icon/Icon'
 import { IconVariables } from './iconVariables'
 import * as React from 'react'
 

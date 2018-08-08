@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionTitleRules from './accordionTitleRules'
+import accordionTitleRules from '../../themes/teams/components/Accordion/accordionTitleRules'
 
 /**
  * A standard AccordionTitle.

@@ -4,8 +4,8 @@ import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
-import listVariables from './listVariables'
-import listItemRules from './listItemRules'
+import listVariables from '../../themes/teams/components/List/listVariables'
+import listItemRules from '../../themes/teams/components/List/listItemRules'
 import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {

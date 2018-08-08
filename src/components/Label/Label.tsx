@@ -5,8 +5,8 @@ import * as _ from 'lodash'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Icon } from '../..'
-import labelRules from './labelRules'
-import labelVariables from './labelVariables'
+import labelRules from '../../themes/teams/components/Label/labelRules'
+import labelVariables from '../../themes/teams/components/Label/labelVariables'
 import callable from '../../lib/callable'
 
 /**

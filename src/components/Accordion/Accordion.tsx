@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
-import accordionRules from './accordionRules'
+import accordionRules from '../../themes/teams/components/Accordion/accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'

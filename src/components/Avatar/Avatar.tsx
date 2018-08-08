@@ -3,8 +3,8 @@ import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import avatarRules from './avatarRules'
-import avatarVariables from './avatarVariables'
+import avatarRules from '../../themes/teams/components/Avatar/avatarRules'
+import avatarVariables from '../../themes/teams/components/Avatar/avatarVariables'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.

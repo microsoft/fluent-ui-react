@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import imageRules from './imageRules'
-import imageVariables from './imageVariables'
+import imageRules from '../../themes/teams/components/Image/imageRules'
+import imageVariables from '../../themes/teams/components/Image/imageVariables'
 import { ImageBehavior } from '../../lib/accessibility'
 
 /**

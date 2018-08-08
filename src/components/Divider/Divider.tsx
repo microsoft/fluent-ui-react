@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import dividerRules from './dividerRules'
-import dividerVariables from './dividerVariables'
+import dividerRules from '../../themes/teams/components/Divider/dividerRules'
+import dividerVariables from '../../themes/teams/components/Divider/dividerVariables'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 

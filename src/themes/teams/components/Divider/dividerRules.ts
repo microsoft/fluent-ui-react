@@ -1,4 +1,4 @@
-import { childrenExist, pxToRem } from '../../lib'
+import { childrenExist, pxToRem } from '../../../../lib'
 
 const dividerBorderRule = (size, color) => ({
   height: `${size + 1}px`,

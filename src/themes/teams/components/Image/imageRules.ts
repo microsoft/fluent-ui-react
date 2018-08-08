@@ -1,4 +1,4 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../../../lib'
 
 export default {
   root: ({ props, variables }) => ({

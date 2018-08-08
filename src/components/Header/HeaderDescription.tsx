@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import headerDescriptionRules from './headerDescriptionRules'
+import headerDescriptionRules from '../../themes/teams/components/Header/headerDescriptionRules'
 
 /**
  * Headers may contain description.

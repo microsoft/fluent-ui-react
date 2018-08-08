@@ -4,8 +4,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import menuItemRules from './menuItemRules'
-import menuVariables from './menuVariables'
+import menuItemRules from '../../themes/teams/components/Menu/menuItemRules'
+import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {

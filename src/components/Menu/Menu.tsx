@@ -4,8 +4,8 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import menuRules from './menuRules'
-import menuVariables from './menuVariables'
+import menuRules from '../../themes/teams/components/Menu/menuRules'
+import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
 
 class Menu extends AutoControlledComponent<any, any> {

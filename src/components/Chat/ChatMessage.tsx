@@ -3,8 +3,8 @@ import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import chatMessageRules from './chatMessageRules'
-import chatMessageVariables from './chatMessageVariables'
+import chatMessageRules from '../../themes/teams/components/Chat/chatMessageRules'
+import chatMessageVariables from '../../themes/teams/components/Chat/chatMessageVariables'
 
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'

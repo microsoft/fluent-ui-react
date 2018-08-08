@@ -1,4 +1,4 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../../../lib'
 
 const underlinedItem = (color: string) => ({
   borderBottom: `solid 4px ${color}`,

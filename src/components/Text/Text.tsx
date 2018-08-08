@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import textRules from './textRules'
-import textVariables from './textVariables'
+import textRules from '../../themes/teams/components/Text/textRules'
+import textVariables from '../../themes/teams/components/Text/textVariables'
 
 /**
  * A component containing text

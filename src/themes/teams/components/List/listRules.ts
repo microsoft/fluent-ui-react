@@ -1,4 +1,4 @@
-import { debugRoot } from '../../styles/debugRules'
+import { debugRoot } from '../../../../styles/debugRules'
 
 // ----------------------------------------
 // Root
