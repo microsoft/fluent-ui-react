@@ -116,8 +116,10 @@ class Provider extends React.Component<any, any> {
       theme.componentVariables = componentVariables
     }
 
+    // rehydration disabled to avoid leaking styles between renderers
+    // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
-      <RendererProvider renderer={renderer}>
+      <RendererProvider renderer={renderer} {...{ rehydrate: false }}>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </RendererProvider>
     )
