@@ -1,16 +1,15 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as _ from 'lodash'
 
 import {
-  callable,
   childrenExist,
   createShorthandFactory,
   customPropTypes,
+  pxToRem,
   UIComponent,
 } from '../../lib'
 
-import { Icon } from '../..'
+import { Layout } from '../..'
 import labelStyles from '../../themes/teams/components/Label/labelStyles'
 import labelVariables from '../../themes/teams/components/Label/labelVariables'
 
@@ -40,93 +39,38 @@ class Label extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Label can have an icon. */
-    icon: customPropTypes.some([PropTypes.string, PropTypes.object]),
+    start: PropTypes.any,
 
-    /** An icon label can format an Icon to appear before or after the text in the label */
-    iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /**
-     * Function called when the icon is clicked.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onIconClick: PropTypes.func,
+    end: PropTypes.any,
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'icon',
-    'iconPosition',
-    'onIconClick',
-  ]
+  static handledProps = ['as', 'children', 'circular', 'className', 'content', 'end', 'start']
 
   static defaultProps = {
-    as: 'label',
+    as: 'span',
   }
 
   static styles = labelStyles
 
   static variables = labelVariables
 
-  handleIconOverrides = predefinedProps => {
-    const { onIconClick, iconPosition, content, variables: labelPropVariables } = this.props
-    const { onClick, variables, xSpacing } = predefinedProps
-
-    const iconVariables = callable(variables)()
-    const labelVariables = labelPropVariables
-      ? callable(labelPropVariables)()
-      : callable(Label.variables)()
-
-    return {
-      onClick: e => {
-        _.invoke(predefinedProps, 'onClick', e)
-        _.invoke(this.props, 'onIconClick', e, this.props)
-      },
-      ...((onClick || onIconClick) && { tabIndex: '0' }),
-      ...((!iconVariables || !iconVariables.color) && {
-        variables: { color: labelVariables.color },
-      }),
-      ...(!xSpacing && {
-        xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
-      }),
-    }
-  }
-
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content, icon, iconPosition } = this.props
-    const getContent = (): React.ReactNode => {
-      const iconAtEnd = iconPosition === 'end'
-      const iconAtStart = !iconAtEnd
-
-      const iconElement = Icon.create(
-        {
-          className: classes.icon,
-          ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
-        },
-        {
-          generateKey: false,
-          overrideProps: this.handleIconOverrides,
-        },
-      )
-
-      return (
-        <React.Fragment>
-          {iconAtStart && icon && iconElement}
-          {content}
-          {iconAtEnd && icon && iconElement}
-        </React.Fragment>
-      )
-    }
+    const { children, content, start, end } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : getContent()}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <Layout
+            main={content}
+            start={start}
+            end={end}
+            gap={pxToRem(3)}
+            startCSS={Label.styles.start()}
+            endCSS={Label.styles.end()}
+          />
+        )}
       </ElementType>
     )
   }

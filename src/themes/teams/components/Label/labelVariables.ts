@@ -5,5 +5,7 @@ export default () => {
   vars.circularRadius = pxToRem(9999)
   vars.padding = `0 ${pxToRem(4)} 0 ${pxToRem(4)}`
   vars.color = 'rgba(0, 0, 0, 0.6)'
+  vars.startPaddingLeft = '0px'
+  vars.endPaddingRight = '0px'
   return vars
 }
