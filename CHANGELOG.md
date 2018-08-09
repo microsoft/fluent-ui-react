@@ -23,6 +23,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Menu `onClick` handler moved from `li` to `a` (accessibility) @miroslavstastny ([#61](https://github.com/stardust-ui/react/pull/61))
 
 
+### Features
+- Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
+
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
 ## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.5...v0.2.6)
