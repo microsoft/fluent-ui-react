@@ -53,6 +53,8 @@ const layoutStyles = {
   start: ({ props }) => ({
     ...(props.debug && debugArea()),
     ...(props.truncateStart && truncateStyle),
+    display: 'inline-flex',
+    alignItems: 'center',
     ...props.startCSS,
   }),
 
@@ -65,6 +67,8 @@ const layoutStyles = {
   end: ({ props }) => ({
     ...(props.debug && debugArea()),
     ...(props.truncateEnd && truncateStyle),
+    display: 'inline-flex',
+    alignItems: 'center',
     ...props.endCSS,
   }),
 }

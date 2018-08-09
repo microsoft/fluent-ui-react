@@ -62,14 +62,7 @@ class Label extends UIComponent<any, any> {
         {childrenExist(children) ? (
           children
         ) : (
-          <Layout
-            main={content}
-            start={start}
-            end={end}
-            gap={pxToRem(3)}
-            startCSS={Label.styles.start()}
-            endCSS={Label.styles.end()}
-          />
+          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
         )}
       </ElementType>
     )
