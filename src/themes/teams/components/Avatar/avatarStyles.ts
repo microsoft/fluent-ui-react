@@ -56,9 +56,7 @@ export default {
     height: pxToRem(getAvatarDimension(size)),
     width: pxToRem(getAvatarDimension(size)),
   }),
-  imageAvatar: ({ props: { size } }) => ({
-    width: pxToRem(getAvatarDimension(size)),
-    height: pxToRem(getAvatarDimension(size)),
+  imageAvatar: () => ({
     verticalAlign: 'top !important',
   }),
   avatarNameContainer: ({ props: { size } }) => ({
