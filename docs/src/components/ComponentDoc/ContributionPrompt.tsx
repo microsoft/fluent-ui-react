@@ -4,14 +4,23 @@ import * as React from 'react'
 import { repoURL } from 'docs/src/utils'
 import { Message, Icon } from 'semantic-ui-react'
 
+const wrapStyle = { wordBreak: 'break-word' }
+
 const ContributionPrompt: any = ({ children }) => (
-  <Message info icon>
+  <Message info icon style={wrapStyle}>
     <Icon name="bullhorn" />
     <Message.Content>
-      <div>{children}</div>
+      {children && <div>{children}</div>}
       <p>
-        If there's no <a href={`${repoURL}/pulls`}>pull request</a> open for this, you should{' '}
-        <a href={`${repoURL}/blob/master/.github/CONTRIBUTING.md`}>contribute</a>!
+        If there's no{' '}
+        <a href={`${repoURL}/pulls`}>
+          pull request <Icon fitted size="small" name="external" />
+        </a>{' '}
+        open for this, you should{' '}
+        <a href={`${repoURL}/blob/master/.github/CONTRIBUTING.md`}>
+          contribute <Icon fitted size="small" name="external" />
+        </a>{' '}
+        one!
       </p>
     </Message.Content>
   </Message>

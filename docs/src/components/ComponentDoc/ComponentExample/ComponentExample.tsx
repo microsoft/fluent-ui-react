@@ -275,8 +275,8 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
     return (
       <ContributionPrompt>
-        Looks like we're missing <code title={missingExamplePath}>{missingExamplePath}</code>{' '}
-        example.
+        Looks like we're need an example file at:
+        <p>{missingExamplePath}</p>
       </ContributionPrompt>
     )
   }
