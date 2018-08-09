@@ -40,6 +40,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `fluid` variant and size variables to Image @kuzhelov ([#54](https://github.com/stardust-ui/react/pull/54))
 - Add SVG icons support @kuzhelov ([#50](https://github.com/stardust-ui/react/pull/50))
 - Add `fluid` prop and variation and width variables to Input @alinais ([#59](https://github.com/stardust-ui/react/pull/59))
+- Add Button `active` prop @gopalgoel19 ([#42](https://github.com/stardust-ui/react/pull/42))
   
 <!--------------------------------[ v0.2.5 ]------------------------------- -->
 ## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)

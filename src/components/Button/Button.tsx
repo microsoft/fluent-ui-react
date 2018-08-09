@@ -23,6 +23,9 @@ class Button extends UIComponent<any, any> {
   public static variables = buttonVariables
 
   public static propTypes = {
+    /** A button can show it is currently the active user selection. */
+    active: PropTypes.bool,
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
@@ -66,6 +69,7 @@ class Button extends UIComponent<any, any> {
 
   static handledProps = [
     'accessibility',
+    'active',
     'as',
     'children',
     'circular',
@@ -85,7 +89,7 @@ class Button extends UIComponent<any, any> {
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
-    const { children, content, disabled, icon, iconPosition, type } = this.props
+    const { active, children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
     const getContent = (): React.ReactNode => {
@@ -114,6 +118,7 @@ class Button extends UIComponent<any, any> {
       <ElementType
         className={classes.root}
         disabled={disabled}
+        active={active}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...rest}
