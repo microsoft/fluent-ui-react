@@ -1,6 +1,8 @@
 import { pxToRem } from '../../../../lib'
 
 export interface IconVariables {
+  [key: string]: string | number
+
   color: string
   backgroundColor: string
   borderColor: string

@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionTitleStyles from '../../themes/teams/components/Accordion/accordionTitleStyles'
 
 /**
  * A standard AccordionTitle.
@@ -44,8 +43,6 @@ class AccordionTitle extends UIComponent<any, any> {
   }
 
   static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
-
-  static styles = accordionTitleStyles
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

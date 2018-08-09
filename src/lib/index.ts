@@ -7,6 +7,7 @@ export { default as UIComponent } from './UIComponent'
 export { debug, makeDebugger } from './debug'
 export { default as eventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
+export { default as toCompactArray } from './toCompactArray'
 
 export * from './factories'
 export { default as callable } from './callable'

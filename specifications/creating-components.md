@@ -56,7 +56,7 @@ const Image = (props) => {
 }
 
 export default createComponent(Image, {
-  rules: imageStyles,
+  styles: imageStyles,
   variables: imageVariables,
 })
 ```
@@ -73,7 +73,7 @@ class Image extends React.Component {
         handledProps={[ ... ]}
         state={StateMachine}
         props={this.props}
-        rules={...}
+        styles={...}
         variables={...}
         render={({ ElementType, rest, classes }) => (
           <ElementType {...rest} className={classes.root} />

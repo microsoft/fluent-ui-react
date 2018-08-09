@@ -1,5 +1,9 @@
 import * as _ from 'lodash'
 import {
+  ComponentVariablesPrepared,
+  ComponentVariablesInput,
+  IComponentPartStylesInput,
+  IComponentPartStylesPrepared,
   ISiteVariables,
   IThemeComponentStylesInput,
   IThemeComponentStylesPrepared,
@@ -11,11 +15,63 @@ import {
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 
+// ----------------------------------------
+// Component level merge functions
+// ----------------------------------------
+
+/**
+ * Merges a single component's styles (keyed by component part) with another component's styles.
+ */
+export const mergeComponentStyles = (
+  target: IComponentPartStylesInput,
+  ...sources: IComponentPartStylesInput[]
+): IComponentPartStylesPrepared => {
+  const initial: IComponentPartStylesPrepared = _.mapValues(target, partStyle => {
+    return callable(partStyle)
+  })
+
+  return sources.reduce<IComponentPartStylesPrepared>((partStylesPrepared, stylesByPart) => {
+    _.forEach(stylesByPart, (partStyle, partName) => {
+      // Break references to avoid an infinite loop.
+      // We are replacing functions with a new ones that calls the originals.
+      const originalTarget = partStylesPrepared[partName]
+      const originalSource = partStyle
+
+      partStylesPrepared[partName] = styleParam => {
+        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+      }
+    })
+
+    return partStylesPrepared
+  }, initial)
+}
+
+/**
+ * Merges a single component's variables with another component's variables.
+ */
+export const mergeComponentVariables = (
+  target: ComponentVariablesInput,
+  ...sources: ComponentVariablesInput[]
+): ComponentVariablesPrepared => {
+  const initial = siteVariables => callable(target)(siteVariables)
+
+  return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
+    return siteVariables => ({
+      ...acc(siteVariables),
+      ...callable(next)(siteVariables),
+    })
+  }, initial)
+}
+
+// ----------------------------------------
+// Theme level merge functions
+// ----------------------------------------
+
 /**
  * Site variables can safely be merged at each Provider in the tree.
  * They are flat objects and do not depend on render-time values, such as props.
  */
-const mergeSiteVariables = (
+export const mergeSiteVariables = (
   target: ISiteVariables,
   ...sources: ISiteVariables[]
 ): ISiteVariables => {
@@ -29,7 +85,7 @@ const mergeSiteVariables = (
  * Therefore, componentVariables must be resolved by the component at render time.
  * We instead pass down call stack of component variable functions to be resolved later.
  */
-const mergeComponentVariables = (
+export const mergeThemeVariables = (
   target: IThemeComponentVariablesInput,
   ...sources: IThemeComponentVariablesInput[]
 ): IThemeComponentVariablesPrepared => {
@@ -55,11 +111,11 @@ const mergeComponentVariables = (
 }
 
 /**
- * See mergeComponentVariables() description.
+ * See mergeThemeVariables() description.
  * Component styles adhere to the same pattern as component variables, except
  *   that they return style objects.
  */
-const mergeComponentStyles = (
+export const mergeThemeStyles = (
   target: IThemeComponentStylesInput,
   ...sources: IThemeComponentStylesInput[]
 ): IThemeComponentStylesPrepared => {
@@ -67,27 +123,19 @@ const mergeComponentStyles = (
     return _.mapValues(stylesByPart, callable)
   })
 
-  return sources.reduce<IThemeComponentStylesPrepared>((acc, next) => {
+  return sources.reduce<IThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
-      acc[displayName] = acc[displayName] || {}
-
-      _.forEach(stylesByPart, (partStyle, partName) => {
-        // Break references to avoid an infinite loop.
-        // We are replacing functions with a new ones that calls the originals.
-        const originalTarget = acc[displayName][partName]
-        const originalSource = next[displayName][partName]
-
-        acc[displayName][partName] = styleParam => {
-          return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
-        }
-      })
+      themeComponentStyles[displayName] = mergeComponentStyles(
+        themeComponentStyles[displayName],
+        stylesByPart,
+      )
     })
 
-    return acc
+    return themeComponentStyles
   }, initial)
 }
 
-const mergeRTL = (target, ...sources) => {
+export const mergeRTL = (target, ...sources) => {
   return !!sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
   }, target)
@@ -105,12 +153,9 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
 
     acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
 
-    acc.componentVariables = mergeComponentVariables(
-      acc.componentVariables,
-      next.componentVariables,
-    )
+    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
 
-    acc.componentStyles = mergeComponentStyles(acc.componentStyles, next.componentStyles)
+    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)

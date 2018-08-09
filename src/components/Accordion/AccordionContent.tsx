@@ -2,8 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionContentStyles from '../../themes/teams/components/Accordion/accordionContentStyles'
-import accordionContentVariables from '../../themes/teams/components/Accordion/accordionContentVariables'
 
 /**
  * A standard AccordionContent.
@@ -41,10 +39,6 @@ class AccordionContent extends UIComponent<any, any> {
   }
 
   static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
-
-  static styles = accordionContentStyles
-
-  static variables = accordionContentVariables
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

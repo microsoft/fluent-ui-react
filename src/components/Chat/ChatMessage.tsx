@@ -3,9 +3,6 @@ import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import chatMessageStyles from '../../themes/teams/components/Chat/chatMessageStyles'
-import chatMessageVariables from '../../themes/teams/components/Chat/chatMessageVariables'
-
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'
 
@@ -34,10 +31,6 @@ class ChatMessage extends UIComponent<any, any> {
   static defaultProps = {
     as: 'li',
   }
-
-  static styles = chatMessageStyles
-
-  static variables = chatMessageVariables
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

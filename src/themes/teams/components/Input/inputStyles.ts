@@ -1,5 +1,7 @@
-const inputStyles = {
-  root: ({ props, variables }) => {
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+
+const inputStyles: IComponentPartStylesInput = {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { fluid } = props
 
     return {
@@ -14,7 +16,7 @@ const inputStyles = {
     }
   },
 
-  input: ({ props, variables }) => {
+  input: ({ props, variables }): ICSSInJSStyle => {
     return {
       outline: 0,
       border: 0,
@@ -32,7 +34,7 @@ const inputStyles = {
     }
   },
 
-  icon: ({ props, variables }) => {
+  icon: ({ props, variables }): ICSSInJSStyle => {
     return {
       position: variables.iconPosition,
       right: variables.iconRight,
