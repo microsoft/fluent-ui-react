@@ -1,6 +1,8 @@
 import React from 'react'
 import { ItemLayout, Image } from '@stardust-ui/react'
 
+const ellipsis = <span>&hellip;</span>
+
 const ItemLayoutExampleTruncateShorthand = ({ knobs }) => (
   <div style={{ width: knobs.width }}>
     <ItemLayout
@@ -10,6 +12,7 @@ const ItemLayoutExampleTruncateShorthand = ({ knobs }) => (
       headerMedia="5:22:40 PM"
       content="The GB pixel is down, navigate the virtual interface!"
       contentMedia="!!"
+      endMedia={ellipsis}
       truncateHeader={knobs.truncateHeader}
       truncateContent={knobs.truncateContent}
     />
