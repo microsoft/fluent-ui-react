@@ -2,12 +2,17 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  callable,
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+} from '../../lib'
 
 import { Icon } from '../..'
-import labelRules from './labelRules'
-import labelVariables from './labelVariables'
-import callable from '../../lib/callable'
+import labelStyles from '../../themes/teams/components/Label/labelStyles'
+import labelVariables from '../../themes/teams/components/Label/labelVariables'
 
 /**
  * A label displays content classification
@@ -65,7 +70,7 @@ class Label extends UIComponent<any, any> {
     as: 'label',
   }
 
-  static rules = labelRules
+  static styles = labelStyles
 
   static variables = labelVariables
 

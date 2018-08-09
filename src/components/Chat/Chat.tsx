@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import chatRules from './chatRules'
+import chatStyles from '../../themes/teams/components/Chat/chatStyles'
 import ChatMessage from './ChatMessage'
 
 class Chat extends UIComponent<any, any> {
@@ -27,7 +27,7 @@ class Chat extends UIComponent<any, any> {
 
   static defaultProps = { as: 'ul' }
 
-  static rules = chatRules
+  static styles = chatStyles
 
   static Message = ChatMessage
 

@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import buttonRules from './buttonRules'
-import buttonVariables from './buttonVariables'
+import buttonStyles from '../../themes/teams/components/Button/buttonStyles'
+import buttonVariables from '../../themes/teams/components/Button/buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
@@ -18,7 +18,7 @@ class Button extends UIComponent<any, any> {
 
   public static className = 'ui-button'
 
-  public static rules = buttonRules
+  public static styles = buttonStyles
 
   public static variables = buttonVariables
 

@@ -44,6 +44,11 @@ const Variations = () => (
       description="A menu can underline the active element."
       examplePath="components/Menu/Variations/MenuExampleUnderlinedPrimary"
     />
+    <ComponentExample
+      title="Fluid"
+      description="A vertical menu may take the size of its container."
+      examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
+    />
   </ExampleSection>
 )
 

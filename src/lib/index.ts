@@ -9,9 +9,11 @@ export { default as eventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 
 export * from './factories'
+export { default as callable } from './callable'
 export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
+export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, IRenderResultConfig } from './renderComponent'
 export {
   useKeyOnly,
