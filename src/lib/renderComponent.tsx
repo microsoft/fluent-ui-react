@@ -77,21 +77,20 @@ const renderComponent = <P extends {}>(
         const rest = getUnhandledProps({ handledProps }, props)
 
         // Resolve variables for this component, allow props.variables to override
-        const variables: ComponentVariablesObject = mergeComponentVariables(
+        const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
         )(siteVariables)
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const styles = mergeComponentStyles(componentStyles[displayName], props.styles)
+        const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
+        const styleParam: ComponentStyleFunctionParam = { props, variables: resolvedVariables }
+        const resolvedStyles = Object.keys(mergedStyles).reduce(
+          (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
+          {},
+        )
 
-        const styleParam: ComponentStyleFunctionParam = {
-          props,
-          variables,
-          rtl,
-        }
-
-        const classes: IComponentPartClasses = getClasses(renderer, styles, styleParam)
+        const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
         const accessibility = getAccessibility(props, state)
@@ -100,8 +99,8 @@ const renderComponent = <P extends {}>(
           ElementType,
           rest,
           classes,
-          variables,
-          styles,
+          variables: resolvedVariables,
+          styles: resolvedStyles,
           accessibility,
         }
 

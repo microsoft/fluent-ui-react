@@ -81,7 +81,6 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 export interface ComponentStyleFunctionParam {
   props: IProps
   variables: ComponentVariablesObject
-  rtl: boolean
 }
 
 export type ComponentPartStyleFunction = (styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle
