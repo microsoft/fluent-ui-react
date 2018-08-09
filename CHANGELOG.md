@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.2.6 ]------------------------------- -->
+## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.5...v0.2.6)
+
 ### Fixes
 
 - Remove unused dependencies and move development dependencies to devDependencies @levithomason ([#51](https://github.com/stardust-ui/react/pull/51))
