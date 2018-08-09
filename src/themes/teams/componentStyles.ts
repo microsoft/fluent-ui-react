@@ -14,7 +14,7 @@ export { default as Divider } from './components/Divider/dividerStyles'
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
-// export { default as Icon } from './components/Icon/iconStyles'
+export { default as Icon } from './components/Icon/iconStyles'
 
 export { default as Image } from './components/Image/imageStyles'
 
