@@ -10,8 +10,17 @@ import { ButtonBehavior } from '../../lib/accessibility'
 
 /**
  * A button.
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * @accessibility
+ * > Button
+ * Default behaviour name: ButtonBehavior
+ * Default behaviour description:
+ * - If element is not button, then "role='button'" is applied.
+ *
+ *  > Disabled button
+ * - if button is disabled, then have to has attribute 'disabled'. In order to be properly narrated.
+ *
+ * > Icon button
+ * - if button has only icon, then the text for reader have to be specified, as aria-label, aria-labelledby or title
  */
 class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
