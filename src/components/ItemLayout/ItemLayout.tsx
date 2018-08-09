@@ -82,9 +82,9 @@ class ItemLayout extends UIComponent<any, any> {
     'renderContentArea',
     'renderHeaderArea',
     'renderMainArea',
+    'rootCSS',
     'truncateContent',
     'truncateHeader',
-    'rootCSS',
   ]
 
   static defaultProps = {
