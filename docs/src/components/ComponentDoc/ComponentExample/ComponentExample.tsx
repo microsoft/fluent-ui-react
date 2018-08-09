@@ -535,7 +535,9 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         </Divider>
         <Provider.Consumer
           render={({ siteVariables }) => {
-            const variablesFilename = `./${displayName}/${_.camelCase(displayName)}Variables.ts`
+            const variablesFilename = `./components/${displayName}/${_.camelCase(
+              displayName,
+            )}Variables.ts`
             const hasVariablesFile = _.includes(variablesContext.keys(), variablesFilename)
 
             if (!hasVariablesFile) {
