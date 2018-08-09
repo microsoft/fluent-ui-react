@@ -1,4 +1,4 @@
-import copyToClipboard from 'copy-to-clipboard'
+import * as copyToClipboard from 'copy-to-clipboard'
 import * as _ from 'lodash/fp'
 import leven from 'leven'
 import * as React from 'react'

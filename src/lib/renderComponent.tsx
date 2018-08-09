@@ -25,7 +25,7 @@ export interface IRenderConfig {
   handledProps: string[]
   props: { [key: string]: any }
   state: { [key: string]: any }
-  rules?: { [key: string]: Function }
+  styles?: { [key: string]: Function }
   variables?: (siteVariables: object) => object
 }
 
@@ -47,7 +47,7 @@ const renderComponent = <P extends {}>(
     displayName,
     handledProps,
     props,
-    rules,
+    styles,
     state,
     variables,
   } = config
@@ -66,7 +66,7 @@ const renderComponent = <P extends {}>(
         const mergedVariables = () =>
           Object.assign({}, variablesFromFile, variablesFromTheme, variablesFromProp)
 
-        const classes = getClasses(renderer, props, rules, mergedVariables, theme)
+        const classes = getClasses(renderer, props, styles, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
         const accessibility = getAccessibility(props, state)

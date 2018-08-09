@@ -21,7 +21,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Name"
-      description="An Avatar can have initials shown from the name prop, if no image is provided"
+      description="An Avatar can have initials shown from the name prop, if no image is provided."
       examplePath="components/Avatar/Variations/AvatarExampleName"
     />
     <ComponentExample

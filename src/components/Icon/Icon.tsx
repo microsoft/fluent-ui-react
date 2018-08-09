@@ -2,8 +2,8 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 
-import iconRules from './iconRules'
-import iconVariables from './iconVariables'
+import iconStyles from '../../themes/teams/components/Icon/iconStyles'
+import iconVariables from '../../themes/teams/components/Icon/iconVariables'
 import svgIcons from './svgIcons'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -77,7 +77,7 @@ class Icon extends UIComponent<any, any> {
     size: 'normal',
   }
 
-  static rules = iconRules
+  static styles = iconStyles
 
   renderFontIcon(ElementType, classes, rest): React.ReactNode {
     return <ElementType className={classes.root} {...rest} />

@@ -9,7 +9,7 @@ if (isBrowser() && process.env.NODE_ENV !== 'production' && process.env.NODE_ENV
   // We try/catch here as Safari throws on localStorage access in private mode or with cookies disabled.
   let DEBUG
   try {
-    DEBUG = window.localStorage.debug
+    DEBUG = (window.localStorage as any).debug
   } catch (e) {
     console.error('Semantic-UI-React could not enable debug.')
     console.error(e)

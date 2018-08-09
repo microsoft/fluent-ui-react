@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
+  callable,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -10,10 +11,9 @@ import {
   partitionHTMLProps,
   UIComponent,
 } from '../../lib'
-import inputRules from './inputRules'
-import inputVariables from './inputVariables'
+import inputStyles from '../../themes/teams/components/Input/inputStyles'
+import inputVariables from '../../themes/teams/components/Input/inputVariables'
 import Icon from '../Icon'
-import callable from '../../lib/callable'
 
 /**
  * An Input
@@ -24,7 +24,7 @@ class Input extends UIComponent<any, any> {
 
   static displayName = 'Input'
 
-  static rules = inputRules
+  static styles = inputStyles
   static variables = inputVariables
 
   static propTypes = {
@@ -37,6 +37,9 @@ class Input extends UIComponent<any, any> {
     /** Additional classes. */
     className: PropTypes.string,
 
+    /** A button can take the width of its container. */
+    fluid: PropTypes.bool,
+
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
@@ -47,7 +50,7 @@ class Input extends UIComponent<any, any> {
     type: PropTypes.string,
   }
 
-  static handledProps = ['as', 'children', 'className', 'icon', 'input', 'type']
+  static handledProps = ['as', 'children', 'className', 'fluid', 'icon', 'input', 'type']
 
   static defaultProps = {
     as: 'div',
