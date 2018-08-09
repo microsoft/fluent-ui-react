@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Pills Vertical"
-      description="A vertical variant of Pills menu"
+      description="A vertical variant of Pills menu."
       examplePath="components/Menu/Variations/MenuExamplePillsVertical"
     />
     <ComponentExample
@@ -21,7 +21,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Pills Primary Vertical"
-      description="A vertical variant of Pills Primary menu"
+      description="A vertical variant of Pills Primary menu."
       examplePath="components/Menu/Variations/MenuExamplePillsPrimaryVertical"
     />
     <ComponentExample
@@ -43,6 +43,11 @@ const Variations = () => (
       title="Underlined primary"
       description="A menu can underline the active element."
       examplePath="components/Menu/Variations/MenuExampleUnderlinedPrimary"
+    />
+    <ComponentExample
+      title="Fluid"
+      description="A vertical menu may take the size of its container."
+      examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
     />
   </ExampleSection>
 )

@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
-import listItemRules from './listItemRules'
+import listItemStyles from '../../themes/teams/components/List/listItemStyles'
 import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
@@ -12,7 +12,7 @@ class ListItem extends UIComponent<any, any> {
 
   static className = 'ui-list__item'
 
-  static rules = listItemRules
+  static styles = listItemStyles
 
   static propTypes = {
     as: customPropTypes.as,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
-const ListExample = () => (
+const ListExampleMedia = () => (
   <List>
     <List.Item
       media={<Image src="public/images/avatar/small/matt.jpg" avatar />}
@@ -24,4 +24,4 @@ const ListExample = () => (
   </List>
 )
 
-export default ListExample
+export default ListExampleMedia

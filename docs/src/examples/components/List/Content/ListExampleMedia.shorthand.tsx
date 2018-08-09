@@ -25,6 +25,6 @@ const items = [
   },
 ]
 
-const ListExample = () => <List items={items} />
+const ListExampleMediaShorthand = () => <List items={items} />
 
-export default ListExample
+export default ListExampleMediaShorthand
