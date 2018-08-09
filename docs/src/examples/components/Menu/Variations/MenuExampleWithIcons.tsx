@@ -1,7 +1,7 @@
 import React from 'react'
 import { Menu, Icon } from '@stardust-ui/react'
 
-class MenuExampleWithIconsVertical extends React.Component {
+class MenuExampleWithIcons extends React.Component {
   state = { activeItem: 'a' }
 
   handleItemClick = activeItem => () => {
@@ -29,4 +29,4 @@ class MenuExampleWithIconsVertical extends React.Component {
   }
 }
 
-export default MenuExampleWithIconsVertical
+export default MenuExampleWithIcons

@@ -6,14 +6,19 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }) => {
-    const { fluid, type, shape, vertical } = props
+    const { icons, fluid, type, shape, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
         ...(!fluid && { width: pxToRem(200) }),
+        ...(icons && {
+          display: 'inline-block',
+          width: 'auto',
+        }),
       }),
       ...(shape !== 'pills' &&
+        !icons &&
         shape !== 'underlined' && {
           ...solidBorder(variables.defaultBorderColor),
           ...(type === 'primary' && {
