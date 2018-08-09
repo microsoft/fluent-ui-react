@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Pills Vertical"
-      description="A vertical variant of Pills menu"
+      description="A vertical variant of Pills menu."
       examplePath="components/Menu/Variations/MenuExamplePillsVertical"
     />
     <ComponentExample
@@ -21,7 +21,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Pills Primary Vertical"
-      description="A vertical variant of Pills Primary menu"
+      description="A vertical variant of Pills Primary menu."
       examplePath="components/Menu/Variations/MenuExamplePillsPrimaryVertical"
     />
     <ComponentExample

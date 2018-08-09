@@ -11,17 +11,17 @@ const States = () => (
     />
     <ComponentExample
       title="Error"
-      description="The error state for a Text component"
+      description="The error state for a Text component."
       examplePath="components/Text/States/TextExampleError"
     />
     <ComponentExample
       title="Success"
-      description="The success state for a Text component"
+      description="The success state for a Text component."
       examplePath="components/Text/States/TextExampleSuccess"
     />
     <ComponentExample
       title="Truncated"
-      description="Truncated text in a Text component"
+      description="Truncated text in a Text component."
       examplePath="components/Text/States/TextExampleTruncated"
     />
   </ExampleSection>

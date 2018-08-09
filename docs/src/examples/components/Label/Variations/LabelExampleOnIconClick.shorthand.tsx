@@ -1,31 +1,29 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-class LabelExampleIconShorthand extends React.Component<{}, { display: string }> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      display: 'inline-block',
-    }
+class LabelExampleOnIconClickShorthand extends React.Component {
+  state = { hidden: false }
+
+  hide = () => {
+    this.setState({ hidden: true })
+    setTimeout(() => this.setState({ hidden: false }), 2000)
   }
 
-  public hide = () => {
-    this.setState({ display: 'none' })
-  }
+  render() {
+    const { hidden } = this.state
 
-  public render() {
-    const { display } = this.state
+    if (hidden) return 'Returning in 2 seconds...'
+
     return (
       <Label
         circular
-        style={{ display }}
+        content="Removable label"
         icon="close"
         iconPosition="end"
         onIconClick={this.hide}
-        content="Removable label"
       />
     )
   }
 }
 
-export default LabelExampleIconShorthand
+export default LabelExampleOnIconClickShorthand
