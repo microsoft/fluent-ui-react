@@ -80,17 +80,13 @@ class MenuItem extends UIComponent<any, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        onClick={this.handleClick}
-        {...accessibility.attributes.root}
-        {...rest}
-      >
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         {childrenExist(children) ? (
           children
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
+            onClick={this.handleClick}
             {...accessibility.attributes.anchor}
           >
             {content}

@@ -3,7 +3,7 @@ import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IMenuVariables } from './menuVariables'
 
 const underlinedItem = (color): ICSSInJSStyle => ({
-  borderBottom: `solid 4px ${color}`,
+  borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
@@ -41,8 +41,6 @@ const menuItemStyles = {
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
-      padding: `${pxToRem(14)} ${pxToRem(18)}`,
-      cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
@@ -67,12 +65,6 @@ const menuItemStyles = {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
-          }),
-        }),
-        ...(shape === 'underlined' && {
-          ...underlinedItem(variables.defaultActiveBackgroundColor),
-          ...(type === 'primary' && {
-            ...underlinedItem(variables.typePrimaryActiveBorderColor),
           }),
         }),
       },
@@ -118,8 +110,37 @@ const menuItemStyles = {
             }),
           },
         }),
+      }),
+    }
+  },
+
+  anchor: ({ props, variables }): ICSSInJSStyle => {
+    const { active, shape, type } = props
+
+    return {
+      color: 'inherit',
+      display: 'block',
+      ...(shape === 'underlined'
+        ? { padding: `0 0 ${pxToRem(8)} 0` }
+        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+      cursor: 'pointer',
+
+      ':hover': {
+        color: 'inherit',
         ...(shape === 'underlined' && {
+          paddingBottom: `${pxToRem(4)}`,
+          ...underlinedItem(variables.defaultActiveBackgroundColor),
+          ...(type === 'primary' && {
+            ...underlinedItem(variables.typePrimaryActiveBorderColor),
+          }),
+        }),
+      },
+
+      ...(active &&
+        shape === 'underlined' && {
           color: variables.defaultColor,
+          paddingBottom: `${pxToRem(4)}`,
+          ':hover': {},
           ...underlinedItem(variables.defaultActiveColor),
           ...(type === 'primary'
             ? {
@@ -130,15 +151,8 @@ const menuItemStyles = {
                 fontWeight: 700,
               }),
         }),
-      }),
     }
   },
-  anchor: (): ICSSInJSStyle => ({
-    color: 'inherit',
-    ':hover': {
-      color: 'inherit',
-    },
-  }),
 }
 
 export default menuItemStyles

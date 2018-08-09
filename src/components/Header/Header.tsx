@@ -33,13 +33,24 @@ class Header extends UIComponent<any, any> {
 
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+
+    /** Custom values for styling variables. */
+    variables: PropTypes.object,
   }
 
   static defaultProps = {
     as: 'h1',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'description', 'textAlign']
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'content',
+    'description',
+    'textAlign',
+    'variables',
+  ]
 
   static Description = HeaderDescription
 

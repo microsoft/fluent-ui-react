@@ -2,10 +2,10 @@ import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 
 export default {
-  root: (): ICSSInJSStyle => ({
+  root: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     fontSize: pxToRem(22),
-    color: 'rgba(0,0,0,.6)',
+    color: v.color,
     fontWeight: 400,
   }),
 }

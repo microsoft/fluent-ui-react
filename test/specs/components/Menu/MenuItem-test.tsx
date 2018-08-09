@@ -5,7 +5,11 @@ import { getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 
 describe('MenuItem', () => {
-  isConformant(MenuItem)
+  isConformant(MenuItem, {
+    eventTargets: {
+      onClick: 'a',
+    },
+  })
   handlesAccessibility(MenuItem, { defaultRootRole: 'presentation' })
   handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 

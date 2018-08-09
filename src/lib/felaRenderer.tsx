@@ -1,4 +1,5 @@
 import { createRenderer } from 'fela'
+import felaSanitizeCss from './felaSanitizeCssPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
@@ -8,8 +9,15 @@ import { IRenderer } from '../../types/theme'
 
 const createRendererConfig = (options: any = {}) => ({
   plugins: [
+    // is necessary to prevent accidental style typos
+    // from breaking ALL the styles on the page
+    felaSanitizeCss({
+      skip: ['content'],
+    }),
+
     felaPluginPlaceholderPrefixer(),
     felaPluginPrefixer(),
+
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
