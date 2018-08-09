@@ -3,7 +3,7 @@ import { debugRoot } from '../../styles/debugRules'
 
 const itemLayoutRules = {
   root: ({ props, variables }) => {
-    const { debugLayout, important, selection } = props
+    const { debugLayout, important } = props
     return {
       ...(debugLayout && debugRoot()),
       gridTemplateRows: `minmax(${variables.itemHeight}, max-content)`,
@@ -12,16 +12,6 @@ const itemLayoutRules = {
 
       ...(important && {
         fontWeight: 'bold',
-      }),
-
-      ...(selection && {
-        position: 'relative',
-
-        ':hover': {
-          background: 'rgba(98, 100, 167, .8)',
-          color: '#fff',
-          cursor: 'pointer',
-        },
       }),
     }
   },
@@ -58,6 +48,7 @@ const itemLayoutRules = {
     lineHeight: variables.contentLineHeight,
   }),
   contentMedia: () => ({}),
+  endMedia: () => ({}),
 }
 
 export default itemLayoutRules

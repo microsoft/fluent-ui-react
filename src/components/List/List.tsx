@@ -5,7 +5,6 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listRules from './listRules'
-import listVariables from './listVariables'
 import { ListBehavior } from '../../lib/accessibility'
 
 class List extends UIComponent<any, any> {
@@ -14,8 +13,6 @@ class List extends UIComponent<any, any> {
   static className = 'ui-list'
 
   static rules = listRules
-
-  static variables = listVariables
 
   static propTypes = {
     as: customPropTypes.as,

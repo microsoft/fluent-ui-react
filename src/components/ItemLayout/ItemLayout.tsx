@@ -43,8 +43,21 @@ class ItemLayout extends UIComponent<any, any> {
     renderHeaderArea: PropTypes.any,
     renderMainArea: PropTypes.any,
 
-    /** An item can indicate that it can be selected. */
-    selection: PropTypes.bool,
+    /** Styled applied to the root element of the rendered component. */
+    rootCSS: PropTypes.object,
+    /** Styled applied to the media element of the rendered component. */
+    mediaCSS: PropTypes.object,
+    /** Styled applied to the header element of the rendered component. */
+    headerCSS: PropTypes.object,
+    /** Styled applied to the header media element of the rendered component. */
+    headerMediaCSS: PropTypes.object,
+    /** Styled applied to the content element of the rendered component. */
+    contentCSS: PropTypes.object,
+    /** Styled applied to the content element of the rendered component. */
+    contentMediaCSS: PropTypes.object,
+    /** Styled applied to the end media element of the rendered component. */
+    endMediaCSS: PropTypes.object,
+
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
   }
@@ -53,19 +66,25 @@ class ItemLayout extends UIComponent<any, any> {
     'as',
     'className',
     'content',
+    'contentCSS',
     'contentMedia',
+    'contentMediaCSS',
     'debug',
     'endMedia',
+    'endMediaCSS',
     'header',
+    'headerCSS',
     'headerMedia',
+    'headerMediaCSS',
     'important',
     'media',
+    'mediaCSS',
     'renderContentArea',
     'renderHeaderArea',
     'renderMainArea',
-    'selection',
     'truncateContent',
     'truncateHeader',
+    'rootCSS',
   ]
 
   static defaultProps = {
@@ -91,13 +110,10 @@ class ItemLayout extends UIComponent<any, any> {
     },
 
     renderHeaderArea: (props, state, classes) => {
-      const { debug, header, headerMedia, truncateHeader, selection } = props
-      const { isHovering } = state
+      const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
 
       const mergedClasses = cx('ui-item-layout__header', classes.header)
       const mediaClasses = cx('ui-item-layout__headerMedia', classes.headerMedia)
-      const headerMediaStyle =
-        headerMedia && selection && isHovering ? { color: 'inherit' } : undefined
 
       return !header && !headerMedia ? null : (
         <Layout
@@ -106,11 +122,11 @@ class ItemLayout extends UIComponent<any, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          rootCSS={selection && isHovering ? { color: 'inherit' } : undefined}
           main={header}
+          rootCSS={headerCSS}
           end={
             headerMedia && (
-              <span style={headerMediaStyle} className={mediaClasses}>
+              <span style={headerMediaCSS} className={mediaClasses}>
                 {headerMedia}
               </span>
             )
@@ -120,10 +136,10 @@ class ItemLayout extends UIComponent<any, any> {
     },
 
     renderContentArea: (props, state, classes) => {
-      const { debug, content, contentMedia, truncateContent, selection } = props
-      const { isHovering } = state
+      const { debug, content, contentMedia, truncateContent, contentCSS, contentMediaCSS } = props
 
       const mergedClasses = cx('ui-item-layout__content', classes.content)
+      const mediaClasses = cx('ui-item-layout__contentMedia', classes.contentMedia)
 
       return !content && !contentMedia ? null : (
         <Layout
@@ -132,45 +148,63 @@ class ItemLayout extends UIComponent<any, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateContent}
-          rootCSS={selection && isHovering ? { color: 'inherit' } : undefined}
+          rootCSS={contentCSS}
           main={content}
-          end={!isHovering && contentMedia}
+          end={
+            contentMedia && (
+              <span style={contentMediaCSS} className={mediaClasses}>
+                {contentMedia}
+              </span>
+            )
+          }
         />
       )
     },
   }
 
-  state: any = {}
-
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
   renderComponent({ ElementType, classes, rest }) {
-    const { as, debug, endMedia, media, renderMainArea } = this.props
-    const { isHovering } = this.state
+    const {
+      as,
+      debug,
+      endMedia,
+      media,
+      renderMainArea,
+      rootCSS,
+      mediaCSS,
+      endMediaCSS,
+    } = this.props
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
-    const endArea = isHovering && endMedia
+    const endArea = endMedia
+
+    const mergedMediaClasses = cx('ui-item-layout__media', classes.media)
+    const mergedEndMediaClasses = cx('ui-item-layout__endMedia', classes.endMedia)
 
     return (
       <Layout
         as={as}
+        rootCSS={rootCSS}
         alignItems="center"
         gap={pxToRem(8)}
         className={classes.root}
         debug={debug}
         reducing
-        start={startArea}
+        start={
+          startArea && (
+            <span style={mediaCSS} className={mergedMediaClasses}>
+              {startArea}
+            </span>
+          )
+        }
         main={mainArea}
-        end={endArea}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
+        end={
+          endArea && (
+            <span style={endMediaCSS} className={mergedEndMediaClasses}>
+              {endArea}
+            </span>
+          )
+        }
         {...rest}
       />
     )
