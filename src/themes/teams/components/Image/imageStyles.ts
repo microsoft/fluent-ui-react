@@ -4,11 +4,11 @@ export default {
   root: ({ props, variables }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
-    width: (props.fluid && '100%') || variables.width,
+    width: variables.width || (props.fluid && '100%'),
     height: variables.height || 'auto',
     ...(props.circular && { borderRadius: pxToRem(9999) }),
     ...(props.avatar && {
-      width: (props.fluid && '100%') || variables.avatarSize,
+      width: variables.avatarSize || (props.fluid && '100%') || pxToRem(32),
       borderRadius: variables.avatarRadius,
     }),
   }),
