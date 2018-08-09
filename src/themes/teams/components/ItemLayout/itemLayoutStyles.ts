@@ -1,7 +1,7 @@
-import { pxToRem } from '../../lib'
-import { debugRoot } from '../../styles/debugRules'
+import { pxToRem } from '../../../../lib'
+import { debugRoot } from '../../../../styles/debugStyles'
 
-const itemLayoutRules = {
+const itemLayoutStyles = {
   root: ({ props, variables }) => {
     const { debugLayout, important } = props
     return {
@@ -51,4 +51,4 @@ const itemLayoutRules = {
   endMedia: () => ({}),
 }
 
-export default itemLayoutRules
+export default itemLayoutStyles

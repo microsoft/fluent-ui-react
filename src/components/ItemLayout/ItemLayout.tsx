@@ -4,8 +4,8 @@ import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
-import itemLayoutRules from './itemLayoutRules'
-import itemLayoutVariables from './itemLayoutVariables'
+import itemLayoutStyles from '../../themes/teams/components/ItemLayout/itemLayoutStyles'
+import itemLayoutVariables from '../../themes/teams/components/ItemLayout/itemLayoutVariables'
 
 class ItemLayout extends UIComponent<any, any> {
   static create: Function
@@ -14,7 +14,7 @@ class ItemLayout extends UIComponent<any, any> {
 
   static className = 'ui-itemlayout'
 
-  static rules = itemLayoutRules
+  static styles = itemLayoutStyles
 
   static variables = itemLayoutVariables
 
