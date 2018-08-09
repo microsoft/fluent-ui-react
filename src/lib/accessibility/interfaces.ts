@@ -102,17 +102,31 @@ export interface IAriaWidgetAttributes {
   'aria-valuetext'?: string
 }
 
+import { KeyCodes } from '../KeyCodes'
+
 export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   role?: AriaRole
   tabIndex?: string
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
+export type AccessibilityEventHandlers = { [partName: string]: IEventHandlers }
+export type ActionDefinition = { [partName: string]: IActionHandler[] }
+
+export interface IActionHandler {
+  eventName: string
+  keyCodes?: KeyCodes[]
+  eventDecorator?: Function
+}
+
+export interface IEventHandlers {
+  handlers: Function[]
+  target: HTMLElement
+}
 
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  actionsDefinition?: ActionDefinition
 }
 
 export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)

@@ -78,6 +78,66 @@ class MenuItem extends UIComponent<any, any> {
     'vertical',
   ]
 
+  setAccessibility = acc => (this.currentAccessibility = acc)
+  setElementRef = ref => (this.elementRef = ref)
+
+  componentDidMount() {
+    if (this.accEventHandlers.length) {
+      this.attachEventHandler(this.accEventHandlers)
+    } else {
+      this.getAndAttachEventHandlers()
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.accEventHandlers.length) {
+      this.detachEventHandler(this.accEventHandlers)
+    }
+  }
+
+  actions = {
+    moveLeft: this.onArrowLeft,
+    moveUp: this.onArrowUp,
+    moveRight: this.onArrowRight,
+    moveDown: this.onArrowDown,
+    triggerClick: this.triggerClick,
+    moveFisrst: this.onHome,
+    moveLast: this.onEnd,
+    closeSubmenu: this.onEsc,
+  }
+
+  onArrowLeft(event: Event) {
+    console.log(event, 'on arrow left')
+  }
+
+  onArrowUp(event: Event) {
+    console.log(event, 'on arrow up')
+  }
+
+  onArrowRight(event: Event) {
+    console.log(event, 'on arrow right')
+  }
+
+  onArrowDown(event: Event) {
+    console.log(event, 'on arrow right')
+  }
+
+  onEsc(event: Event) {
+    console.log(event, 'on arrow Esc')
+  }
+
+  triggerClick(event: Event) {
+    console.log(event, 'on space, enter, or click')
+  }
+
+  onHome(event: Event) {
+    console.log(event, 'on Home')
+  }
+
+  onEnd(event: Event) {
+    console.log(event, 'on End')
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -85,12 +145,15 @@ class MenuItem extends UIComponent<any, any> {
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content } = this.props
 
+    this.setAccessibility(accessibility)
+
     return (
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
-        {...accessibility.attributes.root}
+        {...accessibility.attributes.anchor}
         {...rest}
+        ref={this.setElementRef}
       >
         {childrenExist(children) ? (
           children
