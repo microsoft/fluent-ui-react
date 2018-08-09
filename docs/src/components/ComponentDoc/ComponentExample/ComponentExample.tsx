@@ -15,7 +15,6 @@ import {
   repoURL,
   scrollToAnchor,
   variablesContext,
-  truncateStyle,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { pxToRem, doesNodeContainClick } from 'src/lib'
@@ -283,10 +282,8 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
     return (
       <ContributionPrompt>
-        <div style={truncateStyle}>
-          Looks like we're missing <code title={missingExamplePath}>{missingExamplePath}</code>{' '}
-          example.
-        </div>
+        Looks like we're need an example file at:
+        <p>{missingExamplePath}</p>
       </ContributionPrompt>
     )
   }
