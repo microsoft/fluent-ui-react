@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+
+- Add selection property to child items in ListExampleSelection so that styles and roles are applied properly @jurokapsiar ([#66](https://github.com/stardust-ui/react/pull/66))
+
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
 ## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.5...v0.2.6)
