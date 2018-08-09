@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 const underlinedItem = (color: string) => ({
-  borderBottom: `solid 4px ${color}`,
+  borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
@@ -117,14 +117,14 @@ export default {
       color: 'inherit',
       display: 'block',
       ...(shape === 'underlined'
-        ? { padding: '0 0 8px 0' }
+        ? { padding: `0 0 ${pxToRem(8)} 0` }
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
 
       ':hover': {
         color: 'inherit',
         ...(shape === 'underlined' && {
-          paddingBottom: '4px',
+          paddingBottom: `${pxToRem(4)}`,
           ...underlinedItem(variables.defaultActiveBackgroundColor),
           ...(type === 'primary' && {
             ...underlinedItem(variables.typePrimaryActiveBorderColor),
@@ -135,7 +135,7 @@ export default {
       ...(active &&
         shape === 'underlined' && {
           color: variables.defaultColor,
-          paddingBottom: '4px',
+          paddingBottom: `${pxToRem(4)}`,
           ':hover': {},
           ...underlinedItem(variables.defaultActiveColor),
           ...(type === 'primary'
