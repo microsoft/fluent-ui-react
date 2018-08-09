@@ -175,7 +175,7 @@ class Sidebar extends React.Component<any, any> {
             </small>
           </strong>
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/" activeClassName="active">
+        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
         </Menu.Item>
         <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
