@@ -13,6 +13,7 @@ export default siteVars => {
   // Header
   // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
   vars.headerLineHeight = siteVars.lineHeightSmall
+  vars.headerFontSize = siteVars.fontSizeBase
 
   // Header Media
   vars.headerMediaColor = siteVars.mutedTextColor

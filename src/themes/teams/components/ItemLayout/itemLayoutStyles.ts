@@ -33,6 +33,7 @@ const itemLayoutStyles = {
   },
 
   header: ({ props, variables }) => ({
+    fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
 
