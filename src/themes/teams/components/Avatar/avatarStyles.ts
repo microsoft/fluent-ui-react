@@ -48,7 +48,7 @@ const getAvatarFontSize = (size: number) => {
   return getAvatarDimension(size) / 2
 }
 
-const s: IComponentPartStylesInput = {
+const avatarStyles: IComponentPartStylesInput = {
   root: ({ props: { size } }): ICSSInJSStyle => ({
     backgroundColor: 'inherit',
     display: 'inline-block',
@@ -83,4 +83,5 @@ const s: IComponentPartStylesInput = {
     display: 'table-cell',
   }),
 }
-export default s
+
+export default avatarStyles
