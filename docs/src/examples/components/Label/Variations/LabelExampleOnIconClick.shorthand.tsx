@@ -17,10 +17,10 @@ class LabelExampleOnIconClickShorthand extends React.Component {
     return (
       <Label
         circular
+        content="Removable label"
         icon="close"
         iconPosition="end"
         onIconClick={this.hide}
-        content="Removable label"
       />
     )
   }
