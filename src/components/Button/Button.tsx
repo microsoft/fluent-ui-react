@@ -3,10 +3,13 @@ import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import buttonStyles from '../../themes/teams/components/Button/buttonStyles'
-import buttonVariables from '../../themes/teams/components/Button/buttonVariables'
+import buttonVariables, {
+  IButtonVariables,
+} from '../../themes/teams/components/Button/buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A button.
@@ -20,7 +23,7 @@ class Button extends UIComponent<any, any> {
 
   public static styles = buttonStyles
 
-  public static variables = buttonVariables
+  public static variables: (siteVars) => IButtonVariables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -60,7 +63,7 @@ class Button extends UIComponent<any, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -81,7 +84,7 @@ class Button extends UIComponent<any, any> {
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior,
+    accessibility: ButtonBehavior as Accessibility,
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {

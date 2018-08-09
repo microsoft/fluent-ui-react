@@ -6,6 +6,7 @@ import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import listStyles from '../../themes/teams/components/List/listStyles'
 import { ListBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -40,13 +41,13 @@ class List extends UIComponent<any, any> {
     /** Variables */
     variables: PropTypes.object,
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior,
+    accessibility: ListBehavior as Accessibility,
   }
 
   static handledProps = [

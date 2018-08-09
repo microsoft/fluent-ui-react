@@ -5,6 +5,7 @@ import { customPropTypes, UIComponent } from '../../lib'
 import imageStyles from '../../themes/teams/components/Image/imageStyles'
 import imageVariables from '../../themes/teams/components/Image/imageVariables'
 import { ImageBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * An image is a graphic representation of something.
@@ -19,7 +20,7 @@ class Image extends UIComponent<any, any> {
   static variables = imageVariables
 
   static propTypes = {
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** An element type to render as. */
@@ -42,7 +43,7 @@ class Image extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'img',
-    accessibility: ImageBehavior,
+    accessibility: ImageBehavior as Accessibility,
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

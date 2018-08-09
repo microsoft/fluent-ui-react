@@ -70,9 +70,11 @@ export interface ComponentStyleFunctionParam {
   rtl: boolean
 }
 
-export type ComponentPartStyleFunction = (styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle
+export type ComponentPartStyleFunction =
+  | ((styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle)
+  | undefined
 
-export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
+export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle | undefined
 
 export interface IComponentPartStylesInput {
   [part: string]: ComponentPartStyle
