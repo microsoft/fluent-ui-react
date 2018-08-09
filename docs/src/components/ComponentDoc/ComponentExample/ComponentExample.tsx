@@ -4,7 +4,7 @@ import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
-import copyToClipboard from 'copy-to-clipboard'
+import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
 
