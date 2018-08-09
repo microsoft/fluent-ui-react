@@ -27,7 +27,11 @@ describe('Menu', () => {
       const items = getItems()
       const menuItems = mountWithProvider(<Menu items={items} />).find('MenuItem')
 
-      menuItems.first().simulate('click')
+      menuItems
+        .first()
+        .find('a')
+        .first()
+        .simulate('click')
       expect(items[0].onClick).toHaveBeenCalled()
     })
 
@@ -48,7 +52,11 @@ describe('Menu', () => {
         const wrapper = mountWithProvider(<Menu items={getItems()} />)
         const menuItems = wrapper.find('MenuItem')
 
-        menuItems.at(1).simulate('click')
+        menuItems
+          .at(1)
+          .find('a')
+          .first()
+          .simulate('click')
 
         const updatedItems = wrapper.find('MenuItem')
 
