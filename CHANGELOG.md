@@ -20,7 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 
 - Add selection property to child items in ListExampleSelection so that styles and roles are applied properly @jurokapsiar ([#70](https://github.com/stardust-ui/react/pull/70))
-- Menu `onClick` handler moved from `li` to `a` (accessibility) ([#61](https://github.com/stardust-ui/react/pull/61))
+- Menu `onClick` handler moved from `li` to `a` (accessibility) @miroslavstastny ([#61](https://github.com/stardust-ui/react/pull/61))
 
 
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
