@@ -70,7 +70,6 @@ class Label extends UIComponent<any, any> {
 
   handleIconOverrides = iconProps => {
     const { onIconClick, iconPosition, content, variables } = this.props
-
     const iconVariables = callable(iconProps.variables)() || {}
     const labelVariables = callable(variables)() || {}
 

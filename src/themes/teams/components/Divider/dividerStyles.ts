@@ -5,7 +5,7 @@ import {
   ICSSPseudoElementStyle,
 } from '../../../../../types/theme'
 
-const dividerBorderRule = (size, color): ICSSInJSStyle => ({
+const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
   background: color,
 })
@@ -13,12 +13,12 @@ const dividerBorderRule = (size, color): ICSSInJSStyle => ({
 const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
-  ...dividerBorderRule(size, variables.defaultBackgroundColor), // the default border rule
+  ...dividerBorderStyle(size, variables.defaultBackgroundColor), // the default border style
   ...(type === 'primary' && {
-    ...dividerBorderRule(size, variables.typePrimaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
   }),
   ...(type === 'secondary' && {
-    ...dividerBorderRule(size, variables.typeSecondaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
   }),
 })
 
@@ -56,12 +56,12 @@ const dividerStyles: IComponentPartStylesInput = {
             }),
           }
         : {
-            ...dividerBorderRule(size, variables.typeSecondaryBackgroundColor), // the default border rule
+            ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor), // the default border style
             ...(type === 'primary' && {
-              ...dividerBorderRule(size, variables.typePrimaryBackgroundColor),
+              ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
             }),
             ...(type === 'secondary' && {
-              ...dividerBorderRule(size, variables.defaultBackgroundColor),
+              ...dividerBorderStyle(size, variables.defaultBackgroundColor),
             }),
           }),
     }

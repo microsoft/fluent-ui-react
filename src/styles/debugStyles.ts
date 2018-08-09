@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../types/theme'
 
-const debugRule = ({ name, color, style }): ICSSInJSStyle => ({
+const debugStyle = ({ name, color, style }): ICSSInJSStyle => ({
   position: 'relative',
   border: `2px ${style} ${color}`,
   '::before': {
@@ -19,13 +19,13 @@ const debugRule = ({ name, color, style }): ICSSInJSStyle => ({
 })
 
 export const debugRoot = (): ICSSInJSStyle => ({
-  ...debugRule({ name: 'LAYOUT', color: 'cornflowerblue', style: 'solid' }),
+  ...debugStyle({ name: 'LAYOUT', color: 'cornflowerblue', style: 'solid' }),
   padding: '8px',
   margin: '2px',
 })
 
 export const debugArea = (): ICSSInJSStyle => ({
-  ...debugRule({ name: 'AREA', color: 'lightsalmon', style: 'dashed' }),
+  ...debugStyle({ name: 'AREA', color: 'lightsalmon', style: 'dashed' }),
   padding: '8px',
   margin: '2px',
 })

@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
+import { MenuBehavior } from '../../lib/accessibility'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -28,6 +29,9 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
+    /** A vertical menu may take the size of its container. */
+    fluid: PropTypes.bool,
+
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
@@ -38,18 +42,24 @@ class Menu extends AutoControlledComponent<any, any> {
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: MenuBehavior,
   }
 
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
     'className',
     'defaultActiveIndex',
+    'fluid',
     'items',
     'shape',
     'type',
@@ -88,10 +98,10 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

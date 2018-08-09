@@ -1,6 +1,6 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
-const accordionStyles: IComponentPartStylesInput = {
+const accordionStyles = {
   root: (): ICSSInJSStyle => ({
     verticalAlign: 'middle',
     display: 'flex',

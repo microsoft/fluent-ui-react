@@ -33,9 +33,7 @@ export interface ISiteVariables {
   htmlFontSize?: string
 }
 
-export type ComponentVariableValue = string | number | boolean
-
-export type ComponentVariablesObject = ObjectOf<ComponentVariableValue>
+export type ComponentVariablesObject = any
 
 export type ComponentVariablesFunction = (
   siteVariables?: ISiteVariables,
@@ -64,15 +62,25 @@ export interface ICSSInJSStyle extends React.CSSProperties {
   ':focus'?: ICSSInJSStyle
   ':visited'?: ICSSInJSStyle
 
+  // TODO Questionable: avoid order specific styles
   ':first-child'?: ICSSInJSStyle
   ':last-child'?: ICSSInJSStyle
   ':nth-child(n+2)'?: ICSSInJSStyle
+
+  // TODO Questionable: unsupported by autoprefixer, one-off vendors
+  // we could expand these ourselves so that "font-smoothing" works, but which values?
+  '-webkit-font-smoothing'?:
+    | CSSType.Globals
+    | 'auto'
+    | 'none'
+    | 'antialiased'
+    | 'subpixel-antialiased'
+  '-moz-osx-font-smoothing'?: CSSType.Globals | 'auto' | 'grayscale'
 }
 
 export interface ComponentStyleFunctionParam {
   props: IProps
   variables: ComponentVariablesObject
-  siteVariables: ISiteVariables
   rtl: boolean
 }
 

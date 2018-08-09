@@ -4,20 +4,22 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
 const sizes = new Map([
+  ['micro', 0.3],
   ['mini', 0.4],
   ['tiny', 0.5],
   ['small', 0.75],
+  ['normal', 1],
   ['large', 1.5],
   ['big', 2],
   ['huge', 4],
   ['massive', 8],
 ])
 
-const getIcon = (kind, name) => {
+const getFontIcon = (font, name) => {
   let content = ''
   let fontFamily = 'Icons'
 
-  switch (kind) {
+  switch (font) {
     case 'FontAwesome':
     default: {
       fontFamily = name && name.includes('outline') ? 'outline-icons' : 'Icons'
@@ -29,7 +31,32 @@ const getIcon = (kind, name) => {
   return { content, fontFamily }
 }
 
-const getSize = size => `${sizes.get(size)}em` || '1em'
+const getSize = size => `${sizes.get(size)}em`
+
+const getFontStyles = (font, name, size): ICSSInJSStyle => {
+  const { fontFamily, content } = getFontIcon(font, name)
+
+  return {
+    fontFamily,
+    width: '1.18em',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    textDecoration: 'inherit',
+    textAlign: 'center',
+
+    '-webkit-font-smoothing': 'antialiased',
+    '-moz-osx-font-smoothing': 'grayscale',
+    backfaceVisibility: 'hidden',
+
+    lineHeight: 1,
+
+    '::before': {
+      content,
+      boxSizing: 'inherit',
+      background: '0 0',
+    },
+  }
+}
 
 const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
   switch (xSpacing) {
@@ -44,66 +71,65 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const paddedStyle: ICSSInJSStyle = {
-  padding: '0.5em 0',
-  width: '2em',
-  height: '2em',
+const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
+  return {
+    ...getPaddedStyle(isFontBased),
+
+    boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
+    ...(circular ? { borderRadius: '50%' } : {}),
+  }
 }
 
-const getBorderedStyles = (circular, borderColor, color): ICSSInJSStyle => ({
-  ...paddedStyle,
-  boxShadow: `0 0 0 0.1em ${borderColor || color || 'black'} inset`,
-  ...(circular ? { borderRadius: '50%' } : {}),
+const getPaddedStyle = (isFontBased): ICSSInJSStyle => ({
+  padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
+  width: '2em',
+  height: '2em',
 })
 
-const iconStyles: IComponentPartStylesInput = {
+const iconStyles = {
   root: ({
-    props: { disabled, kind, name, size, bordered, circular, xSpacing },
-    variables,
-  }: {
-    props: any
-    variables: any
+    props: { disabled, font, svg, name, size, bordered, circular, xSpacing },
+    variables: v,
   }): ICSSInJSStyle => {
-    const { fontFamily, content } = getIcon(kind, name)
+    const isFontBased = !svg
 
     return {
-      fontFamily,
-      color: variables.color,
-      backgroundColor: variables.backgroundColor,
       display: 'inline-block',
-      opacity: 1,
-      margin: variables.margin,
-      width: '1.18em',
-      height: '1em',
       fontSize: getSize(size),
-      fontStyle: 'normal',
-      fontWeight: 400,
-      textDecoration: 'inherit',
-      textAlign: 'center',
+
+      width: '1em',
+      height: '1em',
+
+      ...(isFontBased ? getFontStyles(font, name, size) : {}),
+
+      ...(isFontBased && { color: v.color }),
+      backgroundColor: v.backgroundColor,
+
+      opacity: 1,
+      margin: v.margin,
+
       speak: 'none',
-      backfaceVisibility: 'hidden',
+
       verticalAlign: 'middle',
-      lineHeight: 1,
+      overflow: 'hidden',
 
-      ...getXSpacingStyles(xSpacing, variables.horizontalSpace),
+      ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
-      ...((bordered || variables.borderColor || circular) &&
-        getBorderedStyles(circular, variables.borderColor, variables.color)),
+      ...((bordered || v.borderColor || circular) &&
+        getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
 
-      ...(variables.backgroundColor && {
-        ...paddedStyle,
-        ...(bordered || variables.borderColor || { boxShadow: 'none' }),
+      ...(v.backgroundColor && {
+        ...getPaddedStyle(isFontBased),
+        ...(bordered || v.borderColor || { boxShadow: 'none' }),
       }),
-
-      '::before': {
-        content,
-        boxSizing: 'inherit',
-        background: '0 0',
-      },
 
       ...(disabled && disabledStyle),
     }
   },
+
+  svg: ({ variables: v }): ICSSInJSStyle => ({
+    fill: v.color,
+  }),
 }
 
 export default iconStyles

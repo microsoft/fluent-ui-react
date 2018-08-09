@@ -1,49 +1,58 @@
 import { Sizes } from '../../../../lib/enums'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
+import { ITextVariables } from './textVariables'
 
-const textStyles = {
-  root: ({ props, variables, siteVariables }): ICSSInJSStyle => ({
-    ...(props.truncated && truncateStyle),
-    ...(props.atMention && { color: siteVariables.atMentionTextColor }),
-    ...(props.disabled && { color: siteVariables.disabledTextColor }),
-    ...(props.error && { color: siteVariables.errorTextColor }),
-    ...(props.success && { color: siteVariables.successTextColor }),
-    ...(props.timestamp && { color: siteVariables.timestampTextColor }),
-    ...(props.important && { fontWeight: variables.importantWeight }),
-    ...(props.size === Sizes.ExtraSmall && {
-      fontSize: siteVariables.textExtraSmallFontSize,
-      lineHeight: siteVariables.textExtraSmallLineHeight,
-    }),
-    ...(props.size === Sizes.Small && {
-      fontSize: siteVariables.textSmallFontSize,
-      lineHeight: siteVariables.textSmallLineHeight,
-    }),
-    ...(props.size === Sizes.Medium && {
-      fontSize: siteVariables.textMediumFontSize,
-      lineHeight: siteVariables.textMediumLineHeight,
-    }),
-    ...(props.size === Sizes.Large && {
-      fontSize: siteVariables.textLargeFontSize,
-      lineHeight: siteVariables.textLargeLineHeight,
-    }),
-    ...(props.size === Sizes.ExtraLarge && {
-      fontSize: siteVariables.textExtraLargeFontSize,
-      lineHeight: siteVariables.textExtraLargeLineHeight,
-    }),
-    ...(props.size === Sizes['2x'] && {
-      fontSize: siteVariables.textX2FontSize,
-      lineHeight: siteVariables.textX2LineHeight,
-    }),
-    ...(props.size === Sizes['3x'] && {
-      fontSize: siteVariables.textX3FontSize,
-      lineHeight: siteVariables.textX3LineHeight,
-    }),
-    ...(props.size === Sizes['4x'] && {
-      fontSize: siteVariables.textX4FontSize,
-      lineHeight: siteVariables.textX4LineHeight,
-    }),
-  }),
+export interface TextStylesParams {
+  props: any
+  variables: ITextVariables
 }
 
-export default textStyles
+export default {
+  root: ({
+    props: { atMention, disabled, error, size, important, success, timestamp, truncated },
+    variables: v,
+  }: TextStylesParams): ICSSInJSStyle => {
+    return {
+      ...(truncated && truncateStyle),
+      ...(atMention && { color: v.atMentionTextColor }),
+      ...(disabled && { color: v.disabledTextColor }),
+      ...(error && { color: v.errorTextColor }),
+      ...(success && { color: v.successTextColor }),
+      ...(timestamp && { color: v.timestampTextColor }),
+      ...(important && { fontWeight: v.importantWeight }),
+      ...(size === Sizes.ExtraSmall && {
+        fontSize: v.textExtraSmallFontSize,
+        lineHeight: v.textExtraSmallLineHeight,
+      }),
+      ...(size === Sizes.Small && {
+        fontSize: v.textSmallFontSize,
+        lineHeight: v.textSmallLineHeight,
+      }),
+      ...(size === Sizes.Medium && {
+        fontSize: v.textMediumFontSize,
+        lineHeight: v.textMediumLineHeight,
+      }),
+      ...(size === Sizes.Large && {
+        fontSize: v.textLargeFontSize,
+        lineHeight: v.textLargeLineHeight,
+      }),
+      ...(size === Sizes.ExtraLarge && {
+        fontSize: v.textExtraLargeFontSize,
+        lineHeight: v.textExtraLargeLineHeight,
+      }),
+      ...(size === Sizes['2x'] && {
+        fontSize: v.textX2FontSize,
+        lineHeight: v.textX2LineHeight,
+      }),
+      ...(size === Sizes['3x'] && {
+        fontSize: v.textX3FontSize,
+        lineHeight: v.textX3LineHeight,
+      }),
+      ...(size === Sizes['4x'] && {
+        fontSize: v.textX4FontSize,
+        lineHeight: v.textX4LineHeight,
+      }),
+    }
+  },
+}

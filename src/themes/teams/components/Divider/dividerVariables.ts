@@ -1,15 +1,4 @@
-export interface IDividerVariables {
-  [key: string]: string | number
-
-  defaultColor: string
-  defaultBackgroundColor: string
-  typePrimaryColor: string
-  typePrimaryBackgroundColor: string
-  typeSecondaryColor: string
-  typeSecondaryBackgroundColor: string
-}
-
-export default (siteVars: any): IDividerVariables => {
+export default (siteVars: any) => {
   return {
     defaultColor: siteVars.gray04,
     defaultBackgroundColor: siteVars.gray12,

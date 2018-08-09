@@ -1,7 +1,8 @@
 import * as _ from 'lodash'
 import { combineRules } from 'fela'
-import callable from './callable'
 
+import callable from './callable'
+import toCompactArray from './toCompactArray'
 import {
   ComponentPartStyleFunction,
   ComponentStyleFunctionParam,
@@ -10,7 +11,6 @@ import {
   IRenderer,
   OneOrArray,
 } from '../../types/theme'
-import { toCompactArray } from './index'
 
 /**
  * Returns a string of HTML classes.

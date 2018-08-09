@@ -7,12 +7,12 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { type, shape, vertical } = props
+    const { fluid, type, shape, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
-        width: pxToRem(200),
+        ...(!fluid && { width: pxToRem(200) }),
       }),
       ...(shape !== 'pills' &&
         shape !== 'underlined' && {

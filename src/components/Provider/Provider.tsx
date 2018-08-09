@@ -85,7 +85,7 @@ class Provider extends React.Component<IProviderProps, any> {
         renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables))
       } else {
         throw new Error(
-          `staticStyles array must contain CSS strings, style objects, or rule functions, got: ${typeof staticStyle}`,
+          `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
         )
       }
     })
@@ -121,13 +121,15 @@ class Provider extends React.Component<IProviderProps, any> {
   render() {
     const { theme, children } = this.props
 
+    // rehydration disabled to avoid leaking styles between renderers
+    // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
       <ProviderConsumer
         render={(incomingTheme: IThemePrepared) => {
           const outgoingTheme: IThemePrepared = mergeThemes(incomingTheme, theme)
 
           return (
-            <RendererProvider renderer={outgoingTheme.renderer}>
+            <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
             </RendererProvider>
           )

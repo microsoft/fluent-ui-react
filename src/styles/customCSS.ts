@@ -7,7 +7,6 @@ export const disabledStyle: ICSSInJSStyle = {
 
 export const fittedStyle: ICSSInJSStyle = {
   margin: 0,
-  width: 'auto',
 }
 
 export const truncateStyle: ICSSInJSStyle = {

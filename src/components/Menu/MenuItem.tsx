@@ -4,6 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -47,13 +48,18 @@ class MenuItem extends UIComponent<any, any> {
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'li',
+    accessibility: MenuItemBehavior,
   }
 
   static handledProps = [
+    'accessibility',
     'active',
     'as',
     'children',
@@ -70,15 +76,25 @@ class MenuItem extends UIComponent<any, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        className={classes.root}
+        onClick={this.handleClick}
+        {...accessibility.attributes.root}
+        {...rest}
+      >
         {childrenExist(children) ? (
           children
         ) : (
-          <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
+          <a
+            className={cx('ui-menu__item__anchor', classes.anchor)}
+            {...accessibility.attributes.anchor}
+          >
+            {content}
+          </a>
         )}
       </ElementType>
     )

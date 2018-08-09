@@ -1,7 +1,7 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const truncateRule = {
+const truncateStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
@@ -53,19 +53,19 @@ const layoutStyles: IComponentPartStylesInput = {
 
   start: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateStart && truncateRule),
+    ...(props.truncateStart && truncateStyle),
     ...props.startCSS,
   }),
 
   main: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateMain && truncateRule),
+    ...(props.truncateMain && truncateStyle),
     ...props.mainCSS,
   }),
 
   end: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateEnd && truncateRule),
+    ...(props.truncateEnd && truncateStyle),
     ...props.endCSS,
   }),
 }
