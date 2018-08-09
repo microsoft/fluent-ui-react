@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 const underlinedItem = (color: string) => ({
-  borderBottom: `solid 4px ${color}`,
+  borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
@@ -37,8 +37,6 @@ export default {
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
-      padding: `${pxToRem(14)} ${pxToRem(18)}`,
-      cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
@@ -63,12 +61,6 @@ export default {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
-          }),
-        }),
-        ...(shape === 'underlined' && {
-          ...underlinedItem(variables.defaultActiveBackgroundColor),
-          ...(type === 'primary' && {
-            ...underlinedItem(variables.typePrimaryActiveBorderColor),
           }),
         }),
       },
@@ -114,8 +106,37 @@ export default {
             }),
           },
         }),
+      }),
+    }
+  },
+
+  anchor: ({ props, variables }) => {
+    const { active, shape, type } = props
+
+    return {
+      color: 'inherit',
+      display: 'block',
+      ...(shape === 'underlined'
+        ? { padding: `0 0 ${pxToRem(8)} 0` }
+        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+      cursor: 'pointer',
+
+      ':hover': {
+        color: 'inherit',
         ...(shape === 'underlined' && {
+          paddingBottom: `${pxToRem(4)}`,
+          ...underlinedItem(variables.defaultActiveBackgroundColor),
+          ...(type === 'primary' && {
+            ...underlinedItem(variables.typePrimaryActiveBorderColor),
+          }),
+        }),
+      },
+
+      ...(active &&
+        shape === 'underlined' && {
           color: variables.defaultColor,
+          paddingBottom: `${pxToRem(4)}`,
+          ':hover': {},
           ...underlinedItem(variables.defaultActiveColor),
           ...(type === 'primary'
             ? {
@@ -126,13 +147,6 @@ export default {
                 fontWeight: '700',
               }),
         }),
-      }),
     }
   },
-  anchor: () => ({
-    color: 'inherit',
-    ':hover': {
-      color: 'inherit',
-    },
-  }),
 }
