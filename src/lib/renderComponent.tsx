@@ -13,6 +13,7 @@ export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
   rest: { [key: string]: any }
   classes: { [key: string]: string }
+  variables: any
   accessibility: IAccessibilityDefinition
 }
 
@@ -63,15 +64,25 @@ const renderComponent = <P extends {}>(
         const variablesFromTheme = callable(componentVariables[displayName])(siteVariables)
         const variablesFromProp = callable(props.variables)(siteVariables)
 
-        const mergedVariables = () =>
-          Object.assign({}, variablesFromFile, variablesFromTheme, variablesFromProp)
+        const mergedVariables = Object.assign(
+          {},
+          variablesFromFile,
+          variablesFromTheme,
+          variablesFromProp,
+        )
 
         const classes = getClasses(renderer, props, styles, mergedVariables, theme)
         classes.root = cx(className, classes.root, props.className)
 
         const accessibility = getAccessibility(props, state)
 
-        const config: IRenderResultConfig<P> = { ElementType, rest, classes, accessibility }
+        const config: IRenderResultConfig<P> = {
+          ElementType,
+          rest,
+          classes,
+          variables: mergedVariables,
+          accessibility,
+        }
 
         return render(config)
       }}

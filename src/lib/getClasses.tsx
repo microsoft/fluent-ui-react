@@ -9,18 +9,12 @@ export interface IClasses {
  * @param theme
  * @returns {{}}
  */
-const getClasses = (
-  renderer,
-  props,
-  styles,
-  variables: any = () => {},
-  theme: any = {},
-): IClasses => {
+const getClasses = (renderer, props, styles, variables: any, theme: any = {}): IClasses => {
   const { renderRule } = renderer
   const styleProps = {
     props,
     theme,
-    variables: variables(theme.siteVariables),
+    variables,
     rtl: theme.rtl,
   }
 
