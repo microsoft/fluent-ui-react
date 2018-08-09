@@ -346,7 +346,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
   }
 
-  private getComponentName = () => this.props.examplePath.split('/')[1]
+  private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
     return (
@@ -526,7 +526,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const { showVariables } = this.state
     if (!showVariables) return
 
-    const name = this.getComponentName()
+    const displayName = this.getDisplayName()
 
     return (
       <div>
@@ -535,7 +535,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         </Divider>
         <Provider.Consumer
           render={({ siteVariables }) => {
-            const variablesFilename = `./${name}/${_.camelCase(name)}Variables.ts`
+            const variablesFilename = `./${displayName}/${_.camelCase(displayName)}Variables.ts`
             const hasVariablesFile = _.includes(variablesContext.keys(), variablesFilename)
 
             if (!hasVariablesFile) {
@@ -558,7 +558,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
                       key={key}
                       label={key}
                       defaultValue={val}
-                      onChange={this.handleVariableChange(name, key)}
+                      onChange={this.handleVariableChange(displayName, key)}
                     />
                   ))}
                 </Form.Group>
