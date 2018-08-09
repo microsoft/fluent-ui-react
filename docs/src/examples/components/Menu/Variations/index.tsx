@@ -89,6 +89,11 @@ const Variations = () => (
       description="Vertical menu can contain only icons."
       examplePath="components/Menu/Variations/MenuExampleIconOnlyVertical"
     />
+    <ComponentExample
+      title="Menu as a Tab List"
+      description="A menu that acts as a tablist."
+      examplePath="components/Menu/Variations/MenuExampleTab"
+    />
   </ExampleSection>
 )
 
