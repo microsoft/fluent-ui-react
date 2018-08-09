@@ -23,7 +23,7 @@ const ComponentControls: any = props => {
   } = props
 
   return (
-    <Menu color="green" icon="labeled" size="tiny" fitted compact text>
+    <Menu color="green" icon="labeled" size="tiny" compact text>
       <ComponentControlsShowCode active={showCode} onClick={onShowCode} />
       <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
       <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
