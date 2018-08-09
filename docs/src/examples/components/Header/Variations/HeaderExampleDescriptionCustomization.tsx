@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header } from '@stardust-ui/react'
 
-const HeaderExampleDescription = () => (
+const HeaderExampleDescriptionCustomization = () => (
   <Header as="h2">
     Account Settings
     <Header.Description as="span">
@@ -10,4 +10,4 @@ const HeaderExampleDescription = () => (
   </Header>
 )
 
-export default HeaderExampleDescription
+export default HeaderExampleDescriptionCustomization
