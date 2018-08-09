@@ -38,21 +38,27 @@ class UIComponent<P, S> extends React.Component<P, S> {
     throw new Error('renderComponent is not implemented.')
   }
 
-  attachEventHandler(eventHandlers: AccessibilityEventHandlers | AccessibilityEventHandlers[]) {
-    const handlers: AccessibilityEventHandlers[] = [].concat(eventHandlers)
+  attachEventHandlers() {
+    if (this.accEventHandlers.length) {
+      const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
 
-    handlers.forEach(eventHandler => {
-      const eventName = Object.keys(eventHandler)[0]
-      const handler = eventHandler[eventName]
-      eventStack.sub(eventName, handler.handlers, { target: handler.target })
-    })
+      handlers.forEach(eventHandler => {
+        const eventName = Object.keys(eventHandler)[0]
+        const handler = eventHandler[eventName]
+        eventStack.sub(eventName, handler.handlers, { target: handler.target })
+      })
+    } else {
+      this.getAndAttachEventHandlers()
+    }
   }
 
-  detachEventHandler(eventHandlers: AccessibilityEventHandlers | AccessibilityEventHandlers[]) {
-    const handlers: AccessibilityEventHandlers[] = [].concat(eventHandlers)
-    handlers.forEach(eventHandler => {
-      eventStack.unsub(eventHandler.name, eventHandler.handlers, { target: eventHandler.target })
-    })
+  detachEventHandlers() {
+    if (this.accEventHandlers.length) {
+      const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
+      handlers.forEach(eventHandler => {
+        eventStack.unsub(eventHandler.name, eventHandler.handlers, { target: eventHandler.target })
+      })
+    }
   }
 
   getAndAttachEventHandlers() {
@@ -84,7 +90,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     if (this.accEventHandlers.length) {
-      this.attachEventHandler(this.accEventHandlers)
+      this.attachEventHandlers()
     }
   }
 

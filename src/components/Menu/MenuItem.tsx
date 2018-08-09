@@ -82,17 +82,11 @@ class MenuItem extends UIComponent<any, any> {
   setElementRef = ref => (this.elementRef = ref)
 
   componentDidMount() {
-    if (this.accEventHandlers.length) {
-      this.attachEventHandler(this.accEventHandlers)
-    } else {
-      this.getAndAttachEventHandlers()
-    }
+    this.attachEventHandlers()
   }
 
   componentWillUnmount() {
-    if (this.accEventHandlers.length) {
-      this.detachEventHandler(this.accEventHandlers)
-    }
+    this.detachEventHandlers()
   }
 
   actions = {
