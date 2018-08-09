@@ -1,15 +1,9 @@
-import * as _ from 'lodash'
-import { combineRules } from 'fela'
-
 import callable from './callable'
-import toCompactArray from './toCompactArray'
 import {
-  ComponentPartStyleFunction,
   ComponentStyleFunctionParam,
   IComponentPartClasses,
   IComponentPartStylesInput,
   IRenderer,
-  OneOrArray,
 } from '../../types/theme'
 
 /**
@@ -18,29 +12,14 @@ import {
  */
 const getClasses = (
   renderer: IRenderer,
-  componentStyles: OneOrArray<IComponentPartStylesInput>,
+  componentStyles: IComponentPartStylesInput,
   styleParam: ComponentStyleFunctionParam,
 ): IComponentPartClasses => {
-  const stylesArr = toCompactArray(componentStyles)
-
   // root, icon, etc.
-  const componentParts: string[] = stylesArr.reduce((acc, next) => {
-    return next ? _.union(acc, _.keys(next)) : acc
-  }, [])
+  const componentParts: string[] = Object.keys(componentStyles)
 
   return componentParts.reduce((classes, partName) => {
-    const styleFunctionsForPart = stylesArr.reduce(
-      (stylesForPart: ComponentPartStyleFunction[], nextStyle) => {
-        if (nextStyle[partName]) stylesForPart.push(callable(nextStyle[partName]))
-
-        return stylesForPart
-      },
-      [],
-    )
-
-    const combinedFunctions = combineRules(...styleFunctionsForPart)
-
-    classes[partName] = renderer.renderRule(combinedFunctions, styleParam)
+    classes[partName] = renderer.renderRule(callable(componentStyles[partName]), styleParam)
 
     return classes
   }, {})

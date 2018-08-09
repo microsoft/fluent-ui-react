@@ -35,11 +35,11 @@ export interface ISiteVariables {
 
 export type ComponentVariablesObject = any
 
-export type ComponentVariablesFunction = (
+export type ComponentVariablesPrepared = (
   siteVariables?: ISiteVariables,
 ) => ComponentVariablesObject
 
-export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesFunction
+export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
 
 // ========================================================
 // Styles
@@ -144,7 +144,7 @@ export interface IThemeInput {
 export interface IThemePrepared {
   siteVariables: ISiteVariables
   componentVariables: {
-    [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesFunction
+    [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesPrepared
   }
   componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
   rtl: boolean
@@ -205,20 +205,20 @@ export interface IThemeComponentVariablesInput {
 }
 
 export interface IThemeComponentVariablesPrepared {
-  Accordion?: ComponentVariablesFunction
-  Avatar?: ComponentVariablesFunction
-  Button?: ComponentVariablesFunction
-  Chat?: ComponentVariablesFunction
-  Divider?: ComponentVariablesFunction
-  Header?: ComponentVariablesFunction
-  Icon?: ComponentVariablesFunction
-  Image?: ComponentVariablesFunction
-  Input?: ComponentVariablesFunction
-  Label?: ComponentVariablesFunction
-  Layout?: ComponentVariablesFunction
-  ListItem?: ComponentVariablesFunction
-  Menu?: ComponentVariablesFunction
-  Text?: ComponentVariablesFunction
+  Accordion?: ComponentVariablesPrepared
+  Avatar?: ComponentVariablesPrepared
+  Button?: ComponentVariablesPrepared
+  Chat?: ComponentVariablesPrepared
+  Divider?: ComponentVariablesPrepared
+  Header?: ComponentVariablesPrepared
+  Icon?: ComponentVariablesPrepared
+  Image?: ComponentVariablesPrepared
+  Input?: ComponentVariablesPrepared
+  Label?: ComponentVariablesPrepared
+  Layout?: ComponentVariablesPrepared
+  ListItem?: ComponentVariablesPrepared
+  Menu?: ComponentVariablesPrepared
+  Text?: ComponentVariablesPrepared
 }
 
 export interface IRenderer extends IFelaRenderer {}
