@@ -2,10 +2,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import buttonRules from './buttonRules'
-import buttonVariables from './buttonVariables'
+import buttonStyles from '../../themes/teams/components/Button/buttonStyles'
+import buttonVariables from '../../themes/teams/components/Button/buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
+import { ButtonBehavior } from '../../lib/accessibility'
 
 /**
  * A button.
@@ -17,7 +18,7 @@ class Button extends UIComponent<any, any> {
 
   public static className = 'ui-button'
 
-  public static rules = buttonRules
+  public static styles = buttonStyles
 
   public static variables = buttonVariables
 
@@ -58,9 +59,13 @@ class Button extends UIComponent<any, any> {
 
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
+  static handledProps = [
+    'accessibility',
     'as',
     'children',
     'circular',
@@ -76,9 +81,10 @@ class Button extends UIComponent<any, any> {
 
   public static defaultProps = {
     as: 'button',
+    accessibility: ButtonBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
+  public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
@@ -109,6 +115,7 @@ class Button extends UIComponent<any, any> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
+        {...accessibility.attributes.root}
         {...rest}
       >
         {getContent()}

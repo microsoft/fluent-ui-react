@@ -6,7 +6,7 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="Label"
-      description="A label"
+      description="A label."
       examplePath="components/Label/Types/LabelExample"
     />
   </ExampleSection>

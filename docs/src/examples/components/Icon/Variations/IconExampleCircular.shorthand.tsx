@@ -3,7 +3,7 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleCircular = () => (
   <div>
-    <Icon name="chess rock" circular />
+    <Icon name="chess rook" circular />
     <Icon name="book" circular />
     <Icon name="expand" circular />
     <Icon name="play" circular />

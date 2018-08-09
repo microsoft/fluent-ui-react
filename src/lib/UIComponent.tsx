@@ -7,7 +7,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static displayName: string
   static className: string
   static variables?: any
-  static rules?: any
+  static styles?: any
   static handledProps: any
 
   constructor(props, context) {
@@ -36,7 +36,8 @@ class UIComponent<P, S> extends React.Component<P, S> {
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,
-        rules: this.childClass.rules,
+        state: this.state,
+        styles: this.childClass.styles,
         variables: this.childClass.variables,
       },
       this.renderComponent,

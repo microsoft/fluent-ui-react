@@ -1,25 +1,27 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import imageRules from './imageRules'
-import imageVariables from './imageVariables'
+import { customPropTypes, UIComponent } from '../../lib'
+import imageStyles from '../../themes/teams/components/Image/imageStyles'
+import imageVariables from '../../themes/teams/components/Image/imageVariables'
+import { ImageBehavior } from '../../lib/accessibility'
 
 /**
  * An image is a graphic representation of something.
  */
 class Image extends UIComponent<any, any> {
-  static create: Function
-
   static className = 'ui-image'
 
   static displayName = 'Image'
 
-  static rules = imageRules
+  static styles = imageStyles
 
   static variables = imageVariables
 
   static propTypes = {
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** An element type to render as. */
     as: customPropTypes.as,
 
@@ -36,17 +38,16 @@ class Image extends UIComponent<any, any> {
     fluid: PropTypes.bool,
   }
 
-  static handledProps = ['as', 'avatar', 'circular', 'className', 'fluid']
+  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className', 'fluid']
 
   static defaultProps = {
     as: 'img',
+    accessibility: ImageBehavior,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    return <ElementType {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
-
-Image.create = createShorthandFactory(Image, src => ({ src }))
 
 export default Image

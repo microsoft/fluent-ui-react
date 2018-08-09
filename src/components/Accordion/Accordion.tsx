@@ -3,9 +3,10 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
-import accordionRules from './accordionRules'
+import accordionStyles from '../../themes/teams/components/Accordion/accordionStyles'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { DefaultBehavior } from '../../lib/accessibility'
 
 /**
  * A standard Accordion.
@@ -60,11 +61,15 @@ class Accordion extends AutoControlledComponent<any, any> {
         }),
       ),
     ]),
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static rules = accordionRules
+  static styles = accordionStyles
 
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
@@ -74,6 +79,10 @@ class Accordion extends AutoControlledComponent<any, any> {
     'onTitleClick',
     'panels',
   ]
+
+  public static defaultProps = {
+    accessibility: DefaultBehavior,
+  }
 
   static autoControlledProps = ['activeIndex']
 
@@ -143,11 +152,11 @@ class Accordion extends AutoControlledComponent<any, any> {
     return children
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )
