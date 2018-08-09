@@ -1,11 +1,11 @@
-import * as copyToClipboard from 'copy-to-clipboard'
-import { html } from 'js-beautify'
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
+import { html } from 'js-beautify'
+import * as copyToClipboard from 'copy-to-clipboard'
+import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
 
 import {
@@ -67,22 +67,22 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
  * Allows toggling the the raw `code` code block.
  */
 class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
-  componentRef: React.Component
-  sourceCodeMgr: ISourceCodeManager
-  anchorName: string
-  kebabExamplePath: string
-  KnobsComponent: any
+  private componentRef: React.Component
+  private sourceCodeMgr: ISourceCodeManager
+  private anchorName: string
+  private kebabExamplePath: string
+  private KnobsComponent: any
 
-  state: IComponentExampleState = {
+  public state: IComponentExampleState = {
     knobs: {},
     theme: teamsTheme,
   }
 
-  static contextTypes = {
+  public static contextTypes = {
     onPassed: PropTypes.func,
   }
 
-  static propTypes = {
+  public static propTypes = {
     children: PropTypes.node,
     description: PropTypes.node,
     examplePath: PropTypes.string.isRequired,
@@ -93,7 +93,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     title: PropTypes.node,
   }
 
-  componentWillMount() {
+  public componentWillMount() {
     const { examplePath } = this.props
     this.sourceCodeMgr = getSourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
@@ -110,7 +110,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  componentWillReceiveProps(nextProps: IComponentExampleProps) {
+  public componentWillReceiveProps(nextProps: IComponentExampleProps) {
     // deactivate examples when switching from one to the next
     if (
       this.isActiveHash() &&
@@ -121,7 +121,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
   }
 
-  clearActiveState = () => {
+  private clearActiveState = () => {
     this.setState({
       showCode: false,
       showHTML: false,
@@ -130,31 +130,31 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  isActiveState = () => {
+  private isActiveState = () => {
     const { showCode, showHTML, showVariables } = this.state
 
     return showCode || showHTML || showVariables
   }
 
-  isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
+  private isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
 
-  clickedOutsideComponent = (e: Event): boolean => {
+  private clickedOutsideComponent = (e: Event): boolean => {
     return !doesNodeContainClick((this.componentRef as any).ref, e)
   }
 
-  updateHash = () => {
+  private updateHash = () => {
     if (this.isActiveState()) this.setHashAndScroll()
     else if (this.isActiveHash()) this.removeHash()
   }
 
-  setHashAndScroll = () => {
+  private setHashAndScroll = () => {
     const { history, location } = this.props
 
     history.replace(`${location.pathname}#${this.anchorName}`)
     scrollToAnchor()
   }
 
-  removeHash = () => {
+  private removeHash = () => {
     const { history, location } = this.props
 
     history.replace(location.pathname)
@@ -162,12 +162,12 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     this.clearActiveState()
   }
 
-  handleDirectLinkClick = () => {
+  private handleDirectLinkClick = () => {
     this.setHashAndScroll()
     copyToClipboard(window.location.href)
   }
 
-  handleMouseLeave = () => {
+  private handleMouseLeave = () => {
     this.setState({
       isHovering: false,
       handleMouseLeave: null,
@@ -175,7 +175,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  handleMouseMove = () => {
+  private handleMouseMove = () => {
     this.setState({
       isHovering: true,
       handleMouseLeave: this.handleMouseLeave,
@@ -207,7 +207,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
   }
 
-  handleShowRtlClick = e => {
+  private handleShowRtlClick = e => {
     e.preventDefault()
 
     const { showRtl } = this.state
@@ -217,7 +217,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  handleShowCodeClick = e => {
+  private handleShowCodeClick = e => {
     e.preventDefault()
 
     const { showCode } = this.state
@@ -225,7 +225,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
-  handleShowVariablesClick = e => {
+  private handleShowVariablesClick = e => {
     e.preventDefault()
 
     const { showVariables } = this.state
@@ -233,45 +233,45 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     this.setState({ showVariables: !showVariables }, this.updateHash)
   }
 
-  handlePass = () => {
+  private handlePass = () => {
     const { title } = this.props
 
     if (title) _.invoke(this.context, 'onPassed', null, this.props)
   }
 
-  copyJSX = () => {
+  private copyJSX = () => {
     copyToClipboard(this.state.sourceCode)
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
-  resetJSX = () => {
+  private resetJSX = () => {
     if (this.sourceCodeMgr.originalCodeHasChanged && confirm('Lose your changes?')) {
       this.sourceCodeMgr.resetToOriginalCode()
       this.updateAndRenderSourceCode()
     }
   }
 
-  getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
+  private getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
 
-  getKebabExamplePath = () => {
+  private getKebabExamplePath = () => {
     if (!this.kebabExamplePath) this.kebabExamplePath = _.kebabCase(this.props.examplePath)
 
     return this.kebabExamplePath
   }
 
-  hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
+  private hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  setErrorDebounced = _.debounce(error => {
+  private setErrorDebounced = _.debounce(error => {
     this.setState({ error })
   }, 800)
 
-  renderExampleFromCode = (code: string): JSX.Element => {
+  private renderExampleFromCode = (code: string): JSX.Element => {
     const Example = code != null ? evalTypeScript(code) : this.renderMissingExample()
     return _.isFunction(Example) ? this.renderWithProvider(Example) : Example
   }
 
-  renderMissingExample = (): JSX.Element => {
+  private renderMissingExample = (): JSX.Element => {
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
     return (
       <ContributionPrompt>
@@ -281,7 +281,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderSourceCode = _.debounce(() => {
+  private renderSourceCode = _.debounce(() => {
     try {
       const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
 
@@ -305,7 +305,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
   }, 250)
 
-  handleKnobChange = knobs => {
+  private handleKnobChange = knobs => {
     this.setState(
       prevState => ({
         knobs: {
@@ -317,7 +317,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  getKnobsComponent = () => {
+  private getKnobsComponent = () => {
     if (typeof this.KnobsComponent !== 'undefined') {
       return this.KnobsComponent
     }
@@ -327,21 +327,21 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     return this.KnobsComponent
   }
 
-  getKnobsValue = () => {
+  private getKnobsValue = () => {
     const Knobs = this.getKnobsComponent()
 
     return Knobs ? { ...Knobs.defaultProps, ...this.state.knobs } : null
   }
 
-  renderKnobs = () => {
+  private renderKnobs = () => {
     const Knobs = this.getKnobsComponent()
 
     return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
   }
 
-  getDisplayName = () => this.props.examplePath.split('/')[1]
+  private getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  renderWithProvider(ExampleComponent) {
+  private renderWithProvider(ExampleComponent) {
     const { showRtl, theme } = this.state
 
     const newTheme: IThemeInput = {
@@ -356,21 +356,21 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  handleChangeCode = (sourceCode: string) => {
+  private handleChangeCode = (sourceCode: string) => {
     this.sourceCodeMgr.currentCode = sourceCode
     this.updateAndRenderSourceCode()
   }
 
-  updateAndRenderSourceCode = () => {
+  private updateAndRenderSourceCode = () => {
     this.setState({ sourceCode: this.sourceCodeMgr.currentCode }, this.renderSourceCode)
   }
 
-  setApiCodeType = (codeType: SourceCodeType) => {
+  private setApiCodeType = (codeType: SourceCodeType) => {
     this.sourceCodeMgr.codeType = codeType
     this.updateAndRenderSourceCode()
   }
 
-  renderApiCodeMenu = (): JSX.Element => {
+  private renderApiCodeMenu = (): JSX.Element => {
     const { sourceCode } = this.state
     const lineCount = sourceCode && sourceCode.match(/^/gm).length
 
@@ -403,7 +403,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderCodeEditorMenu = (): JSX.Element => {
+  private renderCodeEditorMenu = (): JSX.Element => {
     const { copiedCode } = this.state
     const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
     const codeEditorStyle: React.CSSProperties = {
@@ -448,7 +448,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderJSX = () => {
+  private renderJSX = () => {
     const { showCode, sourceCode } = this.state
 
     if (!showCode) return null
@@ -473,7 +473,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderError = () => {
+  private renderError = () => {
     const { error } = this.state
 
     if (!error) return null
@@ -485,7 +485,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderHTML = () => {
+  private renderHTML = () => {
     const { error, showCode, markup } = this.state
     if (error || !showCode) return null
 
@@ -522,7 +522,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  renderVariables = () => {
+  private renderVariables = () => {
     const { showVariables } = this.state
     if (!showVariables) return
 
@@ -572,7 +572,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  handleVariableChange = (component, variable) => (e, { value }) => {
+  private handleVariableChange = (component, variable) => (e, { value }) => {
     this.setState(
       state => ({
         theme: {
@@ -590,7 +590,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  render() {
+  public render() {
     const { children, description, examplePath, suiVersion, title } = this.props
     const {
       handleMouseLeave,
