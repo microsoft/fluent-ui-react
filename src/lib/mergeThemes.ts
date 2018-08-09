@@ -8,7 +8,8 @@ import {
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
-import { callable, felaRenderer, felaRtlRenderer } from './index'
+import callable from './callable'
+import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 
 /**
  * Site variables can safely be merged at each Provider in the tree.

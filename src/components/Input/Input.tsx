@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
+  callable,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -11,7 +12,6 @@ import {
   UIComponent,
 } from '../../lib'
 import Icon from '../Icon'
-import callable from '../../lib/callable'
 
 /**
  * An Input
