@@ -33,7 +33,7 @@
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
     "pretest": "yarn satisfied && gulp build:docs:docgen",
     "test": "cross-env NODE_ENV=test jest --coverage",
-    "test:screener": "gulp screener",
+    "test:visual": "gulp screener",
     "test:watch": "yarn test --watchAll",
     "generate:component": "gulp generate:component"
   },

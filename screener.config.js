@@ -2,7 +2,7 @@ const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
 
-module.exports = {
+const screenerConfig = {
   projectRepo: 'stardust-ui/react',
 
   apiKey: process.env.SCREENER_API_KEY,
@@ -36,3 +36,10 @@ module.exports = {
       }
     }),
 }
+
+if (process.env.CI) {
+  screenerConfig.baseBranch = 'master'
+  screenerConfig.failureExitCode = 0
+}
+
+module.exports = screenerConfig
