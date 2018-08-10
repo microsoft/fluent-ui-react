@@ -11,12 +11,10 @@ const { paths } = config
 
 task('screener:runner', cb => {
   sh(`screener-runner --conf ${paths.base('screener.config.js')}`, err => {
-    if (err) {
-      console.error(err)
-      process.exit(1)
-    } else {
-      process.exit(0)
-    }
+    cb(err)
+
+    // kill the server
+    process.exit(err ? 1 : 0)
   })
 })
 
@@ -24,4 +22,4 @@ task('screener:runner', cb => {
 // Default
 // ----------------------------------------
 
-task('screener', series('clean:docs', 'build:docs', 'serve:docs', 'screener:runner'))
+task('screener', series('build:docs', 'serve:docs', 'screener:runner'))
