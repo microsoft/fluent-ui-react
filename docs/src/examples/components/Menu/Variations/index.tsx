@@ -74,6 +74,11 @@ const Variations = () => (
       description="A menu that acts as a tablist."
       examplePath="components/Menu/Variations/MenuExampleTab"
     />
+    <ComponentExample
+      title="Menu as a Toolbar"
+      description="A menu that acts as a toolbar."
+      examplePath="components/Menu/Variations/MenuExampleToolbar"
+    />
   </ExampleSection>
 )
 
