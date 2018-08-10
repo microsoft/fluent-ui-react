@@ -6,8 +6,13 @@ declare interface NodeModule {
   hot: any
 }
 
+type RequireContextReturn = {
+  (path): any
+  keys: () => string[]
+}
+
 declare interface NodeRequire {
-  context: any
+  context: (path: string, deep: boolean, pattern: RegExp) => RequireContextReturn
 }
 
 declare module '*.json' {

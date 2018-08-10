@@ -178,6 +178,9 @@ class Sidebar extends React.Component<any, any> {
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
         </Menu.Item>
+        <Menu.Item as={NavLink} exact to="/statistics" activeClassName="active">
+          <Icon name="chart bar" /> Library Statistics
+        </Menu.Item>
         <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
           <Icon name="github" /> GitHub
         </Menu.Item>
@@ -187,7 +190,7 @@ class Sidebar extends React.Component<any, any> {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Icon name="file alternate outline" /> CHANGELOG
+          <Icon name="file code" /> CHANGELOG
         </Menu.Item>
         <Menu.Item active>
           <SemanticUIInput

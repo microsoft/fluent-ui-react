@@ -1,4 +1,4 @@
-import componentInfoContext from './componentInfoContext'
+import componentInfo from './componentInfo'
 
 /**
  * Returns a the info.json files for another component's @see tags.
@@ -7,11 +7,11 @@ import componentInfoContext from './componentInfoContext'
  * @returns {{}[]}
  */
 const getInfoForSeeTags = displayName => {
-  const info = componentInfoContext.byDisplayName[displayName]
+  const info = componentInfo.byDisplayName[displayName]
 
   return info.docblock.tags
     .filter(tag => tag.title === 'see')
-    .map(tag => componentInfoContext.byDisplayName[tag.description])
+    .map(tag => componentInfo.byDisplayName[tag.description])
 }
 
 export default getInfoForSeeTags

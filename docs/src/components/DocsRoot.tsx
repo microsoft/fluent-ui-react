@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import ComponentDoc from '../components/ComponentDoc'
 import PageNotFound from '../views/PageNotFound'
-import componentInfoContext from '../utils/componentInfoContext'
+import componentInfo from '../utils/componentInfo'
 
 class DocsRoot extends React.Component<any, any> {
   static propTypes = {
@@ -22,7 +22,7 @@ class DocsRoot extends React.Component<any, any> {
   render() {
     const { match } = this.props
     const displayName = _.startCase(match.params.name).replace(/ /g, '')
-    const info = componentInfoContext.byDisplayName[displayName]
+    const info = componentInfo.byDisplayName[displayName]
 
     if (info) return <ComponentDoc info={info} />
 

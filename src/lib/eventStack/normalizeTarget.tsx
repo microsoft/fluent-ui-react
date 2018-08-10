@@ -2,7 +2,7 @@
  * Normalizes `target` for EventStack, because `target` can be passed as `boolean` or `string`.
  *
  * @param {boolean|string|HTMLElement|Window} target Value for normalization.
- * @return {HTMLElement|Window} A DOM node.
+ * @returns {HTMLElement|Window} A DOM node.
  */
 const normalizeTarget = target => {
   if (target === 'document') return document

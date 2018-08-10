@@ -15,7 +15,7 @@ const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name 
  * Parses the section view of component examples and builds an object with examples titles and paths.
  *
  * @param {buffer} buffer The content of a view
- * @return {object}
+ * @returns {object}
  */
 const parseDocSection = buffer => {
   const ast = parseBuffer(buffer)

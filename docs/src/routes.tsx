@@ -7,6 +7,7 @@ import DocsRoot from './components/DocsRoot'
 
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
+import Statistics from './views/Statistics'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -14,6 +15,7 @@ const Router = () => (
       <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
+        <DocsLayout exact path="/statistics" component={Statistics} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>

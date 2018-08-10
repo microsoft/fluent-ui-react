@@ -1,5 +1,5 @@
 export * from './constants'
-export { default as componentInfoContext } from './componentInfoContext'
+export { default as componentInfo, IComponentInfoObject } from './componentInfo'
 export { default as componentInfoShape } from './componentInfoShape'
 export { default as exampleContext } from './exampleContext'
 export { default as examplePathToHash } from './examplePathToHash'
