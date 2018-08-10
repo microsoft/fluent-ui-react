@@ -14,7 +14,18 @@ class Avatar extends UIComponent<any, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = ['alt', 'as', 'className', 'getInitials', 'name', 'size', 'src', 'status']
+  static handledProps = [
+    'alt',
+    'as',
+    'className',
+    'getInitials',
+    'name',
+    'size',
+    'src',
+    'status',
+    'styles',
+    'variables',
+  ]
 
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */
@@ -48,6 +59,12 @@ class Avatar extends UIComponent<any, any> {
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {

@@ -48,8 +48,14 @@ class Icon extends UIComponent<any, any> {
       'massive',
     ]),
 
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** Render icon from SVGs collection.  */
     svg: PropTypes.bool,
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -64,7 +70,9 @@ class Icon extends UIComponent<any, any> {
     'font',
     'name',
     'size',
+    'styles',
     'svg',
+    'variables',
     'xSpacing',
   ]
 
