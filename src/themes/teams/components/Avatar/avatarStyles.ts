@@ -57,7 +57,7 @@ const avatarStyles: IComponentPartStylesInput = {
     width: pxToRem(getAvatarDimension(size)),
   }),
   imageAvatar: (): ICSSInJSStyle => ({
-    verticalAlign: 'top !important',
+    verticalAlign: 'top',
   }),
   avatarNameContainer: ({ props: { size } }): ICSSInJSStyle => ({
     display: 'inline-block',
