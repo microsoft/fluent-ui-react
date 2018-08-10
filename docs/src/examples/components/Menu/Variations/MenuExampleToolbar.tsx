@@ -18,19 +18,13 @@ class MenuExampleToolbar extends React.Component {
   render() {
     const { activeIndex } = this.state
     return (
-      <Menu
-        defaultActiveIndex={0}
-        shape="underlined"
-        type="primary"
-        accessibility={ToolbarBehavior}
-      >
+      <Menu defaultActiveIndex={0} shape="pills" accessibility={ToolbarBehavior}>
         {_.times(3, i => {
           return (
             <MenuItem
               key={items[i].key}
               content={items[i].content}
-              shape="underlined"
-              type="primary"
+              shape="pills"
               active={activeIndex === i}
               onClick={this.handleItemClick(i)}
               aria-label={`Compose Editor`}
