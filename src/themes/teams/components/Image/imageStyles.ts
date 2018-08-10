@@ -5,11 +5,11 @@ export default {
   root: ({ props, variables }): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',
-    width: variables.width || (props.fluid && '100%'),
+    width: (props.fluid && '100%') || variables.width,
     height: variables.height || 'auto',
     ...(props.circular && { borderRadius: pxToRem(9999) }),
     ...(props.avatar && {
-      width: variables.avatarSize || (props.fluid && '100%') || pxToRem(32),
+      width: (props.fluid && '100%') || variables.avatarSize,
       borderRadius: variables.avatarRadius,
     }),
   }),

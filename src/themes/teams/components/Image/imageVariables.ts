@@ -4,5 +4,5 @@ export default () => ({
   width: undefined,
   height: undefined,
   avatarRadius: pxToRem(9999),
-  avatarSize: undefined,
+  avatarSize: pxToRem(32),
 })
