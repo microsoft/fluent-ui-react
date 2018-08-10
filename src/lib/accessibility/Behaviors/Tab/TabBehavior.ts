@@ -8,7 +8,7 @@ const TabBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'tab',
       'aria-selected': props['active'],
-      tabIndex: props['active'] ? '0' : '-1',
+      tabIndex: '0',
       'aria-controls': props['aria-controls'], // id of the element that will act as a tabpanel.
     },
   },
