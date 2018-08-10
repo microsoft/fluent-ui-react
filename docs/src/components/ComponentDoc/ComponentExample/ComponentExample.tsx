@@ -14,15 +14,16 @@ import {
   knobsContext,
   repoURL,
   scrollToAnchor,
-  variablesContext,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { pxToRem, doesNodeContainClick } from 'src/lib'
+import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
 import Editor from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
+import { IThemeInput, IThemePrepared } from 'types/theme'
+import { theme as teamsTheme } from '../../../../../src/themes/teams'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -33,19 +34,19 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
 
 interface IComponentExampleState {
   knobs: Object
-  componentVariables: { [key: string]: Object }
-  exampleElement: JSX.Element
-  handleMouseLeave: () => void
-  handleMouseMove: () => void
-  sourceCode: string
-  markup: string
-  error: string
-  showCode: boolean
-  showHTML: boolean
-  showRtl: boolean
-  showVariables: boolean
-  isHovering: boolean
-  copiedCode: boolean
+  theme: IThemeInput
+  exampleElement?: JSX.Element
+  handleMouseLeave?: () => void
+  handleMouseMove?: () => void
+  sourceCode?: string
+  markup?: string
+  error?: string
+  showCode?: boolean
+  showHTML?: boolean
+  showRtl?: boolean
+  showVariables?: boolean
+  isHovering?: boolean
+  copiedCode?: boolean
 }
 
 const EDITOR_BACKGROUND_COLOR = '#1D1F21'
@@ -61,17 +62,6 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
   shorthand: 'Shorthand API',
 }
 
-const variablesPanelStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: pxToRem(250),
-  overflowY: 'auto',
-}
-
-const variableInputStyle = {
-  paddingBottom: pxToRem(10),
-}
-
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
@@ -83,7 +73,10 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private kebabExamplePath: string
   private KnobsComponent: any
 
-  public state = { knobs: {} } as IComponentExampleState
+  public state: IComponentExampleState = {
+    knobs: {},
+    theme: teamsTheme,
+  }
 
   public static contextTypes = {
     onPassed: PropTypes.func,
@@ -349,8 +342,15 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
+    const { showRtl, theme } = this.state
+
+    const newTheme: IThemeInput = {
+      componentVariables: theme.componentVariables,
+      rtl: showRtl,
+    }
+
     return (
-      <Provider componentVariables={this.state.componentVariables} rtl={this.state.showRtl}>
+      <Provider theme={mergeThemes(teamsTheme, newTheme)}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )
@@ -534,34 +534,36 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables }) => {
-            const variablesFilename = `./${displayName}/${_.camelCase(displayName)}Variables.ts`
-            const hasVariablesFile = _.includes(variablesContext.keys(), variablesFilename)
+          render={({ siteVariables, componentVariables }: IThemePrepared) => {
+            const variables = componentVariables[displayName]
 
-            if (!hasVariablesFile) {
+            if (!variables) {
               return (
                 <Segment size="small" inverted padded basic>
-                  This component has no variables to edit.
+                  {displayName} has no variables to edit.
                 </Segment>
               )
             }
 
-            const variables = variablesContext(variablesFilename).default
-            const defaultVariables = variables(siteVariables)
+            const variablesObject = callable(variables)(siteVariables)
 
             return (
-              <Form inverted style={{ padding: '1rem' }}>
-                <Form.Group inline style={variablesPanelStyle}>
-                  {_.map(defaultVariables, (val, key) => (
-                    <Form.Input
-                      style={variableInputStyle}
-                      key={key}
-                      label={key}
-                      defaultValue={val}
-                      onChange={this.handleVariableChange(displayName, key)}
-                    />
-                  ))}
-                </Form.Group>
+              <Form inverted widths="equal" style={{ padding: '1rem' }}>
+                {_.chunk(_.toPairs(variablesObject), 2).map(fields => {
+                  return (
+                    <Form.Group widths="equal" key={fields.map(([key]) => key).join('-')}>
+                      {fields.map(([key, val]) => (
+                        <Form.Input
+                          fluid
+                          key={key}
+                          label={key}
+                          defaultValue={val}
+                          onChange={this.handleVariableChange(displayName, key)}
+                        />
+                      ))}
+                    </Form.Group>
+                  )
+                })}
               </Form>
             )
           }}
@@ -573,11 +575,14 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private handleVariableChange = (component, variable) => (e, { value }) => {
     this.setState(
       state => ({
-        componentVariables: {
-          ...state.componentVariables,
-          [component]: {
-            ...(state.componentVariables && state.componentVariables[component]),
-            [variable]: value,
+        theme: {
+          ...state.theme,
+          componentVariables: {
+            ...state.theme.componentVariables,
+            [component]: {
+              ...(state.theme.componentVariables && state.theme.componentVariables[component]),
+              [variable]: value,
+            },
           },
         },
       }),

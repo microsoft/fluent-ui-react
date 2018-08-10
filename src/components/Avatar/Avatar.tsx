@@ -3,8 +3,6 @@ import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import avatarStyles from '../../themes/teams/components/Avatar/avatarStyles'
-import avatarVariables from '../../themes/teams/components/Avatar/avatarVariables'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
@@ -17,10 +15,6 @@ class Avatar extends UIComponent<any, any> {
   static displayName = 'Avatar'
 
   static handledProps = ['alt', 'as', 'className', 'getInitials', 'name', 'size', 'src', 'status']
-
-  static styles = avatarStyles
-
-  static variables = avatarVariables
 
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */

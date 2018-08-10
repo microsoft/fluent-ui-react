@@ -1,5 +1,7 @@
+import { ICSSInJSStyle } from '../../../../../types/theme'
+
 const accordionTitleStyles = {
-  root: () => ({
+  root: (): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     padding: '.5rem 0',
