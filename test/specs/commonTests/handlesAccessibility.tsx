@@ -3,7 +3,7 @@ import * as React from 'react'
 import { getTestingRenderedComponent } from 'test/utils'
 import { ButtonBehavior, DefaultBehavior } from 'src/lib/accessibility'
 
-const getProp = (renderedComponent, propName, partSelector) => {
+export const getProp = (renderedComponent, propName, partSelector) => {
   const target = partSelector
     ? renderedComponent.render().find(partSelector)
     : renderedComponent.render()

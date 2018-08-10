@@ -11,8 +11,9 @@ import headerStyles from '../../themes/teams/components/Header/headerStyles'
  * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.
  * Nest headings by their rank (or level). The most important heading has the rank 1 (<h1>), the least important heading rank 6 (<h6>). Headings with an equal or higher rank start a new section, headings with a lower rank start new subsections that are part of the higher ranked section.
  *
- * Note:
- * When description is used in header, then reader narrate both as header text.
+ *
+ * Other considerations:
+ *   When description is used in header, then reader narrate both as header text.
  */
 class Header extends UIComponent<any, any> {
   static className = 'ui-header'

@@ -20,7 +20,9 @@ import Icon from '../Icon'
  * @accessibility
  * For good screen reader experience set aria-label or aria-labelledby attribute for input.
  *
- * If input is search, then user "role='search'".
+ *
+ * Other considerations:
+ *  - if input is search, then user "role='search'"
  *
  */
 class Input extends UIComponent<any, any> {

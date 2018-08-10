@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { IconBehaviour } from '../../lib/accessibility/'
+import { IconBehavior } from '../../lib/accessibility/'
 
 import iconStyles from '../../themes/teams/components/Icon/iconStyles'
 import iconVariables from '../../themes/teams/components/Icon/iconVariables'
@@ -11,10 +11,8 @@ export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 /**
  * @accessibility
- *  Default behaviour name: IconBehavior
- *
- * Default behaviour description:
- * - Attribute "aria-hidden='true'" is applied on icon
+ * Default behavior: IconBehavior
+ *  - Attribute "aria-hidden='true'" is applied on icon
  */
 
 class Icon extends UIComponent<any, any> {
@@ -88,7 +86,7 @@ class Icon extends UIComponent<any, any> {
   static defaultProps = {
     as: 'span',
     size: 'normal',
-    accessibility: IconBehaviour,
+    accessibility: IconBehavior,
   }
 
   static styles = iconStyles
