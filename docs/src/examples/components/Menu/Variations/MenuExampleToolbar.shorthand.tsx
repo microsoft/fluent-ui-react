@@ -13,8 +13,7 @@ class MenuExampleToolbarShorthand extends React.Component {
       <Menu
         defaultActiveIndex={0}
         items={items}
-        shape="underlined"
-        type="primary"
+        shape="pills"
         accessibility={ToolbarBehavior}
         aria-label={`Compose Editor`}
       />
