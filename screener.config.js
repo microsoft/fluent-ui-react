@@ -2,6 +2,7 @@ const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
 
+// https://github.com/screener-io/screener-runner
 const screenerConfig = {
   projectRepo: 'stardust-ui/react',
 
