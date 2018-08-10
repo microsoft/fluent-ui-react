@@ -13,7 +13,7 @@ import headerStyles from '../../themes/teams/components/Header/headerStyles'
  *
  *
  * Other considerations:
- *   When description is used in header, then reader narrate both as header text.
+ *  - when description is used in header, then reader narrate both as header text.
  */
 class Header extends UIComponent<any, any> {
   static className = 'ui-header'

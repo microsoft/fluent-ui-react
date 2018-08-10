@@ -8,7 +8,6 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 /**
  * @accessibility
- *
  * If there is no text provided inside divider, then "role='separator'" should be set.
  *
  *
