@@ -24,7 +24,7 @@ const getProp = (renderedComponent, propName, partSelector) => {
 export default (Component, options: any = {}) => {
   const {
     requiredProps = {},
-    defaultRootRole = ButtonBehavior,
+    defaultRootRole = undefined,
     accessibilityOverride = ButtonBehavior,
     overridenRootRole = 'button',
     partSelector = '',
