@@ -3,8 +3,6 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
-import headerDescriptionStyles from '../../themes/teams/components/Header/headerDescriptionStyles'
-
 /**
  * Headers may contain description.
  */
@@ -27,15 +25,16 @@ class HeaderDescription extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** Custom values for styling variables. */
+    variables: PropTypes.object,
   }
 
   static defaultProps = {
     as: 'p',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content']
-
-  static styles = headerDescriptionStyles
+  static handledProps = ['as', 'children', 'className', 'content', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

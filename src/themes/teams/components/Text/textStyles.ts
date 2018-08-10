@@ -1,4 +1,5 @@
 import { Sizes } from '../../../../lib/enums'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
 
@@ -11,7 +12,7 @@ export default {
   root: ({
     props: { atMention, disabled, error, size, important, success, timestamp, truncated },
     variables: v,
-  }: TextStylesParams) => {
+  }: TextStylesParams): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
       ...(atMention && { color: v.atMentionTextColor }),

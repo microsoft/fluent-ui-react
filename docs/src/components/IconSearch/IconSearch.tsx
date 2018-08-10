@@ -3,7 +3,7 @@ import * as _ from 'lodash/fp'
 import leven from 'leven'
 import * as React from 'react'
 
-import { SUI } from 'src/lib'
+import { SUI, toCompactArray } from 'src/lib'
 import { Form, Grid, Header, Icon, Message, Popup } from 'semantic-ui-react'
 
 const gridStyle = {
@@ -107,7 +107,7 @@ export default class IconSearch extends React.Component<any, any> {
 
   renderIconColumn = (name, section?: string) => (
     <Popup
-      key={[name, section].filter(Boolean).join('_')}
+      key={toCompactArray(name, section).join('_')}
       mouseEnterDelay={1000}
       inverted
       closeOnTriggerClick={false}

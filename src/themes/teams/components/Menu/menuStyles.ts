@@ -1,11 +1,12 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }) => {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { fluid, type, shape, vertical } = props
     return {
       display: 'flex',

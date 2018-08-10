@@ -1,4 +1,6 @@
-const debugStyle = ({ name, color, style }) => ({
+import { ICSSInJSStyle } from '../../types/theme'
+
+const debugStyle = ({ name, color, style }): ICSSInJSStyle => ({
   position: 'relative',
   border: `2px ${style} ${color}`,
   '::before': {
@@ -16,19 +18,19 @@ const debugStyle = ({ name, color, style }) => ({
   },
 })
 
-export const debugRoot = () => ({
+export const debugRoot = (): ICSSInJSStyle => ({
   ...debugStyle({ name: 'LAYOUT', color: 'cornflowerblue', style: 'solid' }),
   padding: '8px',
   margin: '2px',
 })
 
-export const debugArea = () => ({
+export const debugArea = (): ICSSInJSStyle => ({
   ...debugStyle({ name: 'AREA', color: 'lightsalmon', style: 'dashed' }),
   padding: '8px',
   margin: '2px',
 })
 
-export const debugGap = ({ vertical }) => ({
+export const debugGap = ({ vertical }): ICSSInJSStyle => ({
   display: 'grid',
   background: '#ccc',
   '::before': {
@@ -39,7 +41,7 @@ export const debugGap = ({ vertical }) => ({
         }
       : {
           textOrientation: 'upright',
-          writingMode: 'tb',
+          writingMode: 'vertical-rl',
         }),
     alignSelf: 'center',
     justifySelf: 'center',

@@ -2,10 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import buttonStyles from '../../themes/teams/components/Button/buttonStyles'
-import buttonVariables, {
-  IButtonVariables,
-} from '../../themes/teams/components/Button/buttonVariables'
 import Icon from '../Icon'
 import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
@@ -20,10 +16,6 @@ class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
-
-  public static styles = buttonStyles
-
-  public static variables: (siteVars) => IButtonVariables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */

@@ -1,9 +1,9 @@
 import { pxToRem } from '../../../../lib'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
-import { IButtonVariables } from './buttonVariables'
 
-export default {
-  root: ({ props, variables }: { props: any; variables: IButtonVariables }) => {
+const buttonStyles: IComponentPartStylesInput = {
+  root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
     const { circular, disabled, fluid, icon, iconPosition, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
@@ -26,7 +26,7 @@ export default {
       typeSecondaryBorderColor,
     } = variables
 
-    const styles = {
+    return {
       height,
       minWidth,
       maxWidth,
@@ -62,42 +62,37 @@ export default {
         width: '100%',
         maxWidth: '100%',
       }),
-    }
 
-    if (disabled) {
-      return {
-        ...styles,
-        ...disabledStyle,
-      }
-    }
+      ...(disabled
+        ? disabledStyle
+        : {
+            borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+            cursor: 'pointer',
+            ':hover': {
+              backgroundColor: backgroundColorHover,
+            },
 
-    return {
-      ...styles,
+            ...(primary && {
+              color: typePrimaryColor,
+              backgroundColor: typePrimaryBackgroundColor,
+              borderColor: typePrimaryBorderColor,
+              ':hover': {
+                backgroundColor: typePrimaryBackgroundColorHover,
+              },
+            }),
 
-      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: backgroundColorHover,
-      },
-
-      ...(primary && {
-        color: typePrimaryColor,
-        backgroundColor: typePrimaryBackgroundColor,
-        borderColor: typePrimaryBorderColor,
-        ':hover': {
-          backgroundColor: typePrimaryBackgroundColorHover,
-        },
-      }),
-
-      ...(secondary && {
-        color: typeSecondaryColor,
-        backgroundColor: typeSecondaryBackgroundColor,
-        borderColor: typeSecondaryBorderColor,
-        ':hover': {
-          borderColor: 'transparent',
-          backgroundColor: typeSecondaryBackgroundColorHover,
-        },
-      }),
+            ...(secondary && {
+              color: typeSecondaryColor,
+              backgroundColor: typeSecondaryBackgroundColor,
+              borderColor: typeSecondaryBorderColor,
+              ':hover': {
+                borderColor: 'transparent',
+                backgroundColor: typeSecondaryBackgroundColorHover,
+              },
+            }),
+          }),
     }
   },
 }
+
+export default buttonStyles

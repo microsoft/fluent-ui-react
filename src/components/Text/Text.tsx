@@ -2,8 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import textStyles, { TextStylesParams } from '../../themes/teams/components/Text/textStyles'
-import textVariables, { ITextVariables } from '../../themes/teams/components/Text/textVariables'
 
 /**
  * A component containing text
@@ -63,17 +61,6 @@ class Text extends UIComponent<any, any> {
     'timestamp',
     'truncated',
   ]
-
-  static styles: {
-    root: (
-      {
-        props: { atMention, disabled, error, size, important, success, timestamp, truncated },
-        variables: v,
-      }: TextStylesParams,
-    ) => any
-  } = textStyles
-
-  static variables: (siteVars) => ITextVariables = textVariables
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props

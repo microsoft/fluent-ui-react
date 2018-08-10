@@ -1,11 +1,16 @@
 import { childrenExist, pxToRem } from '../../../../lib'
+import {
+  IComponentPartStylesInput,
+  ICSSInJSStyle,
+  ICSSPseudoElementStyle,
+} from '../../../../../types/theme'
 
-const dividerBorderStyle = (size, color) => ({
+const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
   background: color,
 })
 
-const beforeAndAfter = (size, type, variables) => ({
+const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
   ...dividerBorderStyle(size, variables.defaultBackgroundColor), // the default border style
@@ -17,8 +22,8 @@ const beforeAndAfter = (size, type, variables) => ({
   }),
 })
 
-export default {
-  root: ({ props, variables }) => {
+const dividerStyles: IComponentPartStylesInput = {
+  root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {
       marginTop: pxToRem(5 + size * 7.5),
@@ -34,11 +39,11 @@ export default {
             textAlign: 'center',
             lineHeight: 1.25,
             fontSize: pxToRem(12 + size),
-            ':before': {
+            '::before': {
               ...beforeAndAfter(size, type, variables),
               marginRight: pxToRem(22 + size * 2),
             },
-            ':after': {
+            '::after': {
               ...beforeAndAfter(size, type, variables),
               marginLeft: pxToRem(22 + size * 2),
             },
@@ -62,3 +67,5 @@ export default {
     }
   },
 }
+
+export default dividerStyles
