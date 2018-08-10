@@ -51,6 +51,12 @@ class Label extends UIComponent<any, any> {
      * @param {object} data - All props.
      */
     onIconClick: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -62,6 +68,8 @@ class Label extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onIconClick',
+    'styles',
+    'variables',
   ]
 
   static defaultProps = {

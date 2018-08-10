@@ -51,6 +51,12 @@ class MenuItem extends UIComponent<any, any> {
 
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -68,7 +74,9 @@ class MenuItem extends UIComponent<any, any> {
     'index',
     'onClick',
     'shape',
+    'styles',
     'type',
+    'variables',
     'vertical',
   ]
 

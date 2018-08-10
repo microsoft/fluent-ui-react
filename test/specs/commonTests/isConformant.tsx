@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import { shallow, mount as enzymeMount, render } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
@@ -223,6 +224,14 @@ export default (Component, options: any = {}) => {
     test('defines handled props in Component.handledProps', () => {
       expect(Component.handledProps).toBeDefined()
       expect(Array.isArray(Component.handledProps)).toEqual(true)
+    })
+
+    test(`has 'styles' as handled prop`, () => {
+      expect(Component.handledProps).toContain('styles')
+    })
+
+    test(`has 'variables' as handled prop`, () => {
+      expect(Component.handledProps).toContain('variables')
     })
 
     test('Component.handledProps includes all handled props', () => {

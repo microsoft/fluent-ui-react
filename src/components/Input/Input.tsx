@@ -43,9 +43,25 @@ class Input extends UIComponent<any, any> {
 
     /** The HTML input type. */
     type: PropTypes.string,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'fluid', 'icon', 'input', 'type']
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'fluid',
+    'icon',
+    'input',
+    'styles',
+    'type',
+    'variables',
+  ]
 
   static defaultProps = {
     as: 'div',
