@@ -5296,7 +5296,7 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
-"ngrok@github:screener-io/ngrok":
+ngrok@screener-io/ngrok:
   version "2.2.24"
   resolved "https://codeload.github.com/screener-io/ngrok/tar.gz/ca2e459b401722ae8c033491aaacaf87125cd238"
   dependencies:
