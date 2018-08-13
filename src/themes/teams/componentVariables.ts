@@ -1,5 +1,3 @@
-import felaPluginPrefixer from 'fela-plugin-prefixer'
-
 export { default as AccordionContent } from './components/Accordion/accordionContentVariables'
 
 export { default as Avatar } from './components/Avatar/avatarVariables'
