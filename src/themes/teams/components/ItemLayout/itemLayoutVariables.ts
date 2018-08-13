@@ -1,30 +1,14 @@
 import { pxToRem } from '../../../../lib'
 
-export default siteVars => {
+export default () => {
   const vars: any = {}
 
   // Item
-  vars.itemPaddingLeft = pxToRem(20)
-  vars.itemPaddingRight = pxToRem(18)
+  vars.paddingLeft = pxToRem(20)
+  vars.paddingRight = pxToRem(18)
   vars.columnGap = pxToRem(8)
 
-  vars.itemHeight = pxToRem(48)
-
-  // Header
-  // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
-  vars.headerLineHeight = siteVars.lineHeightSmall
-  vars.headerFontSize = siteVars.fontSizeBase
-
-  // Header Media
-  vars.headerMediaColor = siteVars.mutedTextColor
-  vars.headerMediaFontSize = siteVars.fontSizeSmall
-  // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
-  vars.headerMediaLineHeight = siteVars.lineHeightSmall
-
-  // Content
-  vars.contentColor = siteVars.mutedTextColor
-  vars.contentFontSize = siteVars.fontSizeSmall
-  vars.contentLineHeight = siteVars.lineHeightSmall
+  vars.height = pxToRem(48)
 
   return vars
 }

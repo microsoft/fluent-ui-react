@@ -24,6 +24,8 @@ export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
 
+export { default as ItemLayout } from './components/ItemLayout/itemLayoutStyles'
+
 export { default as List } from './components/List/listStyles'
 export { default as ListItem } from './components/List/listItemStyles'
 
