@@ -112,7 +112,10 @@ export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttrib
 export type AccessibilityEventHandlers = { [partName: string]: IEventHandlers }
 export type ActionDefinition = { [partName: string]: IActionHandler }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type Accessibility =
+  | IAccessibilityDefinition
+  | ((props: any) => IAccessibilityDefinition)
+  | ((props: any) => Accessibility)
 
 export interface IActionHandler {
   keyCombinations: KeyCombinations[]
@@ -134,18 +137,19 @@ export type IEventHandlers = {
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   actionsDefinition?: ActionDefinition
-}
-
-export type AccessibilityActionsDefinition = {
-  moveNext: (event: KeyboardEvent) => void
-  movePrevious: (event: KeyboardEvent) => void
-  moveLast: (event: KeyboardEvent) => void
-  moveFirst: (event: KeyboardEvent) => void
-  triggerClick: (event: KeyboardEvent) => void
-  [name: string]: (event: KeyboardEvent) => void,
+  actions?: AccessibilityActions
 }
 
 export type AccessibilityActions = {
-  actions: AccessibilityActionsDefinition
-  addAction: Function,
+  // moveNext: (event: KeyboardEvent) => void
+  // movePrevious: (event: KeyboardEvent) => void
+  // moveLast: (event: KeyboardEvent) => void
+  // moveFirst: (event: KeyboardEvent) => void
+  // triggerClick: (event: KeyboardEvent) => void
+  [name: string]: (event: KeyboardEvent) => void,
 }
+
+// export type AccessibilityActions = {
+//   actions: AccessibilityActionsDefinition
+//   addAction: Function,
+// }

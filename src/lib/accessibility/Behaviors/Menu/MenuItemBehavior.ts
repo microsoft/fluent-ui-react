@@ -1,33 +1,14 @@
 import { Accessibility } from '../../interfaces'
-import { KeyCodes } from '../../../KeyCodes'
+import BasicMenuItemBehavior from '../Menu/BasicMenuItemBehavior'
+import VerticalMenuItemBehavior from '../Menu/VerticalMenuItemBehavior'
 
-const MenuItemBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {
-      role: 'presentation',
-    },
-    anchor: {
-      role: 'menuitem',
-      'aria-expanded': props['submenuOpened'],
-      tabIndex: '0',
-    },
-  },
+import callable from '../../../callable'
 
-  actionsDefinition: {
-    closeSubmenu: {
-      keyCombinations: [{ keyCode: KeyCodes.escape }],
-    },
-    openSubmenu: {
-      keyCombinations: [
-        { keyCode: KeyCodes.enter },
-        { keyCode: KeyCodes.space },
-        { keyCode: KeyCodes.down },
-      ],
-    },
-    openSubmenuAndFocusLast: {
-      keyCombinations: [{ keyCode: KeyCodes.up }],
-    },
-  },
-})
+const MenuItemBehavior: Accessibility = (props: any) => {
+  const menuItemBehavior: Accessibility = props.vertical
+    ? VerticalMenuItemBehavior
+    : BasicMenuItemBehavior
+  return callable(menuItemBehavior)({ props })
+}
 
 export default MenuItemBehavior

@@ -5,12 +5,10 @@ import {
   AccessibilityEventHandlers,
   IAccessibilityDefinition,
   IActionHandler,
-  AccessibilityActionsDefinition,
   IEventHandlers,
 } from './accessibility/interfaces'
 
 import keyboardHandlerFilter from './accessibility/Helpers/keyboardHandlerFilter'
-import { actions } from './accessibility/Actions/AccessibilityActions'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -20,7 +18,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static variables?: any
   static rules?: any
   static handledProps: any
-  protected accessibilityActions: AccessibilityActionsDefinition = actions
   protected currentAccessibility: IAccessibilityDefinition
   protected elementRef: HTMLElement
   protected accEventHandlers: IEventHandlers[] = []
@@ -45,11 +42,11 @@ class UIComponent<P, S> extends React.Component<P, S> {
 
   setAccessibility = acc => (this.currentAccessibility = acc)
   setElementRef = ref => (this.elementRef = ref)
-
   attachKeyboardEventHandlers() {
     if (this.accEventHandlers.length) {
       const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
 
+      console.log(handlers)
       handlers.forEach(eventHandler => {
         eventStack.sub('keydown', eventHandler.handlers, { target: eventHandler.target })
       })
@@ -68,13 +65,13 @@ class UIComponent<P, S> extends React.Component<P, S> {
   }
 
   getAndAttachEventHandlers() {
-    for (const action in this.accessibilityActions) {
+    for (const action in this.currentAccessibility.actions) {
       const actionHandler: IActionHandler = this.currentAccessibility.actionsDefinition[action]
 
       if (!actionHandler) continue
 
       const eventHandler: Function = keyboardHandlerFilter(
-        this.accessibilityActions[action],
+        this.currentAccessibility.actions[action],
         actionHandler.keyCombinations,
       )
 

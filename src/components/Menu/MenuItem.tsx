@@ -13,7 +13,7 @@ import {
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { addAction } from '../../lib/accessibility/Actions/AccessibilityActions'
+import { AccessibilityActions } from '../../lib/accessibility/interfaces'
 
 interface MenuItemState {
   submenuOpened: boolean
@@ -100,15 +100,15 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     return { submenuOpened: false }
   }
 
-  constructor(props, state) {
-    super(props, state)
-
-    if (this.props.submenu) {
-      this.accessibilityActions['openSubmenu'] = this.handleClick
-    }
-  }
-
   componentDidMount() {
+    if (this.currentAccessibility && this.props.submenu) {
+      this.currentAccessibility.actions = {
+        openSubmenu: this.openSubmenu.bind(this),
+        toggleSubmenu: this.handleClick.bind(this),
+        closeSubmenu: this.closeSubmenu.bind(this),
+      }
+    }
+
     this.attachKeyboardEventHandlers()
   }
 
@@ -116,11 +116,30 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     this.detachKeyboardEventHandlers()
   }
 
+  openSubmenu = e => {
+    if (!this.props.submenu) return
+    this.setState({ submenuOpened: true }, () => {
+      // TODO: improve, focus submenu first item
+      e.target.lastElementChild.firstElementChild.focus()
+    })
+  }
+
+  closeSubmenu = e => {
+    if (!this.props.submenu) return
+
+    const elemToFocus = this.elementRef
+    this.setState({ submenuOpened: false }, () => {
+      // TODO: improve, focus parent menu item
+      elemToFocus.focus()
+    })
+  }
+
   handleClick = e => {
-    if (this.props.submenu) {
+    if (!this.props.submenu) {
       this.setState({ submenuOpened: !this.state.submenuOpened })
     } else {
       alert(this.props.content)
+      e.stopPropagation()
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
@@ -137,9 +156,10 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         onClick={this.handleClick}
         {...accessibility.attributes.anchor}
         {...rest}
+        ref={this.setElementRef}
       >
         {childrenExist(children) ? (
-          <div>{children}</div>
+          <span>{children}</span>
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}

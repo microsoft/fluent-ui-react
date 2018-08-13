@@ -67,6 +67,11 @@ class Menu extends AutoControlledComponent<any, any> {
   ]
 
   componentDidMount() {
+    // if (this.currentAccessibility) {
+    //   this.currentAccessibility.actions['moveNext'] = () => {
+    //     console.log('move next')
+    //   }
+    // }
     this.attachKeyboardEventHandlers()
   }
 
