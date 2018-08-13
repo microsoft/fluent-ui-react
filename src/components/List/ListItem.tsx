@@ -4,8 +4,6 @@ import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
-import listVariables from '../../themes/teams/components/List/listItemVariables'
-import listItemStyles from '../../themes/teams/components/List/listItemStyles'
 import { ListItemBehavior } from '../../lib/accessibility'
 
 class ListItem extends UIComponent<any, any> {
@@ -14,10 +12,6 @@ class ListItem extends UIComponent<any, any> {
   static displayName = 'ListItem'
 
   static className = 'ui-list__item'
-
-  static styles = listItemStyles
-
-  static variables = listVariables
 
   static propTypes = {
     as: customPropTypes.as,

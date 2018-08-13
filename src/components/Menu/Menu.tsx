@@ -4,16 +4,12 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import menuStyles from '../../themes/teams/components/Menu/menuStyles'
-import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
-
-  static variables = menuVariables
 
   static create: Function
 
@@ -71,8 +67,6 @@ class Menu extends AutoControlledComponent<any, any> {
   ]
 
   static autoControlledProps = ['activeIndex']
-
-  static styles = menuStyles
 
   static Item = MenuItem
 

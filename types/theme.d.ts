@@ -13,6 +13,7 @@ import * as React from 'react'
 // Utilities
 // ========================================================
 
+type OneOrArray<T> = T | T[]
 type ObjectOf<T> = { [key: string]: T }
 
 // ========================================================
@@ -32,15 +33,13 @@ export interface ISiteVariables {
   htmlFontSize?: string
 }
 
-export type ComponentVariableValue = string | number | boolean
+export type ComponentVariablesObject = any
 
-export type ComponentVariablesObject = ObjectOf<ComponentVariableValue>
-
-export type ComponentVariablesFunction = (
+export type ComponentVariablesPrepared = (
   siteVariables?: ISiteVariables,
 ) => ComponentVariablesObject
 
-export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesFunction
+export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
 
 // ========================================================
 // Styles
@@ -62,12 +61,26 @@ export interface ICSSInJSStyle extends React.CSSProperties {
   ':active'?: ICSSInJSStyle
   ':focus'?: ICSSInJSStyle
   ':visited'?: ICSSInJSStyle
+
+  // TODO Questionable: avoid order specific styles
+  ':first-child'?: ICSSInJSStyle
+  ':last-child'?: ICSSInJSStyle
+  ':nth-child(n+2)'?: ICSSInJSStyle
+
+  // TODO Questionable: unsupported by autoprefixer, one-off vendors
+  // we could expand these ourselves so that "font-smoothing" works, but which values?
+  '-webkit-font-smoothing'?:
+    | CSSType.Globals
+    | 'auto'
+    | 'none'
+    | 'antialiased'
+    | 'subpixel-antialiased'
+  '-moz-osx-font-smoothing'?: CSSType.Globals | 'auto' | 'grayscale'
 }
 
 export interface ComponentStyleFunctionParam {
   props: IProps
   variables: ComponentVariablesObject
-  rtl: boolean
 }
 
 export type ComponentPartStyleFunction = (styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle
@@ -85,6 +98,28 @@ export interface IComponentPartStylesPrepared {
 
   root?: ComponentPartStyleFunction
 }
+
+export interface IComponentPartClasses {
+  [part: string]: string
+
+  root?: string
+}
+
+// ========================================================
+// Static Styles
+// ========================================================
+
+export type StaticStyleObject = {
+  [selector: string]: ICSSInJSStyle
+}
+
+export type StaticStyleRenderable = string | StaticStyleObject
+
+export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleObject
+
+export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
+
+export type StaticStyles = OneOrArray<StaticStyle>
 
 // ========================================================
 // Theme
@@ -108,7 +143,7 @@ export interface IThemeInput {
 export interface IThemePrepared {
   siteVariables: ISiteVariables
   componentVariables: {
-    [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesFunction
+    [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesPrepared
   }
   componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
   rtl: boolean
@@ -169,20 +204,41 @@ export interface IThemeComponentVariablesInput {
 }
 
 export interface IThemeComponentVariablesPrepared {
-  Accordion?: ComponentVariablesFunction
-  Avatar?: ComponentVariablesFunction
-  Button?: ComponentVariablesFunction
-  Chat?: ComponentVariablesFunction
-  Divider?: ComponentVariablesFunction
-  Header?: ComponentVariablesFunction
-  Icon?: ComponentVariablesFunction
-  Image?: ComponentVariablesFunction
-  Input?: ComponentVariablesFunction
-  Label?: ComponentVariablesFunction
-  Layout?: ComponentVariablesFunction
-  ListItem?: ComponentVariablesFunction
-  Menu?: ComponentVariablesFunction
-  Text?: ComponentVariablesFunction
+  Accordion?: ComponentVariablesPrepared
+  Avatar?: ComponentVariablesPrepared
+  Button?: ComponentVariablesPrepared
+  Chat?: ComponentVariablesPrepared
+  Divider?: ComponentVariablesPrepared
+  Header?: ComponentVariablesPrepared
+  Icon?: ComponentVariablesPrepared
+  Image?: ComponentVariablesPrepared
+  Input?: ComponentVariablesPrepared
+  Label?: ComponentVariablesPrepared
+  Layout?: ComponentVariablesPrepared
+  ListItem?: ComponentVariablesPrepared
+  Menu?: ComponentVariablesPrepared
+  Text?: ComponentVariablesPrepared
 }
 
 export interface IRenderer extends IFelaRenderer {}
+
+// ========================================================
+// Fonts
+// ========================================================
+
+export interface IFontFaceStyle {
+  fontStretch?: string
+  fontStyle?: string
+  fontVariant?: string
+  fontWeight?: number
+  localAlias?: string
+  unicodeRange?: string
+}
+
+export interface IFontFace {
+  name: string
+  paths: string[]
+  style: IFontFaceStyle
+}
+
+export type FontFaces = IFontFace[]

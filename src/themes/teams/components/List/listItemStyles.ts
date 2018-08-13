@@ -1,9 +1,11 @@
 import { pxToRem } from '../../../../lib'
 import { debugRoot } from '../../../../styles/debugStyles'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 const listItemStyles = {
-  root: ({ props, variables }) => {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { debugLayout, important, selection } = props
+
     return {
       ...(debugLayout && debugRoot()),
       gridTemplateRows: `minmax(${variables.height}, max-content)`,
@@ -26,7 +28,7 @@ const listItemStyles = {
     }
   },
 
-  media: ({ props }) => {
+  media: ({ props }): ICSSInJSStyle => {
     const { important } = props
     return {
       ...(important && {
@@ -42,22 +44,22 @@ const listItemStyles = {
     }
   },
 
-  header: ({ props, variables }) => ({
+  header: ({ props, variables }): ICSSInJSStyle => ({
     lineHeight: variables.headerLineHeight,
   }),
 
-  headerMedia: ({ props, variables }) => ({
+  headerMedia: ({ props, variables }): ICSSInJSStyle => ({
     color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
 
-  content: ({ props, variables }) => ({
+  content: ({ props, variables }): ICSSInJSStyle => ({
     color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),
-  contentMedia: () => ({}),
+  contentMedia: (): ICSSInJSStyle => ({}),
 }
 
 export default listItemStyles

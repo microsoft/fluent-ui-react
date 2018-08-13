@@ -1,9 +1,10 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
-export default {
-  root: ({ props, variables }) => ({
+const labelStyles = {
+  root: ({ props, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
-    fontWeight: '500',
+    fontWeight: 500,
     backgroundColor: 'rgb(232, 232, 232)',
     color: variables.color,
     borderRadius: pxToRem(3),
@@ -11,7 +12,7 @@ export default {
       borderRadius: variables.circularRadius,
     }),
   }),
-  icon: ({ props }) => ({
+  icon: ({ props }): ICSSInJSStyle => ({
     position: 'relative',
     top: '-0.15em',
     ...((props.onIconClick ||
@@ -20,3 +21,5 @@ export default {
     }),
   }),
 }
+
+export default labelStyles
