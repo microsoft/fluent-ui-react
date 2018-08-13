@@ -3,7 +3,6 @@ import { pxToRem } from '../../../../lib'
 export default () => {
   const vars: any = {}
 
-  // Item
   vars.paddingLeft = pxToRem(20)
   vars.paddingRight = pxToRem(18)
   vars.columnGap = pxToRem(8)
