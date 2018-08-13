@@ -8,5 +8,6 @@ export default () => {
   vars.backgroundColor = 'rgb(232, 232, 232)'
   vars.startPaddingLeft = '0px'
   vars.endPaddingRight = '0px'
+  vars.height = pxToRem(20)
   return vars
 }

@@ -10,19 +10,29 @@ const Content = () => (
       examplePath="components/Label/Content/LabelExample"
     />
     <ComponentExample
-      title="Start"
-      description="A label can contain media displayed at the start of it."
-      examplePath="components/Label/Content/LabelExampleStart"
+      title="Image"
+      description="A label can contain image."
+      examplePath="components/Label/Content/LabelExampleImage"
     />
     <ComponentExample
-      title="End"
-      description="A label can contain media displayed at the start of it."
-      examplePath="components/Label/Content/LabelExampleEnd"
+      title="Image position"
+      description="The image in the Label can be positioned to appear in the ending of the Label."
+      examplePath="components/Label/Content/LabelExampleImagePosition"
     />
     <ComponentExample
-      title="Start & End"
-      description="A label can contain media displayed both on the start and end end."
-      examplePath="components/Label/Content/LabelExampleStartEnd"
+      title="Icon"
+      description="A label can contain icon."
+      examplePath="components/Label/Content/LabelExampleIcon"
+    />
+    <ComponentExample
+      title="Icon position"
+      description="The icon in the Label can be positioned to appear in the starting of the Label."
+      examplePath="components/Label/Content/LabelExampleIconPosition"
+    />
+    <ComponentExample
+      title="Content customization"
+      description="The content props in the label can be customized."
+      examplePath="components/Label/Content/LabelExampleContentCustomization"
     />
   </ExampleSection>
 )

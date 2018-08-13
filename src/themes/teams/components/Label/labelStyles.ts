@@ -1,25 +1,23 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 
-const getLabelHeight = () => {
-  return pxToRem(20)
-}
-
-export default {
-  root: ({ props: { start, end, circular }, variables }): ICSSInJSStyle => ({
+const labelStyles = {
+  root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
-    ...(start && {
-      paddingLeft: variables.startPaddingLeft,
-    }),
-    ...(end && {
-      paddingRight: variables.endPaddingRight,
-    }),
+    ...(image &&
+      imagePosition === 'start' && {
+        paddingLeft: variables.startPaddingLeft,
+      }),
+    ...(image &&
+      imagePosition === 'end' && {
+        paddingRight: variables.endPaddingRight,
+      }),
     display: 'inline-flex',
     alignItems: 'center',
-    height: getLabelHeight(),
+    height: variables.height,
     margin: `${pxToRem(4)} 0 0 ${pxToRem(4)}`,
     fontSize: pxToRem(14),
-    lineHeight: getLabelHeight(),
+    lineHeight: variables.height,
     backgroundColor: variables.backgroundColor,
     color: variables.color,
     borderRadius: pxToRem(3),
@@ -27,6 +25,10 @@ export default {
       borderRadius: variables.circularRadius,
     }),
     overflow: 'hidden',
+  }),
+  image: ({ variables }): ICSSInJSStyle => ({
+    height: variables.height,
+    width: variables.height,
   }),
 }
 
