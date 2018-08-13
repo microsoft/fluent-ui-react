@@ -153,7 +153,7 @@ class ItemLayout extends UIComponent<any, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const {
       as,
       debug,
@@ -175,10 +175,11 @@ class ItemLayout extends UIComponent<any, any> {
     return (
       <Layout
         as={as}
+        className={classes.root}
+        styles={{ root: styles.root }}
         rootCSS={rootCSS}
         alignItems="center"
         gap={pxToRem(8)}
-        className={classes.root}
         debug={debug}
         reducing
         start={

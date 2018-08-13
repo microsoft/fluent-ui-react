@@ -111,6 +111,7 @@ class ListItem extends UIComponent<any, any> {
       <ItemLayout
         as={as}
         className={classes.root}
+        rootCSS={styles.root}
         content={content}
         contentMedia={!isHovering && contentMedia}
         debug={debug}
