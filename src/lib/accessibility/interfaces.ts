@@ -103,7 +103,6 @@ export interface IAriaWidgetAttributes {
 }
 
 import { KeyCodes } from '../KeyCodes'
-
 export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   role?: AriaRole
   tabIndex?: string
@@ -111,17 +110,25 @@ export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
 export type AccessibilityEventHandlers = { [partName: string]: IEventHandlers }
-export type ActionDefinition = { [partName: string]: IActionHandler[] }
+export type ActionDefinition = { [partName: string]: IActionHandler }
+
+export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
 
 export interface IActionHandler {
-  eventName: string
-  keyCodes?: KeyCodes[]
-  eventDecorator?: Function
+  keyCombinations: KeyCombinations[]
 }
 
-export interface IEventHandlers {
+export interface KeyCombinations {
+  keyCode: KeyCodes
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
+
+export type IEventHandlers = {
   handlers: Function[]
-  target: HTMLElement
+  target: HTMLElement,
 }
 
 export interface IAccessibilityDefinition {
@@ -129,4 +136,16 @@ export interface IAccessibilityDefinition {
   actionsDefinition?: ActionDefinition
 }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type AccessibilityActionsDefinition = {
+  moveNext: (event: KeyboardEvent) => void
+  movePrevious: (event: KeyboardEvent) => void
+  moveLast: (event: KeyboardEvent) => void
+  moveFirst: (event: KeyboardEvent) => void
+  triggerClick: (event: KeyboardEvent) => void
+  [name: string]: (event: KeyboardEvent) => void,
+}
+
+export type AccessibilityActions = {
+  actions: AccessibilityActionsDefinition
+  addAction: Function,
+}

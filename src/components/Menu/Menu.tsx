@@ -66,6 +66,14 @@ class Menu extends AutoControlledComponent<any, any> {
     'vertical',
   ]
 
+  componentDidMount() {
+    this.attachKeyboardEventHandlers()
+  }
+
+  componentWillUnmount() {
+    this.detachKeyboardEventHandlers()
+  }
+
   static autoControlledProps = ['activeIndex']
 
   static rules = menuRules
@@ -102,8 +110,16 @@ class Menu extends AutoControlledComponent<any, any> {
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
+
+    this.setAccessibility(accessibility)
+
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={classes.root}
+        ref={this.setElementRef}
+      >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

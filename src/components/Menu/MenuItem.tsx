@@ -3,12 +3,23 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  AutoControlledComponent,
+  customPropTypes,
+  UIComponent,
+} from '../../lib'
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
+import { addAction } from '../../lib/accessibility/Actions/AccessibilityActions'
 
-class MenuItem extends UIComponent<any, any> {
+interface MenuItemState {
+  submenuOpened: boolean
+}
+
+class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -57,6 +68,10 @@ class MenuItem extends UIComponent<any, any> {
 
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    submenu: PropTypes.node,
+    submenuOpened: PropTypes.bool,
+    defaultSubmenuOpened: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -76,63 +91,38 @@ class MenuItem extends UIComponent<any, any> {
     'shape',
     'type',
     'vertical',
+    'submenu',
   ]
 
-  setAccessibility = acc => (this.currentAccessibility = acc)
-  setElementRef = ref => (this.elementRef = ref)
+  static autoControlledProps = ['submenuOpened']
+
+  getInitialAutoControlledState() {
+    return { submenuOpened: false }
+  }
+
+  constructor(props, state) {
+    super(props, state)
+
+    if (this.props.submenu) {
+      this.accessibilityActions['openSubmenu'] = this.handleClick
+    }
+  }
 
   componentDidMount() {
-    this.attachEventHandlers()
+    this.attachKeyboardEventHandlers()
   }
 
   componentWillUnmount() {
-    this.detachEventHandlers()
-  }
-
-  actions = {
-    moveLeft: this.onArrowLeft,
-    moveUp: this.onArrowUp,
-    moveRight: this.onArrowRight,
-    moveDown: this.onArrowDown,
-    triggerClick: this.triggerClick,
-    moveFisrst: this.onHome,
-    moveLast: this.onEnd,
-    closeSubmenu: this.onEsc,
-  }
-
-  onArrowLeft(event: Event) {
-    console.log(event, 'on arrow left')
-  }
-
-  onArrowUp(event: Event) {
-    console.log(event, 'on arrow up')
-  }
-
-  onArrowRight(event: Event) {
-    console.log(event, 'on arrow right')
-  }
-
-  onArrowDown(event: Event) {
-    console.log(event, 'on arrow right')
-  }
-
-  onEsc(event: Event) {
-    console.log(event, 'on arrow Esc')
-  }
-
-  triggerClick(event: Event) {
-    console.log(event, 'on space, enter, or click')
-  }
-
-  onHome(event: Event) {
-    console.log(event, 'on Home')
-  }
-
-  onEnd(event: Event) {
-    console.log(event, 'on End')
+    this.detachKeyboardEventHandlers()
   }
 
   handleClick = e => {
+    if (this.props.submenu) {
+      this.setState({ submenuOpened: !this.state.submenuOpened })
+    } else {
+      alert(this.props.content)
+    }
+
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
@@ -147,10 +137,9 @@ class MenuItem extends UIComponent<any, any> {
         onClick={this.handleClick}
         {...accessibility.attributes.anchor}
         {...rest}
-        ref={this.setElementRef}
       >
         {childrenExist(children) ? (
-          children
+          <div>{children}</div>
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
@@ -159,6 +148,7 @@ class MenuItem extends UIComponent<any, any> {
             {content}
           </a>
         )}
+        {this.state.submenuOpened && this.props.submenu}
       </ElementType>
     )
   }

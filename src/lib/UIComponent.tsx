@@ -5,7 +5,12 @@ import {
   AccessibilityEventHandlers,
   IAccessibilityDefinition,
   IActionHandler,
+  AccessibilityActionsDefinition,
+  IEventHandlers,
 } from './accessibility/interfaces'
+
+import keyboardHandlerFilter from './accessibility/Helpers/keyboardHandlerFilter'
+import { actions } from './accessibility/Actions/AccessibilityActions'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -15,10 +20,10 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static variables?: any
   static rules?: any
   static handledProps: any
-  protected actions: any
+  protected accessibilityActions: AccessibilityActionsDefinition = actions
   protected currentAccessibility: IAccessibilityDefinition
   protected elementRef: HTMLElement
-  protected accEventHandlers: AccessibilityEventHandlers[] = []
+  protected accEventHandlers: IEventHandlers[] = []
 
   constructor(props, context) {
     super(props, context)
@@ -38,59 +43,57 @@ class UIComponent<P, S> extends React.Component<P, S> {
     throw new Error('renderComponent is not implemented.')
   }
 
-  attachEventHandlers() {
+  setAccessibility = acc => (this.currentAccessibility = acc)
+  setElementRef = ref => (this.elementRef = ref)
+
+  attachKeyboardEventHandlers() {
     if (this.accEventHandlers.length) {
       const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
 
       handlers.forEach(eventHandler => {
-        const eventName = Object.keys(eventHandler)[0]
-        const handler = eventHandler[eventName]
-        eventStack.sub(eventName, handler.handlers, { target: handler.target })
+        eventStack.sub('keydown', eventHandler.handlers, { target: eventHandler.target })
       })
     } else {
       this.getAndAttachEventHandlers()
     }
   }
 
-  detachEventHandlers() {
+  detachKeyboardEventHandlers() {
     if (this.accEventHandlers.length) {
       const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
       handlers.forEach(eventHandler => {
-        eventStack.unsub(eventHandler.name, eventHandler.handlers, { target: eventHandler.target })
+        eventStack.unsub('keydown', eventHandler.handlers, { target: eventHandler.target })
       })
     }
   }
 
   getAndAttachEventHandlers() {
-    for (const action in this.actions) {
-      const actionHandlers: IActionHandler[] = this.currentAccessibility.actionsDefinition[action]
+    for (const action in this.accessibilityActions) {
+      const actionHandler: IActionHandler = this.currentAccessibility.actionsDefinition[action]
 
-      actionHandlers.forEach(actionHandler => {
-        const eventHandler: Function = actionHandler.eventDecorator
-          ? actionHandler.eventDecorator(this.actions[action], actionHandler.keyCodes)
-          : this.actions[action]
+      if (!actionHandler) continue
 
-        const accEventHandler = this.accEventHandlers.filter(itm => {
-          return (
-            itm[actionHandler.eventName] && itm[actionHandler.eventName].target === this.elementRef
-          )
-        })[0]
+      const eventHandler: Function = keyboardHandlerFilter(
+        this.accessibilityActions[action],
+        actionHandler.keyCombinations,
+      )
 
-        if (accEventHandler) {
-          accEventHandler[actionHandler.eventName].handlers.push(eventHandler)
-        } else {
-          this.accEventHandlers.push({
-            [actionHandler.eventName]: {
-              handlers: [eventHandler],
-              target: this.elementRef,
-            },
-          })
-        }
-      })
+      const accEventHandler = this.accEventHandlers.filter(itm => {
+        return itm.target === this.elementRef
+      })[0]
+
+      if (accEventHandler) {
+        accEventHandler.handlers.push(eventHandler)
+      } else {
+        this.accEventHandlers.push({
+          handlers: [eventHandler],
+          target: this.elementRef,
+        })
+      }
     }
 
     if (this.accEventHandlers.length) {
-      this.attachEventHandlers()
+      this.attachKeyboardEventHandlers()
     }
   }
 
