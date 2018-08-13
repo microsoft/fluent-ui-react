@@ -93,7 +93,7 @@ class MenuItem extends UIComponent<any, any> {
         {childrenExist(children) ? (
           children
         ) : (
-          <a
+          <button
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
@@ -103,7 +103,7 @@ class MenuItem extends UIComponent<any, any> {
                 defaultProps: { xSpacing: !!content ? 'after' : 'none' },
               })}
             {content}
-          </a>
+          </button>
         )}
       </ElementType>
     )

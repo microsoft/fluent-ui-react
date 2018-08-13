@@ -34,6 +34,14 @@ const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJ
   }
 }
 
+const linkAsButtonExperiment: ICSSInJSStyle = {
+  background: 'none',
+  border: 'none',
+  textAlign: 'left',
+  width: '100%',
+  lineHeight: 1,
+}
+
 const menuItemStyles = {
   root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
     const { active, icons, shape, type, vertical } = props
@@ -130,6 +138,7 @@ const menuItemStyles = {
     return {
       color: 'inherit',
       display: 'block',
+      ...linkAsButtonExperiment,
       ...(shape === 'underlined'
         ? { padding: `0 0 ${pxToRem(8)} 0` }
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
