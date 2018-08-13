@@ -1,14 +1,15 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 export default {
-  root: ({ props, variables }) => ({
+  root: ({ props, variables }): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',
-    width: variables.width || (props.fluid && '100%'),
+    width: (props.fluid && '100%') || variables.width,
     height: variables.height || 'auto',
     ...(props.circular && { borderRadius: pxToRem(9999) }),
     ...(props.avatar && {
-      width: variables.avatarSize,
+      width: (props.fluid && '100%') || variables.avatarSize,
       borderRadius: variables.avatarRadius,
     }),
   }),

@@ -4,8 +4,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import menuItemStyles from '../../themes/teams/components/Menu/menuItemStyles'
-import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {
@@ -13,11 +11,7 @@ class MenuItem extends UIComponent<any, any> {
 
   static className = 'ui-menu__item'
 
-  static variables = menuVariables
-
   static create: Function
-
-  static styles = menuItemStyles
 
   static propTypes = {
     /** A menu item can be active. */
@@ -86,17 +80,13 @@ class MenuItem extends UIComponent<any, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        onClick={this.handleClick}
-        {...accessibility.attributes.root}
-        {...rest}
-      >
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         {childrenExist(children) ? (
           children
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
+            onClick={this.handleClick}
             {...accessibility.attributes.anchor}
           >
             {content}
