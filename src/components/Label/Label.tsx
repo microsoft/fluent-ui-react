@@ -141,12 +141,6 @@ class Label extends UIComponent<any, any> {
       }
     }
 
-    if (icon && iconPosition === 'start' && imagePosition !== 'start') {
-      start = iconElement
-    } else if (icon && iconPosition === 'end' && (!image || imagePosition !== 'end')) {
-      end = iconElement
-    }
-
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? (
