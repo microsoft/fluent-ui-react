@@ -5,6 +5,7 @@ const ToolbarBehavior: Accessibility = (props: any) => ({
     root: {
       role: 'toolbar',
       'aria-label': props['aria-label'],
+      'aria-disabled': !!props['disabled'],
     },
   },
 })
