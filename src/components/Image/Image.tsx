@@ -31,9 +31,24 @@ class Image extends UIComponent<any, any> {
 
     /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className', 'fluid']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'avatar',
+    'circular',
+    'className',
+    'fluid',
+    'styles',
+    'variables',
+  ]
 
   static defaultProps = {
     as: 'img',
