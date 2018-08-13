@@ -1,4 +1,6 @@
 export interface IMenuVariables {
+  [key: string]: string | number
+
   defaultColor: string
   defaultActiveColor: string
   defaultActiveBackgroundColor: string

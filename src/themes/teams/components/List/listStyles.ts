@@ -1,11 +1,8 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-
-// ----------------------------------------
-// Root
-// ----------------------------------------
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 const listStyles = {
-  root: ({ props }) => {
+  root: ({ props }): ICSSInJSStyle => {
     const { as, debugLayout } = props
     return {
       ...(debugLayout && debugRoot()),

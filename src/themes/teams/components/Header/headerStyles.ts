@@ -1,5 +1,8 @@
+import { ICSSInJSStyle } from '../../../../../types/theme'
+
 export default {
-  root: ({ props }) => ({
+  root: ({ props, variables: v }): ICSSInJSStyle => ({
+    color: v.color,
     textAlign: props.textAlign,
     display: 'block',
     ...(props.description && { marginBottom: 0 }),

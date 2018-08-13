@@ -3,14 +3,11 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import layoutStyles from '../../themes/teams/components/Layout/layoutStyles'
 
 class Layout extends UIComponent<any, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
-
-  static styles = layoutStyles
 
   static propTypes = {
     as: customPropTypes.as,

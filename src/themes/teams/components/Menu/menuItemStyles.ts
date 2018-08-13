@@ -1,16 +1,18 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IMenuVariables } from './menuVariables'
 
-const underlinedItem = (color: string) => ({
+const underlinedItem = (color): ICSSInJSStyle => ({
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({ props, variables }) => {
+const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
   const { active, icons, shape, type, vertical } = props
   return {
     ...((!shape || shape === 'pointing') &&
       !icons && {
-        ':before': {
+        '::before': {
           position: 'absolute',
           content: '""',
           top: 0,
@@ -22,16 +24,18 @@ const itemSeparator = ({ props, variables }) => {
           }),
         },
         ...(vertical && {
-          ':first-child:before': {
-            display: 'none',
+          ':first-child': {
+            '::before': {
+              display: 'none',
+            },
           },
         }),
       }),
   }
 }
 
-export default {
-  root: ({ props, variables }) => {
+const menuItemStyles = {
+  root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
     const { active, icons, shape, type, vertical } = props
     const { iconsMenuItemSpacing } = variables
     return {
@@ -92,7 +96,7 @@ export default {
           }),
         },
         ...(shape === 'pointing' && {
-          ':after': {
+          '::after': {
             visibility: 'visible',
             background: variables.defaultActiveBackgroundColor,
             position: 'absolute',
@@ -106,7 +110,7 @@ export default {
             border: 'none',
             borderBottom: `1px solid ${variables.defaultBorderColor}`,
             borderRight: `1px solid ${variables.defaultBorderColor}`,
-            zIndex: '2',
+            zIndex: 2,
             transition: 'background .1s ease',
             ...(type === 'primary' && {
               background: variables.typePrimaryActiveBackgroundColor,
@@ -119,7 +123,7 @@ export default {
     }
   },
 
-  anchor: ({ props, variables }) => {
+  anchor: ({ props, variables }): ICSSInJSStyle => {
     const { active, icons, shape, type } = props
     const { iconsMenuItemSize } = variables
 
@@ -163,9 +167,11 @@ export default {
                 ...underlinedItem(variables.typePrimaryActiveColor),
               }
             : {
-                fontWeight: '700',
+                fontWeight: 700,
               }),
         }),
     }
   },
 }
+
+export default menuItemStyles

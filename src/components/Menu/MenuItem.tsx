@@ -4,11 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
 import Icon from '../Icon'
-
-import menuItemStyles from '../../themes/teams/components/Menu/menuItemStyles'
-import menuVariables from '../../themes/teams/components/Menu/menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
 
 class MenuItem extends UIComponent<any, any> {
@@ -16,11 +12,7 @@ class MenuItem extends UIComponent<any, any> {
 
   static className = 'ui-menu__item'
 
-  static variables = menuVariables
-
   static create: Function
-
-  static styles = menuItemStyles
 
   static propTypes = {
     /** A menu item can be active. */

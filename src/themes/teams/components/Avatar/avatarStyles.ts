@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { PositionProperty } from 'csstype'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
 const getAvatarDimension = (size: number) => {
   return 12 + size * 4
@@ -48,20 +48,18 @@ const getAvatarFontSize = (size: number) => {
   return getAvatarDimension(size) / 2
 }
 
-export default {
-  root: ({ props: { size } }) => ({
+const avatarStyles: IComponentPartStylesInput = {
+  root: ({ props: { size } }): ICSSInJSStyle => ({
     backgroundColor: 'inherit',
     display: 'inline-block',
     verticalAlign: 'top',
     height: pxToRem(getAvatarDimension(size)),
     width: pxToRem(getAvatarDimension(size)),
   }),
-  imageAvatar: ({ props: { size } }) => ({
-    width: pxToRem(getAvatarDimension(size)),
-    height: pxToRem(getAvatarDimension(size)),
-    verticalAlign: 'top !important',
+  imageAvatar: (): ICSSInJSStyle => ({
+    verticalAlign: 'top',
   }),
-  avatarNameContainer: ({ props: { size } }) => ({
+  avatarNameContainer: ({ props: { size } }): ICSSInJSStyle => ({
     display: 'inline-block',
     width: pxToRem(getAvatarDimension(size)),
     height: pxToRem(getAvatarDimension(size)),
@@ -70,8 +68,8 @@ export default {
     verticalAlign: 'top',
     textAlign: 'center',
   }),
-  presenceIndicatorWrapper: ({ props: { size }, variables: v }) => ({
-    position: 'relative' as PositionProperty,
+  presenceIndicatorWrapper: ({ props: { size }, variables: v }): ICSSInJSStyle => ({
+    position: 'relative',
     top: `-${pxToRem(getPresenceIndicatorWrapperTop(size))}`,
     left: pxToRem(getPresenceIndicatorWrapperLeft(size)),
     display: 'table',
@@ -79,7 +77,9 @@ export default {
     borderRadius: '9999px',
     backgroundColor: v.presenceIndicatorBackground,
   }),
-  presenceIndicator: () => ({
+  presenceIndicator: (): ICSSInJSStyle => ({
     display: 'table-cell',
   }),
 }
+
+export default avatarStyles
