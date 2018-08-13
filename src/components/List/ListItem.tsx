@@ -107,10 +107,6 @@ class ListItem extends UIComponent<any, any> {
       ...hoveringSelectionCSS,
     }
 
-    console.log(headerCSS)
-    console.log(headerMediaCSS)
-    console.log(contentCSS)
-
     return (
       <ItemLayout
         as={as}
