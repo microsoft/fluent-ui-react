@@ -1,9 +1,11 @@
 import { KeyCombinations } from '../interfaces'
 import keyboardKey from 'keyboard-key'
 
-const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinations[]) => (
-  event: KeyboardEvent,
-) => {
+const keyboardHandlerFilter = (
+  handler: Function,
+  keysCombinations: KeyCombinations[],
+  target: HTMLElement,
+) => (event: KeyboardEvent) => {
   const filteredKeys = keysCombinations.filter(keysCombinations => {
     const keyCode = keysCombinations.keyCode
 
@@ -18,7 +20,7 @@ const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinati
   })
   if (!filteredKeys.length) return
 
-  handler(event)
+  handler(event, target)
 }
 
 export default keyboardHandlerFilter

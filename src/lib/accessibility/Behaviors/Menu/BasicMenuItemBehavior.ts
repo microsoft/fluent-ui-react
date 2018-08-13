@@ -21,9 +21,6 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
         { keyCode: KeyCodes.left },
       ],
     },
-    toggleSubmenu: {
-      keyCombinations: [{ keyCode: KeyCodes.enter }, { keyCode: KeyCodes.space }],
-    },
     openSubmenu: {
       keyCombinations: [
         { keyCode: KeyCodes.enter },
@@ -38,3 +35,25 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
 })
 
 export default BasicMenuItemBehavior
+
+interface INavigable {
+  next()
+  prev()
+}
+
+interface IListNavigable extends INavigable {
+  first()
+  last()
+}
+
+interface IActionable {
+  OnAction()
+}
+
+interface ICancalable {
+  OnEsc()
+}
+
+interface IMenuNvigable extends IListNavigable {}
+
+interface IMenuItemNavigable extends IListNavigable, IActionable, ICancalable {}

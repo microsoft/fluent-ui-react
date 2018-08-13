@@ -7,6 +7,7 @@ import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 import menuVariables from './menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
+import DefaultActions from '../../lib/accessibility/Actions/DefaultActions'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -66,12 +67,12 @@ class Menu extends AutoControlledComponent<any, any> {
     'vertical',
   ]
 
+  constructor(p, s) {
+    super(p, s)
+    this.actions = DefaultActions
+  }
+
   componentDidMount() {
-    // if (this.currentAccessibility) {
-    //   this.currentAccessibility.actions['moveNext'] = () => {
-    //     console.log('move next')
-    //   }
-    // }
     this.attachKeyboardEventHandlers()
   }
 

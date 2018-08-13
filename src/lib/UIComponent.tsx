@@ -6,6 +6,7 @@ import {
   IAccessibilityDefinition,
   IActionHandler,
   IEventHandlers,
+  AccessibilityActions,
 } from './accessibility/interfaces'
 
 import keyboardHandlerFilter from './accessibility/Helpers/keyboardHandlerFilter'
@@ -21,6 +22,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   protected currentAccessibility: IAccessibilityDefinition
   protected elementRef: HTMLElement
   protected accEventHandlers: IEventHandlers[] = []
+  protected actions: AccessibilityActions
 
   constructor(props, context) {
     super(props, context)
@@ -65,14 +67,15 @@ class UIComponent<P, S> extends React.Component<P, S> {
   }
 
   getAndAttachEventHandlers() {
-    for (const action in this.currentAccessibility.actions) {
+    for (const action in this.actions) {
       const actionHandler: IActionHandler = this.currentAccessibility.actionsDefinition[action]
 
       if (!actionHandler) continue
 
       const eventHandler: Function = keyboardHandlerFilter(
-        this.currentAccessibility.actions[action],
+        this.actions[action],
         actionHandler.keyCombinations,
+        this.elementRef,
       )
 
       const accEventHandler = this.accEventHandlers.filter(itm => {

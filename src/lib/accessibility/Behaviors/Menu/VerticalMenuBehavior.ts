@@ -1,6 +1,5 @@
 import { IAccessibilityDefinition } from '../../interfaces'
 import { KeyCodes } from '../../../KeyCodes'
-import DefaultActions from '../../Actions/DefaultActions'
 
 const VerticalMenuBehavior: IAccessibilityDefinition = {
   attributes: {
@@ -23,8 +22,6 @@ const VerticalMenuBehavior: IAccessibilityDefinition = {
       keyCombinations: [{ keyCode: KeyCodes.end }],
     },
   },
-
-  actions: DefaultActions,
 }
 
 export default VerticalMenuBehavior

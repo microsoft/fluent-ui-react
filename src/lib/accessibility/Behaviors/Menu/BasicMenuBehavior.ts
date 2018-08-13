@@ -1,5 +1,4 @@
 import { IAccessibilityDefinition } from '../../interfaces'
-import DefaultActions from '../../Actions/DefaultActions'
 import { KeyCodes } from '../../../KeyCodes'
 
 const BasicMenuBehavior: IAccessibilityDefinition = {
@@ -23,8 +22,6 @@ const BasicMenuBehavior: IAccessibilityDefinition = {
       keyCombinations: [{ keyCode: KeyCodes.end }],
     },
   },
-
-  actions: DefaultActions,
 }
 
 export default BasicMenuBehavior

@@ -100,15 +100,23 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     return { submenuOpened: false }
   }
 
-  componentDidMount() {
-    if (this.currentAccessibility && this.props.submenu) {
-      this.currentAccessibility.actions = {
+  actHand: ActionHandler
+
+  constructor(p, s) {
+    super(p, s)
+
+    if (p.submenu) {
+      this.actions = {
         openSubmenu: this.openSubmenu.bind(this),
         toggleSubmenu: this.handleClick.bind(this),
         closeSubmenu: this.closeSubmenu.bind(this),
       }
     }
 
+    this.actHand = new ActionHandler({}, null)
+  }
+
+  componentDidMount() {
     this.attachKeyboardEventHandlers()
   }
 
@@ -120,7 +128,9 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     if (!this.props.submenu) return
     this.setState({ submenuOpened: true }, () => {
       // TODO: improve, focus submenu first item
-      e.target.lastElementChild.firstElementChild.focus()
+      const firstItem = e.target.lastElementChild.firstElementChild as HTMLElement
+      firstItem.focus()
+      firstItem.tabIndex = 0
     })
   }
 
@@ -135,12 +145,13 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   }
 
   handleClick = e => {
-    if (!this.props.submenu) {
+    if (this.props.submenu) {
       this.setState({ submenuOpened: !this.state.submenuOpened })
     } else {
       alert(this.props.content)
-      e.stopPropagation()
     }
+
+    e.stopPropagation()
 
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -177,3 +188,12 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
 MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
 
 export default MenuItem
+
+class ActionHandler {
+  /**
+   *
+   */
+  constructor(data, htmlElement) {}
+
+  public onStateChanged(data) {}
+}
