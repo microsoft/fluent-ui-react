@@ -1,3 +1,5 @@
+import felaPluginPrefixer from 'fela-plugin-prefixer'
+
 export { default as AccordionContent } from './components/Accordion/accordionContentVariables'
 
 export { default as Avatar } from './components/Avatar/avatarVariables'
@@ -7,6 +9,9 @@ export { default as Button } from './components/Button/buttonVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Divider } from './components/Divider/dividerVariables'
+
+export { default as Header } from './components/Header/headerVariables'
+export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
 export { default as Icon } from './components/Icon/iconVariables'
 
