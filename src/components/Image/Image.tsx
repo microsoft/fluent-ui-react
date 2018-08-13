@@ -2,8 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import imageStyles from '../../themes/teams/components/Image/imageStyles'
-import imageVariables from '../../themes/teams/components/Image/imageVariables'
 import { ImageBehavior } from '../../lib/accessibility'
 
 /**
@@ -24,10 +22,6 @@ class Image extends UIComponent<any, any> {
 
   static displayName = 'Image'
 
-  static styles = imageStyles
-
-  static variables = imageVariables
-
   static propTypes = {
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -46,9 +40,24 @@ class Image extends UIComponent<any, any> {
 
     /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['accessibility', 'as', 'avatar', 'circular', 'className', 'fluid']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'avatar',
+    'circular',
+    'className',
+    'fluid',
+    'styles',
+    'variables',
+  ]
 
   static defaultProps = {
     as: 'img',

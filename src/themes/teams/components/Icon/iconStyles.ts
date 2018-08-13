@@ -1,13 +1,7 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
-import { IconVariables } from './iconVariables'
-import * as React from 'react'
-
-export interface IconStylesParams {
-  props: any
-  variables: IconVariables
-}
 
 const sizes = new Map([
   ['micro', 0.3],
@@ -39,7 +33,7 @@ const getFontIcon = (font, name) => {
 
 const getSize = size => `${sizes.get(size)}em`
 
-const getFontStyles = (font, name, size) => {
+const getFontStyles = (font, name, size): ICSSInJSStyle => {
   const { fontFamily, content } = getFontIcon(font, name)
 
   return {
@@ -64,10 +58,7 @@ const getFontStyles = (font, name, size) => {
   }
 }
 
-const getXSpacingStyles = (
-  xSpacing: IconXSpacing,
-  horizontalSpace: string,
-): React.CSSProperties => {
+const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
   switch (xSpacing) {
     case 'none':
       return fittedStyle
@@ -80,7 +71,7 @@ const getXSpacingStyles = (
   }
 }
 
-const getBorderedStyles = (isFontBased, circular, borderColor, color): React.CSSProperties => {
+const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
   return {
     ...getPaddedStyle(isFontBased),
 
@@ -89,7 +80,7 @@ const getBorderedStyles = (isFontBased, circular, borderColor, color): React.CSS
   }
 }
 
-const getPaddedStyle = isFontBased => ({
+const getPaddedStyle = (isFontBased): ICSSInJSStyle => ({
   padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
   width: '2em',
   height: '2em',
@@ -99,7 +90,7 @@ const iconStyles = {
   root: ({
     props: { disabled, font, svg, name, size, bordered, circular, xSpacing },
     variables: v,
-  }: IconStylesParams) => {
+  }): ICSSInJSStyle => {
     const isFontBased = !svg
 
     return {
@@ -136,7 +127,7 @@ const iconStyles = {
     }
   },
 
-  svg: ({ variables: v }) => ({
+  svg: ({ variables: v }): ICSSInJSStyle => ({
     fill: v.color,
   }),
 }

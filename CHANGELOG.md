@@ -21,7 +21,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Add selection property to child items in ListExampleSelection so that styles and roles are applied properly @jurokapsiar ([#70](https://github.com/stardust-ui/react/pull/70))
 - Menu `onClick` handler moved from `li` to `a` (accessibility) @miroslavstastny ([#61](https://github.com/stardust-ui/react/pull/61))
+- Image `fluid` is applied on the avatar variations @mnajdova ([#77](https://github.com/stardust-ui/react/pull/77))
 
+### Features
+- Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
 
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
 ## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)
@@ -42,7 +45,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `fluid` variant and size variables to Image @kuzhelov ([#54](https://github.com/stardust-ui/react/pull/54))
 - Add SVG icons support @kuzhelov ([#50](https://github.com/stardust-ui/react/pull/50))
 - Add `fluid` prop and variation and width variables to Input @alinais ([#59](https://github.com/stardust-ui/react/pull/59))
-  
+- Support `styles` prop and nested theme Providers @levithomason ([#16](https://github.com/stardust-ui/react/pull/16))
+
 <!--------------------------------[ v0.2.5 ]------------------------------- -->
 ## [v0.2.5](https://github.com/stardust-ui/react/tree/v0.2.5) (2018-08-03)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.4...v0.2.5)

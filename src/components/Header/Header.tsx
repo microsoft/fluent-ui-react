@@ -3,7 +3,6 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import headerStyles from '../../themes/teams/components/Header/headerStyles'
 
 /**
  * A header provides a short summary of content
@@ -38,15 +37,24 @@ class Header extends UIComponent<any, any> {
 
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+
+    /** Custom values for styling variables. */
+    variables: PropTypes.object,
   }
 
   static defaultProps = {
     as: 'h1',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'description', 'textAlign']
-
-  static styles = headerStyles
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'content',
+    'description',
+    'textAlign',
+    'variables',
+  ]
 
   static Description = HeaderDescription
 
