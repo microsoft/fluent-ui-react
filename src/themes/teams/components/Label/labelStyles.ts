@@ -1,11 +1,12 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 const getLabelHeight = () => {
   return pxToRem(20)
 }
 
 export default {
-  root: ({ props: { start, end, circular }, variables }) => ({
+  root: ({ props: { start, end, circular }, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
     ...(start && {
       paddingLeft: variables.startPaddingLeft,
@@ -28,3 +29,5 @@ export default {
     overflow: 'hidden',
   }),
 }
+
+export default labelStyles

@@ -1,5 +1,7 @@
+import { ICSSInJSStyle } from '../../../../../types/theme'
+
 const chatStyles = {
-  root: () => ({
+  root: (): ICSSInJSStyle => ({
     display: 'flex',
     flexDirection: 'column',
     listStyle: 'none',

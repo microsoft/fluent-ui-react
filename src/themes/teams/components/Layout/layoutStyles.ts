@@ -1,4 +1,5 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
 const truncateStyle = {
   overflow: 'hidden',
@@ -6,8 +7,8 @@ const truncateStyle = {
   whiteSpace: 'nowrap',
 }
 
-const layoutStyles = {
-  root: ({ props }) => {
+const layoutStyles: IComponentPartStylesInput = {
+  root: ({ props }): ICSSInJSStyle => {
     const {
       alignItems,
       debug,
@@ -46,11 +47,11 @@ const layoutStyles = {
     }
   },
 
-  gap: ({ props }) => ({
+  gap: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugGap({ vertical: props.vertical })),
   }),
 
-  start: ({ props }) => ({
+  start: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     ...(props.truncateStart && truncateStyle),
     display: 'inline-flex',
@@ -58,13 +59,13 @@ const layoutStyles = {
     ...props.startCSS,
   }),
 
-  main: ({ props }) => ({
+  main: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     ...(props.truncateMain && truncateStyle),
     ...props.mainCSS,
   }),
 
-  end: ({ props }) => ({
+  end: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     ...(props.truncateEnd && truncateStyle),
     display: 'inline-flex',

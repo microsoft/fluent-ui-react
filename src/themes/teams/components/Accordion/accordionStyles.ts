@@ -1,5 +1,7 @@
+import { ICSSInJSStyle } from '../../../../../types/theme'
+
 const accordionStyles = {
-  root: () => ({
+  root: (): ICSSInJSStyle => ({
     verticalAlign: 'middle',
     display: 'flex',
     flexDirection: 'column',

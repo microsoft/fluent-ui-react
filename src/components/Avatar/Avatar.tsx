@@ -3,8 +3,6 @@ import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import avatarStyles from '../../themes/teams/components/Avatar/avatarStyles'
-import avatarVariables from '../../themes/teams/components/Avatar/avatarVariables'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
@@ -16,11 +14,18 @@ class Avatar extends UIComponent<any, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = ['alt', 'as', 'className', 'getInitials', 'name', 'size', 'src', 'status']
-
-  static styles = avatarStyles
-
-  static variables = avatarVariables
+  static handledProps = [
+    'alt',
+    'as',
+    'className',
+    'getInitials',
+    'name',
+    'size',
+    'src',
+    'status',
+    'styles',
+    'variables',
+  ]
 
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */
@@ -54,6 +59,12 @@ class Avatar extends UIComponent<any, any> {
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -112,7 +123,7 @@ class Avatar extends UIComponent<any, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { src, alt, name, status, getInitials, size } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
 
@@ -124,10 +135,17 @@ class Avatar extends UIComponent<any, any> {
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image className={classes.imageAvatar} avatar src={src} alt={alt} title={name} />
+          <Image
+            styles={{ root: { ...styles.imageAvatar } }}
+            fluid
+            avatar
+            src={src}
+            alt={alt}
+            title={name}
+          />
         ) : (
           <Label
-            className={classes.avatarNameContainer}
+            styles={{ root: { ...styles.avatarNameContainer } }}
             as="div"
             content={getInitials(name)}
             variables={{ padding: '0px' }}
@@ -138,7 +156,7 @@ class Avatar extends UIComponent<any, any> {
         {status && (
           <div className={classes.presenceIndicatorWrapper}>
             <Icon
-              className={classes.presenceIndicator}
+              styles={{ root: { ...styles.presenceIndicator } }}
               size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
               circular
               name={icon}
