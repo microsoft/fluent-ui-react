@@ -136,7 +136,7 @@ class Avatar extends UIComponent<any, any> {
       <ElementType {...rest} className={classes.root}>
         {src ? (
           <Image
-            styles={{ root: { ...styles.imageAvatar } }}
+            styles={{ root: styles.imageAvatar }}
             fluid
             avatar
             src={src}
@@ -145,7 +145,7 @@ class Avatar extends UIComponent<any, any> {
           />
         ) : (
           <Label
-            styles={{ root: { ...styles.avatarNameContainer } }}
+            styles={{ root: styles.avatarNameContainer }}
             as="div"
             content={getInitials(name)}
             variables={{ padding: '0px' }}
@@ -156,7 +156,7 @@ class Avatar extends UIComponent<any, any> {
         {status && (
           <div className={classes.presenceIndicatorWrapper}>
             <Icon
-              styles={{ root: { ...styles.presenceIndicator } }}
+              styles={{ root: styles.presenceIndicator }}
               size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
               circular
               name={icon}

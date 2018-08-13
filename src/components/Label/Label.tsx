@@ -88,7 +88,7 @@ class Label extends UIComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { children, content, icon, iconPosition } = this.props
     const getContent = (): React.ReactNode => {
       const iconAtEnd = iconPosition === 'end'
@@ -96,7 +96,7 @@ class Label extends UIComponent<any, any> {
 
       const iconElement = Icon.create(
         {
-          className: classes.icon,
+          styles: { root: styles.icon },
           ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
         },
         {
