@@ -1,10 +1,10 @@
 import React from 'react'
-import { Menu, ToolbarBehavior, Button } from '@stardust-ui/react'
+import { Menu, ToolbarBehavior, Icon } from '@stardust-ui/react'
 
 const items = [
-  { key: 'cloud', content: <Button circular icon="cloud" /> },
-  { key: 'clock', content: <Button circular icon="clock" /> },
-  { key: 'book', content: <Button circular icon="book" /> },
+  { key: 'cloud', content: <Icon circular xSpacing="none" size="small" name="cloud" /> },
+  { key: 'clock', content: <Icon circular xSpacing="none" size="small" name="clock" /> },
+  { key: 'book', content: <Icon circular xSpacing="none" size="small" name="book" /> },
 ]
 
 class MenuExampleToolbarShorthand extends React.Component {
@@ -13,7 +13,7 @@ class MenuExampleToolbarShorthand extends React.Component {
       <Menu
         defaultActiveIndex={0}
         items={items}
-        shape="pills"
+        shape="underlined"
         accessibility={ToolbarBehavior}
         aria-label={`Compose Editor`}
       />
