@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
@@ -37,7 +37,7 @@ const LARGE_DISTANCE_FROM_CENTER = 999999999
 const LARGE_NEGATIVE_DISTANCE_FROM_CENTER = -999999999
 
 const _allInstances: {
-  [key: string]: FocusZone,
+  [key: string]: FocusZone
 } = {}
 
 interface IPoint {

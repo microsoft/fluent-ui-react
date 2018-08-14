@@ -1,4 +1,3 @@
-import { ComponentState } from '../interfaces'
 import UIComponent from '../../UIComponent'
 import keyboardKey from 'keyboard-key'
 
@@ -13,7 +12,7 @@ export abstract class AbstractBehavior<P, S> {
       component: UIComponent<P, S>,
       props: any,
       state: any,
-    ) => void,
+    ) => void
   }
 
   constructor(public readonly name: string) {}
@@ -25,8 +24,6 @@ export abstract class AbstractBehavior<P, S> {
     this.keyHandlers = this.keyHandlers || {}
     this.keyHandlers[key] = callback
   }
-
-  public abstract changeState(newState: ComponentState): void
 
   public onKeyDown(component: UIComponent<P, S>, props, state): object {
     return event => {

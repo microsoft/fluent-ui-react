@@ -1,5 +1,6 @@
 import React from 'react'
 import { Menu } from '@stardust-ui/react'
+import VerticalMenuItemBehavior from 'src/lib/accessibility/Behaviors/Menu/VerticalMenuItemBehavior'
 
 class MenuExampleWithSubMenu extends React.Component {
   state = { activeItem: 'a' }
@@ -14,21 +15,21 @@ class MenuExampleWithSubMenu extends React.Component {
     const submenu1 = (
       <Menu vertical>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'e'}
           onClick={this.handleItemClick('e')}
         >
           New
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'f'}
           onClick={this.handleItemClick('f')}
         >
           Open
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'g'}
           onClick={this.handleItemClick('g')}
         >
@@ -40,28 +41,28 @@ class MenuExampleWithSubMenu extends React.Component {
     const submenu2 = (
       <Menu vertical>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'h'}
           onClick={this.handleItemClick('h')}
         >
           Undo
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'i'}
           onClick={this.handleItemClick('i')}
         >
           Redo
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'j'}
           onClick={this.handleItemClick('j')}
         >
           Cut
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'k'}
           onClick={this.handleItemClick('k')}
         >
@@ -73,14 +74,14 @@ class MenuExampleWithSubMenu extends React.Component {
     const submenu3 = (
       <Menu vertical>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'l'}
           onClick={this.handleItemClick('l')}
         >
           Font
         </Menu.Item>
         <Menu.Item
-          accBehavior="verticalMenuItem"
+          accessibility={VerticalMenuItemBehavior}
           active={activeItem === 'm'}
           onClick={this.handleItemClick('m')}
         >

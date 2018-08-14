@@ -1,21 +1,12 @@
-import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { AbstractBehavior } from '../AbstractBehavior'
+import { Accessibility } from '../../interfaces'
 
-export class ChatMessageBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
-  constructor() {
-    super('chatmessage')
-  }
-
-  private attributes = {
-    'ms-acc-behavior': this.name,
-    'data-is-focusable': true,
-    role: '',
-  }
-
-  public generateAriaAttributes(props, state): object {
-    return this.attributes
-  }
-
-  public changeState(newState: ComponentState): void {}
+const ChatMessageBehavior: Accessibility = {
+  attributes: {
+    root: {
+      role: '',
+      'data-is-focusable': true,
+    },
+  },
 }
+
+export default ChatMessageBehavior
