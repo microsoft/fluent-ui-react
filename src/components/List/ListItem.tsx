@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -38,7 +39,7 @@ class ListItem extends UIComponent<any, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -61,7 +62,7 @@ class ListItem extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior,
+    accessibility: ListItemBehavior as Accessibility,
   }
 
   state: any = {}
