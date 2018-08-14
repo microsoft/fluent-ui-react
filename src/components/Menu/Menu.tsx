@@ -7,7 +7,9 @@ import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 import menuVariables from './menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
-import DefaultActions from '../../lib/accessibility/Actions/DefaultActions'
+import { IActionHandler } from '../../lib/accessibility/Actions/interfaces'
+import MenuActionHandler from '../../lib/accessibility/Actions/Menu/MenuActionHandler'
+import eventStack from '../../lib/eventStack'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -67,13 +69,23 @@ class Menu extends AutoControlledComponent<any, any> {
     'vertical',
   ]
 
-  constructor(p, s) {
-    super(p, s)
-    this.actions = DefaultActions
+  actionHandler: MenuActionHandler
+
+  constructor(props, state) {
+    super(props, state)
   }
 
   componentDidMount() {
+    this.actionHandler = new MenuActionHandler({ ...this.props, ...this.state }, this.elementRef)
+
+    this.actions = {
+      moveNext: this.actionHandler.moveNext.bind(this.actionHandler),
+      movePrevious: this.actionHandler.movePrevious.bind(this.actionHandler),
+    }
+
     this.attachKeyboardEventHandlers()
+
+    eventStack.sub('focus', () => console.log('focusss'), { target: this.elementRef })
   }
 
   componentWillUnmount() {

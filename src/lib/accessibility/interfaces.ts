@@ -106,6 +106,8 @@ import { KeyCodes } from '../KeyCodes'
 export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   role?: AriaRole
   tabIndex?: string
+  'data-focused'?: boolean
+  'data-is-focusable'?: boolean
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }

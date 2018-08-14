@@ -10,6 +10,8 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
       tabIndex: '0',
+      'data-focused': false,
+      'data-is-focusable': true,
     },
   },
 
@@ -35,25 +37,3 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
 })
 
 export default BasicMenuItemBehavior
-
-interface INavigable {
-  next()
-  prev()
-}
-
-interface IListNavigable extends INavigable {
-  first()
-  last()
-}
-
-interface IActionable {
-  OnAction()
-}
-
-interface ICancalable {
-  OnEsc()
-}
-
-interface IMenuNvigable extends IListNavigable {}
-
-interface IMenuItemNavigable extends IListNavigable, IActionable, ICancalable {}

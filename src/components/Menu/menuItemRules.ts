@@ -31,13 +31,13 @@ const itemSeparator = ({ props, variables }) => {
 
 export default {
   root: ({ props, variables }) => {
-    const { active, shape, type, vertical } = props
+    const { active, shape, type, vertical, children } = props
     return {
       color: variables.defaultColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
-      padding: `${pxToRem(14)} ${pxToRem(18)}`,
+      ...(children ? { padding: 0 } : { padding: `${pxToRem(14)} ${pxToRem(18)} ` }),
       cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
@@ -134,5 +134,8 @@ export default {
     ':hover': {
       color: 'inherit',
     },
+  }),
+  div: () => ({
+    padding: `${pxToRem(14)} ${pxToRem(18)}`,
   }),
 }

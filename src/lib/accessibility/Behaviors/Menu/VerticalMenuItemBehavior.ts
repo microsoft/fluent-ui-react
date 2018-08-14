@@ -9,6 +9,8 @@ const VerticalMenuItemBehavior: Accessibility = (props: any) => ({
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
       tabIndex: '-1',
+      'data-focused': false,
+      'data-is-focusable': true,
     },
   },
 

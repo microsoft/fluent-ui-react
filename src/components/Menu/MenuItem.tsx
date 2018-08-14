@@ -100,8 +100,6 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     return { submenuOpened: false }
   }
 
-  actHand: ActionHandler
-
   constructor(p, s) {
     super(p, s)
 
@@ -112,16 +110,14 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         closeSubmenu: this.closeSubmenu.bind(this),
       }
     }
-
-    this.actHand = new ActionHandler({}, null)
   }
 
   componentDidMount() {
-    this.attachKeyboardEventHandlers()
+    // this.attachKeyboardEventHandlers()
   }
 
   componentWillUnmount() {
-    this.detachKeyboardEventHandlers()
+    // this.detachKeyboardEventHandlers()
   }
 
   openSubmenu = e => {
@@ -145,13 +141,13 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   }
 
   handleClick = e => {
-    if (this.props.submenu) {
-      this.setState({ submenuOpened: !this.state.submenuOpened })
-    } else {
-      alert(this.props.content)
-    }
+    // if (this.props.submenu) {
+    //   this.setState({ submenuOpened: !this.state.submenuOpened })
+    // } else {
+    //   alert(this.props.content)
+    // }
 
-    e.stopPropagation()
+    // e.stopPropagation()
 
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -165,12 +161,17 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
-        {...accessibility.attributes.anchor}
+        {...accessibility.attributes.root}
         {...rest}
-        ref={this.setElementRef}
       >
         {childrenExist(children) ? (
-          <span>{children}</span>
+          <div
+            className={classes.div}
+            {...accessibility.attributes.anchor}
+            ref={this.setElementRef}
+          >
+            {children}
+          </div>
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
@@ -188,12 +189,3 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
 MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
 
 export default MenuItem
-
-class ActionHandler {
-  /**
-   *
-   */
-  constructor(data, htmlElement) {}
-
-  public onStateChanged(data) {}
-}
