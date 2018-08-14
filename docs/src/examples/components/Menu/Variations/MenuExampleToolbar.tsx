@@ -1,6 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
-import { Menu, MenuItem, ToolbarBehavior, Icon } from '@stardust-ui/react'
+import { Menu, MenuItem, ToolbarBehavior, Icon, ToolbarButtonBehavior } from '@stardust-ui/react'
 
 const items = [
   { key: 'cloud', content: <Icon circular name="cloud" size="small" xSpacing="none" /> },
@@ -28,6 +28,7 @@ class MenuExampleToolbar extends React.Component {
               active={activeIndex === i}
               onClick={this.handleItemClick(i)}
               aria-label={`Compose Editor`}
+              accessibility={ToolbarButtonBehavior}
             />
           )
         })}

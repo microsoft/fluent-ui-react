@@ -1,10 +1,22 @@
 import React from 'react'
-import { Menu, ToolbarBehavior, Icon } from '@stardust-ui/react'
+import { Menu, ToolbarBehavior, Icon, ToolbarButtonBehavior } from '@stardust-ui/react'
 
 const items = [
-  { key: 'cloud', content: <Icon circular xSpacing="none" size="small" name="cloud" /> },
-  { key: 'clock', content: <Icon circular xSpacing="none" size="small" name="clock" /> },
-  { key: 'book', content: <Icon circular xSpacing="none" size="small" name="book" /> },
+  {
+    key: 'cloud',
+    content: <Icon circular xSpacing="none" size="small" name="cloud" />,
+    accessibility: ToolbarButtonBehavior,
+  },
+  {
+    key: 'clock',
+    content: <Icon circular xSpacing="none" size="small" name="clock" />,
+    accessibility: ToolbarButtonBehavior,
+  },
+  {
+    key: 'book',
+    content: <Icon circular xSpacing="none" size="small" name="book" />,
+    accessibility: ToolbarButtonBehavior,
+  },
 ]
 
 class MenuExampleToolbarShorthand extends React.Component {
