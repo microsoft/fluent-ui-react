@@ -11,6 +11,7 @@ export class ListItemBehavior extends AbstractBehavior<{}, {}>
     'ms-acc-behavior': this.name,
     role: 'listitem',
     //   tabIndex: -1,
+    'data-is-focusable': true,
   }
 
   public generateAriaAttributes(props, state): object {

@@ -7,7 +7,7 @@ export class ChatBehavior extends AbstractBehavior<{}, {}>
   constructor() {
     super('chat')
 
-    this.handleKey('Escape', (key, event, component, props, state) => {
+    this.handleKey(27 /* escape */, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(FocusAction.execute())
     })

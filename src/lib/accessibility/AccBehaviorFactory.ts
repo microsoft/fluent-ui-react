@@ -1,13 +1,13 @@
 import {
   ButtonBehavior,
   ToggleButtonBehavior,
+  MenuButtonBehavior,
   ImageBehavior,
   InputBehavior,
   ListBehavior,
   ListItemBehavior,
   SelectableListBehavior,
   SelectableListItemBehavior,
-  MenuItemBehavior,
   MenuBehavior,
   DefaultBehavior,
   TreeBehavior,
@@ -15,12 +15,15 @@ import {
   GroupBehavior,
   ChatBehavior,
   ChatMessageBehavior,
+  MenuItemBehavior,
+  VerticalMenuItemBehavior,
 } from './Behaviors/behaviors'
 import { IAccessibilityBehavior } from './interfaces'
 
 export enum AccBehaviorType {
   button,
   toggleButton,
+  menuButton,
   image,
   input,
   list,
@@ -29,6 +32,7 @@ export enum AccBehaviorType {
   selectableListItem,
   menu,
   menuItem,
+  verticalMenuItem,
   tree,
   treeItem,
   group,
@@ -40,6 +44,7 @@ export class AccBehaviorFactory {
   private static BehaviorsMap: Map<string, () => IAccessibilityBehavior<{}, {}>> = new Map([
     [AccBehaviorType[AccBehaviorType.button], () => new ButtonBehavior()],
     [AccBehaviorType[AccBehaviorType.toggleButton], () => new ToggleButtonBehavior()],
+    [AccBehaviorType[AccBehaviorType.menuButton], () => new MenuButtonBehavior()],
     [AccBehaviorType[AccBehaviorType.image], () => new ImageBehavior()],
     [AccBehaviorType[AccBehaviorType.input], () => new InputBehavior()],
     [AccBehaviorType[AccBehaviorType.list], () => new ListBehavior()],
@@ -48,6 +53,7 @@ export class AccBehaviorFactory {
     [AccBehaviorType[AccBehaviorType.selectableListItem], () => new SelectableListItemBehavior()],
     [AccBehaviorType[AccBehaviorType.menu], () => new MenuBehavior()],
     [AccBehaviorType[AccBehaviorType.menuItem], () => new MenuItemBehavior()],
+    [AccBehaviorType[AccBehaviorType.verticalMenuItem], () => new VerticalMenuItemBehavior()],
     [AccBehaviorType[AccBehaviorType.tree], () => new TreeBehavior()],
     [AccBehaviorType[AccBehaviorType.treeItem], () => new TreeItemBehavior()],
     [AccBehaviorType[AccBehaviorType.group], () => new GroupBehavior()],

@@ -2,55 +2,39 @@ import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
 import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
-import MenuOpenSubmenuAction from '../../../actions/MenuOpenSubmenuAction'
 
 import keyboardKey from 'keyboard-key'
 
-export class MenuItemBehavior extends AbstractBehavior<{}, {}>
+export class VerticalMenuItemBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
   _async: any
 
   constructor() {
-    super('menuitem')
+    super('vertical-menuitem')
 
     this.handleKey(keyboardKey.Enter, (key, event, component, props, state) => {
       event.preventDefault()
-      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
-    })
-
-    this.handleKey(keyboardKey.Spacebar, (key, event, component, props, state) => {
-      event.preventDefault()
-      component.executeAction(ClickAction.execute({ event, moveFocus: true }))
+      event.stopPropagation()
+      component.executeAction(ClickAction.execute({ event }))
     })
 
     this.handleKey(keyboardKey.Escape, (key, event, component, props, state) => {
-      event.preventDefault()
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(keyboardKey.ArrowRight, (key, event, component, props, state) => {
-      component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
-    })
-
-    this.handleKey(keyboardKey.ArrowLeft, (key, event, component, props, state) => {
+    this.handleKey(keyboardKey.ArrowUp, (key, event, component, props, state) => {
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
 
     this.handleKey(keyboardKey.ArrowDown, (key, event, component, props, state) => {
-      event.preventDefault()
-      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
-    })
-
-    this.handleKey(keyboardKey.ArrowUp, (key, event, component, props, state) => {
-      event.preventDefault()
-      component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
+      component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
     })
   }
 
   private attributes = {
     'ms-acc-behavior': this.name,
     role: 'menuitem',
-    tabIndex: 0,
+    tabIndex: -1,
     'data-is-focusable': true,
   }
 

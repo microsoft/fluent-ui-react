@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, SyntheticEvent } from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
@@ -8,8 +8,8 @@ import menuRules from './menuRules'
 
 import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
 import menuVariables from './menuVariables'
-import { FocusZone } from '../FocusZone'
-import { OffsetBlockEndProperty } from '../../../node_modules/csstype'
+import { OffsetBlockEndProperty } from 'csstype'
+import { FocusZone, FocusZoneDirection } from '../FocusZone'
 
 interface MenuState {
   activeIndex: number
@@ -31,6 +31,7 @@ export interface IMenuProps {
   grabFocus?: boolean
   componentRef?: object
   accBehavior?: string
+  onKeyDown?: (e: SyntheticEvent, props: IMenuProps) => void
 }
 
 class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
@@ -41,6 +42,8 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
   static variables = menuVariables
 
   static create: Function
+
+  private navDirection: FocusZoneDirection
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -74,6 +77,8 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     componentRef: PropTypes.object,
 
     accBehavior: PropTypes.string,
+
+    onKeyDown: PropTypes.func,
   }
 
   static defaultProps = {
@@ -92,6 +97,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     'vertical',
     'grabFocus',
     'accBehavior',
+    'onKeyDown',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -111,6 +117,10 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     this.accBehavior = AccBehaviorFactory.getBehavior(
       AccBehaviorType[accBehavior] || AccBehaviorType.menu,
     )
+
+    this.navDirection = this.props.vertical
+      ? FocusZoneDirection.vertical
+      : FocusZoneDirection.horizontal
   }
 
   componentDidMount() {
@@ -136,6 +146,9 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
+    accBehavior: this.props.vertical
+      ? AccBehaviorType[AccBehaviorType.verticalMenuItem]
+      : AccBehaviorType[AccBehaviorType.menuItem],
   })
 
   renderItems = () => {
@@ -158,14 +171,18 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
   renderComponent({ ElementType, classes, rest }) {
     const { children } = this.props
+
     return (
       <FocusZone
+        direction={this.navDirection}
         elementType={ElementType}
         preventDefaultWhenHandled={true}
+        isCircularNavigation={true}
         ref={this.setFocusZone}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
         className={classes.root}
+        onKeyDown={this.props.onKeyDown}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </FocusZone>

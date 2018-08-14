@@ -6,6 +6,9 @@ import { AutoControlledComponent, customPropTypes, childrenExist } from '../../l
 import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { FocusZone } from '../FocusZone'
+import ChatPaneTitleExpandAction from '../../lib/actions/ChatPaneTitleExpandAction'
+import ChatPaneContentReturnAction from '../../lib/actions/ChatPaneContentReturnAction'
 
 /**
  * A standard Accordion.
@@ -60,6 +63,9 @@ class Accordion extends AutoControlledComponent<any, any> {
         }),
       ),
     ]),
+
+    grabFocus: PropTypes.bool,
+    componentRef: PropTypes.object,
   }
 
   static rules = accordionRules
@@ -73,6 +79,7 @@ class Accordion extends AutoControlledComponent<any, any> {
     'exclusive',
     'onTitleClick',
     'panels',
+    'grabFocus',
   ]
 
   static autoControlledProps = ['activeIndex']
@@ -81,6 +88,49 @@ class Accordion extends AutoControlledComponent<any, any> {
   static Content = AccordionContent
 
   state: any = { activeIndex: [0] }
+
+  // Need the title elements to focus from content to active title on left key.
+  accordionTitles: HTMLElement[] = []
+  addAccordionTitle = title => this.accordionTitles.push(title)
+
+  focusZone: FocusZone
+  setFocusZone = fz => (this.focusZone = fz)
+
+  titleExpandHandler = ChatPaneTitleExpandAction.handler(params => {
+    let { activeIndex } = this.state
+    const { exclusive } = this.props
+    const { index, expand, event } = params
+
+    if (exclusive) {
+      if (!expand && index === activeIndex) {
+        activeIndex = -1
+      } else if (expand) {
+        if (index !== activeIndex) {
+          activeIndex = index
+        } else {
+          return
+        }
+      }
+    } else {
+      if (!expand && _.includes(activeIndex, index)) {
+        activeIndex = _.without(activeIndex, index)
+      } else if (expand) {
+        if (!_.includes(activeIndex, index)) {
+          activeIndex = [...activeIndex, index]
+        } else {
+          return
+        }
+      }
+    }
+
+    event.preventDefault()
+    this.trySetState({ activeIndex }, index)
+  })
+
+  contentReturnHandler = ChatPaneContentReturnAction.handler(params => {
+    const { index } = params
+    this.focusZone.focusElement(this.accordionTitles[index])
+  })
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -125,7 +175,12 @@ class Accordion extends AutoControlledComponent<any, any> {
       children.push(
         AccordionTitle.create(title, {
           generateKey: true,
-          defaultProps: { active, index },
+          defaultProps: {
+            active,
+            index,
+            titleExpandHandler: this.titleExpandHandler,
+            addAccordionTitle: this.addAccordionTitle,
+          },
           overrideProps: this.handleTitleOverrides,
         }),
       )
@@ -134,7 +189,11 @@ class Accordion extends AutoControlledComponent<any, any> {
           { content },
           {
             generateKey: true,
-            defaultProps: { active },
+            defaultProps: {
+              active,
+              titleIndex: index,
+              contentReturnHandler: this.contentReturnHandler,
+            },
           },
         ),
       )
@@ -147,13 +206,16 @@ class Accordion extends AutoControlledComponent<any, any> {
     const { children } = this.props
 
     return (
-      <ElementType
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+      <FocusZone
+        elementType={ElementType}
+        preventDefaultWhenHandled={true}
         {...rest}
         className={classes.root}
+        ref={this.setFocusZone}
+        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
       >
         {childrenExist(children) ? children : this.renderPanels()}
-      </ElementType>
+      </FocusZone>
     )
   }
 }

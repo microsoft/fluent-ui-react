@@ -13,6 +13,7 @@ export enum ComponentState {
 
 export interface IAccessibilityBehavior<P, S> {
   readonly name: string
+  // constructor(props: any, state: any)
   generateAriaAttributes(props: P, state: S): object
   // the following line might not be needed after component state management is introduced
   changeState(newState: ComponentState): void

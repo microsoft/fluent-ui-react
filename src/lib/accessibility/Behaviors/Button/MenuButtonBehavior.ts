@@ -1,17 +1,14 @@
 import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
 import { AbstractBehavior } from '../AbstractBehavior'
+import keyboardKey from 'keyboard-key'
 import ClickAction from '../../../actions/ClickAction'
 import MenuCloseSubmenuAction from '../../../actions/MenuCloseSubmenuAction'
 import MenuOpenSubmenuAction from '../../../actions/MenuOpenSubmenuAction'
 
-import keyboardKey from 'keyboard-key'
-
-export class MenuItemBehavior extends AbstractBehavior<{}, {}>
+export class MenuButtonBehavior extends AbstractBehavior<{}, {}>
   implements IAccessibilityBehavior<{}, {}> {
-  _async: any
-
   constructor() {
-    super('menuitem')
+    super('popup-button')
 
     this.handleKey(keyboardKey.Enter, (key, event, component, props, state) => {
       event.preventDefault()
@@ -28,14 +25,6 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
       component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(keyboardKey.ArrowRight, (key, event, component, props, state) => {
-      component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
-    })
-
-    this.handleKey(keyboardKey.ArrowLeft, (key, event, component, props, state) => {
-      component.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
-    })
-
     this.handleKey(keyboardKey.ArrowDown, (key, event, component, props, state) => {
       event.preventDefault()
       component.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
@@ -49,17 +38,22 @@ export class MenuItemBehavior extends AbstractBehavior<{}, {}>
 
   private attributes = {
     'ms-acc-behavior': this.name,
-    role: 'menuitem',
-    tabIndex: 0,
-    'data-is-focusable': true,
+    role: 'button',
+    'aria-hidden': false,
+    'aria-haspopup': true,
+    'aria-expanded': false,
   }
 
-  public generateAriaAttributes(props: any, state: any): object {
-    if (props.submenu) {
-      this.attributes['aria-expanded'] = state['submenuOpened']
-    }
+  public generateAriaAttributes(props, state): object {
+    this.attributes['aria-expanded'] = state['submenuOpened']
     return this.attributes
   }
 
-  public changeState(newState: ComponentState): void {}
+  public changeState(newState: ComponentState): void {
+    if (newState === ComponentState.disabled) {
+      this.attributes['aria-disabled'] = true
+    } else if (newState === ComponentState.enabled) {
+      delete this.attributes['aria-disabled']
+    }
+  }
 }

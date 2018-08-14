@@ -11,6 +11,10 @@ import Text from '../Text'
 export type IconPosition = 'before' | 'after'
 export type ButtonType = 'primary' | 'secondary'
 
+export interface IButtonState {
+  active?: boolean
+}
+
 export interface IButtonProps {
   as?: string
   children?: ReactNode
@@ -21,9 +25,10 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: boolean | string
   iconPosition?: IconPosition
-  onClick?: (e: SyntheticEvent, props: IButtonProps) => void
+  onClick?: (e: SyntheticEvent) => void
   style?: CSSProperties
   type?: ButtonType
+  accBehavior?: string
 }
 
 /**
@@ -31,7 +36,7 @@ export interface IButtonProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<IButtonProps, any> {
+class Button extends UIComponent<IButtonProps, IButtonState> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -79,6 +84,12 @@ class Button extends UIComponent<IButtonProps, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     accBehavior: PropTypes.string,
+
+    active: PropTypes.bool,
+
+    defaultActive: PropTypes.bool,
+
+    onKeyDown: PropTypes.func,
   }
 
   public static handledProps = [
@@ -94,11 +105,15 @@ class Button extends UIComponent<IButtonProps, any> {
     'onClick',
     'type',
     'accBehavior',
+    'onKeyDown',
   ]
 
   public static defaultProps = {
     as: 'button',
   }
+
+  private elementRef: HTMLElement
+  private setElementRef = ref => (this.elementRef = ref)
 
   constructor(props, state) {
     super(props, state)
@@ -106,6 +121,10 @@ class Button extends UIComponent<IButtonProps, any> {
     this.accBehavior = AccBehaviorFactory.getBehavior(
       AccBehaviorType[accBehavior] || AccBehaviorType.button,
     )
+  }
+
+  public focus() {
+    this.elementRef && this.elementRef.focus()
   }
 
   public renderComponent({
@@ -143,6 +162,7 @@ class Button extends UIComponent<IButtonProps, any> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
+        ref={this.setElementRef}
         {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
         {...rest}
       >
@@ -160,7 +180,7 @@ class Button extends UIComponent<IButtonProps, any> {
     }
 
     if (onClick) {
-      onClick(e, this.props)
+      onClick(e)
     }
   }
 }
