@@ -159,23 +159,33 @@ class MenuItem extends AutoControlledComponent<any, any> {
       this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
     })
 
-    this.handleKey(keyboardKey.ArrowRight, (key, event) => {
-      this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
-    })
+    if (this.props.vertical) {
+      this.handleKey(keyboardKey.ArrowUp, (key, event) => {
+        this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+      })
 
-    this.handleKey(keyboardKey.ArrowLeft, (key, event) => {
-      this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
-    })
+      this.handleKey(keyboardKey.ArrowDown, (key, event) => {
+        this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+      })
+    } else {
+      this.handleKey(keyboardKey.ArrowRight, (key, event) => {
+        this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+      })
 
-    this.handleKey(keyboardKey.ArrowDown, (key, event) => {
-      event.preventDefault()
-      this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
-    })
+      this.handleKey(keyboardKey.ArrowLeft, (key, event) => {
+        this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+      })
 
-    this.handleKey(keyboardKey.ArrowUp, (key, event) => {
-      event.preventDefault()
-      this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
-    })
+      this.handleKey(keyboardKey.ArrowDown, (key, event) => {
+        event.preventDefault()
+        this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
+      })
+
+      this.handleKey(keyboardKey.ArrowUp, (key, event) => {
+        event.preventDefault()
+        this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
+      })
+    }
   }
 
   componentDidMount() {
@@ -235,6 +245,7 @@ class MenuItem extends AutoControlledComponent<any, any> {
     const submenuIndicator = this.props.submenu && (this.state.submenuOpened ? ' <' : ' >')
     return (
       <ElementType
+        onKeyDown={this.keyHandler()}
         ref={this.setElementRef}
         className={classes.root}
         {...accessibility.attributes.root}
@@ -246,13 +257,12 @@ class MenuItem extends AutoControlledComponent<any, any> {
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
-            onKeyDown={this.keyHandler()}
             {...accessibility.attributes.anchor}
           >
-            {content}
+            {content} {submenuIndicator}
           </a>
         )}
-        {submenuIndicator}
+        {this.state.submenuOpened && this.props.submenu}
       </ElementType>
     )
   }
