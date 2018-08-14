@@ -28,3 +28,6 @@ export { default as ItemLayout } from './components/ItemLayout'
 export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/TabBehavior'
 export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/TabListBehavior'
 export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/ToolbarBehavior'
+export {
+  default as ToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'

@@ -91,12 +91,12 @@ const Variations = () => (
     />
     <ComponentExample
       title="Menu as a Tab List"
-      description="A menu that acts as a tablist."
+      description="A menu with TabList accessibility behavior."
       examplePath="components/Menu/Variations/MenuExampleTab"
     />
     <ComponentExample
       title="Menu as a Toolbar"
-      description="A menu that acts as a toolbar."
+      description="A menu with Toolbar accessibility behavior."
       examplePath="components/Menu/Variations/MenuExampleToolbar"
     />
   </ExampleSection>
