@@ -11,7 +11,7 @@ describe('Button', () => {
   handlesAccessibility(Button, {
     defaultRootRole: 'button',
     accessibilityOverride: MenuBehavior,
-    overridenRootRole: 'menu',
+    overriddenRootRole: 'menu',
   })
 
   describe('type', () => {
