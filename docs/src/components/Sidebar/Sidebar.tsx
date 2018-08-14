@@ -111,10 +111,26 @@ class Sidebar extends React.Component<any, any> {
       )),
     )(componentMenu)
 
+    const behaviorItems = _.flow(
+      _.filter(({ type }) => type === 'behavior'),
+      _.map(info => (
+        <Menu.Item
+          key={info.displayName}
+          name={info.displayName}
+          onClick={this.handleItemClick}
+          as={NavLink}
+          to={getComponentPathname(info)}
+          activeClassName="active"
+        />
+      )),
+    )(componentMenu)
+
     return (
       <Menu.Item key={nextType}>
         <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
         <Menu.Menu>{items}</Menu.Menu>
+        <Menu.Header>{_.capitalize('behaviors')}</Menu.Header>
+        <Menu.Menu>{behaviorItems}</Menu.Menu>
       </Menu.Item>
     )
   }, typeOrder)
