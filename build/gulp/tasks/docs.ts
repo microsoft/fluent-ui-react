@@ -90,11 +90,7 @@ task('build:docs:images', () =>
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`, err => {
-        if (err) return done(err)
-
-        sh(`git add ${file.path}`, done)
-      })
+      sh(`doctoc ${file.path} --github --maxlevel 4 && git add ${file.path}`, done)
     }),
   ),
 )
