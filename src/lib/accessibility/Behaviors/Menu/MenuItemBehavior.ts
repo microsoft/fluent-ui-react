@@ -8,7 +8,7 @@ const MenuItemBehavior: Accessibility = (props: any) => {
   const menuItemBehavior: Accessibility = props.vertical
     ? VerticalMenuItemBehavior
     : BasicMenuItemBehavior
-  return callable(menuItemBehavior)({ props })
+  return callable(menuItemBehavior)({ ...props })
 }
 
 export default MenuItemBehavior

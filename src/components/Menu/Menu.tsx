@@ -7,9 +7,7 @@ import MenuItem from './MenuItem'
 import menuRules from './menuRules'
 import menuVariables from './menuVariables'
 import { MenuBehavior } from '../../lib/accessibility'
-import { IActionHandler } from '../../lib/accessibility/Actions/interfaces'
 import MenuActionHandler from '../../lib/accessibility/Actions/Menu/MenuActionHandler'
-import eventStack from '../../lib/eventStack'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -76,20 +74,15 @@ class Menu extends AutoControlledComponent<any, any> {
   }
 
   componentDidMount() {
-    this.actionHandler = new MenuActionHandler({ ...this.props, ...this.state }, this.elementRef)
-
-    this.actions = {
-      moveNext: this.actionHandler.moveNext.bind(this.actionHandler),
-      movePrevious: this.actionHandler.movePrevious.bind(this.actionHandler),
-    }
-
-    this.attachKeyboardEventHandlers()
-
-    eventStack.sub('focus', () => console.log('focusss'), { target: this.elementRef })
+    this.actionHandler = new MenuActionHandler(
+      { ...this.props, ...this.state, ...this.currentAccessibility },
+      this.elementRef,
+    )
+    this.actionHandler.attachKeyboardEventHandlers()
   }
 
   componentWillUnmount() {
-    this.detachKeyboardEventHandlers()
+    this.actionHandler.detachKeyboardEventHandlers()
   }
 
   static autoControlledProps = ['activeIndex']
@@ -137,6 +130,7 @@ class Menu extends AutoControlledComponent<any, any> {
         {...rest}
         className={classes.root}
         ref={this.setElementRef}
+        onFocus={event => this.actionHandler.onFocus(event)}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>

@@ -72,6 +72,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     submenu: PropTypes.node,
     submenuOpened: PropTypes.bool,
     defaultSubmenuOpened: PropTypes.bool,
+    tabIndex: PropTypes.number,
   }
 
   static defaultProps = {
@@ -92,6 +93,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     'type',
     'vertical',
     'submenu',
+    'tabIndex',
   ]
 
   static autoControlledProps = ['submenuOpened']
@@ -167,6 +169,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         {childrenExist(children) ? (
           <div
             className={classes.div}
+            tabIndex={this.props.tabIndex}
             {...accessibility.attributes.anchor}
             ref={this.setElementRef}
           >

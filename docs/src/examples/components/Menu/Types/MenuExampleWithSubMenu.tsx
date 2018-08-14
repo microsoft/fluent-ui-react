@@ -72,6 +72,7 @@ class MenuExampleWithSubMenu extends React.Component {
           onClick={this.handleItemClick('a')}
           submenu={submenu1}
           style={this.menuStyle}
+          tabIndex={0}
         >
           File<span aria-hidden="true"> ▾</span>
         </Menu.Item>

@@ -4,7 +4,7 @@ import eventStack from './eventStack'
 import {
   AccessibilityEventHandlers,
   IAccessibilityDefinition,
-  IActionHandler,
+  IActionDefinition,
   IEventHandlers,
   AccessibilityActions,
 } from './accessibility/interfaces'
@@ -68,15 +68,13 @@ class UIComponent<P, S> extends React.Component<P, S> {
 
   getAndAttachEventHandlers() {
     for (const action in this.actions) {
-      // moveNext, movePrev,
-      const actionHandler: IActionHandler = this.currentAccessibility.actionsDefinition[action]
+      const actionHandler: IActionDefinition = this.currentAccessibility.actionsDefinition[action]
 
       if (!actionHandler) continue
 
       const eventHandler: Function = keyboardHandlerFilter(
         this.actions[action],
         actionHandler.keyCombinations,
-        this.elementRef,
       )
 
       const accEventHandler = this.accEventHandlers.filter(itm => {

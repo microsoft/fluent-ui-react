@@ -1,7 +1,7 @@
 export const getNextElement = function (
   rootElement: HTMLElement,
   currentElement?: HTMLElement | null,
-  checkNodeFunction?: (rootElement: HTMLElement, currentElement?: HTMLElement) => boolean,
+  checkNodeFunction?: (currentElement?: HTMLElement) => boolean,
   checkNode?: boolean,
   suppressParentTraversal?: boolean,
   suppressChildTraversal?: boolean,
@@ -10,7 +10,7 @@ export const getNextElement = function (
     return null
   }
 
-  if (checkNode && checkNodeFunction && checkNodeFunction(rootElement, currentElement)) {
+  if (checkNode && checkNodeFunction && checkNodeFunction(currentElement)) {
     return currentElement
   }
 
@@ -60,7 +60,7 @@ export const getNextElement = function (
 export const getPreviousElement = function (
   rootElement: HTMLElement,
   currentElement?: HTMLElement | null,
-  checkNodeFunction?: (rootElement: HTMLElement, currentElement?: HTMLElement) => boolean,
+  checkNodeFunction?: (currentElement?: HTMLElement) => boolean,
   checkNode?: boolean,
   suppressParentTraversal?: boolean,
   suppressChildTraversal?: boolean,
@@ -69,7 +69,7 @@ export const getPreviousElement = function (
     return null
   }
 
-  if (checkNode && checkNodeFunction && checkNodeFunction(rootElement, currentElement)) {
+  if (checkNode && checkNodeFunction && checkNodeFunction(currentElement)) {
     return currentElement
   }
 
@@ -108,4 +108,17 @@ export const getPreviousElement = function (
       true,
     )
   }
+}
+
+export const isElementVisible = function (element: HTMLElement | undefined | null): boolean {
+  if (!element) return false
+  return element.offsetHeight !== 0 || element.offsetParent !== null
+}
+
+export const isBooleanAttributeSet = function (
+  element: HTMLElement | undefined | null,
+  attributeName: string,
+) {
+  if (!element) return false
+  return element.hasAttribute(attributeName) && element.getAttribute(attributeName) !== 'false'
 }

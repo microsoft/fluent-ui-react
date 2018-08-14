@@ -8,7 +8,7 @@ const VerticalMenuItemBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
-      tabIndex: '-1',
+      tabIndex: props['tabIndex'] === 0 ? '0' : '-1',
       'data-focused': false,
       'data-is-focusable': true,
     },

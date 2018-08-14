@@ -9,7 +9,7 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
-      tabIndex: '0',
+      tabIndex: props['tabIndex'] === 0 ? '0' : '-1',
       'data-focused': false,
       'data-is-focusable': true,
     },

@@ -112,14 +112,14 @@ export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
 export type AccessibilityEventHandlers = { [partName: string]: IEventHandlers }
-export type ActionDefinition = { [partName: string]: IActionHandler }
+export type ActionDefinitions = { [partName: string]: IActionDefinition }
 
 export type Accessibility =
   | IAccessibilityDefinition
   | ((props: any) => IAccessibilityDefinition)
   | ((props: any) => Accessibility)
 
-export interface IActionHandler {
+export interface IActionDefinition {
   keyCombinations: KeyCombinations[]
 }
 
@@ -138,20 +138,10 @@ export type IEventHandlers = {
 
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  actionsDefinition?: ActionDefinition
+  actionsDefinition?: ActionDefinitions
   actions?: AccessibilityActions
 }
 
 export type AccessibilityActions = {
-  // moveNext: (event: KeyboardEvent) => void
-  // movePrevious: (event: KeyboardEvent) => void
-  // moveLast: (event: KeyboardEvent) => void
-  // moveFirst: (event: KeyboardEvent) => void
-  // triggerClick: (event: KeyboardEvent) => void
   [name: string]: (event: KeyboardEvent) => void,
 }
-
-// export type AccessibilityActions = {
-//   actions: AccessibilityActionsDefinition
-//   addAction: Function,
-// }
