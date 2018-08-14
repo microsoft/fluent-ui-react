@@ -1,11 +1,10 @@
 import { task, series } from 'gulp'
-import loadPlugins from 'gulp-load-plugins'
-import rimraf from 'rimraf'
-import webpack from 'webpack'
+import * as rimraf from 'rimraf'
+import * as webpack from 'webpack'
 
 import config from '../../../config'
 
-const g = loadPlugins()
+const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
 // ----------------------------------------

@@ -1,16 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import layoutRules from './layoutRules'
 
 class Layout extends UIComponent<any, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
-
-  static rules = layoutRules
 
   static propTypes = {
     as: customPropTypes.as,

@@ -1,12 +1,18 @@
-import React from 'react'
+import * as React from 'react'
 
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
+import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
   isConformant(Button)
+  handlesAccessibility(Button, {
+    defaultRootRole: 'button',
+    accessibilityOverride: MenuBehavior,
+    overriddenRootRole: 'menu',
+  })
 
   describe('type', () => {
     const typeProp = 'type'

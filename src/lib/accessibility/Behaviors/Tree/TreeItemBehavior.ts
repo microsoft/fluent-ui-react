@@ -1,33 +1,12 @@
-import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { AbstractBehavior } from '../AbstractBehavior'
+import { Accessibility } from '../../interfaces'
 
-export class TreeItemBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
-  constructor() {
-    super('treeitem')
-  }
+const TreeItemBehavior: Accessibility = (props: any) => ({
+  attributes: {
+    root: {
+      role: 'treeitem',
+      'aria-expanded': props['expanded'],
+    },
+  },
+})
 
-  private attributes = {
-    'ms-acc-behavior': this.name,
-    role: 'treeitem',
-  }
-
-  public generateAriaAttributes(props, state): object {
-    return this.attributes
-  }
-
-  public changeState(newState: ComponentState): void {
-    switch (newState) {
-      case ComponentState.expanded:
-        if (this.attributes.hasOwnProperty('aria-expanded')) {
-          this.attributes['aria-expanded'] = true
-        }
-        break
-      case ComponentState.collapsed:
-        if (this.attributes.hasOwnProperty('aria-expanded')) {
-          this.attributes['aria-expanded'] = false
-        }
-        break
-    }
-  }
-}
+export default TreeItemBehavior

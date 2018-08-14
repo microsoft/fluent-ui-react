@@ -1,12 +1,13 @@
-import React from 'react'
+import * as React from 'react'
 import { mount } from 'enzyme'
 
 import Menu from 'src/components/Menu/Menu'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 
 describe('Menu', () => {
   isConformant(Menu)
+  handlesAccessibility(Menu, { defaultRootRole: 'menu' })
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
@@ -26,7 +27,11 @@ describe('Menu', () => {
       const items = getItems()
       const menuItems = mountWithProvider(<Menu items={items} />).find('MenuItem')
 
-      menuItems.first().simulate('click')
+      menuItems
+        .first()
+        .find('a')
+        .first()
+        .simulate('click')
       expect(items[0].onClick).toHaveBeenCalled()
     })
 
@@ -47,7 +52,11 @@ describe('Menu', () => {
         const wrapper = mountWithProvider(<Menu items={getItems()} />)
         const menuItems = wrapper.find('MenuItem')
 
-        menuItems.at(1).simulate('click')
+        menuItems
+          .at(1)
+          .find('a')
+          .first()
+          .simulate('click')
 
         const updatedItems = wrapper.find('MenuItem')
 

@@ -1,49 +1,21 @@
-import PropTypes from 'prop-types'
-import React, { ReactNode, CSSProperties, SyntheticEvent } from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import buttonRules from './buttonRules'
-import buttonVariables from './buttonVariables'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
+import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
 import Text from '../Text'
-
-export type IconPosition = 'before' | 'after'
-export type ButtonType = 'primary' | 'secondary'
-
-export interface IButtonState {
-  active?: boolean
-}
-
-export interface IButtonProps {
-  as?: string
-  children?: ReactNode
-  circular?: boolean
-  className?: string
-  content?: ReactNode
-  disabled?: boolean
-  fluid?: boolean
-  icon?: boolean | string
-  iconPosition?: IconPosition
-  onClick?: (e: SyntheticEvent) => void
-  style?: CSSProperties
-  type?: ButtonType
-  accBehavior?: string
-}
+import { ButtonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A button.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<IButtonProps, IButtonState> {
+class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
-
-  public static rules = buttonRules
-
-  public static variables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -83,16 +55,12 @@ class Button extends UIComponent<IButtonProps, IButtonState> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    accBehavior: PropTypes.string,
-
-    active: PropTypes.bool,
-
-    defaultActive: PropTypes.bool,
-
-    onKeyDown: PropTypes.func,
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
+  static handledProps = [
+    'accessibility',
     'as',
     'children',
     'circular',
@@ -104,38 +72,18 @@ class Button extends UIComponent<IButtonProps, IButtonState> {
     'iconPosition',
     'onClick',
     'type',
-    'accBehavior',
-    'onKeyDown',
   ]
 
   public static defaultProps = {
     as: 'button',
+    accessibility: ButtonBehavior as Accessibility,
   }
 
-  private elementRef: HTMLElement
-  private setElementRef = ref => (this.elementRef = ref)
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.button,
-    )
-  }
-
-  public focus() {
-    this.elementRef && this.elementRef.focus()
-  }
-
-  public renderComponent({
-    ElementType,
-    classes,
-    rest,
-  }: IRenderResultConfig<IButtonProps>): ReactNode {
+  public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
     const { children, content, disabled, icon, iconPosition, type } = this.props
     const primary = type === 'primary'
 
-    const getContent = (): ReactNode => {
+    const getContent = (): React.ReactNode => {
       if (childrenExist(children)) {
         return children
       }
@@ -162,8 +110,7 @@ class Button extends UIComponent<IButtonProps, IButtonState> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
-        ref={this.setElementRef}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
       >
         {getContent()}
@@ -171,7 +118,7 @@ class Button extends UIComponent<IButtonProps, IButtonState> {
     )
   }
 
-  private handleClick = (e: SyntheticEvent) => {
+  private handleClick = (e: React.SyntheticEvent) => {
     const { onClick, disabled } = this.props
 
     if (disabled) {
@@ -180,7 +127,7 @@ class Button extends UIComponent<IButtonProps, IButtonState> {
     }
 
     if (onClick) {
-      onClick(e)
+      onClick(e, this.props)
     }
   }
 }

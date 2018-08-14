@@ -1,13 +1,9 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
-import {} from '../../lib/accessibility/Behaviors/behaviors'
-import chatMessageRules from './chatMessageRules'
-import chatMessageVariables from './chatMessageVariables'
-import { AccBehaviorFactory, AccBehaviorType } from '../../lib/accessibility/AccBehaviorFactory'
 import { FocusZone } from '../FocusZone'
+import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
 
 class ChatMessage extends UIComponent<any, any> {
   static className = 'ui-chat__message'
@@ -30,27 +26,19 @@ class ChatMessage extends UIComponent<any, any> {
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'mine']
+  static handledProps = ['accessibility', 'as', 'children', 'className', 'content', 'mine']
 
   static defaultProps = {
     as: 'li',
+    accessibility: ChatMessageBehavior,
   }
 
-  static rules = chatMessageRules
-
-  static variables = chatMessageVariables
-
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.chatMessage,
-    )
-  }
-
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children, content } = this.props
 
     return (
@@ -58,7 +46,7 @@ class ChatMessage extends UIComponent<any, any> {
         elementType={ElementType}
         preventDefaultWhenHandled={true}
         isCircularNavigation={true}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
         className={classes.root}
       >

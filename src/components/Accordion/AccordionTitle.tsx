@@ -1,10 +1,12 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionTitleRules from './accordionTitleRules'
-import { ChatPaneTitleBehavior } from '../../lib/accessibility/Behaviors/behaviors'
+import { ChatPaneTitleBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+import ChatPaneTitleExpandAction from '../../lib/actions/ChatPaneTitleExpandAction'
+import keyboardKey from 'keyboard-key'
 
 /**
  * A standard AccordionTitle.
@@ -43,11 +45,15 @@ class AccordionTitle extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     titleExpandHandler: PropTypes.object,
     addAccordionTitle: PropTypes.func,
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'active',
     'children',
@@ -59,13 +65,25 @@ class AccordionTitle extends UIComponent<any, any> {
     'addAccordionTitle',
   ]
 
-  static rules = accordionTitleRules
+  static defaultProps = {
+    accessibility: ChatPaneTitleBehavior as Accessibility,
+  }
 
-  constructor(p, context) {
-    super(p, context)
+  constructor(props, ctx) {
+    super(props, ctx)
+    this.registerActionHandler(props.titleExpandHandler)
 
-    this.registerActionHandler(this.props.titleExpandHandler)
-    this.accBehavior = new ChatPaneTitleBehavior()
+    this.handleKey(keyboardKey.ArrowRight, (key, event) => {
+      this.executeAction(
+        ChatPaneTitleExpandAction.execute({ index: props['index'], expand: true, event }),
+      )
+    })
+
+    this.handleKey(keyboardKey.ArrowLeft, (key, event) => {
+      this.executeAction(
+        ChatPaneTitleExpandAction.execute({ index: props['index'], expand: false, event }),
+      )
+    })
   }
 
   handleClick = e => {
@@ -75,7 +93,7 @@ class AccordionTitle extends UIComponent<any, any> {
     _.invoke(this.props, 'addAccordionTitle', ref)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { active, children, content } = this.props
 
     if (childrenExist(children)) {
@@ -91,8 +109,8 @@ class AccordionTitle extends UIComponent<any, any> {
         {...rest}
         className={classes.root}
         onClick={this.handleClick}
-        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        onKeyDown={this.keyHandler()}
+        {...accessibility.attributes.root}
         ref={this.addAccordionTitle}
       >
         {active ? <span>&#9660;</span> : <span>&#9654;</span>}

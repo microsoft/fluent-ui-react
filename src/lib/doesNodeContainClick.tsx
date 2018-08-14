@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 /**
  * Determines if a click's coordinates are within the bounds of a node.

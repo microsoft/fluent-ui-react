@@ -1,24 +1,11 @@
-import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { AbstractBehavior } from '../AbstractBehavior'
+import { Accessibility } from '../../interfaces'
 
-export class ImageBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
-  constructor() {
-    super('image')
-  }
+const ImageBehavior: Accessibility = (props: any) => ({
+  attributes: {
+    root: {
+      role: props['alt'] ? undefined : 'presentation',
+    },
+  },
+})
 
-  private attributes = {
-    'ms-acc-behavior': this.name,
-    alt: '',
-  }
-
-  public generateAriaAttributes(props, state): object {
-    if (!props['alt']) {
-      this.attributes['role'] = 'presentation'
-    }
-
-    return this.attributes
-  }
-
-  public changeState(newState: ComponentState): void {}
-}
+export default ImageBehavior

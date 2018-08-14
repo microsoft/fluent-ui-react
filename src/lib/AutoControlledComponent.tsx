@@ -22,7 +22,7 @@
  *    Some instance methods may be exposed to users via refs.  Again, these are lost with HOC unless
  *    hoisted and exposed by the HOC.
  */
-import _ from 'lodash'
+import * as _ from 'lodash'
 import UIComponent from './UIComponent'
 
 const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(1)}`
@@ -71,7 +71,7 @@ export const getAutoControlledStateValue = (
   // otherwise, undefined
 }
 
-export default abstract class AutoControlledComponent<P, S> extends UIComponent<P, S> {
+export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent<P, S> {
   constructor(props, ctx) {
     super(props, ctx)
 

@@ -21,8 +21,23 @@ const Variations = () => (
     />
     <ComponentExample
       title="Name"
-      description="An Avatar can have initials shown from the name prop, if no image is provided"
+      description="An Avatar can have initials shown from the name prop, if no image is provided."
       examplePath="components/Avatar/Variations/AvatarExampleName"
+    />
+    <ComponentExample
+      title="Excluded Initials"
+      description="Avatar initials exclude content in parens, braces, and brackets, as well as all middle names."
+      examplePath="components/Avatar/Variations/AvatarExampleExcludedInitials"
+    />
+    <ComponentExample
+      title="Get initials"
+      description="An Avatar can be provided with custom logic for generating the initials shown in the label."
+      examplePath="components/Avatar/Variations/AvatarExampleGetInitials"
+    />
+    <ComponentExample
+      title="Presence indicator customization"
+      description="The presence indicator inside the Avatar can be customize to show different background."
+      examplePath="components/Avatar/Variations/AvatarExamplePresenceIndicatorCustomization"
     />
     <ComponentExample
       title="Size"

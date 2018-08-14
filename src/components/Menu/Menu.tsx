@@ -1,45 +1,17 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { ReactNode, SyntheticEvent } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
-import MenuItem from './MenuItem'
-import menuRules from './menuRules'
-
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
-import menuVariables from './menuVariables'
-import { OffsetBlockEndProperty } from 'csstype'
+import { MenuBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 import { FocusZone, FocusZoneDirection } from '../FocusZone'
+import MenuItem from './MenuItem'
 
-interface MenuState {
-  activeIndex: number
-}
-
-export type MenuType = 'primary' | 'secondary'
-export type MenuShape = 'pills' | 'pointing' | 'underlined'
-
-export interface IMenuProps {
-  as?: string
-  activeIndex?: number | string
-  children?: ReactNode
-  className?: string
-  defaultActiveIndex?: number | string
-  items?: any
-  shape?: MenuShape
-  type?: MenuType
-  vertical?: boolean
-  grabFocus?: boolean
-  componentRef?: object
-  accBehavior?: string
-  onKeyDown?: (e: SyntheticEvent, props: IMenuProps) => void
-}
-
-class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
+class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
-
-  static variables = menuVariables
 
   static create: Function
 
@@ -61,6 +33,9 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
+    /** A vertical menu may take the size of its container. */
+    fluid: PropTypes.bool,
+
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
@@ -72,37 +47,38 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     grabFocus: PropTypes.bool,
 
     componentRef: PropTypes.object,
-
-    accBehavior: PropTypes.string,
 
     onKeyDown: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: MenuBehavior as Accessibility,
   }
 
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
     'className',
     'defaultActiveIndex',
+    'fluid',
     'items',
     'shape',
     'type',
     'vertical',
     'grabFocus',
-    'accBehavior',
     'onKeyDown',
   ]
 
   static autoControlledProps = ['activeIndex']
-
-  static rules = menuRules
 
   static Item = MenuItem
 
@@ -113,11 +89,6 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
   constructor(props, state) {
     super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.menu,
-    )
-
     this.navDirection = this.props.vertical
       ? FocusZoneDirection.vertical
       : FocusZoneDirection.horizontal
@@ -146,9 +117,6 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
-    accBehavior: this.props.vertical
-      ? AccBehaviorType[AccBehaviorType.verticalMenuItem]
-      : AccBehaviorType[AccBehaviorType.menuItem],
   })
 
   renderItems = () => {
@@ -169,7 +137,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
@@ -179,7 +147,7 @@ class Menu extends AutoControlledComponent<IMenuProps, MenuState> {
         preventDefaultWhenHandled={true}
         isCircularNavigation={true}
         ref={this.setFocusZone}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
         {...rest}
         className={classes.root}
         onKeyDown={this.props.onKeyDown}

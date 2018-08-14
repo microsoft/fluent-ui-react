@@ -1,15 +1,31 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, felaRtlRenderer } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import {
+  FontFaces,
+  IThemePrepared,
+  IThemeInput,
+  StaticStyles,
+  StaticStyleObject,
+  StaticStyle,
+  StaticStyleFunction,
+} from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
+
+export interface IProviderProps {
+  fontFaces?: FontFaces
+  theme: IThemeInput
+  staticStyles?: StaticStyles
+  children: React.ReactNode
+}
 
 /**
  * The Provider passes the CSS in JS renderer and theme down context.
  */
-class Provider extends Component<any, any> {
+class Provider extends React.Component<IProviderProps, any> {
   static propTypes = {
     fontFaces: PropTypes.arrayOf(
       PropTypes.shape({
@@ -25,47 +41,63 @@ class Provider extends Component<any, any> {
         }),
       }),
     ),
-    siteVariables: PropTypes.object,
-    componentVariables: PropTypes.object,
-    staticStyles: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
-    ),
-    rtl: PropTypes.bool,
+    theme: PropTypes.shape({
+      siteVariables: PropTypes.object,
+      componentVariables: PropTypes.object,
+      componentStyles: PropTypes.object,
+      rtl: PropTypes.bool,
+    }),
+    staticStyles: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+      PropTypes.func,
+      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func])),
+    ]),
     children: PropTypes.element.isRequired,
   }
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = felaRenderer => {
-    const { siteVariables, staticStyles } = this.props
+  renderStaticStyles = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
+    const { theme, staticStyles } = this.props
 
     if (!staticStyles) return
 
-    const renderObject = object => {
+    const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaRenderer.renderStatic(style, selector)
+        felaLtrRenderer.renderStatic(style, selector)
       })
     }
 
-    const staticStylesArr = [].concat(staticStyles)
+    const staticStylesArr = toCompactArray(staticStyles)
 
-    staticStylesArr.forEach(staticStyle => {
-      if (_.isString(staticStyle)) {
-        felaRenderer.renderStatic(staticStyle)
+    staticStylesArr.forEach((staticStyle: StaticStyle) => {
+      if (typeof staticStyle === 'string') {
+        felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
-        renderObject(staticStyle)
+        renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject(staticStyle(siteVariables))
+        renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables))
       } else {
         throw new Error(
-          `staticStyles array must contain CSS strings, style objects, or rule functions, got: ${typeof staticStyle}`,
+          `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
         )
       }
     })
   }
 
-  renderFontFaces = felaRenderer => {
-    const { siteVariables, fontFaces } = this.props
+  renderFontFaces = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
+    const { fontFaces } = this.props
 
     if (!fontFaces) return
 
@@ -73,39 +105,36 @@ class Provider extends Component<any, any> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.path, font.style)
     }
 
-    const fontFaceArr = [].concat(_.isFunction(fontFaces) ? fontFaces(siteVariables) : fontFaces)
-
-    fontFaceArr.forEach(fontObject => {
+    fontFaces.forEach(fontObject => {
       renderFontObject(fontObject)
     })
   }
 
   componentDidMount() {
-    const felaRenderer = this.props.rtl ? felaRtlRenderer : felaLtrRenderer
-    this.renderStaticStyles(felaRenderer)
-    this.renderFontFaces(felaRenderer)
+    this.renderStaticStyles()
+    this.renderFontFaces()
   }
 
   render() {
-    const { componentVariables, siteVariables, children, rtl } = this.props
+    const { theme, children } = this.props
 
-    // ensure we don't assign `undefined` values to the theme context
-    // they will override values down stream
-    const theme: any = { rtl: !!rtl }
-    if (siteVariables) {
-      theme.siteVariables = siteVariables
-    }
-    if (componentVariables) {
-      theme.componentVariables = componentVariables
-    }
-
+    // rehydration disabled to avoid leaking styles between renderers
+    // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
-      <RendererProvider renderer={this.props.rtl ? felaRtlRenderer : felaLtrRenderer}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </RendererProvider>
+      <ProviderConsumer
+        render={(incomingTheme: IThemePrepared) => {
+          const outgoingTheme: IThemePrepared = mergeThemes(incomingTheme, theme)
+
+          return (
+            <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
+              <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
+            </RendererProvider>
+          )
+        }}
+      />
     )
   }
 }

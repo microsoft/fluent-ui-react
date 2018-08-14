@@ -1,51 +1,17 @@
-import React, { CSSProperties } from 'react'
-import PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, SUI } from '../../lib'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 
-import iconRules from './iconRules'
-import iconVariables from './iconVariables'
-
-export type IconColor =
-  | 'white'
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'olive'
-  | 'green'
-  | 'teal'
-  | 'blue'
-  | 'violet'
-  | 'purple'
-  | 'pink'
-  | 'brown'
-  | 'grey'
-  | 'black'
-
-export type IconSize = 'mini' | 'tiny' | 'small' | 'large' | 'big' | 'huge' | 'massive'
+import svgIcons from './svgIcons'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
-export interface IconProps {
-  as?: string
-  bordered?: boolean
-  circular?: boolean
-  className?: string
-  color?: IconColor
-  disabled?: boolean
-  kind?: string
-  name?: string
-  size?: IconSize
-  xSpacing?: IconXSpacing
-  style?: CSSProperties
-  title?: string
-}
+class Icon extends UIComponent<any, any> {
+  static create: Function
 
-class Icon extends UIComponent<IconProps, {}> {
   static className = 'ui-icon'
 
   static displayName = 'Icon'
-
-  static variables = iconVariables
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -60,35 +26,36 @@ class Icon extends UIComponent<IconProps, {}> {
     /** Additional classes. */
     className: PropTypes.string,
 
-    /** Color of the icon. */
-    color: PropTypes.oneOf([
-      'white',
-      'red',
-      'orange',
-      'yellow',
-      'olive',
-      'green',
-      'teal',
-      'blue',
-      'violet',
-      'purple',
-      'pink',
-      'brown',
-      'grey',
-      'black',
-    ]),
-
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
-    /** The type of font that needs to be used */
-    kind: PropTypes.string,
+    /** Sets font for a font-based icon.  */
+    font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
 
     /** Name of the icon. */
-    name: customPropTypes.suggest(SUI.ALL_ICONS_IN_ALL_CONTEXTS),
+    name: PropTypes.string,
 
     /** Size of the icon. */
-    size: PropTypes.oneOf(['mini', 'tiny', 'small', 'large', 'big', 'huge', 'massive']),
+    size: PropTypes.oneOf([
+      'micro',
+      'mini',
+      'tiny',
+      'small',
+      'normal',
+      'large',
+      'big',
+      'huge',
+      'massive',
+    ]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Render icon from SVGs collection.  */
+    svg: PropTypes.bool,
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -99,24 +66,44 @@ class Icon extends UIComponent<IconProps, {}> {
     'bordered',
     'circular',
     'className',
-    'color',
     'disabled',
-    'kind',
+    'font',
     'name',
     'size',
+    'styles',
+    'svg',
+    'variables',
     'xSpacing',
   ]
 
   static defaultProps = {
-    as: 'i',
-    kind: 'FontAwesome',
+    as: 'span',
+    size: 'normal',
   }
 
-  static rules = iconRules
-
-  renderComponent({ ElementType, classes, rest }) {
+  renderFontIcon(ElementType, classes, rest): React.ReactNode {
     return <ElementType className={classes.root} {...rest} />
   }
+
+  renderSvgIcon(ElementType, classes, rest): React.ReactNode {
+    const icon = svgIcons[this.props.name]
+
+    return (
+      <ElementType className={classes.root} {...rest}>
+        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
+          {icon && icon.element}
+        </svg>
+      </ElementType>
+    )
+  }
+
+  renderComponent({ ElementType, classes, rest }) {
+    return this.props.svg
+      ? this.renderSvgIcon(ElementType, classes, rest)
+      : this.renderFontIcon(ElementType, classes, rest)
+  }
 }
+
+Icon.create = createShorthandFactory(Icon, name => ({ name }))
 
 export default Icon

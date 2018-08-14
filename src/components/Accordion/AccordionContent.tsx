@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import _ from 'lodash'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import accordionContentRules from './accordionContentRules'
-import accordionContentVariables from './accordionContentVariables'
-import { ChatPaneContentBehavior } from '../../lib/accessibility/Behaviors/Accordion/ChatPaneContentBehavior'
+import { ChatPaneContentBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A standard AccordionContent.
@@ -37,9 +36,13 @@ class AccordionContent extends UIComponent<any, any> {
 
     /** AccordionTitle index inside Accordion. */
     titleIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'active',
     'children',
@@ -49,26 +52,20 @@ class AccordionContent extends UIComponent<any, any> {
     'titleIndex',
   ]
 
-  static rules = accordionContentRules
-
-  static variables = accordionContentVariables
-
-  constructor(p, context) {
-    super(p, context)
-
-    this.registerActionHandler(this.props.contentReturnHandler)
-    this.accBehavior = new ChatPaneContentBehavior()
+  static defaultProps = {
+    accessibility: ChatPaneContentBehavior as Accessibility,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children, content } = this.props
+    this.registerActionHandler(this.props.contentReturnHandler)
 
     return (
       <ElementType
         {...rest}
         className={classes.root}
-        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        onKeyDown={this.keyHandler()}
+        {...accessibility.attributes.root}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

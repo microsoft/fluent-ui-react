@@ -6,7 +6,7 @@ import { pxToRem } from '../../lib'
 
 export const htmlFontSize = '14px' // what 1rem represents
 
-const blackRgbaFormat = alpha => `rgba(37, 36, 36, ${alpha})`
+const blackRgbaFormat = (alpha: number): string => `rgba(37, 36, 36, ${alpha})`
 export const black = blackRgbaFormat(1)
 export const gray01 = blackRgbaFormat(0.95)
 export const gray02 = blackRgbaFormat(0.75)
@@ -18,6 +18,7 @@ export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray12 = blackRgbaFormat(0.05)
 export const gray14 = '#FAF9F8'
+export const fontBlack = '#252424'
 
 export const white = '#FFF'
 

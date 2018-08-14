@@ -1,11 +1,12 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
-import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { DefaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 import { FocusZone } from '../FocusZone'
 import ChatPaneTitleExpandAction from '../../lib/actions/ChatPaneTitleExpandAction'
 import ChatPaneContentReturnAction from '../../lib/actions/ChatPaneContentReturnAction'
@@ -66,11 +67,13 @@ class Accordion extends AutoControlledComponent<any, any> {
 
     grabFocus: PropTypes.bool,
     componentRef: PropTypes.object,
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static rules = accordionRules
-
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
@@ -81,6 +84,10 @@ class Accordion extends AutoControlledComponent<any, any> {
     'panels',
     'grabFocus',
   ]
+
+  public static defaultProps = {
+    accessibility: DefaultBehavior as Accessibility,
+  }
 
   static autoControlledProps = ['activeIndex']
 
@@ -202,17 +209,17 @@ class Accordion extends AutoControlledComponent<any, any> {
     return children
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
       <FocusZone
         elementType={ElementType}
         preventDefaultWhenHandled={true}
-        {...rest}
         className={classes.root}
         ref={this.setFocusZone}
-        {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
+        {...accessibility.attributes.root}
+        {...rest}
       >
         {childrenExist(children) ? children : this.renderPanels()}
       </FocusZone>

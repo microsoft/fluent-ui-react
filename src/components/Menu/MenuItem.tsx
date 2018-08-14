@@ -1,7 +1,7 @@
-import _ from 'lodash'
-import cx from 'classnames'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as cx from 'classnames'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import {
   childrenExist,
@@ -11,12 +11,13 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { AccBehaviorType, AccBehaviorFactory } from '../../lib/accessibility/AccBehaviorFactory'
-
-import { MenuType, MenuShape } from './Menu'
-
-import menuItemRules from './menuItemRules'
-import menuVariables from './menuVariables'
+import { MenuItemBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+import {
+  focusAsync,
+  focusFirstChild,
+  getPreviousElement,
+} from '../../../node_modules/@uifabric/utilities'
 import ClickAction, { ClickActionParams } from '../../lib/actions/ClickAction'
 import MenuCloseSubmenuAction, {
   MenuCloseSubmenuActionParams,
@@ -24,40 +25,14 @@ import MenuCloseSubmenuAction, {
 import MenuOpenSubmenuAction, {
   MenuOpenSubmenuActionParams,
 } from '../../lib/actions/MenuOpenSubmenuAction'
+import keyboardKey from 'keyboard-key'
 
-import { focusFirstChild, focusAsync, getPreviousElement } from '@uifabric/utilities'
-
-interface MenuItemState {
-  submenuOpened: boolean
-}
-
-export interface IMenuItemProps {
-  active?: boolean
-  as?: string
-  children?: ReactNode
-  className?: string
-  content?: ReactNode
-  index?: number
-  onClick?: (any, IMenuItemProps) => void
-  shape?: MenuShape
-  type?: MenuType
-  vertical?: boolean
-  submenu?: ReactNode
-  submenuOpened?: boolean
-  defaultSubmenuOpened?: boolean
-  accBehavior?: string
-}
-
-class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
+class MenuItem extends AutoControlledComponent<any, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
 
-  static variables = menuVariables
-
   static create: Function
-
-  static rules = menuItemRules
 
   static propTypes = {
     /** A menu item can be active. */
@@ -95,20 +70,23 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     submenu: PropTypes.node,
 
     submenuOpened: PropTypes.bool,
 
     defaultSubmenuOpened: PropTypes.bool,
-
-    accBehavior: PropTypes.string,
   }
 
   static defaultProps = {
     as: 'li',
+    accessibility: MenuItemBehavior as Accessibility,
   }
 
   static handledProps = [
+    'accessibility',
     'active',
     'as',
     'children',
@@ -120,7 +98,6 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     'type',
     'vertical',
     'submenu',
-    'accBehavior',
   ]
 
   static autoControlledProps = ['submenuOpened']
@@ -160,16 +137,45 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     }
   })
 
-  constructor(props, state) {
-    super(props, state)
-    const accBehavior: string = props.accBehavior
-    this.accBehavior = AccBehaviorFactory.getBehavior(
-      AccBehaviorType[accBehavior] || AccBehaviorType.menuItem,
-    )
+  constructor(props, ctx) {
+    super(props, ctx)
 
     this.registerActionHandler(this.clickHandler)
     this.registerActionHandler(this.closeSubmenuHandler)
     this.registerActionHandler(this.openSubmenuHandler)
+
+    this.handleKey(keyboardKey.Enter, (key, event) => {
+      event.preventDefault()
+      this.executeAction(ClickAction.execute({ event, moveFocus: true }))
+    })
+
+    this.handleKey(keyboardKey.Spacebar, (key, event) => {
+      event.preventDefault()
+      this.executeAction(ClickAction.execute({ event, moveFocus: true }))
+    })
+
+    this.handleKey(keyboardKey.Escape, (key, event) => {
+      event.preventDefault()
+      this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: true }))
+    })
+
+    this.handleKey(keyboardKey.ArrowRight, (key, event) => {
+      this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+    })
+
+    this.handleKey(keyboardKey.ArrowLeft, (key, event) => {
+      this.executeAction(MenuCloseSubmenuAction.execute({ moveFocus: false }))
+    })
+
+    this.handleKey(keyboardKey.ArrowDown, (key, event) => {
+      event.preventDefault()
+      this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true }))
+    })
+
+    this.handleKey(keyboardKey.ArrowUp, (key, event) => {
+      event.preventDefault()
+      this.executeAction(MenuOpenSubmenuAction.execute({ moveFocus: true, focusLast: true }))
+    })
   }
 
   componentDidMount() {
@@ -223,33 +229,30 @@ class MenuItem extends AutoControlledComponent<IMenuItemProps, MenuItemState> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content } = this.props
 
     const submenuIndicator = this.props.submenu && (this.state.submenuOpened ? ' <' : ' >')
     return (
       <ElementType
         ref={this.setElementRef}
-        role="presentation"
-        onKeyDown={this.accBehavior.onKeyDown(this, this.props, this.state)}
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rest}
       >
-        <div // this is an attempt to mimic the acc prototype
-          {...rest}
-          className={classes.root}
-          onClick={this.handleClick}
-          {...this.accBehavior.generateAriaAttributes(this.props, this.state)}
-        >
-          {childrenExist(children) ? (
-            children
-          ) : (
-            // this is an attempt to mimic the prototype
-            <span>{content}</span>
-            // <a className={cx('ui-menu__item__anchor', classes.anchor)}>{content}</a>
-          )}
-          {submenuIndicator}
-        </div>
-
-        {this.state.submenuOpened && this.props.submenu}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <a
+            className={cx('ui-menu__item__anchor', classes.anchor)}
+            onClick={this.handleClick}
+            onKeyDown={this.keyHandler()}
+            {...accessibility.attributes.anchor}
+          >
+            {content}
+          </a>
+        )}
+        {submenuIndicator}
       </ElementType>
     )
   }

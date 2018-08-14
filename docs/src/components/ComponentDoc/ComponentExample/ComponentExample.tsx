@@ -1,10 +1,10 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { PureComponent, isValidElement, CSSProperties } from 'react'
+import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
-import copyToClipboard from 'copy-to-clipboard'
+import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
 
@@ -14,16 +14,16 @@ import {
   knobsContext,
   repoURL,
   scrollToAnchor,
-  variablesContext,
-  truncateStyle,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { pxToRem, doesNodeContainClick } from 'src/lib'
+import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
 import Editor from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
+import { IThemeInput, IThemePrepared } from 'types/theme'
+import { theme as teamsTheme } from '../../../../../src/themes/teams'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -34,25 +34,25 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
 
 interface IComponentExampleState {
   knobs: Object
-  componentVariables: { [key: string]: Object }
-  exampleElement: JSX.Element
-  handleMouseLeave: () => void
-  handleMouseMove: () => void
-  sourceCode: string
-  markup: string
-  error: string
-  showCode: boolean
-  showHTML: boolean
-  showRtl: boolean
-  showVariables: boolean
-  isHovering: boolean
-  copiedCode: boolean
+  theme: IThemeInput
+  exampleElement?: JSX.Element
+  handleMouseLeave?: () => void
+  handleMouseMove?: () => void
+  sourceCode?: string
+  markup?: string
+  error?: string
+  showCode?: boolean
+  showHTML?: boolean
+  showRtl?: boolean
+  showVariables?: boolean
+  isHovering?: boolean
+  copiedCode?: boolean
 }
 
 const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 const EDITOR_GUTTER_COLOR = '#26282d'
 
-const childrenStyle: CSSProperties = {
+const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
   maxWidth: pxToRem(500),
 }
@@ -62,29 +62,21 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
   shorthand: 'Shorthand API',
 }
 
-const variablesPanelStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  maxHeight: pxToRem(250),
-  overflowY: 'auto',
-}
-
-const variableInputStyle = {
-  paddingBottom: pxToRem(10),
-}
-
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-class ComponentExample extends PureComponent<IComponentExampleProps, IComponentExampleState> {
+class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
   private componentRef: React.Component
   private sourceCodeMgr: ISourceCodeManager
   private anchorName: string
   private kebabExamplePath: string
   private KnobsComponent: any
 
-  public state = { knobs: {} } as IComponentExampleState
+  public state: IComponentExampleState = {
+    knobs: {},
+    theme: teamsTheme,
+  }
 
   public static contextTypes = {
     onPassed: PropTypes.func,
@@ -283,10 +275,8 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
     return (
       <ContributionPrompt>
-        <div style={truncateStyle}>
-          Looks like we're missing <code title={missingExamplePath}>{missingExamplePath}</code>{' '}
-          example.
-        </div>
+        Looks like we're need an example file at:
+        <p>{missingExamplePath}</p>
       </ContributionPrompt>
     )
   }
@@ -295,7 +285,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     try {
       const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
 
-      if (!isValidElement(exampleElement)) {
+      if (!React.isValidElement(exampleElement)) {
         this.setErrorDebounced(
           `Default export is not a valid React element. Check the example syntax.`,
         )
@@ -349,11 +339,18 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
   }
 
-  private getComponentName = () => this.props.examplePath.split('/')[1]
+  private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
+    const { showRtl, theme } = this.state
+
+    const newTheme: IThemeInput = {
+      componentVariables: theme.componentVariables,
+      rtl: showRtl,
+    }
+
     return (
-      <Provider componentVariables={this.state.componentVariables} rtl={this.state.showRtl}>
+      <Provider theme={mergeThemes(teamsTheme, newTheme)}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )
@@ -391,13 +388,13 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
 
     return (
       // match code editor background and gutter size and colors
-      <div style={{ background: EDITOR_BACKGROUND_COLOR } as CSSProperties}>
+      <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
           style={
             {
               borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
               paddingBottom: '1rem',
-            } as CSSProperties
+            } as React.CSSProperties
           }
         >
           <Menu size="small" inverted secondary pointing items={menuItems} />
@@ -409,7 +406,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
   private renderCodeEditorMenu = (): JSX.Element => {
     const { copiedCode } = this.state
     const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
-    const codeEditorStyle: CSSProperties = {
+    const codeEditorStyle: React.CSSProperties = {
       position: 'absolute',
       margin: 0,
       top: '2px',
@@ -509,7 +506,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
         <Divider inverted horizontal>
           <span style={{ opacity: 0.5 }}>HTML</span>
         </Divider>
-        <div style={{ padding: '1rem', filter: 'grayscale()' } as CSSProperties}>
+        <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
           <Editor
             mode="html"
             showGutter={false}
@@ -529,7 +526,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
     const { showVariables } = this.state
     if (!showVariables) return
 
-    const name = this.getComponentName()
+    const displayName = this.getDisplayName()
 
     return (
       <div>
@@ -537,34 +534,36 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables }) => {
-            const variablesFilename = `./${name}/${_.camelCase(name)}Variables.ts`
-            const hasVariablesFile = _.includes(variablesContext.keys(), variablesFilename)
+          render={({ siteVariables, componentVariables }: IThemePrepared) => {
+            const variables = componentVariables[displayName]
 
-            if (!hasVariablesFile) {
+            if (!variables) {
               return (
                 <Segment size="small" inverted padded basic>
-                  This component has no variables to edit.
+                  {displayName} has no variables to edit.
                 </Segment>
               )
             }
 
-            const variables = variablesContext(variablesFilename).default
-            const defaultVariables = variables(siteVariables)
+            const variablesObject = callable(variables)(siteVariables)
 
             return (
-              <Form inverted style={{ padding: '1rem' }}>
-                <Form.Group inline style={variablesPanelStyle}>
-                  {_.map(defaultVariables, (val, key) => (
-                    <Form.Input
-                      style={variableInputStyle}
-                      key={key}
-                      label={key}
-                      defaultValue={val}
-                      onChange={this.handleVariableChange(name, key)}
-                    />
-                  ))}
-                </Form.Group>
+              <Form inverted widths="equal" style={{ padding: '1rem' }}>
+                {_.chunk(_.toPairs(variablesObject), 2).map(fields => {
+                  return (
+                    <Form.Group widths="equal" key={fields.map(([key]) => key).join('-')}>
+                      {fields.map(([key, val]) => (
+                        <Form.Input
+                          fluid
+                          key={key}
+                          label={key}
+                          defaultValue={val}
+                          onChange={this.handleVariableChange(displayName, key)}
+                        />
+                      ))}
+                    </Form.Group>
+                  )
+                })}
               </Form>
             )
           }}
@@ -576,11 +575,14 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
   private handleVariableChange = (component, variable) => (e, { value }) => {
     this.setState(
       state => ({
-        componentVariables: {
-          ...state.componentVariables,
-          [component]: {
-            ...(state.componentVariables && state.componentVariables[component]),
-            [variable]: value,
+        theme: {
+          ...state.theme,
+          componentVariables: {
+            ...state.theme.componentVariables,
+            [component]: {
+              ...(state.theme.componentVariables && state.theme.componentVariables[component]),
+              [variable]: value,
+            },
           },
         },
       }),
@@ -603,7 +605,7 @@ class ComponentExample extends PureComponent<IComponentExampleProps, IComponentE
 
     const isActive = this.isActiveHash() || this.isActiveState()
 
-    const exampleStyle: CSSProperties = {
+    const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
       background: '#fff',

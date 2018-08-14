@@ -1,19 +1,14 @@
-import React from 'react'
+import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
-import { IAccessibilityBehavior } from './accessibility/interfaces'
 import { ActionHandler } from './actions/Action'
-import { AccBehaviorFactory } from './accessibility/AccBehaviorFactory'
 
 abstract class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static variables?: any
-  static rules?: any
   static handledProps: any
 
-  public accBehavior: IAccessibilityBehavior<P, S>
   private actionHandlers: { [name: string]: (params: any) => void }
 
   constructor(props, context) {
@@ -28,7 +23,6 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.accBehavior = AccBehaviorFactory.getBehavior()
   }
 
   // state machine should be used instead, for now allow simple actions on components
@@ -40,6 +34,23 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
   executeAction<A>(args: { name: string; params: A }): void {
     if (this.actionHandlers && this.actionHandlers[args.name]) {
       this.actionHandlers[args.name](args.params)
+    }
+  }
+
+  private keyHandlers: {
+    [key: string]: (key: string, event: Event) => void
+  }
+
+  protected handleKey(key: string, callback: (key: string, event: Event) => void): void {
+    this.keyHandlers = this.keyHandlers || {}
+    this.keyHandlers[key] = callback
+  }
+
+  protected keyHandler(): object {
+    return event => {
+      if (this.keyHandlers && this.keyHandlers[event.which]) {
+        this.keyHandlers[event.which](event.key, event)
+      }
     }
   }
 
@@ -55,8 +66,7 @@ abstract class UIComponent<P, S> extends React.Component<P, S> {
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,
-        rules: this.childClass.rules,
-        variables: this.childClass.variables,
+        state: this.state,
       },
       this.renderComponent,
     )

@@ -1,5 +1,4 @@
 import { exec } from 'child_process'
-
 const sh = (cmd, cb) => {
   const options = {
     cwd: process.cwd(),

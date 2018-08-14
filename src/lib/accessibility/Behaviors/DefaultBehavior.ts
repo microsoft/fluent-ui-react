@@ -1,19 +1,9 @@
-import { IAccessibilityBehavior, ComponentState } from '../interfaces'
-import { AbstractBehavior } from './AbstractBehavior'
+import { Accessibility } from '../interfaces'
 
-export class DefaultBehavior<P, S> extends AbstractBehavior<P, S>
-  implements IAccessibilityBehavior<P, S> {
-  constructor() {
-    super('default')
-  }
-
-  public generateAriaAttributes(): object {
-    return {
-      'ms-acc-behavior': this.name,
-    }
-  }
-
-  public changeState(newState: ComponentState): void {
-    throw new Error('Method not implemented.')
-  }
+const DefaultBehavior: Accessibility = {
+  attributes: {
+    root: {},
+  },
 }
+
+export default DefaultBehavior

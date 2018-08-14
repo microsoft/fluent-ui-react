@@ -1,6 +1,6 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import React, { isValidElement } from 'react'
+import * as React from 'react'
 import { createShorthand, createShorthandFactory } from 'src/lib'
 import { consoleUtil } from 'test/utils'
 
@@ -44,7 +44,7 @@ const itReturnsNullGivenDefaultProps = value => {
 
 const itReturnsAValidElement = value => {
   test('returns a valid element', () => {
-    expect(isValidElement(getShorthand({ value }))).toBe(true)
+    expect(React.isValidElement(getShorthand({ value }))).toBe(true)
   })
 }
 

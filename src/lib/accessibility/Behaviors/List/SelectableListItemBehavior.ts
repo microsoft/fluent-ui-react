@@ -1,30 +1,12 @@
-import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { AbstractBehavior } from '../AbstractBehavior'
+import { IAccessibilityDefinition } from '../../interfaces'
 
-export class SelectableListItemBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
-  constructor() {
-    super('selectable-listitem')
-  }
+const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => ({
+  attributes: {
+    root: {
+      role: 'option',
+      'aria-selected': !!props['active'],
+    },
+  },
+})
 
-  private attributes = {
-    'ms-acc-behavior': this.name,
-    role: 'option',
-    // tabIndex: -1,
-  }
-
-  public generateAriaAttributes(props, state): object {
-    return this.attributes
-  }
-
-  public changeState(newState: ComponentState): void {
-    switch (newState) {
-      case ComponentState.active:
-        this.attributes['aria-selected'] = true
-        break
-      case ComponentState.inactive:
-        delete this.attributes['aria-selected']
-        break
-    }
-  }
-}
+export default SelectableListItemBehavior

@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 export const COLORS = [
   'red',
@@ -1807,7 +1807,7 @@ export const ICONS = _.uniq([
 ])
 
 export const ICON_ALIASES = [
-  'chess rock',
+  'chess rook',
   'ordered list',
   'unordered list',
   'user doctor',
@@ -2114,7 +2114,7 @@ export const ICONS_AND_ALIASES = _.uniq([...ICONS, ...ICON_ALIASES])
 
 // Some icon names are not part of icons.css.
 // These are only valid as children of other components.
-// Their CSS rules are defined by a specific component's CSS.
+// Their CSS styles are defined by a specific component's CSS.
 // We don't want to show name warnings for those usages so we add them as valid names here.
 export const COMPONENT_CONTEXT_SPECIFIC_ICONS = [
   'left dropdown', // nested dropdown menu direction icon

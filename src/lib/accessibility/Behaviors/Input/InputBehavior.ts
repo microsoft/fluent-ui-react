@@ -1,25 +1,11 @@
-import { IAccessibilityBehavior, ComponentState } from '../../interfaces'
-import { AbstractBehavior } from '../AbstractBehavior'
+import { Accessibility } from '../../interfaces'
 
-export class InputBehavior extends AbstractBehavior<{}, {}>
-  implements IAccessibilityBehavior<{}, {}> {
-  constructor() {
-    super('input')
-  }
+const InputBehavior: Accessibility = (props: any) => ({
+  attributes: {
+    root: {
+      'aria-disabled': !!props['disabled'],
+    },
+  },
+})
 
-  private attributes = {
-    'ms-acc-behavior': this.name,
-  }
-
-  public generateAriaAttributes(props, state): object {
-    return this.attributes
-  }
-
-  public changeState(newState: ComponentState): void {
-    if (newState === ComponentState.disabled) {
-      this.attributes['aria-disabled'] = true
-    } else if (newState === ComponentState.enabled) {
-      delete this.attributes['aria-disabled']
-    }
-  }
-}
+export default InputBehavior
