@@ -76,6 +76,7 @@ class Button extends UIComponent<any, any> {
   public static defaultProps = {
     as: 'button',
     accessibility: ButtonBehavior,
+    iconPosition: 'before',
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
@@ -96,7 +97,7 @@ class Button extends UIComponent<any, any> {
               key="btn-icon"
               name={icon}
               xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
-              color={primary ? 'white' : 'black'}
+              variables={{ color: primary ? 'white' : 'black' }}
             />
           ),
       ].filter(Boolean)

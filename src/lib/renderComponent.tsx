@@ -78,11 +78,20 @@ const renderComponent = <P extends {}>(
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
-          props.variables,
+          props.variables || props.vars,
         )(siteVariables)
 
+        console.warn('styles are', props.styles)
+
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
+        const stylesFromProps =
+          typeof props.styles === 'function'
+            ? (props.styles as any)(resolvedVariables)
+            : props.styles
+
+        const mergedStyles = mergeComponentStyles(componentStyles[displayName], {
+          root: stylesFromProps,
+        } as any)
         const styleParam: ComponentStyleFunctionParam = { props, variables: resolvedVariables }
         const resolvedStyles = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
