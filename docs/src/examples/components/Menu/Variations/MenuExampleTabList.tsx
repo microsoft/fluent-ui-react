@@ -29,7 +29,7 @@ class MenuExampleTab extends React.Component {
               active={activeIndex === i}
               onClick={this.handleItemClick(i)}
               accessibility={TabListBehavior}
-              aria-label={`Today's events`}
+              aria-label="Today's events"
             />
           )
         })}

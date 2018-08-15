@@ -27,7 +27,7 @@ class MenuExampleToolbar extends React.Component {
               shape="underlined"
               active={activeIndex === i}
               onClick={this.handleItemClick(i)}
-              aria-label={`Compose Editor`}
+              aria-label="Compose Editor"
               accessibility={ToolbarButtonBehavior}
             />
           )

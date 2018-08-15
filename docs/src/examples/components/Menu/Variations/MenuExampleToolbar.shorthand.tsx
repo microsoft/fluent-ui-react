@@ -27,7 +27,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         items={items}
         shape="underlined"
         accessibility={ToolbarBehavior}
-        aria-label={`Compose Editor`}
+        aria-label="Compose Editor"
       />
     )
   }
