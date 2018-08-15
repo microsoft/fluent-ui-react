@@ -34,7 +34,7 @@ class List extends UIComponent<any, any> {
 
     /** Truncates header */
     truncateHeader: PropTypes.bool,
-    
+
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
