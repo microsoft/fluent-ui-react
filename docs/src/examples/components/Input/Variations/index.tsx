@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -15,8 +15,13 @@ const Variations = () => (
       examplePath="components/Input/Variations/InputExampleFluid"
     />
     <ComponentExample
-      title="Clearable icon"
-      description="An input can have a search icon that can change into clear button on typing."
+      title="Clearable"
+      description="An input can be clearable."
+      examplePath="components/Input/Variations/InputExampleClearable"
+    />
+    <ComponentExample
+      title="Clearable with icon"
+      description="An input with a given icon can be clearable (the given icon will change into clear button on typing)."
       examplePath="components/Input/Variations/InputExampleIconClearable"
     />
   </ExampleSection>

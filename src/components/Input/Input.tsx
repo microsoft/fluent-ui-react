@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
+  AutoControlledComponent,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -16,7 +17,7 @@ import Icon from '../Icon'
  * An Input
  * @accessibility This is example usage of the accessibility tag.
  */
-class Input extends UIComponent<any, any> {
+class Input extends AutoControlledComponent<any, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'
@@ -33,6 +34,9 @@ class Input extends UIComponent<any, any> {
 
     /** A property that will change the icon on the input and clear the input on click on Cancel */
     clearable: PropTypes.bool,
+
+    /** The default value of the input. */
+    defaultValue: PropTypes.string,
 
     /** A button can take the width of its container. */
     fluid: PropTypes.bool,
@@ -85,23 +89,22 @@ class Input extends UIComponent<any, any> {
     type: 'text',
   }
 
+  static autoControlledProps = ['value']
+
   inputRef: any
 
-  constructor(props, context) {
-    super(props, context)
+  state: any = { value: this.props.value || '' }
 
-    this.state = {
-      value: props.value || '',
-    }
+  getInitialAutoControlledState() {
+    return { value: '' }
   }
 
   handleChange = e => {
     const value = _.get(e, 'target.value')
-    const { clearable } = this.props
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.setState({ value })
+    !this.props.value && this.setState({ value })
   }
 
   handleChildOverrides = (child, defaultProps) => ({
@@ -115,8 +118,10 @@ class Input extends UIComponent<any, any> {
     const { clearable } = this.props
     const { value } = this.state
 
-    if (clearable && value.length !== 0) {
+    if (clearable && !this.props.value && value.length !== 0) {
       this.setState({ value: '' })
+    } else if (clearable && this.props.value && this.props.value.length !== 0) {
+      this.setState({ value: this.props.value })
     }
   }
 
@@ -142,7 +147,7 @@ class Input extends UIComponent<any, any> {
     const { clearable, icon } = this.props
     const { value } = this.state
 
-    if (clearable && !_.isNil(icon) && value.length !== 0) {
+    if (clearable && value.length !== 0) {
       return 'close'
     }
 
