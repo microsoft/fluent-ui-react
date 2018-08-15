@@ -7,7 +7,6 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
     },
     anchor: {
       role: 'button',
-      'aria-selected': props['active'],
       tabIndex: '0',
     },
   },
