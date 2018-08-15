@@ -5,6 +5,7 @@ import * as cx from 'classnames'
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
 import { ListItemBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class ListItem extends UIComponent<any, any> {
   static create: Function
@@ -43,8 +44,14 @@ class ListItem extends UIComponent<any, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -63,13 +70,15 @@ class ListItem extends UIComponent<any, any> {
     'renderHeaderArea',
     'renderMainArea',
     'selection',
+    'styles',
     'truncateContent',
     'truncateHeader',
+    'variables',
   ]
 
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior,
+    accessibility: ListItemBehavior as Accessibility,
 
     renderMainArea: (props, state, classes) => {
       const { renderHeaderArea, renderContentArea } = props

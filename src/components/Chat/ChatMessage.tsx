@@ -24,9 +24,15 @@ class ChatMessage extends UIComponent<any, any> {
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'mine']
+  static handledProps = ['as', 'children', 'className', 'content', 'mine', 'styles', 'variables']
 
   static defaultProps = {
     as: 'li',

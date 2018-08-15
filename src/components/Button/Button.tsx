@@ -5,6 +5,7 @@ import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
 import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A button.
@@ -54,8 +55,14 @@ class Button extends UIComponent<any, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -70,12 +77,14 @@ class Button extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onClick',
+    'styles',
     'type',
+    'variables',
   ]
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior,
+    accessibility: ButtonBehavior as Accessibility,
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {

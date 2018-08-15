@@ -51,6 +51,12 @@ class Label extends UIComponent<any, any> {
      * @param {object} data - All props.
      */
     onIconClick: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -62,6 +68,8 @@ class Label extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onIconClick',
+    'styles',
+    'variables',
   ]
 
   static defaultProps = {
@@ -88,7 +96,7 @@ class Label extends UIComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { children, content, icon, iconPosition } = this.props
     const getContent = (): React.ReactNode => {
       const iconAtEnd = iconPosition === 'end'
@@ -96,7 +104,7 @@ class Label extends UIComponent<any, any> {
 
       const iconElement = Icon.create(
         {
-          className: classes.icon,
+          styles: { root: styles.icon },
           ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
         },
         {
