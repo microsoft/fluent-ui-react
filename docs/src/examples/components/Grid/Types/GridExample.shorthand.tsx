@@ -1,27 +1,19 @@
 import React from 'react'
 import { Grid, Image } from '@stardust-ui/react'
 
-const imageNames = [
-  'ade.jpg',
-  'chris.jpg',
-  'christian.jpg',
-  'daniel.jpg',
-  'elliot.jpg',
-  'elyse.png',
-  'helen.jpg',
-  'jenny.jpg',
-  'joe.jpg',
-  'justen.jpg',
+const images = [
+  <Image key="ade" fluid src="public/images/avatar/large/ade.jpg" />,
+  <Image key="chris" fluid src="public/images/avatar/large/chris.jpg" />,
+  <Image key="christian" fluid src="public/images/avatar/large/christian.jpg" />,
+  <Image key="daniel" fluid src="public/images/avatar/large/daniel.jpg" />,
+  <Image key="elliot" fluid src="public/images/avatar/large/elliot.jpg" />,
+  <Image key="elyse" fluid src="public/images/avatar/large/elyse.png" />,
+  <Image key="helen" fluid src="public/images/avatar/large/helen.jpg" />,
+  <Image key="jenny" fluid src="public/images/avatar/large/jenny.jpg" />,
+  <Image key="joe" fluid src="public/images/avatar/large/joe.jpg" />,
+  <Image key="justen" fluid src="public/images/avatar/large/justen.jpg" />,
 ]
 
-const images = imageNames.map((name, index) => (
-  <Image key={`${name}-${index}`} fluid src={`public/images/avatar/large/${name}`} />
-))
-
-const GridExample = () => (
-  <div>
-    <Grid content={images} />
-  </div>
-)
+const GridExample = () => <Grid content={images} />
 
 export default GridExample
