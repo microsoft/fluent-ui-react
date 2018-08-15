@@ -65,22 +65,14 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const descriptionProps =
-      typeof descriptionContentOrProps === 'string'
-        ? { content: descriptionContentOrProps }
-        : descriptionContentOrProps
-
-    const descriptionElement = HeaderDescription.create(
-      {
-        ...descriptionProps,
+    const descriptionElement = HeaderDescription.create(descriptionContentOrProps, {
+      defaultProps: {
         variables: {
           ...(v.descriptionColor && { color: v.descriptionColor }),
         },
       },
-      {
-        generateKey: false,
-      },
-    )
+      generateKey: false,
+    })
 
     return (
       <ElementType {...rest} className={classes.root}>
