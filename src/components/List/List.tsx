@@ -35,11 +35,14 @@ class List extends UIComponent<any, any> {
     /** Truncates header */
     truncateHeader: PropTypes.bool,
 
-    /** Variables */
-    variables: PropTypes.object,
-
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -55,6 +58,7 @@ class List extends UIComponent<any, any> {
     'debug',
     'items',
     'selection',
+    'styles',
     'truncateContent',
     'truncateHeader',
     'variables',

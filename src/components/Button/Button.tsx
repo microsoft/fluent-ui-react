@@ -57,6 +57,12 @@ class Button extends UIComponent<any, any> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -71,7 +77,9 @@ class Button extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onClick',
+    'styles',
     'type',
+    'variables',
   ]
 
   public static defaultProps = {
