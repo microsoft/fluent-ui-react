@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { MenuItemBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -49,7 +50,7 @@ class MenuItem extends UIComponent<any, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom styles to be applied for component. */
@@ -61,7 +62,7 @@ class MenuItem extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior,
+    accessibility: MenuItemBehavior as Accessibility,
   }
 
   static handledProps = [

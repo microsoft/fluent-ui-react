@@ -5,6 +5,7 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
@@ -33,8 +34,8 @@ class List extends UIComponent<any, any> {
 
     /** Truncates header */
     truncateHeader: PropTypes.bool,
-
-    /** Accessibility behavior if overriden by the user. */
+    
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom styles to be applied for component. */
@@ -46,7 +47,7 @@ class List extends UIComponent<any, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior,
+    accessibility: ListBehavior as Accessibility,
   }
 
   static handledProps = [

@@ -5,6 +5,7 @@ import * as React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -43,7 +44,7 @@ class Menu extends AutoControlledComponent<any, any> {
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom styles to be applied for component. */
@@ -55,7 +56,7 @@ class Menu extends AutoControlledComponent<any, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: MenuBehavior,
+    accessibility: MenuBehavior as Accessibility,
   }
 
   static handledProps = [

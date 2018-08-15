@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
-  callable,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -114,12 +113,11 @@ class Input extends UIComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, className, icon, input, type } = this.props
+  renderComponent({ ElementType, classes, rest, styles }) {
+    const { children, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = classes.input
-    const iconClasses = classes.icon
 
     // Render with children
     // ----------------------------------------
@@ -148,7 +146,7 @@ class Input extends UIComponent<any, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { className: iconClasses },
+            defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>
