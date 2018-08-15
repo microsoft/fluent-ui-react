@@ -10,6 +10,8 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
 
+  static useVariablesFrom = 'Menu'
+
   static className = 'ui-menu__item'
 
   static create: Function
