@@ -3,9 +3,18 @@ import _ from 'lodash'
 import { Menu, MenuItem, ToolbarBehavior, Icon, ToolbarButtonBehavior } from '@stardust-ui/react'
 
 const items = [
-  { key: 'cloud', content: <Icon circular name="cloud" size="small" xSpacing="none" /> },
-  { key: 'clock', content: <Icon circular name="clock" size="small" xSpacing="none" /> },
-  { key: 'book', content: <Icon circular name="book" size="small" xSpacing="none" /> },
+  {
+    key: 'cloud',
+    content: <Icon circular name="cloud" size="small" xSpacing="none" aria-label="Cloud Tool" />,
+  },
+  {
+    key: 'clock',
+    content: <Icon circular name="clock" size="small" xSpacing="none" aria-label="Clock Tool" />,
+  },
+  {
+    key: 'book',
+    content: <Icon circular name="book" size="small" xSpacing="none" aria-label="Book Tool" />,
+  },
 ]
 
 class MenuExampleToolbar extends React.Component {
