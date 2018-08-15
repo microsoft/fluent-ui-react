@@ -3,21 +3,21 @@ import { pxToRem } from '../../../../lib'
 export interface IButtonVariables {
   [key: string]: string | number
 
-  height?: string
-  minWidth?: string
-  maxWidth?: string
-  backgroundColor?: string
-  backgroundColorHover?: string
-  circularRadius?: string
-  paddingLeftRightValue?: number
-  typePrimaryColor?: string
-  typePrimaryBackgroundColor?: string
-  typePrimaryBackgroundColorHover?: string
-  typePrimaryBorderColor?: string
-  typeSecondaryColor?: string
-  typeSecondaryBackgroundColor?: string
-  typeSecondaryBackgroundColorHover?: string
-  typeSecondaryBorderColor?: string
+  height: string
+  minWidth: string
+  maxWidth: string
+  backgroundColor: string
+  backgroundColorHover: string
+  circularRadius: string
+  paddingLeftRightValue: number
+  typePrimaryColor: string
+  typePrimaryBackgroundColor: string
+  typePrimaryBackgroundColorHover: string
+  typePrimaryBorderColor: string
+  typeSecondaryColor: string
+  typeSecondaryBackgroundColor: string
+  typeSecondaryBackgroundColorHover: string
+  typeSecondaryBorderColor: string
 }
 
 export default (siteVars: any): IButtonVariables => {
