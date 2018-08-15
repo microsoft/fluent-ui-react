@@ -5,6 +5,8 @@ import _ from 'lodash'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ChatPaneContentBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import keyboardKey from 'keyboard-key'
+import ChatPaneContentReturnAction from '../../lib/actions/ChatPaneContentReturnAction'
 
 /**
  * A standard AccordionContent.
@@ -56,9 +58,19 @@ class AccordionContent extends UIComponent<any, any> {
     accessibility: ChatPaneContentBehavior as Accessibility,
   }
 
+  constructor(props, ctx) {
+    super(props, ctx)
+
+    this.registerActionHandler(this.props.contentReturnHandler)
+
+    this.handleKey(keyboardKey.ArrowLeft, (key, event) => {
+      event.preventDefault()
+      this.executeAction(ChatPaneContentReturnAction.execute({ index: props['titleIndex'] }))
+    })
+  }
+
   renderComponent({ ElementType, classes, rest, accessibility }) {
     const { children, content } = this.props
-    this.registerActionHandler(this.props.contentReturnHandler)
 
     return (
       <ElementType
