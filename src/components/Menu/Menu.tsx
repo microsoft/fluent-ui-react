@@ -91,8 +91,6 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    /** Accessibility label that will be added by the accessibility behavior. */
-    'aria-label': PropTypes.string,
   }
 
   static defaultProps = {
@@ -117,7 +115,6 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     'underlined',
     'variables',
     'vertical',
-    'aria-label',
   ]
 
   static autoControlledProps = ['activeIndex']
