@@ -1,7 +1,8 @@
 import { KeyCombinations } from '../interfaces'
 import keyboardKey from 'keyboard-key'
+import { isPropertyAccessOrQualifiedName } from 'typescript'
 
-const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinations[]) => (
+export const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinations[]) => (
   event: KeyboardEvent,
 ) => {
   const filteredKeys = keysCombinations.filter(keysCombinations => {
@@ -21,4 +22,20 @@ const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinati
   handler(event)
 }
 
-export default keyboardHandlerFilter
+export const mapKeysToActions = (actionsDefinition, actions) => {
+  if (!actions || !actionsDefinition) return
+
+  const keyboardHandlers = []
+
+  for (const action in actionsDefinition) {
+    if (!actions[action]) continue
+
+    const filteredAction = keyboardHandlerFilter(
+      actions[action].bind(this),
+      actionsDefinition[action].keyCombinations,
+    )
+    keyboardHandlers.push(filteredAction)
+  }
+
+  return keyboardHandlers
+}

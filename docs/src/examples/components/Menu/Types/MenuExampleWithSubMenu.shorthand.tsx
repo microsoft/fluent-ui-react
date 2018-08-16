@@ -1,13 +1,23 @@
 import * as React from 'react'
 import { Menu } from '@stardust-ui/react'
 
+const submenuStyle = {
+  position: 'absolute',
+  top: '100%',
+  width: '100px',
+  left: 0,
+}
+
+const menuStyle = {
+  width: '100px',
+  position: 'relative',
+}
+
 const subMenuItems1 = [
   { key: 'a', content: 'New' },
   { key: 'b', content: 'Open' },
   { key: 'c', content: 'Edit' },
 ]
-
-const submenu1 = <Menu items={subMenuItems1} vertical />
 
 const subMenuItems2 = [
   { key: 'd', content: 'Undo' },
@@ -16,17 +26,19 @@ const subMenuItems2 = [
   { key: 'g', content: 'Cope' },
 ]
 
-const submenu2 = <Menu items={subMenuItems2} vertical />
-
 const subMenuItems3 = [{ key: 'h', content: 'Font' }, { key: 'i', content: 'Text' }]
 
-const submenu3 = <Menu items={subMenuItems3} vertical />
+const submenu1 = <Menu items={subMenuItems1} vertical style={submenuStyle} />
+
+const submenu2 = <Menu items={subMenuItems2} vertical style={submenuStyle} />
+
+const submenu3 = <Menu items={subMenuItems3} vertical style={submenuStyle} />
 
 const items = [
-  { key: 'file', content: 'File', submenu: submenu1 },
-  { key: 'edit', content: 'Edit', submenu: submenu2 },
-  { key: 'format', content: 'Format', submenu: submenu3 },
-  { key: 'help', content: 'Help' },
+  { key: 'file', content: 'File', submenu: submenu1, style: menuStyle },
+  { key: 'edit', content: 'Edit', submenu: submenu2, style: menuStyle },
+  { key: 'format', content: 'Format', submenu: submenu3, style: menuStyle },
+  { key: 'help', content: 'Help', style: menuStyle },
 ]
 
 class MenuExampleWithSubMenuShorthand extends React.Component {

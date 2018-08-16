@@ -10,7 +10,6 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
       tabIndex: props['tabIndex'] === 0 ? '0' : '-1',
-      'data-focused': false,
       'data-is-focusable': true,
     },
   },
@@ -28,10 +27,8 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
         { keyCode: KeyCodes.enter },
         { keyCode: KeyCodes.space },
         { keyCode: KeyCodes.down },
+        { keyCode: KeyCodes.up },
       ],
-    },
-    openSubmenuAndFocusLast: {
-      keyCombinations: [{ keyCode: KeyCodes.up }],
     },
   },
 })

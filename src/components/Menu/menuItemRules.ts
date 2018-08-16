@@ -37,7 +37,7 @@ export default {
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
-      ...(children ? { padding: 0 } : { padding: `${pxToRem(14)} ${pxToRem(18)} ` }),
+      // ...(children ? { padding: 0 } : { padding: `${pxToRem(14)} ${pxToRem(18)} ` }),
       cursor: 'pointer',
       display: 'block',
       ...(shape === 'pills' && {
@@ -131,6 +131,8 @@ export default {
   },
   anchor: () => ({
     color: 'inherit',
+    display: 'block',
+    padding: `${pxToRem(14)} ${pxToRem(18)}`,
     ':hover': {
       color: 'inherit',
     },

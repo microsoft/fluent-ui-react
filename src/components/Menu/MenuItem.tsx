@@ -8,12 +8,11 @@ import {
   createShorthandFactory,
   AutoControlledComponent,
   customPropTypes,
-  UIComponent,
 } from '../../lib'
 import menuItemRules from './menuItemRules'
 import menuVariables from './menuVariables'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { AccessibilityActions } from '../../lib/accessibility/interfaces'
+import MenuItemActionHandler from '../../lib/accessibility/Actions/Menu/MenuItemActionHandler'
 
 interface MenuItemState {
   submenuOpened: boolean
@@ -102,54 +101,64 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     return { submenuOpened: false }
   }
 
+  actionHandler: MenuItemActionHandler
+
   constructor(p, s) {
     super(p, s)
-
-    if (p.submenu) {
-      this.actions = {
-        openSubmenu: this.openSubmenu.bind(this),
-        toggleSubmenu: this.handleClick.bind(this),
-        closeSubmenu: this.closeSubmenu.bind(this),
-      }
-    }
   }
 
   componentDidMount() {
-    // this.attachKeyboardEventHandlers()
+    this.actionHandler = new MenuItemActionHandler(
+      {
+        ...this.props,
+        ...this.state,
+        ...this.currentAccessibility,
+      },
+      this.elementRef,
+      this.openSubmenu.bind(this),
+      this.closeSubmenu.bind(this),
+    )
+
+    this.actionHandler.attachKeyboardEventHandlers()
   }
 
   componentWillUnmount() {
-    // this.detachKeyboardEventHandlers()
+    this.actionHandler.detachKeyboardEventHandlers()
   }
 
-  openSubmenu = e => {
-    if (!this.props.submenu) return
-    this.setState({ submenuOpened: true }, () => {
-      // TODO: improve, focus submenu first item
-      const firstItem = e.target.lastElementChild.firstElementChild as HTMLElement
-      firstItem.focus()
-      firstItem.tabIndex = 0
-    })
+  openSubmenu() {
+    if (!this.props.submenu) {
+      alert(this.props.content)
+    }
+
+    if (!this.state.submenuOpened) {
+      this.setState({ submenuOpened: true })
+    }
   }
 
-  closeSubmenu = e => {
-    if (!this.props.submenu) return
-
-    const elemToFocus = this.elementRef
+  closeSubmenu() {
+    if (!this.props.submenu || !this.state.submenuOpened) return
     this.setState({ submenuOpened: false }, () => {
-      // TODO: improve, focus parent menu item
-      elemToFocus.focus()
+      this.focus()
     })
+  }
+
+  toggleSubmenu() {
+    this.setState({ submenuOpened: !this.state.submenuOpened })
+  }
+
+  focus() {
+    this.elementRef.focus()
   }
 
   handleClick = e => {
-    // if (this.props.submenu) {
-    //   this.setState({ submenuOpened: !this.state.submenuOpened })
-    // } else {
-    //   alert(this.props.content)
-    // }
+    if (this.props.submenu) {
+      this.toggleSubmenu()
+    } else {
+      alert(this.props.content)
+    }
 
-    // e.stopPropagation()
+    e.stopPropagation()
 
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -164,6 +173,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
+        ref={this.setElementRef}
         {...rest}
       >
         {childrenExist(children) ? (
@@ -171,7 +181,6 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
             className={classes.div}
             tabIndex={this.props.tabIndex}
             {...accessibility.attributes.anchor}
-            ref={this.setElementRef}
           >
             {children}
           </div>

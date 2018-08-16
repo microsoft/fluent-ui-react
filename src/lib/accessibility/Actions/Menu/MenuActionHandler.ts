@@ -1,25 +1,19 @@
-import { IActionHandler } from '../interfaces'
-import keyboardHandlerFilter from '../../Helpers/keyboardHandlerFilter'
+import { INavigableActionHandler, ActionHandler } from '../interfaces'
+import { mapKeysToActions } from '../../Helpers/keyboardHandler'
+import { LinkedList } from '../../Helpers/linkedList'
+
 import {
   getNextElement,
   getPreviousElement,
   isElementVisible,
   isBooleanAttributeSet,
 } from '../../Helpers/dom'
-import eventStack from '../../../eventStack'
 
-class MenuActionHandler implements IActionHandler {
-  private _rootElement: HTMLElement
+class MenuActionHandler extends ActionHandler implements INavigableActionHandler {
   private readonly IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
-  private readonly IS_FOCUSED = 'data-focused'
   private _isCircularNavigation: boolean = true
   private _currentFocusedElement: HTMLElement
-
-  getCurrentFocusedElement(rootElement: HTMLElement): HTMLElement | null | undefined {
-    if (!rootElement) return null
-
-    return rootElement.querySelector(`[${this.IS_FOCUSED}="true"]`) as HTMLElement
-  }
+  private _linkedList: LinkedList<HTMLElement>
 
   private _isFocusable(element: HTMLElement | undefined | null): boolean {
     if (!element) return false
@@ -30,84 +24,44 @@ class MenuActionHandler implements IActionHandler {
     return isFocusable && !isDisabled && isElementVisible(element)
   }
 
-  private _checkNextCandidateElement(currentElement?: HTMLElement): boolean {
-    return this._isFocusable(currentElement) && currentElement !== this._currentFocusedElement
-  }
-
-  private _getNextCandidateElement(): HTMLElement | null {
-    const nextElement = getNextElement(
-      this._rootElement,
-      this._currentFocusedElement,
-      this._checkNextCandidateElement.bind(this),
-    )
-
-    if (nextElement) {
-      return nextElement
-    } else if (this._isCircularNavigation) {
-      return getNextElement(
-        this._rootElement,
-        this._rootElement.firstElementChild as HTMLElement,
-        this._checkNextCandidateElement.bind(this),
-        true,
-      )
-    }
-  }
-
-  private _getPreviousCandidateElement() {
-    const previousElement = getPreviousElement(
-      this._rootElement,
-      this._currentFocusedElement,
-      this._checkNextCandidateElement.bind(this),
-    )
-
-    if (previousElement) {
-      return previousElement
-    } else if (this._isCircularNavigation) {
-      return getPreviousElement(
-        this._rootElement,
-        this._rootElement.lastElementChild as HTMLElement,
-        this._checkNextCandidateElement.bind(this),
-        true,
-      )
-    }
-  }
-
-  public moveNext() {
-    const nextElement = this._getNextCandidateElement()
+  public moveNext(event: KeyboardEvent) {
+    const nextElement = this._linkedList.next()
 
     if (!nextElement) return
     nextElement.focus()
+
+    event.stopPropagation()
+    event.preventDefault()
   }
 
-  public movePrevious() {
-    const previousElement = this._getPreviousCandidateElement()
+  public movePrevious(event: KeyboardEvent) {
+    const previousElement = this._linkedList.previous()
 
     if (!previousElement) return
     previousElement.focus()
+
+    event.stopPropagation()
+    event.preventDefault()
   }
 
-  public moveFirst() {
-    const firstElement = getNextElement(
-      this._rootElement,
-      this._rootElement.firstElementChild as HTMLElement,
-      this._checkNextCandidateElement.bind(this),
-      true,
-    )
+  public moveFirst(event: KeyboardEvent) {
+    const firstElement = this._linkedList.head.item
 
     if (!firstElement) return
     firstElement.focus()
+
+    event.stopPropagation()
+    event.preventDefault()
   }
 
-  public moveLast() {
-    const lastElement = getPreviousElement(
-      this._rootElement,
-      this._rootElement.lastElementChild as HTMLElement,
-      this._checkNextCandidateElement.bind(this),
-      true,
-    )
+  public moveLast(event: KeyboardEvent) {
+    const lastElement = this._linkedList.tail.item
 
     if (!lastElement) return
     lastElement.focus()
+
+    event.stopPropagation()
+    event.preventDefault()
   }
 
   public onFocus(event: Event) {
@@ -120,38 +74,51 @@ class MenuActionHandler implements IActionHandler {
           this._currentFocusedElement.tabIndex = -1
           target.tabIndex = 0
         }
-        this._currentFocusedElement.setAttribute(this.IS_FOCUSED, 'false')
       }
       this._currentFocusedElement = target
-      target.setAttribute(this.IS_FOCUSED, 'true')
+
+      event.stopPropagation()
+      event.preventDefault()
     }
   }
 
-  private _actionHandlers = []
+  private getFocusableElementsList(parentElement: HTMLElement) {
+    const children = parentElement.children
+    if (!children.length) return
+    const list = new LinkedList<HTMLElement>()
+    list.isCircular = this._isCircularNavigation
+
+    const childrenArray = [].slice.apply(children)
+
+    childrenArray.forEach(element => {
+      const focusableChild = element.querySelector(`[${this.IS_FOCUSABLE_ATTRIBUTE}]`)
+      if (this._isFocusable(focusableChild)) {
+        list.append(focusableChild)
+      }
+    })
+
+    return list
+  }
 
   constructor(props, htmlElement) {
-    this._rootElement = htmlElement
+    super(htmlElement)
 
-    const actionsDefinition = props.actionsDefinition
+    if (props['disabled']) return
 
-    for (const action in actionsDefinition) {
-      if (!this[action]) continue
-      const filteredAction = keyboardHandlerFilter(
-        this[action].bind(this),
-        actionsDefinition[action].keyCombinations,
-      )
-      this._actionHandlers.push(filteredAction)
+    this._linkedList = this.getFocusableElementsList(htmlElement)
+
+    this._keyboardHandlers = mapKeysToActions(props.actionsDefinition, {
+      moveNext: this.moveNext.bind(this),
+      movePrevious: this.movePrevious.bind(this),
+      moveLast: this.moveLast.bind(this),
+      moveFirst: this.moveFirst.bind(this),
+    })
+  }
+
+  public onStateChanged(props: any) {
+    if (props['disabled']) {
+      this.detachKeyboardEventHandlers()
     }
-  }
-
-  public onStateChanged(props: any) {}
-
-  public attachKeyboardEventHandlers() {
-    eventStack.sub('keydown', this._actionHandlers, { target: this._rootElement })
-  }
-
-  public detachKeyboardEventHandlers() {
-    eventStack.unsub('keydown', this._actionHandlers, { target: this._rootElement })
   }
 }
 

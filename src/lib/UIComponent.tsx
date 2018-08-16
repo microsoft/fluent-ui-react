@@ -1,15 +1,6 @@
 import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
-import eventStack from './eventStack'
-import {
-  AccessibilityEventHandlers,
-  IAccessibilityDefinition,
-  IActionDefinition,
-  IEventHandlers,
-  AccessibilityActions,
-} from './accessibility/interfaces'
-
-import keyboardHandlerFilter from './accessibility/Helpers/keyboardHandlerFilter'
+import { IAccessibilityDefinition } from './accessibility/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -21,8 +12,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static handledProps: any
   protected currentAccessibility: IAccessibilityDefinition
   protected elementRef: HTMLElement
-  protected accEventHandlers: IEventHandlers[] = []
-  protected actions: AccessibilityActions
 
   constructor(props, context) {
     super(props, context)
@@ -44,57 +33,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
 
   setAccessibility = acc => (this.currentAccessibility = acc)
   setElementRef = ref => (this.elementRef = ref)
-  attachKeyboardEventHandlers() {
-    if (this.accEventHandlers.length) {
-      const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
-
-      console.log(handlers)
-      handlers.forEach(eventHandler => {
-        eventStack.sub('keydown', eventHandler.handlers, { target: eventHandler.target })
-      })
-    } else {
-      this.getAndAttachEventHandlers()
-    }
-  }
-
-  detachKeyboardEventHandlers() {
-    if (this.accEventHandlers.length) {
-      const handlers: AccessibilityEventHandlers[] = [].concat(this.accEventHandlers)
-      handlers.forEach(eventHandler => {
-        eventStack.unsub('keydown', eventHandler.handlers, { target: eventHandler.target })
-      })
-    }
-  }
-
-  getAndAttachEventHandlers() {
-    for (const action in this.actions) {
-      const actionHandler: IActionDefinition = this.currentAccessibility.actionsDefinition[action]
-
-      if (!actionHandler) continue
-
-      const eventHandler: Function = keyboardHandlerFilter(
-        this.actions[action],
-        actionHandler.keyCombinations,
-      )
-
-      const accEventHandler = this.accEventHandlers.filter(itm => {
-        return itm.target === this.elementRef
-      })[0]
-
-      if (accEventHandler) {
-        accEventHandler.handlers.push(eventHandler)
-      } else {
-        this.accEventHandlers.push({
-          handlers: [eventHandler],
-          target: this.elementRef,
-        })
-      }
-    }
-
-    if (this.accEventHandlers.length) {
-      this.attachKeyboardEventHandlers()
-    }
-  }
 
   render() {
     return renderComponent(

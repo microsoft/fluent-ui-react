@@ -1,30 +1,42 @@
+import { keyboardHandlerFilter } from '../Helpers/keyboardHandler'
+import eventStack from '../../eventStack'
 export interface IActionHandler {
   onStateChanged(props: any)
 }
-
 export interface INavigable {
-  moveNext()
-
-  movePrevious()
-
-  moveFirst()
-
-  moveLast()
+  moveNext(event: KeyboardEvent)
+  movePrevious(event: KeyboardEvent)
+  moveFirst(event: KeyboardEvent)
+  moveLast(event: KeyboardEvent)
 }
 
-export interface IListNavigable extends INavigable {
-  first()
-  last()
-}
+export interface INavigableActionHandler extends IActionHandler, INavigable {}
 
 export interface IActionable {
-  OnAction()
+  triggerAction(event: KeyboardEvent)
 }
 
-export interface ICancalable {
-  OnEsc()
+export interface ICancelable {
+  cancelAction(event: KeyboardEvent)
 }
 
-export interface IMenuNvigable extends IListNavigable {}
+export interface IActionableActionHandler extends IActionHandler, IActionable, ICancelable {}
 
-export interface IMenuItemNavigable extends IListNavigable, IActionable, ICancalable {}
+export abstract class ActionHandler {
+  protected _rootElement: HTMLElement
+  protected _keyboardHandlers
+
+  constructor(element: HTMLElement) {
+    this._rootElement = element
+  }
+
+  public attachKeyboardEventHandlers() {
+    if (!this._keyboardHandlers || !this._keyboardHandlers.length) return
+    eventStack.sub('keydown', this._keyboardHandlers, { target: this._rootElement })
+  }
+
+  public detachKeyboardEventHandlers() {
+    if (!this._keyboardHandlers || !this._keyboardHandlers.length) return
+    eventStack.unsub('keydown', this._keyboardHandlers, { target: this._rootElement })
+  }
+}

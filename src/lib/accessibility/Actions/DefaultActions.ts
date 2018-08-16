@@ -20,7 +20,6 @@ const Helpers = {
 
 const DefaultActions: AccessibilityActions = {
   moveNext: (event: KeyboardEvent, elem?: HTMLElement) => {
-    console.log(elem)
     const current = event.target as HTMLElement
     if (!current) return
 
