@@ -93,18 +93,14 @@ class Input extends AutoControlledComponent<any, any> {
 
   inputRef: any
 
-  state: any = { value: this.props.value || '' }
-
-  getInitialAutoControlledState() {
-    return { value: '' }
-  }
+  state: any = { value: this.props.value || this.props.defaultValue || '' }
 
   handleChange = e => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    !this.props.value && this.setState({ value })
+    this.trySetState({ value })
   }
 
   handleChildOverrides = (child, defaultProps) => ({
@@ -118,10 +114,8 @@ class Input extends AutoControlledComponent<any, any> {
     const { clearable } = this.props
     const { value } = this.state
 
-    if (clearable && !this.props.value && value.length !== 0) {
-      this.setState({ value: '' })
-    } else if (clearable && this.props.value && this.props.value.length !== 0) {
-      this.setState({ value: this.props.value })
+    if (clearable) {
+      this.trySetState({ value: '' })
     }
   }
 
