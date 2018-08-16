@@ -6,17 +6,11 @@ const sh = (command, cb) => {
   const options = {
     cwd: process.cwd(),
     env: process.env,
+    stdio: 'inherit',
+    shell: true,
   }
 
   const child = spawn(cmd, args, options)
-
-  child.stdout.on('data', data => {
-    console.log(data.toString())
-  })
-
-  child.stderr.on('data', data => {
-    console.error(data.toString())
-  })
 
   child.on('close', code => {
     if (code === 0) return cb()
