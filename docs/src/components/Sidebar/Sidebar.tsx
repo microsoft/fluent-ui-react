@@ -12,6 +12,7 @@ import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
+const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
@@ -96,6 +97,8 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
+  getBehaviorPathname = info => `/behaviors/${_.kebabCase(info.displayName)}`
+
   menuItemsByType = _.map(nextType => {
     const items = _.flow(
       _.filter(({ type }) => type === nextType),
@@ -112,18 +115,18 @@ class Sidebar extends React.Component<any, any> {
     )(componentMenu)
 
     const behaviorItems = _.flow(
-      _.filter(({ type }) => type === 'behavior'),
+      _.filter(({ type }) => type === 'Behavior'),
       _.map(info => (
         <Menu.Item
           key={info.displayName}
           name={info.displayName}
           onClick={this.handleItemClick}
           as={NavLink}
-          to={getComponentPathname(info)}
+          to={this.getBehaviorPathname(info)}
           activeClassName="active"
         />
       )),
-    )(componentMenu)
+    )(behaviorMenuItems)
 
     return (
       <Menu.Item key={nextType}>

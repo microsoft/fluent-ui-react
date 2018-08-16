@@ -11,6 +11,7 @@ import * as WebpackHotMiddleware from 'webpack-hot-middleware'
 import sh from '../sh'
 import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
+import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
 
@@ -32,6 +33,10 @@ task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
 })
 
+task('clean:docs:component-menu-behaviors', cb => {
+  rimraf(paths.docsSrc('componentMenuBehaviors.json'), cb)
+})
+
 task('clean:docs:dist', cb => {
   rimraf(paths.docsDist(), cb)
 })
@@ -45,6 +50,7 @@ task(
   parallel(
     'clean:docs:component-info',
     'clean:docs:component-menu',
+    'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
     'clean:docs:example-menus',
   ),
@@ -55,6 +61,7 @@ task(
 // ----------------------------------------
 
 const componentsSrc = [`${config.paths.src()}/components/*/[A-Z]*.tsx`]
+const behaviorSrc = [`${config.paths.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
 const examplesSrc = `${paths.docsSrc()}/examples/*/*/*/index.tsx`
 const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
 
@@ -70,6 +77,12 @@ task('build:docs:component-menu', () =>
     .pipe(dest(paths.docsSrc())),
 )
 
+task('build:docs:component-menu-behaviors', () =>
+  src(behaviorSrc, { since: lastRun('build:docs:component-menu-behaviors') })
+    .pipe(gulpComponentMenuBehaviors())
+    .pipe(dest(paths.docsSrc())),
+)
+
 task('build:docs:example-menu', () =>
   src(examplesSrc, { since: lastRun('build:docs:example-menu') })
     .pipe(gulpExampleMenu())
@@ -78,7 +91,12 @@ task('build:docs:example-menu', () =>
 
 task(
   'build:docs:json',
-  parallel('build:docs:docgen', 'build:docs:component-menu', 'build:docs:example-menu'),
+  parallel(
+    'build:docs:docgen',
+    'build:docs:component-menu',
+    'build:docs:component-menu-behaviors',
+    'build:docs:example-menu',
+  ),
 )
 
 task('build:docs:html', () => src(paths.docsSrc('404.html')).pipe(dest(paths.docsDist())))
