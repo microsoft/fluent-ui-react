@@ -7,11 +7,6 @@ class MenuItemActionHandler extends ActionHandler implements IActionHandler {
   private readonly IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
   private _documentEventHandler
 
-  private handleDocumentClick = (e: Event) => {
-    e.stopPropagation()
-    if (this._rootElement && doesNodeContainClick(this._rootElement, e)) return
-  }
-
   constructor(props, htmlElement, openSubmenu, closeSubmenu) {
     super(htmlElement)
 

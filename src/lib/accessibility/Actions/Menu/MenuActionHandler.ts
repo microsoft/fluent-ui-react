@@ -101,6 +101,7 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
         }
       }
       this._currentFocusedElement = target
+      this._linkedList.setCurrentItem(this._currentFocusedElement)
 
       event.stopPropagation()
       event.preventDefault()

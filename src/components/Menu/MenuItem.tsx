@@ -101,8 +101,6 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     return { submenuOpened: false }
   }
 
-  actionHandler: MenuItemActionHandler
-
   constructor(p, s) {
     super(p, s)
   }

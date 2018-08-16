@@ -1,6 +1,8 @@
 import eventStack from '../../eventStack'
 export interface IActionHandler {
   onStateChanged(props: any)
+  attachKeyboardEventHandlers()
+  detachKeyboardEventHandlers()
 }
 export interface INavigable {
   moveNext(event: KeyboardEvent)
