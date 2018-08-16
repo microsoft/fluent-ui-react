@@ -45,7 +45,6 @@ export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName?: string
-  useVariablesFrom?: string
   handledProps: string[]
   props: IRenderConfigProps
   state: { [key: string]: any }
@@ -63,15 +62,7 @@ const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
-  const {
-    className,
-    defaultProps,
-    displayName,
-    useVariablesFrom = displayName,
-    handledProps,
-    props,
-    state,
-  } = config
+  const { className, defaultProps, displayName, handledProps, props, state } = config
 
   return (
     <FelaTheme
@@ -87,7 +78,7 @@ const renderComponent = <P extends {}>(
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-          componentVariables[useVariablesFrom],
+          componentVariables[displayName],
           props.variables,
         )(siteVariables)
 

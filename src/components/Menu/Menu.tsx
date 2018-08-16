@@ -6,6 +6,7 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesObject } from '../../../types/theme'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -89,8 +90,8 @@ class Menu extends AutoControlledComponent<any, any> {
     },
   })
 
-  renderItems = () => {
-    const { items, type, shape, variables, vertical } = this.props
+  renderItems = (variables: ComponentVariablesObject) => {
+    const { items, type, shape, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -98,7 +99,7 @@ class Menu extends AutoControlledComponent<any, any> {
         defaultProps: {
           type,
           shape,
-          variables, // variables overrides only, not the resolved variables
+          variables,
           vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
@@ -108,11 +109,11 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
       <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderItems()}
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }

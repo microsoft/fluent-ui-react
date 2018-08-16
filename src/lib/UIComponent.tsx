@@ -5,7 +5,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
-  static useVariablesFrom?: string
   static className: string
   static handledProps: any
 
@@ -33,7 +32,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
         className: this.childClass.className,
         defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
-        useVariablesFrom: this.childClass.useVariablesFrom,
         handledProps: this.childClass.handledProps,
         props: this.props,
         state: this.state,
