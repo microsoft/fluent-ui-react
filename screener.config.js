@@ -26,15 +26,21 @@ const screenerConfig = {
   },
 
   // screenshot every example in maximized mode
-  states: glob
-    .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
-    .map(examplePath => {
+  states: _.flatMap(
+    glob.sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] }),
+    examplePath => {
       const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
 
-      return {
-        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}`,
-        name: nameWithExtension,
-      }
+      return [
+        {
+          url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}`,
+          name: nameWithExtension,
+        },
+        {
+          url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}?rtl=true`,
+          name: `${nameWithExtension}-rtl`,
+        },
+      ]
     }),
 }
 

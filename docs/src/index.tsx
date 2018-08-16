@@ -12,13 +12,30 @@ import Router from './routes'
 // Rendering
 // ----------------------------------------
 
+const getUrlParams = (search = '') => {
+  const hashes = search.slice(search.indexOf('?') + 1).split('&')
+  return hashes.reduce((acc, hash) => {
+    // eslint-disable-next-line
+    const [key, val] = hash.split('=')
+    return {
+      ...acc,
+      [key]: decodeURIComponent(val),
+    }
+  }, {})
+}
+
+const rtl = getUrlParams(window.location.search)['rtl'] === 'true'
+
 const mountNode = document.createElement('div')
+if (rtl) {
+  mountNode.setAttribute('dir', 'rtl')
+}
 document.body.appendChild(mountNode)
 
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider theme={theme} staticStyles={staticStyles} fontFaces={fontFaces}>
+      <Provider theme={{ ...theme, ...{ rtl } }} staticStyles={staticStyles} fontFaces={fontFaces}>
         <NewApp />
       </Provider>
     </AppContainer>,

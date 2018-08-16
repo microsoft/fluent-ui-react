@@ -3,7 +3,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import {
+  felaRenderer as felaLtrRenderer,
+  felaRtlRenderer,
+  mergeThemes,
+  toCompactArray,
+} from '../../lib'
 import {
   FontFaces,
   IThemePrepared,
@@ -58,7 +63,7 @@ class Provider extends React.Component<IProviderProps, any> {
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = () => {
+  renderStaticStyles = renderer => {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
@@ -70,7 +75,7 @@ class Provider extends React.Component<IProviderProps, any> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaLtrRenderer.renderStatic(style, selector)
+        renderer.renderStatic(style, selector)
       })
     }
 
@@ -78,7 +83,7 @@ class Provider extends React.Component<IProviderProps, any> {
 
     staticStylesArr.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
-        felaLtrRenderer.renderStatic(staticStyle)
+        renderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
@@ -91,7 +96,7 @@ class Provider extends React.Component<IProviderProps, any> {
     })
   }
 
-  renderFontFaces = () => {
+  renderFontFaces = renderer => {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
@@ -105,7 +110,7 @@ class Provider extends React.Component<IProviderProps, any> {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.path, font.style)
+      renderer.renderFont(font.name, font.path, font.style)
     }
 
     fontFaces.forEach(fontObject => {
@@ -114,8 +119,10 @@ class Provider extends React.Component<IProviderProps, any> {
   }
 
   componentDidMount() {
-    this.renderStaticStyles()
-    this.renderFontFaces()
+    const { theme } = this.props
+    const renderer = theme && theme.rtl ? felaRtlRenderer : felaLtrRenderer
+    this.renderStaticStyles(renderer)
+    this.renderFontFaces(renderer)
   }
 
   render() {
