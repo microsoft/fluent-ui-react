@@ -50,22 +50,22 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
     />
     <ComponentExample
-      title="Menu with Icons"
+      title="Icon"
       description="Menu items can contain icons."
       examplePath="components/Menu/Variations/MenuExampleWithIcons"
     />
     <ComponentExample
-      title="Vertical Menu with Icons"
+      title="Vertical Icon"
       description="Vertical menu items can contain icons."
       examplePath="components/Menu/Variations/MenuExampleWithIconsVertical"
     />
     <ComponentExample
-      title="Icon Menu"
+      title="Icon Only"
       description="Menu can contain only icons."
       examplePath="components/Menu/Variations/MenuExampleIconsOnly"
     />
     <ComponentExample
-      title="Vertical Icon Menu"
+      title="Vertical Icon Only"
       description="Vertical menu can contain only icons."
       examplePath="components/Menu/Variations/MenuExampleIconsOnlyVertical"
     />

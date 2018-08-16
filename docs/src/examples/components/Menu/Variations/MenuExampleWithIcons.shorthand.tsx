@@ -7,10 +7,6 @@ const items = [
   { key: 'search', icon: 'search' },
 ]
 
-class MenuExampleWithIconsShorthand extends React.Component {
-  render() {
-    return <Menu defaultActiveIndex={0} items={items} />
-  }
-}
+const MenuExampleWithIcons = () => <Menu defaultActiveIndex={0} items={items} />
 
-export default MenuExampleWithIconsShorthand
+export default MenuExampleWithIcons

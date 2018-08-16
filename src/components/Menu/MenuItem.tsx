@@ -86,7 +86,7 @@ class MenuItem extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content } = this.props
+    const { children, content, icon } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -98,7 +98,7 @@ class MenuItem extends UIComponent<any, any> {
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
           >
-            {this.props.icon &&
+            {icon &&
               Icon.create(this.props.icon, {
                 defaultProps: { xSpacing: !!content ? 'after' : 'none' },
               })}
