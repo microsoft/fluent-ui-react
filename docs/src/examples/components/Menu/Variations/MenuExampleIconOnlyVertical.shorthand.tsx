@@ -7,8 +7,8 @@ const items = [
   { key: 'search', icon: 'search' },
 ]
 
-const MenuExampleIconsOnlyVertical = () => (
-  <Menu vertical icons defaultActiveIndex={0} items={items} />
+const MenuExampleIconOnlyVertical = () => (
+  <Menu vertical iconOnly defaultActiveIndex={0} items={items} />
 )
 
-export default MenuExampleIconsOnlyVertical
+export default MenuExampleIconOnlyVertical

@@ -35,7 +35,7 @@ class Menu extends AutoControlledComponent<any, any> {
     fluid: PropTypes.bool,
 
     /** A menu may have just icons. */
-    icons: PropTypes.bool,
+    iconOnly: PropTypes.bool,
 
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
@@ -71,7 +71,7 @@ class Menu extends AutoControlledComponent<any, any> {
     'className',
     'defaultActiveIndex',
     'fluid',
-    'icons',
+    'iconOnly',
     'items',
     'shape',
     'styles',
@@ -95,13 +95,13 @@ class Menu extends AutoControlledComponent<any, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { icons, items, type, shape, vertical } = this.props
+    const { iconOnly, items, type, shape, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
         defaultProps: {
-          icons,
+          iconOnly,
           type,
           shape,
           variables,

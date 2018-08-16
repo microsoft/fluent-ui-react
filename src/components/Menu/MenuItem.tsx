@@ -35,7 +35,7 @@ class MenuItem extends UIComponent<any, any> {
     icon: customPropTypes.itemShorthand,
 
     /** A menu may have just icons. */
-    icons: PropTypes.bool,
+    iconOnly: PropTypes.bool,
 
     /** MenuItem index inside Menu. */
     index: PropTypes.number,
@@ -80,7 +80,7 @@ class MenuItem extends UIComponent<any, any> {
     'className',
     'content',
     'icon',
-    'icons',
+    'iconOnly',
     'index',
     'onClick',
     'shape',

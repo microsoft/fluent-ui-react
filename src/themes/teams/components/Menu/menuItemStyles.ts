@@ -8,10 +8,10 @@ const underlinedItem = (color): ICSSInJSStyle => ({
 })
 
 const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
-  const { active, icons, shape, type, vertical } = props
+  const { active, iconOnly, shape, type, vertical } = props
   return {
     ...((!shape || shape === 'pointing') &&
-      !icons && {
+      !iconOnly && {
         '::before': {
           position: 'absolute',
           content: '""',
@@ -36,7 +36,7 @@ const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJ
 
 const menuItemStyles = {
   root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
-    const { active, icons, shape, type, vertical } = props
+    const { active, iconOnly, shape, type, vertical } = props
     const { iconsMenuItemSpacing } = variables
     return {
       color: variables.defaultColor,
@@ -44,7 +44,7 @@ const menuItemStyles = {
       position: 'relative',
       verticalAlign: 'middle',
       display: 'block',
-      ...(icons && {
+      ...(iconOnly && {
         ':nth-child(n+2)': {
           ...(vertical
             ? { marginTop: iconsMenuItemSpacing }
@@ -124,7 +124,7 @@ const menuItemStyles = {
   },
 
   anchor: ({ props, variables }): ICSSInJSStyle => {
-    const { active, icons, shape, type } = props
+    const { active, iconOnly, shape, type } = props
     const { iconsMenuItemSize } = variables
 
     return {
@@ -135,7 +135,7 @@ const menuItemStyles = {
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
 
-      ...(icons && {
+      ...(iconOnly && {
         width: iconsMenuItemSize,
         height: iconsMenuItemSize || '100%',
         padding: 0,

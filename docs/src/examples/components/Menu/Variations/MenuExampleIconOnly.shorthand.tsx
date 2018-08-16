@@ -7,6 +7,6 @@ const items = [
   { key: 'search', icon: 'search' },
 ]
 
-const MenuExampleIconsOnly = () => <Menu icons defaultActiveIndex={0} items={items} />
+const MenuExampleIconOnly = () => <Menu iconOnly defaultActiveIndex={0} items={items} />
 
-export default MenuExampleIconsOnly
+export default MenuExampleIconOnly
