@@ -9,6 +9,11 @@ const Types = () => (
       description="The Text component supports a number of text sizes."
       examplePath="components/Text/Types/TextSizesExample"
     />
+    <ComponentExample
+      title="Text Weights"
+      description="The Text component supports a number of text weights."
+      examplePath="components/Text/Types/TextWeightsExample"
+    />
   </ExampleSection>
 )
 
