@@ -56,8 +56,14 @@ export default ({ forImportStartsWith, paths }: Config) =>
       }
 
       const absoluteSrcImportPath = paths.base(importPath)
+      const relativeImportPath = path.relative(
+        path.dirname(originalSrcFilePath),
+        absoluteSrcImportPath,
+      )
 
-      return path.relative(path.dirname(originalSrcFilePath), absoluteSrcImportPath)
+      return path.dirname(relativeImportPath) === '.' && !relativeImportPath.startsWith('.')
+        ? `./${relativeImportPath}`
+        : relativeImportPath
     })
 
     return contentWithReplacement
