@@ -130,15 +130,13 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     if (!this.props.submenu) {
       // trigger action on click
       this.handleClick(event)
-    }
-
-    if (!this.state.submenuOpened) {
+    } else {
       this.setState({ submenuOpened: true }, () => afterRenderClbk && afterRenderClbk(event))
     }
   }
 
   closeSubmenu(event: KeyboardEvent, afterRenderClbk: (event?: KeyboardEvent) => void) {
-    if (!this.props.submenu || !this.state.submenuOpened) return
+    if (!this.props.submenu) return
     this.setState({ submenuOpened: false }, () => afterRenderClbk && afterRenderClbk(event))
   }
 
@@ -172,7 +170,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         {...rest}
       >
         {childrenExist(children) ? (
-            {children}
+          { children }
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}

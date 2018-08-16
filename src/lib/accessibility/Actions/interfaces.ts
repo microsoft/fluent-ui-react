@@ -1,4 +1,3 @@
-import { keyboardHandlerFilter } from '../Helpers/keyboardHandler'
 import eventStack from '../../eventStack'
 export interface IActionHandler {
   onStateChanged(props: any)
