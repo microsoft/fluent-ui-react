@@ -137,7 +137,4 @@ export default {
       color: 'inherit',
     },
   }),
-  div: () => ({
-    padding: `${pxToRem(14)} ${pxToRem(18)}`,
-  }),
 }

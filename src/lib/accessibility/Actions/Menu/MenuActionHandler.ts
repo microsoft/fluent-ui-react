@@ -3,8 +3,6 @@ import { mapKeysToActions } from '../../Helpers/keyboardHandler'
 import { LinkedList } from '../../Helpers/linkedList'
 
 import {
-  getNextElement,
-  getPreviousElement,
   isElementVisible,
   isBooleanAttributeSet,
 } from '../../Helpers/dom'
@@ -24,8 +22,34 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
     return isFocusable && !isDisabled && isElementVisible(element)
   }
 
+  private _getFocusableElementsList(parentElement: HTMLElement) {
+    const children = parentElement.children
+    if (!children.length) return
+    const list = new LinkedList<HTMLElement>()
+    list.isCircular = this._isCircularNavigation
+
+    const childrenArray = [].slice.apply(children)
+
+    childrenArray.forEach(element => {
+      const focusableChild = element.querySelector(`[${this.IS_FOCUSABLE_ATTRIBUTE}]`)
+      if (this._isFocusable(focusableChild)) {
+        list.append(focusableChild)
+      }
+    })
+
+    return list
+  }
+
   public moveNext(event: KeyboardEvent) {
-    const nextElement = this._linkedList.next()
+
+    let nextElement
+
+    if(this._currentFocusedElement) {
+      nextElement = this._linkedList.next()
+    }
+    else {
+      nextElement = this._linkedList.head.item
+    }    
 
     if (!nextElement) return
     nextElement.focus()
@@ -35,6 +59,7 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
   }
 
   public movePrevious(event: KeyboardEvent) {
+    
     const previousElement = this._linkedList.previous()
 
     if (!previousElement) return
@@ -82,30 +107,12 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
     }
   }
 
-  private getFocusableElementsList(parentElement: HTMLElement) {
-    const children = parentElement.children
-    if (!children.length) return
-    const list = new LinkedList<HTMLElement>()
-    list.isCircular = this._isCircularNavigation
-
-    const childrenArray = [].slice.apply(children)
-
-    childrenArray.forEach(element => {
-      const focusableChild = element.querySelector(`[${this.IS_FOCUSABLE_ATTRIBUTE}]`)
-      if (this._isFocusable(focusableChild)) {
-        list.append(focusableChild)
-      }
-    })
-
-    return list
-  }
-
   constructor(props, htmlElement) {
     super(htmlElement)
 
     if (props['disabled']) return
 
-    this._linkedList = this.getFocusableElementsList(htmlElement)
+    this._linkedList = this._getFocusableElementsList(htmlElement)
 
     this._keyboardHandlers = mapKeysToActions(props.actionsDefinition, {
       moveNext: this.moveNext.bind(this),

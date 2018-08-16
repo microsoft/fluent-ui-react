@@ -1,6 +1,5 @@
 import { KeyCombinations } from '../interfaces'
 import keyboardKey from 'keyboard-key'
-import { isPropertyAccessOrQualifiedName } from 'typescript'
 
 export const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCombinations[]) => (
   event: KeyboardEvent,

@@ -126,29 +126,24 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     this.actionHandler.detachKeyboardEventHandlers()
   }
 
-  openSubmenu() {
+  openSubmenu(event: KeyboardEvent, afterRenderClbk: (event?: KeyboardEvent) => void) {
     if (!this.props.submenu) {
-      alert(this.props.content)
+      // trigger action on click
+      this.handleClick(event)
     }
 
     if (!this.state.submenuOpened) {
-      this.setState({ submenuOpened: true })
+      this.setState({ submenuOpened: true }, () => afterRenderClbk && afterRenderClbk(event))
     }
   }
 
-  closeSubmenu() {
+  closeSubmenu(event: KeyboardEvent, afterRenderClbk: (event?: KeyboardEvent) => void) {
     if (!this.props.submenu || !this.state.submenuOpened) return
-    this.setState({ submenuOpened: false }, () => {
-      this.focus()
-    })
+    this.setState({ submenuOpened: false }, () => afterRenderClbk && afterRenderClbk(event))
   }
 
   toggleSubmenu() {
     this.setState({ submenuOpened: !this.state.submenuOpened })
-  }
-
-  focus() {
-    this.elementRef.focus()
   }
 
   handleClick = e => {
@@ -177,13 +172,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
         {...rest}
       >
         {childrenExist(children) ? (
-          <div
-            className={classes.div}
-            tabIndex={this.props.tabIndex}
-            {...accessibility.attributes.anchor}
-          >
             {children}
-          </div>
         ) : (
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
