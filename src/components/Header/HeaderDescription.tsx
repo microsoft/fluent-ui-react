@@ -26,15 +26,18 @@ class HeaderDescription extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Custom values for styling variables. */
-    variables: PropTypes.object,
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'p',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'variables']
+  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
