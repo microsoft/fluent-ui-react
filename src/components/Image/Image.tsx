@@ -17,7 +17,8 @@ import { ImageBehavior } from '../../lib/accessibility'
  * Other considerations:
  *  - when alt attribute is empty, then Narrator in scan mode navigate to image and narrate it as empty paragraph
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid it the attribute "aria-hidden='true'" should be used
- *  - when image is visible for screen reader and contains another attribute as aria-label/arialabbeledby/title, then verify different screen readers narrations
+ *  - when image is visible for screen reader and contains another attribute as aria-label/arialabbeledby/title, then do additional screen readers verification.
+ *    As each reader can narrate alt attribute + aria attribute + title a bit diffrently.
  */
 class Image extends UIComponent<any, any> {
   static className = 'ui-image'
