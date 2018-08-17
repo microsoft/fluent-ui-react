@@ -151,11 +151,11 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
     if (!next) return acc
 
-    acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
+    acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables!)
 
-    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
+    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables!)
 
-    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
+    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles!)
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)

@@ -58,7 +58,7 @@ export const getAutoControlledStateValue = (
 
     // initial state - state may be null or undefined
     if (state) {
-      const initialState = state[propName]
+      const initialState = state![propName]
       if (initialState !== undefined) return initialState
     }
   }

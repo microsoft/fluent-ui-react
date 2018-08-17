@@ -124,8 +124,8 @@ class Sidebar extends React.Component<any, any> {
     if (!query) return
 
     let itemIndex = -1
-    const startsWithMatches = []
-    const containsMatches = []
+    const startsWithMatches: any[] = []
+    const containsMatches: any[] = []
     const escapedQuery = _.escapeRegExp(query)
 
     _.each(info => {

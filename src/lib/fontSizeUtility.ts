@@ -3,7 +3,7 @@ import isBrowser from './isBrowser'
 
 const DEFAULT_FONT_SIZE_IN_PX = 16
 const DEFAULT_REM_SIZE_IN_PX = 10
-let _htmlFontSizeInPx: number = null
+let _htmlFontSizeInPx: number | null = null
 
 const getComputedFontSize = (): number => {
   return isBrowser()
@@ -12,7 +12,7 @@ const getComputedFontSize = (): number => {
     : DEFAULT_FONT_SIZE_IN_PX
 }
 
-const getFontSizeValue = (size: string): number => {
+const getFontSizeValue = (size?: string | null): number | null => {
   return (size && parseFloat(size)) || null
 }
 
@@ -53,7 +53,7 @@ export const pxToRem = (value: number = 0): string => {
  */
 export const setHTMLFontSize = (fontSize?: string): void => {
   const htmlFontSizeValue = getFontSizeValue(fontSize) || 0
-  const htmlFontSizeUnit = fontSize.replace(htmlFontSizeValue.toString(), '')
+  const htmlFontSizeUnit = fontSize!.replace(htmlFontSizeValue.toString(), '')
 
   if (process.env.NODE_ENV !== 'production') {
     if (htmlFontSizeValue <= 0) {

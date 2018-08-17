@@ -40,7 +40,7 @@ export function createShorthand(
   mapValueToProps: MapValueToProps,
   value?: ShorthandValue,
   options: ICreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
-): React.ReactElement<IProps> | null {
+): React.ReactElement<IProps> | null | undefined {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
@@ -73,9 +73,9 @@ export function createShorthand(
 
   // User's props
   const usersProps =
-    (valIsReactElement && value.props) ||
+    (valIsReactElement && (value! as any).props) ||
     (valIsPropsObject && value) ||
-    (valIsPrimitive && mapValueToProps(value)) ||
+    (valIsPrimitive && mapValueToProps(value!)) ||
     {}
 
   // Override props
@@ -119,13 +119,16 @@ export function createShorthand(
   // ----------------------------------------
 
   // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value, props)
+  if (valIsReactElement) return React.cloneElement(value!, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
 
   // Call functions with args similar to createElement()
-  if (valIsFunction) return value(Component, props, props.children)
+  if (valIsFunction) {
+    const func: Function = value! // Temporary workaround to bypass TS compiler error
+    return func(Component, props, props.children)
+  }
 }
 
 // ============================================================

@@ -8,7 +8,7 @@ import getComponentInfo from './util/getComponentInfo'
 const pluginName = 'gulp-component-menu'
 
 export default () => {
-  const result = []
+  const result: any[] = []
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {

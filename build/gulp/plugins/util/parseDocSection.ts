@@ -19,7 +19,7 @@ const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name 
  */
 const parseDocSection = buffer => {
   const ast = parseBuffer(buffer)
-  const examples = []
+  const examples: any[] = []
   let sectionName
 
   traverse(ast, {

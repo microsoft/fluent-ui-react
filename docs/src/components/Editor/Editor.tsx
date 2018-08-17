@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
-import ace from 'brace'
+import * as ace from 'brace'
 import 'brace/ext/language_tools'
 import 'brace/mode/jsx'
 import 'brace/mode/html'
@@ -17,7 +17,7 @@ const languageTools = ace.acequire('ace/ext/language_tools')
 
 const semanticUIReactCompleter = {
   getCompletions(editor, session, pos, prefix, callback) {
-    const completions = []
+    const completions: any[] = []
 
     _.each(parentComponents, component => {
       const { name } = component._meta
@@ -95,7 +95,7 @@ class Editor extends React.Component<IEditorProps> {
     const { value, active, showCursor } = nextProps
 
     if (showCursor !== previousPros.showCursor) {
-      this.setCursorVisibility(showCursor)
+      this.setCursorVisibility(showCursor!)
     }
 
     if (value !== previousPros.value) {
@@ -115,7 +115,7 @@ class Editor extends React.Component<IEditorProps> {
   public componentDidMount() {
     const { active, showCursor } = this.props
 
-    this.setCursorVisibility(showCursor)
+    this.setCursorVisibility(showCursor!)
 
     if (active) {
       this.addDocumentListener()
@@ -177,7 +177,7 @@ class Editor extends React.Component<IEditorProps> {
     })
   }
 
-  private safeCall<T>(cb: () => T, logError?: boolean): T {
+  private safeCall<T>(cb: () => T, logError?: boolean): T | undefined {
     try {
       return cb()
     } catch (error) {

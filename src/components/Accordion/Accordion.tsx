@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
+import { AutoControlledComponent, customPropTypes, childrenExist, UIComponent } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
@@ -130,7 +130,7 @@ class Accordion extends AutoControlledComponent<any, any> {
   }
 
   renderPanels = () => {
-    const children = []
+    const children: UIComponent<any, any>[] = []
     const { panels } = this.props
 
     _.each(panels, (panel, index) => {

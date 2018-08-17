@@ -28,7 +28,7 @@ export default class ComponentExamples extends React.Component<IComponentExample
    * 2. for every ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
    *              ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
    */
-  private renderExamples = (): JSX.Element => {
+  private renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
     const allPaths = exampleContext.keys()
 

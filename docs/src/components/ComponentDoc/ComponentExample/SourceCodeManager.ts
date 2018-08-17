@@ -25,8 +25,8 @@ export const examplePathPatterns: { [key in SourceCodeType]: string } = {
 
 class SourceCodeManager implements ISourceCodeManager {
   private readonly data: { [key in SourceCodeType]: ISourceCodeData } = {
-    normal: null,
-    shorthand: null,
+    normal: {} as ISourceCodeData,
+    shorthand: {} as ISourceCodeData,
   }
 
   public codeType: SourceCodeType
@@ -89,7 +89,7 @@ class SourceCodeManager implements ISourceCodeManager {
     try {
       return require(`!raw-loader!../../../examples/${path}`)
     } catch (e) {
-      return null
+      return ''
     }
   }
 }

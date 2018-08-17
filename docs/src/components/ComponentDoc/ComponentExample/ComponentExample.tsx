@@ -170,7 +170,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private handleMouseLeave = () => {
     this.setState({
       isHovering: false,
-      handleMouseLeave: null,
+      handleMouseLeave: undefined,
       handleMouseMove: this.handleMouseMove,
     })
   }
@@ -179,7 +179,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     this.setState({
       isHovering: true,
       handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: null,
+      handleMouseMove: undefined,
     })
   }
 
@@ -240,7 +240,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   private copyJSX = () => {
-    copyToClipboard(this.state.sourceCode)
+    copyToClipboard(this.state.sourceCode!)
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
@@ -283,7 +283,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderSourceCode = _.debounce(() => {
     try {
-      const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
+      const exampleElement = this.renderExampleFromCode(this.state.sourceCode!)
 
       if (!React.isValidElement(exampleElement)) {
         this.setErrorDebounced(
@@ -292,7 +292,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       } else {
         // immediately render a null error
         // but also ensure the last debounced error call is a null error
-        const error = null
+        const error = undefined
         this.setErrorDebounced(error)
         this.setState({
           error,
@@ -372,7 +372,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderApiCodeMenu = (): JSX.Element => {
     const { sourceCode } = this.state
-    const lineCount = sourceCode && sourceCode.match(/^/gm).length
+    const lineCount = sourceCode && sourceCode!.match(/^/gm)!.length
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
@@ -392,7 +392,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         <div
           style={
             {
-              borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
+              borderLeft: `${lineCount! > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
               paddingBottom: '1rem',
             } as React.CSSProperties
           }
@@ -491,7 +491,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
     // add new lines between almost all adjacent elements
     // moves inline elements to their own line
-    const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
+    const preFormattedHTML = markup!.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
 
     const beautifiedHTML = html(preFormattedHTML, {
       indent_size: 2,
@@ -627,7 +627,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         once={false}
         onTopPassed={this.handlePass}
         onTopPassedReverse={this.handlePass}
-        ref={c => (this.componentRef = c)}
+        ref={c => (this.componentRef = c!)}
       >
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />

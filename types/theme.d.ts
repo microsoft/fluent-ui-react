@@ -83,28 +83,22 @@ export interface ComponentStyleFunctionParam {
   variables: ComponentVariablesObject
 }
 
-export type ComponentPartStyleFunction =
-  | ((styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle)
-  | undefined
+export type ComponentPartStyleFunction = ((
+  styleParam: ComponentStyleFunctionParam,
+) => ICSSInJSStyle)
 
 export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
 
 export interface IComponentPartStylesInput {
   [part: string]: ComponentPartStyle
-
-  root?: ComponentPartStyle
 }
 
 export interface IComponentPartStylesPrepared {
   [part: string]: ComponentPartStyleFunction
-
-  root?: ComponentPartStyleFunction
 }
 
 export interface IComponentPartClasses {
-  [part: string]: string | undefined
-
-  root?: string
+  [part: string]: string
 }
 
 // ========================================================
