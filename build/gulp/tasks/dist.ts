@@ -1,6 +1,7 @@
 import { task, series, parallel, src, dest } from 'gulp'
 import * as merge2 from 'merge2'
 import * as rimraf from 'rimraf'
+import * as ttypescript from 'ttypescript'
 import * as webpack from 'webpack'
 
 import config from '../../../config'
@@ -25,7 +26,11 @@ task('build:dist:commonjs', () => {
   const settings = { declaration: true }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
-  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(
+    typescript({
+      typescript: ttypescript,
+    }),
+  )
   const types = src(paths.base('types/**'))
 
   return merge2([
@@ -37,7 +42,10 @@ task('build:dist:commonjs', () => {
 
 task('build:dist:es', () => {
   const tsConfig = paths.base('build/tsconfig.es.json')
-  const settings = { declaration: true }
+  const settings = {
+    declaration: true,
+    typescript: ttypescript,
+  }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
   const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())

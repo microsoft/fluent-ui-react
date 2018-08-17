@@ -8,6 +8,9 @@
       "@stardust-ui/react": ["src"],
       "*": ["*", "types/*"]
     },
+    "plugins": [
+      {"transform": "./transformers/propTypes.ts"}
+    ],
     "types": [
       "node",
       "jest"
