@@ -102,17 +102,46 @@ export interface IAriaWidgetAttributes {
   'aria-valuetext'?: string
 }
 
+import { KeyCodes } from '../KeyCodes'
 export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   role?: AriaRole
   tabIndex?: string
+  'data-focused'?: boolean
+  'data-is-focusable'?: boolean
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
+export type AccessibilityEventHandlers = { [partName: string]: IEventHandlers }
+export type ActionDefinitions = { [partName: string]: IActionDefinition }
+
+export type Accessibility =
+  | IAccessibilityDefinition
+  | ((props: any) => IAccessibilityDefinition)
+  | ((props: any) => Accessibility)
+
+export interface IActionDefinition {
+  keyCombinations: KeyCombinations[]
+}
+
+export interface KeyCombinations {
+  keyCode: KeyCodes
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
+
+export type IEventHandlers = {
+  handlers: Function[]
+  target: HTMLElement,
+}
 
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  actionsDefinition?: ActionDefinitions
+  actions?: AccessibilityActions
 }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type AccessibilityActions = {
+  [name: string]: (event: KeyboardEvent) => void,
+}

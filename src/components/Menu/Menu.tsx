@@ -8,6 +8,8 @@ import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesObject } from '../../../types/theme'
 
+import MenuActionHandler from '../../lib/accessibility/Actions/Menu/MenuActionHandler'
+
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
@@ -80,6 +82,22 @@ class Menu extends AutoControlledComponent<any, any> {
     'vertical',
   ]
 
+  constructor(props, state) {
+    super(props, state)
+  }
+
+  componentDidMount() {
+    this.actionHandler = new MenuActionHandler(
+      { ...this.props, ...this.state, ...this.currentAccessibility },
+      this.elementRef,
+    )
+    this.actionHandler.attachKeyboardEventHandlers()
+  }
+
+  componentWillUnmount() {
+    this.actionHandler.detachKeyboardEventHandlers()
+  }
+
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem
@@ -116,8 +134,16 @@ class Menu extends AutoControlledComponent<any, any> {
 
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
+
+    this.setAccessibility(accessibility)
+
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={classes.root}
+        ref={this.setElementRef}
+      >
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )

@@ -1,5 +1,7 @@
 import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
+import { IAccessibilityDefinition } from './accessibility/interfaces'
+import { IActionHandler } from './accessibility/Actions/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -7,6 +9,9 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static displayName: string
   static className: string
   static handledProps: any
+  protected currentAccessibility: IAccessibilityDefinition
+  protected elementRef: HTMLElement
+  protected actionHandler: IActionHandler
 
   constructor(props, context) {
     super(props, context)
@@ -25,6 +30,9 @@ class UIComponent<P, S> extends React.Component<P, S> {
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {
     throw new Error('renderComponent is not implemented.')
   }
+
+  setAccessibility = acc => (this.currentAccessibility = acc)
+  setElementRef = ref => (this.elementRef = ref)
 
   render() {
     return renderComponent(
