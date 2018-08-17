@@ -56,6 +56,8 @@ export const mergeComponentVariables = (
   const initial = siteVariables => callable(target)(siteVariables)
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
+    if (!next) return acc
+
     return siteVariables => ({
       ...acc(siteVariables),
       ...callable(next)(siteVariables),
@@ -92,6 +94,8 @@ export const mergeThemeVariables = (
   const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
 
   return sources.reduce((acc, next) => {
+    if (!next) return acc
+
     return displayNames.reduce((componentVariables, displayName) => {
       // Break references to avoid an infinite loop.
       // We are replacing functions with new ones that calls the originals.

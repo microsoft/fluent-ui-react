@@ -6,6 +6,38 @@ describe('mergeThemes', () => {
     expect(() => mergeThemes(undefined, undefined)).not.toThrow()
   })
 
+  test('gracefully handles merging a theme in with undefined values', () => {
+    const target = {
+      siteVariables: { color: 'black' },
+      componentVariables: { Button: { color: 'black' } },
+      componentStyles: { Button: { root: { color: 'black' } } },
+      rtl: true,
+    }
+    const source = {
+      siteVariables: undefined,
+      componentVariables: undefined,
+      componentStyles: undefined,
+      rtl: undefined,
+    }
+    expect(() => mergeThemes(target, source)).not.toThrow()
+  })
+
+  test('gracefully handles merging onto a theme with undefined values', () => {
+    const target = {
+      siteVariables: undefined,
+      componentVariables: undefined,
+      componentStyles: undefined,
+      rtl: undefined,
+    }
+    const source = {
+      siteVariables: { color: 'black' },
+      componentVariables: { Button: { color: 'black' } },
+      componentStyles: { Button: { root: { color: 'black' } } },
+      rtl: true,
+    }
+    expect(() => mergeThemes(target, source)).not.toThrow()
+  })
+
   describe('siteVariables', () => {
     test('merges top level keys', () => {
       const target = { siteVariables: { overridden: false, keep: true } }
