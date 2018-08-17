@@ -1,9 +1,24 @@
 import mergeThemes from '../../../src/lib/mergeThemes'
-import { felaRtlRenderer, felaRenderer } from '../../../src/lib'
+import { felaRenderer, felaRtlRenderer } from '../../../src/lib'
 
 describe('mergeThemes', () => {
   test('gracefully handles undefined themes', () => {
     expect(() => mergeThemes(undefined, undefined)).not.toThrow()
+  })
+
+  test('always returns an object', () => {
+    expect(mergeThemes(undefined, undefined)).toMatchObject({})
+    expect(mergeThemes(null, undefined)).toMatchObject({})
+    expect(mergeThemes(undefined, null)).toMatchObject({})
+    expect(mergeThemes(null, null)).toMatchObject({})
+
+    expect(mergeThemes({}, undefined)).toMatchObject({})
+    expect(mergeThemes(undefined, {})).toMatchObject({})
+    expect(mergeThemes({}, {})).toMatchObject({})
+
+    expect(mergeThemes({}, null)).toMatchObject({})
+    expect(mergeThemes(null, {})).toMatchObject({})
+    expect(mergeThemes({}, {})).toMatchObject({})
   })
 
   test('gracefully handles merging a theme in with undefined values', () => {
