@@ -8,6 +8,13 @@ import PageNotFound from '../views/PageNotFound'
 
 const allExamplePaths = exampleContext.keys()
 
+const exampleStyle = {
+  padding: '1rem',
+  margin: '1rem',
+  height: '100vh',
+  border: '2px solid black',
+}
+
 const VisualTestLayout: any = props => {
   const { match } = props
   const displayName = _.startCase(match.params.kebabComponentName).replace(/ /g, '')
@@ -25,18 +32,20 @@ const VisualTestLayout: any = props => {
     const { exampleName } = parseExamplePath(path)
 
     return (
-      <div key={path} style={{ padding: '1rem', margin: '1rem', border: '2px solid black' }}>
-        <h3>{exampleName}</h3>
+      <div key={path}>
+        <div style={exampleStyle}>
+          <h3>{exampleName} - Default Theme, LTR</h3>
+          <ExampleComponent />
+        </div>
 
-        <h3>Default</h3>
-        <ExampleComponent />
-
-        <h3>Default - RTL</h3>
-        <Provider theme={{ rtl: true }}>
-          <div dir="rtl">
-            <ExampleComponent />
-          </div>
-        </Provider>
+        <div style={exampleStyle}>
+          <h3>{exampleName} - Default Theme, RTL</h3>
+          <Provider theme={{ rtl: true }}>
+            <div dir="rtl">
+              <ExampleComponent />
+            </div>
+          </Provider>
+        </div>
       </div>
     )
   })
