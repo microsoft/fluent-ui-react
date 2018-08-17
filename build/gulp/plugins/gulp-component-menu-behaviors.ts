@@ -3,7 +3,11 @@ import * as path from 'path'
 import * as through2 from 'through2'
 import * as Vinyl from 'vinyl'
 import * as _ from 'lodash'
+import * as fs from 'fs'
+
 const pluginName = 'gulp-component-menu-behaviors'
+const extract = require('extract-comments')
+const doctrine = require('doctrine')
 
 export default () => {
   const result = []
@@ -27,12 +31,27 @@ export default () => {
       console.log(`behaviorVariantName is: ${behaviorVariantName}`)
       const behaviorName = path.basename(dir)
 
+      let description
+      const fileContent = fs.readFileSync(file.path).toString()
+      const blockComments = extract(fileContent).filter(comment => comment.type === 'BlockComment') // filtering only block comments
+
+      // getting object that describes '@description' part of the comment's text
+      if (!_.isEmpty(blockComments)) {
+        const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
+        const descriptionToken = commentTokens.find(token => token.title === 'description')
+        // printing text of '@description' part
+        description = descriptionToken.description
+        console.log('Parsed description:' + descriptionToken.description)
+      } else {
+        description = 'Missing description'
+      }
+
       result.push({
         displayName: behaviorName,
         type: componentType,
         variations: {
           name: behaviorVariantName,
-          text: `- adds role='button' if element type is other than 'button'`,
+          text: description,
         },
       })
       cb()

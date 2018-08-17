@@ -21,12 +21,17 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     return _.upperFirst(_.lowerCase(divided))
   }
 
+  getRoleName(fileName: string) {
+    return fileName.replace('.ts', '')
+  }
+
   render() {
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
       background: '#fff',
       boxShadow: '0 1px 2px #ccc',
+      margin: '10px',
       // ...(isActive
       //   ? {
       //       boxShadow: '0 8px 32px #aaa',
@@ -38,7 +43,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const commentBox: React.CSSProperties = {
-      padding: 50,
+      padding: 5,
     }
     const { match } = this.props
     const behaviorName = match.params.name.charAt(0).toUpperCase() + match.params.name.slice(1)
@@ -53,13 +58,26 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                 <div style={{ display: 'flex' }}>
                   <div style={{ flex: '1' }}>
                     <ComponentExampleTitle
-                      description={variation.text}
                       title={this.getNameFromFileName(variation.name)}
+                      // description={variation.text}
+                      description={`Behavior name: ${this.getRoleName(variation.name)}`}
                     />
                   </div>
                   <div style={{ flex: '0 0 auto' }} />
                 </div>
               </Grid.Column>
+              <div>
+                <span> Behavior desription: </span>
+                <br />
+                {variation.text.split('\n').map((splittedText, key) => {
+                  return (
+                    <span key={key}>
+                      {splittedText}
+                      <br />
+                    </span>
+                  )
+                })}
+              </div>
             </Grid>
           ))}
       </div>
