@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isConformant, handlesAccessibility, getProp } from '../../commonTests'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
 import { MenuBehavior } from 'src/lib/accessibility'
@@ -14,12 +14,12 @@ describe('Icon', () => {
       accessibilityOverride: MenuBehavior,
       overridenRootRole: 'menu',
     })
-  })
 
-  describe('Icon accessibility - aria hidden', () => {
-    test('set to true by default', () => {
-      const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
-      expect(getProp(renderedComponent, 'aria-hidden', '')).toBe('true')
+    describe('aria hidden', () => {
+      test('set to true by default', () => {
+        const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
+        expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
+      })
     })
   })
 })

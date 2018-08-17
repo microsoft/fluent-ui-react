@@ -10,15 +10,14 @@ import { ImageBehavior } from '../../lib/accessibility'
  * An image is a graphic representation of something.
  * @accessibility
  * Default behavior: ImageBehavior
- *  - attribute "aria-hidden='true'" is applied on img tag, if there is no 'alt' attribute provided
+ *  - attribute "aria-hidden='true'" is applied on img element, if there is no 'alt' property provided
  *
- * If image should be visible to screen readers, then it has to have 'alt' attribute specified.
+ * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:
- *  - when alt attribute is empty, then Narrator in scan mode navigate to image and narrate it as empty paragraph
- *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid it the attribute "aria-hidden='true'" should be used
- *  - when image is visible for screen reader and contains another attribute as aria-label/arialabbeledby/title, then do additional screen readers verification.
- *    As each reader can narrate alt attribute + aria attribute + title a bit diffrently.
+ *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph
+ *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
+ *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
 class Image extends UIComponent<any, any> {
   static className = 'ui-image'
