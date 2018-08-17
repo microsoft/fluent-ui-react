@@ -29,11 +29,11 @@ const screenerConfig = {
   states: glob
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .map(examplePath => {
-      const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
+      const displayName = path.basename(path.dirname(path.dirname(examplePath)))
 
       return {
-        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}`,
-        name: nameWithExtension,
+        url: `http://localhost:8080/visual-test/${_.kebabCase(displayName)}`,
+        name: displayName,
       }
     }),
 }
