@@ -17,10 +17,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Fixes
-
-- Fix `MenuItem` broken styles @miroslavstastny ([#94](https://github.com/stardust-ui/react/pull/94))
-
 <!--------------------------------[ v0.2.7 ]------------------------------- -->
 ## [v0.2.7](https://github.com/stardust-ui/react/tree/v0.2.7) (2018-08-13)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.6...v0.2.7)
@@ -32,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Image `fluid` is applied on the avatar variations @mnajdova ([#77](https://github.com/stardust-ui/react/pull/77))
 - Include missing `types` directory in dist @smykhailov ([#76](https://github.com/stardust-ui/react/pull/76))
 - Temporarily disable Provider.Consumer typings to avoid TS bug @levithomason ([#88](https://github.com/stardust-ui/react/pull/88))
+- Fix `MenuItem` broken styles @miroslavstastny ([#94](https://github.com/stardust-ui/react/pull/94))
 
 ### Features
 - Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
