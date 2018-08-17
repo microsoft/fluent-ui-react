@@ -105,4 +105,8 @@ export class LinkedList<T> {
   public setCurrentItem(item: T): void {
     this.setCurrentIndex(this.search(item))
   }
+
+  public doesListIncludeItem(item: T): boolean {
+    return this._items.find(i => i.item === item) ? true : false
+  }
 }

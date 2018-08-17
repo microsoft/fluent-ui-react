@@ -1,11 +1,9 @@
 import { INavigableActionHandler, ActionHandler } from '../interfaces'
 import { mapKeysToActions } from '../../Helpers/keyboardHandler'
 import { LinkedList } from '../../Helpers/linkedList'
+import eventStack from '../../../eventStack'
 
-import {
-  isElementVisible,
-  isBooleanAttributeSet,
-} from '../../Helpers/dom'
+import { isElementVisible, isBooleanAttributeSet } from '../../Helpers/dom'
 
 class MenuActionHandler extends ActionHandler implements INavigableActionHandler {
   private readonly IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
@@ -41,15 +39,13 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
   }
 
   public moveNext(event: KeyboardEvent) {
-
     let nextElement
 
-    if(this._currentFocusedElement) {
+    if (this._currentFocusedElement) {
       nextElement = this._linkedList.next()
-    }
-    else {
+    } else {
       nextElement = this._linkedList.head.item
-    }    
+    }
 
     if (!nextElement) return
     nextElement.focus()
@@ -59,7 +55,6 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
   }
 
   public movePrevious(event: KeyboardEvent) {
-    
     const previousElement = this._linkedList.previous()
 
     if (!previousElement) return
@@ -93,6 +88,9 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
     const target = event.target as HTMLElement
     if (!target) return
 
+    // checks if event target is included in current menu, or it can be from submenu
+    if (!this._linkedList.doesListIncludeItem(event.target as HTMLElement)) return
+
     if (this._isFocusable(target)) {
       if (this._currentFocusedElement) {
         if (this._currentFocusedElement.tabIndex === 0) {
@@ -101,7 +99,9 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
         }
       }
       this._currentFocusedElement = target
-      this._linkedList.setCurrentItem(this._currentFocusedElement)
+      if (this._currentFocusedElement !== this._linkedList.current) {
+        this._linkedList.setCurrentItem(this._currentFocusedElement)
+      }
 
       event.stopPropagation()
       event.preventDefault()
@@ -112,6 +112,8 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
     super(htmlElement)
 
     if (props['disabled']) return
+
+    // htmlElement.addEventListener('focus', this.onFocus.bind(this), true)
 
     this._linkedList = this._getFocusableElementsList(htmlElement)
 
@@ -127,6 +129,26 @@ class MenuActionHandler extends ActionHandler implements INavigableActionHandler
     if (props['disabled']) {
       this.detachKeyboardEventHandlers()
     }
+  }
+
+  public attachKeyboardEventHandlers() {
+    super.attachKeyboardEventHandlers()
+
+    // this._rootElement.addEventListener('focus', this.onFocus.bind(this), true)
+    eventStack.sub('focus', this.onFocus.bind(this), {
+      target: this._rootElement,
+      useCapture: true,
+    })
+  }
+
+  public detachKeyboardEventHandlers() {
+    super.detachKeyboardEventHandlers()
+
+    // this._rootElement.removeEventListener('focus', this.onFocus.bind(this), true)
+    eventStack.unsub('focus', this.onFocus.bind(this), {
+      target: this._rootElement,
+      useCapture: true,
+    })
   }
 }
 

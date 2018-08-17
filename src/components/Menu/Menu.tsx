@@ -67,8 +67,6 @@ class Menu extends AutoControlledComponent<any, any> {
     'vertical',
   ]
 
-  actionHandler: MenuActionHandler
-
   constructor(props, state) {
     super(props, state)
   }
@@ -130,7 +128,6 @@ class Menu extends AutoControlledComponent<any, any> {
         {...rest}
         className={classes.root}
         ref={this.setElementRef}
-        onFocus={event => this.actionHandler.onFocus(event)}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>

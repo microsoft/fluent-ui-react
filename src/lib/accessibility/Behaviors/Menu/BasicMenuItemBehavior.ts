@@ -15,14 +15,14 @@ const BasicMenuItemBehavior: Accessibility = (props: any) => ({
   },
 
   actionsDefinition: {
-    closeSubmenu: {
+    cancelAction: {
       keyCombinations: [
         { keyCode: KeyCodes.escape },
         { keyCode: KeyCodes.right },
         { keyCode: KeyCodes.left },
       ],
     },
-    openSubmenu: {
+    triggerAction: {
       keyCombinations: [
         { keyCode: KeyCodes.enter },
         { keyCode: KeyCodes.space },

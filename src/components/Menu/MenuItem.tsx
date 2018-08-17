@@ -121,7 +121,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   }
 
   componentWillUnmount() {
-    this.actionHandler.detachKeyboardEventHandlers()
+    this.actionHandler && this.actionHandler.detachKeyboardEventHandlers()
   }
 
   openSubmenu(event: KeyboardEvent, afterRenderClbk: (event?: KeyboardEvent) => void) {

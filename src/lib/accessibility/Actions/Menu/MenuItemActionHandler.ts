@@ -6,11 +6,14 @@ import doesNodeContainClick from '../../../doesNodeContainClick'
 class MenuItemActionHandler extends ActionHandler implements IActionHandler {
   private readonly IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
   private _documentEventHandler
+  private _focusableElement: HTMLElement
 
   constructor(props, htmlElement, openSubmenu, closeSubmenu) {
     super(htmlElement)
 
     if (props['disabled']) return
+
+    this._focusableElement = htmlElement.querySelector(`[${this.IS_FOCUSABLE_ATTRIBUTE}="true"]`)
 
     const wrappedOpenSubmenu = event => {
       openSubmenu(event, event => {
@@ -39,14 +42,12 @@ class MenuItemActionHandler extends ActionHandler implements IActionHandler {
 
     const wrappedCloseMenu = event => {
       closeSubmenu(event, () => {
-        const focusableELement = htmlElement.querySelector(
-          `[${this.IS_FOCUSABLE_ATTRIBUTE}="true"]`,
-        )
-        if (!focusableELement) return
-        focusableELement.focus()
+        if (!this._focusableElement) return
+        this._focusableElement.focus()
       })
     }
 
+    // close submenu on Blur event
     this._documentEventHandler = (e: Event) => {
       e.stopPropagation()
       if (this._rootElement && doesNodeContainClick(this._rootElement, e)) return
@@ -54,8 +55,8 @@ class MenuItemActionHandler extends ActionHandler implements IActionHandler {
     }
 
     this._keyboardHandlers = mapKeysToActions(props.actionsDefinition, {
-      openSubmenu: wrappedOpenSubmenu,
-      closeSubmenu: wrappedCloseMenu,
+      triggerAction: wrappedOpenSubmenu,
+      cancelAction: wrappedCloseMenu,
     })
   }
 
@@ -69,12 +70,18 @@ class MenuItemActionHandler extends ActionHandler implements IActionHandler {
     super.attachKeyboardEventHandlers()
 
     eventStack.sub('click', this._documentEventHandler)
+
+    // Focus event doesn't bubble itself, so capturing was used to handle event on a menu
+    eventStack.sub('focus', () => {}, { target: this._focusableElement, useCapture: true })
   }
 
   public detachKeyboardEventHandlers() {
     super.detachKeyboardEventHandlers()
 
     eventStack.unsub('click', this._documentEventHandler)
+
+    // Focus event doesn't bubble itself, so capturing was used to handle event on a menu
+    eventStack.unsub('focus', () => {}, { target: this._focusableElement, useCapture: true })
   }
 }
 

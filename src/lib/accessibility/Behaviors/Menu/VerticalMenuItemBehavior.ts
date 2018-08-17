@@ -1,4 +1,5 @@
 import { Accessibility } from '../../interfaces'
+import { KeyCodes } from '../../../KeyCodes'
 
 const VerticalMenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -13,7 +14,14 @@ const VerticalMenuItemBehavior: Accessibility = (props: any) => ({
     },
   },
 
-  actionsDefinition: {},
+  actionsDefinition: {
+    cancelAction: {
+      keyCombinations: [],
+    },
+    triggerAction: {
+      keyCombinations: [{ keyCode: KeyCodes.enter }, { keyCode: KeyCodes.space }],
+    },
+  },
 })
 
 export default VerticalMenuItemBehavior
