@@ -135,14 +135,7 @@ class Avatar extends UIComponent<any, any> {
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image
-            styles={{ root: styles.imageAvatar }}
-            fluid
-            avatar
-            src={src}
-            alt={alt}
-            title={name}
-          />
+          <Image />
         ) : (
           <Label
             styles={{ root: styles.avatarNameContainer }}
