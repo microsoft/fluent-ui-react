@@ -26,16 +26,14 @@ const screenerConfig = {
   },
 
   // screenshot every example in maximized mode
-  states: glob
-    .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
-    .map(examplePath => {
-      const displayName = path.basename(path.dirname(path.dirname(examplePath)))
+  states: glob.sync('src/components/*').map(componentPath => {
+    const displayName = path.basename(componentPath)
 
-      return {
-        url: `http://localhost:8080/visual-test/${_.kebabCase(displayName)}`,
-        name: displayName,
-      }
-    }),
+    return {
+      url: `http://localhost:8080/visual-test/${_.kebabCase(displayName)}`,
+      name: displayName,
+    }
+  }),
 }
 
 if (process.env.CI) {
