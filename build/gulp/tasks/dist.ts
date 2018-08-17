@@ -8,6 +8,7 @@ import config from '../../../config'
 const { paths } = config
 const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
+import gulpUseRelativeImportPaths from '../plugins/gulp-use-relative-import-paths'
 
 // ----------------------------------------
 // Clean
@@ -29,7 +30,9 @@ task('build:dist:commonjs', () => {
   const types = src(paths.base('types/**'))
 
   return merge2([
-    dts.pipe(dest(paths.dist('commonjs'))),
+    dts
+      .pipe(gulpUseRelativeImportPaths({ forImportStartsWith: 'src', paths }))
+      .pipe(dest(paths.dist('commonjs'))),
     js.pipe(dest(paths.dist('commonjs'))),
     types.pipe(dest(paths.dist('types'))),
   ])
@@ -44,7 +47,9 @@ task('build:dist:es', () => {
   const types = src(paths.base('types/**'))
 
   return merge2([
-    dts.pipe(dest(paths.dist('es'))),
+    dts
+      .pipe(gulpUseRelativeImportPaths({ forImportStartsWith: 'src', paths }))
+      .pipe(dest(paths.dist('es'))),
     js.pipe(dest(paths.dist('es'))),
     types.pipe(dest(paths.dist('types'))),
   ])
