@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from '@stardust-ui/react'
 
-const TextWeightsExample = () => (
+const TextWeightsExampleShorthand = () => (
   <div>
     <div>
       <Text weight="light">This text is light.</Text>
@@ -20,4 +20,4 @@ const TextWeightsExample = () => (
     </div>
   </div>
 )
-export default TextWeightsExample
+export default TextWeightsExampleShorthand
