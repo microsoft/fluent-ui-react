@@ -40,7 +40,7 @@ class Button extends UIComponent<any, any> {
     fluid: PropTypes.bool,
 
     /** Button can have an icon. */
-    icon: customPropTypes.some([PropTypes.bool, PropTypes.string]),
+    icon: customPropTypes.itemShorthand,
 
     /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),
@@ -85,11 +85,28 @@ class Button extends UIComponent<any, any> {
   public static defaultProps = {
     as: 'button',
     accessibility: ButtonBehavior as Accessibility,
+    iconPosition: 'before',
+  }
+
+  public renderIcon() {
+    const { content, icon, iconPosition, type } = this.props
+    const iconIsAfterButton = iconPosition === 'after'
+
+    const iconProps =
+      typeof icon === 'string' ? { name: icon } : typeof icon === 'object' ? icon : {}
+
+    return (
+      <Icon
+        key="btn-icon"
+        xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
+        color={type === 'primary' ? 'white' : 'black'}
+        {...iconProps}
+      />
+    )
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
-    const { children, content, disabled, icon, iconPosition, type } = this.props
-    const primary = type === 'primary'
+    const { children, content, disabled, icon, iconPosition } = this.props
 
     const getContent = (): React.ReactNode => {
       if (childrenExist(children)) {
@@ -99,15 +116,7 @@ class Button extends UIComponent<any, any> {
       const iconIsAfterButton = iconPosition === 'after'
       const renderedContent = [
         content && <Text key="btn-content" truncated content={content} />,
-        icon &&
-          typeof icon === 'string' && (
-            <Icon
-              key="btn-icon"
-              name={icon}
-              xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
-              color={primary ? 'white' : 'black'}
-            />
-          ),
+        icon && this.renderIcon(),
       ].filter(Boolean)
 
       return iconIsAfterButton ? renderedContent : renderedContent.reverse()

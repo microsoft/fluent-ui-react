@@ -4,10 +4,15 @@ import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
+import Icon from 'src/components/Icon/Icon'
+
 import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
-  isConformant(Button)
+  isConformant(Button).hasConformantShorthandProperty('icon', Icon, {
+    mapsStringValueToProperty: 'name',
+  })
+
   handlesAccessibility(Button, {
     defaultRootRole: 'button',
     accessibilityOverride: MenuBehavior,
