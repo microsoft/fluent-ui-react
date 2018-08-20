@@ -17,9 +17,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Fixes
+### BREAKING CHANGES
+- Remove Children API support from Menu component @miroslavstastny ([#111](https://github.com/stardust-ui/react/pull/111))
 
+### Fixes
+- Fix wrong typings generated for dist @kuzhelov ([#99](https://github.com/stardust-ui/react/pull/99))
+- Fix components generation script @kuzhelov ([#105](https://github.com/stardust-ui/react/pull/105))
 - Reactivate tests for `Text` @kuzhelov ([#104](https://github.com/stardust-ui/react/pull/104))
+
+### Features
+- Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
 
 <!--------------------------------[ v0.2.7 ]------------------------------- -->
 ## [v0.2.7](https://github.com/stardust-ui/react/tree/v0.2.7) (2018-08-13)
