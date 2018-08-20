@@ -63,6 +63,8 @@ export const timestampTextColor = gray04
 //
 // Fonts
 //
+export const fontSizeLarge = pxToRem(24)
+export const fontSizeMedium = pxToRem(18)
 export const fontSizeBase = pxToRem(14)
 export const fontSizeSmall = pxToRem(12)
 export const fontSizeExtraSmall = pxToRem(10)
