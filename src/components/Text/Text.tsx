@@ -68,12 +68,12 @@ class Text extends UIComponent<any, any> {
     'error',
     'important',
     'size',
-    'weight',
     'styles',
     'success',
     'timestamp',
     'truncated',
     'variables',
+    'weight',
   ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
