@@ -85,7 +85,6 @@ class Button extends UIComponent<any, any> {
   public static defaultProps = {
     as: 'button',
     accessibility: ButtonBehavior as Accessibility,
-    iconPosition: 'before',
   }
 
   public renderIcon() {
