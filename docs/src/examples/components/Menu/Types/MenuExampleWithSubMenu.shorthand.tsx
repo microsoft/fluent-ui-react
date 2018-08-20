@@ -31,7 +31,7 @@ const items = [
 
 class MenuExampleWithSubMenuShorthand extends React.Component {
   render() {
-    return <Menu defaultActiveIndex={0} items={items} />
+    return <Menu accBehavior="menuBar" defaultActiveIndex={0} items={items} />
   }
 }
 
