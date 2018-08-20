@@ -91,17 +91,13 @@ class Button extends UIComponent<any, any> {
     const { content, icon, iconPosition, type } = this.props
     const iconIsAfterButton = iconPosition === 'after'
 
-    const iconProps =
-      typeof icon === 'string' ? { name: icon } : typeof icon === 'object' ? icon : {}
-
-    return (
-      <Icon
-        key="btn-icon"
-        xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
-        color={type === 'primary' ? 'white' : 'black'}
-        {...iconProps}
-      />
-    )
+    return Icon.create(icon, {
+      defaultProps: {
+        key: 'btn-icon',
+        xSpacing: !content ? 'none' : iconIsAfterButton ? 'before' : 'after',
+        color: type === 'primary' ? 'white' : 'black',
+      },
+    })
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
