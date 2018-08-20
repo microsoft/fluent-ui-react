@@ -1,5 +1,12 @@
+import { textWeightSemibold, textWeightBold } from '../../siteVariables'
+
 export interface ITextVariables {
   importantWeight: number
+  textWeightLight: number
+  textWeightSemilight: number
+  textWeightRegular: number
+  textWeightSemibold: number
+  textWeightBold: number
   atMentionTextColor: string
   disabledTextColor: string
   errorTextColor: string
@@ -47,5 +54,10 @@ export default (siteVariables): ITextVariables => {
     textX4FontSize: siteVariables.textX4FontSize,
     textX4LineHeight: siteVariables.textX4LineHeight,
     importantWeight: 600,
+    textWeightLight: siteVariables.textWeightLight,
+    textWeightSemilight: siteVariables.textWeightSemilight,
+    textWeightRegular: siteVariables.textWeightRegular,
+    textWeightSemibold: siteVariables.textWeightSemibold,
+    textWeightBold: siteVariables.textWeightBold,
   }
 }
