@@ -2,8 +2,6 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 
-export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-
 class Segment extends UIComponent<any, any> {
   static className = 'ui-segment'
 
