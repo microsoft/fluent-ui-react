@@ -4,7 +4,7 @@ import { Button, Icon, Text } from '@stardust-ui/react'
 const ButtonExampleContentAndIcon = () => (
   <div>
     <Button type="primary" icon iconPosition="before">
-      <Icon name="book" color="white" xSpacing="after" />
+      <Icon name="book" xSpacing="after" variables={{ color: 'white' }} />
       <Text content="Click me before" />
     </Button>
     <Button type="secondary" icon iconPosition="after">

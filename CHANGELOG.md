@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix wrong typings generated for dist @kuzhelov ([#99](https://github.com/stardust-ui/react/pull/99))
 - Fix components generation script @kuzhelov ([#105](https://github.com/stardust-ui/react/pull/105))
 - Reactivate tests for `Text` @kuzhelov ([#104](https://github.com/stardust-ui/react/pull/104))
+- Fix Button icon color @levithomason ([#102](https://github.com/stardust-ui/react/pull/102))
 
 ### Features
 - Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
