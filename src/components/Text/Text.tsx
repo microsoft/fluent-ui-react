@@ -9,6 +9,8 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 class Text extends UIComponent<any, any> {
   static className = 'ui-text'
 
+  static displayName = 'Text'
+
   static propTypes = {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
@@ -45,6 +47,12 @@ class Text extends UIComponent<any, any> {
 
     /** Truncates text as needed */
     truncated: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -58,12 +66,14 @@ class Text extends UIComponent<any, any> {
     'content',
     'disabled',
     'error',
+    'important',
     'size',
     'weight',
-    'important',
+    'styles',
     'success',
     'timestamp',
     'truncated',
+    'variables',
   ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
