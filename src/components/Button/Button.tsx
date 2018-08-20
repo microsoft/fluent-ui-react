@@ -9,14 +9,11 @@ import { ButtonBehavior } from '../../lib/accessibility'
 /**
  * A button.
  * @accessibility
- * Default behavior: ButtonBehavior
- *  - adds role='button' if element type is other than 'button'
- *
- *
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
+
 class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
 
