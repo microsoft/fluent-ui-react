@@ -9,13 +9,18 @@ export const keyboardHandlerFilter = (handler: Function, keysCombinations: KeyCo
 
     const { shiftKey, altKey, metaKey, ctrlKey } = event
 
+    if (
+      (keysCombinations.altKey && !altKey) ||
+      (keysCombinations.shiftKey && !shiftKey) ||
+      (keysCombinations.metaKey && !metaKey) ||
+      (keysCombinations.ctrlKey && !ctrlKey)
+    ) {
+      return null
+    }
+
     return keyCode === keyboardKey.getCode(event)
-    // &&
-    //   (shiftKey && keysCombinations.shiftKey) ||
-    //   (altKey && keysCombinations.altKey) ||
-    //   (metaKey && keysCombinations.metaKey) ||
-    //   (ctrlKey && keysCombinations.ctrlKey))
   })
+
   if (!filteredKeys.length) return
 
   handler(event)

@@ -140,7 +140,7 @@ const submenu2 = <Menu items={subMenuItems2} vertical style={submenuStyle} />
 const submenu3 = <Menu items={subMenuItems3} vertical style={submenuStyle} />
 
 const items = [
-  { key: 'file', content: <span>File ▾</span>, submenu: submenu1, style: menuStyle, tabIndex: 0 },
+  { key: 'file', content: <span>File ▾</span>, submenu: submenu1, style: menuStyle },
   { key: 'edit', content: <span>Edit ▾</span>, submenu: submenu2, style: menuStyle },
   { key: 'format', content: <span>Format ▾</span>, submenu: submenu3, style: menuStyle },
   { key: 'help', content: 'Help', style: menuStyle },

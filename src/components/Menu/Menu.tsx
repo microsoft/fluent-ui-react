@@ -125,6 +125,7 @@ class Menu extends AutoControlledComponent<any, any> {
           variables,
           vertical,
           index,
+          tabIndex: index === 0 ? 0 : null,
           active: parseInt(activeIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
