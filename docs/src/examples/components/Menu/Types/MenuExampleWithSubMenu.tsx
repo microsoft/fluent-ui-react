@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu, MenuBarBehavior } from '@stardust-ui/react'
 
 // class MenuExampleWithSubMenu extends React.Component {
 //   state = { activeItem: 'a' }
@@ -148,7 +148,7 @@ const items = [
 
 class MenuExampleWithSubMenu extends React.Component {
   render() {
-    return <Menu defaultActiveIndex={0} items={items} />
+    return <Menu defaultActiveIndex={0} items={items} accessibility={MenuBarBehavior} />
   }
 }
 
