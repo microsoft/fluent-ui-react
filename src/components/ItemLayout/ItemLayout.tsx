@@ -50,8 +50,14 @@ class ItemLayout extends UIComponent<any, any> {
     /** Styled applied to the end media element of the rendered component. */
     endMediaCSS: PropTypes.object,
 
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -74,8 +80,10 @@ class ItemLayout extends UIComponent<any, any> {
     'renderHeaderArea',
     'renderMainArea',
     'rootCSS',
+    'styles',
     'truncateContent',
     'truncateHeader',
+    'variables',
   ]
 
   static defaultProps = {
