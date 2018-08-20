@@ -7,7 +7,7 @@ export class MenuBehavior extends AbstractBehavior<{}, {}>
     super('menu')
   }
 
-  private attributes = {
+  protected attributes = {
     'ms-acc-behavior': this.name,
     role: 'menu',
   }

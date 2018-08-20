@@ -90,7 +90,7 @@ class MenuExampleWithSubMenu extends React.Component {
     )
 
     return (
-      <Menu>
+      <Menu accBehavior="menuBar">
         <Menu.Item
           active={activeItem === 'a'}
           onClick={this.handleItemClick('a')}
