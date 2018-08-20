@@ -7,10 +7,8 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-class MenuExamplePillsVerticalShorthand extends React.Component {
-  render() {
-    return <Menu defaultActiveIndex={0} items={items} shape="pills" vertical />
-  }
-}
+const MenuExamplePillsVertical = () => (
+  <Menu defaultActiveIndex={0} items={items} shape="pills" vertical />
+)
 
-export default MenuExamplePillsVerticalShorthand
+export default MenuExamplePillsVertical
