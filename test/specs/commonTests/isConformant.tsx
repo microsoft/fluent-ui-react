@@ -5,7 +5,7 @@ import { shallow, mount as enzymeMount, render } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
-import { assertBodyContains, consoleUtil, syntheticEvent, uncapitalize } from 'test/utils'
+import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
