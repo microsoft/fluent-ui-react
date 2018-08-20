@@ -5,11 +5,19 @@ import { shallow, mount as enzymeMount, render } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
-import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
+import { assertBodyContains, consoleUtil, syntheticEvent, uncapitalize } from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
+
+type ShorthandTestOptions = {
+  mapsStringValueToProperty?: string
+}
+
+const DefaultShorthandTestOptions: ShorthandTestOptions = {
+  mapsStringValueToProperty: 'content',
+}
 
 const mount = (node, options?) => {
   return enzymeMount(
@@ -498,6 +506,47 @@ export default (Component, options: any = {}) => {
       // test suites
       // -----------------------------------
       return this
+    },
+
+    hasConformantShorthandProperty(
+      shorthandPropertyName: string,
+      ShorthandComponent,
+      options: ShorthandTestOptions = DefaultShorthandTestOptions,
+    ) {
+      const { mapsStringValueToProperty } = options
+
+      describe(`shorthand property for '${ShorthandComponent.displayName}'`, () => {
+        test(`is defined`, () => {
+          expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
+        })
+
+        test(`string value is handled as ${
+          ShorthandComponent.displayName
+        }'s ${mapsStringValueToProperty}`, () => {
+          const props = { [shorthandPropertyName]: 'some value' }
+          const wrapper = mount(<Component {...props} />)
+
+          const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
+          expect(shorthandComponentProps[mapsStringValueToProperty]).toEqual('some value')
+        })
+
+        test(`object value is spread as ${ShorthandComponent.displayName}'s props`, () => {
+          const ShorthandValue = { foo: 'foo value', bar: 'bar value' }
+
+          const props = { [shorthandPropertyName]: ShorthandValue }
+          const wrapper = mount(<Component {...props} />)
+
+          const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
+
+          const allShorthandPropertiesArePassedToShorthandComponent = Object.keys(
+            ShorthandValue,
+          ).every(
+            propertyName => ShorthandValue[propertyName] === shorthandComponentProps[propertyName],
+          )
+
+          expect(allShorthandPropertiesArePassedToShorthandComponent).toBe(true)
+        })
+      })
     },
   }
 }
