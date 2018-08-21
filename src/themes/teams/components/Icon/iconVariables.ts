@@ -11,7 +11,7 @@ export interface IconVariables {
 }
 
 export default (): IconVariables => ({
-  color: 'black',
+  color: undefined,
   // TODO move initial variable discovery to JSON files
   // similar to how components have an info.json file
   backgroundColor: undefined,

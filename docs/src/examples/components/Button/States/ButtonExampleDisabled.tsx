@@ -11,7 +11,7 @@ const ButtonExampleDisabled = () => (
       Secondary
     </Button>
     <Button disabled type="primary" icon iconPosition="before">
-      <Icon name="book" color="white" xSpacing="after" />
+      <Icon name="book" xSpacing="after" />
       <Text content="Click me" />
     </Button>
     <Button disabled circular>

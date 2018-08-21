@@ -1,33 +1,21 @@
 import { pxToRem } from '../../../../lib'
-import { debugRoot } from '../../../../styles/debugStyles'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const listItemStyles = {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { debugLayout, important, selection } = props
+const listItemStyles: IComponentPartStylesInput = {
+  root: ({ props: { selection, important } }): ICSSInJSStyle => ({
+    ...(selection && {
+      position: 'relative',
 
-    return {
-      ...(debugLayout && debugRoot()),
-      gridTemplateRows: `minmax(${variables.height}, max-content)`,
-      paddingLeft: variables.paddingLeft,
-      paddingRight: variables.paddingRight,
-
-      ...(important && {
-        fontWeight: 'bold',
-      }),
-
-      ...(selection && {
-        position: 'relative',
-
-        ':hover': {
-          background: 'rgba(98, 100, 167, .8)',
-          color: '#fff',
-          cursor: 'pointer',
-        },
-      }),
-    }
-  },
-
+      ':hover': {
+        background: 'rgba(98, 100, 167, .8)',
+        color: '#fff',
+        cursor: 'pointer',
+      },
+    }),
+    ...(important && {
+      fontWeight: 'bold',
+    }),
+  }),
   media: ({ props }): ICSSInJSStyle => {
     const { important } = props
     return {
@@ -43,23 +31,20 @@ const listItemStyles = {
       }),
     }
   },
-
   header: ({ props, variables }): ICSSInJSStyle => ({
+    fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
-
   headerMedia: ({ props, variables }): ICSSInJSStyle => ({
     color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
-
-  content: ({ props, variables }): ICSSInJSStyle => ({
+  content: ({ props, variables }) => ({
     color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),
-  contentMedia: (): ICSSInJSStyle => ({}),
 }
 
 export default listItemStyles
