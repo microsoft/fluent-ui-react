@@ -9,8 +9,11 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
       role: 'button',
       tabIndex: '0',
       'aria-disabled': props['disabled'],
+      'aria-label': props['aria-label'],
+      'aria-labelledby': props['aria-labelledby'],
     },
   },
+  handledProps: ['aria-label', 'aria-labelledby'],
 })
 
 export default ToolbarButtonBehavior
