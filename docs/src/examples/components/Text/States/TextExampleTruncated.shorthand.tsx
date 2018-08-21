@@ -10,7 +10,7 @@ const [notTruncatedText, truncatedText] = [
     .join('. '),
 )
 
-const TextExampleTruncated = () => (
+const TextExampleTruncatedShorthand = () => (
   <div style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
     <Text content={notTruncatedText} />
     <br />
@@ -19,4 +19,4 @@ const TextExampleTruncated = () => (
   </div>
 )
 
-export default TextExampleTruncated
+export default TextExampleTruncatedShorthand
