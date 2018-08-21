@@ -1,9 +1,9 @@
 import { task, src, dest, series } from 'gulp'
 import { argv } from 'yargs'
 import config from '../../../../config'
-import rename from 'gulp-rename'
-import replace from 'gulp-replace'
-import inquirer from 'inquirer'
+import * as rename from 'gulp-rename'
+import * as replace from 'gulp-replace'
+import * as inquirer from 'inquirer'
 import * as path from 'path'
 import * as fs from 'fs'
 
