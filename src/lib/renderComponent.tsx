@@ -73,7 +73,11 @@ const renderComponent = <P extends {}>(
         renderer = felaRenderer,
       }: IThemeInput | IThemePrepared = {}) => {
         const ElementType = getElementType({ defaultProps }, props)
-        const rest = getUnhandledProps({ handledProps }, props)
+        const accessibility = getAccessibility(props, state)
+        const rest = getUnhandledProps(
+          { handledProps: [...handledProps, ...accessibility.handledProps] },
+          props,
+        )
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -91,8 +95,6 @@ const renderComponent = <P extends {}>(
 
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
-
-        const accessibility = getAccessibility(props, state)
 
         const config: IRenderResultConfig<P> = {
           ElementType,
