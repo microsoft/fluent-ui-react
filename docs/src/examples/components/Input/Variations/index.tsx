@@ -24,6 +24,11 @@ const Variations = () => (
       description="An input with a given icon can be clearable (the given icon will change into clear button on typing)."
       examplePath="components/Input/Variations/InputExampleIconClearable"
     />
+    <ComponentExample
+      title="Label"
+      description="An input can be preceeded or succeeded by a text."
+      examplePath="components/Input/Variations/InputExampleLabel"
+    />
   </ExampleSection>
 )
 

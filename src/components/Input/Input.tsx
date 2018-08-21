@@ -33,6 +33,7 @@ export interface IInputProps {
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
+import Label from '../Label'
 
 /**
  * An Input
@@ -68,6 +69,15 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
+    /** Shorthand for creating the HTML Input. */
+    input: customPropTypes.itemShorthand,
+
+    /** Shorthand for creating a Label.  */
+    label: customPropTypes.itemShorthand,
+
+    /** The Label text can appear before or after the input element.  */
+    labelPosition: PropTypes.oneOf(['start', 'end']),
+
     /**
      * Called on change.
      *
@@ -96,6 +106,9 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     'defaultValue',
     'fluid',
     'icon',
+    'input',
+    'label',
+    'labelPosition',
     'onChange',
     'styles',
     'type',
@@ -181,16 +194,24 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   }
 
   renderComponent({ ElementType, classes, styles }) {
-    const { type } = this.props
+    const { input, label, labelPosition, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const { onChange } = htmlInputProps as any
 
     const inputClasses = classes.input
 
+    const labelAtEnd = labelPosition === 'end'
+    const labelAtStart = !labelAtEnd
+
     return (
-      <ElementType className={classes.root} {...restProps} onChange={onChange}>
-        {createHTMLInput(type, {
+      <ElementType className={classes.root} {...restProps} {...htmlInputProps}>
+        {labelAtStart &&
+          label &&
+          Label.create(label, {
+            defaultProps: { styles: { root: styles.label } },
+          })}
+        {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
@@ -201,6 +222,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
           Icon.create(this.computeIcon(), {
             defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
+          })}
+        {labelAtEnd &&
+          label &&
+          Label.create(label, {
+            defaultProps: { styles: { root: styles.label } },
           })}
       </ElementType>
     )
