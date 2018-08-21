@@ -4,17 +4,17 @@ import { Menu, ToolbarBehavior, Icon, ToolbarButtonBehavior } from '@stardust-ui
 const items = [
   {
     key: 'cloud',
-    icon: <Icon circular xSpacing="none" size="small" name="cloud" aria-label="Cloud Tool" />,
+    icon: <Icon circular xSpacing="both" size="small" name="cloud" aria-label="Cloud Tool" />,
     accessibility: ToolbarButtonBehavior,
   },
   {
     key: 'clock',
-    icon: <Icon circular xSpacing="none" size="small" name="clock" aria-label="Clock Tool" />,
+    icon: <Icon circular xSpacing="both" size="small" name="clock" aria-label="Clock Tool" />,
     accessibility: ToolbarButtonBehavior,
   },
   {
     key: 'book',
-    icon: <Icon circular xSpacing="none" size="small" name="book" aria-label="Book Tool" />,
+    icon: <Icon circular xSpacing="both" size="small" name="book" aria-label="Book Tool" />,
     accessibility: ToolbarButtonBehavior,
   },
 ]
@@ -25,7 +25,7 @@ class MenuExampleToolbarShorthand extends React.Component {
       <Menu
         defaultActiveIndex={0}
         items={items}
-        shape="underlined"
+        iconOnly
         accessibility={ToolbarBehavior}
         aria-label="Compose Editor"
       />
