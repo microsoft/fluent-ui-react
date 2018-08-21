@@ -40,6 +40,13 @@ const inputStyles: IComponentPartStylesInput = {
       outline: 0,
     }
   },
+
+  label: ({ props, variables }): ICSSInJSStyle => {
+    return {
+      position: 'relative',
+      backgroundColor: 'transparent',
+    }
+  },
 }
 
 export default inputStyles

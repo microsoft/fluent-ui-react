@@ -34,6 +34,7 @@ export interface IInputProps {
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
+import Label from '../Label'
 
 /**
  * An Input
@@ -186,16 +187,24 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   }
 
   renderComponent({ ElementType, classes, styles }) {
-    const { type } = this.props
+    const { input, label, labelPosition, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const { onChange } = htmlInputProps as any
 
     const inputClasses = classes.input
 
+    const labelAtEnd = labelPosition === 'end'
+    const labelAtStart = !labelAtEnd
+
     return (
-      <ElementType className={classes.root} {...restProps} onChange={onChange}>
-        {createHTMLInput(type, {
+      <ElementType className={classes.root} {...restProps} {...htmlInputProps}>
+        {labelAtStart &&
+          label &&
+          Label.create(label, {
+            defaultProps: { styles: { root: styles.label } },
+          })}
+        {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
@@ -206,6 +215,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
           Icon.create(this.computeIcon(), {
             defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
+          })}
+        {labelAtEnd &&
+          label &&
+          Label.create(label, {
+            defaultProps: { styles: { root: styles.label } },
           })}
       </ElementType>
     )
