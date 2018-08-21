@@ -18,7 +18,7 @@ export const getRenderedAttribute = (renderedComponent, propName, partSelector) 
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  * @param {string} [options.defaultRootRole=''] Default root role rendered when no override provided
  * @param {string} [options.accessibilityOverride=ButtonBehavior] Override to test accessibility property override
- * @param {string} [options.overridenRootRole=ButtonBehavior] Overriden root role when accessibility property overriden
+ * @param {string} [options.overriddenRootRole=ButtonBehavior] Overridden root role when accessibility property overridden
  * @param {string} [options.partSelector=''] Selector to scope the test to a part
  */
 export default (Component, options: any = {}) => {
@@ -26,7 +26,7 @@ export default (Component, options: any = {}) => {
     requiredProps = {},
     defaultRootRole = undefined,
     accessibilityOverride = ButtonBehavior,
-    overridenRootRole = 'button',
+    overriddenRootRole = 'button',
     partSelector = '',
   } = options
 
@@ -53,7 +53,7 @@ export default (Component, options: any = {}) => {
         <Component {...requiredProps} accessibility={accessibilityOverride} />,
       )
       const role = getRenderedAttribute(rendered, 'role', partSelector)
-      expect(role).toBe(overridenRootRole)
+      expect(role).toBe(overriddenRootRole)
     })
 
     test('gets correct role when overrides role', () => {

@@ -1,9 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import dividerStyles from '../../themes/teams/components/Divider/dividerStyles'
-import dividerVariables from '../../themes/teams/components/Divider/dividerVariables'
-
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 /**
@@ -20,10 +17,6 @@ class Divider extends UIComponent<any, any> {
   static create: Function
 
   static className = 'ui-divider'
-
-  static styles = dividerStyles
-
-  static variables = dividerVariables
 
   static propTypes = {
     as: customPropTypes.as,
@@ -45,9 +38,25 @@ class Divider extends UIComponent<any, any> {
 
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'important', 'size', 'type']
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'content',
+    'important',
+    'size',
+    'styles',
+    'type',
+    'variables',
+  ]
 
   static defaultProps = {
     size: 0,

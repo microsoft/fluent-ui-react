@@ -11,8 +11,6 @@ import {
 } from '../../lib'
 
 import { Icon } from '../..'
-import labelStyles from '../../themes/teams/components/Label/labelStyles'
-import labelVariables from '../../themes/teams/components/Label/labelVariables'
 
 /**
  * A label displays content classification
@@ -53,6 +51,12 @@ class Label extends UIComponent<any, any> {
      * @param {object} data - All props.
      */
     onIconClick: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -64,41 +68,35 @@ class Label extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onIconClick',
+    'styles',
+    'variables',
   ]
 
   static defaultProps = {
     as: 'label',
   }
 
-  static styles = labelStyles
-
-  static variables = labelVariables
-
-  handleIconOverrides = predefinedProps => {
-    const { onIconClick, iconPosition, content, variables: labelPropVariables } = this.props
-    const { onClick, variables, xSpacing } = predefinedProps
-
-    const iconVariables = callable(variables)()
-    const labelVariables = labelPropVariables
-      ? callable(labelPropVariables)()
-      : callable(Label.variables)()
+  handleIconOverrides = iconProps => {
+    const { onIconClick, iconPosition, content, variables } = this.props
+    const iconVariables = callable(iconProps.variables)() || {}
+    const labelVariables = callable(variables)() || {}
 
     return {
       onClick: e => {
-        _.invoke(predefinedProps, 'onClick', e)
+        _.invoke(iconProps, 'onClick', e)
         _.invoke(this.props, 'onIconClick', e, this.props)
       },
-      ...((onClick || onIconClick) && { tabIndex: '0' }),
+      ...((iconProps.onClick || onIconClick) && { tabIndex: '0' }),
       ...((!iconVariables || !iconVariables.color) && {
         variables: { color: labelVariables.color },
       }),
-      ...(!xSpacing && {
+      ...(!iconProps.xSpacing && {
         xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
       }),
     }
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { children, content, icon, iconPosition } = this.props
     const getContent = (): React.ReactNode => {
       const iconAtEnd = iconPosition === 'end'
@@ -106,7 +104,7 @@ class Label extends UIComponent<any, any> {
 
       const iconElement = Icon.create(
         {
-          className: classes.icon,
+          styles: { root: styles.icon },
           ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
         },
         {

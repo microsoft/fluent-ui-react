@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import { shallow, mount as enzymeMount, render } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
@@ -225,6 +226,14 @@ export default (Component, options: any = {}) => {
       expect(Array.isArray(Component.handledProps)).toEqual(true)
     })
 
+    test(`has 'styles' as handled prop`, () => {
+      expect(Component.handledProps).toContain('styles')
+    })
+
+    test(`has 'variables' as handled prop`, () => {
+      expect(Component.handledProps).toContain('variables')
+    })
+
     test('Component.handledProps includes all handled props', () => {
       const computedProps = _.union(
         Component.autoControlledProps,
@@ -235,7 +244,8 @@ export default (Component, options: any = {}) => {
 
       const message =
         'Not all handled props were defined in static handledProps. Add all props defined in' +
-        ' static autoControlledProps, static defaultProps and static propTypes must.'
+        ' static autoControlledProps, static defaultProps and static propTypes must be defined' +
+        ' in static handledProps.'
 
       expect({
         message,
@@ -286,7 +296,7 @@ export default (Component, options: any = {}) => {
 
         if (eventTarget.length === 0) {
           throw new Error(
-            'The event prop was not delegate to the children. You probably ' +
+            'The event prop was not delegated to the children. You probably ' +
               'forgot to use `getUnhandledProps` util to spread the `rest` props.',
           )
         }

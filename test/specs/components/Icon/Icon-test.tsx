@@ -12,7 +12,7 @@ describe('Icon', () => {
     handlesAccessibility(Icon, {
       defaultRootRole: undefined,
       accessibilityOverride: MenuBehavior,
-      overridenRootRole: 'menu',
+      overriddenRootRole: 'menu',
     })
 
     describe('aria hidden', () => {

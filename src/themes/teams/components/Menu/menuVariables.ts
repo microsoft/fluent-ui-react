@@ -1,4 +1,6 @@
 export interface IMenuVariables {
+  [key: string]: string | number
+
   defaultColor: string
   defaultActiveColor: string
   defaultActiveBackgroundColor: string
@@ -11,6 +13,9 @@ export interface IMenuVariables {
   typePrimaryBorderColor: string
   typePrimaryActiveBorderColor: string
   typePrimaryUnderlinedBorderColor: string
+
+  iconsMenuItemSize: string
+  iconsMenuItemSpacing: number | string
 }
 
 export default (siteVars: any): IMenuVariables => {
@@ -27,5 +32,8 @@ export default (siteVars: any): IMenuVariables => {
     typePrimaryBorderColor: siteVars.brand08,
     typePrimaryActiveBorderColor: siteVars.brand12,
     typePrimaryUnderlinedBorderColor: siteVars.gray12,
+
+    iconsMenuItemSize: undefined,
+    iconsMenuItemSpacing: 0,
   }
 }

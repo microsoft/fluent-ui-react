@@ -1,32 +1,22 @@
 import { pxToRem } from '../../../../lib'
-import { debugRoot } from '../../../../styles/debugStyles'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 
-const listItemStyles = {
-  root: ({ props, variables }) => {
-    const { debugLayout, important, selection } = props
-    return {
-      ...(debugLayout && debugRoot()),
-      gridTemplateRows: `minmax(${variables.height}, max-content)`,
-      paddingLeft: variables.paddingLeft,
-      paddingRight: variables.paddingRight,
+const listItemStyles: IComponentPartStylesInput = {
+  root: ({ props: { selection, important } }): ICSSInJSStyle => ({
+    ...(selection && {
+      position: 'relative',
 
-      ...(important && {
-        fontWeight: 'bold',
-      }),
-
-      ...(selection && {
-        position: 'relative',
-
-        ':hover': {
-          background: 'rgba(98, 100, 167, .8)',
-          color: '#fff',
-          cursor: 'pointer',
-        },
-      }),
-    }
-  },
-
-  media: ({ props }) => {
+      ':hover': {
+        background: 'rgba(98, 100, 167, .8)',
+        color: '#fff',
+        cursor: 'pointer',
+      },
+    }),
+    ...(important && {
+      fontWeight: 'bold',
+    }),
+  }),
+  media: ({ props }): ICSSInJSStyle => {
     const { important } = props
     return {
       ...(important && {
@@ -41,23 +31,20 @@ const listItemStyles = {
       }),
     }
   },
-
-  header: ({ props, variables }) => ({
+  header: ({ props, variables }): ICSSInJSStyle => ({
+    fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
-
-  headerMedia: ({ props, variables }) => ({
+  headerMedia: ({ props, variables }): ICSSInJSStyle => ({
     color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
-
   content: ({ props, variables }) => ({
     color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),
-  contentMedia: () => ({}),
 }
 
 export default listItemStyles

@@ -2,14 +2,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import textStyles from '../../themes/teams/components/Text/textStyles'
-import textVariables from '../../themes/teams/components/Text/textVariables'
 
 /**
  * A component containing text
  */
 class Text extends UIComponent<any, any> {
   static className = 'ui-text'
+
+  static displayName = 'Text'
 
   static propTypes = {
     /** Change the default element type of the Text component */
@@ -36,6 +36,9 @@ class Text extends UIComponent<any, any> {
     /** The size for the Text component */
     size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
 
+    /** The weight for the Text component */
+    weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
+
     /** Set as success Text component */
     success: PropTypes.bool,
 
@@ -44,6 +47,12 @@ class Text extends UIComponent<any, any> {
 
     /** Truncates text as needed */
     truncated: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -57,16 +66,15 @@ class Text extends UIComponent<any, any> {
     'content',
     'disabled',
     'error',
-    'size',
     'important',
+    'size',
+    'styles',
     'success',
     'timestamp',
     'truncated',
+    'variables',
+    'weight',
   ]
-
-  static styles = textStyles
-
-  static variables = textVariables
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props

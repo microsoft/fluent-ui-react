@@ -3,8 +3,6 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 
-import iconStyles from '../../themes/teams/components/Icon/iconStyles'
-import iconVariables from '../../themes/teams/components/Icon/iconVariables'
 import svgIcons from './svgIcons'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -21,8 +19,6 @@ class Icon extends UIComponent<any, any> {
   static className = 'ui-icon'
 
   static displayName = 'Icon'
-
-  static variables = iconVariables
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -59,8 +55,14 @@ class Icon extends UIComponent<any, any> {
       'massive',
     ]),
 
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** Render icon from SVGs collection.  */
     svg: PropTypes.bool,
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
@@ -79,7 +81,9 @@ class Icon extends UIComponent<any, any> {
     'font',
     'name',
     'size',
+    'styles',
     'svg',
+    'variables',
     'xSpacing',
   ]
 
@@ -88,8 +92,6 @@ class Icon extends UIComponent<any, any> {
     size: 'normal',
     accessibility: IconBehavior,
   }
-
-  static styles = iconStyles
 
   renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />

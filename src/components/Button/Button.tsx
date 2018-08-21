@@ -2,11 +2,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import buttonStyles from '../../themes/teams/components/Button/buttonStyles'
-import buttonVariables from '../../themes/teams/components/Button/buttonVariables'
 import Icon from '../Icon'
-import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A button.
@@ -23,10 +21,6 @@ class Button extends UIComponent<any, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
-
-  public static styles = buttonStyles
-
-  public static variables = buttonVariables
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -66,8 +60,14 @@ class Button extends UIComponent<any, any> {
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -82,39 +82,19 @@ class Button extends UIComponent<any, any> {
     'icon',
     'iconPosition',
     'onClick',
+    'styles',
     'type',
+    'variables',
   ]
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior,
+    accessibility: ButtonBehavior as Accessibility,
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
-    const { children, content, disabled, icon, iconPosition, type } = this.props
-    const primary = type === 'primary'
-
-    const getContent = (): React.ReactNode => {
-      if (childrenExist(children)) {
-        return children
-      }
-
-      const iconIsAfterButton = iconPosition === 'after'
-      const renderedContent = [
-        content && <Text key="btn-content" truncated content={content} />,
-        icon &&
-          typeof icon === 'string' && (
-            <Icon
-              key="btn-icon"
-              name={icon}
-              xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
-              color={primary ? 'white' : 'black'}
-            />
-          ),
-      ].filter(Boolean)
-
-      return iconIsAfterButton ? renderedContent : renderedContent.reverse()
-    }
+    const { children, content, disabled, iconPosition } = this.props
+    const hasChildren = childrenExist(children)
 
     return (
       <ElementType
@@ -124,9 +104,23 @@ class Button extends UIComponent<any, any> {
         {...accessibility.attributes.root}
         {...rest}
       >
-        {getContent()}
+        {hasChildren && children}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
+        {!hasChildren && content}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
       </ElementType>
     )
+  }
+
+  public renderIcon = () => {
+    const { disabled, icon, iconPosition, content, type } = this.props
+
+    return Icon.create(icon, {
+      defaultProps: {
+        xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        variables: { color: type === 'primary' && !disabled ? 'white' : undefined },
+      },
+    })
   }
 
   private handleClick = (e: React.SyntheticEvent) => {

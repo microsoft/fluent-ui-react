@@ -4,15 +4,13 @@ import * as PropTypes from 'prop-types'
 
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
-import listStyles from '../../themes/teams/components/List/listStyles'
 import { ListBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 class List extends UIComponent<any, any> {
   static displayName = 'List'
 
   static className = 'ui-list'
-
-  static styles = listStyles
 
   static propTypes = {
     as: customPropTypes.as,
@@ -37,16 +35,19 @@ class List extends UIComponent<any, any> {
     /** Truncates header */
     truncateHeader: PropTypes.bool,
 
-    /** Variables */
-    variables: PropTypes.object,
-
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior,
+    accessibility: ListBehavior as Accessibility,
   }
 
   static handledProps = [
@@ -57,6 +58,7 @@ class List extends UIComponent<any, any> {
     'debug',
     'items',
     'selection',
+    'styles',
     'truncateContent',
     'truncateHeader',
     'variables',

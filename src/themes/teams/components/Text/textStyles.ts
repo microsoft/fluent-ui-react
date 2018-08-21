@@ -1,4 +1,5 @@
-import { Sizes } from '../../../../lib/enums'
+import { Sizes, Weights } from '../../../../lib/enums'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
 
@@ -9,9 +10,9 @@ export interface TextStylesParams {
 
 export default {
   root: ({
-    props: { atMention, disabled, error, size, important, success, timestamp, truncated },
+    props: { atMention, disabled, error, size, weight, important, success, timestamp, truncated },
     variables: v,
-  }: TextStylesParams) => {
+  }: TextStylesParams): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
       ...(atMention && { color: v.atMentionTextColor }),
@@ -19,6 +20,21 @@ export default {
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
       ...(timestamp && { color: v.timestampTextColor }),
+      ...(weight === Weights.Light && {
+        fontWeight: v.textWeightLight,
+      }),
+      ...(weight === Weights.Semilight && {
+        fontWeight: v.textWeightSemilight,
+      }),
+      ...(weight === Weights.Regular && {
+        fontWeight: v.textWeightRegular,
+      }),
+      ...(weight === Weights.Semibold && {
+        fontWeight: v.textWeightSemibold,
+      }),
+      ...(weight === Weights.Bold && {
+        fontWeight: v.textWeightBold,
+      }),
       ...(important && { fontWeight: v.importantWeight }),
       ...(size === Sizes.ExtraSmall && {
         fontSize: v.textExtraSmallFontSize,

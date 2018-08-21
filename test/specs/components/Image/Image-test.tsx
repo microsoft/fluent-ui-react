@@ -12,7 +12,7 @@ describe('Image', () => {
     handlesAccessibility(Image, {
       defaultRootRole: undefined,
       accessibilityOverride: MenuBehavior,
-      overridenRootRole: 'menu',
+      overriddenRootRole: 'menu',
     })
 
     test('set to true if alt is not defined', () => {

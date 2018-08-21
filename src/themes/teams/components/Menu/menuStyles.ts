@@ -1,19 +1,25 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }) => {
-    const { fluid, type, shape, vertical } = props
+  root: ({ props, variables }): ICSSInJSStyle => {
+    const { iconOnly, fluid, type, shape, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
         ...(!fluid && { width: pxToRem(200) }),
+        ...(iconOnly && {
+          display: 'inline-block',
+          width: 'auto',
+        }),
       }),
       ...(shape !== 'pills' &&
+        !iconOnly &&
         shape !== 'underlined' && {
           ...solidBorder(variables.defaultBorderColor),
           ...(type === 'primary' && {

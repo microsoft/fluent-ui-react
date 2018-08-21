@@ -1,43 +1,56 @@
 import { pxToRem } from '../../../../lib'
+import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IMenuVariables } from './menuVariables'
 
-const underlinedItem = (color: string) => ({
+const underlinedItem = (color): ICSSInJSStyle => ({
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({ props, variables }) => {
-  const { active, shape, type, vertical } = props
+const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
+  const { active, iconOnly, shape, type, vertical } = props
   return {
-    ...((!shape || shape === 'pointing') && {
-      ':before': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        right: 0,
-        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
-        background: variables.defaultBorderColor,
-        ...(type === 'primary' && {
-          background: variables.typePrimaryBorderColor,
-        }),
-      },
-      ...(vertical && {
-        ':first-child:before': {
-          display: 'none',
+    ...((!shape || shape === 'pointing') &&
+      !iconOnly && {
+        '::before': {
+          position: 'absolute',
+          content: '""',
+          top: 0,
+          right: 0,
+          ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+          background: variables.defaultBorderColor,
+          ...(type === 'primary' && {
+            background: variables.typePrimaryBorderColor,
+          }),
         },
+        ...(vertical && {
+          ':first-child': {
+            '::before': {
+              display: 'none',
+            },
+          },
+        }),
       }),
-    }),
   }
 }
 
-export default {
-  root: ({ props, variables }) => {
-    const { active, shape, type, vertical } = props
+const menuItemStyles = {
+  root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
+    const { active, iconOnly, shape, type, vertical } = props
+    const { iconsMenuItemSpacing } = variables
     return {
       color: variables.defaultColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
       display: 'block',
+      ...(iconOnly && {
+        ':nth-child(n+2)': {
+          ...(vertical
+            ? { marginTop: iconsMenuItemSpacing }
+            : { marginLeft: iconsMenuItemSpacing }),
+        },
+      }),
       ...(shape === 'pills' && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
@@ -83,7 +96,7 @@ export default {
           }),
         },
         ...(shape === 'pointing' && {
-          ':after': {
+          '::after': {
             visibility: 'visible',
             background: variables.defaultActiveBackgroundColor,
             position: 'absolute',
@@ -97,7 +110,7 @@ export default {
             border: 'none',
             borderBottom: `1px solid ${variables.defaultBorderColor}`,
             borderRight: `1px solid ${variables.defaultBorderColor}`,
-            zIndex: '2',
+            zIndex: 2,
             transition: 'background .1s ease',
             ...(type === 'primary' && {
               background: variables.typePrimaryActiveBackgroundColor,
@@ -110,8 +123,9 @@ export default {
     }
   },
 
-  anchor: ({ props, variables }) => {
-    const { active, shape, type } = props
+  anchor: ({ props, variables }): ICSSInJSStyle => {
+    const { active, iconOnly, shape, type } = props
+    const { iconsMenuItemSize } = variables
 
     return {
       color: 'inherit',
@@ -120,6 +134,15 @@ export default {
         ? { padding: `0 0 ${pxToRem(8)} 0` }
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
+
+      ...(iconOnly && {
+        width: iconsMenuItemSize,
+        height: iconsMenuItemSize || '100%',
+        padding: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }),
 
       ':hover': {
         color: 'inherit',
@@ -144,9 +167,11 @@ export default {
                 ...underlinedItem(variables.typePrimaryActiveColor),
               }
             : {
-                fontWeight: '700',
+                fontWeight: 700,
               }),
         }),
     }
   },
 }
+
+export default menuItemStyles

@@ -10,6 +10,7 @@ require('./build/gulp/tasks/dll')
 require('./build/gulp/tasks/dist')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/generate')
+require('./build/gulp/tasks/screener')
 
 // global tasks
 task('build', series('dll', parallel('dist', 'build:docs')))

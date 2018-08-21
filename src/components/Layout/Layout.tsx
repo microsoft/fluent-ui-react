@@ -3,14 +3,11 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import layoutStyles from '../../themes/teams/components/Layout/layoutStyles'
 
 class Layout extends UIComponent<any, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
-
-  static styles = layoutStyles
 
   static propTypes = {
     as: customPropTypes.as,
@@ -57,6 +54,12 @@ class Layout extends UIComponent<any, any> {
     truncateEnd: PropTypes.bool,
 
     vertical: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -82,9 +85,11 @@ class Layout extends UIComponent<any, any> {
     'start',
     'startCSS',
     'startSize',
+    'styles',
     'truncateEnd',
     'truncateMain',
     'truncateStart',
+    'variables',
     'vertical',
   ]
 

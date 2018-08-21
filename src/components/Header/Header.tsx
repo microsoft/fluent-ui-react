@@ -3,7 +3,6 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import headerStyles from '../../themes/teams/components/Header/headerStyles'
 
 /**
  * A header provides a short summary of content
@@ -13,7 +12,7 @@ import headerStyles from '../../themes/teams/components/Header/headerStyles'
  *
  *
  * Other considerations:
- *  - when description property is used in header, readers will narrate both header content and description within the element.
+ *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
 class Header extends UIComponent<any, any> {
@@ -39,15 +38,28 @@ class Header extends UIComponent<any, any> {
 
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'h1',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'description', 'textAlign']
-
-  static styles = headerStyles
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'content',
+    'description',
+    'styles',
+    'textAlign',
+    'variables',
+  ]
 
   static Description = HeaderDescription
 
