@@ -1,13 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import {
-  createHTMLInput,
-  customPropTypes,
-  getUnhandledProps,
-  partitionHTMLProps,
-  UIComponent,
-} from '../../lib'
+import { createHTMLInput, customPropTypes, UIComponent } from '../../lib'
 import Label from '../Label'
 
 /**
@@ -36,47 +30,28 @@ class Radio extends UIComponent<any, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** The HTML input type. */
-    type: PropTypes.string,
   }
 
-  static handledProps = ['as', 'children', 'className', 'label', 'styles', 'variables', 'type']
+  static handledProps = ['as', 'children', 'className', 'label', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',
     type: 'radio',
   }
 
-  partitionProps = () => {
-    const { type } = this.props
-
-    const unhandled = getUnhandledProps(Radio, this.props)
-    const [htmlInputProps, rest] = partitionHTMLProps(unhandled)
-
-    return [
-      {
-        ...htmlInputProps,
-        type,
-      },
-      rest,
-    ]
-  }
-
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { input, type, label } = this.props
-    const [htmlInputProps, restProps] = this.partitionProps()
+    const { type, label } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
-          overrideProps: {
-            className: classes.radio,
-          },
-        })}
-        {Label.create(label, {
-          defaultProps: { styles: { root: styles.label } },
-        })}
+      <ElementType {...rest} className={classes.root}>
+        <Label styles={{ root: styles.label }}>
+          {createHTMLInput(type, {
+            overrideProps: {
+              className: classes.radio,
+            },
+          })}
+          {label}
+        </Label>
       </ElementType>
     )
   }

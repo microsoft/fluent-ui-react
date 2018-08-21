@@ -3,32 +3,25 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 const radioStyles: IComponentPartStylesInput = {
   root: ({ props, variables }): ICSSInJSStyle => {
     return {
-      display: 'inline-flex',
-      position: 'relative',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
       outline: 0,
-      minHeight: '2.5rem',
     }
   },
 
   radio: ({ props, variables }): ICSSInJSStyle => {
     return {
       display: 'inline-block',
+      marginRight: variables.radioMargin,
     }
   },
 
   label: ({ props, variables }): ICSSInJSStyle => {
     return {
-      alignItems: 'center',
       cursor: 'pointer',
-      display: 'inline-block',
-      fontSize: variables.fontSize,
+      display: 'inline-flex',
+      alignItems: 'center',
       fontWeight: variables.fontWeight,
-      padding: 0,
-      margin: variables.labelMargin,
+      minHeight: '2.5rem',
       backgroundColor: 'transparent',
-      border: 0,
     }
   },
 }
