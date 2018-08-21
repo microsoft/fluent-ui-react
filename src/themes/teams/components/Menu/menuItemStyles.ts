@@ -8,40 +8,49 @@ const underlinedItem = (color): ICSSInJSStyle => ({
 })
 
 const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
-  const { active, shape, type, vertical } = props
+  const { active, iconOnly, shape, type, vertical } = props
   return {
-    ...((!shape || shape === 'pointing') && {
-      '::before': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        right: 0,
-        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
-        background: variables.defaultBorderColor,
-        ...(type === 'primary' && {
-          background: variables.typePrimaryBorderColor,
-        }),
-      },
-      ...(vertical && {
-        ':first-child': {
-          '::before': {
-            display: 'none',
-          },
+    ...((!shape || shape === 'pointing') &&
+      !iconOnly && {
+        '::before': {
+          position: 'absolute',
+          content: '""',
+          top: 0,
+          right: 0,
+          ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+          background: variables.defaultBorderColor,
+          ...(type === 'primary' && {
+            background: variables.typePrimaryBorderColor,
+          }),
         },
+        ...(vertical && {
+          ':first-child': {
+            '::before': {
+              display: 'none',
+            },
+          },
+        }),
       }),
-    }),
   }
 }
 
 const menuItemStyles = {
   root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
-    const { active, shape, type, vertical } = props
+    const { active, iconOnly, shape, type, vertical } = props
+    const { iconsMenuItemSpacing } = variables
     return {
       color: variables.defaultColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
       display: 'block',
+      ...(iconOnly && {
+        ':nth-child(n+2)': {
+          ...(vertical
+            ? { marginTop: iconsMenuItemSpacing }
+            : { marginLeft: iconsMenuItemSpacing }),
+        },
+      }),
       ...(shape === 'pills' && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
@@ -115,7 +124,8 @@ const menuItemStyles = {
   },
 
   anchor: ({ props, variables }): ICSSInJSStyle => {
-    const { active, shape, type } = props
+    const { active, iconOnly, shape, type } = props
+    const { iconsMenuItemSize } = variables
 
     return {
       color: 'inherit',
@@ -124,6 +134,15 @@ const menuItemStyles = {
         ? { padding: `0 0 ${pxToRem(8)} 0` }
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
+
+      ...(iconOnly && {
+        width: iconsMenuItemSize,
+        height: iconsMenuItemSize || '100%',
+        padding: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }),
 
       ':hover': {
         color: 'inherit',

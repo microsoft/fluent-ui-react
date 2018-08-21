@@ -3,7 +3,6 @@ import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
-import Text from '../Text'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -88,30 +87,8 @@ class Button extends UIComponent<any, any> {
   }
 
   public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
-    const { children, content, disabled, icon, iconPosition, type } = this.props
-    const primary = type === 'primary'
-
-    const getContent = (): React.ReactNode => {
-      if (childrenExist(children)) {
-        return children
-      }
-
-      const iconIsAfterButton = iconPosition === 'after'
-      const renderedContent = [
-        content && <Text key="btn-content" truncated content={content} />,
-        icon &&
-          typeof icon === 'string' && (
-            <Icon
-              key="btn-icon"
-              name={icon}
-              xSpacing={!content ? 'none' : iconIsAfterButton ? 'before' : 'after'}
-              color={primary ? 'white' : 'black'}
-            />
-          ),
-      ].filter(Boolean)
-
-      return iconIsAfterButton ? renderedContent : renderedContent.reverse()
-    }
+    const { children, content, disabled, iconPosition } = this.props
+    const hasChildren = childrenExist(children)
 
     return (
       <ElementType
@@ -121,9 +98,23 @@ class Button extends UIComponent<any, any> {
         {...accessibility.attributes.root}
         {...rest}
       >
-        {getContent()}
+        {hasChildren && children}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
+        {!hasChildren && content}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
       </ElementType>
     )
+  }
+
+  public renderIcon = () => {
+    const { disabled, icon, iconPosition, content, type } = this.props
+
+    return Icon.create(icon, {
+      defaultProps: {
+        xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        variables: { color: type === 'primary' && !disabled ? 'white' : undefined },
+      },
+    })
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
