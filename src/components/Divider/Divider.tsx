@@ -5,11 +5,7 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 /**
  * @accessibility
- * If there is no text provided inside divider, then "role='separator'" should be set.
- *
- *
- * Other considerations:
- *  - if separator contains text, then "role='separator'" cannnot be used because text is not narrated by VoiceOver (even with aria-label)
+ * This is shown at the top.
  */
 class Divider extends UIComponent<any, any> {
   static displayName = 'Divider'
