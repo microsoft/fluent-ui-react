@@ -8,11 +8,7 @@ import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
   isConformant(Button)
-  handlesAccessibility(Button, {
-    defaultRootRole: 'button',
-    accessibilityOverride: MenuBehavior,
-    overriddenRootRole: 'menu',
-  })
+  handlesAccessibility(Button, { defaultRootRole: 'button' })
 
   describe('type', () => {
     const typeProp = 'type'
