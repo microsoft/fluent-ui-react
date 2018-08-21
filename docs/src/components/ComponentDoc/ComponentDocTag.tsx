@@ -23,13 +23,6 @@ class ComponentDocTag extends React.Component<any, any> {
       return defaultBeharior
     }
     const accPropertyFormatted = accProperty.defaultValue.split('.').pop() + '.ts'
-    // const behaviorFiltered = behaviorMenuItems.filter(behavior => behavior.variations.find(variation => variation.name.includes(accPropertyFormatted)))
-    //   .map(behavior => ({
-    //     type: behavior.type,
-    //     displayName: behavior.displayName,
-    //     defaultFile: behavior.variations.find(variation => variation.name.includes(accPropertyFormatted)).name,
-    //   }))
-
     const behaviorFiltered = []
     behaviorMenuItems.forEach(behavior => {
       return behavior.variations.find(variation => {

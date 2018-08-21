@@ -27,14 +27,6 @@ class DocsBehaviorRoot extends React.Component<any, any> {
       background: '#fff',
       boxShadow: '0 1px 2px #ccc',
       margin: '10px',
-      // ...(isActive
-      //   ? {
-      //       boxShadow: '0 8px 32px #aaa',
-      //     }
-      //   : isHovering && {
-      //       boxShadow: '0 2px 8px #bbb',
-      //       zIndex: 1,
-      //     }),
     }
 
     const commentBox: React.CSSProperties = {

@@ -126,9 +126,6 @@ class Sidebar extends React.Component<any, any> {
       />
     ))
 
-    // probably better would be to take behavior string from already parsed JSON as from constant
-    // const behaviorType = behaviorMenuItems[0].type
-
     return (
       <Menu.Item key={nextType}>
         <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
