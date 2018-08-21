@@ -13,7 +13,7 @@ describe('Button', () => {
     handlesAccessibility(Button, {
       defaultRootRole: undefined,
       accessibilityOverride: MenuBehavior,
-      overridenRootRole: 'menu',
+      overriddenRootRole: 'menu',
     })
   })
 
@@ -22,7 +22,7 @@ describe('Button', () => {
       requiredProps: { as: 'div' },
       defaultRootRole: 'button',
       accessibilityOverride: MenuBehavior,
-      overridenRootRole: 'menu',
+      overriddenRootRole: 'menu',
     })
   })
 })

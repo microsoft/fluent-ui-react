@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
-  callable,
   childrenExist,
   createHTMLInput,
   customPropTypes,
@@ -49,9 +48,25 @@ class Input extends UIComponent<any, any> {
 
     /** The HTML input type. */
     type: PropTypes.string,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'fluid', 'icon', 'input', 'type']
+  static handledProps = [
+    'as',
+    'children',
+    'className',
+    'fluid',
+    'icon',
+    'input',
+    'styles',
+    'type',
+    'variables',
+  ]
 
   static defaultProps = {
     as: 'div',
@@ -104,12 +119,11 @@ class Input extends UIComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, className, icon, input, type } = this.props
+  renderComponent({ ElementType, classes, rest, styles }) {
+    const { children, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = classes.input
-    const iconClasses = classes.icon
 
     // Render with children
     // ----------------------------------------
@@ -138,7 +152,7 @@ class Input extends UIComponent<any, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { className: iconClasses },
+            defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>
