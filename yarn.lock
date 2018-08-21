@@ -2058,6 +2058,12 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+esprima-extract-comments@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/esprima-extract-comments/-/esprima-extract-comments-1.1.0.tgz#0dacab567a5900240de6d344cf18c33617becbc9"
+  dependencies:
+    esprima "^4.0.0"
+
 esprima@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
@@ -2290,6 +2296,13 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+extract-comments@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/extract-comments/-/extract-comments-1.0.0.tgz#ad4e640704d8a9a124faf8776b47735ff092a593"
+  dependencies:
+    esprima-extract-comments "^1.0.1"
+    parse-code-context "^0.2.2"
 
 extsprintf@1.3.0:
   version "1.3.0"
@@ -5477,6 +5490,10 @@ parse-asn1@^5.0.0:
     create-hash "^1.1.0"
     evp_bytestokey "^1.0.0"
     pbkdf2 "^3.0.3"
+
+parse-code-context@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/parse-code-context/-/parse-code-context-0.2.2.tgz#144b8afb7219482d7e88c1eb6a765596f3a6ac0d"
 
 parse-entities@^1.0.2:
   version "1.1.2"

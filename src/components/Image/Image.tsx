@@ -7,9 +7,6 @@ import { ImageBehavior } from '../../lib/accessibility'
 /**
  * An image is a graphic representation of something.
  * @accessibility
- * Default behavior: ImageBehavior
- *  - attribute "aria-hidden='true'" is applied on img tag, if there is no 'alt' attribute provided
- *
  * If image should be visible to screen readers, then it has to have 'alt' attribute specified.
  *
  * Other considerations:

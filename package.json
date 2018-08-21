@@ -106,6 +106,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "express": "^4.15.4",
+    "extract-comments": "^1.0.0",
     "fbjs": "^0.8.17",
     "gh-pages": "^1.0.0",
     "gulp": "^4.0.0",

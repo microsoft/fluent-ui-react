@@ -28,7 +28,6 @@ export default () => {
       const dir = path.dirname(absPath)
       const componentType = path.basename(path.dirname(dir)).replace(/s$/, '')
       const behaviorVariantName = file.basename
-      console.log(`behaviorVariantName is: ${behaviorVariantName}`)
       const behaviorName = path.basename(dir)
 
       let description
@@ -39,11 +38,9 @@ export default () => {
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
         const descriptionToken = commentTokens.find(token => token.title === 'description')
-        // printing text of '@description' part
         description = descriptionToken.description
-        console.log('Parsed description:' + descriptionToken.description)
       } else {
-        description = 'Missing description'
+        description = 'Behavior file has no description.'
       }
 
       result.push({

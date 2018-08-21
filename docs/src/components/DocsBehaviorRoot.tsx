@@ -4,14 +4,13 @@ import * as React from 'react'
 const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
 import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
-
+import { behaviorType } from 'docs/src/constants'
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
     children: PropTypes.node,
     match: PropTypes.shape({
       params: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
       }),
     }),
   }
@@ -19,10 +18,6 @@ class DocsBehaviorRoot extends React.Component<any, any> {
   getNameFromFileName(fileName: string) {
     const divided = _.startCase(fileName.replace('ts', ''))
     return _.upperFirst(_.lowerCase(divided))
-  }
-
-  getRoleName(fileName: string) {
-    return fileName.replace('.ts', '')
   }
 
   render() {
@@ -46,32 +41,33 @@ class DocsBehaviorRoot extends React.Component<any, any> {
       padding: 5,
     }
     const { match } = this.props
-    const behaviorName = match.params.name.charAt(0).toUpperCase() + match.params.name.slice(1)
-    // let jsx
     return (
       <div style={commentBox}>
         {behaviorMenuItems
-          .find(behavior => behavior.displayName === behaviorName)
-          .variations.map(variation => (
-            <Grid className="docs-example" style={exampleStyle}>
+          .find(behavior => behavior.displayName === _.capitalize(match.params.name))
+          .variations.map((variation, keyValue) => (
+            <Grid key={keyValue} className="docs-example" style={exampleStyle}>
               <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
                 <div style={{ display: 'flex' }}>
                   <div style={{ flex: '1' }}>
                     <ComponentExampleTitle
+                      id={_.kebabCase(variation.name)}
                       title={this.getNameFromFileName(variation.name)}
-                      // description={variation.text}
-                      description={`Behavior name: ${this.getRoleName(variation.name)}`}
+                      description={`${_.upperFirst(behaviorType)} name: ${variation.name.replace(
+                        '.ts',
+                        '',
+                      )}`}
                     />
                   </div>
                   <div style={{ flex: '0 0 auto' }} />
                 </div>
               </Grid.Column>
-              <div>
-                <span> Behavior desription: </span>
+              <div style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
+                <span> Description: </span>
                 <br />
-                {variation.text.split('\n').map((splittedText, key) => {
+                {variation.text.split('\n').map((splittedText, keyValue) => {
                   return (
-                    <span key={key}>
+                    <span key={keyValue}>
                       {splittedText}
                       <br />
                     </span>

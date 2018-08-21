@@ -6,6 +6,7 @@ import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { behaviorType } from 'docs/src/constants'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
@@ -97,7 +98,7 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getBehaviorPathname = info => `/behaviors/${_.kebabCase(info.displayName)}`
+  getBehaviorPathname = info => `/${behaviorType}s/${_.kebabCase(info.displayName)}`
 
   menuItemsByType = _.map(nextType => {
     const items = _.flow(
@@ -114,25 +115,25 @@ class Sidebar extends React.Component<any, any> {
       )),
     )(componentMenu)
 
-    const behaviorItems = _.flow(
-      _.filter(({ type }) => type === 'Behavior'),
-      _.map(info => (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          as={NavLink}
-          to={this.getBehaviorPathname(info)}
-          activeClassName="active"
-        />
-      )),
-    )(behaviorMenuItems)
+    const behaviorItems = behaviorMenuItems.map(info => (
+      <Menu.Item
+        key={info.displayName}
+        name={info.displayName}
+        onClick={this.handleItemClick}
+        as={NavLink}
+        to={this.getBehaviorPathname(info)}
+        activeClassName="active"
+      />
+    ))
+
+    // probably better would be to take behavior string from already parsed JSON as from constant
+    // const behaviorType = behaviorMenuItems[0].type
 
     return (
       <Menu.Item key={nextType}>
         <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
         <Menu.Menu>{items}</Menu.Menu>
-        <Menu.Header>{_.capitalize('behaviors')}</Menu.Header>
+        <Menu.Header style={{ marginTop: '1em' }}>{_.capitalize(behaviorType) + 's'}</Menu.Header>
         <Menu.Menu>{behaviorItems}</Menu.Menu>
       </Menu.Item>
     )

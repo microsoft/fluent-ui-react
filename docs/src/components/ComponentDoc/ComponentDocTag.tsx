@@ -14,16 +14,13 @@ class ComponentDocTag extends React.Component<any, any> {
   }
 
   getBehaviorURLandName = fromInfo => {
-    const accProperty = fromInfo.props.find(property => {
-      if (property.name === 'accessibility') {
-        return property
-      }
-    })
+    const defaultBeharior = {
+      name: undefined,
+      url: undefined,
+    }
+    const accProperty = fromInfo.props.find(property => property.name === 'accessibility')
     if (!accProperty) {
-      return {
-        name: undefined,
-        url: undefined,
-      }
+      return defaultBeharior
     }
     const accPropertyFormatted = accProperty.defaultValue.split('.').pop() + '.ts'
     // const behaviorFiltered = behaviorMenuItems.filter(behavior => behavior.variations.find(variation => variation.name.includes(accPropertyFormatted)))
@@ -48,34 +45,41 @@ class ComponentDocTag extends React.Component<any, any> {
 
     if (behaviorFiltered && behaviorFiltered.length > 0) {
       const behaviorsFolder = behaviorFiltered[0].type + 's'
+      const behaviorFile = behaviorFiltered[0].defaultFile.replace('.ts', '')
       return {
-        name: `${behaviorFiltered[0].defaultFile}`,
-        url: `${behaviorsFolder}/${behaviorFiltered[0].displayName}`,
+        name: `${behaviorFile}`,
+        url: `${behaviorsFolder}/${behaviorFiltered[0].displayName}#${_.kebabCase(behaviorFile)}`,
       }
     }
-    return {
-      name: undefined,
-      url: undefined,
+    return defaultBeharior
+  }
+
+  getDefaultBehavior(info) {
+    const defaultBehavior = this.getBehaviorURLandName(info)
+    if (defaultBehavior && defaultBehavior.name && defaultBehavior.url) {
+      return (
+        <span>
+          {' '}
+          Default behavior: <a href={defaultBehavior.url}> {defaultBehavior.name} </a>{' '}
+        </span>
+      )
     }
   }
 
   render() {
     const { info, tag, title, errorMessage } = this.props
-    const description = this.getTagDescription(tag, info) || (
-      <Message error content={errorMessage} compact={true} />
-    )
+    const accDescription = this.getTagDescription(tag, info)
+    const description =
+      accDescription || this.getBehaviorURLandName(info).name ? (
+        accDescription
+      ) : (
+        <Message error content={errorMessage} compact={true} />
+      )
 
     return (
-      <Header as="h2" style={headerStyle}>
+      <Header as="h2" style={headerStyle} className="no-anchor">
         <Header.Content>{title}</Header.Content>
-        <Header.Subheader>
-          {' '}
-          Default behavior:{' '}
-          <a href={this.getBehaviorURLandName(info).url}>
-            {' '}
-            {this.getBehaviorURLandName(info).name}{' '}
-          </a>{' '}
-        </Header.Subheader>
+        <Header.Subheader> {this.getDefaultBehavior(info)} </Header.Subheader>
         <Header.Subheader> {description} </Header.Subheader>
       </Header>
     )

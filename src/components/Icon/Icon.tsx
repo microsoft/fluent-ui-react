@@ -9,8 +9,6 @@ export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 /**
  * @accessibility
- * Default behavior: IconBehavior
- *  - attribute "aria-hidden='true'" is applied on icon
  */
 
 class Icon extends UIComponent<any, any> {
