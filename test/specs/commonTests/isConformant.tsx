@@ -12,11 +12,11 @@ import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
 
 type ShorthandTestOptions = {
-  mapsStringValueToProperty?: string
+  mapsValueToProp?: string
 }
 
 const DefaultShorthandTestOptions: ShorthandTestOptions = {
-  mapsStringValueToProperty: 'content',
+  mapsValueToProp: 'content',
 }
 
 const mount = (node, options?) => {
@@ -514,7 +514,7 @@ export default (Component, options: any = {}) => {
       ShorthandComponent,
       options: ShorthandTestOptions = DefaultShorthandTestOptions,
     ) {
-      const { mapsStringValueToProperty } = options
+      const { mapsValueToProp } = options
 
       describe(`shorthand property for '${ShorthandComponent.displayName}'`, () => {
         test(`is defined`, () => {
@@ -523,12 +523,12 @@ export default (Component, options: any = {}) => {
 
         test(`string value is handled as ${
           ShorthandComponent.displayName
-        }'s ${mapsStringValueToProperty}`, () => {
+        }'s ${mapsValueToProp}`, () => {
           const props = { [shorthandPropertyName]: 'some value' }
           const wrapper = mount(<Component {...props} />)
 
           const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
-          expect(shorthandComponentProps[mapsStringValueToProperty]).toEqual('some value')
+          expect(shorthandComponentProps[mapsValueToProp]).toEqual('some value')
         })
 
         test(`object value is spread as ${ShorthandComponent.displayName}'s props`, () => {

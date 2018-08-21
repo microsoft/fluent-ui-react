@@ -10,7 +10,7 @@ import { MenuBehavior } from 'src/lib/accessibility'
 
 describe('Button', () => {
   isConformant(Button).hasConformantShorthandProperty('icon', Icon, {
-    mapsStringValueToProperty: 'name',
+    mapsValueToProp: 'name',
   })
 
   handlesAccessibility(Button, {
