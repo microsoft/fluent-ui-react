@@ -9,9 +9,7 @@ const MenuBehavior: Accessibility = {
   focusZone: {
     mode: FocusZoneMode.Wrap,
     props: {
-      onActiveElementChanged: (element, ev) => {
-        console.error('MENU BEHAVIOR', 'on active element changed', 'element', element, 'ev', ev)
-      },
+      isCircularNavigation: true,
     },
   },
 }
