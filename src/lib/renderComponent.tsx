@@ -83,7 +83,7 @@ const addKeyDownHandler = (rest, actions, accessibility, props) => {
   }
   if (!hasCommonActions) return
 
-  rest.onKeyDown = (event: KeyboardEvent) => {
+  rest.onKeyDown = (event: React.KeyboardEvent) => {
     for (const actionName in actionsDefinition) {
       if (!actions[actionName]) continue
       const eventHandler = keyboardHandlerFilter(

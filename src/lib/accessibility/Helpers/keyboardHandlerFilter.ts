@@ -1,7 +1,7 @@
 import { KeyCombinations, KeyboardHandler } from '../interfaces'
 import keyboardKey from 'keyboard-key'
 const keyboardHandlerFilter = (handler: KeyboardHandler, keysCombinations: KeyCombinations[]) => (
-  event: KeyboardEvent,
+  event: React.KeyboardEvent,
 ) => {
   const filteredKeys = keysCombinations.filter(keysCombinations => {
     const keyCode = keysCombinations.keyCode

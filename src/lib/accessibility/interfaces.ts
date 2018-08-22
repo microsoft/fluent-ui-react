@@ -130,6 +130,6 @@ export type AccessibilityActions = {
   [name: string]: KeyboardHandler
 }
 
-export type KeyboardHandler = (event: KeyboardEvent) => void
+export type KeyboardHandler = (event: React.KeyboardEvent) => void
 
 export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
