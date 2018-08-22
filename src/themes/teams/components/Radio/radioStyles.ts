@@ -4,12 +4,12 @@ const radioStyles: IComponentPartStylesInput = {
   root: ({ props, variables }): ICSSInJSStyle => {
     return {
       outline: 0,
+      display: 'inline-block',
     }
   },
 
   radio: ({ props, variables }): ICSSInJSStyle => {
     return {
-      display: 'inline-block',
       marginRight: variables.radioMargin,
     }
   },
@@ -18,7 +18,7 @@ const radioStyles: IComponentPartStylesInput = {
     return {
       cursor: 'pointer',
       display: 'inline-flex',
-      alignItems: 'center',
+      alignItems: 'baseline',
       fontWeight: variables.fontWeight,
       minHeight: '2.5rem',
       backgroundColor: 'transparent',
