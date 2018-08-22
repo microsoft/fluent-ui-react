@@ -1,6 +1,0 @@
-webpackJsonp([11],{1737:/*!****************************************************!*\
-  !*** ./docs/src/exampleMenus/Button.examples.json ***!
-  \****************************************************/
-/*! dynamic exports provided */
-/*! all exports used */
-function(t,e){t.exports=[{sectionName:"Types",examples:[{title:"Default",examplePath:"components/Button/Types/ButtonExample"},{title:"Emphasis",examplePath:"components/Button/Types/ButtonExampleEmphasis"},{title:"Icon",examplePath:"components/Button/Types/ButtonExampleIcon"},{title:"Content and Icon",examplePath:"components/Button/Types/ButtonExampleContentAndIcon"}]},{sectionName:"States",examples:[{title:"Disabled",examplePath:"components/Button/States/ButtonExampleDisabled"}]},{sectionName:"Variations",examples:[{title:"Fluid",examplePath:"components/Button/Variations/ButtonExampleFluid"},{title:"Circular",examplePath:"components/Button/Variations/ButtonExampleCircular"},{title:"Circular Emphasis",examplePath:"components/Button/Variations/ButtonExampleEmphasisCircular"}]}]}});
