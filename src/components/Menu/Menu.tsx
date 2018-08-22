@@ -2,11 +2,17 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+} from '../../lib'
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesObject } from '../../../types/theme'
+import { focusFirstChild, focusAsync, getLastFocusable } from '@uifabric/utilities'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -114,14 +120,34 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 
+  focusFirstItem = () => {
+    focusFirstChild(this.elementRef)
+  }
+
+  focusLastItem = () => {
+    const lastFocusableElement = getLastFocusable(this.elementRef, this.elementRef
+      .lastElementChild as HTMLElement)
+    lastFocusableElement && focusAsync(lastFocusableElement)
+  }
+
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
+
+    this.setAccessibility(accessibility)
+
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={classes.root}
+        ref={this.setElementRef}
+      >
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }
 }
+
+Menu.create = createShorthandFactory(Menu, content => ({ content }))
 
 export default Menu

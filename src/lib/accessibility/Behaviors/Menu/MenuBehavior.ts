@@ -1,19 +1,8 @@
-import { Accessibility, FocusZoneMode } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
+import BasicMenuBehavior from './BasicMenuBehavior'
+import VerticalMenuBehavior from './VerticalMenuBehavior'
 
-const MenuBehavior: Accessibility = {
-  attributes: {
-    root: {
-      role: 'menu',
-    },
-  },
-  focusZone: {
-    mode: FocusZoneMode.Wrap,
-    props: {
-      onActiveElementChanged: (element, ev) => {
-        console.error('MENU BEHAVIOR', 'on active element changed', 'element', element, 'ev', ev)
-      },
-    },
-  },
-}
+const MenuBehavior: Accessibility = (props: any) =>
+  props.vertical ? VerticalMenuBehavior : BasicMenuBehavior
 
 export default MenuBehavior

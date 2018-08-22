@@ -8,6 +8,9 @@ import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import toCompactArray from './toCompactArray'
+import keyboardHandlerFilter from './accessibility/Helpers/keyboardHandlerFilter'
+import { AccessibilityActions } from './accessibility/interfaces'
+import _ from 'lodash'
 
 import {
   ComponentStyleFunctionParam,
@@ -53,6 +56,7 @@ export interface IRenderConfig {
   handledProps: string[]
   props: IRenderConfigProps
   state: { [key: string]: any }
+  actions: AccessibilityActions
 }
 
 const getAccessibility = <P extends {}>(props, state) => {
@@ -80,11 +84,40 @@ function wrapInGenericFocusZone<
   return <FocusZone {...props}>{children}</FocusZone>
 }
 
+function addKeyDownHandler(rest, actions, accessibility, props) {
+  const actionsDefinition = accessibility.actionsDefinition
+
+  if (!actions || !actionsDefinition) return
+
+  let hasCommonActions = false
+
+  for (const actionName in actionsDefinition) {
+    if (actions[actionName]) {
+      hasCommonActions = true
+      break
+    }
+  }
+
+  if (!hasCommonActions) return
+
+  rest.onKeyDown = (event: KeyboardEvent) => {
+    for (const actionName in actionsDefinition) {
+      if (!actions[actionName]) continue
+      const eventHandler = keyboardHandlerFilter(
+        actions[actionName],
+        actionsDefinition[actionName].keyCombinations,
+      )
+      eventHandler && eventHandler(event)
+    }
+    _.invoke(props, 'onKeyDown', event, props)
+  }
+}
+
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
-  const { className, defaultProps, displayName, handledProps, props, state } = config
+  const { className, defaultProps, displayName, handledProps, props, state, actions } = config
 
   return (
     <FelaTheme
@@ -97,6 +130,9 @@ const renderComponent = <P extends {}>(
       }: IThemeInput | IThemePrepared = {}) => {
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
+
+        const accessibility = getAccessibility(props, state) as IAccessibilityDefinition
+        addKeyDownHandler(rest, actions, accessibility, props)
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -114,8 +150,6 @@ const renderComponent = <P extends {}>(
 
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
-
-        const accessibility = getAccessibility(props, state) as IAccessibilityDefinition
 
         const config: IRenderResultConfig<P> = {
           ElementType,

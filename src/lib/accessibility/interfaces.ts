@@ -104,13 +104,34 @@ export interface IAriaWidgetAttributes {
   'aria-valuetext'?: string
 }
 
+import { KeyCodes } from '@uifabric/utilities'
+
 export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
   role?: AriaRole
   tabIndex?: string
+  'data-focused'?: boolean
+  'data-is-focusable'?: boolean
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
+export type ActionDefinitions = { [partName: string]: IActionDefinition }
+
+export type Accessibility =
+  | IAccessibilityDefinition
+  | ((props: any) => IAccessibilityDefinition)
+  | ((props: any) => Accessibility)
+
+export interface IActionDefinition {
+  keyCombinations: KeyCombinations[]
+}
+
+export interface KeyCombinations {
+  keyCode: KeyCodes
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
 
 export enum FocusZoneMode {
   Custom,
@@ -124,8 +145,12 @@ export type FocusZoneDefinition = {
 
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
   focusZone?: FocusZoneDefinition
+  actionsDefinition?: ActionDefinitions
 }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type AccessibilityActions = {
+  [name: string]: KeyboardHandler
+}
+
+export type KeyboardHandler = (event: KeyboardEvent) => void
