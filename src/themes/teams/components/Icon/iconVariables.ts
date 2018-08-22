@@ -3,7 +3,7 @@ import { pxToRem } from '../../../../lib'
 export interface IconVariables {
   [key: string]: string | number | undefined
 
-  color: string
+  color?: string
   backgroundColor?: string
   borderColor?: string
   horizontalSpace: string

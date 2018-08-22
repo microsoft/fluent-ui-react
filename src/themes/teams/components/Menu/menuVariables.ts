@@ -1,5 +1,5 @@
 export interface IMenuVariables {
-  [key: string]: string | number
+  [key: string]: string | number | undefined
 
   defaultColor: string
   defaultActiveColor: string
@@ -14,7 +14,7 @@ export interface IMenuVariables {
   typePrimaryActiveBorderColor: string
   typePrimaryUnderlinedBorderColor: string
 
-  iconsMenuItemSize: string
+  iconsMenuItemSize?: string
   iconsMenuItemSpacing: number | string
 }
 

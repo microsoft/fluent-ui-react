@@ -26,9 +26,7 @@ export type IProps = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface ISiteVariables {
-  [key: string]: any
-
+export interface ISiteVariables extends ObjectOf<any> {
   brand?: string
   htmlFontSize?: string
 }
@@ -89,25 +87,17 @@ export type ComponentPartStyleFunction = ((
 
 export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
 
-export interface IComponentPartStylesInput {
-  [part: string]: ComponentPartStyle
-}
+export interface IComponentPartStylesInput extends ObjectOf<ComponentPartStyle> {}
 
-export interface IComponentPartStylesPrepared {
-  [part: string]: ComponentPartStyleFunction
-}
+export interface IComponentPartStylesPrepared extends ObjectOf<ComponentPartStyleFunction> {}
 
-export interface IComponentPartClasses {
-  [part: string]: string
-}
+export interface IComponentPartClasses extends ObjectOf<string> {}
 
 // ========================================================
 // Static Styles
 // ========================================================
 
-export type StaticStyleObject = {
-  [selector: string]: ICSSInJSStyle
-}
+export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
 
 export type StaticStyleRenderable = string | StaticStyleObject
 

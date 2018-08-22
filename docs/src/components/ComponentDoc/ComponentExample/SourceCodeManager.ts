@@ -78,6 +78,11 @@ class SourceCodeManager implements ISourceCodeManager {
     const path = this.sourceCodePath + examplePathPatterns[sourceCodeType]
     const code = this.safeRequire(path)
 
+    if (code === '') {
+      console.error(`Can't load example for path ${path}`)
+      return
+    }
+
     this.data[sourceCodeType] = {
       path,
       code,
