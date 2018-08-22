@@ -35,4 +35,6 @@ export { default as Menu } from './components/Menu/menuStyles'
 
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
+export { default as Segment } from './components/Segment/segmentStyles'
+
 export { default as Text } from './components/Text/textStyles'
