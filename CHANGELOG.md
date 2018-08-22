@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.7...v0.3.0)
@@ -35,7 +38,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
 - Add `Grid` component base implementation @Bugaa92 ([#93](https://github.com/stardust-ui/react/pull/93))
 - Add basic `Segment` component @kuzhelov ([#103](https://github.com/stardust-ui/react/pull/103))
-- Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
 
 <!--------------------------------[ v0.2.7 ]------------------------------- -->
 ## [v0.2.7](https://github.com/stardust-ui/react/tree/v0.2.7) (2018-08-13)
