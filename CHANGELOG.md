@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.3.0 ]------------------------------- -->
+## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.7...v0.3.0)
+
 ### BREAKING CHANGES
 - Remove Children API support from Menu component @miroslavstastny ([#111](https://github.com/stardust-ui/react/pull/111))
 
