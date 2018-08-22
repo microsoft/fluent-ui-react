@@ -8,8 +8,7 @@ import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import toCompactArray from './toCompactArray'
-import _ from 'lodash'
-
+import * as _ from 'lodash'
 import {
   ComponentStyleFunctionParam,
   ComponentVariablesInput,
@@ -92,7 +91,8 @@ const addKeyDownHandler = (rest, actions, accessibility, props) => {
       )
       eventHandler && eventHandler(event)
     }
-    _.invoke(props, 'onKeyDown', event, props)
+
+    _.invoke(props, 'onKeyDown', event)
   }
 }
 

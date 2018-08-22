@@ -1,5 +1,5 @@
 import { Accessibility } from '../../interfaces'
-import keyboardKey from 'keyboard-key'
+import * as keyboardKey from 'keyboard-key'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
