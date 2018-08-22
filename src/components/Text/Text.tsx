@@ -36,6 +36,9 @@ class Text extends UIComponent<any, any> {
     /** The size for the Text component */
     size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
 
+    /** The weight for the Text component */
+    weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
+
     /** Set as success Text component */
     success: PropTypes.bool,
 
@@ -70,6 +73,7 @@ class Text extends UIComponent<any, any> {
     'timestamp',
     'truncated',
     'variables',
+    'weight',
   ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {

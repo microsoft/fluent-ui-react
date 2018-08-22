@@ -252,7 +252,8 @@ export default (Component, options: any = {}) => {
 
       const message =
         'Not all handled props were defined in static handledProps. Add all props defined in' +
-        ' static autoControlledProps, static defaultProps and static propTypes must.'
+        ' static autoControlledProps, static defaultProps and static propTypes must be defined' +
+        ' in static handledProps.'
 
       expect({
         message,
@@ -303,7 +304,7 @@ export default (Component, options: any = {}) => {
 
         if (eventTarget.length === 0) {
           throw new Error(
-            'The event prop was not delegate to the children. You probably ' +
+            'The event prop was not delegated to the children. You probably ' +
               'forgot to use `getUnhandledProps` util to spread the `rest` props.',
           )
         }
