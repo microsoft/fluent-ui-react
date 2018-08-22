@@ -28,11 +28,14 @@ class Radio extends UIComponent<any, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** The HTML input type. */
+    type: PropTypes.string,
+
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'label', 'styles', 'variables']
+  static handledProps = ['as', 'children', 'className', 'label', 'styles', 'type', 'variables']
 
   static defaultProps = {
     as: 'div',
