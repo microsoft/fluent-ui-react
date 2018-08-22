@@ -108,11 +108,28 @@ export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
-
+export type ActionsDefinition = { [partName: string]: IActionDefinition }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  actionsDefinition?: ActionsDefinition
 }
+
+export interface IActionDefinition {
+  keyCombinations: KeyCombinations[]
+}
+
+export interface KeyCombinations {
+  keyCode: number
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
+
+export type AccessibilityActions = {
+  [name: string]: KeyboardHandler
+}
+
+export type KeyboardHandler = (event: KeyboardEvent) => void
 
 export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)

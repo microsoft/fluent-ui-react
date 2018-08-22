@@ -1,4 +1,5 @@
 import { Accessibility } from '../../interfaces'
+import keyboardKey from 'keyboard-key'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -9,6 +10,12 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
       tabIndex: '0',
+    },
+  },
+
+  actionsDefinition: {
+    triggerClick: {
+      keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
     },
   },
 })

@@ -6,7 +6,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActions } from '../../lib/accessibility/interfaces'
 
 class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
@@ -89,6 +89,10 @@ class MenuItem extends UIComponent<any, any> {
     'variables',
     'vertical',
   ]
+
+  actions: AccessibilityActions = {
+    triggerClick: event => this.handleClick(event),
+  }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
