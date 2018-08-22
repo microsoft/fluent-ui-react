@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
@@ -23,6 +23,18 @@ describe('Button', () => {
       defaultRootRole: 'button',
       accessibilityOverride: MenuBehavior,
       overriddenRootRole: 'menu',
+    })
+  })
+
+  describe('Accessibility - aria disabled', () => {
+    it('set to true if disabled attributed provided', () => {
+      const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
+      expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+    })
+
+    it('set to false if disabled attributed not provided', () => {
+      const renderedComponent = getTestingRenderedComponent(Button, <Button />)
+      expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
     })
   })
 

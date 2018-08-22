@@ -16,8 +16,13 @@ describe('Icon', () => {
     })
 
     describe('aria hidden', () => {
-      test('set to true by default', () => {
+      it('icon - set to true by default', () => {
         const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
+        expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
+      })
+
+      it('svg - set to true by default', () => {
+        const renderedComponent = getTestingRenderedComponent(Icon, <Icon svg />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
     })

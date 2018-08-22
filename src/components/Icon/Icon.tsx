@@ -101,12 +101,8 @@ class Icon extends UIComponent<any, any> {
     const icon = svgIcons[this.props.name]
 
     return (
-      <ElementType className={classes.root} {...rest}>
-        <svg
-          className={classes.svg}
-          viewBox={icon && icon.viewBox}
-          {...accessibility.attributes.root}
-        >
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
           {icon && icon.element}
         </svg>
       </ElementType>
