@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.7...v0.3.0)
