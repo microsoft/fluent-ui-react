@@ -26,8 +26,8 @@ import {
   shouldWrapFocus,
   createRef,
 } from '@uifabric/utilities'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../interfaces'
 
-const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter'
 const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 const TABINDEX = 'tabindex'

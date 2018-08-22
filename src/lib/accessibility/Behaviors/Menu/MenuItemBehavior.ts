@@ -1,4 +1,4 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '../../interfaces'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -8,7 +8,7 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
-      'data-is-focusable': true,
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
 })
