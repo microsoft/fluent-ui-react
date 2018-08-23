@@ -11,7 +11,7 @@ import helpers from './commonHelpers'
 import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
 
-const mount = (node, options?) => {
+export const mount = (node, options?) => {
   return enzymeMount(
     <ThemeProvider theme={{ renderer: felaRenderer }}>{node}</ThemeProvider>,
     options,

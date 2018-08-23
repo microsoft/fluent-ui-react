@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+
+<!--------------------------------[ v0.3.0 ]------------------------------- -->
+## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.7...v0.3.0)
+
 ### BREAKING CHANGES
 - Remove Children API support from Menu component @miroslavstastny ([#111](https://github.com/stardust-ui/react/pull/111))
 
@@ -25,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix components generation script @kuzhelov ([#105](https://github.com/stardust-ui/react/pull/105))
 - Reactivate tests for `Text` @kuzhelov ([#104](https://github.com/stardust-ui/react/pull/104))
 - Fix Button icon color @levithomason ([#102](https://github.com/stardust-ui/react/pull/102))
+- Fix `icon` shorthand property for Button @kuzhelov ([#112](https://github.com/stardust-ui/react/pull/112))
 
 ### Features
 - Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
