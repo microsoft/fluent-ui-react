@@ -34,7 +34,7 @@ export interface IAccordionPropsStrict {
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All item props.
    */
-  onTitleClick?: Function
+  onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void
 
   /** Shorthand array of props for Accordion. */
   panels?: {
