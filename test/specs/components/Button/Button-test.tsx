@@ -1,13 +1,23 @@
 import * as React from 'react'
 
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
+import {
+  isConformant,
+  handlesAccessibility,
+  implementsShorthandProp,
+  getRenderedAttribute,
+} from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 
 import Button from 'src/components/Button/Button'
+import Icon from 'src/components/Icon/Icon'
+
 import { MenuBehavior } from 'src/lib/accessibility'
+
+const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
   isConformant(Button)
+  buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('Button accessibility', () => {
     handlesAccessibility(Button, {

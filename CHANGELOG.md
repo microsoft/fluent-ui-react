@@ -18,6 +18,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Split Menu `shape` prop to separate `pills`, `pointing` and `underlined` props @miroslavstastny ([#114](https://github.com/stardust-ui/react/pull/114))
+
+### Features
+- Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+
+<!--------------------------------[ v0.3.0 ]------------------------------- -->
+## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.2.7...v0.3.0)
+
+### BREAKING CHANGES
 - Remove Children API support from Menu component @miroslavstastny ([#111](https://github.com/stardust-ui/react/pull/111))
 
 ### Fixes
@@ -25,11 +35,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix components generation script @kuzhelov ([#105](https://github.com/stardust-ui/react/pull/105))
 - Reactivate tests for `Text` @kuzhelov ([#104](https://github.com/stardust-ui/react/pull/104))
 - Fix Button icon color @levithomason ([#102](https://github.com/stardust-ui/react/pull/102))
+- Fix `icon` shorthand property for Button @kuzhelov ([#112](https://github.com/stardust-ui/react/pull/112))
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 
 ### Features
 - Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
 - Add `Grid` component base implementation @Bugaa92 ([#93](https://github.com/stardust-ui/react/pull/93))
+- Add basic `Segment` component @kuzhelov ([#103](https://github.com/stardust-ui/react/pull/103))
 
 <!--------------------------------[ v0.2.7 ]------------------------------- -->
 ## [v0.2.7](https://github.com/stardust-ui/react/tree/v0.2.7) (2018-08-13)
@@ -47,6 +59,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
 - Add `ItemLayout` component @mnajdova ([#60](https://github.com/stardust-ui/react/pull/60))
+
+## Features
+- Add Input `clearable` prop @alinais ([#37](https://github.com/stardust-ui/react/pull/37))
 
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
 ## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)
