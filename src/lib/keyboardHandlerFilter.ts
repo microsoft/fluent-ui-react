@@ -1,5 +1,6 @@
-import { KeyCombinations, KeyboardHandler } from '../interfaces'
+import { KeyCombinations, KeyboardHandler } from './accessibility/interfaces'
 import * as keyboardKey from 'keyboard-key'
+
 const keyboardHandlerFilter = (handler: KeyboardHandler, keysCombinations: KeyCombinations[]) => (
   event: React.KeyboardEvent,
 ) => {

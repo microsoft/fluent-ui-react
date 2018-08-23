@@ -35,7 +35,7 @@ export interface IRenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 
-type IRenderConfigProps = {
+export type IRenderConfigProps = {
   [key: string]: any
   variables?: ComponentVariablesInput
   styles?: IComponentPartStylesInput
