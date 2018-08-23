@@ -8,12 +8,59 @@ import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
+export interface IAccordionPropsStrict {
+  /** An element type to render as (string or function). */
+  as?: any
+
+  /** Index of the currently active panel. */
+  activeIndex?: number[] | number
+
+  /** Primary content. */
+  children?: React.ReactNode
+
+  /** Additional classes. */
+  className?: string
+
+  /** Initial activeIndex value. */
+  defaultActiveIndex?: number[] | number
+
+  /** Only allow one panel open at a time. */
+  exclusive?: boolean
+
+  /**
+   * Called when a panel title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onTitleClick?: Function
+
+  /** Shorthand array of props for Accordion. */
+  panels?: {
+    content: React.ReactNode | object
+    title: React.ReactNode | object
+  }[]
+
+  /** Accessibility behavior if overridden by the user. */
+  accessibility?: object | Function
+
+  /** Custom styles to be applied for component. */
+  styles?: object | Function
+
+  /** Custom variables to be applied for component. */
+  variables?: object | Function
+}
+
+export interface IAccordionProps extends IAccordionPropsStrict {
+  [key: string]: any
+}
+
 /**
  * A standard Accordion.
  * @accessibility
  * Concern: how do we optimally navigate through an Accordion element with nested children?
  */
-class Accordion extends AutoControlledComponent<any, any> {
+class Accordion extends AutoControlledComponent<IAccordionProps, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
