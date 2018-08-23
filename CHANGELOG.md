@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `descriptionColor` to Header @kuzhelov ([#78](https://github.com/stardust-ui/react/pull/78))
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 - Add strict null checks for generated TS types @smykhailov ([#108](https://github.com/stardust-ui/react/pull/108))
+- Add `Portal`, `PortalInner` and `Ref` components base implementation @Bugaa92 ([#144](https://github.com/stardust-ui/react/pull/144))
 
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
