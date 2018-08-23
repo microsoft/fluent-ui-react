@@ -7,8 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExamplePillsVertical = () => (
-  <Menu defaultActiveIndex={0} items={items} shape="pills" vertical />
-)
+const MenuExamplePillsVertical = () => <Menu defaultActiveIndex={0} items={items} pills vertical />
 
 export default MenuExamplePillsVertical

@@ -7,6 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExamplePointing = () => <Menu defaultActiveIndex={0} items={items} shape="pointing" />
+const MenuExamplePointing = () => <Menu defaultActiveIndex={0} items={items} pointing />
 
 export default MenuExamplePointing
