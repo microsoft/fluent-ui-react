@@ -30,6 +30,13 @@ const labelStyles = {
     height: variables.height,
     width: variables.height,
   }),
+  icon: ({ props }): ICSSInJSStyle => ({
+    ...(props.icon &&
+      typeof props.icon === 'object' &&
+      props.icon.onClick && {
+        cursor: 'pointer',
+      }),
+  }),
 }
 
 export default labelStyles
