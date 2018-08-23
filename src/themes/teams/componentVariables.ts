@@ -29,6 +29,8 @@ export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
 
+export { default as PopupContent } from './components/Popup/popupContentVariables'
+
 export { default as Radio } from './components/Radio/radioVariables'
 
 export { default as Text } from './components/Text/textVariables'
