@@ -4,12 +4,10 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  childrenExist,
   createHTMLInput,
   customPropTypes,
   getUnhandledProps,
   partitionHTMLProps,
-  UIComponent,
 } from '../../lib'
 import Icon from '../Icon'
 
@@ -43,9 +41,6 @@ class Input extends AutoControlledComponent<any, any> {
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
-
-    /** Shorthand for creating the HTML Input. */
-    input: customPropTypes.itemShorthand,
 
     /**
      * Called on change.
@@ -163,31 +158,14 @@ class Input extends AutoControlledComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, clearable, input, type } = this.props
+    const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = classes.input
-    const iconClasses = classes.icon
-
-    // Render with children
-    // ----------------------------------------
-    if (childrenExist(children)) {
-      // add htmlInputProps to the `<input />` child
-      const childElements = _.map(React.Children.toArray(children), child => {
-        if (child.type !== 'input') return child
-        return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
-      })
-
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {childElements}
-        </ElementType>
-      )
-    }
 
     return (
       <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
+        {createHTMLInput(type || 'text', {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
