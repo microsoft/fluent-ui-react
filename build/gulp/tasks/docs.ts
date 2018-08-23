@@ -1,13 +1,12 @@
-import historyApiFallback from 'connect-history-api-fallback'
-import express from 'express'
+import * as historyApiFallback from 'connect-history-api-fallback'
+import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
-import loadPlugins from 'gulp-load-plugins'
-import path from 'path'
-import rimraf from 'rimraf'
-import through from 'through2'
-import webpack from 'webpack'
-import WebpackDevMiddleware from 'webpack-dev-middleware'
-import WebpackHotMiddleware from 'webpack-hot-middleware'
+import * as path from 'path'
+import * as rimraf from 'rimraf'
+import * as through2 from 'through2'
+import * as webpack from 'webpack'
+import * as WebpackDevMiddleware from 'webpack-dev-middleware'
+import * as WebpackHotMiddleware from 'webpack-hot-middleware'
 
 import sh from '../sh'
 import config from '../../../config'
@@ -16,7 +15,7 @@ import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
 
 const { paths } = config
-const g = loadPlugins()
+const g = require('gulp-load-plugins')()
 const { colors, log, PluginError } = g.util
 
 const handleWatchChange = e => log(`File ${e.path} was ${e.type}, running tasks...`)
@@ -90,8 +89,12 @@ task('build:docs:images', () =>
 
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
-    through.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4 && git add ${file.path}`, done)
+    through2.obj((file, enc, done) => {
+      sh(`doctoc ${file.path} --github --maxlevel 4`, err => {
+        if (err) return done(err)
+
+        sh(`git add ${file.path}`, done)
+      })
     }),
   ),
 )

@@ -1,18 +1,11 @@
-import React, { HTMLAttributes } from 'react'
+import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 
-export interface UIComponentProps extends HTMLAttributes<HTMLElement> {
-  as?: string | Function
-  variables?: ((siteVariables: object) => object) | object
-}
-
-class UIComponent<P, S> extends React.Component<P & UIComponentProps, S> {
+class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static variables?: any
-  static rules?: any
   static handledProps: any
 
   constructor(props, context) {
@@ -41,8 +34,7 @@ class UIComponent<P, S> extends React.Component<P & UIComponentProps, S> {
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,
-        rules: this.childClass.rules,
-        variables: this.childClass.variables,
+        state: this.state,
       },
       this.renderComponent,
     )

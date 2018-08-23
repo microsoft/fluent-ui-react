@@ -1,5 +1,5 @@
 import { task, series, parallel } from 'gulp'
-import path from 'path'
+import * as path from 'path'
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =
@@ -10,6 +10,7 @@ require('./build/gulp/tasks/dll')
 require('./build/gulp/tasks/dist')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/generate')
+require('./build/gulp/tasks/screener')
 
 // global tasks
 task('build', series('dll', parallel('dist', 'build:docs')))

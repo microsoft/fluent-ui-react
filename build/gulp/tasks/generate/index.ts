@@ -1,11 +1,11 @@
 import { task, src, dest, series } from 'gulp'
 import { argv } from 'yargs'
 import config from '../../../../config'
-import rename from 'gulp-rename'
-import replace from 'gulp-replace'
-import inquirer from 'inquirer'
-import path from 'path'
-import fs from 'fs'
+import * as rename from 'gulp-rename'
+import * as replace from 'gulp-replace'
+import * as inquirer from 'inquirer'
+import * as path from 'path'
+import * as fs from 'fs'
 
 const { paths } = config
 const TEMPLATE_PLACEHOLDER = 'TEMPLATE_COMPONENT__'

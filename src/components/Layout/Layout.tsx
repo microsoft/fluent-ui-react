@@ -1,16 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import layoutRules from './layoutRules'
 
 class Layout extends UIComponent<any, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
-
-  static rules = layoutRules
 
   static propTypes = {
     as: customPropTypes.as,
@@ -57,6 +54,12 @@ class Layout extends UIComponent<any, any> {
     truncateEnd: PropTypes.bool,
 
     vertical: PropTypes.bool,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -82,9 +85,11 @@ class Layout extends UIComponent<any, any> {
     'start',
     'startCSS',
     'startSize',
+    'styles',
     'truncateEnd',
     'truncateMain',
     'truncateStart',
+    'variables',
     'vertical',
   ]
 

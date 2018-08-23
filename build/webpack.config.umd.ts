@@ -1,9 +1,9 @@
-import webpack from 'webpack'
+import * as webpack from 'webpack'
 
 import config from '../config'
-import pkg from '../package.json'
 import webpackConfig from '../webpack.config'
 
+const pkg = require('../package.json')
 const { paths } = config
 
 const webpackUMDConfig = {

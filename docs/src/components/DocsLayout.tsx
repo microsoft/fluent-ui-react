@@ -1,6 +1,6 @@
 import AnchorJS from 'anchor-js'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { withRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 
@@ -13,7 +13,7 @@ const anchors = new AnchorJS({
   icon: '#',
 })
 
-class DocsLayout extends Component<any, any> {
+class DocsLayout extends React.Component<any, any> {
   scrollStartTimeout: any
   pathname: any
 

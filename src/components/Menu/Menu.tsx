@@ -1,33 +1,17 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { ReactNode } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import menuRules from './menuRules'
-import menuVariables from './menuVariables'
+import { MenuBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesObject } from '../../../types/theme'
 
-export type MenuType = 'primary' | 'secondary'
-export type MenuShape = 'pills' | 'pointing' | 'underlined'
-
-export interface IMenuProps {
-  as?: string
-  activeIndex?: number | string
-  children?: ReactNode
-  className?: string
-  defaultActiveIndex?: number | string
-  items?: any
-  shape?: MenuShape
-  type?: MenuType
-  vertical?: boolean
-}
-
-class Menu extends AutoControlledComponent<IMenuProps, any> {
+class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
-
-  static variables = menuVariables
 
   static create: Function
 
@@ -47,37 +31,65 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     /** Initial activeIndex value. */
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
+    /** A vertical menu may take the size of its container. */
+    fluid: PropTypes.bool,
+
+    /** A menu may have just icons. */
+    iconOnly: PropTypes.bool,
+
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /** A menu can point to show its relationship to nearby content. */
+    pointing: PropTypes.bool,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
+
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
+    accessibility: MenuBehavior as Accessibility,
   }
 
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
     'className',
     'defaultActiveIndex',
+    'fluid',
+    'iconOnly',
     'items',
-    'shape',
+    'pills',
+    'pointing',
+    'styles',
     'type',
+    'underlined',
+    'variables',
     'vertical',
   ]
 
   static autoControlledProps = ['activeIndex']
-
-  static rules = menuRules
 
   static Item = MenuItem
 
@@ -91,15 +103,19 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     },
   })
 
-  renderItems = () => {
-    const { items, type, shape, vertical } = this.props
+  renderItems = (variables: ComponentVariablesObject) => {
+    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
         defaultProps: {
+          iconOnly,
+          pills,
+          pointing,
           type,
-          shape,
+          underlined,
+          variables,
           vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
@@ -109,11 +125,11 @@ class Menu extends AutoControlledComponent<IMenuProps, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderItems()}
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }

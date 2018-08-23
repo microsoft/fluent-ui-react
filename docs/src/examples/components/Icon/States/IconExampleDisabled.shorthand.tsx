@@ -3,10 +3,10 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleDisabled = () => (
   <div>
-    <Icon disabled name="users" size="big" />
-    <Icon disabled color="red" name="users" size="big" />
-    <Icon disabled color="orange" name="users" size="big" />
-    <Icon disabled color="yellow" name="users" size="big" />
+    <Icon disabled svg name="umbrella" size="big" />
+    <Icon disabled svg name="umbrella" size="big" variables={{ color: 'blue' }} />
+    <Icon disabled svg name="umbrella" size="big" variables={{ color: 'red' }} />
+    <Icon disabled svg name="umbrella" size="big" variables={{ color: 'orange' }} />
   </div>
 )
 

@@ -1,11 +1,17 @@
-const { FelaTheme } = require('react-fela')
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import { FelaTheme } from 'react-fela'
+
+import { IThemePrepared } from '../../../types/theme'
+
+export interface IProviderConsumerProps {
+  render: (theme: IThemePrepared) => React.ReactNode
+}
 
 /**
  * The Provider's Consumer is for accessing the theme.
  */
-const ProviderConsumer: any = props => <FelaTheme {...props} />
+const ProviderConsumer: React.SFC<IProviderConsumerProps> = props => <FelaTheme {...props} />
 
 ProviderConsumer.propTypes = {
   /**

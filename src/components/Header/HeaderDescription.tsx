@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-
-import headerDescriptionRules from './headerDescriptionRules'
 
 /**
  * Headers may contain description.
@@ -27,15 +25,19 @@ class HeaderDescription extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'p',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content']
-
-  static rules = headerDescriptionRules
+  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

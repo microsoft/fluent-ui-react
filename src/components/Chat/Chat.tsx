@@ -1,9 +1,8 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import chatRules from './chatRules'
 import ChatMessage from './ChatMessage'
 
 class Chat extends UIComponent<any, any> {
@@ -21,13 +20,17 @@ class Chat extends UIComponent<any, any> {
 
     /** Shorthand array of messages. */
     messages: PropTypes.arrayOf(PropTypes.any),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'messages']
+  static handledProps = ['as', 'children', 'className', 'messages', 'styles', 'variables']
 
   static defaultProps = { as: 'ul' }
-
-  static rules = chatRules
 
   static Message = ChatMessage
 

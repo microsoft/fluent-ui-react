@@ -10,9 +10,19 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExamplePills"
     />
     <ComponentExample
+      title="Pills Vertical"
+      description="A vertical variant of Pills menu."
+      examplePath="components/Menu/Variations/MenuExamplePillsVertical"
+    />
+    <ComponentExample
       title="Pills Primary"
       description="A menu can adjust its appearance to de-emphasize its contents."
       examplePath="components/Menu/Variations/MenuExamplePillsPrimary"
+    />
+    <ComponentExample
+      title="Pills Primary Vertical"
+      description="A vertical variant of Pills Primary menu."
+      examplePath="components/Menu/Variations/MenuExamplePillsPrimaryVertical"
     />
     <ComponentExample
       title="Pointing"
@@ -33,6 +43,31 @@ const Variations = () => (
       title="Underlined primary"
       description="A menu can underline the active element."
       examplePath="components/Menu/Variations/MenuExampleUnderlinedPrimary"
+    />
+    <ComponentExample
+      title="Vertical Fluid"
+      description="A vertical menu may take the size of its container."
+      examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
+    />
+    <ComponentExample
+      title="Icon"
+      description="Menu items can contain icons."
+      examplePath="components/Menu/Variations/MenuExampleWithIcons"
+    />
+    <ComponentExample
+      title="Vertical Icon"
+      description="Vertical menu items can contain icons."
+      examplePath="components/Menu/Variations/MenuExampleWithIconsVertical"
+    />
+    <ComponentExample
+      title="Icon Only"
+      description="Menu can contain only icons."
+      examplePath="components/Menu/Variations/MenuExampleIconOnly"
+    />
+    <ComponentExample
+      title="Vertical Icon Only"
+      description="Vertical menu can contain only icons."
+      examplePath="components/Menu/Variations/MenuExampleIconOnlyVertical"
     />
   </ExampleSection>
 )

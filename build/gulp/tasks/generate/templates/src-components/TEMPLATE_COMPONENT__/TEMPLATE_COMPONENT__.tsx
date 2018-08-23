@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 const TEMPLATE_COMPONENT__: any = (props: any) => <div>Hello from TEMPLATE_COMPONENT__!</div>
 

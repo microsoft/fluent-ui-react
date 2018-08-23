@@ -1,20 +1,24 @@
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 
-import { exampleContext } from 'docs/src/utils'
+import { exampleContext, exampleKebabNameToFilename, parseExamplePath } from 'docs/src/utils'
 import PageNotFound from '../views/PageNotFound'
 
-const exampleKeys = exampleContext.keys()
+const examplePaths = exampleContext.keys()
 
 const ExternalExampleLayout: any = props => {
   const { exampleName } = props.match.params
-  const exampleFilename = `/${_.startCase(exampleName).replace(/ /g, '')}.tsx`
+  const exampleFilename = exampleKebabNameToFilename(exampleName)
 
-  const componentKey = _.find(_.endsWith(exampleFilename), exampleKeys)
-  if (!componentKey) return <PageNotFound />
+  const examplePath = _.find(path => {
+    const { exampleName } = parseExamplePath(path)
+    return exampleFilename === exampleName
+  }, examplePaths)
 
-  const ExampleComponent = exampleContext(componentKey).default
+  if (!examplePath) return <PageNotFound />
+
+  const ExampleComponent = exampleContext(examplePath).default
   if (!ExampleComponent) return <PageNotFound />
 
   return <ExampleComponent />

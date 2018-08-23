@@ -1,11 +1,12 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
-import accordionRules from './accordionRules'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
+import { DefaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A standard Accordion.
@@ -60,11 +61,19 @@ class Accordion extends AutoControlledComponent<any, any> {
         }),
       ),
     ]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static rules = accordionRules
-
   static handledProps = [
+    'accessibility',
     'activeIndex',
     'as',
     'children',
@@ -73,7 +82,13 @@ class Accordion extends AutoControlledComponent<any, any> {
     'exclusive',
     'onTitleClick',
     'panels',
+    'styles',
+    'variables',
   ]
+
+  public static defaultProps = {
+    accessibility: DefaultBehavior as Accessibility,
+  }
 
   static autoControlledProps = ['activeIndex']
 
@@ -143,11 +158,11 @@ class Accordion extends AutoControlledComponent<any, any> {
     return children
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

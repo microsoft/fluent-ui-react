@@ -6,7 +6,7 @@ import { pxToRem } from '../../lib'
 
 export const htmlFontSize = '14px' // what 1rem represents
 
-const blackRgbaFormat = alpha => `rgba(37, 36, 36, ${alpha})`
+const blackRgbaFormat = (alpha: number): string => `rgba(37, 36, 36, ${alpha})`
 export const black = blackRgbaFormat(1)
 export const gray01 = blackRgbaFormat(0.95)
 export const gray02 = blackRgbaFormat(0.75)
@@ -18,6 +18,7 @@ export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray12 = blackRgbaFormat(0.05)
 export const gray14 = '#FAF9F8'
+export const fontBlack = '#252424'
 
 export const white = '#FFF'
 
@@ -86,9 +87,14 @@ export const textLargeFontSize = '18pt'
 export const textLargeLineHeight = '24pt'
 export const textExtraLargeFontSize = '24pt'
 export const textExtraLargeLineHeight = '32pt'
-export const textX2FontSize = ''
-export const textX2LineHeight = ''
-export const textX3FontSize = ''
-export const textX3LineHeight = ''
-export const textX4FontSize = ''
-export const textX4LineHeight = ''
+export const textX2FontSize = '36pt'
+export const textX2LineHeight = '48pt'
+export const textX3FontSize = '54pt'
+export const textX3LineHeight = '66pt'
+export const textX4FontSize = '72pt'
+export const textX4LineHeight = '86pt'
+export const textWeightLight = 200
+export const textWeightSemilight = 300
+export const textWeightRegular = 400
+export const textWeightSemibold = 600
+export const textWeightBold = 800

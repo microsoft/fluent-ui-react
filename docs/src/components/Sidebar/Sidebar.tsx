@@ -1,7 +1,7 @@
 import keyboardKey from 'keyboard-key'
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
@@ -9,14 +9,14 @@ import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
-import pkg from '../../../../package.json'
 
+const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 
-class Sidebar extends Component<any, any> {
+class Sidebar extends React.Component<any, any> {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
@@ -175,7 +175,7 @@ class Sidebar extends Component<any, any> {
             </small>
           </strong>
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/" activeClassName="active">
+        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
         </Menu.Item>
         <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">

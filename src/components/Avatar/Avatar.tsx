@@ -1,10 +1,8 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import avatarRules from './avatarRules'
-import avatarVariables from './avatarVariables'
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
@@ -16,11 +14,18 @@ class Avatar extends UIComponent<any, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = ['alt', 'as', 'className', 'name', 'size', 'src', 'status']
-
-  static rules = avatarRules
-
-  static variables = avatarVariables
+  static handledProps = [
+    'alt',
+    'as',
+    'className',
+    'getInitials',
+    'name',
+    'size',
+    'src',
+    'status',
+    'styles',
+    'variables',
+  ]
 
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */
@@ -51,10 +56,40 @@ class Avatar extends UIComponent<any, any> {
       'Offline',
       'PresenceUnknown',
     ]),
+
+    /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
+    getInitials: PropTypes.func,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     size: 5,
+    getInitials(name: string) {
+      if (!name) {
+        return ''
+      }
+
+      const reducedName = name
+        .replace(/\s*\(.*?\)\s*/g, ' ')
+        .replace(/\s*{.*?}\s*/g, ' ')
+        .replace(/\s*\[.*?]\s*/g, ' ')
+
+      const initials = reducedName
+        .split(' ')
+        .filter(item => item !== '')
+        .map(name => name.charAt(0))
+        .reduce((accumulator, currentValue) => accumulator + currentValue)
+
+      if (initials.length > 2) {
+        return initials.charAt(0) + initials.charAt(initials.length - 1)
+      }
+      return initials
+    },
   }
 
   static statusToIcon = {
@@ -88,55 +123,50 @@ class Avatar extends UIComponent<any, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { src, alt, name, status } = this.props
+  renderComponent({ ElementType, classes, rest, styles }) {
+    const { src, alt, name, status, getInitials, size } = this.props
     const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+
+    const iconVariables = {
+      color: 'white',
+      backgroundColor: color,
+    }
+
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image className={classes.imageAvatar} avatar src={src} alt={alt} title={name} />
+          <Image
+            styles={{ root: styles.imageAvatar }}
+            fluid
+            avatar
+            src={src}
+            alt={alt}
+            title={name}
+          />
         ) : (
           <Label
-            className={classes.avatarLabel}
+            styles={{ root: styles.avatarNameContainer }}
             as="div"
-            content={this.getInitials(name)}
+            content={getInitials(name)}
             variables={{ padding: '0px' }}
             circular
             title={name}
           />
         )}
         {status && (
-          <span className={classes.presenceSpan}>
-            <Label
-              className={classes.presenceIconLabel}
-              as="div"
-              variables={{ padding: '0px' }}
-              style={{ background: color }}
+          <div className={classes.presenceIndicatorWrapper}>
+            <Icon
+              styles={{ root: styles.presenceIndicator }}
+              size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
               circular
-              title={name}
-            >
-              <Icon
-                size="mini"
-                name={icon}
-                color="white"
-                style={avatarRules.presenceIcon()}
-                title={status}
-              />
-            </Label>
-          </span>
+              name={icon}
+              variables={iconVariables}
+              title={status}
+            />
+          </div>
         )}
       </ElementType>
     )
-  }
-
-  getInitials(name: string): string {
-    if (!name) {
-      return ''
-    }
-    const names = name.split(' ')
-    return names
-      .map(name => (name.length ? name.charAt(0) : ''))
-      .reduce((accumulator, currentValue) => accumulator + currentValue)
   }
 }
 
