@@ -35,6 +35,8 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
+export { default as PopupContent } from './components/Popup/popupContentStyles'
+
 export { default as Radio } from './components/Radio/radioStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
