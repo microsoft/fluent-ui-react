@@ -1,6 +1,6 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
 const sizes = new Map([
@@ -75,6 +75,7 @@ const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSS
   return {
     ...getPaddedStyle(isFontBased),
 
+    // TODO: "black" here should actually match the Icon's fill or text color
     boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
