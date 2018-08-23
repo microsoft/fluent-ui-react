@@ -2,10 +2,12 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * // not finished, need to be finished...
+ * The MenuItemBehavior is done for structure of menu item which consist of root element and anchor inside the root element.
  * The MenuItemBehavior adds :
- * - role'presentation'
- * - role 'menuitem' on anchor
+ * - role 'presentation' on the root element
+ * - role 'menuitem' on anchor, which ...
+ * - 'aria-expanded' attribute on anchor ???
+ *
  */
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
