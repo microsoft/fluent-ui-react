@@ -52,7 +52,7 @@ const menuItemStyles = {
             : { marginLeft: iconsMenuItemSpacing }),
         },
       }),
-      ...(!vertical && { width: pxToRem(variables.menuItemWidth) }),
+      ...(!vertical && variables.menuItemWidth && { width: pxToRem(variables.menuItemWidth) }),
       ...(pills && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),

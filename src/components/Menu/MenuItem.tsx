@@ -160,8 +160,8 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
           Menu.create(submenu, {
             overrideProps: {
               className: classes.submenu,
-              variables,
               vertical: true,
+              variables,
             },
           })}
       </ElementType>
