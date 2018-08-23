@@ -8,7 +8,7 @@ const items = [
 ]
 
 const MenuExamplePillsPrimary = () => (
-  <Menu defaultActiveIndex={0} items={items} shape="pills" type="primary" />
+  <Menu defaultActiveIndex={0} items={items} pills type="primary" />
 )
 
 export default MenuExamplePillsPrimary
