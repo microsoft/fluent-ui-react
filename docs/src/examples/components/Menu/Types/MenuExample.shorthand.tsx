@@ -7,10 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-class MenuExampleShorthand extends React.Component {
-  render() {
-    return <Menu defaultActiveIndex={0} items={items} />
-  }
-}
+const MenuExample = () => <Menu defaultActiveIndex={0} items={items} />
 
-export default MenuExampleShorthand
+export default MenuExample

@@ -48,6 +48,12 @@ class Label extends UIComponent<any, any> {
 
     /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -60,6 +66,8 @@ class Label extends UIComponent<any, any> {
     'iconPosition',
     'image',
     'imagePosition',
+    'styles',
+    'variables',
   ]
 
   static defaultProps = {

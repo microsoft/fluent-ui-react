@@ -6,6 +6,7 @@ import { AutoControlledComponent, customPropTypes, childrenExist } from '../../l
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 /**
  * A standard Accordion.
@@ -61,8 +62,14 @@ class Accordion extends AutoControlledComponent<any, any> {
       ),
     ]),
 
-    /** Accessibility behavior if overriden by the user. */
+    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
@@ -75,10 +82,12 @@ class Accordion extends AutoControlledComponent<any, any> {
     'exclusive',
     'onTitleClick',
     'panels',
+    'styles',
+    'variables',
   ]
 
   public static defaultProps = {
-    accessibility: DefaultBehavior,
+    accessibility: DefaultBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeIndex']
