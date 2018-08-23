@@ -2,7 +2,12 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+} from '../../lib'
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
@@ -134,5 +139,7 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 }
+
+Menu.create = createShorthandFactory(Menu, {})
 
 export default Menu

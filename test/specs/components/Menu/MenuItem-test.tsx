@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { getTestingRenderedComponent } from 'test/utils'
+import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
+
 import MenuItem from 'src/components/Menu/MenuItem'
 
 describe('MenuItem', () => {
@@ -28,5 +29,20 @@ describe('MenuItem', () => {
 
     expect(menuItem.find('.ui-menu__item').is('li')).toBe(true)
     expect(menuItem.text()).toBe('Home')
+  })
+
+  it('menu item renders submenu after click on it', () => {
+    const submenu = {
+      vertical: true,
+      items: [
+        { key: 'new', content: 'New' },
+        { key: 'open', content: 'Open' },
+        { key: 'edit', content: 'Edit' },
+      ],
+    }
+    const menuItem = mountWithProvider(<MenuItem submenu={submenu} content="File" />)
+    expect(menuItem.find('.ui-menu').length).toBe(0)
+    menuItem.find('a').simulate('click')
+    expect(menuItem.find('.ui-menu').is('ul')).toBe(true)
   })
 })

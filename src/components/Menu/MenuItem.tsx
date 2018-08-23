@@ -3,12 +3,22 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  AutoControlledComponent,
+} from '../../lib'
 import Icon from '../Icon'
+import Menu from '../Menu'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-class MenuItem extends UIComponent<any, any> {
+interface MenuItemState {
+  submenuOpened: boolean
+}
+
+class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -30,6 +40,9 @@ class MenuItem extends UIComponent<any, any> {
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** Initial submenuOpened value. */
+    defaultSubmenuOpened: PropTypes.bool,
 
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
@@ -70,6 +83,12 @@ class MenuItem extends UIComponent<any, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Shorthand for Menu Item submenu */
+    submenu: customPropTypes.itemShorthand,
+
+    /** Auto controlled prop that defines if submenu is opened */
+    submenuOpened: PropTypes.bool,
+
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
@@ -79,6 +98,8 @@ class MenuItem extends UIComponent<any, any> {
     accessibility: MenuItemBehavior as Accessibility,
   }
 
+  static autoControlledProps = ['submenuOpened']
+
   static handledProps = [
     'accessibility',
     'active',
@@ -86,6 +107,7 @@ class MenuItem extends UIComponent<any, any> {
     'children',
     'className',
     'content',
+    'defaultSubmenuOpened',
     'icon',
     'iconOnly',
     'index',
@@ -93,18 +115,28 @@ class MenuItem extends UIComponent<any, any> {
     'pills',
     'pointing',
     'styles',
+    'submenu',
+    'submenuOpened',
     'type',
     'underlined',
     'variables',
     'vertical',
   ]
 
+  getInitialAutoControlledState() {
+    return { submenuOpened: false }
+  }
+
   handleClick = e => {
+    if (this.props.submenu) {
+      this.setState({ submenuOpened: !this.state.submenuOpened })
+    }
+
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, submenu } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -123,6 +155,13 @@ class MenuItem extends UIComponent<any, any> {
             {content}
           </a>
         )}
+
+        {this.state.submenuOpened &&
+          Menu.create(submenu, {
+            overrideProps: {
+              className: classes.submenu,
+            },
+          })}
       </ElementType>
     )
   }
