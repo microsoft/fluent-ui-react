@@ -82,7 +82,7 @@ class Provider extends React.Component<IProviderProps, any> {
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables!))
+        renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables))
       } else {
         throw new Error(
           `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,

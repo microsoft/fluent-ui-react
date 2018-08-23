@@ -73,7 +73,7 @@ export const mergeComponentVariables = (
  */
 export const mergeSiteVariables = (
   target: ISiteVariables,
-  ...sources: ISiteVariables[]
+  ...sources: (ISiteVariables | undefined)[]
 ): ISiteVariables => {
   return sources.reduce((acc, next) => ({ ...acc, ...next }), target)
 }
@@ -85,12 +85,12 @@ export const mergeSiteVariables = (
  * Therefore, componentVariables must be resolved by the component at render time.
  * We instead pass down call stack of component variable functions to be resolved later.
  */
+
 export const mergeThemeVariables = (
   target: IThemeComponentVariablesInput,
-  ...sources: IThemeComponentVariablesInput[]
+  ...sources: (IThemeComponentVariablesInput | undefined)[]
 ): IThemeComponentVariablesPrepared => {
   const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
-
   return sources.reduce((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
       // Break references to avoid an infinite loop.
@@ -117,7 +117,7 @@ export const mergeThemeVariables = (
  */
 export const mergeThemeStyles = (
   target: IThemeComponentStylesInput,
-  ...sources: IThemeComponentStylesInput[]
+  ...sources: (IThemeComponentStylesInput | undefined)[]
 ): IThemeComponentStylesPrepared => {
   const initial: IThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
     return _.mapValues(stylesByPart, callable)
@@ -151,11 +151,11 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
     if (!next) return acc
 
-    acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables!)
+    acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
 
-    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables!)
+    acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
 
-    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles!)
+    acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)

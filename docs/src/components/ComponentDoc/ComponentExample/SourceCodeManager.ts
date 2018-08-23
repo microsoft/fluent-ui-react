@@ -78,8 +78,9 @@ class SourceCodeManager implements ISourceCodeManager {
     const path = this.sourceCodePath + examplePathPatterns[sourceCodeType]
     const code = this.safeRequire(path)
 
-    if (code === '') {
-      console.error(`Can't load example for path ${path}`)
+    if (!code) {
+      // Returning as there is no examples provided for this type
+      // e.g. there is no children API example for component
       return
     }
 
@@ -90,11 +91,11 @@ class SourceCodeManager implements ISourceCodeManager {
     }
   }
 
-  private safeRequire = (path: string): string => {
+  private safeRequire = (path: string): string | undefined => {
     try {
       return require(`!raw-loader!../../../examples/${path}`)
     } catch (e) {
-      return ''
+      return undefined
     }
   }
 }

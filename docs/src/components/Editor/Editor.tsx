@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
-import * as ace from 'brace'
+import ace from 'brace'
 import 'brace/ext/language_tools'
 import 'brace/mode/jsx'
 import 'brace/mode/html'
@@ -15,9 +15,15 @@ const parentComponents = []
 // https://github.com/thlorenz/brace/issues/19
 const languageTools = ace.acequire('ace/ext/language_tools')
 
+type Completion = {
+  caption: string
+  value: string
+  meta: string
+}
+
 const semanticUIReactCompleter = {
   getCompletions(editor, session, pos, prefix, callback) {
-    const completions: any[] = []
+    const completions: Completion[] = []
 
     _.each(parentComponents, component => {
       const { name } = component._meta
@@ -41,11 +47,11 @@ languageTools.addCompleter(semanticUIReactCompleter)
 export interface IEditorProps extends AceEditorProps {
   id: string
   value: string
-  mode?: 'html' | 'jsx'
+  mode: 'html' | 'jsx'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
-  active?: boolean
-  showCursor?: boolean
+  active: boolean
+  showCursor: boolean
   highlightGutterLine?: boolean
 }
 
@@ -95,7 +101,7 @@ class Editor extends React.Component<IEditorProps> {
     const { value, active, showCursor } = nextProps
 
     if (showCursor !== previousPros.showCursor) {
-      this.setCursorVisibility(showCursor!)
+      this.setCursorVisibility(showCursor)
     }
 
     if (value !== previousPros.value) {
@@ -115,7 +121,7 @@ class Editor extends React.Component<IEditorProps> {
   public componentDidMount() {
     const { active, showCursor } = this.props
 
-    this.setCursorVisibility(showCursor!)
+    this.setCursorVisibility(showCursor)
 
     if (active) {
       this.addDocumentListener()

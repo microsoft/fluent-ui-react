@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
-import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
+import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
 
 import {
@@ -38,15 +38,15 @@ interface IComponentExampleState {
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
-  sourceCode?: string
-  markup?: string
+  sourceCode: string
+  markup: string
   error?: string
-  showCode?: boolean
-  showHTML?: boolean
-  showRtl?: boolean
-  showVariables?: boolean
-  isHovering?: boolean
-  copiedCode?: boolean
+  showCode: boolean
+  showHTML: boolean
+  showRtl: boolean
+  showVariables: boolean
+  isHovering: boolean
+  copiedCode: boolean
 }
 
 const EDITOR_BACKGROUND_COLOR = '#1D1F21'
@@ -76,6 +76,14 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   public state: IComponentExampleState = {
     knobs: {},
     theme: teamsTheme,
+    sourceCode: '',
+    markup: '',
+    showCode: false,
+    showHTML: false,
+    showRtl: false,
+    showVariables: false,
+    isHovering: false,
+    copiedCode: false,
   }
 
   public static contextTypes = {
@@ -240,7 +248,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   private copyJSX = () => {
-    copyToClipboard(this.state.sourceCode!)
+    copyToClipboard(this.state.sourceCode)
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
@@ -283,7 +291,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderSourceCode = _.debounce(() => {
     try {
-      const exampleElement = this.renderExampleFromCode(this.state.sourceCode!)
+      const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
 
       if (!React.isValidElement(exampleElement)) {
         this.setErrorDebounced(
@@ -372,7 +380,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderApiCodeMenu = (): JSX.Element => {
     const { sourceCode } = this.state
-    const lineCount = sourceCode && sourceCode!.match(/^/gm)!.length
+    const lineCount = sourceCode && sourceCode.match(/^/gm)!.length
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
@@ -392,7 +400,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         <div
           style={
             {
-              borderLeft: `${lineCount! > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
+              borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
               paddingBottom: '1rem',
             } as React.CSSProperties
           }
@@ -457,12 +465,17 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       <div>
         {this.renderApiCodeMenu()}
 
-        {sourceCode != null && (
+        {sourceCode !== '' && (
           <div>
             {this.renderCodeEditorMenu()}
             <Editor
               setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
               id={`${this.getKebabExamplePath()}-jsx`}
+              mode="jsx"
+              active={false}
+              showGutter={false}
+              showCursor={false}
+              highlightActiveLine={false}
               value={sourceCode}
               onChange={this.handleChangeCode}
               onOutsideClick={this.handleShowCodeInactive}
@@ -491,7 +504,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
     // add new lines between almost all adjacent elements
     // moves inline elements to their own line
-    const preFormattedHTML = markup!.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
+    const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
 
     const beautifiedHTML = html(preFormattedHTML, {
       indent_size: 2,
@@ -512,6 +525,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
             showGutter={false}
             showCursor={false}
             readOnly
+            active={false}
             highlightActiveLine={false}
             id={`${this.getKebabExamplePath()}-html`}
             onOutsideClick={this.handleShowHTMLInactive}

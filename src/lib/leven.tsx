@@ -4,8 +4,8 @@
 let leven = (a, b) => 0
 
 if (process.env.NODE_ENV !== 'production') {
-  const arr: any[] = []
-  const charCodeCache: any[] = []
+  const arr: number[] = []
+  const charCodeCache: number[] = []
 
   leven = (a, b) => {
     if (a === b) return 0
