@@ -16,6 +16,7 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 
 ### BREAKING CHANGES
 - Split Menu `shape` prop to separate `pills`, `pointing` and `underlined` props @miroslavstastny ([#114](https://github.com/stardust-ui/react/pull/114))
@@ -36,7 +37,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Reactivate tests for `Text` @kuzhelov ([#104](https://github.com/stardust-ui/react/pull/104))
 - Fix Button icon color @levithomason ([#102](https://github.com/stardust-ui/react/pull/102))
 - Fix `icon` shorthand property for Button @kuzhelov ([#112](https://github.com/stardust-ui/react/pull/112))
-- Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 
 ### Features
 - Add Menu `iconOnly`, MenuItem `iconOnly` and `icon` props @miroslavstastny ([#73](https://github.com/stardust-ui/react/pull/73))
