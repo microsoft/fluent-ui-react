@@ -7,6 +7,7 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { NotStrictProps } from '../../lib/NotStrictProps'
 
 export interface IAccordionPropsStrict {
   /** An element type to render as (string or function). */
@@ -51,9 +52,7 @@ export interface IAccordionPropsStrict {
   variables?: object | Function
 }
 
-export interface IAccordionProps extends IAccordionPropsStrict {
-  [key: string]: any
-}
+export type IAccordionProps = NotStrictProps<IAccordionPropsStrict>
 
 /**
  * A standard Accordion.
