@@ -2,33 +2,26 @@ import React from 'react'
 import { Menu } from '@stardust-ui/react'
 
 const menuWidthVariable = {
-  menuItemWidth: '100px',
+  menuItemWidth: 100,
 }
 
 const fileSubmenu = {
-  vertical: true,
   items: [
     { key: 'new', content: 'New' },
     { key: 'open', content: 'Open' },
     { key: 'edit', content: 'Edit' },
   ],
-  variables: menuWidthVariable,
 }
 const editSubmenu = {
-  vertical: true,
   items: [
     { key: 'undo', content: 'Undo' },
     { key: 'redo', content: 'Redo' },
     { key: 'cut', content: 'Cut' },
-    ,
     { key: 'copy', content: 'Copy' },
   ],
-  variables: menuWidthVariable,
 }
 const formatSubmenu = {
-  vertical: true,
   items: [{ key: 'font', content: 'Font' }, { key: 'text', content: 'Text' }],
-  variables: menuWidthVariable,
 }
 
 const items = [

@@ -12,7 +12,7 @@ export default {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
-        ...(!fluid && { width: variables.menuItemWidth || pxToRem(200) }),
+        ...(!fluid && { width: pxToRem(variables.menuItemWidth) || pxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',

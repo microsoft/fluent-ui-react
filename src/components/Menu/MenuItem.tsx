@@ -136,7 +136,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, submenu } = this.props
+    const { children, content, icon, submenu, variables } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -160,6 +160,8 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
           Menu.create(submenu, {
             overrideProps: {
               className: classes.submenu,
+              variables,
+              vertical: true,
             },
           })}
       </ElementType>
