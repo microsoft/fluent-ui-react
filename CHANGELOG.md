@@ -16,13 +16,13 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 
 ### BREAKING CHANGES
 - Split Menu `shape` prop to separate `pills`, `pointing` and `underlined` props @miroslavstastny ([#114](https://github.com/stardust-ui/react/pull/114))
 
 ### Features
 - Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+- Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
