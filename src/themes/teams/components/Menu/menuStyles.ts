@@ -7,22 +7,27 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { fluid, type, shape, vertical } = props
+    const { iconOnly, fluid, pills, type, underlined, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
         ...(!fluid && { width: pxToRem(200) }),
+        ...(iconOnly && {
+          display: 'inline-block',
+          width: 'auto',
+        }),
       }),
-      ...(shape !== 'pills' &&
-        shape !== 'underlined' && {
+      ...(!pills &&
+        !iconOnly &&
+        !underlined && {
           ...solidBorder(variables.defaultBorderColor),
           ...(type === 'primary' && {
             ...solidBorder(variables.typePrimaryBorderColor),
           }),
           borderRadius: pxToRem(4),
         }),
-      ...(shape === 'underlined' && {
+      ...(underlined && {
         borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
       }),
       minHeight: pxToRem(24),

@@ -4,6 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -30,6 +31,12 @@ class MenuItem extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
+    /** Name or shorthand for Menu Item Icon */
+    icon: customPropTypes.itemShorthand,
+
+    /** A menu may have just icons. */
+    iconOnly: PropTypes.bool,
+
     /** MenuItem index inside Menu. */
     index: PropTypes.number,
 
@@ -42,10 +49,17 @@ class MenuItem extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /** A menu can point to show its relationship to nearby content. */
+    pointing: PropTypes.bool,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -72,11 +86,15 @@ class MenuItem extends UIComponent<any, any> {
     'children',
     'className',
     'content',
+    'icon',
+    'iconOnly',
     'index',
     'onClick',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]
@@ -86,7 +104,7 @@ class MenuItem extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content } = this.props
+    const { children, content, icon } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -98,6 +116,10 @@ class MenuItem extends UIComponent<any, any> {
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
           >
+            {icon &&
+              Icon.create(this.props.icon, {
+                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              })}
             {content}
           </a>
         )}

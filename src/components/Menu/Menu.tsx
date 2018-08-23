@@ -6,6 +6,7 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesObject } from '../../../types/theme'
 
 class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
@@ -33,13 +34,23 @@ class Menu extends AutoControlledComponent<any, any> {
     /** A vertical menu may take the size of its container. */
     fluid: PropTypes.bool,
 
+    /** A menu may have just icons. */
+    iconOnly: PropTypes.bool,
+
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /** A menu can point to show its relationship to nearby content. */
+    pointing: PropTypes.bool,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -67,10 +78,13 @@ class Menu extends AutoControlledComponent<any, any> {
     'className',
     'defaultActiveIndex',
     'fluid',
+    'iconOnly',
     'items',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]
@@ -89,15 +103,19 @@ class Menu extends AutoControlledComponent<any, any> {
     },
   })
 
-  renderItems = () => {
-    const { items, type, shape, vertical } = this.props
+  renderItems = (variables: ComponentVariablesObject) => {
+    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
         defaultProps: {
+          iconOnly,
+          pills,
+          pointing,
           type,
-          shape,
+          underlined,
+          variables,
           vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
@@ -107,11 +125,11 @@ class Menu extends AutoControlledComponent<any, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
       <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderItems()}
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }
