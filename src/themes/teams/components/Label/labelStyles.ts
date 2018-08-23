@@ -15,7 +15,6 @@ const labelStyles = {
     display: 'inline-flex',
     alignItems: 'center',
     height: variables.height,
-    margin: `${pxToRem(4)} 0 0 ${pxToRem(4)}`,
     fontSize: pxToRem(14),
     lineHeight: variables.height,
     backgroundColor: variables.backgroundColor,
