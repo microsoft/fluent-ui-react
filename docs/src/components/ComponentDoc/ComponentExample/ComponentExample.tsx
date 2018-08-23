@@ -36,6 +36,7 @@ interface IComponentExampleState {
   knobs: Object
   theme: IThemeInput
   exampleElement?: JSX.Element
+  currentExamplePath?: string
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
   sourceCode?: string
@@ -101,6 +102,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
     this.setState({
       exampleElement,
+      currentExamplePath: this.sourceCodeMgr.currentPath,
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       showCode: this.isActiveHash(),
@@ -297,6 +299,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         this.setState({
           error,
           exampleElement,
+          currentExamplePath: this.sourceCodeMgr.currentPath,
           markup: renderToStaticMarkup(exampleElement),
         })
       }
@@ -596,6 +599,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       handleMouseLeave,
       handleMouseMove,
       exampleElement,
+      currentExamplePath,
       isHovering,
       showCode,
       showHTML,
@@ -649,7 +653,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={examplePath}
+                  examplePath={currentExamplePath || examplePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
