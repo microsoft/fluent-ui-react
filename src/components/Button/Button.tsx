@@ -59,7 +59,7 @@ export type IButtonProps = NotStrictProps<IButtonPropsStrict>
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Button extends UIComponent<any, any> {
+class Button extends UIComponent<IButtonProps, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
