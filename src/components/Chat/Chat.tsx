@@ -2,10 +2,30 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, customPropTypes, UIComponent, NotStrictProps } from '../../lib'
 import ChatMessage from './ChatMessage'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
-class Chat extends UIComponent<any, any> {
+export interface IChatPropsStrict {
+  /** An element type to render as (string or function). */
+  as?: any
+
+  /** Additional classes. */
+  className?: string
+
+  /** Shorthand array of props for Accordion. */
+  messages?: any[]
+
+  /** Custom styles to be applied for component. */
+  styles?: IComponentPartStylesInput
+
+  /** Custom variables to be applied for component. */
+  variables?: ComponentVariablesInput
+}
+
+export type IChatProps = NotStrictProps<IChatPropsStrict>
+
+class Chat extends UIComponent<IChatProps, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'
