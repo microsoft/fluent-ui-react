@@ -50,7 +50,7 @@ describe('Button', () => {
       })
     })
 
-    describe('toggleButton behavior', () => {
+    describe('ToggleButton behavior', () => {
       describe('role button', () => {
         test('is not defined, if compoenent is button', () => {
           const renderedComponent = getTestingRenderedComponent(
