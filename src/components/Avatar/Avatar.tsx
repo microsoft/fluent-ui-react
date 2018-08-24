@@ -2,14 +2,35 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { customPropTypes, UIComponent, Extendable } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IAvatarProps {
+  alt?: string
+  as?: any
+  className?: string
+  name?: string
+  size?: number
+  src?: string
+  status?:
+    | 'Available'
+    | 'Away'
+    | 'BeRightBack'
+    | 'Busy'
+    | 'DoNotDisturb'
+    | 'Offline'
+    | 'PresenceUnknown'
+  getInitials?: (name: string) => string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
  * @accessibility To be discussed
  *
  */
-class Avatar extends UIComponent<any, any> {
+class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static className = 'ui-avatar'
 
   static displayName = 'Avatar'
