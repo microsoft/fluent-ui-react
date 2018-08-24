@@ -15,7 +15,7 @@ describe('Image', () => {
       overriddenRootRole: 'menu',
     })
 
-    describe('aria hidden', () => {
+    describe('aria-hidden', () => {
       test('is set to true, if alt attribute is not defined', () => {
         const renderedComponent = getTestingRenderedComponent(Image, <Image />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')

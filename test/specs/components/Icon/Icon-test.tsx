@@ -15,7 +15,7 @@ describe('Icon', () => {
       overriddenRootRole: 'menu',
     })
 
-    describe('aria hidden', () => {
+    describe('aria-hidden', () => {
       test('font-based - set to true by default', () => {
         const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
