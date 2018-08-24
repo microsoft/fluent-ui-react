@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { createHTMLInput, customPropTypes, UIComponent } from '../../lib'
-import { Input, Label } from '../..'
+import Label from '../Label'
 
 /**
  * @accessibility
@@ -48,7 +48,11 @@ class Radio extends UIComponent<any, any> {
     return (
       <ElementType {...rest} className={classes.root}>
         <Label styles={{ root: styles.label }}>
-          <Input type="radio" styles={{ root: styles.radio }} />
+          {createHTMLInput(type, {
+            overrideProps: {
+              className: classes.radio,
+            },
+          })}
           {label}
         </Label>
       </ElementType>
