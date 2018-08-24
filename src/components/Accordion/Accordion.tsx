@@ -7,13 +7,57 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { NotStrictProps } from '../../lib/NotStrictProps'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IAccordionPropsStrict {
+  /** An element type to render as (string or function). */
+  as?: any
+
+  /** Index of the currently active panel. */
+  activeIndex?: number[] | number
+
+  /** Additional classes. */
+  className?: string
+
+  /** Initial activeIndex value. */
+  defaultActiveIndex?: number[] | number
+
+  /** Only allow one panel open at a time. */
+  exclusive?: boolean
+
+  /**
+   * Called when a panel title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void
+
+  /** Shorthand array of props for Accordion. */
+  panels?: {
+    content: React.ReactNode | object
+    title: React.ReactNode | object
+  }[]
+
+  /** Accessibility behavior if overridden by the user. */
+  accessibility?: object | Function
+
+  /** Custom styles to be applied for component. */
+  styles?: IComponentPartStylesInput
+
+  /** Custom variables to be applied for component. */
+  variables?: ComponentVariablesInput
+}
+
+export type IAccordionProps = NotStrictProps<IAccordionPropsStrict>
 
 /**
  * A standard Accordion.
  * @accessibility
  * Concern: how do we optimally navigate through an Accordion element with nested children?
  */
-class Accordion extends AutoControlledComponent<any, any> {
+class Accordion extends AutoControlledComponent<IAccordionProps, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
