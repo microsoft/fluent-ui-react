@@ -24,9 +24,6 @@ class Input extends AutoControlledComponent<any, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
-    children: PropTypes.node,
-
     /** Additional classes. */
     className: PropTypes.string,
 
@@ -65,7 +62,6 @@ class Input extends AutoControlledComponent<any, any> {
 
   static handledProps = [
     'as',
-    'children',
     'className',
     'clearable',
     'defaultValue',
@@ -165,7 +161,7 @@ class Input extends AutoControlledComponent<any, any> {
 
     return (
       <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(type || 'text', {
+        {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
