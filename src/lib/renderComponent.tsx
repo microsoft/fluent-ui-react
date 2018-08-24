@@ -55,7 +55,7 @@ export interface IRenderConfig {
   state: { [key: string]: any }
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility: (props, state) => IAccessibilityDefinition = (props, state) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
   return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
     ...props,
@@ -115,7 +115,7 @@ const renderComponent = <P extends {}>(
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const accessibility = getAccessibility(props, state) as IAccessibilityDefinition
+        const accessibility = getAccessibility(props, state)
 
         const config: IRenderResultConfig<P> = {
           ElementType,
