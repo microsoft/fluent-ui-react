@@ -3,8 +3,13 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
+  content: ({ props }) => ({
+    overflow: 'hidden',
+    ...(typeof props.content === 'string' && { textOverflow: 'ellipsis' }),
+  }),
+
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, icon, iconPosition, type } = props
+    const { circular, content, disabled, fluid, type } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -31,7 +36,7 @@ const buttonStyles: IComponentPartStylesInput = {
       minWidth,
       maxWidth,
       backgroundColor,
-      display: 'inline-block',
+      display: 'inline-flex',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
@@ -41,18 +46,12 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...truncateStyle,
 
-      ...(icon &&
-        (iconPosition
-          ? {
-              display: 'inline-flex',
-              justifyContent: 'center',
-            }
-          : {
-              minWidth: height,
-              padding: 0,
-            })),
+      ...(!content && {
+        justifyContent: 'center',
+      }),
 
       ...(circular && {
+        justifyContent: 'center',
         minWidth: height,
         padding: 0,
         borderRadius: circularRadius,
