@@ -15,7 +15,13 @@ import Icon from '../Icon'
 
 /**
  * An Input
- * @accessibility This is example usage of the accessibility tag.
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ *
  */
 class Input extends AutoControlledComponent<any, any> {
   static className = 'ui-input'
