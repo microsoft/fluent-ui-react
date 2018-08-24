@@ -13,6 +13,7 @@ export interface IAccordionProps {
   as?: any
   activeIndex?: number[] | number
   className?: string
+  children?: React.ReactNode
   defaultActiveIndex?: number[] | number
   exclusive?: boolean
   onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void

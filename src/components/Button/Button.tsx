@@ -9,6 +9,7 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 
 export interface IButtonProps {
   as?: any
+  children?: React.ReactNode
   circular?: boolean
   className?: string
   disabled?: boolean
