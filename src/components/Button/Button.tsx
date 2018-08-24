@@ -127,7 +127,14 @@ class Button extends UIComponent<any, any> {
     return Icon.create(icon, {
       defaultProps: {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: { color: variables.color },
+        variables: {
+          color:
+            type === 'primary'
+              ? variables.typePrimaryColor
+              : type === 'secondary'
+                ? variables.typeSecondaryColor
+                : variables.color,
+        },
       },
     })
   }
