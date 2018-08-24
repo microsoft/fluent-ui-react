@@ -20,8 +20,8 @@ const Types = () => (
       examplePath="components/Menu/Types/MenuExampleVertical"
     />
     <ComponentExample
-      title="Menu with Submenus"
-      description="A menu contains vertical submenus."
+      title="Sub Menu"
+      description="A menu item may contain another vertical menu nested inside that acts as a grouped sub-menu."
       examplePath="components/Menu/Types/MenuExampleWithSubmenu"
     />
   </ExampleSection>
