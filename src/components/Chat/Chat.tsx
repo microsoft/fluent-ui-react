@@ -9,6 +9,7 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 export interface IChatProps {
   as?: any
   className?: string
+  children?: React.ReactNode
   messages?: any[]
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
