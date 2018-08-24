@@ -8,6 +8,7 @@ import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { NotStrictProps } from '../../lib/NotStrictProps'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
 export interface IAccordionPropsStrict {
   /** An element type to render as (string or function). */
@@ -46,10 +47,10 @@ export interface IAccordionPropsStrict {
   accessibility?: object | Function
 
   /** Custom styles to be applied for component. */
-  styles?: object | Function
+  styles?: IComponentPartStylesInput
 
   /** Custom variables to be applied for component. */
-  variables?: object | Function
+  variables?: ComponentVariablesInput
 }
 
 export type IAccordionProps = NotStrictProps<IAccordionPropsStrict>
