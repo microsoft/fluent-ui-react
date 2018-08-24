@@ -7,6 +7,7 @@ import {
   getRenderedAttribute,
 } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
+import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
 
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
@@ -19,32 +20,90 @@ describe('Button', () => {
   isConformant(Button)
   buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
 
-  describe('Button accessibility', () => {
-    handlesAccessibility(Button, {
-      defaultRootRole: undefined,
-      accessibilityOverride: MenuBehavior,
-      overriddenRootRole: 'menu',
-    })
-  })
-
-  describe('Div Button accessibility', () => {
-    handlesAccessibility(Button, {
-      requiredProps: { as: 'div' },
-      defaultRootRole: 'button',
-      accessibilityOverride: MenuBehavior,
-      overriddenRootRole: 'menu',
-    })
-  })
-
-  describe('Accessibility - aria disabled', () => {
-    it('set to true if disabled attributed provided', () => {
-      const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
-      expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+  describe('accessibility', () => {
+    describe('button', () => {
+      handlesAccessibility(Button, {
+        defaultRootRole: undefined,
+        accessibilityOverride: MenuBehavior,
+        overriddenRootRole: 'menu',
+      })
     })
 
-    it('set to false if disabled attributed not provided', () => {
-      const renderedComponent = getTestingRenderedComponent(Button, <Button />)
-      expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+    describe('div Button', () => {
+      handlesAccessibility(Button, {
+        requiredProps: { as: 'div' },
+        defaultRootRole: 'button',
+        accessibilityOverride: MenuBehavior,
+        overriddenRootRole: 'menu',
+      })
+    })
+
+    describe('aria disabled', () => {
+      it('is set to true, if disabled attribute is provided', () => {
+        const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
+        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+      })
+
+      it('is set to false, if disabled attribute is not provided', () => {
+        const renderedComponent = getTestingRenderedComponent(Button, <Button />)
+        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+      })
+    })
+
+    describe('toggleButton behavior', () => {
+      describe('role button', () => {
+        it('is not defined, if compoenent is button', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'role', '')).toBe(undefined)
+        })
+
+        it('is defined, if compoenent is not button', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button as="div" accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'role', '')).toBe('button')
+        })
+      })
+
+      describe('aria-pressed', () => {
+        it('is set to true, if active attribute is provided', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button active="true" accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('true')
+        })
+
+        it('is set to false, if active attribute is not provided', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('false')
+        })
+      })
+
+      describe('aria disabled', () => {
+        it('is set to true, if disabled attribute is provided', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button disabled accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+        })
+
+        it('is set to false, if disabled attribute is not provided', () => {
+          const renderedComponent = getTestingRenderedComponent(
+            Button,
+            <Button accessibility={ToggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+        })
+      })
     })
   })
 

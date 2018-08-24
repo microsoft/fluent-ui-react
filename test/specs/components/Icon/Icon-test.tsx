@@ -8,7 +8,7 @@ import { getTestingRenderedComponent } from 'test/utils'
 describe('Icon', () => {
   isConformant(Icon)
 
-  describe('Icon accessibility', () => {
+  describe('accessibility', () => {
     handlesAccessibility(Icon, {
       defaultRootRole: undefined,
       accessibilityOverride: MenuBehavior,
@@ -16,12 +16,12 @@ describe('Icon', () => {
     })
 
     describe('aria hidden', () => {
-      it('icon - set to true by default', () => {
+      test('font-based - set to true by default', () => {
         const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
 
-      it('svg - set to true by default', () => {
+      test('svg - set to true by default', () => {
         const renderedComponent = getTestingRenderedComponent(Icon, <Icon svg />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
