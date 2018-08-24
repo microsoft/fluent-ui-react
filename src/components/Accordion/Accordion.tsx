@@ -17,9 +17,6 @@ export interface IAccordionPropsStrict {
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
 
-  /** Primary content. */
-  children?: React.ReactNode
-
   /** Additional classes. */
   className?: string
 
