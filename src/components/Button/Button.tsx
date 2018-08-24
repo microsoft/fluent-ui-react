@@ -1,10 +1,58 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, NotStrictProps } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IButtonPropsStrict {
+  /** An element type to render as (string or function). */
+  as?: any
+
+  /** A button can appear circular. */
+  circular?: boolean
+
+  /** Additional classes. */
+  className?: string
+
+  /** A button can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
+  /** Shorthand for primary content. */
+  content?: React.ReactNode
+
+  /** A button can take the width of its container. */
+  fluid?: boolean
+
+  /** Button can have an icon. */
+  icon?: React.ReactNode | object | (React.ReactNode | object)[]
+
+  /** An icon button can format an Icon to appear before or after the button */
+  iconPosition?: 'before' | 'after'
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: (event: React.SyntheticEvent, data: IButtonProps) => void
+
+  /** A button can be formatted to show different levels of emphasis. */
+  type?: 'primary' | 'secondary'
+
+  /** Accessibility behavior if overridden by the user. */
+  accessibility?: object | Function
+
+  /** Custom styles to be applied for component. */
+  styles?: IComponentPartStylesInput
+
+  /** Custom variables to be applied for component. */
+  variables?: ComponentVariablesInput
+}
+
+export type IButtonProps = NotStrictProps<IButtonPropsStrict>
 
 /**
  * A button.

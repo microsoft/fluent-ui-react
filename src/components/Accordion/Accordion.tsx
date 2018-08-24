@@ -2,12 +2,11 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
+import { AutoControlledComponent, customPropTypes, childrenExist, NotStrictProps } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { NotStrictProps } from '../../lib/NotStrictProps'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
 export interface IAccordionPropsStrict {
