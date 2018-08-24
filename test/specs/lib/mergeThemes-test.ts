@@ -1,9 +1,56 @@
 import mergeThemes from '../../../src/lib/mergeThemes'
-import { felaRtlRenderer, felaRenderer } from '../../../src/lib'
+import { felaRenderer, felaRtlRenderer } from '../../../src/lib'
 
 describe('mergeThemes', () => {
   test('gracefully handles undefined themes', () => {
     expect(() => mergeThemes(undefined, undefined)).not.toThrow()
+  })
+
+  test('always returns an object', () => {
+    expect(mergeThemes(undefined, undefined)).toMatchObject({})
+    expect(mergeThemes(null, undefined)).toMatchObject({})
+    expect(mergeThemes(undefined, null)).toMatchObject({})
+    expect(mergeThemes(null, null)).toMatchObject({})
+
+    expect(mergeThemes({}, undefined)).toMatchObject({})
+    expect(mergeThemes(undefined, {})).toMatchObject({})
+    expect(mergeThemes({}, {})).toMatchObject({})
+
+    expect(mergeThemes({}, null)).toMatchObject({})
+    expect(mergeThemes(null, {})).toMatchObject({})
+    expect(mergeThemes({}, {})).toMatchObject({})
+  })
+
+  test('gracefully handles merging a theme in with undefined values', () => {
+    const target = {
+      siteVariables: { color: 'black' },
+      componentVariables: { Button: { color: 'black' } },
+      componentStyles: { Button: { root: { color: 'black' } } },
+      rtl: true,
+    }
+    const source = {
+      siteVariables: undefined,
+      componentVariables: undefined,
+      componentStyles: undefined,
+      rtl: undefined,
+    }
+    expect(() => mergeThemes(target, source)).not.toThrow()
+  })
+
+  test('gracefully handles merging onto a theme with undefined values', () => {
+    const target = {
+      siteVariables: undefined,
+      componentVariables: undefined,
+      componentStyles: undefined,
+      rtl: undefined,
+    }
+    const source = {
+      siteVariables: { color: 'black' },
+      componentVariables: { Button: { color: 'black' } },
+      componentStyles: { Button: { root: { color: 'black' } } },
+      rtl: true,
+    }
+    expect(() => mergeThemes(target, source)).not.toThrow()
   })
 
   describe('siteVariables', () => {

@@ -7,11 +7,13 @@ import DocsRoot from './components/DocsRoot'
 
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
+import VisualTestLayout from './components/VisualTestLayout'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
       <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
+      <Route exact path="/visual-test/:kebabComponentName" component={VisualTestLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
