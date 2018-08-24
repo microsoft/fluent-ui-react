@@ -38,7 +38,7 @@ describe('Button', () => {
       })
     })
 
-    describe('aria disabled', () => {
+    describe('aria-disabled', () => {
       test('is set to true, if disabled attribute is provided', () => {
         const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
@@ -87,7 +87,7 @@ describe('Button', () => {
         })
       })
 
-      describe('aria disabled', () => {
+      describe('aria-disabled', () => {
         test('is set to true, if disabled attribute is provided', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
