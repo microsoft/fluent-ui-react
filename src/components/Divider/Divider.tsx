@@ -12,6 +12,7 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 
 export interface IDividerProps {
   as?: any
+  children?: React.ReactNode
   className?: string
   content?: React.ReactNode
   size?: number
