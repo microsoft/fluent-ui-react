@@ -93,6 +93,8 @@ export const mergeThemeVariables = (
 
   return sources.reduce((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
+      if (!next) return acc
+
       // Break references to avoid an infinite loop.
       // We are replacing functions with new ones that calls the originals.
       const originalTarget = acc[displayName]

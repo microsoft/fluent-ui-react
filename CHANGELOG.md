@@ -20,8 +20,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Split Menu `shape` prop to separate `pills`, `pointing` and `underlined` props @miroslavstastny ([#114](https://github.com/stardust-ui/react/pull/114))
 
+### Fixes
+- Fix docs pages presenting examples of wrong component @kuzhelov ([#124](https://github.com/stardust-ui/react/pull/124))
+- Fix component variables when merging themes @levithomason ([#128](https://github.com/stardust-ui/react/pull/128))
+
 ### Features
 - Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
+- Add `descriptionColor` to Header @kuzhelov ([#78](https://github.com/stardust-ui/react/pull/78))
 
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
@@ -47,7 +52,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.6...v0.2.7)
 
 ### Fixes
-
 - Add selection property to child items in ListExampleSelection so that styles and roles are applied properly @jurokapsiar ([#70](https://github.com/stardust-ui/react/pull/70))
 - Menu `onClick` handler moved from `li` to `a` (accessibility) @miroslavstastny ([#61](https://github.com/stardust-ui/react/pull/61))
 - Image `fluid` is applied on the avatar variations @mnajdova ([#77](https://github.com/stardust-ui/react/pull/77))
@@ -58,8 +62,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
 - Add `ItemLayout` component @mnajdova ([#60](https://github.com/stardust-ui/react/pull/60))
-
-## Features
 - Add Input `clearable` prop @alinais ([#37](https://github.com/stardust-ui/react/pull/37))
 
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
@@ -67,7 +69,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.5...v0.2.6)
 
 ### Fixes
-
 - Remove unused dependencies and move development dependencies to devDependencies @levithomason ([#51](https://github.com/stardust-ui/react/pull/51))
 - Fix Avatar alignment issue and initials for long names @mnajdova ([#38](https://github.com/stardust-ui/react/pull/38))
 - Changing the default styles for Input component @alinais ([#25](https://github.com/stardust-ui/react/pull/25))
@@ -95,7 +96,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.2.3...v0.2.4)
 
 ### Fixes
-
 - Replaced Header `subheader` with `description` and fixed it to render well-formed HTML @mnajdova ([#17](https://github.com/stardust-ui/react/pull/17))
 - Removed allowSyntheticDefaultImports from shared tsconfig but allow it on docs @aniknafs ([#46](https://github.com/stardust-ui/react/pull/46))
 
