@@ -12,7 +12,7 @@ import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 
-const mount = (node, options?) => {
+export const mount = (node, options?) => {
   return enzymeMount(
     <ThemeProvider theme={{ renderer: felaRenderer }}>{node}</ThemeProvider>,
     options,

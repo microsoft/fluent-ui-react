@@ -8,9 +8,10 @@ const underlinedItem = (color): ICSSInJSStyle => ({
 })
 
 const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
-  const { active, iconOnly, shape, type, vertical } = props
+  const { active, iconOnly, pills, type, underlined, vertical } = props
   return {
-    ...((!shape || shape === 'pointing') &&
+    ...(!pills &&
+      !underlined &&
       !iconOnly && {
         '::before': {
           position: 'absolute',
@@ -36,7 +37,7 @@ const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJ
 
 const menuItemStyles = {
   root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
-    const { active, iconOnly, shape, type, vertical } = props
+    const { active, iconOnly, pills, pointing, type, underlined, vertical } = props
     const { iconsMenuItemSpacing } = variables
     return {
       color: variables.defaultColor,
@@ -51,11 +52,11 @@ const menuItemStyles = {
             : { marginLeft: iconsMenuItemSpacing }),
         },
       }),
-      ...(shape === 'pills' && {
+      ...(pills && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
       }),
-      ...(shape === 'underlined' && {
+      ...(underlined && {
         padding: '0',
         margin: `0 ${pxToRem(10)} 0 0`,
         ':nth-child(n+2)': {
@@ -70,7 +71,7 @@ const menuItemStyles = {
       ':hover': {
         color: variables.defaultActiveColor,
         // all menus should have gray background on hover except the underlined menu
-        ...(shape !== 'underlined' && {
+        ...(!underlined && {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
@@ -79,7 +80,7 @@ const menuItemStyles = {
       },
 
       ...(active && {
-        ...(shape !== 'underlined' && {
+        ...(!underlined && {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
@@ -87,7 +88,7 @@ const menuItemStyles = {
         }),
         color: variables.defaultColor,
         ':hover': {
-          ...(shape !== 'underlined' && {
+          ...(!underlined && {
             color: variables.defaultActiveColor,
             background: variables.defaultActiveBackgroundColor,
             ...(type === 'primary' && {
@@ -95,7 +96,7 @@ const menuItemStyles = {
             }),
           }),
         },
-        ...(shape === 'pointing' && {
+        ...(pointing && {
           '::after': {
             visibility: 'visible',
             background: variables.defaultActiveBackgroundColor,
@@ -124,13 +125,13 @@ const menuItemStyles = {
   },
 
   anchor: ({ props, variables }): ICSSInJSStyle => {
-    const { active, iconOnly, shape, type } = props
+    const { active, iconOnly, type, underlined } = props
     const { iconsMenuItemSize } = variables
 
     return {
       color: 'inherit',
       display: 'block',
-      ...(shape === 'underlined'
+      ...(underlined
         ? { padding: `0 0 ${pxToRem(8)} 0` }
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
@@ -146,7 +147,7 @@ const menuItemStyles = {
 
       ':hover': {
         color: 'inherit',
-        ...(shape === 'underlined' && {
+        ...(underlined && {
           paddingBottom: `${pxToRem(4)}`,
           ...underlinedItem(variables.defaultActiveBackgroundColor),
           ...(type === 'primary' && {
@@ -156,7 +157,7 @@ const menuItemStyles = {
       },
 
       ...(active &&
-        shape === 'underlined' && {
+        underlined && {
           color: variables.defaultColor,
           paddingBottom: `${pxToRem(4)}`,
           ':hover': {},

@@ -40,10 +40,17 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /** A menu can point to show its relationship to nearby content. */
+    pointing: PropTypes.bool,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -73,9 +80,11 @@ class Menu extends AutoControlledComponent<any, any> {
     'fluid',
     'iconOnly',
     'items',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]
@@ -95,15 +104,17 @@ class Menu extends AutoControlledComponent<any, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, type, shape, vertical } = this.props
+    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
         defaultProps: {
           iconOnly,
+          pills,
+          pointing,
           type,
-          shape,
+          underlined,
           variables,
           vertical,
           index,
