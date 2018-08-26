@@ -145,8 +145,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { src, alt, name, status, getInitials, size } = this.props
-    const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+    const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
+    const { icon = '', color = '' } = (status && Avatar.statusToIcon[status]) || {}
 
     const iconVariables = {
       color: 'white',
@@ -168,7 +168,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
           <Label
             styles={{ root: styles.avatarNameContainer }}
             as="div"
-            content={getInitials(name)}
+            content={getInitials && getInitials(name || '')}
             variables={{ padding: '0px' }}
             circular
             title={name}
@@ -192,3 +192,5 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
 }
 
 export default Avatar
+
+export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps

@@ -147,7 +147,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
   }
 
   renderPanels = () => {
-    const children: UIComponent<any, any>[] = []
+    const children: any[] = []
     const { panels } = this.props
 
     _.each(panels, (panel, index) => {

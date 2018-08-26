@@ -101,7 +101,7 @@ export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
 
 export type StaticStyleRenderable = string | StaticStyleObject
 
-export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleObject
+export type StaticStyleFunction = (siteVariables?: ISiteVariables) => StaticStyleObject
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 

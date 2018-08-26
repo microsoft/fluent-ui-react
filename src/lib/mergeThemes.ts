@@ -24,7 +24,7 @@ import { felaRenderer, felaRtlRenderer } from './felaRenderer'
  */
 export const mergeComponentStyles = (
   target: IComponentPartStylesInput,
-  ...sources: IComponentPartStylesInput[]
+  ...sources: (IComponentPartStylesInput | null | undefined)[]
 ): IComponentPartStylesPrepared => {
   const initial: IComponentPartStylesPrepared = _.mapValues(target, partStyle => {
     return callable(partStyle)
@@ -73,9 +73,9 @@ export const mergeComponentVariables = (
  */
 export const mergeSiteVariables = (
   target: ISiteVariables,
-  ...sources: (ISiteVariables | undefined)[]
+  ...sources: (ISiteVariables | null | undefined)[]
 ): ISiteVariables => {
-  return sources.reduce((acc, next) => ({ ...acc, ...next }), target)
+  return sources.reduce<ISiteVariables>((acc, next) => ({ ...acc, ...next }), target)
 }
 
 /**
@@ -88,10 +88,10 @@ export const mergeSiteVariables = (
 
 export const mergeThemeVariables = (
   target: IThemeComponentVariablesInput,
-  ...sources: (IThemeComponentVariablesInput | undefined)[]
+  ...sources: (IThemeComponentVariablesInput | null | undefined)[]
 ): IThemeComponentVariablesPrepared => {
   const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
-  return sources.reduce((acc, next) => {
+  return sources.reduce<IThemeComponentVariablesInput>((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
       if (!next) return acc
 
