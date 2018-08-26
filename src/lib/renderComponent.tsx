@@ -7,7 +7,6 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
-import toCompactArray from './toCompactArray'
 
 import {
   ComponentStyleFunctionParam,

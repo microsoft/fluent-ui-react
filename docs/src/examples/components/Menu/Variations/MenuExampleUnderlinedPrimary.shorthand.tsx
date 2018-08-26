@@ -8,7 +8,7 @@ const items = [
 ]
 
 const MenuExampleUnderlinedPrimary = () => (
-  <Menu defaultActiveIndex={0} items={items} shape="underlined" type="primary" />
+  <Menu defaultActiveIndex={0} items={items} underlined type="primary" />
 )
 
 export default MenuExampleUnderlinedPrimary

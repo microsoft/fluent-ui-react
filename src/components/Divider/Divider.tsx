@@ -1,13 +1,32 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  Extendable,
+} from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IDividerProps {
+  as?: any
+  children?: React.ReactNode
+  className?: string
+  content?: React.ReactNode
+  size?: number
+  type?: 'primary' | 'secondary'
+  important?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * @accessibility
  * This is shown at the top.
  */
-class Divider extends UIComponent<any, any> {
+class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
