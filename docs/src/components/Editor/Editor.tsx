@@ -45,13 +45,13 @@ const semanticUIReactCompleter = {
 languageTools.addCompleter(semanticUIReactCompleter)
 
 export interface IEditorProps extends AceEditorProps {
-  id: string
-  value: string
-  mode: 'html' | 'jsx'
+  id?: string
+  value?: string
+  mode?: 'html' | 'jsx'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
-  active: boolean
-  showCursor: boolean
+  active?: boolean
+  showCursor?: boolean
   highlightGutterLine?: boolean
 }
 
@@ -70,7 +70,7 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: PropTypes.bool,
   }
 
-  public static defaultProps: IEditorProps = {
+  public static defaultProps = {
     id: '',
     value: '',
     mode: 'jsx',
@@ -93,10 +93,10 @@ class Editor extends React.Component<IEditorProps> {
   constructor(props: IEditorProps) {
     super(props)
 
-    this.setLineCount(props.value)
+    this.setLineCount((props as IEditorPropsWithDefaults).value)
   }
 
-  public componentWillReceiveProps(nextProps: IEditorProps) {
+  public componentWillReceiveProps(nextProps: IEditorPropsWithDefaults) {
     const previousPros = this.props
     const { value, active, showCursor } = nextProps
 
@@ -119,7 +119,7 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   public componentDidMount() {
-    const { active, showCursor } = this.props
+    const { active, showCursor } = this.props as IEditorPropsWithDefaults
 
     this.setCursorVisibility(showCursor)
 
@@ -196,3 +196,5 @@ class Editor extends React.Component<IEditorProps> {
 }
 
 export default Editor
+
+export type IEditorPropsWithDefaults = IEditorProps & (typeof Editor.defaultProps)

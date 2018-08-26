@@ -471,11 +471,6 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
             <Editor
               setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
               id={`${this.getKebabExamplePath()}-jsx`}
-              mode="jsx"
-              active={false}
-              showGutter={false}
-              showCursor={false}
-              highlightActiveLine={false}
               value={sourceCode}
               onChange={this.handleChangeCode}
               onOutsideClick={this.handleShowCodeInactive}
