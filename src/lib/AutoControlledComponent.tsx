@@ -42,10 +42,10 @@ const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(
  *  @param {boolean} [includeDefaults=false] Whether or not to heed the default props or initial state
  */
 export const getAutoControlledStateValue = (
-  propName,
-  props,
-  state = undefined,
-  includeDefaults = false,
+  propName: string,
+  props: any,
+  state: any = undefined,
+  includeDefaults: boolean = false,
 ) => {
   // regular props
   const propValue = props[propName]
@@ -58,7 +58,7 @@ export const getAutoControlledStateValue = (
 
     // initial state - state may be null or undefined
     if (state) {
-      const initialState = state![propName]
+      const initialState = state[propName]
       if (initialState !== undefined) return initialState
     }
   }
