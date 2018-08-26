@@ -465,18 +465,16 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       <div>
         {this.renderApiCodeMenu()}
 
-        {sourceCode !== '' && (
-          <div>
-            {this.renderCodeEditorMenu()}
-            <Editor
-              setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
-              id={`${this.getKebabExamplePath()}-jsx`}
-              value={sourceCode}
-              onChange={this.handleChangeCode}
-              onOutsideClick={this.handleShowCodeInactive}
-            />
-          </div>
-        )}
+        <div>
+          {this.renderCodeEditorMenu()}
+          <Editor
+            setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
+            id={`${this.getKebabExamplePath()}-jsx`}
+            value={sourceCode}
+            onChange={this.handleChangeCode}
+            onOutsideClick={this.handleShowCodeInactive}
+          />
+        </div>
       </div>
     )
   }
@@ -520,7 +518,6 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
             showGutter={false}
             showCursor={false}
             readOnly
-            active={false}
             highlightActiveLine={false}
             id={`${this.getKebabExamplePath()}-html`}
             onOutsideClick={this.handleShowHTMLInactive}
