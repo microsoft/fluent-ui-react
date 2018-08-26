@@ -127,7 +127,7 @@ export function createShorthand(
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
 
   // Call functions with args similar to createElement()
-  if (valIsFunction) (value as Function)(Component, props, props.children)
+  if (valIsFunction) return (value as Function)(Component, props, props.children)
 }
 
 // ============================================================
