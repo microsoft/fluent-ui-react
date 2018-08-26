@@ -79,8 +79,8 @@ class SourceCodeManager implements ISourceCodeManager {
     const code = this.safeRequire(path)
 
     if (!code) {
-      // Returning as there is no examples provided for this type
-      // e.g. there is no children API example for component
+      // Returning as there are no examples provided for this type
+      // - e.g. there is no children API example for component
       return
     }
 
