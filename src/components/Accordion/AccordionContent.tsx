@@ -2,12 +2,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { Children, Extendable } from '../../../types/utils'
 
 export interface IAccordionContentProps {
   as?: any
   active?: boolean
-  children?: React.ReactNode
+  children?: Children
   className?: string
   content?: React.ReactNode
   onClick?: (event: React.SyntheticEvent, data: IAccordionContentProps) => void

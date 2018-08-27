@@ -3,11 +3,11 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import { Children, Extendable } from '../../../types/utils'
 
 export interface IHeaderDescriptionProps {
   as?: any
-  children?: React.ReactNode
+  children?: Children
   className?: string
   content?: React.ReactNode
   styles?: IComponentPartStylesInput

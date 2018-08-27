@@ -5,12 +5,12 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatMessage from './ChatMessage'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import { Children, Extendable } from '../../../types/utils'
 
 export interface IChatProps {
   as?: any
   className?: string
-  children?: React.ReactNode
+  children?: Children
   messages?: any[]
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput

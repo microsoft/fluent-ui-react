@@ -3,12 +3,12 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { Extendable, ItemShorthand } from '../../../types/utils'
+import { Children, Extendable, ItemShorthand } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any
-  children?: React.ReactNode
+  children?: Children
   className?: string
   content?: React.ReactNode
   description?: ItemShorthand
