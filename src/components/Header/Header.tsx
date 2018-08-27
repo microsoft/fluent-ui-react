@@ -12,7 +12,8 @@ import HeaderDescription from './HeaderDescription'
  *
  *
  * Other considerations:
- *  - when description is used in header, then reader narrate both as header text.
+ *  - when the description property is used in header, readers will narrate both header content and description within the element.
+ *    In addition to that, both will be displayed in the list of headings.
  */
 class Header extends UIComponent<any, any> {
   static className = 'ui-header'
@@ -62,8 +63,8 @@ class Header extends UIComponent<any, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content, description } = this.props
+  renderComponent({ ElementType, classes, variables: v, rest }) {
+    const { children, content, description: descriptionContentOrProps } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -73,7 +74,14 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const descriptionElement = HeaderDescription.create(description, { generateKey: false })
+    const descriptionElement = HeaderDescription.create(descriptionContentOrProps, {
+      defaultProps: {
+        variables: {
+          ...(v.descriptionColor && { color: v.descriptionColor }),
+        },
+      },
+      generateKey: false,
+    })
 
     return (
       <ElementType {...rest} className={classes.root}>

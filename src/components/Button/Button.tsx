@@ -42,7 +42,7 @@ class Button extends UIComponent<any, any> {
     fluid: PropTypes.bool,
 
     /** Button can have an icon. */
-    icon: customPropTypes.some([PropTypes.bool, PropTypes.string]),
+    icon: customPropTypes.itemShorthand,
 
     /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),

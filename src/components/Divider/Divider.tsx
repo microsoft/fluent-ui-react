@@ -1,7 +1,26 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  Extendable,
+} from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IDividerProps {
+  as?: any
+  children?: React.ReactNode
+  className?: string
+  content?: React.ReactNode
+  size?: number
+  type?: 'primary' | 'secondary'
+  important?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * @accessibility
@@ -11,7 +30,7 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
  * Other considerations:
  *  - if separator contains text, then "role='separator'" cannnot be used because text is not narrated by VoiceOver (even with aria-label)
  */
-class Divider extends UIComponent<any, any> {
+class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
@@ -76,3 +95,5 @@ class Divider extends UIComponent<any, any> {
 Divider.create = createShorthandFactory(Divider, content => ({ content }))
 
 export default Divider
+
+export type IDividerPropsWithDefaults = IDividerProps & typeof Divider.defaultProps

@@ -9,9 +9,17 @@ const pluginName = 'gulp-component-menu-behaviors'
 const extract = require('extract-comments')
 const doctrine = require('doctrine')
 
-export default () => {
-  const result = []
+type BehaviorMenuItem = {
+  displayName: string
+  type: string
+  variations: {
+    name: string
+    text: string
+  }
+}
 
+export default () => {
+  const result: BehaviorMenuItem[] = []
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {
       cb(null, file)

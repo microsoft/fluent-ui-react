@@ -7,6 +7,12 @@ const headerStyle = {
   whiteSpace: 'pre-line',
 }
 
+type behaviorFiltered = {
+  type: string
+  displayName: string
+  defaultFile: string
+}
+
 class ComponentDocTag extends React.Component<any, any> {
   getTagDescription = (forTag, fromInfo) => {
     const tags = (fromInfo.docblock && fromInfo.docblock.tags) || []
@@ -23,7 +29,7 @@ class ComponentDocTag extends React.Component<any, any> {
       return defaultBeharior
     }
     const accPropertyFormatted = accProperty.defaultValue.split('.').pop() + '.ts'
-    const behaviorFiltered = []
+    const behaviorFiltered: behaviorFiltered[] = []
     behaviorMenuItems.forEach(behavior => {
       return behavior.variations.find(variation => {
         if (variation.name === accPropertyFormatted) {

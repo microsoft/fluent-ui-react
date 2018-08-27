@@ -3,7 +3,7 @@ import * as React from 'react'
 import { getTestingRenderedComponent } from 'test/utils'
 import { ButtonBehavior, DefaultBehavior } from 'src/lib/accessibility'
 
-export const getProp = (renderedComponent, propName, partSelector) => {
+export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector
     ? renderedComponent.render().find(partSelector)
     : renderedComponent.render()
@@ -32,7 +32,7 @@ export default (Component, options: any = {}) => {
 
   test('gets default accessibility when no override used', () => {
     const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
-    const role = getProp(rendered, 'role', partSelector)
+    const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBe(defaultRootRole)
   })
 
@@ -41,7 +41,7 @@ export default (Component, options: any = {}) => {
       Component,
       <Component {...requiredProps} accessibility={DefaultBehavior} />,
     )
-    const role = getProp(rendered, 'role', partSelector)
+    const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()
   })
 
@@ -52,7 +52,7 @@ export default (Component, options: any = {}) => {
         Component,
         <Component {...requiredProps} accessibility={accessibilityOverride} />,
       )
-      const role = getProp(rendered, 'role', partSelector)
+      const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(overriddenRootRole)
     })
 
@@ -62,7 +62,7 @@ export default (Component, options: any = {}) => {
         Component,
         <Component {...requiredProps} role={testRole} />,
       )
-      const role = getProp(rendered, 'role', partSelector)
+      const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })
 
@@ -72,7 +72,7 @@ export default (Component, options: any = {}) => {
         Component,
         <Component {...requiredProps} accessibility={accessibilityOverride} role={testRole} />,
       )
-      const role = getProp(rendered, 'role', partSelector)
+      const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })
   }

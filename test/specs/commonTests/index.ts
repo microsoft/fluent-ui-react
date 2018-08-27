@@ -5,7 +5,7 @@ export * from './implementsClassNameProps'
 export { default as implementsCreateMethod } from './implementsCreateMethod'
 export { default as implementsShorthandProp } from './implementsShorthandProp'
 
-export { default as handlesAccessibility, getProp } from './handlesAccessibility'
+export { default as handlesAccessibility, getRenderedAttribute } from './handlesAccessibility'
 
 export { default as isConformant } from './isConformant'
 export { default as rendersChildren } from './rendersChildren'

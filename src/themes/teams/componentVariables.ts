@@ -10,6 +10,9 @@ export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Grid } from './components/Grid/gridVariables'
 
+export { default as Header } from './components/Header/headerVariables'
+export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
+
 export { default as Icon } from './components/Icon/iconVariables'
 
 export { default as Image } from './components/Image/imageVariables'
@@ -25,5 +28,7 @@ export { default as ItemLayout } from './components/ItemLayout/itemLayoutVariabl
 export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
+
+export { default as Radio } from './components/Radio/radioVariables'
 
 export { default as Text } from './components/Text/textVariables'
