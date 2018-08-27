@@ -1,14 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import {
-  childrenExist,
-  createShorthandFactory,
-  customPropTypes,
-  UIComponent,
-  Extendable,
-} from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export interface IDividerProps {
   as?: any
