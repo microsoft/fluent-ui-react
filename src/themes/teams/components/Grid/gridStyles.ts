@@ -26,8 +26,8 @@ const gridStyles: IComponentPartStylesInput = {
       gridGap,
       display: 'grid',
       justifyContent: 'space-evenly',
-      gridAutoFlow: rows && !columns && 'column',
 
+      ...(rows && !columns && { gridAutoFlow: 'column' }),
       ...(rows && { gridTemplateRows: getCSSTemplateValue(rows) }),
       ...(columns && { gridTemplateColumns: getCSSTemplateValue(columns) }),
     }
