@@ -19,9 +19,9 @@ import {
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
-import { IAccessibilityDefinition, AccessibilityActions } from './accessibility/interfaces'
+import { IAccessibilityBehavior, AccessibilityActions } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
-import addKeyDownHandler from './addKeyDownHandler'
+import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 
 export interface IRenderResultConfig<P> {
@@ -30,7 +30,7 @@ export interface IRenderResultConfig<P> {
   rest: IProps
   variables: ComponentVariablesObject
   styles: IComponentPartStylesPrepared
-  accessibility: IAccessibilityDefinition
+  accessibility: IAccessibilityBehavior
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -58,8 +58,11 @@ const getAccessibility = <P extends {}>(props, state, actions) => {
     ...state,
   })
 
-  addKeyDownHandler(actions, accessibility, props)
-  return accessibility
+  const handlers = getKeyDownHandlers(actions, accessibility, props)
+  return {
+    ...accessibility,
+    handlers,
+  }
 }
 
 const renderComponent = <P extends {}>(

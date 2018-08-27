@@ -112,6 +112,9 @@ export type ActionsDefinition = { [partName: string]: { [actionName: string]: IA
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   actionsDefinition?: ActionsDefinition
+}
+
+export interface IAccessibilityBehavior extends IAccessibilityDefinition {
   handlers?: ActionsHandler
 }
 

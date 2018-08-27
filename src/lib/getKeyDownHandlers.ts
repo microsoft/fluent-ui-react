@@ -1,6 +1,10 @@
 import * as _ from 'lodash'
 import keyboardHandlerFilter from './keyboardHandlerFilter'
-import { IAccessibilityDefinition, AccessibilityActions } from 'src/lib/accessibility/interfaces'
+import {
+  IAccessibilityDefinition,
+  AccessibilityActions,
+  ActionsHandler,
+} from 'src/lib/accessibility/interfaces'
 import { IRenderConfigProps } from 'src/lib/renderComponent'
 
 /**
@@ -10,22 +14,22 @@ import { IRenderConfigProps } from 'src/lib/renderComponent'
  * @param {IAccessibilityDefinition} accessibility The input element which is to loose focus.
  * @param {IRenderConfigProps} props The props which are used to invoke onKeyDown handler passed from top.
  */
-const addKeyDownHandler = (
+const getKeyDownHandlers = (
   actions: AccessibilityActions,
   accessibility: IAccessibilityDefinition,
   props: IRenderConfigProps,
-) => {
-  accessibility.handlers = {}
+): ActionsHandler => {
+  const handlers = {}
   const actionsDefinition = accessibility.actionsDefinition
 
-  if (!actions || !actionsDefinition) return
+  if (!actions || !actionsDefinition) return handlers
 
   for (const elementName in actionsDefinition) {
     const currentActionDef = actionsDefinition[elementName]
     const commonActions = _.intersection(_.keys(currentActionDef), _.keys(actions))
     if (!commonActions.length) continue
 
-    accessibility.handlers[elementName] = {
+    handlers[elementName] = {
       onKeyDown: (event: React.KeyboardEvent) => {
         commonActions.forEach(actionName => {
           const eventHandler = keyboardHandlerFilter(
@@ -39,6 +43,8 @@ const addKeyDownHandler = (
       },
     }
   }
+
+  return handlers
 }
 
-export default addKeyDownHandler
+export default getKeyDownHandlers
