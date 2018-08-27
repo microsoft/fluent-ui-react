@@ -1,11 +1,12 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, Extendable } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IButtonProps {
   as?: any
@@ -15,7 +16,7 @@ export interface IButtonProps {
   disabled?: boolean
   content?: React.ReactNode
   fluid?: boolean
-  icon?: React.ReactNode | object | (React.ReactNode | object)[]
+  icon?: ItemShorthand
   iconPosition?: 'before' | 'after'
   onClick?: (event: React.SyntheticEvent, data: IButtonProps) => void
   type?: 'primary' | 'secondary'

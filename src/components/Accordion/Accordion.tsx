@@ -2,12 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist, Extendable } from '../../lib'
+import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IAccordionProps {
   as?: any
@@ -18,8 +19,8 @@ export interface IAccordionProps {
   exclusive?: boolean
   onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void
   panels?: {
-    content: React.ReactNode | object
-    title: React.ReactNode | object
+    content: ItemShorthand
+    title: ItemShorthand
   }[]
   accessibility?: object | Function
   styles?: IComponentPartStylesInput
