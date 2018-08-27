@@ -9,7 +9,7 @@ import {
   Extendable,
 } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { ItemShorthand } from '../../../types/customPropTypes'
+import { ItemShorthand } from '../../../types/utils'
 
 export interface IGridProps {
   as?: any
