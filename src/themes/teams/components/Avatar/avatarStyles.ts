@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IAvatarProps } from '../../../../components/Avatar/Avatar'
+import { IAvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const getAvatarDimension = (size: number) => {
   return 12 + size * 4
@@ -50,7 +50,12 @@ const getAvatarFontSize = (size: number) => {
 }
 
 const avatarStyles: IComponentPartStylesInput = {
-  root: ({ props: { size } }: { props: IAvatarProps }): ICSSInJSStyle => ({
+  root: ({
+    props: { size },
+  }: {
+    props: IAvatarPropsWithDefaults
+    variables: any
+  }): ICSSInJSStyle => ({
     backgroundColor: 'inherit',
     display: 'inline-block',
     verticalAlign: 'top',
@@ -60,7 +65,12 @@ const avatarStyles: IComponentPartStylesInput = {
   imageAvatar: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
-  avatarNameContainer: ({ props: { size } }: { props: IAvatarProps }): ICSSInJSStyle => ({
+  avatarNameContainer: ({
+    props: { size },
+  }: {
+    props: IAvatarPropsWithDefaults
+    variables: any
+  }): ICSSInJSStyle => ({
     display: 'inline-block',
     width: pxToRem(getAvatarDimension(size)),
     height: pxToRem(getAvatarDimension(size)),
@@ -73,7 +83,7 @@ const avatarStyles: IComponentPartStylesInput = {
     props: { size },
     variables: v,
   }: {
-    props: IAvatarProps
+    props: IAvatarPropsWithDefaults
     variables: any
   }): ICSSInJSStyle => ({
     position: 'relative',
