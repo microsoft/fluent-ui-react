@@ -91,3 +91,5 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
 Divider.create = createShorthandFactory(Divider, content => ({ content }))
 
 export default Divider
+
+export type IDividerPropsWithDefaults = IDividerProps & typeof Divider.defaultProps
