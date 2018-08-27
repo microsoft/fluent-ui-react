@@ -119,7 +119,7 @@ export const mergeThemeVariables = (
  */
 export const mergeThemeStyles = (
   target: IThemeComponentStylesInput,
-  ...sources: (IThemeComponentStylesInput | undefined)[]
+  ...sources: (IThemeComponentStylesInput | null | undefined)[]
 ): IThemeComponentStylesPrepared => {
   const initial: IThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
     return _.mapValues(stylesByPart, callable)
