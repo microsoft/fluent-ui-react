@@ -12,11 +12,11 @@ import {
 } from '../../lib'
 import Icon from '../Icon'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand } from '../../../types/utils'
+import { Children, Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IInputProps {
   as?: any
-  children?: React.ReactNode
+  children?: Children
   className?: string
   clearable?: boolean
   defaultValue?: string
