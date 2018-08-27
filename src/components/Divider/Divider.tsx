@@ -3,11 +3,11 @@ import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Children, Extendable } from '../../../types/utils'
+import { ReactChildren, Extendable } from '../../../types/utils'
 
 export interface IDividerProps {
   as?: any
-  children?: Children
+  children?: ReactChildren
   className?: string
   content?: React.ReactNode
   size?: number

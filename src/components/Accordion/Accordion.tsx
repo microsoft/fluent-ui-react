@@ -8,13 +8,13 @@ import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Children, Extendable, ItemShorthand } from '../../../types/utils'
+import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IAccordionProps {
   as?: any
   activeIndex?: number[] | number
   className?: string
-  children?: Children
+  children?: ReactChildren
   defaultActiveIndex?: number[] | number
   exclusive?: boolean
   onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void

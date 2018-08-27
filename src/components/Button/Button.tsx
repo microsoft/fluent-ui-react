@@ -6,11 +6,11 @@ import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Children, Extendable, ItemShorthand } from '../../../types/utils'
+import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IButtonProps {
   as?: any
-  children?: Children
+  children?: ReactChildren
   circular?: boolean
   className?: string
   disabled?: boolean
