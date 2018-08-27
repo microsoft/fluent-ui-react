@@ -3,9 +3,11 @@ import { pxToRem } from '../../lib'
 //
 // VARIABLES
 //
-
 export const htmlFontSize = '14px' // what 1rem represents
 
+//
+// COLORS
+//
 const blackRgbaFormat = (alpha: number): string => `rgba(37, 36, 36, ${alpha})`
 export const black = blackRgbaFormat(1)
 export const gray01 = blackRgbaFormat(0.95)
@@ -38,11 +40,11 @@ export const red = '#C4314B'
 export const red08 = '#F3D6DB'
 export const yellow = '#F8D22A'
 export const green = '#92C353'
+export const green04 = '#237b4b'
 
 //
 // SEMANTIC ASSIGNMENTS
 //
-
 export const bodyPadding = 0
 export const bodyMargin = 0
 export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
@@ -51,50 +53,26 @@ export const bodyColor = black
 export const bodyLineHeight = pxToRem(20)
 
 //
-// Colors
+// Font sizes
 //
-export const atMentionTextColor = orange04
-export const disabledTextColor = gray06
-export const errorTextColor = red
-export const mutedTextColor = gray02
-export const successTextColor = green
-export const timestampTextColor = gray04
-
-//
-// Fonts
-//
+export const fontSizeExtraLarge = pxToRem(24)
+export const fontSizeLarge = pxToRem(18)
 export const fontSizeBase = pxToRem(14)
 export const fontSizeSmall = pxToRem(12)
 export const fontSizeExtraSmall = pxToRem(10)
 
 //
-// Line Heights
+// Font weights
 //
-export const lineHeightBase = pxToRem(20)
-export const lineHeightSmall = pxToRem(16)
-export const lineHeightExtraSmall = pxToRem(12)
+export const fontWeightLight = 200
+export const fontWeightSemilight = 300
+export const fontWeightRegular = 400
+export const fontWeightSemibold = 600
+export const fontWeightBold = 700
 
 //
-// Text Component
+// Line Heights
 //
-export const textExtraSmallFontSize = '10pt'
-export const textExtraSmallLineHeight = '12pt'
-export const textSmallFontSize = '12pt'
-export const textSmallLineHeight = '16pt'
-export const textMediumFontSize = '14pt'
-export const textMediumLineHeight = '20pt'
-export const textLargeFontSize = '18pt'
-export const textLargeLineHeight = '24pt'
-export const textExtraLargeFontSize = '24pt'
-export const textExtraLargeLineHeight = '32pt'
-export const textX2FontSize = '36pt'
-export const textX2LineHeight = '48pt'
-export const textX3FontSize = '54pt'
-export const textX3LineHeight = '66pt'
-export const textX4FontSize = '72pt'
-export const textX4LineHeight = '86pt'
-export const textWeightLight = 200
-export const textWeightSemilight = 300
-export const textWeightRegular = 400
-export const textWeightSemibold = 600
-export const textWeightBold = 800
+export const lineHeightLarge = 1.4
+export const lineHeightBase = 1.33
+export const lineHeightSmall = 1.2

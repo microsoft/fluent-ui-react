@@ -5,6 +5,9 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 
 /**
  * A component containing text
+ * @accessibility
+ * Text is how people read the content on your website.
+ * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
 class Text extends UIComponent<any, any> {
   static className = 'ui-text'
@@ -32,6 +35,9 @@ class Text extends UIComponent<any, any> {
 
     /** The text can appear more important and draw user's attention */
     important: PropTypes.bool,
+
+    /** The text can be in a temporary state */
+    temporary: PropTypes.bool,
 
     /** The size for the Text component */
     size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
@@ -72,6 +78,7 @@ class Text extends UIComponent<any, any> {
     'success',
     'timestamp',
     'truncated',
+    'temporary',
     'variables',
     'weight',
   ]
