@@ -15,7 +15,13 @@ import Icon from '../Icon'
 
 /**
  * An Input
- * @accessibility This is example usage of the accessibility tag.
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ *
  */
 class Input extends AutoControlledComponent<any, any> {
   static className = 'ui-input'
@@ -174,7 +180,10 @@ class Input extends AutoControlledComponent<any, any> {
     if (childrenExist(children)) {
       // add htmlInputProps to the `<input />` child
       const childElements = _.map(React.Children.toArray(children), child => {
-        if (child.type !== 'input') return child
+        if (typeof child === 'string' || typeof child === 'number' || child.type !== 'input') {
+          return child
+        }
+
         return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
       })
 
