@@ -454,7 +454,8 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
               direction === FocusZoneDirection.horizontal ||
               direction === FocusZoneDirection.bidirectional
             ) {
-              focusChanged = ev.shiftKey ? this.moveFocusLeft() : this.moveFocusRight()
+              const tabWithDirection = getRTL() ? !ev.shiftKey : ev.shiftKey
+              focusChanged = tabWithDirection ? this.moveFocusLeft() : this.moveFocusRight()
             }
             this._processingTabKey = false
             if (focusChanged) {
