@@ -3,11 +3,12 @@ import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IGridProps {
   as?: any
   className?: string
+  children?: ReactChildren
   columns?: string | number
   content?: ItemShorthand | ItemShorthand[]
   rows?: string | number

@@ -3,12 +3,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IAccordionTitleProps {
   as?: any
   active?: boolean
-  children?: React.ReactNode
+  children?: ReactChildren
   className?: string
   content?: React.ReactNode
   index?: string | number
