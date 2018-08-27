@@ -75,7 +75,7 @@ export function createShorthand(
 
   // User's props
   const usersProps =
-    (valIsReactElement && (value as React.ReactElement<IProps>).props) || // TODO: can throw exception, requires correct handling of such situation
+    (valIsReactElement && (value as React.ReactElement<IProps>).props) ||
     (valIsPropsObject && (value as IProps)) ||
     (valIsPrimitive && mapValueToProps(value as Primitive)) ||
     {}
