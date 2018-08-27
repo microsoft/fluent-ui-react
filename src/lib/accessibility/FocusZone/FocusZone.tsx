@@ -29,7 +29,7 @@ import {
 import { IS_FOCUSABLE_ATTRIBUTE } from '../interfaces'
 
 const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter'
-const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
+export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 const TABINDEX = 'tabindex'
 const NO_VERTICAL_WRAP = 'data-no-vertical-wrap'
 const NO_HORIZONTAL_WRAP = 'data-no-horizontal-wrap'

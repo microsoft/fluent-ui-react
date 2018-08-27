@@ -39,3 +39,4 @@ export { default as leven } from './leven'
 
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
 export { customPropTypes, SUI }
+export { Extendable } from './Extendable'
