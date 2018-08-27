@@ -4,8 +4,36 @@ import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 
 import svgIcons from './svgIcons'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
+export type IconSize =
+  | 'micro'
+  | 'mini'
+  | 'tiny'
+  | 'small'
+  | 'normal'
+  | 'large'
+  | 'big'
+  | 'huge'
+  | 'massive'
+
+export interface IIconProps {
+  as?: any
+  bordered?: boolean
+  circular?: boolean
+  className?: string
+  disabled?: boolean
+  font?: boolean | string
+  name?: string
+  size?: IconSize
+  svg?: boolean
+  xSpacing?: IconXSpacing
+  accessibility?: object | Function
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * @accessibility
@@ -13,7 +41,7 @@ export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
  *  - attribute "aria-hidden='true'" is applied on icon
  */
 
-class Icon extends UIComponent<any, any> {
+class Icon extends UIComponent<Extendable<IIconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -98,7 +126,8 @@ class Icon extends UIComponent<any, any> {
   }
 
   renderSvgIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    const icon = svgIcons[this.props.name]
+    const { name } = this.props
+    const icon = name && svgIcons[name]
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
