@@ -25,8 +25,8 @@ export const examplePathPatterns: { [key in SourceCodeType]: string } = {
 
 class SourceCodeManager implements ISourceCodeManager {
   private readonly data: { [key in SourceCodeType]: ISourceCodeData } = {
-    normal: null,
-    shorthand: null,
+    normal: {} as ISourceCodeData,
+    shorthand: {} as ISourceCodeData,
   }
 
   public codeType: SourceCodeType
@@ -78,6 +78,12 @@ class SourceCodeManager implements ISourceCodeManager {
     const path = this.sourceCodePath + examplePathPatterns[sourceCodeType]
     const code = this.safeRequire(path)
 
+    if (!code) {
+      // Returning as there are no examples provided for this type
+      // - e.g. there is no children API example for component
+      return
+    }
+
     this.data[sourceCodeType] = {
       path,
       code,
@@ -85,11 +91,11 @@ class SourceCodeManager implements ISourceCodeManager {
     }
   }
 
-  private safeRequire = (path: string): string => {
+  private safeRequire = (path: string): string | undefined => {
     try {
       return require(`!raw-loader!../../../examples/${path}`)
     } catch (e) {
-      return null
+      return undefined
     }
   }
 }

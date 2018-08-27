@@ -9,7 +9,7 @@ const isValidCssValue = (value: any) => {
   const openingBrackets = '({['
   const closingBrackets = ')}]'
 
-  const openingBracketsStack = []
+  const openingBracketsStack: string[] = []
 
   /**
    * This loop logic checks whether braces sequence of input argument is valid.
@@ -24,6 +24,7 @@ const isValidCssValue = (value: any) => {
     } else if (closingBrackets.includes(currentCharacter)) {
       const lastOpeningBracket = openingBracketsStack.pop()
       if (
+        lastOpeningBracket &&
         openingBrackets.indexOf(lastOpeningBracket) !== closingBrackets.indexOf(currentCharacter)
       ) {
         return false
