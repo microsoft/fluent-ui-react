@@ -3,7 +3,7 @@ import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IGridProps {
   as?: any

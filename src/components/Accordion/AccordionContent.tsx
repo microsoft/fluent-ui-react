@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ReactChildren, Extendable } from '../../../types/utils'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IAccordionContentProps {
   as?: any

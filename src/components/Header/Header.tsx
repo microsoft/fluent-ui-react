@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
 export interface IHeaderProps {

@@ -8,7 +8,7 @@ import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IAccordionProps {
   as?: any
