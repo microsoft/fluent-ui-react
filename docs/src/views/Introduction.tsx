@@ -15,14 +15,7 @@ const Comparison: any = ({ jsx, html }) => (
         <Label size="tiny" attached="top left">
           JSX
         </Label>
-        <Editor
-          id={btoa(jsx)}
-          value={jsx}
-          readOnly
-          mode={'jsx'}
-          showCursor={false}
-          active={false}
-        />
+        <Editor id={btoa(jsx)} value={jsx} readOnly />
       </Grid.Column>
       <Grid.Column largeScreen="2" only="large screen" textAlign="center">
         <Divider vertical>
@@ -33,14 +26,7 @@ const Comparison: any = ({ jsx, html }) => (
         <Label size="tiny" attached="top right">
           Rendered HTML
         </Label>
-        <Editor
-          id={btoa(html)}
-          mode="html"
-          value={html}
-          readOnly
-          showCursor={false}
-          active={false}
-        />
+        <Editor id={btoa(html)} mode="html" value={html} readOnly />
       </Grid.Column>
     </Grid>
   </Segment>
