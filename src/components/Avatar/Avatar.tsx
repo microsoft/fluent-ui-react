@@ -168,7 +168,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
           <Label
             styles={{ root: styles.avatarNameContainer }}
             as="div"
-            content={getInitials && getInitials(name || '')}
+            content={getInitials(name || '')}
             variables={{ padding: '0px' }}
             circular
             title={name}
