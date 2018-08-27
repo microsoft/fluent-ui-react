@@ -5,7 +5,7 @@ import { DefaultBehavior } from 'src/lib/accessibility'
 const testKeyCode = 27
 const accessibility = DefaultBehavior as IAccessibilityDefinition
 const props = {}
-let rest = {}
+const partElementName = 'anchor'
 
 const eventArg: React.KeyboardEvent = {
   keyCode: testKeyCode,
@@ -40,12 +40,12 @@ const eventArg: React.KeyboardEvent = {
 describe('addKeyDownHandler', () => {
   beforeEach(() => {
     accessibility.actionsDefinition = {
-      testAction: {
-        keyCombinations: [{ keyCode: testKeyCode }],
+      [partElementName]: {
+        testAction: {
+          keyCombinations: [{ keyCode: testKeyCode }],
+        },
       },
     }
-
-    rest = {}
   })
 
   describe('should attach onKeyDown handler', () => {
@@ -54,8 +54,31 @@ describe('addKeyDownHandler', () => {
         testAction: () => {},
       }
 
-      addKeyDownHandler(rest, actions, accessibility, props)
-      expect(rest.hasOwnProperty('onKeyDown')).toBeTruthy()
+      addKeyDownHandler(actions, accessibility, props)
+      expect(accessibility.hasOwnProperty('handlers')).toBeTruthy()
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeTruthy()
+      expect(accessibility.handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
+    })
+    test('for few component elements', () => {
+      const actions = {
+        testAction: () => {},
+        someOtherTestAction: () => {},
+      }
+
+      const anotherPartName = 'root'
+
+      accessibility.actionsDefinition[anotherPartName] = {
+        someOtherTestAction: {
+          keyCombinations: [{ keyCode: testKeyCode }],
+        },
+      }
+
+      addKeyDownHandler(actions, accessibility, props)
+      expect(accessibility.hasOwnProperty('handlers')).toBeTruthy()
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeTruthy()
+      expect(accessibility.handlers.hasOwnProperty(anotherPartName)).toBeTruthy()
+      expect(accessibility.handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
+      expect(accessibility.handlers[anotherPartName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
     test('when there is 1 common action and few others that are not common', () => {
       const actions = {
@@ -63,13 +86,16 @@ describe('addKeyDownHandler', () => {
         testAction: () => {},
       }
 
-      accessibility.actionsDefinition.doSomething = { keyCombinations: [{ keyCode: testKeyCode }] }
-      accessibility.actionsDefinition.doSomethingElse = {
+      accessibility.actionsDefinition[partElementName].doSomething = {
+        keyCombinations: [{ keyCode: testKeyCode }],
+      }
+      accessibility.actionsDefinition[partElementName].doSomethingElse = {
         keyCombinations: [{ keyCode: testKeyCode }],
       }
 
-      addKeyDownHandler(rest, actions, accessibility, props)
-      expect(rest.hasOwnProperty('onKeyDown')).toBeTruthy()
+      addKeyDownHandler(actions, accessibility, props)
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeTruthy()
+      expect(accessibility.handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
     test('and action should be invoked if keydown event has keycode mapped to that action', () => {
       const actions = {
@@ -78,12 +104,17 @@ describe('addKeyDownHandler', () => {
         anotherTestAction: jest.fn(),
       }
 
-      accessibility.actionsDefinition.otherAction = { keyCombinations: [{ keyCode: testKeyCode }] }
-      accessibility.actionsDefinition.anotherTestAction = { keyCombinations: [{ keyCode: 21 }] }
+      accessibility.actionsDefinition[partElementName].otherAction = {
+        keyCombinations: [{ keyCode: testKeyCode }],
+      }
+      accessibility.actionsDefinition[partElementName].anotherTestAction = {
+        keyCombinations: [{ keyCode: 21 }],
+      }
 
-      addKeyDownHandler(rest, actions, accessibility, props)
+      addKeyDownHandler(actions, accessibility, props)
 
-      rest['onKeyDown'] && rest['onKeyDown'](eventArg)
+      accessibility.handlers[partElementName] &&
+        accessibility.handlers[partElementName]['onKeyDown'](eventArg)
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.otherAction).toHaveBeenCalled()
       expect(actions.anotherTestAction).not.toHaveBeenCalled()
@@ -94,24 +125,24 @@ describe('addKeyDownHandler', () => {
     test('when actions are null', () => {
       const actions = null
 
-      addKeyDownHandler(rest, actions, accessibility, props)
-      expect(rest.hasOwnProperty('onKeyDown')).toBeFalsy()
+      addKeyDownHandler(actions, accessibility, props)
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test("when acessibility's actionsDefinition is null", () => {
       const actions = {
         otherAction: (event: React.KeyboardEvent) => {},
       }
 
-      addKeyDownHandler(rest, actions, DefaultBehavior as IAccessibilityDefinition, props)
-      expect(rest.hasOwnProperty('onKeyDown')).toBeFalsy()
+      addKeyDownHandler(actions, DefaultBehavior as IAccessibilityDefinition, props)
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test('there are not common actions and actions definition', () => {
       const actions = {
         otherAction: (event: React.KeyboardEvent) => {},
       }
 
-      addKeyDownHandler(rest, actions, accessibility, props)
-      expect(rest.hasOwnProperty('onKeyDown')).toBeFalsy()
+      addKeyDownHandler(actions, accessibility, props)
+      expect(accessibility.handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
   })
 })

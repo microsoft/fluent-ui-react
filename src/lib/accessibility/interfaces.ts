@@ -108,10 +108,11 @@ export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type ActionsDefinition = { [partName: string]: IActionDefinition }
+export type ActionsDefinition = { [partName: string]: { [actionName: string]: IActionDefinition } }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   actionsDefinition?: ActionsDefinition
+  handlers?: ActionsHandler
 }
 
 export interface IActionDefinition {
@@ -127,7 +128,13 @@ export interface KeyCombinations {
 }
 
 export type AccessibilityActions = {
-  [name: string]: KeyboardHandler
+  [actionName: string]: KeyboardHandler
+}
+
+export type ActionsHandler = {
+  [partName: string]: {
+    onKeyDown?: KeyboardHandler
+  }
 }
 
 export type KeyboardHandler = (event: React.KeyboardEvent) => void

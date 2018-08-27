@@ -51,12 +51,15 @@ export interface IRenderConfig {
   actions: AccessibilityActions
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility = <P extends {}>(props, state, actions) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
+  const accessibility = callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
     ...props,
     ...state,
   })
+
+  addKeyDownHandler(actions, accessibility, props)
+  return accessibility
 }
 
 const renderComponent = <P extends {}>(
@@ -77,8 +80,7 @@ const renderComponent = <P extends {}>(
         const ElementType = getElementType({ defaultProps }, props)
         const rest = getUnhandledProps({ handledProps }, props)
 
-        const accessibility = getAccessibility(props, state)
-        addKeyDownHandler(rest, actions, accessibility, props)
+        const accessibility = getAccessibility(props, state, actions)
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(

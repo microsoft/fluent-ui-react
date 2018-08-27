@@ -91,7 +91,7 @@ class MenuItem extends UIComponent<any, any> {
   ]
 
   actions: AccessibilityActions = {
-    triggerClick: event => this.handleClick(event),
+    performClick: event => this.handleClick(event),
   }
 
   handleClick = e => {
@@ -102,7 +102,12 @@ class MenuItem extends UIComponent<any, any> {
     const { children, content, icon } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.handlers.root}
+        {...rest}
+      >
         {childrenExist(children) ? (
           children
         ) : (
@@ -110,6 +115,7 @@ class MenuItem extends UIComponent<any, any> {
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
+            {...accessibility.handlers.anchor}
           >
             {icon &&
               Icon.create(this.props.icon, {
