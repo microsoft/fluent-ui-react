@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `descriptionColor` to Header @kuzhelov ([#78](https://github.com/stardust-ui/react/pull/78))
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 - Add strict null checks for generated TS types @smykhailov ([#108](https://github.com/stardust-ui/react/pull/108))
+- Add Label `image` and `imagePosition`, removed `onIconClick` prop  @mnajdova ([#55](https://github.com/stardust-ui/react/pull/55/))
 
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
@@ -65,7 +66,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `color` variables to Header and Header.Description @kuzhelov ([#72](https://github.com/stardust-ui/react/pull/72))
 - Add `ItemLayout` component @mnajdova ([#60](https://github.com/stardust-ui/react/pull/60))
 - Add Input `clearable` prop @alinais ([#37](https://github.com/stardust-ui/react/pull/37))
-- Add Label `image` and `imagePosition`, removed `onIconClick` prop  @mnajdova ([#55](https://github.com/stardust-ui/react/pull/55/))
 
 <!--------------------------------[ v0.2.6 ]------------------------------- -->
 ## [v0.2.6](https://github.com/stardust-ui/react/tree/v0.2.6) (2018-08-09)

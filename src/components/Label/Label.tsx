@@ -112,8 +112,8 @@ class Label extends UIComponent<any, any> {
         overrideProps: this.handleIconOverrides,
       })
 
-    let start = null
-    let end = null
+    let start: React.ReactNode = null
+    let end: React.ReactNode = null
 
     // Default positioning of the image and icon
     if (image && imagePosition === 'start') {
