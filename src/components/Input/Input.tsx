@@ -180,8 +180,9 @@ class Input extends AutoControlledComponent<any, any> {
     if (childrenExist(children)) {
       // add htmlInputProps to the `<input />` child
       const childElements = _.map(React.Children.toArray(children), child => {
-        if (typeof child === 'string' || typeof child === 'number') return child
-        if (child.type !== 'input') return child
+        if (typeof child === 'string' || typeof child === 'number' || child.type !== 'input') {
+          return child
+        }
 
         return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
       })
