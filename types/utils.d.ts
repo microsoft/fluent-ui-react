@@ -11,3 +11,4 @@ export type Extendable<T> = T & {
 // ========================================================
 
 export type ItemShorthand = React.ReactNode | object | (React.ReactNode | object)[]
+export type ReactChildren = React.ReactNodeArray | React.ReactNode
