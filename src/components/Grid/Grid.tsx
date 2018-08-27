@@ -9,12 +9,13 @@ import {
   Extendable,
 } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ItemShorthand } from '../../../types/customPropTypes'
 
 export interface IGridProps {
   as?: any
   className?: string
   columns?: string | number
-  content?: customPropTypes.ItemShorthandType | customPropTypes.ItemShorthandType[]
+  content?: ItemShorthand | ItemShorthand[]
   rows?: string | number
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput

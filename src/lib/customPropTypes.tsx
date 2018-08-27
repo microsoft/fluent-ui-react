@@ -387,5 +387,3 @@ export const deprecate = (help, validator) => (props, propName, componentName, .
 
   return error
 }
-
-export type ItemShorthandType = React.ReactNode | object | (React.ReactNode | object)[]
