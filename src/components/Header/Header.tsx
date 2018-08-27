@@ -3,6 +3,19 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
+import { Extendable, ItemShorthand } from '../../../types/utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IHeaderProps {
+  as?: any
+  children?: React.ReactNode
+  className?: string
+  content?: React.ReactNode
+  description?: ItemShorthand
+  textAlign?: 'left' | 'center' | 'right' | 'justified'
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A header provides a short summary of content
@@ -15,7 +28,7 @@ import HeaderDescription from './HeaderDescription'
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<any, any> {
+class Header extends UIComponent<Extendable<IHeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'
