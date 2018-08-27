@@ -31,7 +31,7 @@ const dividerStyles: IComponentPartStylesInput = {
     props: IDividerPropsWithDefaults
     variables: any
   }): ICSSInJSStyle => {
-    const { children, size, type, important, content } = props as IDividerPropsWithDefaults
+    const { children, size, type, important, content } = props
     return {
       marginTop: pxToRem(5 + size * 7.5),
       marginBottom: pxToRem(5 + size * 7.5),
