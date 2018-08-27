@@ -3,7 +3,7 @@ import isBrowser from './isBrowser'
 
 const DEFAULT_FONT_SIZE_IN_PX = 16
 const DEFAULT_REM_SIZE_IN_PX = 10
-let _htmlFontSizeInPx: number = DEFAULT_FONT_SIZE_IN_PX
+let _htmlFontSizeInPx: number | null = null
 
 const getComputedFontSize = (): number => {
   return isBrowser()
