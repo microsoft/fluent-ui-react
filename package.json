@@ -33,6 +33,7 @@
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
     "pretest": "yarn satisfied && gulp build:docs:docgen",
     "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:perf": "gulp perf",
     "test:visual": "gulp screener",
     "test:watch": "yarn test --watchAll",
     "generate:component": "gulp generate:component"
@@ -98,6 +99,7 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-router": "^4.0.27",
     "awesome-typescript-loader": "4.0.1",
+    "chalk": "^2.4.1",
     "connect-history-api-fallback": "^1.3.0",
     "copy-to-clipboard": "^3.0.8",
     "cross-env": "^5.1.4",
@@ -125,6 +127,7 @@
     "jest": "^23.1.0",
     "js-beautify": "^1.6.14",
     "leven": "^2.1.0",
+    "lighthouse": "^3.0.3",
     "lint-staged": "^7.0.2",
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
