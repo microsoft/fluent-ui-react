@@ -74,7 +74,8 @@ describe('MenuItem', () => {
         )
       })
 
-      ; [true, false].forEach(disabledValue => {
+      const disabledFlags = [true, false]
+      disabledFlags.forEach(disabledValue => {
         test(`aria-disabled should be ${disabledValue} if button disabled prop is ${disabledValue}`, () => {
           const menuItemComponent = getTestingRenderedComponent(
             MenuItem,
@@ -130,7 +131,8 @@ describe('MenuItem', () => {
         )
       })
 
-      ; [true, false].forEach(activeValue => {
+      const activeFlags = [true, false]
+      activeFlags.forEach(activeValue => {
         test(`aria-selected should be ${activeValue} if button active prop is ${activeValue}`, () => {
           const menuItemComponent = getTestingRenderedComponent(
             MenuItem,
