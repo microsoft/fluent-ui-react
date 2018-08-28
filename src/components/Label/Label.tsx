@@ -127,16 +127,13 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
       const iconAtEnd = iconPosition === 'end'
       const iconAtStart = !iconAtEnd
 
-      const iconElement = Icon.create(
-        icon,
-        {
+      const iconElement = Icon.create(icon, {
+        generateKey: false,
+        defaultProps: {
           styles: { root: styles.icon },
         },
-        {
-          generateKey: false,
-          overrideProps: this.handleIconOverrides,
-        },
-      )
+        overrideProps: this.handleIconOverrides,
+      })
 
       return (
         <React.Fragment>
