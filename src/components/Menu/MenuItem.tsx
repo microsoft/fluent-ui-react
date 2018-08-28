@@ -31,6 +31,9 @@ class MenuItem extends UIComponent<any, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
+    /** A button can show it is currently unable to be interacted with. */
+    disabled: PropTypes.bool,
+
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
 
@@ -86,6 +89,7 @@ class MenuItem extends UIComponent<any, any> {
     'children',
     'className',
     'content',
+    'disabled',
     'icon',
     'iconOnly',
     'index',
