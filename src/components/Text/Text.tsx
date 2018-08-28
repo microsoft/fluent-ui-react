@@ -73,11 +73,11 @@ class Text extends UIComponent<any, any> {
     'size',
     'styles',
     'success',
+    'temporary',
     'timestamp',
     'truncated',
     'variables',
     'weight',
-    'temporary',
   ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
