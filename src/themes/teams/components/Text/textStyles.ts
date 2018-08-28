@@ -10,7 +10,18 @@ export interface TextStylesParams {
 
 export default {
   root: ({
-    props: { atMention, disabled, error, size, weight, important, success, timestamp, truncated },
+    props: {
+      atMention,
+      disabled,
+      error,
+      size,
+      weight,
+      important,
+      success,
+      timestamp,
+      truncated,
+      temporary,
+    },
     variables: v,
   }: TextStylesParams): ICSSInJSStyle => {
     return {
@@ -20,6 +31,7 @@ export default {
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
       ...(timestamp && { color: v.timestampTextColor }),
+      ...(temporary && { fontStyle: 'italic' }),
       ...(weight === Weights.Light && {
         fontWeight: v.textWeightLight,
       }),
@@ -35,7 +47,10 @@ export default {
       ...(weight === Weights.Bold && {
         fontWeight: v.textWeightBold,
       }),
-      ...(important && { fontWeight: v.importantWeight }),
+      ...(important && {
+        fontWeight: v.importantWeight,
+        color: v.importantTextColor,
+      }),
       ...(size === Sizes.ExtraSmall && {
         fontSize: v.textExtraSmallFontSize,
         lineHeight: v.textExtraSmallLineHeight,
@@ -55,18 +70,6 @@ export default {
       ...(size === Sizes.ExtraLarge && {
         fontSize: v.textExtraLargeFontSize,
         lineHeight: v.textExtraLargeLineHeight,
-      }),
-      ...(size === Sizes['2x'] && {
-        fontSize: v.textX2FontSize,
-        lineHeight: v.textX2LineHeight,
-      }),
-      ...(size === Sizes['3x'] && {
-        fontSize: v.textX3FontSize,
-        lineHeight: v.textX3LineHeight,
-      }),
-      ...(size === Sizes['4x'] && {
-        fontSize: v.textX4FontSize,
-        lineHeight: v.textX4LineHeight,
       }),
     }
   },

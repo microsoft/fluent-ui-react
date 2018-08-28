@@ -53,6 +53,9 @@ class Text extends UIComponent<any, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** The text can signify a temporary state */
+    temporary: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -74,6 +77,7 @@ class Text extends UIComponent<any, any> {
     'truncated',
     'variables',
     'weight',
+    'temporary',
   ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
