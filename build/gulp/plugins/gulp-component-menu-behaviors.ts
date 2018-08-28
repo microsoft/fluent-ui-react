@@ -34,7 +34,7 @@ export default () => {
     try {
       const absPath = path.resolve(process.cwd(), file.path)
       const dir = path.dirname(absPath)
-      const componentType = path.basename(path.dirname(dir)).replace(/s$/, '')
+      const componentType = _.lowerFirst(path.basename(path.dirname(dir)).replace(/s$/, ''))
       const behaviorVariantName = file.basename
       const behaviorName = path.basename(dir)
 

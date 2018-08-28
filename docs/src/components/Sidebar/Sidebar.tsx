@@ -16,9 +16,6 @@ const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-// assume all behaviors are the same type
-const behaviorType = behaviorMenuItems[0].type
-
 type ComponentMenuItem = { displayName: string; type: string }
 
 class Sidebar extends React.Component<any, any> {
@@ -101,8 +98,6 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  getBehaviorPathname = info => `/${behaviorType}s/${_.kebabCase(info.displayName)}`
-
   menuItemsByType = _.map(nextType => {
     const items = _.flow(
       _.filter(({ type }) => type === nextType),
@@ -116,25 +111,12 @@ class Sidebar extends React.Component<any, any> {
           activeClassName="active"
         />
       )),
-    )(componentMenu)
-
-    const behaviorItems = behaviorMenuItems.map(info => (
-      <Menu.Item
-        key={info.displayName}
-        name={info.displayName}
-        onClick={this.handleItemClick}
-        as={NavLink}
-        to={this.getBehaviorPathname(info)}
-        activeClassName="active"
-      />
-    ))
+    )([...componentMenu, ...behaviorMenuItems])
 
     return (
       <Menu.Item key={nextType}>
         <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
         <Menu.Menu>{items}</Menu.Menu>
-        <Menu.Header style={{ marginTop: '1em' }}>Behaviors</Menu.Header>
-        <Menu.Menu>{behaviorItems}</Menu.Menu>
       </Menu.Item>
     )
   }, typeOrder)
