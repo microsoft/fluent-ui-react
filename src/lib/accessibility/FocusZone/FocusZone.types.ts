@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { FocusZone } from './FocusZone'
-import { IRefObject } from '@uifabric/utilities'
 
 /**
  * FocusZone component class interface.
@@ -31,7 +30,7 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
    * Optional callback to access the IFocusZone interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
    */
-  componentRef?: IRefObject<IFocusZone>
+  componentRef?: React.RefObject<IFocusZone>
 
   /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
@@ -74,26 +73,10 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
   isInnerZoneKeystroke?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
   /**
-   * Sets the aria-labelledby attribute.
-   */
-  ariaLabelledBy?: string
-
-  /**
-   * Sets the aria-describedby attribute.
-   */
-  ariaDescribedBy?: string
-
-  /**
    * Callback for when one of immediate children elements gets active by getting focused
    * or by having one of its respective children elements focused.
    */
   onActiveElementChanged?: (element?: HTMLElement, ev?: React.FocusEvent<HTMLElement>) => void
-
-  /**
-   * Deprecated at v1.12.1. DIV props provided to the FocusZone will be mixed into the root element.
-   * @deprecated
-   */
-  rootProps?: React.HTMLAttributes<HTMLDivElement>
 
   /**
    * Callback method for determining if focus should indeed be set on the given element.
@@ -104,15 +87,6 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
 
   /** Allow focus to move to root */
   allowFocusRoot?: boolean
-
-  /**
-   * Allows tab key to be handled to tab through a list of items in the focus zone,
-   * an unfortunate side effect is that users will not be able to tab out of the focus zone
-   * and have to hit escape or some other key.
-   * @deprecated Use 'handleTabKey' instead.
-   *
-   */
-  allowTabKey?: boolean
 
   /**
    * Allows tab key to be handled to tab through a list of items in the focus zone,
