@@ -3,13 +3,35 @@ import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
+
+export interface IAvatarProps {
+  alt?: string
+  as?: any
+  className?: string
+  name?: string
+  size?: number
+  src?: string
+  status?:
+    | 'Available'
+    | 'Away'
+    | 'BeRightBack'
+    | 'Busy'
+    | 'DoNotDisturb'
+    | 'Offline'
+    | 'PresenceUnknown'
+  getInitials?: (name: string) => string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An avatar is a graphic representation of user alongside with a presence icon.
  * @accessibility To be discussed
  *
  */
-class Avatar extends UIComponent<any, any> {
+class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static className = 'ui-avatar'
 
   static displayName = 'Avatar'
@@ -124,8 +146,8 @@ class Avatar extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { src, alt, name, status, getInitials, size } = this.props
-    const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+    const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
+    const { icon = '', color = '' } = (status && Avatar.statusToIcon[status]) || {}
 
     const iconVariables = {
       color: 'white',
@@ -147,7 +169,7 @@ class Avatar extends UIComponent<any, any> {
           <Label
             styles={{ root: styles.avatarNameContainer }}
             as="div"
-            content={getInitials(name)}
+            content={getInitials(name || '')}
             variables={{ padding: '0px' }}
             circular
             title={name}
@@ -171,3 +193,5 @@ class Avatar extends UIComponent<any, any> {
 }
 
 export default Avatar
+
+export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps

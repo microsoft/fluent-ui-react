@@ -7,7 +7,6 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
-import toCompactArray from './toCompactArray'
 
 import {
   ComponentStyleFunctionParam,
@@ -44,7 +43,7 @@ type IRenderConfigProps = {
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
-  displayName?: string
+  displayName: string
   handledProps: string[]
   props: IRenderConfigProps
   state: { [key: string]: any }

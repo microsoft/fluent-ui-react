@@ -7,13 +7,32 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+
+export interface IAccordionProps {
+  as?: any
+  activeIndex?: number[] | number
+  className?: string
+  children?: ReactChildren
+  defaultActiveIndex?: number[] | number
+  exclusive?: boolean
+  onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void
+  panels?: {
+    content: ItemShorthand
+    title: ItemShorthand
+  }[]
+  accessibility?: object | Function
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A standard Accordion.
  * @accessibility
  * Concern: how do we optimally navigate through an Accordion element with nested children?
  */
-class Accordion extends AutoControlledComponent<any, any> {
+class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -130,7 +149,7 @@ class Accordion extends AutoControlledComponent<any, any> {
   }
 
   renderPanels = () => {
-    const children = []
+    const children: any[] = []
     const { panels } = this.props
 
     _.each(panels, (panel, index) => {
