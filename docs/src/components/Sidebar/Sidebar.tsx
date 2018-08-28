@@ -6,7 +6,6 @@ import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
-import { behaviorType } from 'docs/src/constants'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
@@ -17,6 +16,8 @@ const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
+// assume all behaviors are the same type
+const behaviorType = behaviorMenuItems[0].type
 
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -132,7 +133,7 @@ class Sidebar extends React.Component<any, any> {
       <Menu.Item key={nextType}>
         <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
         <Menu.Menu>{items}</Menu.Menu>
-        <Menu.Header style={{ marginTop: '1em' }}>{_.capitalize(behaviorType) + 's'}</Menu.Header>
+        <Menu.Header style={{ marginTop: '1em' }}>Behaviors</Menu.Header>
         <Menu.Menu>{behaviorItems}</Menu.Menu>
       </Menu.Item>
     )

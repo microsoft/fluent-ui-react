@@ -4,7 +4,7 @@ import { IAccessibilityDefinition } from '../../interfaces'
 
 /**
  * @description
- * The ListItemBehavior adds beharior SelectableListItemBehavior or BasicListItemBehavior based on property selection.
+ * The ListItemBehavior adds beharior SelectableListItemBehavior or BasicListItemBehavior based on "selection" property.
  */
 
 const ListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) =>

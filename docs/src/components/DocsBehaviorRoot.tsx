@@ -4,7 +4,6 @@ import * as React from 'react'
 const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
 import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
-import { behaviorType } from 'docs/src/constants'
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
     children: PropTypes.node,
@@ -45,10 +44,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                     <ComponentExampleTitle
                       id={_.kebabCase(variation.name)}
                       title={this.getNameFromFileName(variation.name)}
-                      description={`${_.upperFirst(behaviorType)} name: ${variation.name.replace(
-                        '.ts',
-                        '',
-                      )}`}
+                      description={`Behavior name: ${variation.name.replace('.ts', '')}`}
                     />
                   </div>
                   <div style={{ flex: '0 0 auto' }} />

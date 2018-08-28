@@ -4,7 +4,7 @@ import BasicListBehavior from './BasicListBehavior'
 
 /**
  * @description
- * The ListBehavior adds beharior BasicListBehavior or SelectableListBehavior based on property selection.
+ * The ListBehavior adds beharior BasicListBehavior or SelectableListBehavior based on "selection" property.
  */
 
 const ListBehavior: Accessibility = (props: any) =>
