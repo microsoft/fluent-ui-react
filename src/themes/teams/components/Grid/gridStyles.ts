@@ -1,5 +1,5 @@
 import { IGridVariables } from './gridVariables'
-import { IComponentPartStylesInput, IProps, ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle, IProps } from '../../../../../types/theme'
 
 const getCSSTemplateValue = (template: string | number): string => {
   const templateAsNumber = Number(template)
@@ -26,8 +26,8 @@ const gridStyles: IComponentPartStylesInput = {
       gridGap,
       display: 'grid',
       justifyContent: 'space-evenly',
-      gridAutoFlow: rows && !columns && 'column',
 
+      ...(rows && !columns && { gridAutoFlow: 'column' }),
       ...(rows && { gridTemplateRows: getCSSTemplateValue(rows) }),
       ...(columns && { gridTemplateColumns: getCSSTemplateValue(columns) }),
     }

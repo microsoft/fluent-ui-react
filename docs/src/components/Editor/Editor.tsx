@@ -16,9 +16,15 @@ const parentComponents = []
 // https://github.com/thlorenz/brace/issues/19
 const languageTools = ace.acequire('ace/ext/language_tools')
 
+type Completion = {
+  caption: string
+  value: string
+  meta: string
+}
+
 const semanticUIReactCompleter = {
   getCompletions(editor, session, pos, prefix, callback) {
-    const completions = []
+    const completions: Completion[] = []
 
     _.each(parentComponents, component => {
       const { name } = component._meta
@@ -41,7 +47,7 @@ languageTools.addCompleter(semanticUIReactCompleter)
 
 export interface IEditorProps extends AceEditorProps {
   id: string
-  value: string
+  value?: string
   mode?: 'html' | 'jsx' | 'sh'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
@@ -68,7 +74,7 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: PropTypes.bool,
   }
 
-  public static defaultProps: IEditorProps = {
+  public static defaultProps = {
     id: '',
     value: '',
     mode: 'jsx',
@@ -91,10 +97,10 @@ class Editor extends React.Component<IEditorProps> {
   constructor(props: IEditorProps) {
     super(props)
 
-    this.setLineCount(props.value)
+    this.setLineCount((props as IEditorPropsWithDefaults).value)
   }
 
-  public componentWillReceiveProps(nextProps: IEditorProps) {
+  public componentWillReceiveProps(nextProps: IEditorPropsWithDefaults) {
     const previousPros = this.props
     const { value, active, showCursor } = nextProps
 
@@ -117,7 +123,7 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   public componentDidMount() {
-    const { active, showCursor } = this.props
+    const { active, showCursor } = this.props as IEditorPropsWithDefaults
 
     this.setCursorVisibility(showCursor)
 
@@ -181,7 +187,7 @@ class Editor extends React.Component<IEditorProps> {
     })
   }
 
-  private safeCall<T>(cb: () => T, logError?: boolean): T {
+  private safeCall<T>(cb: () => T, logError?: boolean): T | undefined {
     try {
       return cb()
     } catch (error) {
@@ -194,3 +200,5 @@ class Editor extends React.Component<IEditorProps> {
 }
 
 export default Editor
+
+export type IEditorPropsWithDefaults = IEditorProps & (typeof Editor.defaultProps)

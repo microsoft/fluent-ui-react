@@ -2,8 +2,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
-import { customPropTypes, UIComponent, Extendable } from '../../lib'
+import { customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export interface IAvatarProps {
   alt?: string
@@ -145,8 +146,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { src, alt, name, status, getInitials, size } = this.props
-    const { icon = '', color = '' } = Avatar.statusToIcon[status] || {}
+    const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
+    const { icon = '', color = '' } = (status && Avatar.statusToIcon[status]) || {}
 
     const iconVariables = {
       color: 'white',
@@ -168,7 +169,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
           <Label
             styles={{ root: styles.avatarNameContainer }}
             as="div"
-            content={getInitials(name)}
+            content={getInitials(name || '')}
             variables={{ padding: '0px' }}
             circular
             title={name}
@@ -192,3 +193,5 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
 }
 
 export default Avatar
+
+export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps

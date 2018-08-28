@@ -1,11 +1,9 @@
-import { pxToRem } from '../../../../lib'
-
 export interface IGridVariables {
   height: string
   width: string
   defaultColumnCount: number
-  gridGap: string
-  padding: string
+  gridGap?: string
+  padding?: string
 }
 
 export default (): IGridVariables => ({

@@ -31,7 +31,7 @@ export const convertImportStatementToExpression = (node: ts.ImportDeclaration) =
         return `const {${imports.join()}} = ${MODULE};\n`
       },
     ],
-  ])(node.importClause.namedBindings)
+  ])(node.importClause!.namedBindings)
 }
 
 /**

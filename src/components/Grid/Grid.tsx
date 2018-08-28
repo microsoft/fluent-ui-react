@@ -2,13 +2,26 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+
+export interface IGridProps {
+  as?: any
+  className?: string
+  children?: ReactChildren
+  columns?: string | number
+  content?: ItemShorthand | ItemShorthand[]
+  rows?: string | number
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A grid.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<any, any> {
+class Grid extends UIComponent<Extendable<IGridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'

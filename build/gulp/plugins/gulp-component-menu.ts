@@ -7,8 +7,13 @@ import getComponentInfo from './util/getComponentInfo'
 
 const pluginName = 'gulp-component-menu'
 
+type ComponentMenuItem = {
+  displayName: string
+  type: string
+}
+
 export default () => {
-  const result = []
+  const result: ComponentMenuItem[] = []
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {
