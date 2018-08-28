@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable, ReactChildren, SyntheticEventHandler } from '../../../types/utils'
+import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
 
 export interface IAccordionTitleProps {
   as?: any
@@ -12,7 +12,7 @@ export interface IAccordionTitleProps {
   className?: string
   content?: React.ReactNode
   index?: string | number
-  onClick?: SyntheticEventHandler<IAccordionTitleProps>
+  onClick?: ComponentEventHandler<IAccordionTitleProps>
 }
 
 /**

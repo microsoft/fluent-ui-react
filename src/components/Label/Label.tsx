@@ -17,7 +17,7 @@ import {
   Extendable,
   ReactChildren,
   ItemShorthand,
-  SyntheticEventHandler,
+  ComponentEventHandler,
 } from '../../../types/utils'
 
 import { Icon } from '../..'
@@ -32,7 +32,7 @@ export interface ILabelProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'start' | 'end'
-  onIconClick?: SyntheticEventHandler<ILabelProps>
+  onIconClick?: ComponentEventHandler<ILabelProps>
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

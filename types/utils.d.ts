@@ -12,4 +12,4 @@ export type Extendable<T> = T & {
 
 export type ItemShorthand = React.ReactNode | object | (React.ReactNode | object)[]
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
-export type SyntheticEventHandler<TProps> = (event: React.SyntheticEvent, data: TProps) => void
+export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: TProps) => void

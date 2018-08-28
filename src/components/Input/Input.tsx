@@ -16,7 +16,7 @@ import {
   Extendable,
   ItemShorthand,
   ReactChildren,
-  SyntheticEventHandler,
+  ComponentEventHandler,
 } from '../../../types/utils'
 
 export interface IInputProps {
@@ -28,7 +28,7 @@ export interface IInputProps {
   fluid?: boolean
   icon?: ItemShorthand
   input?: ItemShorthand
-  onChange?: SyntheticEventHandler<IInputProps>
+  onChange?: ComponentEventHandler<IInputProps>
   value?: string
   type?: string
   styles?: IComponentPartStylesInput

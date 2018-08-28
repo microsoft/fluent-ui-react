@@ -10,7 +10,7 @@ import {
   Extendable,
   ItemShorthand,
   ReactChildren,
-  SyntheticEventHandler,
+  ComponentEventHandler,
 } from '../../../types/utils'
 
 export interface IButtonProps {
@@ -23,7 +23,7 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'before' | 'after'
-  onClick?: SyntheticEventHandler<IButtonProps>
+  onClick?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
   accessibility?: object | Function
   styles?: IComponentPartStylesInput

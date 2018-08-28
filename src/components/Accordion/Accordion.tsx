@@ -12,7 +12,7 @@ import {
   Extendable,
   ItemShorthand,
   ReactChildren,
-  SyntheticEventHandler,
+  ComponentEventHandler,
 } from '../../../types/utils'
 
 export interface IAccordionProps {
@@ -22,7 +22,7 @@ export interface IAccordionProps {
   children?: ReactChildren
   defaultActiveIndex?: number[] | number
   exclusive?: boolean
-  onTitleClick?: SyntheticEventHandler<IAccordionProps>
+  onTitleClick?: ComponentEventHandler<IAccordionProps>
   panels?: {
     content: ItemShorthand
     title: ItemShorthand
