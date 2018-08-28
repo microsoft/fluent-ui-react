@@ -19,9 +19,14 @@ import {
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
-import { IAccessibilityDefinition } from './accessibility/interfaces'
+import { IAccessibilityDefinition, FocusZoneMode } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import {
+  IFocusZoneProps,
+  IFocusZone,
+  FocusZone as FabricFocusZone,
+} from './accessibility/FocusZone'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -49,12 +54,29 @@ export interface IRenderConfig {
   state: { [key: string]: any }
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility: (props, state) => IAccessibilityDefinition = (props, state) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
   return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
     ...props,
     ...state,
   })
+}
+
+/**
+ * This function provides compile-time type checking for the following:
+ * - if FocusZone implements IFocusZone interface,
+ * - if FocusZone properties extend IFocusZoneProps, and
+ * - if the passed properties extend IFocusZoneProps.
+ *
+ * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
+ * that the new implementation is backwards compatible with the old implementation.
+ */
+function wrapInGenericFocusZone<
+  COMPONENT_PROPS extends IFocusZoneProps,
+  PROPS extends COMPONENT_PROPS,
+  COMPONENT extends IFocusZone & React.Component<COMPONENT_PROPS>
+>(FocusZone: { new (...args: any[]): COMPONENT }, props: PROPS, children: React.ReactNode) {
+  return <FocusZone {...props}>{children}</FocusZone>
 }
 
 const renderComponent = <P extends {}>(
@@ -103,7 +125,12 @@ const renderComponent = <P extends {}>(
           accessibility,
         }
 
-        return render(config)
+        const rendered = render(config)
+
+        if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
+          return wrapInGenericFocusZone(FabricFocusZone, accessibility.focusZone.props, rendered)
+        }
+        return rendered
       }}
     />
   )

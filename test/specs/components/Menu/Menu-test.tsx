@@ -7,7 +7,7 @@ import { mountWithProvider } from 'test/utils'
 
 describe('Menu', () => {
   isConformant(Menu)
-  handlesAccessibility(Menu, { defaultRootRole: 'menu' })
+  handlesAccessibility(Menu, { defaultRootRole: 'menu', isWrappedInFocusZone: true })
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
