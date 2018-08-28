@@ -48,7 +48,7 @@ type IRenderConfigProps = {
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
-  displayName?: string
+  displayName: string
   handledProps: string[]
   props: IRenderConfigProps
   state: { [key: string]: any }
