@@ -10,12 +10,32 @@ import {
   UIComponent,
 } from '../../lib'
 
+import { Accessibility } from '../../lib/accessibility/interfaces'
+
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+
 import { Icon } from '../..'
+
+export interface ILabelProps {
+  accessibility?: Accessibility
+  as?: any
+  children?: ReactChildren
+  circular?: boolean
+  className?: string
+  content?: React.ReactNode
+  fluid?: boolean
+  icon?: ItemShorthand
+  iconPosition: 'start' | 'end'
+  onIconClick: (event: React.SyntheticEvent, data: ILabelProps) => void
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A label displays content classification
  */
-class Label extends UIComponent<any, any> {
+class Label extends UIComponent<Extendable<ILabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function
@@ -103,9 +123,9 @@ class Label extends UIComponent<any, any> {
       const iconAtStart = !iconAtEnd
 
       const iconElement = Icon.create(
+        icon,
         {
           styles: { root: styles.icon },
-          ...(typeof icon === 'string' ? { name: icon } : { ...icon }),
         },
         {
           generateKey: false,
