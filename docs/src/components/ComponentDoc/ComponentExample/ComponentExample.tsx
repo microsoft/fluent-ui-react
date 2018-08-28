@@ -607,6 +607,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
+    const currentExamplePath = this.sourceCodeMgr.currentPath
 
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
@@ -652,7 +653,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={examplePath}
+                  examplePath={currentExamplePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
