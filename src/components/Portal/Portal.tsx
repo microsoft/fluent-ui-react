@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { invoke } from 'lodash'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -110,12 +110,12 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
 
   private handleMount = () => {
     eventStack.sub('click', this.handleDocumentClick)
-    invoke(this.props, 'onMount', this.props)
+    _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
     eventStack.unsub('click', this.handleDocumentClick)
-    invoke(this.props, 'onUnmount', this.props)
+    _.invoke(this.props, 'onUnmount', this.props)
   }
 
   private handlePortalRef = (portalNode: HTMLElement) => {
@@ -125,13 +125,13 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
   private handleTriggerRef = (triggerNode: HTMLElement) => {
     this.triggerNode = triggerNode
 
-    invoke(this.props, 'triggerRef', triggerNode)
+    _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
   private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
     const { trigger } = this.props
 
-    invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
+    _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
 
