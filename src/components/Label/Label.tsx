@@ -13,7 +13,12 @@ import {
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ItemShorthand,
+  SyntheticEventHandler,
+} from '../../../types/utils'
 
 import { Icon } from '../..'
 
@@ -27,7 +32,7 @@ export interface ILabelProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition: 'start' | 'end'
-  onIconClick: (event: React.SyntheticEvent, data: ILabelProps) => void
+  onIconClick: SyntheticEventHandler<ILabelProps>
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

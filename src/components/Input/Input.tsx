@@ -12,7 +12,12 @@ import {
 } from '../../lib'
 import Icon from '../Icon'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  SyntheticEventHandler,
+} from '../../../types/utils'
 
 export interface IInputProps {
   as?: any
@@ -23,7 +28,7 @@ export interface IInputProps {
   fluid?: boolean
   icon?: ItemShorthand
   input?: ItemShorthand
-  onChange?: (event: React.SyntheticEvent, data: IInputProps) => void
+  onChange?: SyntheticEventHandler<IInputProps>
   value?: string
   type?: string
   styles?: IComponentPartStylesInput
