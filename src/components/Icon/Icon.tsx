@@ -35,12 +35,6 @@ export interface IIconProps {
   variables?: ComponentVariablesInput
 }
 
-/**
- * @accessibility
- * Default behavior: IconBehavior
- *  - attribute "aria-hidden='true'" is applied on icon
- */
-
 class Icon extends UIComponent<Extendable<IIconProps>, any> {
   static create: Function
 

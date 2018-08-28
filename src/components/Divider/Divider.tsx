@@ -1,18 +1,13 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import {
-  childrenExist,
-  createShorthandFactory,
-  customPropTypes,
-  UIComponent,
-  Extendable,
-} from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IDividerProps {
   as?: any
-  children?: React.ReactNode
+  children?: ReactChildren
   className?: string
   content?: React.ReactNode
   size?: number
@@ -24,11 +19,7 @@ export interface IDividerProps {
 
 /**
  * @accessibility
- * If there is no text provided inside divider, then "role='separator'" should be set.
- *
- *
- * Other considerations:
- *  - if separator contains text, then "role='separator'" cannnot be used because text is not narrated by VoiceOver (even with aria-label)
+ * This is shown at the top.
  */
 class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static displayName = 'Divider'
