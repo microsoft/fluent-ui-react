@@ -1,10 +1,11 @@
 import * as PropTypes from 'prop-types'
-import { invoke } from 'lodash'
+import * as _ from 'lodash'
 import { Children, Component } from 'react'
 import { findDOMNode } from 'react-dom'
-import { Extendable } from '../../../types/utils'
+import { ReactChildren } from 'utils'
 
 export interface IRefProps {
+  children?: ReactChildren
   innerRef?: (ref: HTMLElement) => void
 }
 
@@ -12,7 +13,7 @@ export interface IRefProps {
  * This component exposes a callback prop that always returns the DOM node of both functional and class component
  * children.
  */
-export default class Ref extends Component<Extendable<IRefProps>, any> {
+export default class Ref extends Component<IRefProps> {
   static propTypes = {
     /** Primary content. */
     children: PropTypes.element,
@@ -26,7 +27,7 @@ export default class Ref extends Component<Extendable<IRefProps>, any> {
   }
 
   componentDidMount() {
-    invoke(this.props, 'innerRef', findDOMNode(this))
+    _.invoke(this.props, 'innerRef', findDOMNode(this))
   }
 
   render() {

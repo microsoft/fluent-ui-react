@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { invoke } from 'lodash'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -9,13 +9,14 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, Extendable } from '../../../types/utils'
+import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 
 export interface IPortalProps {
+  children?: ReactChildren
   content?: ItemShorthand | ItemShorthand[]
   defaultOpen?: boolean
   onMount?: (props: IPortalProps) => void
@@ -25,10 +26,14 @@ export interface IPortalProps {
   triggerRef?: (node: HTMLElement) => void
 }
 
+export interface IPortalState {
+  open?: boolean
+}
+
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
+class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -72,7 +77,18 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
     triggerRef: PropTypes.func,
   }
 
-  public render() {
+  public static handledProps = [
+    'children',
+    'content',
+    'defaultOpen',
+    'onMount',
+    'onUnmount',
+    'open',
+    'trigger',
+    'triggerRef',
+  ]
+
+  public renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
         {this.renderPortal()}
@@ -110,12 +126,12 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
 
   private handleMount = () => {
     eventStack.sub('click', this.handleDocumentClick)
-    invoke(this.props, 'onMount', this.props)
+    _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
     eventStack.unsub('click', this.handleDocumentClick)
-    invoke(this.props, 'onUnmount', this.props)
+    _.invoke(this.props, 'onUnmount', this.props)
   }
 
   private handlePortalRef = (portalNode: HTMLElement) => {
@@ -125,13 +141,13 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
   private handleTriggerRef = (triggerNode: HTMLElement) => {
     this.triggerNode = triggerNode
 
-    invoke(this.props, 'triggerRef', triggerNode)
+    _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
   private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
     const { trigger } = this.props
 
-    invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
+    _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
 
