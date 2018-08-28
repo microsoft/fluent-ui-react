@@ -31,8 +31,8 @@ export interface ILabelProps {
   content?: React.ReactNode
   fluid?: boolean
   icon?: ItemShorthand
-  iconPosition: 'start' | 'end'
-  onIconClick: SyntheticEventHandler<ILabelProps>
+  iconPosition?: 'start' | 'end'
+  onIconClick?: SyntheticEventHandler<ILabelProps>
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
