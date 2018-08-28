@@ -2,10 +2,11 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
-import ace from 'brace'
+import * as ace from 'brace'
 import 'brace/ext/language_tools'
-import 'brace/mode/jsx'
 import 'brace/mode/html'
+import 'brace/mode/jsx'
+import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
 import { eventStack, doesNodeContainClick } from 'src/lib'
 
@@ -41,13 +42,16 @@ languageTools.addCompleter(semanticUIReactCompleter)
 export interface IEditorProps extends AceEditorProps {
   id: string
   value: string
-  mode?: 'html' | 'jsx'
+  mode?: 'html' | 'jsx' | 'sh'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
   active?: boolean
   showCursor?: boolean
   highlightGutterLine?: boolean
 }
+
+export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
+export const EDITOR_GUTTER_COLOR = '#26282d'
 
 class Editor extends React.Component<IEditorProps> {
   private lineCount: number
@@ -57,7 +61,7 @@ class Editor extends React.Component<IEditorProps> {
   public static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx']),
+    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
     onClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
     active: PropTypes.bool,
