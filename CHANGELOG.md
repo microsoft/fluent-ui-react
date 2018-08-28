@@ -23,11 +23,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix docs pages presenting examples of wrong component @kuzhelov ([#124](https://github.com/stardust-ui/react/pull/124))
 - Fix component variables when merging themes @levithomason ([#128](https://github.com/stardust-ui/react/pull/128))
+- Fix Button styles when rendered as an anchor @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
 
 ### Features
 - Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
 - Add `descriptionColor` to Header @kuzhelov ([#78](https://github.com/stardust-ui/react/pull/78))
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
+
+### Documentation
+- Add a Quick Start guide @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
 
 <!--------------------------------[ v0.3.0 ]------------------------------- -->
 ## [v0.3.0](https://github.com/stardust-ui/react/tree/v0.3.0) (2018-08-22)
