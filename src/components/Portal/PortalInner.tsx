@@ -1,10 +1,12 @@
 import * as PropTypes from 'prop-types'
-import { invoke } from 'lodash'
+import * as _ from 'lodash'
 import { Component } from 'react'
 import { createPortal } from 'react-dom'
 import { Extendable } from '../../../types/utils'
+import { isBrowser } from '../../lib'
 
 export interface IPortalProps {
+  context?: HTMLElement
   onMount?: (props: IPortalProps) => void
   onUnmount?: (props: IPortalProps) => void
 }
@@ -16,6 +18,9 @@ class PortalInner extends Component<Extendable<IPortalProps>, any> {
   public static propTypes = {
     /** Primary content. */
     children: PropTypes.node,
+
+    /** Existing element the portal should be bound to. */
+    context: PropTypes.object,
 
     /**
      * Called when the portal is mounted on the DOM
@@ -32,16 +37,22 @@ class PortalInner extends Component<Extendable<IPortalProps>, any> {
     onUnmount: PropTypes.func,
   }
 
+  public static defaultProps = {
+    context: isBrowser() ? document.body : null,
+  }
+
   public componentDidMount() {
-    invoke(this.props, 'onMount', { ...this.props })
+    _.invoke(this.props, 'onMount', this.props)
   }
 
   public componentWillUnmount() {
-    invoke(this.props, 'onUnmount', { ...this.props })
+    _.invoke(this.props, 'onUnmount', this.props)
   }
 
   public render() {
-    return createPortal(this.props.children, document.body)
+    const { children, context } = this.props
+
+    return context && createPortal(children, context)
   }
 }
 
