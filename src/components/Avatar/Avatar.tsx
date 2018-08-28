@@ -2,8 +2,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
-import { customPropTypes, UIComponent, Extendable } from '../../lib'
+import { customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export interface IAvatarProps {
   alt?: string

@@ -9,9 +9,26 @@ import {
   customPropTypes,
   getUnhandledProps,
   partitionHTMLProps,
-  UIComponent,
 } from '../../lib'
 import Icon from '../Icon'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+
+export interface IInputProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  clearable?: boolean
+  defaultValue?: string
+  fluid?: boolean
+  icon?: ItemShorthand
+  input?: ItemShorthand
+  onChange?: (event: React.SyntheticEvent, data: IInputProps) => void
+  value?: string
+  type?: string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An Input
@@ -23,7 +40,7 @@ import Icon from '../Icon'
  *  - if input is search, then use "role='search'"
  *
  */
-class Input extends AutoControlledComponent<any, any> {
+class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'
@@ -118,7 +135,6 @@ class Input extends AutoControlledComponent<any, any> {
 
   handleOnClear = e => {
     const { clearable } = this.props
-    const { value } = this.state
 
     if (clearable) {
       this.trySetState({ value: '' })
@@ -169,11 +185,10 @@ class Input extends AutoControlledComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, clearable, input, type } = this.props
+    const { children, input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = classes.input
-    const iconClasses = classes.icon
 
     // Render with children
     // ----------------------------------------
