@@ -19,8 +19,8 @@ export interface IDividerProps {
 
 /**
  * @accessibility
+ * This is shown at the top.
  */
-
 class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static displayName = 'Divider'
 

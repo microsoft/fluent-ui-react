@@ -5,9 +5,27 @@ import { customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
+
+export interface IImageProps {
+  accessibility?: Accessibility
+  as?: any
+  avatar?: boolean
+  children?: ReactChildren
+  circular?: boolean
+  className?: string
+  fluid?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
 /**
  * An image is a graphic representation of something.
  * @accessibility
+ * Default behavior: ImageBehavior
+ *  - attribute "aria-hidden='true'" is applied on img element, if there is no 'alt' property provided
+ *
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:
@@ -15,7 +33,7 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-class Image extends UIComponent<any, any> {
+class Image extends UIComponent<Extendable<IImageProps>, any> {
   static className = 'ui-image'
 
   static displayName = 'Image'

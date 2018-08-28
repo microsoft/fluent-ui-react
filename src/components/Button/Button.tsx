@@ -28,6 +28,9 @@ export interface IButtonProps {
 /**
  * A button.
  * @accessibility
+ * Default behavior: ButtonBehavior
+ *  - adds role='button' if element type is other than 'button'
+ *
  *
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader

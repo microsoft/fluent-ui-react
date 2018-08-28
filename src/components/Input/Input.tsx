@@ -38,6 +38,7 @@ export interface IInputProps {
  *
  * Other considerations:
  *  - if input is search, then use "role='search'"
+ *
  */
 class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   static className = 'ui-input'
