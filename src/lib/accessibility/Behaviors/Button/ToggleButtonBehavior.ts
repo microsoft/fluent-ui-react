@@ -12,6 +12,7 @@ const ToggleButtonBehavior: Accessibility = (props: any) => ({
     root: {
       role: props.as === 'button' ? undefined : 'button',
       'aria-pressed': !!props['active'],
+      'aria-disabled': !!props['disabled'],
     },
   },
 })
