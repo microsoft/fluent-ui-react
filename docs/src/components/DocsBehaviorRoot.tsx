@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
-import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
