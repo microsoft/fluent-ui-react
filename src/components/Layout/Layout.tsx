@@ -3,8 +3,45 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
+import { Extendable } from '../../../types/utils'
+import {
+  ComponentVariablesInput,
+  IComponentPartStylesInput,
+  ICSSInJSStyle,
+} from '../../../types/theme'
 
-class Layout extends UIComponent<any, any> {
+export interface ILayoutProps {
+  as?: any
+  className?: string
+  debug?: boolean
+  renderStartArea?: (params: object) => React.ReactNode
+  renderMainArea?: (params: object) => React.ReactNode
+  renderEndArea?: (params: object) => React.ReactNode
+  renderGap?: (params: object) => React.ReactNode
+  rootCSS?: ICSSInJSStyle
+  start?: any
+  startCSS?: ICSSInJSStyle
+  startSize?: string
+  main?: any
+  mainCSS?: ICSSInJSStyle
+  mainSize?: string
+  end?: any
+  endCSS?: ICSSInJSStyle
+  endSize?: string
+  justifyItems?: any
+  alignItems?: any
+  gap?: string
+  reducing?: boolean
+  disappearing?: boolean
+  truncateStart?: boolean
+  truncateMain?: boolean
+  truncateEnd?: boolean
+  vertical?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -130,7 +167,7 @@ class Layout extends UIComponent<any, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props
+    } = this.props as ILayoutPropsWithDefaults
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -175,3 +212,4 @@ class Layout extends UIComponent<any, any> {
 }
 
 export default Layout
+export type ILayoutPropsWithDefaults = ILayoutProps & typeof Layout.defaultProps

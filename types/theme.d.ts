@@ -26,9 +26,7 @@ export type IProps = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface ISiteVariables {
-  [key: string]: any
-
+export interface ISiteVariables extends ObjectOf<any> {
   brand?: string
   htmlFontSize?: string
 }
@@ -83,41 +81,27 @@ export interface ComponentStyleFunctionParam {
   variables: ComponentVariablesObject
 }
 
-export type ComponentPartStyleFunction =
-  | ((styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle)
-  | undefined
+export type ComponentPartStyleFunction = ((
+  styleParam: ComponentStyleFunctionParam,
+) => ICSSInJSStyle)
 
 export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
 
-export interface IComponentPartStylesInput {
-  [part: string]: ComponentPartStyle
+export interface IComponentPartStylesInput extends ObjectOf<ComponentPartStyle> {}
 
-  root?: ComponentPartStyle
-}
+export interface IComponentPartStylesPrepared extends ObjectOf<ComponentPartStyleFunction> {}
 
-export interface IComponentPartStylesPrepared {
-  [part: string]: ComponentPartStyleFunction
-
-  root?: ComponentPartStyleFunction
-}
-
-export interface IComponentPartClasses {
-  [part: string]: string | undefined
-
-  root?: string
-}
+export interface IComponentPartClasses extends ObjectOf<string> {}
 
 // ========================================================
 // Static Styles
 // ========================================================
 
-export type StaticStyleObject = {
-  [selector: string]: ICSSInJSStyle
-}
+export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
 
 export type StaticStyleRenderable = string | StaticStyleObject
 
-export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleObject
+export type StaticStyleFunction = (siteVariables?: ISiteVariables) => StaticStyleObject
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
