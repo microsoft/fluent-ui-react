@@ -22,7 +22,7 @@ export interface IAccordionProps {
     content: ItemShorthand
     title: ItemShorthand
   }[]
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

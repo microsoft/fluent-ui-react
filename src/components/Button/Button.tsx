@@ -20,7 +20,7 @@ export interface IButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: (event: React.SyntheticEvent, data: IButtonProps) => void
   type?: 'primary' | 'secondary'
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
