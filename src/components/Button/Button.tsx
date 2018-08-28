@@ -126,17 +126,20 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     rest,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
+    const { isLastFocusFromMouse } = this.state
+    console.log('state is', isLastFocusFromMouse)
+
     const hasChildren = childrenExist(children)
-    const { buttonClasses = classes.root } = this.state
 
     return (
       <ElementType
-        className={buttonClasses}
+        className={classes.root}
+        styles={isLastFocusFromMouse ? { root: styles.focusFromMouse } : undefined}
         disabled={disabled}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...rest}
-        onFocus={this.handleFocus.bind(this, classes)}
+        onFocus={() => this.handleFocus()}
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
@@ -177,11 +180,8 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     }
   }
 
-  private handleFocus = classes => {
-    this.setState({
-      buttonClasses:
-        whatInput.ask() === 'mouse' ? cx(classes.root, classes.focusFromMouse) : classes.root,
-    })
+  private handleFocus = () => {
+    this.setState({ isLastFocusFromMouse: whatInput.ask() === 'mouse' })
   }
 }
 
