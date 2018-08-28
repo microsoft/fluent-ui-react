@@ -4,6 +4,19 @@ import * as React from 'react'
 import { customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Extendable } from '../../../types/utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IImageProps {
+  as?: any
+  avatar?: boolean
+  circular?: boolean
+  className?: string
+  fluid?: boolean
+  accessibility?: object | Function
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
