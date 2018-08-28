@@ -1,4 +1,5 @@
 const fontAwesomeIcons = new Map([
+  ['arrow right', 'f061'],
   ['chess rook', 'f447'],
   ['unordered list', 'f0ca'],
   ['ordered list', 'f0cb'],
