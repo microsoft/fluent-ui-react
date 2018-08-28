@@ -45,6 +45,7 @@ const buttonStyles: IComponentPartStylesInput = {
         (iconPosition
           ? {
               display: 'inline-flex',
+              alignItems: 'center',
               justifyContent: 'center',
             }
           : {
@@ -77,6 +78,7 @@ const buttonStyles: IComponentPartStylesInput = {
               backgroundColor: typePrimaryBackgroundColor,
               borderColor: typePrimaryBorderColor,
               ':hover': {
+                color: typePrimaryColor,
                 backgroundColor: typePrimaryBackgroundColorHover,
               },
             }),
@@ -86,6 +88,7 @@ const buttonStyles: IComponentPartStylesInput = {
               backgroundColor: typeSecondaryBackgroundColor,
               borderColor: typeSecondaryBorderColor,
               ':hover': {
+                color: typeSecondaryColor,
                 borderColor: 'transparent',
                 backgroundColor: typeSecondaryBackgroundColorHover,
               },
