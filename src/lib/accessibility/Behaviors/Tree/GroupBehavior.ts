@@ -1,11 +1,11 @@
 import { Accessibility } from '../../interfaces'
 
-const MenuBehavior: Accessibility = {
+const GroupBehavior: Accessibility = {
   attributes: {
     root: {
-      role: 'menu',
+      role: 'group',
     },
   },
 }
 
-export default MenuBehavior
+export default GroupBehavior
