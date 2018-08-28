@@ -13,7 +13,7 @@ export default () => (
     <p>
       Stardust UI should be installed as a <code>dependency</code> of your app.
     </p>
-    <CodeSnippet mode="sh" value="yarn install @stardust-ui/react" />
+    <CodeSnippet mode="sh" value="yarn add @stardust-ui/react" />
     <Header as="h2">Setup</Header>
     <p>
       Stardust components are styled using CSS in JS. This technique requires a style renderer to
