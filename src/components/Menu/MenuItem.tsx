@@ -28,7 +28,7 @@ export interface IMenuItemProps {
   index?: number
   onClick?: ComponentEventHandler<IMenuItemProps>
   pills?: boolean
-  pointing?: boolean
+  pointing?: boolean | 'start' | 'end'
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean

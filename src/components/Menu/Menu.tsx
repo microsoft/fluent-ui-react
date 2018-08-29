@@ -25,7 +25,7 @@ export interface IMenuProps {
   iconOnly?: boolean
   items?: ItemShorthand[]
   pills?: boolean
-  pointing?: boolean
+  pointing?: boolean | 'start' | 'end'
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
