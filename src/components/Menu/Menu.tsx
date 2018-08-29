@@ -68,8 +68,11 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** A menu can adjust its appearance to de-emphasize its contents. */
     pills: PropTypes.bool,
 
-    /** A menu can point to show its relationship to nearby content. */
-    pointing: PropTypes.bool,
+    /**
+     * A menu can point to show its relationship to nearby content.
+     * For vertical menu, it can point to the start of the item or to the end.
+     */
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
