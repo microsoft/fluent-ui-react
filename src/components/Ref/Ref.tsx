@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import { invoke } from 'lodash'
+import * as _ from 'lodash'
 import { Children, Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { Extendable } from '../../../types/utils'
@@ -26,7 +26,7 @@ export default class Ref extends Component<Extendable<IRefProps>, any> {
   }
 
   componentDidMount() {
-    invoke(this.props, 'innerRef', findDOMNode(this))
+    _.invoke(this.props, 'innerRef', findDOMNode(this))
   }
 
   render() {

@@ -1,3 +1,6 @@
+import * as themes from './themes'
+export { themes }
+
 export { default as Accordion } from './components/Accordion'
 export { default as Button } from './components/Button'
 export { default as Chat } from './components/Chat'
@@ -24,3 +27,4 @@ export { default as Segment } from './components/Segment'
 export { default as ItemLayout } from './components/ItemLayout'
 export { default as Portal } from './components/Portal'
 export { default as Popup } from './components/Popup'
+export { PopupContent } from './components/Popup'

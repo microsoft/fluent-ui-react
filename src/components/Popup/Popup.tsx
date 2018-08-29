@@ -1,18 +1,14 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 import CSSProperties = React.CSSProperties
 
-import Portal from '../Portal'
-import {
-  childrenExist,
-  customPropTypes,
-  makeDebugger,
-  UIComponent,
-  IRenderResultConfig,
-} from '../../lib'
+import { childrenExist, customPropTypes, isBrowser } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
+import Portal from '../Portal'
+import PopupContent from './PopupContent'
+
 import { PopupBehavior, PopupTriggerBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -26,7 +22,6 @@ type PopupPosition =
   | 'top center'
   | 'bottom center'
 
-const debug = makeDebugger('*')
 const POSITIONS: PopupPosition[] = [
   'top start',
   'top end',
@@ -40,16 +35,15 @@ const POSITIONS: PopupPosition[] = [
 
 export interface IPopupProps {
   as?: any
+  basic?: boolean
   className?: string
   content?: ItemShorthand | ItemShorthand[]
   position?: PopupPosition
-  styles?: IComponentPartStylesInput
-  trigger?: JSX.Element
-  variables?: ComponentVariablesInput
+  style?: CSSProperties
+  trigger: JSX.Element
 }
 
 export interface IPopupState {
-  position?: PopupPosition
   style?: CSSProperties
 }
 
@@ -58,16 +52,19 @@ export interface IPopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupState> {
+export default class Popup extends React.Component<Extendable<IPopupProps>, IPopupState> {
+  private popupOffset = 8
   private triggerRef: HTMLElement
   private popupCoords: ClientRect | DOMRect | undefined
 
-  public static displayName = 'Popup'
-  public static className = 'ui-popup'
+  public static Content = PopupContent
 
   public static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
+
+    /** Basic CSS styling for the popup */
+    basic: PropTypes.bool,
 
     /** Primary content. */
     children: PropTypes.node,
@@ -78,67 +75,25 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** Simple text content for the popover. */
     content: customPropTypes.itemShorthand,
 
-    /** Position for the popover. */
+    /** Position for the popup. */
     position: PropTypes.oneOf(POSITIONS),
 
     /** Element to be rendered in-place where the popup is defined. */
-    trigger: PropTypes.node,
+    trigger: PropTypes.node.isRequired,
 
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    /** Custom style to be applied for component. */
+    style: PropTypes.object,
   }
-
-  public static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'content',
-    'style',
-    'styles',
-    'trigger',
-    'variables',
-  ]
 
   public static defaultProps = {
     position: 'top start',
-    accessibility: PopupBehavior as Accessibility,
   }
 
-  public state = {
-    position: undefined,
-    style: {},
-  }
+  public state = { style: {} }
 
-  public renderComponent({
-    ElementType,
-    classes,
-    rest,
-    accessibility,
-  }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    debug(`renderComponent`)
-
-    const { children, content, trigger } = this.props
-    const style = { ...this.state.style, ...this.props.style }
-
-    const popupJSX = (
-      <ElementType
-        className={classes.root}
-        ref={this.handlePopupRef}
-        style={style}
-        {...rest}
-        {...accessibility.attributes.root}
-      >
-        {childrenExist(children) ? children : content}
-      </ElementType>
-    )
-
+  public render() {
+    const { basic, children, content, trigger } = this.props
+    const { style } = this.state
     return (
       <Portal
         onMount={this.handlePortalMount}
@@ -146,17 +101,18 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         triggerRef={this.handleTriggerRef}
         triggerAccessibility={PopupTriggerBehavior}
       >
-        {popupJSX}
+        <Popup.Content basic={basic} triggerRef={this.handlePopupRef} styles={{ root: style }}>
+          {childrenExist(children) ? children : content}
+        </Popup.Content>
       </Portal>
     )
   }
 
-  private computePopupStyle(position: PopupPosition): CSSProperties {
-    debug(`computePopupStyle`)
-
+  private computePopupStyle(): CSSProperties {
     const style: CSSProperties = {}
     const popupCoords = this.popupCoords
-    if (!popupCoords) {
+
+    if (!isBrowser() || !popupCoords) {
       return style
     }
 
@@ -168,78 +124,58 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
     const { pageYOffset, pageXOffset } = window
     const { clientWidth, clientHeight } = document.documentElement
+    const { position } = this.props
+    const popupOffset = this.props.basic ? 0 : this.popupOffset
 
     if (_.includes(position, 'end')) {
-      style.left = 'auto'
       style.right = Math.round(clientWidth - (coords.right + pageXOffset))
     } else if (_.includes(position, 'start')) {
       style.left = Math.round(coords.left + pageXOffset)
-      style.right = 'auto'
     } else {
       // if not start nor end, we are horizontally centering the element
       const xOffset = (coords.width - popupCoords.width) / 2
       style.left = Math.round(coords.left + xOffset + pageXOffset)
-      style.right = 'auto'
     }
 
     if (_.includes(position, 'top')) {
-      style.top = 'auto'
-      style.bottom = Math.round(clientHeight - (coords.top + pageYOffset))
+      style.bottom = Math.round(clientHeight - (coords.top + pageYOffset)) + popupOffset
     } else if (_.includes(position, 'bottom')) {
-      style.top = Math.round(coords.bottom + pageYOffset)
-      style.bottom = 'auto'
+      style.top = Math.round(coords.bottom + pageYOffset) + popupOffset
     } else {
       // if not top nor bottom, we are vertically centering the element
       const yOffset = (coords.height + popupCoords.height) / 2
       style.top = Math.round(coords.bottom + pageYOffset - yOffset)
-      style.bottom = 'auto'
 
-      const xOffset = popupCoords.width
+      const xOffset = popupCoords.width + popupOffset
       if (_.includes(position, 'end')) {
-         (style.right as number) -= xOffset
+        style.right = (style.right as number) - xOffset
       } else {
-         (style.left as number) -= xOffset
+        style.left = (style.left as number) - xOffset
       }
     }
 
     // Append 'px' to every numerical values in the style
-    return {
-      ..._.mapValues(style, value => (_.isNumber(value) ? `${value}px` : value)),
-      position: 'absolute',
-      zIndex: 2,
-    }
+    return _.mapValues(style, value => (_.isNumber(value) ? `${value}px` : value))
   }
 
   private setPopupStyle() {
-    debug(`setPopupStyle()`)
-
-    const { position } = this.props
-    const style = this.computePopupStyle(position!)
+    const style = this.computePopupStyle()
 
     if (!_.isEmpty(style)) {
-      debug(`setPopupStyle() CALLED`)
-      this.setState({ style, position })
+      this.setState({ style })
     }
   }
 
   private handlePortalMount = () => {
-    debug('handlePortalMount()')
-
-    console.log(this.popupCoords)
-
     this.setPopupStyle()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {
-    debug(`handlePopupRef(${popupRef})`)
-
     this.popupCoords = popupRef && popupRef.getBoundingClientRect()
     this.setPopupStyle()
   }
 
   private handleTriggerRef = (triggerRef: HTMLElement) => {
-    debug(`handleTriggerRef(${triggerRef})`)
-
     this.triggerRef = triggerRef
   }
 
