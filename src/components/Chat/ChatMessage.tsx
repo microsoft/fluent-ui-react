@@ -3,10 +3,12 @@ import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import Avatar from '../Avatar'
 
 export interface IChatMessageProps {
   as?: any
+  avatar?: ItemShorthand
   children?: ReactChildren
   className?: string
   content?: any
@@ -24,6 +26,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
   static propTypes = {
     as: customPropTypes.as,
+
+    /** Chat messages can have an avatar */
+    avatar: customPropTypes.itemShorthand,
 
     /** Child content. */
     children: PropTypes.node,
@@ -44,21 +49,35 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'mine', 'styles', 'variables']
+  static handledProps = [
+    'as',
+    'avatar',
+    'children',
+    'className',
+    'content',
+    'mine',
+    'styles',
+    'variables',
+  ]
 
   static defaultProps = {
     as: 'li',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+  renderComponent({ ElementType, classes, rest, styles }) {
+    const { avatar, children, content, mine } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {!mine && this.renderAvatar(avatar, styles)}
+        <div className={classes.chatContent}>{childrenExist(children) ? children : content}</div>
+        {mine && this.renderAvatar(avatar, styles)}
       </ElementType>
     )
   }
+
+  private renderAvatar = (avatar: ItemShorthand, styles: IComponentPartStylesInput) =>
+    avatar && Avatar.create(avatar, { defaultProps: { styles: { root: styles.chatAvatar } } })
 }
 
 ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
