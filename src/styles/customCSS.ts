@@ -1,10 +1,8 @@
 import { ICSSInJSStyle } from '../../types/theme'
 
 export const disabledStyle: ICSSInJSStyle = {
-  backgroundColor: '#edebe9', // gray12
-  borderColor: 'transparent',
-  color: '#e1dfdd', // gray08
-  cursor: 'default',
+  opacity: 0.45,
+  cursor: 'not-allowed',
 }
 
 export const fittedStyle: ICSSInJSStyle = {
