@@ -6,34 +6,9 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesObject } from '../../../types/theme'
 
-import {
-  ComponentVariablesInput,
-  ComponentVariablesObject,
-  IComponentPartStylesInput,
-} from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-
-export interface IMenuProps {
-  accessibility?: Accessibility
-  as?: any
-  activeIndex?: number | string
-  children?: ReactChildren
-  className?: string
-  defaultActiveIndex?: number | string
-  fluid?: boolean
-  iconOnly?: boolean
-  items?: ItemShorthand[]
-  pills?: boolean
-  pointing?: boolean
-  type?: 'primary' | 'secondary'
-  underlined?: boolean
-  vertical?: boolean
-  styles?: IComponentPartStylesInput
-  variables?: ComponentVariablesInput
-}
-
-class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
+class Menu extends AutoControlledComponent<any, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'

@@ -1,13 +1,12 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IMenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }: { props: IMenuProps; variables: any }): ICSSInJSStyle => {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { iconOnly, fluid, pills, type, underlined, vertical } = props
     return {
       display: 'flex',

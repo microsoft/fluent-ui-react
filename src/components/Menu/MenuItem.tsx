@@ -8,35 +8,7 @@ import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import {
-  ComponentEventHandler,
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
-} from '../../../types/utils'
-
-export interface IMenuItemProps {
-  accessibility?: Accessibility
-  active?: boolean
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: any
-  icon?: ItemShorthand
-  iconOnly?: boolean
-  index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
-  pills?: boolean
-  pointing?: boolean
-  type?: 'primary' | 'secondary'
-  underlined?: boolean
-  vertical?: boolean
-  styles?: IComponentPartStylesInput
-  variables?: ComponentVariablesInput
-}
-
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
+class MenuItem extends UIComponent<any, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
