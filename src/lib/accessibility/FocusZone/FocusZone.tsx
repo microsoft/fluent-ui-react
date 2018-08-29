@@ -38,6 +38,7 @@ import {
 } from './FocusUtilities'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../interfaces'
 import getUnhandledProps from '../../getUnhandledProps'
+import { customPropTypes } from '../..'
 
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 const TABINDEX = 'tabindex'
@@ -61,8 +62,21 @@ const getRTL = () => false
 
 export class FocusZone extends React.Component<IFocusZoneProps, {}> implements IFocusZone {
   static propTypes = {
-    isCircularNavigation: PropTypes.bool,
+    componentRef: PropTypes.object,
+    className: PropTypes.string,
     direction: PropTypes.number,
+    disabled: PropTypes.bool,
+    elementType: customPropTypes.as,
+    isCircularNavigation: PropTypes.bool,
+    isInnerZoneKeystroke: PropTypes.func,
+    onActiveElementChanged: PropTypes.func,
+    onBeforeFocus: PropTypes.func,
+    allowFocusRoot: PropTypes.bool,
+    handleTabKey: PropTypes.number,
+    shouldInputLoseFocusOnArrowKey: PropTypes.func,
+    doNotAllowFocusEventToPropagate: PropTypes.bool,
+    onFocusNotification: PropTypes.func,
+    preventDefaultWhenHandled: PropTypes.bool,
   }
 
   public static defaultProps: IFocusZoneProps = {
@@ -70,10 +84,27 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     direction: FocusZoneDirection.bidirectional,
   }
 
-  static handledProps = ['isCircularNavigation', 'direction']
-
   static displayName = 'FocusZone'
   static className = 'ms-FocusZone'
+
+  static handledProps = [
+    'componentRef',
+    'className',
+    'direction',
+    'defaultActiveElement',
+    'disabled',
+    'elementType',
+    'isCircularNavigation',
+    'isInnerZoneKeystroke',
+    'onActiveElementChanged',
+    'onBeforeFocus',
+    'allowFocusRoot',
+    'handleTabKey',
+    'shouldInputLoseFocusOnArrowKey',
+    'doNotAllowFocusEventToPropagate',
+    'onFocusNotification',
+    'preventDefaultWhenHandled',
+  ]
 
   private _root = React.createRef<HTMLElement>()
   private _id: string
@@ -148,7 +179,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       <Tag
         role="presentation"
         {...rest}
-        className={cx('ms-FocusZone', className)}
+        className={cx(FocusZone.className, className)}
         ref={this._root}
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
