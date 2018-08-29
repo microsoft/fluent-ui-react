@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
 import { DefaultBehavior } from 'src/lib/accessibility'
-import { Accessibility, AriaRole } from 'src/lib/accessibility/interfaces'
+import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
 import { FocusZone, FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
@@ -34,14 +34,14 @@ const TestBehavior: Accessibility = (props: any) => ({
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  * @param {string} [options.defaultRootRole=''] Default root role rendered when no override provided
  * @param {string} [options.partSelector=''] Selector to scope the test to a part
- * @param {boolean} [options.wrappedInFocusZone=false] If the component should be wrapped in FocusZone
+ * @param {FocusZoneDefinition} [options.focusZoneDefinition={}] FocusZone definition
  */
 export default (Component, options: any = {}) => {
   const {
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
-    isWrappedInFocusZone = false,
+    focusZoneDefinition = {},
   } = options
 
   test('gets default accessibility when no override used', () => {
@@ -91,14 +91,14 @@ export default (Component, options: any = {}) => {
     })
   }
 
-  if (isWrappedInFocusZone) {
+  if (focusZoneDefinition && focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     test('gets wrapped in FocusZone', () => {
       const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
 
-      const focusZones = rendered.find(FocusZone)
-      expect(focusZones).toHaveLength(1)
+      const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
+      expect(focusZone.type()).toEqual(FocusZone)
 
-      const focusZoneDiv = focusZones.first().childAt(0)
+      const focusZoneDiv = focusZone.childAt(0)
       expect(focusZoneDiv.type()).toBe('div')
       expect(focusZoneDiv.children().length).toBeGreaterThan(0)
     })

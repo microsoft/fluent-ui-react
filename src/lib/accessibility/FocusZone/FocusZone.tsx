@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import {
   FocusZoneDirection,
@@ -66,15 +67,15 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     className: PropTypes.string,
     direction: PropTypes.number,
     disabled: PropTypes.bool,
-    elementType: customPropTypes.as,
+    as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
-    isInnerZoneKeystroke: PropTypes.func,
+    shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
-    onBeforeFocus: PropTypes.func,
+    shouldReceiveFocus: PropTypes.func,
     allowFocusRoot: PropTypes.bool,
     handleTabKey: PropTypes.number,
     shouldInputLoseFocusOnArrowKey: PropTypes.func,
-    doNotAllowFocusEventToPropagate: PropTypes.bool,
+    stopFocusPropagation: PropTypes.bool,
     onFocusNotification: PropTypes.func,
     preventDefaultWhenHandled: PropTypes.bool,
   }
@@ -93,20 +94,20 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     'direction',
     'defaultActiveElement',
     'disabled',
-    'elementType',
+    'as',
     'isCircularNavigation',
-    'isInnerZoneKeystroke',
+    'shouldEnterInnerZone',
     'onActiveElementChanged',
-    'onBeforeFocus',
+    'shouldReceiveFocus',
     'allowFocusRoot',
     'handleTabKey',
     'shouldInputLoseFocusOnArrowKey',
-    'doNotAllowFocusEventToPropagate',
+    'stopFocusPropagation',
     'onFocusNotification',
     'preventDefaultWhenHandled',
   ]
 
-  private _root = React.createRef<HTMLElement>()
+  private _root = { current: undefined }
   private _id: string
   /** The most recently focused child element. */
   private _activeElement: HTMLElement | null
@@ -172,7 +173,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
   render() {
     const { className } = this.props
-    const Tag = this.props.elementType || 'div'
+    const Tag = this.props.as || 'div'
     const rest = getUnhandledProps({ handledProps: FocusZone.handledProps }, this.props)
 
     return (
@@ -180,7 +181,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
         role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
-        ref={this._root}
+        ref={elem => (this._root.current = ReactDOM.findDOMNode(elem))} // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}
@@ -260,9 +261,9 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   public focusElement(element: HTMLElement): boolean {
-    const { onBeforeFocus } = this.props
+    const { shouldReceiveFocus } = this.props
 
-    if (onBeforeFocus && !onBeforeFocus(element)) {
+    if (shouldReceiveFocus && !shouldReceiveFocus(element)) {
       return false
     }
 
@@ -279,11 +280,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const {
-      onActiveElementChanged,
-      doNotAllowFocusEventToPropagate,
-      onFocusNotification,
-    } = this.props
+    const { onActiveElementChanged, stopFocusPropagation, onFocusNotification } = this.props
 
     if (onFocusNotification) {
       onFocusNotification()
@@ -308,7 +305,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
-    if (doNotAllowFocusEventToPropagate) {
+    if (stopFocusPropagation) {
       ev.stopPropagation()
     }
   }
@@ -381,7 +378,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
    * Handle the keystrokes.
    */
   private _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
-    const { direction, disabled, isInnerZoneKeystroke } = this.props
+    const { direction, disabled, shouldEnterInnerZone } = this.props
 
     if (disabled) {
       return
@@ -403,8 +400,8 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     }
 
     if (
-      isInnerZoneKeystroke &&
-      isInnerZoneKeystroke(ev) &&
+      shouldEnterInnerZone &&
+      shouldEnterInnerZone(ev) &&
       this.isImmediateDescendantOfZone(ev.target as HTMLElement)
     ) {
       // Try to focus

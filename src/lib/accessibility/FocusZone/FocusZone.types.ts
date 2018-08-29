@@ -57,7 +57,7 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
   /**
    * Element type the root element will use. Default is "div".
    */
-  elementType?: keyof React.ReactHTML
+  as?: React.ReactType
 
   /**
    * If set, will cycle to the beginning of the targets once the user navigates to the
@@ -70,7 +70,7 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
    * intends to navigate into the inner zone. Returning true will ask the first inner zone to
    * set focus.
    */
-  isInnerZoneKeystroke?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
+  shouldEnterInnerZone?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
   /**
    * Callback for when one of immediate children elements gets active by getting focused
@@ -83,7 +83,7 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
    * @param {HTMLElement} element The child element within the zone to focus.
    * @returns True if focus should be set to the given element, false to avoid setting focus.
    */
-  onBeforeFocus?: (childElement?: HTMLElement) => boolean
+  shouldReceiveFocus?: (childElement?: HTMLElement) => boolean
 
   /** Allow focus to move to root */
   allowFocusRoot?: boolean
@@ -96,16 +96,17 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
   handleTabKey?: FocusZoneTabbableElements
 
   /**
-   * A callback method to determine if the input element should lose focus on arrow keys
-   *  @param {HTMLInputElement} inputElement The input element which is to loose focus.
-   *  @returns True if input element should loose focus or false otherwise.
+   * A callback method to determine if the input element should lose focus on arrow keys.
+   * For example: use arrow keys to navigate when an input element is empty or when cursor is at the beginning/end of a string.
+   *  @param {HTMLInputElement} inputElement The input element which is to lose focus.
+   *  @returns True if input element should lose focus or false otherwise.
    */
   shouldInputLoseFocusOnArrowKey?: (inputElement: HTMLInputElement) => boolean
 
   /**
-   * Whether the FocusZone should allow focus events to propagate past the FocusZone
+   * Whether the FocusZone should stop focus event propagation past the FocusZone
    */
-  doNotAllowFocusEventToPropagate?: boolean
+  stopFocusPropagation?: boolean
 
   /**
    * Callback to notify creators that focus has been set on the FocusZone

@@ -555,14 +555,14 @@ describe('FocusZone', () => {
 
   it('skips subzone elements until manually entered', () => {
     const isInnerZoneKeystroke = (e: React.KeyboardEvent<HTMLElement>): boolean =>
-      e.which === keyboardKey.Enter
+      keyboardKey.getCode(e) === keyboardKey.Enter
     const isFocusableProperty = { [IS_FOCUSABLE_ATTRIBUTE]: true }
 
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone
           direction={FocusZoneDirection.horizontal}
-          isInnerZoneKeystroke={isInnerZoneKeystroke}
+          shouldEnterInnerZone={isInnerZoneKeystroke}
         >
           <button className="a">a</button>
           <div className="b" data-is-sub-focuszone={true} {...isFocusableProperty}>
@@ -642,14 +642,14 @@ describe('FocusZone', () => {
 
   it('skips child focusZone elements until manually entered', () => {
     const isInnerZoneKeystroke = (e: React.KeyboardEvent<HTMLElement>): boolean =>
-      e.which === keyboardKey.Enter
+      keyboardKey.getCode(e) === keyboardKey.Enter
     const isFocusableProperty = { [IS_FOCUSABLE_ATTRIBUTE]: true }
 
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone
           direction={FocusZoneDirection.horizontal}
-          isInnerZoneKeystroke={isInnerZoneKeystroke}
+          shouldEnterInnerZone={isInnerZoneKeystroke}
         >
           <button className="a">a</button>
           <FocusZone
@@ -995,7 +995,7 @@ describe('FocusZone', () => {
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.Tab })
     expect(tabDownListener.mock.calls.length).toBe(1)
     const onKeyDownEvent = tabDownListener.mock.calls[0][0]
-    expect(onKeyDownEvent.which).toBe(keyboardKey.Tab)
+    expect(keyboardKey.getCode(onKeyDownEvent)).toBe(keyboardKey.Tab)
   })
 
   it('should stay in input box with arrow keys and exit with tab', () => {
