@@ -13,6 +13,8 @@ import {
 } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
+import { PopupBehavior, PopupTriggerBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 type PopupPosition =
   | 'top start'
@@ -106,6 +108,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   public static defaultProps = {
     position: 'top start',
+    accessibility: PopupBehavior as Accessibility,
   }
 
   public state = {
@@ -117,6 +120,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     ElementType,
     classes,
     rest,
+    accessibility,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
     debug(`renderComponent`)
 
@@ -124,13 +128,24 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     const style = { ...this.state.style, ...this.props.style }
 
     const popupJSX = (
-      <ElementType className={classes.root} ref={this.handlePopupRef} style={style} {...rest}>
+      <ElementType
+        className={classes.root}
+        ref={this.handlePopupRef}
+        style={style}
+        {...rest}
+        {...accessibility.attributes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
 
     return (
-      <Portal onMount={this.handlePortalMount} trigger={trigger} triggerRef={this.handleTriggerRef}>
+      <Portal
+        onMount={this.handlePortalMount}
+        trigger={trigger}
+        triggerRef={this.handleTriggerRef}
+        triggerAccessibility={PopupTriggerBehavior}
+      >
         {popupJSX}
       </Portal>
     )
@@ -209,6 +224,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   private handlePortalMount = () => {
     debug('handlePortalMount()')
+
+    console.log(this.popupCoords)
 
     this.setPopupStyle()
   }

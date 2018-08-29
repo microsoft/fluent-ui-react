@@ -293,7 +293,7 @@ export class FocusZone extends BaseComponent<IFocusZoneProps, {}> implements IFo
     }
 
     let target = ev.target as HTMLElement
-    const path = []
+    const path: HTMLElement[] = []
 
     while (target && target !== this._root.current) {
       path.push(target)

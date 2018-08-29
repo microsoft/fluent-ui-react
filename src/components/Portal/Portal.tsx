@@ -70,6 +70,9 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
      * @param {JSX.Element} node - Referred node.
      */
     triggerRef: PropTypes.func,
+
+    /** Accessibility behavior for trigger element. */
+    triggerAccessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public render() {
@@ -97,12 +100,15 @@ class Portal extends AutoControlledComponent<Extendable<IPortalProps>, any> {
   }
 
   private renderTrigger(): JSX.Element | undefined {
-    const { trigger } = this.props
+    const { trigger, triggerAccessibility } = this.props
 
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
-          {React.cloneElement(trigger, { onClick: this.handleTriggerClick })}
+          {React.cloneElement(trigger, {
+            onClick: this.handleTriggerClick,
+            accessibility: triggerAccessibility,
+          })}
         </Ref>
       )
     )
