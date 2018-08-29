@@ -6,9 +6,34 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesObject } from '../../../types/theme'
 
-class Menu extends AutoControlledComponent<any, any> {
+import {
+  ComponentVariablesInput,
+  ComponentVariablesObject,
+  IComponentPartStylesInput,
+} from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+
+export interface IMenuProps {
+  accessibility?: Accessibility
+  as?: any
+  activeIndex?: number | string
+  children?: ReactChildren
+  className?: string
+  defaultActiveIndex?: number | string
+  fluid?: boolean
+  iconOnly?: boolean
+  items?: ItemShorthand[]
+  pills?: boolean
+  pointing?: boolean | 'start' | 'end'
+  type?: 'primary' | 'secondary'
+  underlined?: boolean
+  vertical?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -40,10 +65,20 @@ class Menu extends AutoControlledComponent<any, any> {
     /** Shorthand array of props for Menu. */
     items: customPropTypes.collectionShorthand,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /**
+     * A menu can point to show its relationship to nearby content.
+     * For vertical menu, it can point to the start of the item or to the end.
+     */
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -73,9 +108,11 @@ class Menu extends AutoControlledComponent<any, any> {
     'fluid',
     'iconOnly',
     'items',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]
@@ -95,15 +132,17 @@ class Menu extends AutoControlledComponent<any, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, type, shape, vertical } = this.props
+    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
         defaultProps: {
           iconOnly,
+          pills,
+          pointing,
           type,
-          shape,
+          underlined,
           variables,
           vertical,
           index,

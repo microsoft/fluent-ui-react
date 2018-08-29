@@ -24,7 +24,7 @@ import { felaRenderer, felaRtlRenderer } from './felaRenderer'
  */
 export const mergeComponentStyles = (
   target: IComponentPartStylesInput,
-  ...sources: IComponentPartStylesInput[]
+  ...sources: (IComponentPartStylesInput | null | undefined)[]
 ): IComponentPartStylesPrepared => {
   const initial: IComponentPartStylesPrepared = _.mapValues(target, partStyle => {
     return callable(partStyle)
@@ -73,9 +73,9 @@ export const mergeComponentVariables = (
  */
 export const mergeSiteVariables = (
   target: ISiteVariables,
-  ...sources: ISiteVariables[]
+  ...sources: (ISiteVariables | null | undefined)[]
 ): ISiteVariables => {
-  return sources.reduce((acc, next) => ({ ...acc, ...next }), target)
+  return sources.reduce<ISiteVariables>((acc, next) => ({ ...acc, ...next }), target)
 }
 
 /**
@@ -85,14 +85,16 @@ export const mergeSiteVariables = (
  * Therefore, componentVariables must be resolved by the component at render time.
  * We instead pass down call stack of component variable functions to be resolved later.
  */
+
 export const mergeThemeVariables = (
   target: IThemeComponentVariablesInput,
-  ...sources: IThemeComponentVariablesInput[]
+  ...sources: (IThemeComponentVariablesInput | null | undefined)[]
 ): IThemeComponentVariablesPrepared => {
   const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
-
-  return sources.reduce((acc, next) => {
+  return sources.reduce<IThemeComponentVariablesInput>((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
+      if (!next) return acc
+
       // Break references to avoid an infinite loop.
       // We are replacing functions with new ones that calls the originals.
       const originalTarget = acc[displayName]
@@ -117,7 +119,7 @@ export const mergeThemeVariables = (
  */
 export const mergeThemeStyles = (
   target: IThemeComponentStylesInput,
-  ...sources: IThemeComponentStylesInput[]
+  ...sources: (IThemeComponentStylesInput | null | undefined)[]
 ): IThemeComponentStylesPrepared => {
   const initial: IThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
     return _.mapValues(stylesByPart, callable)

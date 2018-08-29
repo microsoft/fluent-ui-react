@@ -1,16 +1,25 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IMenuVariables } from './menuVariables'
+import { IMenuItemProps } from '../../../../components/Menu/MenuItem'
 
 const underlinedItem = (color): ICSSInJSStyle => ({
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
-  const { active, iconOnly, shape, type, vertical } = props
+const itemSeparator = ({
+  props,
+  variables,
+}: {
+  props: IMenuItemProps
+  variables: IMenuVariables
+}): ICSSInJSStyle => {
+  const { active, iconOnly, pointing, pills, type, underlined, vertical } = props
   return {
-    ...((!shape || shape === 'pointing') &&
+    ...(!pills &&
+      !underlined &&
+      !(pointing && vertical) &&
       !iconOnly && {
         '::before': {
           position: 'absolute',
@@ -34,9 +43,65 @@ const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJ
   }
 }
 
+const pointingBeak = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
+  const { pointing, type } = props
+
+  let backgroundColor: string
+  let borderColor: string
+  let top: string
+  let borders: ICSSInJSStyle
+
+  if (type === 'primary') {
+    backgroundColor = variables.typePrimaryActiveBackgroundColor
+    borderColor = variables.typePrimaryBorderColor
+  } else {
+    backgroundColor = variables.defaultActiveBackgroundColor
+    borderColor = variables.defaultBorderColor
+  }
+
+  if (pointing === 'start') {
+    borders = {
+      borderTop: `1px solid ${borderColor}`,
+      borderLeft: `1px solid ${borderColor}`,
+    }
+    top = '-1px' // 1px for the border
+  } else {
+    borders = {
+      borderBottom: `1px solid ${borderColor}`,
+      borderRight: `1px solid ${borderColor}`,
+    }
+    top = '100%'
+  }
+
+  return {
+    '::after': {
+      visibility: 'visible',
+      background: backgroundColor,
+      position: 'absolute',
+      content: '""',
+      top,
+      left: '50%',
+      transform: 'translateX(-50%) translateY(-50%) rotate(45deg)',
+      margin: '.5px 0 0',
+      width: pxToRem(10),
+      height: pxToRem(10),
+      border: 'none',
+      ...borders,
+      zIndex: 2,
+      transition: 'background .1s ease',
+    },
+  }
+}
+
 const menuItemStyles = {
-  root: ({ props, variables }: { props: any; variables: IMenuVariables }): ICSSInJSStyle => {
-    const { active, iconOnly, shape, type, vertical } = props
+  root: ({
+    props,
+    variables,
+  }: {
+    props: IMenuItemProps
+    variables: IMenuVariables
+  }): ICSSInJSStyle => {
+    const { active, iconOnly, pills, pointing, type, underlined, vertical } = props
     const { iconsMenuItemSpacing } = variables
     return {
       color: variables.defaultColor,
@@ -51,11 +116,11 @@ const menuItemStyles = {
             : { marginLeft: iconsMenuItemSpacing }),
         },
       }),
-      ...(shape === 'pills' && {
+      ...(pills && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
       }),
-      ...(shape === 'underlined' && {
+      ...(underlined && {
         padding: '0',
         margin: `0 ${pxToRem(10)} 0 0`,
         ':nth-child(n+2)': {
@@ -66,11 +131,21 @@ const menuItemStyles = {
         color: variables.defaultColor,
       }),
       ...itemSeparator({ props, variables }),
+      ...(pointing &&
+        vertical && {
+          border: '1px solid transparent',
+          borderTopLeftRadius: `${pxToRem(3)}`,
+          borderTopRightRadius: `${pxToRem(3)}`,
+          ...(pointing === 'end'
+            ? { borderRight: `${pxToRem(3)} solid transparent` }
+            : { borderLeft: `${pxToRem(3)} solid transparent` }),
+          marginBottom: `${pxToRem(12)}`,
+        }),
 
       ':hover': {
         color: variables.defaultActiveColor,
         // all menus should have gray background on hover except the underlined menu
-        ...(shape !== 'underlined' && {
+        ...(!underlined && {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
@@ -79,7 +154,7 @@ const menuItemStyles = {
       },
 
       ...(active && {
-        ...(shape !== 'underlined' && {
+        ...(!underlined && {
           background: variables.defaultActiveBackgroundColor,
           ...(type === 'primary' && {
             background: variables.typePrimaryActiveBackgroundColor,
@@ -87,7 +162,7 @@ const menuItemStyles = {
         }),
         color: variables.defaultColor,
         ':hover': {
-          ...(shape !== 'underlined' && {
+          ...(!underlined && {
             color: variables.defaultActiveColor,
             background: variables.defaultActiveBackgroundColor,
             ...(type === 'primary' && {
@@ -95,44 +170,35 @@ const menuItemStyles = {
             }),
           }),
         },
-        ...(shape === 'pointing' && {
-          '::after': {
-            visibility: 'visible',
-            background: variables.defaultActiveBackgroundColor,
-            position: 'absolute',
-            content: '""',
-            top: '100%',
-            left: '50%',
-            transform: 'translateX(-50%) translateY(-50%) rotate(45deg)',
-            margin: '.5px 0 0',
-            width: pxToRem(10),
-            height: pxToRem(10),
-            border: 'none',
-            borderBottom: `1px solid ${variables.defaultBorderColor}`,
-            borderRight: `1px solid ${variables.defaultBorderColor}`,
-            zIndex: 2,
-            transition: 'background .1s ease',
-            ...(type === 'primary' && {
-              background: variables.typePrimaryActiveBackgroundColor,
-              borderBottom: `1px solid ${variables.typePrimaryBorderColor}`,
-              borderRight: `1px solid ${variables.typePrimaryBorderColor}`,
-            }),
-          },
-        }),
+        ...(pointing && !vertical && pointingBeak({ props, variables })),
+        ...(pointing &&
+          vertical && {
+            ...(pointing === 'end'
+              ? { borderRight: `${pxToRem(3)} solid ${variables.typePrimaryActiveColor}` }
+              : { borderLeft: `${pxToRem(3)} solid ${variables.typePrimaryActiveColor}` }),
+          }),
       }),
     }
   },
 
-  anchor: ({ props, variables }): ICSSInJSStyle => {
-    const { active, iconOnly, shape, type } = props
+  anchor: ({
+    props,
+    variables,
+  }: {
+    props: IMenuItemProps
+    variables: IMenuVariables
+  }): ICSSInJSStyle => {
+    const { active, iconOnly, pointing, type, underlined, vertical } = props
     const { iconsMenuItemSize } = variables
 
     return {
       color: 'inherit',
       display: 'block',
-      ...(shape === 'underlined'
+      ...(underlined
         ? { padding: `0 0 ${pxToRem(8)} 0` }
-        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+        : pointing && vertical
+          ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
+          : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
       cursor: 'pointer',
 
       ...(iconOnly && {
@@ -146,7 +212,7 @@ const menuItemStyles = {
 
       ':hover': {
         color: 'inherit',
-        ...(shape === 'underlined' && {
+        ...(underlined && {
           paddingBottom: `${pxToRem(4)}`,
           ...underlinedItem(variables.defaultActiveBackgroundColor),
           ...(type === 'primary' && {
@@ -156,7 +222,7 @@ const menuItemStyles = {
       },
 
       ...(active &&
-        shape === 'underlined' && {
+        underlined && {
           color: variables.defaultColor,
           paddingBottom: `${pxToRem(4)}`,
           ':hover': {},

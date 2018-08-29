@@ -4,8 +4,19 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatMessage from './ChatMessage'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
-class Chat extends UIComponent<any, any> {
+export interface IChatProps {
+  as?: any
+  className?: string
+  children?: ReactChildren
+  messages?: any[]
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'

@@ -35,6 +35,26 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExamplePointingPrimary"
     />
     <ComponentExample
+      title="Pointing Start"
+      description="A menu can point up to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExamplePointingStart"
+    />
+    <ComponentExample
+      title="Pointing Start Primary"
+      description="A menu can point up to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExamplePointingStartPrimary"
+    />
+    <ComponentExample
+      title="Vertical Pointing"
+      description="A vertical menu can point to start to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExampleVerticalPointing"
+    />
+    <ComponentExample
+      title="Vertical Pointing End"
+      description="A vertical menu can point to the end to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExampleVerticalPointingEnd"
+    />
+    <ComponentExample
       title="Underlined"
       description="A menu can underline the active element."
       examplePath="components/Menu/Variations/MenuExampleUnderlined"
@@ -45,7 +65,7 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleUnderlinedPrimary"
     />
     <ComponentExample
-      title="Fluid"
+      title="Vertical Fluid"
       description="A vertical menu may take the size of its container."
       examplePath="components/Menu/Variations/MenuExampleVerticalFluid"
     />

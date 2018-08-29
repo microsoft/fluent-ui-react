@@ -8,7 +8,35 @@ import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-class MenuItem extends UIComponent<any, any> {
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
+
+export interface IMenuItemProps {
+  accessibility?: Accessibility
+  active?: boolean
+  as?: any
+  children?: ReactChildren
+  className?: string
+  content?: any
+  icon?: ItemShorthand
+  iconOnly?: boolean
+  index?: number
+  onClick?: ComponentEventHandler<IMenuItemProps>
+  pills?: boolean
+  pointing?: boolean | 'start' | 'end'
+  type?: 'primary' | 'secondary'
+  underlined?: boolean
+  vertical?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -49,10 +77,20 @@ class MenuItem extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /**
+     * A menu can point to show its relationship to nearby content.
+     * For vertical menu, it can point to the start of the item or to the end.
+     */
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -83,9 +121,11 @@ class MenuItem extends UIComponent<any, any> {
     'iconOnly',
     'index',
     'onClick',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]

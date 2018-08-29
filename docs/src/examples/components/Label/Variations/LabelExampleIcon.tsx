@@ -3,7 +3,7 @@ import { Label, Icon } from '@stardust-ui/react'
 
 const LabelExampleIcon = () => (
   <Label>
-    <Icon name="coffee" xSpacing="after" variables={() => ({ color: 'rgba(0, 0, 0, 0.6)' })} />
+    <Icon name="coffee" xSpacing="after" />
     Label containing icon
   </Label>
 )

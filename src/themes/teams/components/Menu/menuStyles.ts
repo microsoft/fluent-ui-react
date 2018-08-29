@@ -1,13 +1,14 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IMenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
 })
 
 export default {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, type, shape, vertical } = props
+  root: ({ props, variables }: { props: IMenuProps; variables: any }): ICSSInJSStyle => {
+    const { iconOnly, fluid, pointing, pills, type, underlined, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
@@ -18,16 +19,17 @@ export default {
           width: 'auto',
         }),
       }),
-      ...(shape !== 'pills' &&
+      ...(!pills &&
         !iconOnly &&
-        shape !== 'underlined' && {
+        !(pointing && vertical) &&
+        !underlined && {
           ...solidBorder(variables.defaultBorderColor),
           ...(type === 'primary' && {
             ...solidBorder(variables.typePrimaryBorderColor),
           }),
           borderRadius: pxToRem(4),
         }),
-      ...(shape === 'underlined' && {
+      ...(underlined && {
         borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
       }),
       minHeight: pxToRem(24),
