@@ -67,7 +67,6 @@ class Input extends AutoControlledComponent<any, any> {
     'defaultValue',
     'fluid',
     'icon',
-    'input',
     'onChange',
     'styles',
     'type',
@@ -103,7 +102,6 @@ class Input extends AutoControlledComponent<any, any> {
 
   handleOnClear = e => {
     const { clearable } = this.props
-    const { value } = this.state
 
     if (clearable) {
       this.trySetState({ value: '' })
@@ -153,14 +151,16 @@ class Input extends AutoControlledComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, styles }) {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
+
+    const { onChange } = htmlInputProps as any
 
     const inputClasses = classes.input
 
     return (
-      <ElementType {...rest} className={classes.root} {...htmlInputProps}>
+      <ElementType className={classes.root} {...restProps} onChange={onChange}>
         {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
