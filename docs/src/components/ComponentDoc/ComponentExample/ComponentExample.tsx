@@ -17,7 +17,7 @@ import {
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
-import Editor from 'docs/src/components/Editor'
+import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
@@ -48,9 +48,6 @@ interface IComponentExampleState {
   isHovering: boolean
   copiedCode: boolean
 }
-
-const EDITOR_BACKGROUND_COLOR = '#1D1F21'
-const EDITOR_GUTTER_COLOR = '#26282d'
 
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,

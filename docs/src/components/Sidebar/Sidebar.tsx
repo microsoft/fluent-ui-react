@@ -171,25 +171,35 @@ class Sidebar extends React.Component<any, any> {
         <Menu.Item>
           <Logo spaced="right" size="mini" />
           <strong>
-            Stardust &nbsp;
+            Stardust UI React &nbsp;
             <small>
               <em>{pkg.version}</em>
             </small>
           </strong>
+          <Menu.Menu>
+            <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
+              <Icon name="github" /> GitHub
+            </Menu.Item>
+            <Menu.Item
+              as="a"
+              href={`${repoURL}/blob/master/CHANGELOG.md`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="file alternate outline" /> CHANGELOG
+            </Menu.Item>
+          </Menu.Menu>
         </Menu.Item>
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
         </Menu.Item>
-        <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
-          <Icon name="github" /> GitHub
-        </Menu.Item>
-        <Menu.Item
-          as="a"
-          href={`${repoURL}/blob/master/CHANGELOG.md`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon name="file alternate outline" /> CHANGELOG
+        <Menu.Item>
+          Guides
+          <Menu.Menu>
+            <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
+              Quick Start
+            </Menu.Item>
+          </Menu.Menu>
         </Menu.Item>
         <Menu.Item active>
           <SemanticUIInput
