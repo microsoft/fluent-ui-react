@@ -67,7 +67,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     className: PropTypes.string,
     direction: PropTypes.number,
     disabled: PropTypes.bool,
-    as: customPropTypes.as,
+    as: PropTypes.any, // TODO: find out why customPropTypes.as fails at runtime (customPropTypes is undefined)
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
