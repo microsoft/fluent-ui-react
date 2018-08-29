@@ -1,7 +1,8 @@
 import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
 
 const chatMessageStyles = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({ props, variables }: { props: IChatMessageProps; variables: any }): ICSSInJSStyle => ({
     position: 'relative',
     padding: '1rem',
     marginTop: '1rem',

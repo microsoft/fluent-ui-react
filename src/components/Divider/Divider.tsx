@@ -2,12 +2,26 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
+
+export interface IDividerProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  size?: number
+  type?: 'primary' | 'secondary'
+  important?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * @accessibility
  * This is shown at the top.
  */
-class Divider extends UIComponent<any, any> {
+class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
@@ -72,3 +86,5 @@ class Divider extends UIComponent<any, any> {
 Divider.create = createShorthandFactory(Divider, content => ({ content }))
 
 export default Divider
+
+export type IDividerPropsWithDefaults = IDividerProps & typeof Divider.defaultProps

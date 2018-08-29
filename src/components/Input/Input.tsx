@@ -10,12 +10,41 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
+
+export interface IInputProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  clearable?: boolean
+  defaultValue?: string
+  fluid?: boolean
+  icon?: ItemShorthand
+  input?: ItemShorthand
+  onChange?: ComponentEventHandler<IInputProps>
+  value?: string
+  type?: string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An Input
- * @accessibility This is example usage of the accessibility tag.
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ *
  */
-class Input extends AutoControlledComponent<any, any> {
+class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'

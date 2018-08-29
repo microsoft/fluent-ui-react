@@ -1,12 +1,48 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { IconBehavior } from '../../lib/accessibility/'
 
 import svgIcons from './svgIcons'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
+export type IconSize =
+  | 'micro'
+  | 'mini'
+  | 'tiny'
+  | 'small'
+  | 'normal'
+  | 'large'
+  | 'big'
+  | 'huge'
+  | 'massive'
 
-class Icon extends UIComponent<any, any> {
+export interface IIconProps {
+  as?: any
+  bordered?: boolean
+  circular?: boolean
+  className?: string
+  disabled?: boolean
+  font?: boolean | string
+  name?: string
+  size?: IconSize
+  svg?: boolean
+  xSpacing?: IconXSpacing
+  accessibility?: Accessibility
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+/**
+ * @accessibility
+ * Default behavior: IconBehavior
+ *  - attribute "aria-hidden='true'" is applied on icon
+ */
+
+class Icon extends UIComponent<Extendable<IIconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -59,9 +95,13 @@ class Icon extends UIComponent<any, any> {
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
+
+    /** Accessibility behavior if overriden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'bordered',
     'circular',
@@ -79,17 +119,19 @@ class Icon extends UIComponent<any, any> {
   static defaultProps = {
     as: 'span',
     size: 'normal',
+    accessibility: IconBehavior,
   }
 
-  renderFontIcon(ElementType, classes, rest): React.ReactNode {
-    return <ElementType className={classes.root} {...rest} />
+  renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
+    return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, classes, rest): React.ReactNode {
-    const icon = svgIcons[this.props.name]
+  renderSvgIcon(ElementType, classes, rest, accessibility): React.ReactNode {
+    const { name } = this.props
+    const icon = name && svgIcons[name]
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         <svg className={classes.svg} viewBox={icon && icon.viewBox}>
           {icon && icon.element}
         </svg>
@@ -97,10 +139,10 @@ class Icon extends UIComponent<any, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, accessibility }) {
     return this.props.svg
-      ? this.renderSvgIcon(ElementType, classes, rest)
-      : this.renderFontIcon(ElementType, classes, rest)
+      ? this.renderSvgIcon(ElementType, classes, rest, accessibility)
+      : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }
 
