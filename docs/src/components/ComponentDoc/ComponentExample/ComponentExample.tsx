@@ -5,7 +5,7 @@ import { withRouter, RouteComponentProps } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
-import { Divider, Form, Grid, Menu, Segment, Visibility, SemanticCOLORS } from 'semantic-ui-react'
+import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider } from '@stardust-ui/react'
 
 import {
@@ -17,7 +17,7 @@ import {
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
-import Editor from 'docs/src/components/Editor'
+import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
@@ -38,19 +38,16 @@ interface IComponentExampleState {
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
-  sourceCode?: string
-  markup?: string
+  sourceCode: string
+  markup: string
   error?: string
-  showCode?: boolean
-  showHTML?: boolean
-  showRtl?: boolean
-  showVariables?: boolean
-  isHovering?: boolean
-  copiedCode?: boolean
+  showCode: boolean
+  showHTML: boolean
+  showRtl: boolean
+  showVariables: boolean
+  isHovering: boolean
+  copiedCode: boolean
 }
-
-const EDITOR_BACKGROUND_COLOR = '#1D1F21'
-const EDITOR_GUTTER_COLOR = '#26282d'
 
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
@@ -76,6 +73,14 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   public state: IComponentExampleState = {
     knobs: {},
     theme: teamsTheme,
+    sourceCode: '',
+    markup: '',
+    showCode: false,
+    showHTML: false,
+    showRtl: false,
+    showVariables: false,
+    isHovering: false,
+    copiedCode: false,
   }
 
   public static contextTypes = {
@@ -170,7 +175,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private handleMouseLeave = () => {
     this.setState({
       isHovering: false,
-      handleMouseLeave: null,
+      handleMouseLeave: undefined,
       handleMouseMove: this.handleMouseMove,
     })
   }
@@ -179,7 +184,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     this.setState({
       isHovering: true,
       handleMouseLeave: this.handleMouseLeave,
-      handleMouseMove: null,
+      handleMouseMove: undefined,
     })
   }
 
@@ -292,7 +297,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       } else {
         // immediately render a null error
         // but also ensure the last debounced error call is a null error
-        const error = null
+        const error = undefined
         this.setErrorDebounced(error)
         this.setState({
           error,
@@ -372,7 +377,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderApiCodeMenu = (): JSX.Element => {
     const { sourceCode } = this.state
-    const lineCount = sourceCode && sourceCode.match(/^/gm).length
+    const lineCount = sourceCode && sourceCode.match(/^/gm)!.length
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
@@ -457,18 +462,16 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       <div>
         {this.renderApiCodeMenu()}
 
-        {sourceCode != null && (
-          <div>
-            {this.renderCodeEditorMenu()}
-            <Editor
-              setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
-              id={`${this.getKebabExamplePath()}-jsx`}
-              value={sourceCode}
-              onChange={this.handleChangeCode}
-              onOutsideClick={this.handleShowCodeInactive}
-            />
-          </div>
-        )}
+        <div>
+          {this.renderCodeEditorMenu()}
+          <Editor
+            setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
+            id={`${this.getKebabExamplePath()}-jsx`}
+            value={sourceCode}
+            onChange={this.handleChangeCode}
+            onOutsideClick={this.handleShowCodeInactive}
+          />
+        </div>
       </div>
     )
   }
@@ -604,6 +607,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
+    const currentExamplePath = this.sourceCodeMgr.currentPath
 
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
@@ -627,7 +631,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         once={false}
         onTopPassed={this.handlePass}
         onTopPassedReverse={this.handlePass}
-        ref={c => (this.componentRef = c)}
+        ref={c => (this.componentRef = c!)}
       >
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
@@ -649,7 +653,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={examplePath}
+                  examplePath={currentExamplePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}

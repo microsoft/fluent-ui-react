@@ -83,7 +83,7 @@ function isComponentDefinition(path) {
  */
 function findExportedComponentDefinitions(ast, recast) {
   const types = recast.types.namedTypes
-  const components = []
+  const components: any[] = []
 
   function exportDeclaration(path) {
     const definitions = resolveExportDeclaration2

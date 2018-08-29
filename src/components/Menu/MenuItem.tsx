@@ -49,10 +49,17 @@ class MenuItem extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
 
-    shape: PropTypes.oneOf(['pills', 'pointing', 'underlined']),
+    /** A menu can adjust its appearance to de-emphasize its contents. */
+    pills: PropTypes.bool,
+
+    /** A menu can point to show its relationship to nearby content. */
+    pointing: PropTypes.bool,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
+
+    /** Menu items can by highlighted using underline. */
+    underlined: PropTypes.bool,
 
     /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
@@ -83,9 +90,11 @@ class MenuItem extends UIComponent<any, any> {
     'iconOnly',
     'index',
     'onClick',
-    'shape',
+    'pills',
+    'pointing',
     'styles',
     'type',
+    'underlined',
     'variables',
     'vertical',
   ]

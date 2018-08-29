@@ -34,13 +34,13 @@ if (__DEV__) {
   if (module.hot) {
     module.hot.accept('./routes', () => {
       // restore scroll
-      const { scrollLeft, scrollTop } = document.scrollingElement
+      const { scrollLeft, scrollTop } = document.scrollingElement!
       ReactDOM.unmountComponentAtNode(mountNode)
 
       try {
         render(require('./routes').default)
-        document.scrollingElement.scrollTop = scrollTop
-        document.scrollingElement.scrollLeft = scrollLeft
+        document.scrollingElement!.scrollTop = scrollTop
+        document.scrollingElement!.scrollLeft = scrollLeft
       } catch (e) {
         console.error(e)
       }

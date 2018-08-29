@@ -11,8 +11,10 @@ type ShorthandFunction = (
   props: IProps,
   children: any,
 ) => React.ReactElement<IProps>
-type ShorthandValue = string & number & IProps & React.ReactElement<IProps> & ShorthandFunction
-type MapValueToProps = (value: ShorthandValue) => IProps
+
+type Primitive = string | number
+type ShorthandValue = Primitive | IProps | React.ReactElement<IProps> | ShorthandFunction
+type MapValueToProps = (value: Primitive) => IProps
 
 interface ICreateShorthandOptions {
   /** Default props object */
@@ -40,7 +42,7 @@ export function createShorthand(
   mapValueToProps: MapValueToProps,
   value?: ShorthandValue,
   options: ICreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
-): React.ReactElement<IProps> | null {
+): React.ReactElement<IProps> | null | undefined {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
@@ -73,9 +75,9 @@ export function createShorthand(
 
   // User's props
   const usersProps =
-    (valIsReactElement && value.props) ||
-    (valIsPropsObject && value) ||
-    (valIsPrimitive && mapValueToProps(value)) ||
+    (valIsReactElement && (value as React.ReactElement<IProps>).props) ||
+    (valIsPropsObject && (value as IProps)) ||
+    (valIsPrimitive && mapValueToProps(value as Primitive)) ||
     {}
 
   // Override props
@@ -119,13 +121,13 @@ export function createShorthand(
   // ----------------------------------------
 
   // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value, props)
+  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<IProps>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
 
   // Call functions with args similar to createElement()
-  if (valIsFunction) return value(Component, props, props.children)
+  if (valIsFunction) return (value as Function)(Component, props, props.children)
 }
 
 // ============================================================

@@ -2,11 +2,22 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
+
+export interface IHeaderDescriptionProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * Headers may contain description.
  */
-class HeaderDescription extends UIComponent<any, any> {
+class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'

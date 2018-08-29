@@ -1,3 +1,6 @@
+import * as themes from './themes'
+export { themes }
+
 export { default as Accordion } from './components/Accordion'
 export { default as Button } from './components/Button'
 export { default as Chat } from './components/Chat'
@@ -14,6 +17,7 @@ export { default as Menu } from './components/Menu'
 export { MenuItem } from './components/Menu'
 export { default as Provider } from './components/Provider'
 export { default as ProviderConsumer } from './components/Provider/ProviderConsumer'
+export { default as Radio } from './components/Radio'
 export { default as Icon } from './components/Icon'
 export { default as Text } from './components/Text'
 export { default as Header } from './components/Header'
