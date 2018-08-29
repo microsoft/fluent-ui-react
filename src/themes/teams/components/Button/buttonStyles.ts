@@ -30,6 +30,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      fontSize: variables.textSize,
       backgroundColor,
       display: 'inline-block',
       position: 'relative',
