@@ -5,6 +5,7 @@ import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {
   accessibility?: Accessibility
@@ -25,7 +26,7 @@ export interface IListItemProps {
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<any, any> {
+class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static create: Function
 
   static displayName = 'ListItem'
