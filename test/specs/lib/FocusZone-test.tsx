@@ -142,7 +142,7 @@ describe('FocusZone', () => {
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.Home })
     expect(lastFocusedElement).toBe(buttonA)
 
-    // // Press end should go to the last target.
+    // Press end should go to the last target.
     ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.End })
     expect(lastFocusedElement).toBe(buttonC)
   })
