@@ -8,7 +8,12 @@ import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
 export interface IAccordionProps {
   as?: any
@@ -17,7 +22,7 @@ export interface IAccordionProps {
   children?: ReactChildren
   defaultActiveIndex?: number[] | number
   exclusive?: boolean
-  onTitleClick?: (event: React.SyntheticEvent, data: IAccordionProps) => void
+  onTitleClick?: ComponentEventHandler<IAccordionProps>
   panels?: {
     content: ItemShorthand
     title: ItemShorthand
