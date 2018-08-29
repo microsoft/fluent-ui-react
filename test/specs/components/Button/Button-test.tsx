@@ -1,4 +1,6 @@
 import * as React from 'react'
+const ReactDOMServer = require('react-dom/server')
+const { axe, toHaveNoViolations } = require('jest-axe')
 
 import {
   isConformant,
@@ -6,7 +8,7 @@ import {
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
-import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
+import { getTestingRenderedComponent, mountWithProvider, expectAxe } from 'test/utils'
 import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
 
 import Button from 'src/components/Button/Button'
@@ -47,6 +49,51 @@ describe('Button', () => {
       test('is set to false, if disabled attribute is not provided', () => {
         const renderedComponent = getTestingRenderedComponent(Button, <Button />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+      })
+    })
+
+    describe('AXE validation', () => {
+      describe('icon button must have textual representation for screen readers', () => {
+        test('with title', async () => {
+          const html = ReactDOMServer.renderToString(<Button icon="books" title="testing button" />)
+          const results = await axe(html)
+          expectAxe(results).toHaveNoViolations()
+        })
+
+        test('with aria-label attribute', async () => {
+          const html = ReactDOMServer.renderToString(
+            <Button icon="books" aria-label="testing button" />,
+          )
+          const results = await axe(html)
+          expectAxe(results).toHaveNoViolations()
+        })
+
+        test('with aria-labelledby attribute', async () => {
+          const html = ReactDOMServer.renderToString(
+            <div>
+              <Button icon="books" aria-labelledby="tstBtn" />
+              <span id="tstBtn" aria-label="testing button" />
+            </div>,
+          )
+          const results = await axe(html)
+          expectAxe(results).toHaveNoViolations()
+        })
+      })
+
+      describe('different buttons variants', () => {
+        test('button', async () => {
+          const html = ReactDOMServer.renderToString(<Button>Simple test button</Button>)
+          const results = await axe(html)
+          expectAxe(results).toHaveNoViolations()
+        })
+
+        test('button with text and icon', async () => {
+          const html = ReactDOMServer.renderToString(
+            <Button icon="test" content="Simple test button" />,
+          )
+          const results = await axe(html)
+          expectAxe(results).toHaveNoViolations()
+        })
       })
     })
 
