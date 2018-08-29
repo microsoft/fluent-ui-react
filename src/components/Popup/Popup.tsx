@@ -10,7 +10,7 @@ import Portal from '../Portal'
 import PopupContent from './PopupContent'
 
 import { PopupBehavior, PopupTriggerBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/interfaces'
 
 type PopupPosition =
   | 'top start'
@@ -108,6 +108,20 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
     )
   }
 
+  popupRef: HTMLElement
+
+  focus(focusFirst: boolean = true) {
+    if (!this.popupRef) return
+    const allFocusableElements = this.popupRef.querySelectorAll(
+      `[${IS_FOCUSABLE_ATTRIBUTE}="true"]`,
+    )
+    const focusableElement = (focusFirst
+      ? allFocusableElements[0]
+      : allFocusableElements[allFocusableElements.length - 1]) as HTMLElement
+
+    focusableElement && focusableElement.focus()
+  }
+
   private computePopupStyle(): CSSProperties {
     const style: CSSProperties = {}
     const popupCoords = this.popupCoords
@@ -168,9 +182,11 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
 
   private handlePortalMount = () => {
     this.setPopupStyle()
+    this.focus()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {
+    this.popupRef = popupRef
     this.popupCoords = popupRef && popupRef.getBoundingClientRect()
     this.setPopupStyle()
   }

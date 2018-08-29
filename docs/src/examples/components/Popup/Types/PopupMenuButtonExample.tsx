@@ -11,6 +11,7 @@ const MenuExampleVertical = <Menu defaultActiveIndex={0} items={items} vertical 
 
 const PopupMenuButtonExampleShorthand = () => (
   <Popup
+    basic
     position="bottom start"
     trigger={<Button content="Menu button" />}
     content={MenuExampleVertical}
