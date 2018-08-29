@@ -1,6 +1,6 @@
 import * as React from 'react'
 const ReactDOMServer = require('react-dom/server')
-const { axe, toHaveNoViolations } = require('jest-axe')
+const { axe } = require('jest-axe')
 
 import {
   isConformant,
