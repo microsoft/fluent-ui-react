@@ -35,6 +35,16 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExamplePointingPrimary"
     />
     <ComponentExample
+      title="Pointing Start"
+      description="A menu can point up to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExamplePointingStart"
+    />
+    <ComponentExample
+      title="Pointing Start Primary"
+      description="A menu can point up to show its relationship to nearby content."
+      examplePath="components/Menu/Variations/MenuExamplePointingStartPrimary"
+    />
+    <ComponentExample
       title="Vertical Pointing"
       description="A vertical menu can point to start to show its relationship to nearby content."
       examplePath="components/Menu/Variations/MenuExampleVerticalPointing"

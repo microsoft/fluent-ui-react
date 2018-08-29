@@ -36,30 +36,52 @@ const itemSeparator = ({ props, variables }: { props: any; variables }): ICSSInJ
   }
 }
 
-const bottomBeak = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
-  const { type } = props
+const pointingBeak = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
+  const { pointing, type } = props
+
+  let backgroundColor: string
+  let borderColor: string
+  let top: string
+  let borders: ICSSInJSStyle
+
+  if (type === 'primary') {
+    backgroundColor = variables.typePrimaryActiveBackgroundColor
+    borderColor = variables.typePrimaryBorderColor
+  } else {
+    backgroundColor = variables.defaultActiveBackgroundColor
+    borderColor = variables.defaultBorderColor
+  }
+
+  if (pointing === 'start') {
+    borders = {
+      borderTop: `1px solid ${borderColor}`,
+      borderLeft: `1px solid ${borderColor}`,
+    }
+    top = '-1px' // 1px for the border
+  } else {
+    borders = {
+      borderBottom: `1px solid ${borderColor}`,
+      borderRight: `1px solid ${borderColor}`,
+    }
+    top = '100%'
+  }
+
   return {
     '::after': {
       visibility: 'visible',
-      background: variables.defaultActiveBackgroundColor,
+      background: backgroundColor,
       position: 'absolute',
       content: '""',
-      top: '100%',
+      top,
       left: '50%',
       transform: 'translateX(-50%) translateY(-50%) rotate(45deg)',
       margin: '.5px 0 0',
       width: pxToRem(10),
       height: pxToRem(10),
       border: 'none',
-      borderBottom: `1px solid ${variables.defaultBorderColor}`,
-      borderRight: `1px solid ${variables.defaultBorderColor}`,
+      ...borders,
       zIndex: 2,
       transition: 'background .1s ease',
-      ...(type === 'primary' && {
-        background: variables.typePrimaryActiveBackgroundColor,
-        borderBottom: `1px solid ${variables.typePrimaryBorderColor}`,
-        borderRight: `1px solid ${variables.typePrimaryBorderColor}`,
-      }),
     },
   }
 }
@@ -135,7 +157,7 @@ const menuItemStyles = {
             }),
           }),
         },
-        ...(pointing && !vertical && bottomBeak({ props, variables })),
+        ...(pointing && !vertical && pointingBeak({ props, variables })),
         ...(pointing &&
           vertical && {
             ...(pointing === 'end'
