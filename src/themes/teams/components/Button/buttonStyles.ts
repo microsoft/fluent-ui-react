@@ -49,6 +49,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      fontSize: variables.textSize,
       color,
       backgroundColor,
       borderRadius,
