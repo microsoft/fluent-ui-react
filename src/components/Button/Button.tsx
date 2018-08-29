@@ -6,7 +6,12 @@ import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
 export interface IButtonProps {
   as?: any
@@ -18,7 +23,7 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'before' | 'after'
-  onClick?: (event: React.SyntheticEvent, data: IButtonProps) => void
+  onClick?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
