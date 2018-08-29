@@ -22,7 +22,7 @@ import * as _ from 'lodash'
 //   // getNativeProps,
 //   // getParent,
 //   // getPreviousElement,
-//   // getRTL, // TODO: this is probably broken anyway, we need a way to check RTL in Stardust!
+//   // getRTL, // TODO: will be passed thru props from renderComponent
 //   // isElementFocusZone,
 //   // isElementFocusSubZone,
 //   // isElementTabbable,
@@ -39,13 +39,9 @@ import {
 import { IS_FOCUSABLE_ATTRIBUTE } from '../interfaces'
 import getUnhandledProps from '../../getUnhandledProps'
 
-const IS_ENTER_DISABLED_ATTRIBUTE = 'data-disable-click-on-enter'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 const TABINDEX = 'tabindex'
-const NO_VERTICAL_WRAP = 'data-no-vertical-wrap'
-const NO_HORIZONTAL_WRAP = 'data-no-horizontal-wrap'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
-const LARGE_NEGATIVE_DISTANCE_FROM_CENTER = -999999999
 
 const _allInstances: {
   [key: string]: FocusZone
@@ -94,7 +90,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   private windowElement: Window | null
 
   constructor(props: IFocusZoneProps) {
-    super(props, undefined) // TODO what is context?
+    super(props)
 
     this._id = _.uniqueId('FocusZone')
 
