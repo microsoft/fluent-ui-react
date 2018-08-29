@@ -4,7 +4,7 @@ import * as React from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 
-import { neverUpdate } from 'docs/src/hoc'
+import { updateForKeys } from 'docs/src/hoc'
 
 const ComponentControlsMaximize: any = ({ examplePath }) => (
   <Menu.Item
@@ -22,4 +22,4 @@ ComponentControlsMaximize.propTypes = {
   examplePath: PropTypes.string.isRequired,
 }
 
-export default neverUpdate(ComponentControlsMaximize)
+export default updateForKeys(['examplePath'])(ComponentControlsMaximize)

@@ -1,8 +1,9 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IImageProps } from '../../../../components/Image/Image'
 
 export default {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({ props, variables }: { props: IImageProps; variables: any }): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     width: (props.fluid && '100%') || variables.width,
