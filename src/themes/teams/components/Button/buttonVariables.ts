@@ -12,12 +12,21 @@ export interface IButtonVariables {
   paddingLeftRightValue: number
   typePrimaryColor: string
   typePrimaryBackgroundColor: string
+  typePrimaryBackgroundColorActive: string
   typePrimaryBackgroundColorHover: string
   typePrimaryBorderColor: string
+  typePrimaryBorderColorFocus: string
+  typePrimaryBorderColorInsetFocus: string
   typeSecondaryColor: string
   typeSecondaryBackgroundColor: string
+  typeSecondaryBackgroundColorActive: string
   typeSecondaryBackgroundColorHover: string
+  typeSecondaryBackgroundColorFocus: string
   typeSecondaryBorderColor: string
+  typeSecondaryBorderColorActive: string
+  typeSecondaryBorderColorHover: string
+  typeSecondaryBorderColorFocus: string
+  typeSecondaryBorderColorInsetFocus: string
 }
 
 export default (siteVars: any): IButtonVariables => {
@@ -31,11 +40,21 @@ export default (siteVars: any): IButtonVariables => {
     paddingLeftRightValue: 20,
     typePrimaryColor: siteVars.white,
     typePrimaryBackgroundColor: siteVars.brand,
+    typePrimaryBackgroundColorActive: siteVars.brand02,
     typePrimaryBackgroundColorHover: siteVars.brand04,
+    typePrimaryBackgroundColorFocus: siteVars.brand04,
     typePrimaryBorderColor: 'transparent',
+    typePrimaryBorderColorFocus: siteVars.black,
+    typePrimaryBorderColorInsetFocus: siteVars.white,
     typeSecondaryColor: siteVars.black,
     typeSecondaryBackgroundColor: siteVars.white,
-    typeSecondaryBackgroundColorHover: siteVars.gray06,
-    typeSecondaryBorderColor: siteVars.gray06,
+    typeSecondaryBackgroundColorActive: siteVars.gray08,
+    typeSecondaryBackgroundColorHover: siteVars.gray12,
+    typeSecondaryBackgroundColorFocus: siteVars.gray08,
+    typeSecondaryBorderColor: siteVars.gray08,
+    typeSecondaryBorderColorActive: siteVars.gray06,
+    typeSecondaryBorderColorHover: siteVars.gray06,
+    typeSecondaryBorderColorFocus: siteVars.black,
+    typeSecondaryBorderColorInsetFocus: siteVars.white,
   }
 }

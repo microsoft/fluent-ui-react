@@ -18,15 +18,27 @@ const buttonStyles: IComponentPartStylesInput = {
       paddingLeftRightValue,
       typePrimaryColor,
       typePrimaryBackgroundColor,
+      typePrimaryBackgroundColorActive,
       typePrimaryBackgroundColorHover,
+      typePrimaryBackgroundColorFocus,
       typePrimaryBorderColor,
+      typePrimaryBorderColorFocus,
+      typePrimaryBorderColorInsetFocus,
       typeSecondaryColor,
       typeSecondaryBackgroundColor,
+      typeSecondaryBackgroundColorActive,
       typeSecondaryBackgroundColorHover,
+      typeSecondaryBackgroundColorFocus,
       typeSecondaryBorderColor,
+      typeSecondaryBorderColorActive,
+      typeSecondaryBorderColorHover,
+      typeSecondaryBorderColorFocus,
+      typeSecondaryBorderColorInsetFocus,
     } = variables
 
     return {
+      cursor: 'pointer',
+      outline: 0,
       height,
       minWidth,
       maxWidth,
@@ -67,8 +79,6 @@ const buttonStyles: IComponentPartStylesInput = {
       ...(disabled
         ? disabledStyle
         : {
-            borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
-            cursor: 'pointer',
             ':hover': {
               backgroundColor: backgroundColorHover,
             },
@@ -76,10 +86,26 @@ const buttonStyles: IComponentPartStylesInput = {
             ...(primary && {
               color: typePrimaryColor,
               backgroundColor: typePrimaryBackgroundColor,
-              borderColor: typePrimaryBorderColor,
+              border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
+              ':active': {
+                backgroundColor: typePrimaryBackgroundColorActive,
+              },
               ':hover': {
-                color: typePrimaryColor,
                 backgroundColor: typePrimaryBackgroundColorHover,
+              },
+              ':focus': {
+                backgroundColor: typePrimaryBackgroundColorFocus,
+                borderColor: typePrimaryBorderColorFocus,
+                '::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
+                  borderRadius: `${pxToRem(2)}`,
+                },
               },
             }),
 
@@ -87,10 +113,28 @@ const buttonStyles: IComponentPartStylesInput = {
               color: typeSecondaryColor,
               backgroundColor: typeSecondaryBackgroundColor,
               borderColor: typeSecondaryBorderColor,
+              borderWidth: pxToRem(1),
+              ':active': {
+                backgroundColor: typeSecondaryBackgroundColorActive,
+                borderColor: typeSecondaryBorderColorActive,
+              },
               ':hover': {
-                color: typeSecondaryColor,
-                borderColor: 'transparent',
                 backgroundColor: typeSecondaryBackgroundColorHover,
+                borderColor: typeSecondaryBorderColorHover,
+              },
+              ':focus': {
+                backgroundColor: typeSecondaryBackgroundColorFocus,
+                borderColor: typeSecondaryBorderColorFocus,
+                '::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  border: `${pxToRem(1)} solid ${typeSecondaryBorderColorInsetFocus}`,
+                  borderRadius: `${pxToRem(2)}`,
+                },
               },
             }),
           }),
