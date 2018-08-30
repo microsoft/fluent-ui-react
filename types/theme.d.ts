@@ -141,6 +141,7 @@ export interface IThemePrepared {
 export interface IThemeComponentStylesInput {
   Accordion?: IComponentPartStylesInput
   Avatar?: IComponentPartStylesInput
+  Avatar2?: IComponentPartStylesInput
   Button?: IComponentPartStylesInput
   Chat?: IComponentPartStylesInput
   Divider?: IComponentPartStylesInput
@@ -159,6 +160,7 @@ export interface IThemeComponentStylesInput {
 export interface IThemeComponentStylesPrepared {
   Accordion?: IComponentPartStylesPrepared
   Avatar?: IComponentPartStylesPrepared
+  Avatar2?: IComponentPartStylesPrepared
   Button?: IComponentPartStylesPrepared
   Chat?: IComponentPartStylesPrepared
   Divider?: IComponentPartStylesPrepared
@@ -177,6 +179,7 @@ export interface IThemeComponentStylesPrepared {
 export interface IThemeComponentVariablesInput {
   Accordion?: ComponentVariablesInput
   Avatar?: ComponentVariablesInput
+  Avatar2?: ComponentVariablesInput
   Button?: ComponentVariablesInput
   Chat?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
@@ -194,6 +197,7 @@ export interface IThemeComponentVariablesInput {
 export interface IThemeComponentVariablesPrepared {
   Accordion?: ComponentVariablesPrepared
   Avatar?: ComponentVariablesPrepared
+  Avatar2?: ComponentVariablesPrepared
   Button?: ComponentVariablesPrepared
   Chat?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
