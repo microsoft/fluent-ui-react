@@ -2,15 +2,16 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, Extendable } from '../../lib'
+import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatMessage from './ChatMessage'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface IChatProps {
   as?: any
   className?: string
-  children?: React.ReactNode
-  messages?: any[]
+  children?: ReactChildren
+  messages?: ItemShorthand[]
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

@@ -1,3 +1,6 @@
+import * as themes from './themes'
+export { themes }
+
 export { default as Accordion } from './components/Accordion'
 export { default as Button } from './components/Button'
 export { default as Chat } from './components/Chat'

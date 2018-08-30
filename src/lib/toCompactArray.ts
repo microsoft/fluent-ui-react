@@ -1,5 +1,5 @@
-const toCompactArray = <T = any>(...values: T[]): T[] => {
-  return [].concat(...values).filter(Boolean)
+const toCompactArray = <T>(...values: T[]): T[] => {
+  return ([] as T[]).concat(...values).filter(Boolean)
 }
 
 export default toCompactArray

@@ -4,7 +4,7 @@ import {
   ICSSInJSStyle,
   ICSSPseudoElementStyle,
 } from '../../../../../types/theme'
-import { IDividerProps } from '../../../../components/Divider/Divider'
+import { IDividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 
 const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
@@ -24,7 +24,13 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
 })
 
 const dividerStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }: { props: IDividerProps; variables: any }): ICSSInJSStyle => {
+  root: ({
+    props,
+    variables,
+  }: {
+    props: IDividerPropsWithDefaults
+    variables: any
+  }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {
       marginTop: pxToRem(5 + size * 7.5),

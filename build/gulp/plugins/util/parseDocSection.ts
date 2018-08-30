@@ -11,6 +11,11 @@ const getJSXAttributes = jsxPath =>
 
 const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name }), 'value')
 
+type Example = {
+  title: string
+  examplePath: string
+}
+
 /**
  * Parses the section view of component examples and builds an object with examples titles and paths.
  *
@@ -19,7 +24,7 @@ const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name 
  */
 const parseDocSection = buffer => {
   const ast = parseBuffer(buffer)
-  const examples = []
+  const examples: Example[] = []
   let sectionName
 
   traverse(ast, {
