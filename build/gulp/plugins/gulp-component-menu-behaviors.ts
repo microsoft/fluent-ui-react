@@ -41,14 +41,15 @@ export default () => {
       let description
       const fileContent = fs.readFileSync(file.path).toString()
       const blockComments = extract(fileContent).filter(comment => comment.type === 'BlockComment') // filtering only block comments
+      const emptyDescriptionText = 'Behavior file has no description.'
 
       // getting object that describes '@description' part of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
         const descriptionToken = commentTokens.find(token => token.title === 'description')
-        description = descriptionToken.description
+        description = descriptionToken ? descriptionToken.description : emptyDescriptionText
       } else {
-        description = 'Behavior file has no description.'
+        description = emptyDescriptionText
       }
 
       result.push({
