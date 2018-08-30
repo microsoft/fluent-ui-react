@@ -116,6 +116,7 @@ const menuItemStyles = {
             : { marginLeft: iconsMenuItemSpacing }),
         },
       }),
+      ...(!vertical && variables.menuItemWidth && { width: pxToRem(variables.menuItemWidth) }),
       ...(pills && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
         borderRadius: pxToRem(5),
@@ -237,6 +238,11 @@ const menuItemStyles = {
               }),
         }),
     }
+  },
+  submenu: {
+    position: 'absolute',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
 }
 

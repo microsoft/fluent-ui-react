@@ -19,6 +19,11 @@ const Types = () => (
       description="A vertical menu displays elements vertically."
       examplePath="components/Menu/Types/MenuExampleVertical"
     />
+    <ComponentExample
+      title="Sub Menu"
+      description="A menu item may contain another vertical menu nested inside that acts as a grouped sub-menu."
+      examplePath="components/Menu/Types/MenuExampleWithSubmenu"
+    />
   </ExampleSection>
 )
 
