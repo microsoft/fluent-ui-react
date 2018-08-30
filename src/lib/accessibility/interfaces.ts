@@ -122,10 +122,41 @@ export type FocusZoneDefinition = {
   props?: IFocusZoneProps
 }
 
+export type ActionsDefinition = { [partName: string]: { [actionName: string]: IActionDefinition } }
+
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   keyHandlers?: AccessibilityKeyHandlers
   focusZone?: FocusZoneDefinition
+  actionsDefinition?: ActionsDefinition
 }
+
+export interface IAccessibilityBehavior extends IAccessibilityDefinition {
+  handlers?: ActionsHandler
+}
+
+export interface IActionDefinition {
+  keyCombinations: KeyCombinations[]
+}
+
+export interface KeyCombinations {
+  keyCode: number
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
+
+export type AccessibilityActions = {
+  [actionName: string]: KeyboardHandler
+}
+
+export type ActionsHandler = {
+  [partName: string]: {
+    onKeyDown?: KeyboardHandler
+  }
+}
+
+export type KeyboardHandler = (event: React.KeyboardEvent) => void
 
 export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
