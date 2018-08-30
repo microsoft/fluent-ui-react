@@ -6,11 +6,16 @@ import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
 export interface IButtonProps {
   as?: any
-  children?: React.ReactNode
+  children?: ReactChildren
   circular?: boolean
   className?: string
   disabled?: boolean
@@ -18,9 +23,9 @@ export interface IButtonProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'before' | 'after'
-  onClick?: (event: React.SyntheticEvent, data: IButtonProps) => void
+  onClick?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

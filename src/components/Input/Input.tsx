@@ -4,14 +4,35 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  childrenExist,
   createHTMLInput,
   customPropTypes,
   getUnhandledProps,
   partitionHTMLProps,
-  UIComponent,
 } from '../../lib'
 import Icon from '../Icon'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
+
+export interface IInputProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  clearable?: boolean
+  defaultValue?: string
+  fluid?: boolean
+  icon?: ItemShorthand
+  input?: ItemShorthand
+  onChange?: ComponentEventHandler<IInputProps>
+  value?: string
+  type?: string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An Input
@@ -23,7 +44,7 @@ import Icon from '../Icon'
  *  - if input is search, then use "role='search'"
  *
  */
-class Input extends AutoControlledComponent<any, any> {
+class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'
@@ -31,9 +52,6 @@ class Input extends AutoControlledComponent<any, any> {
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
 
     /** Additional classes. */
     className: PropTypes.string,
@@ -49,9 +67,6 @@ class Input extends AutoControlledComponent<any, any> {
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
-
-    /** Shorthand for creating the HTML Input. */
-    input: customPropTypes.itemShorthand,
 
     /**
      * Called on change.
@@ -76,13 +91,11 @@ class Input extends AutoControlledComponent<any, any> {
 
   static handledProps = [
     'as',
-    'children',
     'className',
     'clearable',
     'defaultValue',
     'fluid',
     'icon',
-    'input',
     'onChange',
     'styles',
     'type',
@@ -118,7 +131,6 @@ class Input extends AutoControlledComponent<any, any> {
 
   handleOnClear = e => {
     const { clearable } = this.props
-    const { value } = this.state
 
     if (clearable) {
       this.trySetState({ value: '' })
@@ -168,35 +180,17 @@ class Input extends AutoControlledComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, clearable, input, type } = this.props
+  renderComponent({ ElementType, classes, styles }) {
+    const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
+    const { onChange } = htmlInputProps as any
+
     const inputClasses = classes.input
-    const iconClasses = classes.icon
-
-    // Render with children
-    // ----------------------------------------
-    if (childrenExist(children)) {
-      // add htmlInputProps to the `<input />` child
-      const childElements = _.map(React.Children.toArray(children), child => {
-        if (typeof child === 'string' || typeof child === 'number' || child.type !== 'input') {
-          return child
-        }
-
-        return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
-      })
-
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {childElements}
-        </ElementType>
-      )
-    }
 
     return (
-      <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
+      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+        {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,

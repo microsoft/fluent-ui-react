@@ -10,11 +10,35 @@ import {
 } from '../../lib'
 
 import { Icon, Image, Layout } from '../..'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  Extendable,
+  ReactChildren,
+  ItemShorthand,
+  ComponentEventHandler,
+} from '../../../types/utils'
+
+export interface ILabelProps {
+  accessibility?: Accessibility
+  as?: any
+  children?: ReactChildren
+  circular?: boolean
+  className?: string
+  content?: React.ReactNode
+  fluid?: boolean
+  icon?: ItemShorthand
+  iconPosition?: 'start' | 'end'
+  onIconClick?: ComponentEventHandler<ILabelProps>
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A label displays content classification
  */
-class Label extends UIComponent<any, any> {
+class Label extends UIComponent<Extendable<ILabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function
