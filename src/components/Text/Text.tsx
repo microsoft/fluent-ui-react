@@ -7,20 +7,20 @@ import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 
 export interface ITextProps {
-  as: any
-  atMention: boolean
-  className: string
-  content: any
-  disabled: boolean
-  error: boolean
-  important: boolean
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
-  weight: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
-  success: boolean
-  timestamp: boolean
-  truncated: boolean
-  styles: IComponentPartStylesInput
-  variables: ComponentVariablesInput
+  as?: any
+  atMention?: boolean
+  className?: string
+  content?: any
+  disabled?: boolean
+  error?: boolean
+  important?: boolean
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+  weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
+  success?: boolean
+  timestamp?: boolean
+  truncated?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
 }
 
 /**
