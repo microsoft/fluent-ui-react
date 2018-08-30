@@ -28,8 +28,8 @@ export interface ILayoutProps {
   end?: any
   endCSS?: ICSSInJSStyle
   endSize?: string
-  justifyItems?: any
-  alignItems?: any
+  justifyItems?: React.CSSProperties['justifyItems']
+  alignItems?: React.CSSProperties['alignItems']
   gap?: string
   reducing?: boolean
   disappearing?: boolean

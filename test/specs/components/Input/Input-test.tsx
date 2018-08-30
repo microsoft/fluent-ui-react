@@ -1,12 +1,18 @@
 import * as React from 'react'
 
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
 
 import Input from 'src/components/Input/Input'
+import Icon from 'src/components/Icon/Icon'
 import { mountWithProvider } from 'test/utils'
 
 describe('Input', () => {
-  isConformant(Input)
+  isConformant(Input, {
+    eventTargets: {
+      onChange: 'input',
+    },
+  })
+  implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('input', () => {
     it('renders a text <input> by default', () => {
