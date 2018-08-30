@@ -6,7 +6,11 @@ import Input from 'src/components/Input/Input'
 import { mountWithProvider } from 'test/utils'
 
 describe('Input', () => {
-  isConformant(Input)
+  isConformant(Input, {
+    eventTargets: {
+      onChange: 'input',
+    },
+  })
 
   describe('input', () => {
     it('renders a text <input> by default', () => {
