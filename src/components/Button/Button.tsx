@@ -1,7 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import whatInput from 'what-input'
-import * as cx from 'classnames'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
