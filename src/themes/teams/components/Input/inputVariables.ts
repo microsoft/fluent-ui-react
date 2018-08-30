@@ -5,7 +5,6 @@ export default (siteVars: any) => {
 
   vars.borderRadius = `${pxToRem(3)}`
   vars.borderBottom = `${pxToRem(2)} solid transparent`
-  vars.height = '100%'
   vars.backgroundColor = siteVars.gray10
 
   vars.fontColor = siteVars.fontBlack

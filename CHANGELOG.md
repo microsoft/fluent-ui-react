@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Adjust layout and rendered HTML of Input @kuzhelov ([#127](https://github.com/stardust-ui/react/pull/127))
+
 <!--------------------------------[ v0.4.0 ]------------------------------- -->
 ## [v0.4.0](https://github.com/stardust-ui/react/tree/v0.4.0) (2018-08-29)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.3.0...v0.4.0)
