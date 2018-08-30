@@ -35,6 +35,7 @@ const buttonStyles: IComponentPartStylesInput = {
       backgroundColor,
       display: 'inline-flex',
       justifyContent: 'center',
+      alignItems: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
@@ -52,6 +53,7 @@ const buttonStyles: IComponentPartStylesInput = {
         backgroundColor: typePrimaryBackgroundColor,
         borderColor: typePrimaryBorderColor,
         ':hover': {
+          color: typePrimaryColor,
           backgroundColor: typePrimaryBackgroundColorHover,
         },
       }),
@@ -61,6 +63,7 @@ const buttonStyles: IComponentPartStylesInput = {
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
         ':hover': {
+          color: typeSecondaryColor,
           borderColor: 'transparent',
           backgroundColor: typeSecondaryBackgroundColorHover,
         },
