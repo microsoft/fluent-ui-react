@@ -49,12 +49,9 @@ export interface IRenderConfig {
   state: { [key: string]: any }
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility = props => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
-    ...props,
-    ...state,
-  })
+  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)(props)
 }
 
 const renderComponent = <P extends {}>(
@@ -83,7 +80,11 @@ const renderComponent = <P extends {}>(
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
-        const styleParam: ComponentStyleFunctionParam = { props, variables: resolvedVariables }
+        const appliedProps = { ...state, ...props }
+        const styleParam: ComponentStyleFunctionParam = {
+          props: appliedProps,
+          variables: resolvedVariables,
+        }
         const resolvedStyles = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
@@ -92,7 +93,7 @@ const renderComponent = <P extends {}>(
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const accessibility = getAccessibility(props, state)
+        const accessibility = getAccessibility(appliedProps)
 
         const config: IRenderResultConfig<P> = {
           ElementType,
