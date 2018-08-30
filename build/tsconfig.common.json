@@ -6,7 +6,6 @@
     "baseUrl": "../",
     "paths": {
       "@stardust-ui/react": ["src"],
-      "@stardust-ui/react/themes/teams": ["src/themes/teams"],
       "*": ["*", "types/*"]
     },
     "types": [

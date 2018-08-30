@@ -7,7 +7,24 @@ import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-class List extends UIComponent<any, any> {
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+
+export interface IListProps {
+  accessibility?: Accessibility
+  as?: any
+  children?: ReactChildren
+  className?: string
+  debug?: boolean
+  items?: ItemShorthand[]
+  selection?: boolean
+  truncateContent?: boolean
+  truncateHeader?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class List extends UIComponent<Extendable<IListProps>, any> {
   static displayName = 'List'
 
   static className = 'ui-list'
