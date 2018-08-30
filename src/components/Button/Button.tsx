@@ -111,9 +111,9 @@ class Button extends UIComponent<any, any> {
         {...rest}
       >
         {hasChildren && children}
-        {iconPosition !== 'after' && this.renderIcon(variables)}
-        {content && <span className={classes.content}>{content}</span>}
-        {iconPosition === 'after' && this.renderIcon(variables)}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
+        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables)}
       </ElementType>
     )
   }
