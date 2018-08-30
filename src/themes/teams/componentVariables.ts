@@ -1,6 +1,7 @@
 export { default as AccordionContent } from './components/Accordion/accordionContentVariables'
 
 export { default as Avatar } from './components/Avatar/avatarVariables'
+export { default as Avatar2 } from './components/Avatar2/avatar2Variables'
 
 export { default as Button } from './components/Button/buttonVariables'
 

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-import { Avatar2, Provider } from '@stardust-ui/react'
+import { Avatar2, Provider, themes } from '@stardust-ui/react'
 
 const Avatar2ExampleSizeShorthand = () => (
   <div>
@@ -9,19 +9,20 @@ const Avatar2ExampleSizeShorthand = () => (
       src="public/images/avatar/small/matt.jpg"
       avatarSize="medium"
       avatarType="bot"
-      avatarState="PresenceUnknown"
+      avatarState="unknown"
     />
     <Avatar2
       src="public/images/avatar/small/matt.jpg"
       avatarSize="xlarge"
       avatarType="person"
-      avatarState="Available"
+      avatarState="available"
     />
     <br />
     Theme here:
     <Provider.Consumer
-      render={theme => <pre>{JSON.stringify(theme.componentVariables.Avatar2, null, 2)}</pre>}
+      render={theme => <pre>{JSON.stringify(theme.componentVariables.Avatar2())}</pre>}
     />
+    <Provider.Consumer render={theme => <pre>{JSON.stringify(theme)}</pre>} />
     <br />
     End Theme.
   </div>

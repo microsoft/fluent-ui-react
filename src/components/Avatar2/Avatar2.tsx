@@ -3,6 +3,8 @@ import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
+import avatarStyles from '../../themes/teams/components/Avatar/avatarStyles'
+import avatar2Variables from '../../themes/teams/components/Avatar2/avatar2Variables'
 
 /**
  * An avatar2 is a graphic representation of user alongside with a presence icon.
@@ -138,8 +140,31 @@ class Avatar2 extends UIComponent<any, any> {
     },
   }
 
+  ///
+  /// Uses the properties when rendered to get the correct clipping path
+  ///
+  static avatarTypeToPath = function (
+    avatarType: string,
+    avatarSize: string,
+    avatarHasPresence: boolean,
+  ) {
+    // console.log(avatar2Variables["avatarClippingData"])//[avatarType]["avatarClip"]
+    // how do I access the avatar variables from here to get the path data out?
+    return 'M23.93,2H10.07C9,2,8.01,2.57,7.47,3.5l-6.92,12c-0.54,0.93-0.54,2.07,0,3l6.93,12c0.54,0.93,1.53,1.5,2.6,1.5h13.85c1.07,0,2.06-0.57,2.6-1.5l6.93-12c0.54-0.93,0.54-2.07,0-3l-6.93-12C25.99,2.57,25,2,23.93,2z'
+  }
+
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { src, alt, name, status, getInitials, size } = this.props
+    const {
+      src,
+      alt,
+      name,
+      status,
+      getInitials,
+      size,
+      avatarType,
+      avatarSize,
+      presence,
+    } = this.props
     const { icon = '', color = '' } = Avatar2.statusToIcon[status] || {}
 
     const iconVariables = {
@@ -151,21 +176,12 @@ class Avatar2 extends UIComponent<any, any> {
       <ElementType {...rest} className={classes.root}>
         {src ? (
           <div>
-            {/*
-              <Image
-                styles={{ root: styles.imageAvatar }}
-                fluid
-                avatar
-                src={src}
-                alt={alt}
-                title={name}
-              />
-
-                This inline SVG will have some unnecessarily repeated items
-                Need a way to separate out the clipping paths in order to not duplicate them for every avatar
-            */}
-            <svg viewBox="-2 0 36 34" width="36" height="36">
+            <svg viewBox="0 0 36 34" width="36" height="36">
+              {/* this needs to move out of here to be an application-wide resource */}
               <defs>
+                <clipPath>
+                  <path d={Avatar2.avatarTypeToPath(avatarType, avatarSize, presence)} />
+                </clipPath>
                 <clipPath id="AvatarClipBot_M">
                   <path d="M23.93,2H10.07C9,2,8.01,2.57,7.47,3.5l-6.92,12c-0.54,0.93-0.54,2.07,0,3l6.93,12c0.54,0.93,1.53,1.5,2.6,1.5h13.85c1.07,0,2.06-0.57,2.6-1.5l6.93-12c0.54-0.93,0.54-2.07,0-3l-6.93-12C25.99,2.57,25,2,23.93,2z" />
                 </clipPath>

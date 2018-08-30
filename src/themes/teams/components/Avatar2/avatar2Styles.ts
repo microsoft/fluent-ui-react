@@ -1,6 +1,11 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { avatarSizes, avatarTypes, avatarStates, IAvatar2Variables } from './avatar2Variables'
+import {
+  avatarSizes,
+  avatarClippingData,
+  presenceStates,
+  IAvatar2Variables,
+} from './avatar2Variables'
 
 const getAvatarDimension = (size: string) => {
   return avatarSizes[size].size

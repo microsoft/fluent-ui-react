@@ -3,6 +3,9 @@ export interface IAvatar2Variables {
   avatarSize: string
   avatarType: string
   avatarState: string
+  presenceStates: any
+  avatarClippingData: any
+  avatarSizes: any
 }
 
 //
@@ -42,7 +45,7 @@ export const avatarSizes = {
 // so that the Avatar implementation is relying on established variables?
 // avatarPaths contains the paths data for clipping the avatar
 //
-export const avatarTypes = {
+export const avatarClippingData = {
   person: {
     xsmall: {
       avatarClip: 'a',
@@ -156,46 +159,45 @@ export const avatarTypes = {
   },
 }
 
-export const avatarStates = {
-  Available: {
+export const presenceStates = {
+  available: {
     icon: 'check',
     color: 'green',
   },
-  Busy: {
+  busy: {
     icon: '',
     color: 'red',
   },
-  DoNotDisturb: {
+  doNotDisturb: {
     icon: 'minus',
     color: 'red',
   },
-  Away: {
+  away: {
     icon: 'clock',
     color: 'yellow',
   },
-  BeRightBack: {
+  beRightBack: {
     icon: 'clock',
     color: 'yellow',
   },
-  Offline: {
+  offline: {
     icon: '',
     color: 'grey',
   },
-  PresenceUnknown: {
+  unknown: {
     icon: '',
     color: 'grey',
-  },
-  outOfOffice: {
-    icon: '',
-    color: 'orchid',
   },
 }
 
 export default (siteVariables): IAvatar2Variables => {
   return {
     presenceIndicatorBackground: 'transparent',
-    avatarSize: 'small',
+    avatarSize: 'medium',
     avatarType: 'person',
     avatarState: 'unknown',
+    avatarSizes,
+    avatarClippingData,
+    presenceStates,
   }
 }
