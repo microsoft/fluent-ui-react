@@ -135,6 +135,7 @@ export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHan
 export enum FocusZoneMode {
   Custom,
   Wrap,
+  Embed,
 }
 
 export type FocusZoneDefinition = {

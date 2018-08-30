@@ -16,6 +16,10 @@ export interface IChatProps {
   variables?: ComponentVariablesInput
 }
 
+import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
+import { Accessibility, AccessibilityActions } from '../../lib/accessibility/interfaces'
+import { FocusZone } from '../../lib/accessibility/FocusZone'
+
 class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static className = 'ui-chat'
 
@@ -37,19 +41,30 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'messages', 'styles', 'variables']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'children',
+    'className',
+    'messages',
+    'styles',
+    'variables',
+  ]
 
-  static defaultProps = { as: 'ul' }
+  static defaultProps = { accessibility: ChatBehavior as Accessibility, as: 'div' }
 
   static Message = ChatMessage
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, messages } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children)
           ? children
           : _.map(messages, message => ChatMessage.create(message))}

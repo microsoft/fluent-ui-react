@@ -20,7 +20,11 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
   actionsDefinition: {
     anchor: {
       performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+        keyCombinations: [
+          { keyCode: keyboardKey.Enter },
+          { keyCode: keyboardKey.Spacebar },
+          { keyCode: keyboardKey.ArrowDown },
+        ],
       },
     },
   },
