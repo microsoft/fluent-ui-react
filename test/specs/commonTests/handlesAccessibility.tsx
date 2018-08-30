@@ -3,7 +3,8 @@ import * as React from 'react'
 import { getTestingRenderedComponent } from 'test/utils'
 import { DefaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
-import { FocusZone, FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
+import { FocusZone } from 'src/lib/accessibility/FocusZone'
+import { FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/FocusUtilities'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector

@@ -60,6 +60,11 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
   as?: React.ReactType
 
   /**
+   * If true, FocusZone behavior will change to match RTL environments (left/right arrows switched).
+   */
+  isRtl?: boolean
+
+  /**
    * If set, will cycle to the beginning of the targets once the user navigates to the
    * next target while at the end, and to the end when navigate to the previous at the beginning.
    */

@@ -10,38 +10,17 @@ import {
 import * as keyboardKey from 'keyboard-key'
 import * as cx from 'classnames'
 import * as _ from 'lodash'
-// import {
-//   // BaseComponent,
-//   // EventGroup,
-//   // KeyCodes,
-//   // css,
-//   // htmlElementProperties,
-//   // elementContains,
-//   // getDocument,
-//   // getId,
-//   // getNextElement,
-//   // getNativeProps,
-//   // getParent,
-//   // getPreviousElement,
-//   // getRTL, // TODO: will be passed thru props from renderComponent
-//   // isElementFocusZone,
-//   // isElementFocusSubZone,
-//   // isElementTabbable,
-//   // shouldWrapFocus,
-//   // createRef,
-// } from '@uifabric/utilities'
 import {
   getNextElement,
   getPreviousElement,
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  IS_FOCUSABLE_ATTRIBUTE,
+  FOCUSZONE_ID_ATTRIBUTE,
 } from './FocusUtilities'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../interfaces'
 import getUnhandledProps from '../../getUnhandledProps'
-import { customPropTypes } from '../..'
 
-export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
 
@@ -58,8 +37,6 @@ const ALLOWED_INPUT_TYPES = ['text', 'number', 'password', 'email', 'tel', 'url'
 function getParent(child: HTMLElement): HTMLElement | null {
   return child && child.parentElement
 }
-
-const getRTL = () => false
 
 export class FocusZone extends React.Component<IFocusZoneProps, {}> implements IFocusZone {
   static propTypes = {
@@ -484,7 +461,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               direction === FocusZoneDirection.horizontal ||
               direction === FocusZoneDirection.bidirectional
             ) {
-              const tabWithDirection = getRTL() ? !ev.shiftKey : ev.shiftKey
+              const tabWithDirection = this.props.isRtl ? !ev.shiftKey : ev.shiftKey
               focusChanged = tabWithDirection ? this.moveFocusLeft() : this.moveFocusRight()
             }
             this._processingTabKey = false
@@ -762,7 +739,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   private moveFocusLeft(): boolean {
     if (
       this.moveFocus(
-        getRTL(),
+        this.props.isRtl,
         (activeRect: ClientRect, targetRect: ClientRect) => {
           let distance = -1
 
@@ -790,7 +767,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
   private moveFocusRight(): boolean {
     if (
       this.moveFocus(
-        !getRTL(),
+        !this.props.isRtl,
         (activeRect: ClientRect, targetRect: ClientRect) => {
           let distance = -1
 

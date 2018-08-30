@@ -1,4 +1,5 @@
-import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/FocusUtilities'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {

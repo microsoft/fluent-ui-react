@@ -5,7 +5,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
 - Replaced path `../../Utilities` with `@uifabric/utilities`.
-- Moved `IS_FOCUSABLE_ATTRIBUTE` to `../interfaces` and exporting `FOCUSZONE_ID_ATTRIBUTE` so it can be used in unit tests.
+- Moved `IS_FOCUSABLE_ATTRIBUTE` and others to `FocusUtilities.ts`.
 - Added prop types.
     - **ATTENTION!** For some reason `customPropTypes` import does not work. Need to investigate!
 - Added `preventDefaultWhenHandled` property and method, added to `_onKeyDown`.
@@ -25,6 +25,6 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
     - `getId` replaced with `_.uniqueId`.
     - `getNativeProps` replaced with `getUnhandledProps`.
     - `getParent` replaced with vanilla JS approach.
-    - `getRTL` removed without a working alternative for now, **needs to be passed in a property (TODO!!!)**!
+    - `getRTL` replaced with an `isRtl` property.
     - `createRef` replaced with a custom object and a callback which is necessary anyway because of custom component handling, see above for details.
     - Focus related utilities moved to `FocusUtilities.ts`.

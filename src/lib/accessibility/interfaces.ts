@@ -122,8 +122,6 @@ export type FocusZoneDefinition = {
   props?: IFocusZoneProps
 }
 
-export const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
-
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   keyHandlers?: AccessibilityKeyHandlers
