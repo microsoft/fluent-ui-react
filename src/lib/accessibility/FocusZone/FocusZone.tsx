@@ -56,7 +56,7 @@ interface IPoint {
 const ALLOWED_INPUT_TYPES = ['text', 'number', 'password', 'email', 'tel', 'url', 'search']
 
 function getParent(child: HTMLElement): HTMLElement | null {
-  return child && child.parentNode && (child.parentNode as HTMLElement)
+  return child && child.parentElement
 }
 
 const getRTL = () => false
@@ -107,7 +107,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     'preventDefaultWhenHandled',
   ]
 
-  private _root = { current: undefined }
+  private _root: { current: HTMLElement | null } = { current: null }
   private _id: string
   /** The most recently focused child element. */
   private _activeElement: HTMLElement | null
@@ -181,7 +181,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
         role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
-        ref={elem => (this._root.current = ReactDOM.findDOMNode(elem))} // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
+        ref={elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)} // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}

@@ -4,16 +4,17 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
-- Replacing path `../../Utilities` with `@uifabric/utilities`.
-- Moving `IS_FOCUSABLE_ATTRIBUTE` to `../interfaces` and exporting `FOCUSZONE_ID_ATTRIBUTE` so it can be used in unit tests.
-- Adding prop types.
+- Replaced path `../../Utilities` with `@uifabric/utilities`.
+- Moved `IS_FOCUSABLE_ATTRIBUTE` to `../interfaces` and exporting `FOCUSZONE_ID_ATTRIBUTE` so it can be used in unit tests.
+- Added prop types.
     - **ATTENTION!** For some reason `customPropTypes` import does not work. Need to investigate!
-- Adding `preventDefaultWhenHandled` property and method, added to `_onKeyDown`.
+- Added `preventDefaultWhenHandled` property and method, added to `_onKeyDown`.
 - Renamed boolean callback properties to better reflect their purpose.
 - Renamed `elementType` to `as`.
 - Removed deprecated properties.
 - Removed `shouldWrapFocus` functionality as it is not necessary for Stardust now and maybe never will.
 - In order to handle custom components in `as`, the `ref` and `_root` were changed to rely on `ReactDOM.findDOMNode` which seems to be necessary because of react-hot-loader. Please see the corresponding [issue #964 at react-hot-loader](https://github.com/gaearon/react-hot-loader/issues/964).
+- Added better typings so that FocusZone passes strict type checks.
 - Replaced Fabric dependencies accordingly:
     - `BaseComponent` removed.
     - `EventGroup` replaced with vanilla JS approach.
@@ -26,3 +27,4 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
     - `getParent` replaced with vanilla JS approach.
     - `getRTL` removed without a working alternative for now, **needs to be passed in a property (TODO!!!)**!
     - `createRef` replaced with a custom object and a callback which is necessary anyway because of custom component handling, see above for details.
+    - Focus related utilities moved to `FocusUtilities.ts`.
