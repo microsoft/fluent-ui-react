@@ -26,7 +26,7 @@ export default (siteVars: any): IButtonVariables => {
     height: pxToRem(32),
     minWidth: pxToRem(96),
     maxWidth: pxToRem(280),
-    color: undefined,
+    color: siteVars.black,
     backgroundColor: siteVars.gray08,
     backgroundColorHover: siteVars.gray06,
     circularRadius: pxToRem(999),
