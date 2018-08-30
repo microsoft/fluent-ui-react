@@ -1,17 +1,35 @@
-import { Accessibility, FocusZoneMode } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
+import callable from '../../../callable'
+import ButtonBehavior from '../Button/ButtonBehavior'
 
-const PopupBehavior: Accessibility = {
+const PopupBehavior: Accessibility = (props: any) => ({
   attributes: {
-    root: {
-      //   role: 'menu'
+    trigger: {
+      ...callable(ButtonBehavior)(props).attributes.root,
+      tabIndex: props && props.as === 'button' ? undefined : 0,
+      'aria-haspopup': 'true',
     },
   },
-  focusZone: {
-    mode: FocusZoneMode.Wrap,
-    props: {
-      isCircularNavigation: true,
+  actionsDefinition: {
+    trigger: {
+      openAndFocus: {
+        keyCombinations: [
+          { keyCode: keyboardKey.Enter },
+          { keyCode: keyboardKey.Spacebar },
+          { keyCode: keyboardKey.ArrowDown },
+        ],
+      },
+      openAndFocusLast: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
+      },
+    },
+    popup: {
+      close: {
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
+      },
     },
   },
-}
+})
 
 export default PopupBehavior

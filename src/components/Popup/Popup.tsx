@@ -9,7 +9,15 @@ import { ItemShorthand, Extendable } from '../../../types/utils'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
 
-import { PopupBehavior, PopupTriggerBehavior } from '../../lib/accessibility'
+import { PopupBehavior } from '../../lib/accessibility'
+import Ref from '../Ref'
+import {
+  Accessibility,
+  AccessibilityActions,
+  IAccessibilityBehavior,
+} from '../../lib/accessibility/interfaces'
+import getKeyDownHandlers from '../../lib/getKeyDownHandlers'
+import callable from '../../lib/callable'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/interfaces'
 
 type PopupPosition =
@@ -41,10 +49,12 @@ export interface IPopupProps {
   position?: PopupPosition
   style?: CSSProperties
   trigger: JSX.Element
+  focusableSelector?: string
 }
 
 export interface IPopupState {
   style?: CSSProperties
+  open: boolean
 }
 
 /**
@@ -55,6 +65,7 @@ export interface IPopupState {
 export default class Popup extends React.Component<Extendable<IPopupProps>, IPopupState> {
   private popupOffset = 8
   private triggerRef: HTMLElement
+  private popupRef: HTMLElement
   private popupCoords: ClientRect | DOMRect | undefined
 
   public static Content = PopupContent
@@ -83,43 +94,100 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
 
     /** Custom style to be applied for component. */
     style: PropTypes.object,
+
+    /** Selector of an element to be focused right after popup was opened */
+    focusableSelector: PropTypes.string,
   }
 
   public static defaultProps = {
     position: 'top start',
   }
 
-  public state = { style: {} }
+  public state = { style: {}, open: false }
+
+  actions: AccessibilityActions = {
+    openAndFocus: () => this.openPopup(this.focus),
+    openAndFocusLast: () => this.openPopup(this.focusLast),
+    close: () => this.closePopup(),
+  }
 
   public render() {
     const { basic, children, content, trigger } = this.props
-    const { style } = this.state
+    const { style, open } = this.state
+    const accessibilityBehavior = this.getAccessibility(this.props, this.state, this.actions)
     return (
-      <Portal
-        onMount={this.handlePortalMount}
-        trigger={trigger}
-        triggerRef={this.handleTriggerRef}
-        triggerAccessibility={PopupTriggerBehavior}
-      >
-        <Popup.Content basic={basic} triggerRef={this.handlePopupRef} styles={{ root: style }}>
-          {childrenExist(children) ? children : content}
-        </Popup.Content>
-      </Portal>
+      <React.Fragment>
+        <Ref innerRef={this.handleTriggerRef}>
+          {React.cloneElement(trigger, {
+            onClick: this.handleTriggerClick,
+            ...accessibilityBehavior.attributes.trigger,
+            ...accessibilityBehavior.handlers.trigger,
+          })}
+        </Ref>
+        <Portal onMount={this.handlePortalMount} open={open}>
+          <Popup.Content
+            basic={basic}
+            triggerRef={this.handlePopupRef}
+            styles={{ root: style }}
+            {...accessibilityBehavior.attributes.popup}
+            {...accessibilityBehavior.handlers.popup}
+          >
+            {childrenExist(children) ? children : content}
+          </Popup.Content>
+        </Portal>
+      </React.Fragment>
     )
   }
 
-  popupRef: HTMLElement
+  handleTriggerClick = () => {
+    this.setState({ open: !this.state.open })
+  }
 
-  focus(focusFirst: boolean = true) {
+  private openPopup = (afterRenderClbk?: Function) => {
+    this.setState({ open: true }, () => {
+      afterRenderClbk && afterRenderClbk()
+    })
+  }
+
+  private closePopup = () => {
+    this.setState({ open: false }, () => {
+      this.triggerRef.focus()
+    })
+  }
+
+  private focus = () => {
     if (!this.popupRef) return
-    const allFocusableElements = this.popupRef.querySelectorAll(
-      `[${IS_FOCUSABLE_ATTRIBUTE}="true"]`,
-    )
-    const focusableElement = (focusFirst
-      ? allFocusableElements[0]
-      : allFocusableElements[allFocusableElements.length - 1]) as HTMLElement
+    const focusableElement = (this.getFocusableElementBySelector(this.props.focusableSelector) ||
+      this.popupRef.querySelector(`[${IS_FOCUSABLE_ATTRIBUTE}="true"]`)) as HTMLElement
 
     focusableElement && focusableElement.focus()
+  }
+
+  private focusLast = () => {
+    if (!this.popupRef) return
+
+    let focusableElement
+
+    const focusableElementBySelector = this.getFocusableElementBySelector(
+      this.props.focusableSelector,
+    ) as HTMLElement
+
+    if (focusableElementBySelector) {
+      focusableElementBySelector.focus()
+    } else {
+      const allFocusableElements = this.popupRef.querySelectorAll(
+        `[${IS_FOCUSABLE_ATTRIBUTE}="true"]`,
+      )
+      focusableElement = allFocusableElements[allFocusableElements.length - 1] as HTMLElement
+
+      focusableElement && focusableElement.focus()
+    }
+  }
+
+  private getFocusableElementBySelector = (selector?: string) => {
+    if (!selector) return null
+
+    return this.popupRef.querySelector(selector)
   }
 
   private computePopupStyle(): CSSProperties {
@@ -182,7 +250,6 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
 
   private handlePortalMount = () => {
     this.setPopupStyle()
-    this.focus()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {
@@ -193,6 +260,19 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
 
   private handleTriggerRef = (triggerRef: HTMLElement) => {
     this.triggerRef = triggerRef
+  }
+
+  private getAccessibility = (props, state, actions) => {
+    const accessibility = callable(PopupBehavior)({
+      ...props,
+      ...state,
+    })
+
+    const handlers = getKeyDownHandlers(actions, accessibility, props)
+    return {
+      ...accessibility,
+      handlers,
+    }
   }
 
   private getContext = (): HTMLElement => this.triggerRef

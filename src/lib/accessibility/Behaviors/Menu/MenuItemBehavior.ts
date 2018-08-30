@@ -1,4 +1,5 @@
 import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -9,6 +10,14 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
       [IS_FOCUSABLE_ATTRIBUTE]: true,
+    },
+  },
+
+  actionsDefinition: {
+    anchor: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
     },
   },
 })
