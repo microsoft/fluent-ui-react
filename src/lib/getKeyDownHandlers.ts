@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import keyboardHandlerFilter from './keyboardHandlerFilter'
 import {
-  IAccessibilityDefinition,
+  ActionsDefinition,
   AccessibilityActions,
   ActionsHandler,
 } from 'src/lib/accessibility/interfaces'
@@ -10,17 +10,16 @@ import { IRenderConfigProps } from 'src/lib/renderComponent'
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
- * @param {AccessibilityActions} actions The input element which is to loose focus.
- * @param {IAccessibilityDefinition} accessibility The input element which is to loose focus.
+ * @param {AccessibilityActions} actions Component's actions
+ * @param {ActionsDefinition} actionsDefinition The mapping of keys and actions' names
  * @param {IRenderConfigProps} props The props which are used to invoke onKeyDown handler passed from top.
  */
 const getKeyDownHandlers = (
   actions: AccessibilityActions,
-  accessibility: IAccessibilityDefinition,
+  actionsDefinition: ActionsDefinition,
   props: IRenderConfigProps,
 ): ActionsHandler => {
   const handlers = {}
-  const actionsDefinition = accessibility.actionsDefinition
 
   if (!actions || !actionsDefinition) return handlers
 

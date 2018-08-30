@@ -6,6 +6,7 @@ const testKeyCode = 27
 const accessibility = DefaultBehavior as IAccessibilityDefinition
 const props = {}
 const partElementName = 'anchor'
+let actionsDefinition
 
 const eventArg: React.KeyboardEvent = {
   keyCode: testKeyCode,
@@ -39,7 +40,7 @@ const eventArg: React.KeyboardEvent = {
 
 describe('getKeyDownHandlers', () => {
   beforeEach(() => {
-    accessibility.actionsDefinition = {
+    actionsDefinition = {
       [partElementName]: {
         testAction: {
           keyCombinations: [{ keyCode: testKeyCode }],
@@ -54,7 +55,7 @@ describe('getKeyDownHandlers', () => {
         testAction: () => {},
       }
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeTruthy()
       expect(handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
@@ -66,13 +67,13 @@ describe('getKeyDownHandlers', () => {
 
       const anotherPartName = 'root'
 
-      accessibility.actionsDefinition[anotherPartName] = {
+      actionsDefinition[anotherPartName] = {
         someOtherTestAction: {
           keyCombinations: [{ keyCode: testKeyCode }],
         },
       }
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeTruthy()
       expect(handlers.hasOwnProperty(anotherPartName)).toBeTruthy()
       expect(handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
@@ -84,14 +85,14 @@ describe('getKeyDownHandlers', () => {
         testAction: () => {},
       }
 
-      accessibility.actionsDefinition[partElementName].doSomething = {
+      actionsDefinition[partElementName].doSomething = {
         keyCombinations: [{ keyCode: testKeyCode }],
       }
-      accessibility.actionsDefinition[partElementName].doSomethingElse = {
+      actionsDefinition[partElementName].doSomethingElse = {
         keyCombinations: [{ keyCode: testKeyCode }],
       }
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeTruthy()
       expect(handlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
@@ -102,14 +103,14 @@ describe('getKeyDownHandlers', () => {
         anotherTestAction: jest.fn(),
       }
 
-      accessibility.actionsDefinition[partElementName].otherAction = {
+      actionsDefinition[partElementName].otherAction = {
         keyCombinations: [{ keyCode: testKeyCode }],
       }
-      accessibility.actionsDefinition[partElementName].anotherTestAction = {
+      actionsDefinition[partElementName].anotherTestAction = {
         keyCombinations: [{ keyCode: 21 }],
       }
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
 
       handlers[partElementName] && handlers[partElementName]['onKeyDown'](eventArg)
       expect(actions.testAction).toHaveBeenCalled()
@@ -122,7 +123,7 @@ describe('getKeyDownHandlers', () => {
     test('when actions are null', () => {
       const actions = null
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test("when acessibility's actionsDefinition is null", () => {
@@ -130,11 +131,7 @@ describe('getKeyDownHandlers', () => {
         otherAction: (event: React.KeyboardEvent) => {},
       }
 
-      const handlers = getKeyDownHandlers(
-        actions,
-        DefaultBehavior as IAccessibilityDefinition,
-        props,
-      )
+      const handlers = getKeyDownHandlers(actions, null, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test('there are not common actions and actions definition', () => {
@@ -142,7 +139,7 @@ describe('getKeyDownHandlers', () => {
         otherAction: (event: React.KeyboardEvent) => {},
       }
 
-      const handlers = getKeyDownHandlers(actions, accessibility, props)
+      const handlers = getKeyDownHandlers(actions, actionsDefinition, props)
       expect(handlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
   })
