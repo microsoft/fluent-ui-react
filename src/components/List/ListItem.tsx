@@ -11,17 +11,17 @@ export interface IListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
-  contentMedia: any
-  content: any
-  debug: boolean
-  header: any
-  endMedia: any
-  headerMedia: any
-  important: boolean
-  media: any
-  selection: boolean
-  truncateContent: boolean
-  truncateHeader: boolean
+  contentMedia?: any
+  content?: any
+  debug?: boolean
+  header?: any
+  endMedia?: any
+  headerMedia?: any
+  important?: boolean
+  media?: any
+  selection?: boolean
+  truncateContent?: boolean
+  truncateHeader?: boolean
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
