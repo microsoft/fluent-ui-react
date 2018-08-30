@@ -25,7 +25,7 @@ export interface IButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
