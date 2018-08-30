@@ -102,10 +102,6 @@ class Button extends UIComponent<any, any> {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
 
-    if (hasChildren) {
-      return children
-    }
-
     return (
       <ElementType
         className={classes.root}
@@ -114,6 +110,7 @@ class Button extends UIComponent<any, any> {
         {...accessibility.attributes.root}
         {...rest}
       >
+        {hasChildren && children}
         {iconPosition !== 'after' && this.renderIcon(variables)}
         {content && <span className={classes.content}>{content}</span>}
         {iconPosition === 'after' && this.renderIcon(variables)}
