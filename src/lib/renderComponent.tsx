@@ -10,12 +10,11 @@ import getUnhandledProps from './getUnhandledProps'
 
 import {
   ComponentStyleFunctionParam,
-  ComponentVariablesInput,
   ComponentVariablesObject,
   IComponentPartClasses,
-  IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   IProps,
+  IState,
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
@@ -34,19 +33,13 @@ export interface IRenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 
-type IRenderConfigProps = {
-  [key: string]: any
-  variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
-}
-
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
-  props: IRenderConfigProps
-  state: { [key: string]: any }
+  props: IProps
+  state: IState
 }
 
 const getAccessibility = props => {
