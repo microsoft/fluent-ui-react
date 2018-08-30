@@ -17,6 +17,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.5.0 ]------------------------------- -->
+## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.4.0...v0.5.0)
+
+### BREAKING CHANGES
+- Rework Provider API and `themes` pattern to resolve import issue @levithomason ([#114](https://github.com/stardust-ui/react/pull/114))
+
+### Fixes
+- Adjust layout and rendered HTML of Input @kuzhelov ([#127](https://github.com/stardust-ui/react/pull/127))
+
+<!--------------------------------[ v0.4.0 ]------------------------------- -->
+## [v0.4.0](https://github.com/stardust-ui/react/tree/v0.4.0) (2018-08-29)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.3.0...v0.4.0)
+
 ### BREAKING CHANGES
 - Split Menu `shape` prop to separate `pills`, `pointing` and `underlined` props @miroslavstastny ([#114](https://github.com/stardust-ui/react/pull/114))
 
@@ -25,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix component variables when merging themes @levithomason ([#128](https://github.com/stardust-ui/react/pull/128))
 - Fix docs *Maximize* for shorthand examples @miroslavstastny ([#122](https://github.com/stardust-ui/react/pull/122))
 - Fix Button styles when rendered as an anchor @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
+- Fix Layout doc page showing ItemLayout examples @levithomason ([#160](https://github.com/stardust-ui/react/pull/160))
 
 ### Features
 - Add basic `Radio` component @alinais ([#100](https://github.com/stardust-ui/react/pull/100))
@@ -32,6 +47,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 - Add strict null checks for generated TS types @smykhailov ([#108](https://github.com/stardust-ui/react/pull/108))
 - Export themes at `@stardust-ui/react/themes` @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
+- Add support for Menu `vertical pointing` prop @miroslavstastny ([#123](https://github.com/stardust-ui/react/pull/123))
 
 ### Documentation
 - Add a Quick Start guide @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
