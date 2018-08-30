@@ -6,9 +6,34 @@ import { AutoControlledComponent, childrenExist, customPropTypes } from '../../l
 import MenuItem from './MenuItem'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesObject } from '../../../types/theme'
 
-class Menu extends AutoControlledComponent<any, any> {
+import {
+  ComponentVariablesInput,
+  ComponentVariablesObject,
+  IComponentPartStylesInput,
+} from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+
+export interface IMenuProps {
+  accessibility?: Accessibility
+  as?: any
+  activeIndex?: number | string
+  children?: ReactChildren
+  className?: string
+  defaultActiveIndex?: number | string
+  fluid?: boolean
+  iconOnly?: boolean
+  items?: ItemShorthand[]
+  pills?: boolean
+  pointing?: boolean | 'start' | 'end'
+  type?: 'primary' | 'secondary'
+  underlined?: boolean
+  vertical?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -43,8 +68,11 @@ class Menu extends AutoControlledComponent<any, any> {
     /** A menu can adjust its appearance to de-emphasize its contents. */
     pills: PropTypes.bool,
 
-    /** A menu can point to show its relationship to nearby content. */
-    pointing: PropTypes.bool,
+    /**
+     * A menu can point to show its relationship to nearby content.
+     * For vertical menu, it can point to the start of the item or to the end.
+     */
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
