@@ -126,15 +126,12 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     rest,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
-    const { isLastFocusFromMouse } = this.state
-    console.log('state is', isLastFocusFromMouse)
 
     const hasChildren = childrenExist(children)
 
     return (
       <ElementType
         className={classes.root}
-        styles={isLastFocusFromMouse ? { root: styles.focusFromMouse } : undefined}
         disabled={disabled}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
