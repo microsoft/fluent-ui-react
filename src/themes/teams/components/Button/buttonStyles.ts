@@ -34,6 +34,7 @@ const buttonStyles: IComponentPartStylesInput = {
       color,
       backgroundColor,
       display: 'inline-flex',
+      justifyContent: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
@@ -65,12 +66,7 @@ const buttonStyles: IComponentPartStylesInput = {
         },
       }),
 
-      ...(!content && {
-        justifyContent: 'center',
-      }),
-
       ...(circular && {
-        justifyContent: 'center',
         minWidth: height,
         padding: 0,
         borderRadius: circularRadius,
