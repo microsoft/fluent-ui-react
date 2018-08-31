@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IPresencePropsWithDefaults } from '../../../../components/Presence/Presence'
+import { IComponentPartStylesInput, ICSSInJSStyle } from 'theme'
+import { IPresenceIndicatorPropsWithDefaults } from '../../../../components/PresenceIndicator/PresenceIndicator'
 
 const getRootElementPadding = (size: number) => {
   if (size < 6) {
@@ -9,12 +9,12 @@ const getRootElementPadding = (size: number) => {
   return 3
 }
 
-const presenceStyles: IComponentPartStylesInput = {
+const presenceIndicatorStyles: IComponentPartStylesInput = {
   root: ({
     props: { size },
     variables: v,
   }: {
-    props: IPresencePropsWithDefaults
+    props: IPresenceIndicatorPropsWithDefaults
     variables: any
   }): ICSSInJSStyle => ({
     position: 'relative',
@@ -28,4 +28,4 @@ const presenceStyles: IComponentPartStylesInput = {
   }),
 }
 
-export default presenceStyles
+export default presenceIndicatorStyles

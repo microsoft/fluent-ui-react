@@ -34,7 +34,9 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
-export { default as Presence } from './components/Presence/presenceStyles'
+export {
+  default as PresenceIndicator,
+} from './components/PresenceIndicator/presenceIndicatorStyles'
 
 export { default as Radio } from './components/Radio/radioStyles'
 

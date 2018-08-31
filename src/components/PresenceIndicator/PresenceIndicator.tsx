@@ -3,10 +3,10 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
+import { Extendable } from 'utils'
 
-export interface IPresenceProps {
+export interface IPresenceIndicatorProps {
   as?: any
   className?: string
   size?: number
@@ -23,12 +23,12 @@ export interface IPresenceProps {
 }
 
 /**
- * A presence is a graphical representation of user's availability
+ * A presence indicator is a graphical representation of user's availability
  */
-class Presence extends UIComponent<Extendable<IPresenceProps>, any> {
-  static className = 'ui-presence'
+class PresenceIndicator extends UIComponent<Extendable<IPresenceIndicatorProps>, any> {
+  static className = 'ui-presence__indicator'
 
-  static displayName = 'Presence'
+  static displayName = 'PresenceIndicator'
 
   static handledProps = ['as', 'className', 'size', 'status', 'styles', 'variables']
 
@@ -97,8 +97,8 @@ class Presence extends UIComponent<Extendable<IPresenceProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { status, size } = this.props as IPresencePropsWithDefaults
-    const { icon = '', color = '' } = (status && Presence.statusToIcon[status]) || {}
+    const { status, size } = this.props as IPresenceIndicatorPropsWithDefaults
+    const { icon = '', color = '' } = (status && PresenceIndicator.statusToIcon[status]) || {}
 
     const iconVariables = {
       color: 'white',
@@ -121,6 +121,7 @@ class Presence extends UIComponent<Extendable<IPresenceProps>, any> {
   }
 }
 
-export default Presence
+export default PresenceIndicator
 
-export type IPresencePropsWithDefaults = IPresenceProps & typeof Presence.defaultProps
+export type IPresenceIndicatorPropsWithDefaults = IPresenceIndicatorProps &
+  typeof PresenceIndicator.defaultProps
