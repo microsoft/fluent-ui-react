@@ -12,6 +12,7 @@ export interface ITextVariables {
   errorTextColor: string
   successTextColor: string
   timestampTextColor: string
+  timestampHoverTextColor: string
   textExtraSmallFontSize: string
   textExtraSmallLineHeight: string
   textSmallFontSize: string
@@ -37,6 +38,7 @@ export default (siteVariables): ITextVariables => {
     errorTextColor: siteVariables.errorTextColor,
     successTextColor: siteVariables.successTextColor,
     timestampTextColor: siteVariables.timestampTextColor,
+    timestampHoverTextColor: siteVariables.gray02,
     textExtraSmallFontSize: siteVariables.textExtraSmallFontSize,
     textExtraSmallLineHeight: siteVariables.textExtraSmallLineHeight,
     textSmallFontSize: siteVariables.textSmallFontSize,
