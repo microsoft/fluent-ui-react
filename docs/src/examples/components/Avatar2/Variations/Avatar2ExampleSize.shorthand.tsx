@@ -17,14 +17,10 @@ const Avatar2ExampleSizeShorthand = () => (
       avatarType="person"
       avatarState="available"
     />
-    <br />
-    Theme here:
     <Provider.Consumer
       render={theme => <pre>{JSON.stringify(theme.componentVariables.Avatar2())}</pre>}
     />
     <Provider.Consumer render={theme => <pre>{JSON.stringify(theme)}</pre>} />
-    <br />
-    End Theme.
   </div>
 )
 
