@@ -25,6 +25,7 @@ export interface IButtonProps {
   icon?: ItemShorthand
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
+  onFocus?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
@@ -82,6 +83,13 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
      */
     onClick: PropTypes.func,
 
+    /**
+     * Called after user's click.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onFocus: PropTypes.func,
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -107,6 +115,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'icon',
     'iconPosition',
     'onClick',
+    'onFocus',
     'styles',
     'type',
     'variables',
