@@ -23,6 +23,7 @@ export interface IMenuItemProps {
   children?: ReactChildren
   className?: string
   content?: any
+  disabled?: boolean
   icon?: ItemShorthand
   iconOnly?: boolean
   index?: number
