@@ -26,7 +26,7 @@ export interface IPresenceIndicatorProps {
  * A presence indicator is a graphical representation of user's availability
  */
 class PresenceIndicator extends UIComponent<Extendable<IPresenceIndicatorProps>, any> {
-  static className = 'ui-presence__indicator'
+  static className = 'ui-presenceindicator'
 
   static displayName = 'PresenceIndicator'
 
