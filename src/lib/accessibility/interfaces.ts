@@ -111,6 +111,10 @@ export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttrib
 export type ActionsDefinition = { [partName: string]: { [actionName: string]: IActionDefinition } }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
+  actionsDefinition?: ActionsDefinition
+}
+
+export interface IAccessibilityBehavior extends IAccessibilityDefinition {
   handlers?: ActionsHandler
 }
 
@@ -138,6 +142,4 @@ export type ActionsHandler = {
 
 export type KeyboardHandler = (event: React.KeyboardEvent) => void
 
-export type Accessibility =
-  | IAccessibilityDefinition
-  | ((props: any, actions?: AccessibilityActions) => IAccessibilityDefinition)
+export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)

@@ -1,16 +1,7 @@
-import { Accessibility, ActionsDefinition, AccessibilityActions } from '../../interfaces'
-import getKeyDownHandlers from '../../../getKeyDownHandlers'
+import { Accessibility } from '../../interfaces'
 import * as keyboardKey from 'keyboard-key'
 
-const actionsDefinition: ActionsDefinition = {
-  anchor: {
-    performClick: {
-      keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-    },
-  },
-}
-
-const MenuItemBehavior: Accessibility = (props: any, actions: AccessibilityActions) => ({
+const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -22,7 +13,13 @@ const MenuItemBehavior: Accessibility = (props: any, actions: AccessibilityActio
     },
   },
 
-  handlers: getKeyDownHandlers(actions, actionsDefinition, props),
+  actionsDefinition: {
+    anchor: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
+  },
 })
 
 export default MenuItemBehavior
