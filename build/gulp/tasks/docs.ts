@@ -1,6 +1,7 @@
 import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import * as remember from 'gulp-remember'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
 import * as through2 from 'through2'
@@ -19,7 +20,7 @@ const { paths } = config
 const g = require('gulp-load-plugins')()
 const { colors, log, PluginError } = g.util
 
-const handleWatchChange = e => log(`File ${e.path} was ${e.type}, running tasks...`)
+const handleWatchChange = (path, stats) => log(`File ${path} was changed, running tasks...`)
 
 // ----------------------------------------
 // Clean
@@ -79,6 +80,7 @@ task('build:docs:component-menu', () =>
 
 task('build:docs:component-menu-behaviors', () =>
   src(behaviorSrc, { since: lastRun('build:docs:component-menu-behaviors') })
+    .pipe(remember('component-menu-behaviors'))
     .pipe(gulpComponentMenuBehaviors())
     .pipe(dest(paths.docsSrc())),
 )
@@ -210,6 +212,13 @@ task('watch:docs', cb => {
 
   // rebuild example menus
   watch(examplesSrc, series('build:docs:example-menu')).on('change', handleWatchChange)
+
+  watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
+    .on('change', handleWatchChange)
+    .on('unlink', path => {
+      log(`File ${path} was deleted, running tasks...`)
+      remember.forget('component-menu-behaviors', path)
+    })
 
   // rebuild images
   watch(`${config.paths.src()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
