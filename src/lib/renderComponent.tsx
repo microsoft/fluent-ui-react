@@ -10,12 +10,11 @@ import getUnhandledProps from './getUnhandledProps'
 
 import {
   ComponentStyleFunctionParam,
-  ComponentVariablesInput,
   ComponentVariablesObject,
   IComponentPartClasses,
-  IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   IProps,
+  IState,
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
@@ -34,27 +33,18 @@ export interface IRenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 
-type IRenderConfigProps = {
-  [key: string]: any
-  variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
-}
-
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
-  props: IRenderConfigProps
-  state: { [key: string]: any }
+  props: IProps
+  state: IState
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility = props => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
-    ...props,
-    ...state,
-  })
+  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)(props)
 }
 
 const renderComponent = <P extends {}>(
@@ -83,8 +73,9 @@ const renderComponent = <P extends {}>(
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
+        const appliedProps = { ...state, ...props }
         const styleParam: ComponentStyleFunctionParam = {
-          props: { ...props, ...state },
+          props: appliedProps,
           variables: resolvedVariables,
         }
         const resolvedStyles = Object.keys(mergedStyles).reduce(
@@ -95,7 +86,7 @@ const renderComponent = <P extends {}>(
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const accessibility = getAccessibility(props, state)
+        const accessibility = getAccessibility(appliedProps)
 
         const config: IRenderResultConfig<P> = {
           ElementType,
