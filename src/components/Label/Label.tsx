@@ -13,12 +13,7 @@ import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import {
-  Extendable,
-  ReactChildren,
-  ItemShorthand,
-  ComponentEventHandler,
-} from '../../../types/utils'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface ILabelProps {
   accessibility?: Accessibility
@@ -30,7 +25,8 @@ export interface ILabelProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'start' | 'end'
-  onIconClick?: ComponentEventHandler<ILabelProps>
+  image?: ItemShorthand
+  imagePosition?: 'start' | 'end'
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
@@ -126,7 +122,11 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
           styles: {
             root: styles.icon,
           },
-          ...(!(icon.variables && icon.variables.color) && {
+          ...(!(
+            typeof icon === 'object' &&
+            (icon as any).variables &&
+            (icon as any).variables.color
+          ) && {
             variables: {
               color: variables.color,
             },
