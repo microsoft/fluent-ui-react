@@ -57,7 +57,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
+    content: PropTypes.any,
 
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
