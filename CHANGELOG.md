@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
 
+### Features
+- Add Button `text` prop @mnajdova ([#177](https://github.com/stardust-ui/react/pull/177))
+
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.4.0...v0.5.0)
