@@ -6,7 +6,7 @@ import CSSProperties = React.CSSProperties
 import { childrenExist, customPropTypes, isBrowser } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
-import Portal from '../Portal'
+import Portal, { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
 import PopupContent from './PopupContent'
 
 type PopupPosition =
@@ -30,7 +30,7 @@ const POSITIONS: PopupPosition[] = [
   'bottom center',
 ]
 
-export interface IPopupProps {
+export interface IPopupProps extends IPortalGenericProps {
   as?: any
   basic?: boolean
   className?: string
@@ -40,7 +40,7 @@ export interface IPopupProps {
   trigger: JSX.Element
 }
 
-export interface IPopupState {
+export interface IPopupState extends IPortalGenericState {
   style?: CSSProperties
 }
 
@@ -49,9 +49,8 @@ export interface IPopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends React.Component<Extendable<IPopupProps>, IPopupState> {
+export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopupState> {
   private popupOffset = 8
-  private triggerRef: HTMLElement
   private popupCoords: ClientRect | DOMRect | undefined
 
   public static Content = PopupContent
@@ -80,24 +79,56 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
 
     /** Custom style to be applied for component. */
     style: PropTypes.object,
+
+    /** Initial value of open. */
+    defaultOpen: PropTypes.bool,
+
+    /**
+     * Called when the portal is mounted on the DOM.
+     *
+     * @param {object} data - All props.
+     */
+    onMount: PropTypes.func,
+
+    /**
+     * Called when the portal is unmounted from the DOM.
+     *
+     * @param {object} data - All props.
+     */
+    onUnmount: PropTypes.func,
+
+    /** Controls whether or not the portal is displayed. */
+    open: PropTypes.bool,
+
+    /**
+     * Called with a ref to the trigger node.
+     *
+     * @param {JSX.Element} node - Referred node.
+     */
+    triggerRef: PropTypes.func,
   }
 
   public static defaultProps = {
     position: 'top start',
   }
 
-  public state = { style: {} }
+  public state = { style: {}, open: false }
 
   public render() {
     const { basic, children, content, trigger } = this.props
     const { style } = this.state
 
+    const portalContent = (
+      <Popup.Content basic={basic} triggerRef={this.handlePopupRef} styles={{ root: style }}>
+        {childrenExist(children) ? children : content}
+      </Popup.Content>
+    )
+
     return (
-      <Portal onMount={this.handlePortalMount} trigger={trigger} triggerRef={this.handleTriggerRef}>
-        <Popup.Content basic={basic} triggerRef={this.handlePopupRef} styles={{ root: style }}>
-          {childrenExist(children) ? children : content}
-        </Popup.Content>
-      </Portal>
+      <React.Fragment>
+        {this.renderPortal(portalContent)}
+        {this.renderTrigger(trigger)}
+      </React.Fragment>
     )
   }
 
@@ -160,8 +191,13 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
     }
   }
 
-  private handlePortalMount = () => {
+  protected handleMount = () => {
+    super.handleMount()
     this.setPopupStyle()
+  }
+
+  protected handleUnmount = () => {
+    super.handleUnmount()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {
@@ -169,9 +205,5 @@ export default class Popup extends React.Component<Extendable<IPopupProps>, IPop
     this.setPopupStyle()
   }
 
-  private handleTriggerRef = (triggerRef: HTMLElement) => {
-    this.triggerRef = triggerRef
-  }
-
-  private getContext = (): HTMLElement => this.triggerRef
+  private getContext = (): HTMLElement => this.triggerNode
 }
