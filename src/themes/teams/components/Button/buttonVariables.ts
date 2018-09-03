@@ -19,6 +19,11 @@ export interface IButtonVariables {
   typeSecondaryBackgroundColor: string
   typeSecondaryBackgroundColorHover: string
   typeSecondaryBorderColor: string
+  typeTextColorHover: string
+  typeTextPrimaryColor: string
+  typeTextPrimaryColorHover: string
+  typeTextSecondaryColor: string
+  typeTextSecondaryColorHover: string
 }
 
 export default (siteVars: any): IButtonVariables => {
@@ -39,5 +44,10 @@ export default (siteVars: any): IButtonVariables => {
     typeSecondaryBackgroundColor: siteVars.white,
     typeSecondaryBackgroundColorHover: siteVars.gray06,
     typeSecondaryBorderColor: siteVars.gray06,
+    typeTextColorHover: siteVars.brand04,
+    typeTextPrimaryColor: siteVars.white,
+    typeTextPrimaryColorHover: siteVars.brand04,
+    typeTextSecondaryColor: siteVars.gray03,
+    typeTextSecondaryColorHover: siteVars.brand04,
   }
 }
