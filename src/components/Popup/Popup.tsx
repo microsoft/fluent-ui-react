@@ -6,8 +6,17 @@ import CSSProperties = React.CSSProperties
 import { childrenExist, customPropTypes, isBrowser } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
-import Portal, { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
+import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
 import PopupContent from './PopupContent'
+import { PopupBehavior } from '../../lib/accessibility'
+import {
+  Accessibility,
+  AccessibilityActions,
+  IAccessibilityBehavior,
+} from '../../lib/accessibility/interfaces'
+import getKeyDownHandlers from '../../lib/getKeyDownHandlers'
+import callable from '../../lib/callable'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone/FocusUtilities'
 
 type PopupPosition =
   | 'top start'
@@ -38,6 +47,7 @@ export interface IPopupProps extends IPortalGenericProps {
   position?: PopupPosition
   style?: CSSProperties
   trigger: JSX.Element
+  focusableSelector?: string
 }
 
 export interface IPopupState extends IPortalGenericState {
@@ -96,6 +106,8 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
 
     /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
+
+    focusableSelector: PropTypes.string,
   }
 
   public static defaultProps = {
@@ -104,12 +116,26 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
 
   public state = { style: {}, open: false }
 
+  actions: AccessibilityActions = {
+    openAndFocus: () => this.open(this.focus),
+    openAndFocusLast: () => this.open(this.focusLast),
+    close: () => this.close(() => this.triggerNode.focus()),
+  }
+
   public render() {
     const { basic, children, content, trigger } = this.props
     const { style } = this.state
 
+    const accessibilityBehavior = this.getAccessibility(this.props, this.state, this.actions)
+
     const portalContent = (
-      <Popup.Content basic={basic} triggerRef={this.handlePopupRef} styles={{ root: style }}>
+      <Popup.Content
+        basic={basic}
+        triggerRef={this.handlePopupRef}
+        styles={{ root: style }}
+        {...accessibilityBehavior.attributes.popup}
+        {...accessibilityBehavior.handlers.popup}
+      >
         {childrenExist(children) ? children : content}
       </Popup.Content>
     )
@@ -117,9 +143,55 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     return (
       <React.Fragment>
         {this.renderPortal(portalContent)}
-        {this.renderTrigger(trigger)}
+        {this.renderTrigger(trigger, {
+          ...accessibilityBehavior.attributes.popup,
+          ...accessibilityBehavior.handlers.trigger,
+        })}
       </React.Fragment>
     )
+  }
+
+  private focus = () => {
+    if (!this.portalNode) return
+    const focusableElement = (this.getFocusableElementBySelector(this.props.focusableSelector) ||
+      this.portalNode.querySelector(`[${IS_FOCUSABLE_ATTRIBUTE}="true"]`)) as HTMLElement
+
+    focusableElement && focusableElement.focus()
+  }
+
+  private focusLast = () => {
+    if (!this.portalNode) return
+
+    let focusableElement
+
+    const focusableElementBySelector = this.getFocusableElementBySelector(
+      this.props.focusableSelector,
+    ) as HTMLElement
+
+    if (focusableElementBySelector) {
+      focusableElementBySelector.focus()
+    } else {
+      const allFocusableElements = this.portalNode.querySelectorAll(
+        `[${IS_FOCUSABLE_ATTRIBUTE}="true"]`,
+      )
+      focusableElement = allFocusableElements[allFocusableElements.length - 1] as HTMLElement
+
+      focusableElement && focusableElement.focus()
+    }
+  }
+
+  private getFocusableElementBySelector = (selector?: string) => {
+    if (!selector) return null
+
+    return this.portalNode.querySelector(selector)
+  }
+
+  private setPopupStyle() {
+    const style = this.computePopupStyle()
+
+    if (!_.isEmpty(style)) {
+      this.setState({ style })
+    }
   }
 
   private computePopupStyle(): CSSProperties {
@@ -173,14 +245,6 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     return _.mapValues(style, value => (_.isNumber(value) ? `${value}px` : value))
   }
 
-  private setPopupStyle() {
-    const style = this.computePopupStyle()
-
-    if (!_.isEmpty(style)) {
-      this.setState({ style })
-    }
-  }
-
   protected handleMount = () => {
     super.handleMount()
     this.setPopupStyle()
@@ -196,4 +260,17 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
   }
 
   private getContext = (): HTMLElement => this.triggerNode
+
+  private getAccessibility = (props, state, actions) => {
+    const accessibility = callable(PopupBehavior)({
+      ...props,
+      ...state,
+    })
+
+    const handlers = getKeyDownHandlers(actions, accessibility, props)
+    return {
+      ...accessibility,
+      handlers,
+    }
+  }
 }

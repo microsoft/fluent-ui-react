@@ -44,12 +44,15 @@ export class PortalGeneric<
     )
   }
 
-  protected renderTrigger(trigger: JSX.Element): JSX.Element | undefined {
+  protected renderTrigger(trigger: JSX.Element, attributes?: any): JSX.Element | undefined {
     this.trigger = trigger
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
-          {React.cloneElement(trigger, { onClick: this.handleTriggerClick.bind(this) })}
+          {React.cloneElement(trigger, {
+            onClick: this.handleTriggerClick.bind(this),
+            ...attributes,
+          })}
         </Ref>
       )
     )
