@@ -16,7 +16,7 @@ export interface IPortalGenericProps {
 }
 
 export interface IPortalGenericState {
-  open: boolean
+  open?: boolean
 }
 
 /**

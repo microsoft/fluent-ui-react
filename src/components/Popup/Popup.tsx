@@ -80,9 +80,6 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     /** Custom style to be applied for component. */
     style: PropTypes.object,
 
-    /** Initial value of open. */
-    defaultOpen: PropTypes.bool,
-
     /**
      * Called when the portal is mounted on the DOM.
      *
@@ -99,13 +96,6 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
 
     /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
-
-    /**
-     * Called with a ref to the trigger node.
-     *
-     * @param {JSX.Element} node - Referred node.
-     */
-    triggerRef: PropTypes.func,
   }
 
   public static defaultProps = {
