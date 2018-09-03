@@ -1,4 +1,5 @@
 import { Accessibility } from '../../interfaces'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/FocusUtilities'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -8,7 +9,7 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'menuitem',
       'aria-expanded': props['submenuOpened'],
-      tabIndex: '0',
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
 })

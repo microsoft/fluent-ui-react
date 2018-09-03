@@ -4,10 +4,15 @@ import { mount } from 'enzyme'
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
+import { MenuBehavior } from 'src/lib/accessibility'
+import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 describe('Menu', () => {
   isConformant(Menu)
-  handlesAccessibility(Menu, { defaultRootRole: 'menu' })
+  handlesAccessibility(Menu, {
+    defaultRootRole: 'menu',
+    focusZoneDefinition: (MenuBehavior as IAccessibilityDefinition).focusZone,
+  })
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },

@@ -11,8 +11,6 @@ describe('Image', () => {
   describe('accessibility', () => {
     handlesAccessibility(Image, {
       defaultRootRole: undefined,
-      accessibilityOverride: MenuBehavior,
-      overriddenRootRole: 'menu',
     })
 
     describe('aria-hidden', () => {
