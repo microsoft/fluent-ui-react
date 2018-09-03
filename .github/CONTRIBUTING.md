@@ -471,6 +471,30 @@ yarn test
 yarn test:watch
 ```
 
+#### Debugging tests
+
+1. Open `Chrome DevTools` and drag & drop the whole `react/` repo directory there, then click allow
+
+[]
+
+2. Go to project sources and in `config.ts` replace `cheap-source-map` string with `eval-source-map`
+
+3. Go to console and run:
+```bash
+node --inspect-brk node_modules/.bin/jest --runInBand [PATTERN_FOR_TEST_FILENAME]
+```
+
+e.g.:
+```bash
+node --inspect-brk node_modules/.bin/jest --runInBand ChatList*
+```
+
+4. Go to `Chrome DevTools` and click on the green button to open `Dedicated DevTools for Node.js`
+
+[]
+
+5. Press `Ctrl+P` to navigate to your test files, add breakpoints and resume execution
+
 ## State
 
 Strive to use stateless functional components when possible:
