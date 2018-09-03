@@ -7,14 +7,14 @@ const TabBehavior: Accessibility = (props: any) => ({
     },
     anchor: {
       role: 'tab',
-      'aria-selected': props['active'],
+      'aria-selected': props['aria-selected'] || props['active'],
       tabIndex: '0',
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-controls': props['aria-controls'],
     },
   },
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-controls'],
+  handledProps: ['aria-label', 'aria-labelledby', 'aria-controls', 'aria-selected'],
 })
 
 export default TabBehavior
