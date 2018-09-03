@@ -12,7 +12,7 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
       'aria-labelledby': props['aria-labelledby'],
     },
   },
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-expanded'],
+  handledProps: ['aria-label', 'aria-labelledby'],
 })
 
 export default MenuItemBehavior
