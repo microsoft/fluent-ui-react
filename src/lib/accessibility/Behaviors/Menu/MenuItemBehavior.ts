@@ -7,13 +7,13 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
     },
     anchor: {
       role: 'menuitem',
-      'aria-expanded': props['submenuOpened'],
+      'aria-expanded': props['aria-expanded'] || props['submenuOpened'],
       tabIndex: '0',
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
     },
   },
-  handledProps: ['aria-label', 'aria-labelledby'],
+  handledProps: ['aria-label', 'aria-labelledby', 'aria-expanded'],
 })
 
 export default MenuItemBehavior
