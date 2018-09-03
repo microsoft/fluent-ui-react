@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 
 import Provider from 'src/components/Provider'
 
-export const withProvider = element => <Provider siteVariables={{}}>{element}</Provider>
+export const withProvider = element => <Provider theme={{}}>{element}</Provider>
 
 export const mountWithProvider = (Element: React.ReactNode, options?: {}) =>
   mount(withProvider(Element), options)

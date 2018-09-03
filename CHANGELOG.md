@@ -18,7 +18,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
+
+<!--------------------------------[ v0.5.0 ]------------------------------- -->
+## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.4.0...v0.5.0)
+
+### BREAKING CHANGES
+- Rework Provider API and `themes` pattern to resolve import issue @levithomason ([#114](https://github.com/stardust-ui/react/pull/114))
+
+### Fixes
 - Adjust layout and rendered HTML of Input @kuzhelov ([#127](https://github.com/stardust-ui/react/pull/127))
+- Fix Button component's layout and icon color @kuzhelov ([#135](https://github.com/stardust-ui/react/pull/135))
 
 ### Features
 - Add Label `image` and `imagePosition`, removed `onIconClick` prop  @mnajdova ([#55](https://github.com/stardust-ui/react/pull/55/))
