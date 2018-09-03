@@ -116,6 +116,8 @@ export interface IThemeInput {
   componentStyles?: IThemeComponentStylesInput
   rtl?: boolean
   renderer?: IRenderer
+  fontFaces?: FontFaces
+  staticStyles?: StaticStyles
 }
 
 // Component variables and styles must be resolved by the component after
