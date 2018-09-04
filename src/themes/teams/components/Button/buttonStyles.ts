@@ -12,6 +12,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      defaultBorderRadius,
       color,
       backgroundColor,
       backgroundColorHover,
@@ -40,7 +41,7 @@ const buttonStyles: IComponentPartStylesInput = {
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
-      borderRadius: pxToRem(2),
+      borderRadius: defaultBorderRadius,
 
       borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
       cursor: 'pointer',

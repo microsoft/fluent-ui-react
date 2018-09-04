@@ -1,0 +1,116 @@
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import * as _ from 'lodash'
+
+import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import Button from './Button'
+
+export interface IButtonGroupProps {
+  as?: any
+  children?: ReactChildren
+  circular?: boolean
+  className?: string
+  content?: React.ReactNode
+  buttons?: ItemShorthand[]
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+/**
+ * A button group.
+ */
+class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
+  public static displayName = 'ButtonGroup'
+
+  public static className = 'ui-button__buttons'
+
+  public static propTypes = {
+    /** An element type to render as (string or function). */
+    as: customPropTypes.as,
+
+    /** A button can take the width of its container. */
+    buttons: customPropTypes.collectionShorthand,
+
+    /** Primary content. */
+    children: PropTypes.node,
+
+    /** Additional classes. */
+    className: PropTypes.string,
+
+    /** The buttons inside group can appear circular. */
+    circular: PropTypes.bool,
+
+    /** Shorthand for primary content. */
+    content: customPropTypes.contentShorthand,
+
+    /** Custom styles to be applied for component. */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Custom variables to be applied for component. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  }
+
+  static handledProps = [
+    'as',
+    'buttons',
+    'children',
+    'circular',
+    'className',
+    'content',
+    'styles',
+    'variables',
+  ]
+
+  public static defaultProps = {
+    as: 'div',
+  }
+
+  public renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    styles,
+    rest,
+  }): React.ReactNode {
+    const { children, content, buttons, circular } = this.props
+    if (_.isNil(buttons)) {
+      return (
+        <ElementType {...rest} className={classes.root}>
+          {childrenExist(children) ? children : content}
+        </ElementType>
+      )
+    }
+
+    return (
+      <ElementType {...rest} className={classes.root}>
+        {_.map(buttons, (button, idx) =>
+          Button.create(button, {
+            defaultProps: {
+              circular,
+              styles: { root: this.getStyleForButtonIndex(styles, buttons, idx) },
+            },
+          }),
+        )}
+      </ElementType>
+    )
+  }
+
+  getStyleForButtonIndex = (styles, buttons, idx) => {
+    let resultStyles = {}
+    if (idx === 0) {
+      resultStyles = styles.firstButton
+    }
+    if (idx === buttons.length - 1) {
+      resultStyles = { ...resultStyles, ...styles.lastButton }
+    }
+    if (idx !== 0 && idx !== buttons.length - 1) {
+      resultStyles = styles.middleButton
+    }
+    return resultStyles
+  }
+}
+
+export default ButtonGroup

@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
@@ -12,6 +12,7 @@ import {
   ReactChildren,
   ComponentEventHandler,
 } from '../../../types/utils'
+import ButtonGroup from './ButtonGroup'
 
 export interface IButtonProps {
   as?: any
@@ -42,6 +43,8 @@ export interface IButtonProps {
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
 class Button extends UIComponent<Extendable<IButtonProps>, any> {
+  static create: Function
+
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -116,6 +119,8 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     accessibility: ButtonBehavior as Accessibility,
   }
 
+  static Group = ButtonGroup
+
   public renderComponent({
     ElementType,
     classes,
@@ -143,7 +148,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   public renderIcon = variables => {
-    const { disabled, icon, iconPosition, content, type } = this.props
+    const { icon, iconPosition, content, type } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
@@ -173,5 +178,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     }
   }
 }
+
+Button.create = createShorthandFactory(Button, content => ({ content }))
 
 export default Button
