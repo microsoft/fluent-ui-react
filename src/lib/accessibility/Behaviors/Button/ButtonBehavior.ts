@@ -2,8 +2,8 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * The ButtonBehavior adds role='button' if element type is other than 'button'.
- * This allows the screen readers handle component as button.
+ *  Adds role='button' if element type is other than 'button'. This allows the screen readers handle component as button.
+ *  Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
 const ButtonBehavior: Accessibility = (props: any) => ({

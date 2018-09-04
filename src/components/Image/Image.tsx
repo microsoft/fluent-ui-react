@@ -23,9 +23,6 @@ export interface IImageProps {
 /**
  * An image is a graphic representation of something.
  * @accessibility
- * Default behavior: ImageBehavior
- *  - attribute "aria-hidden='true'" is applied on img element, if there is no 'alt' property provided
- *
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:

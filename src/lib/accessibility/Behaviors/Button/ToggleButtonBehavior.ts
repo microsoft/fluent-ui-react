@@ -2,10 +2,9 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * The ToggleButtonBehavior adds:
- * - role='button' if element type is other than 'button'. This allows the screen readers handle component as button.
- * - attribute 'aria-pressed' based on the active property. Based on this, screen readers can recognize state of button, if it is pressed or not.
- * - attribute 'aria-disabled' based on disabled property.
+ * Adds role='button' if element type is other than 'button'. This allows the screen readers handle component as button.
+ * Adds attribute 'aria-pressed=true' based on the property 'active'. Based on this, screen readers can recognize state of button, if it is pressed or not.
+ * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
 const ToggleButtonBehavior: Accessibility = (props: any) => ({

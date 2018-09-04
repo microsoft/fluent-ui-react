@@ -2,7 +2,7 @@ import { IAccessibilityDefinition } from '../../interfaces'
 
 /**
  * @description
- * The SelectableListBehavior adds role='list'.
+ * Adds role='list'.
  * The 'list' role is used to identify an element that creates a list.
  */
 

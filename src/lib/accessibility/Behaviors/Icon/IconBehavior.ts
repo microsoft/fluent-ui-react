@@ -2,7 +2,7 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * The IconBehavior adds attribute "aria-hidden='true'" to icon.
+ * Adds attribute 'aria-hidden=true' to icon.
  * Icon is usually only visual representation and therefore is hidden from screen readers.
  */
 

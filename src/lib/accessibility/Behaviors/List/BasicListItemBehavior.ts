@@ -2,7 +2,7 @@ import { IAccessibilityDefinition } from '../../interfaces'
 
 /**
  * @description
- * The BasicListItemBehavior adds role='listitem'.
+ * Adds role='listitem'.
  * The 'listitem' role is used to identify an element that is a single item in a list.
  */
 

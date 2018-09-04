@@ -2,8 +2,7 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * The InputBehavior adds:
- * - attribute 'aria-disabled' based on disabled property.
+ * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
 const InputBehavior: Accessibility = (props: any) => ({

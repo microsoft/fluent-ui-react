@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Header, Message } from 'semantic-ui-react'
-const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
+const behaviorMenuItems = require('docs/src/behaviorMenu')
 
 const headerStyle = {
   whiteSpace: 'pre-line',
