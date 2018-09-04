@@ -32,7 +32,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     className: PropTypes.string,
 
     /** Shorthand for the primary content. */
-    content: PropTypes.string,
+    content: PropTypes.any,
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
