@@ -88,7 +88,7 @@ const buttonStyles: IComponentPartStylesInput = {
         color: typeSecondaryColor,
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
-        borderWidth: pxToRem(1),
+        border: `${pxToRem(1)} solid ${typeSecondaryBorderColor}`,
         ':active': {
           backgroundColor: typeSecondaryBackgroundColorActive,
           borderColor: typeSecondaryBorderColorActive,

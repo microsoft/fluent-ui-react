@@ -51,7 +51,7 @@ export default (siteVars: any): IButtonVariables => {
     typeSecondaryColor: siteVars.black,
     typeSecondaryBackgroundColor: siteVars.white,
     typeSecondaryBackgroundColorActive: siteVars.gray08,
-    typeSecondaryBackgroundColorHover: siteVars.gray12,
+    typeSecondaryBackgroundColorHover: siteVars.gray09,
     typeSecondaryBackgroundColorFocus: siteVars.gray08,
     typeSecondaryBorderColor: siteVars.gray08,
     typeSecondaryBorderColorActive: siteVars.gray06,
