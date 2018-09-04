@@ -40,6 +40,9 @@ export interface IMenuItemProps {
   vertical?: boolean
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
+  submenu?: ItemShorthand
+  submenuOpened?: boolean
+  defaultSubmenuOpened?: boolean
 }
 
 interface MenuItemState {
