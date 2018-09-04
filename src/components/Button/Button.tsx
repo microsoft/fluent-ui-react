@@ -25,7 +25,7 @@ export interface IButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
   type?: 'primary' | 'secondary'
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
@@ -116,7 +116,13 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     accessibility: ButtonBehavior as Accessibility,
   }
 
-  public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    rest,
+  }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
 
@@ -129,20 +135,27 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
-        {!hasChildren && content}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
+        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables)}
       </ElementType>
     )
   }
 
-  public renderIcon = () => {
+  public renderIcon = variables => {
     const { disabled, icon, iconPosition, content, type } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: { color: type === 'primary' && !disabled ? 'white' : undefined },
+        variables: {
+          color:
+            type === 'primary'
+              ? variables.typePrimaryColor
+              : type === 'secondary'
+                ? variables.typeSecondaryColor
+                : variables.color,
+        },
       },
     })
   }

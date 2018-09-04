@@ -4,8 +4,29 @@ import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
-class ListItem extends UIComponent<any, any> {
+export interface IListItemProps {
+  accessibility?: Accessibility
+  as?: any
+  className?: string
+  contentMedia?: any
+  content?: any
+  debug?: boolean
+  header?: any
+  endMedia?: any
+  headerMedia?: any
+  important?: boolean
+  media?: any
+  selection?: boolean
+  truncateContent?: boolean
+  truncateHeader?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static create: Function
 
   static displayName = 'ListItem'

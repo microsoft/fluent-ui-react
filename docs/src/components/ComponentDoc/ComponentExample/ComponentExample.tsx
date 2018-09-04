@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 
 import {
   examplePathToHash,
@@ -23,7 +23,6 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
 import { IThemeInput, IThemePrepared } from 'types/theme'
-import { theme as teamsTheme } from '../../../../../src/themes/teams'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -72,7 +71,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public state: IComponentExampleState = {
     knobs: {},
-    theme: teamsTheme,
+    theme: themes.teams,
     sourceCode: '',
     markup: '',
     showCode: false,
@@ -355,7 +354,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
 
     return (
-      <Provider theme={mergeThemes(teamsTheme, newTheme)}>
+      <Provider theme={mergeThemes(themes.teams, newTheme)}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )
