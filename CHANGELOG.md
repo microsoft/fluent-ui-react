@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
 
 ### Features
-- Create PresenceIndicator as a separate component @musingh ([#168](https://github.com/stardust-ui/react/pull/168))
+- Create StatusIndicator as a separate component @musingh ([#168](https://github.com/stardust-ui/react/pull/168))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)

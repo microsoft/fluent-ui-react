@@ -5,9 +5,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
-      title="PresenceIndicator"
-      description="A presence indicator for showing user's availability"
-      examplePath="components/PresenceIndicator/Types/PresenceIndicatorExample"
+      title="StatusIndicator"
+      description="A status indicator for showing user's status"
+      examplePath="components/StatusIndicator/Types/StatusIndicatorExample"
     />
   </ExampleSection>
 )

@@ -31,4 +31,6 @@ export { default as Menu } from './components/Menu/menuVariables'
 
 export { default as Radio } from './components/Radio/radioVariables'
 
+export { default as StatusIndicator } from './components/StatusIndicator/statusIndicatorVariables'
+
 export { default as Text } from './components/Text/textVariables'

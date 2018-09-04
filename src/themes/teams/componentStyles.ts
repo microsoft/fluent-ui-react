@@ -34,12 +34,10 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
-export {
-  default as PresenceIndicator,
-} from './components/PresenceIndicator/presenceIndicatorStyles'
-
 export { default as Radio } from './components/Radio/radioStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
+
+export { default as StatusIndicator } from './components/StatusIndicator/statusIndicatorStyles'
 
 export { default as Text } from './components/Text/textStyles'
