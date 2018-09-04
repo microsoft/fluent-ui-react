@@ -3,12 +3,24 @@ import * as PropTypes from 'prop-types'
 
 import { createHTMLInput, customPropTypes, UIComponent } from '../../lib'
 import Label from '../Label'
+import { Extendable, ReactChildren } from '../../../types/utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+export interface IRadioProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  label?: string
+  type?: string
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * @accessibility
  * This is shown at the top.
  */
-class Radio extends UIComponent<any, any> {
+class Radio extends UIComponent<Extendable<IRadioProps>, any> {
   static displayName = 'Radio'
 
   static className = 'ui-radio'

@@ -4,7 +4,6 @@ import * as _ from 'lodash'
 import CSSProperties = React.CSSProperties
 
 import { childrenExist, customPropTypes, isBrowser } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
 import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
 import PopupContent from './PopupContent'
@@ -107,6 +106,9 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
 
+    /** Initial open value */
+    defaultOpen: PropTypes.bool,
+
     focusableSelector: PropTypes.string,
   }
 
@@ -149,6 +151,11 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
         })}
       </React.Fragment>
     )
+  }
+
+  protected handleMount() {
+    super.handleMount()
+    this.setPopupStyle()
   }
 
   private focus = () => {
@@ -243,15 +250,6 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
 
     // Append 'px' to every numerical values in the style
     return _.mapValues(style, value => (_.isNumber(value) ? `${value}px` : value))
-  }
-
-  protected handleMount = () => {
-    super.handleMount()
-    this.setPopupStyle()
-  }
-
-  protected handleUnmount = () => {
-    super.handleUnmount()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {

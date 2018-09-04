@@ -5,19 +5,18 @@ import {
   AccessibilityActions,
   ActionsHandler,
 } from 'src/lib/accessibility/interfaces'
-import { IRenderConfigProps } from 'src/lib/renderComponent'
-
+import { IPropsWithVarsAndStyles, IState } from '../../types/theme'
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
  * @param {AccessibilityActions} actions The input element which is to loose focus.
  * @param {IAccessibilityDefinition} accessibility The input element which is to loose focus.
- * @param {IRenderConfigProps} props The props which are used to invoke onKeyDown handler passed from top.
+ * @param {IState & IPropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
  */
 const getKeyDownHandlers = (
   actions: AccessibilityActions,
   accessibility: IAccessibilityDefinition,
-  props: IRenderConfigProps,
+  props: IState & IPropsWithVarsAndStyles,
 ): ActionsHandler => {
   const handlers = {}
   const actionsDefinition = accessibility.actionsDefinition

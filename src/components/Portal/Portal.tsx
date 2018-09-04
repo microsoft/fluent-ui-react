@@ -6,8 +6,6 @@ import { childrenExist, customPropTypes } from '../../lib'
 import { ItemShorthand, Extendable } from '../../../types/utils'
 import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from './PortalGeneric'
 
-type ReactMouseEvent = React.MouseEvent<HTMLElement>
-
 export interface IPortalProps extends IPortalGenericProps {
   content?: ItemShorthand | ItemShorthand[]
   onMount?: (props: IPortalProps) => void
@@ -26,6 +24,9 @@ class Portal extends PortalGeneric<Extendable<IPortalProps>, IPortalState> {
   public static propTypes = {
     /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
+
+    /** Initial open value */
+    defaultOpen: PropTypes.bool,
 
     /** Primary content. */
     children: PropTypes.node,
@@ -69,14 +70,6 @@ class Portal extends PortalGeneric<Extendable<IPortalProps>, IPortalState> {
         {this.renderTrigger(trigger as JSX.Element)}
       </React.Fragment>
     )
-  }
-
-  protected handleMount = () => {
-    super.handleMount()
-  }
-
-  protected handleUnmount = () => {
-    super.handleUnmount()
   }
 }
 
