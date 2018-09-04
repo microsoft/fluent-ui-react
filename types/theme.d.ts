@@ -31,6 +31,17 @@ export type IProps = Extendable<{
 // ========================================================
 export type IState = Extendable<{}>
 
+export type IPropsWithVarsAndStyles = Extendable<{
+  variables?: ComponentVariablesInput
+  styles?: IComponentPartStylesInput
+}>
+
+// ========================================================
+// State
+// ========================================================
+
+export type IState = ObjectOf<any>
+
 // ========================================================
 // Variables
 // ========================================================
@@ -86,7 +97,7 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 }
 
 export interface ComponentStyleFunctionParam {
-  props: IState & IProps
+  props: IState & IPropsWithVarsAndStyles
   variables: ComponentVariablesObject
 }
 
