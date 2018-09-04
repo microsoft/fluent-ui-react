@@ -35,10 +35,13 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
+
     /** Additional classes. */
     className: PropTypes.string,
+
     /** Size multiplier (default 5) * */
     size: PropTypes.number,
+
     /** The status of the user, used for showing different icon */
     status: PropTypes.oneOf([
       'Available',
@@ -49,8 +52,10 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
       'Offline',
       'PresenceUnknown',
     ]),
+
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
