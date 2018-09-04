@@ -20,16 +20,7 @@ type ObjectOf<T> = { [key: string]: T }
 // ========================================================
 // Props
 // ========================================================
-
-export type IProps = Extendable<{
-  variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
-}>
-
-// ========================================================
-// State
-// ========================================================
-export type IState = Extendable<{}>
+export type IProps = ObjectOf<any>
 
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
