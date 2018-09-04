@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, icon, iconPosition, type } = props
+    const { circular, disabled, fluid, type, iconOnly } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -12,6 +12,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      color,
       backgroundColor,
       backgroundColorHover,
       circularRadius,
@@ -42,28 +43,75 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      color,
       backgroundColor,
-      display: 'inline-block',
+      display: 'inline-flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       borderRadius: pxToRem(2),
-      borderWidth: 0,
+      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      ':hover': {
+        backgroundColor: backgroundColorHover,
+      },
 
-      ...truncateStyle,
+      ...(primary && {
+        color: typePrimaryColor,
+        backgroundColor: typePrimaryBackgroundColor,
+        border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
+        ':active': {
+          backgroundColor: typePrimaryBackgroundColorActive,
+        },
+        ':hover': {
+          backgroundColor: typePrimaryBackgroundColorHover,
+        },
+        ':focus': {
+          backgroundColor: typePrimaryBackgroundColorFocus,
+          borderColor: typePrimaryBorderColorFocus,
+          '::before': {
+            content: '""',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
+            borderRadius: `${pxToRem(2)}`,
+          },
+        },
+      }),
 
-      ...(icon &&
-        (iconPosition
-          ? {
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }
-          : {
-              minWidth: height,
-              padding: 0,
-            })),
+      ...(secondary && {
+        color: typeSecondaryColor,
+        backgroundColor: typeSecondaryBackgroundColor,
+        borderColor: typeSecondaryBorderColor,
+        borderWidth: pxToRem(1),
+        ':active': {
+          backgroundColor: typeSecondaryBackgroundColorActive,
+          borderColor: typeSecondaryBorderColorActive,
+        },
+        ':hover': {
+          backgroundColor: typeSecondaryBackgroundColorHover,
+          borderColor: typeSecondaryBorderColorHover,
+        },
+        ':focus': {
+          backgroundColor: typeSecondaryBackgroundColorFocus,
+          borderColor: typeSecondaryBorderColorFocus,
+          '::before': {
+            content: '""',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            border: `${pxToRem(1)} solid ${typeSecondaryBorderColorInsetFocus}`,
+            borderRadius: `${pxToRem(2)}`,
+          },
+        },
+      }),
 
       ...(circular && {
         minWidth: height,
@@ -76,70 +124,25 @@ const buttonStyles: IComponentPartStylesInput = {
         maxWidth: '100%',
       }),
 
-      ...(disabled
-        ? disabledStyle
-        : {
-            ':hover': {
-              backgroundColor: backgroundColorHover,
-            },
+      ...(disabled && {
+        ...disabledStyle,
+        ':hover': {
+          borderColor: undefined,
+          backgroundColor: undefined,
+        },
+      }),
 
-            ...(primary && {
-              color: typePrimaryColor,
-              backgroundColor: typePrimaryBackgroundColor,
-              border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
-              ':active': {
-                backgroundColor: typePrimaryBackgroundColorActive,
-              },
-              ':hover': {
-                backgroundColor: typePrimaryBackgroundColorHover,
-              },
-              ':focus': {
-                backgroundColor: typePrimaryBackgroundColorFocus,
-                borderColor: typePrimaryBorderColorFocus,
-                '::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  right: '0',
-                  bottom: '0',
-                  border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
-                  borderRadius: `${pxToRem(2)}`,
-                },
-              },
-            }),
-
-            ...(secondary && {
-              color: typeSecondaryColor,
-              backgroundColor: typeSecondaryBackgroundColor,
-              borderColor: typeSecondaryBorderColor,
-              borderWidth: pxToRem(1),
-              ':active': {
-                backgroundColor: typeSecondaryBackgroundColorActive,
-                borderColor: typeSecondaryBorderColorActive,
-              },
-              ':hover': {
-                backgroundColor: typeSecondaryBackgroundColorHover,
-                borderColor: typeSecondaryBorderColorHover,
-              },
-              ':focus': {
-                backgroundColor: typeSecondaryBackgroundColorFocus,
-                borderColor: typeSecondaryBorderColorFocus,
-                '::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '0',
-                  left: '0',
-                  right: '0',
-                  bottom: '0',
-                  border: `${pxToRem(1)} solid ${typeSecondaryBorderColorInsetFocus}`,
-                  borderRadius: `${pxToRem(2)}`,
-                },
-              },
-            }),
-          }),
+      ...(iconOnly && {
+        minWidth: height,
+        padding: 0,
+      }),
     }
   },
+
+  content: ({ props }) => ({
+    overflow: 'hidden',
+    ...(typeof props.content === 'string' && truncateStyle),
+  }),
 }
 
 export default buttonStyles

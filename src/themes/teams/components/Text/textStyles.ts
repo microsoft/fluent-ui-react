@@ -2,9 +2,10 @@ import { Sizes, Weights } from '../../../../lib/enums'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
+import { ITextProps } from '../../../../components/Text/Text'
 
 export interface TextStylesParams {
-  props: any
+  props: ITextProps
   variables: ITextVariables
 }
 
