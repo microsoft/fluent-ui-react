@@ -61,9 +61,9 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${config.paths.src()}/components/*/[A-Z]*.tsx`]
-const behaviorSrc = [`${config.paths.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
-const examplesSrc = `${paths.docsSrc()}/examples/*/*/*/index.tsx`
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
+const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
+const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
 
 task('build:docs:docgen', () =>
