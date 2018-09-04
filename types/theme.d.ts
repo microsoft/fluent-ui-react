@@ -1,6 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
+import { Extendable } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -21,6 +22,17 @@ type ObjectOf<T> = { [key: string]: T }
 // ========================================================
 
 export type IProps = ObjectOf<any>
+
+export type IPropsWithVarsAndStyles = Extendable<{
+  variables?: ComponentVariablesInput
+  styles?: IComponentPartStylesInput
+}>
+
+// ========================================================
+// State
+// ========================================================
+
+export type IState = ObjectOf<any>
 
 // ========================================================
 // Variables
@@ -77,7 +89,7 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 }
 
 export interface ComponentStyleFunctionParam {
-  props: IProps
+  props: IState & IPropsWithVarsAndStyles
   variables: ComponentVariablesObject
 }
 
@@ -116,6 +128,8 @@ export interface IThemeInput {
   componentStyles?: IThemeComponentStylesInput
   rtl?: boolean
   renderer?: IRenderer
+  fontFaces?: FontFaces
+  staticStyles?: StaticStyles
 }
 
 // Component variables and styles must be resolved by the component after
