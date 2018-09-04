@@ -3,7 +3,7 @@ import { Accessibility } from '../../interfaces'
 const ImageBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: props['alt'] ? undefined : 'presentation',
+      'aria-hidden': props['alt'] ? undefined : 'true',
     },
   },
 })

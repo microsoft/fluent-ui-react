@@ -2,8 +2,20 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
-class ChatMessage extends UIComponent<any, any> {
+export interface IChatMessageProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  content?: any
+  mine?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -20,7 +32,7 @@ class ChatMessage extends UIComponent<any, any> {
     className: PropTypes.string,
 
     /** Shorthand for the primary content. */
-    content: PropTypes.string,
+    content: PropTypes.any,
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,

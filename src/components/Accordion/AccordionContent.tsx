@@ -2,11 +2,21 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+
+export interface IAccordionContentProps {
+  as?: any
+  active?: boolean
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  onClick?: ComponentEventHandler<IAccordionContentProps>
+}
 
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<any, any> {
+class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function

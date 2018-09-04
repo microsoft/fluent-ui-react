@@ -7,16 +7,15 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
-import toCompactArray from './toCompactArray'
 
 import {
   ComponentStyleFunctionParam,
-  ComponentVariablesInput,
   ComponentVariablesObject,
   IComponentPartClasses,
-  IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   IProps,
+  IPropsWithVarsAndStyles,
+  IState,
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
@@ -35,27 +34,18 @@ export interface IRenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 
-type IRenderConfigProps = {
-  [key: string]: any
-  variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
-}
-
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
-  displayName?: string
+  displayName: string
   handledProps: string[]
-  props: IRenderConfigProps
-  state: { [key: string]: any }
+  props: IPropsWithVarsAndStyles
+  state: IState
 }
 
-const getAccessibility = <P extends {}>(props, state) => {
+const getAccessibility = (props: IState & IPropsWithVarsAndStyles) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)({
-    ...props,
-    ...state,
-  })
+  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)(props)
 }
 
 const renderComponent = <P extends {}>(
@@ -84,7 +74,11 @@ const renderComponent = <P extends {}>(
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
-        const styleParam: ComponentStyleFunctionParam = { props, variables: resolvedVariables }
+        const stateAndProps = { ...state, ...props }
+        const styleParam: ComponentStyleFunctionParam = {
+          props: stateAndProps,
+          variables: resolvedVariables,
+        }
         const resolvedStyles = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
@@ -93,7 +87,7 @@ const renderComponent = <P extends {}>(
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const accessibility = getAccessibility(props, state)
+        const accessibility = getAccessibility(stateAndProps)
 
         const config: IRenderResultConfig<P> = {
           ElementType,

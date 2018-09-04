@@ -1,6 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
+import { Extendable } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -22,13 +23,22 @@ type ObjectOf<T> = { [key: string]: T }
 
 export type IProps = ObjectOf<any>
 
+export type IPropsWithVarsAndStyles = Extendable<{
+  variables?: ComponentVariablesInput
+  styles?: IComponentPartStylesInput
+}>
+
+// ========================================================
+// State
+// ========================================================
+
+export type IState = ObjectOf<any>
+
 // ========================================================
 // Variables
 // ========================================================
 
-export interface ISiteVariables {
-  [key: string]: any
-
+export interface ISiteVariables extends ObjectOf<any> {
   brand?: string
   htmlFontSize?: string
 }
@@ -79,45 +89,31 @@ export interface ICSSInJSStyle extends React.CSSProperties {
 }
 
 export interface ComponentStyleFunctionParam {
-  props: IProps
+  props: IState & IPropsWithVarsAndStyles
   variables: ComponentVariablesObject
 }
 
-export type ComponentPartStyleFunction =
-  | ((styleParam?: ComponentStyleFunctionParam) => ICSSInJSStyle)
-  | undefined
+export type ComponentPartStyleFunction = ((
+  styleParam: ComponentStyleFunctionParam,
+) => ICSSInJSStyle)
 
 export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
 
-export interface IComponentPartStylesInput {
-  [part: string]: ComponentPartStyle
+export interface IComponentPartStylesInput extends ObjectOf<ComponentPartStyle> {}
 
-  root?: ComponentPartStyle
-}
+export interface IComponentPartStylesPrepared extends ObjectOf<ComponentPartStyleFunction> {}
 
-export interface IComponentPartStylesPrepared {
-  [part: string]: ComponentPartStyleFunction
-
-  root?: ComponentPartStyleFunction
-}
-
-export interface IComponentPartClasses {
-  [part: string]: string | undefined
-
-  root?: string
-}
+export interface IComponentPartClasses extends ObjectOf<string> {}
 
 // ========================================================
 // Static Styles
 // ========================================================
 
-export type StaticStyleObject = {
-  [selector: string]: ICSSInJSStyle
-}
+export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
 
 export type StaticStyleRenderable = string | StaticStyleObject
 
-export type StaticStyleFunction = (siteVariables: ISiteVariables) => StaticStyleObject
+export type StaticStyleFunction = (siteVariables?: ISiteVariables) => StaticStyleObject
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
@@ -132,6 +128,8 @@ export interface IThemeInput {
   componentStyles?: IThemeComponentStylesInput
   rtl?: boolean
   renderer?: IRenderer
+  fontFaces?: FontFaces
+  staticStyles?: StaticStyles
 }
 
 // Component variables and styles must be resolved by the component after

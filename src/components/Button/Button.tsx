@@ -5,13 +5,43 @@ import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
+
+export interface IButtonProps {
+  as?: any
+  children?: ReactChildren
+  circular?: boolean
+  className?: string
+  disabled?: boolean
+  content?: React.ReactNode
+  fluid?: boolean
+  icon?: ItemShorthand
+  iconPosition?: 'before' | 'after'
+  onClick?: ComponentEventHandler<IButtonProps>
+  type?: 'primary' | 'secondary'
+  accessibility?: Accessibility
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A button.
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * @accessibility
+ * Default behavior: ButtonBehavior
+ *  - adds role='button' if element type is other than 'button'
+ *
+ *
+ * Other considerations:
+ *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
+ *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<any, any> {
+class Button extends UIComponent<Extendable<IButtonProps>, any> {
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -86,7 +116,13 @@ class Button extends UIComponent<any, any> {
     accessibility: ButtonBehavior as Accessibility,
   }
 
-  public renderComponent({ ElementType, classes, accessibility, rest }): React.ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    rest,
+  }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
 
@@ -99,20 +135,27 @@ class Button extends UIComponent<any, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
-        {!hasChildren && content}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
+        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables)}
       </ElementType>
     )
   }
 
-  public renderIcon = () => {
+  public renderIcon = variables => {
     const { disabled, icon, iconPosition, content, type } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: { color: type === 'primary' && !disabled ? 'white' : undefined },
+        variables: {
+          color:
+            type === 'primary'
+              ? variables.typePrimaryColor
+              : type === 'secondary'
+                ? variables.typeSecondaryColor
+                : variables.color,
+        },
       },
     })
   }

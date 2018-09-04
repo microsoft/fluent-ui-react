@@ -3,11 +3,22 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+
+export interface IAccordionTitleProps {
+  as?: any
+  active?: boolean
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  index?: string | number
+  onClick?: ComponentEventHandler<IAccordionTitleProps>
+}
 
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<any, any> {
+class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function

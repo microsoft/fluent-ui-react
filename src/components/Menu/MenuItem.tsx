@@ -14,11 +14,39 @@ import Menu from '../Menu'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
+
+export interface IMenuItemProps {
+  accessibility?: Accessibility
+  active?: boolean
+  as?: any
+  children?: ReactChildren
+  className?: string
+  content?: any
+  icon?: ItemShorthand
+  iconOnly?: boolean
+  index?: number
+  onClick?: ComponentEventHandler<IMenuItemProps>
+  pills?: boolean
+  pointing?: boolean | 'start' | 'end'
+  type?: 'primary' | 'secondary'
+  underlined?: boolean
+  vertical?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
 interface MenuItemState {
   submenuOpened: boolean
 }
 
-class MenuItem extends AutoControlledComponent<any, MenuItemState> {
+class MenuItem extends AutoControlledComponent<Extendable<IMenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -39,7 +67,7 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
+    content: PropTypes.any,
 
     /** Initial submenuOpened value. */
     defaultSubmenuOpened: PropTypes.bool,
@@ -65,8 +93,11 @@ class MenuItem extends AutoControlledComponent<any, MenuItemState> {
     /** A menu can adjust its appearance to de-emphasize its contents. */
     pills: PropTypes.bool,
 
-    /** A menu can point to show its relationship to nearby content. */
-    pointing: PropTypes.bool,
+    /**
+     * A menu can point to show its relationship to nearby content.
+     * For vertical menu, it can point to the start of the item or to the end.
+     */
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
