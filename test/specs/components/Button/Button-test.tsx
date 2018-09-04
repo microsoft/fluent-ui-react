@@ -16,6 +16,14 @@ import { MenuBehavior } from 'src/lib/accessibility'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
+jest.mock('what-input', () => {
+  return {
+    default: {
+      ask: jest.fn(),
+    },
+  }
+})
+
 describe('Button', () => {
   isConformant(Button)
   buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
