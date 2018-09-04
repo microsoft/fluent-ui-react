@@ -35,7 +35,7 @@ task('clean:docs:component-menu', cb => {
 })
 
 task('clean:docs:component-menu-behaviors', cb => {
-  rimraf(paths.docsSrc('componentMenuBehaviors.json'), cb)
+  rimraf(paths.docsSrc('behaviorMenu.json'), cb)
 })
 
 task('clean:docs:dist', cb => {
