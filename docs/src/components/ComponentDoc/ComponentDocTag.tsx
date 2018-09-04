@@ -58,7 +58,6 @@ class ComponentDocTag extends React.Component<any, any> {
     if (defaultBehavior && defaultBehavior.name && defaultBehavior.url) {
       return (
         <span>
-          {' '}
           Default behavior: <a href={defaultBehavior.url}> {defaultBehavior.name} </a>{' '}
         </span>
       )
