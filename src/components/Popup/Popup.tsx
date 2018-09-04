@@ -4,9 +4,8 @@ import * as _ from 'lodash'
 import CSSProperties = React.CSSProperties
 
 import { childrenExist, customPropTypes, isBrowser } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { ItemShorthand, Extendable } from '../../../types/utils'
-import Portal, { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
+import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
 import PopupContent from './PopupContent'
 
 type PopupPosition =
@@ -96,6 +95,9 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
 
     /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
+
+    /** Initial open value */
+    defaultOpen: PropTypes.bool,
   }
 
   public static defaultProps = {
@@ -120,6 +122,11 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
         {this.renderTrigger(trigger)}
       </React.Fragment>
     )
+  }
+
+  protected handleMount() {
+    super.handleMount()
+    this.setPopupStyle()
   }
 
   private computePopupStyle(): CSSProperties {
@@ -179,15 +186,6 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     if (!_.isEmpty(style)) {
       this.setState({ style })
     }
-  }
-
-  protected handleMount = () => {
-    super.handleMount()
-    this.setPopupStyle()
-  }
-
-  protected handleUnmount = () => {
-    super.handleUnmount()
   }
 
   private handlePopupRef = (popupRef: HTMLElement) => {
