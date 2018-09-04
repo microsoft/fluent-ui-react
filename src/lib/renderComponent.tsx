@@ -18,6 +18,7 @@ import {
   IState,
   IThemeInput,
   IThemePrepared,
+  SvgIcons,
 } from '../../types/theme'
 import { IAccessibilityDefinition } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
@@ -30,6 +31,7 @@ export interface IRenderResultConfig<P> {
   variables: ComponentVariablesObject
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityDefinition
+  svgIcons: SvgIcons
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -60,6 +62,7 @@ const renderComponent = <P extends {}>(
         siteVariables = {},
         componentVariables = {},
         componentStyles = {},
+        svgIcons = {},
         rtl = false,
         renderer = felaRenderer,
       }: IThemeInput | IThemePrepared = {}) => {
@@ -96,6 +99,7 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           styles: resolvedStyles,
           accessibility,
+          svgIcons,
         }
 
         return render(config)

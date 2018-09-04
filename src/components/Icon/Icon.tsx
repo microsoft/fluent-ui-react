@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 
-import svgIcons from './svgIcons'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/interfaces'
@@ -126,22 +125,20 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, classes, rest, accessibility): React.ReactNode {
+  renderSvgIcon(ElementType, svgIcons, classes, rest, accessibility): React.ReactNode {
     const { name } = this.props
-    const icon = name && svgIcons[name]
+    const renderIcon = svgIcons[name]
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
-          {icon && icon.element}
-        </svg>
+        {renderIcon && renderIcon(classes)}
       </ElementType>
     )
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
+  renderComponent({ ElementType, classes, rest, accessibility, svgIcons }) {
     return this.props.svg
-      ? this.renderSvgIcon(ElementType, classes, rest, accessibility)
+      ? this.renderSvgIcon(ElementType, svgIcons, classes, rest, accessibility)
       : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }
