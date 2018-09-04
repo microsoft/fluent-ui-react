@@ -11,8 +11,8 @@ describe('ChatMessage', () => {
 
   describe('avatar', () => {
     it('creates an Avatar component when the avatar shorthand is provided', () => {
-      const name = 'AB'
-      const chatMsg = mountWithProvider(<ChatMessage avatar="AB" />)
+      const name = 'John Doe'
+      const chatMsg = mountWithProvider(<ChatMessage avatar={name} />)
 
       expect(chatMsg.find('Avatar').prop('name')).toEqual(name)
     })

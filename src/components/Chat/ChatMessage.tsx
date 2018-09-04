@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
@@ -67,10 +68,14 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   renderComponent({ ElementType, classes, rest, styles }) {
     const { avatar, children, content, mine } = this.props
 
-    return (
+    return childrenExist(children) ? (
+      <ElementType {...rest} className={cx(classes.root, classes.chatContent)}>
+        {children}
+      </ElementType>
+    ) : (
       <ElementType {...rest} className={classes.root}>
         {!mine && this.renderAvatar(avatar, styles)}
-        <div className={classes.chatContent}>{childrenExist(children) ? children : content}</div>
+        <div className={classes.chatContent}>{content}</div>
         {mine && this.renderAvatar(avatar, styles)}
       </ElementType>
     )
