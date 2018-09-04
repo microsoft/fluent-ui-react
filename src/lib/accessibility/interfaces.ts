@@ -115,4 +115,6 @@ export interface IAccessibilityDefinition {
   keyHandlers?: AccessibilityKeyHandlers
 }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type AccessibilityDefinitionFunction = ((props: any) => IAccessibilityDefinition)
+
+export type Accessibility = AccessibilityDefinitionFunction | IAccessibilityDefinition
