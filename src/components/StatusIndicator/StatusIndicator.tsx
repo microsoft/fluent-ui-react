@@ -3,14 +3,21 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
-import { Extendable } from 'utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export interface IStatusIndicatorProps {
   as?: any
   className?: string
   size?: number
-  status?: string
+  status?:
+    | 'Available'
+    | 'Away'
+    | 'BeRightBack'
+    | 'Busy'
+    | 'DoNotDisturb'
+    | 'Offline'
+    | 'PresenceUnknown'
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
@@ -28,19 +35,22 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
-
     /** Additional classes. */
     className: PropTypes.string,
-
     /** Size multiplier (default 5) * */
     size: PropTypes.number,
-
     /** The status of the user, used for showing different icon */
-    status: PropTypes.string,
-
+    status: PropTypes.oneOf([
+      'Available',
+      'Away',
+      'BeRightBack',
+      'Busy',
+      'DoNotDisturb',
+      'Offline',
+      'PresenceUnknown',
+    ]),
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
@@ -50,14 +60,43 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
     size: 5,
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { status, size } = this.props as IStatusIndicatorPropsWithDefaults
-    const { iconName = '', iconColor = '', indicatorColor = '' } =
-      (status && variables[status]) || {}
+  static statusToIcon = {
+    Available: {
+      icon: 'check',
+      color: 'green',
+    },
+    Busy: {
+      icon: '',
+      color: 'red',
+    },
+    DoNotDisturb: {
+      icon: 'minus',
+      color: 'red',
+    },
+    Away: {
+      icon: 'clock',
+      color: 'yellow',
+    },
+    BeRightBack: {
+      icon: 'clock',
+      color: 'yellow',
+    },
+    Offline: {
+      icon: '',
+      color: 'grey',
+    },
+    PresenceUnknown: {
+      icon: '',
+      color: 'grey',
+    },
+  }
 
+  renderComponent({ ElementType, classes, rest, styles }) {
+    const { status, size } = this.props as IStatusIndicatorPropsWithDefaults
+    const { icon = '', color = '' } = (status && StatusIndicator.statusToIcon[status]) || {}
     const iconVariables = {
-      color: iconColor,
-      backgroundColor: indicatorColor,
+      color: 'white',
+      backgroundColor: color,
     }
 
     return (
@@ -67,7 +106,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
             styles={{ root: styles.statusIcon }}
             size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
             circular
-            name={iconName}
+            name={icon}
             variables={iconVariables}
           />
         )}
@@ -75,8 +114,6 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
     )
   }
 }
-
 export default StatusIndicator
-
 export type IStatusIndicatorPropsWithDefaults = IStatusIndicatorProps &
   typeof StatusIndicator.defaultProps

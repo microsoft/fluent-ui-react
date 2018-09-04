@@ -1,7 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from 'theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IStatusIndicatorPropsWithDefaults } from '../../../../components/StatusIndicator/StatusIndicator'
-import { StatusIndicatorStates } from './statusIndicatorVariables'
 
 const getRootElementPadding = (size: number) => {
   if (size < 6) {
@@ -12,17 +11,17 @@ const getRootElementPadding = (size: number) => {
 
 const statusIndicatorStyles: IComponentPartStylesInput = {
   root: ({
-    props: { size, status },
-    variables: vars,
+    props: { size },
+    variables: v,
   }: {
     props: IStatusIndicatorPropsWithDefaults
-    variables: StatusIndicatorStates
+    variables: any
   }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'table',
     padding: pxToRem(getRootElementPadding(size)),
     borderRadius: '9999px',
-    backgroundColor: vars[status].borderColor,
+    backgroundColor: v.backgroundColor,
   }),
   statusIcon: (): ICSSInJSStyle => ({
     display: 'table-cell',
