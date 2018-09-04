@@ -21,7 +21,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
 
 ### Features
-- adding 'behaviors' section to the menu, under the components 
+- Add `state` to `props` in component styling functions @Bugaa92 ([#173](https://github.com/stardust-ui/react/pull/173))
+- Adding 'behaviors' section to the menu, under the components @kolaps33 ([#119] (https://github.com/stardust-ui/react/pull/119)
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)

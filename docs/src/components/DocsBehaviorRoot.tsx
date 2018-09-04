@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-const behaviorMenuItems = require('docs/src/componentMenuBehaviors')
+const behaviorMenuItems = require('docs/src/behaviorMenu')
 import { Grid } from 'semantic-ui-react'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 class DocsBehaviorRoot extends React.Component<any, any> {
@@ -14,7 +14,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }),
   }
 
-  getNameFromFileName(fileName: string) {
+  baseName(fileName: string) {
     const divided = _.startCase(fileName.replace('ts', ''))
     return _.upperFirst(_.lowerCase(divided))
   }
@@ -43,7 +43,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                   <div style={{ flex: '1' }}>
                     <ComponentExampleTitle
                       id={_.kebabCase(variation.name)}
-                      title={this.getNameFromFileName(variation.name)}
+                      title={this.baseName(variation.name)}
                       description={`Behavior name: ${variation.name.replace('.ts', '')}`}
                     />
                   </div>

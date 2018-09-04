@@ -86,7 +86,7 @@ export default () => {
 
   function endStream(cb) {
     const file = new Vinyl({
-      path: './componentMenuBehaviors.json',
+      path: './behaviorMenu.json',
       contents: Buffer.from(JSON.stringify(getParsedResults(), null, 2)),
     })
 
