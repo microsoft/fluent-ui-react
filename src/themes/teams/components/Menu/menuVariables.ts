@@ -16,6 +16,7 @@ export interface IMenuVariables {
 
   iconsMenuItemSize?: string
   iconsMenuItemSpacing: number | string
+  menuItemWidth: number
 }
 
 export default (siteVars: any): IMenuVariables => {
@@ -35,5 +36,6 @@ export default (siteVars: any): IMenuVariables => {
 
     iconsMenuItemSize: undefined,
     iconsMenuItemSpacing: 0,
+    menuItemWidth: undefined,
   }
 }

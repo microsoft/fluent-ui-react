@@ -13,7 +13,7 @@ export default {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
-        ...(!fluid && { width: pxToRem(200) }),
+        ...(!fluid && { width: pxToRem(variables.menuItemWidth || 200) }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',
