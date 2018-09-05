@@ -21,10 +21,12 @@ const buttonStyles: IComponentPartStylesInput = {
       typePrimaryBackgroundColor,
       typePrimaryBackgroundColorHover,
       typePrimaryBorderColor,
+      typePrimaryBorderFocusColor,
       typeSecondaryColor,
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
+      typeSecondaryBorderFocusColor,
     } = variables
 
     const focusAndHoverSecondary = {
@@ -95,11 +97,11 @@ const buttonStyles: IComponentPartStylesInput = {
         outline: '0',
         ...(isLastFocusFromKeyboard && {
           ...((primary && {
-            boxShadow: 'inset 0 0 0 2px white',
+            boxShadow: `inset 0 0 0 2px ${typePrimaryBorderFocusColor}`,
             color: typePrimaryColor,
             backgroundColor: typePrimaryBackgroundColorHover,
           }) || {
-            boxShadow: 'inset 0 0 0 2px #000',
+            boxShadow: `inset 0 0 0 2px ${typeSecondaryBorderFocusColor}`,
             ...focusAndHoverSecondary,
           }),
         }),
