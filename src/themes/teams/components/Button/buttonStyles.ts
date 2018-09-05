@@ -47,8 +47,9 @@ const buttonStyles: IComponentPartStylesInput = {
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       borderRadius: pxToRem(2),
+      borderColor: 'transparent',
 
-      borderWidth: `${type ? (circular ? 1 : 2) : 0}px`,
+      borderWidth: `${circular ? 1 : 2}px`,
       cursor: 'pointer',
       ':hover': {
         backgroundColor: backgroundColorHover,
@@ -93,12 +94,11 @@ const buttonStyles: IComponentPartStylesInput = {
       ':focus': {
         outline: '0',
         ...(isLastFocusFromKeyboard && {
-          ...(primary && {
+          ...((primary && {
             boxShadow: 'inset 0 0 0 2px white',
             color: typePrimaryColor,
             backgroundColor: typePrimaryBackgroundColorHover,
-          }),
-          ...(secondary && {
+          }) || {
             boxShadow: 'inset 0 0 0 2px #000',
             ...focusAndHoverSecondary,
           }),
