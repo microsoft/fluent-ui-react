@@ -25,7 +25,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
 
   static displayName = 'StatusIndicator'
 
-  static handledProps = ['as', 'className', 'size', 'icon', 'styles', 'variables']
+  static handledProps = ['as', 'className', 'icon', 'size', 'styles', 'variables']
 
   static propTypes = {
     /** An element type to render as (string or function). */
