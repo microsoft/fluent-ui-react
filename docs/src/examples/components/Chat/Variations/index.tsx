@@ -5,9 +5,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Circular"
-      description="A label can be circular."
-      examplePath="components/Label/Variations/LabelExampleCircular"
+      title="Avatar"
+      description="A chat can contain messages with avatars."
+      examplePath="components/Chat/Variations/ChatExampleAvatar"
     />
   </ExampleSection>
 )
