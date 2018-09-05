@@ -42,33 +42,10 @@ CONTRIBUTING
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Getting Started
+These guides will walk your through various activities for contributing:
 
-Make sure you have at least [Node.js v6][11]:
-
-```sh
-node -v
-
-v6.2.1
-```
-
-### Fork, Clone & Install
-
-Start by [forking Semantic UI React][12] to your GitHub account.  Then clone your fork and install dependencies:
-
-```sh
-git clone git@github.com:<your-user>/Semantic-UI-React.git
-cd Semantic-UI-React
-yarn
-```
-
->Note, we use `yarn` because `npm` has unfortunately become unreliable.  Get it [here][16].
-
-Add our repo as a git remote so you can pull/rebase your fork with our latest updates:
-
-```
-git remote add upstream git@github.com:Semantic-Org/Semantic-UI-React.git
-```
+- [Setup Local Development]()
+- Add a feature
 
 ### Commit Messages
 
