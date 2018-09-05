@@ -4,19 +4,34 @@ import { Menu, ToolbarBehavior, Icon, ToolbarButtonBehavior } from '@stardust-ui
 const items = [
   {
     key: 'cloud',
-    icon: <Icon circular xSpacing="both" size="small" name="cloud" />,
+    icon: {
+      name: 'cloud',
+      circular: true,
+      xSpacing: 'both',
+      size: 'small',
+    },
     accessibility: ToolbarButtonBehavior,
     'aria-label': 'Cloud Tool',
   },
   {
     key: 'clock',
-    icon: <Icon circular xSpacing="both" size="small" name="clock" />,
+    icon: {
+      name: 'clock',
+      circular: true,
+      xSpacing: 'both',
+      size: 'small',
+    },
     accessibility: ToolbarButtonBehavior,
     'aria-label': 'Clock Tool',
   },
   {
     key: 'book',
-    icon: <Icon circular xSpacing="both" size="small" name="book" />,
+    icon: {
+      name: 'book',
+      circular: true,
+      xSpacing: 'both',
+      size: 'small',
+    },
     accessibility: ToolbarButtonBehavior,
     'aria-label': 'Book Tool',
   },
