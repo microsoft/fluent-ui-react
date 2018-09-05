@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
+import { truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
@@ -17,6 +17,8 @@ const buttonStyles: IComponentPartStylesInput = {
       backgroundColorHover,
       circularRadius,
       paddingLeftRightValue,
+      typeDisabledButtonColor,
+      typeDisabledButtonBackgroundColor,
       typePrimaryColor,
       typePrimaryBackgroundColor,
       typePrimaryBackgroundColorActive,
@@ -125,10 +127,13 @@ const buttonStyles: IComponentPartStylesInput = {
       }),
 
       ...(disabled && {
-        ...disabledStyle,
+        cursor: 'pointer',
+        color: typeDisabledButtonColor,
+        backgroundColor: typeDisabledButtonBackgroundColor,
+        borderColor: typeDisabledButtonBackgroundColor,
         ':hover': {
-          borderColor: undefined,
-          backgroundColor: undefined,
+          backgroundColor: typeDisabledButtonBackgroundColor,
+          borderColor: typeDisabledButtonBackgroundColor,
         },
       }),
 

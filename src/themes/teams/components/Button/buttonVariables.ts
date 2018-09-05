@@ -28,6 +28,8 @@ export interface IButtonVariables {
   typeSecondaryBorderColorHover: string
   typeSecondaryBorderColorFocus: string
   typeSecondaryBorderColorInsetFocus: string
+  typeDisabledButtonColor: string
+  typeDisabledButtonBackgroundColor: string
 }
 
 export default (siteVars: any): IButtonVariables => {
@@ -58,5 +60,7 @@ export default (siteVars: any): IButtonVariables => {
     typeSecondaryBorderColorHover: siteVars.gray06,
     typeSecondaryBorderColorFocus: siteVars.black,
     typeSecondaryBorderColorInsetFocus: siteVars.white,
+    typeDisabledButtonColor: siteVars.gray08,
+    typeDisabledButtonBackgroundColor: siteVars.gray09,
   }
 }
