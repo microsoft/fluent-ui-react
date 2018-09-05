@@ -3,7 +3,7 @@ import { IAccessibilityDefinition } from '../../interfaces'
 /**
  * @description
  * Adds role='option'. This role is used for a selectable item in a list.
- * Adds attribute 'aria-selected=true' based on the property 'active'. Based on this, screen readers can recognize state of item in list, if it is selected or not.
+ * Adds attribute 'aria-selected=true' based on the property 'active'.
  */
 
 const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => ({
