@@ -1,6 +1,6 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-const LabelExampleIconShorthand = () => <Label icon="coffee" content="Label containing icon" />
+const LabelExampleIconShorthand = <Label content="Label with icon" icon="close" />
 
 export default LabelExampleIconShorthand
