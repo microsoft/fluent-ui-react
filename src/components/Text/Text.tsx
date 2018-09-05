@@ -17,6 +17,7 @@ export interface ITextProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
+  temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
   styles?: IComponentPartStylesInput
@@ -62,6 +63,9 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Set as success Text component */
     success: PropTypes.bool,
 
+    /** The text can signify a temporary state */
+    temporary: PropTypes.bool,
+
     /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
 
@@ -73,9 +77,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** The text can signify a temporary state */
-    temporary: PropTypes.bool,
   }
 
   static defaultProps = {
