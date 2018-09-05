@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type } = props
+    const { circular, disabled, fluid, type, iconOnly } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -86,6 +86,11 @@ const buttonStyles: IComponentPartStylesInput = {
           borderColor: undefined,
           backgroundColor: undefined,
         },
+      }),
+
+      ...(iconOnly && {
+        minWidth: height,
+        padding: 0,
       }),
     }
   },
