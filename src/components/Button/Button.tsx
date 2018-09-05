@@ -22,6 +22,7 @@ export interface IButtonProps {
   content?: React.ReactNode
   fluid?: boolean
   icon?: ItemShorthand
+  iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
   text?: boolean
@@ -72,6 +73,9 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Button can have an icon. */
     icon: customPropTypes.itemShorthand,
 
+    /** A button may indicate that it has only icon. */
+    iconOnly: PropTypes.bool,
+
     /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),
 
@@ -108,6 +112,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'disabled',
     'fluid',
     'icon',
+    'iconOnly',
     'iconPosition',
     'onClick',
     'styles',
