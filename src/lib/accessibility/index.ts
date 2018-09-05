@@ -10,3 +10,7 @@ export { default as SelectableListBehavior } from './Behaviors/List/SelectableLi
 export { default as SelectableListItemBehavior } from './Behaviors/List/SelectableListItemBehavior'
 export { default as InputBehavior } from './Behaviors/Input/InputBehavior'
 export { default as IconBehavior } from './Behaviors/Icon/IconBehavior'
+export { default as TabBehavior } from './Behaviors/Tab/TabBehavior'
+export { default as TabListBehavior } from './Behaviors/Tab/TabListBehavior'
+export { default as ToolbarBehavior } from './Behaviors/Toolbar/ToolbarBehavior'
+export { default as ToolbarButtonBehavior } from './Behaviors/Toolbar/ToolbarButtonBehavior'
