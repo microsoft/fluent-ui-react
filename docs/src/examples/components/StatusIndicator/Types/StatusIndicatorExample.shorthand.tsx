@@ -3,13 +3,31 @@ import { StatusIndicator } from '@stardust-ui/react'
 
 const StatusIndicatorShorthandExample = () => (
   <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-    <StatusIndicator status="Available" title="Available" />
-    <StatusIndicator status="Busy" title="In a call" />
-    <StatusIndicator status="DoNotDisturb" title="Do not disturb" />
-    <StatusIndicator status="Away" title="Away" />
-    <StatusIndicator status="BeRightBack" title="Be right back" />
-    <StatusIndicator status="Offline" title="Offline" />
-    <StatusIndicator status="PresenceUnknown" title="Presence unknown" />
+    <StatusIndicator />
+    <StatusIndicator
+      icon={{ name: 'check', variables: { color: 'white', backgroundColor: 'green' } }}
+      title="Available"
+    />
+    <StatusIndicator
+      icon={{ name: 'clock', variables: { color: 'white', backgroundColor: 'yellow' } }}
+      title="Away"
+    />
+    <StatusIndicator
+      icon={{ name: 'clock', variables: { color: 'white', backgroundColor: 'yellow' } }}
+      title="Be right back"
+    />
+    <StatusIndicator
+      icon={{ name: '', variables: { color: 'white', backgroundColor: 'red' } }}
+      title="Busy"
+    />
+    <StatusIndicator
+      icon={{ name: 'minus', variables: { color: 'white', backgroundColor: 'red' } }}
+      title="Do not disturb"
+    />
+    <StatusIndicator
+      icon={{ name: '', variables: { color: 'white', backgroundColor: 'grey' } }}
+      title="Offline"
+    />
   </div>
 )
 

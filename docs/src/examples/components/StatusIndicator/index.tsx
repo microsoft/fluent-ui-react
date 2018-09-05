@@ -1,10 +1,10 @@
 import * as React from 'react'
 import Types from './Types'
 
-const PresenceIndicatorExamples = () => (
+const StatusIndicatorExamples = () => (
   <div>
     <Types />
   </div>
 )
 
-export default PresenceIndicatorExamples
+export default StatusIndicatorExamples
