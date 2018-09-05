@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -31,6 +31,8 @@ export interface IImageProps {
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
 class Image extends UIComponent<Extendable<IImageProps>, any> {
+  static create: Function
+
   static className = 'ui-image'
 
   static displayName = 'Image'
@@ -81,5 +83,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
+
+Image.create = createShorthandFactory(Image, src => ({ src }))
 
 export default Image

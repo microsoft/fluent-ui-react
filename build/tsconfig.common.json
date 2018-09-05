@@ -20,7 +20,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "allowJs": false,
-    "noImplicitReturns": false,
+    "noImplicitReturns": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
