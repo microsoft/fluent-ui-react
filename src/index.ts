@@ -25,6 +25,12 @@ export { HeaderDescription } from './components/Header'
 export { default as Avatar } from './components/Avatar'
 export { default as Segment } from './components/Segment'
 export { default as ItemLayout } from './components/ItemLayout'
+export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/TabBehavior'
+export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/TabListBehavior'
+export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/ToolbarBehavior'
+export {
+  default as ToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'
 export { default as Portal } from './components/Portal'
 export { default as Popup } from './components/Popup'
 export { PopupContent } from './components/Popup'
