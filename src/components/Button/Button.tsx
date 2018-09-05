@@ -132,7 +132,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   public state = {
-    isLastFocusFromMouse: false,
+    isLastFocusFromKeyboard: false,
   }
 
   public renderComponent({
@@ -196,7 +196,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   private handleFocus = (e: React.SyntheticEvent) => {
     const { onFocus } = this.props
 
-    this.setState({ isLastFocusFromMouse: whatInput.ask() === 'mouse' })
+    this.setState({ isLastFocusFromKeyboard: whatInput.ask() === 'keyboard' })
 
     if (onFocus) {
       onFocus(e, this.props)

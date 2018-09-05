@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, iconOnly, isLastFocusFromMouse } = props
+    const { circular, disabled, fluid, type, iconOnly, isLastFocusFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -27,6 +27,12 @@ const buttonStyles: IComponentPartStylesInput = {
       typeSecondaryBorderColor,
     } = variables
 
+    const focusAndHoverSecondary = {
+      color: typeSecondaryColor,
+      borderColor: 'transparent',
+      backgroundColor: typeSecondaryBackgroundColorHover,
+    }
+
     return {
       height,
       minWidth,
@@ -42,7 +48,7 @@ const buttonStyles: IComponentPartStylesInput = {
       verticalAlign: 'middle',
       borderRadius: pxToRem(2),
 
-      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+      borderWidth: `${type ? (circular ? 1 : 2) : 0}px`,
       cursor: 'pointer',
       ':hover': {
         backgroundColor: backgroundColorHover,
@@ -62,11 +68,7 @@ const buttonStyles: IComponentPartStylesInput = {
         color: typeSecondaryColor,
         backgroundColor: typeSecondaryBackgroundColor,
         borderColor: typeSecondaryBorderColor,
-        ':hover': {
-          color: typeSecondaryColor,
-          borderColor: 'transparent',
-          backgroundColor: typeSecondaryBackgroundColorHover,
-        },
+        ':hover': focusAndHoverSecondary,
       }),
 
       ...(circular && {
@@ -88,9 +90,20 @@ const buttonStyles: IComponentPartStylesInput = {
         },
       }),
 
-      ...(isLastFocusFromMouse && {
+      ':focus': {
         outline: '0',
-      }),
+        ...(isLastFocusFromKeyboard && {
+          ...(primary && {
+            boxShadow: 'inset 0 0 0 2px white',
+            color: typePrimaryColor,
+            backgroundColor: typePrimaryBackgroundColorHover,
+          }),
+          ...(secondary && {
+            boxShadow: 'inset 0 0 0 2px #000',
+            ...focusAndHoverSecondary,
+          }),
+        }),
+      },
 
       ...(iconOnly && {
         minWidth: height,
