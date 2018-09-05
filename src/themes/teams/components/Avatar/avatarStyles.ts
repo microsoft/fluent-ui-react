@@ -6,7 +6,7 @@ const getAvatarDimension = (size: number) => {
   return 12 + size * 4
 }
 
-const getPresenceIndicatorDimension = (size: number) => {
+const getStatusIndicatorDimension = (size: number) => {
   if (size < 4) {
     return 8
   }
@@ -16,23 +16,23 @@ const getPresenceIndicatorDimension = (size: number) => {
   return 12
 }
 
-const getPresenceIndicatorWrapperTop = (size: number) => {
+const getStatusIndicatorWrapperTop = (size: number) => {
   return (
-    getPresenceIndicatorDimension(size) +
-    getPresenceIndicatorWrapperPadding(size) +
-    getPresenceIndicatorWrapperPadding(size)
+    getStatusIndicatorDimension(size) +
+    getStatusIndicatorWrapperPadding(size) +
+    getStatusIndicatorWrapperPadding(size)
   )
 }
 
-const getPresenceIndicatorWrapperLeft = (size: number) => {
+const getStatusIndicatorWrapperLeft = (size: number) => {
   return (
     getAvatarDimension(size) -
-    getPresenceIndicatorDimension(size) -
-    getPresenceIndicatorWrapperPadding(size)
+    getStatusIndicatorDimension(size) -
+    getStatusIndicatorWrapperPadding(size)
   )
 }
 
-const getPresenceIndicatorWrapperPadding = (size: number) => {
+const getStatusIndicatorWrapperPadding = (size: number) => {
   if (size < 6) {
     return 2
   }
@@ -79,7 +79,7 @@ const avatarStyles: IComponentPartStylesInput = {
     verticalAlign: 'top',
     textAlign: 'center',
   }),
-  presenceIndicatorWrapper: ({
+  statusIndicator: ({
     props: { size },
     variables: v,
   }: {
@@ -87,15 +87,9 @@ const avatarStyles: IComponentPartStylesInput = {
     variables: any
   }): ICSSInJSStyle => ({
     position: 'relative',
-    top: `-${pxToRem(getPresenceIndicatorWrapperTop(size))}`,
-    left: pxToRem(getPresenceIndicatorWrapperLeft(size)),
-    display: 'table',
-    padding: pxToRem(getPresenceIndicatorWrapperPadding(size)),
-    borderRadius: '9999px',
-    backgroundColor: v.presenceIndicatorBackground,
-  }),
-  presenceIndicator: (): ICSSInJSStyle => ({
-    display: 'table-cell',
+    top: `-${pxToRem(getStatusIndicatorWrapperTop(size))}`,
+    left: pxToRem(getStatusIndicatorWrapperLeft(size)),
+    backgroundColor: v.statusIndicatorBackground,
   }),
 }
 
