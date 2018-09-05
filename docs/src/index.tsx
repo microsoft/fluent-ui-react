@@ -3,8 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 // TODO make themes a monorepo of packages
-import { fontFaces, staticStyles, theme } from 'src/themes/teams'
-import { Provider } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 
 import Router from './routes'
 
@@ -18,7 +17,7 @@ document.body.appendChild(mountNode)
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider theme={theme} staticStyles={staticStyles} fontFaces={fontFaces}>
+      <Provider theme={themes.teams}>
         <NewApp />
       </Provider>
     </AppContainer>,

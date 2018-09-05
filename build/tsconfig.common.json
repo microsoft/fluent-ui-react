@@ -23,6 +23,6 @@
     "noImplicitReturns": false,
     "noImplicitThis": false,
     "noImplicitAny": false,
-    "strictNullChecks": true
+    "strictNullChecks": false,
   }
 }
