@@ -7,10 +7,14 @@ const headerStyle = {
   whiteSpace: 'pre-line',
 }
 
-type behaviorFiltered = {
+type defaultBehavior = {
   type: string
   displayName: string
   defaultFile: string
+}
+type defaultBehaviorInfo = {
+  name: string
+  url: string
 }
 
 class ComponentDocTag extends React.Component<any, any> {
@@ -19,47 +23,51 @@ class ComponentDocTag extends React.Component<any, any> {
     return _.result(_.find(tags, 'title', forTag), 'description')
   }
 
-  getBehaviorURLandName = fromInfo => {
-    const defaultBeharior = {
-      name: undefined,
-      url: undefined,
-    }
+  getDefaultBehaviorInfo = (fromInfo): defaultBehaviorInfo => {
+    let defaultBehavior: defaultBehavior
     const accProperty = fromInfo.props.find(property => property.name === 'accessibility')
     if (!accProperty) {
-      return defaultBeharior
+      return undefined
     }
+
     const accPropertyFormatted = accProperty.defaultValue.split('.').pop() + '.ts'
-    const behaviorFiltered: behaviorFiltered[] = []
+
     behaviorMenuItems.forEach(behavior => {
-      return behavior.variations.find(variation => {
+      behavior.variations.find(variation => {
         if (variation.name === accPropertyFormatted) {
-          behaviorFiltered.push({
+          defaultBehavior = {
             type: behavior.type,
             displayName: behavior.displayName,
             defaultFile: variation.name,
-          })
+          }
         }
       })
     })
 
-    if (behaviorFiltered && behaviorFiltered.length > 0) {
-      const behaviorsFolder = behaviorFiltered[0].type + 's'
-      const behaviorFile = behaviorFiltered[0].defaultFile.replace('.ts', '')
-      return {
-        name: `${behaviorFile}`,
-        url: `${behaviorsFolder}/${behaviorFiltered[0].displayName}#${_.kebabCase(behaviorFile)}`,
+    if (defaultBehavior) {
+      const behaviorsFolder = defaultBehavior.type + 's'
+      const defaultBehaviorFile = defaultBehavior.defaultFile.replace('.ts', '')
+      const defaultBehaviorInfo: defaultBehaviorInfo = {
+        name: `${defaultBehaviorFile}`,
+        url: `${behaviorsFolder}/${defaultBehavior.displayName}#${_.kebabCase(
+          defaultBehaviorFile,
+        )}`,
       }
+      return defaultBehaviorInfo
     }
-    return defaultBeharior
+
+    return undefined
   }
 
   getDefaultBehavior(info) {
-    const defaultBehavior = this.getBehaviorURLandName(info)
-    if (defaultBehavior && defaultBehavior.name && defaultBehavior.url) {
+    const defaultBehaviorInfo: defaultBehaviorInfo = this.getDefaultBehaviorInfo(info)
+    if (defaultBehaviorInfo) {
       return (
-        <span>
-          Default behavior: <a href={defaultBehavior.url}> {defaultBehavior.name} </a>{' '}
-        </span>
+        <Header.Subheader>
+          <span>
+            Default behavior: <a href={defaultBehaviorInfo.url}> {defaultBehaviorInfo.name} </a>
+          </span>
+        </Header.Subheader>
       )
     }
   }
@@ -68,7 +76,7 @@ class ComponentDocTag extends React.Component<any, any> {
     const { info, tag, title, errorMessage } = this.props
     const accDescription = this.getTagDescription(tag, info)
     const description =
-      accDescription || this.getBehaviorURLandName(info).name ? (
+      accDescription || this.getDefaultBehaviorInfo(info) ? (
         accDescription
       ) : (
         <Message error content={errorMessage} compact={true} />
@@ -77,7 +85,7 @@ class ComponentDocTag extends React.Component<any, any> {
     return (
       <Header as="h2" style={headerStyle} className="no-anchor">
         <Header.Content>{title}</Header.Content>
-        <Header.Subheader> {this.getDefaultBehavior(info)} </Header.Subheader>
+        {this.getDefaultBehavior(info)}
         <Header.Subheader> {description} </Header.Subheader>
       </Header>
     )
