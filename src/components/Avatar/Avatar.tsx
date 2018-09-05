@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Icon } from '../../'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
@@ -32,6 +32,8 @@ export interface IAvatarProps {
  *
  */
 class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
+  static create: Function
+
   static className = 'ui-avatar'
 
   static displayName = 'Avatar'
@@ -191,6 +193,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     )
   }
 }
+
+Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
 
 export default Avatar
 

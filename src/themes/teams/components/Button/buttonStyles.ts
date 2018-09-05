@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, isLastFocusFromMouse } = props
+    const { circular, disabled, fluid, type, iconOnly, isLastFocusFromMouse } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -90,6 +90,11 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...(isLastFocusFromMouse && {
         outline: '0',
+      }),
+
+      ...(iconOnly && {
+        minWidth: height,
+        padding: 0,
       }),
     }
   },
