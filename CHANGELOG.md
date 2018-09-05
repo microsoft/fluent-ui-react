@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Adding `behaviors` section to the menu, under the components @kolaps33 ([#119](https://github.com/stardust-ui/react/pull/119))
 - Add `avatar` prop to `Chat.Message` subcomponent @Bugaa92 ([#159](https://github.com/stardust-ui/react/pull/159))
 - add `iconOnly` prop to `Button` @mnajdova ([#182](https://github.com/stardust-ui/react/pull/182))
+- Adding accessibility description for behaviors @kolaps33 ([#181](https://github.com/stardust-ui/react/pull/181))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)
