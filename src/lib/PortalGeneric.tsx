@@ -53,7 +53,7 @@ export abstract class PortalGeneric<
 
   static autoControlledProps = ['open']
 
-  getInitialAutoControlledState() {
+  private getInitialAutoControlledState() {
     return { open: false }
   }
 
@@ -104,18 +104,18 @@ export abstract class PortalGeneric<
     _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
-  protected open = (afterRenderClbk?: Function) => {
-    this.setState({ open: true }, () => afterRenderClbk && afterRenderClbk())
+  protected open = (afterRenderCb?: Function) => {
+    this.setState({ open: true }, () => afterRenderCb && afterRenderCb())
   }
 
-  protected close = (afterRenderClbk?: Function) => {
-    this.setState({ open: false }, () => afterRenderClbk && afterRenderClbk())
+  protected close = (afterRenderCb?: Function) => {
+    this.setState({ open: false }, () => afterRenderCb && afterRenderCb())
   }
 
-  protected handleTriggerClick = (e: ReactMouseEvent, trigger) => {
+  protected handleTriggerClick = (e: ReactMouseEvent, trigger: JSX.Element) => {
     trigger && _.invoke(trigger, 'props.onClick', e, trigger.props) // Call original event handler
 
-    this.setState({ open: !this.state.open })
+    this.state.open ? this.close() : this.open()
   }
 
   protected handleDocumentClick = (e: ReactMouseEvent) => {
@@ -127,6 +127,6 @@ export abstract class PortalGeneric<
       return // ignore the click
     }
 
-    this.setState({ open: false })
+    this.close()
   }
 }

@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
+import { childrenExist, customPropTypes } from '../../lib'
 import { ItemShorthand, Extendable } from '../../../types/utils'
 import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../../lib/PortalGeneric'
 
@@ -61,13 +61,13 @@ class Portal extends PortalGeneric<Extendable<IPortalProps>, IPortalState> {
 
   public state = { open: false }
 
-  public renderComponent({  }: IRenderResultConfig<IPortalProps>): React.ReactNode {
+  public renderComponent(): React.ReactNode {
     const { content, children, trigger } = this.props
     const portalContent = (childrenExist(children) ? children : content) as JSX.Element
     return (
       <React.Fragment>
         {this.renderPortal(portalContent)}
-        {this.renderTrigger(trigger as JSX.Element)}
+        {this.renderTrigger(trigger)}
       </React.Fragment>
     )
   }
