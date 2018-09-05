@@ -2,10 +2,10 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { eventStack, doesNodeContainClick, AutoControlledComponent } from '../../lib'
+import { eventStack, doesNodeContainClick, AutoControlledComponent } from '.'
 import { Extendable } from 'utils'
-import Ref from '../Ref'
-import PortalInner from './PortalInner'
+import Ref from '../components/Ref'
+import PortalInner from '../components/Portal/PortalInner'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 
@@ -55,10 +55,6 @@ export abstract class PortalGeneric<
 
   getInitialAutoControlledState() {
     return { open: false }
-  }
-
-  render(): JSX.Element {
-    throw new Error('render is not implemented.')
   }
 
   protected renderPortal(content: JSX.Element): JSX.Element | undefined {

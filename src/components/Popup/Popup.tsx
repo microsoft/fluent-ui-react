@@ -3,9 +3,9 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import CSSProperties = React.CSSProperties
 
-import { childrenExist, customPropTypes, isBrowser } from '../../lib'
+import { childrenExist, customPropTypes, isBrowser, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable } from '../../../types/utils'
-import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../Portal'
+import { IPortalGenericProps, IPortalGenericState, PortalGeneric } from '../../lib/PortalGeneric'
 import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
 import {
@@ -124,7 +124,11 @@ export default class Popup extends PortalGeneric<Extendable<IPopupState>, IPopup
     close: () => this.close(() => this.triggerNode.focus()),
   }
 
-  public render() {
+  public renderComponent({
+    ElementType,
+    classes,
+    rest,
+  }: IRenderResultConfig<IPopupProps>): React.ReactNode {
     const { basic, children, content, trigger } = this.props
     const { style } = this.state
 
