@@ -41,7 +41,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     debug: PropTypes.bool,
 
     /** Shorthand array of props for ListItem. */
-    items: PropTypes.arrayOf(PropTypes.any),
+    items: customPropTypes.collectionShorthand,
 
     /** A selection list formats list items as possible choices. */
     selection: PropTypes.bool,

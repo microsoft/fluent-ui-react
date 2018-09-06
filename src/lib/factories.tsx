@@ -128,6 +128,8 @@ export function createShorthand(
 
   // Call functions with args similar to createElement()
   if (valIsFunction) return (value as Function)(Component, props, props.children)
+
+  return null
 }
 
 // ============================================================

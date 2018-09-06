@@ -526,7 +526,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   private renderVariables = () => {
     const { showVariables } = this.state
-    if (!showVariables) return
+    if (!showVariables) return undefined
 
     const displayName = this.getDisplayName()
 

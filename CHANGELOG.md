@@ -19,12 +19,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
+- Fixed missing colors from the siteVariables @mnajdova ([#200](https://github.com/stardust-ui/react/pull/200))
 
 ### Features
 - Add `state` to `props` in component styling functions @Bugaa92 ([#173](https://github.com/stardust-ui/react/pull/173))
 - Adding `behaviors` section to the menu, under the components @kolaps33 ([#119](https://github.com/stardust-ui/react/pull/119))
 - Add `avatar` prop to `Chat.Message` subcomponent @Bugaa92 ([#159](https://github.com/stardust-ui/react/pull/159))
 - add `iconOnly` prop to `Button` @mnajdova ([#182](https://github.com/stardust-ui/react/pull/182))
+- Add Label `image` and `imagePosition`, removed `onIconClick` prop  @mnajdova ([#55](https://github.com/stardust-ui/react/pull/55/))
+- Add `ButtonGroup` component @mnajdova ([#179](https://github.com/stardust-ui/react/pull/179))
 - Add Button `text` prop @mnajdova ([#177](https://github.com/stardust-ui/react/pull/177))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->

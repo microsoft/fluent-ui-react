@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { mount } from './isConformant'
 
-type ShorthandTestOptions = {
+export type ShorthandTestOptions = {
   mapsValueToProp?: string
 }
 
-const DefaultShorthandTestOptions: ShorthandTestOptions = {
+export const DefaultShorthandTestOptions: ShorthandTestOptions = {
   mapsValueToProp: 'content',
 }
 
