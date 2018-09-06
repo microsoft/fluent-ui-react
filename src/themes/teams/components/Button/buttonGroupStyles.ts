@@ -16,15 +16,15 @@ const buttonGroupStyles: IComponentPartStylesInput = {
   firstButton: ({ props: p, variables: v }: { props: IButtonGroupProps; variables: any }) => ({
     ...commonButtonsStyles(p.circular),
     ...(!p.circular && {
-      borderTopLeftRadius: v.defaultBorderRadius,
-      borderBottomLeftRadius: v.defaultBorderRadius,
+      borderTopLeftRadius: v.borderRadius,
+      borderBottomLeftRadius: v.borderRadius,
     }),
   }),
   lastButton: ({ props: p, variables: v }: { props: IButtonGroupProps; variables: any }) => ({
     ...commonButtonsStyles(p.circular),
     ...(!p.circular && {
-      borderTopRightRadius: v.defaultBorderRadius,
-      borderBottomRightRadius: v.defaultBorderRadius,
+      borderTopRightRadius: v.borderRadius,
+      borderBottomRightRadius: v.borderRadius,
     }),
   }),
 }

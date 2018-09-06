@@ -24,7 +24,7 @@ export interface IButtonGroupProps {
 class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
   public static displayName = 'ButtonGroup'
 
-  public static className = 'ui-button__buttons'
+  public static className = 'ui-buttons'
 
   public static propTypes = {
     /** An element type to render as (string or function). */
