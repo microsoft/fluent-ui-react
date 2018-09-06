@@ -10,7 +10,7 @@ import { IState, IPropsWithVarsAndStyles } from '../../types/theme'
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
- * @param {AccessibilityActions} actions The input element which is to loose focus.
+ * @param {AccessibilityActions} actions Actions defined in a component.
  * @param {IAccessibilityDefinition} accessibility The input element which is to loose focus.
  * @param {IState & IPropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
  */

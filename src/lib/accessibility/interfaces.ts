@@ -102,7 +102,27 @@ export interface IAriaWidgetAttributes {
   'aria-valuetext'?: string
 }
 
-export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
+export interface IAriaRelationshipAttributes {
+  'aria-activedescendant'?: string
+  'aria-colcount'?: string
+  'aria-colindex'?: string
+  'aria-colspan'?: string
+  'aria-controls'?: string
+  'aria-describedby'?: string
+  'aria-details'?: string
+  'aria-errormessage'?: string
+  'aria-flowto'?: string
+  'aria-labelledby'?: string
+  'aria-owns'?: string
+  'aria-posinset'?: string
+  'aria-rowcount'?: string
+  'aria-rowindex'?: string
+  'aria-rowspan'?: string
+}
+
+export interface IAccessibilityAttributes
+  extends IAriaWidgetAttributes,
+    IAriaRelationshipAttributes {
   role?: AriaRole
   tabIndex?: string
 }
@@ -112,6 +132,7 @@ export type ActionsDefinition = { [partName: string]: { [actionName: string]: IA
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   actionsDefinition?: ActionsDefinition
+  handledProps?: (keyof IAccessibilityAttributes)[]
 }
 
 export interface IAccessibilityBehavior extends IAccessibilityDefinition {
