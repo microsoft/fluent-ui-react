@@ -1,40 +1,42 @@
 import * as _ from 'lodash'
 import keyboardHandlerFilter from './keyboardHandlerFilter'
 import {
-  IAccessibilityDefinition,
-  AccessibilityActions,
-  ActionsHandler,
+  AccessibilityActionHandlers,
+  ActionsKeyHandler,
+  KeyActions,
 } from 'src/lib/accessibility/interfaces'
 import { IState, IPropsWithVarsAndStyles } from '../../types/theme'
 
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
- * @param {AccessibilityActions} actions Actions defined in a component.
- * @param {IAccessibilityDefinition} accessibility The input element which is to loose focus.
+ * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
+ * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
  * @param {IState & IPropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
  */
 const getKeyDownHandlers = (
-  actions: AccessibilityActions,
-  accessibility: IAccessibilityDefinition,
+  componentActionHandlers: AccessibilityActionHandlers,
+  behaviorKeyActions: KeyActions,
   props: IState & IPropsWithVarsAndStyles,
-): ActionsHandler => {
-  const handlers = {}
-  const actionsDefinition = accessibility.actionsDefinition
+): ActionsKeyHandler => {
+  const keyHandlers = {}
 
-  if (!actions || !actionsDefinition) return handlers
+  if (!componentActionHandlers || !behaviorKeyActions) return keyHandlers
 
-  for (const elementName in actionsDefinition) {
-    const currentActionDef = actionsDefinition[elementName]
-    const commonActions = _.intersection(_.keys(currentActionDef), _.keys(actions))
-    if (!commonActions.length) continue
+  for (const componentPart in behaviorKeyActions) {
+    const componentPartKeyAction = behaviorKeyActions[componentPart]
+    const handledActions = _.intersection(
+      _.keys(componentPartKeyAction),
+      _.keys(componentActionHandlers),
+    )
+    if (!handledActions.length) continue
 
-    handlers[elementName] = {
-      onKeyDown: (event: React.KeyboardEvent) => {
-        commonActions.forEach(actionName => {
+    keyHandlers[componentPart] = {
+      onKeyDown: (event: KeyboardEvent) => {
+        handledActions.forEach(actionName => {
           const eventHandler = keyboardHandlerFilter(
-            actions[actionName],
-            currentActionDef[actionName].keyCombinations,
+            componentActionHandlers[actionName],
+            componentPartKeyAction[actionName].keyCombinations,
           )
           eventHandler && eventHandler(event)
         })
@@ -44,7 +46,7 @@ const getKeyDownHandlers = (
     }
   }
 
-  return handlers
+  return keyHandlers
 }
 
 export default getKeyDownHandlers

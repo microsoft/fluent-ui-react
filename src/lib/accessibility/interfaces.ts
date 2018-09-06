@@ -128,18 +128,18 @@ export interface IAccessibilityAttributes
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type ActionsDefinition = { [partName: string]: { [actionName: string]: IActionDefinition } }
+export type KeyActions = { [partName: string]: { [actionName: string]: IKeyAction } }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
-  actionsDefinition?: ActionsDefinition
+  keyActions?: KeyActions
   handledProps?: (keyof IAccessibilityAttributes)[]
 }
 
 export interface IAccessibilityBehavior extends IAccessibilityDefinition {
-  handlers?: ActionsHandler
+  keyHandlers?: ActionsKeyHandler
 }
 
-export interface IActionDefinition {
+export interface IKeyAction {
   keyCombinations: KeyCombinations[]
 }
 
@@ -151,16 +151,17 @@ export interface KeyCombinations {
   metaKey?: boolean
 }
 
-export type AccessibilityActions = {
-  [actionName: string]: KeyboardHandler
+export type AccessibilityActionHandlers = {
+  [actionName: string]: EventHandler
 }
 
-export type ActionsHandler = {
+export type ActionsKeyHandler = {
   [partName: string]: {
     onKeyDown?: KeyboardHandler
   }
 }
 
-export type KeyboardHandler = (event: React.KeyboardEvent) => void
+export type KeyboardHandler = (event: KeyboardEvent) => void
+export type EventHandler = (event: Event) => void
 
 export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)

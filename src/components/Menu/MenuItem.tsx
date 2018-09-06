@@ -6,7 +6,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActions } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import {
@@ -135,7 +135,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'vertical',
   ]
 
-  actions: AccessibilityActions = {
+  actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
@@ -150,7 +150,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
-        {...accessibility.handlers.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
       >
         {childrenExist(children) ? (
@@ -160,7 +160,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
-            {...accessibility.handlers.anchor}
+            {...accessibility.keyHandlers.anchor}
           >
             {icon &&
               Icon.create(this.props.icon, {

@@ -1,23 +1,23 @@
 import { KeyCombinations, KeyboardHandler } from './accessibility/interfaces'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 const keyboardHandlerFilter = (handler: KeyboardHandler, keysCombinations: KeyCombinations[]) => (
-  event: React.KeyboardEvent,
+  event: KeyboardEvent,
 ) => {
-  const filteredKeys = keysCombinations.filter(keysCombinations => {
-    const keyCode = keysCombinations.keyCode
-    const { shiftKey, altKey, metaKey, ctrlKey } = event
-    if (
-      (keysCombinations.altKey && !altKey) ||
-      (keysCombinations.shiftKey && !shiftKey) ||
-      (keysCombinations.metaKey && !metaKey) ||
-      (keysCombinations.ctrlKey && !ctrlKey)
-    ) {
-      return null
-    }
-    return keyCode === keyboardKey.getCode(event)
-  })
-  if (!filteredKeys.length) return
-  handler(event)
+  const { shiftKey, altKey, metaKey, ctrlKey } = event
+  const isHandled = _.some(
+    keysCombinations,
+    keysCombination =>
+      keysCombination.keyCode === keyboardKey.getCode(event) &&
+      (!keysCombination.altKey || altKey) &&
+      (!keysCombination.shiftKey || shiftKey) &&
+      (!keysCombination.metaKey || metaKey) &&
+      (!keysCombination.ctrlKey || ctrlKey),
+  )
+  if (isHandled) {
+    handler(event)
+  }
 }
+
 export default keyboardHandlerFilter

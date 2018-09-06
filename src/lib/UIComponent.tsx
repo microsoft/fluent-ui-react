@@ -1,6 +1,6 @@
 import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
-import { AccessibilityActions } from './accessibility/interfaces'
+import { AccessibilityActionHandlers } from './accessibility/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -8,7 +8,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static displayName: string
   static className: string
   static handledProps: any
-  protected actions: AccessibilityActions
+  protected actionHandlers: AccessibilityActionHandlers
 
   constructor(props, context) {
     super(props, context)
@@ -37,7 +37,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         handledProps: this.childClass.handledProps,
         props: this.props,
         state: this.state,
-        actions: this.actions,
+        actionHandlers: this.actionHandlers,
       },
       this.renderComponent,
     )
