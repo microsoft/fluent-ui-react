@@ -194,16 +194,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
     const inputClasses = classes.input
 
-    const labelAtEnd = labelPosition === 'end'
-    const labelAtStart = !labelAtEnd
-
     return (
       <ElementType className={classes.root} {...restProps} {...htmlInputProps}>
-        {labelAtStart &&
-          label &&
-          Label.create(label, {
-            defaultProps: { styles: { root: styles.label } },
-          })}
         {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
           overrideProps: {
@@ -215,11 +207,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
           Icon.create(this.computeIcon(), {
             defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
-          })}
-        {labelAtEnd &&
-          label &&
-          Label.create(label, {
-            defaultProps: { styles: { root: styles.label } },
           })}
       </ElementType>
     )
