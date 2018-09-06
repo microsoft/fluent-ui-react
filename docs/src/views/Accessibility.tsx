@@ -121,39 +121,8 @@ export default () => (
       Our strong recommendation here is to have clear accessibility designs and example user flows
       as early in the design process as possible.{' '}
     </p>
-    <Header as="h1" content="Stardust basics" />
-    <p>
-      Stardust shares many of the same goals as it's predecessor - Sementic UI. It aims to enable
-      users to build up beautiful complex components and form them into applications. In additional
-      Stardust brings far greater freedom in theming, overriding behaviours / styling and far
-      greater accessibility support.
-    </p>
-    <p>
-      The main source of documentation is the live documentation at the{' '}
-      <a href="https://stardust-ui.github.io/react/">DocSite</a>.
-    </p>
 
-    <Header as="h2" content="Using DocSite" />
-    <p>
-      The <a href="https://stardust-ui.github.io/react/">DocSite</a>, among other things, contains a
-      catalogue of Stardust components. For each component, you can see:
-    </p>
-    <ul>
-      <li>The component description</li>
-      <li>
-        The default accessibility behaviour, alternative behaviours and other accessibility
-        considerations
-      </li>
-      <li>Properties</li>
-      <li>Variations with examples</li>
-    </ul>
-    <p>
-      Examples show the recommended way of using the components in the different variations. For
-      each example, you are able to edit the JSX code, see the rendered HTML, change themes and
-      validate the rendering in RTL scenario.{' '}
-    </p>
-    <p>Integration of accessibility testing into the DocSite is under consideration.</p>
-    <h1>Accessibility</h1>
+    <Header as="h1" content="Accessibility" />
     <p>Accessibility covers a broad area and several different aspects. </p>
     <p>
       Stardust itself focuses on providing keyboard navigation, screen reader support, zooming and
@@ -175,7 +144,6 @@ export default () => (
     </p>
 
     <Header as="h3" content="Tabbing and arrow key navigation" />
-
     <p>
       The tab key is used to move between focusable elements, and many users are familiar with this
       behaviour as they, for example, move between fields in form using tab. This is provided by the
@@ -353,9 +321,41 @@ export default () => (
     />
     <p>
       This way, Stardust will generate a child component based on the provided content string and
-      will apply the role.
+      will apply the role. ie:
+      <CodeSnippet
+        value={[
+          "import React from 'react'",
+          "import { Menu } from '@stardust-ui/react",
+          '',
+          'const items = [',
+          "  { key: 'editorials', content: 'Editorials' },",
+          "  { key: 'review', content: 'Reviews' },",
+          "  { key: 'events', content: 'Upcoming Events' },",
+          ']',
+          '',
+          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} type="primary" />',
+          '',
+          'export default MenuExamplePrimary',
+        ].join('\n')}
+      />
+      renders
+      <CodeSnippet
+        label="html"
+        value={[
+          '<ul role="menu" class="ui-menu a ab c d e f g">',
+          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae af" role="presentation">',
+          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Editorials</a>',
+          '  </li>',
+          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae" role="presentation">',
+          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Reviews</a>',
+          '  </li>',
+          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae" role="presentation">',
+          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Upcoming Events</a>',
+          '  </li>',
+          '</ul>',
+        ].join('\n')}
+      />
     </p>
-
     <Header as="h4" content="Overriding behaviours" />
     <p>
       User can override the default behaviour by using the accessibility attribute as well as
@@ -373,6 +373,17 @@ export default () => (
         ')',
       ].join('\n')}
     />
+    <Header as="h4" content="Using DocSite" />
+    <p>
+      The default and other available behaviors for all the components can be found on the{' '}
+      <a href="https://stardust-ui.github.io/react/">DocSite</a>, together with notes on other
+      accessibility considerations for using the component. The examples show the recommended way of
+      using the components in the different variations. For each example, you are able to edit the
+      JSX code, see the rendered HTML, change themes and validate the rendering in RTL scenario, or
+      with different behaviors.
+    </p>
+
+    <p>Further integration of accessibility testing into the DocSite is under consideration.</p>
 
     <Header as="h2" content="Screen Readers" />
 
