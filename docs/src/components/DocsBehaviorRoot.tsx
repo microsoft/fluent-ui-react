@@ -37,7 +37,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const { match } = this.props
-    const pageTitle = _.capitalize(match.params.name) + ' accessibility behavior'
+    const pageTitle = _.capitalize(match.params.name) + ' behaviors'
     return (
       <DocumentTitle title={pageTitle}>
         <Grid>
@@ -46,12 +46,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
               <Header
                 as="h1"
                 content={pageTitle}
-                subheader={
-                  pageTitle +
-                  ' applies keyboard handlers and aria properties to ' +
-                  match.params.name +
-                  ' components.'
-                }
+                subheader={'Keyboard and Screenreader options for ' + match.params.name + 's.'}
               />
             </Grid.Column>
           </Grid.Row>
@@ -68,7 +63,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                       <ComponentExampleTitle
                         id={_.kebabCase(variation.name)}
                         title={this.baseName(variation.name)}
-                        description={`Behavior name: ${variation.name.replace('.ts', '')}`}
+                        description={`Name: ${variation.name.replace('.ts', '')}`}
                       />
                     </div>
                     <div style={{ flex: '0 0 auto' }} />
