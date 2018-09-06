@@ -6,6 +6,7 @@ export interface IButtonVariables {
   height: string
   minWidth: string
   maxWidth: string
+  color: string
   backgroundColor: string
   backgroundColorHover: string
   circularRadius: string
@@ -26,6 +27,7 @@ export default (siteVars: any): IButtonVariables => {
     height: pxToRem(32),
     minWidth: pxToRem(96),
     maxWidth: pxToRem(280),
+    color: siteVars.black,
     backgroundColor: siteVars.gray08,
     backgroundColorHover: siteVars.gray06,
     circularRadius: pxToRem(999),

@@ -12,10 +12,10 @@ import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
+const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-
 type ComponentMenuItem = { displayName: string; type: string }
 
 class Sidebar extends React.Component<any, any> {
@@ -111,7 +111,7 @@ class Sidebar extends React.Component<any, any> {
           activeClassName="active"
         />
       )),
-    )(componentMenu)
+    )([...componentMenu, ...behaviorMenu])
 
     return (
       <Menu.Item key={nextType}>
@@ -123,7 +123,7 @@ class Sidebar extends React.Component<any, any> {
 
   renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
-    if (!query) return
+    if (!query) return undefined
 
     let itemIndex = -1
     const startsWithMatches: ComponentMenuItem[] = []
