@@ -1,14 +1,13 @@
 import * as React from 'react'
-const ReactDOMServer = require('react-dom/server')
-const { axe } = require('jest-axe')
 
 import {
   isConformant,
   handlesAccessibility,
+  htmlIsAccessibilityCompliant,
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
-import { getTestingRenderedComponent, mountWithProvider, expectAxe } from 'test/utils'
+import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
 
 import Button from 'src/components/Button/Button'
@@ -52,48 +51,29 @@ describe('Button', () => {
       })
     })
 
-    describe('AXE validation', () => {
+    describe('HTML accessibility rules validation', () => {
       describe('icon button must have textual representation for screen readers', () => {
-        test('with title', async () => {
-          const html = ReactDOMServer.renderToString(<Button icon="books" title="testing button" />)
-          const results = await axe(html)
-          expectAxe(results).toHaveNoViolations()
-        })
+        test('with title', async () =>
+          htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
 
-        test('with aria-label attribute', async () => {
-          const html = ReactDOMServer.renderToString(
-            <Button icon="books" aria-label="testing button" />,
-          )
-          const results = await axe(html)
-          expectAxe(results).toHaveNoViolations()
-        })
+        test('with aria-label attribute', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" aria-label="testing button" />))
 
-        test('with aria-labelledby attribute', async () => {
-          const html = ReactDOMServer.renderToString(
+        test('with aria-labelledby attribute', async () =>
+          htmlIsAccessibilityCompliant(
             <div>
               <Button icon="books" aria-labelledby="tstBtn" />
               <span id="tstBtn" aria-label="testing button" />
             </div>,
-          )
-          const results = await axe(html)
-          expectAxe(results).toHaveNoViolations()
-        })
+          ))
       })
 
       describe('different buttons variants', () => {
-        test('button', async () => {
-          const html = ReactDOMServer.renderToString(<Button>Simple test button</Button>)
-          const results = await axe(html)
-          expectAxe(results).toHaveNoViolations()
-        })
+        test('button', async () =>
+          htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
 
-        test('button with text and icon', async () => {
-          const html = ReactDOMServer.renderToString(
-            <Button icon="test" content="Simple test button" />,
-          )
-          const results = await axe(html)
-          expectAxe(results).toHaveNoViolations()
-        })
+        test('button with text and icon', async () =>
+          htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
       })
     })
 
