@@ -25,8 +25,8 @@ const StatusIndicatorShorthandExample = () => (
       title="Do not disturb"
     />
     <StatusIndicator
-      icon={{ name: '', variables: { color: 'white', backgroundColor: 'grey' } }}
-      title="Offline"
+      icon={{ name: 'home', variables: { color: 'white', backgroundColor: 'blue' } }}
+      title="Working from Home"
     />
   </div>
 )

@@ -11,12 +11,10 @@ const StatusIndicatorWrapper = (status: string) => {
         />
       )
     case 'Away':
-      return (
-        <StatusIndicator
-          icon={{ name: 'clock', variables: { color: 'white', backgroundColor: 'yellow' } }}
-          title="Away"
-        />
-      )
+      return {
+        icon: { name: 'clock', variables: { color: 'white', backgroundColor: 'yellow' } },
+        title: 'Away',
+      }
     case 'Busy':
       return (
         <StatusIndicator
