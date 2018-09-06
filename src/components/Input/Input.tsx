@@ -4,7 +4,6 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  childrenExist,
   createHTMLInput,
   customPropTypes,
   getUnhandledProps,
@@ -12,7 +11,12 @@ import {
 } from '../../lib'
 import Icon from '../Icon'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { ReactChildren, Extendable, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
 export interface IInputProps {
   as?: any
@@ -23,7 +27,7 @@ export interface IInputProps {
   fluid?: boolean
   icon?: ItemShorthand
   input?: ItemShorthand
-  onChange?: (event: React.SyntheticEvent, data: IInputProps) => void
+  onChange?: ComponentEventHandler<IInputProps>
   value?: string
   type?: string
   styles?: IComponentPartStylesInput
@@ -49,9 +53,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
-    children: PropTypes.node,
-
     /** Additional classes. */
     className: PropTypes.string,
 
@@ -66,9 +67,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
-
-    /** Shorthand for creating the HTML Input. */
-    input: customPropTypes.itemShorthand,
 
     /**
      * Called on change.
@@ -93,13 +91,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
   static handledProps = [
     'as',
-    'children',
     'className',
     'clearable',
     'defaultValue',
     'fluid',
     'icon',
-    'input',
     'onChange',
     'styles',
     'type',
@@ -184,34 +180,17 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, input, type } = this.props
+  renderComponent({ ElementType, classes, styles }) {
+    const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
+
+    const { onChange } = htmlInputProps as any
 
     const inputClasses = classes.input
 
-    // Render with children
-    // ----------------------------------------
-    if (childrenExist(children)) {
-      // add htmlInputProps to the `<input />` child
-      const childElements = _.map(React.Children.toArray(children), child => {
-        if (typeof child === 'string' || typeof child === 'number' || child.type !== 'input') {
-          return child
-        }
-
-        return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
-      })
-
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {childElements}
-        </ElementType>
-      )
-    }
-
     return (
-      <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
+      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+        {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,

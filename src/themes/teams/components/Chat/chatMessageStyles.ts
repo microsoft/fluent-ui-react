@@ -1,21 +1,45 @@
 import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import { IChatMessageVariables } from './chatMessageVariables'
+import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({
+    props: p,
+    variables: v,
+  }: {
+    props: IChatMessageProps
+    variables: IChatMessageVariables
+  }): ICSSInJSStyle => ({
+    display: 'flex',
     position: 'relative',
-    padding: '1rem',
     marginTop: '1rem',
     marginBottom: '1rem',
-    ...(props.mine
+    ...(p.mine
       ? {
           marginLeft: 'auto',
         }
       : {
           marginRight: 'auto',
         }),
-    maxWidth: variables.messageWidth,
+    maxWidth: v.messageWidth,
+  }),
+
+  chatAvatar: (): ICSSInJSStyle => ({
+    margin: pxToRem(10),
+  }),
+
+  chatContent: ({
+    props: p,
+    variables: v,
+  }: {
+    props: IChatMessageProps
+    variables: IChatMessageVariables
+  }): ICSSInJSStyle => ({
+    flex: 1,
+    padding: '1rem',
     color: 'rgb(64, 64, 64)',
-    backgroundColor: props.mine ? variables.messageColorMine : variables.messageColor,
+    backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
     borderRadius: '0.3rem',
   }),
 }

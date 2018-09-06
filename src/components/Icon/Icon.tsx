@@ -6,6 +6,7 @@ import { IconBehavior } from '../../lib/accessibility/'
 import svgIcons from './svgIcons'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 export type IconSize =
@@ -30,7 +31,7 @@ export interface IIconProps {
   size?: IconSize
   svg?: boolean
   xSpacing?: IconXSpacing
-  accessibility?: object | Function
+  accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }

@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
+import { NavLink } from 'react-router-dom'
 
 import Editor from 'docs/src/components/Editor'
 import { Container, Divider, Grid, Header, Icon, Label, List, Segment } from 'semantic-ui-react'
@@ -38,7 +39,7 @@ Comparison.propTypes = {
 }
 
 const Introduction = () => (
-  <Container id="introduction-page">
+  <Container id="introduction-page" text>
     <Segment basic textAlign="center">
       <Logo centered size="small" />
       <Header as="h1" textAlign="center">
@@ -46,6 +47,13 @@ const Introduction = () => (
         <Header.Subheader>{pkg.description}</Header.Subheader>
       </Header>
     </Segment>
+    <p>
+      Stardust UI React is being built as an exemplar of the Stardust UI design language, component
+      specifications, and utilities.
+    </p>
+    <p>
+      See the <NavLink to="quick-start">Quick Start</NavLink> guide to get started.
+    </p>
   </Container>
 )
 

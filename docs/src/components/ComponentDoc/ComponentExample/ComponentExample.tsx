@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 
 import {
   examplePathToHash,
@@ -17,13 +17,12 @@ import {
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
-import Editor from 'docs/src/components/Editor'
+import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
 import { IThemeInput, IThemePrepared } from 'types/theme'
-import { theme as teamsTheme } from '../../../../../src/themes/teams'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -49,9 +48,6 @@ interface IComponentExampleState {
   copiedCode: boolean
 }
 
-const EDITOR_BACKGROUND_COLOR = '#1D1F21'
-const EDITOR_GUTTER_COLOR = '#26282d'
-
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
   maxWidth: pxToRem(500),
@@ -75,7 +71,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public state: IComponentExampleState = {
     knobs: {},
-    theme: teamsTheme,
+    theme: themes.teams,
     sourceCode: '',
     markup: '',
     showCode: false,
@@ -358,7 +354,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
 
     return (
-      <Provider theme={mergeThemes(teamsTheme, newTheme)}>
+      <Provider theme={mergeThemes(themes.teams, newTheme)}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )

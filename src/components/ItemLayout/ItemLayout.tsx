@@ -4,8 +4,53 @@ import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
+import {
+  ComponentVariablesInput,
+  IComponentPartClasses,
+  IComponentPartStylesInput,
+  ICSSInJSStyle,
+} from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
-class ItemLayout extends UIComponent<any, any> {
+export interface IItemLayoutProps {
+  as?: any
+  className?: string
+  contentMedia?: any
+  content?: any
+  debug?: boolean
+  header?: any
+  endMedia?: any
+  headerMedia?: any
+  media?: any
+  renderContentArea?: (
+    props: IItemLayoutProps,
+    state: any,
+    classes: IComponentPartClasses,
+  ) => React.ReactNode
+  renderHeaderArea?: (
+    props: IItemLayoutProps,
+    state: any,
+    classes: IComponentPartClasses,
+  ) => React.ReactNode
+  renderMainArea?: (
+    props: IItemLayoutProps,
+    state: any,
+    classes: IComponentPartClasses,
+  ) => React.ReactNode
+  rootCSS?: ICSSInJSStyle
+  mediaCSS?: ICSSInJSStyle
+  headerCSS?: ICSSInJSStyle
+  headerMediaCSS?: ICSSInJSStyle
+  contentCSS?: ICSSInJSStyle
+  contentMediaCSS?: ICSSInJSStyle
+  endMediaCSS?: ICSSInJSStyle
+  truncateContent?: boolean
+  truncateHeader?: boolean
+  styles?: IComponentPartStylesInput
+  variables?: ComponentVariablesInput
+}
+
+class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -31,9 +76,9 @@ class ItemLayout extends UIComponent<any, any> {
     headerMedia: PropTypes.any,
 
     media: PropTypes.any,
-    renderContentArea: PropTypes.any,
-    renderHeaderArea: PropTypes.any,
-    renderMainArea: PropTypes.any,
+    renderContentArea: PropTypes.func,
+    renderHeaderArea: PropTypes.func,
+    renderMainArea: PropTypes.func,
 
     /** Styled applied to the root element of the rendered component. */
     rootCSS: PropTypes.object,
@@ -162,16 +207,8 @@ class ItemLayout extends UIComponent<any, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const {
-      as,
-      debug,
-      endMedia,
-      media,
-      renderMainArea,
-      rootCSS,
-      mediaCSS,
-      endMediaCSS,
-    } = this.props
+    const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
+      .props as IItemLayoutPropsWithDefaults
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -214,3 +251,5 @@ class ItemLayout extends UIComponent<any, any> {
 ItemLayout.create = createShorthandFactory(ItemLayout, main => ({ main }))
 
 export default ItemLayout
+
+export type IItemLayoutPropsWithDefaults = IItemLayoutProps & typeof ItemLayout.defaultProps
