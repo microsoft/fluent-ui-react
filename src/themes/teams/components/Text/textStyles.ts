@@ -20,7 +20,12 @@ export default {
       ...(disabled && { color: v.disabledTextColor }),
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
-      ...(timestamp && { color: v.timestampTextColor }),
+      ...(timestamp && {
+        color: v.timestampTextColor,
+        ':hover': {
+          color: v.timestampHoverTextColor,
+        },
+      }),
       ...(weight === Weights.Light && {
         fontWeight: v.textWeightLight,
       }),
