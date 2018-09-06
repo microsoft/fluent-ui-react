@@ -1,20 +1,21 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IRadioProps } from '../../../../components/Radio/Radio'
 
 const radioStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: (): ICSSInJSStyle => {
     return {
       outline: 0,
       display: 'inline-block',
     }
   },
 
-  radio: ({ props, variables }): ICSSInJSStyle => {
+  radio: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => {
     return {
       marginRight: variables.radioMargin,
     }
   },
 
-  label: ({ props, variables }): ICSSInJSStyle => {
+  label: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => {
     return {
       cursor: 'pointer',
       display: 'inline-flex',

@@ -23,6 +23,7 @@ export interface IMenuItemProps {
   children?: ReactChildren
   className?: string
   content?: any
+  disabled?: boolean
   icon?: ItemShorthand
   iconOnly?: boolean
   index?: number
@@ -57,7 +58,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
+    content: PropTypes.any,
+
+    /** A menu item can show it is currently unable to be interacted with. */
+    disabled: PropTypes.bool,
 
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
@@ -117,6 +121,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'children',
     'className',
     'content',
+    'disabled',
     'icon',
     'iconOnly',
     'index',
