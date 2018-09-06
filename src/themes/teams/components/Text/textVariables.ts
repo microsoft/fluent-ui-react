@@ -11,6 +11,7 @@ export interface ITextVariables {
   errorTextColor: string
   successTextColor: string
   timestampTextColor: string
+  timestampHoverTextColor: string
   textExtraSmallFontSize: string
   textExtraSmallLineHeight: string
   textSmallFontSize: string
@@ -21,6 +22,12 @@ export interface ITextVariables {
   textLargeLineHeight: string
   textExtraLargeFontSize: string
   textExtraLargeLineHeight: string
+  textX2FontSize: string
+  textX2LineHeight: string
+  textX3FontSize: string
+  textX3LineHeight: string
+  textX4FontSize: string
+  textX4LineHeight: string
 }
 
 export default (siteVariables): ITextVariables => {
@@ -30,6 +37,7 @@ export default (siteVariables): ITextVariables => {
     errorTextColor: siteVariables.red,
     successTextColor: siteVariables.green04,
     timestampTextColor: siteVariables.gray04,
+    timestampHoverTextColor: siteVariables.gray02,
 
     textExtraSmallFontSize: siteVariables.fontSizeExtraSmall,
     textExtraSmallLineHeight: siteVariables.lineHeightExtraSmall,
@@ -45,6 +53,15 @@ export default (siteVariables): ITextVariables => {
 
     textExtraLargeFontSize: siteVariables.fontSizeExtraLarge,
     textExtraLargeLineHeight: siteVariables.lineHeightSmall,
+
+    textX2FontSize: siteVariables.fontSizeX2,
+    textX2LineHeight: siteVariables.lineHeightSmall,
+
+    textX3FontSize: siteVariables.fontSizeX3,
+    textX3LineHeight: siteVariables.lineHeightSmall,
+
+    textX4FontSize: siteVariables.fontSizeX4,
+    textX4LineHeight: siteVariables.lineHeightSmall,
 
     importantWeight: siteVariables.fontWeightBold,
     importantTextColor: siteVariables.red,

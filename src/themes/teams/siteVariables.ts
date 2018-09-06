@@ -42,6 +42,9 @@ export const green04 = '#237b4b'
 //
 // FONT SIZES
 //
+export const fontSizeX4 = pxToRem(72)
+export const fontSizeX3 = pxToRem(48)
+export const fontSizeX2 = pxToRem(36)
 export const fontSizeExtraLarge = pxToRem(24)
 export const fontSizeLarge = pxToRem(18)
 export const fontSizeMedium = pxToRem(14)

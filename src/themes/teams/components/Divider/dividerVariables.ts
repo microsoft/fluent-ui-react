@@ -1,7 +1,7 @@
 export default (siteVars: any) => {
   return {
     defaultColor: siteVars.gray04,
-    defaultBackgroundColor: siteVars.gray12,
+    defaultBackgroundColor: siteVars.gray08,
     typePrimaryColor: siteVars.brand,
     typePrimaryBackgroundColor: siteVars.brand,
     typeSecondaryColor: siteVars.gray02,
