@@ -88,7 +88,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     onClick: PropTypes.func,
 
     /**
-     * Called after user's click.
+     * Called after user's focus.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
