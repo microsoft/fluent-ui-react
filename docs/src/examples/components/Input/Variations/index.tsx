@@ -25,9 +25,9 @@ const Variations = () => (
       examplePath="components/Input/Variations/InputExampleIconClearable"
     />
     <ComponentExample
-      title="Label"
-      description="An input can be preceeded or succeeded by a text."
-      examplePath="components/Input/Variations/InputExampleLabel"
+      title="Inline"
+      description="An input can be used inline with text."
+      examplePath="components/Input/Variations/InputExampleInline"
     />
   </ExampleSection>
 )

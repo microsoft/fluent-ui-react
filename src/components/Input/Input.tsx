@@ -26,6 +26,7 @@ export interface IInputProps {
   defaultValue?: string
   fluid?: boolean
   icon?: ItemShorthand
+  inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
   value?: string
@@ -63,20 +64,17 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The default value of the input. */
     defaultValue: PropTypes.string,
 
-    /** A button can take the width of its container. */
+    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
+    /** An input can be used inline with text */
+    inline: PropTypes.bool,
+
     /** Shorthand for creating the HTML Input. */
     input: customPropTypes.itemShorthand,
-
-    /** Shorthand for creating a Label.  */
-    label: customPropTypes.itemShorthand,
-
-    /** The Label text can appear before or after the input element.  */
-    labelPosition: PropTypes.oneOf(['start', 'end']),
 
     /**
      * Called on change.
@@ -106,9 +104,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     'defaultValue',
     'fluid',
     'icon',
+    'inline',
     'input',
-    'label',
-    'labelPosition',
     'onChange',
     'styles',
     'type',
@@ -201,16 +198,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
     const inputClasses = classes.input
 
-    const labelAtEnd = labelPosition === 'end'
-    const labelAtStart = !labelAtEnd
-
     return (
       <ElementType className={classes.root} {...restProps} {...htmlInputProps}>
-        {labelAtStart &&
-          label &&
-          Label.create(label, {
-            defaultProps: { styles: { root: styles.label } },
-          })}
         {createHTMLInput(input || type, {
           defaultProps: htmlInputProps,
           overrideProps: {
@@ -222,11 +211,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
           Icon.create(this.computeIcon(), {
             defaultProps: { styles: { root: styles.icon } },
             overrideProps: this.handleIconOverrides,
-          })}
-        {labelAtEnd &&
-          label &&
-          Label.create(label, {
-            defaultProps: { styles: { root: styles.label } },
           })}
       </ElementType>
     )

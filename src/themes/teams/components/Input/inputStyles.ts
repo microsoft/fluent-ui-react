@@ -14,7 +14,7 @@ const inputStyles: IComponentPartStylesInput = {
   },
 
   input: ({ props, variables }): ICSSInJSStyle => {
-    const { fluid } = props
+    const { fluid, inline } = props
 
     return {
       outline: 0,
@@ -25,6 +25,7 @@ const inputStyles: IComponentPartStylesInput = {
       backgroundColor: variables.backgroundColor,
       padding: variables.inputPadding,
       ...(fluid && { width: '100%' }),
+      ...(inline && { float: 'left' }),
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,
@@ -37,13 +38,6 @@ const inputStyles: IComponentPartStylesInput = {
       position: variables.iconPosition,
       right: variables.iconRight,
       outline: 0,
-    }
-  },
-
-  label: ({ props, variables }): ICSSInJSStyle => {
-    return {
-      position: 'relative',
-      backgroundColor: 'transparent',
     }
   },
 }
