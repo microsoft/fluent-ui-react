@@ -4,6 +4,7 @@ import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
 import { ToolbarBehavior, TabListBehavior } from '../../../../src/lib/accessibility'
+import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
