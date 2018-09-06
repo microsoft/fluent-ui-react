@@ -5,9 +5,9 @@ import ButtonGroup from 'src/components/Button/ButtonGroup'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import Button from 'src/components/Button'
 
-const buttonGroupImplementsShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
+const buttonGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
 
 describe('ButtonGroup', () => {
   isConformant(ButtonGroup)
-  buttonGroupImplementsShorthandProp('buttons', Button)
+  buttonGroupImplementsCollectionShorthandProp('buttons', Button)
 })

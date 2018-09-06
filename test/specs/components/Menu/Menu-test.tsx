@@ -4,10 +4,15 @@ import { mount } from 'enzyme'
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
+import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
+import MenuItem from 'src/components/Menu/MenuItem'
+
+const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
 describe('Menu', () => {
   isConformant(Menu)
   handlesAccessibility(Menu, { defaultRootRole: 'menu' })
+  menuImplementsCollectionShorthandProp('items', MenuItem)
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },

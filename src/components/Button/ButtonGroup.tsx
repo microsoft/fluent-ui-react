@@ -90,7 +90,9 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
           Button.create(button, {
             defaultProps: {
               circular,
-              styles: { root: this.getStyleForButtonIndex(styles, buttons, idx) },
+              styles: {
+                root: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
+              },
             },
           }),
         )}
@@ -98,15 +100,15 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     )
   }
 
-  getStyleForButtonIndex = (styles, buttons, idx) => {
+  getStyleForButtonIndex = (styles, isFirst, isLast) => {
     let resultStyles = {}
-    if (idx === 0) {
+    if (isFirst) {
       resultStyles = styles.firstButton
     }
-    if (idx === buttons.length - 1) {
+    if (isLast) {
       resultStyles = { ...resultStyles, ...styles.lastButton }
     }
-    if (idx !== 0 && idx !== buttons.length - 1) {
+    if (!isFirst && !isLast) {
       resultStyles = styles.middleButton
     }
     return resultStyles
