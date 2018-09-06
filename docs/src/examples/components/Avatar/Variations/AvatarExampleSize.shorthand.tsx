@@ -12,11 +12,11 @@ const AvatarExampleSizeShorthand = () =>
     const size = i + 1
     return (
       <div key={size}>
-        <Avatar size={size} src="public/images/avatar/small/matt.jpg" status={availableStatus} />
+        <Avatar size={size} image="public/images/avatar/small/matt.jpg" status={availableStatus} />
         &emsp;
         <Avatar size={size} name="John Doe" status={availableStatus} />
         &emsp;
-        <Avatar size={size} src="public/images/avatar/small/matt.jpg" />
+        <Avatar size={size} image="public/images/avatar/small/matt.jpg" />
       </div>
     )
   })

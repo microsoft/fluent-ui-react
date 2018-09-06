@@ -26,15 +26,15 @@ const statusIndicators = {
 
 const AvatarExampleStatusShorthand = () => (
   <div>
-    <Avatar src="public/images/avatar/small/matt.jpg" status={statusIndicators.available} />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={statusIndicators.available} />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status={statusIndicators.busy} />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={statusIndicators.busy} />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status={statusIndicators.doNotDisturb} />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={statusIndicators.doNotDisturb} />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status={statusIndicators.away} />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={statusIndicators.away} />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status={statusIndicators.offline} />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={statusIndicators.offline} />
     &emsp;
   </div>
 )

@@ -8,8 +8,7 @@ const availableStatus = {
 
 const AvatarExampleStatusIndicatorCustomizationShorthand = () => (
   <Avatar
-    src="public/images/avatar/small/matt.jpg"
-    alt="Profile picture of Matt"
+    image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
     status={availableStatus}
     variables={{ statusIndicatorBackground: '#d3d3d3' }}
   />

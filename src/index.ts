@@ -3,6 +3,7 @@ export { themes }
 
 export { default as Accordion } from './components/Accordion'
 export { default as Avatar } from './components/Avatar'
+export { AvatarWithoutRenderMethod } from './components/Avatar'
 export { default as Button } from './components/Button'
 export { default as Chat } from './components/Chat'
 export { default as ChatMessage } from './components/Chat'

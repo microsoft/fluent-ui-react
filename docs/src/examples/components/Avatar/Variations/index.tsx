@@ -7,12 +7,7 @@ const Variations = () => (
     <ComponentExample
       title="Image"
       description="An Avatar can show the image of the user."
-      examplePath="components/Avatar/Variations/AvatarExampleSrc"
-    />
-    <ComponentExample
-      title="Alt"
-      description="The alternative text for the image used in the Avatar."
-      examplePath="components/Avatar/Variations/AvatarExampleAlt"
+      examplePath="components/Avatar/Variations/AvatarExampleImage"
     />
     <ComponentExample
       title="Status"

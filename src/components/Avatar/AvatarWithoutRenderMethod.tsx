@@ -15,7 +15,6 @@ export interface IAvatarProps {
   size?: number
   status?: ItemShorthand
   getInitials?: (name: string) => string
-  renderMainArea?: Function
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
@@ -39,7 +38,6 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     'image',
     'label',
     'name',
-    'renderMainArea',
     'size',
     'status',
     'styles',
@@ -71,9 +69,6 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
 
-    /** function for rendering the main aria in the Avatar */
-    renderMainArea: PropTypes.func,
-
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -104,41 +99,32 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
       }
       return initials
     },
-    renderMainArea: ({ props, styles, variables, classes }) => {
-      const { image, label, getInitials, name } = props
-      return (
-        <div style={{}}>
-          {Image.create(image, {
-            defaultProps: {
-              fluid: true,
-              avatar: true,
-              title: name,
-              styles: { root: styles.imageAvatar },
-            },
-          })}
-          {!image &&
-            Label.create(label || {}, {
-              defaultProps: {
-                as: 'div',
-                content: getInitials(name),
-                circular: true,
-                title: name,
-                styles: { root: styles.avatarNameContainer },
-                variables: { padding: '0px' },
-              },
-            })}
-        </div>
-      )
-    },
   }
 
-  renderComponent(config) {
-    const { ElementType, classes, rest, styles } = config
-    const { status, renderMainArea, size } = this.props as IAvatarPropsWithDefaults
+  renderComponent({ ElementType, classes, rest, styles, variables }) {
+    const { status, getInitials, image, label, size } = this.props as IAvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {renderMainArea({ ...config, props: this.props })}
+        {Image.create(image, {
+          defaultProps: {
+            fluid: true,
+            avatar: true,
+            title: name,
+            styles: { root: styles.imageAvatar },
+          },
+        })}
+        {!image &&
+          Label.create(label || {}, {
+            defaultProps: {
+              as: 'div',
+              content: getInitials(name),
+              circular: true,
+              title: name,
+              styles: { root: styles.avatarNameContainer },
+              variables: { padding: '0px' },
+            },
+          })}
         {StatusIndicator.create(status, {
           defaultProps: {
             styles: { root: styles.statusIndicator },
