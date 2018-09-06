@@ -1,3 +1,3 @@
 export default () => ({
-  presenceIndicatorBackground: 'white',
+  statusIndicatorBackground: 'white',
 })
