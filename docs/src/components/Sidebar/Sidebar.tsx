@@ -123,7 +123,7 @@ class Sidebar extends React.Component<any, any> {
 
   renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
-    if (!query) return
+    if (!query) return undefined
 
     let itemIndex = -1
     const startsWithMatches: ComponentMenuItem[] = []

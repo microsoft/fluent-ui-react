@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label } from '@stardust-ui/react'
 
-class LabelExampleOnIconClickShorthand extends React.Component {
+class LabelExampleContentCustomizationShorthand extends React.Component {
   state = { hidden: false }
 
   hide = () => {
@@ -16,14 +16,19 @@ class LabelExampleOnIconClickShorthand extends React.Component {
 
     return (
       <Label
+        content="You can remove me!"
         circular
-        content="Removable label"
-        icon="close"
-        iconPosition="end"
-        onIconClick={this.hide}
+        image={{
+          src: 'public/images/avatar/small/matt.jpg',
+          avatar: true,
+        }}
+        icon={{
+          name: 'close',
+          onClick: this.hide,
+        }}
       />
     )
   }
 }
 
-export default LabelExampleOnIconClickShorthand
+export default LabelExampleContentCustomizationShorthand

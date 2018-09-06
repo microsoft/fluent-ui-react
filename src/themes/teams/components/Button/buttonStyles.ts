@@ -12,6 +12,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      borderRadius,
       color,
       backgroundColor,
       backgroundColorHover,

@@ -3,8 +3,9 @@ export { themes }
 
 export { default as Accordion } from './components/Accordion'
 export { default as Button } from './components/Button'
+export { ButtonGroup } from './components/Button'
 export { default as Chat } from './components/Chat'
-export { default as ChatMessage } from './components/Chat'
+export { ChatMessage } from './components/Chat'
 export { default as Divider } from './components/Divider'
 export { default as Grid } from './components/Grid'
 export { default as Image } from './components/Image'
@@ -25,3 +26,9 @@ export { HeaderDescription } from './components/Header'
 export { default as Avatar } from './components/Avatar'
 export { default as Segment } from './components/Segment'
 export { default as ItemLayout } from './components/ItemLayout'
+export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/TabBehavior'
+export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/TabListBehavior'
+export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/ToolbarBehavior'
+export {
+  default as ToolbarButtonBehavior,
+} from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'
