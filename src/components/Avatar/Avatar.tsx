@@ -125,14 +125,13 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
             title={name}
           />
         )}
-        {status &&
-          StatusIndicator.create(status, {
-            defaultProps: {
-              styles: { root: styles.statusIndicator },
-              circular: true,
-              size,
-            },
-          })}
+        {StatusIndicator.create(status, {
+          defaultProps: {
+            styles: { root: styles.statusIndicator },
+            circular: true,
+            size,
+          },
+        })}
       </ElementType>
     )
   }

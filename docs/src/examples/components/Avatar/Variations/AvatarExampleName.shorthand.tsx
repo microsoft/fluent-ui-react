@@ -1,13 +1,11 @@
 import React from 'react'
-import { Avatar, StatusIndicator } from '@stardust-ui/react'
+import { Avatar } from '@stardust-ui/react'
 
-const Available = (
-  <StatusIndicator
-    icon={{ name: 'check', variables: { color: 'white', backgroundColor: 'green' } }}
-    title="Available"
-  />
-)
+const availableStatus = {
+  icon: { name: 'check', variables: { color: 'white', backgroundColor: 'green' } },
+  title: 'Available',
+}
 
-const AvatarExampleNameShorthand = () => <Avatar name="John Doe" status={Available} />
+const AvatarExampleNameShorthand = () => <Avatar name="John Doe" status={availableStatus} />
 
 export default AvatarExampleNameShorthand

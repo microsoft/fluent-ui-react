@@ -17,7 +17,7 @@ const StatusIndicatorShorthandExample = () => (
       title="Be right back"
     />
     <StatusIndicator
-      icon={{ name: '', variables: { color: 'white', backgroundColor: 'red' } }}
+      icon={{ variables: { color: 'white', backgroundColor: 'red' } }}
       title="Busy"
     />
     <StatusIndicator
