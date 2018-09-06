@@ -159,6 +159,9 @@ export const avatarClippingData = {
   },
 }
 
+//
+// Presence States should also correspond to business logic..?
+//
 export const presenceStates = {
   available: {
     icon: 'check',

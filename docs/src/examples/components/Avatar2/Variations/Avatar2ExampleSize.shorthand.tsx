@@ -17,10 +17,54 @@ const Avatar2ExampleSizeShorthand = () => (
       avatarType="person"
       avatarState="available"
     />
+    {/* <Provider.Consumer
+      render={theme => (
+          <pre>{JSON.stringify(theme.componentVariables.Avatar2(theme.siteVariables))}</pre>
+        )}
+    /> */}
+    {/* <Provider.Consumer
+      render={({ siteVariables }: IThemePrepared) => {
+        return _.map(siteVariables.avatarSizes, (value, key) => (
+          <div key={key}>
+            <Avatar2 />{key}: {value}
+          </div>
+        ))
+      }}
+    /> */}
+    {/*
     <Provider.Consumer
-      render={theme => <pre>{JSON.stringify(theme.componentVariables.Avatar2())}</pre>}
+      render={({ theme.componentVariables.Avatar2() } : IThemePrepared) => {
+        const avatarSizes = siteVariables['avatarSizes']
+
+        return (
+          <div>
+            {_.chunk(_.toPairs(avatarSizes)).map(sizes => {
+              return (
+                <div>
+                  {sizes.map(([key, val]) => (
+                    <div>
+                      <Avatar2 avatarSize={key} />
+                  ))}
+                </div>
+              )
+            })}
+          </div>
+        )
+      }}
+     />
+
+    <Provider.Consumer
+      render={theme => (
+        <pre>{JSON.stringify(theme.componentVariables.Avatar2())}</pre>
+      )}
     />
-    <Provider.Consumer render={theme => <pre>{JSON.stringify(theme)}</pre>} />
+
+    <Provider.Consumer
+      render={theme => (
+        <pre>{JSON.stringify(theme)}</pre>
+      )}
+    />
+     */}
   </div>
 )
 
