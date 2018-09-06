@@ -4,7 +4,7 @@ import { pxToRem } from '../../lib'
 // VARIABLES
 //
 
-export const htmlFontSize = '14px' // what 1rem represents
+export const htmlFontSize = '10px' // what 1rem represents
 
 export const black = '#252423'
 export const gray02 = '#484644'
