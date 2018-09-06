@@ -18,8 +18,10 @@ class ComponentDocTag extends React.Component<any, any> {
     return _.result(_.find(tags, 'title', forTag), 'description')
   }
 
-  findDefaultBehaviorInfo = (fromInfo): DefaultBehaviorInfo => {
-    const accessibilityProperty = fromInfo.props.find(property => property.name === 'accessibility')
+  findDefaultBehaviorInfo = (fetchDefaultBehaviorInfo): DefaultBehaviorInfo => {
+    const accessibilityProperty = fetchDefaultBehaviorInfo.props.find(
+      property => property.name === 'accessibility',
+    )
     if (!accessibilityProperty) {
       return undefined
     }
