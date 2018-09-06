@@ -14,12 +14,7 @@ const ButtonExampleText = () => (
       Secondary
     </Button>
     <Button text circular>
-      <Icon name="coffee" xSpacing="none" />
-    </Button>
-    <br />
-    <br />
-    <Button text fluid>
-      Fluid
+      <Icon name="compass outline" xSpacing="none" />
     </Button>
   </div>
 )

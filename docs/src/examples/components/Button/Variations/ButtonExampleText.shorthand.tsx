@@ -6,10 +6,7 @@ const ButtonExampleTextShorthand = () => (
     <Button text icon="book" content="Default" iconPosition="before" />
     <Button text type="primary" content="Primary" />
     <Button text type="secondary" content="Secondary" />
-    <Button text circular icon="coffee" />
-    <br />
-    <br />
-    <Button text fluid content="Fluid" />
+    <Button text iconOnly icon="compass outline" />
   </div>
 )
 
