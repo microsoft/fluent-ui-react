@@ -41,7 +41,7 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     /**
      * Called with a ref to the trigger node.
      *
-     * @param {JSX.Element} node - Referred node.
+     * @param {HTMLElement} node - Referred node.
      */
     innerRef: PropTypes.func,
 
