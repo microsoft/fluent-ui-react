@@ -87,6 +87,8 @@ export abstract class PortalGeneric<
         element.setAttribute('acc-hidden', 'true')
       }
     }
+
+    // or set aria-hidden=”true” on the first child nodes of the Body element, then append the dialog Div to the Body
   }
 
   private showContentInAccessibilityTree() {
