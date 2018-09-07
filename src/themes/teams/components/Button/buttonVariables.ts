@@ -6,6 +6,7 @@ export interface IButtonVariables {
   height: string
   minWidth: string
   maxWidth: string
+  borderRadius: string
   color: string
   backgroundColor: string
   backgroundColorHover: string
@@ -20,6 +21,11 @@ export interface IButtonVariables {
   typeSecondaryBackgroundColor: string
   typeSecondaryBackgroundColorHover: string
   typeSecondaryBorderColor: string
+  typeTextColorHover: string
+  typeTextPrimaryColor: string
+  typeTextPrimaryColorHover: string
+  typeTextSecondaryColor: string
+  typeTextSecondaryColorHover: string
 }
 
 export default (siteVars: any): IButtonVariables => {
@@ -27,6 +33,7 @@ export default (siteVars: any): IButtonVariables => {
     height: pxToRem(32),
     minWidth: pxToRem(96),
     maxWidth: pxToRem(280),
+    borderRadius: pxToRem(2),
     color: siteVars.black,
     backgroundColor: siteVars.gray08,
     backgroundColorHover: siteVars.gray06,
@@ -41,5 +48,10 @@ export default (siteVars: any): IButtonVariables => {
     typeSecondaryBackgroundColor: siteVars.white,
     typeSecondaryBackgroundColorHover: siteVars.gray06,
     typeSecondaryBorderColor: siteVars.gray06,
+    typeTextColorHover: siteVars.brand04,
+    typeTextPrimaryColor: siteVars.brand,
+    typeTextPrimaryColorHover: siteVars.brand04,
+    typeTextSecondaryColor: siteVars.gray03,
+    typeTextSecondaryColorHover: siteVars.brand04,
   }
 }

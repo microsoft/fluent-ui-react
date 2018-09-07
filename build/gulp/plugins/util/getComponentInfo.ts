@@ -82,13 +82,12 @@ const getComponentInfo = filepath => {
     : info.displayName
 
   // class name for the component
-  // example, the "button" in class="ui button"
+  // example, the "button" in class="ui-button"
   // name of the component, sub component, or plural parent for sub component groups
   info.componentClassName = (info.isChild
-    ? `ui-${info.parentDisplayName}__${info.subcomponentName.replace(
-        /Group$/,
-        `${info.parentDisplayName}s`,
-      )}`
+    ? _.includes(info.subcomponentName, 'Group')
+      ? `ui-${info.parentDisplayName}s`
+      : `ui-${info.parentDisplayName}__${info.subcomponentName}`
     : `ui-${info.displayName}`
   ).toLowerCase()
 

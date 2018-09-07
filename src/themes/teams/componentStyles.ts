@@ -5,6 +5,7 @@ export { default as AccordionTitle } from './components/Accordion/accordionTitle
 export { default as Avatar } from './components/Avatar/avatarStyles'
 
 export { default as Button } from './components/Button/buttonStyles'
+export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
