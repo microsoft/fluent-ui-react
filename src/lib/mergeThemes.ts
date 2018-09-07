@@ -148,6 +148,7 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     siteVariables: {},
     componentVariables: {},
     componentStyles: {},
+    svgIcons: {},
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
@@ -158,6 +159,9 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
 
     acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
+
+    // Merge icons set, last one wins in case of collisions
+    acc.svgIcons = { ...acc.svgIcons, ...(next.svgIcons || {}) }
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)
