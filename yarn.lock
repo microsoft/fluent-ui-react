@@ -1403,6 +1403,10 @@ compression@~1.6.2:
     on-headers "~1.0.1"
     vary "~1.1.0"
 
+compute-scroll-into-view@^1.0.2:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.8.tgz#ad0acd869dc6dc1069201532c025783a30ea177d"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -1994,6 +1998,13 @@ dot-prop@^4.1.0:
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
   dependencies:
     is-obj "^1.0.0"
+
+downshift@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/downshift/-/downshift-2.2.2.tgz#c88b982091e2affdea102e235843cc8c6e3a9f63"
+  dependencies:
+    compute-scroll-into-view "^1.0.2"
+    prop-types "^15.6.0"
 
 duplexer2@0.0.2:
   version "0.0.2"
