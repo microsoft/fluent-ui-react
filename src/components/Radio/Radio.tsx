@@ -33,7 +33,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Whether or not checkbox is checked. */
+    /** Whether or not radio is checked. */
     checked: PropTypes.bool,
 
     /** Child content * */
@@ -45,7 +45,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** Initial checked value. */
     defaultChecked: PropTypes.bool,
 
-    /** A radio can appear disabled and be unable to change states */
+    /** A radio can appear disabled and be unable to change states. */
     disabled: PropTypes.bool,
 
     /** The label of the radio input. */
