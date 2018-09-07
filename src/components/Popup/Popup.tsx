@@ -81,16 +81,16 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Basic CSS styling for the popup */
+    /** Basic CSS styling for the popup. */
     basic: PropTypes.bool,
 
-    /** Primary content. */
-    children: PropTypes.node,
+    /** The popup content (deprecated). */
+    children: customPropTypes.deprecate('Use content instead.', null),
 
     /** Additional classes. */
     className: PropTypes.string,
 
-    /** Simple text content for the popover. */
+    /** The popup content. */
     content: customPropTypes.itemShorthand,
 
     /** Position for the popup. */
@@ -165,7 +165,12 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     const computedStyle = rtl ? rtlCSSJS(style) : style
 
     return (
-      <Popup.Content innerRef={ref} basic={basic} styles={{ root: computedStyle }}>
+      <Popup.Content
+        innerRef={ref}
+        basic={basic}
+        {...rtl && { dir: 'rtl' }}
+        styles={{ root: computedStyle }}
+      >
         {content}
       </Popup.Content>
     )

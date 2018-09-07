@@ -31,7 +31,7 @@ describe('Popup', () => {
       }
       wrapper = mount(
         <Provider theme={{ rtl }}>
-          <Popup content={<p />} {...props} />
+          <Popup {...props} />
         </Provider>,
       )
       wrapper.setState({ triggerRef: document.createElement('a') })
