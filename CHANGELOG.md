@@ -34,7 +34,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility keyboard action handlers @sophieH29 ([#121](https://github.com/stardust-ui/react/pull/121))
 - Add accessibility description for `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
 - Add `Portal`, `PortalInner` and `Ref` components base implementation @Bugaa92 ([#144](https://github.com/stardust-ui/react/pull/144))
-- Add `StatusIndicator` as a separate component @musingh1 ([#168](https://github.com/stardust-ui/react/pull/168))
+- Add `StatusIndicator` as a separate component @musingh1 ([#208](https://github.com/stardust-ui/react/pull/208))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)
