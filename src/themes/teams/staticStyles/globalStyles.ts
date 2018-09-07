@@ -7,7 +7,7 @@ const globalStyles = siteVars => ({
     margin: siteVars.bodyMargin,
     fontFamily: siteVars.bodyFontFamily,
     fontSize: siteVars.bodyFontSize,
-    lineHeight: siteVars.lineHeightBase,
+    lineHeight: siteVars.bodyLineHeight,
   },
 })
 

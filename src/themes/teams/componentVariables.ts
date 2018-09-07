@@ -3,6 +3,7 @@ export { default as AccordionContent } from './components/Accordion/accordionCon
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
+export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
