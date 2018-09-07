@@ -101,7 +101,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, rest, styles, variables }) {
     const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
 
     return (
@@ -129,6 +129,10 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
           defaultProps: {
             styles: { root: styles.statusIndicator },
             size,
+            variables: {
+              borderColor: variables.statusIndicatorBorderColor,
+              borderWidth: variables.statusIndicatorBorderWidth,
+            },
           },
         })}
       </ElementType>

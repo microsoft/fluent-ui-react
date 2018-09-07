@@ -58,6 +58,20 @@ export const successTextColor = green
 export const timestampTextColor = gray04
 
 //
+// Status Colors
+//
+export const successStatusBackgroundColor = green
+export const successStatusTextColor = white
+export const infoStatusBackgroundColor = 'blue'
+export const infoStatusTextColor = white
+export const warningStatusBackgroundColor = yellow
+export const warningStatusTextColor = white
+export const errorStatusBackgroundColor = red
+export const errorStatusTextColor = white
+export const unknownStatusBackgroundColor = gray04
+export const unknownStatusTextColor = white
+
+//
 // Fonts
 //
 export const fontSizeBase = pxToRem(14)

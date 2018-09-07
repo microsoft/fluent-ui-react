@@ -11,7 +11,7 @@ const AvatarExampleStatusIndicatorCustomizationShorthand = () => (
     src="public/images/avatar/small/matt.jpg"
     alt="Profile picture of Matt"
     status={availableStatus}
-    variables={{ statusIndicatorBackground: '#d3d3d3' }}
+    variables={{ statusIndicatorBorderColor: '#d3d3d3' }}
   />
 )
 

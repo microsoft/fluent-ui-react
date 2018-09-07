@@ -10,13 +10,14 @@ export interface IStatusIndicatorProps {
   as?: any
   className?: string
   size?: number
+  status?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
   icon?: ItemShorthand
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
 
 /**
- * A status indicator is a graphical representation of user's status
+ * A status indicator is a graphical representation of a status
  */
 class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any> {
   static create: Function
@@ -25,7 +26,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
 
   static displayName = 'StatusIndicator'
 
-  static handledProps = ['as', 'className', 'icon', 'size', 'styles', 'variables']
+  static handledProps = ['as', 'className', 'icon', 'size', 'status', 'styles', 'variables']
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -37,7 +38,10 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
     /** Size multiplier (default 5) * */
     size: PropTypes.number,
 
-    /** Shorthand for the icon */
+    /** The pre-defined status values which can be consumed directly */
+    status: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
+
+    /** Shorthand for the icon, to provide customizing status */
     icon: customPropTypes.itemShorthand,
 
     /** Custom styles to be applied for component. */
@@ -48,15 +52,8 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   }
 
   static defaultProps = {
-    as: 'div',
+    as: 'span',
     size: 5,
-    icon: {
-      name: '',
-      variables: {
-        color: 'white',
-        backgroundColor: 'grey',
-      },
-    },
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
@@ -68,6 +65,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
             styles: { root: styles.statusIcon },
             circular: true,
             size: size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny',
+            variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
           },
         })}
       </ElementType>

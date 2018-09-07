@@ -89,7 +89,6 @@ const avatarStyles: IComponentPartStylesInput = {
     position: 'relative',
     top: `-${pxToRem(getStatusIndicatorWrapperTop(size))}`,
     left: pxToRem(getStatusIndicatorWrapperLeft(size)),
-    backgroundColor: v.statusIndicatorBackground,
   }),
 }
 
