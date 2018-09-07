@@ -6,7 +6,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import {
@@ -135,6 +135,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'vertical',
   ]
 
+  actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -143,7 +147,12 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     const { children, content, icon } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+      >
         {childrenExist(children) ? (
           children
         ) : (
@@ -151,6 +160,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
             {...accessibility.attributes.anchor}
+            {...accessibility.keyHandlers.anchor}
           >
             {icon &&
               Icon.create(this.props.icon, {

@@ -7,7 +7,6 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
-
 import {
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
@@ -19,8 +18,13 @@ import {
   IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
-import { IAccessibilityDefinition } from './accessibility/interfaces'
+import {
+  IAccessibilityBehavior,
+  AccessibilityActionHandlers,
+  IAccessibilityDefinition,
+} from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
+import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 
 export interface IRenderResultConfig<P> {
@@ -29,7 +33,7 @@ export interface IRenderResultConfig<P> {
   rest: IProps
   variables: ComponentVariablesObject
   styles: IComponentPartStylesPrepared
-  accessibility: IAccessibilityDefinition
+  accessibility: IAccessibilityBehavior
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -41,18 +45,38 @@ export interface IRenderConfig {
   handledProps: string[]
   props: IPropsWithVarsAndStyles
   state: IState
+  actionHandlers: AccessibilityActionHandlers
 }
 
-const getAccessibility = (props: IState & IPropsWithVarsAndStyles) => {
+const getAccessibility = (
+  props: IState & IPropsWithVarsAndStyles,
+  actionHandlers: AccessibilityActionHandlers,
+) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  return callable(customAccessibility || defaultAccessibility || DefaultBehavior)(props)
+  const accessibility: IAccessibilityDefinition = callable(
+    customAccessibility || defaultAccessibility || DefaultBehavior,
+  )(props)
+
+  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
+  return {
+    ...accessibility,
+    keyHandlers,
+  }
 }
 
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
-  const { className, defaultProps, displayName, handledProps, props, state } = config
+  const {
+    className,
+    defaultProps,
+    displayName,
+    handledProps,
+    props,
+    state,
+    actionHandlers,
+  } = config
 
   return (
     <FelaTheme
@@ -74,7 +98,7 @@ const renderComponent = <P extends {}>(
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
         const stateAndProps = { ...state, ...props }
-        const accessibility = getAccessibility(stateAndProps)
+        const accessibility = getAccessibility(stateAndProps, actionHandlers)
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
