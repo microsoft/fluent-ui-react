@@ -34,7 +34,6 @@ export interface IInputProps {
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
-import Label from '../Label'
 
 /**
  * An Input
@@ -191,7 +190,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   }
 
   renderComponent({ ElementType, classes, styles }) {
-    const { input, label, labelPosition, type } = this.props
+    const { input, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const { onChange } = htmlInputProps as any
