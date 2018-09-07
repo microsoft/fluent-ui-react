@@ -11,7 +11,18 @@ export interface TextStylesParams {
 
 export default {
   root: ({
-    props: { atMention, disabled, error, size, weight, important, success, timestamp, truncated },
+    props: {
+      atMention,
+      disabled,
+      error,
+      size,
+      weight,
+      important,
+      success,
+      timestamp,
+      truncated,
+      temporary,
+    },
     variables: v,
   }: TextStylesParams): ICSSInJSStyle => {
     return {
@@ -20,7 +31,13 @@ export default {
       ...(disabled && { color: v.disabledTextColor }),
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
-      ...(timestamp && { color: v.timestampTextColor }),
+      ...(temporary && { fontStyle: 'italic' }),
+      ...(timestamp && {
+        color: v.timestampTextColor,
+        ':hover': {
+          color: v.timestampHoverTextColor,
+        },
+      }),
       ...(weight === Weights.Light && {
         fontWeight: v.textWeightLight,
       }),
@@ -36,7 +53,10 @@ export default {
       ...(weight === Weights.Bold && {
         fontWeight: v.textWeightBold,
       }),
-      ...(important && { fontWeight: v.importantWeight }),
+      ...(important && {
+        fontWeight: v.importantWeight,
+        color: v.importantTextColor,
+      }),
       ...(size === Sizes.ExtraSmall && {
         fontSize: v.textExtraSmallFontSize,
         lineHeight: v.textExtraSmallLineHeight,

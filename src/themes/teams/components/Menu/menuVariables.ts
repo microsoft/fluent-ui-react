@@ -31,7 +31,7 @@ export default (siteVars: any): IMenuVariables => {
     typePrimaryBackgroundColorHover: siteVars.brand16,
     typePrimaryBorderColor: siteVars.brand08,
     typePrimaryActiveBorderColor: siteVars.brand12,
-    typePrimaryUnderlinedBorderColor: siteVars.gray12,
+    typePrimaryUnderlinedBorderColor: siteVars.gray08,
 
     iconsMenuItemSize: undefined,
     iconsMenuItemSpacing: 0,
