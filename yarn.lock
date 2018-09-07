@@ -113,6 +113,20 @@
   dependencies:
     "@types/node" "*"
 
+"@uifabric/merge-styles@>=6.8.3 <7.0.0":
+  version "6.8.3"
+  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-6.8.3.tgz#f30b2ad7df96cf2a98e044245e65131a8158269a"
+  dependencies:
+    tslib "^1.7.1"
+
+"@uifabric/utilities@^6.17.2":
+  version "6.17.2"
+  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-6.17.2.tgz#0f1bf85f0a4dc2870472481beed887affc4b8b8c"
+  dependencies:
+    "@uifabric/merge-styles" ">=6.8.3 <7.0.0"
+    prop-types "^15.5.10"
+    tslib "^1.7.1"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -6106,7 +6120,7 @@ prompts@^0.1.9:
     clorox "^1.0.3"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:

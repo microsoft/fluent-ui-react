@@ -71,7 +71,7 @@ class Portal extends PortalGeneric<Extendable<IPortalProps>, IPortalState> {
     return (
       <React.Fragment>
         {this.renderPortal(portalContent)}
-        {this.renderTrigger(trigger as JSX.Element)}
+        {this.renderTrigger(trigger)}
       </React.Fragment>
     )
   }

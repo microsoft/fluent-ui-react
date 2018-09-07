@@ -15,6 +15,22 @@ const PortalTypesExamples = () => (
       description="A controlled portal."
       examplePath="components/Portal/Types/PortalExampleControlled"
     />
+    <ComponentExample
+      title="Portal focus trap"
+      description="Portal focus trap"
+      examplePath="components/Portal/Types/PortalFocusTrapExample"
+    />
+    <ComponentExample
+      title="Portal with embeded Portal inside"
+      description="Portal with embeded Portal inside"
+      examplePath="components/Portal/Types/PortalInPortalExample"
+    />
+
+    <ComponentExample
+      title="Portal that opens with timeout"
+      description="Portal that opens with timeout"
+      examplePath="components/Portal/Types/PortalWithTimeout"
+    />
   </ExampleSection>
 )
 

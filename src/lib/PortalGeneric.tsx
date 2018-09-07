@@ -7,6 +7,8 @@ import { Extendable } from 'utils'
 import Ref from '../components/Ref'
 import PortalInner from '../components/Portal/PortalInner'
 
+import { FocusTrapZone } from './accessibility/FocusZone/FocusTrapZone'
+
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 
 export interface IPortalGenericProps {
@@ -53,12 +55,53 @@ export abstract class PortalGeneric<
 
   static autoControlledProps = ['open']
 
-  getInitialAutoControlledState() {
+  private getInitialAutoControlledState() {
     return { open: false }
+  }
+
+  private hideContentFromAccessibilityTree() {
+    // if (!this.portalNode) return
+
+    // let current = document.body
+
+    // while(current !== this.portalNode) {
+    //     for (let index = 0; index < current.children.length; index++) {
+    //       const element = current.children[index] as HTMLElement;
+
+    //       if (!element.contains(this.portalNode)) {
+    //         element.setAttribute('aria-hidden', 'true')
+    //       }
+    //       else {
+    //         current = element
+    //       }
+    //     }
+    // }
+
+    const elements = document.body.children
+
+    for (let index = 0; index < elements.length - 1; index++) {
+      const element = elements[index]
+
+      if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE') {
+        element.setAttribute('aria-hidden', 'true')
+        element.setAttribute('acc-hidden', 'true')
+      }
+    }
+  }
+
+  private showContentInAccessibilityTree() {
+    const hiddenElements = document.querySelectorAll('[acc-hidden="true"]')
+    for (let index = 0; index < hiddenElements.length; index++) {
+      const element = hiddenElements[index]
+      element.removeAttribute('aria-hidden')
+      element.removeAttribute('acc-hidden')
+    }
   }
 
   protected renderPortal(content: JSX.Element): JSX.Element | undefined {
     const { open } = this.state
+
+    !open && this.showContentInAccessibilityTree()
 
     return (
       open && (
@@ -67,7 +110,14 @@ export abstract class PortalGeneric<
             onMount={this.handleMount.bind(this)}
             onUnmount={this.handleUnmount.bind(this)}
           >
-            {content}
+            <FocusTrapZone
+              isClickableOutsideFocusTrap={true}
+              forceFocusInsideTrap={false}
+              elementToFocusOnDismiss={null}
+              disableFirstFocus={false}
+            >
+              {content}
+            </FocusTrapZone>
           </PortalInner>
         </Ref>
       )
@@ -99,6 +149,7 @@ export abstract class PortalGeneric<
 
   protected handlePortalRef = (portalNode: HTMLElement) => {
     this.portalNode = portalNode
+    this.hideContentFromAccessibilityTree()
   }
 
   protected handleTriggerRef = (triggerNode: HTMLElement) => {
@@ -118,7 +169,7 @@ export abstract class PortalGeneric<
   protected handleTriggerClick = (e: ReactMouseEvent, trigger) => {
     trigger && _.invoke(trigger, 'props.onClick', e, trigger.props) // Call original event handler
 
-    this.setState({ open: !this.state.open })
+    this.state.open ? this.close() : this.open()
   }
 
   protected handleDocumentClick = (e: ReactMouseEvent) => {
