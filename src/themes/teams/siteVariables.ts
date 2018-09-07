@@ -3,7 +3,7 @@ import { pxToRem } from '../../lib'
 //
 // VARIABLES
 //
-export const htmlFontSize = '14px' // what 1rem represents
+export const htmlFontSize = '10px' // what 1rem represents
 
 //
 // COLORS
@@ -73,6 +73,6 @@ export const lineHeightExtraSmall = 1.2
 export const bodyPadding = 0
 export const bodyMargin = 0
 export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1rem'
+export const bodyFontSize = '1.4rem'
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
