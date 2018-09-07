@@ -28,6 +28,7 @@ export interface IButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
   onFocus?: ComponentEventHandler<IButtonProps>
+  text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
@@ -97,6 +98,9 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
      */
     onFocus: PropTypes.func,
 
+    /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+    text: PropTypes.bool,
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -125,6 +129,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'onClick',
     'onFocus',
     'styles',
+    'text',
     'type',
     'variables',
   ]
@@ -160,27 +165,19 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         onFocus={this.handleFocus}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
         {!hasChildren && content && <span className={classes.content}>{content}</span>}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables)}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
       </ElementType>
     )
   }
 
-  public renderIcon = variables => {
-    const { icon, iconPosition, content, type } = this.props
+  public renderIcon = () => {
+    const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: {
-          color:
-            type === 'primary'
-              ? variables.typePrimaryColor
-              : type === 'secondary'
-                ? variables.typeSecondaryColor
-                : variables.color,
-        },
       },
     })
   }

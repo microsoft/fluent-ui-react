@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, iconOnly, isLastFocusFromKeyboard } = props
+    const { circular, disabled, fluid, type, text, iconOnly, isLastFocusFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -28,6 +28,11 @@ const buttonStyles: IComponentPartStylesInput = {
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
       typeSecondaryBorderFocusColor,
+      typeTextColorHover,
+      typeTextPrimaryColor,
+      typeTextPrimaryColorHover,
+      typeTextSecondaryColor,
+      typeTextSecondaryColorHover,
     } = variables
 
     const focusAndHoverSecondary = {
@@ -51,20 +56,13 @@ const buttonStyles: IComponentPartStylesInput = {
       verticalAlign: 'middle',
       borderRadius: pxToRem(2),
       borderColor: 'transparent',
-
       borderWidth: `${circular ? 1 : 2}px`,
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: backgroundColorHover,
-      },
 
-      ...(primary && {
-        color: typePrimaryColor,
-        backgroundColor: typePrimaryBackgroundColor,
-        borderColor: typePrimaryBorderColor,
+      ...(!text && {
+        borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
         ':hover': {
-          color: typePrimaryColor,
-          backgroundColor: typePrimaryBackgroundColorHover,
+          backgroundColor: backgroundColorHover,
         },
       }),
 
@@ -74,6 +72,53 @@ const buttonStyles: IComponentPartStylesInput = {
         borderColor: typeSecondaryBorderColor,
         ':hover': focusAndHoverSecondary,
       }),
+
+      ...(text && {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        ':hover': {
+          color: typeTextColorHover,
+        },
+      }),
+
+      ...(primary &&
+        !text && {
+          color: typePrimaryColor,
+          backgroundColor: typePrimaryBackgroundColor,
+          borderColor: typePrimaryBorderColor,
+          ':hover': {
+            color: typePrimaryColor,
+            backgroundColor: typePrimaryBackgroundColorHover,
+          },
+        }),
+
+      ...(primary &&
+        text && {
+          color: typeTextPrimaryColor,
+          ':hover': {
+            color: typeTextPrimaryColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        !text && {
+          color: typeSecondaryColor,
+          backgroundColor: typeSecondaryBackgroundColor,
+          borderColor: typeSecondaryBorderColor,
+          ':hover': {
+            color: typeSecondaryColor,
+            borderColor: 'transparent',
+            backgroundColor: typeSecondaryBackgroundColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        text && {
+          color: typeTextSecondaryColor,
+          ':hover': {
+            color: typeTextSecondaryColorHover,
+          },
+        }),
 
       ...(circular && {
         minWidth: height,
