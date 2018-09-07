@@ -9,6 +9,11 @@ const Variations = () => (
       description="An Accordion can compose complex children."
       examplePath="components/Accordion/Variations/AccordionExampleList"
     />
+    <ComponentExample
+      title="Nested content"
+      description="An Accordion can have nested Accordians."
+      examplePath="components/Accordion/Variations/AccordionNestedExample"
+    />
   </ExampleSection>
 )
 

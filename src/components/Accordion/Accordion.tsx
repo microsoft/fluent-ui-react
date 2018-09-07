@@ -2,7 +2,12 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
+import {
+  AutoControlledComponent,
+  customPropTypes,
+  childrenExist,
+  createShorthandFactory,
+} from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
@@ -24,8 +29,9 @@ export interface IAccordionProps {
   exclusive?: boolean
   onTitleClick?: ComponentEventHandler<IAccordionProps>
   panels?: {
-    content: ItemShorthand
+    content?: ItemShorthand
     title: ItemShorthand
+    accordion?: IAccordionProps
   }[]
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
@@ -39,6 +45,8 @@ export interface IAccordionProps {
  */
 class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any> {
   static displayName = 'Accordion'
+
+  static create: Function
 
   static className = 'ui-accordion'
 
@@ -158,7 +166,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     const { panels } = this.props
 
     _.each(panels, (panel, index) => {
-      const { content, title } = panel
+      const { content, title, accordion } = panel
       const active = this.isIndexActive(index)
 
       children.push(
@@ -170,7 +178,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       )
       children.push(
         AccordionContent.create(
-          { content },
+          { content: accordion ? Accordion.create(accordion) : content },
           {
             generateKey: true,
             defaultProps: { active },
@@ -192,5 +200,14 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     )
   }
 }
+
+Accordion.create = createShorthandFactory(Accordion, primitive => ({
+  panels: [
+    {
+      key: primitive,
+      title: primitive,
+    },
+  ],
+}))
 
 export default Accordion
