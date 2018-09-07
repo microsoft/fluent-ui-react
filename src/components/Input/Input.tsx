@@ -180,7 +180,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, styles }) {
+  renderComponent({ ElementType, classes, styles, variables }) {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
@@ -199,7 +199,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { styles: { root: styles.icon } },
+            defaultProps: {
+              styles: { root: styles.icon },
+              variables: variables.icon,
+            },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>

@@ -136,6 +136,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     classes,
     accessibility,
     variables,
+    styles,
     rest,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
@@ -150,19 +151,21 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {!hasChildren && content && <span className={classes.content}>{content}</span>}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
-  public renderIcon = () => {
+  public renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
+        styles: { root: styles.icon },
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        variables: variables.icon,
       },
     })
   }
