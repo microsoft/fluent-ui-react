@@ -8,7 +8,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top-start position
+          The popup is being rendered in<br />top-start position.
         </p>
       }
     />
@@ -17,7 +17,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top position
+          The popup is being rendered in<br />top position.
         </p>
       }
     />
@@ -26,7 +26,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top-end position
+          The popup is being rendered in<br />top-end position.
         </p>
       }
     />
@@ -35,7 +35,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom-start position
+          The popup is being rendered in<br />bottom-start position.
         </p>
       }
     />
@@ -44,7 +44,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom position
+          The popup is being rendered in<br />bottom position.
         </p>
       }
     />
@@ -53,7 +53,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom-end position
+          The popup is being rendered in<br />bottom-end position.
         </p>
       }
     />
@@ -62,7 +62,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />before-start position
+          The popup is being rendered in<br />before-start position.
         </p>
       }
     />
@@ -71,7 +71,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />before position
+          The popup is being rendered in<br />before position.
         </p>
       }
     />
@@ -80,7 +80,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />before-end position
+          The popup is being rendered in<br />before-end position.
         </p>
       }
     />
@@ -89,7 +89,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after-start position
+          The popup is being rendered in<br />after-start position.
         </p>
       }
     />
@@ -98,7 +98,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after position
+          The popup is being rendered in<br />after position.
         </p>
       }
     />
@@ -107,7 +107,7 @@ const PopupExamplePosition = () => (
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after-end position
+          The popup is being rendered in<br />after-end position.
         </p>
       }
     />
