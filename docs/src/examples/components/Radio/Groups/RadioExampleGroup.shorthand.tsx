@@ -6,15 +6,15 @@ const handleChange = (e, params) => {
 }
 
 const radios = [
-  { key: '1', name: 'pizza', label: 'Capricciosa', value: '1' },
-  { key: '2', name: 'pizza', label: 'Prosciutto', value: '2' },
-  { key: '3', name: 'pizza', label: 'Margherita', value: '3' },
+  { key: '1', name: 'pizza', label: 'Capricciosa', value: 'Capricciosa' },
+  { key: '2', name: 'pizza', label: 'Prosciutto', value: 'Prosciutto' },
+  { key: '3', name: 'pizza', label: 'Margherita', value: 'Margherita' },
 ]
 
 const RadioExampleGroupShorthand = () => (
   <React.Fragment>
     Choose your pizza:
-    <RadioGroup defaultSelectedValue="2" onChange={handleChange} radios={radios} />
+    <RadioGroup defaultSelectedValue="Prosciutto" onChange={handleChange} radios={radios} />
   </React.Fragment>
 )
 
