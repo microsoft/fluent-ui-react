@@ -1,4 +1,5 @@
 import { Accessibility } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @description
@@ -20,7 +21,16 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
       'aria-labelledby': props['aria-labelledby'],
     },
   },
+
   handledProps: ['aria-label', 'aria-labelledby'],
+
+  keyActions: {
+    anchor: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
+  },
 })
 
 export default MenuItemBehavior

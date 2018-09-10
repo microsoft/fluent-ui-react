@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
@@ -12,6 +12,7 @@ import {
   ReactChildren,
   ComponentEventHandler,
 } from '../../../types/utils'
+import ButtonGroup from './ButtonGroup'
 
 export interface IButtonProps {
   as?: any
@@ -25,6 +26,7 @@ export interface IButtonProps {
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
+  text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
@@ -39,6 +41,8 @@ export interface IButtonProps {
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
 class Button extends UIComponent<Extendable<IButtonProps>, any> {
+  static create: Function
+
   public static displayName = 'Button'
 
   public static className = 'ui-button'
@@ -81,6 +85,9 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
      */
     onClick: PropTypes.func,
 
+    /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+    text: PropTypes.bool,
+
     /** A button can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -108,6 +115,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'iconPosition',
     'onClick',
     'styles',
+    'text',
     'type',
     'variables',
   ]
@@ -116,6 +124,8 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     as: 'button',
     accessibility: ButtonBehavior as Accessibility,
   }
+
+  static Group = ButtonGroup
 
   public renderComponent({
     ElementType,
@@ -136,27 +146,19 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables)}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
         {!hasChildren && content && <span className={classes.content}>{content}</span>}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables)}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
       </ElementType>
     )
   }
 
-  public renderIcon = variables => {
-    const { icon, iconPosition, content, type } = this.props
+  public renderIcon = () => {
+    const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: {
-          color:
-            type === 'primary'
-              ? variables.typePrimaryColor
-              : type === 'secondary'
-                ? variables.typeSecondaryColor
-                : variables.color,
-        },
       },
     })
   }
@@ -174,5 +176,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     }
   }
 }
+
+Button.create = createShorthandFactory(Button, content => ({ content }))
 
 export default Button
