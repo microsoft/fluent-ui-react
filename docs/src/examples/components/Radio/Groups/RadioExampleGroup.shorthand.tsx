@@ -1,21 +1,45 @@
 import React from 'react'
-import { RadioGroup } from '@stardust-ui/react'
+import { Radio, Divider } from '@stardust-ui/react'
 
-const handleChange = (e, params) => {
-  console.log('The selected value is changed', e, params)
+class RadioExample extends React.Component {
+  state = { selectedValue: '' }
+
+  handleChange = (e, props) => {
+    this.setState({ selectedValue: props.value })
+  }
+
+  render() {
+    const { selectedValue } = this.state
+    return (
+      <div role="radiogroup">
+        The selected value is: {selectedValue}
+        <Divider />
+        <Radio
+          label="Capricciosa"
+          name="pizza"
+          value="Capricciosa"
+          onChange={this.handleChange}
+          checked={selectedValue === 'Capricciosa'}
+        />{' '}
+        <br />
+        <Radio
+          label="Prosciutto"
+          name="pizza"
+          value="Prosciutto"
+          onChange={this.handleChange}
+          checked={selectedValue === 'Prosciutto'}
+        />{' '}
+        <br />
+        <Radio
+          label="Margherita"
+          name="pizza"
+          value="Margherita"
+          onChange={this.handleChange}
+          checked={selectedValue === 'Margherita'}
+        />
+      </div>
+    )
+  }
 }
 
-const radios = [
-  { key: '1', name: 'pizza', label: 'Capricciosa', value: 'Capricciosa' },
-  { key: '2', name: 'pizza', label: 'Prosciutto', value: 'Prosciutto' },
-  { key: '3', name: 'pizza', label: 'Margherita', value: 'Margherita' },
-]
-
-const RadioExampleGroupShorthand = () => (
-  <React.Fragment>
-    Choose your pizza:
-    <RadioGroup defaultSelectedValue="Prosciutto" onChange={handleChange} radios={radios} />
-  </React.Fragment>
-)
-
-export default RadioExampleGroupShorthand
+export default RadioExample

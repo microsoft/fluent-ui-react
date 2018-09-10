@@ -12,6 +12,9 @@ const radioStyles: IComponentPartStylesInput = {
   radio: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => {
     return {
       marginRight: variables.radioMargin,
+      position: 'absolute',
+      opacity: 0,
+      cursor: 'pointer',
     }
   },
 
