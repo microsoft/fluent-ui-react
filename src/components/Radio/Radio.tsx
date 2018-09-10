@@ -14,6 +14,7 @@ export interface IRadioProps {
   defaultChecked?: boolean
   disabled?: boolean
   label?: string
+  name?: string
   onChange?: ComponentEventHandler<IRadioProps>
   type?: string
   styles?: IComponentPartStylesInput
@@ -51,6 +52,9 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** The label of the radio input. */
     label: PropTypes.string,
 
+    /** The HTML input name. */
+    name: PropTypes.string,
+
     /**
      * Called after radio is clicked.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -79,6 +83,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'defaultChecked',
     'disabled',
     'label',
+    'name',
     'onChange',
     'styles',
     'type',
@@ -110,7 +115,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { type, label, disabled, value } = this.props
+    const { type, label, disabled, value, name } = this.props
     const { checked } = this.state
 
     return (
@@ -121,6 +126,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
               checked,
               disabled,
               value,
+              name,
               onChange: this.handleChange,
             },
             overrideProps: {
