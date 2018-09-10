@@ -9,7 +9,7 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
+import { ItemShorthand, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 
@@ -23,7 +23,10 @@ export interface IPortalProps {
   onUnmount?: (props: IPortalProps) => void
   open?: boolean
   trigger?: JSX.Element
+  triggerAccessibility?: any
   triggerRef?: (node: HTMLElement) => void
+  onTriggerClick?: (e: ReactMouseEvent) => void
+  onOutsideClick?: (e: ReactMouseEvent) => void
 }
 
 export interface IPortalState {
@@ -75,6 +78,23 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {JSX.Element} node - Referred node.
      */
     triggerRef: PropTypes.func,
+
+    /** Trigger accessibility behavior object if overridden by the user. */
+    triggerAccessibility: PropTypes.object,
+
+    /**
+     * Called when trigger was clicked.
+     *
+     * @param {object} data - All props.
+     */
+    onTriggerClick: PropTypes.func,
+
+    /**
+     * Called when click event was invoked outside portal or trigger.
+     *
+     * @param {object} data - All props.
+     */
+    onOutsideClick: PropTypes.func,
   }
 
   public static handledProps = [
@@ -82,9 +102,12 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     'content',
     'defaultOpen',
     'onMount',
+    'onOutsideClick',
+    'onTriggerClick',
     'onUnmount',
     'open',
     'trigger',
+    'triggerAccessibility',
     'triggerRef',
   ]
 
@@ -113,17 +136,19 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   }
 
   private renderTrigger(): JSX.Element | undefined {
-    const { trigger } = this.props
+    const { trigger, triggerAccessibility } = this.props
 
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
-          {React.cloneElement(trigger, { onClick: this.handleTriggerClick })}
+          {React.cloneElement(trigger, {
+            onClick: this.handleTriggerClick,
+            ...triggerAccessibility,
+          })}
         </Ref>
       )
     )
   }
-
   private handleMount = () => {
     eventStack.sub('click', this.handleDocumentClick)
     _.invoke(this.props, 'onMount', this.props)
@@ -147,6 +172,7 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
     const { trigger } = this.props
 
+    _.invoke(this.props, 'onTriggerClick', e) // Call handler from popup
     _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
@@ -159,7 +185,7 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     ) {
       return // ignore the click
     }
-
+    _.invoke(this.props, 'onOutsideClick', e)
     this.trySetState({ open: false })
   }
 }

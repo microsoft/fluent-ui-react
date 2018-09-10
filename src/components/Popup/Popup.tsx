@@ -10,6 +10,8 @@ import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
+import { PopupBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 enum PositionParts {
   start = 'start',
@@ -51,6 +53,7 @@ const POSITIONS: Position[] = [
 
 export interface IPopupProps {
   as?: any
+  accessibility?: Accessibility
   basic?: boolean
   children?: ReactChildren
   className?: string
@@ -59,10 +62,13 @@ export interface IPopupProps {
   trigger?: JSX.Element
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
+  onOpen: (props: IPopupProps) => void
+  onClose: (props: IPopupProps) => void
 }
 
 export interface IPopupState {
   triggerRef: HTMLElement
+  popupOpened?: boolean
 }
 
 /**
@@ -104,14 +110,34 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /**
+     * Called when popup is opened.
+     *
+     * @param {object} data - All props.
+     */
+    onOpen: PropTypes.func,
+
+    /**
+     * Called when popup is closed.
+     *
+     * @param {object} data - All props.
+     */
+    onClose: PropTypes.func,
   }
 
   public static handledProps = [
+    'accessibility',
     'as',
     'basic',
     'children',
     'className',
     'content',
+    'onOpen',
+    'onClose',
     'position',
     'styles',
     'trigger',
@@ -121,54 +147,110 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public static defaultProps = {
     as: Portal,
     position: 'top-start',
+    accessibility: PopupBehavior as Accessibility,
   }
 
-  public state = { triggerRef: undefined }
+  public state = { triggerRef: undefined, popupOpened: false }
+
+  actionHandlers: AccessibilityActionHandlers = {
+    open: e => this.openPopup(e),
+    close: e => this.closePopup(e),
+  }
 
   public renderComponent({
     ElementType,
     classes,
+    accessibility,
     rest,
     rtl,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger } = this.props
+    const { children, trigger, position } = this.props
+    const popupAccessibility = {
+      ...accessibility.attributes.popup,
+      ...accessibility.keyHandlers.popup,
+    }
+    const triggerAccessibility = {
+      ...accessibility.attributes.trigger,
+      ...accessibility.keyHandlers.trigger,
+    }
 
     return (
       <ElementType
         className={classes.root}
         {...rest}
+        open={this.state.popupOpened}
+        onTriggerClick={this.onTriggerClick}
         trigger={trigger}
         triggerRef={this.handleTriggerRef}
+        triggerAccessibility={triggerAccessibility}
+        onOutsideClick={this.closePopup}
+        onMount={this.onOpen}
+        onUnmount={this.onClose}
       >
-        {childrenExist(children) ? children : this.renderContent(rtl)}
+        {childrenExist(children)
+          ? children
+          : this.renderContent(
+              this.computePopupPlacement(this.props.position, rtl),
+              this.renderPopperChildren.bind(this, rtl, popupAccessibility),
+            )}
       </ElementType>
     )
   }
 
-  private renderContent(rtl: boolean): JSX.Element {
+  private renderContent(popupPlacement: Placement, renderChildrenCb: any): JSX.Element {
     const triggerRef = this.state.triggerRef
-    const placement = this.computePopupPlacement(this.props.position, rtl)
 
     return (
       triggerRef && (
         <Popper
-          placement={placement}
+          placement={popupPlacement}
           referenceElement={triggerRef}
-          children={this.renderPopperChildren.bind(this, rtl)}
+          children={renderChildrenCb}
         />
       )
     )
   }
 
-  private renderPopperChildren = (rtl: boolean, { ref, style }: PopperChildrenProps) => {
+  private renderPopperChildren = (
+    rtl: boolean,
+    popupAccessibility: any,
+    { ref, style }: PopperChildrenProps,
+  ) => {
     const { basic, content } = this.props
     const computedStyle = rtl ? rtlCSSJS(style) : style
 
     return (
-      <Popup.Content innerRef={ref} basic={basic} styles={{ root: computedStyle }}>
+      <Popup.Content
+        innerRef={ref}
+        basic={basic}
+        styles={{ root: computedStyle }}
+        {...popupAccessibility}
+      >
         {content}
       </Popup.Content>
     )
+  }
+
+  private onTriggerClick = () => {
+    this.setState({ popupOpened: !this.state.popupOpened })
+  }
+
+  private openPopup = (e: Event) => {
+    e.preventDefault()
+    this.setState({ popupOpened: true })
+  }
+
+  private closePopup = (e: Event) => {
+    e.preventDefault()
+    this.setState({ popupOpened: false })
+  }
+
+  private onOpen = () => {
+    _.invoke(this.props, 'onOpen', this.props)
+  }
+
+  private onClose = () => {
+    _.invoke(this.props, 'onClose', this.props)
   }
 
   private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })
