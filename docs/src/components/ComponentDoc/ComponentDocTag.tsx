@@ -7,7 +7,7 @@ const headerStyle = {
   whiteSpace: 'pre-line',
 }
 
-interface DefaultBehaviorInfo {
+interface AccessibilityBehaviorInfo {
   name: string
   url: string
 }
@@ -18,8 +18,8 @@ class ComponentDocTag extends React.Component<any, any> {
     return _.result(_.find(tags, 'title', forTag), 'description')
   }
 
-  findDefaultBehaviorInfo = (componentInfo): DefaultBehaviorInfo => {
-    const accessibilityDescription = componentInfo.props.find(
+  getDefaultBehaviorInfo = (fromComponentInfo): AccessibilityBehaviorInfo => {
+    const accessibilityDescription = fromComponentInfo.props.find(
       property => property.name === 'accessibility',
     )
     if (!accessibilityDescription) {
@@ -39,7 +39,7 @@ class ComponentDocTag extends React.Component<any, any> {
     return undefined
   }
 
-  createDefaultBehaviorInfo(behavior: any, variation: any): DefaultBehaviorInfo {
+  createDefaultBehaviorInfo(behavior: any, variation: any): AccessibilityBehaviorInfo {
     const behaviorsFolder = behavior.type + 's'
     const defaultBehaviorFile = variation.name.replace('.ts', '')
     return {
@@ -48,36 +48,37 @@ class ComponentDocTag extends React.Component<any, any> {
     }
   }
 
-  renderDefaultBehavior(componentInfo) {
-    const defaultBehaviorInfo: DefaultBehaviorInfo = this.findDefaultBehaviorInfo(componentInfo)
-    if (defaultBehaviorInfo) {
-      return (
-        <Header.Subheader>
-          <span>
-            Default behavior: <a href={defaultBehaviorInfo.url}> {defaultBehaviorInfo.name} </a>
-          </span>
-        </Header.Subheader>
-      )
-    }
-
-    return undefined
+  renderDefaultBehaviorInfo(defaultBehaviorInfo: AccessibilityBehaviorInfo) {
+    return (
+      <React.Fragment>
+        Default behavior: <a href={defaultBehaviorInfo.url}>{defaultBehaviorInfo.name}</a>
+      </React.Fragment>
+    )
   }
 
   render() {
     const { info, tag, title, errorMessage } = this.props
-    const accDescription = this.getTagDescription(tag, info)
-    const description =
-      accDescription || this.findDefaultBehaviorInfo(info) ? (
-        accDescription
-      ) : (
-        <Message error content={errorMessage} compact={true} />
-      )
+    const description = this.getTagDescription(tag, info)
+    const defaultAccBehaviorInfo = tag === 'accessibility' && this.getDefaultBehaviorInfo(info)
 
     return (
       <Header as="h2" style={headerStyle} className="no-anchor">
         <Header.Content>{title}</Header.Content>
-        {this.renderDefaultBehavior(info)}
-        <Header.Subheader> {description} </Header.Subheader>
+
+        {defaultAccBehaviorInfo && (
+          <Header.Subheader>
+            {this.renderDefaultBehaviorInfo(defaultAccBehaviorInfo)}
+          </Header.Subheader>
+        )}
+
+        <Header.Subheader>{description}</Header.Subheader>
+
+        {!defaultAccBehaviorInfo &&
+          !description && (
+            <Header.Subheader>
+              <Message error content={errorMessage} compact={true} />
+            </Header.Subheader>
+          )}
       </Header>
     )
   }
