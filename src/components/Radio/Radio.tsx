@@ -89,8 +89,6 @@ class Radio extends UIComponent<Extendable<IRadioProps>, any> {
     'variables',
   ]
 
-  static autoControlledProps = ['checked']
-
   static defaultProps = {
     as: 'div',
     type: 'radio',
