@@ -125,12 +125,14 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
       <ElementType {...rest} className={classes.root} role="radiogroup">
         {_.map(radios, radio =>
           Radio.create(radio, {
-            ...(!this.componentDidMountFlag &&
-              radio.value &&
-              defaultSelectedValue &&
-              radio.value === defaultSelectedValue && {
-                checked: true,
-              }),
+            defaultProps: {
+              ...(!this.componentDidMountFlag &&
+                radio.value &&
+                defaultSelectedValue &&
+                radio.value === defaultSelectedValue && {
+                  checked: true,
+                }),
+            },
             overrideProps: {
               onChange: this.handleRadioChange,
             },
