@@ -1,7 +1,6 @@
 import React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
-import { Segment } from '@stardust-ui/react'
 
 const States = () => (
   <ExampleSection title="States">
@@ -9,19 +8,7 @@ const States = () => (
       title="Checked"
       description="A radio can come pre-checked."
       examplePath="components/Radio/States/RadioExampleChecked"
-    >
-      <Segment style={{ marginTop: '10px' }}>
-        Use{' '}
-        <a
-          href="https://facebook.github.io/react/docs/forms.html#default-value"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <code>defaultChecked</code>
-        </a>{' '}
-        as you normally would to set default form values.
-      </Segment>
-    </ComponentExample>
+    />
     <ComponentExample
       title="Disabled"
       description="Radios can be disabled."

@@ -1,17 +1,17 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { createHTMLInput, customPropTypes, AutoControlledComponent } from '../../lib'
+import { createHTMLInput, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
 import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import RadioGroup from './RadioGroup'
 
 export interface IRadioProps {
   as?: any
   checked?: boolean
   children?: ReactChildren
   className?: string
-  defaultChecked?: boolean
   disabled?: boolean
   label?: string
   name?: string
@@ -26,7 +26,9 @@ export interface IRadioProps {
  * @accessibility
  * This is shown at the top.
  */
-class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
+class Radio extends UIComponent<Extendable<IRadioProps>, any> {
+  static create: Function
+
   static displayName = 'Radio'
 
   static className = 'ui-radio'
@@ -42,9 +44,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     /** Additional classes. */
     className: PropTypes.string,
-
-    /** Initial checked value. */
-    defaultChecked: PropTypes.bool,
 
     /** A radio can appear disabled and be unable to change states. */
     disabled: PropTypes.bool,
@@ -80,7 +79,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'checked',
     'children',
     'className',
-    'defaultChecked',
     'disabled',
     'label',
     'name',
@@ -98,9 +96,10 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     type: 'radio',
   }
 
+  static Group = RadioGroup
+
   private handleChange = (e: React.SyntheticEvent) => {
-    const { onChange, disabled } = this.props
-    const { checked } = this.state
+    const { onChange, disabled, checked } = this.props
 
     if (disabled) {
       e.preventDefault()
@@ -110,13 +109,10 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     if (onChange) {
       onChange(e, { ...this.props, checked: !checked })
     }
-
-    this.trySetState({ checked: !checked })
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { type, label, disabled, value, name } = this.props
-    const { checked } = this.state
+    const { type, label, disabled, value, name, checked } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -139,5 +135,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     )
   }
 }
+
+Radio.create = createShorthandFactory(Radio, label => ({ label }))
 
 export default Radio
