@@ -72,9 +72,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** An input can be used inline with text */
     inline: PropTypes.bool,
 
-    /** Shorthand for creating the HTML Input. */
-    input: customPropTypes.itemShorthand,
-
     /**
      * Called on change.
      *
@@ -104,7 +101,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     'fluid',
     'icon',
     'inline',
-    'input',
     'onChange',
     'styles',
     'type',
@@ -190,7 +186,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   }
 
   renderComponent({ ElementType, classes, styles }) {
-    const { input, type } = this.props
+    const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const { onChange } = htmlInputProps as any
@@ -198,8 +194,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     const inputClasses = classes.input
 
     return (
-      <ElementType className={classes.root} {...restProps} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
+      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+        {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
