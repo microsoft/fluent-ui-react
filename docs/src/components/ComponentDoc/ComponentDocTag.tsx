@@ -18,18 +18,19 @@ class ComponentDocTag extends React.Component<any, any> {
     return _.result(_.find(tags, 'title', forTag), 'description')
   }
 
-  findDefaultBehaviorInfo = (fetchDefaultBehaviorInfo): DefaultBehaviorInfo => {
-    const accessibilityProperty = fetchDefaultBehaviorInfo.props.find(
+  findDefaultBehaviorInfo = (componentInfo): DefaultBehaviorInfo => {
+    const accessibilityDescription = componentInfo.props.find(
       property => property.name === 'accessibility',
     )
-    if (!accessibilityProperty) {
+    if (!accessibilityDescription) {
       return undefined
     }
 
-    const accPropertyFormatted = accessibilityProperty.defaultValue.split('.').pop() + '.ts'
+    const defaultAccBehaviorFilename =
+      accessibilityDescription.defaultValue.split('.').pop() + '.ts'
 
     for (const behavior of behaviorMenuItems) {
-      const variation = behavior.variations.find(v => v.name === accPropertyFormatted)
+      const variation = behavior.variations.find(v => v.name === defaultAccBehaviorFilename)
       if (variation) {
         return this.createDefaultBehaviorInfo(behavior, variation)
       }
