@@ -48,8 +48,8 @@ class ComponentDocTag extends React.Component<any, any> {
     }
   }
 
-  renderDefaultBehavior(info) {
-    const defaultBehaviorInfo: DefaultBehaviorInfo = this.findDefaultBehaviorInfo(info)
+  renderDefaultBehavior(componentInfo) {
+    const defaultBehaviorInfo: DefaultBehaviorInfo = this.findDefaultBehaviorInfo(componentInfo)
     if (defaultBehaviorInfo) {
       return (
         <Header.Subheader>
