@@ -10,6 +10,11 @@ const Types = () => (
       description="A default popup."
       examplePath="components/Popup/Types/PopupExample"
     />
+    <ComponentExample
+      title="Popup menu button"
+      description="Popup menu button"
+      examplePath="components/Popup/Types/PopupMenuButtonExample"
+    />
   </ExampleSection>
 )
 

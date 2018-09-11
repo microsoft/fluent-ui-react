@@ -13,6 +13,10 @@ import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import {
+  getFirstFocusable,
+  getLastFocusable,
+} from '../../lib/accessibility/FocusZone/FocusUtilities'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
@@ -44,6 +48,7 @@ export interface IPopupState {
  * This should be replaced with the actual description after the PR is merged
  */
 export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupState> {
+  private popupRef: HTMLElement
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -125,8 +130,9 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public state = { triggerRef: undefined, popupOpened: false }
 
   actionHandlers: AccessibilityActionHandlers = {
-    open: e => this.openPopup(e),
-    close: e => this.closePopup(e),
+    openAndFocus: e => this.openPopup(e, this.focus),
+    openAndFocusLast: e => this.openPopup(e, this.focusLast),
+    close: e => this.closePopup(e, this.focusTrigger),
   }
 
   public renderComponent({
@@ -193,7 +199,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
     return (
       <Popup.Content
-        innerRef={ref}
+        innerRef={this.handlePopupRef.bind(this, ref)}
         basic={basic}
         {...rtl && { dir: 'rtl' }}
         styles={{ root: computedStyle }}
@@ -204,18 +210,18 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     )
   }
 
-  private onTriggerClick = () => {
-    this.setState({ popupOpened: !this.state.popupOpened })
+  private onTriggerClick = (e: Event) => {
+    !this.state.popupOpened ? this.openPopup(e) : this.closePopup(e)
   }
 
-  private openPopup = (e: Event) => {
+  private openPopup = (e: Event, afterRenderCb?: () => void) => {
     e.preventDefault()
-    this.setState({ popupOpened: true })
+    this.setState({ popupOpened: true }, () => afterRenderCb && afterRenderCb())
   }
 
-  private closePopup = (e: Event) => {
+  private closePopup = (e: Event, afterRenderCb?: () => void) => {
     e.preventDefault()
-    this.setState({ popupOpened: false })
+    this.setState({ popupOpened: false }, () => afterRenderCb && afterRenderCb())
   }
 
   private onOpen = () => {
@@ -224,6 +230,28 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   private onClose = () => {
     _.invoke(this.props, 'onClose', this.props)
+  }
+
+  private focus = () => {
+    if (!this.popupRef) return
+    const focusableEment = getFirstFocusable(this.popupRef, this.popupRef, true)
+    focusableEment && focusableEment.focus()
+  }
+
+  private focusLast = () => {
+    if (!this.popupRef) return
+    const focusableEment = getLastFocusable(this.popupRef, this.popupRef, true)
+    focusableEment && focusableEment.focus()
+  }
+
+  private focusTrigger = () => {
+    const triggerRef = this.state.triggerRef
+    triggerRef && triggerRef.focus()
+  }
+
+  private handlePopupRef = (handleRef: any, popupRef: HTMLElement) => {
+    handleRef && handleRef(popupRef)
+    this.popupRef = popupRef
   }
 
   private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })

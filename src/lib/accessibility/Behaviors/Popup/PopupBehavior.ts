@@ -16,8 +16,15 @@ const PopupBehavior: Accessibility = (props: any) => ({
   },
   keyActions: {
     trigger: {
-      open: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      openAndFocus: {
+        keyCombinations: [
+          { keyCode: keyboardKey.Enter },
+          { keyCode: keyboardKey.Spacebar },
+          { keyCode: keyboardKey.ArrowDown },
+        ],
+      },
+      openAndFocusLast: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
       },
     },
     popup: {

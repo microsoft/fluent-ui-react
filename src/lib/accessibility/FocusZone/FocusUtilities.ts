@@ -42,6 +42,7 @@ export function getLastFocusable(
     false /*suppressParentTraversal*/,
     true /*traverseChildren*/,
     includeElementsInFocusZones,
+    true /*allowFocusRoot*/,
   )
 }
 
