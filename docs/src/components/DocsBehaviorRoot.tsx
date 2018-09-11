@@ -29,19 +29,12 @@ class DocsBehaviorRoot extends React.Component<any, any> {
       margin: '1em 1em 1em 2em',
     }
 
-    const commentBox: React.CSSProperties = {
-      padding: 5,
-    }
-    const topRowStyle = {
-      margin: '1em',
-    }
-
     const { match } = this.props
     const pageTitle = _.capitalize(match.params.name) + ' behaviors'
     return (
       <DocumentTitle title={pageTitle}>
         <Grid>
-          <Grid.Row style={topRowStyle}>
+          <Grid.Row style={{ margin: '1em' }}>
             <Grid.Column>
               <Header
                 as="h1"
