@@ -125,49 +125,39 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     const { type, label, disabled, value, name, icon } = this.props
     const { checked } = this.state
 
-    const iconParam = Icon.create(icon || '', {
-      defaultProps: {
-        circular: true,
-        size: 'mini',
-        variables: {
-          color: checked ? variables.checkedIconColor : variables.uncheckedIconColor,
-          backgroundColor: checked
-            ? variables.checkedIconBackgroundColor
-            : variables.uncheckedIconBackgroundColor,
-          borderColor: checked
-            ? variables.checkedIconBorderColor
-            : variables.uncheckedIconBorderColor,
-        },
-      },
-    })
-
-    const contentParam = (
-      <React.Fragment>
-        {createHTMLInput(type, {
-          defaultProps: {
-            checked,
-            disabled,
-            value,
-            name,
-            onChange: this.handleChange,
-          },
-          overrideProps: {
-            className: classes.radio,
-          },
-        })}
-        {label}
-      </React.Fragment>
-    )
-
     return (
       <ElementType {...rest} className={classes.root}>
-        <Label
-          as="label"
-          styles={{ root: styles.label }}
-          iconPosition="start"
-          icon={iconParam}
-          content={contentParam}
-        />
+        <Label as="label" styles={{ root: styles.label }}>
+          {Icon.create(icon || '', {
+            defaultProps: {
+              circular: true,
+              size: 'mini',
+              variables: {
+                color: checked ? variables.checkedIconColor : variables.uncheckedIconColor,
+                backgroundColor: checked
+                  ? variables.checkedIconBackgroundColor
+                  : variables.uncheckedIconBackgroundColor,
+                borderColor: checked
+                  ? variables.checkedIconBorderColor
+                  : variables.uncheckedIconBorderColor,
+              },
+              styles: { root: styles.icon },
+            },
+          })}
+          {createHTMLInput(type, {
+            defaultProps: {
+              checked,
+              disabled,
+              value,
+              name,
+              onChange: this.handleChange,
+            },
+            overrideProps: {
+              className: classes.radio,
+            },
+          })}
+          {label}
+        </Label>
       </ElementType>
     )
   }

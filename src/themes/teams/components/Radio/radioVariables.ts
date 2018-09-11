@@ -6,6 +6,8 @@ export default (siteVars: any) => {
   vars.fontWeight = 400
   vars.radioMargin = `${pxToRem(10)}`
 
+  vars.iconMargin = `0 ${pxToRem(10)} 0 0`
+
   vars.uncheckedIconColor = siteVars.brand
   vars.uncheckedIconBorderColor = siteVars.brand
   vars.uncheckedIconBackgroundColor = 'white'
