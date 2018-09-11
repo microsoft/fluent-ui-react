@@ -358,13 +358,13 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     const { direction, disabled, shouldEnterInnerZone } = this.props
 
     if (disabled) {
-      return
+      return undefined
     }
 
     if (document.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
-      return
+      return undefined
     }
 
     if (this.props.onKeyDown) {
@@ -373,7 +373,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
     // If the default has been prevented, do not process keyboard events.
     if (ev.isDefaultPrevented()) {
-      return
+      return undefined
     }
 
     if (
@@ -386,7 +386,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
 
       if (innerZone) {
         if (!innerZone.focus(true)) {
-          return
+          return undefined
         }
       } else if (isElementFocusSubZone(ev.target as HTMLElement)) {
         if (
@@ -396,20 +396,20 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
             true,
           ) as HTMLElement)
         ) {
-          return
+          return undefined
         }
       } else {
-        return
+        return undefined
       }
     } else if (ev.altKey) {
-      return
+      return undefined
     } else {
       switch (keyboardKey.getCode(ev)) {
         case keyboardKey.Spacebar:
           if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
             break
           }
-          return
+          return undefined
 
         case keyboardKey.ArrowLeft:
           if (direction !== FocusZoneDirection.vertical) {
@@ -418,7 +418,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               break
             }
           }
-          return
+          return undefined
 
         case keyboardKey.ArrowRight:
           if (direction !== FocusZoneDirection.vertical) {
@@ -427,7 +427,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               break
             }
           }
-          return
+          return undefined
 
         case keyboardKey.ArrowUp:
           if (direction !== FocusZoneDirection.horizontal) {
@@ -436,7 +436,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               break
             }
           }
-          return
+          return undefined
 
         case keyboardKey.ArrowDown:
           if (direction !== FocusZoneDirection.horizontal) {
@@ -445,7 +445,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               break
             }
           }
-          return
+          return undefined
 
         case keyboardKey.Tab:
           if (
@@ -469,7 +469,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
               break
             }
           }
-          return
+          return undefined
 
         case keyboardKey.Home:
           if (
@@ -487,7 +487,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
           ) {
             break
           }
-          return
+          return undefined
 
         case keyboardKey.End:
           if (
@@ -511,21 +511,23 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
           ) {
             break
           }
-          return
+          return undefined
 
         case keyboardKey.Enter:
           if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
             break
           }
-          return
+          return undefined
 
         default:
-          return
+          return undefined
       }
     }
 
     ev.preventDefault()
     ev.stopPropagation()
+
+    return undefined
   }
 
   /**
