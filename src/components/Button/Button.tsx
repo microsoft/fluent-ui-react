@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import whatInput from 'what-input'
+import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
@@ -27,7 +28,7 @@ export interface IButtonProps {
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
-  onFocus?: ComponentEventHandler<IButtonProps>
+  onFocus?: ComponentEventHandler<Extendable<IButtonProps>>
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
@@ -142,7 +143,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   static Group = ButtonGroup
 
   public state = {
-    isLastFocusFromKeyboard: false,
+    isFromKeyboard: false,
   }
 
   public renderComponent({
@@ -196,11 +197,11 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const { onFocus } = this.props
-    this.setState({ isLastFocusFromKeyboard: whatInput.ask() === 'keyboard' })
-    if (onFocus) {
-      onFocus(e, this.props)
-    }
+    const isFromKeyboard = whatInput.ask() === 'keyboard'
+
+    this.setState({ isFromKeyboard })
+
+    _.invoke(this.props, 'onFocus', e, { ...this.props, isFromKeyboard })
   }
 }
 
