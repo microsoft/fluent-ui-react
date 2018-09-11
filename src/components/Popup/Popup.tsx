@@ -63,7 +63,12 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** The popup content. */
     content: customPropTypes.itemShorthand,
 
-    /** Position for the popup. */
+    /**
+     * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
+     * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
+     * and 'start' | 'end' respectively), we ignore the value set for align and make it 'center'.
+     * This is the mechanism we chose for dealing with mismatched prop values.
+     */
     position: PropTypes.oneOf(POSITIONS),
 
     /** Element to be rendered in-place where the popup is defined. */

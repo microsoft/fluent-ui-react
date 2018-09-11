@@ -1,12 +1,29 @@
 import React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
+const triggers = [
+  { icon: 'arrow circle up', padding: '5px 42px 18px 5px' },
+  { icon: 'arrow circle up', padding: '5px 5px 18px 5px' },
+  { icon: 'arrow circle up', padding: '5px 5px 18px 42px' },
+  { icon: 'arrow circle down', padding: '18px 42px 5px 5px' },
+  { icon: 'arrow circle down', padding: '18px 5px 5px 5px' },
+  { icon: 'arrow circle down', padding: '18px 5px 5px 42px' },
+  { icon: 'arrow circle left', padding: '5px 42px 18px 5px' },
+  { icon: 'arrow circle left', padding: '5px 42px 5px 5px' },
+  { icon: 'arrow circle left', padding: '18px 42px 5px 5px' },
+  { icon: 'arrow circle right', padding: '5px 5px 18px 42px' },
+  { icon: 'arrow circle right', padding: '5px 5px 5px 42px' },
+  { icon: 'arrow circle right', padding: '18px 5px 5px 42px' },
+].map(({ icon, padding }) => (
+  <Button icon={icon} styles={{ root: { padding, height: '38px', minWidth: '64px' } }} />
+))
+
 const PopupExamplePosition = () => (
   <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
     <Popup
       align="start"
       position="above"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[0]}
       content={
         <p>
           The popup is rendered above the trigger<br />aligned to the start.
@@ -16,7 +33,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="center"
       position="above"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[1]}
       content={
         <p>
           The popup is rendered above the trigger<br />aligned to the center.
@@ -26,7 +43,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="end"
       position="above"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[2]}
       content={
         <p>
           The popup is rendered above the trigger<br />aligned to the end.
@@ -36,7 +53,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="start"
       position="below"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[3]}
       content={
         <p>
           The popup is rendered below the trigger<br />aligned to the start.
@@ -46,7 +63,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="center"
       position="below"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[4]}
       content={
         <p>
           The popup is rendered below the trigger<br />aligned to the center.
@@ -56,7 +73,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="end"
       position="below"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[5]}
       content={
         <p>
           The popup is rendered below the trigger<br />aligned to the end.
@@ -66,7 +83,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="top"
       position="before"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[6]}
       content={
         <p>
           The popup is rendered before the trigger<br />aligned to the top.
@@ -76,7 +93,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="center"
       position="before"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[7]}
       content={
         <p>
           The popup is rendered before the trigger<br />aligned to the center.
@@ -86,7 +103,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="bottom"
       position="before"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[8]}
       content={
         <p>
           The popup is rendered before the trigger<br />aligned to the bottom.
@@ -96,7 +113,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="top"
       position="after"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[9]}
       content={
         <p>
           The popup is rendered after the trigger<br />aligned to the top.
@@ -106,7 +123,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="center"
       position="after"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[10]}
       content={
         <p>
           The popup is rendered after the trigger<br />aligned to the center.
@@ -116,7 +133,7 @@ const PopupExamplePosition = () => (
     <Popup
       align="bottom"
       position="after"
-      trigger={<Button icon="expand" />}
+      trigger={triggers[11]}
       content={
         <p>
           The popup is rendered after the trigger<br />aligned to the bottom.
