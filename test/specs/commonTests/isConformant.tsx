@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { shallow, mount as enzymeMount, render } from 'enzyme'
+import { shallow, mount as enzymeMount, render, ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
@@ -30,13 +30,17 @@ export default (Component, options: any = {}) => {
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
+  const wrappedComponent = mount(<Component {...requiredProps} />)
+
+  const createComponent = props => {
+    const actualComponent = new ReactWrapper(wrappedComponent.props().children)
+    actualComponent.setProps(props)
+    return actualComponent
+  }
 
   // This is added because of the FelaTheme wrapper and the component itself, because it is mounted
   const getComponent = wrapper => {
-    return wrapper
-      .childAt(0)
-      .childAt(0)
-      .childAt(0)
+    return wrapper.childAt(0).childAt(0)
   }
 
   // make sure components are properly exported
@@ -130,10 +134,7 @@ export default (Component, options: any = {}) => {
     const propName = 'data-is-conformant-spread-props'
     const props = { [propName]: true }
 
-    const component = mount(<Component {...requiredProps} {...props} />)
-
-    // The component already has the prop, so we are testing if it's children also have the props,
-    // that is why we are testing if it is greater then 1
+    const component = createComponent(props)
     expect(component.find(props).length).toBeGreaterThan(1)
   })
 
@@ -160,7 +161,7 @@ export default (Component, options: any = {}) => {
         ]
 
         tags.forEach(tag => {
-          const wrapper = mount(<Component {...requiredProps} as={tag} />)
+          const wrapper = createComponent({ as: tag })
           const component = getComponent(wrapper)
           try {
             expect(component.is(tag)).toEqual(true)
@@ -174,7 +175,7 @@ export default (Component, options: any = {}) => {
       test('renders as a functional component or passes "as" to the next component', () => {
         const MyComponent = () => null
 
-        const wrapper = mount(<Component {...requiredProps} as={MyComponent} />)
+        const wrapper = createComponent({ as: MyComponent })
         const component = getComponent(wrapper)
 
         try {
@@ -197,7 +198,7 @@ export default (Component, options: any = {}) => {
           }
         }
 
-        const wrapper = mount(<Component {...requiredProps} as={MyComponent} />)
+        const wrapper = createComponent({ as: MyComponent })
         const component = getComponent(wrapper)
 
         try {
@@ -210,9 +211,7 @@ export default (Component, options: any = {}) => {
 
       test('passes extra props to the component it is renders as', () => {
         const MyComponent = () => null
-        const wrapper = mount(
-          <Component {...requiredProps} as={MyComponent} data-extra-prop="foo" />,
-        )
+        const wrapper = createComponent({ as: MyComponent, 'data-extra-prop': 'foo' })
 
         expect(wrapper.find('MyComponent[data-extra-prop="foo"]').length).toBeGreaterThan(0)
       })
@@ -281,7 +280,7 @@ export default (Component, options: any = {}) => {
           'data-simulate-event-here': true,
         }
 
-        const component = mount(<Component {...props} />).childAt(0)
+        const component = createComponent({ ...props })
 
         const eventTarget = eventTargets[listenerName]
           ? component
@@ -371,7 +370,7 @@ export default (Component, options: any = {}) => {
     })
 
     test(`is applied to the root element`, () => {
-      const component = mount(<Component {...requiredProps} />)
+      const component = createComponent({})
 
       // only test components that implement className
       if (component.find('[className]').hostNodes().length > 0) {
@@ -411,7 +410,7 @@ export default (Component, options: any = {}) => {
         wrapper.detach()
         document.body.removeChild(mountNode)
       } else {
-        const component = mount(<Component {...requiredProps} className={className} />)
+        const component = createComponent({ className })
         expect(
           _.includes(
             component
@@ -426,7 +425,7 @@ export default (Component, options: any = {}) => {
     })
 
     test("user's className does not override the default classes", () => {
-      const component = mount(<Component {...requiredProps} />)
+      const component = createComponent({})
       const defaultClasses = component
         .find('[className]')
         .hostNodes()
@@ -436,9 +435,7 @@ export default (Component, options: any = {}) => {
       if (!defaultClasses) return
 
       const userClasses = 'generate'
-      const wrapperWithCustomClasses = mount(
-        <Component {...requiredProps} className={userClasses} />,
-      )
+      const wrapperWithCustomClasses = createComponent({ className: userClasses })
       const mixedClasses = wrapperWithCustomClasses
         .find('[className]')
         .hostNodes()
