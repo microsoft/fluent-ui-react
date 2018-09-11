@@ -32,3 +32,4 @@ export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolba
 export {
   default as ToolbarButtonBehavior,
 } from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'
+export { default as Portal } from './components/Portal'
