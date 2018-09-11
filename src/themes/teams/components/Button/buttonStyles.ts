@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly } = props
+    const { circular, disabled, fluid, type, text, iconOnly, isLastFocusFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -22,10 +22,12 @@ const buttonStyles: IComponentPartStylesInput = {
       typePrimaryBackgroundColor,
       typePrimaryBackgroundColorHover,
       typePrimaryBorderColor,
+      typePrimaryBorderFocusColor,
       typeSecondaryColor,
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
+      typeSecondaryBorderFocusColor,
       typeTextColorHover,
       typeTextPrimaryColor,
       typeTextPrimaryColorHover,
@@ -33,13 +35,18 @@ const buttonStyles: IComponentPartStylesInput = {
       typeTextSecondaryColorHover,
     } = variables
 
+    const focusAndHoverSecondary = {
+      color: typeSecondaryColor,
+      borderColor: 'transparent',
+      backgroundColor: typeSecondaryBackgroundColorHover,
+    }
+
     return {
       height,
       minWidth,
       maxWidth,
       color,
       backgroundColor,
-      borderRadius,
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -47,6 +54,9 @@ const buttonStyles: IComponentPartStylesInput = {
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
+      borderRadius: pxToRem(2),
+      borderColor: 'transparent',
+      borderWidth: `${circular ? 1 : 2}px`,
       cursor: 'pointer',
 
       ...(!text && {
@@ -54,6 +64,13 @@ const buttonStyles: IComponentPartStylesInput = {
         ':hover': {
           backgroundColor: backgroundColorHover,
         },
+      }),
+
+      ...(secondary && {
+        color: typeSecondaryColor,
+        backgroundColor: typeSecondaryBackgroundColor,
+        borderColor: typeSecondaryBorderColor,
+        ':hover': focusAndHoverSecondary,
       }),
 
       ...(text && {
@@ -121,6 +138,20 @@ const buttonStyles: IComponentPartStylesInput = {
           backgroundColor: undefined,
         },
       }),
+
+      ':focus': {
+        outline: '0',
+        ...(isLastFocusFromKeyboard && {
+          ...((primary && {
+            boxShadow: `inset 0 0 0 2px ${typePrimaryBorderFocusColor}`,
+            color: typePrimaryColor,
+            backgroundColor: typePrimaryBackgroundColorHover,
+          }) || {
+            boxShadow: `inset 0 0 0 2px ${typeSecondaryBorderFocusColor}`,
+            ...focusAndHoverSecondary,
+          }),
+        }),
+      },
 
       ...(iconOnly && {
         minWidth: height,

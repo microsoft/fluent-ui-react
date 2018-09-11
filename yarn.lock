@@ -8262,6 +8262,10 @@ webpack@^3.5.4:
     webpack-sources "^1.0.1"
     yargs "^8.0.2"
 
+what-input@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/what-input/-/what-input-5.1.1.tgz#46bfd76b559ccc343bcd74c235a310b579f1ca05"
+
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.3.tgz#57c235bc8657e914d24e1a397d3c82daee0a6ba3"

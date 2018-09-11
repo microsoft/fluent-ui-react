@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import whatInput from 'what-input'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
@@ -26,6 +27,7 @@ export interface IButtonProps {
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
+  onFocus?: ComponentEventHandler<IButtonProps>
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
@@ -89,6 +91,13 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
      */
     onClick: PropTypes.func,
 
+    /**
+     * Called after user's focus.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onFocus: PropTypes.func,
+
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
@@ -118,6 +127,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'iconOnly',
     'iconPosition',
     'onClick',
+    'onFocus',
     'styles',
     'text',
     'type',
@@ -130,6 +140,10 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   static Group = ButtonGroup
+
+  public state = {
+    isLastFocusFromKeyboard: false,
+  }
 
   public renderComponent({
     ElementType,
@@ -148,6 +162,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...rest}
+        onFocus={this.handleFocus}
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
@@ -177,6 +192,16 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
     if (onClick) {
       onClick(e, this.props)
+    }
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    const { onFocus } = this.props
+
+    this.setState({ isLastFocusFromKeyboard: whatInput.ask() === 'keyboard' })
+
+    if (onFocus) {
+      onFocus(e, this.props)
     }
   }
 }
