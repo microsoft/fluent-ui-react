@@ -21,7 +21,7 @@ export interface IMenuVariables {
 export default (siteVars: any): IMenuVariables => {
   return {
     defaultColor: siteVars.gray02,
-    defaultActiveColor: siteVars.gray01,
+    defaultActiveColor: siteVars.black,
     defaultActiveBackgroundColor: siteVars.gray10,
     defaultBorderColor: siteVars.gray08,
 
@@ -31,7 +31,7 @@ export default (siteVars: any): IMenuVariables => {
     typePrimaryBackgroundColorHover: siteVars.brand16,
     typePrimaryBorderColor: siteVars.brand08,
     typePrimaryActiveBorderColor: siteVars.brand12,
-    typePrimaryUnderlinedBorderColor: siteVars.gray12,
+    typePrimaryUnderlinedBorderColor: siteVars.gray08,
 
     iconsMenuItemSize: undefined,
     iconsMenuItemSpacing: 0,

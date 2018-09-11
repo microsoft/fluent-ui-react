@@ -20,6 +20,11 @@ const States = () => (
       examplePath="components/Text/States/TextExampleSuccess"
     />
     <ComponentExample
+      title="Temporary"
+      description="A text can be used to signify a temporary state."
+      examplePath="components/Text/States/TextExampleTemporary"
+    />
+    <ComponentExample
       title="Truncated"
       description="Truncated text in a Text component."
       examplePath="components/Text/States/TextExampleTruncated"

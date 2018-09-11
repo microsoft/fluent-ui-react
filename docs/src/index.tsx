@@ -3,10 +3,10 @@ import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
 // TODO make themes a monorepo of packages
-import { fontFaces, staticStyles, theme } from 'src/themes/teams'
-import { Provider } from '@stardust-ui/react'
+import { Provider, themes } from '@stardust-ui/react'
 
 import Router from './routes'
+import { mergeThemes } from '../../src/lib'
 
 // ----------------------------------------
 // Rendering
@@ -18,7 +18,15 @@ document.body.appendChild(mountNode)
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider theme={theme} staticStyles={staticStyles} fontFaces={fontFaces}>
+      <Provider
+        theme={mergeThemes(themes.teams, {
+          // adjust Teams' theme to Semantic UI's font size scheme
+          siteVariables: {
+            htmlFontSize: '14px',
+            bodyFontSize: '1rem',
+          },
+        })}
+      >
         <NewApp />
       </Provider>
     </AppContainer>,

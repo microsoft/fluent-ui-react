@@ -3,22 +3,21 @@ import { pxToRem } from '../../lib'
 //
 // VARIABLES
 //
+export const htmlFontSize = '10px' // what 1rem represents
 
-export const htmlFontSize = '14px' // what 1rem represents
-
-const blackRgbaFormat = (alpha: number): string => `rgba(37, 36, 36, ${alpha})`
-export const black = blackRgbaFormat(1)
-export const gray01 = blackRgbaFormat(0.95)
-export const gray02 = blackRgbaFormat(0.75)
-export const gray03 = blackRgbaFormat(0.65)
-export const gray04 = blackRgbaFormat(0.5)
-export const gray06 = blackRgbaFormat(0.3)
-export const gray08 = blackRgbaFormat(0.15)
+//
+// COLORS
+//
+export const black = '#252423'
+export const gray02 = '#484644'
+export const gray03 = '#605E5C'
+export const gray04 = '#979593'
+export const gray06 = '#C8C6C4'
+export const gray08 = '#E1DFDD'
 export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
-export const gray12 = blackRgbaFormat(0.05)
 export const gray14 = '#FAF9F8'
-export const fontBlack = '#252424'
+export const fontBlack = black
 
 export const white = '#FFF'
 
@@ -38,63 +37,42 @@ export const red = '#C4314B'
 export const red08 = '#F3D6DB'
 export const yellow = '#F8D22A'
 export const green = '#92C353'
+export const green04 = '#237b4b'
 
 //
-// SEMANTIC ASSIGNMENTS
+// FONT SIZES
 //
-
-export const bodyPadding = 0
-export const bodyMargin = 0
-export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1rem'
-export const bodyColor = black
-export const bodyLineHeight = pxToRem(20)
-
-//
-// Colors
-//
-export const atMentionTextColor = orange04
-export const disabledTextColor = gray06
-export const errorTextColor = red
-export const mutedTextColor = gray02
-export const successTextColor = green
-export const timestampTextColor = gray04
-
-//
-// Fonts
-//
-export const fontSizeBase = pxToRem(14)
+export const fontSizeX4 = pxToRem(72)
+export const fontSizeX3 = pxToRem(48)
+export const fontSizeX2 = pxToRem(36)
+export const fontSizeExtraLarge = pxToRem(24)
+export const fontSizeLarge = pxToRem(18)
+export const fontSizeMedium = pxToRem(14)
 export const fontSizeSmall = pxToRem(12)
 export const fontSizeExtraSmall = pxToRem(10)
 
 //
-// Line Heights
+// FONT WEIGHTS
 //
-export const lineHeightBase = pxToRem(20)
-export const lineHeightSmall = pxToRem(16)
-export const lineHeightExtraSmall = pxToRem(12)
+export const fontWeightLight = 200
+export const fontWeightSemilight = 300
+export const fontWeightRegular = 400
+export const fontWeightSemibold = 600
+export const fontWeightBold = 700
 
 //
-// Text Component
+// LINE HEIGHTS
 //
-export const textExtraSmallFontSize = '10pt'
-export const textExtraSmallLineHeight = '12pt'
-export const textSmallFontSize = '12pt'
-export const textSmallLineHeight = '16pt'
-export const textMediumFontSize = '14pt'
-export const textMediumLineHeight = '20pt'
-export const textLargeFontSize = '18pt'
-export const textLargeLineHeight = '24pt'
-export const textExtraLargeFontSize = '24pt'
-export const textExtraLargeLineHeight = '32pt'
-export const textX2FontSize = '36pt'
-export const textX2LineHeight = '48pt'
-export const textX3FontSize = '54pt'
-export const textX3LineHeight = '66pt'
-export const textX4FontSize = '72pt'
-export const textX4LineHeight = '86pt'
-export const textWeightLight = 200
-export const textWeightSemilight = 300
-export const textWeightRegular = 400
-export const textWeightSemibold = 600
-export const textWeightBold = 800
+export const lineHeightBase = 1.4286
+export const lineHeightSmall = 1.3333
+export const lineHeightExtraSmall = 1.2
+
+//
+// SEMANTIC ASSIGNMENTS
+//
+export const bodyPadding = 0
+export const bodyMargin = 0
+export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
+export const bodyFontSize = '1.4rem'
+export const bodyColor = black
+export const bodyLineHeight = lineHeightBase

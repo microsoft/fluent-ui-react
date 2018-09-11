@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, icon, iconPosition, type } = props
+    const { circular, disabled, fluid, type, text, iconOnly } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -12,6 +12,8 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      borderRadius,
+      color,
       backgroundColor,
       backgroundColorHover,
       circularRadius,
@@ -24,34 +26,82 @@ const buttonStyles: IComponentPartStylesInput = {
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
+      typeTextColorHover,
+      typeTextPrimaryColor,
+      typeTextPrimaryColorHover,
+      typeTextSecondaryColor,
+      typeTextSecondaryColorHover,
     } = variables
 
     return {
       height,
       minWidth,
       maxWidth,
+      color,
       backgroundColor,
-      display: 'inline-block',
+      borderRadius,
+      display: 'inline-flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
-      borderRadius: pxToRem(2),
-      borderWidth: 0,
+      cursor: 'pointer',
 
-      ...truncateStyle,
+      ...(!text && {
+        borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+        ':hover': {
+          backgroundColor: backgroundColorHover,
+        },
+      }),
 
-      ...(icon &&
-        (iconPosition
-          ? {
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }
-          : {
-              minWidth: height,
-              padding: 0,
-            })),
+      ...(text && {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        ':hover': {
+          color: typeTextColorHover,
+        },
+      }),
+
+      ...(primary &&
+        !text && {
+          color: typePrimaryColor,
+          backgroundColor: typePrimaryBackgroundColor,
+          borderColor: typePrimaryBorderColor,
+          ':hover': {
+            color: typePrimaryColor,
+            backgroundColor: typePrimaryBackgroundColorHover,
+          },
+        }),
+
+      ...(primary &&
+        text && {
+          color: typeTextPrimaryColor,
+          ':hover': {
+            color: typeTextPrimaryColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        !text && {
+          color: typeSecondaryColor,
+          backgroundColor: typeSecondaryBackgroundColor,
+          borderColor: typeSecondaryBorderColor,
+          ':hover': {
+            color: typeSecondaryColor,
+            borderColor: 'transparent',
+            backgroundColor: typeSecondaryBackgroundColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        text && {
+          color: typeTextSecondaryColor,
+          ':hover': {
+            color: typeTextSecondaryColorHover,
+          },
+        }),
 
       ...(circular && {
         minWidth: height,
@@ -64,38 +114,25 @@ const buttonStyles: IComponentPartStylesInput = {
         maxWidth: '100%',
       }),
 
-      ...(disabled
-        ? disabledStyle
-        : {
-            borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
-            cursor: 'pointer',
-            ':hover': {
-              backgroundColor: backgroundColorHover,
-            },
+      ...(disabled && {
+        ...disabledStyle,
+        ':hover': {
+          borderColor: undefined,
+          backgroundColor: undefined,
+        },
+      }),
 
-            ...(primary && {
-              color: typePrimaryColor,
-              backgroundColor: typePrimaryBackgroundColor,
-              borderColor: typePrimaryBorderColor,
-              ':hover': {
-                color: typePrimaryColor,
-                backgroundColor: typePrimaryBackgroundColorHover,
-              },
-            }),
-
-            ...(secondary && {
-              color: typeSecondaryColor,
-              backgroundColor: typeSecondaryBackgroundColor,
-              borderColor: typeSecondaryBorderColor,
-              ':hover': {
-                color: typeSecondaryColor,
-                borderColor: 'transparent',
-                backgroundColor: typeSecondaryBackgroundColorHover,
-              },
-            }),
-          }),
+      ...(iconOnly && {
+        minWidth: height,
+        padding: 0,
+      }),
     }
   },
+
+  content: ({ props }) => ({
+    overflow: 'hidden',
+    ...(typeof props.content === 'string' && truncateStyle),
+  }),
 }
 
 export default buttonStyles

@@ -6,7 +6,6 @@
     "baseUrl": "../",
     "paths": {
       "@stardust-ui/react": ["src"],
-      "@stardust-ui/react/themes/teams": ["src/themes/teams"],
       "*": ["*", "types/*"]
     },
     "types": [
@@ -21,7 +20,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "allowJs": false,
-    "noImplicitReturns": false,
+    "noImplicitReturns": true,
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,

@@ -3,6 +3,7 @@ import * as React from 'react'
 import {
   isConformant,
   handlesAccessibility,
+  htmlIsAccessibilityCompliant,
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
@@ -41,6 +42,32 @@ describe('Button', () => {
       test('is set to false, if disabled attribute is not provided', () => {
         const renderedComponent = getTestingRenderedComponent(Button, <Button />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+      })
+    })
+
+    describe('HTML accessibility rules validation', () => {
+      describe('icon button must have textual representation for screen readers', () => {
+        test('with title', async () =>
+          htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
+
+        test('with aria-label attribute', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" aria-label="testing button" />))
+
+        test('with aria-labelledby attribute', async () =>
+          htmlIsAccessibilityCompliant(
+            <div>
+              <Button icon="books" aria-labelledby="tstBtn" />
+              <span id="tstBtn" aria-label="testing button" />
+            </div>,
+          ))
+      })
+
+      describe('different buttons variants', () => {
+        test('button', async () =>
+          htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
+
+        test('button with text and icon', async () =>
+          htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
       })
     })
 
