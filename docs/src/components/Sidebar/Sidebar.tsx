@@ -201,6 +201,16 @@ class Sidebar extends React.Component<any, any> {
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>
+        {process.env.NODE_ENV !== 'production' && (
+          <Menu.Item>
+            Prototypes
+            <Menu.Menu>
+              <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
+                Chat Pane
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu.Item>
+        )}
         <Menu.Item active>
           <SemanticUIInput
             className="transparent inverted icon"

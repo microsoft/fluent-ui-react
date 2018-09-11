@@ -13,6 +13,7 @@ import { mergeThemes } from '../../src/lib'
 // ----------------------------------------
 
 const mountNode = document.createElement('div')
+mountNode.style.height = '100%'
 document.body.appendChild(mountNode)
 
 const render = NewApp =>
