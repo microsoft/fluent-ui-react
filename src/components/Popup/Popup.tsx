@@ -29,8 +29,8 @@ export interface IPopupProps {
   trigger?: JSX.Element
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
-  onOpen: (props: IPopupProps) => void
-  onClose: (props: IPopupProps) => void
+  onOpen?: (props: IPopupProps) => void
+  onClose?: (props: IPopupProps) => void
 }
 
 export interface IPopupState {
