@@ -42,14 +42,13 @@ export const green04 = '#237b4b'
 //
 // FONT SIZES
 //
-export const fontSizeX4 = pxToRem(72)
-export const fontSizeX3 = pxToRem(48)
-export const fontSizeX2 = pxToRem(36)
-export const fontSizeExtraLarge = pxToRem(24)
-export const fontSizeLarge = pxToRem(18)
-export const fontSizeMedium = pxToRem(14)
-export const fontSizeSmall = pxToRem(12)
-export const fontSizeExtraSmall = pxToRem(10)
+export const fontSizes = {
+  xs: pxToRem(10),
+  sm: pxToRem(12),
+  md: pxToRem(14),
+  lg: pxToRem(18),
+  xl: pxToRem(24),
+}
 
 //
 // FONT WEIGHTS

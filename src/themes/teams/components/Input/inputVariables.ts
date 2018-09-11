@@ -8,7 +8,7 @@ export default (siteVars: any) => {
   vars.backgroundColor = siteVars.gray10
 
   vars.fontColor = siteVars.fontBlack
-  vars.fontSize = siteVars.fontSizeMedium
+  vars.fontSize = siteVars.fontSizes.md
 
   vars.inputPadding = `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`
   vars.inputFocusBorderColor = siteVars.brand
