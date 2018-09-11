@@ -117,7 +117,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   public static defaultProps = {
     as: Portal,
-    position: 'top-start',
+    position: 'above',
     align: 'start',
     accessibility: PopupBehavior as Accessibility,
   }
