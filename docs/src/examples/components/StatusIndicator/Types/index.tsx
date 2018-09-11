@@ -6,12 +6,17 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="Default"
-      description="A status indicator for showing user's status"
+      description="A status indicator is for indicating the status of something."
       examplePath="components/StatusIndicator/Types/StatusIndicatorExample"
     />
     <ComponentExample
+      title="Status"
+      description="A status indicator can indicate various statuses."
+      examplePath="components/StatusIndicator/Types/StatusIndicatorStatusExample"
+    />
+    <ComponentExample
       title="Icon"
-      description="A status indicator can have icon"
+      description="A status indicator can have icon."
       examplePath="components/StatusIndicator/Types/StatusIndicatorIconExample"
     />
   </ExampleSection>

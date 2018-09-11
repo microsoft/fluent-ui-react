@@ -14,7 +14,7 @@ export interface IStatusIndicatorVariables {
 }
 
 export default siteVariables => ({
-  borderColor: 'white',
+  borderColor: undefined,
   borderWidth: 2,
   successBackgroundColor: siteVariables.successStatusBackgroundColor,
   successTextColor: siteVariables.successStatusTextColor,

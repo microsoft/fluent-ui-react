@@ -4,10 +4,10 @@ import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
 const sizes = new Map([
-  ['micro', 0.3],
-  ['mini', 0.4],
-  ['tiny', 0.5],
-  ['small', 0.75],
+  ['micro', 0.5],
+  ['mini', 0.6],
+  ['tiny', 0.7],
+  ['small', 0.85],
   ['normal', 1],
   ['large', 1.5],
   ['big', 2],
@@ -98,15 +98,11 @@ const iconStyles = {
       display: 'inline-block',
       fontSize: getSize(size),
 
-      width: '1em',
-      height: '1em',
-
       ...(isFontBased ? getFontStyles(font, name, size) : {}),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,
 
-      opacity: 1,
       margin: v.margin,
 
       speak: 'none',
@@ -118,11 +114,6 @@ const iconStyles = {
 
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
-
-      ...(v.backgroundColor && {
-        ...getPaddedStyle(isFontBased),
-        ...(bordered || v.borderColor || { boxShadow: 'none' }),
-      }),
 
       ...(disabled && disabledStyle),
     }

@@ -9,6 +9,7 @@ import { Extendable, ItemShorthand } from '../../../types/utils'
 export interface IStatusIndicatorProps {
   as?: any
   className?: string
+  color?: string
   size?: number
   status?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
   icon?: ItemShorthand
@@ -26,7 +27,16 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
 
   static displayName = 'StatusIndicator'
 
-  static handledProps = ['as', 'className', 'icon', 'size', 'status', 'styles', 'variables']
+  static handledProps = [
+    'as',
+    'className',
+    'color',
+    'icon',
+    'size',
+    'status',
+    'styles',
+    'variables',
+  ]
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -34,6 +44,9 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
 
     /** Additional classes. */
     className: PropTypes.string,
+
+    /** A custom color. */
+    color: PropTypes.string,
 
     /** Size multiplier (default 5) * */
     size: PropTypes.number,
@@ -53,19 +66,19 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
 
   static defaultProps = {
     as: 'span',
-    size: 5,
+    size: 10,
+    status: 'unknown',
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { icon, size } = this.props as IStatusIndicatorPropsWithDefaults
+    const { icon } = this.props as IStatusIndicatorPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
-            styles: { root: styles.statusIcon },
-            circular: true,
-            size: size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny',
+            size: 'mini',
             variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
+            xSpacing: 'none',
           },
         })}
       </ElementType>

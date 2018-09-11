@@ -77,7 +77,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   static defaultProps = {
-    size: 5,
+    size: 32,
     getInitials(name: string) {
       if (!name) {
         return ''
@@ -128,7 +128,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
         {StatusIndicator.create(status, {
           defaultProps: {
             styles: { root: styles.statusIndicator },
-            size,
+            size: size / 4,
             variables: {
               borderColor: variables.statusIndicatorBorderColor,
               borderWidth: variables.statusIndicatorBorderWidth,

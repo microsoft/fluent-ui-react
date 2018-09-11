@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { StatusIndicator } from '@stardust-ui/react'
 
-const StatusIndicatorIconShorthandExample = () => (
+const StatusIndicatorIconExampleShorthand = () => (
   <div>
     <StatusIndicator status="success" icon="check" />
     &emsp;
@@ -9,4 +9,4 @@ const StatusIndicatorIconShorthandExample = () => (
   </div>
 )
 
-export default StatusIndicatorIconShorthandExample
+export default StatusIndicatorIconExampleShorthand

@@ -3,20 +3,6 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IStatusIndicatorPropsWithDefaults } from '../../../../components/StatusIndicator/StatusIndicator'
 import { IStatusIndicatorVariables } from './statusIndicatorVariables'
 
-const getRootElementSize = (size: number) => {
-  if (size < 4) {
-    return 8
-  }
-  if (size < 6) {
-    return 10
-  }
-  return 12
-}
-
-const getRootElementDimension = (size: number, borderWidth: number) => {
-  return getRootElementSize(size) + borderWidth * 2
-}
-
 const getBackgroundColor = (status: string, variables: IStatusIndicatorVariables) => {
   switch (status) {
     case 'success':
@@ -51,35 +37,36 @@ const getTextColor = (status: string, variables: IStatusIndicatorVariables) => {
 
 const statusIndicatorStyles: IComponentPartStylesInput = {
   root: ({
-    props: { size, status },
+    props: { color, size, status },
     variables,
   }: {
     props: IStatusIndicatorPropsWithDefaults
     variables: IStatusIndicatorVariables
   }): ICSSInJSStyle => ({
-    display: 'table',
-    height: pxToRem(getRootElementDimension(size, variables.borderWidth)),
-    width: pxToRem(getRootElementDimension(size, variables.borderWidth)),
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: pxToRem(size + 2 * (variables.borderWidth || 0)),
+    width: pxToRem(size + 2 * (variables.borderWidth || 0)),
+    verticalAlign: 'middle',
     borderRadius: '9999px',
-    backgroundColor: status && getBackgroundColor(status, variables),
-    borderColor: variables.borderColor,
-    borderWidth: pxToRem(variables.borderWidth),
-    borderStyle: 'solid',
+    ...(variables.borderColor && {
+      borderColor: variables.borderColor,
+      borderWidth: pxToRem(variables.borderWidth),
+      borderStyle: 'solid',
+    }),
+    backgroundColor: color || getBackgroundColor(status, variables),
   }),
-  statusIcon: ({
+
+  icon: ({
     props: { status },
     variables,
   }: {
     props: IStatusIndicatorPropsWithDefaults
     variables: IStatusIndicatorVariables
-  }): ICSSInJSStyle => {
-    return {
-      display: 'table-cell',
-      color: status && getTextColor(status, variables),
-      height: '100%',
-      width: '100%',
-    }
-  },
+  }): ICSSInJSStyle => ({
+    color: getTextColor(status, variables),
+  }),
 }
 
 export default statusIndicatorStyles
