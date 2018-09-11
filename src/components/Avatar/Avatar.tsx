@@ -183,7 +183,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
               styles={{ root: styles.presenceIndicator }}
               size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
               circular
-              name={icon}
+              name={icon as any}
               variables={iconVariables}
               title={status}
             />

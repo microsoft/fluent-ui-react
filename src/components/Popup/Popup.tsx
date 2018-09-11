@@ -12,46 +12,13 @@ import Portal from '../Portal'
 import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
-enum PositionParts {
-  start = 'start',
-  end = 'end',
-  left = 'left',
-  right = 'right',
-  before = 'before',
-  after = 'after',
-}
-
-export type Position =
-  | 'top-start'
-  | 'top'
-  | 'top-end'
-  | 'bottom-start'
-  | 'bottom'
-  | 'bottom-end'
-  | 'before-start'
-  | 'before'
-  | 'before-end'
-  | 'after-start'
-  | 'after'
-  | 'after-end'
-
-const POSITIONS: Position[] = [
-  'top-start',
-  'top',
-  'top-end',
-  'bottom-start',
-  'bottom',
-  'bottom-end',
-  'before-start',
-  'before',
-  'before-end',
-  'after-start',
-  'after',
-  'after-end',
-]
+const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
+const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
 export interface IPopupProps {
+  align?: Alignment
   as?: any
   accessibility?: Accessibility
   basic?: boolean
@@ -84,6 +51,9 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public static Content = PopupContent
 
   public static propTypes = {
+    /** Alignment for the popup. */
+    align: PropTypes.oneOf(ALIGNMENTS),
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
@@ -91,7 +61,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     basic: PropTypes.bool,
 
     /** The popup content (deprecated). */
-    children: customPropTypes.deprecate('Use content instead.', null),
+    children: customPropTypes.disallow(['children']),
 
     /** Additional classes. */
     className: PropTypes.string,
@@ -131,6 +101,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   public static handledProps = [
     'accessibility',
+    'align',
     'as',
     'basic',
     'children',
@@ -147,6 +118,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public static defaultProps = {
     as: Portal,
     position: 'top-start',
+    align: 'start',
     accessibility: PopupBehavior as Accessibility,
   }
 
@@ -164,7 +136,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     rest,
     rtl,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger, position } = this.props
+    const { children, trigger, position, align } = this.props
     const popupAccessibility = {
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
@@ -190,7 +162,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         {childrenExist(children)
           ? children
           : this.renderContent(
-              this.computePopupPlacement(this.props.position, rtl),
+              computePopupPlacement({ align, position, rtl }),
               this.renderPopperChildren.bind(this, rtl, popupAccessibility),
             )}
       </ElementType>
@@ -255,32 +227,4 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   }
 
   private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })
-
-  private computePopupPlacement(position: Position, rtl: boolean): Placement {
-    if (_.startsWith(position, PositionParts.before)) {
-      return position.replace(
-        PositionParts.before,
-        rtl ? PositionParts.right : PositionParts.left,
-      ) as Placement
-    }
-
-    if (_.startsWith(position, PositionParts.after)) {
-      return position.replace(
-        PositionParts.after,
-        rtl ? PositionParts.left : PositionParts.right,
-      ) as Placement
-    }
-
-    if (rtl) {
-      if (_.endsWith(position, PositionParts.start)) {
-        return position.replace(PositionParts.start, PositionParts.end) as Placement
-      }
-
-      if (_.endsWith(position, PositionParts.end)) {
-        return position.replace(PositionParts.end, PositionParts.start) as Placement
-      }
-    }
-
-    return position as Placement
-  }
 }

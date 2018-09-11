@@ -4,110 +4,122 @@ import { Button, Grid, Popup } from '@stardust-ui/react'
 const PopupExamplePosition = () => (
   <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
     <Popup
-      position="top-start"
+      align="start"
+      position="above"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top-start position.
+          The popup is rendered above the trigger<br />aligned to the start.
         </p>
       }
     />
     <Popup
-      position="top"
+      align="center"
+      position="above"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top position.
+          The popup is rendered above the trigger<br />aligned to the center.
         </p>
       }
     />
     <Popup
-      position="top-end"
+      align="end"
+      position="above"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />top-end position.
+          The popup is rendered above the trigger<br />aligned to the end.
         </p>
       }
     />
     <Popup
-      position="bottom-start"
+      align="start"
+      position="below"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom-start position.
+          The popup is rendered below the trigger<br />aligned to the start.
         </p>
       }
     />
     <Popup
-      position="bottom"
+      align="center"
+      position="below"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom position.
+          The popup is rendered below the trigger<br />aligned to the center.
         </p>
       }
     />
     <Popup
-      position="bottom-end"
+      align="end"
+      position="below"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />bottom-end position.
+          The popup is rendered below the trigger<br />aligned to the end.
         </p>
       }
     />
     <Popup
-      position="before-start"
-      trigger={<Button icon="expand" />}
-      content={
-        <p>
-          The popup is being rendered in<br />before-start position.
-        </p>
-      }
-    />
-    <Popup
+      align="top"
       position="before"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />before position.
+          The popup is rendered before the trigger<br />aligned to the top.
         </p>
       }
     />
     <Popup
-      position="before-end"
+      align="center"
+      position="before"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />before-end position.
+          The popup is rendered before the trigger<br />aligned to the center.
         </p>
       }
     />
     <Popup
-      position="after-start"
+      align="bottom"
+      position="before"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after-start position.
+          The popup is rendered before the trigger<br />aligned to the bottom.
         </p>
       }
     />
     <Popup
+      align="top"
       position="after"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after position.
+          The popup is rendered after the trigger<br />aligned to the top.
         </p>
       }
     />
     <Popup
-      position="after-end"
+      align="center"
+      position="after"
       trigger={<Button icon="expand" />}
       content={
         <p>
-          The popup is being rendered in<br />after-end position.
+          The popup is rendered after the trigger<br />aligned to the center.
+        </p>
+      }
+    />
+    <Popup
+      align="bottom"
+      position="after"
+      trigger={<Button icon="expand" />}
+      content={
+        <p>
+          The popup is rendered after the trigger<br />aligned to the bottom.
         </p>
       }
     />

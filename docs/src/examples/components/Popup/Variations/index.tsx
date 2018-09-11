@@ -11,8 +11,8 @@ const Variations = () => (
       examplePath="components/Popup/Variations/PopupExampleBasic"
     />
     <ComponentExample
-      title="Position"
-      description="A popup can be position around its trigger."
+      title="Alignment and Position"
+      description="A popup can be positioned around its trigger and aligned relative to the trigger's margins."
       examplePath="components/Popup/Variations/PopupExamplePosition"
     />
   </ExampleSection>
