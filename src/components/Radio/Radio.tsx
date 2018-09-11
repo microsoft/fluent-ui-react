@@ -29,7 +29,7 @@ export interface IRadioProps {
 
 /**
  * @accessibility
- * This is shown at the top.
+ * Radio buttons do not handle accessibility. Those aspects will be handled once the RadioGroup component is introduced.
  */
 class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static create: Function
@@ -107,18 +107,18 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   private handleChange = (e: React.SyntheticEvent) => {
     const { onChange, disabled } = this.props
-    const { checked } = this.state
+    const checked = (e.target as HTMLInputElement).checked
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onChange) {
-      onChange(e, { ...this.props, checked: !checked })
-    }
+    this.trySetState({ checked })
 
-    this.trySetState({ checked: !checked })
+    if (onChange) {
+      onChange(e, { ...this.props, checked })
+    }
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
