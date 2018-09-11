@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly, isLastFocusFromKeyboard } = props
+    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -50,7 +50,7 @@ const buttonStyles: IComponentPartStylesInput = {
       cursor: 'pointer',
 
       ':focus': {
-        ...(isLastFocusFromKeyboard &&
+        ...(isFromKeyboard &&
           {
             // focus styles should be added like this, since they should be applied only on keyboard.
           }),
