@@ -20,6 +20,7 @@ import {
   FOCUSZONE_ID_ATTRIBUTE,
 } from './FocusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
+import * as customPropTypes from '../../customPropTypes'
 
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
@@ -44,7 +45,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     className: PropTypes.string,
     direction: PropTypes.number,
     disabled: PropTypes.bool,
-    as: PropTypes.any, // TODO: find out why customPropTypes.as fails at runtime (customPropTypes is undefined)
+    as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
@@ -55,6 +56,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     stopFocusPropagation: PropTypes.bool,
     onFocusNotification: PropTypes.func,
     preventDefaultWhenHandled: PropTypes.bool,
+    isRtl: PropTypes.bool,
   }
 
   public static defaultProps: IFocusZoneProps = {
@@ -82,6 +84,7 @@ export class FocusZone extends React.Component<IFocusZoneProps, {}> implements I
     'stopFocusPropagation',
     'onFocusNotification',
     'preventDefaultWhenHandled',
+    'isRtl',
   ]
 
   private _root: { current: HTMLElement | null } = { current: null }

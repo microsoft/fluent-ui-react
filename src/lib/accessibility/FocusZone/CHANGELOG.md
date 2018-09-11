@@ -7,7 +7,6 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Replaced path `../../Utilities` with `@uifabric/utilities`.
 - Moved `IS_FOCUSABLE_ATTRIBUTE` and others to `FocusUtilities.ts`.
 - Added prop types.
-    - **ATTENTION!** For some reason `customPropTypes` import does not work. Need to investigate!
 - Added `preventDefaultWhenHandled` property and method, added to `_onKeyDown`.
 - Renamed boolean callback properties to better reflect their purpose.
 - Renamed `elementType` to `as`.
