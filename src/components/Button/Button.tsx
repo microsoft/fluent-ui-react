@@ -28,7 +28,7 @@ export interface IButtonProps {
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
-  onFocus?: ComponentEventHandler<Extendable<IButtonProps>>
+  onFocus?: ComponentEventHandler<IButtonProps>
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
@@ -201,7 +201,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
     this.setState({ isFromKeyboard })
 
-    _.invoke(this.props, 'onFocus', e, { ...this.props, isFromKeyboard })
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
