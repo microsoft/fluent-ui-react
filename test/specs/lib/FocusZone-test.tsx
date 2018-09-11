@@ -9,7 +9,7 @@ import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
 } from '../../../src/lib/accessibility/FocusZone'
-import { IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/FocusUtilities'
+import { IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 describe('FocusZone', () => {
   let lastFocusedElement: HTMLElement | undefined

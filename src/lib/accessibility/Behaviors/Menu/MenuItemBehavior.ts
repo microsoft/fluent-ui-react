@@ -1,5 +1,5 @@
 import { Accessibility } from '../../interfaces'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/FocusUtilities'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({

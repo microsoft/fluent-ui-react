@@ -4,7 +4,7 @@ import { getTestingRenderedComponent } from 'test/utils'
 import { DefaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/FocusUtilities'
+import { FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector

@@ -18,7 +18,7 @@ import {
   isElementTabbable,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
-} from './FocusUtilities'
+} from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
 
@@ -39,7 +39,7 @@ function getParent(child: HTMLElement): HTMLElement | null {
   return child && child.parentElement
 }
 
-export class FocusZone extends React.Component<IFocusZoneProps, {}> implements IFocusZone {
+export class FocusZone extends React.Component<IFocusZoneProps> implements IFocusZone {
   static propTypes = {
     componentRef: PropTypes.object,
     className: PropTypes.string,
