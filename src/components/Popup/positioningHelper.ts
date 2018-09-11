@@ -31,29 +31,29 @@ const alignmentMap: Map<Alignment, PlacementCb> = new Map([
 ] as [Alignment, PlacementCb][])
 
 const shouldAlignToCenter = (p: Position, a: Alignment) => {
-  const isPositionedVertically = p === 'above' || p === 'below'
+  const positionedVertically = p === 'above' || p === 'below'
   const alignedVertically = a === 'top' || a === 'bottom'
 
   return (
-    (isPositionedVertically && alignedVertically) || (!isPositionedVertically && !alignedVertically)
+    (positionedVertically && alignedVertically) || (!positionedVertically && !alignedVertically)
   )
 }
 
 /**
  * | position | alignment | placement       | placement RTL
  * -----------------------------------------------------------------
- * | above    | start     | 'top-start'     | 'top-end'
- * | above    | center    | 'top'           | 'top'
- * | above    | end       | 'top-end'       | 'top-start'
- * | below    | start     | 'bottom-start'  | 'bottom-end'
- * | below    | center    | 'bottom'        | 'bottom'
- * | below    | end       | 'bottom-end'    | 'bottom-start
- * | before   | top       | 'left-start'    | 'right-start'
- * | before   | center    | 'left'          | 'right'
- * | before   | bottom    | 'left-end'      | 'right-end'
- * | after    | top       | 'right-start'   | 'left-start'
- * | after    | center    | 'right'         | 'left'
- * | after    | bottom    | 'right-end'     | 'left-end'
+ * | above    | start     |  top-start      |  top-end
+ * | above    | center    |  top            |  top
+ * | above    | end       |  top-end        |  top-start
+ * | below    | start     |  bottom-start   |  bottom-end
+ * | below    | center    |  bottom         |  bottom
+ * | below    | end       |  bottom-end     |  bottom-start
+ * | before   | top       |  left-start     |  right-start
+ * | before   | center    |  left           |  right
+ * | before   | bottom    |  left-end       |  right-end
+ * | after    | top       |  right-start    |  left-start
+ * | after    | center    |  right          |  left
+ * | after    | bottom    |  right-end      |  left-end
  */
 export default ({
   align,
@@ -68,5 +68,5 @@ export default ({
   const computedPosition = positionMap.get(position)(rtl)
   const computedAlignmnent = alignmentMap.get(alignment)(rtl)
 
-  return `${computedPosition}-${computedAlignmnent}` as Placement
+  return `${computedPosition}${computedAlignmnent && '-' + computedAlignmnent}` as Placement
 }

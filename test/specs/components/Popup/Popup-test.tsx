@@ -27,8 +27,9 @@ describe('Popup', () => {
   }) =>
     it(`Popup ${position} position sends ${expectedPlacement} to Popper props`, () => {
       const props: IPopupProps = {
-        content: <p />,
+        align,
         position,
+        content: <p />,
         trigger: <button />,
       }
       wrapper = mount(
@@ -108,12 +109,12 @@ describe('Popup', () => {
       testPopupPosition({ position: 'below', align: 'start', expectedPlacement: 'bottom-start' })
       testPopupPosition({ position: 'below', align: 'center', expectedPlacement: 'bottom' })
       testPopupPosition({ position: 'below', align: 'end', expectedPlacement: 'bottom-end' })
-      testPopupPosition({ position: 'before', align: 'start', expectedPlacement: 'left-start' })
+      testPopupPosition({ position: 'before', align: 'top', expectedPlacement: 'left-start' })
       testPopupPosition({ position: 'before', align: 'center', expectedPlacement: 'left' })
-      testPopupPosition({ position: 'before', align: 'end', expectedPlacement: 'left-end' })
-      testPopupPosition({ position: 'after', align: 'start', expectedPlacement: 'right-start' })
+      testPopupPosition({ position: 'before', align: 'bottom', expectedPlacement: 'left-end' })
+      testPopupPosition({ position: 'after', align: 'top', expectedPlacement: 'right-start' })
       testPopupPosition({ position: 'after', align: 'center', expectedPlacement: 'right' })
-      testPopupPosition({ position: 'after', align: 'end', expectedPlacement: 'right-end' })
+      testPopupPosition({ position: 'after', align: 'bottom', expectedPlacement: 'right-end' })
     })
 
     describe('handles Popup position correctly in rtl', () => {
@@ -126,15 +127,20 @@ describe('Popup', () => {
       testPopupPosition({ position: 'below', align: 'end', expectedPlacement: 'bottom-start', rtl })
       testPopupPosition({
         position: 'before',
-        align: 'start',
+        align: 'top',
         expectedPlacement: 'right-start',
         rtl,
       })
       testPopupPosition({ position: 'before', align: 'center', expectedPlacement: 'right', rtl })
-      testPopupPosition({ position: 'before', align: 'end', expectedPlacement: 'right-end', rtl })
-      testPopupPosition({ position: 'after', align: 'start', expectedPlacement: 'left-start', rtl })
+      testPopupPosition({
+        position: 'before',
+        align: 'bottom',
+        expectedPlacement: 'right-end',
+        rtl,
+      })
+      testPopupPosition({ position: 'after', align: 'top', expectedPlacement: 'left-start', rtl })
       testPopupPosition({ position: 'after', align: 'center', expectedPlacement: 'left', rtl })
-      testPopupPosition({ position: 'after', align: 'end', expectedPlacement: 'left-end', rtl })
+      testPopupPosition({ position: 'after', align: 'bottom', expectedPlacement: 'left-end', rtl })
     })
   })
 })
