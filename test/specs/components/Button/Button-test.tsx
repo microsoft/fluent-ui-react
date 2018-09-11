@@ -54,13 +54,13 @@ describe('Button', () => {
     describe('HTML accessibility rules validation', () => {
       describe('icon button must have textual representation for screen readers', () => {
         test('with title', async () =>
-          htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
+          await htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
 
         test('with aria-label attribute', async () =>
           await htmlIsAccessibilityCompliant(<Button icon="books" aria-label="testing button" />))
 
         test('with aria-labelledby attribute', async () =>
-          htmlIsAccessibilityCompliant(
+          await htmlIsAccessibilityCompliant(
             <div>
               <Button icon="books" aria-labelledby="tstBtn" />
               <span id="tstBtn" aria-label="testing button" />
@@ -70,10 +70,10 @@ describe('Button', () => {
 
       describe('different buttons variants', () => {
         test('button', async () =>
-          htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
+          await htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
 
         test('button with text and icon', async () =>
-          htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
+          await htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
       })
     })
 
