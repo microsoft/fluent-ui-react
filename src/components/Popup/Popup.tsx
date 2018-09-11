@@ -197,8 +197,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         basic={basic}
         {...rtl && { dir: 'rtl' }}
         styles={{ root: computedStyle }}
-        {...popupAccessibility}
-      >
+        {...popupAccessibility}>
         {content}
       </Popup.Content>
     )
