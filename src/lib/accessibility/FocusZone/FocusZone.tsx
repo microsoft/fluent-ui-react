@@ -21,6 +21,7 @@ import {
 } from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
+import getElementType from '../../getElementType'
 
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
@@ -59,9 +60,10 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     isRtl: PropTypes.bool,
   }
 
-  public static defaultProps: IFocusZoneProps = {
+  static defaultProps: IFocusZoneProps = {
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
+    as: 'div',
   }
 
   static displayName = 'FocusZone'
@@ -153,11 +155,12 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
   render() {
     const { className } = this.props
-    const Tag = this.props.as || 'div'
+    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
+
     const rest = getUnhandledProps({ handledProps: FocusZone.handledProps }, this.props)
 
     return (
-      <Tag
+      <ElementType
         role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
@@ -168,7 +171,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
         onMouseDownCapture={this._onMouseDown}
       >
         {this.props.children}
-      </Tag>
+      </ElementType>
     )
   }
 
@@ -214,14 +217,13 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
   /**
    * Sets focus to the last tabbable item in the zone.
-   * @param {boolean} forceIntoFirstElement If true, focus will be forced into the first element, even if focus is already in the focus zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   public focusLast(): boolean {
     if (this._root.current) {
       const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
 
-      this.focusElement(getPreviousElement(
+      return this.focusElement(getPreviousElement(
         this._root.current,
         lastChild,
         true,
