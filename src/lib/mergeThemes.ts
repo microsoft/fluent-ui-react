@@ -4,6 +4,7 @@ import {
   ComponentVariablesInput,
   IComponentPartStylesInput,
   IComponentPartStylesPrepared,
+  IFontFace,
   ISiteVariables,
   IThemeComponentStylesInput,
   IThemeComponentStylesPrepared,
@@ -11,9 +12,12 @@ import {
   IThemeComponentVariablesPrepared,
   IThemeInput,
   IThemePrepared,
+  StaticStyle,
+  StaticStyles,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
+import toCompactArray from './toCompactArray'
 
 // ----------------------------------------
 // Component level merge functions
@@ -155,11 +159,21 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
+export const mergeFontFaces = (...sources: IFontFace[]) => {
+  return toCompactArray<IFontFace>(...sources)
+}
+
+export const mergeStaticStyles = (...sources: StaticStyle[]) => {
+  return toCompactArray<StaticStyle>(...sources)
+}
+
 const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
     componentVariables: {},
     componentStyles: {},
+    fontFaces: [],
+    staticStyles: [],
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
@@ -176,6 +190,10 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
 
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
+
+    acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
+
+    acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
 
     return acc
   }, emptyTheme)

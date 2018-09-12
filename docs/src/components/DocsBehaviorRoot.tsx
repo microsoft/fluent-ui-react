@@ -2,7 +2,8 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 const behaviorMenuItems = require('docs/src/behaviorMenu')
-import { Grid } from 'semantic-ui-react'
+import { Grid, Header } from 'semantic-ui-react'
+import DocumentTitle from 'react-document-title'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
@@ -25,46 +26,58 @@ class DocsBehaviorRoot extends React.Component<any, any> {
       transition: 'box-shadow 200ms, background 200ms',
       background: '#fff',
       boxShadow: '0 1px 2px #ccc',
-      margin: '10px',
+      margin: '1em 1em 1em 2em',
     }
 
-    const commentBox: React.CSSProperties = {
-      padding: 5,
-    }
     const { match } = this.props
+    const pageTitle = _.capitalize(match.params.name) + ' behaviors'
     return (
-      <div style={commentBox}>
-        {behaviorMenuItems
-          .find(behavior => behavior.displayName === _.capitalize(match.params.name))
-          .variations.map((variation, keyValue) => (
-            <Grid key={keyValue} className="docs-example" style={exampleStyle}>
-              <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
-                <div style={{ display: 'flex' }}>
-                  <div style={{ flex: '1' }}>
-                    <ComponentExampleTitle
-                      id={_.kebabCase(variation.name)}
-                      title={this.baseName(variation.name)}
-                      description={`Behavior name: ${variation.name.replace('.ts', '')}`}
-                    />
+      <DocumentTitle title={pageTitle}>
+        <Grid>
+          <Grid.Row style={{ margin: '1em' }}>
+            <Grid.Column>
+              <Header
+                as="h1"
+                content={pageTitle}
+                subheader={'Keyboard and Screenreader options for ' + match.params.name + 's.'}
+              />
+            </Grid.Column>
+          </Grid.Row>
+          {behaviorMenuItems
+            .find(behavior => behavior.displayName === _.capitalize(match.params.name))
+            .variations.map((variation, keyValue) => (
+              <Grid.Row key={keyValue} className="docs-example" style={exampleStyle}>
+                <Grid.Column
+                  width={16}
+                  style={{ borderBottom: '1px solid #ddd', padding: '0 0 0 1em' }}
+                >
+                  <div style={{ display: 'flex' }}>
+                    <div style={{ flex: '1', marginBottom: '1em' }}>
+                      <ComponentExampleTitle
+                        id={_.kebabCase(variation.name)}
+                        title={this.baseName(variation.name)}
+                        description={`Name: ${variation.name.replace('.ts', '')}`}
+                      />
+                    </div>
+                    <div style={{ flex: '0 0 auto' }} />
                   </div>
-                  <div style={{ flex: '0 0 auto' }} />
+                </Grid.Column>
+                <div style={{ padding: '1em' }}>
+                  <span> Description: </span>
+                  <br />
+                  {variation.text.split('\n').map((splittedText, keyValue) => {
+                    return (
+                      <span key={keyValue}>
+                        {splittedText}
+                        <br />
+                      </span>
+                    )
+                  })}
                 </div>
-              </Grid.Column>
-              <div style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
-                <span> Description: </span>
-                <br />
-                {variation.text.split('\n').map((splittedText, keyValue) => {
-                  return (
-                    <span key={keyValue}>
-                      {splittedText}
-                      <br />
-                    </span>
-                  )
-                })}
-              </div>
-            </Grid>
-          ))}
-      </div>
+              </Grid.Row>
+            ))}
+        </Grid>
+      </DocumentTitle>
     )
   }
 }
