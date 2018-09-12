@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 
 import {
   createHTMLInput,
@@ -17,6 +18,7 @@ export interface IRadioProps {
   checked?: boolean
   children?: ReactChildren
   className?: string
+  defaultChecked?: boolean
   disabled?: boolean
   label?: string
   name?: string
@@ -106,7 +108,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static autoControlledProps = ['checked']
 
   private handleChange = (e: React.SyntheticEvent) => {
-    const { onChange, disabled } = this.props
+    const { disabled } = this.props
     const checked = (e.target as HTMLInputElement).checked
 
     if (disabled) {
@@ -116,9 +118,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     this.trySetState({ checked })
 
-    if (onChange) {
-      onChange(e, { ...this.props, checked })
-    }
+    _.invoke(this.props, 'onChange', e, { ...this.props, checked })
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
