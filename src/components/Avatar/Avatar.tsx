@@ -127,7 +127,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
         {Status.create(status, {
           defaultProps: {
             styles: { root: styles.status },
-            size: size / 4,
+            size: size * 0.3125,
             variables: {
               borderColor: variables.statusBorderColor,
               borderWidth: variables.statusBorderWidth,
