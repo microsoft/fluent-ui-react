@@ -11,8 +11,11 @@ import Label from '../Label'
 import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+import { RadioBehavior } from '../../lib/accessibility'
 
 export interface IRadioProps {
+  accessibility?: Accessibility
   as?: any
   checked?: boolean
   children?: ReactChildren
@@ -78,11 +81,15 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'checked',
     'children',
@@ -101,6 +108,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static defaultProps = {
     as: 'div',
     type: 'radio',
+    accessibility: RadioBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked']
@@ -121,13 +129,28 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  elementRef: HTMLInputElement
+  setElementRef = ref => (this.elementRef = ref)
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.checked && this.state.checked) {
+      this.elementRef.focus()
+    }
+  }
+
+  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
     const { type, label, disabled, value, name, icon } = this.props
     const { checked } = this.state
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        <Label as="label" styles={{ root: styles.label }}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+        ref={this.setElementRef}
+      >
+        <Label as="label" styles={{ root: styles.label }} {...accessibility.attributes.label}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
@@ -154,6 +177,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
             },
             overrideProps: {
               className: classes.radio,
+              ...accessibility.attributes.input,
             },
           })}
           {label}

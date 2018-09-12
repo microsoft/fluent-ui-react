@@ -19,6 +19,7 @@ export { MenuItem } from './components/Menu'
 export { default as Provider } from './components/Provider'
 export { default as ProviderConsumer } from './components/Provider/ProviderConsumer'
 export { default as Radio } from './components/Radio'
+export { RadioGroup } from './components/Radio'
 export { default as Icon } from './components/Icon'
 export { default as Text } from './components/Text'
 export { default as Header } from './components/Header'
@@ -32,4 +33,8 @@ export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolba
 export {
   default as ToolbarButtonBehavior,
 } from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'
+export {
+  default as RadioGroupBehavior,
+} from './lib/accessibility/Behaviors/Radio/RadioGroupBehavior'
+export { default as RadioBehavior } from './lib/accessibility/Behaviors/Radio/RadioBehavior'
 export { default as Portal } from './components/Portal'
