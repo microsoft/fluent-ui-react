@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
-const AvatarExampleStatusIndicatorCustomizationShorthand = () => (
+const AvatarExampleStatusCustomizationShorthand = () => (
   <Avatar
     src="public/images/avatar/small/matt.jpg"
     alt="Profile picture of Matt"
@@ -10,8 +10,8 @@ const AvatarExampleStatusIndicatorCustomizationShorthand = () => (
       icon: 'check',
       title: 'Available',
     }}
-    variables={{ statusIndicatorBorderColor: '#d3d3d3' }}
+    variables={{ statusBorderColor: '#d3d3d3' }}
   />
 )
 
-export default AvatarExampleStatusIndicatorCustomizationShorthand
+export default AvatarExampleStatusCustomizationShorthand

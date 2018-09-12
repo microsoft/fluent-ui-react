@@ -1,10 +1,10 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IStatusIndicatorPropsWithDefaults } from '../../../../components/StatusIndicator/StatusIndicator'
-import { IStatusIndicatorVariables } from './statusIndicatorVariables'
+import { IStatusPropsWithDefaults } from '../../../../components/Status/Status'
+import { IStatusVariables } from './statusVariables'
 
-const getBackgroundColor = (status: string, variables: IStatusIndicatorVariables) => {
-  switch (status) {
+const getBackgroundColor = (state: string, variables: IStatusVariables) => {
+  switch (state) {
     case 'success':
       return variables.successBackgroundColor
     case 'info':
@@ -19,8 +19,8 @@ const getBackgroundColor = (status: string, variables: IStatusIndicatorVariables
   }
 }
 
-const getTextColor = (status: string, variables: IStatusIndicatorVariables) => {
-  switch (status) {
+const getTextColor = (state: string, variables: IStatusVariables) => {
+  switch (state) {
     case 'success':
       return variables.successTextColor
     case 'info':
@@ -35,13 +35,13 @@ const getTextColor = (status: string, variables: IStatusIndicatorVariables) => {
   }
 }
 
-const statusIndicatorStyles: IComponentPartStylesInput = {
+const statusStyles: IComponentPartStylesInput = {
   root: ({
-    props: { color, size, status },
+    props: { color, size, state },
     variables,
   }: {
-    props: IStatusIndicatorPropsWithDefaults
-    variables: IStatusIndicatorVariables
+    props: IStatusPropsWithDefaults
+    variables: IStatusVariables
   }): ICSSInJSStyle => ({
     display: 'inline-flex',
     alignItems: 'center',
@@ -55,18 +55,18 @@ const statusIndicatorStyles: IComponentPartStylesInput = {
       borderWidth: pxToRem(variables.borderWidth),
       borderStyle: 'solid',
     }),
-    backgroundColor: color || getBackgroundColor(status, variables),
+    backgroundColor: color || getBackgroundColor(state, variables),
   }),
 
   icon: ({
-    props: { status },
+    props: { state },
     variables,
   }: {
-    props: IStatusIndicatorPropsWithDefaults
-    variables: IStatusIndicatorVariables
+    props: IStatusPropsWithDefaults
+    variables: IStatusVariables
   }): ICSSInJSStyle => ({
-    color: getTextColor(status, variables),
+    color: getTextColor(state, variables),
   }),
 }
 
-export default statusIndicatorStyles
+export default statusStyles

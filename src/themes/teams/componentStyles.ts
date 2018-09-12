@@ -41,6 +41,6 @@ export { default as Radio } from './components/Radio/radioStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
 
-export { default as StatusIndicator } from './components/StatusIndicator/statusIndicatorStyles'
+export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'

@@ -1,4 +1,4 @@
 export default () => ({
-  statusIndicatorBorderColor: 'white',
-  statusIndicatorBorderWidth: 2,
+  statusBorderColor: 'white',
+  statusBorderWidth: 2,
 })

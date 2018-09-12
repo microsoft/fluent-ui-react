@@ -2,11 +2,11 @@ import * as React from 'react'
 import Types from './Types'
 import Variations from './Variations'
 
-const StatusIndicatorExamples = () => (
+const StatusExamples = () => (
   <div>
     <Types />
     <Variations />
   </div>
 )
 
-export default StatusIndicatorExamples
+export default StatusExamples

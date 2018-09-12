@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Image, Label, StatusIndicator } from '../../'
+import { Image, Label, Status } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
@@ -20,9 +20,8 @@ export interface IAvatarProps {
 }
 
 /**
- * An avatar is a graphic representation of user alongside with a status icon.
+ * An avatar is a graphic representation of user.
  * @accessibility To be discussed
- *
  */
 class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static create: Function
@@ -125,13 +124,13 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
             title={name}
           />
         )}
-        {StatusIndicator.create(status, {
+        {Status.create(status, {
           defaultProps: {
-            styles: { root: styles.statusIndicator },
+            styles: { root: styles.status },
             size: size / 4,
             variables: {
-              borderColor: variables.statusIndicatorBorderColor,
-              borderWidth: variables.statusIndicatorBorderWidth,
+              borderColor: variables.statusBorderColor,
+              borderWidth: variables.statusBorderWidth,
             },
           },
         })}

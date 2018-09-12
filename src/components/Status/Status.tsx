@@ -6,37 +6,28 @@ import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
-export interface IStatusIndicatorProps {
+export interface IStatusProps {
   as?: any
   className?: string
   color?: string
-  size?: number
-  status?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
   icon?: ItemShorthand
+  size?: number
+  state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
 
 /**
- * A status indicator is a graphical representation of a status
+ * A status graphically represents someone's or something's state.
  */
-class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any> {
+class Status extends UIComponent<Extendable<IStatusProps>, any> {
   static create: Function
 
-  static className = 'ui-statusindicator'
+  static className = 'ui-status'
 
-  static displayName = 'StatusIndicator'
+  static displayName = 'Status'
 
-  static handledProps = [
-    'as',
-    'className',
-    'color',
-    'icon',
-    'size',
-    'status',
-    'styles',
-    'variables',
-  ]
+  static handledProps = ['as', 'className', 'color', 'icon', 'size', 'state', 'styles', 'variables']
 
   static propTypes = {
     /** An element type to render as (string or function). */
@@ -48,14 +39,14 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
     /** A custom color. */
     color: PropTypes.string,
 
+    /** Shorthand for the icon, to provide customizing status */
+    icon: customPropTypes.itemShorthand,
+
     /** Size multiplier (default 5) * */
     size: PropTypes.number,
 
-    /** The pre-defined status values which can be consumed directly */
-    status: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
-
-    /** Shorthand for the icon, to provide customizing status */
-    icon: customPropTypes.itemShorthand,
+    /** The pre-defined state values which can be consumed directly. */
+    state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -67,11 +58,11 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   static defaultProps = {
     as: 'span',
     size: 10,
-    status: 'unknown',
+    state: 'unknown',
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { icon } = this.props as IStatusIndicatorPropsWithDefaults
+    const { icon } = this.props as IStatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
@@ -86,8 +77,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   }
 }
 
-StatusIndicator.create = createShorthandFactory(StatusIndicator, status => ({ status }))
+Status.create = createShorthandFactory(Status, state => ({ state }))
 
-export default StatusIndicator
-export type IStatusIndicatorPropsWithDefaults = IStatusIndicatorProps &
-  typeof StatusIndicator.defaultProps
+export default Status
+export type IStatusPropsWithDefaults = IStatusProps & typeof Status.defaultProps

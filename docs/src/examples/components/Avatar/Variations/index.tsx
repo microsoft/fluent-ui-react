@@ -35,9 +35,9 @@ const Variations = () => (
       examplePath="components/Avatar/Variations/AvatarExampleGetInitials"
     />
     <ComponentExample
-      title="Status indicator customization"
-      description="The status indicator inside the Avatar can be customize to show different background."
-      examplePath="components/Avatar/Variations/AvatarExampleStatusIndicatorCustomization"
+      title="Status customization"
+      description="The status inside the Avatar can be customize to show different background."
+      examplePath="components/Avatar/Variations/AvatarExampleStatusCustomization"
     />
     <ComponentExample
       title="Size"
