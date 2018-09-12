@@ -15,6 +15,14 @@ import Icon from 'src/components/Icon/Icon'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
+jest.mock('what-input', () => {
+  return {
+    default: {
+      ask: jest.fn(),
+    },
+  }
+})
+
 describe('Button', () => {
   isConformant(Button)
   buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })

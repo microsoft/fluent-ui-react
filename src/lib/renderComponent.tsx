@@ -40,6 +40,7 @@ export interface IRenderResultConfig<P> {
   variables: ComponentVariablesObject
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
+  rtl: boolean
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -149,6 +150,7 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           styles: resolvedStyles,
           accessibility,
+          rtl,
         }
 
         const rendered = render(config)

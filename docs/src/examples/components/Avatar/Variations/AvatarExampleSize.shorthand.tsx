@@ -2,17 +2,21 @@ import _ from 'lodash'
 import React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
+const status = { icon: 'check', color: 'green', title: 'Available' }
+
 const AvatarExampleSizeShorthand = () =>
-  _.times(10, i => {
-    const size = i + 1
+  _.times(7, i => {
+    const size = 20 + i * 4
     return (
-      <div key={size}>
-        <Avatar size={size} src="public/images/avatar/small/matt.jpg" status="Available" />
+      <p key={size}>
+        <strong>{size}</strong>
         &emsp;
-        <Avatar size={size} name="John Doe" status="Available" />
+        <Avatar size={size} src="public/images/avatar/small/matt.jpg" status={status} />
+        &emsp;
+        <Avatar size={size} name="John Doe" status={status} />
         &emsp;
         <Avatar size={size} src="public/images/avatar/small/matt.jpg" />
-      </div>
+      </p>
     )
   })
 
