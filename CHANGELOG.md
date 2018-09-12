@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixed missing colors in Teams' siteVariables @mnajdova ([#200](https://github.com/stardust-ui/react/pull/200))
 - Fixed Teams' siteVariables font sizes @levithomason ([#204](https://github.com/stardust-ui/react/pull/204))
 - Fixed docs examples of `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
+- Preserve fonts and static styles in mergeThemes @levithomason ([#205](https://github.com/stardust-ui/react/pull/205))
 
 ### Features
 - Add `state` to `props` in component styling functions @Bugaa92 ([#173](https://github.com/stardust-ui/react/pull/173))
@@ -35,6 +36,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility description for `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
 - Add `Portal`, `PortalInner` and `Ref` components base implementation @Bugaa92 ([#144](https://github.com/stardust-ui/react/pull/144))
 - Support all Semantic UI FontAwesome icon names @levithomason ([#211](https://github.com/stardust-ui/react/pull/211))
+- Add `Popup` component base implementation @Bugaa92 ([#150](https://github.com/stardust-ui/react/pull/150))
+- Add Input `inline` prop @alinais ([#120](https://github.com/stardust-ui/react/pull/120))
 - Add `StatusIndicator` as a separate component @musingh1 ([#208](https://github.com/stardust-ui/react/pull/208))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->

@@ -1,5 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import whatInput from 'what-input'
+import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
@@ -26,6 +28,7 @@ export interface IButtonProps {
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
+  onFocus?: ComponentEventHandler<IButtonProps>
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
@@ -89,6 +92,13 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
      */
     onClick: PropTypes.func,
 
+    /**
+     * Called after user's focus.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onFocus: PropTypes.func,
+
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
@@ -118,6 +128,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     'iconOnly',
     'iconPosition',
     'onClick',
+    'onFocus',
     'styles',
     'text',
     'type',
@@ -130,6 +141,10 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   static Group = ButtonGroup
+
+  public state = {
+    isFromKeyboard: false,
+  }
 
   public renderComponent({
     ElementType,
@@ -146,6 +161,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...rest}
       >
@@ -178,6 +194,14 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     if (onClick) {
       onClick(e, this.props)
     }
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    const isFromKeyboard = whatInput.ask() === 'keyboard'
+
+    this.setState({ isFromKeyboard })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
