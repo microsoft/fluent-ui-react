@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `FocusZone` to `lib/accessibility`, change `Menu` behavior to support arrow keys @tomasiser ([#116](https://github.com/stardust-ui/react/pull/116))
+
 <!--------------------------------[ v0.5.1 ]------------------------------- -->
 ## [v0.5.1](https://github.com/stardust-ui/react/tree/v0.5.1) (2018-09-11)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.5.0...v0.5.1)
