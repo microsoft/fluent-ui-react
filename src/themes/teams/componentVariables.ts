@@ -34,4 +34,6 @@ export { default as PopupContent } from './components/Popup/popupContentVariable
 
 export { default as Radio } from './components/Radio/radioVariables'
 
+export { default as Status } from './components/Status/statusVariables'
+
 export { default as Text } from './components/Text/textVariables'
