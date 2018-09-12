@@ -109,16 +109,16 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   private handleChange = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
-    const checked = (e.target as HTMLInputElement).checked
+    const { checked } = this.state
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    this.trySetState({ checked })
+    this.trySetState({ checked: !checked })
 
-    _.invoke(this.props, 'onChange', e, { ...this.props, checked })
+    _.invoke(this.props, 'onChange', e, { ...this.props, checked: !checked })
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
@@ -126,7 +126,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     const { checked } = this.state
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} onChange={this.handleChange}>
         <Label as="label" styles={{ root: styles.label }}>
           {Icon.create(icon || '', {
             defaultProps: {
@@ -150,7 +150,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
               disabled,
               value,
               name,
-              onChange: this.handleChange,
             },
             overrideProps: {
               className: classes.radio,
