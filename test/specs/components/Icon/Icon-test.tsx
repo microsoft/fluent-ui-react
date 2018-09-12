@@ -11,8 +11,6 @@ describe('Icon', () => {
   describe('accessibility', () => {
     handlesAccessibility(Icon, {
       defaultRootRole: undefined,
-      accessibilityOverride: MenuBehavior,
-      overriddenRootRole: 'menu',
     })
 
     describe('aria-hidden', () => {

@@ -1,4 +1,5 @@
 import { Accessibility } from '../../interfaces'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
 const MenuItemBehavior: Accessibility = (props: any) => ({
@@ -11,6 +12,7 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
       tabIndex: '0',
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
 
