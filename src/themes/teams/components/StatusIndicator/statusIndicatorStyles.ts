@@ -46,8 +46,8 @@ const statusIndicatorStyles: IComponentPartStylesInput = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: pxToRem(size + 2 * (variables.borderWidth || 0)),
-    width: pxToRem(size + 2 * (variables.borderWidth || 0)),
+    height: pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0)),
+    width: pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0)),
     verticalAlign: 'middle',
     borderRadius: '9999px',
     ...(variables.borderColor && {

@@ -6,7 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Custom"
-      description="A status indicator can be used to show a custom status"
+      description="A status indicator can be used to show a custom status."
       examplePath="components/StatusIndicator/Variations/StatusIndicatorCustomExample"
     />
   </ExampleSection>

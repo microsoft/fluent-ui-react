@@ -76,7 +76,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
-            size: 'mini',
+            size: 'micro',
             variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
             xSpacing: 'none',
           },

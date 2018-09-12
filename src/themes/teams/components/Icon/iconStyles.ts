@@ -4,9 +4,9 @@ import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
 const sizes = new Map([
-  ['micro', 0.5],
-  ['mini', 0.6],
-  ['tiny', 0.7],
+  ['micro', 0.55],
+  ['mini', 0.65],
+  ['tiny', 0.75],
   ['small', 0.85],
   ['normal', 1],
   ['large', 1.5],
