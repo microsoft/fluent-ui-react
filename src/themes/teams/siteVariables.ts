@@ -52,6 +52,20 @@ export const fontSizeSmall = pxToRem(12)
 export const fontSizeExtraSmall = pxToRem(10)
 
 //
+// STATUS COLORS
+//
+export const successStatusBackgroundColor = green
+export const successStatusTextColor = white
+export const infoStatusBackgroundColor = 'blue'
+export const infoStatusTextColor = white
+export const warningStatusBackgroundColor = yellow
+export const warningStatusTextColor = white
+export const errorStatusBackgroundColor = red
+export const errorStatusTextColor = white
+export const unknownStatusBackgroundColor = gray04
+export const unknownStatusTextColor = white
+
+//
 // FONT WEIGHTS
 //
 export const fontWeightLight = 200
