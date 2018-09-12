@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
-const status = { icon: 'check', title: 'Available' }
+const status = { icon: 'check', color: 'green', title: 'Available' }
 
 const AvatarExampleSizeShorthand = () =>
   _.times(7, i => {

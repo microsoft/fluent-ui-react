@@ -16,7 +16,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Icon"
-      description="A status indicator can have icon."
+      description="A status indicator can have an icon."
       examplePath="components/StatusIndicator/Types/StatusIndicatorIconExample"
     />
   </ExampleSection>

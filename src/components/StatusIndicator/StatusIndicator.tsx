@@ -86,7 +86,7 @@ class StatusIndicator extends UIComponent<Extendable<IStatusIndicatorProps>, any
   }
 }
 
-StatusIndicator.create = createShorthandFactory(StatusIndicator, icon => ({ icon }))
+StatusIndicator.create = createShorthandFactory(StatusIndicator, status => ({ status }))
 
 export default StatusIndicator
 export type IStatusIndicatorPropsWithDefaults = IStatusIndicatorProps &

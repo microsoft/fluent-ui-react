@@ -35,8 +35,8 @@ const avatarStyles: IComponentPartStylesInput = {
   }),
   statusIndicator: (): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: '-2px',
+    right: '-2px',
   }),
 }
 
