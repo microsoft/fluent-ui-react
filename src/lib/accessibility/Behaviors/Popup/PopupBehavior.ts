@@ -33,6 +33,14 @@ const PopupBehavior: Accessibility = (props: any) => ({
       },
     },
   },
+
+  focusTrapZone: {
+    enabled: true,
+    props: {
+      disableFirstFocus: true,
+      isClickableOutsideFocusTrap: true,
+    },
+  },
 })
 
 export default PopupBehavior

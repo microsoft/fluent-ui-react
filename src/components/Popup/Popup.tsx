@@ -152,6 +152,11 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
       ...accessibility.keyHandlers.trigger,
     }
 
+    const trapFocus = accessibility.focusTrapZone && accessibility.focusTrapZone.enabled
+    const focusTrapZoneProps = trapFocus && {
+      ...accessibility.focusTrapZone.props,
+    }
+
     return (
       <ElementType
         className={classes.root}
@@ -164,6 +169,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         onOutsideClick={this.closePopup}
         onMount={this.onOpen}
         onUnmount={this.onClose}
+        trapFocus={trapFocus}
+        focusTrapZoneProps={focusTrapZoneProps}
       >
         {childrenExist(children)
           ? children

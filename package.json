@@ -79,6 +79,7 @@
     }
   },
   "dependencies": {
+    "@uifabric/utilities": "^6.19.0",
     "classnames": "^2.2.5",
     "fela": "^6.1.7",
     "fela-plugin-fallback-value": "^5.0.17",

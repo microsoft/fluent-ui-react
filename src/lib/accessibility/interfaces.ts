@@ -1,4 +1,4 @@
-import { IFocusZoneProps } from './FocusZone'
+import { IFocusZoneProps, IFocusTrapZoneProps } from './FocusZone'
 
 export type AriaWidgetRole =
   | 'button'
@@ -141,12 +141,18 @@ export type FocusZoneDefinition = {
   props?: IFocusZoneProps
 }
 
+export type FocusTrapZoneDefinition = {
+  enabled?: boolean
+  props?: IFocusTrapZoneProps
+}
+
 export type KeyActions = { [partName: string]: { [actionName: string]: IKeyAction } }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   keyActions?: KeyActions
   handledProps?: (keyof IAccessibilityAttributes)[]
   focusZone?: FocusZoneDefinition
+  focusTrapZone?: FocusTrapZoneDefinition
 }
 
 export interface IAccessibilityBehavior extends IAccessibilityDefinition {
