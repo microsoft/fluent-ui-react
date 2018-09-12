@@ -1,4 +1,4 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility, FocusZoneMode } from '../../interfaces'
 
 /**
  * @description
@@ -10,6 +10,12 @@ const MenuBehavior: Accessibility = {
   attributes: {
     root: {
       role: 'menu',
+    },
+  },
+  focusZone: {
+    mode: FocusZoneMode.Wrap,
+    props: {
+      isCircularNavigation: true,
     },
   },
 }
