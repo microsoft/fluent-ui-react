@@ -145,6 +145,9 @@ export default (Component, options: any = {}) => {
     const props = { [propName]: true }
 
     const component = createComponent(props)
+
+    // The component already has the prop, so we are testing if it's children also have the props,
+    // that is why we are testing if it is greater then 1
     expect(component.find(props).length).toBeGreaterThan(1)
   })
 
