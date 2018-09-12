@@ -42,14 +42,9 @@ class Provider extends React.Component<IProviderProps, any> {
           }),
         }),
       ),
-      staticStyles: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-        PropTypes.func,
-        PropTypes.arrayOf(
-          PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
-        ),
-      ]),
+      staticStyles: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+      ),
     }),
     children: PropTypes.element.isRequired,
   }
@@ -72,9 +67,7 @@ class Provider extends React.Component<IProviderProps, any> {
       })
     }
 
-    const staticStylesArr = toCompactArray(staticStyles)
-
-    staticStylesArr.forEach((staticStyle: StaticStyle) => {
+    staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
         felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {

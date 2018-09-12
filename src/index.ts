@@ -38,3 +38,5 @@ export {
 } from './lib/accessibility/Behaviors/Radio/RadioGroupBehavior'
 export { default as RadioBehavior } from './lib/accessibility/Behaviors/Radio/RadioBehavior'
 export { default as Portal } from './components/Portal'
+export { default as Popup } from './components/Popup'
+export { PopupContent } from './components/Popup'
