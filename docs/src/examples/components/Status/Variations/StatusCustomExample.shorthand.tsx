@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Status, Avatar } from '@stardust-ui/react'
 
-const StatusCustomShorthandExample = () => (
+const StatusCustomExampleShorthand = () => (
   <div>
     <Status color="orange" icon="clock" title="Be right back" />
     &emsp;
@@ -11,4 +11,4 @@ const StatusCustomShorthandExample = () => (
   </div>
 )
 
-export default StatusCustomShorthandExample
+export default StatusCustomExampleShorthand
