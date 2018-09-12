@@ -78,7 +78,6 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...(primary &&
         !text && {
-          outline: 0,
           color: typePrimaryColor,
           backgroundColor: typePrimaryBackgroundColor,
           border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
@@ -89,6 +88,12 @@ const buttonStyles: IComponentPartStylesInput = {
             color: typePrimaryColor,
             backgroundColor: typePrimaryBackgroundColorHover,
           },
+        }),
+
+      ...(primary &&
+        !text &&
+        !circular && {
+          outline: 0,
           ':focus': {
             ...(isFromKeyboard && {
               backgroundColor: typePrimaryBackgroundColorFocus,
@@ -117,7 +122,6 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...(secondary &&
         !text && {
-          outline: 0,
           color: typeSecondaryColor,
           backgroundColor: typeSecondaryBackgroundColor,
           borderColor: typeSecondaryBorderColor,
@@ -130,6 +134,12 @@ const buttonStyles: IComponentPartStylesInput = {
             backgroundColor: typeSecondaryBackgroundColorHover,
             borderColor: typeSecondaryBorderColorHover,
           },
+        }),
+
+      ...(secondary &&
+        !text &&
+        !circular && {
+          outline: 0,
           ':focus': {
             ...(isFromKeyboard && {
               backgroundColor: typeSecondaryBackgroundColorFocus,
