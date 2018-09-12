@@ -376,13 +376,12 @@ export default (Component, options: any = {}) => {
   // ----------------------------------------
   describe('static className (common)', () => {
     const getClassesOfRootElement = component => {
-      const classes = component
+      return component
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop('data-focuszone-id')) // filter out FocusZone <div>
         .first()
         .prop('className')
-      return classes
     }
 
     test(`is a static equal to "${info.componentClassName}"`, () => {
@@ -435,7 +434,7 @@ export default (Component, options: any = {}) => {
       if (!defaultClasses) return
 
       const userClasses = 'generate'
-      createComponent({ className: userClasses })
+      const wrapperWithCustomClasses = createComponent({ className: userClasses })
       const mixedClasses = getClassesOfRootElement(wrapperWithCustomClasses)
 
       const message = [
