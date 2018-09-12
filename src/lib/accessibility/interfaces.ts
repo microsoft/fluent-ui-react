@@ -1,3 +1,5 @@
+import { IFocusZoneProps } from './FocusZone'
+
 export type AriaWidgetRole =
   | 'button'
   | 'checkbox'
@@ -128,11 +130,23 @@ export interface IAccessibilityAttributes
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
+
+export enum FocusZoneMode {
+  Custom,
+  Wrap,
+}
+
+export type FocusZoneDefinition = {
+  mode: FocusZoneMode
+  props?: IFocusZoneProps
+}
+
 export type KeyActions = { [partName: string]: { [actionName: string]: IKeyAction } }
 export interface IAccessibilityDefinition {
   attributes?: AccessibilityAttributes
   keyActions?: KeyActions
   handledProps?: (keyof IAccessibilityAttributes)[]
+  focusZone?: FocusZoneDefinition
 }
 
 export interface IAccessibilityBehavior extends IAccessibilityDefinition {

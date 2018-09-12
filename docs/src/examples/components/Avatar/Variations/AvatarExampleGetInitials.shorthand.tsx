@@ -4,7 +4,11 @@ import { Avatar } from '@stardust-ui/react'
 const getInitials = name => name.split(' ').map(word => `${word[0]}.`)
 
 const AvatarExampleGetInitialsShorthand = () => (
-  <Avatar status="Available" name="John Doe" getInitials={getInitials} />
+  <Avatar
+    name="John Doe"
+    getInitials={getInitials}
+    status={{ color: 'green', icon: 'check', title: 'Available' }}
+  />
 )
 
 export default AvatarExampleGetInitialsShorthand

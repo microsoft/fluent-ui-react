@@ -6,6 +6,8 @@ import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
 import { ToolbarBehavior, TabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
+import { MenuBehavior } from 'src/lib/accessibility'
+import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -70,7 +72,10 @@ describe('Menu', () => {
     })
 
     describe('accessibility', () => {
-      handlesAccessibility(Menu, { defaultRootRole: 'menu' })
+      handlesAccessibility(Menu, {
+        defaultRootRole: 'menu',
+        focusZoneDefinition: (MenuBehavior as IAccessibilityDefinition).focusZone,
+      })
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
