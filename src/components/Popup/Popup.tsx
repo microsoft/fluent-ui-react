@@ -10,12 +10,19 @@ import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
+import { PopupBehavior } from '../../lib/accessibility'
+import {
+  Accessibility,
+  AccessibilityActionHandlers,
+  IAccessibilityBehavior,
+} from '../../lib/accessibility/interfaces'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
 export interface IPopupProps {
+  accessibility?: Accessibility
   align?: Alignment
   as?: any
   basic?: boolean
@@ -30,6 +37,7 @@ export interface IPopupProps {
 
 export interface IPopupState {
   triggerRef: HTMLElement
+  popupOpened?: boolean
 }
 
 /**
@@ -79,9 +87,13 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static handledProps = [
+    'accessibility',
     'align',
     'as',
     'basic',
@@ -98,47 +110,72 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     as: Portal,
     align: 'start',
     position: 'above',
+    accessibility: PopupBehavior as Accessibility,
   }
 
-  public state = { triggerRef: undefined }
+  public state = { triggerRef: undefined, popupOpened: false }
+
+  actionHandlers: AccessibilityActionHandlers = {
+    open: e => this.openPopup(e),
+    close: e => this.closePopup(e),
+    closeAndFocusTrigger: e => this.closePopup(e, this.focusTrigger),
+  }
 
   public renderComponent({
     ElementType,
     classes,
+    accessibility,
     rest,
     rtl,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger } = this.props
+    const { children, trigger, position, align } = this.props
 
     return (
       <ElementType
         className={classes.root}
         {...rest}
+        open={this.state.popupOpened}
         trigger={trigger}
         triggerRef={this.handleTriggerRef}
+        triggerAccessibility={{
+          ...accessibility.attributes.trigger,
+          ...accessibility.keyHandlers.trigger,
+        }}
+        onOutsideClick={this.closePopup}
+        onTriggerClick={this.onTriggerClick}
       >
-        {childrenExist(children) ? children : this.renderContent(rtl)}
+        {childrenExist(children)
+          ? children
+          : this.renderContent(
+              computePopupPlacement({ align, position, rtl }),
+              this.renderPopperChildren.bind(this, rtl, accessibility),
+            )}
       </ElementType>
     )
   }
 
-  private renderContent(rtl: boolean): JSX.Element {
-    const { align, position } = this.props
+  private renderContent(
+    popupPlacement: Placement,
+    renderChildrenCb: (props: PopperChildrenProps) => React.ReactNode,
+  ): JSX.Element {
     const triggerRef = this.state.triggerRef
-    const placement = computePopupPlacement({ align, position, rtl })
 
     return (
       triggerRef && (
         <Popper
-          placement={placement}
+          placement={popupPlacement}
           referenceElement={triggerRef}
-          children={this.renderPopperChildren.bind(this, rtl)}
+          children={renderChildrenCb}
         />
       )
     )
   }
 
-  private renderPopperChildren = (rtl: boolean, { ref, style }: PopperChildrenProps) => {
+  private renderPopperChildren = (
+    rtl: boolean,
+    accessibility: IAccessibilityBehavior,
+    { ref, style }: PopperChildrenProps,
+  ) => {
     const { basic, content } = this.props
     const computedStyle = rtl ? rtlCSSJS(style) : style
 
@@ -148,10 +185,31 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         basic={basic}
         {...rtl && { dir: 'rtl' }}
         styles={{ root: computedStyle }}
+        {...accessibility.attributes.popup}
+        {...accessibility.keyHandlers.popup}
       >
         {content}
       </Popup.Content>
     )
+  }
+
+  private onTriggerClick = () => {
+    this.setState({ popupOpened: !this.state.popupOpened })
+  }
+
+  private openPopup = (e: Event, afterRenderCb?: () => void) => {
+    e.preventDefault()
+    this.setState({ popupOpened: true }, () => afterRenderCb && afterRenderCb())
+  }
+
+  private closePopup = (e: Event, afterRenderCb?: () => void) => {
+    e.preventDefault()
+    this.setState({ popupOpened: false }, () => afterRenderCb && afterRenderCb())
+  }
+
+  private focusTrigger = () => {
+    const triggerRef = this.state.triggerRef
+    triggerRef && triggerRef.focus()
   }
 
   private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })
