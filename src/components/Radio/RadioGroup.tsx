@@ -96,6 +96,8 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
       newIndex = this.props.items.length - 1
     }
     this.trySetState({ checkedIndex: newIndex })
+
+    _.invoke(this.props, 'onChange', event, this.props.items[newIndex])
   }
 
   handleItemOverrides = predefinedProps => ({
@@ -104,7 +106,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
       this.trySetState({ checkedIndex: index })
 
-      _.invoke(predefinedProps, 'onChange', e, itemProps)
+      _.invoke(this.props, 'onChange', e, itemProps)
     },
   })
 

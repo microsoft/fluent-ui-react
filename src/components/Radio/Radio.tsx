@@ -1,5 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import whatInput from 'what-input'
+import * as _ from 'lodash'
 
 import {
   createHTMLInput,
@@ -28,6 +30,7 @@ export interface IRadioProps {
   styles?: IComponentPartStylesInput
   value?: string | number
   variables?: ComponentVariablesInput
+  isFromKeyboard?: boolean
 }
 
 /**
@@ -86,6 +89,11 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    isFromKeyboard: PropTypes.bool,
+    defaultIsFromKeyboard: PropTypes.bool,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
   }
 
   static handledProps = [
@@ -103,6 +111,10 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'type',
     'value',
     'variables',
+    'isFromKeyboard',
+    'defautIsFromKeyboard',
+    'onFocus',
+    'onBlur',
   ]
 
   static defaultProps = {
@@ -111,7 +123,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     accessibility: RadioBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked']
+  static autoControlledProps = ['checked', 'isFromKeyboard']
 
   private handleChange = (e: React.SyntheticEvent) => {
     const { onChange, disabled } = this.props
@@ -129,6 +141,22 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     }
   }
 
+  private handleFocus = (e: React.SyntheticEvent) => {
+    const isFromKeyboard = whatInput.ask() === 'keyboard'
+
+    this.setState({ isFromKeyboard })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    const isFromKeyboard = false
+
+    this.setState({ isFromKeyboard })
+
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
   elementRef: HTMLInputElement
   setElementRef = ref => (this.elementRef = ref)
 
@@ -144,6 +172,8 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     return (
       <ElementType
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}

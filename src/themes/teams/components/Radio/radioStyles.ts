@@ -23,8 +23,11 @@ const radioStyles: IComponentPartStylesInput = {
     backgroundColor: 'transparent',
   }),
 
-  icon: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
+  icon: ({ props, variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
     margin: variables.iconMargin,
+    ...(props.isFromKeyboard && {
+      border: '.2rem solid red', // TODO: style
+    }),
   }),
 }
 
