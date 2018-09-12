@@ -60,24 +60,6 @@ const buttonStyles: IComponentPartStylesInput = {
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       cursor: 'pointer',
-      outline: 0,
-
-      ':focus': {
-        ...(isFromKeyboard && {
-          backgroundColor: typePrimaryBackgroundColorFocus,
-          borderColor: typePrimaryBorderColorFocus,
-          '::before': {
-            content: '""',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            right: '0',
-            bottom: '0',
-            border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
-            borderRadius: `${pxToRem(2)}`,
-          },
-        }),
-      },
 
       ...(!text && {
         borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
@@ -96,6 +78,7 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...(primary &&
         !text && {
+          outline: 0,
           color: typePrimaryColor,
           backgroundColor: typePrimaryBackgroundColor,
           border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
@@ -105,6 +88,22 @@ const buttonStyles: IComponentPartStylesInput = {
           ':hover': {
             color: typePrimaryColor,
             backgroundColor: typePrimaryBackgroundColorHover,
+          },
+          ':focus': {
+            ...(isFromKeyboard && {
+              backgroundColor: typePrimaryBackgroundColorFocus,
+              borderColor: typePrimaryBorderColorFocus,
+              '::before': {
+                content: '""',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
+                borderRadius: `${pxToRem(2)}`,
+              },
+            }),
           },
         }),
 
@@ -118,6 +117,7 @@ const buttonStyles: IComponentPartStylesInput = {
 
       ...(secondary &&
         !text && {
+          outline: 0,
           color: typeSecondaryColor,
           backgroundColor: typeSecondaryBackgroundColor,
           borderColor: typeSecondaryBorderColor,
