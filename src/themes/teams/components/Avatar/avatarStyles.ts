@@ -33,10 +33,10 @@ const avatarStyles: IComponentPartStylesInput = {
     verticalAlign: 'top',
     textAlign: 'center',
   }),
-  status: (): ICSSInJSStyle => ({
+  status: ({ props, variables }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: '-2px',
-    right: '-2px',
+    bottom: `-${variables.statusBorderWidth}px`,
+    right: `-${variables.statusBorderWidth}px`,
   }),
 }
 
