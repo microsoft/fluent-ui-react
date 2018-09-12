@@ -42,7 +42,7 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
     /** Shorthand for the icon, to provide customizing status */
     icon: customPropTypes.itemShorthand,
 
-    /** Size multiplier (default 5) * */
+    /** Size multiplier */
     size: PropTypes.number,
 
     /** The pre-defined state values which can be consumed directly. */

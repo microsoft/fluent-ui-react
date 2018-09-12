@@ -56,7 +56,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** The name used for displaying the initials of the avatar if the image is not provided. */
     name: PropTypes.string,
 
-    /** Size multiplier (default 5) * */
+    /** Size multiplier */
     size: PropTypes.number,
 
     /** The src of the image used in the Avatar. */
