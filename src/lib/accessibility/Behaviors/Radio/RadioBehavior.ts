@@ -4,15 +4,14 @@ import * as keyboardKey from 'keyboard-key'
 const RadioBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: 'radio',
-      tabIndex: props.checked ? '0' : '-1',
-      'aria-checked': props.checked,
+      role: 'presentation',
     },
     label: {
       role: 'presentation',
     },
     input: {
-      role: 'presentation',
+      tabIndex: props.checked ? '0' : '-1',
+      'aria-checked': props.checked,
     },
   },
 
