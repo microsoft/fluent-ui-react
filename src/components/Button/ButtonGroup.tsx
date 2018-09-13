@@ -30,7 +30,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** A button can take the width of its container. */
+    /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
 
     /** Primary content. */
