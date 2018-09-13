@@ -48,6 +48,34 @@ export default Component => {
 
         expect(allShorthandPropertiesArePassedToShorthandComponent).toBe(true)
       })
+
+      test(`shorthand's styles may be passed as '${shorthandPropertyName}' prop of ${
+        Component.displayName
+      }'s styles`, () => {
+        const props = { [shorthandPropertyName]: 'some value' }
+
+        const wrapper = mount(
+          <Component {...props} styles={{ [shorthandPropertyName]: { foo: 'bar' } }} />,
+        )
+        const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
+
+        expect(shorthandComponentProps.styles).toBeDefined()
+        expect(shorthandComponentProps.styles.root).toEqual({ foo: 'bar' })
+      })
+
+      test(`shorthand's variables may be passed as '${shorthandPropertyName}' prop of ${
+        Component.displayName
+      }'s variables`, () => {
+        const props = { [shorthandPropertyName]: 'some value' }
+
+        const wrapper = mount(
+          <Component {...props} variables={{ [shorthandPropertyName]: { foo: 'bar' } }} />,
+        )
+        const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
+
+        expect(shorthandComponentProps.variables).toBeDefined()
+        expect(shorthandComponentProps.variables.foo).toBe('bar')
+      })
     })
   }
 }

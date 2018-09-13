@@ -1,14 +1,16 @@
-import { task, src, dest, series } from 'gulp'
+import { task, src, dest, parallel, series } from 'gulp'
 import { argv } from 'yargs'
 import config from '../../../../config'
 import * as rename from 'gulp-rename'
 import * as replace from 'gulp-replace'
 import * as inquirer from 'inquirer'
+import * as _ from 'lodash'
 import * as path from 'path'
 import * as fs from 'fs'
 
 const { paths } = config
-const TEMPLATE_PLACEHOLDER = 'TEMPLATE_COMPONENT__'
+const DISPLAY_NAME = '$DisplayName'
+const KEBAB_DISPLAY_NAME = '$kebab-display-name'
 
 let componentName: string
 
@@ -66,19 +68,21 @@ task('generate:component:name', cb => {
 })
 
 task('generate:component:src', cb => {
-  if (fs.existsSync(paths.src('components', componentName))) {
-    writeWarning(`Directory of '${componentName}' already exists, nothing is created in src.`)
+  const directory = paths.src('components', componentName)
+  if (fs.existsSync(directory)) {
+    writeWarning(`${path.relative(process.cwd(), directory)} already exists, skipping.`)
     return cb()
   }
 
-  return src(path.resolve(__dirname, `./templates/src-components/${TEMPLATE_PLACEHOLDER}/**/*`))
-    .pipe(replace(TEMPLATE_PLACEHOLDER, componentName))
+  return src(path.resolve(__dirname, `./templates/src-components/${DISPLAY_NAME}/**/*`))
+    .pipe(replace(DISPLAY_NAME, componentName))
+    .pipe(replace(KEBAB_DISPLAY_NAME, _.kebabCase(componentName)))
     .pipe(
       rename(path => {
-        path.basename = path.basename.replace(TEMPLATE_PLACEHOLDER, componentName)
+        path.basename = path.basename.replace(DISPLAY_NAME, componentName)
       }),
     )
-    .pipe(dest(paths.src('components', componentName)))
+    .pipe(dest(directory))
 })
 
 task('generate:component:export', cb => {
@@ -87,29 +91,48 @@ task('generate:component:export', cb => {
 })
 
 task('generate:component:docs', cb => {
-  if (fs.existsSync(paths.docsSrc('examples', 'components', componentName))) {
-    writeWarning(`Directory of '${componentName}' already exists, nothing is created in docs.`)
+  const directory = paths.docsSrc('examples', 'components', componentName)
+  if (fs.existsSync(directory)) {
+    writeWarning(`${path.relative(process.cwd(), directory)} already exists, skipping.`)
     return cb()
   }
 
-  return src(
-    path.resolve(__dirname, `./templates/docs-examples-components/${TEMPLATE_PLACEHOLDER}/**/*`),
-  )
-    .pipe(replace(TEMPLATE_PLACEHOLDER, componentName))
+  return src(path.resolve(__dirname, `./templates/docs-examples-components/${DISPLAY_NAME}/**/*`))
+    .pipe(replace(DISPLAY_NAME, componentName))
     .pipe(
       rename(path => {
-        path.basename = path.basename.replace(TEMPLATE_PLACEHOLDER, componentName)
+        path.basename = path.basename.replace(DISPLAY_NAME, componentName)
       }),
     )
-    .pipe(dest(paths.docsSrc('examples', 'components', componentName)))
+    .pipe(dest(directory))
+})
+
+task('generate:component:test', cb => {
+  const directory = paths.base('test', 'specs', 'components', componentName)
+  if (fs.existsSync(directory)) {
+    writeWarning(`${path.relative(process.cwd(), directory)} already exists, skipping.`)
+    return cb()
+  }
+
+  return src(path.resolve(__dirname, `./templates/test-specs-components/${DISPLAY_NAME}/**/*`))
+    .pipe(replace(DISPLAY_NAME, componentName))
+    .pipe(
+      rename(path => {
+        path.basename = path.basename.replace(DISPLAY_NAME, componentName)
+      }),
+    )
+    .pipe(dest(directory))
 })
 
 task(
   'generate:component',
   series(
     'generate:component:name',
-    'generate:component:src',
-    'generate:component:export',
-    'generate:component:docs',
+    parallel(
+      'generate:component:src',
+      'generate:component:export',
+      'generate:component:docs',
+      'generate:component:test',
+    ),
   ),
 )
