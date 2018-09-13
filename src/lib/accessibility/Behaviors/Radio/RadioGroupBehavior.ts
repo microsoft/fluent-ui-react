@@ -11,10 +11,10 @@ const RadioGroupBehavior: Accessibility = (props: any) => ({
   keyActions: {
     root: {
       nextItem: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }, { keyCode: keyboardKey.ArrowRight }],
+        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }, { keyCode: keyboardKey.ArrowRight }],
       },
       prevItem: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }, { keyCode: keyboardKey.ArrowLeft }],
+        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }, { keyCode: keyboardKey.ArrowLeft }],
       },
     },
   },

@@ -3,17 +3,12 @@ import * as PropTypes from 'prop-types'
 import whatInput from 'what-input'
 import * as _ from 'lodash'
 
-import {
-  createHTMLInput,
-  customPropTypes,
-  AutoControlledComponent,
-  createShorthandFactory,
-} from '../../lib'
+import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
 import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import { RadioBehavior } from '../../lib/accessibility'
 
 export interface IRadioProps {
@@ -125,9 +120,9 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   static autoControlledProps = ['checked', 'isFromKeyboard']
 
-  private handleChange = (e: React.SyntheticEvent) => {
+  private select = (e: React.SyntheticEvent) => {
     const { onChange, disabled } = this.props
-    const checked = (e.target as HTMLInputElement).checked
+    const checked = true
 
     if (disabled) {
       e.preventDefault()
@@ -174,13 +169,14 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
       <ElementType
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        onClick={this.select}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
         ref={this.setElementRef}
       >
-        <Label as="label" styles={{ root: styles.label }} {...accessibility.attributes.label}>
+        <Label styles={{ root: styles.label }} {...accessibility.attributes.label}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
@@ -195,19 +191,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
                   : variables.uncheckedIconBorderColor,
               },
               styles: { root: styles.icon },
-            },
-          })}
-          {createHTMLInput(type, {
-            defaultProps: {
-              checked,
-              disabled,
-              value,
-              name,
-              onChange: this.handleChange,
-            },
-            overrideProps: {
-              className: classes.radio,
-              ...accessibility.attributes.input,
             },
           })}
           {label}

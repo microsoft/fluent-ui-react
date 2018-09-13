@@ -11,17 +11,6 @@ const RadioBehavior: Accessibility = (props: any) => ({
     label: {
       role: 'presentation',
     },
-    input: {
-      role: 'presentation',
-    },
-  },
-
-  keyActions: {
-    anchor: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-    },
   },
 })
 
