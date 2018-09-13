@@ -7,7 +7,7 @@ const TextSizesExampleShorthand = () => (
     render={({ siteVariables }) => {
       return _.map(siteVariables.fontSizes, (value, key) => (
         <div key={key}>
-          <Text size={key} content="Dicta voluptatum dolorem." />
+          <Text size={key} content={`This is size="${key}" size font.`} />
         </div>
       ))
     }}
