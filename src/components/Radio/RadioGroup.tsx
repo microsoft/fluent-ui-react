@@ -130,7 +130,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     return (
       <ElementType
         {...accessibility.attributes.root}
-        // {...accessibility.keyHandlers.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
       >

@@ -157,12 +157,12 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  inputRef: HTMLInputElement
-  setInputRef = ref => (this.inputRef = ref)
+  elementRef: HTMLInputElement
+  setElementRef = ref => (this.elementRef = ref)
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.checked && this.state.checked) {
-      this.inputRef.focus()
+      this.elementRef.focus()
     }
   }
 
@@ -171,7 +171,15 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     const { checked } = this.state
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+        ref={this.setElementRef}
+      >
         <Label as="label" styles={{ root: styles.label }} {...accessibility.attributes.label}>
           {Icon.create(icon || '', {
             defaultProps: {
@@ -199,11 +207,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
             },
             overrideProps: {
               className: classes.radio,
-              onFocus: this.handleFocus,
-              onBlur: this.handleBlur,
               ...accessibility.attributes.input,
-              ...accessibility.keyHandlers.input,
-              ref: this.setInputRef,
             },
           })}
           {label}
