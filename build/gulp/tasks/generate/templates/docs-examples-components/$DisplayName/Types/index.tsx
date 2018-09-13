@@ -6,8 +6,8 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="Default"
-      description="A default TEMPLATE_COMPONENT__."
-      examplePath="components/TEMPLATE_COMPONENT__/Types/TEMPLATE_COMPONENT__/Example"
+      description="A default $DisplayName."
+      examplePath="components/$DisplayName/Types/$DisplayNameExample"
     />
   </ExampleSection>
 )

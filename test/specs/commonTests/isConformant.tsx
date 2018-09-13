@@ -346,7 +346,7 @@ export default (Component, options: any = {}) => {
         let errorMessage = 'was not called with (event)'
 
         if (_.has(Component.propTypes, listenerName)) {
-          expectedArgs = [eventShape, component.props()]
+          expectedArgs = [eventShape, expect.objectContaining(component.props())]
           errorMessage =
             'was not called with (event, data).\n' +
             `Ensure that 'props' object is passed to '${listenerName}'\n` +
