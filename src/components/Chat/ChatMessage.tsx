@@ -6,6 +6,8 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
+import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 export interface IChatMessageProps {
   as?: any
@@ -26,6 +28,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     as: customPropTypes.as,
 
     /** Chat messages can have an avatar */
@@ -51,6 +56,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'avatar',
     'children',
@@ -62,18 +68,23 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   ]
 
   static defaultProps = {
+    accessibility: ChatMessageBehavior as Accessibility,
     as: 'li',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const { avatar, children, content, mine } = this.props
 
     return childrenExist(children) ? (
-      <ElementType {...rest} className={cx(classes.root, classes.chatContent)}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={cx(classes.root, classes.chatContent)}
+      >
         {children}
       </ElementType>
     ) : (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {!mine && this.renderAvatar(avatar, styles)}
         <div className={classes.chatContent}>{content}</div>
         {mine && this.renderAvatar(avatar, styles)}

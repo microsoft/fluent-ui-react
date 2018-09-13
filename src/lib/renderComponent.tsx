@@ -153,6 +153,13 @@ const renderComponent = <P extends {}>(
           rtl,
         }
 
+        if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+          const originalElementType = config.ElementType
+          config.ElementType = FabricFocusZone as any
+          config.rest = { ...config.rest, ...accessibility.focusZone.props }
+          config.rest.as = originalElementType
+        }
+
         const rendered = render(config)
 
         if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {

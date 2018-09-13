@@ -134,6 +134,7 @@ export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttrib
 export enum FocusZoneMode {
   Custom,
   Wrap,
+  Embed,
 }
 
 export type FocusZoneDefinition = {

@@ -6,6 +6,8 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatMessage from './ChatMessage'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/interfaces'
+import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
 
 export interface IChatProps {
   as?: any
@@ -22,6 +24,9 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static displayName = 'Chat'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     as: customPropTypes.as,
 
     /** Additional classes. */
@@ -39,17 +44,25 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'messages', 'styles', 'variables']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'children',
+    'className',
+    'messages',
+    'styles',
+    'variables',
+  ]
 
-  static defaultProps = { as: 'ul' }
+  static defaultProps = { accessibility: ChatBehavior as Accessibility, as: 'ul' }
 
   static Message = ChatMessage
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, messages } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children)
           ? children
           : _.map(messages, message => ChatMessage.create(message))}
