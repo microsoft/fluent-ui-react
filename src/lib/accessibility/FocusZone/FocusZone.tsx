@@ -16,6 +16,7 @@ import {
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
@@ -120,7 +121,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
   public componentDidMount(): void {
     _allInstances[this._id] = this
     if (this._root.current) {
-      this.windowElement = this._root.current.ownerDocument.defaultView
+      this.windowElement = getWindow(this._root.current)
 
       let parentElement = getParent(this._root.current)
 

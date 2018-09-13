@@ -9,9 +9,10 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
+import { ItemShorthand, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
+import { FocusTrapZone, IFocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 
@@ -23,7 +24,8 @@ export interface IPortalProps {
   onUnmount?: (props: IPortalProps) => void
   open?: boolean
   trigger?: JSX.Element
-  triggerRef?: (node: HTMLElement) => void
+  trapFocus?: boolean
+  focusTrapZoneProps?: IFocusTrapZoneProps
 }
 
 export interface IPortalState {
@@ -75,15 +77,23 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {JSX.Element} node - Referred node.
      */
     triggerRef: PropTypes.func,
+
+    /** Controls whether or not focus trap should be applied */
+    trapFocus: PropTypes.bool,
+
+    /** FocusTrapZone props */
+    focusTrapZoneProps: PropTypes.object,
   }
 
   public static handledProps = [
     'children',
     'content',
     'defaultOpen',
+    'focusTrapZoneProps',
     'onMount',
     'onUnmount',
     'open',
+    'trapFocus',
     'trigger',
     'triggerRef',
   ]
@@ -98,14 +108,19 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   }
 
   private renderPortal(): JSX.Element | undefined {
-    const { children, content } = this.props
+    const { children, content, trapFocus, focusTrapZoneProps } = this.props
     const { open } = this.state
+    const contentToRender = childrenExist(children) ? children : content
 
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
           <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
-            {childrenExist(children) ? children : content}
+            {trapFocus ? (
+              <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
+            ) : (
+              contentToRender
+            )}
           </PortalInner>
         </Ref>
       )
