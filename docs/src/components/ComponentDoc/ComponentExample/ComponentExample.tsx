@@ -354,7 +354,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
 
     return (
-      <Provider theme={mergeThemes(themes.teams, newTheme)}>
+      <Provider theme={newTheme}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )
