@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import {
-  ComponentVariablesPrepared,
   ComponentVariablesInput,
+  ComponentVariablesPrepared,
   IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   ISiteVariables,
@@ -11,6 +11,7 @@ import {
   IThemeComponentVariablesPrepared,
   IThemeInput,
   IThemePrepared,
+  ThemeIcons,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -143,12 +144,16 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
+export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
+  return Object.assign(target, ...sources)
+}
+
 const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
     componentVariables: {},
     componentStyles: {},
-    svgIcons: {},
+    icons: {},
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
@@ -161,7 +166,7 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 
     // Merge icons set, last one wins in case of collisions
-    acc.svgIcons = { ...acc.svgIcons, ...(next.svgIcons || {}) }
+    acc.icons = mergeIcons(acc.icons, next.icons)
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)

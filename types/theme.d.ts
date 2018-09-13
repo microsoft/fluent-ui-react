@@ -130,7 +130,7 @@ export interface IThemeInput {
   renderer?: IRenderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
-  svgIcons?: SvgIcons
+  icons?: ThemeIcons
 }
 
 // Component variables and styles must be resolved by the component after
@@ -147,7 +147,7 @@ export interface IThemePrepared {
     [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesPrepared
   }
   componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
-  svgIcons: SvgIcons
+  icons: ThemeIcons
   rtl: boolean
   renderer: IRenderer
 }
@@ -252,4 +252,4 @@ export type FontFaces = IFontFace[]
 type Classes = { [iconPart: string]: string }
 export type RenderSvgIconFunction = (classes: Classes) => React.ReactNode
 
-export type SvgIcons = { [iconName: string]: RenderSvgIconFunction }
+export type ThemeIcons = { [iconName: string]: RenderSvgIconFunction }

@@ -1,17 +1,25 @@
-export { default as call } from './call'
-export { default as callEnd } from './callEnd'
+import call from './call'
+import callEnd from './callEnd'
+import callVideo from './callIncomingVideo'
+import callVideoOff from './callIncomingVideoOff'
+import callStartPresenting from './callControlPresentNew'
+import callStopPresenting from './callControlStopPresentingNew'
+import callMicrophone from './callMicrophone'
+import callMicrophoneOff from './callMicrophoneOff'
+import more from './more'
+import teamCreate from './teamCreate'
+import umbrella from './umbrella'
 
-export { default as callVideo } from './callIncomingVideo'
-export { default as callVideoOff } from './callIncomingVideoOff'
-
-export { default as callStartPresenting } from './callControlPresentNew'
-export { default as callStopPresenting } from './callControlStopPresentingNew'
-
-export { default as callMicrophone } from './callMicrophone'
-export { default as callMicrophoneOff } from './callMicrophoneOff'
-
-export { default as more } from './more'
-
-export { default as teamCreate } from './teamCreate'
-
-export { default as umbrella } from './umbrella'
+export default {
+  call,
+  'call-end': callEnd,
+  'call-video': callVideo,
+  'call-video-off': callVideoOff,
+  'call-start-presenting': callStartPresenting,
+  'call-stop-presenting': callStopPresenting,
+  'call-microphone': callMicrophone,
+  'call-microphone-off': callMicrophoneOff,
+  more,
+  'team-create': teamCreate,
+  umbrella,
+}

@@ -125,9 +125,9 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, svgIcons, classes, rest, accessibility): React.ReactNode {
+  renderSvgIcon(ElementType, icons, classes, rest, accessibility): React.ReactNode {
     const { name } = this.props
-    const renderIcon = svgIcons[name]
+    const renderIcon = icons[name]
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -136,9 +136,9 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility, svgIcons }) {
+  renderComponent({ ElementType, classes, rest, accessibility, icons }) {
     return this.props.svg
-      ? this.renderSvgIcon(ElementType, svgIcons, classes, rest, accessibility)
+      ? this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
       : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }

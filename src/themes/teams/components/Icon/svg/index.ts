@@ -1,4 +1,4 @@
-import * as svgIconsAndStyles from './icons'
+import svgIconsAndStyles from './icons'
 import { IconSpec } from './types'
 
 export const getStyle = partName => {
