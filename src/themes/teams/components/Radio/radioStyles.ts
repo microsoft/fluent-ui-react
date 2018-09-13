@@ -25,10 +25,6 @@ const radioStyles: IComponentPartStylesInput = {
       color: variables.disabledColor,
     }),
   }),
-
-  icon: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
-    margin: variables.iconMargin,
-  }),
 }
 
 export default radioStyles

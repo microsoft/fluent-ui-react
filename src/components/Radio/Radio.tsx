@@ -132,15 +132,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
             defaultProps: {
               circular: true,
               size: 'mini',
-              variables: {
-                color: checked ? variables.checkedIconColor : variables.uncheckedIconColor,
-                backgroundColor: checked
-                  ? variables.checkedIconBackgroundColor
-                  : variables.uncheckedIconBackgroundColor,
-                borderColor: checked
-                  ? variables.checkedIconBorderColor
-                  : variables.uncheckedIconBorderColor,
-              },
+              variables: variables.icon,
               styles: { root: styles.icon },
             },
           })}
