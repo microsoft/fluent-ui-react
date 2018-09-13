@@ -55,7 +55,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     handleTabKey: PropTypes.number,
     shouldInputLoseFocusOnArrowKey: PropTypes.func,
     stopFocusPropagation: PropTypes.bool,
-    onFocusNotification: PropTypes.func,
+    onFocus: PropTypes.func,
     preventDefaultWhenHandled: PropTypes.bool,
     isRtl: PropTypes.bool,
   }
@@ -84,7 +84,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     'handleTabKey',
     'shouldInputLoseFocusOnArrowKey',
     'stopFocusPropagation',
-    'onFocusNotification',
+    'onFocus',
     'preventDefaultWhenHandled',
     'isRtl',
   ]
@@ -115,6 +115,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
     this._processingTabKey = false
     this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
+    this.setRef = this.setRef.bind(this)
   }
 
   public componentDidMount(): void {
@@ -164,7 +165,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
         role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
-        ref={elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)} // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
+        ref={this.setRef}
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}
@@ -261,12 +262,13 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     return false
   }
 
-  private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const { onActiveElementChanged, stopFocusPropagation, onFocusNotification } = this.props
+  private setRef(elem) {
+    // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
+    this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
+  }
 
-    if (onFocusNotification) {
-      onFocusNotification()
-    }
+  private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
+    const { onActiveElementChanged, stopFocusPropagation, onFocus } = this.props
 
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement
@@ -290,6 +292,8 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     if (stopFocusPropagation) {
       ev.stopPropagation()
     }
+
+    _.invoke(this.props, 'onFocus', ev)
   }
 
   /**
