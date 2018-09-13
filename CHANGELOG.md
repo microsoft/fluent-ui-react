@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
-- Fix `Popup` component imports @mnajdova ([#222](https://github.com/stardust-ui/react/pull/221))
+- Fix `Popup` component imports @mnajdova ([#222](https://github.com/stardust-ui/react/pull/222))
 - Fix font size issue in docs @kuzhelov ([#221](https://github.com/stardust-ui/react/pull/221))
 
 ### Features
