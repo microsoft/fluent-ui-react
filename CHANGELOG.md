@@ -25,6 +25,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `FocusZone` to `renderComponent`, change `Menu` behavior to support arrow keys @tomasiser ([#116](https://github.com/stardust-ui/react/pull/116))
 - Add `value`, `disabled`, `checked`, `defaultChecked` and `onChange` props to `Radio` component @mnajdova ([#206](https://github.com/stardust-ui/react/pull/206))
 
+### Performance
+- Enable Webpack tree shaking with `sideEffects: false` @levithomason ([#224](https://github.com/stardust-ui/react/pull/224))
+
 <!--------------------------------[ v0.5.1 ]------------------------------- -->
 ## [v0.5.1](https://github.com/stardust-ui/react/tree/v0.5.1) (2018-09-11)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.5.0...v0.5.1)
