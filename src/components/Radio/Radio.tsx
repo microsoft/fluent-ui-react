@@ -9,7 +9,12 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import Label from '../Label'
-import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 
@@ -20,6 +25,7 @@ export interface IRadioProps {
   className?: string
   defaultChecked?: boolean
   disabled?: boolean
+  icon?: ItemShorthand
   label?: string
   name?: string
   onChange?: ComponentEventHandler<IRadioProps>
@@ -58,6 +64,9 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** A radio can appear disabled and be unable to change states. */
     disabled: PropTypes.bool,
 
+    /** The radio button indicator can be user-defined icon */
+    icon: customPropTypes.itemShorthand,
+
     /** The label of the radio input. */
     label: PropTypes.string,
 
@@ -91,6 +100,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'className',
     'defaultChecked',
     'disabled',
+    'icon',
     'label',
     'name',
     'onChange',
@@ -142,6 +152,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
               disabled,
               value,
               name,
+              onChange: () => {},
             },
             overrideProps: {
               className: classes.radio,
