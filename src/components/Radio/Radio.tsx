@@ -136,7 +136,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     const { checked } = this.state
 
     return (
-      <ElementType {...rest} className={classes.root} onChange={this.handleChange}>
+      <ElementType {...rest} className={classes.root}>
         <Label as="label" styles={{ root: styles.label }}>
           {Icon.create(icon || '', {
             defaultProps: {
@@ -152,7 +152,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
               disabled,
               value,
               name,
-              onChange: () => {},
+              onChange: this.handleChange,
             },
             overrideProps: {
               className: classes.radio,
