@@ -6,7 +6,7 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatMessage from './ChatMessage'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
 
 export interface IChatProps {
@@ -58,11 +58,22 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
   static Message = ChatMessage
 
+  actionHandlers: AccessibilityActionHandlers = {
+    focus: event => {
+      this.focusZone.focus()
+    },
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, messages } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+      >
         {childrenExist(children)
           ? children
           : _.map(messages, message => ChatMessage.create(message))}

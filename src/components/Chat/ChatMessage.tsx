@@ -7,7 +7,7 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
 import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 export interface IChatMessageProps {
   as?: any
@@ -72,19 +72,31 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     as: 'li',
   }
 
+  actionHandlers: AccessibilityActionHandlers = {
+    preventDefault: event => {
+      event.preventDefault()
+    },
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const { avatar, children, content, mine } = this.props
 
     return childrenExist(children) ? (
       <ElementType
-        {...accessibility.attributes.root}
-        {...rest}
         className={cx(classes.root, classes.chatContent)}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
       >
         {children}
       </ElementType>
     ) : (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+      >
         {!mine && this.renderAvatar(avatar, styles)}
         <div className={classes.chatContent}>{content}</div>
         {mine && this.renderAvatar(avatar, styles)}

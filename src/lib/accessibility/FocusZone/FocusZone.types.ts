@@ -121,8 +121,9 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
 
   /**
    * Callback to notify creators that focus has been set on the FocusZone
+   *  @param {FocusEvent} event - React's original FocusEvent.
    */
-  onFocusNotification?: () => void
+  onFocus?: (event: React.FocusEvent<HTMLElement | FocusZone>) => void
 
   /**
    * Whether the FocusZone prevents default when handled a key event
