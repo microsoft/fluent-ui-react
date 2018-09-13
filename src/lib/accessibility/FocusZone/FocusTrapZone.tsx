@@ -58,11 +58,12 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
   static defaultProps: IFocusTrapZoneProps = {
     as: 'div',
+    isClickableOutsideFocusTrap: true
   }
 
   public componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
-    const { disableFirstFocus = false } = this.props
+    const { disableFirstFocus = false } = this.props   
 
     this.windowElement = getWindow(this._root.current)
     this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
@@ -74,6 +75,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       this.focus()
     }
 
+    this._hideContentFromAccessibilityTree()
     this._subscribeToEvents()
   }
 
@@ -99,8 +101,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
   public componentWillUnmount(): void {
     const { ignoreExternalFocusing } = this.props
 
-    this._unsubscribeFromEvents()
-
     FocusTrapZone._focusStack = FocusTrapZone._focusStack.filter((value: FocusTrapZone) => {
       return this !== value
     })
@@ -113,6 +113,12 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       (this._root.current.contains(activeElement) || activeElement === document.body)
     ) {
       focusAsync(this._previouslyFocusedElementOutsideTrapZone)
+    }
+
+    this._unsubscribeFromEvents()
+
+    if (!FocusTrapZone._focusStack.length) {      
+      this._showContentInAccessibilityTree()
     }
   }
 
@@ -270,5 +276,27 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     } else if (!previouslyFocusedElement) {
       return document.activeElement as HTMLElement
     } else return previouslyFocusedElement
+  }
+
+  private _hideContentFromAccessibilityTree() {
+    const elements = document.body.children
+
+    for (let index = 0; index < elements.length - 1; index++) {
+      const element = elements[index]
+
+      if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE') {
+        element.setAttribute('aria-hidden', 'true')
+        element.setAttribute('acc-hidden', 'true')
+      }
+    }
+  }
+
+  private _showContentInAccessibilityTree() {
+    const hiddenElements = document.querySelectorAll('[acc-hidden="true"]')
+    for (let index = 0; index < hiddenElements.length; index++) {
+      const element = hiddenElements[index]
+      element.removeAttribute('aria-hidden')
+      element.removeAttribute('acc-hidden')
+    }
   }
 }
