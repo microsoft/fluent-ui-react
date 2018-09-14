@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as path from 'path'
-import { defaultHandlers, parse, resolver } from 'react-docgen'
+import { defaultHandlers, parse } from 'react-docgen'
 import * as fs from 'fs'
 import * as ts from 'typescript'
 import parseDefaultValue from './parseDefaultValue'
