@@ -54,21 +54,21 @@ const dividerStyles: IComponentPartStylesInput = {
               ...beforeAndAfter(size, type, variables),
               marginLeft: pxToRem(22 + size * 2),
             },
-            color: variables.typeSecondaryColor, // the default color
+            color: variables.color, // the default color
             ...(type === 'primary' && {
               color: variables.typePrimaryColor,
             }),
             ...(type === 'secondary' && {
-              color: variables.defaultColor,
+              color: variables.typeSecondaryColor,
             }),
           }
         : {
-            ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor), // the default border style
+            ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
             ...(type === 'primary' && {
               ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
             }),
             ...(type === 'secondary' && {
-              ...dividerBorderStyle(size, variables.defaultBackgroundColor),
+              ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
             }),
           }),
     }
