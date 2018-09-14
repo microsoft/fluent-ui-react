@@ -77,9 +77,6 @@ export default App;
       fs.linkSync(paths.dist(), tsAppPath('node_modules', pkg.name))
     })
 
-    .then(log(`Linking ${pkg.name}`))
-    .then(runInTSApp(`yarn link ${pkg.name}`))
-
     .then(log('Installing dependencies'))
     .then(runInTSApp('yarn install'))
 
