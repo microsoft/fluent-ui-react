@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
   IThemePrepared,
   IThemeInput,

@@ -2,7 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ItemShorthand } from '../../../types/utils'
 import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
 
 export type $DisplayNameProps = {

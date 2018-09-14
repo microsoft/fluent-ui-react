@@ -1,4 +1,4 @@
-import mergeThemes, { mergeFontFaces } from '../../../../src/lib/mergeThemes'
+import mergeThemes from '../../../../src/lib/mergeThemes'
 import { felaRenderer, felaRtlRenderer } from '../../../../src/lib'
 
 describe('mergeThemes', () => {

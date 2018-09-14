@@ -4,7 +4,7 @@ import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import Editor from 'docs/src/components/Editor'
-import { Container, Divider, Grid, Header, Icon, Label, List, Segment } from 'semantic-ui-react'
+import { Container, Divider, Grid, Header, Icon, Label, Segment } from 'semantic-ui-react'
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')

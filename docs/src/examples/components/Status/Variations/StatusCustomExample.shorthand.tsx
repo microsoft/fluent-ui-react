@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Status, Avatar } from '@stardust-ui/react'
+import { Status } from '@stardust-ui/react'
 
 const StatusCustomExampleShorthand = () => (
   <div>
