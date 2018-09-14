@@ -28,10 +28,6 @@ export default () => (
       <a href="https://www.w3.org/TR/wai-aria-practices-1.1/">aria best practises</a> and validates
       them with subject matter experts.
     </p>
-    <p>
-      While Stardust goes a long way in making the application accessible by default, it does build
-      on having correct semantic HTML as the base.
-    </p>
 
     <Header as="h3" content="Out of Scope" />
     <p>
@@ -39,7 +35,37 @@ export default () => (
       deliberately not part of Stardust and should be handled by the hosting application.
     </p>
 
-    <Header as="h2" content="What does semantic HTML mean?" />
+    <Header as="h2" content="Making an app / page accessible" />
+    <p>
+      Besides component level accessibility there are application level / page level considerations,
+      mostly regarding the logical structure. Follow{' '}
+      <a href="https://www.w3.org/TR/wai-aria-practices/examples/landmarks/index.html">
+        ARIA Landmarks Example
+      </a>{' '}
+      to identify and implement page areas.
+    </p>
+    <p>
+      In some cases, ARIA attributes need to be provided by the consumer of Stardust if the required
+      information cannot be derived from the components.
+      <br />
+      Focusable elements that do not contain any textual information need to be labelled so that the
+      screen reader can present them to the user. In addition to that, information that is relevant
+      to the screen reader user only can be added to the label:
+      <CodeSnippet
+        value={[
+          "<Button icon='envelope'> -> <Button icon='envelope' aria-label='Send message'>",
+          "<Radio ... aria-label='Include history from the past day. Press TAB to change the number of days.'>",
+        ].join('\n')}
+      />
+      Most typical examples are aria-label, aria-labelledby and title attributes. In some cases the
+      values need to be dynamically changed based on the state of the component/application.
+    </p>
+
+    <Header as="h2" content="Semantic HTML" />
+    <p>
+      While Stardust goes a long way in making the application accessible by default, it does build
+      on having correct semantic HTML as the base.
+    </p>
     <p>
       One way to look at this is that by looking at the HTML, you should immediately be able to see
       what the function is on every part of the page. For example,{' '}
@@ -231,7 +257,21 @@ export default () => (
       behaviour applied.
     </p>
 
-    <Header as="h3" content="Right Click Support?" />
+    <Header as="h3" content="Right Click Support" />
+    <p>
+      For cases when right click is used to execute a secondary action (for example a context menu),
+      a keyboar shortcut needs to be provided to allow the keyboard / screen reader users to execute
+      the secondary action. Also, screen reader has to make the user aware about the presence of the
+      secondary action.
+    </p>
+
+    <Header as="h3" content="Elements that appear on hover over another element" />
+    <p>
+      Tooltips, popups and similar elements might appear only when the trigger element is hovered by
+      mouse. Users using keyboard or screen readers to navigate are not able to hover the trigger
+      element. Therefore such elements need to be visible also when the trigger element is in
+      focused state.
+    </p>
 
     <Header as="h2" content="Accessibility Behaviours" />
     <p>
@@ -343,14 +383,14 @@ export default () => (
         label="html"
         value={[
           '<ul role="menu" class="ui-menu a ab c d e f g">',
-          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae af" role="presentation">',
-          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Editorials</a>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Editorials</a>',
           '  </li>',
-          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae" role="presentation">',
-          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Reviews</a>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Reviews</a>',
           '  </li>',
-          '  <li class="ui-menu__item h i j k l m n o p q r ac t ae" role="presentation">',
-          '    <a class="ui-menu__item__anchor w l x y z" role="menuitem" tabindex="0">Upcoming Events</a>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Upcoming Events</a>',
           '  </li>',
           '</ul>',
         ].join('\n')}
@@ -449,15 +489,11 @@ export default () => (
     </p>
 
     <Header as="h2" content="Zoom" />
-    <p>Stardust components are tested at 125% .</p>
+    <p>Stardust components are tested zoomed up to 200%.</p>
 
-    <Header as="h1" content="Glossary" />
-    <p>virtual screen reader navigation: This is alternative navigation mode in screen readers:</p>
-    <ul>
-      <li>Jaws - Virtual Cursor</li>
-      <li>VoiceOver - VoiceOver Keys</li>
-      <li>Narrator - Scan Mode</li>
-      <li>NVDA - BrowserMode</li>
-    </ul>
+    <Header as="h1" content="Contributing" />
+    <a href="https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md">
+      Accrssibility contributing guide
+    </a>
   </DocPage>
 )
