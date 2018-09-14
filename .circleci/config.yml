@@ -50,5 +50,8 @@ jobs:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
       - run:
+          name: Project Tests
+          command: yarn test:projects:cra-ts
+      - run:
           name: Visual Tests
           command: yarn test:visual
