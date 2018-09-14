@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { getTestingRenderedComponent } from 'test/utils'
+import { getTestingMountedRenderedComponent, getTestingRenderedComponent } from 'test/utils'
 import { DefaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
@@ -94,7 +94,10 @@ export default (Component, options: any = {}) => {
 
   if (focusZoneDefinition && focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     test('gets wrapped in FocusZone', () => {
-      const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+      const rendered = getTestingMountedRenderedComponent(
+        Component,
+        <Component {...requiredProps} />,
+      )
 
       const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
       expect(focusZone.type()).toEqual(FocusZone)

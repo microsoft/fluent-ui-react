@@ -1,13 +1,9 @@
 import * as React from 'react'
 
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { getTestingRenderedComponent } from 'test/utils'
+import { getTestingMountedRenderedComponent, getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
-import {
-  ToolbarButtonBehavior,
-  TabBehavior,
-  MenuItemBehavior,
-} from '../../../../src/lib/accessibility'
+import { ToolbarButtonBehavior, TabBehavior } from '../../../../src/lib/accessibility'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {
@@ -17,17 +13,16 @@ describe('MenuItem', () => {
   })
 
   it('content renders as `li > a`', () => {
-    const menuItem = getTestingRenderedComponent(MenuItem, <MenuItem content="Home" />).find(
+    const menuItem = getTestingMountedRenderedComponent(MenuItem, <MenuItem content="Home" />).find(
       '.ui-menu__item',
     )
-
     expect(menuItem.is('li')).toBe(true)
     expect(menuItem.childAt(0).is('a')).toBe(true)
     expect(menuItem.text()).toBe('Home')
   })
 
   it('children render directly inside `li`', () => {
-    const menuItem = getTestingRenderedComponent(MenuItem, <MenuItem>Home</MenuItem>)
+    const menuItem = getTestingMountedRenderedComponent(MenuItem, <MenuItem>Home</MenuItem>)
 
     expect(menuItem.find('.ui-menu__item').is('li')).toBe(true)
     expect(menuItem.text()).toBe('Home')
