@@ -26,6 +26,9 @@ export interface ITextProps {
 
 /**
  * A component containing text
+ * @accessibility
+ * Text is how people read the content on your website.
+ * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
 class Text extends UIComponent<Extendable<ITextProps>, any> {
   static className = 'ui-text'

@@ -65,24 +65,34 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     as: 'li',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, rest, styles, variables }) {
     const { avatar, children, content, mine } = this.props
 
     return childrenExist(children) ? (
-      <ElementType {...rest} className={cx(classes.root, classes.chatContent)}>
+      <ElementType {...rest} className={cx(classes.root, classes.content)}>
         {children}
       </ElementType>
     ) : (
       <ElementType {...rest} className={classes.root}>
-        {!mine && this.renderAvatar(avatar, styles)}
-        <div className={classes.chatContent}>{content}</div>
-        {mine && this.renderAvatar(avatar, styles)}
+        {!mine && this.renderAvatar(avatar, styles, variables)}
+        <div className={classes.content}>{content}</div>
+        {mine && this.renderAvatar(avatar, styles, variables)}
       </ElementType>
     )
   }
 
-  private renderAvatar = (avatar: ItemShorthand, styles: IComponentPartStylesInput) =>
-    avatar && Avatar.create(avatar, { defaultProps: { styles: { root: styles.chatAvatar } } })
+  private renderAvatar = (
+    avatar: ItemShorthand,
+    styles: IComponentPartStylesInput,
+    variables: ComponentVariablesInput,
+  ) =>
+    avatar &&
+    Avatar.create(avatar, {
+      defaultProps: {
+        styles: { root: styles.avatar },
+        variables: variables.avatar,
+      },
+    })
 }
 
 ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))

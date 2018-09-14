@@ -15,7 +15,7 @@ const itemSeparator = ({
   props: IMenuItemProps
   variables: IMenuVariables
 }): ICSSInJSStyle => {
-  const { active, iconOnly, pointing, pills, type, underlined, vertical } = props
+  const { iconOnly, pointing, pills, type, underlined, vertical } = props
   return {
     ...(!pills &&
       !underlined &&
