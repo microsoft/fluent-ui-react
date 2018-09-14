@@ -162,7 +162,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     }
   }
 
-  private handleChange = (e: React.SyntheticEvent) => {
+  private select = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
     const checked = true
 
@@ -194,8 +194,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { type, label, disabled, value, name, icon } = this.props
-    const { checked } = this.state
+    const { label, icon } = this.props
 
     return (
       <ElementType

@@ -1,3 +1,7 @@
+// TODO:
+// vertical
+// Radio onChange not fired when unselected
+// circular key nav
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

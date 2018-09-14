@@ -1,5 +1,4 @@
 import { Accessibility } from '../../interfaces'
-import * as keyboardKey from 'keyboard-key'
 
 const RadioBehavior: Accessibility = (props: any) => ({
   attributes: {
