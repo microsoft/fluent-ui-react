@@ -4,7 +4,7 @@ import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput = {
   root: ({ props, variables }: { props: any; variables: any }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type } = props
+    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
@@ -12,6 +12,7 @@ const buttonStyles: IComponentPartStylesInput = {
       height,
       minWidth,
       maxWidth,
+      borderRadius,
       color,
       backgroundColor,
       backgroundColorHover,
@@ -25,6 +26,11 @@ const buttonStyles: IComponentPartStylesInput = {
       typeSecondaryBackgroundColor,
       typeSecondaryBackgroundColorHover,
       typeSecondaryBorderColor,
+      typeTextColorHover,
+      typeTextPrimaryColor,
+      typeTextPrimaryColorHover,
+      typeTextSecondaryColor,
+      typeTextSecondaryColorHover,
     } = variables
 
     return {
@@ -33,6 +39,7 @@ const buttonStyles: IComponentPartStylesInput = {
       maxWidth,
       color,
       backgroundColor,
+      borderRadius,
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -40,34 +47,68 @@ const buttonStyles: IComponentPartStylesInput = {
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
-      borderRadius: pxToRem(2),
-
-      borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: backgroundColorHover,
+
+      ':focus': {
+        ...(isFromKeyboard &&
+          {
+            // focus styles should be added like this, since they should be applied only on keyboard.
+          }),
       },
 
-      ...(primary && {
-        color: typePrimaryColor,
-        backgroundColor: typePrimaryBackgroundColor,
-        borderColor: typePrimaryBorderColor,
+      ...(!text && {
+        borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
         ':hover': {
-          color: typePrimaryColor,
-          backgroundColor: typePrimaryBackgroundColorHover,
+          backgroundColor: backgroundColorHover,
         },
       }),
 
-      ...(secondary && {
-        color: typeSecondaryColor,
-        backgroundColor: typeSecondaryBackgroundColor,
-        borderColor: typeSecondaryBorderColor,
+      ...(text && {
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
         ':hover': {
-          color: typeSecondaryColor,
-          borderColor: 'transparent',
-          backgroundColor: typeSecondaryBackgroundColorHover,
+          color: typeTextColorHover,
         },
       }),
+
+      ...(primary &&
+        !text && {
+          color: typePrimaryColor,
+          backgroundColor: typePrimaryBackgroundColor,
+          borderColor: typePrimaryBorderColor,
+          ':hover': {
+            color: typePrimaryColor,
+            backgroundColor: typePrimaryBackgroundColorHover,
+          },
+        }),
+
+      ...(primary &&
+        text && {
+          color: typeTextPrimaryColor,
+          ':hover': {
+            color: typeTextPrimaryColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        !text && {
+          color: typeSecondaryColor,
+          backgroundColor: typeSecondaryBackgroundColor,
+          borderColor: typeSecondaryBorderColor,
+          ':hover': {
+            color: typeSecondaryColor,
+            borderColor: 'transparent',
+            backgroundColor: typeSecondaryBackgroundColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        text && {
+          color: typeTextSecondaryColor,
+          ':hover': {
+            color: typeTextSecondaryColorHover,
+          },
+        }),
 
       ...(circular && {
         minWidth: height,
@@ -86,6 +127,11 @@ const buttonStyles: IComponentPartStylesInput = {
           borderColor: undefined,
           backgroundColor: undefined,
         },
+      }),
+
+      ...(iconOnly && {
+        minWidth: height,
+        padding: 0,
       }),
     }
   },

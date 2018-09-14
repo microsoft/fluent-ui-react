@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -22,6 +22,7 @@
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",
+    "prepush": "gulp git:prepush",
     "postcommit": "git update-index --again",
     "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build",
     "postrelease": "yarn deploy:docs",
@@ -87,7 +88,9 @@
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
-    "react-fela": "^7.2.0"
+    "react-fela": "^7.2.0",
+    "react-popper": "^1.0.2",
+    "what-input": "^5.1.2"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",
@@ -125,6 +128,7 @@
     "husky": "^0.14.3",
     "inquirer": "^6.0.0",
     "jest": "^23.1.0",
+    "jest-axe": "^3.0.0",
     "js-beautify": "^1.6.14",
     "leven": "^2.1.0",
     "lint-staged": "^7.0.2",

@@ -3,6 +3,7 @@ export { default as AccordionContent } from './components/Accordion/accordionCon
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
+export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
@@ -29,6 +30,10 @@ export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
 
+export { default as PopupContent } from './components/Popup/popupContentVariables'
+
 export { default as Radio } from './components/Radio/radioVariables'
+
+export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'

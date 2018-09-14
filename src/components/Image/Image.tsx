@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, UIComponent } from '../../lib'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -23,9 +23,6 @@ export interface IImageProps {
 /**
  * An image is a graphic representation of something.
  * @accessibility
- * Default behavior: ImageBehavior
- *  - attribute "aria-hidden='true'" is applied on img element, if there is no 'alt' property provided
- *
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:
@@ -34,6 +31,8 @@ export interface IImageProps {
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
 class Image extends UIComponent<Extendable<IImageProps>, any> {
+  static create: Function
+
   static className = 'ui-image'
 
   static displayName = 'Image'
@@ -84,5 +83,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
+
+Image.create = createShorthandFactory(Image, src => ({ src }))
 
 export default Image

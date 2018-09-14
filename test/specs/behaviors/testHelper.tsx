@@ -87,6 +87,9 @@ export class TestHelper {
   public getBehaviorWithProperType(behaviorName: string): AccessibilityDefinitionFunction {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
+    if (!importedBehavior) {
+      throw 'Behavior file was not find, probably was not imported. Import file and add behavior.'
+    }
     return importedBehavior as AccessibilityDefinitionFunction
   }
 }
