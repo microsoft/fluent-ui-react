@@ -7,7 +7,40 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps {
+const END = 35
+const HOME = 36
+const LEFT_ARROW = 37
+const UP_ARROW = 38
+const RIGHT_ARROW = 39
+const DOWN_ARROW = 40
+const ENTER = 13
+const SPACE = 32
+const ESC = 27
+const TAB = 9
+
+interface IAtomicItemProps {
+  idx: number
+  isFocused: boolean
+
+  isFirstElement: boolean
+  isLastElement: boolean
+
+  onMovePrevious: () => void
+  onMoveNext: () => void
+  onMoveFirst: () => void
+  onMoveLast: () => void
+  onEnter: () => void
+  onSpace: () => void
+  onEsc: () => void
+}
+
+interface IAtomicItemState {
+  shouldSubContainerBeOpened: boolean
+  isLastOpened: boolean
+  isHovering: boolean
+}
+
+export interface IListItemProps extends IAtomicItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
@@ -26,7 +59,7 @@ export interface IListItemProps {
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
+class ListItem extends UIComponent<Extendable<IListItemProps>, IAtomicItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -70,6 +103,19 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    isFocused: PropTypes.bool,
+
+    isFirstElement: PropTypes.bool,
+    isLastElement: PropTypes.bool,
+
+    onMovePrevious: PropTypes.func,
+    onMoveNext: PropTypes.func,
+    onMoveFirst: PropTypes.func,
+    onMoveLast: PropTypes.func,
+    onEnter: PropTypes.func,
+    onSpace: PropTypes.func,
+    onEsc: PropTypes.func,
   }
 
   static handledProps = [
@@ -90,6 +136,16 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     'truncateContent',
     'truncateHeader',
     'variables',
+    'isFocused',
+    'isFirstElement',
+    'isLastElement',
+    'onMovePrevious',
+    'onMoveNext',
+    'onMoveFirst',
+    'onMoveLast',
+    'onEnter',
+    'onSpace',
+    'onEsc',
   ]
 
   static defaultProps = {
@@ -97,14 +153,171 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     accessibility: ListItemBehavior as Accessibility,
   }
 
-  state: any = {}
-
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
   }
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
+  }
+
+  handleKeyDown = (e: KeyboardEvent) => {
+    switch (e.keyCode) {
+      case END:
+        console.log('End Arrow Key Pressed')
+        this.moveLast()
+        break
+
+      case HOME:
+        console.log('Home Arrow Key Pressed')
+        this.moveFirst()
+        break
+
+      case LEFT_ARROW:
+        console.log('Left Arrow Key Pressed')
+        if (this.props.parentContainerDirection === 'vertical') {
+          break
+        }
+        this.movePrevious()
+        break
+
+      case RIGHT_ARROW:
+        console.log('Right Arrow Key Pressed')
+        if (this.props.parentContainerDirection === 'vertical') {
+          break
+        }
+        this.moveNext()
+        break
+
+      case UP_ARROW:
+        console.log('Up Arrow Key Pressed')
+        if (this.props.parentContainerDirection === 'horizontal') {
+          break
+        }
+        this.movePrevious()
+        break
+
+      case DOWN_ARROW:
+        console.log('Down Arrow Key Pressed')
+        if (this.props.parentContainerDirection === 'horizontal') {
+          break
+        }
+        this.moveNext()
+        break
+
+      case ENTER:
+        console.log('ENTER Key Pressed')
+        this.enter()
+        break
+
+      case SPACE:
+        console.log('SPACE Key Pressed')
+        this.space()
+        break
+
+      case ESC:
+        console.log('ESC Key Pressed')
+
+        console.error(`isLastOpened ${this.state.isLastOpened}`)
+        this.esc()
+        if (this.state.isLastOpened === true) {
+          e.preventDefault()
+          e.stopPropagation()
+          this.setState({ isLastOpened: false })
+        }
+        break
+    }
+
+    // TODO: make this correct
+    if (e.keyCode !== TAB && e.keyCode !== ESC) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+  }
+
+  private movePrevious() {
+    if (this.props.isFirstElement || !this.props.isFocused) {
+      return
+    }
+
+    this.props.onMovePrevious()
+  }
+
+  private moveNext() {
+    if (this.props.isLastElement || !this.props.isFocused) {
+      return
+    }
+
+    this.props.onMoveNext()
+  }
+
+  private moveFirst() {
+    if (this.props.isFirstElement || !this.props.isFocused) {
+      return
+    }
+
+    this.props.onMoveFirst()
+  }
+
+  private moveLast() {
+    if (this.props.isLastElement || !this.props.isFocused) {
+      return
+    }
+
+    this.props.onMoveLast()
+  }
+
+  private enter() {
+    this.setState({ isLastOpened: false })
+
+    if (!this.props.isFocused || !this.props.subItems) {
+      return
+    }
+
+    this.setState({
+      shouldSubContainerBeOpened: true,
+      isLastOpened: true,
+    })
+
+    this.props.onEnter()
+  }
+
+  private space() {
+    if (!this.props.isFocused) {
+      return
+    }
+
+    this.props.onSpace()
+  }
+
+  private esc() {
+    if (!this.props.isFocused) {
+      return
+    }
+
+    console.warn(`isLastOpened ${this.state.isLastOpened}`)
+
+    this.setState({ shouldSubContainerBeOpened: false })
+    this.props.onEsc()
+  }
+
+  private itemRef = React.createRef<HTMLLIElement>()
+
+  constructor(props: IAtomicItemProps, state: IAtomicItemState) {
+    super(props, state)
+
+    this.state = {
+      shouldSubContainerBeOpened: false,
+      isLastOpened: false,
+      isHovering: false,
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.isFocused) {
+      // this.itemRef.current!.focus()
+      console.log(this.itemRef.current!)
+    }
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -160,9 +373,11 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         truncateHeader={truncateHeader}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        onKeyDown={this.handleKeyDown}
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
       />

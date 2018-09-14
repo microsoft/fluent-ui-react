@@ -24,7 +24,11 @@ export interface IListProps {
   variables?: ComponentVariablesInput
 }
 
-class List extends UIComponent<Extendable<IListProps>, any> {
+interface IContainerState {
+  focusItemOnIdx: number
+}
+
+class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -86,6 +90,14 @@ class List extends UIComponent<Extendable<IListProps>, any> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  constructor(props: IListProps, state: IContainerState) {
+    super(props, state)
+
+    this.state = {
+      focusItemOnIdx: 0,
+    }
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
@@ -101,9 +113,63 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     const itemProps = _.pick(this.props, List.itemProps)
 
     return _.map(items, (item, idx) => {
+      const isFocused = idx === this.state.focusItemOnIdx && this.state.focusItemOnIdx !== -1
+
       itemProps.idx = idx
+      itemProps.isFocused = isFocused
+
+      itemProps.isFirstElement = idx === 0
+      itemProps.isLastElement = idx === items.length - 1
+      itemProps.onMovePrevious = this.movePrevious.bind(this)
+      itemProps.onMoveNext = this.moveNext.bind(this)
+      itemProps.onMoveFirst = this.moveFirst.bind(this)
+      itemProps.onMoveLast = this.moveLast.bind(this)
+      itemProps.onEnter = this.enter.bind(this)
+      itemProps.onSpace = this.space.bind(this)
+      itemProps.onEsc = this.esc.bind(this)
+
       return ListItem.create(item, { defaultProps: itemProps })
     })
+  }
+
+  private movePrevious(): void {
+    this.setState({
+      focusItemOnIdx: this.state.focusItemOnIdx - 1,
+    })
+    console.log('movePrevious() - active index changed: ' + this.state.focusItemOnIdx)
+  }
+
+  private moveNext(): void {
+    this.setState({
+      focusItemOnIdx: this.state.focusItemOnIdx + 1,
+    })
+    console.log('moveNext() - active index changed: ' + this.state.focusItemOnIdx)
+  }
+
+  private moveFirst(): void {
+    this.setState({
+      focusItemOnIdx: 0,
+    })
+    console.log('moveFirst() - active index changed: ' + this.state.focusItemOnIdx)
+  }
+
+  private moveLast(): void {
+    this.setState({
+      focusItemOnIdx: this.props.items.length - 1,
+    })
+    console.log('moveLast() - active index changed: ' + this.state.focusItemOnIdx)
+  }
+
+  private enter(): void {
+    console.log('enter()')
+  }
+
+  private space(): void {
+    console.log('space()')
+  }
+
+  private esc(): void {
+    console.log('esc()')
   }
 }
 
