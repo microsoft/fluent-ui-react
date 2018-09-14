@@ -17,6 +17,7 @@ export interface ITextProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
+  temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
   styles?: IComponentPartStylesInput
@@ -25,6 +26,9 @@ export interface ITextProps {
 
 /**
  * A component containing text
+ * @accessibility
+ * Text is how people read the content on your website.
+ * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
 class Text extends UIComponent<Extendable<ITextProps>, any> {
   static className = 'ui-text'
@@ -62,6 +66,9 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Set as success Text component */
     success: PropTypes.bool,
 
+    /** The text can signify a temporary state */
+    temporary: PropTypes.bool,
+
     /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
 
@@ -90,6 +97,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     'size',
     'styles',
     'success',
+    'temporary',
     'timestamp',
     'truncated',
     'variables',

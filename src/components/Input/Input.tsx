@@ -26,6 +26,7 @@ export interface IInputProps {
   defaultValue?: string
   fluid?: boolean
   icon?: ItemShorthand
+  inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
   value?: string
@@ -62,11 +63,14 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The default value of the input. */
     defaultValue: PropTypes.string,
 
-    /** A button can take the width of its container. */
+    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
+
+    /** An input can be used inline with text */
+    inline: PropTypes.bool,
 
     /**
      * Called on change.
@@ -96,6 +100,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     'defaultValue',
     'fluid',
     'icon',
+    'inline',
     'onChange',
     'styles',
     'type',
@@ -180,7 +185,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, styles }) {
+  renderComponent({ ElementType, classes, styles, variables }) {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
@@ -199,7 +204,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { styles: { root: styles.icon } },
+            defaultProps: {
+              styles: { root: styles.icon },
+              variables: variables.icon,
+            },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>

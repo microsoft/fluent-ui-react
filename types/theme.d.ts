@@ -47,6 +47,7 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: ISiteVariables,
+  props?: any,
 ) => ComponentVariablesObject
 
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
@@ -94,7 +95,7 @@ export interface ComponentStyleFunctionParam {
 }
 
 export type ComponentPartStyleFunction = ((
-  styleParam: ComponentStyleFunctionParam,
+  styleParam?: ComponentStyleFunctionParam,
 ) => ICSSInJSStyle)
 
 export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
@@ -117,7 +118,7 @@ export type StaticStyleFunction = (siteVariables?: ISiteVariables) => StaticStyl
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
-export type StaticStyles = OneOrArray<StaticStyle>
+export type StaticStyles = StaticStyle[]
 
 // ========================================================
 // Theme
@@ -148,6 +149,8 @@ export interface IThemePrepared {
   componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
   rtl: boolean
   renderer: IRenderer
+  fontFaces: FontFaces
+  staticStyles: StaticStyles
 }
 
 export interface IThemeComponentStylesInput {

@@ -2,4 +2,5 @@ coverage:
   ignore:
     - docs/*
     - src/lib/*
+    - src/themes/*
     - test/*

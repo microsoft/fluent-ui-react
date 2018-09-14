@@ -111,7 +111,10 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     const imageElement =
       image &&
       Image.create(image, {
-        defaultProps: { styles: { root: styles.image } },
+        defaultProps: {
+          styles: { root: styles.image },
+          variables: variables.image,
+        },
         generateKey: false,
       })
 
@@ -119,18 +122,8 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
       icon &&
       Icon.create(icon, {
         defaultProps: {
-          styles: {
-            root: styles.icon,
-          },
-          ...(!(
-            typeof icon === 'object' &&
-            (icon as any).variables &&
-            (icon as any).variables.color
-          ) && {
-            variables: {
-              color: variables.color,
-            },
-          }),
+          variables: variables.icon,
+          styles: { root: styles.icon },
         },
         generateKey: false,
         overrideProps: this.handleIconOverrides,
