@@ -60,7 +60,9 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
   actionHandlers: AccessibilityActionHandlers = {
     focus: event => {
-      this.focusZone.focus()
+      if (this.focusZone) {
+        this.focusZone.focus()
+      }
     },
   }
 
