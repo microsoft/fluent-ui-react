@@ -1,0 +1,6 @@
+webpackJsonp([19],{1967:/*!****************************************************!*\
+  !*** ./docs/src/exampleMenus/Avatar.examples.json ***!
+  \****************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+function(a,t){a.exports=[{sectionName:"Types",examples:[{title:"Default",examplePath:"components/Avatar/Types/AvatarExample"}]},{sectionName:"Variations",examples:[{title:"Image",examplePath:"components/Avatar/Variations/AvatarExampleSrc"},{title:"Alt",examplePath:"components/Avatar/Variations/AvatarExampleAlt"},{title:"Status",examplePath:"components/Avatar/Variations/AvatarExampleStatus"},{title:"Name",examplePath:"components/Avatar/Variations/AvatarExampleName"},{title:"Excluded Initials",examplePath:"components/Avatar/Variations/AvatarExampleExcludedInitials"},{title:"Get initials",examplePath:"components/Avatar/Variations/AvatarExampleGetInitials"},{title:"Status customization",examplePath:"components/Avatar/Variations/AvatarExampleStatusCustomization"},{title:"Size",examplePath:"components/Avatar/Variations/AvatarExampleSize"}]}]}});
