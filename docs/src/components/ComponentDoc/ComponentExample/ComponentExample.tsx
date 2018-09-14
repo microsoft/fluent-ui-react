@@ -593,7 +593,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   public render() {
-    const { children, description, examplePath, suiVersion, title } = this.props
+    const { children, description, suiVersion, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
