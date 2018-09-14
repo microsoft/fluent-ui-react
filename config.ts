@@ -36,6 +36,7 @@ const paths = {
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
+  test: base.bind(null, 'test'),
 }
 
 const config = {

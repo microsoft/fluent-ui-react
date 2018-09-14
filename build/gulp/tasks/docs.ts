@@ -110,11 +110,10 @@ task('build:docs:images', () =>
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`, err => {
-        if (err) return done(err)
-
-        sh(`git add ${file.path}`, done)
-      })
+      sh(`doctoc ${file.path} --github --maxlevel 4`)
+        .then(() => sh(`git add ${file.path}`))
+        .then(done)
+        .catch(done)
     }),
   ),
 )
@@ -161,7 +160,9 @@ task(
 
 task('deploy:docs', cb => {
   const relativePath = path.relative(process.cwd(), paths.docsDist())
-  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`, cb)
+  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`)
+    .then(cb)
+    .catch(cb)
 })
 
 // ----------------------------------------

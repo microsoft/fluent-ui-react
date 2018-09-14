@@ -16,3 +16,5 @@ docs/dist/
 dll/
 node_modules/
 .vscode/
+
+test/projects/
