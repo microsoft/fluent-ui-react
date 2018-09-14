@@ -1,7 +1,9 @@
 // TODO:
 // vertical
-// Radio onChange not fired when unselected
+// Radio onChange not fired when in group (selected or unselected)
 // circular key nav
+// Radio-test failing with Stateless function components cannot be given refs. Attempts to access this ref will fail.
+// styling for focused state
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -102,6 +104,8 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     this.trySetState({ checkedIndex: newIndex })
 
     _.invoke(this.props, 'onChange', event, this.props.items[newIndex])
+
+    event.preventDefault()
   }
 
   handleItemOverrides = predefinedProps => ({
