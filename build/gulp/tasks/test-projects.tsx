@@ -31,7 +31,16 @@ task('clean:test:projects:cra-ts', cb => {
 //  - Link our package
 //  - Try and run a build
 task('build:test:projects:cra-ts', () => {
-  const appTSX = `import { Avatar, Button, Header, Image, Input, Provider, themes } from '@stardust-ui/react';
+  const appTSX = `import {
+  Avatar,
+  Button,
+  Header,
+  Image,
+  Input,
+  Popup,
+  Provider,
+  themes
+} from '@stardust-ui/react';
 import * as React from 'react';
 
 class App extends React.Component {
@@ -39,6 +48,7 @@ class App extends React.Component {
     return (
       <Provider theme={themes.teams}>
         <div>
+          <Popup trigger={<Button content="Popup" />} content="Popup content" />
           <Avatar src="//placehold.it" />
           <Button content="Click me" />
           <Header content="This is " />
