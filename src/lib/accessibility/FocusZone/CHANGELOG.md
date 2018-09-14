@@ -2,6 +2,10 @@
 
 This is a list of changes made to this Stardust copy of FocusZone in comparison with the original [Fabric FocusZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusZone/FocusZone.tsx).
 
+### Unreleased
+- Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
+- Replaced `ref={this.setRef}` with `this.setRef(this)` in `componentDidMount` to support functional components, which is needed to pass unit tests with embed.
+
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
 - Moved `IS_FOCUSABLE_ATTRIBUTE` and others to `focusUtilities.ts`.
