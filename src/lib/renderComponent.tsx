@@ -32,6 +32,7 @@ import {
   IFocusZone,
   FocusZone as FabricFocusZone,
 } from './accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -91,6 +92,7 @@ function wrapInGenericFocusZone<
   children: React.ReactNode,
   ref: (focusZone: IFocusZone) => void,
 ) {
+  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
   return (
     <FocusZone ref={ref} {...props}>
       {children}

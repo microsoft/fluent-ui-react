@@ -120,6 +120,8 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
   public componentDidMount(): void {
     _allInstances[this._id] = this
+
+    this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
       this.windowElement = this._root.current.ownerDocument.defaultView
 
@@ -165,7 +167,6 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
         role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
-        ref={this.setRef}
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
         onFocus={this._onFocus}
