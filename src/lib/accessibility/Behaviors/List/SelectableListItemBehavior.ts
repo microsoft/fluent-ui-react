@@ -11,6 +11,7 @@ const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (pr
     root: {
       role: 'option',
       'aria-selected': !!props['active'],
+      tabIndex: props.idx === 0 ? '0' : '-1',
     },
   },
 })

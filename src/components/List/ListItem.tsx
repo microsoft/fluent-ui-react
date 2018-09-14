@@ -34,6 +34,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static className = 'ui-list__item'
 
   static propTypes = {
+    idx: PropTypes.number,
+
     as: customPropTypes.as,
 
     /** Additional classes. */
@@ -71,6 +73,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   }
 
   static handledProps = [
+    'idx',
     'accessibility',
     'as',
     'className',
@@ -106,6 +109,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
+      idx,
       as,
       debug,
       endMedia,
@@ -139,6 +143,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
     return (
       <ItemLayout
+        idx={idx}
         as={as}
         className={classes.root}
         rootCSS={styles.root}

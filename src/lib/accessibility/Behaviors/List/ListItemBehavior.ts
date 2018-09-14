@@ -7,7 +7,8 @@ import { IAccessibilityDefinition } from '../../interfaces'
  * Defines a behavior "BasicListItemBehavior" or "SelectableListItemBehavior" based on "selection" property.
  */
 
-const ListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) =>
-  props.selection ? SelectableListItemBehavior(props) : BasicListItemBehavior
+const ListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => {
+  return props.selection ? SelectableListItemBehavior(props) : BasicListItemBehavior(props)
+}
 
 export default ListItemBehavior

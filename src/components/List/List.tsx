@@ -100,7 +100,10 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     const { items } = this.props
     const itemProps = _.pick(this.props, List.itemProps)
 
-    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
+    return _.map(items, (item, idx) => {
+      itemProps.idx = idx
+      return ListItem.create(item, { defaultProps: itemProps })
+    })
   }
 }
 
