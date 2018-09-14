@@ -3,21 +3,21 @@ import { Text } from '@stardust-ui/react'
 
 const TextSizesExampleShorthand = () => (
   <div>
-    <Text size="xs">Dicta voluptatum dolorem.</Text>
+    <Text size="xs" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="sm">Dicta voluptatum dolorem.</Text>
+    <Text size="sm" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="md">Dicta voluptatum dolorem.</Text>
+    <Text size="md" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="lg">Dicta voluptatum dolorem.</Text>
+    <Text size="lg" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="xl">Dicta voluptatum dolorem.</Text>
+    <Text size="xl" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="2x">Dicta voluptatum dolorem.</Text>
+    <Text size="2x" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="3x">Dicta voluptatum dolorem.</Text>
+    <Text size="3x" content="Dicta voluptatum dolorem." />
     <br />
-    <Text size="4x">Dicta voluptatum dolorem.</Text>
+    <Text size="4x" content="Dicta voluptatum dolorem." />
   </div>
 )
 export default TextSizesExampleShorthand

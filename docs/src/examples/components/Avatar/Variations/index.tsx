@@ -16,7 +16,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Status"
-      description="An Avatar can have a status icon showing his presence."
+      description="An Avatar can have a status icon showing his status."
       examplePath="components/Avatar/Variations/AvatarExampleStatus"
     />
     <ComponentExample
@@ -35,9 +35,9 @@ const Variations = () => (
       examplePath="components/Avatar/Variations/AvatarExampleGetInitials"
     />
     <ComponentExample
-      title="Presence indicator customization"
-      description="The presence indicator inside the Avatar can be customize to show different background."
-      examplePath="components/Avatar/Variations/AvatarExamplePresenceIndicatorCustomization"
+      title="Status customization"
+      description="The status inside the Avatar can be customize to show different background."
+      examplePath="components/Avatar/Variations/AvatarExampleStatusCustomization"
     />
     <ComponentExample
       title="Size"

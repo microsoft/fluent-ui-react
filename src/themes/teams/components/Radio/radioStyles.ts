@@ -2,29 +2,29 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IRadioProps } from '../../../../components/Radio/Radio'
 
 const radioStyles: IComponentPartStylesInput = {
-  root: (): ICSSInJSStyle => {
-    return {
-      outline: 0,
-      display: 'inline-block',
-    }
-  },
+  root: (): ICSSInJSStyle => ({
+    outline: 0,
+    display: 'inline-block',
+  }),
 
-  radio: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => {
-    return {
-      marginRight: variables.radioMargin,
-    }
-  },
+  radio: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
+    marginRight: variables.radioMargin,
+    position: 'absolute',
+    opacity: 0,
+    cursor: 'pointer',
+  }),
 
-  label: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => {
-    return {
-      cursor: 'pointer',
-      display: 'inline-flex',
-      alignItems: 'baseline',
-      fontWeight: variables.fontWeight,
-      minHeight: '2.5rem',
-      backgroundColor: 'transparent',
-    }
-  },
+  label: ({ variables, props }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'baseline',
+    fontWeight: variables.fontWeight,
+    minHeight: '2.5rem',
+    backgroundColor: 'transparent',
+    ...(props.disabled && {
+      color: variables.disabledColor,
+    }),
+  }),
 }
 
 export default radioStyles
