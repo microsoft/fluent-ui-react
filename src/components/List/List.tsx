@@ -133,31 +133,27 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   }
 
   private movePrevious(): void {
-    this.setState({
-      focusItemOnIdx: this.state.focusItemOnIdx - 1,
+    this.setState(prev => {
+      return { focusItemOnIdx: prev.focusItemOnIdx - 1 }
     })
-    console.log('movePrevious() - active index changed: ' + this.state.focusItemOnIdx)
   }
 
   private moveNext(): void {
-    this.setState({
-      focusItemOnIdx: this.state.focusItemOnIdx + 1,
+    this.setState(prev => {
+      return { focusItemOnIdx: prev.focusItemOnIdx + 1 }
     })
-    console.log('moveNext() - active index changed: ' + this.state.focusItemOnIdx)
   }
 
   private moveFirst(): void {
     this.setState({
       focusItemOnIdx: 0,
     })
-    console.log('moveFirst() - active index changed: ' + this.state.focusItemOnIdx)
   }
 
   private moveLast(): void {
     this.setState({
       focusItemOnIdx: this.props.items.length - 1,
     })
-    console.log('moveLast() - active index changed: ' + this.state.focusItemOnIdx)
   }
 
   private enter(): void {
