@@ -14,7 +14,7 @@ const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
 const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
-  ...dividerBorderStyle(size, variables.defaultBackgroundColor), // the default border style
+  ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
   ...(type === 'primary' && {
     ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
   }),
