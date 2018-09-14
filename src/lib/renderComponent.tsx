@@ -17,6 +17,7 @@ import {
   IState,
   IThemeInput,
   IThemePrepared,
+  ThemeIcons,
 } from '../../types/theme'
 import {
   IAccessibilityBehavior,
@@ -41,6 +42,7 @@ export interface IRenderResultConfig<P> {
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
   rtl: boolean
+  icons: ThemeIcons
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -112,6 +114,7 @@ const renderComponent = <P extends {}>(
         siteVariables = {},
         componentVariables = {},
         componentStyles = {},
+        icons = {},
         rtl = false,
         renderer = felaRenderer,
       }: IThemeInput | IThemePrepared = {}) => {
@@ -152,6 +155,7 @@ const renderComponent = <P extends {}>(
           styles: resolvedStyles,
           accessibility,
           rtl,
+          icons,
         }
 
         const rendered = render(config)

@@ -3,6 +3,8 @@ import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 import { IconXSpacing } from '../../../../components/Icon/Icon'
 
+import { getStyle as getSvgStyle } from './svg'
+
 const sizes = new Map([
   ['micro', 0.3],
   ['mini', 0.4],
@@ -123,9 +125,27 @@ const iconStyles = {
     }
   },
 
-  svg: ({ variables: v }): ICSSInJSStyle => ({
-    fill: v.color,
-  }),
+  svg: getSvgStyle('svg'),
+
+  g: getSvgStyle('g'),
+
+  path1: getSvgStyle('path1'),
+
+  path2: getSvgStyle('path2'),
+
+  path3: getSvgStyle('path3'),
+
+  path4: getSvgStyle('path4'),
+
+  path5: getSvgStyle('path5'),
+
+  path6: getSvgStyle('path6'),
+
+  path7: getSvgStyle('path7'),
+
+  path8: getSvgStyle('path8'),
+
+  path9: getSvgStyle('path9'),
 }
 
 export default iconStyles
