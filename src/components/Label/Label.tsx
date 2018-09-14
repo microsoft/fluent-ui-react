@@ -1,26 +1,19 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as _ from 'lodash'
 
 import {
-  callable,
   childrenExist,
   createShorthandFactory,
   customPropTypes,
+  pxToRem,
   UIComponent,
 } from '../../lib'
 
+import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import {
-  Extendable,
-  ReactChildren,
-  ItemShorthand,
-  ComponentEventHandler,
-} from '../../../types/utils'
-
-import { Icon } from '../..'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface ILabelProps {
   accessibility?: Accessibility
@@ -32,7 +25,8 @@ export interface ILabelProps {
   fluid?: boolean
   icon?: ItemShorthand
   iconPosition?: 'start' | 'end'
-  onIconClick?: ComponentEventHandler<ILabelProps>
+  image?: ItemShorthand
+  imagePosition?: 'start' | 'end'
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
@@ -64,18 +58,16 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     content: customPropTypes.contentShorthand,
 
     /** Label can have an icon. */
-    icon: customPropTypes.some([PropTypes.string, PropTypes.object]),
+    icon: customPropTypes.itemShorthand,
 
     /** An icon label can format an Icon to appear before or after the text in the label */
     iconPosition: PropTypes.oneOf(['start', 'end']),
 
-    /**
-     * Function called when the icon is clicked.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onIconClick: PropTypes.func,
+    /** Label can have an icon. */
+    image: customPropTypes.itemShorthand,
+
+    /** An icon label can format an Icon to appear before or after the text in the label */
+    imagePosition: PropTypes.oneOf(['start', 'end']),
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -92,61 +84,95 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     'content',
     'icon',
     'iconPosition',
-    'onIconClick',
+    'image',
+    'imagePosition',
     'styles',
     'variables',
   ]
 
   static defaultProps = {
-    as: 'label',
+    as: 'span',
+    imagePosition: 'start',
+    iconPosition: 'end',
   }
 
   handleIconOverrides = iconProps => {
-    const { onIconClick, iconPosition, content, variables } = this.props
-    const iconVariables = callable(iconProps.variables)() || {}
-    const labelVariables = callable(variables)() || {}
-
     return {
-      onClick: e => {
-        _.invoke(iconProps, 'onClick', e)
-        _.invoke(this.props, 'onIconClick', e, this.props)
-      },
-      ...((iconProps.onClick || onIconClick) && { tabIndex: '0' }),
-      ...((!iconVariables || !iconVariables.color) && {
-        variables: { color: labelVariables.color },
-      }),
+      ...(iconProps.onClick && { tabIndex: '0' }),
       ...(!iconProps.xSpacing && {
-        xSpacing: !content ? 'none' : iconPosition === 'end' ? 'before' : 'after',
+        xSpacing: 'none',
       }),
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, content, icon, iconPosition } = this.props
-    const getContent = (): React.ReactNode => {
-      const iconAtEnd = iconPosition === 'end'
-      const iconAtStart = !iconAtEnd
+  renderComponent({ ElementType, classes, rest, variables, styles }) {
+    const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
-      const iconElement = Icon.create(icon, {
-        generateKey: false,
+    const imageElement =
+      image &&
+      Image.create(image, {
         defaultProps: {
+          styles: { root: styles.image },
+          variables: variables.image,
+        },
+        generateKey: false,
+      })
+
+    const iconElement =
+      icon &&
+      Icon.create(icon, {
+        defaultProps: {
+          variables: variables.icon,
           styles: { root: styles.icon },
         },
+        generateKey: false,
         overrideProps: this.handleIconOverrides,
       })
 
-      return (
-        <React.Fragment>
-          {iconAtStart && icon && iconElement}
-          {content}
-          {iconAtEnd && icon && iconElement}
-        </React.Fragment>
-      )
+    let start: React.ReactNode = null
+    let end: React.ReactNode = null
+
+    // Default positioning of the image and icon
+    if (image && imagePosition === 'start') {
+      start = imageElement
+    }
+    if (icon && iconPosition === 'end') {
+      end = iconElement
+    }
+
+    // Custom positioning of the icon and image
+    if (icon && iconPosition === 'start') {
+      if (image && imagePosition === 'start') {
+        start = (
+          <React.Fragment>
+            {imageElement}
+            {iconElement}
+          </React.Fragment>
+        )
+      } else {
+        start = iconElement
+      }
+    }
+    if (image && imagePosition === 'end') {
+      if (icon && iconPosition === 'end') {
+        end = (
+          <React.Fragment>
+            {iconElement}
+            {imageElement}
+          </React.Fragment>
+        )
+      } else {
+        end = imageElement
+      }
     }
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : getContent()}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
+        )}
       </ElementType>
     )
   }

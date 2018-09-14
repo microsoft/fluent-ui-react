@@ -54,6 +54,8 @@ const layoutStyles: IComponentPartStylesInput = {
   start: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     ...(props.truncateStart && truncateStyle),
+    display: 'inline-flex',
+    alignItems: 'center',
     ...props.startCSS,
   }),
 
@@ -66,6 +68,8 @@ const layoutStyles: IComponentPartStylesInput = {
   end: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     ...(props.truncateEnd && truncateStyle),
+    display: 'inline-flex',
+    alignItems: 'center',
     ...props.endCSS,
   }),
 }

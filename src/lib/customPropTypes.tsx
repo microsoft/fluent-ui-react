@@ -8,7 +8,7 @@ const typeOf = x => Object.prototype.toString.call(x)
  * Ensure a component can render as a give prop value.
  */
 export const as = (...args) =>
-  PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.symbol])(...args)
+  (PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.symbol]) as any)(...args)
 
 /**
  * Ensure a prop is a valid DOM node.
@@ -77,7 +77,7 @@ export const suggest = suggestions => {
     const propValue = props[propName]
 
     // skip if prop is undefined or is included in the suggestions
-    if (!propValue || suggestionsLookup[propValue]) return
+    if (!propValue || suggestionsLookup[propValue]) return undefined
 
     // check if the words were correct but ordered differently.
     // Since we're matching for classNames we need to allow any word order
@@ -86,13 +86,13 @@ export const suggest = suggestions => {
       .split(' ')
       .sort()
       .join(' ')
-    if (suggestionsLookup[propValueSorted]) return
+    if (suggestionsLookup[propValueSorted]) return undefined
 
     // find best suggestions
     const bestMatches = findBestSuggestions(propValue)
 
     // skip if a match scored 0
-    if (bestMatches.some(x => x.score === 0)) return
+    if (bestMatches.some(x => x.score === 0)) return undefined
 
     return new Error(
       [
@@ -120,7 +120,7 @@ export const disallow = disallowedProps => (props, propName, componentName) => {
   }
 
   // skip if prop is undefined
-  if (_.isNil(props[propName]) || props[propName] === false) return
+  if (_.isNil(props[propName]) || props[propName] === false) return undefined
 
   // find disallowed props with values
   const disallowed = disallowedProps.reduce((acc, disallowedProp) => {
@@ -140,6 +140,8 @@ export const disallow = disallowedProps => (props, propName, componentName) => {
       ].join(' '),
     )
   }
+
+  return undefined
 }
 
 /**
@@ -203,6 +205,8 @@ export const some = validators => (props, propName, componentName, ...rest) => {
     error.message += `\n${_.map(errors, (err, i) => `[${i + 1}]: ${err.message}`).join('\n')}`
     return error
   }
+
+  return undefined
 }
 
 /**
@@ -237,7 +241,7 @@ export const givenProps = (propsShape, validator) => (props, propName, component
       : val === props[propName]
   })
 
-  if (!shouldValidate) return
+  if (!shouldValidate) return undefined
 
   const error = validator(props, propName, componentName, ...rest)
 
@@ -275,7 +279,7 @@ export const demand = requiredProps => (props, propName, componentName) => {
   }
 
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
 
   const missingRequired = requiredProps.filter(requiredProp => props[requiredProp] === undefined)
   if (missingRequired.length > 0) {
@@ -285,6 +289,8 @@ export const demand = requiredProps => (props, propName, componentName) => {
       )}\`.`,
     )
   }
+
+  return undefined
 }
 
 /**
@@ -304,7 +310,7 @@ export const multipleProp = possible => (props, propName, componentName) => {
   const propValue = props[propName]
 
   // skip if prop is undefined
-  if (_.isNil(propValue) || propValue === false) return
+  if (_.isNil(propValue) || propValue === false) return undefined
 
   const values = propValue
     .replace('large screen', 'large-screen')
@@ -321,6 +327,8 @@ export const multipleProp = possible => (props, propName, componentName) => {
       )}\`.`,
     )
   }
+
+  return undefined
 }
 
 /**
@@ -362,7 +370,7 @@ export const deprecate = (help, validator) => (props, propName, componentName, .
   }
 
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
 
   // deprecation error and help
   const error = new Error(`The \`${propName}\` prop in \`${componentName}\` is deprecated.`)

@@ -3,6 +3,7 @@ import * as React from 'react'
 import {
   isConformant,
   handlesAccessibility,
+  htmlIsAccessibilityCompliant,
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
@@ -12,9 +13,15 @@ import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
 
-import { MenuBehavior } from 'src/lib/accessibility'
-
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
+
+jest.mock('what-input', () => {
+  return {
+    default: {
+      ask: jest.fn(),
+    },
+  }
+})
 
 describe('Button', () => {
   isConformant(Button)
@@ -24,8 +31,6 @@ describe('Button', () => {
     describe('button', () => {
       handlesAccessibility(Button, {
         defaultRootRole: undefined,
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 
@@ -33,8 +38,6 @@ describe('Button', () => {
       handlesAccessibility(Button, {
         requiredProps: { as: 'div' },
         defaultRootRole: 'button',
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 
@@ -47,6 +50,32 @@ describe('Button', () => {
       test('is set to false, if disabled attribute is not provided', () => {
         const renderedComponent = getTestingRenderedComponent(Button, <Button />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+      })
+    })
+
+    describe('HTML accessibility rules validation', () => {
+      describe('icon button must have textual representation for screen readers', () => {
+        test('with title', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
+
+        test('with aria-label attribute', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" aria-label="testing button" />))
+
+        test('with aria-labelledby attribute', async () =>
+          await htmlIsAccessibilityCompliant(
+            <div>
+              <Button icon="books" aria-labelledby="tstBtn" />
+              <span id="tstBtn" aria-label="testing button" />
+            </div>,
+          ))
+      })
+
+      describe('different buttons variants', () => {
+        test('button', async () =>
+          await htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
+
+        test('button with text and icon', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
       })
     })
 

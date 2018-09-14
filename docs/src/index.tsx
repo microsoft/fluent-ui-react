@@ -6,6 +6,7 @@ import { AppContainer } from 'react-hot-loader'
 import { Provider, themes } from '@stardust-ui/react'
 
 import Router from './routes'
+import { mergeThemes } from '../../src/lib'
 
 // ----------------------------------------
 // Rendering
@@ -17,7 +18,15 @@ document.body.appendChild(mountNode)
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider theme={themes.teams}>
+      <Provider
+        theme={mergeThemes(themes.teams, {
+          // adjust Teams' theme to Semantic UI's font size scheme
+          siteVariables: {
+            htmlFontSize: '14px',
+            bodyFontSize: '1rem',
+          },
+        })}
+      >
         <NewApp />
       </Provider>
     </AppContainer>,
