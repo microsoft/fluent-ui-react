@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix `Popup` component imports @mnajdova ([#222](https://github.com/stardust-ui/react/pull/222))
 - Fix font size issue in docs @kuzhelov ([#221](https://github.com/stardust-ui/react/pull/221))
+- Fix Provider incorrectly rendering font face rules @levithomason ([#227](https://github.com/stardust-ui/react/pull/227))
 
 ### Features
 - Add `FocusZone` to `renderComponent`, change `Menu` behavior to support arrow keys @tomasiser ([#116](https://github.com/stardust-ui/react/pull/116))
