@@ -2,6 +2,8 @@ import * as fs from 'fs'
 import { task, series } from 'gulp'
 import * as rimraf from 'rimraf'
 import sh from '../sh'
+import * as mkdirp from 'mkdirp'
+
 import config from '../../../config'
 
 const pkg = require('../../../package.json')
@@ -61,6 +63,8 @@ export default App;
   const runInTSApp = cmd => () => sh(`cd ${tsAppPath()} && ${cmd}`)
 
   return Promise.resolve()
+    .then(() => mkdirp.sync(projectsPath()))
+
     .then(log('Creating React App'))
     .then(runInProjects(`create-react-app ${tsAppPath()} --scripts-version=react-scripts-ts`))
 
