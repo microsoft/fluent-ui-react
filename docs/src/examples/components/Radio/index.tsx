@@ -5,9 +5,9 @@ import Groups from './Groups'
 
 const RadioExamples = () => (
   <div>
+    <Groups />
     <Types />
     <States />
-    <Groups />
   </div>
 )
 

@@ -25,11 +25,11 @@ const chatMessageStyles = {
     maxWidth: v.messageWidth,
   }),
 
-  chatAvatar: (): ICSSInJSStyle => ({
+  avatar: (): ICSSInJSStyle => ({
     margin: pxToRem(10),
   }),
 
-  chatContent: ({
+  content: ({
     props: p,
     variables: v,
   }: {

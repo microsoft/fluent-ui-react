@@ -119,11 +119,6 @@ const iconStyles = {
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
 
-      ...(v.backgroundColor && {
-        ...getPaddedStyle(isFontBased),
-        ...(bordered || v.borderColor || { boxShadow: 'none' }),
-      }),
-
       ...(disabled && disabledStyle),
     }
   },

@@ -1,11 +1,21 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import whatInput from 'what-input'
 import * as _ from 'lodash'
+import whatInput from 'what-input'
 
-import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
+import {
+  createHTMLInput,
+  customPropTypes,
+  AutoControlledComponent,
+  createShorthandFactory,
+} from '../../lib'
 import Label from '../Label'
-import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
@@ -17,12 +27,16 @@ export interface IRadioProps {
   checked?: boolean
   children?: ReactChildren
   className?: string
+  defaultChecked?: boolean
   disabled?: boolean
+  icon?: ItemShorthand
   label?: string
   name?: string
   onChange?: ComponentEventHandler<IRadioProps>
   type?: string
   styles?: IComponentPartStylesInput
+
+  // TODO: what is the difference between value and checked?
   value?: string | number
   variables?: ComponentVariablesInput
   isFromKeyboard?: boolean
@@ -30,7 +44,7 @@ export interface IRadioProps {
 
 /**
  * @accessibility
- * Radio buttons do not handle accessibility. Those aspects will be handled once the RadioGroup component is introduced.
+ * Radio buttons need to be grouped in RadioGroup component to correctly handle accessibility.
  */
 class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static create: Function
@@ -40,6 +54,9 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   static className = 'ui-radio'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     as: customPropTypes.as,
 
     /** Whether or not radio is checked. */
@@ -54,14 +71,37 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** Initial checked value. */
     defaultChecked: PropTypes.bool,
 
+    /** Default value for isFromKeyboard (autocontrolled). */
+    defaultIsFromKeyboard: PropTypes.bool,
+
     /** A radio can appear disabled and be unable to change states. */
     disabled: PropTypes.bool,
+
+    /** The radio button indicator can be user-defined icon */
+    icon: customPropTypes.itemShorthand,
+
+    /** Whether focus came from the keyboard (autocontrolled). */
+    isFromKeyboard: PropTypes.bool,
 
     /** The label of the radio input. */
     label: PropTypes.string,
 
     /** The HTML input name. */
     name: PropTypes.string,
+
+    /**
+     * Called after radio blurs.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onBlur: PropTypes.func,
+
+    /**
+     * Called after radio gets focus.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onFocus: PropTypes.func,
 
     /**
      * Called after radio is clicked.
@@ -79,16 +119,8 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    isFromKeyboard: PropTypes.bool,
-    defaultIsFromKeyboard: PropTypes.bool,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
   }
 
   static handledProps = [
@@ -98,18 +130,19 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'children',
     'className',
     'defaultChecked',
+    'defautIsFromKeyboard',
     'disabled',
+    'icon',
+    'isFromKeyboard',
     'label',
     'name',
     'onChange',
+    'onBlur',
+    'onFocus',
     'styles',
     'type',
     'value',
     'variables',
-    'isFromKeyboard',
-    'defautIsFromKeyboard',
-    'onFocus',
-    'onBlur',
   ]
 
   static defaultProps = {
@@ -120,38 +153,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   static autoControlledProps = ['checked', 'isFromKeyboard']
 
-  private select = (e: React.SyntheticEvent) => {
-    const { onChange, disabled } = this.props
-    const checked = true
-
-    if (disabled) {
-      e.preventDefault()
-      return
-    }
-
-    this.trySetState({ checked })
-
-    if (onChange) {
-      onChange(e, { ...this.props, checked })
-    }
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-
-    this.setState({ isFromKeyboard })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  private handleBlur = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = false
-
-    this.setState({ isFromKeyboard })
-
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
   elementRef: HTMLInputElement
   setElementRef = ref => (this.elementRef = ref)
 
@@ -161,35 +162,58 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     }
   }
 
+  private handleChange = (e: React.SyntheticEvent) => {
+    const { disabled } = this.props
+    const checked = true
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
+    this.trySetState({ checked })
+
+    _.invoke(this.props, 'onChange', e, { ...this.props, checked })
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    const isFromKeyboard = whatInput.ask() === 'keyboard'
+    this.setState({ isFromKeyboard })
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    const isFromKeyboard = false
+    this.setState({ isFromKeyboard })
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleClick = (e: React.SyntheticEvent) => {
+    this.select(e)
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
     const { type, label, disabled, value, name, icon } = this.props
     const { checked } = this.state
 
     return (
       <ElementType
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        onClick={this.select}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        onClick={this.handleClick}
         className={classes.root}
         ref={this.setElementRef}
       >
-        <Label styles={{ root: styles.label }} {...accessibility.attributes.label}>
+        <Label styles={{ root: styles.label }}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
               size: 'mini',
-              variables: {
-                color: checked ? variables.checkedIconColor : variables.uncheckedIconColor,
-                backgroundColor: checked
-                  ? variables.checkedIconBackgroundColor
-                  : variables.uncheckedIconBackgroundColor,
-                borderColor: checked
-                  ? variables.checkedIconBorderColor
-                  : variables.uncheckedIconBorderColor,
-              },
+              variables: variables.icon,
               styles: { root: styles.icon },
             },
           })}

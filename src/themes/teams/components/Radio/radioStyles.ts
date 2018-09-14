@@ -7,24 +7,19 @@ const radioStyles: IComponentPartStylesInput = {
     display: 'inline-block',
   }),
 
-  radio: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
-    marginRight: variables.radioMargin,
-    position: 'absolute',
-    opacity: 0,
-    cursor: 'pointer',
-  }),
-
-  label: ({ variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
+  label: ({ variables, props }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
     cursor: 'pointer',
     display: 'inline-flex',
     alignItems: 'baseline',
     fontWeight: variables.fontWeight,
     minHeight: '2.5rem',
     backgroundColor: 'transparent',
+    ...(props.disabled && {
+      color: variables.disabledColor,
+    }),
   }),
 
   icon: ({ props, variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
-    margin: variables.iconMargin,
     ...(props.isFromKeyboard && {
       border: '.2rem solid red', // TODO: style
     }),

@@ -1,20 +1,20 @@
 import { pxToRem } from '../../../../lib'
+import { IRadioProps } from '../../../../components/Radio/Radio'
 
-export default (siteVars: any) => {
-  const vars: any = {}
+export default (siteVars: any, props: IRadioProps) => {
+  const { checked } = props
 
-  vars.fontWeight = 400
-  vars.radioMargin = `${pxToRem(10)}`
+  return {
+    fontWeight: 400,
+    radioMargin: `${pxToRem(10)}`,
+    disabledColor: siteVars.gray06,
 
-  vars.iconMargin = `0 ${pxToRem(10)} 0 0`
-
-  vars.uncheckedIconColor = siteVars.brand
-  vars.uncheckedIconBorderColor = siteVars.brand
-  vars.uncheckedIconBackgroundColor = 'white'
-
-  vars.checkedIconColor = 'white'
-  vars.checkedIconBorderColor = siteVars.brand
-  vars.checkedIconBackgroundColor = siteVars.brand
-
-  return vars
+    // variables for the icon part
+    icon: {
+      margin: `0 ${pxToRem(10)} 0 0`,
+      color: checked ? siteVars.white : siteVars.brand,
+      backgroundColor: checked ? siteVars.brand : siteVars.white,
+      borderColor: checked ? siteVars.white : siteVars.brand,
+    },
+  }
 }
