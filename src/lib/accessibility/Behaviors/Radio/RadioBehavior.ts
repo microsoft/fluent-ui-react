@@ -13,6 +13,7 @@ const RadioBehavior: Accessibility = (props: any) => ({
       role: 'radio',
       tabIndex: props.checked ? '0' : '-1',
       'aria-checked': props.checked,
+      'aria-disabled': props.disabled,
     },
     label: {
       role: 'presentation',

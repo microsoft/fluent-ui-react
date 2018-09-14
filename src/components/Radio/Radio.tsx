@@ -18,7 +18,7 @@ import {
 } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioBehavior } from '../../lib/accessibility'
 
 export interface IRadioProps {
@@ -35,8 +35,6 @@ export interface IRadioProps {
   onChange?: ComponentEventHandler<IRadioProps>
   type?: string
   styles?: IComponentPartStylesInput
-
-  // TODO: what is the difference between value and checked?
   value?: string | number
   variables?: ComponentVariablesInput
   isFromKeyboard?: boolean
@@ -157,23 +155,11 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   setElementRef = ref => (this.elementRef = ref)
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.checked && this.state.checked) {
-      this.elementRef.focus()
+    const checked = this.state.checked
+    if (checked !== prevState.checked) {
+      checked && this.elementRef.focus()
+      _.invoke(this.props, 'onChange', undefined, { ...this.props, checked })
     }
-  }
-
-  private select = (e: React.SyntheticEvent) => {
-    const { disabled } = this.props
-    const checked = true
-
-    if (disabled) {
-      e.preventDefault()
-      return
-    }
-
-    this.trySetState({ checked })
-
-    _.invoke(this.props, 'onChange', e, { ...this.props, checked })
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
@@ -188,8 +174,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
-    this.select(e)
+  handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 

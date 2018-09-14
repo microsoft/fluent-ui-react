@@ -3,8 +3,14 @@ import { Divider, RadioGroup } from '@stardust-ui/react'
 
 const items = [
   { name: 'pizza', key: 'Capricciosa', label: 'Capricciosa', value: 'capricciosa' },
-  { name: 'pizza', key: 'Prosciutto', label: 'Prosciutto', value: 'prosciutto' },
-  { name: 'pizza', key: 'Margherita', label: 'Margherita', value: 'margherita' },
+  { name: 'pizza', key: 'Prosciutto', label: 'Prosciutto', value: 'prosciutto', disabled: true },
+  {
+    name: 'pizza',
+    key: 'Margherita',
+    label: 'Margherita',
+    value: 'margherita',
+    onChange: (e, props) => alert('Margherita ' + props.checked ? 'selected' : 'unselected'),
+  },
 ]
 
 class RadioGroupExample extends React.Component {
@@ -18,7 +24,7 @@ class RadioGroupExample extends React.Component {
       <div>
         The selected value is: {selectedValue}
         <Divider />
-        <RadioGroup defaultCheckedIndex={0} items={items} onChange={this.handleChange} />
+        <RadioGroup defaultCheckedValue="capricciosa" items={items} onChange={this.handleChange} />
       </div>
     )
   }
