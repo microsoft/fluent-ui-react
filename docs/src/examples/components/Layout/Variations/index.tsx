@@ -11,10 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Disappearing"
-      description={[
-        'A disappearing layout renders will render content directly when possible',
-        ' (i.e. without wrapping elements).',
-      ].join('')}
+      description="A disappearing layout renders content directly when possible."
       examplePath="components/Layout/Variations/LayoutExampleDisappearing"
     />
     <ComponentExample

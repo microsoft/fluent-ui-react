@@ -12,8 +12,8 @@ const LayoutExampleReducing = () => (
     <Layout
       debug
       reducing
-      end="End content."
       main="Areas are retained when there are multiple pieces of content."
+      end="Such as this."
     />
   </div>
 )

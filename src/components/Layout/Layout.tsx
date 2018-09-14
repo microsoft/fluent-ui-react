@@ -3,33 +3,19 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
-import {
-  ComponentVariablesInput,
-  IComponentPartStylesInput,
-  ICSSInJSStyle,
-} from '../../../types/theme'
+import { Extendable, ItemShorthand } from '../../../types/utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+
+import LayoutArea from './LayoutArea'
+import LayoutGap from './LayoutGap'
 
 export interface ILayoutProps {
   as?: any
   className?: string
   debug?: boolean
-  renderStartArea?: (params: object) => React.ReactNode
-  renderMainArea?: (params: object) => React.ReactNode
-  renderEndArea?: (params: object) => React.ReactNode
-  renderGap?: (params: object) => React.ReactNode
-  rootCSS?: ICSSInJSStyle
-  start?: any
-  startCSS?: ICSSInJSStyle
-  startSize?: string
-  main?: any
-  mainCSS?: ICSSInJSStyle
-  mainSize?: string
-  end?: any
-  endCSS?: ICSSInJSStyle
-  endSize?: string
-  justifyItems?: React.CSSProperties['justifyItems']
-  alignItems?: React.CSSProperties['alignItems']
+  start?: ItemShorthand
+  main?: ItemShorthand
+  end?: ItemShorthand
   gap?: string
   reducing?: boolean
   disappearing?: boolean
@@ -41,6 +27,9 @@ export interface ILayoutProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A Layout is for arranging content areas in common ways.
+ */
 class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
   static className = 'ui-layout'
 
@@ -51,44 +40,23 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
     className: PropTypes.string,
     debug: PropTypes.bool,
 
-    renderStartArea: PropTypes.func,
-    renderMainArea: PropTypes.func,
-    renderEndArea: PropTypes.func,
-    renderGap: PropTypes.func,
-
-    /** Styled applied to the root element of the rendered component. */
-    rootCSS: PropTypes.object,
-
+    /** Shorthand for the Layout.Area placed at the start of the Layout. */
     start: PropTypes.any,
-    startCSS: PropTypes.object,
-    startSize: PropTypes.string,
 
+    /** Shorthand for the primary Layout.Area within the Layout. */
     main: PropTypes.any,
-    mainCSS: PropTypes.object,
-    mainSize: PropTypes.string,
 
+    /** Shorthand for the Layout.Area placed at the end of the Layout. */
     end: PropTypes.any,
-    endCSS: PropTypes.object,
-    endSize: PropTypes.string,
 
-    /** How to align items on-axis within the layout (i.e. vertical or not). */
-    justifyItems: PropTypes.any,
-
-    /** How to align cross-axis items within the layout (i.e. vertical or not). */
-    alignItems: PropTypes.any,
-
-    /** A layout can have gaps of whitespace between areas. */
+    /** A Layout can have gaps of whitespace between areas. */
     gap: PropTypes.string,
 
-    /** A layout can reduce to the minimum required areas. */
+    /** A Layout can reduce to the minimum required areas. */
     reducing: PropTypes.bool,
 
-    /** A layout can render its content directly if only one piece of content exists. */
+    /** A Layout can render its content directly if only one piece of content exists. */
     disappearing: PropTypes.bool,
-
-    truncateStart: PropTypes.bool,
-    truncateMain: PropTypes.bool,
-    truncateEnd: PropTypes.bool,
 
     vertical: PropTypes.bool,
 
@@ -100,78 +68,41 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
   }
 
   static handledProps = [
-    'alignItems',
     'as',
     'className',
     'debug',
     'disappearing',
     'end',
-    'endCSS',
-    'endSize',
     'gap',
-    'justifyItems',
     'main',
-    'mainCSS',
-    'mainSize',
     'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
     'start',
-    'startCSS',
-    'startSize',
     'styles',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
     'variables',
     'vertical',
   ]
 
-  static defaultProps = {
-    startSize: 'auto',
-    mainSize: '1fr',
-    endSize: 'auto',
-
-    // TODO: when an area is another Layout, do not wrap them in an extra div
-    // TODO: option 1) higher value layouts could use start={Layout.create(start)} to ensure Areas are layout root
-    renderStartArea({ start, classes }) {
-      return start && <div className={cx('ui-layout__start', classes.start)}>{start}</div>
-    },
-
-    renderMainArea({ main, classes }) {
-      return main && <div className={cx('ui-layout__main', classes.main)}>{main}</div>
-    },
-
-    renderEndArea({ end, classes }) {
-      return end && <div className={cx('ui-layout__end', classes.end)}>{end}</div>
-    },
-
-    // Heads up!
-    // IE11 Doesn't support grid-gap, insert virtual columns instead
-    renderGap({ gap, classes }) {
-      return gap && <span className={cx('ui-layout__gap', classes.gap)} />
-    },
-  }
+  static Area = LayoutArea
+  static Gap = LayoutGap
 
   renderComponent({ ElementType, classes, rest }) {
-    const {
-      reducing,
-      disappearing,
-      start,
-      main,
-      end,
-      renderStartArea,
-      renderMainArea,
-      renderEndArea,
-      renderGap,
-    } = this.props as ILayoutPropsWithDefaults
+    const { reducing, debug, disappearing, start, main, end, gap } = this.props
 
-    const startArea = renderStartArea({ ...this.props, classes })
-    const mainArea = renderMainArea({ ...this.props, classes })
-    const endArea = renderEndArea({ ...this.props, classes })
+    const startArea = LayoutArea.create(start, {
+      defaultProps: { debug, size: 'auto' },
+    })
+
+    const mainArea = LayoutArea.create(main, {
+      defaultProps: { debug },
+    })
+
+    const endArea = LayoutArea.create(end, {
+      defaultProps: { debug, size: 'auto' },
+    })
+
+    const gapArea = LayoutGap.create(gap, {
+      defaultProps: { debug, size: gap },
+    })
 
     if (!startArea && !mainArea && !endArea) {
       return <ElementType {...rest} className={classes.root} />
@@ -202,9 +133,9 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
     return (
       <ElementType {...rest} className={classes.root}>
         {startArea}
-        {startArea && mainArea && renderGap({ ...this.props, classes })}
+        {start && main && gapArea}
         {mainArea}
-        {(startArea || mainArea) && endArea && renderGap({ ...this.props, classes })}
+        {(start || main) && end && gapArea}
         {endArea}
       </ElementType>
     )
@@ -212,4 +143,3 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 }
 
 export default Layout
-export type ILayoutPropsWithDefaults = ILayoutProps & typeof Layout.defaultProps

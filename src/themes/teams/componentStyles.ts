@@ -26,6 +26,8 @@ export { default as Input } from './components/Input/inputStyles'
 export { default as Label } from './components/Label/labelStyles'
 
 export { default as Layout } from './components/Layout/layoutStyles'
+export { default as LayoutArea } from './components/Layout/layoutAreaStyles'
+export { default as LayoutGap } from './components/Layout/layoutGapStyles'
 
 export { default as ItemLayout } from './components/ItemLayout/itemLayoutStyles'
 

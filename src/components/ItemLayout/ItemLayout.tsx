@@ -157,24 +157,22 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
       const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
 
       const mergedClasses = cx('ui-item-layout__header', classes.header)
-      const mediaClasses = cx('ui-item-layout__headerMedia', classes.headerMedia)
+      const headerMediaClasses = cx('ui-item-layout__headerMedia', classes.headerMedia)
 
       return !header && !headerMedia ? null : (
         <Layout
           className={mergedClasses}
-          alignItems="end"
+          // alignItems="end"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateHeader}
-          main={header}
-          rootCSS={headerCSS}
-          end={
-            headerMedia && (
-              <span style={headerMediaCSS} className={mediaClasses}>
-                {headerMedia}
-              </span>
-            )
-          }
+          main={{ content: header, truncate: truncateHeader }}
+          styles={{ root: headerCSS }}
+          end={{
+            as: 'span',
+            content: headerMedia,
+            styles: { root: headerMediaCSS },
+            className: headerMediaClasses,
+          }}
         />
       )
     },
@@ -188,19 +186,17 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
       return !content && !contentMedia ? null : (
         <Layout
           className={mergedClasses}
-          alignItems="start"
+          // alignItems="start"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateContent}
-          rootCSS={contentCSS}
-          main={content}
-          end={
-            contentMedia && (
-              <span style={contentMediaCSS} className={mediaClasses}>
-                {contentMedia}
-              </span>
-            )
-          }
+          styles={{ root: contentCSS }}
+          main={{ content, truncate: truncateContent }}
+          end={{
+            as: 'span',
+            content: contentMedia,
+            styles: { root: contentMediaCSS },
+            className: mediaClasses,
+          }}
         />
       )
     },
@@ -210,10 +206,6 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
       .props as IItemLayoutPropsWithDefaults
 
-    const startArea = media
-    const mainArea = renderMainArea(this.props, this.state, classes)
-    const endArea = endMedia
-
     const mergedMediaClasses = cx('ui-item-layout__media', classes.media)
     const mergedEndMediaClasses = cx('ui-item-layout__endMedia', classes.endMedia)
 
@@ -221,27 +213,27 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
       <Layout
         as={as}
         className={classes.root}
-        styles={{ root: styles.root }}
-        rootCSS={rootCSS}
-        alignItems="center"
-        gap={pxToRem(8)}
+        // alignItems="center"
         debug={debug}
         reducing
-        start={
-          startArea && (
-            <span style={mediaCSS} className={mergedMediaClasses}>
-              {startArea}
-            </span>
-          )
-        }
-        main={mainArea}
-        end={
-          endArea && (
-            <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {endArea}
-            </span>
-          )
-        }
+        styles={{ root: { ...styles.root, ...rootCSS } }}
+        gap={pxToRem(8)}
+        start={Layout.Area.create(media, {
+          defaultProps: {
+            as: 'span',
+            styles: { root: mediaCSS },
+            className: mergedMediaClasses,
+          },
+        })}
+        main={{
+          content: renderMainArea(this.props, this.state, classes),
+        }}
+        end={{
+          as: 'span',
+          content: endMedia,
+          styles: { root: endMediaCSS },
+          className: mergedEndMediaClasses,
+        }}
         {...rest}
       />
     )
