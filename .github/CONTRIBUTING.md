@@ -9,20 +9,11 @@ CONTRIBUTING
   - [Commands](#commands)
 - [Workflow](#workflow)
   - [Create a Component](#create-a-component)
-  - [Define _meta](#define-_meta)
+  - [Display Name and Class Name](#display-name-and-class-name)
   - [Using propTypes](#using-proptypes)
   - [Conformance Test](#conformance-test)
   - [Open A PR](#open-a-pr)
   - [Spec out the API](#spec-out-the-api)
-- [API](#api)
-  - [SUI HTML Classes](#sui-html-classes)
-    - [API Patterns](#api-patterns)
-    - [Building className](#building-classname)
-    - [Testing className](#testing-classname)
-  - [SUI HTML Markup](#sui-html-markup)
-    - [SUI Components vs Component Parts](#sui-components-vs-component-parts)
-    - [React Components & Sub Components](#react-components--sub-components)
-    - [Component Part Props](#component-part-props)
 - [Testing](#testing)
   - [Coverage](#coverage)
   - [Common Tests](#common-tests)
@@ -31,7 +22,6 @@ CONTRIBUTING
     - [Writing tests](#writing-tests)
     - [Running tests](#running-tests)
 - [State](#state)
-  - [AutoControlledComponent](#autocontrolledcomponent)
 - [Documentation](#documentation)
   - [Website](#website)
   - [Components](#components)
@@ -47,7 +37,7 @@ These guides will walk your through various activities for contributing:
 
 ### Commit Messages
 
-Please follow the [Angular Git Commit Guidelines][8] format.
+Please follow the [Angular Git Commit Guidelines][5] format.
 
 ### Commands
 
@@ -164,7 +154,7 @@ This will also help with getting early feedback and smaller faster iterations on
 
 ### Spec out the API
 
-Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how your component's API will support all the native Stardust features. You can reference this [API proposal][7] for the Input.
+Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how your component's API will support all the native Stardust features. You can reference this [API proposal][4] for the Input.
 
 Once we have solidified the component spec, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
@@ -231,7 +221,7 @@ function MyComponent(props) {
 }
 ```
 
-If you're component requires event handlers, it is a stateful class component. Want to know [why][15]?
+If you're component requires event handlers, it is a stateful class component. Want to know [why][7]?
 
 ```tsx
 class MyComponent extends AutoControlledComponent {
@@ -319,19 +309,10 @@ Usage examples for a component live in `docs/src/examples`.  The examples follow
 
 Adding documentation for new components is a bit tedious.  The best way to do this (for now) is to copy an existing component's and update them.
 
-[1]: https://github.com/Semantic-Org/Semantic-UI-React/blob/master/test/specs/commonTests.js
+[1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
 [2]: https://facebook.github.io/react/docs/forms.html#controlled-components
 [3]: https://facebook.github.io/react/docs/forms.html#uncontrolled-components
-[4]: https://github.com/Semantic-Org/Semantic-UI-React/blob/master/src/lib/classNameBuilders.js
-[5]: https://semantic-ui.com/elements/header
-[6]: https://semantic-ui.com/views/item
-[7]: https://github.com/Semantic-Org/Semantic-UI-React/pull/281#issuecomment-228663527
-[8]: https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
-[9]: https://semantic-ui.com/introduction/glossary.html
-[10]: https://semantic-ui.com/elements/label.html
-[11]: https://nodejs.org/
-[12]: https://github.com/Semantic-Org/Semantic-UI-React#fork-destination-box
-[13]: https://github.com/Semantic-Org/Semantic-UI-React/blob/master/src/factories
-[14]: https://github.com/Semantic-Org/Semantic-UI-React/pull/335#issuecomment-238960895
-[15]: https://github.com/Semantic-Org/Semantic-UI-React/issues/607
-[16]: https://yarnpkg.com/en/docs/getting-started
+[4]: https://github.com/stardust-ui/react/pull/73
+[5]: https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
+[6]: https://stardust-ui.github.io/react/glossary
+[7]: https://github.com/Semantic-Org/Semantic-UI-React/issues/607
