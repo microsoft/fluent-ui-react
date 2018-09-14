@@ -5,6 +5,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 ### Unreleased
 - Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
 - Replaced `ref={this.setRef}` with `this.setRef(this)` in `componentDidMount` to support functional components, which is needed to pass unit tests with embed.
+- Changed `defaultActiveElement` to query only descendants of the focus zone instead of the whole document, which enables to write simpler selectors. Note that we do not lose any functionality by this, because selecting elements outside of focus zone had no effect.
 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
