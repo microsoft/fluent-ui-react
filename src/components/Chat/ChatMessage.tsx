@@ -3,7 +3,11 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import {
+  ComponentVariablesInput,
+  ComponentPartStyle,
+  IComponentPartStylesInput,
+} from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
 
@@ -14,7 +18,7 @@ export interface IChatMessageProps {
   className?: string
   content?: any
   mine?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -89,7 +93,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     avatar &&
     Avatar.create(avatar, {
       defaultProps: {
-        styles: { root: styles.avatar },
+        styles: styles.avatar,
         variables: variables.avatar,
       },
     })
