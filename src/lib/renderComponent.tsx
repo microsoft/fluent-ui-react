@@ -1,4 +1,5 @@
 import * as cx from 'classnames'
+import _ from 'lodash'
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
@@ -53,6 +54,7 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
+  componentId?: string
 }
 
 const getAccessibility = (
@@ -104,6 +106,7 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
+    componentId,
   } = config
 
   return (
@@ -141,7 +144,11 @@ const renderComponent = <P extends {}>(
           {},
         )
 
-        const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
+        const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam, {
+          className,
+          componentId,
+        })
+
         classes.root = cx(className, classes.root, props.className)
 
         const config: IRenderResultConfig<P> = {

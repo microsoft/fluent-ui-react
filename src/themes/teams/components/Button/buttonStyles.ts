@@ -140,6 +140,13 @@ const buttonStyles: IComponentPartStylesInput = {
     overflow: 'hidden',
     ...(typeof props.content === 'string' && truncateStyle),
   }),
+
+  onHover: {
+    icon: ({ props }) => ({
+      color: 'red',
+      ...(props.primary && { backgroundColor: 'yellow' }),
+    }),
+  } as any,
 }
 
 export default buttonStyles

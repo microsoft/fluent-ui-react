@@ -10,6 +10,8 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static handledProps: any
   protected actionHandlers: AccessibilityActionHandlers
 
+  protected componentId?: string
+
   constructor(props, context) {
     super(props, context)
     if (process.env.NODE_ENV !== 'production') {
@@ -38,6 +40,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,
+        componentId: this.componentId,
       },
       this.renderComponent,
     )
