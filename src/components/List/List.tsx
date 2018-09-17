@@ -2,21 +2,21 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
+import { customPropTypes, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import { BaseContainer, IContainerProps } from '../../lib/accessibility/FocusHandling/BaseContainer'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
-export interface IListProps {
+export interface IListProps extends IContainerProps {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
   className?: string
   debug?: boolean
-  items?: ItemShorthand[]
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -24,11 +24,7 @@ export interface IListProps {
   variables?: ComponentVariablesInput
 }
 
-interface IContainerState {
-  focusItemOnIdx: number
-}
-
-class List extends UIComponent<Extendable<IListProps>, IContainerState> {
+class List extends BaseContainer<Extendable<IListProps>> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -90,14 +86,6 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  constructor(props: IListProps, state: IContainerState) {
-    super(props, state)
-
-    this.state = {
-      focusItemOnIdx: 0,
-    }
-  }
-
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
@@ -112,60 +100,11 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
     const { items } = this.props
     const itemProps = _.pick(this.props, List.itemProps)
 
-    return _.map(items, (item, idx) => {
-      const isFocused = idx === this.state.focusItemOnIdx && this.state.focusItemOnIdx !== -1
-
-      itemProps.idx = idx
-      itemProps.isFocused = isFocused
-
-      itemProps.isFirstElement = idx === 0
-      itemProps.isLastElement = idx === items.length - 1
-      itemProps.onMovePrevious = this.movePrevious.bind(this)
-      itemProps.onMoveNext = this.moveNext.bind(this)
-      itemProps.onMoveFirst = this.moveFirst.bind(this)
-      itemProps.onMoveLast = this.moveLast.bind(this)
-      itemProps.onEnter = this.enter.bind(this)
-      itemProps.onSpace = this.space.bind(this)
-      itemProps.onEsc = this.esc.bind(this)
-
-      return ListItem.create(item, { defaultProps: itemProps })
-    })
-  }
-
-  private movePrevious(): void {
-    this.setState(prev => {
-      return { focusItemOnIdx: prev.focusItemOnIdx - 1 }
-    })
-  }
-
-  private moveNext(): void {
-    this.setState(prev => {
-      return { focusItemOnIdx: prev.focusItemOnIdx + 1 }
-    })
-  }
-
-  private moveFirst(): void {
-    this.setState({
-      focusItemOnIdx: 0,
-    })
-  }
-
-  private moveLast(): void {
-    this.setState({
-      focusItemOnIdx: this.props.items.length - 1,
-    })
-  }
-
-  private enter(): void {
-    console.log('enter()')
-  }
-
-  private space(): void {
-    console.log('space()')
-  }
-
-  private esc(): void {
-    console.log('esc()')
+    return _.map(items, (item, idx) =>
+      ListItem.create(item, {
+        defaultProps: this.assignAtomicItemsProps(itemProps, idx, items.length),
+      }),
+    )
   }
 }
 
