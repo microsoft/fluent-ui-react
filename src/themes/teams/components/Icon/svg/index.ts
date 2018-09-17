@@ -5,7 +5,7 @@ export const getStyle = partName => {
   return args => {
     const { props } = args
 
-    if (!props.svg) {
+    if (props.isFontBased) {
       return undefined
     }
 

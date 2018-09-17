@@ -1,6 +1,7 @@
 import * as React from 'react'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/interfaces'
+import { ThemeIcons } from 'theme'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
@@ -28,6 +29,10 @@ class UIComponent<P, S> extends React.Component<P, S> {
     throw new Error('renderComponent is not implemented.')
   }
 
+  getExtraProps({ icons }: { icons?: ThemeIcons }) {
+    return {}
+  }
+
   render() {
     return renderComponent(
       {
@@ -38,6 +43,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,
+        getExtraProps: this.getExtraProps.bind(this),
       },
       this.renderComponent,
     )
