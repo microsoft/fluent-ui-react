@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'

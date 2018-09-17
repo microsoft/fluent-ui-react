@@ -47,6 +47,7 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: ISiteVariables,
+  props?: any,
 ) => ComponentVariablesObject
 
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared

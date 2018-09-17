@@ -1,5 +1,3 @@
-/* tslint:disable:no-string-literal */
-
 export const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
