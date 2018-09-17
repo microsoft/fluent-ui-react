@@ -13,7 +13,6 @@ import {
   IThemeInput,
   IThemePrepared,
   StaticStyle,
-  StaticStyles,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
