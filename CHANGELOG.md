@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.5.2 ]------------------------------- -->
+## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.1...v0.5.2)
+
 ### Fixes
 - Fix Provider incorrectly rendering font face rules @levithomason ([#227](https://github.com/stardust-ui/react/pull/227))
 
