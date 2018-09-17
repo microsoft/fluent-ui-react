@@ -6,18 +6,23 @@ import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
 
-import { default as iconsAndStyles } from './components/Icon/svg'
+import { default as svgIconsAndStyles } from './components/Icon/svg'
+import { default as fontIcons } from './components/Icon/font'
+
 import { IconSpec } from './components/Icon/svg/types'
 
-const icons = Object.keys(iconsAndStyles as { [iconName: string]: IconSpec }).reduce<ThemeIcons>(
-  (accIcons, iconName) => {
-    const iconAndStyle = iconsAndStyles[iconName]
-    const icon = typeof iconAndStyle === 'object' ? iconAndStyle.icon : iconAndStyle // if icon function is only provided (and no styles)
+const icons: ThemeIcons = Object.keys(svgIconsAndStyles as { [iconName: string]: IconSpec }).reduce<
+  ThemeIcons
+>((accIcons, iconName) => {
+  const iconAndStyle = svgIconsAndStyles[iconName]
+  const icon = typeof iconAndStyle === 'object' ? iconAndStyle.icon : iconAndStyle // if icon function is only provided (and no styles)
 
-    return { ...accIcons, ...{ [iconName]: icon } }
-  },
-  {},
-)
+  return { ...accIcons, ...{ [iconName]: icon } }
+}, {})
+
+Object.keys(fontIcons).forEach(iconName => {
+  icons[iconName] = fontIcons[iconName]
+})
 
 export default {
   siteVariables,

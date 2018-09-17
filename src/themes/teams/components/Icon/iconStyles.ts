@@ -1,7 +1,7 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IconXSpacing, IIconProps, IIconExtraProps } from '../../../../components/Icon/Icon'
+import { ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { IconXSpacing, IIconProps, IconExtraProps } from '../../../../components/Icon/Icon'
 
 import { getStyle as getSvgStyle } from './svg'
 
@@ -17,17 +17,17 @@ const sizes = new Map([
   ['massive', 8],
 ])
 
-const getFontIcon = name => {
-  const fontFamily = name && name.includes('outline') ? 'outline-icons' : 'Icons'
-  const content = (name && `'\\${fontAwesomeIcons(name)}'`) || '?'
+const getDefaultFontIcon = (iconName: string) => {
+  const fontFamily = iconName && iconName.includes('outline') ? 'outline-icons' : 'Icons'
+  const content = (iconName && `'\\${fontAwesomeIcons(iconName)}'`) || '?'
 
   return { content, fontFamily }
 }
 
 const getSize = size => `${sizes.get(size)}em`
 
-const getFontStyles = (name): ICSSInJSStyle => {
-  const { fontFamily, content } = getFontIcon(name)
+const getFontStyles = (iconName: string, themeIcon?: FontIconSpec): ICSSInJSStyle => {
+  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
@@ -82,10 +82,10 @@ const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
 
 const iconStyles = {
   root: ({
-    props: { disabled, isFontBased, name, size, bordered, circular, xSpacing },
+    props: { disabled, isFontBased, name, size, bordered, circular, xSpacing, fontIconFromTheme },
     variables: v,
   }: {
-    props: IIconProps & IIconExtraProps
+    props: IIconProps & IconExtraProps
     variables: any
   }): ICSSInJSStyle => {
     return {
@@ -95,7 +95,7 @@ const iconStyles = {
       width: '1em',
       height: '1em',
 
-      ...(isFontBased ? getFontStyles(name) : {}),
+      ...(isFontBased ? getFontStyles(name, fontIconFromTheme) : {}),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,

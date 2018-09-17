@@ -8,6 +8,8 @@ import {
   ComponentVariablesInput,
   IComponentPartStylesInput,
   ThemeIcons,
+  RenderSvgIconFunction,
+  FontIconSpec,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
@@ -37,8 +39,9 @@ export interface IIconProps {
   variables?: ComponentVariablesInput
 }
 
-export interface IIconExtraProps {
+export type IconExtraProps = {
   isFontBased: boolean
+  fontIconFromTheme?: FontIconSpec
 }
 
 /**
@@ -124,7 +127,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
 
   renderSvgIcon(ElementType, icons: ThemeIcons, classes, rest, accessibility): React.ReactNode {
     const { name } = this.props
-    const renderIcon = icons[name]
+    const renderIcon = icons[name] as RenderSvgIconFunction
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -140,9 +143,12 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     return !themeIcon || typeof themeIcon !== 'function'
   }
 
-  getExtraProps({ icons }): IIconExtraProps {
+  getExtraProps({ icons }): IconExtraProps {
+    const isFontBased = this.isFontBased(icons)
+
     return {
-      isFontBased: this.isFontBased(icons),
+      isFontBased,
+      fontIconFromTheme: isFontBased && icons[this.props.name],
     }
   }
 

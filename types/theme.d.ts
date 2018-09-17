@@ -249,10 +249,15 @@ export interface IFontFace {
 export type FontFaces = IFontFace[]
 
 // ========================================================
-// SVG Icons
+// Icons
 // ========================================================
 
 type Classes = { [iconPart: string]: string }
 export type RenderSvgIconFunction = (classes: Classes) => React.ReactNode
 
-export type ThemeIcons = { [iconName: string]: RenderSvgIconFunction }
+export type FontIconSpec = {
+  content: string
+  fontFamily: string
+}
+
+export type ThemeIcons = { [iconName: string]: RenderSvgIconFunction | FontIconSpec }
