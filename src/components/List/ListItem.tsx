@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
@@ -315,8 +316,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IAtomicItemState>
 
   componentDidUpdate() {
     if (this.props.isFocused) {
-      // this.itemRef.current!.focus()
-      console.log(this.itemRef.current!)
+      const domNode = ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement
+      domNode.focus()
     }
   }
 

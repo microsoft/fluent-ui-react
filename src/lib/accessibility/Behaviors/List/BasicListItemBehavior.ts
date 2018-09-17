@@ -6,13 +6,15 @@ import { IAccessibilityDefinition } from '../../interfaces'
  * The 'listitem' role is used to identify an element that is a single item in a list.
  */
 
-const BasicListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => ({
-  attributes: {
-    root: {
-      role: 'listitem',
-      tabIndex: props.idx === 0 ? '0' : '-1',
+const BasicListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => {
+  return {
+    attributes: {
+      root: {
+        role: 'listitem',
+        tabIndex: props.isFocused ? '0' : '-1',
+      },
     },
-  },
-})
+  }
+}
 
 export default BasicListItemBehavior
