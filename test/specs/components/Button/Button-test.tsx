@@ -9,14 +9,11 @@ import {
 } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
 import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
-import { initKeyboardFocusMock } from 'test/specs/lib/keyboardFocusMock'
 
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
-
-initKeyboardFocusMock()
 
 describe('Button', () => {
   isConformant(Button)

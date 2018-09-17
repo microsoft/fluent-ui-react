@@ -1,6 +1,5 @@
 // TODO:
 // vertical - padding variable?
-// Radio-test failing with Stateless function components cannot be given refs. Attempts to access this ref will fail.
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
