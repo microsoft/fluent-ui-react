@@ -7,7 +7,7 @@ const IconSetExampleShorthand = () => (
       <Grid columns={3} style={{ textAlign: 'center' }}>
         {Object.keys(theme.icons).map(name => (
           <span>
-            <Icon svg key={name} name={name} />
+            <Icon key={name} name={name} />
             <br />
             <code>{name}</code>
           </span>
