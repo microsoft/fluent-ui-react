@@ -1,8 +1,6 @@
 // TODO:
-// vertical
+// vertical - padding variable?
 // Radio-test failing with Stateless function components cannot be given refs. Attempts to access this ref will fail.
-// styling for focused state
-// disabled
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -30,6 +28,7 @@ export interface IRadioGroupProps {
   items?: ItemShorthand[]
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
+  vertical?: boolean
 }
 
 class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, any> {
@@ -66,6 +65,9 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** A vertical radio group displays elements vertically. */
+    vertical: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -83,6 +85,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     'items',
     'styles',
     'variables',
+    'vertical',
   ]
 
   static autoControlledProps = ['checkedValue']
@@ -90,38 +93,57 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
   static Item = Radio
 
   actionHandlers: AccessibilityActionHandlers = {
-    nextItem: event => this.setCheckItem(event, 1),
-    prevItem: event => this.setCheckItem(event, -1),
+    nextItem: event => this.setCheckedItem(event, 1),
+    prevItem: event => this.setCheckedItem(event, -1),
   }
 
-  setCheckItem = (event, direction) => {
-    if (!this.props.items || this.props.items.length === 0) {
-      return
-    }
+  setCheckedItem = (event, direction) => {
+    const nextItem = this.findNextEnabledCheckedItem(direction)
 
-    const currentIndex = this.props.items.findIndex(
-      item => (item as RadioProps).value === this.state.checkedValue,
-    )
-    let newIndex = currentIndex + direction
-    if (newIndex < 0) {
-      newIndex = this.props.items.length - 1
-    } else if (newIndex >= this.props.items.length) {
-      newIndex = 0
-    }
-
-    if (newIndex >= 0 && newIndex < this.props.items.length && newIndex !== currentIndex) {
-      const itemProps = this.props.items[newIndex] as RadioProps
-      this.trySetState({ checkedValue: itemProps.value })
-      _.invoke(this.props, 'onChange', event, itemProps)
+    if (nextItem) {
+      this.trySetState({ checkedValue: nextItem.value })
+      _.invoke(this.props, 'onChange', event, nextItem)
     }
 
     event.preventDefault()
   }
 
+  findNextEnabledCheckedItem = (direction): RadioProps => {
+    if (!this.props.items || this.props.items.length === 0) {
+      return undefined
+    }
+
+    const currentIndex = this.props.items.findIndex(
+      item => (item as RadioProps).value === this.state.checkedValue,
+    )
+
+    for (
+      let newIndex = currentIndex + direction;
+      newIndex !== currentIndex;
+      newIndex += direction
+    ) {
+      if (newIndex < 0) {
+        newIndex = this.props.items.length - 1
+      } else if (newIndex >= this.props.items.length) {
+        newIndex = 0
+      }
+
+      if (newIndex < 0 || newIndex >= this.props.items.length || newIndex === currentIndex) {
+        return undefined
+      }
+
+      const itemProps = this.props.items[newIndex] as RadioProps
+      if (!itemProps.disabled) {
+        return itemProps
+      }
+    }
+    return undefined
+  }
+
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
-      const { value } = itemProps
-      if (value !== this.state.checkedValue) {
+      const { value, disabled } = itemProps
+      if (!disabled && value !== this.state.checkedValue) {
         this.trySetState({ checkedValue: value })
         _.invoke(this.props, 'onChange', event, itemProps)
       }
@@ -129,7 +151,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     },
   })
 
-  renderItems = (variables: ComponentVariablesObject) => {
+  renderItems = (variables: ComponentVariablesObject, vertical: boolean) => {
     const { items } = this.props
     const { checkedValue } = this.state
 
@@ -137,6 +159,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
       Radio.create(item, {
         defaultProps: {
           checked: typeof checkedValue !== 'undefined' && checkedValue === item.value,
+          vertical,
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -144,7 +167,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
-    const { children } = this.props
+    const { children, vertical } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
@@ -152,7 +175,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         {...rest}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(variables)}
+        {childrenExist(children) ? children : this.renderItems(variables, vertical)}
       </ElementType>
     )
   }

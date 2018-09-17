@@ -1,10 +1,13 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IRadioProps } from '../../../../components/Radio/Radio'
+import { pxToRem } from '../../../../lib'
 
 const radioStyles: IComponentPartStylesInput = {
-  root: (): ICSSInJSStyle => ({
+  root: ({ variables, props }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
     outline: 0,
-    display: 'inline-block',
+    ...(!props.vertical && {
+      display: 'inline-block',
+    }),
   }),
 
   label: ({ variables, props }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
@@ -21,7 +24,10 @@ const radioStyles: IComponentPartStylesInput = {
 
   icon: ({ props, variables }: { props: IRadioProps; variables: any }): ICSSInJSStyle => ({
     ...(props.isFromKeyboard && {
-      border: '.2rem solid red', // TODO: style
+      // this creates both inset and outset box shadow that some readers (NVDA) show when radio is not checked but it is focused
+      boxShadow:
+        `0 0 0 ${pxToRem(1)} ${variables.icon.outlineColor},` +
+        `0 0 0 ${pxToRem(2)} ${variables.icon.outlineColor} inset`,
     }),
   }),
 }

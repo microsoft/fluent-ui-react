@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import whatInput from 'what-input'
@@ -38,6 +39,7 @@ export interface IRadioProps {
   value?: string | number
   variables?: ComponentVariablesInput
   isFromKeyboard?: boolean
+  vertical?: boolean
 }
 
 /**
@@ -119,6 +121,9 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** A vertical radio group displays elements vertically. */
+    vertical: PropTypes.bool,
   }
 
   static handledProps = [
@@ -128,19 +133,20 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'children',
     'className',
     'defaultChecked',
-    'defautIsFromKeyboard',
+    'defaultIsFromKeyboard',
     'disabled',
     'icon',
     'isFromKeyboard',
     'label',
     'name',
-    'onChange',
     'onBlur',
+    'onChange',
     'onFocus',
     'styles',
     'type',
     'value',
     'variables',
+    'vertical',
   ]
 
   static defaultProps = {
@@ -151,8 +157,11 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   static autoControlledProps = ['checked', 'isFromKeyboard']
 
-  elementRef: HTMLInputElement
-  setElementRef = ref => (this.elementRef = ref)
+  elementRef: HTMLElement
+
+  componentDidMount() {
+    this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
@@ -190,7 +199,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
         onBlur={this.handleBlur}
         onClick={this.handleClick}
         className={classes.root}
-        ref={this.setElementRef}
       >
         <Label styles={{ root: styles.label }}>
           {Icon.create(icon || '', {

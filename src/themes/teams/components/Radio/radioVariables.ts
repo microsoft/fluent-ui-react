@@ -15,6 +15,7 @@ export default (siteVars: any, props: IRadioProps) => {
       color: checked ? siteVars.white : siteVars.brand,
       backgroundColor: checked ? siteVars.brand : siteVars.white,
       borderColor: checked ? siteVars.white : siteVars.brand,
+      outlineColor: siteVars.brand,
     },
   }
 }
