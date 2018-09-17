@@ -3,6 +3,7 @@ import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { IChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
+const rem10 = pxToRem(10)
 const chatMessageStyles = {
   root: ({
     props: p,
@@ -11,7 +12,6 @@ const chatMessageStyles = {
     props: IChatMessageProps
     variables: IChatMessageVariables
   }): ICSSInJSStyle => ({
-    display: 'flex',
     position: 'relative',
     marginTop: '1rem',
     marginBottom: '1rem',
@@ -25,8 +25,11 @@ const chatMessageStyles = {
     maxWidth: v.messageWidth,
   }),
 
-  avatar: (): ICSSInJSStyle => ({
-    margin: pxToRem(10),
+  avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
+    marginTop: rem10,
+    marginBottom: rem10,
+    marginLeft: p.mine ? rem10 : 0,
+    marginRight: p.mine ? 0 : rem10,
   }),
 
   content: ({
@@ -36,7 +39,6 @@ const chatMessageStyles = {
     props: IChatMessageProps
     variables: IChatMessageVariables
   }): ICSSInJSStyle => ({
-    flex: 1,
     padding: '1rem',
     color: 'rgb(64, 64, 64)',
     backgroundColor: p.mine ? v.messageColorMine : v.messageColor,

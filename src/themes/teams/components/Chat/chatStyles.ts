@@ -1,7 +1,10 @@
 import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IChatVariables } from './chatVariables'
 
 const chatStyles = {
-  root: (): ICSSInJSStyle => ({
+  root: ({ variables: v }: { variables: IChatVariables }): ICSSInJSStyle => ({
+    backgroundColor: v.backgroundColor,
+    border: `1px solid ${v.backgroundColor}`,
     display: 'flex',
     flexDirection: 'column',
     listStyle: 'none',
