@@ -4,11 +4,16 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 import Segment from 'src/components/Segment/Segment'
 
 const States = () => (
-  <ExampleSection title="States">
+  <ExampleSection title="Item">
+    <ComponentExample
+      title="Radio"
+      description="A radio for checking. Needs to be part of RadioGroup"
+      examplePath="components/RadioGroup/Item/RadioGroupItemExample"
+    />
     <ComponentExample
       title="Checked"
       description="A radio can come pre-checked."
-      examplePath="components/Radio/States/RadioExampleChecked"
+      examplePath="components/RadioGroup/Item/RadioGroupItemExampleChecked"
     >
       <Segment style={{ marginTop: '10px' }}>
         Use{' '}
@@ -25,7 +30,7 @@ const States = () => (
     <ComponentExample
       title="Disabled"
       description="Radios can be disabled."
-      examplePath="components/Radio/States/RadioExampleDisabled"
+      examplePath="components/RadioGroup/Item/RadioGroupItemExampleDisabled"
     />
   </ExampleSection>
 )

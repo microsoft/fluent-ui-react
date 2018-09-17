@@ -10,19 +10,14 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import Label from '../Label'
-import {
-  ComponentEventHandler,
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
-} from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
+import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface IRadioProps {
+export interface IRadioGroupItemProps {
   accessibility?: Accessibility
   as?: any
   checked?: boolean
@@ -33,8 +28,7 @@ export interface IRadioProps {
   icon?: ItemShorthand
   label?: string
   name?: string
-  onChange?: ComponentEventHandler<IRadioProps>
-  type?: string
+  onChange?: ComponentEventHandler<IRadioGroupItemProps>
   styles?: IComponentPartStylesInput
   value?: string | number
   variables?: ComponentVariablesInput
@@ -44,14 +38,14 @@ export interface IRadioProps {
 
 /**
  * @accessibility
- * Radio buttons need to be grouped in RadioGroup component to correctly handle accessibility.
+ * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
-class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
+class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemProps>, any> {
   static create: Function
 
-  static displayName = 'Radio'
+  static displayName = 'RadioGroupItem'
 
-  static className = 'ui-radio'
+  static className = 'ui-radio__item'
 
   static propTypes = {
     /** Accessibility behavior if overridden by the user. */
@@ -59,7 +53,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     as: customPropTypes.as,
 
-    /** Whether or not radio is checked. */
+    /** Whether or not radio item is checked. */
     checked: PropTypes.bool,
 
     /** Child content * */
@@ -74,37 +68,37 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     /** Default value for isFromKeyboard (autocontrolled). */
     defaultIsFromKeyboard: PropTypes.bool,
 
-    /** A radio can appear disabled and be unable to change states. */
+    /** A radio item can appear disabled and be unable to change states. */
     disabled: PropTypes.bool,
 
-    /** The radio button indicator can be user-defined icon */
+    /** The radio item indicator can be user-defined icon */
     icon: customPropTypes.itemShorthand,
 
     /** Whether focus came from the keyboard (autocontrolled). */
     isFromKeyboard: PropTypes.bool,
 
-    /** The label of the radio input. */
+    /** The label of the radio item. */
     label: PropTypes.string,
 
     /** The HTML input name. */
     name: PropTypes.string,
 
     /**
-     * Called after radio blurs.
+     * Called after radio item blurs.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
     onBlur: PropTypes.func,
 
     /**
-     * Called after radio gets focus.
+     * Called after radio item gets focus.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
     onFocus: PropTypes.func,
 
     /**
-     * Called after radio is clicked.
+     * Called after radio item checked state is changed.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
@@ -112,9 +106,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** The HTML input type. */
-    type: PropTypes.string,
 
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -143,7 +134,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     'onChange',
     'onFocus',
     'styles',
-    'type',
     'value',
     'variables',
     'vertical',
@@ -151,7 +141,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
   static defaultProps = {
     as: 'div',
-    type: 'radio',
     accessibility: RadioBehavior as Accessibility,
   }
 
@@ -214,6 +203,6 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   }
 }
 
-Radio.create = createShorthandFactory(Radio, label => ({ label }))
+RadioGroupItem.create = createShorthandFactory(RadioGroupItem, label => ({ label }))
 
-export default Radio
+export default RadioGroupItem

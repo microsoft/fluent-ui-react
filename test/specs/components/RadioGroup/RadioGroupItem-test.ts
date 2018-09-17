@@ -1,14 +1,14 @@
 import { isConformant } from 'test/specs/commonTests'
 import { initKeyboardFocusMock } from 'test/specs/lib/keyboardFocusMock'
 
-import Radio from 'src/components/Radio'
+import RadioGroupItem from 'src/components/RadioGroup'
 
 initKeyboardFocusMock()
 
-describe('Radio', () => {
-  isConformant(Radio, {
+describe('RadioGroupItem', () => {
+  isConformant(RadioGroupItem, {
     eventTargets: {
-      onChange: 'input',
+      onChange: 'root',
     },
   })
 })

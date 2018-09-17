@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
-import { IRadioProps } from '../../../../components/Radio/Radio'
+import { IRadioGroupItemProps } from '../../../../components/RadioGroup/RadioGroupItem'
 
-export default (siteVars: any, props: IRadioProps) => {
+export default (siteVars: any, props: IRadioGroupItemProps) => {
   const { checked } = props
 
   return {

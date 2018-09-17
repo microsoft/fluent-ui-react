@@ -9,11 +9,10 @@ const items = [
     key: 'Margherita',
     label: 'Margherita',
     value: 'margherita',
-    onChange: (e, props) => alert('Margherita ' + props.checked ? 'selected' : 'unselected'),
   },
 ]
 
-class RadioGroupExample extends React.Component {
+class RadioGroupVerticalExample extends React.Component {
   state = { selectedValue: '' }
   handleChange = (e, props) => {
     this.setState({ selectedValue: props.value })
@@ -24,9 +23,14 @@ class RadioGroupExample extends React.Component {
       <div>
         The selected value is: {selectedValue}
         <Divider />
-        <RadioGroup defaultCheckedValue="capricciosa" items={items} onChange={this.handleChange} />
+        <RadioGroup
+          vertical
+          defaultCheckedValue="capricciosa"
+          items={items}
+          onChange={this.handleChange}
+        />
       </div>
     )
   }
 }
-export default RadioGroupExample
+export default RadioGroupVerticalExample

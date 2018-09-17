@@ -6,17 +6,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
-import Radio from './Radio'
+import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
 import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import {
-  ComponentVariablesInput,
-  ComponentVariablesObject,
-  IComponentPartStylesInput,
-} from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { RadioProps } from '../../../node_modules/semantic-ui-react'
+import { ComponentVariablesInput, ComponentVariablesObject, IComponentPartStylesInput } from 'theme'
+import { Extendable, ItemShorthand, ReactChildren } from 'utils'
 
 export interface IRadioGroupProps {
   accessibility?: Accessibility
@@ -39,6 +34,9 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
   static create: Function
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
@@ -57,8 +55,12 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     /** Shorthand array of props for RadioGroup. */
     items: customPropTypes.collectionShorthand,
 
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    /**
+     * Called after radio group value is changed.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All value props.
+     */
+    onChange: PropTypes.func,
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -77,12 +79,13 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   static handledProps = [
     'accessibility',
-    'checkedValue',
     'as',
+    'checkedValue',
     'children',
     'className',
     'defaultCheckedValue',
     'items',
+    'onChange',
     'styles',
     'variables',
     'vertical',
@@ -90,7 +93,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   static autoControlledProps = ['checkedValue']
 
-  static Item = Radio
+  static Item = RadioGroupItem
 
   actionHandlers: AccessibilityActionHandlers = {
     nextItem: event => this.setCheckedItem(event, 1),
@@ -108,13 +111,13 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     event.preventDefault()
   }
 
-  findNextEnabledCheckedItem = (direction): RadioProps => {
+  findNextEnabledCheckedItem = (direction): IRadioGroupItemProps => {
     if (!this.props.items || this.props.items.length === 0) {
       return undefined
     }
 
     const currentIndex = this.props.items.findIndex(
-      item => (item as RadioProps).value === this.state.checkedValue,
+      item => (item as IRadioGroupItemProps).value === this.state.checkedValue,
     )
 
     for (
@@ -132,7 +135,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         return undefined
       }
 
-      const itemProps = this.props.items[newIndex] as RadioProps
+      const itemProps = this.props.items[newIndex] as IRadioGroupItemProps
       if (!itemProps.disabled) {
         return itemProps
       }
@@ -156,7 +159,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     const { checkedValue } = this.state
 
     return _.map(items, (item, index) =>
-      Radio.create(item, {
+      RadioGroupItem.create(item, {
         defaultProps: {
           checked: typeof checkedValue !== 'undefined' && checkedValue === item.value,
           vertical,
