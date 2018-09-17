@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import whatInput from 'what-input'
 
 import {
   createHTMLInput,
@@ -21,6 +20,7 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioBehavior } from '../../lib/accessibility'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IRadioProps {
   accessibility?: Accessibility
@@ -155,7 +155,7 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
     accessibility: RadioBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked', 'isFromKeyboard']
+  static autoControlledProps = ['checked', isFromKeyboard.propertyName]
 
   elementRef: HTMLElement
 
@@ -172,14 +172,12 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.state())
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = false
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.initial)
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
