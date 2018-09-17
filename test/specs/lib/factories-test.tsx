@@ -4,6 +4,8 @@ import * as React from 'react'
 import { createShorthand, createShorthandFactory } from 'src/lib'
 import { consoleUtil } from 'test/utils'
 
+jest.mock('react')
+
 // ----------------------------------------
 // Utils
 // ----------------------------------------
@@ -42,27 +44,28 @@ const itReturnsNullGivenDefaultProps = value => {
   })
 }
 
-const itReturnsAValidElement = value => {
-  test('returns a valid element', () => {
-    expect(React.isValidElement(getShorthand({ value }))).toBe(true)
-  })
-}
-
 const itAppliesDefaultProps = value => {
   test('applies defaultProps', () => {
     const defaultProps = { some: 'defaults' }
-
-    expect(shallow(getShorthand({ value, defaultProps })).props()).toEqual(defaultProps)
+    getShorthand({ value, defaultProps })
+    expect(React.createElement).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining(defaultProps),
+    )
   })
 }
 
 const itDoesNotIncludePropsFromMapValueToProps = value => {
   test('does not include props from mapValueToProps', () => {
     const props = { 'data-foo': 'foo' }
-    const wrapper = shallow(getShorthand({ value, mapValueToProps: () => props }))
+    getShorthand({ value, mapValueToProps: () => props })
 
     _.each(props, (val, key) => {
-      expect(wrapper.props()).not.toHaveProperty(key, val)
+      const pair = { [key]: value }
+      expect(React.createElement).not.toHaveBeenLastCalledWith(
+        expect.anything(),
+        expect.objectContaining(pair),
+      )
     })
   })
 }
@@ -72,24 +75,30 @@ const itMergesClassNames = (classNameSource, extraClassName, shorthandConfig) =>
     const defaultProps = { className: 'default' }
     const overrideProps = { className: 'override' }
 
-    expect(
-      shallow(getShorthand({ defaultProps, overrideProps, ...shorthandConfig })).hasClass(
-        `default override ${extraClassName}`,
-      ),
-    ).toBe(true)
+    getShorthand({ defaultProps, overrideProps, ...shorthandConfig })
+    expect(React.createElement).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining({ className: `default override ${extraClassName}` }),
+    )
   })
 }
 
 const itAppliesProps = (propsSource, expectedProps, shorthandConfig) => {
   test(`applies props from the ${propsSource} props`, () => {
-    expect(shallow(getShorthand(shorthandConfig)).props()).toEqual(expectedProps)
+    getShorthand(shorthandConfig)
+    expect(React.createElement).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining(expectedProps),
+    )
   })
 }
 
 const itOverridesDefaultProps = (propsSource, defaultProps, expectedProps, shorthandConfig) => {
   test(`overrides defaultProps with ${propsSource} props`, () => {
-    expect(shallow(getShorthand({ defaultProps, ...shorthandConfig })).props()).toEqual(
-      expectedProps,
+    getShorthand({ defaultProps, ...shorthandConfig })
+    expect(React.createElement).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining(expectedProps),
     )
   })
 }
@@ -98,9 +107,10 @@ const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) =>
   test(`overrides defaultProps with falsey ${propsSource} props`, () => {
     const defaultProps = { undef: '-', nil: '-', zero: '-', empty: '-' }
     const expectedProps = { undef: undefined, nil: null, zero: 0, empty: '' }
-
-    expect(shallow(getShorthand({ defaultProps, ...shorthandConfig })).props()).toEqual(
-      expectedProps,
+    getShorthand({ defaultProps, ...shorthandConfig })
+    expect(React.createElement).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.objectContaining(expectedProps),
     )
   })
 }
@@ -170,7 +180,9 @@ describe('factories', () => {
     describe('defaultProps', () => {
       test('can be an object', () => {
         const defaultProps = { 'data-some': 'defaults' }
-        expect(shallow(getShorthand({ defaultProps, value: 'foo' })).props()).toEqual(defaultProps)
+        getShorthand({ defaultProps, value: 'foo' })
+
+        expect(React.createElement).toHaveBeenLastCalledWith('div', { ...defaultProps, key: 'foo' })
       })
     })
 
@@ -181,62 +193,80 @@ describe('factories', () => {
       })
 
       test('is not consumed', () => {
-        expect(getShorthand({ value: { key: 123 } }).props).toHaveProperty('key')
+        getShorthand({ value: { key: 123 } })
+        expect(React.createElement).toHaveBeenLastCalledWith(
+          'div',
+          expect.objectContaining({ key: 123 }),
+        )
       })
 
       describe('on an element', () => {
         test('works with a string', () => {
-          expect(getShorthand({ value: <div key="foo" /> })).toHaveProperty('key', 'foo')
+          getShorthand({ value: <div key="foo" /> })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 'foo' })
         })
 
         test('works with a number', () => {
-          expect(getShorthand({ value: <div key={123} /> })).toHaveProperty('key', '123')
+          getShorthand({ value: <div key={123} /> })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 123 })
         })
 
         test('works with falsy values', () => {
-          expect(getShorthand({ value: <div key={null} /> })).toHaveProperty('key', 'null')
+          getShorthand({ value: <div key={null} /> })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: null })
 
-          expect(getShorthand({ value: <div key={0} /> })).toHaveProperty('key', '0')
+          getShorthand({ value: <div key={0} /> })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 0 })
 
-          expect(getShorthand({ value: <div key="" /> })).toHaveProperty('key', '')
+          getShorthand({ value: <div key="" /> })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: '' })
         })
       })
 
       describe('on an object', () => {
         test('works with a string', () => {
-          expect(getShorthand({ value: { key: 'foo' } })).toHaveProperty('key', 'foo')
+          getShorthand({ value: { key: 'foo' } })
+          expect(React.createElement).toHaveBeenLastCalledWith('div', { key: 'foo' })
         })
 
         test('works with a number', () => {
-          expect(getShorthand({ value: { key: 123 } })).toHaveProperty('key', '123')
+          getShorthand({ value: { key: 123 } })
+          expect(React.createElement).toHaveBeenLastCalledWith('div', { key: 123 })
         })
 
         test('works with falsy values', () => {
-          expect(getShorthand({ value: { key: null } })).toHaveProperty('key', 'null')
+          getShorthand({ value: { key: null } })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: null })
 
-          expect(getShorthand({ value: { key: 0 } })).toHaveProperty('key', '0')
+          getShorthand({ value: { key: 0 } })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 0 })
 
-          expect(getShorthand({ value: { key: '' } })).toHaveProperty('key', '')
+          getShorthand({ value: { key: '' } })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: '' })
         })
       })
 
       describe('when value is a string', () => {
         test('is generated from the value', () => {
-          expect(getShorthand({ value: 'foo' })).toHaveProperty('key', 'foo')
+          getShorthand({ value: 'foo' })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 'foo' })
         })
 
         test('is not generated if generateKey is false', () => {
-          expect(getShorthand({ value: 'foo', generateKey: false })).toHaveProperty('key', null)
+          getShorthand({ value: 'foo', generateKey: false })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: null })
         })
       })
 
       describe('when value is a number', () => {
         test('is generated from the value', () => {
-          expect(getShorthand({ value: 123 })).toHaveProperty('key', '123')
+          getShorthand({ value: 123 })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: 123 })
         })
 
         test('is not generated if generateKey is false', () => {
-          expect(getShorthand({ value: 123, generateKey: false })).toHaveProperty('key', null)
+          getShorthand({ value: 123, generateKey: false })
+          expect(React.createElement).toHaveBeenCalledWith('div', { key: null })
         })
       })
     })
@@ -244,47 +274,20 @@ describe('factories', () => {
     describe('overrideProps', () => {
       test('can be an object', () => {
         const overrideProps = { 'data-some': 'overrides' }
-
-        expect(shallow(getShorthand({ overrideProps, value: 'foo' })).props()).toEqual(
-          overrideProps,
-        )
+        getShorthand({ overrideProps, value: 'foo' })
+        expect(React.createElement).toHaveBeenLastCalledWith('div', {
+          ...overrideProps,
+          key: 'foo',
+        })
       })
 
       test('can be a function that returns defaultProps', () => {
         const overrideProps = () => ({ 'data-some': 'overrides' })
-
-        expect(shallow(getShorthand({ overrideProps, value: 'foo' })).props()).toEqual(
-          overrideProps(),
-        )
-      })
-
-      test("is called with the user's element's and default props", () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const userProps = { 'data-user': 'props' }
-        const value = <div {...userProps} />
-
-        shallow(getShorthand({ defaultProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
-      })
-
-      test("is called with the user's props object", () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const userProps = { 'data-user': 'props' }
-
-        shallow(getShorthand({ defaultProps, overrideProps, value: userProps }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
-      })
-
-      test('is called with the result of mapValueToProps', () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const value = 'foo'
-        const mapValueToProps = val => ({ 'data-mapped': val })
-
-        shallow(getShorthand({ defaultProps, mapValueToProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...mapValueToProps(value) })
+        getShorthand({ overrideProps, value: 'foo' })
+        expect(React.createElement).toHaveBeenLastCalledWith('div', {
+          ...overrideProps(),
+          key: 'foo',
+        })
       })
     })
 
@@ -308,25 +311,7 @@ describe('factories', () => {
       itReturnsNullGivenDefaultProps(false)
     })
 
-    describe('from an element', () => {
-      itReturnsAValidElement(<div />)
-      itAppliesDefaultProps(<div />)
-      itDoesNotIncludePropsFromMapValueToProps(<div />)
-      itMergesClassNames('element', 'user', { value: <div className="user" /> })
-      itAppliesProps('element', { foo: 'foo' }, { value: <div {...{ foo: 'foo' } as any} /> })
-      itOverridesDefaultProps(
-        'element',
-        { some: 'defaults', overridden: false },
-        { some: 'defaults', overridden: true },
-        { value: <div {...{ overridden: true } as any} /> },
-      )
-      itOverridesDefaultPropsWithFalseyProps('element', {
-        value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
-      })
-    })
-
     describe('from a string', () => {
-      itReturnsAValidElement('foo')
       itAppliesDefaultProps('foo')
       itMergesClassNames('mapValueToProps', 'mapped', {
         value: 'foo',
@@ -359,7 +344,6 @@ describe('factories', () => {
     })
 
     describe('from a props object', () => {
-      itReturnsAValidElement({})
       itAppliesDefaultProps({})
       itDoesNotIncludePropsFromMapValueToProps({})
       itMergesClassNames('props object', 'user', {
@@ -381,9 +365,6 @@ describe('factories', () => {
     })
 
     describe('from a function', () => {
-      itReturnsAValidElement(() => <div />)
-      itDoesNotIncludePropsFromMapValueToProps(() => <div />)
-
       test('is called once', () => {
         const spy = jest.fn()
 
@@ -430,38 +411,65 @@ describe('factories', () => {
         const userProps = { style: { bottom: 5 } }
         const overrideProps = { style: { right: 5 } }
 
-        expect(
-          shallow(getShorthand({ defaultProps, overrideProps, value: userProps })).prop('style'),
-        ).toEqual({ left: 5, bottom: 5, right: 5 })
+        getShorthand({ defaultProps, overrideProps, value: userProps })
+        expect(React.createElement).toHaveBeenLastCalledWith(
+          'div',
+          expect.objectContaining({
+            style: {
+              left: 5,
+              bottom: 5,
+              right: 5,
+            },
+          }),
+        )
       })
 
       test('merges style prop and handles override by userProps', () => {
         const defaultProps = { style: { left: 10, bottom: 5 } }
         const userProps = { style: { bottom: 10 } }
 
-        expect(shallow(getShorthand({ defaultProps, value: userProps })).prop('style')).toEqual({
-          left: 10,
-          bottom: 10,
-        })
+        getShorthand({ defaultProps, value: userProps })
+        expect(React.createElement).toHaveBeenLastCalledWith(
+          'div',
+          expect.objectContaining({
+            style: {
+              left: 10,
+              bottom: 10,
+            },
+          }),
+        )
       })
 
       test('merges style prop and handles override by overrideProps', () => {
         const userProps = { style: { bottom: 10, right: 5 } }
         const overrideProps = { style: { right: 10 } }
 
-        expect(shallow(getShorthand({ overrideProps, value: userProps })).prop('style')).toEqual({
-          bottom: 10,
-          right: 10,
-        })
+        getShorthand({ overrideProps, value: userProps })
+        expect(React.createElement).toHaveBeenLastCalledWith(
+          'div',
+          expect.objectContaining({
+            style: {
+              bottom: 10,
+              right: 10,
+            },
+          }),
+        )
       })
 
       test('merges style prop from defaultProps and overrideProps', () => {
         const defaultProps = { style: { left: 10, bottom: 5 } }
         const overrideProps = { style: { bottom: 10 } }
 
-        expect(
-          shallow(getShorthand({ defaultProps, overrideProps, value: 'foo' })).prop('style'),
-        ).toEqual({ left: 10, bottom: 10 })
+        getShorthand({ defaultProps, overrideProps, value: 'foo' })
+        expect(React.createElement).toHaveBeenLastCalledWith(
+          'div',
+          expect.objectContaining({
+            style: {
+              left: 10,
+              bottom: 10,
+            },
+          }),
+        )
       })
     })
   })
