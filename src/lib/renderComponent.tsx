@@ -54,7 +54,6 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
-  componentId?: string
 }
 
 const getAccessibility = (
@@ -106,7 +105,6 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
-    componentId,
   } = config
 
   return (
@@ -146,7 +144,6 @@ const renderComponent = <P extends {}>(
 
         const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam, {
           className,
-          componentId,
         })
 
         classes.root = cx(className, classes.root, props.className)

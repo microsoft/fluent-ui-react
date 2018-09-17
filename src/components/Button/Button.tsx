@@ -45,12 +45,6 @@ export interface IButtonProps {
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
 class Button extends UIComponent<Extendable<IButtonProps>, any> {
-  constructor(props, context) {
-    super(props, context)
-
-    this.componentId = 'button-instance-id'
-  }
-
   static create: Function
 
   public static displayName = 'Button'
@@ -162,7 +156,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
     return (
       <ElementType
-        className={cx(classes.root, this.componentId)}
+        className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
@@ -170,14 +164,14 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles, classes)}
         {!hasChildren && content && <span className={classes.content}>{content}</span>}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles, classes)}
       </ElementType>
     )
   }
 
-  public renderIcon = (variables, styles) => {
+  public renderIcon = (variables, styles, classes) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
@@ -185,7 +179,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         styles: { root: styles.icon },
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
-        className: cx(`${this.componentId}`, 'slot-icon'),
+        className: classes.slots.icon,
       },
     })
   }
