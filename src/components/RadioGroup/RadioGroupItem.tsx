@@ -21,6 +21,7 @@ export interface IRadioGroupItemProps {
   accessibility?: Accessibility
   as?: any
   checked?: boolean
+  checkedChanged?: ComponentEventHandler<IRadioGroupItemProps>
   children?: ReactChildren
   className?: string
   defaultChecked?: boolean
@@ -28,7 +29,6 @@ export interface IRadioGroupItemProps {
   icon?: ItemShorthand
   label?: string
   name?: string
-  onChange?: ComponentEventHandler<IRadioGroupItemProps>
   styles?: IComponentPartStylesInput
   value?: string | number
   variables?: ComponentVariablesInput
@@ -91,6 +91,13 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     onBlur: PropTypes.func,
 
     /**
+     * Called after radio item is clicked.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onClick: PropTypes.func,
+
+    /**
      * Called after radio item gets focus.
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
@@ -102,7 +109,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
-    onChange: PropTypes.func,
+    checkedChanged: PropTypes.func,
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -121,6 +128,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     'accessibility',
     'as',
     'checked',
+    'checkedChanged',
     'children',
     'className',
     'defaultChecked',
@@ -131,7 +139,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     'label',
     'name',
     'onBlur',
-    'onChange',
+    'onClick',
     'onFocus',
     'styles',
     'value',
@@ -156,7 +164,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     const checked = this.state.checked
     if (checked !== prevState.checked) {
       checked && this.elementRef.focus()
-      _.invoke(this.props, 'onChange', undefined, { ...this.props, checked })
+      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
     }
   }
 

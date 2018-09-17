@@ -6,9 +6,5 @@ import RadioGroup from 'src/components/RadioGroup'
 initKeyboardFocusMock()
 
 describe('RadioGroup', () => {
-  isConformant(RadioGroup, {
-    eventTargets: {
-      onChange: 'root',
-    },
-  })
+  isConformant(RadioGroup)
 })

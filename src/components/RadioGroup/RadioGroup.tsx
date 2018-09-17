@@ -60,7 +60,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All value props.
      */
-    onChange: PropTypes.func,
+    checkedValueChanged: PropTypes.func,
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -81,11 +81,11 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     'accessibility',
     'as',
     'checkedValue',
+    'checkedValueChanged',
     'children',
     'className',
     'defaultCheckedValue',
     'items',
-    'onChange',
     'styles',
     'variables',
     'vertical',
@@ -105,7 +105,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
     if (nextItem) {
       this.trySetState({ checkedValue: nextItem.value })
-      _.invoke(this.props, 'onChange', event, nextItem)
+      _.invoke(this.props, 'checkedValueChanged', event, nextItem)
     }
 
     event.preventDefault()
@@ -148,7 +148,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
       const { value, disabled } = itemProps
       if (!disabled && value !== this.state.checkedValue) {
         this.trySetState({ checkedValue: value })
-        _.invoke(this.props, 'onChange', event, itemProps)
+        _.invoke(this.props, 'checkedValueChanged', event, itemProps)
       }
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },

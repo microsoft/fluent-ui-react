@@ -23,7 +23,11 @@ class RadioGroupExample extends React.Component {
       <div>
         The selected value is: {selectedValue}
         <Divider />
-        <RadioGroup defaultCheckedValue="capricciosa" items={items} onChange={this.handleChange} />
+        <RadioGroup
+          defaultCheckedValue="capricciosa"
+          items={items}
+          checkedValueChanged={this.handleChange}
+        />
       </div>
     )
   }
