@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Downshift from 'downshift'
+import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
 import Label from '../Label'
 import Input from '../Input'
-import Menu from '../Menu'
+import Menu, { MenuItem } from '../Menu'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import Button from '../Button'
@@ -41,6 +41,11 @@ const peoplePickerStyles: any = {
     },
     root: { flexGrow: 1 },
   },
+  menu: {
+    position: 'absolute',
+    width: 'calc(100% - 4rem)',
+    zIndex: '1000',
+  },
 }
 
 interface IPeoplePickerProps {
@@ -50,6 +55,7 @@ interface IPeoplePickerProps {
 interface IPeoplePickerState {
   selected: any[]
   focused: boolean
+  emptyInput: boolean
 }
 
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
@@ -62,12 +68,13 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.state = {
       selected: [],
       focused: false,
+      emptyInput: true,
     }
 
     this.input = React.createRef()
   }
 
-  private handleSelection = element => {
+  handleSelection = element => {
     this.add(element)
   }
 
@@ -87,11 +94,31 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.setState({ selected })
   }
 
+  stateReducer = (state: DownshiftState<MenuItem>, changes: StateChangeOptions<MenuItem>) => {
+    // this prevents the menu from being closed when the user
+    // selects an item with a keyboard or mouse
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.keyDownEnter:
+      case Downshift.stateChangeTypes.clickItem:
+        return {
+          ...changes,
+          isOpen: state.isOpen,
+          highlightedIndex: state.highlightedIndex,
+        }
+      case Downshift.stateChangeTypes.changeInput:
+        this.setState({ emptyInput: changes.inputValue === '' })
+        return changes
+      default:
+        return changes
+    }
+  }
+
   public render(): React.ReactNode {
     return (
       <React.Fragment>
         <Label content="Add" styles={peoplePickerStyles.addLabel} id={this.labelId} />
         <Downshift
+          stateReducer={this.stateReducer}
           onChange={this.handleSelection}
           selectedItem={null}
           itemToString={item => (item ? item.value : '')}
@@ -105,6 +132,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
             highlightedIndex,
             toggleMenu,
           }) => {
+            const availableItems = this.props.source(inputValue, this.state.selected)
             return (
               <div id="people-picker">
                 <div
@@ -155,7 +183,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                       this.setState({ focused: true })
                     }}
                     onKeyUp={event => {
-                      if (keyboardKey.getCode(event) === keyboardKey.Backspace && !inputValue) {
+                      if (
+                        keyboardKey.getCode(event) === keyboardKey.Backspace &&
+                        this.state.emptyInput
+                      ) {
                         this.state.selected.length > 0 && this.remove()
                       }
                     }}
@@ -166,27 +197,29 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                     }}
                   />
                 </div>
-                {isOpen && (
-                  <Menu
-                    vertical
-                    fluid
-                    {...getMenuProps()}
-                    defaultActiveIndex={0}
-                    items={this.props.source(inputValue, this.state.selected).map((item, index) => {
-                      return {
-                        key: `peoplePickerItem-${index}`,
-                        content: item.name,
-                        ...getItemProps({
-                          index,
-                          item,
-                          style: {
-                            backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
-                          },
-                        }),
-                      }
-                    })}
-                  />
-                )}
+                {isOpen &&
+                  availableItems.length > 0 && (
+                    <Menu
+                      vertical
+                      fluid
+                      {...getMenuProps()}
+                      defaultActiveIndex={0}
+                      style={peoplePickerStyles.menu}
+                      items={availableItems.map((item, index) => {
+                        return {
+                          key: `peoplePickerItem-${index}`,
+                          content: item.name,
+                          ...getItemProps({
+                            index,
+                            item,
+                            style: {
+                              backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
+                            },
+                          }),
+                        }
+                      })}
+                    />
+                  )}
               </div>
             )
           }}
