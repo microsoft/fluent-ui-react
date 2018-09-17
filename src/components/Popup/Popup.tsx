@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 import rtlCSSJS from 'rtl-css-js'
 
@@ -14,7 +15,7 @@ import {
   AccessibilityActionHandlers,
   IAccessibilityBehavior,
 } from '../../lib/accessibility/interfaces'
-import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import computePopupPlacement, { Alignment, Position, Placement } from './positioningHelper'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
@@ -114,9 +115,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public state = { triggerRef: undefined, popupOpened: false }
 
   actionHandlers: AccessibilityActionHandlers = {
-    open: e => this.openPopup(e),
-    close: e => this.closePopup(e),
-    closeAndFocusTrigger: e => this.closePopup(e, this.focusTrigger),
+    performClick: e => this.onTriggerClick(e),
+    closeAndFocusTrigger: e => this.handlePopupState(e, false, this.focusTrigger),
   }
 
   public renderComponent({
@@ -139,7 +139,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
           ...accessibility.attributes.trigger,
           ...accessibility.keyHandlers.trigger,
         }}
-        onOutsideClick={this.closePopup}
+        onOutsideClick={e => this.handlePopupState(e, false)}
         onTriggerClick={this.onTriggerClick}
       >
         {childrenExist(children)
@@ -191,24 +191,15 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     )
   }
 
-  private onTriggerClick = () => {
-    this.setState({ popupOpened: !this.state.popupOpened })
+  private onTriggerClick = (e: Event) => {
+    this.handlePopupState(e, !this.state.popupOpened)
   }
 
-  private openPopup = (e: Event, afterRenderCb?: () => void) => {
+  private handlePopupState = (e: Event, popupOpened: boolean, afterRenderCb?: () => void) => {
     e.preventDefault()
-    this.setState({ popupOpened: true }, () => afterRenderCb && afterRenderCb())
+    this.setState({ popupOpened }, afterRenderCb)
   }
 
-  private closePopup = (e: Event, afterRenderCb?: () => void) => {
-    e.preventDefault()
-    this.setState({ popupOpened: false }, () => afterRenderCb && afterRenderCb())
-  }
-
-  private focusTrigger = () => {
-    const triggerRef = this.state.triggerRef
-    triggerRef && triggerRef.focus()
-  }
-
+  private focusTrigger = () => _.invoke(this.state.triggerRef, 'focus')
   private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })
 }

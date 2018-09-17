@@ -1,26 +1,49 @@
 import { Accessibility } from '../../interfaces'
 import * as keyboardKey from 'keyboard-key'
+import _ from 'lodash'
 
-const isButton = props => {
-  return props && props.trigger && props.trigger.props && props.trigger.props.as === 'button'
+const isFocusable = props => {
+  try {
+    const { as, href } = props.trigger.props
+    const { type } = props.trigger
+    return (
+      type === 'button' ||
+      type === 'input' ||
+      (type === 'a' && href !== undefined) ||
+      as === 'button'
+    )
+  } catch {
+    return false
+  }
+}
+
+const getAriaAttribute = (attribute, props, defaultValue) => {
+  try {
+    if (props.trigger.props[attribute]) {
+      return props.trigger.props[attribute]
+    }
+    if (isFocusable(props)) {
+      return undefined
+    }
+    return defaultValue
+  } catch {
+    return defaultValue
+  }
 }
 
 const PopupBehavior: Accessibility = (props: any) => ({
   attributes: {
     trigger: {
-      role: isButton(props) ? undefined : 'button',
-      tabIndex: isButton(props) ? undefined : '0',
+      role: getAriaAttribute('role', props, 'button'),
+      tabIndex: getAriaAttribute('tabIndex', props, '0'),
       'aria-haspopup': 'true',
       'aria-disabled': !!props['disabled'],
     },
   },
   keyActions: {
     trigger: {
-      open: {
+      performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-      close: {
-        keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
     },
     popup: {
