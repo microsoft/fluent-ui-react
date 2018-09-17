@@ -31,11 +31,22 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [_, roleToBeAdded] = [...parameters.props]
     const property = {}
+    let expectedResult
     if (parameters.behavior instanceof Function) {
-      const expectedResult = parameters.behavior(property).attributes.root['role']
+      expectedResult = parameters.behavior(property).attributes.root['role']
     } else {
-      const expectedResult = parameters.behavior.attributes.root['role']
+      expectedResult = parameters.behavior.attributes.root['role']
     }
+    expect(expectedResult).toEqual(roleToBeAdded)
+  },
+})
+
+definitions.push({
+  regexp: /Adds role '([a-z]+)' to '([a-z]+)' component's part/g,
+  testMethod: (parameters: TestMethod) => {
+    const [_, roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const property = {}
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded]['role']
     expect(expectedResult).toEqual(roleToBeAdded)
   },
 })

@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import {
   Accessibility,
   AccessibilityDefinitionFunction,
+  IAccessibilityDefinition,
 } from '../../../src/lib/accessibility/interfaces'
 
 interface FilteredDescription {
@@ -84,12 +85,16 @@ export class TestHelper {
     })
   }
 
-  public getBehaviorWithProperType(behaviorName: string): AccessibilityDefinitionFunction {
+  public getBehaviorWithProperType(
+    behaviorName: string,
+  ): AccessibilityDefinitionFunction | IAccessibilityDefinition {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
     if (!importedBehavior) {
       throw 'Behavior file was not find, probably was not imported. Import file and add behavior.'
     }
+
+    // solve that sometimes we return function somethimes it is just object
     return importedBehavior as AccessibilityDefinitionFunction
   }
 }
