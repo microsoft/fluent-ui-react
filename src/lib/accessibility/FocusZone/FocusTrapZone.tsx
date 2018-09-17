@@ -11,6 +11,7 @@ import {
   getLastTabbable,
   getWindow,
   focusAsync,
+  HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
 
 import { IFocusTrapZone, IFocusTrapZoneProps } from './FocusTrapZone.types'
@@ -58,12 +59,12 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
   static defaultProps: IFocusTrapZoneProps = {
     as: 'div',
-    isClickableOutsideFocusTrap: true
+    isClickableOutsideFocusTrap: true,
   }
 
   public componentDidMount(): void {
     FocusTrapZone._focusStack.push(this)
-    const { disableFirstFocus = false } = this.props   
+    const { disableFirstFocus = false } = this.props
 
     this.windowElement = getWindow(this._root.current)
     this._previouslyFocusedElementOutsideTrapZone = this._getPreviouslyFocusedElementOutsideTrapZone()
@@ -117,7 +118,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
     this._unsubscribeFromEvents()
 
-    if (!FocusTrapZone._focusStack.length) {      
+    if (!FocusTrapZone._focusStack.length) {
       this._showContentInAccessibilityTree()
     }
   }
@@ -201,7 +202,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
   }
 
-  private _forceFocusInTrap(ev: FocusEvent): void {
+  private _forceFocusInTrap = (ev: FocusEvent): void => {
     if (
       FocusTrapZone._focusStack.length &&
       this === FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
@@ -267,36 +268,37 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
   private _getPreviouslyFocusedElementOutsideTrapZone = () => {
     const { elementToFocusOnDismiss } = this.props
-    const previouslyFocusedElement = this._previouslyFocusedElementOutsideTrapZone
+    let previouslyFocusedElement = this._previouslyFocusedElementOutsideTrapZone
 
-    if (elementToFocusOnDismiss) {
-      return previouslyFocusedElement !== elementToFocusOnDismiss
-        ? elementToFocusOnDismiss
-        : previouslyFocusedElement
+    if (elementToFocusOnDismiss && previouslyFocusedElement !== elementToFocusOnDismiss) {
+      previouslyFocusedElement = elementToFocusOnDismiss
     } else if (!previouslyFocusedElement) {
-      return document.activeElement as HTMLElement
-    } else return previouslyFocusedElement
+      previouslyFocusedElement = document.activeElement as HTMLElement
+    }
+
+    return previouslyFocusedElement
   }
 
-  private _hideContentFromAccessibilityTree() {
-    const elements = document.body.children
+  private _hideContentFromAccessibilityTree = () => {
+    const elements = (document.body && document.body.children) || []
 
+    // loop through all body's children, except the last one - which is the portal
     for (let index = 0; index < elements.length - 1; index++) {
       const element = elements[index]
 
       if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE') {
         element.setAttribute('aria-hidden', 'true')
-        element.setAttribute('acc-hidden', 'true')
+        element.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
       }
     }
   }
 
-  private _showContentInAccessibilityTree() {
-    const hiddenElements = document.querySelectorAll('[acc-hidden="true"]')
+  private _showContentInAccessibilityTree = () => {
+    const hiddenElements = document.querySelectorAll(`[${HIDDEN_FROM_ACC_TREE}="true"]`)
     for (let index = 0; index < hiddenElements.length; index++) {
       const element = hiddenElements[index]
       element.removeAttribute('aria-hidden')
-      element.removeAttribute('acc-hidden')
+      element.removeAttribute(HIDDEN_FROM_ACC_TREE)
     }
   }
 }

@@ -9,7 +9,9 @@ class PortalExamplePortal extends React.Component {
           <Button
             content={'Toggle portal'}
             trapFocus={true}
-            focusTrapZoneProps={{}}
+            focusTrapZoneProps={{
+              isClickableOutsideFocusTrap: true,
+            }}
           />
         }
       >
