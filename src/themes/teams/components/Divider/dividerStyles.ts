@@ -14,12 +14,12 @@ const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
 const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
-  ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
+  ...dividerBorderStyle(size, variables.dividerColor),
   ...(type === 'primary' && {
-    ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.primaryColor),
   }),
   ...(type === 'secondary' && {
-    ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.secondaryColor),
   }),
 })
 
@@ -33,43 +33,36 @@ const dividerStyles: IComponentPartStylesInput = {
   }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {
-      marginTop: pxToRem(5 + size * 7.5),
-      marginBottom: pxToRem(5 + size * 7.5),
-      fontWeight: 400,
+      color: variables.textColor,
+      display: 'flex',
+      alignItems: 'center',
+      ...(type === 'primary' && {
+        color: variables.primaryColor,
+      }),
+      ...(type === 'secondary' && {
+        color: variables.secondaryColor,
+      }),
       ...(important && {
-        fontWeight: 700,
+        fontWeight: variables.importantFontWeight,
       }),
       ...(childrenExist(children) || content
         ? {
-            display: 'flex',
-            alignItems: 'center',
             textAlign: 'center',
-            lineHeight: 1.25,
             fontSize: pxToRem(12 + size),
+            lineHeight: variables.textLineHeight,
             '::before': {
               ...beforeAndAfter(size, type, variables),
-              marginRight: pxToRem(22 + size * 2),
+              marginRight: pxToRem(20),
             },
             '::after': {
               ...beforeAndAfter(size, type, variables),
-              marginLeft: pxToRem(22 + size * 2),
+              marginLeft: pxToRem(20),
             },
-            color: variables.color, // the default color
-            ...(type === 'primary' && {
-              color: variables.typePrimaryColor,
-            }),
-            ...(type === 'secondary' && {
-              color: variables.typeSecondaryColor,
-            }),
           }
         : {
-            ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
-            ...(type === 'primary' && {
-              ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
-            }),
-            ...(type === 'secondary' && {
-              ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
-            }),
+            '::before': {
+              ...beforeAndAfter(size, type, variables),
+            },
           }),
     }
   },
