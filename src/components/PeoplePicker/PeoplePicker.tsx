@@ -74,8 +74,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.input = React.createRef()
   }
 
-  handleSelection = element => {
-    this.add(element)
+  private handleCloseIconAction(element, event) {
+    this.remove(element)
+    this.input.current.inputRef.focus()
+    event.stopPropagation()
   }
 
   private add(element) {
@@ -119,7 +121,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         <Label content="Add" styles={peoplePickerStyles.addLabel} id={this.labelId} />
         <Downshift
           stateReducer={this.stateReducer}
-          onChange={this.handleSelection}
+          onChange={this.onDropdownChange}
           selectedItem={null}
           itemToString={item => (item ? item.value : '')}
         >
@@ -141,10 +143,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                     ...peoplePickerStyles.containerDiv,
                     ...(this.state.focused ? peoplePickerStyles.containerDivOnFocus : {}),
                   }}
-                  onClick={() => {
-                    toggleMenu()
-                    !isOpen && this.input.current.inputRef.focus()
-                  }}
+                  onClick={this.onContainerClick.bind(this, toggleMenu, isOpen)}
                 >
                   {this.state.selected.length === 0
                     ? null
@@ -160,18 +159,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                           }}
                           icon={{
                             name: 'close',
-                            onClick: event => {
-                              this.remove(element)
-                              this.input.current.inputRef.focus()
-                              event.stopPropagation()
-                            },
-                            onKeyDown: event => {
-                              if (keyboardKey.getCode(event) === keyboardKey.Enter) {
-                                this.remove(element)
-                                this.input.current.inputRef.focus()
-                                event.stopPropagation()
-                              }
-                            },
+                            onClick: this.onCloseIconClick.bind(this, element),
+                            onKeyDown: this.onCloseIconKeyDown.bind(this, element),
                           }}
                         />
                       ))}
@@ -179,22 +168,11 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                     styles={peoplePickerStyles.textInput}
                     ref={this.input}
                     placeholder={this.state.selected.length > 0 ? '' : 'Start typing a name'}
-                    onFocus={() => {
-                      this.setState({ focused: true })
-                    }}
-                    onKeyUp={event => {
-                      if (
-                        keyboardKey.getCode(event) === keyboardKey.Backspace &&
-                        this.state.emptyInput
-                      ) {
-                        this.state.selected.length > 0 && this.remove()
-                      }
-                    }}
+                    onFocus={this.onInputFocus}
+                    onKeyUp={this.onInputKeyUp}
                     {...getInputProps()}
                     aria-labelledby={this.labelId}
-                    onBlur={() => {
-                      this.setState({ focused: false })
-                    }}
+                    onBlur={this.onInputBlur}
                   />
                 </div>
                 {isOpen &&
@@ -235,6 +213,37 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         </div>
       </React.Fragment>
     )
+  }
+
+  onDropdownChange = element => {
+    this.add(element)
+  }
+
+  onInputFocus = () => {
+    this.setState({ focused: true })
+  }
+
+  onInputBlur = () => {
+    this.setState({ focused: false })
+  }
+
+  onInputKeyUp = event => {
+    if (keyboardKey.getCode(event) === keyboardKey.Backspace && this.state.emptyInput) {
+      this.state.selected.length > 0 && this.remove()
+    }
+  }
+
+  onContainerClick = (toggleMenu, isOpen) => {
+    toggleMenu()
+    !isOpen && this.input.current.inputRef.focus()
+  }
+
+  onCloseIconClick = (element, event) => this.handleCloseIconAction(element, event)
+
+  onCloseIconKeyDown = (element, event) => {
+    if (keyboardKey.getCode(event) === keyboardKey.Enter) {
+      this.handleCloseIconAction(element, event)
+    }
   }
 }
 
