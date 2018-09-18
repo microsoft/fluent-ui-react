@@ -13,7 +13,6 @@ import {
   IThemeInput,
   IThemePrepared,
   StaticStyle,
-  StaticStyles,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -57,13 +56,25 @@ export const mergeComponentVariables = (
   target: ComponentVariablesInput,
   ...sources: ComponentVariablesInput[]
 ): ComponentVariablesPrepared => {
-  const initial = siteVariables => callable(target)(siteVariables)
+  const initial = (...args) => callable(target)(...args) || {}
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
-    return siteVariables => ({
-      ...acc(siteVariables),
-      ...callable(next)(siteVariables),
-    })
+    return (...args) => {
+      const accumulatedVariables = acc(...args)
+      const computedComponentVariables = callable(next)(...args)
+
+      const mergedVariables = {}
+      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+        const accumulatedVariable = accumulatedVariables[variableName]
+
+        mergedVariables[variableName] =
+          _.isObject(variableToMerge) && _.isObject(accumulatedVariable)
+            ? { ...accumulatedVariable, ...variableToMerge }
+            : variableToMerge
+      })
+
+      return { ...accumulatedVariables, ...mergedVariables }
+    }
   }, initial)
 }
 
@@ -104,10 +115,10 @@ export const mergeThemeVariables = (
       const originalTarget = acc[displayName]
       const originalSource = next[displayName]
 
-      componentVariables[displayName] = siteVariables => {
+      componentVariables[displayName] = (...args) => {
         return {
-          ...callable(originalTarget)(siteVariables),
-          ...callable(originalSource)(siteVariables),
+          ...callable(originalTarget)(...args),
+          ...callable(originalSource)(...args),
         }
       }
 
