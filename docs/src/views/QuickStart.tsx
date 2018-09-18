@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Icon } from 'semantic-ui-react'
+import { Header, Icon, Divider } from 'semantic-ui-react'
 
 import { Button } from '@stardust-ui/react'
 
@@ -56,6 +56,8 @@ export default () => (
         `)`,
       ].join('\n')}
     />
+
+    <Divider />
     <br />
     {/* Show a preview of the above snippet */}
     <Button

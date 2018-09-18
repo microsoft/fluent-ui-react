@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header } from 'semantic-ui-react'
+import { Header, Divider } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
@@ -503,7 +503,16 @@ export default () => (
       Accessibility contributing guide
     </a>
 
+    <Divider />
     <br />
+    <Button
+      as={NavLink}
+      content="Quick Start"
+      type="primary"
+      icon="arrow left"
+      iconPosition="before"
+      to="components/quick-start"
+    />
     <Button
       as={NavLink}
       content="Docs"
@@ -511,7 +520,6 @@ export default () => (
       icon="arrow right"
       iconPosition="after"
       to="components/button"
-      style={{ marginTop: '30px' }}
     />
   </DocPage>
 )
