@@ -13,7 +13,7 @@ import {
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps extends IAtomicItemProps {
+export interface IListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string

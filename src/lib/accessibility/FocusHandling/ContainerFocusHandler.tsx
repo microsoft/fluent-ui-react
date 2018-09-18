@@ -17,7 +17,11 @@ type SetStateDelegate<P, S> = <K extends keyof S>(
 ) => void
 
 export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
-  constructor(private props: P, private state: S, private setState: SetStateDelegate<P, S>) {
+  // constructor(private props: P, private state: S, private setState: SetStateDelegate<P, S>) {
+  //   this.state = _.assign(this.state, { focusItemOnIdx: 0 })
+  // }
+
+  constructor(private props: P, private state: S, private component: React.Component<P, S>) {
     this.state = _.assign(this.state, { focusItemOnIdx: 0 })
   }
 
@@ -39,19 +43,19 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
   }
 
   protected movePrevious(): void {
-    this.setState(prev => {
+    this.component.setState(prev => {
       return { focusItemOnIdx: prev.focusItemOnIdx - 1 }
     })
   }
 
   protected moveNext(): void {
-    this.setState(prev => {
+    this.component.setState(prev => {
       return { focusItemOnIdx: prev.focusItemOnIdx + 1 }
     })
   }
 
   protected moveFirst(): void {
-    this.setState({
+    this.component.setState({
       focusItemOnIdx: 0,
     })
   }
@@ -61,7 +65,7 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
       return
     }
 
-    this.setState({
+    this.component.setState({
       focusItemOnIdx: this.props.items.length - 1,
     })
   }

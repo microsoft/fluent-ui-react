@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import keyboardKey from 'keyboard-key'
 
-import { UIComponent, AutoControlledComponent } from '../..'
+import { UIComponent } from '../..'
 
 export interface IAtomicItemProps {
   isFocused: boolean
@@ -25,12 +25,12 @@ export interface IAtomicItemState {
 }
 
 export abstract class BaseAtomicItem<
-  P extends IAtomicItemProps,
+  P,
   S extends IAtomicItemState = IAtomicItemState
-> extends UIComponent<P, S> {
+> extends UIComponent<any, S> {
   protected itemRef = React.createRef<HTMLElement>()
 
-  constructor(props: P, state: S) {
+  constructor(props: any, state: S) {
     super(props, state)
 
     this.state = {
@@ -40,7 +40,7 @@ export abstract class BaseAtomicItem<
   }
 
   componentDidUpdate() {
-    if (this.props.isFocused) {
+    if (this.props.atomicItemProps.isFocused) {
       const domNode = ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement
       domNode.focus()
     }
@@ -60,7 +60,7 @@ export abstract class BaseAtomicItem<
 
       case keyboardKey.ArrowLeft:
         console.log('Left Arrow Key Pressed')
-        // if (this.props.parentContainerDirection === 'vertical') {
+        // if (this.props.atomicItemProps.parentContainerDirection === 'vertical') {
         //   break
         // }
         this.movePrevious()
@@ -68,7 +68,7 @@ export abstract class BaseAtomicItem<
 
       case keyboardKey.ArrowRight:
         console.log('Right Arrow Key Pressed')
-        // if (this.props.parentContainerDirection === 'vertical') {
+        // if (this.props.atomicItemProps.parentContainerDirection === 'vertical') {
         //   break
         // }
         this.moveNext()
@@ -76,7 +76,7 @@ export abstract class BaseAtomicItem<
 
       case keyboardKey.ArrowUp:
         console.log('Up Arrow Key Pressed')
-        // if (this.props.parentContainerDirection === 'horizontal') {
+        // if (this.props.atomicItemProps.parentContainerDirection === 'horizontal') {
         //   break
         // }
         this.movePrevious()
@@ -84,7 +84,7 @@ export abstract class BaseAtomicItem<
 
       case keyboardKey.ArrowDown:
         console.log('Down Arrow Key Pressed')
-        // if (this.props.parentContainerDirection === 'horizontal') {
+        // if (this.props.atomicItemProps.parentContainerDirection === 'horizontal') {
         //   break
         // }
         this.moveNext()
@@ -103,7 +103,6 @@ export abstract class BaseAtomicItem<
       case keyboardKey.Escape:
         console.log('ESC Key Pressed')
 
-        console.error(`isLastOpened ${this.state.isLastOpened}`)
         this.esc()
         if (this.state.isLastOpened === true) {
           e.preventDefault()
@@ -121,41 +120,41 @@ export abstract class BaseAtomicItem<
   }
 
   protected movePrevious() {
-    if (this.props.isFirstElement || !this.props.isFocused) {
+    if (this.props.atomicItemProps.isFirstElement || !this.props.atomicItemProps.isFocused) {
       return
     }
 
-    this.props.onMovePrevious()
+    this.props.atomicItemProps.onMovePrevious()
   }
 
   protected moveNext() {
-    if (this.props.isLastElement || !this.props.isFocused) {
+    if (this.props.atomicItemProps.isLastElement || !this.props.atomicItemProps.isFocused) {
       return
     }
 
-    this.props.onMoveNext()
+    this.props.atomicItemProps.onMoveNext()
   }
 
   protected moveFirst() {
-    if (this.props.isFirstElement || !this.props.isFocused) {
+    if (this.props.atomicItemProps.isFirstElement || !this.props.atomicItemProps.isFocused) {
       return
     }
 
-    this.props.onMoveFirst()
+    this.props.atomicItemProps.onMoveFirst()
   }
 
   protected moveLast() {
-    if (this.props.isLastElement || !this.props.isFocused) {
+    if (this.props.atomicItemProps.isLastElement || !this.props.atomicItemProps.isFocused) {
       return
     }
 
-    this.props.onMoveLast()
+    this.props.atomicItemProps.onMoveLast()
   }
 
   protected enter() {
     this.setState({ isLastOpened: false })
 
-    if (!this.props.isFocused || !(this.props as any).subItems) {
+    if (!this.props.atomicItemProps.isFocused || !(this.props as any).subItems) {
       return
     }
 
@@ -164,25 +163,25 @@ export abstract class BaseAtomicItem<
       isLastOpened: true,
     })
 
-    this.props.onEnter()
+    this.props.atomicItemProps.onEnter()
   }
 
   protected space() {
-    if (!this.props.isFocused) {
+    if (!this.props.atomicItemProps.isFocused) {
       return
     }
 
-    this.props.onSpace()
+    this.props.atomicItemProps.onSpace()
   }
 
   protected esc() {
-    if (!this.props.isFocused) {
+    if (!this.props.atomicItemProps.isFocused) {
       return
     }
 
     console.warn(`isLastOpened ${this.state.isLastOpened}`)
 
     this.setState({ shouldSubContainerBeOpened: false })
-    this.props.onEsc()
+    this.props.atomicItemProps.onEsc()
   }
 }
