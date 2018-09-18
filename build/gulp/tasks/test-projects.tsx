@@ -93,7 +93,7 @@ export default App;
       testAppDir = tmpDir.trim()
       logSimple(testAppDir)
     })
-    .then(runInTestApp(`create-react-app ${tsAppPath()} --scripts-version=react-scripts-ts`))
+    .then(runInTestApp(`create-react-app ./test --scripts-version=react-scripts-ts`))
   // .then(() => sh(`pwd`))
   // .then((res) => log('Result is: ' + res))
 })
