@@ -14,7 +14,7 @@ export default () => (
       As much as possible, accessibility should just work when you put together and integrate
       Stardust components. Specially users should be able to navigate around the application using
       the keyboard or screen readers, and virtual screen reader navigation modes are supported by
-      default.
+      default, and high contrast themes are provided.
     </p>
     <p>
       The components themselves have accessibility build in - so, for example, a dropdown menu will
@@ -25,6 +25,12 @@ export default () => (
     <p>
       The consumer of the library should generally be shielded from the intricates of applying the
       correct aria roles, testing on multiple screen reader / os combinations.
+    </p>
+    <p>
+      While Stardust itself focuses on providing keyboard navigation, screen reader support, zooming
+      and high contrast themes, there are other, perhaps broader considerations to be taken into
+      account when designing applications for accessibility. In particular the ordering and choice
+      of elements within the page is critical and discussed in more detail below.
     </p>
     <p>
       Stardust attempts to follow the{' '}
@@ -155,20 +161,6 @@ export default () => (
       as early in the design process as possible.{' '}
     </p>
 
-    <Header as="h1" content="Accessibility" />
-    <p>Accessibility covers a broad area and several different aspects. </p>
-    <p>
-      Stardust itself focuses on providing keyboard navigation, screen reader support, zooming and
-      high contrast themes. We'll discuss each of these in detail below. However, there are other,
-      perhaps broader considerations to be taken into account when designing applications for
-      accessibility.
-    </p>
-    <p>
-      As mentioned before, selecting and using the appropriate components for the appropriate user
-      interactions is vital, as well as having the page laid out within the HMTL so that order in
-      which elements occur matches the natural tab order as the user traverses the page top left to
-      bottom right.
-    </p>
     <Header as="h2" content="Keyboard Navigation" />
     <p>
       The ability to navigate and interact with the application without a mouse is something that
