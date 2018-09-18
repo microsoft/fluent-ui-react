@@ -8,7 +8,6 @@
   "types": "dist/es/index.d.ts",
   "sideEffects": false,
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
