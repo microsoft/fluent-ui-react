@@ -199,7 +199,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
   }
 
-  handleShowHTML = (shouldShowHTML: boolean) => {
+  handleShowHTML = (shouldShowHTML: boolean, data: any) => {
     if (shouldShowHTML !== this.state.showHTML) {
       this.setState({ showHTML: shouldShowHTML }, this.updateHash)
     }
@@ -207,7 +207,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   handleShowHTMLInactive = (e: Event) => {
     if (this.clickedOutsideComponent(e)) {
-      this.handleShowHTML(false)
+      this.handleShowHTML(false, null)
     }
   }
 
@@ -221,12 +221,18 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  private handleShowCodeClick = e => {
+  private handleShowCodeClick = (e: Event, data: any) => {
     e.preventDefault()
 
     const { showCode } = this.state
 
     this.setState({ showCode: !showCode }, this.updateHash)
+  }
+
+  private handleMaximize = (e: Event, data: any) => {
+    e.preventDefault()
+
+    window.open('/maximize/' + _.kebabCase(data.examplePath.split('/').slice(-1)))
   }
 
   private handleShowVariablesClick = e => {
@@ -657,6 +663,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
                   onShowVariables={this.handleShowVariablesClick}
+                  onMaximize={this.handleMaximize}
                   showCode={showCode}
                   showHTML={showHTML}
                   showRtl={showRtl}

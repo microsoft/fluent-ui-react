@@ -1,14 +1,27 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from 'semantic-ui-react'
+import { Icon, Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 
 const ComponentControlsShowCode: any = ({ active, onClick }) => (
-  <Menu.Item active={active} onClick={onClick}>
-    <Icon color={active ? 'green' : 'grey'} fitted name="code" size="large" />
-    Try it
-  </Menu.Item>
+  <Menu.Item
+    active={active}
+    onClick={onClick}
+    styles={{
+      root: {
+        display: 'grid',
+        textAlign: 'center',
+      },
+    }}
+    icon={{
+      styles: { root: { color: active ? 'green' : 'grey', marginBottom: '10px' } },
+      size: 'large',
+      name: 'code',
+      xspacing: 'both',
+    }}
+    content="Try it"
+  />
 )
 
 ComponentControlsShowCode.propTypes = {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 import ComponentControlsShowCode from './ComponentControlsShowCode'
@@ -20,14 +20,15 @@ const ComponentControls: any = props => {
     onShowCode,
     onShowRtl,
     onShowVariables,
+    onMaximize,
   } = props
 
   return (
-    <Menu color="green" icon="labeled" size="tiny" compact text>
+    <Menu fluid color="green" icon="labeled" size="tiny" pills>
       <ComponentControlsShowCode active={showCode} onClick={onShowCode} />
       <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
       <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
-      <ComponentControlsMaximize examplePath={examplePath} />
+      <ComponentControlsMaximize examplePath={examplePath} onClick={onMaximize} />
       <ComponentControlsCopyLink anchorName={anchorName} onClick={onCopyLink} />
     </Menu>
   )
@@ -40,6 +41,7 @@ ComponentControls.propTypes = {
   onShowCode: PropTypes.func,
   onShowRtl: PropTypes.func,
   onShowVariables: PropTypes.func,
+  onMaximize: PropTypes.func,
   showCode: PropTypes.bool,
   showRtl: PropTypes.bool,
   showVariables: PropTypes.bool,

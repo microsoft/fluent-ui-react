@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from 'semantic-ui-react'
+import { Icon, Menu } from '@stardust-ui/react'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
@@ -31,13 +31,21 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
 
     return (
       <Menu.Item
-        href={`#${anchorName}`}
         onClick={this.handleClick}
-        color={active ? 'green' : undefined}
-      >
-        <Icon color={active ? 'green' : 'grey'} fitted name="linkify" size="large" />
-        {active ? 'Copied!' : this.btnLabel}
-      </Menu.Item>
+        styles={{
+          root: {
+            display: 'grid',
+            textAlign: 'center',
+          },
+        }}
+        icon={{
+          styles: { root: { color: active ? 'green' : 'grey', marginBottom: '10px' } },
+          size: 'large',
+          name: 'linkify',
+          xspacing: 'both',
+        }}
+        content={active ? 'Copied!' : this.btnLabel}
+      />
     )
   }
 
