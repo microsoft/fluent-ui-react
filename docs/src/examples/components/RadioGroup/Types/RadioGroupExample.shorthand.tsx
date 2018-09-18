@@ -1,7 +1,6 @@
 import React from 'react'
 import { Divider, RadioGroup } from '@stardust-ui/react'
-
-const items = [
+const props = [
   { name: 'pizza', key: 'Capricciosa', label: 'Capricciosa', value: 'capricciosa' },
   { name: 'pizza', key: 'Prosciutto', label: 'Prosciutto', value: 'prosciutto', disabled: true },
   {
@@ -10,6 +9,11 @@ const items = [
     label: 'Margherita',
     value: 'margherita',
   },
+]
+const items = [
+  <RadioGroup.Item {...props[0]} />,
+  <RadioGroup.Item {...props[1]} />,
+  <RadioGroup.Item {...props[2]} />,
 ]
 
 class RadioGroupExample extends React.Component {

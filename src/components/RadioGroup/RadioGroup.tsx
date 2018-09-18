@@ -99,6 +99,10 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     prevItem: event => this.setCheckedItem(event, -1),
   }
 
+  getItemProps = item => {
+    return (item as React.ReactElement<IRadioGroupItemProps>).props || item
+  }
+
   setCheckedItem = (event, direction) => {
     const nextItem = this.findNextEnabledCheckedItem(direction)
 
@@ -116,7 +120,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     }
 
     const currentIndex = this.props.items.findIndex(
-      item => (item as IRadioGroupItemProps).value === this.state.checkedValue,
+      item => this.getItemProps(item as IRadioGroupItemProps).value === this.state.checkedValue,
     )
 
     for (
@@ -134,7 +138,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         return undefined
       }
 
-      const itemProps = this.props.items[newIndex] as IRadioGroupItemProps
+      const itemProps = this.getItemProps(this.props.items[newIndex] as IRadioGroupItemProps)
       if (!itemProps.disabled) {
         return itemProps
       }
@@ -143,6 +147,9 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
   }
 
   handleItemOverrides = predefinedProps => ({
+    checked:
+      typeof this.state.checkedValue !== 'undefined' &&
+      this.state.checkedValue === predefinedProps.value,
     onClick: (e, itemProps) => {
       const { value, disabled } = itemProps
       if (!disabled && value !== this.state.checkedValue) {
@@ -160,7 +167,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     return _.map(items, (item, index) =>
       RadioGroupItem.create(item, {
         defaultProps: {
-          checked: typeof checkedValue !== 'undefined' && checkedValue === item.value,
           vertical,
         },
         overrideProps: this.handleItemOverrides,
