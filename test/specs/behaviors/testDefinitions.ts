@@ -1,8 +1,4 @@
 import { TestDefinition, TestMethod } from './testHelper'
-import {
-  AccessibilityDefinitionFunction,
-  IAccessibilityDefinition,
-} from 'src/lib/accessibility/interfaces'
 import { callable } from 'src/lib'
 
 const definitions: TestDefinition[] = []
