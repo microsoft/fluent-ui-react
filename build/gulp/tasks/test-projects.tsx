@@ -95,7 +95,7 @@ export default App;
       logSimple(testAppDir)
     })
     .then(() => sh(`mkdir ${testAppDir}`))
-    .then(runInTestApp(`create-react-app . --scripts-version=react-scripts-ts`))
+    .then(runInTestApp(`yarn create react-app . --scripts-version=react-scripts-ts`))
     .then(runInTestApp(`yarn add ${paths.base()}`))
     .then(runInTestApp(`rm -rf node_modules/@stardust-ui/react/node_modules`))
     .then(() => {
