@@ -1,22 +1,25 @@
 import { spawn } from 'child_process'
 
-const sh = (command: string): Promise<string> => {
+const sh = (command: string, pipeOutputToResult: boolean = false): Promise<string> => {
   return new Promise((resolve, reject) => {
     const [cmd, ...args] = command.split(' ')
 
     const options = {
       cwd: process.cwd(),
       env: process.env,
-      stdio: ['pipe', 'pipe', 'pipe'] as any, // [0, 1, 2],
+      stdio: (pipeOutputToResult ? ['pipe', 'pipe', 'pipe'] : [0, 1, 2]) as any,
       shell: true,
     }
 
     const child = spawn(cmd, args, options)
 
     let stdoutData = ''
-    child.stdout.on('data', data => {
-      stdoutData += data
-    })
+
+    if (child.stdout) {
+      child.stdout.on('data', data => {
+        stdoutData += data
+      })
+    }
 
     child.on('close', code => {
       if (code === 0) {

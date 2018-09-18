@@ -88,7 +88,7 @@ export default App;
   return Promise.resolve()
     .then(() => mkdirp.sync(projectsPath()))
     .then(log('Testing temp dir scenario'))
-    .then(() => sh(`mktemp -d`))
+    .then(() => sh(`mktemp -d`, true))
     .then(tmpDir => {
       testAppDir = tmpDir.trim()
       logSimple(testAppDir)
