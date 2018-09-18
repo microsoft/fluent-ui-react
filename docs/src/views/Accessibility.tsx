@@ -26,11 +26,11 @@ export default () => (
     </p>
     <p>
       The consumer of the library should generally be shielded from the intricates of applying the
-      correct aria roles, testing on multiple screen reader / os combinations.
+      correct ARIA roles, testing on multiple screen reader / os combinations.
     </p>
     <p>
       Stardust attempts to follow the{' '}
-      <a href="https://www.w3.org/TR/wai-aria-practices-1.1/">aria best practises</a> and validates
+      <a href="https://www.w3.org/TR/wai-aria-practices-1.1/">ARIA best practises</a> and validates
       them with subject matter experts.
     </p>
 
@@ -129,7 +129,7 @@ export default () => (
     </p>
     <p>
       How does the user expect to navigate this? It looks a bit similar to a breadcrumb-like
-      control, but the final element isn't focusable. So should we follow the aria recommendations
+      control, but the final element isn't focusable. So should we follow the ARIA recommendations
       for breadcrumbs or do something else? Both 'Stardust UI' and the '...' menu are actionable, so
       one approach is for focus to first land on 'Stardust UI', and then when you press{' '}
       {code('Tab')} to move to '...'. Alternatively, this could be regarded as one control and you
@@ -469,8 +469,8 @@ export default () => (
         component/element
       </li>
       <li>
-        {code('aria-labelledby')} is similar to aria-label, but is only a reference to a different
-        element present in DOM.
+        {code('aria-labelledby')} is similar to {code('aria-label')}, but is only a reference to a
+        different element present in DOM.
       </li>
     </ul>
     <p>
