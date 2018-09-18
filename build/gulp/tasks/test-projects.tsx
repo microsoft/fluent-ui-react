@@ -97,6 +97,7 @@ export default App;
     .then(runInTestApp(`create-react-app . --scripts-version=react-scripts-ts`))
     .then(runInTestApp(`yarn add ${paths.base()}`))
     .then(runInTestApp(`rm -rf node_modules/@stardust-ui/react/node_modules`))
+    .then(runInTestApp(`yarn build`))
   // .then(() => sh(`pwd`))
   // .then((res) => log('Result is: ' + res))
 })
