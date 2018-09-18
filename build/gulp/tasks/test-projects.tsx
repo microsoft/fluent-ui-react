@@ -87,6 +87,7 @@ export default App;
 
   return Promise.resolve()
     .then(() => mkdirp.sync(projectsPath()))
+    .then(() => sh('yarn build:dist'))
     .then(log('Testing temp dir scenario'))
     .then(() => sh(`mktemp -d`, true))
     .then(tmpDir => {
