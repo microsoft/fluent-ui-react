@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
-    parallelism: 4
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
@@ -38,13 +37,7 @@ jobs:
             - ~/.cache/yarn
             - .yarn-cache
             - node_modules
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Prettier
-          command: yarn prettier
-test:
+  lint:
     docker:
       - image: circleci/node:8
     parallelism: 4
@@ -52,32 +45,18 @@ test:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
       - run:
-          name: Update yarn
-          command: |
-            # remove default yarn
-            sudo rm -rf $(dirname $(which yarn))/yarn*
-            # download latest
-            rm -rf ~/.yarn
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
-      - checkout
-      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
+          name: Lint
+          command: yarn lint
       - run:
-          name: Add npm bin to PATH
-          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
-      - run:
-          name: Install Dependencies
-          command: yarn
-      - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - .yarn-cache
-            - node_modules
+          name: Prettier
+          command: yarn prettier
+  test:
+    docker:
+      - image: circleci/node:8
+    parallelism: 4
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    steps:
       - run:
           name: Unit Tests
           command: yarn test --maxWorkers=4
@@ -87,3 +66,14 @@ test:
       - run:
           name: Visual Tests
           command: yarn test:visual
+workflows:
+  version: 2
+  build_lint_test:
+    jobs:
+      - build
+      - lint:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
