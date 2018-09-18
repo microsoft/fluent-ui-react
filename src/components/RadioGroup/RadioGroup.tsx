@@ -135,10 +135,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         newIndex = 0
       }
 
-      if (newIndex < 0 || newIndex >= this.props.items.length || newIndex === currentIndex) {
-        return undefined
-      }
-
       const itemProps = this.getItemProps(this.props.items[newIndex] as IRadioGroupItemProps)
       if (!itemProps.disabled) {
         return itemProps
