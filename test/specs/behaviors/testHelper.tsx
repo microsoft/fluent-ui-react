@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import callable from '../../../src/lib/callable'
 import {
   Accessibility,
   AccessibilityDefinitionFunction,

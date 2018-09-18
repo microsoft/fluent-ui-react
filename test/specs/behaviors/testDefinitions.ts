@@ -1,4 +1,4 @@
-import { TestDefinition, TestMethod, TestHelper } from './testHelper'
+import { TestDefinition, TestMethod } from './testHelper'
 import {
   AccessibilityDefinitionFunction,
   IAccessibilityDefinition,
@@ -6,7 +6,6 @@ import {
 import { callable } from 'src/lib'
 
 const definitions: TestDefinition[] = []
-const testHelper = new TestHelper()
 
 definitions.push({
   regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'/g,

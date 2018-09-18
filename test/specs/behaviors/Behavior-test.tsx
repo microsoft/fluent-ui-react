@@ -10,7 +10,7 @@ import {
   MenuBehavior,
   MenuItemBehavior,
 } from '../../../src/lib/accessibility/'
-import { TestHelper, TestMethod } from './testHelper'
+import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 const behaviorMenuItems = require('docs/src/behaviorMenu')
 
