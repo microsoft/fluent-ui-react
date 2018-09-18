@@ -25,7 +25,7 @@ const Router = () => (
           <DocsLayout
             exact
             path="/prototype-chat-people-picker"
-            component={require('./prototypes/ChatPeoplePicker').default}
+            component={require('./prototypes/ChatPeoplePicker/ChatPeoplePickerExample').default}
           />
         )}
         <DocsLayout exact path="/*" component={PageNotFound} />

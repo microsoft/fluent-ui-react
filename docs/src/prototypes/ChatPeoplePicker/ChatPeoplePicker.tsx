@@ -1,12 +1,9 @@
 import * as React from 'react'
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
-import Label from '../Label'
-import Input from '../Input'
-import Menu, { MenuItem } from '../Menu'
+import { Label, Input, Button, Menu, MenuItem } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
-import Button from '../Button'
-import { pxToRem } from '../../lib'
+import { pxToRem } from 'src/lib'
 
 const peoplePickerStyles: any = {
   containerDiv: {
@@ -58,7 +55,7 @@ interface IPeoplePickerState {
   inputValue: string
 }
 
-export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
+export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private input: any
   private labelId: string = 'picker-label-id'
 
@@ -250,4 +247,4 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 }
 
-export default PeoplePicker
+export default ChatPeoplePicker

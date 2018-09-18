@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PeoplePicker } from '@stardust-ui/react'
+import PeoplePicker from './ChatPeoplePicker'
 
 const items = [
   { name: 'Bruce Wayne', image: 'public/images/avatar/small/matt.jpg' },
