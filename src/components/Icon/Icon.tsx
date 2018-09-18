@@ -91,7 +91,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
   }
 
   static handledProps = [
