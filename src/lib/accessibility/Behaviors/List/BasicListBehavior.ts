@@ -1,4 +1,4 @@
-import { IAccessibilityDefinition } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
 
 /**
  * @description
@@ -6,12 +6,12 @@ import { IAccessibilityDefinition } from '../../interfaces'
  * The 'list' role is used to identify an element that creates a list.
  */
 
-const BasicListBehavior: IAccessibilityDefinition = {
+const BasicListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'list',
     },
   },
-}
+})
 
 export default BasicListBehavior

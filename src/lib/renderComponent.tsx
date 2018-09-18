@@ -60,9 +60,9 @@ const getAccessibility = (
   actionHandlers: AccessibilityActionHandlers,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: IAccessibilityDefinition = callable(
-    customAccessibility || defaultAccessibility || DefaultBehavior,
-  )(props)
+  const accessibility: IAccessibilityDefinition = (customAccessibility ||
+    defaultAccessibility ||
+    DefaultBehavior)(props)
 
   const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
   return {

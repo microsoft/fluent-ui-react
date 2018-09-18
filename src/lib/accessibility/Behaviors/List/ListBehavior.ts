@@ -8,6 +8,6 @@ import BasicListBehavior from './BasicListBehavior'
  */
 
 const ListBehavior: Accessibility = (props: any) =>
-  props.selection ? SelectableListBehavior : BasicListBehavior
+  props.selection ? SelectableListBehavior(props) : BasicListBehavior(props)
 
 export default ListBehavior
