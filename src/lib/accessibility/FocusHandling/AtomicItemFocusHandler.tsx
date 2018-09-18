@@ -24,11 +24,11 @@ export interface IAtomicItemState {
   isLastOpened: boolean
 }
 
-export abstract class BaseAtomicItem<
+export class AtomicItemFocusHandler<
   P,
   S extends IAtomicItemState = IAtomicItemState
 > extends UIComponent<any, S> {
-  protected itemRef = React.createRef<HTMLElement>()
+  public itemRef = React.createRef<HTMLElement>()
 
   constructor(props: any, state: S) {
     super(props, state)
@@ -46,80 +46,7 @@ export abstract class BaseAtomicItem<
     }
   }
 
-  protected handleKeyDown = (e: KeyboardEvent) => {
-    switch (e.keyCode) {
-      case keyboardKey.End:
-        console.log('End Arrow Key Pressed')
-        this.moveLast()
-        break
-
-      case keyboardKey.Home:
-        console.log('Home Arrow Key Pressed')
-        this.moveFirst()
-        break
-
-      case keyboardKey.ArrowLeft:
-        console.log('Left Arrow Key Pressed')
-        // if (this.props.atomicItemProps.parentContainerDirection === 'vertical') {
-        //   break
-        // }
-        this.movePrevious()
-        break
-
-      case keyboardKey.ArrowRight:
-        console.log('Right Arrow Key Pressed')
-        // if (this.props.atomicItemProps.parentContainerDirection === 'vertical') {
-        //   break
-        // }
-        this.moveNext()
-        break
-
-      case keyboardKey.ArrowUp:
-        console.log('Up Arrow Key Pressed')
-        // if (this.props.atomicItemProps.parentContainerDirection === 'horizontal') {
-        //   break
-        // }
-        this.movePrevious()
-        break
-
-      case keyboardKey.ArrowDown:
-        console.log('Down Arrow Key Pressed')
-        // if (this.props.atomicItemProps.parentContainerDirection === 'horizontal') {
-        //   break
-        // }
-        this.moveNext()
-        break
-
-      case keyboardKey.Enter:
-        console.log('ENTER Key Pressed')
-        this.enter()
-        break
-
-      case keyboardKey[' ']:
-        console.log('SPACE Key Pressed')
-        this.space()
-        break
-
-      case keyboardKey.Escape:
-        console.log('ESC Key Pressed')
-
-        this.esc()
-        if (this.state.isLastOpened === true) {
-          e.preventDefault()
-          e.stopPropagation()
-          this.setState({ isLastOpened: false })
-        }
-        break
-    }
-
-    // TODO: make this correct
-    if (e.keyCode !== keyboardKey.Tab && e.keyCode !== keyboardKey.Escape) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-  }
-
-  protected movePrevious() {
+  public movePrevious() {
     if (this.props.atomicItemProps.isFirstElement || !this.props.atomicItemProps.isFocused) {
       return
     }
@@ -127,7 +54,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onMovePrevious()
   }
 
-  protected moveNext() {
+  public moveNext() {
     if (this.props.atomicItemProps.isLastElement || !this.props.atomicItemProps.isFocused) {
       return
     }
@@ -135,7 +62,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onMoveNext()
   }
 
-  protected moveFirst() {
+  public moveFirst() {
     if (this.props.atomicItemProps.isFirstElement || !this.props.atomicItemProps.isFocused) {
       return
     }
@@ -143,7 +70,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onMoveFirst()
   }
 
-  protected moveLast() {
+  public moveLast() {
     if (this.props.atomicItemProps.isLastElement || !this.props.atomicItemProps.isFocused) {
       return
     }
@@ -151,7 +78,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onMoveLast()
   }
 
-  protected enter() {
+  public enter() {
     this.setState({ isLastOpened: false })
 
     if (!this.props.atomicItemProps.isFocused || !(this.props as any).subItems) {
@@ -166,7 +93,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onEnter()
   }
 
-  protected space() {
+  public space() {
     if (!this.props.atomicItemProps.isFocused) {
       return
     }
@@ -174,7 +101,7 @@ export abstract class BaseAtomicItem<
     this.props.atomicItemProps.onSpace()
   }
 
-  protected esc() {
+  public esc() {
     if (!this.props.atomicItemProps.isFocused) {
       return
     }

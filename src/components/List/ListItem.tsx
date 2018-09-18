@@ -6,10 +6,10 @@ import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
-  BaseAtomicItem,
+  AtomicItemFocusHandler,
   IAtomicItemProps,
   IAtomicItemState,
-} from '../../lib/accessibility/FocusHandling/BaseAtomicItem'
+} from '../../lib/accessibility/FocusHandling/AtomicItemFocusHandler'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
@@ -37,7 +37,7 @@ export interface IListItemState extends IAtomicItemState {
   isHovering: boolean
 }
 
-class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState> {
+class ListItem extends AtomicItemFocusHandler<Extendable<IListItemProps>, IListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -108,9 +108,10 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
     accessibility: ListItemBehavior as Accessibility,
   }
 
-  // actionHandlers: AccessibilityActionHandlers = {
-  //   moveNext: this.moveNext,
-  // }
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNext: this.moveNext.bind(this),
+    movePrevious: this.movePrevious.bind(this),
+  }
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -171,12 +172,12 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
         truncateHeader={truncateHeader}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        onKeyDown={this.handleKeyDown}
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
         ref={this.itemRef}
         {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
       />
     )

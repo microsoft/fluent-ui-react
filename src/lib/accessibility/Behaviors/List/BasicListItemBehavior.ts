@@ -23,6 +23,9 @@ const BasicListItemBehavior: (props: any) => IAccessibilityDefinition = (props: 
             { keyCode: keyboardKey.ArrowRight },
           ],
         },
+        movePrevious: {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowUp }, { keyCode: keyboardKey.ArrowLeft }],
+        },
       },
     },
   }

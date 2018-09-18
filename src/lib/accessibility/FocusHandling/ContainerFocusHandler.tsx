@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { IAtomicItemProps } from './BaseAtomicItem'
+import { IAtomicItemProps } from './AtomicItemFocusHandler'
 
 export interface IContainerProps<T> {
   items?: T[]
@@ -13,7 +13,7 @@ export interface IContainerState {
 //   state:
 //     | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
 //     | (Pick<S, K> | S | null),
-//   callback?: () => void,
+//   callback?: () => void
 // ) => void
 
 export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
@@ -43,25 +43,25 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
     return itemProps
   }
 
-  protected movePrevious(): void {
+  private movePrevious(): void {
     this.component.setState(prev => {
       return { focusItemOnIdx: prev.focusItemOnIdx - 1 }
     })
   }
 
-  protected moveNext(): void {
+  private moveNext(): void {
     this.component.setState(prev => {
       return { focusItemOnIdx: prev.focusItemOnIdx + 1 }
     })
   }
 
-  protected moveFirst(): void {
+  private moveFirst(): void {
     this.component.setState({
       focusItemOnIdx: 0,
     })
   }
 
-  protected moveLast(): void {
+  private moveLast(): void {
     if (!this.component.props.items) {
       return
     }
@@ -71,15 +71,15 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
     })
   }
 
-  protected enter(): void {
+  private enter(): void {
     console.log('enter()')
   }
 
-  protected space(): void {
+  private space(): void {
     console.log('space()')
   }
 
-  protected esc(): void {
+  private esc(): void {
     console.log('esc()')
   }
 }
