@@ -6,10 +6,8 @@ const definitions: TestDefinition[] = []
 definitions.push({
   regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'/g,
   testMethod: (parameters: TestMethod) => {
-    const [_, attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [
-      ...parameters.props,
-    ]
-    const property = []
+    const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
+    const property = {}
     property[propertyDependingOn] = propertyDependingOn
 
     // const expectedResult = testHelper.getBehaviorObject(parameters.behavior, property).attributes!.root[attributeToBeAdded]
@@ -23,7 +21,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' to [a-z]+/g,
   testMethod: (parameters: TestMethod) => {
-    const [_, attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
+    const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}
     const expectedResult = callable(parameters.behavior)(property).attributes!.root[
       attributeToBeAdded
@@ -35,7 +33,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds role='([a-z]+)'./g,
   testMethod: (parameters: TestMethod) => {
-    const [_, roleToBeAdded] = [...parameters.props]
+    const [roleToBeAdded] = [...parameters.props]
     // const expectedResult = testHelper.getBehaviorObject(parameters.behavior).attributes.root['role']
     const property = {}
     const expectedResult = callable(parameters.behavior)(property).attributes.root['role']
@@ -46,7 +44,7 @@ definitions.push({
 definitions.push({
   regexp: /Adds role '([a-z]+)' to '([a-z]+)' component's part/g,
   testMethod: (parameters: TestMethod) => {
-    const [_, roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
+    const [roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
     // const expectedResult = testHelper.getBehaviorObject(parameters.behavior).attributes[elementWhereToBeAdded]['role']
     const property = {}
     const expectedResult = callable(parameters.behavior)(property).attributes[

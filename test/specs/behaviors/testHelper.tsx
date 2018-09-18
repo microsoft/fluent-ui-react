@@ -53,7 +53,7 @@ export class TestHelper {
           test(singleTest.params[0], () => {
             singleTest.testMethod({
               behavior: this.getBehaviorWithProperType(singleTest.behaviorName),
-              props: singleTest.params,
+              props: singleTest.params.slice(1),
             })
           })
         })
