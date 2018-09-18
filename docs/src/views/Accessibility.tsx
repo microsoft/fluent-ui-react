@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { Header } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 
+import { Button } from '@stardust-ui/react'
+
 export default () => (
-  <DocPage title="How to Use Stardust - Accessibility Perspective">
+  <DocPage title="Accessibility in Stardust">
     <Header as="h2" content="Goals of Accessibility" />
 
     <p>
@@ -14,7 +17,7 @@ export default () => (
       default.
     </p>
     <p>
-      The components themselves have accessibility build in - so for example, a dropdown menu will
+      The components themselves have accessibility build in - so, for example, a dropdown menu will
       be focusable, you can navigate between the options with arrow keys, and select the desired
       option. Of course, if you want to enhance / override the default behaviour this is also
       supported.
@@ -44,19 +47,23 @@ export default () => (
       </a>{' '}
       to identify and implement page areas.
     </p>
+
     <p>
       In some cases, ARIA attributes need to be provided by the consumer of Stardust if the required
       information cannot be derived from the components.
-      <br />
+    </p>
+    <p>
       Focusable elements that do not contain any textual information need to be labelled so that the
       screen reader can present them to the user. In addition to that, information that is relevant
       to the screen reader user only can be added to the label:
-      <CodeSnippet
-        value={[
-          "<Button icon='envelope'> -> <Button icon='envelope' aria-label='Send message'>",
-          "<Radio ... aria-label='Include history from the past day. Press TAB to change the number of days.'>",
-        ].join('\n')}
-      />
+    </p>
+    <CodeSnippet
+      value={[
+        "<Button icon='envelope'> -> <Button icon='envelope' aria-label='Send message'>",
+        "<Radio ... aria-label='Include history from the past day. Press TAB to change the number of days.'>",
+      ].join('\n')}
+    />
+    <p>
       Most typical examples are aria-label, aria-labelledby and title attributes. In some cases the
       values need to be dynamically changed based on the state of the component/application.
     </p>
@@ -102,7 +109,7 @@ export default () => (
       <li>Use appropriate roles and aria-* attributes</li>
     </ul>
 
-    <p>Design Considerations</p>
+    <Header as="h3" content="Design Considerations" />
     <p>
       Having a clear idea of how users would use the keyboard and screen readers to navigate through
       your app before development starts is critical to both getting the ordering of components
@@ -493,7 +500,18 @@ export default () => (
 
     <Header as="h1" content="Contributing" />
     <a href="https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md">
-      Accrssibility contributing guide
+      Accessibility contributing guide
     </a>
+
+    <br />
+    <Button
+      as={NavLink}
+      content="Docs"
+      type="primary"
+      icon="arrow right"
+      iconPosition="after"
+      to="components/button"
+      style={{ marginTop: '30px' }}
+    />
   </DocPage>
 )

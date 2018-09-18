@@ -60,11 +60,11 @@ export default () => (
     {/* Show a preview of the above snippet */}
     <Button
       as={NavLink}
-      content="Docs"
+      content="Accessibility"
       type="primary"
       icon="arrow right"
       iconPosition="after"
-      to="components/button"
+      to="accessibility"
     />
   </DocPage>
 )
