@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header, Divider } from 'semantic-ui-react'
+import { Header, Divider, Message } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
@@ -352,80 +352,83 @@ export default () => (
       ].join('\n')}
     />
 
-    <p>
-      NOTE: If Children API is used (rather than the Shortcut API), Stardust does not modify the
-      children components in any way. For example, if content of {code('Menu.Item')} is provided as
-      a child component, no behaviours are applied on these children. Consider the following
-      example:
-    </p>
-    <CodeSnippet
-      value={['return (', ' <Menu>', ' <Menu.Item>Editorials</Menu.Item>', ' </Menu>', ' )'].join(
-        '\n',
-      )}
-    />
-    <p>Rendered HTML:</p>
-    <CodeSnippet
-      value={[
-        '<ul role="menu" class="ui-menu">',
-        ' <li class="ui-menu__item" role="presentation">Editorials</li>',
-        '</ul>',
-      ].join('\n')}
-    />
-    <p>
-      Notice that Stardust only applies role only on the {code('<li>')} element which it rendered.
-      The {code('Menu.Item')}
-      "Editorials" component that was passed to Stardust is not modified in any way and thus doesn't
-      have the role applied.
-    </p>
-    <p>Proper accessible menu implementation in this case would be:</p>
-    <CodeSnippet
-      label="App.jsx"
-      value={[
-        'return (',
-        '  <Menu>',
-        '    <Menu.Item content="Editorials" />',
-        '  </Menu>',
-        ')',
-      ].join('\n')}
-    />
-    <p>
-      This way, Stardust will generate a child component based on the provided content string and
-      will apply the role to it:
-    </p>
-    <CodeSnippet
-      value={[
-        "import React from 'react'",
-        "import { Menu } from '@stardust-ui/react",
-        '',
-        'const items = [',
-        "  { key: 'editorials', content: 'Editorials' },",
-        "  { key: 'review', content: 'Reviews' },",
-        "  { key: 'events', content: 'Upcoming Events' },",
-        ']',
-        '',
-        'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} type="primary" />',
-        '',
-        'export default MenuExamplePrimary',
-      ].join('\n')}
-    />
+    <Message warning>
+      <Message.Header>Children API vs Shorthand API</Message.Header>
+      <p>
+        Note that if Children API is used (rather than the Shortcut API), Stardust does not modify
+        the children components in any way. For example, if content of {code('Menu.Item')} is
+        provided as a child component, no behaviours are applied on these children. Consider the
+        following example:
+      </p>
+      <CodeSnippet
+        value={['return (', ' <Menu>', ' <Menu.Item>Editorials</Menu.Item>', ' </Menu>', ' )'].join(
+          '\n',
+        )}
+      />
+      <p>Rendered HTML:</p>
+      <CodeSnippet
+        value={[
+          '<ul role="menu" class="ui-menu">',
+          ' <li class="ui-menu__item" role="presentation">Editorials</li>',
+          '</ul>',
+        ].join('\n')}
+      />
+      <p>
+        Notice that Stardust only applies role only on the {code('<li>')} element which it rendered.
+        The {code('Menu.Item')}
+        "Editorials" component that was passed to Stardust is not modified in any way and thus
+        doesn't have the role applied.
+      </p>
+      <p>Proper accessible menu implementation in this case would be:</p>
+      <CodeSnippet
+        label="App.jsx"
+        value={[
+          'return (',
+          '  <Menu>',
+          '    <Menu.Item content="Editorials" />',
+          '  </Menu>',
+          ')',
+        ].join('\n')}
+      />
+      <p>
+        This way, Stardust will generate a child component based on the provided content string and
+        will apply the role to it:
+      </p>
+      <CodeSnippet
+        value={[
+          "import React from 'react'",
+          "import { Menu } from '@stardust-ui/react",
+          '',
+          'const items = [',
+          "  { key: 'editorials', content: 'Editorials' },",
+          "  { key: 'review', content: 'Reviews' },",
+          "  { key: 'events', content: 'Upcoming Events' },",
+          ']',
+          '',
+          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} type="primary" />',
+          '',
+          'export default MenuExamplePrimary',
+        ].join('\n')}
+      />
 
-    <p>and this is the HTML that will be rendered:</p>
-    <CodeSnippet
-      label="html"
-      value={[
-        '<ul role="menu" class="ui-menu a ab c d e f g">',
-        '  <li class="ui-menu__item ..." role="presentation">',
-        '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Editorials</a>',
-        '  </li>',
-        '  <li class="ui-menu__item ..." role="presentation">',
-        '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Reviews</a>',
-        '  </li>',
-        '  <li class="ui-menu__item ..." role="presentation">',
-        '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Upcoming Events</a>',
-        '  </li>',
-        '</ul>',
-      ].join('\n')}
-    />
+      <p>And this is the HTML that will be rendered:</p>
+      <CodeSnippet
+        label="html"
+        value={[
+          '<ul role="menu" class="ui-menu a ab c d e f g">',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Editorials</a>',
+          '  </li>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Reviews</a>',
+          '  </li>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Upcoming Events</a>',
+          '  </li>',
+          '</ul>',
+        ].join('\n')}
+      />
+    </Message>
 
     <Header as="h4" content="Overriding behaviours" />
     <p>
