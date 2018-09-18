@@ -16,15 +16,7 @@ const States = () => (
       examplePath="components/RadioGroup/Item/RadioGroupItemExampleChecked"
     >
       <Segment style={{ marginTop: '10px' }}>
-        Use{' '}
-        <a
-          href="https://facebook.github.io/react/docs/forms.html#default-value"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <code>defaultChecked</code>
-        </a>{' '}
-        as you normally would to set default form values.
+        Use <code>defaultCheckedValue</code> to set the default value.
       </Segment>
     </ComponentExample>
     <ComponentExample

@@ -3,18 +3,13 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import {
-  createHTMLInput,
-  customPropTypes,
-  AutoControlledComponent,
-  createShorthandFactory,
-} from '../../lib'
+import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
 import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { RadioBehavior } from '../../lib/accessibility'
+import { RadioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IRadioGroupItemProps {
@@ -149,7 +144,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioBehavior as Accessibility,
+    accessibility: RadioGroupItemBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
@@ -211,6 +206,6 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
   }
 }
 
-RadioGroupItem.create = createShorthandFactory(RadioGroupItem, label => ({ label }))
+RadioGroupItem.create = createShorthandFactory(RadioGroupItem, () => ({}))
 
 export default RadioGroupItem

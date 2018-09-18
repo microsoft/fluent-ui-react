@@ -115,7 +115,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
   }
 
   findNextEnabledCheckedItem = (direction): IRadioGroupItemProps => {
-    if (!this.props.items || this.props.items.length === 0) {
+    if (!this.props.items || !this.props.items.length) {
       return undefined
     }
 
@@ -162,7 +162,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   renderItems = (variables: ComponentVariablesObject, vertical: boolean) => {
     const { items } = this.props
-    const { checkedValue } = this.state
 
     return _.map(items, (item, index) =>
       RadioGroupItem.create(item, {

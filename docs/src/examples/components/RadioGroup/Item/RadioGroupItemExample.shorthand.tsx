@@ -6,7 +6,12 @@ const handleChange = () => {
 }
 
 const RadioGroupItemExample = () => (
-  <RadioGroup.Item label="Make your choice" onChange={handleChange} />
+  <RadioGroup
+    items={[
+      <RadioGroup.Item label="Make your choice" value="1" checkedChanged={handleChange} />,
+      <RadioGroup.Item label="Another option" value="2" checkedChanged={handleChange} />,
+    ]}
+  />
 )
 
 export default RadioGroupItemExample
