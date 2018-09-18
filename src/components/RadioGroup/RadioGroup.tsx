@@ -119,7 +119,8 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
       return undefined
     }
 
-    const currentIndex = this.props.items.findIndex(
+    const currentIndex = _.findIndex(
+      this.props.items,
       item => this.getItemProps(item as IRadioGroupItemProps).value === this.state.checkedValue,
     )
 
