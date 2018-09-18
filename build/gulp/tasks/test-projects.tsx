@@ -90,10 +90,10 @@ export default App;
     .then(log('Testing temp dir scenario'))
     .then(() => sh(`mktemp -d`, true))
     .then(tmpDir => {
-      testAppDir = tmpDir.trim()
+      testAppDir = `${tmpDir.trim()}/test`
       logSimple(testAppDir)
     })
-    .then(runInTestApp(`create-react-app ./test --scripts-version=react-scripts-ts`))
+    .then(runInTestApp(`create-react-app . --scripts-version=react-scripts-ts`))
     .then(runInTestApp(`yarn add ${paths.base()}`))
     .then(runInTestApp(`rm -rf node_modules/@stardust-ui/react/node_modules`))
   // .then(() => sh(`pwd`))
