@@ -46,6 +46,8 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Lint
           command: yarn lint
@@ -60,6 +62,8 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
       - run:
           name: Unit Tests
           command: yarn test --maxWorkers=4
