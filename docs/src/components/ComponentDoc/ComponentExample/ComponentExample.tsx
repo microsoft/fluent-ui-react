@@ -16,7 +16,7 @@ import {
   scrollToAnchor,
 } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, doesNodeContainClick, mergeThemes, pxToRem } from 'src/lib'
+import { callable, doesNodeContainClick, pxToRem } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
@@ -354,7 +354,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     }
 
     return (
-      <Provider theme={mergeThemes(themes.teams, newTheme)}>
+      <Provider theme={newTheme}>
         <ExampleComponent knobs={this.getKnobsValue()} />
       </Provider>
     )
@@ -380,13 +380,16 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
+      const disabled =
+        codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
+
       return {
         active: this.sourceCodeMgr.codeType === codeType,
-        disabled:
-          codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType),
+        disabled,
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
+        className: disabled && 'crossout',
       }
     })
 
@@ -593,7 +596,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   public render() {
-    const { children, description, examplePath, suiVersion, title } = this.props
+    const { children, description, suiVersion, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
