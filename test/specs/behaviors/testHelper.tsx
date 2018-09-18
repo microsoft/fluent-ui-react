@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import callable from '../../../src/lib/callable'
 import {
   Accessibility,
   AccessibilityDefinitionFunction,
@@ -12,7 +13,7 @@ interface FilteredDescription {
 }
 
 export interface TestMethod {
-  behavior: AccessibilityDefinitionFunction
+  behavior: AccessibilityDefinitionFunction | IAccessibilityDefinition
   props: [string]
 }
 
@@ -94,7 +95,8 @@ export class TestHelper {
       throw 'Behavior file was not find, probably was not imported. Import file and add behavior.'
     }
 
-    // solve that sometimes we return function somethimes it is just object
-    return importedBehavior as AccessibilityDefinitionFunction
+    return typeof importedBehavior === 'function'
+      ? (importedBehavior as AccessibilityDefinitionFunction)
+      : (importedBehavior as IAccessibilityDefinition)
   }
 }
