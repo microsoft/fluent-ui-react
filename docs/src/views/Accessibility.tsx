@@ -537,7 +537,7 @@ export default () => (
       type="primary"
       icon="arrow left"
       iconPosition="before"
-      to="components/quick-start"
+      to="quick-start"
     />
     <Button
       as={NavLink}
