@@ -4,7 +4,7 @@ general:
     ignore:
       - gh-pages
 jobs:
-  initialize:
+  build:
     docker:
       - image: circleci/node:8
     parallelism: 4
@@ -74,10 +74,10 @@ workflows:
   version: 2
   build_lint_test:
     jobs:
-      - initialize
+      - build
       - lint:
           requires:
-            - initialize
+            - build
       - test:
           requires:
-            - initialize
+            - build
