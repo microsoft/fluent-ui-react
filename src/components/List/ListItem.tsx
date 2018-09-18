@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, customPropTypes } from '../../lib'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
@@ -37,7 +37,7 @@ export interface IListItemState extends IAtomicItemState {
   isHovering: boolean
 }
 
-class ListItem extends AtomicItemFocusHandler<Extendable<IListItemProps>, IListItemState> {
+class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -108,9 +108,11 @@ class ListItem extends AtomicItemFocusHandler<Extendable<IListItemProps>, IListI
     accessibility: ListItemBehavior as Accessibility,
   }
 
+  private atomicItemFocusHandler = new AtomicItemFocusHandler(this as any)
+
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.moveNext.bind(this),
-    movePrevious: this.movePrevious.bind(this),
+    moveNext: this.atomicItemFocusHandler.moveNext.bind(this),
+    movePrevious: this.atomicItemFocusHandler.movePrevious.bind(this),
   }
 
   handleMouseEnter = () => {
