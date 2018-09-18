@@ -8,6 +8,15 @@ import { Button } from '@stardust-ui/react'
 
 const code = (content: string): React.ReactNode => <code>{content}</code>
 
+const link = (content: string, url: string): React.ReactNode => (
+  <React.Fragment>
+    {' '}
+    <a href={url} target={url.startsWith('http') ? '_blank' : '_self'}>
+      {content}
+    </a>
+  </React.Fragment>
+)
+
 export default () => (
   <DocPage title="Accessibility in Stardust">
     <Header as="h2" content="Goals of Accessibility" />
@@ -29,8 +38,8 @@ export default () => (
       correct ARIA roles, testing on multiple screen reader / os combinations.
     </p>
     <p>
-      Stardust attempts to follow the{' '}
-      <a href="https://www.w3.org/TR/wai-aria-practices-1.1/">ARIA best practises</a> and validates
+      Stardust attempts to follow the
+      {link('ARIA best practises', 'https://www.w3.org/TR/wai-aria-practices-1.1/')} and validates
       them with subject matter experts.
     </p>
 
@@ -43,10 +52,11 @@ export default () => (
     <Header as="h2" content="Making an app / page accessible" />
     <p>
       Besides component level accessibility there are application level / page level considerations,
-      mostly regarding the logical structure. Follow{' '}
-      <a href="https://www.w3.org/TR/wai-aria-practices/examples/landmarks/index.html">
-        ARIA Landmarks Example
-      </a>{' '}
+      mostly regarding the logical structure. Follow
+      {link(
+        'ARIA Landmarks Example',
+        'https://www.w3.org/TR/wai-aria-practices/examples/landmarks/index.html',
+      )}{' '}
       to identify and implement page areas.
     </p>
 
@@ -205,10 +215,11 @@ export default () => (
       toolbar, items in a list).
     </p>
     <p>
-      Stardust leverages Focus Zone component which is based on the{' '}
-      <a href="https://developer.microsoft.com/en-us/fabric#/components/focuszone">
-        Focus Zone from Office UI Fabric
-      </a>. This component allows to wrap any focusable component/element and adds arrow key
+      Stardust leverages Focus Zone component which is based on the
+      {link(
+        'Focus Zone from Office UI Fabric',
+        'https://developer.microsoft.com/en-us/fabric#/components/focuszone',
+      )}. This component allows to wrap any focusable component/element and adds arrow key
       navigation functionality.
     </p>
     <p>There are two basic use cases for Focus Zone:</p>
@@ -233,8 +244,8 @@ export default () => (
     <ul>
       <li>Focus the next or previous element after pressing a navigation key</li>
       <li>
-        Remember the last focused element within the zone by using{' '}
-        <a href="https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex">Roving tabindex</a>
+        Remember the last focused element within the zone by using
+        {link('Roving tabindex', 'https://www.w3.org/TR/wai-aria-practices/#kbd_roving_tabindex')}
       </li>
     </ul>
     <Header as="h3" content="Advanced keyboard navigation scenarios" />
@@ -266,7 +277,7 @@ export default () => (
       using their virtual navigation methods and/or list different types of elements (headings,
       buttons, menus). Every screen reader has its own implementation of virtual navigation, but
       they all operate based on the ARIA roles and attributes. Stardust will render these attributes
-      based on the <a href="#_Accessibility_Behaviours">accessibility behaviours</a> of the
+      based on the {link('accessibility behaviours', '#_Accessibility_Behaviours')} of the
       component. Users can override these and provide their own roles and attributes by changing the
       behaviour applied.
     </p>
@@ -435,8 +446,8 @@ export default () => (
     />
     <Header as="h4" content="Available Behaviors" />
     <p>
-      The default and other available behaviors for all the components can be found in the{' '}
-      <a href="https://stardust-ui.github.io/react/">documentation</a>, together with notes on other
+      The default and other available behaviors for all the components can be found in the
+      {link('documentation', 'https://stardust-ui.github.io/react/')}, together with notes on other
       accessibility considerations for using the component. The examples show the recommended way of
       using the components in the different variations - it is possible to edit example's code, see
       the rendered HTML, change themes and validate the rendering in RTL scenario, or with different
@@ -510,9 +521,10 @@ export default () => (
     <p>Stardust components are tested zoomed up to 200%.</p>
 
     <Header as="h1" content="Contributing" />
-    <a href="https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md">
-      Accessibility contributing guide
-    </a>
+    {link(
+      'Accessibility contributing guide',
+      'https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md',
+    )}
 
     <Divider />
     <br />
