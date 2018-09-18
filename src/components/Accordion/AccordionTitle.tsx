@@ -2,10 +2,17 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes } from '../../lib'
 import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+import {
+  IAtomicItemProps,
+  BaseAtomicItem,
+} from '../../lib/accessibility/FocusHandling/BaseAtomicItem'
+import DefaultTabableBehavior from '../../lib/accessibility/Behaviors/DefaultTabableBehavior'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
-export interface IAccordionTitleProps {
+export interface IAccordionTitleProps extends IAtomicItemProps {
+  accessibility?: Accessibility
   as?: any
   active?: boolean
   children?: ReactChildren
@@ -18,7 +25,7 @@ export interface IAccordionTitleProps {
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> {
+class AccordionTitle extends BaseAtomicItem<Extendable<IAccordionTitleProps>> {
   static displayName = 'AccordionTitle'
 
   static create: Function
@@ -51,9 +58,25 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
      * @param {object} data - All props.
      */
     onClick: PropTypes.func,
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'active',
+    'children',
+    'className',
+    'content',
+    'index',
+    'onClick',
+  ]
+
+  public static defaultProps = {
+    accessibility: DefaultTabableBehavior as Accessibility,
+  }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

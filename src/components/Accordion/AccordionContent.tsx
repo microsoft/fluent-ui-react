@@ -1,10 +1,17 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes } from '../../lib'
 import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+import {
+  IAtomicItemProps,
+  BaseAtomicItem,
+} from '../../lib/accessibility/FocusHandling/BaseAtomicItem'
+import DefaultTabableBehavior from '../../lib/accessibility/Behaviors/DefaultTabableBehavior'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
-export interface IAccordionContentProps {
+export interface IAccordionContentProps extends IAtomicItemProps {
+  accessibility?: Accessibility
   as?: any
   active?: boolean
   children?: ReactChildren
@@ -16,7 +23,7 @@ export interface IAccordionContentProps {
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, any> {
+class AccordionContent extends BaseAtomicItem<Extendable<IAccordionContentProps>> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -46,9 +53,24 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
      * @param {object} data - All props.
      */
     onClick: PropTypes.func,
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
+  static handledProps = [
+    'accessibility',
+    'as',
+    'active',
+    'children',
+    'className',
+    'content',
+    'onClick',
+  ]
+
+  public static defaultProps = {
+    accessibility: DefaultTabableBehavior as Accessibility,
+  }
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

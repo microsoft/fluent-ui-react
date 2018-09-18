@@ -14,8 +14,12 @@ import {
   ReactChildren,
   ComponentEventHandler,
 } from '../../../types/utils'
+import {
+  BaseAutoControlledContainer,
+  IContainerProps,
+} from '../../lib/accessibility/FocusHandling/BaseContainer'
 
-export interface IAccordionProps {
+export interface IAccordionProps extends IContainerProps {
   as?: any
   activeIndex?: number[] | number
   className?: string
@@ -37,7 +41,7 @@ export interface IAccordionProps {
  * @accessibility
  * Concern: how do we optimally navigate through an Accordion element with nested children?
  */
-class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any> {
+class Accordion extends BaseAutoControlledContainer<Extendable<IAccordionProps>> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -164,7 +168,11 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       children.push(
         AccordionTitle.create(title, {
           generateKey: true,
-          defaultProps: { active, index },
+          defaultProps: this.assignAtomicItemsProps(
+            { active, index } as any,
+            index,
+            children.length,
+          ),
           overrideProps: this.handleTitleOverrides,
         }),
       )

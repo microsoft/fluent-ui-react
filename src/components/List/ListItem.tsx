@@ -78,19 +78,6 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    // isFocused: PropTypes.bool,
-
-    // isFirstElement: PropTypes.bool,
-    // isLastElement: PropTypes.bool,
-
-    // onMovePrevious: PropTypes.func,
-    // onMoveNext: PropTypes.func,
-    // onMoveFirst: PropTypes.func,
-    // onMoveLast: PropTypes.func,
-    // onEnter: PropTypes.func,
-    // onSpace: PropTypes.func,
-    // onEsc: PropTypes.func,
   }
 
   static handledProps = [
@@ -110,16 +97,6 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
     'truncateContent',
     'truncateHeader',
     'variables',
-    // 'isFocused',
-    // 'isFirstElement',
-    // 'isLastElement',
-    // 'onMovePrevious',
-    // 'onMoveNext',
-    // 'onMoveFirst',
-    // 'onMoveLast',
-    // 'onEnter',
-    // 'onSpace',
-    // 'onEsc',
   ]
 
   static defaultProps = {
