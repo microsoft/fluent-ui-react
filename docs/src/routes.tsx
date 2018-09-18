@@ -21,6 +21,13 @@ const Router = () => (
         <DocsLayout exact path="/quick-start" component={QuickStart} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
+        {process.env.NODE_ENV !== 'production' && (
+          <DocsLayout
+            exact
+            path="/prototype-chat-people-picker"
+            component={require('./prototypes/ChatPeoplePicker').default}
+          />
+        )}
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>
