@@ -9,25 +9,26 @@ export interface IContainerState {
   focusItemOnIdx: number
 }
 
-type SetStateDelegate<P, S> = <K extends keyof S>(
-  state:
-    | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
-    | (Pick<S, K> | S | null),
-  callback?: () => void,
-) => void
+// type SetStateDelegate<P, S> = <K extends keyof S>(
+//   state:
+//     | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
+//     | (Pick<S, K> | S | null),
+//   callback?: () => void,
+// ) => void
 
 export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
   // constructor(private props: P, private state: S, private setState: SetStateDelegate<P, S>) {
   //   this.state = _.assign(this.state, { focusItemOnIdx: 0 })
   // }
 
-  constructor(private props: P, private state: S, private component: React.Component<P, S>) {
-    this.state = _.assign(this.state, { focusItemOnIdx: 0 })
+  constructor(private component: React.Component<P, S>) {
+    component.state = { focusItemOnIdx: 0 } as any
   }
 
   public assignAtomicItemsProps(idx: number, itemsLength: number): IAtomicItemProps {
     const itemProps: IAtomicItemProps = {
-      isFocused: idx === this.state.focusItemOnIdx && this.state.focusItemOnIdx !== -1,
+      isFocused:
+        idx === this.component.state.focusItemOnIdx && this.component.state.focusItemOnIdx !== -1,
       isFirstElement: idx === 0,
       isLastElement: idx === itemsLength - 1,
       onMovePrevious: this.movePrevious.bind(this),
@@ -61,12 +62,12 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
   }
 
   protected moveLast(): void {
-    if (!this.props.items) {
+    if (!this.component.props.items) {
       return
     }
 
     this.component.setState({
-      focusItemOnIdx: this.props.items.length - 1,
+      focusItemOnIdx: this.component.props.items.length - 1,
     })
   }
 

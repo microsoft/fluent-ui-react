@@ -90,7 +90,7 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  private containerFocusHandler = new ContainerFocusHandler(this.props, this.state, this)
+  private containerFocusHandler = new ContainerFocusHandler(this)
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
