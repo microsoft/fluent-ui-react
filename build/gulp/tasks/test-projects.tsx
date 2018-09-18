@@ -71,33 +71,24 @@ export default App;
     return arg
   }
 
+  const logSimple = msg => {
+    console.log()
+    console.log('='.repeat(80))
+    console.log('CRA TS:', msg)
+    console.log('='.repeat(80))
+  }
+
   const runInProjects = cmd => () => sh(`cd ${projectsPath()} && ${cmd}`)
   const runInTSApp = cmd => () => sh(`cd ${tsAppPath()} && ${cmd}`)
 
   return Promise.resolve()
     .then(() => mkdirp.sync(projectsPath()))
 
-    .then(log('Creating React App'))
-    .then(runInProjects(`create-react-app ${tsAppPath()} --scripts-version=react-scripts-ts`))
-
-    .then(log('Updating App.tsx'))
-    .then(() => {
-      fs.writeFileSync(tsAppPath('src', 'App.tsx'), appTSX)
-    })
-
-    .then(log('Building Stardust'))
-    .then(() => sh('yarn build:dist'))
-
-    .then(log('Copying dist to React App'))
-    .then(() => {
-      fs.linkSync(paths.dist(), tsAppPath('node_modules', pkg.name))
-    })
-
-    .then(log('Installing dependencies'))
-    .then(runInTSApp('yarn install'))
-
-    .then(log('Building!'))
-    .then(runInTSApp('yarn build'))
+    .then(log('Testing temp dir scenario'))
+    .then(() => sh(`mktemp -d`))
+    .then(res => logSimple(res.trim()))
+  // .then(() => sh(`pwd`))
+  // .then((res) => log('Result is: ' + res))
 })
 
 // ----------------------------------------
