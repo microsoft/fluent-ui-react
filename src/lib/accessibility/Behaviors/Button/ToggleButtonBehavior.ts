@@ -1,4 +1,4 @@
-import { Accessibility, AccessibilityAttributes } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
 import { ButtonAttributes } from '../Button/ButtonBehavior'
 
 /**
