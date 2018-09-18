@@ -5,6 +5,7 @@ import sh from '../sh'
 import * as mkdirp from 'mkdirp'
 
 import config from '../../../config'
+import { tmpdir } from 'os'
 
 const pkg = require('../../../package.json')
 
@@ -86,6 +87,8 @@ export default App;
 
     .then(log('Testing temp dir scenario'))
     .then(() => sh(`mktemp -d`))
+    .then(tmpDir => sh(`cd ${tmpDir.trim()}`))
+    .then(() => sh(`pwd`))
     .then(res => logSimple(res.trim()))
   // .then(() => sh(`pwd`))
   // .then((res) => log('Result is: ' + res))
