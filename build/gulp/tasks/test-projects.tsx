@@ -87,8 +87,7 @@ export default App;
 
     .then(log('Testing temp dir scenario'))
     .then(() => sh(`mktemp -d`))
-    .then(tmpDir => sh(`cd ${tmpDir.trim()}`))
-    .then(() => sh(`pwd`))
+    .then(tmpDir => sh(`cd ${tmpDir.trim()} && pwd`))
     .then(res => logSimple(res.trim()))
   // .then(() => sh(`pwd`))
   // .then((res) => log('Result is: ' + res))
