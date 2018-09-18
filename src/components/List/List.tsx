@@ -2,16 +2,20 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, childrenExist } from '../../lib'
+import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { BaseContainer, IContainerProps } from '../../lib/accessibility/FocusHandling/BaseContainer'
+import {
+  ContainerFocusHandler,
+  IContainerProps,
+  IContainerState,
+} from '../../lib/accessibility/FocusHandling/ContainerFocusHandler'
 
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
-export interface IListProps extends IContainerProps {
+export interface IListProps extends IContainerProps<ItemShorthand> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
@@ -24,7 +28,7 @@ export interface IListProps extends IContainerProps {
   variables?: ComponentVariablesInput
 }
 
-class List extends BaseContainer<Extendable<IListProps>> {
+class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -86,6 +90,8 @@ class List extends BaseContainer<Extendable<IListProps>> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  private containerFocusHandler = new ContainerFocusHandler(this.props, this.state, this.setState)
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
@@ -100,11 +106,16 @@ class List extends BaseContainer<Extendable<IListProps>> {
     const { items } = this.props
     const itemProps = _.pick(this.props, List.itemProps)
 
-    return _.map(items, (item, idx) =>
-      ListItem.create(item, {
-        defaultProps: this.assignAtomicItemsProps(itemProps, idx, items.length),
-      }),
-    )
+    return _.map(items, (item, idx) => {
+      itemProps.atomicItemProps = this.containerFocusHandler.assignAtomicItemsProps(
+        idx,
+        items.length,
+      )
+
+      return ListItem.create(item, {
+        defaultProps: itemProps,
+      })
+    })
   }
 }
 

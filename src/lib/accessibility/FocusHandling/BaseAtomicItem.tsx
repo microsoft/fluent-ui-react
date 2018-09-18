@@ -120,7 +120,7 @@ export abstract class BaseAtomicItem<
     }
   }
 
-  private movePrevious() {
+  protected movePrevious() {
     if (this.props.isFirstElement || !this.props.isFocused) {
       return
     }
@@ -128,7 +128,7 @@ export abstract class BaseAtomicItem<
     this.props.onMovePrevious()
   }
 
-  private moveNext() {
+  protected moveNext() {
     if (this.props.isLastElement || !this.props.isFocused) {
       return
     }
@@ -136,7 +136,7 @@ export abstract class BaseAtomicItem<
     this.props.onMoveNext()
   }
 
-  private moveFirst() {
+  protected moveFirst() {
     if (this.props.isFirstElement || !this.props.isFocused) {
       return
     }
@@ -144,7 +144,7 @@ export abstract class BaseAtomicItem<
     this.props.onMoveFirst()
   }
 
-  private moveLast() {
+  protected moveLast() {
     if (this.props.isLastElement || !this.props.isFocused) {
       return
     }
@@ -152,7 +152,7 @@ export abstract class BaseAtomicItem<
     this.props.onMoveLast()
   }
 
-  private enter() {
+  protected enter() {
     this.setState({ isLastOpened: false })
 
     if (!this.props.isFocused || !(this.props as any).subItems) {
@@ -167,7 +167,7 @@ export abstract class BaseAtomicItem<
     this.props.onEnter()
   }
 
-  private space() {
+  protected space() {
     if (!this.props.isFocused) {
       return
     }
@@ -175,7 +175,7 @@ export abstract class BaseAtomicItem<
     this.props.onSpace()
   }
 
-  private esc() {
+  protected esc() {
     if (!this.props.isFocused) {
       return
     }

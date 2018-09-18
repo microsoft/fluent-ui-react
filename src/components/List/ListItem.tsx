@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
   BaseAtomicItem,
   IAtomicItemProps,
@@ -30,6 +30,7 @@ export interface IListItemProps extends IAtomicItemProps {
   truncateHeader?: boolean
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
+  atomicItemProps?: IAtomicItemProps
 }
 
 export interface IListItemState extends IAtomicItemState {
@@ -78,6 +79,8 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    atomicItemProps: PropTypes.object,
   }
 
   static handledProps = [
@@ -97,12 +100,17 @@ class ListItem extends BaseAtomicItem<Extendable<IListItemProps>, IListItemState
     'truncateContent',
     'truncateHeader',
     'variables',
+    'atomicItemProps',
   ]
 
   static defaultProps = {
     as: 'li',
     accessibility: ListItemBehavior as Accessibility,
   }
+
+  // actionHandlers: AccessibilityActionHandlers = {
+  //   moveNext: this.moveNext,
+  // }
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
