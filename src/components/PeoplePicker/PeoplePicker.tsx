@@ -30,7 +30,7 @@ const peoplePickerStyles: any = {
     borderRadius: '0.2143rem 0.2143rem 0.1429rem 0.1429rem',
   },
   addLabel: {
-    root: { backgroundColor: 'white' },
+    root: { backgroundColor: '#f7f7f7' },
   },
   textInput: {
     input: {
@@ -43,19 +43,19 @@ const peoplePickerStyles: any = {
   },
   menu: {
     position: 'absolute',
-    width: 'calc(100% - 4rem)',
     zIndex: '1000',
   },
 }
 
 interface IPeoplePickerProps {
   source: (inputValue: string, selected: any[]) => { name: string; image: string }[]
+  styles?: any
 }
 
 interface IPeoplePickerState {
   selected: any[]
   focused: boolean
-  emptyInput: boolean
+  inputValue: string
 }
 
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
@@ -68,25 +68,26 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.state = {
       selected: [],
       focused: false,
-      emptyInput: true,
+      inputValue: '',
     }
 
     this.input = React.createRef()
   }
 
   private handleCloseIconAction(element, event) {
-    this.remove(element)
+    this.removeFromSelected(element)
     this.input.current.inputRef.focus()
     event.stopPropagation()
   }
 
-  private add(element) {
+  private addToSelected(element, clearInput = true) {
     this.setState(({ selected }) => ({
       selected: [...selected, element],
+      inputValue: clearInput ? '' : undefined,
     }))
   }
 
-  private remove(element?) {
+  private removeFromSelected(element?) {
     let { selected } = this.state
     if (element) {
       selected = selected.filter(currentElement => currentElement !== element)
@@ -108,7 +109,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           highlightedIndex: state.highlightedIndex,
         }
       case Downshift.stateChangeTypes.changeInput:
-        this.setState({ emptyInput: changes.inputValue === '' })
+        if (changes.hasOwnProperty('inputValue')) {
+          this.setState({ inputValue: changes.inputValue })
+        }
         return changes
       default:
         return changes
@@ -117,12 +120,13 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
   public render(): React.ReactNode {
     return (
-      <React.Fragment>
+      <div style={this.props.styles}>
         <Label content="Add" styles={peoplePickerStyles.addLabel} id={this.labelId} />
         <Downshift
           stateReducer={this.stateReducer}
           onChange={this.onDropdownChange}
           selectedItem={null}
+          inputValue={this.state.inputValue}
           itemToString={item => (item ? item.value : '')}
         >
           {({
@@ -136,9 +140,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           }) => {
             const availableItems = this.props.source(inputValue, this.state.selected)
             return (
-              <div id="people-picker">
+              <div>
                 <div
-                  id="people-picker-container"
                   style={{
                     ...peoplePickerStyles.containerDiv,
                     ...(this.state.focused ? peoplePickerStyles.containerDivOnFocus : {}),
@@ -182,7 +185,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                       fluid
                       {...getMenuProps()}
                       defaultActiveIndex={0}
-                      style={peoplePickerStyles.menu}
+                      style={{ width: this.props.styles.width, ...peoplePickerStyles.menu }}
                       items={availableItems.map((item, index) => {
                         return {
                           key: `peoplePickerItem-${index}`,
@@ -211,12 +214,12 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           <Button type="secondary" content="Cancel" style={{ margin: '0' }} />
           <Button type="primary" content="Add" style={{ margin: `0 0 0 ${pxToRem(8)}` }} />
         </div>
-      </React.Fragment>
+      </div>
     )
   }
 
   onDropdownChange = element => {
-    this.add(element)
+    this.addToSelected(element)
   }
 
   onInputFocus = () => {
@@ -228,8 +231,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   onInputKeyUp = event => {
-    if (keyboardKey.getCode(event) === keyboardKey.Backspace && this.state.emptyInput) {
-      this.state.selected.length > 0 && this.remove()
+    if (keyboardKey.getCode(event) === keyboardKey.Backspace && this.state.inputValue === '') {
+      this.state.selected.length > 0 && this.removeFromSelected()
     }
   }
 
