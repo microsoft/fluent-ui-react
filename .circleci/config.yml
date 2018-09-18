@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
-    parallelism: 4
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
@@ -42,12 +41,13 @@ jobs:
   lint:
     docker:
       - image: circleci/node:8
-    parallelism: 4
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
       - restore_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
       - run:
           name: Lint
           command: yarn lint
@@ -58,12 +58,13 @@ jobs:
   test:
     docker:
       - image: circleci/node:8
-    parallelism: 4
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
       - restore_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
       - run:
           name: Unit Tests
           command: yarn test --maxWorkers=4
