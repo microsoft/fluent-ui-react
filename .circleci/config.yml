@@ -37,6 +37,7 @@ jobs:
             - ~/.cache/yarn
             - .yarn-cache
             - node_modules
+
   lint:
     docker:
       - image: circleci/node:8
@@ -50,6 +51,7 @@ jobs:
       - run:
           name: Prettier
           command: yarn prettier
+
   test:
     docker:
       - image: circleci/node:8
