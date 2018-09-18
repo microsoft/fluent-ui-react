@@ -9,6 +9,7 @@ jobs:
       - image: circleci/node:8
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    parallelism: 4
     steps:
       - run:
           name: Update yarn
