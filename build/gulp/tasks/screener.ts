@@ -1,4 +1,4 @@
-import { task, parallel, series } from 'gulp'
+import { task, series } from 'gulp'
 
 import sh from '../sh'
 import config from '../../../config'
