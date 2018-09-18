@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
-    parallelism: 2
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
