@@ -82,13 +82,18 @@ export default App;
   const runInProjects = cmd => () => sh(`cd ${projectsPath()} && ${cmd}`)
   const runInTSApp = cmd => () => sh(`cd ${tsAppPath()} && ${cmd}`)
 
+  let testAppDir = ''
+  const runInTestApp = cmd => () => sh(`cd ${testAppDir} && ${cmd}`)
+
   return Promise.resolve()
     .then(() => mkdirp.sync(projectsPath()))
-
     .then(log('Testing temp dir scenario'))
     .then(() => sh(`mktemp -d`))
-    .then(tmpDir => sh(`cd ${tmpDir.trim()} && pwd`))
-    .then(res => logSimple(res.trim()))
+    .then(tmpDir => {
+      testAppDir = tmpDir.trim()
+      logSimple(testAppDir)
+    })
+    .then(runInTestApp(`create-react-app ${tsAppPath()} --scripts-version=react-scripts-ts`))
   // .then(() => sh(`pwd`))
   // .then((res) => log('Result is: ' + res))
 })
