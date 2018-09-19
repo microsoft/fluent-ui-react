@@ -1,13 +1,22 @@
 import * as React from 'react'
 import { mount } from './isConformant'
 import * as _ from 'lodash'
-import { DefaultShorthandTestOptions, ShorthandTestOptions } from './implementsShorthandProp'
+
+export type CollectionShorthandTestOptions = {
+  mapsValueToProp?: string
+  skipArrayOfStrings?: boolean
+}
+
+export const DefaultCollectionShorthandTestOptions: CollectionShorthandTestOptions = {
+  mapsValueToProp: 'content',
+  skipArrayOfStrings: false,
+}
 
 export default Component => {
   return function implementsCollectionShorthandProp(
     shorthandPropertyName: string,
     ShorthandComponent: React.ComponentType,
-    options: ShorthandTestOptions = DefaultShorthandTestOptions,
+    options: CollectionShorthandTestOptions = DefaultCollectionShorthandTestOptions,
   ) {
     const { mapsValueToProp } = options
 
