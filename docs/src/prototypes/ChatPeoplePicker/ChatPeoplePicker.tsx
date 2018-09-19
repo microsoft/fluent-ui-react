@@ -183,7 +183,9 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     <List
                       {...getMenuProps()}
                       defaultActiveIndex={0}
-                      styles={{ width: this.props.styles.width, ...peoplePickerStyles.menu }}
+                      styles={{
+                        root: { width: this.props.styles.width, ...peoplePickerStyles.menu },
+                      }}
                       items={availableItems.map((item, index) => {
                         return {
                           key: `peoplePickerItem-${index}`,
