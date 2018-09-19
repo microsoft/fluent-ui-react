@@ -47,9 +47,6 @@ const chatMessageStyles = {
   author: {
     marginRight: px10asRem,
   },
-  timestamp: {
-    marginRight: px10asRem,
-  },
 }
 
 export default chatMessageStyles
