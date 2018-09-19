@@ -73,7 +73,8 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     'componentRef',
     'className',
     'direction',
-    'defaultActiveElement',
+    'defaultTabbableElement',
+    'shouldFocusOnMount',
     'disabled',
     'as',
     'isCircularNavigation',
@@ -142,10 +143,13 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
       // Assign initial tab indexes so that we can set initial focus as appropriate.
       this.updateTabIndexes()
 
-      if (this.props.defaultActiveElement) {
+      if (this.props.defaultTabbableElement) {
         this._activeElement = this._root.current.querySelector(
-          this.props.defaultActiveElement,
+          this.props.defaultTabbableElement,
         ) as HTMLElement
+      }
+
+      if (this.props.shouldFocusOnMount) {
         this.focus()
       }
     }
