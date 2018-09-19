@@ -9,6 +9,7 @@ import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
+import MoreExamples from './views/MoreExamples'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -19,6 +20,7 @@ const Router = () => (
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
         <DocsLayout exact path="/quick-start" component={QuickStart} />
         <DocsLayout exact path="/theming" component={Theming} />
+        <DocsLayout exact path="/more-examples" component={MoreExamples} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>
