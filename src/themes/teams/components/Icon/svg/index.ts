@@ -1,5 +1,5 @@
 import svgIconsAndStyles from './icons'
-import { IconSpec } from './types'
+import { TeamsSvgIconSpec } from './types'
 
 export const getStyle = partName => {
   return args => {
@@ -22,4 +22,4 @@ export const getStyle = partName => {
   }
 }
 
-export default svgIconsAndStyles as { [iconName: string]: IconSpec }
+export default svgIconsAndStyles as { [iconName: string]: TeamsSvgIconSpec }

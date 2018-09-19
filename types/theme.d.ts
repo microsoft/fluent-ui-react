@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable } from './utils'
+import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -9,13 +9,6 @@ import { Extendable } from './utils'
 // 3. Resolved - (for rendering), plain object variables and styles, all values required
 //
 // We use these terms in typings to indicate which phase the typings apply to.
-
-// ========================================================
-// Utilities
-// ========================================================
-
-type OneOrArray<T> = T | T[]
-type ObjectOf<T> = { [key: string]: T }
 
 // ========================================================
 // Props
@@ -261,16 +254,20 @@ export type FontFaces = IFontFace[]
 // ========================================================
 
 type Classes = { [iconPart: string]: string }
-export type RenderSvgIconFunction = (classes: Classes) => React.ReactNode
+type SvgIconFuncArg = {
+  classes: Classes
+  props: any
+}
 
-export type FontIconSpec = {
+type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
+export type FontIconSpec = ObjectOrFunc<{
   content: string
   fontFamily: string
-}
+}>
 
-export type IconSpec = {
+export type ThemeIconSpec = {
   isSvg?: boolean
-  icon: FontIconSpec | RenderSvgIconFunction
+  icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: IconSpec }
+export type ThemeIcons = { [iconName: string]: ThemeIconSpec }

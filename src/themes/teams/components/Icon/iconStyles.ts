@@ -1,6 +1,8 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
+import { callable } from '../../../../lib'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
 import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
 
 import { getStyle as getSvgStyle } from './svg'
@@ -26,7 +28,7 @@ const getDefaultFontIcon = (iconName: string) => {
 
 const getSize = size => `${sizes.get(size)}em`
 
-const getFontStyles = (iconName: string, themeIcon?: FontIconSpec): ICSSInJSStyle => {
+const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
@@ -96,7 +98,9 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
       width: '1em',
       height: '1em',
 
-      ...(isFontBased ? getFontStyles(name, iconSpec && (iconSpec.icon as FontIconSpec)) : {}),
+      ...(isFontBased
+        ? getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())
+        : {}),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,

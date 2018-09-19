@@ -1,4 +1,4 @@
-import { IThemeInput, ThemeIcons } from '../../../types/theme'
+import { IThemeInput, ThemeIcons, SvgIconSpec } from '../../../types/theme'
 
 import Icon from '../../../src/components/Icon'
 
@@ -11,13 +11,16 @@ import staticStyles from './staticStyles'
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 import { default as fontIcons } from './components/Icon/font'
 
-import { IconSpec } from './components/Icon/svg/types'
+import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
 
-const icons: ThemeIcons = Object.keys(svgIconsAndStyles as { [iconName: string]: IconSpec }).reduce<
-  ThemeIcons
->((accIcons, iconName) => {
-  const iconAndStyle = svgIconsAndStyles[iconName]
-  const icon = typeof iconAndStyle === 'object' ? iconAndStyle.icon : iconAndStyle // if icon function is only provided (and no styles)
+const icons: ThemeIcons = Object.keys(svgIconsAndStyles as {
+  [iconName: string]: TeamsSvgIconSpec
+}).reduce<ThemeIcons>((accIcons, iconName) => {
+  const iconAndMaybeStyles = svgIconsAndStyles[iconName]
+
+  const icon: SvgIconSpec = (iconAndMaybeStyles as any).styles
+    ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
+    : (iconAndMaybeStyles as SvgIconSpec)
 
   return { ...accIcons, ...{ [iconName]: Icon.declareSvg(icon) } }
 }, {})

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { IconSpec } from '../types'
+import { TeamsSvgIconSpec } from '../types'
 
-export default (classes => (
+export default (
   <svg viewBox="0 0 32 32" role="presentation" focusable="false">
     <g>
       <path
@@ -19,4 +19,4 @@ export default (classes => (
       />
     </g>
   </svg>
-)) as IconSpec
+) as TeamsSvgIconSpec
