@@ -2,12 +2,32 @@ import * as React from 'react'
 import PeoplePicker from './ChatPeoplePicker'
 
 const items = [
-  { name: 'Bruce Wayne', image: 'public/images/avatar/small/matt.jpg' },
-  { name: 'Natasha Romanoff', image: 'public/images/avatar/small/jenny.jpg' },
-  { name: 'Steven Strange', image: 'public/images/avatar/small/joe.jpg' },
-  { name: 'Alfred Pennyworth', image: 'public/images/avatar/small/justen.jpg' },
-  { name: `Scarlett O'Hara`, image: 'public/images/avatar/small/laura.jpg' },
-  { name: 'Imperator Furiosa', image: 'public/images/avatar/small/veronika.jpg' },
+  {
+    name: 'Bruce Wayne',
+    image: 'public/images/avatar/small/matt.jpg',
+    position: 'Software Engineer',
+  },
+  {
+    name: 'Natasha Romanoff',
+    image: 'public/images/avatar/small/jenny.jpg',
+    position: 'UX Designer 2',
+  },
+  {
+    name: 'Steven Strange',
+    image: 'public/images/avatar/small/joe.jpg',
+    position: 'Principal Software Engineering Manager',
+  },
+  {
+    name: 'Alfred Pennyworth',
+    image: 'public/images/avatar/small/justen.jpg',
+    position: 'Technology Consultant',
+  },
+  {
+    name: `Scarlett O'Hara`,
+    image: 'public/images/avatar/small/laura.jpg',
+    position: 'Software Engineer 2',
+  },
+  { name: 'Imperator Furiosa', image: 'public/images/avatar/small/veronika.jpg', position: 'Boss' },
 ]
 
 const getUnselectedItems = (selected: { name: string }[]) => {

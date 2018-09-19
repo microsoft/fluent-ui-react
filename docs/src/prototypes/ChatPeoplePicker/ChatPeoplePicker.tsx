@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
-import { Label, Input, Button, Menu, MenuItem } from '@stardust-ui/react'
+import { Label, Input, Button, Image, MenuItem, List } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
@@ -45,7 +45,10 @@ const peoplePickerStyles: any = {
 }
 
 interface IPeoplePickerProps {
-  source: (inputValue: string, selected: any[]) => { name: string; image: string }[]
+  source: (
+    inputValue: string,
+    selected: any[],
+  ) => { name: string; image: string; position: string }[]
   styles?: any
 }
 
@@ -177,7 +180,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                 </div>
                 {isOpen &&
                   availableItems.length > 0 && (
-                    <Menu
+                    <List
                       vertical
                       fluid
                       {...getMenuProps()}
@@ -186,12 +189,15 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                       items={availableItems.map((item, index) => {
                         return {
                           key: `peoplePickerItem-${index}`,
-                          content: item.name,
+                          header: item.name,
+                          content: item.position,
+                          media: <Image src={item.image} avatar />,
                           ...getItemProps({
                             index,
                             item,
                             style: {
-                              backgroundColor: highlightedIndex === index ? 'lightgray' : 'white',
+                              backgroundColor: highlightedIndex === index ? '#6264A7' : 'white',
+                              color: highlightedIndex === index ? 'white' : 'black',
                             },
                           }),
                         }
