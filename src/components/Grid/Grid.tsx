@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IGridProps {
@@ -12,7 +12,7 @@ export interface IGridProps {
   columns?: string | number
   content?: ItemShorthand | ItemShorthand[]
   rows?: string | number
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
