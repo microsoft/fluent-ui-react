@@ -134,16 +134,14 @@ export default () => (
     <ExampleSnippet
       value={[
         `<Button`,
-        `  icon="user"`,
+        `  icon={{ name: "user", styles: { borderBottom: '4px solid red' } }}`,
         `  content="Profile"`,
-        `  styles={{ icon: { borderBottom: '4px solid red' } }}`,
         `/>`,
       ].join('\n')}
       render={() => (
         <Button
-          icon="user"
+          icon={{ name: 'user', styles: { borderBottom: '4px solid red' } }}
           content="Profile"
-          styles={{ icon: { borderBottom: '4px solid red' } }}
         />
       )}
     />
@@ -156,9 +154,9 @@ export default () => (
       value={[
         `const style = { color: 'green' }`,
         ``,
-        `<Text styles={{ root: { style } }}>This is green text</Text>`,
+        `<Text styles={{ style }}>This is green text</Text>`,
       ].join('\n')}
-      render={() => <Text styles={{ root: { color: 'green' } }}>This is green text.</Text>}
+      render={() => <Text styles={{ color: 'green' }}>This is green text.</Text>}
     />
   </DocPage>
 )
