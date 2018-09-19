@@ -61,7 +61,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
-    defaultValue: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
@@ -87,7 +87,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
