@@ -20,6 +20,11 @@ const Types = () => (
       description="Multiple radio buttons organized into one vertical radio group."
       examplePath="components/RadioGroup/Types/RadioGroupVerticalExample"
     />
+    <ComponentExample
+      title="Color Picker"
+      description="Radio group used as a color picker."
+      examplePath="components/RadioGroup/Types/RadioGroupColorPickerExample"
+    />
   </ExampleSection>
 )
 
