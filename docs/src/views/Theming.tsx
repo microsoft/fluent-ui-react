@@ -317,34 +317,74 @@ export default () => (
     </p>
     <ExampleSnippet
       value={[
-        `<Provider`,
-        `  theme={{`,
-        `    siteVariables: { brand: 'charcoal' }`,
-        `  }}`,
-        `>`,
+        `<div>`,
+        `  <Header as="h3" content="Default" />`,
+        `  <Button type="primary">Branding</Button>`,
+        `  <Divider type="primary">Branding</Divider>`,
+        ``,
         `  <Provider`,
         `    theme={{`,
-        `      componentStyles: {`,
-        `        Button: { root: { color: 'goldenrod'} }`,
-        `      }`,
+        `      siteVariables: { brand: 'darkred' },`,
         `    }}`,
         `  >`,
-        `    <div>`,
+        `    <>`,
+        `      <Header as="h3" content="First provider theming" />`,
         `      <Button type="primary">Branding</Button>`,
         `      <Divider type="primary">Branding</Divider>`,
-        `    </div>`,
+        ``,
+        `      <Provider`,
+        `        theme={{`,
+        `          componentStyles: {`,
+        `            Button: {`,
+        `              root: { color: 'goldenrod' },`,
+        `            },`,
+        `          },`,
+        `        }}`,
+        `      >`,
+        `        <>`,
+        `          <Header as="h3" content="Second provider theming" />`,
+        `          <Button type="primary">Branding</Button>`,
+        `          <Divider type="primary">Branding</Divider>`,
+        `        </>`,
+        `      </Provider>`,
+        `    </>`,
         `  </Provider>`,
-        `</Provider>`,
+        `</div>`,
       ].join('\n')}
       render={() => (
-        <Provider theme={{ siteVariables: { brand: 'darkred' } }}>
-          <Provider theme={{ componentStyles: { Button: { root: { color: 'goldenrod' } } } }}>
-            <div>
+        <div>
+          <Header as="h3" content="Default" />
+          <Button type="primary">Branding</Button>
+          <Divider type="primary">Branding</Divider>
+
+          <Provider
+            theme={{
+              siteVariables: { brand: 'darkred' },
+            }}
+          >
+            <>
+              <Header as="h3" content="First provider theming" />
               <Button type="primary">Branding</Button>
               <Divider type="primary">Branding</Divider>
-            </div>
+
+              <Provider
+                theme={{
+                  componentStyles: {
+                    Button: {
+                      root: { color: 'goldenrod' },
+                    },
+                  },
+                }}
+              >
+                <>
+                  <Header as="h3" content="Second provider theming" />
+                  <Button type="primary">Branding</Button>
+                  <Divider type="primary">Branding</Divider>
+                </>
+              </Provider>
+            </>
           </Provider>
-        </Provider>
+        </div>
       )}
     />
   </DocPage>
