@@ -18,26 +18,15 @@ type SetStateDelegate<P, S> = <K extends keyof S>(
 
 export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
   constructor(
-    private getProps: any,
+    private getProps: () => P,
     private setState: SetStateDelegate<P, S>,
-    private initState: any,
-    private getState: any,
+    private initState: (state: IContainerState) => void,
+    private getState: () => S,
   ) {
     this.initState({ focusItemOnIdx: 0 })
-
-    // this.getState() = {
-    //   focusItemOnIdx: 0,
-    // } as any
-    // this.setState({ focusItemOnIdx: 0 })
   }
 
-  // constructor(private component: React.Component<P, S>) {
-  //   component.state = { focusItemOnIdx: 0 } as any
-  // }
-
   public assignAtomicItemsProps(idx: number, itemsLength: number): IAtomicItemProps {
-    console.log(`state`)
-
     const itemProps: IAtomicItemProps = {
       isFocused: idx === this.getState().focusItemOnIdx && this.getState().focusItemOnIdx !== -1,
       isFirstElement: idx === 0,
