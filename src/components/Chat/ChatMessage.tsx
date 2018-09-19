@@ -8,7 +8,6 @@ import {
   customPropTypes,
   UIComponent,
   IRenderResultConfig,
-  pxToRem,
 } from '../../lib'
 import {
   ComponentVariablesInput,
@@ -22,14 +21,14 @@ import Text from '../Text'
 
 export interface IChatMessageProps {
   as?: any
-  author?: string
+  author?: ItemShorthand
   avatar?: ItemShorthand
   children?: ReactChildren
   className?: string
   content?: any
   mine?: boolean
   styles?: IComponentPartStylesInput
-  timestamp?: string
+  timestamp?: ItemShorthand
   variables?: ComponentVariablesInput
 }
 
@@ -44,7 +43,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     as: customPropTypes.as,
 
     /** Author of the message. */
-    author: PropTypes.string,
+    author: customPropTypes.itemShorthand,
 
     /** Chat messages can have an avatar */
     avatar: customPropTypes.itemShorthand,
@@ -65,7 +64,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Timestamp of the message. */
-    timestamp: PropTypes.string,
+    timestamp: customPropTypes.itemShorthand,
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -107,14 +106,35 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
         {...rest}
         className={classes.root}
         start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
-        main={this.renderContent(classes.content)}
+        main={this.renderContent(classes.content, styles, variables)}
         end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
       />
     )
   }
 
-  private renderContent = (contentClass: string) => {
+  private renderContent = (
+    contentClass: string,
+    styles: IComponentPartStylesInput,
+    variables: ComponentVariablesInput,
+  ) => {
     const { author, content, mine, timestamp } = this.props
+
+    const authorComponent = Text.create(author, {
+      defaultProps: {
+        size: 'sm',
+        styles: { root: styles.author },
+        variables: variables.author,
+      },
+    })
+
+    const timestampComponent = Text.create(timestamp, {
+      defaultProps: {
+        size: 'sm',
+        timestamp: true,
+        styles: { root: styles.timestamp },
+        variables: variables.timestamp,
+      },
+    })
 
     return (
       <Layout
@@ -122,23 +142,14 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
         vertical
         start={
           <>
-            {!mine && author && this.renderText(author)}
-            {timestamp && this.renderText(timestamp, true)}
+            {!mine && authorComponent}
+            {timestampComponent}
           </>
         }
         main={content}
       />
     )
   }
-
-  private renderText = (content: string, timestamp?: boolean) => (
-    <Text
-      timestamp={timestamp}
-      content={content}
-      size="sm"
-      styles={{ root: { marginRight: pxToRem(10) } }}
-    />
-  )
 
   private renderAvatar = (
     avatar: ItemShorthand,

@@ -3,7 +3,7 @@ import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { IChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
-const rem10 = pxToRem(10)
+const px10asRem = pxToRem(10)
 const chatMessageStyles = {
   root: ({
     props: p,
@@ -26,10 +26,10 @@ const chatMessageStyles = {
   }),
 
   avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
-    marginTop: rem10,
-    marginBottom: rem10,
-    marginLeft: p.mine ? rem10 : 0,
-    marginRight: p.mine ? 0 : rem10,
+    marginTop: px10asRem,
+    marginBottom: px10asRem,
+    marginLeft: p.mine ? px10asRem : 0,
+    marginRight: p.mine ? 0 : px10asRem,
   }),
 
   content: ({
@@ -44,6 +44,12 @@ const chatMessageStyles = {
     backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
     borderRadius: '0.3rem',
   }),
+  author: {
+    marginRight: px10asRem,
+  },
+  timestamp: {
+    marginRight: px10asRem,
+  },
 }
 
 export default chatMessageStyles
