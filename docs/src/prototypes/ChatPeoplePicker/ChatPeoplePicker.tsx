@@ -146,7 +146,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     ...peoplePickerStyles.containerDiv,
                     ...(this.state.focused ? peoplePickerStyles.containerDivOnFocus : {}),
                   }}
-                  onClick={this.onContainerClick.bind(this, toggleMenu, isOpen)}
+                  onClick={this.onContainerClick.bind(this, isOpen)}
                 >
                   {this.state.selected.length === 0
                     ? null
@@ -175,7 +175,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     onKeyUp={this.onInputKeyUp}
                     {...getInputProps()}
                     aria-labelledby={this.labelId}
-                    onBlur={this.onInputBlur.bind(this, toggleMenu, isOpen)}
+                    onBlur={this.onInputBlur.bind(this, toggleMenu, isOpen)} // must be here to override the one from getInputProps()
                   />
                 </div>
                 <List
@@ -253,8 +253,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     }
   }
 
-  onContainerClick = (toggleMenu, isOpen) => {
-    toggleMenu()
+  onContainerClick = isOpen => {
     !isOpen && this.input.current.inputRef.focus()
   }
 
