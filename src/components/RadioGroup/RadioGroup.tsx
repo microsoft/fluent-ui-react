@@ -135,6 +135,10 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         newIndex = 0
       }
 
+      if (newIndex === currentIndex) {
+        return undefined
+      }
+
       const itemProps = this.getItemProps(this.props.items[newIndex] as IRadioGroupItemProps)
       if (!itemProps.disabled) {
         return itemProps
@@ -147,13 +151,13 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     checked:
       typeof this.state.checkedValue !== 'undefined' &&
       this.state.checkedValue === predefinedProps.value,
-    onClick: (e, itemProps) => {
+    onClick: (event, itemProps) => {
       const { value, disabled } = itemProps
       if (!disabled && value !== this.state.checkedValue) {
         this.trySetState({ checkedValue: value })
         _.invoke(this.props, 'checkedValueChanged', event, itemProps)
       }
-      _.invoke(predefinedProps, 'onClick', e, itemProps)
+      _.invoke(predefinedProps, 'onClick', event, itemProps)
     },
   })
 
