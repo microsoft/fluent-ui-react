@@ -1,4 +1,4 @@
-import { ListBehavior, ListItemBehavior } from 'src/lib/accessibility'
+import { ListBehavior } from 'src/lib/accessibility'
 import { AccessibilityDefinitionFunction } from '../../../src/lib/accessibility/interfaces'
 
 describe('ListBehavior.ts', () => {
