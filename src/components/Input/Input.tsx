@@ -23,13 +23,13 @@ export interface IInputProps {
   children?: ReactChildren
   className?: string
   clearable?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
   fluid?: boolean
   icon?: ItemShorthand
   inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
-  value?: string
+  value?: string | number
   type?: string
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
