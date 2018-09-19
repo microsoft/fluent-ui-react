@@ -71,15 +71,9 @@ export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IC
     })
   }
 
-  private enter(): void {
-    console.log('enter()')
-  }
+  private enter(): void {}
 
-  private space(): void {
-    console.log('space()')
-  }
+  private space(): void {}
 
-  private esc(): void {
-    console.log('esc()')
-  }
+  private esc(): void {}
 }

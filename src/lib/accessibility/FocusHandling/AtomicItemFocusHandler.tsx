@@ -34,7 +34,7 @@ export class AtomicItemFocusHandler<
     } as any
   }
 
-  componentDidUpdate() {
+  public focus() {
     if (this.component.props.atomicItemProps.isFocused) {
       const domNode = ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement
       domNode.focus()
@@ -52,15 +52,15 @@ export class AtomicItemFocusHandler<
     this.component.props.atomicItemProps.onMovePrevious()
   }
 
-  public moveNext() {
+  public moveNext(component: React.Component<P, S>) {
     if (
-      this.component.props.atomicItemProps.isLastElement ||
-      !this.component.props.atomicItemProps.isFocused
+      component.props.atomicItemProps.isLastElement ||
+      !component.props.atomicItemProps.isFocused
     ) {
       return
     }
 
-    this.component.props.atomicItemProps.onMoveNext()
+    component.props.atomicItemProps.onMoveNext()
   }
 
   public moveFirst() {

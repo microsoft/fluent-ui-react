@@ -111,8 +111,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   private atomicItemFocusHandler = new AtomicItemFocusHandler(this as any)
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.atomicItemFocusHandler.moveNext.bind(this),
-    movePrevious: this.atomicItemFocusHandler.movePrevious.bind(this),
+    moveNext: this.atomicItemFocusHandler.moveNext.bind(this.atomicItemFocusHandler),
+    movePrevious: this.atomicItemFocusHandler.movePrevious.bind(this.atomicItemFocusHandler),
   }
 
   handleMouseEnter = () => {
@@ -121,6 +121,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
+  }
+
+  componentDidUpdate() {
+    this.atomicItemFocusHandler.focus()
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -177,7 +181,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
-        ref={this.itemRef}
+        ref={this.atomicItemFocusHandler.itemRef}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
