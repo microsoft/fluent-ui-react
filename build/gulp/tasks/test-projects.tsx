@@ -9,6 +9,7 @@ import config from '../../../config'
 import { tmpdir } from 'os'
 
 import * as path from 'path'
+import * as tmp from 'tmp'
 
 const pkg = require('../../../package.json')
 
@@ -84,10 +85,10 @@ export default App;
 
   try {
     log('STEP 1. Create test React project with TSX scripts..')
-    const testAppDir = path.resolve((await sh(`mktemp -d`, true)).trim(), 'test')
+    const testAppDir = path.resolve(tmp.dirSync().name, 'test')
     const runInTestApp = cmd => sh(`cd ${testAppDir} && ${cmd}`)
 
-    await sh(`mkdir ${testAppDir}`)
+    fs.mkdirSync(testAppDir)
 
     await runInTestApp(`yarn create react-app . --scripts-version=react-scripts-ts`)
 
