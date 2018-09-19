@@ -116,7 +116,6 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
     this._processingTabKey = false
     this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
-    this.setRef = this.setRef.bind(this)
   }
 
   public componentDidMount(): void {
@@ -269,7 +268,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     return false
   }
 
-  private setRef(elem) {
+  private setRef = (elem: React.ReactInstance): void => {
     // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
     this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
   }

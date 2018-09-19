@@ -24,7 +24,6 @@ class UIComponent<P, S> extends React.Component<P, S> {
     }
 
     this.renderComponent = this.renderComponent.bind(this)
-    this.setFocusZoneRef = this.setFocusZoneRef.bind(this)
   }
 
   renderComponent(config: IRenderResultConfig<P>): React.ReactNode {
@@ -47,7 +46,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
     )
   }
 
-  private setFocusZoneRef(focusZone: IFocusZone) {
+  private setFocusZoneRef = (focusZone: IFocusZone): void => {
     this.focusZone = focusZone
   }
 }

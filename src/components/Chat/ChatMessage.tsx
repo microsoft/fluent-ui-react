@@ -10,6 +10,7 @@ import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMess
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 export interface IChatMessageProps {
+  accessibility?: Accessibility
   as?: any
   avatar?: ItemShorthand
   children?: ReactChildren
@@ -73,6 +74,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   actionHandlers: AccessibilityActionHandlers = {
+    // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
     },

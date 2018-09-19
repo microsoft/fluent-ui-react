@@ -10,6 +10,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
 
 export interface IChatProps {
+  accessibility?: Accessibility
   as?: any
   className?: string
   children?: ReactChildren
@@ -59,11 +60,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static Message = ChatMessage
 
   actionHandlers: AccessibilityActionHandlers = {
-    focus: event => {
-      if (this.focusZone) {
-        this.focusZone.focus()
-      }
-    },
+    focus: event => this.focusZone && this.focusZone.focus(),
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
