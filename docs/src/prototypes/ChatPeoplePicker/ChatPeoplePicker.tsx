@@ -175,42 +175,42 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     onKeyUp={this.onInputKeyUp}
                     {...getInputProps()}
                     aria-labelledby={this.labelId}
-                    onBlur={this.onInputBlur}
+                    onBlur={this.onInputBlur.bind(this, toggleMenu, isOpen)}
                   />
                 </div>
-                {isOpen &&
-                  availableItems.length > 0 && (
-                    <List
-                      {...getMenuProps()}
-                      defaultActiveIndex={0}
-                      styles={{
-                        root: { width: this.props.styles.width, ...peoplePickerStyles.menu },
-                      }}
-                      items={availableItems.map((item, index) => {
-                        return {
-                          key: `peoplePickerItem-${index}`,
-                          header: item.name,
-                          content: item.position,
-                          styles: {
-                            header: {
-                              color: highlightedIndex === index ? 'white' : 'black',
+                <List
+                  {...getMenuProps()}
+                  styles={{
+                    root: { width: this.props.styles.width, ...peoplePickerStyles.menu },
+                  }}
+                  items={
+                    availableItems.length > 0 && isOpen
+                      ? availableItems.map((item, index) => {
+                          return {
+                            key: `peoplePickerItem-${index}`,
+                            header: item.name,
+                            content: item.position,
+                            styles: {
+                              header: {
+                                color: highlightedIndex === index ? 'white' : 'black',
+                              },
+                              content: {
+                                color: highlightedIndex === index ? 'white' : 'black',
+                              },
                             },
-                            content: {
-                              color: highlightedIndex === index ? 'white' : 'black',
-                            },
-                          },
-                          media: <Image src={item.image} avatar />,
-                          ...getItemProps({
-                            index,
-                            item,
-                            style: {
-                              backgroundColor: highlightedIndex === index ? '#6264A7' : 'white',
-                            },
-                          }),
-                        }
-                      })}
-                    />
-                  )}
+                            media: <Image src={item.image} avatar />,
+                            ...getItemProps({
+                              index,
+                              item,
+                              style: {
+                                backgroundColor: highlightedIndex === index ? '#6264A7' : 'white',
+                              },
+                            }),
+                          }
+                        })
+                      : null
+                  }
+                />
               </div>
             )
           }}
@@ -236,13 +236,20 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     this.setState({ focused: true })
   }
 
-  onInputBlur = () => {
+  onInputBlur = (toggleMenu, isOpen) => {
     this.setState({ focused: false })
+    isOpen && toggleMenu()
   }
 
   onInputKeyUp = event => {
-    if (keyboardKey.getCode(event) === keyboardKey.Backspace && this.state.inputValue === '') {
-      this.state.selected.length > 0 && this.removeFromSelected()
+    switch (keyboardKey.getCode(event)) {
+      case keyboardKey.Backspace:
+        if (this.state.inputValue === '' && this.state.selected.length > 0) {
+          this.removeFromSelected()
+          return
+        }
+      default:
+        return
     }
   }
 
