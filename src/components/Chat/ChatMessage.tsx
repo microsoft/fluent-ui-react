@@ -11,8 +11,8 @@ import {
 } from '../../lib'
 import {
   ComponentVariablesInput,
-  IComponentPartStylesInput,
   ComponentPartStyle,
+  IComponentPartStylesInput,
 } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
