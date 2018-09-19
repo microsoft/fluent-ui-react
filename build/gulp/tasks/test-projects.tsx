@@ -1,30 +1,43 @@
 import * as fs from 'fs'
 import { task, series } from 'gulp'
-import * as rimraf from 'rimraf'
 import sh from '../sh'
-import * as mkdirp from 'mkdirp'
-import * as parseJson from 'parse-json'
 
 import config from '../../../config'
-import { tmpdir } from 'os'
-
-import * as path from 'path'
 import * as tmp from 'tmp'
-
-const pkg = require('../../../package.json')
 
 const { paths } = config
 
-const projectsPath = (...args) => paths.test('projects', ...args)
-const tsAppPath = (...args) => projectsPath('cra-ts', ...args)
+const log = msg => {
+  console.log()
+  console.log('='.repeat(80))
+  console.log('CRA TS:', msg)
+  console.log('='.repeat(80))
+}
 
-// ----------------------------------------
-// Clean
-// ----------------------------------------
+const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
 
-task('clean:test:projects:cra-ts', cb => {
-  rimraf(tsAppPath(), cb)
-})
+const buildAndPackStardust = async (): Promise<string> => {
+  await sh('yarn build:dist')
+
+  return (await sh(`npm pack`, true)).trim()
+}
+
+const createReactApp = async (atDirectory: string) => {
+  fs.mkdirSync(atDirectory)
+
+  await runIn(atDirectory)(`yarn create react-app . --scripts-version=react-scripts-ts`)
+}
+
+const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
+  const tsConfigAsJson = JSON.parse(`${fs.readFileSync(tsconfigPath)}`)
+  if (!tsConfigAsJson.compilerOptions) {
+    tsConfigAsJson.compilerOptions = {}
+  }
+
+  tsConfigAsJson.compilerOptions[flag] = true
+
+  fs.writeFileSync(tsconfigPath, JSON.stringify(tsConfigAsJson))
+}
 
 // ----------------------------------------
 // Build
@@ -67,65 +80,45 @@ class App extends React.Component {
 
 export default App;
 `
-
-  const log = msg => {
-    console.log()
-    console.log('='.repeat(80))
-    console.log('CRA TS:', msg)
-    console.log('='.repeat(80))
-  }
-
+  //////// PREPARE STARDUST PACKAGE ///////
   log('STEP 0. Preparing Stardust package..')
-  await sh('yarn build:dist')
 
-  const stardustPackageFilename = (await sh(`npm pack`, true)).trim()
+  const stardustPackageFilename = await buildAndPackStardust()
   log(`Stardust package is published: ${paths.base(stardustPackageFilename)}`)
 
-  ////////
-
   try {
+    //////// CREATE TEST REACT APP ///////
     log('STEP 1. Create test React project with TSX scripts..')
-    const testAppDir = path.resolve(tmp.dirSync().name, 'test')
-    const runInTestApp = cmd => sh(`cd ${testAppDir} && ${cmd}`)
 
-    fs.mkdirSync(testAppDir)
+    const testAppPath = paths.withRootAt(tmp.dirSync().name, 'test')
+    await createReactApp(testAppPath())
 
-    await runInTestApp(`yarn create react-app . --scripts-version=react-scripts-ts`)
+    const runInTestApp = runIn(testAppPath())
+    log(`Test React project is successfully created: ${testAppPath()}`)
 
-    log(`Test React project is successfully created: ${testAppDir}`)
-
-    ///////////
-
+    //////// ADD STARDUST AS A DEPENDENCY ///////
     log('STEP 2. Add Stardust dependency to test project..')
+
     await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
     log("Stardust is successfully added as test project's dependency.")
 
-    //////////////
-
+    //////// ENABLE SKIP LIB CHECK FLAG ///////
     log("STEP 3. Enable 'skipLibCheck' flag for test project's TS compiler")
-    const tsconfigPath = path.resolve(testAppDir, 'tsconfig.json')
 
-    const tsConfigAsJson = JSON.parse(`${fs.readFileSync(tsconfigPath)}`)
-    if (!tsConfigAsJson.compilerOptions) {
-      tsConfigAsJson.compilerOptions = {}
-    }
+    const tsconfigPath = testAppPath('tsconfig.json')
+    enableTsCompilerFlagSync(tsconfigPath, 'skipLibCheck')
 
-    tsConfigAsJson.compilerOptions.skipLibCheck = true
-
-    fs.writeFileSync(tsconfigPath, JSON.stringify(tsConfigAsJson))
-
-    ///////////////
-
+    //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
     log("STEP 4. Reference Stardust components in test project's App.tsx")
-    fs.writeFileSync(path.resolve(testAppDir, 'src', 'App.tsx'), appTSX)
+    fs.writeFileSync(testAppPath('src', 'App.tsx'), appTSX)
 
-    ////////////
-
+    //////// BUILD TEST PROJECT ///////
     log('STEP 5. Build test project..')
     await runInTestApp(`yarn build`)
+
     log('Test project is built successfully!')
   } finally {
-    await sh(`rm ${stardustPackageFilename}`)
+    fs.unlinkSync(stardustPackageFilename)
   }
 })
 

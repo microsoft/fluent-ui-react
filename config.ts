@@ -37,6 +37,7 @@ const paths = {
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
   test: base.bind(null, 'test'),
+  withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
 }
 
 const config = {
