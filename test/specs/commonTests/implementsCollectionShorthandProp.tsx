@@ -16,18 +16,20 @@ export default Component => {
         expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
       })
 
-      test(`array of string values is spread as ${
-        ShorthandComponent.displayName
-      }s' ${mapsValueToProp}`, () => {
-        const shorthandValue = ['some value', 'some other value']
-        const props = { [shorthandPropertyName]: shorthandValue }
-        const wrapper = mount(<Component {...props} />)
+      if (!options.skipArrayOfStrings) {
+        test(`array of string values is spread as ${
+          ShorthandComponent.displayName
+        }s' ${mapsValueToProp}`, () => {
+          const shorthandValue = ['some value', 'some other value']
+          const props = { [shorthandPropertyName]: shorthandValue }
+          const wrapper = mount(<Component {...props} />)
 
-        const shorthandComponents = wrapper.find(ShorthandComponent.displayName)
+          const shorthandComponents = wrapper.find(ShorthandComponent.displayName)
 
-        expect(shorthandComponents.first().prop(mapsValueToProp)).toEqual(_.first(shorthandValue))
-        expect(shorthandComponents.last().prop(mapsValueToProp)).toEqual(_.last(shorthandValue))
-      })
+          expect(shorthandComponents.first().prop(mapsValueToProp)).toEqual(_.first(shorthandValue))
+          expect(shorthandComponents.last().prop(mapsValueToProp)).toEqual(_.last(shorthandValue))
+        })
+      }
 
       test(`object value is spread as ${ShorthandComponent.displayName}'s props`, () => {
         const shorthandValue = [

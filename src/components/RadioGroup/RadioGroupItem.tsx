@@ -40,7 +40,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
 
   static displayName = 'RadioGroupItem'
 
-  static className = 'ui-radio__item'
+  static className = 'ui-radiogroup__item'
 
   static propTypes = {
     /** Accessibility behavior if overridden by the user. */

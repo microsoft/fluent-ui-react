@@ -1,7 +1,15 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 
-import RadioGroupItem from 'src/components/RadioGroup'
+import { RadioGroupItem } from 'src/components/RadioGroup'
 
 describe('RadioGroupItem', () => {
-  isConformant(RadioGroupItem)
+  describe('isConformant', () => {
+    isConformant(RadioGroupItem)
+  })
+
+  describe('accessibility', () => {
+    handlesAccessibility(RadioGroupItem, {
+      defaultRootRole: 'radio',
+    })
+  })
 })

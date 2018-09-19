@@ -3,10 +3,12 @@ import { mount } from './isConformant'
 
 export type ShorthandTestOptions = {
   mapsValueToProp?: string
+  skipArrayOfStrings?: boolean
 }
 
 export const DefaultShorthandTestOptions: ShorthandTestOptions = {
   mapsValueToProp: 'content',
+  skipArrayOfStrings: false,
 }
 
 export default Component => {
