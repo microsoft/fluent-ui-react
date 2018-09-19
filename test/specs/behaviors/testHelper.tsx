@@ -98,4 +98,11 @@ export class TestHelper {
       ? (importedBehavior as AccessibilityDefinitionFunction)
       : (importedBehavior as IAccessibilityDefinition)
   }
+
+  public convertToBooleenIfApplicable(stringToConvert: string) {
+    if (stringToConvert === 'true' || stringToConvert === 'false') {
+      return Boolean(stringToConvert)
+    }
+    return stringToConvert
+  }
 }

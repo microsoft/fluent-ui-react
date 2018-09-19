@@ -9,6 +9,9 @@ import {
   SelectableListBehavior,
   MenuBehavior,
   MenuItemBehavior,
+  ListBehavior,
+  ListItemBehavior,
+  ImageBehavior,
 } from '../../../src/lib/accessibility/'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -27,5 +30,8 @@ testHelper.addBehavior('BasicListItemBehavior', BasicListItemBehavior)
 testHelper.addBehavior('SelectableListBehavior', SelectableListBehavior)
 testHelper.addBehavior('MenuBehavior', MenuBehavior)
 testHelper.addBehavior('MenuItemBehavior', MenuItemBehavior)
+testHelper.addBehavior('ListBehavior', ListBehavior)
+testHelper.addBehavior('ListItemBehavior', ListItemBehavior)
+testHelper.addBehavior('ImageBehavior', ImageBehavior)
 
 testHelper.run(behaviorMenuItems)
