@@ -4,8 +4,8 @@ export interface IChatMessageVariables {
   messageColorMine: string
 }
 
-export default (): IChatMessageVariables => ({
+export default (siteVars): IChatMessageVariables => ({
   messageWidth: '80%',
-  messageColor: 'rgba(0,0,0,0.1)',
+  messageColor: siteVars.white,
   messageColorMine: '#E0E0ED',
 })

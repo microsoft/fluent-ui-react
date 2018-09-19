@@ -52,7 +52,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children)
           ? children
-          : _.map(messages, message => ChatMessage.create(message))}
+          : _.map(messages, message => ChatMessage.create(message, { generateKey: true }))}
       </ElementType>
     )
   }
