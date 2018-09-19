@@ -1,9 +1,9 @@
 import { Accessibility, FocusZoneMode } from '../../interfaces'
 
-const TabListBehavior: Accessibility = {
+const ButtonGroupBehavior: Accessibility = {
   attributes: {
     root: {
-      role: 'tablist',
+      role: 'presentation',
     },
   },
   focusZone: {
@@ -14,4 +14,4 @@ const TabListBehavior: Accessibility = {
   },
 }
 
-export default TabListBehavior
+export default ButtonGroupBehavior
