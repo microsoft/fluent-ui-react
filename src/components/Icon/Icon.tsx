@@ -139,7 +139,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, accessibility, theme }) {
-    const { icons } = theme
+    const { icons = {} } = theme
 
     return icons[this.props.name] && icons[this.props.name].isSvg
       ? this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
