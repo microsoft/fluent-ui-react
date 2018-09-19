@@ -8,7 +8,7 @@ const chatStyles = {
     display: 'flex',
     flexDirection: 'column',
     listStyle: 'none',
-    padding: 0,
+    padding: v.padding,
     margin: 0,
   }),
 }
