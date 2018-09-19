@@ -181,23 +181,28 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                 {isOpen &&
                   availableItems.length > 0 && (
                     <List
-                      vertical
-                      fluid
                       {...getMenuProps()}
                       defaultActiveIndex={0}
-                      style={{ width: this.props.styles.width, ...peoplePickerStyles.menu }}
+                      styles={{ width: this.props.styles.width, ...peoplePickerStyles.menu }}
                       items={availableItems.map((item, index) => {
                         return {
                           key: `peoplePickerItem-${index}`,
                           header: item.name,
                           content: item.position,
+                          styles: {
+                            header: {
+                              color: highlightedIndex === index ? 'white' : 'black',
+                            },
+                            content: {
+                              color: highlightedIndex === index ? 'white' : 'black',
+                            },
+                          },
                           media: <Image src={item.image} avatar />,
                           ...getItemProps({
                             index,
                             item,
                             style: {
                               backgroundColor: highlightedIndex === index ? '#6264A7' : 'white',
-                              color: highlightedIndex === index ? 'white' : 'black',
                             },
                           }),
                         }
