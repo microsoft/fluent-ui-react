@@ -122,7 +122,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     const authorComponent = Text.create(author, {
       defaultProps: {
         size: 'sm',
-        styles: { root: styles.author },
+        styles: styles.author,
         variables: variables.author,
       },
     })
@@ -131,7 +131,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       defaultProps: {
         size: 'sm',
         timestamp: true,
-        styles: { root: styles.timestamp },
+        styles: styles.timestamp,
         variables: variables.timestamp,
       },
     })
