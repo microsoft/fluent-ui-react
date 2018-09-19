@@ -21,7 +21,8 @@ export default () => (
         <strong>None</strong> - Users who just need a good first run experience.
       </li>
       <li>
-        <strong>Opt-in</strong> - Users who need to change a little or a lot.
+        <strong>Opt-in</strong> - Users who need to change a little or a lot, by modifying the
+        variables or the styles.
       </li>
       <li>
         <strong>Pixel Perfect</strong> - Users who have pixel perfect design requirements.
@@ -140,7 +141,7 @@ export default () => (
     <p>Styles can be applied to components and their child parts.</p>
     <p>
       {' '}
-      You would style the <code>icon</code> part of a <code>Button</code> component.
+      You can style the <code>icon</code> part of a <code>Button</code> component.
     </p>
 
     <ExampleSnippet
@@ -161,7 +162,7 @@ export default () => (
     />
 
     <p>
-      You can style the <code>color</code> css property of a <code>Text</code> component.
+      Also you can style the <code>color</code> css property of a <code>Text</code> component.
     </p>
     <ExampleSnippet
       label="js"
@@ -171,181 +172,6 @@ export default () => (
         `<Text styles={{ root: { style } }}>This is green text</Text>`,
       ].join('\n')}
       render={() => <Text styles={{ root: { color: 'green' } }}>This is green text.</Text>}
-    />
-
-    <Header as="h2" content="Different styling needs" />
-    <Header as="h3" content="None" />
-    <p>If you do not need any custom theming, just import some components and start building.</p>
-    <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
-        ``,
-        `export default () => <Button content="Nice" />`,
-      ].join('\n')}
-      render={() => <Button content="Nice" />}
-    />
-
-    <Header as="h3" content="Opt-in" />
-    <p>When you need only small amount of styling isolated per component.</p>
-    <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
-        ``,
-        `const styles = {`,
-        `        icon: {color: 'brown'}`,
-        `        root: {backgroundColor: 'coral'}`,
-        `      }`,
-        `const btnExample = () => <Button type="primary" icon="book" iconOnly styles={styles} />`,
-        ``,
-        `export default btnExample`,
-      ].join('\n')}
-      render={() => (
-        <Button
-          type="primary"
-          icon="book"
-          iconOnly
-          styles={{ icon: { color: 'brown' }, root: { backgroundColor: 'coral' } }}
-        />
-      )}
-    />
-
-    <Header as="h3" content="Pixel Perfect" />
-    <p>Pixel Perfect</p>
-    <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button, Divider, Provider } from '@stardust-ui/react'`,
-        ``,
-        `const theme = {`,
-        `  siteVariables: {`,
-        `    brand: 'darkred',`,
-        `    brand04: '#8F5873',`,
-        `    gray08: '#A8516E',`,
-        `    gray06: '#f4c2c2',`,
-        `    gray03: '#757575',`,
-        `  },`,
-        `  componentVariables: {`,
-        `    Button: {`,
-        `      height: '24px',`,
-        `      minWidth: '24px',`,
-        `      borderRadius: '8px',`,
-        `      color: 'darkred',`,
-        `      typeSecondaryColor: '#ffffff',`,
-        `      typeSecondaryBorderColor: 'transparent',`,
-        `      typeSecondaryBackgroundColor: '#6699CC',`,
-        `      typeSecondaryBackgroundColorHover: '#91A3B0',`,
-        `    },`,
-        `  },`,
-        `  componentStyles: {`,
-        `    Button: {`,
-        `      icon: {`,
-        `        fontSize: '12px',`,
-        `      },`,
-        `    },`,
-        `  },`,
-        `}`,
-        ``,
-        `const provider = () => (`,
-        `  <Provider theme={theme}>`,
-        `    <div>`,
-        `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button type="secondary" icon="at" content="Send email" />`,
-        `      <Divider type="primary">Branding primary</Divider>`,
-        `      <Divider type="secondary">Branding secondary</Divider>`,
-        `    </div>`,
-        `  </Provider>`,
-        `)`,
-        ``,
-        `export default provider`,
-      ].join('\n')}
-      render={() => (
-        <div>
-          <p>Before:</p>
-          <Button type="primary" icon="plus" iconOnly />
-          <Button type="secondary" icon="at" content="Send email" />
-          <Divider type="primary">Branding primary</Divider>
-          <Divider type="secondary">Branding secondary</Divider>
-
-          <p>After:</p>
-          <Provider
-            theme={{
-              siteVariables: {
-                brand: 'darkred',
-                brand04: '#8F5873',
-                gray08: '#A8516E',
-                gray06: '#f4c2c2',
-                gray03: '#757575',
-              },
-              componentVariables: {
-                Button: {
-                  height: '24px',
-                  minWidth: '24px',
-                  borderRadius: '8px',
-                  color: 'darkred',
-                  typeSecondaryColor: '#ffffff',
-                  typeSecondaryBorderColor: 'transparent',
-                  typeSecondaryBackgroundColor: '#6699CC',
-                  typeSecondaryBackgroundColorHover: '#91A3B0',
-                },
-              },
-              componentStyles: {
-                Button: {
-                  icon: {
-                    fontSize: '12px',
-                  },
-                },
-              },
-            }}
-          >
-            <div>
-              <Button type="primary" icon="plus" iconOnly />
-              <Button type="secondary" icon="at" content="Send email" />
-              <Divider type="primary">Branding primary</Divider>
-              <Divider type="secondary">Branding secondary</Divider>
-            </div>
-          </Provider>
-        </div>
-      )}
-    />
-
-    <Header as="h2" content="Nesting" />
-    <p>
-      If you need to customize a bigger part of the theme, you can nest the second provider and
-      overwrite the needed styles.
-    </p>
-    <ExampleSnippet
-      value={[
-        `<Provider`,
-        `  theme={{`,
-        `    siteVariables: { brand: 'charcoal' }`,
-        `  }}`,
-        `>`,
-        `  <Provider`,
-        `    theme={{`,
-        `      componentStyles: {`,
-        `        Button: { root: { color: 'goldenrod'} }`,
-        `      }`,
-        `    }}`,
-        `  >`,
-        `    <div>`,
-        `      <Button type="primary">Branding</Button>`,
-        `      <Divider type="primary">Branding</Divider>`,
-        `    </div>`,
-        `  </Provider>`,
-        `</Provider>`,
-      ].join('\n')}
-      render={() => (
-        <Provider theme={{ siteVariables: { brand: 'darkred' } }}>
-          <Provider theme={{ componentStyles: { Button: { root: { color: 'goldenrod' } } } }}>
-            <div>
-              <Button type="primary">Branding</Button>
-              <Divider type="primary">Branding</Divider>
-            </div>
-          </Provider>
-        </Provider>
-      )}
     />
   </DocPage>
 )
