@@ -60,8 +60,6 @@ export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 export const EDITOR_GUTTER_COLOR = '#26282d'
 
 class Editor extends React.Component<IEditorProps> {
-  private lineCount: number
-
   private static readonly refName = 'aceEditor'
 
   public static propTypes = {
@@ -94,22 +92,12 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: true,
   }
 
-  constructor(props: IEditorProps) {
-    super(props)
-
-    this.setLineCount((props as IEditorPropsWithDefaults).value)
-  }
-
   public componentWillReceiveProps(nextProps: IEditorPropsWithDefaults) {
     const previousPros = this.props
-    const { value, active, showCursor } = nextProps
+    const { active, showCursor } = nextProps
 
     if (showCursor !== previousPros.showCursor) {
       this.setCursorVisibility(showCursor)
-    }
-
-    if (value !== previousPros.value) {
-      this.setLineCount(value)
     }
 
     if (active !== previousPros.active) {
@@ -175,10 +163,6 @@ class Editor extends React.Component<IEditorProps> {
 
   private get container(): HTMLElement {
     return this.safeCall(() => this.renderer.container)
-  }
-
-  private setLineCount(value: string) {
-    this.lineCount = value && value.length ? (value.match(/\n/g) || []).length + 1 : 0
   }
 
   private setCursorVisibility(visible: boolean): void {
