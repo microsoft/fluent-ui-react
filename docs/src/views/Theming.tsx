@@ -12,22 +12,9 @@ export default () => (
     <p>
       Stardust is a fully themable component library. Theming is opt-in, allowing you to theme as
       much or as little as needed. Themes can be applied to your entire app, to specific subtrees,
-      or to individual components. You can also infinitely nest and override themes.
+      or to individual components. You can also infinitely nest and override themes by modifying the
+      needed variables or styles.
     </p>
-
-    <p>Stardust is intentional in supporting three levels of theming needs:</p>
-    <ol>
-      <li>
-        <strong>None</strong> - Users who just need a good first run experience.
-      </li>
-      <li>
-        <strong>Opt-in</strong> - Users who need to change a little or a lot, by modifying the
-        variables or the styles.
-      </li>
-      <li>
-        <strong>Pixel Perfect</strong> - Users who have pixel perfect design requirements.
-      </li>
-    </ol>
 
     <p>Let's look at how this is done.</p>
 
