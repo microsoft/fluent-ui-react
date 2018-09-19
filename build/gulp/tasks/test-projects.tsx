@@ -8,6 +8,8 @@ import * as parseJson from 'parse-json'
 import config from '../../../config'
 import { tmpdir } from 'os'
 
+import * as path from 'path'
+
 const pkg = require('../../../package.json')
 
 const { paths } = config
@@ -82,7 +84,7 @@ export default App;
 
   try {
     log('STEP 1. Create test React project with TSX scripts..')
-    const testAppDir = `${(await sh(`mktemp -d`, true)).trim()}/test`
+    const testAppDir = path.resolve((await sh(`mktemp -d`, true)).trim(), 'test')
     const runInTestApp = cmd => sh(`cd ${testAppDir} && ${cmd}`)
 
     await sh(`mkdir ${testAppDir}`)
@@ -100,7 +102,7 @@ export default App;
     //////////////
 
     log("STEP 3. Enable 'skipLibCheck' flag for test project's TS compiler")
-    const tsconfigPath = `${testAppDir}/tsconfig.json`
+    const tsconfigPath = path.resolve(testAppDir, 'tsconfig.json')
 
     const tsConfigAsJson = JSON.parse(`${fs.readFileSync(tsconfigPath)}`)
     if (!tsConfigAsJson.compilerOptions) {
@@ -114,7 +116,7 @@ export default App;
     ///////////////
 
     log("STEP 4. Reference Stardust components in test project's App.tsx")
-    fs.writeFileSync(`${testAppDir}/src/App.tsx`, appTSX)
+    fs.writeFileSync(path.resolve(testAppDir, 'src', 'App.tsx'), appTSX)
 
     ////////////
 
