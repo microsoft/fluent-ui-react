@@ -6,7 +6,7 @@ import * as _ from 'lodash'
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
 import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
+import { ComponentVariablesInput, ComponentPartStyle } from 'theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'
@@ -24,7 +24,7 @@ export interface IRadioGroupItemProps {
   icon?: ItemShorthand
   label?: string
   name?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
   isFromKeyboard?: boolean
@@ -190,13 +190,13 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
         onClick={this.handleClick}
         className={classes.root}
       >
-        <Label styles={{ root: styles.label }}>
+        <Label styles={styles.label}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
               size: 'mini',
               variables: variables.icon,
-              styles: { root: styles.icon },
+              styles: styles.icon,
             },
           })}
           {label}

@@ -1,8 +1,12 @@
 import * as React from 'react'
 
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import {
+  isConformant,
+  handlesAccessibility,
+  htmlIsAccessibilityCompliant,
+} from 'test/specs/commonTests'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
+import { mountWithProvider } from 'test/utils'
 
 import RadioGroup, { RadioGroupItem } from 'src/components/RadioGroup'
 
@@ -45,6 +49,9 @@ describe('RadioGroup', () => {
     handlesAccessibility(RadioGroup, {
       defaultRootRole: 'radiogroup',
     })
+
+    test('compliance', async () =>
+      await htmlIsAccessibilityCompliant(<RadioGroup items={getShorthandItems()} />))
   })
 
   describe('implementsCollectionShorthandProp', () => {

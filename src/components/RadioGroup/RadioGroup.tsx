@@ -9,7 +9,7 @@ import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
 import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentVariablesObject, IComponentPartStylesInput } from 'theme'
+import { ComponentVariablesInput, ComponentVariablesObject, ComponentPartStyle } from 'theme'
 import { Extendable, ItemShorthand, ReactChildren } from 'utils'
 
 export interface IRadioGroupProps {
@@ -20,7 +20,7 @@ export interface IRadioGroupProps {
   className?: string
   defaultCheckedValue?: number | string
   items?: ItemShorthand[]
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
   vertical?: boolean
 }

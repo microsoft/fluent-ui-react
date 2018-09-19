@@ -14,13 +14,11 @@ class RadioGroupColorPickerExample extends React.Component {
         }),
       },
       styles: {
-        root: {
-          borderRadius: '3px',
-          ...(isSelected && {
-            backgroundClip: 'content-box',
-            padding: '2px',
-          }),
-        },
+        borderRadius: '3px',
+        ...(isSelected && {
+          backgroundClip: 'content-box',
+          padding: '2px',
+        }),
       },
     }
   }
