@@ -42,7 +42,7 @@ export interface IRenderResultConfig<P> {
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
   rtl: boolean
-  icons: ThemeIcons
+  theme: IThemePrepared
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -50,7 +50,6 @@ export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
-  getExtraProps: (any) => any
   displayName: string
   handledProps: string[]
   props: IPropsWithVarsAndStyles
@@ -102,7 +101,6 @@ const renderComponent = <P extends {}>(
   const {
     className,
     defaultProps,
-    getExtraProps,
     displayName,
     handledProps,
     props,
@@ -112,18 +110,19 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={({
-        siteVariables = {},
-        componentVariables = {},
-        componentStyles = {},
-        icons = {},
-        rtl = false,
-        renderer = felaRenderer,
-      }: IThemeInput | IThemePrepared = {}) => {
+      render={(theme: IThemePrepared) => {
+        const {
+          siteVariables = {},
+          componentVariables = {},
+          componentStyles = {},
+          icons = {},
+          rtl = false,
+          renderer = felaRenderer,
+        } = theme
+
         const ElementType = getElementType({ defaultProps }, props)
 
-        const derivedProps = getExtraProps({ icons })
-        const stateAndProps = { ...derivedProps, ...state, ...props }
+        const stateAndProps = { ...state, ...props }
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -143,6 +142,7 @@ const renderComponent = <P extends {}>(
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
+          theme,
         }
         const resolvedStyles = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
@@ -160,7 +160,7 @@ const renderComponent = <P extends {}>(
           styles: resolvedStyles,
           accessibility,
           rtl,
-          icons,
+          theme,
         }
 
         const rendered = render(config)

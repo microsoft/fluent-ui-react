@@ -9,6 +9,7 @@ import {
   IComponentPartStylesInput,
   ThemeIcons,
   RenderSvgIconFunction,
+  IconSpec,
   FontIconSpec,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
@@ -39,17 +40,18 @@ export interface IIconProps {
   variables?: ComponentVariablesInput
 }
 
-export type IconExtraProps = {
-  isFontBased: boolean
-  fontIconFromTheme?: FontIconSpec
-}
-
 /**
  * @accessibility
  * Default behavior: IconBehavior
  *  - attribute "aria-hidden='true'" is applied on icon
  */
 class Icon extends UIComponent<Extendable<IIconProps>, any> {
+  static declareSvg = (renderSvg: RenderSvgIconFunction): IconSpec => ({
+    isSvg: true,
+    icon: renderSvg,
+  })
+  static declareFontBased = (descriptor: FontIconSpec): IconSpec => ({ icon: descriptor })
+
   static create: Function
 
   static className = 'ui-icon'
@@ -127,7 +129,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
 
   renderSvgIcon(ElementType, icons: ThemeIcons, classes, rest, accessibility): React.ReactNode {
     const { name } = this.props
-    const renderIcon = icons[name] as RenderSvgIconFunction
+    const renderIcon = icons[name].icon as RenderSvgIconFunction
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
@@ -136,26 +138,12 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     )
   }
 
-  isFontBased(themeIcons: ThemeIcons): boolean {
-    const { name } = this.props
-    const themeIcon = themeIcons[name]
+  renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+    const { icons } = theme
 
-    return !themeIcon || typeof themeIcon !== 'function'
-  }
-
-  getExtraProps({ icons }): IconExtraProps {
-    const isFontBased = this.isFontBased(icons)
-
-    return {
-      isFontBased,
-      fontIconFromTheme: isFontBased && icons[this.props.name],
-    }
-  }
-
-  renderComponent({ ElementType, classes, rest, accessibility, icons }) {
-    return this.isFontBased(icons)
-      ? this.renderFontIcon(ElementType, classes, rest, accessibility)
-      : this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
+    return icons[this.props.name] && icons[this.props.name].isSvg
+      ? this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
+      : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }
 

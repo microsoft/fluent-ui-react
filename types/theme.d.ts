@@ -89,20 +89,28 @@ export interface ICSSInJSStyle extends React.CSSProperties {
   '-moz-osx-font-smoothing'?: CSSType.Globals | 'auto' | 'grayscale'
 }
 
-export interface ComponentStyleFunctionParam {
-  props: IState & IPropsWithVarsAndStyles
-  variables: ComponentVariablesObject
+export interface ComponentStyleFunctionParam<
+  TProps extends IPropsWithVarsAndStyles = IPropsWithVarsAndStyles,
+  TVars extends ComponentVariablesObject = ComponentVariablesObject
+> {
+  props: IState & TProps
+  variables: TVars
+  theme: IThemePrepared
 }
 
-export type ComponentPartStyleFunction = ((
-  styleParam?: ComponentStyleFunctionParam,
+export type ComponentPartStyleFunction<TProps = {}, TVars = {}> = ((
+  styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
 ) => ICSSInJSStyle)
 
-export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
+export type ComponentPartStyle<TProps = {}, TVars = {}> =
+  | ComponentPartStyleFunction<TProps, TVars>
+  | ICSSInJSStyle
 
-export interface IComponentPartStylesInput extends ObjectOf<ComponentPartStyle> {}
+export interface IComponentPartStylesInput<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentPartStyle<TProps, TVars>> {}
 
-export interface IComponentPartStylesPrepared extends ObjectOf<ComponentPartStyleFunction> {}
+export interface IComponentPartStylesPrepared<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentPartStyleFunction<TProps, TVars>> {}
 
 export interface IComponentPartClasses extends ObjectOf<string> {}
 
@@ -260,4 +268,9 @@ export type FontIconSpec = {
   fontFamily: string
 }
 
-export type ThemeIcons = { [iconName: string]: RenderSvgIconFunction | FontIconSpec }
+export type IconSpec = {
+  isSvg?: boolean
+  icon: FontIconSpec | RenderSvgIconFunction
+}
+
+export type ThemeIcons = { [iconName: string]: IconSpec }

@@ -1,7 +1,7 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
-import { IconXSpacing, IIconProps, IconExtraProps } from '../../../../components/Icon/Icon'
+import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
 
 import { getStyle as getSvgStyle } from './svg'
 
@@ -80,14 +80,15 @@ const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
   height: '2em',
 })
 
-const iconStyles = {
+const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   root: ({
-    props: { disabled, isFontBased, name, size, bordered, circular, xSpacing, fontIconFromTheme },
+    props: { disabled, name, size, bordered, circular, xSpacing },
     variables: v,
-  }: {
-    props: IIconProps & IconExtraProps
-    variables: any
+    theme,
   }): ICSSInJSStyle => {
+    const iconSpec = theme.icons[name]
+    const isFontBased = !iconSpec || !iconSpec.isSvg
+
     return {
       display: 'inline-block',
       fontSize: getSize(size),
@@ -95,7 +96,7 @@ const iconStyles = {
       width: '1em',
       height: '1em',
 
-      ...(isFontBased ? getFontStyles(name, fontIconFromTheme) : {}),
+      ...(isFontBased ? getFontStyles(name, iconSpec && (iconSpec.icon as FontIconSpec)) : {}),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,
