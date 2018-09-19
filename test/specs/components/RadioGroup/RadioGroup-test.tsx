@@ -145,8 +145,6 @@ describe('RadioGroup', () => {
         .first()
         .simulate('click')
 
-      const updatedItems = wrapper.find('RadioGroupItem')
-
       expect(checkedValueChanged).not.toHaveBeenCalled()
     })
 
