@@ -1,4 +1,5 @@
 import * as path from 'path'
+import * as _ from 'lodash'
 
 // ------------------------------------
 // Environment vars
@@ -36,7 +37,10 @@ const paths = {
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
+  posix: undefined, // all the sibling values, but with forward slashes regardless the OS
 }
+
+paths.posix = _.mapValues(paths, func => (...args) => func(...args).replace(/\\/g, '/'))
 
 const config = {
   ...envConfig,

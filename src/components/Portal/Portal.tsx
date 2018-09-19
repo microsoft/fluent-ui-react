@@ -9,7 +9,7 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
+import { ItemShorthand, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 
