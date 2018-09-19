@@ -8,6 +8,8 @@ import { Provider, themes } from '@stardust-ui/react'
 import Router from './routes'
 import { mergeThemes } from '../../src/lib'
 
+import { semanticCssOverrides } from './Style'
+
 // ----------------------------------------
 // Rendering
 // ----------------------------------------
@@ -16,11 +18,15 @@ const mountNode = document.createElement('div')
 mountNode.style.height = '100%'
 document.body.appendChild(mountNode)
 
+const semanticStyleOverrides = {
+  staticStyles: [semanticCssOverrides],
+}
+
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
       <Provider
-        theme={mergeThemes(themes.teams, {
+        theme={mergeThemes(semanticStyleOverrides, themes.teams, {
           // adjust Teams' theme to Semantic UI's font size scheme
           siteVariables: {
             htmlFontSize: '14px',

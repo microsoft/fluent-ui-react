@@ -8,7 +8,7 @@ export interface CodeSnippetProps {
   style?: React.CSSProperties
 }
 
-const CodeSnippet = ({ label = '', value, mode, style, ...rest }: CodeSnippetProps) => (
+const CodeSnippet = ({ label, value, mode = 'jsx', style, ...rest }: CodeSnippetProps) => (
   <div
     style={{
       position: 'relative',
