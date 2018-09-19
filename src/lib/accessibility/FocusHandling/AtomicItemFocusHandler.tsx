@@ -52,15 +52,15 @@ export class AtomicItemFocusHandler<
     this.component.props.atomicItemProps.onMovePrevious()
   }
 
-  public moveNext(component: React.Component<P, S>) {
+  public moveNext() {
     if (
-      component.props.atomicItemProps.isLastElement ||
-      !component.props.atomicItemProps.isFocused
+      this.component.props.atomicItemProps.isLastElement ||
+      !this.component.props.atomicItemProps.isFocused
     ) {
       return
     }
 
-    component.props.atomicItemProps.onMoveNext()
+    this.component.props.atomicItemProps.onMoveNext()
   }
 
   public moveFirst() {
