@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IStatusProps {
@@ -13,7 +13,7 @@ export interface IStatusProps {
   icon?: ItemShorthand
   size?: number
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ITextProps {
   as?: any
@@ -20,7 +20,7 @@ export interface ITextProps {
   temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

@@ -10,7 +10,7 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -31,7 +31,7 @@ export interface IInputProps {
   onChange?: ComponentEventHandler<IInputProps>
   value?: string
   type?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -205,7 +205,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
             defaultProps: {
-              styles: { root: styles.icon },
+              styles: styles.icon,
               variables: variables.icon,
             },
             overrideProps: this.handleIconOverrides,

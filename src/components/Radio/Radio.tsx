@@ -15,7 +15,7 @@ import {
   ItemShorthand,
   ReactChildren,
 } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 
 export interface IRadioProps {
@@ -30,7 +30,7 @@ export interface IRadioProps {
   name?: string
   onChange?: ComponentEventHandler<IRadioProps>
   type?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
 }
@@ -137,13 +137,13 @@ class Radio extends AutoControlledComponent<Extendable<IRadioProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        <Label as="label" styles={{ root: styles.label }}>
+        <Label as="label" styles={styles.label}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
               size: 'mini',
               variables: variables.icon,
-              styles: { root: styles.icon },
+              styles: styles.icon,
             },
           })}
           {createHTMLInput(type, {

@@ -27,7 +27,7 @@ export interface IChatMessageProps {
   className?: string
   content?: any
   mine?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   timestamp?: ItemShorthand
   variables?: ComponentVariablesInput
 }
@@ -159,7 +159,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     avatar &&
     Avatar.create(avatar, {
       defaultProps: {
-        styles: { root: avatarStyles },
+        styles: avatarStyles,
         variables: variables.avatar,
       },
     })
