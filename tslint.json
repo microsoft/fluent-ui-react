@@ -4,7 +4,7 @@
     "arrow-parens": false,
     "align": [false],
     "import-name": [false],
-    "linebreak-style": [true, "LF"],
+    "linebreak-style": [false, "LF"],
     "max-line-length": [false],
     "no-increment-decrement": false,
     "no-unused-variable": true,

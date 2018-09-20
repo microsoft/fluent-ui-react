@@ -13,6 +13,8 @@ export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
+export { default as ContextualMenu } from './components/ContextualMenu/contextualMenuStyles'
+
 export { default as Divider } from './components/Divider/dividerStyles'
 
 export { default as Header } from './components/Header/headerStyles'
