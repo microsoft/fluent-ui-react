@@ -62,6 +62,7 @@ const attachmentStyles: IComponentPartStylesInput = {
     bottom: 0,
     left: 0,
     width: props.progress + '%',
+    maxWidth: '100%',
     height: pxToRem(variables.progressHeight),
     background: variables.progressColor,
   }),
