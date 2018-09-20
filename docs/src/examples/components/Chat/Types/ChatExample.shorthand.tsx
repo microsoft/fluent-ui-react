@@ -55,7 +55,7 @@ const items = [
   },
   {
     key: 7,
-    action: { icon: 'record', content: 'Meeting started', timestamp: "'Today, 11:15 PM'" },
+    action: { icon: 'record', content: 'Meeting started', timestamp: 'Today, 11:15 PM' },
   },
 ]
 
