@@ -110,7 +110,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { as, avatar, children, mine } = this.props
+    const { avatar, children, mine } = this.props
 
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root

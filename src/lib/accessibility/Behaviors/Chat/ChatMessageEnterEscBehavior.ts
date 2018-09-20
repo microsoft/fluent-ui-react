@@ -1,4 +1,4 @@
-import { Accessibility, FocusZoneMode, AriaRole } from '../../interfaces'
+import { Accessibility, FocusZoneMode } from '../../interfaces'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
