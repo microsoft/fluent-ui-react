@@ -24,11 +24,6 @@ const Slots = () => (
       description="An attachment can provide the user with an action. Click on the icon to see the effect."
       examplePath="components/Attachment/Slots/AttachmentActionExample"
     />
-    <ComponentExample
-      title="Progress"
-      description="An attachment can show upload progress."
-      examplePath="components/Attachment/Slots/AttachmentProgressExample"
-    />
   </ExampleSection>
 )
 

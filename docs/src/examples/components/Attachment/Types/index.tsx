@@ -9,6 +9,11 @@ const Types = () => (
       description="A default Attachment."
       examplePath="components/Attachment/Types/AttachmentExample"
     />
+    <ComponentExample
+      title="Progress"
+      description="An attachment can show upload progress."
+      examplePath="components/Attachment/Types/AttachmentProgressExample"
+    />
   </ExampleSection>
 )
 
