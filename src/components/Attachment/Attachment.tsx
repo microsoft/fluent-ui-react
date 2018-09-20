@@ -7,13 +7,13 @@ import { Extendable, ItemShorthand } from '../../../types/utils'
 import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
+import Text from '../Text/Text'
 
 export type AttachmentProps = {
   action?: ItemShorthand
   actionable?: boolean
   as?: any
   children?: React.ReactChildren
-  content?: React.ReactNode
   description?: string
   header?: string
   icon?: ItemShorthand
@@ -37,7 +37,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     'actionable',
     'as',
     'children',
-    'content',
     'description',
     'header',
     'icon',
@@ -51,16 +50,13 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     action: customPropTypes.itemShorthand,
 
     /** An Attachment can be styled to indicate possible user interaction. */
-    actionable: PropTypes.arrayOf(customPropTypes.itemShorthand),
+    actionable: PropTypes.bool,
 
     /** An element type to render as. */
     as: customPropTypes.as,
 
     /** Define your own children. */
     children: PropTypes.node,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
 
     /** A string describing the attachment. */
     description: PropTypes.string,
@@ -96,12 +92,13 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
         </div>
         {(header || description) && (
           <div className={classes.content}>
-            {createHTMLDivision(header, {
+            {Text.create(header, {
               defaultProps: {
                 className: classes.header,
               },
             })}
-            {createHTMLDivision(description, {
+
+            {Text.create(description, {
               defaultProps: {
                 className: classes.description,
               },
