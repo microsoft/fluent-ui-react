@@ -122,6 +122,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: this.atomicItemFocusHandler.moveNext.bind(this.atomicItemFocusHandler),
     movePrevious: this.atomicItemFocusHandler.movePrevious.bind(this.atomicItemFocusHandler),
+    moveFirst: this.atomicItemFocusHandler.moveFirst.bind(this.atomicItemFocusHandler),
+    moveLast: this.atomicItemFocusHandler.moveLast.bind(this.atomicItemFocusHandler),
   }
 
   handleMouseEnter = () => {
