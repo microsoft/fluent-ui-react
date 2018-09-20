@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { implementsShorthandProp, isConformant } from 'test/specs/commonTests'
 
 import Text from 'src/components/Text'
