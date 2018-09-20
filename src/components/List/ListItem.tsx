@@ -11,7 +11,7 @@ import {
   IAtomicItemProps,
   IAtomicItemState,
 } from '../../lib/accessibility/FocusHandling/AtomicItemFocusHandler'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {
@@ -29,7 +29,7 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
   atomicItemProps?: IAtomicItemProps
 }

@@ -380,13 +380,16 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
+      const disabled =
+        codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
+
       return {
         active: this.sourceCodeMgr.codeType === codeType,
-        disabled:
-          codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType),
+        disabled,
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
+        className: disabled && 'crossout',
       }
     })
 

@@ -15,7 +15,7 @@ const triggers = [
   { icon: 'arrow circle right', padding: '5px 5px 5px 42px' },
   { icon: 'arrow circle right', padding: '18px 5px 5px 42px' },
 ].map(({ icon, padding }) => (
-  <Button icon={icon} styles={{ root: { padding, height: '38px', minWidth: '64px' } }} />
+  <Button icon={icon} styles={{ padding, height: '38px', minWidth: '64px' }} />
 ))
 
 const PopupExamplePosition = () => (

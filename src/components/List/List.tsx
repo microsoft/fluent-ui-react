@@ -12,7 +12,7 @@ import {
   IContainerState,
 } from '../../lib/accessibility/FocusHandling/ContainerFocusHandler'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface IListProps extends IContainerProps<ItemShorthand> {
@@ -24,7 +24,7 @@ export interface IListProps extends IContainerProps<ItemShorthand> {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
