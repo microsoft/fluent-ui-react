@@ -128,37 +128,35 @@ export default () => (
     <p>Styles can be applied to components and their child parts.</p>
     <p>
       {' '}
-      You would style the <code>icon</code> part of a <code>Button</code> component.
+      You can style the <code>icon</code> part of a <code>Button</code> component.
     </p>
 
     <ExampleSnippet
       value={[
         `<Button`,
-        `  icon="user"`,
+        `  icon={{ name: "user", styles: { borderBottom: '4px solid red' } }}`,
         `  content="Profile"`,
-        `  styles={{ icon: { borderBottom: '4px solid red' } }}`,
         `/>`,
       ].join('\n')}
       render={() => (
         <Button
-          icon="user"
+          icon={{ name: 'user', styles: { borderBottom: '4px solid red' } }}
           content="Profile"
-          styles={{ icon: { borderBottom: '4px solid red' } }}
         />
       )}
     />
 
     <p>
-      You can style the <code>color</code> css property of a <code>Text</code> component.
+      Also you can style the <code>color</code> css property of a <code>Text</code> component.
     </p>
     <ExampleSnippet
       label="js"
       value={[
         `const style = { color: 'green' }`,
         ``,
-        `<Text styles={{ root: { style } }}>This is green text</Text>`,
+        `<Text styles={ style }>This is green text</Text>`,
       ].join('\n')}
-      render={() => <Text styles={{ root: { color: 'green' } }}>This is green text.</Text>}
+      render={() => <Text styles={{ color: 'green' }}>This is green text.</Text>}
     />
 
     <br />

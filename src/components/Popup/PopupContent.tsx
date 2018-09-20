@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {
@@ -12,7 +12,7 @@ export interface IPopupContentProps {
   children?: ReactChildren
   className?: string
   innerRef?: (node: HTMLElement) => void
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

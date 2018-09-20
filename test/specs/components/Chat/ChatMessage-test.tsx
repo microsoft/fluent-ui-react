@@ -4,10 +4,13 @@ import { mountWithProvider } from '../../../utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
 import Avatar from 'src/components/Avatar'
+import Text from 'src/components/Text'
 
 describe('ChatMessage', () => {
   isConformant(ChatMessage)
   implementsShorthandProp(ChatMessage)('avatar', Avatar, { mapsValueToProp: 'name' })
+  implementsShorthandProp(ChatMessage)('author', Text)
+  implementsShorthandProp(ChatMessage)('timestamp', Text)
 
   describe('avatar', () => {
     it('creates an Avatar component when the avatar shorthand is provided', () => {
