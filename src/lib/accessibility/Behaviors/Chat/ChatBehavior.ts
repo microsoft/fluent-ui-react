@@ -17,12 +17,13 @@ const ChatBehavior: Accessibility = {
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.ArrowRight,
       direction: FocusZoneDirection.vertical,
       defaultTabbableElement: `[${CHAT_FOCUSZONE_ATTRIBUTE}] > * > *:last-child`, // select last chat message by default
       [CHAT_FOCUSZONE_ATTRIBUTE]: '', // allows querying the default active element
+      // style: { height: '100%' },
     },
   },
   keyActions: {

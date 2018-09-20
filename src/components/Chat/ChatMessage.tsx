@@ -20,6 +20,7 @@ import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMess
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
+import Menu from '../Menu'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -102,6 +103,36 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     },
   }
 
+  private renderToolbar(): React.ReactNode {
+    const items: any[] = ['compose', 'attach', 'smile', 'picture'].map((icon, index) =>
+      this.getMenuItem(icon, index),
+    )
+
+    items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+
+    return (
+      <Menu
+        defaultActiveIndex={0}
+        items={items}
+        iconOnly
+        aria-label="Compose Editor"
+        styles={{ marginTop: '10px' }}
+      />
+    )
+  }
+
+  private getMenuItem(name: string, index: number): any {
+    return {
+      key: `${index}-${name}`,
+      icon: {
+        name,
+        xSpacing: 'both',
+        variables: siteVars => ({ color: siteVars.gray02 }),
+      },
+      'aria-label': `${name} tool`,
+    }
+  }
+
   renderComponent({
     ElementType,
     classes,
@@ -111,7 +142,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
     const { as, avatar, children, mine } = this.props
-
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const content = childrenPropExists ? (
@@ -171,6 +201,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
           </>
         }
         main={content}
+        end={this.renderToolbar()}
       />
     )
   }
