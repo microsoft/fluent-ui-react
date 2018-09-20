@@ -86,7 +86,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           {Icon.create(icon, {
             defaultProps: {
               size: 'big',
-              fitted: true,
             },
           })}
         </div>
