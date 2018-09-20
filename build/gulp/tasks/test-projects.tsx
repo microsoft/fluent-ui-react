@@ -1,6 +1,7 @@
 import * as fs from 'fs'
 import { task, series } from 'gulp'
 import sh from '../sh'
+import * as rimraf from 'rimraf'
 
 import config from '../../../config'
 import * as tmp from 'tmp'
@@ -22,10 +23,31 @@ const buildAndPackStardust = async (): Promise<string> => {
   return (await sh(`npm pack`, true)).trim()
 }
 
-const createReactApp = async (atDirectory: string) => {
-  fs.mkdirSync(atDirectory)
+const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
+  const atDirectorySubpath = paths.withRootAt(atTempDirectory)
 
-  await runIn(atDirectory)(`yarn create react-app . --scripts-version=react-scripts-ts`)
+  // we need this temp sibling project to install create-react-app util without polluting
+  // global state, as well as the scope of test project
+  const tempUtilProjectPath = atDirectorySubpath('util')
+  const appProjectPath = atDirectorySubpath(appName)
+
+  fs.mkdirSync(tempUtilProjectPath)
+
+  try {
+    // restoring bits of create-react-app inside util project
+    await runIn(tempUtilProjectPath)('yarn add create-react-app')
+
+    // create test project with util's create-react-app
+    fs.mkdirSync(appProjectPath)
+    await runIn(tempUtilProjectPath)(
+      `yarn create-react-app ${appProjectPath} --scripts-version=react-scripts-ts`,
+    )
+  } finally {
+    // remove temp util directory
+    rimraf.sync(tempUtilProjectPath)
+  }
+
+  return appProjectPath
 }
 
 const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
@@ -48,7 +70,7 @@ const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
 //  - Update the App.tsx to include some stardust imports
 //  - Link our package
 //  - Try and run a build
-task('build:test:projects:cra-ts', async () => {
+task('test:projects:cra-ts', async () => {
   const appTSX = `import {
   Avatar,
   Button,
@@ -90,8 +112,7 @@ export default App;
     //////// CREATE TEST REACT APP ///////
     log('STEP 1. Create test React project with TSX scripts..')
 
-    const testAppPath = paths.withRootAt(tmp.dirSync().name, 'test')
-    await createReactApp(testAppPath())
+    const testAppPath = paths.withRootAt(await createReactApp(tmp.dirSync().name, 'test-app'))
 
     const runInTestApp = runIn(testAppPath())
     log(`Test React project is successfully created: ${testAppPath()}`)
@@ -121,8 +142,3 @@ export default App;
     fs.unlinkSync(stardustPackageFilename)
   }
 })
-
-// ----------------------------------------
-// Test
-// ----------------------------------------
-task('test:projects:cra-ts', series('build:test:projects:cra-ts'))
