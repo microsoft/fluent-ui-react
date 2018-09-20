@@ -8,7 +8,7 @@ import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
@@ -34,7 +34,7 @@ export interface IMenuItemProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -104,11 +104,6 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
      */
     target: PropTypes.string,
 
-    /**
-     * to
-     */
-    to: PropTypes.string,
-
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -151,7 +146,6 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'rel',
     'styles',
     'target',
-    'to',
     'type',
     'underlined',
     'variables',
@@ -167,7 +161,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, href, target, rel, to } = this.props
+    const { children, content, icon, href, target, rel } = this.props
 
     return (
       <ElementType
@@ -185,7 +179,6 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
             href={href}
             target={target}
             rel={rel}
-            to={to}
             {...accessibility.attributes.anchor}
             {...accessibility.keyHandlers.anchor}
           >

@@ -18,6 +18,7 @@ const componentMenu = require('docs/src/componentMenu')
 const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
+const flexDislayStyle: any = { display: 'flex' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -112,7 +113,7 @@ class Sidebar extends React.Component<any, any> {
           as={NavLink}
           to={getComponentPathname(info)}
           activeClassName="active"
-          styles={{ root: { color: '#979593', background: black, padding: '0px' } }}
+          styles={{ color: '#979593', background: black, padding: '0px' }}
         />
       )),
     )([...componentMenu, ...behaviorMenu])
@@ -123,12 +124,7 @@ class Sidebar extends React.Component<any, any> {
         content={
           <div>
             {_.capitalize(nextType)}s
-            <Menu
-              vertical
-              items={items}
-              styles={{ root: { color: white, background: black } }}
-              pills
-            />
+            <Menu vertical items={items} styles={{ color: white, background: black }} pills />
           </div>
         }
       />
@@ -166,7 +162,7 @@ class Sidebar extends React.Component<any, any> {
           onClick={this.handleItemClick}
           active={isSelected}
           to={getComponentPathname(info)}
-          styles={{ anchor: { padding: '0px' } }}
+          styles={{ padding: '0px' }}
         >
           {info.displayName}
           {isSelected && selectedItemLabel}
@@ -174,14 +170,7 @@ class Sidebar extends React.Component<any, any> {
       )
     }, this.filteredMenu)
 
-    return (
-      <Menu
-        vertical
-        styles={{ root: { color: white, background: black } }}
-        pills
-        items={menuItems}
-      />
-    )
+    return <Menu vertical styles={{ color: white, background: black }} pills items={menuItems} />
   }
 
   render() {
@@ -191,11 +180,9 @@ class Sidebar extends React.Component<any, any> {
       <Menu
         vertical
         styles={{
-          root: {
-            color: white,
-            background: black,
-            ...style,
-          },
+          color: white,
+          background: black,
+          ...style,
         }}
         pills
       >
@@ -210,15 +197,18 @@ class Sidebar extends React.Component<any, any> {
           <Menu
             vertical
             pills
-            styles={{ root: { color: white, background: black } }}
+            styles={{ color: white, background: black }}
             items={[
               {
                 key: 'github',
-                content: 'GitHub',
+                content: (
+                  <div style={flexDislayStyle}>
+                    GitHub<Icon name="chess rook" styles={{ root: { textAlign: 'right' } }} />
+                  </div>
+                ),
                 href: repoURL,
                 target: '_blank',
                 rel: 'noopener noreferrer',
-                icon: 'github',
               },
               {
                 key: 'change',
@@ -236,10 +226,14 @@ class Sidebar extends React.Component<any, any> {
           Guides
           <Menu
             vertical
-            styles={{ root: { color: white, background: black } }}
+            styles={{ color: white, background: black }}
             pills
             items={[
               { key: 'quickstart', content: <NavLink to="/quick-start">QuickStart</NavLink> },
+              {
+                key: 'accessiblity',
+                content: <NavLink to="/accessibility">Accessibility</NavLink>,
+              },
             ]}
           />
         </Menu.Item>
