@@ -61,14 +61,10 @@ const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
   fs.writeFileSync(tsconfigPath, JSON.stringify(tsConfigAsJson))
 }
 
-// ----------------------------------------
-// Build
-// ----------------------------------------
-
-// TS Project:
+// Tests the following scenario
 //  - Create a new react test app
+//  - Add Stardust as a app's dependency
 //  - Update the App.tsx to include some stardust imports
-//  - Link our package
 //  - Try and run a build
 task('test:projects:cra-ts', async () => {
   const appTSX = `import {
