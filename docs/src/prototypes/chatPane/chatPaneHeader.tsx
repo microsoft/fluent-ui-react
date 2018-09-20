@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layout, Avatar, Text, Button, Segment, Icon, Divider } from '@stardust-ui/react'
+import { Avatar, Button, Icon, Layout, Menu, Segment, Text } from '@stardust-ui/react'
 
 import { IChat } from './data/interfaces'
 
@@ -9,14 +9,7 @@ export interface IChatPaneHeaderProps {
 
 class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
   public render() {
-    return (
-      <Layout
-        vertical
-        start={this.renderBanner()}
-        main={this.renderMainArea()}
-        end={<Divider type="secondary" styles={{ marginTop: 0, marginBottom: 0, width: '100%' }} />}
-      />
-    )
+    return <Layout vertical start={this.renderBanner()} main={this.renderMainArea()} />
   }
 
   private renderBanner(): React.ReactNode {
@@ -46,15 +39,18 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
     const { chat } = this.props
 
     return (
-      <Layout
-        start={<Avatar name={chat.title} />}
-        main={
-          <Text size="lg" content={chat.title} styles={{ marginLeft: '12px', fontWeight: 600 }} />
-        }
-        end={this.renderHeaderButtons()}
-        alignItems="center"
-        styles={{ padding: '16px 32px' }}
-      />
+      <>
+        <Layout
+          start={<Avatar name={chat.title} />}
+          main={
+            <Text size="lg" content={chat.title} styles={{ marginLeft: '12px', fontWeight: 600 }} />
+          }
+          end={this.renderHeaderButtons()}
+          alignItems="center"
+          styles={{ padding: '16px 32px' }}
+        />
+        {this.renderMenu()}
+      </>
     )
   }
 
@@ -80,6 +76,30 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
           />
         ))}
       </div>
+    )
+  }
+
+  private renderMenu(): React.ReactNode {
+    const menuItems = [
+      { key: 'Conversation', content: 'Conversation' },
+      { key: 'Files', content: 'Files' },
+      { key: 'Organization', content: 'Organization' },
+      { key: 'Activity', content: 'Activity' },
+      { key: 'Add', content: <Icon name={'plus'} /> },
+    ]
+
+    return (
+      <Menu
+        defaultActiveIndex={0}
+        items={menuItems}
+        underlined
+        type="primary"
+        styles={({ props, variables }: { props: any; variables: any }) => ({
+          marginLeft: '35px',
+          marginRight: '35px',
+          borderBottom: `1px solid ${variables.typePrimaryUnderlinedBorderColor}`,
+        })}
+      />
     )
   }
 }
