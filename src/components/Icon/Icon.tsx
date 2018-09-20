@@ -4,7 +4,7 @@ import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 
 import svgIcons from './svgIcons'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -32,7 +32,7 @@ export interface IIconProps {
   svg?: boolean
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
