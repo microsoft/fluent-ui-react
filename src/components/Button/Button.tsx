@@ -7,7 +7,7 @@ import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } f
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -32,7 +32,7 @@ export interface IButtonProps {
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -147,6 +147,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     classes,
     accessibility,
     variables,
+    styles,
     rest,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
@@ -162,19 +163,21 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {!hasChildren && content && <span className={classes.content}>{content}</span>}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon()}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
-  public renderIcon = () => {
+  public renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
+        styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        variables: variables.icon,
       },
     })
   }

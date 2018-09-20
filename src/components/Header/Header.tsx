@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any
@@ -13,7 +13,7 @@ export interface IHeaderProps {
   content?: React.ReactNode
   description?: ItemShorthand
   textAlign?: 'left' | 'center' | 'right' | 'justified'
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -93,7 +93,6 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
           ...(v.descriptionColor && { color: v.descriptionColor }),
         },
       },
-      generateKey: false,
     })
 
     return (

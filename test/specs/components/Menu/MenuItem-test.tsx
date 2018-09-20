@@ -3,11 +3,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
-import {
-  ToolbarButtonBehavior,
-  TabBehavior,
-  MenuItemBehavior,
-} from '../../../../src/lib/accessibility'
+import { ToolbarButtonBehavior, TabBehavior } from '../../../../src/lib/accessibility'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {

@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { shallow, mount as enzymeMount, render } from 'enzyme'
+import { mount as enzymeMount } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
@@ -90,7 +90,7 @@ export default (Component, options: any = {}) => {
         ].join('\n'),
       )
     })
-    return
+    return null
   }
 
   // ----------------------------------------
@@ -349,7 +349,7 @@ export default (Component, options: any = {}) => {
         let errorMessage = 'was not called with (event)'
 
         if (_.has(Component.propTypes, listenerName)) {
-          expectedArgs = [eventShape, component.props()]
+          expectedArgs = [eventShape, expect.objectContaining(component.props())]
           errorMessage =
             'was not called with (event, data).\n' +
             `Ensure that 'props' object is passed to '${listenerName}'\n` +

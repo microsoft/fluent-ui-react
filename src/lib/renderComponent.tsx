@@ -23,6 +23,7 @@ import {
   IAccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
+  Accessibility,
 } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
@@ -144,16 +145,22 @@ const renderComponent = <P extends {}>(
       }: IThemeInput | IThemePrepared = {}) => {
         const ElementType = getElementType({ defaultProps }, props)
 
+        const stateAndProps = { ...state, ...props }
+
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
-        )(siteVariables)
+        )(siteVariables, stateAndProps)
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
-        const stateAndProps = { ...state, ...props }
-        const accessibility = getAccessibility(stateAndProps, actionHandlers)
+        const mergedStyles: IComponentPartStylesPrepared = mergeComponentStyles(
+          componentStyles[displayName],
+          {
+            root: props.styles,
+          },
+        )
+        const accessibility: Accessibility = getAccessibility(stateAndProps, actionHandlers)
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
@@ -162,7 +169,7 @@ const renderComponent = <P extends {}>(
           props: stateAndProps,
           variables: resolvedVariables,
         }
-        const resolvedStyles = Object.keys(mergedStyles).reduce(
+        const resolvedStyles: IComponentPartStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
         )

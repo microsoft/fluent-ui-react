@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Button from './Button'
 
@@ -14,7 +14,7 @@ export interface IButtonGroupProps {
   className?: string
   content?: React.ReactNode
   buttons?: ItemShorthand[]
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -30,7 +30,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** A button can take the width of its container. */
+    /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
 
     /** Primary content. */
@@ -90,9 +90,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
           Button.create(button, {
             defaultProps: {
               circular,
-              styles: {
-                root: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
-              },
+              styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
             },
           }),
         )}

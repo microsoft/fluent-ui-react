@@ -3,13 +3,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
   IThemePrepared,
   IThemeInput,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
+  IFontFace,
 } from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
 
@@ -92,15 +93,15 @@ class Provider extends React.Component<IProviderProps, any> {
 
     if (!fontFaces) return
 
-    const renderFontObject = font => {
+    const renderFontObject = (font: IFontFace) => {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
     }
 
-    fontFaces.forEach(fontObject => {
-      renderFontObject(fontObject)
+    fontFaces.forEach((font: IFontFace) => {
+      renderFontObject(font)
     })
   }
 

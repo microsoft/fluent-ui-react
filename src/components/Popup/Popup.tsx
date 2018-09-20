@@ -1,13 +1,11 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
-import { Placement } from 'popper.js'
 import rtlCSSJS from 'rtl-css-js'
 
 import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from 'theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -24,7 +22,7 @@ export interface IPopupProps {
   content?: ItemShorthand | ItemShorthand[]
   position?: Position
   trigger?: JSX.Element
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -143,12 +141,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     const computedStyle = rtl ? rtlCSSJS(style) : style
 
     return (
-      <Popup.Content
-        innerRef={ref}
-        basic={basic}
-        {...rtl && { dir: 'rtl' }}
-        styles={{ root: computedStyle }}
-      >
+      <Popup.Content innerRef={ref} basic={basic} {...rtl && { dir: 'rtl' }} styles={computedStyle}>
         {content}
       </Popup.Content>
     )

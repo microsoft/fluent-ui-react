@@ -10,7 +10,7 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -23,15 +23,15 @@ export interface IInputProps {
   children?: ReactChildren
   className?: string
   clearable?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
   fluid?: boolean
   icon?: ItemShorthand
   inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
-  value?: string
+  value?: string | number
   type?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -61,7 +61,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
-    defaultValue: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
@@ -87,7 +87,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -185,7 +185,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, styles }) {
+  renderComponent({ ElementType, classes, styles, variables }) {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
@@ -204,7 +204,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { styles: { root: styles.icon } },
+            defaultProps: {
+              styles: styles.icon,
+              variables: variables.icon,
+            },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>

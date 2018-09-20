@@ -2,7 +2,6 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
-import { MenuBehavior } from 'src/lib/accessibility'
 import { getTestingRenderedComponent } from 'test/utils'
 
 describe('Icon', () => {

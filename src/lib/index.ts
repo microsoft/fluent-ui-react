@@ -1,5 +1,4 @@
 import * as customPropTypes from './customPropTypes'
-import * as SUI from './SUI'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
@@ -38,4 +37,4 @@ export { default as doesNodeContainClick } from './doesNodeContainClick'
 export { default as leven } from './leven'
 
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
-export { customPropTypes, SUI }
+export { customPropTypes }

@@ -12,7 +12,7 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface ILabelProps {
@@ -27,7 +27,7 @@ export interface ILabelProps {
   iconPosition?: 'start' | 'end'
   image?: ItemShorthand
   imagePosition?: 'start' | 'end'
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -111,28 +111,19 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     const imageElement =
       image &&
       Image.create(image, {
-        defaultProps: { styles: { root: styles.image } },
-        generateKey: false,
+        defaultProps: {
+          styles: styles.image,
+          variables: variables.image,
+        },
       })
 
     const iconElement =
       icon &&
       Icon.create(icon, {
         defaultProps: {
-          styles: {
-            root: styles.icon,
-          },
-          ...(!(
-            typeof icon === 'object' &&
-            (icon as any).variables &&
-            (icon as any).variables.color
-          ) && {
-            variables: {
-              color: variables.color,
-            },
-          }),
+          styles: styles.icon,
+          variables: variables.icon,
         },
-        generateKey: false,
         overrideProps: this.handleIconOverrides,
       })
 
