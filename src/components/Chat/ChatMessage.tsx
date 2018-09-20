@@ -126,9 +126,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     return (
       <ElementType
-        {...rest}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rest}
         className={className}
       >
         {content}
