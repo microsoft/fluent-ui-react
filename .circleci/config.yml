@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Publish npm package
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ ! -z ${npm_TOKEN+x} ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
               npm version prerelease --preid=${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD` --no-git-tag-version
               npm publish --tag next
