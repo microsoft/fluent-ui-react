@@ -185,6 +185,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         styles={computedStyle}
         {...accessibility.attributes.popup}
         {...accessibility.keyHandlers.popup}
+      >
         {content}
       </Popup.Content>
     )
