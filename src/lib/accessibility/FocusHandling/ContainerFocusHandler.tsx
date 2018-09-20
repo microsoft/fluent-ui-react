@@ -1,5 +1,4 @@
-import * as _ from 'lodash'
-import { IAtomicItemProps } from './AtomicItemFocusHandler'
+import { IAtomicItemProps, SetStateDelegate } from './AtomicItemFocusHandler'
 
 export interface IContainerProps<T> {
   items?: T[]
@@ -8,13 +7,6 @@ export interface IContainerProps<T> {
 export interface IContainerState {
   focusItemOnIdx: number
 }
-
-type SetStateDelegate<P, S> = <K extends keyof S>(
-  state:
-    | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
-    | (Pick<S, K> | S | null),
-  callback?: () => void,
-) => void
 
 export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
   constructor(

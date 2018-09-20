@@ -90,23 +90,14 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  // private containerFocusHandler
-  private containerFocusHandler = (() => {
-    const h = new ContainerFocusHandler(
-      () => this.props,
-      this.setState.bind(this),
-      s => {
-        this.state = s
-      },
-      () => this.state,
-    )
-    console.log('this.state', this.state)
-    return h
-  })()
-
-  // componentWillMount() {
-  //   this.containerFocusHandler = new ContainerFocusHandler(this.props, this.state, this.setState.bind(this))
-  // }
+  private containerFocusHandler = new ContainerFocusHandler(
+    () => this.props,
+    this.setState.bind(this),
+    s => {
+      this.state = s
+    },
+    () => this.state,
+  )
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props

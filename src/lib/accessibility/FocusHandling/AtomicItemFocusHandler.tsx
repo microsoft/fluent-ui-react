@@ -1,6 +1,3 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-
 export interface IAtomicItemProps {
   isFocused: boolean
 
@@ -21,102 +18,92 @@ export interface IAtomicItemState {
   isLastOpened: boolean
 }
 
-export class AtomicItemFocusHandler<
-  P extends {} & { atomicItemProps: IAtomicItemProps },
-  S extends IAtomicItemState
-> {
-  public itemRef = React.createRef<HTMLElement>()
+export type SetStateDelegate<P, S> = <K extends keyof S>(
+  state:
+    | ((prevState: Readonly<S>, props: Readonly<P>) => Pick<S, K> | S | null)
+    | (Pick<S, K> | S | null),
+  callback?: () => void,
+) => void
 
-  constructor(private component: React.Component<P, S>) {
-    this.component.state = {
+export class AtomicItemFocusHandler<P extends IAtomicItemProps, S extends IAtomicItemState> {
+  constructor(
+    private getProps: () => P,
+    private setState: SetStateDelegate<P, S>,
+    private initState: (state: IAtomicItemState) => void,
+  ) {
+    this.initState({
       shouldSubContainerBeOpened: false,
       isLastOpened: false,
-    } as any
+    })
   }
 
-  public focus() {
-    if (this.component.props.atomicItemProps.isFocused) {
-      const domNode = ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement
-      domNode.focus()
+  public focus(focusableElement: HTMLElement) {
+    if (this.getProps().isFocused) {
+      focusableElement.focus()
     }
   }
 
   public movePrevious() {
-    if (
-      this.component.props.atomicItemProps.isFirstElement ||
-      !this.component.props.atomicItemProps.isFocused
-    ) {
+    if (this.getProps().isFirstElement || !this.getProps().isFocused) {
       return
     }
 
-    this.component.props.atomicItemProps.onMovePrevious()
+    this.getProps().onMovePrevious()
   }
 
   public moveNext() {
-    if (
-      this.component.props.atomicItemProps.isLastElement ||
-      !this.component.props.atomicItemProps.isFocused
-    ) {
+    if (this.getProps().isLastElement || !this.getProps().isFocused) {
       return
     }
 
-    this.component.props.atomicItemProps.onMoveNext()
+    this.getProps().onMoveNext()
   }
 
   public moveFirst() {
-    if (
-      this.component.props.atomicItemProps.isFirstElement ||
-      !this.component.props.atomicItemProps.isFocused
-    ) {
+    if (this.getProps().isFirstElement || !this.getProps().isFocused) {
       return
     }
 
-    this.component.props.atomicItemProps.onMoveFirst()
+    this.getProps().onMoveFirst()
   }
 
   public moveLast() {
-    if (
-      this.component.props.atomicItemProps.isLastElement ||
-      !this.component.props.atomicItemProps.isFocused
-    ) {
+    if (this.getProps().isLastElement || !this.getProps().isFocused) {
       return
     }
 
-    this.component.props.atomicItemProps.onMoveLast()
+    this.getProps().onMoveLast()
   }
 
   public enter() {
-    this.component.setState({ isLastOpened: false })
+    this.setState({ isLastOpened: false })
 
-    if (
-      !this.component.props.atomicItemProps.isFocused ||
-      !(this.component.props as any).subItems
-    ) {
+    if (!this.getProps().isFocused) {
       return
     }
 
-    this.component.setState({
+    this.setState({
       shouldSubContainerBeOpened: true,
       isLastOpened: true,
     })
 
-    this.component.props.atomicItemProps.onEnter()
+    this.getProps().onEnter()
   }
 
   public space() {
-    if (!this.component.props.atomicItemProps.isFocused) {
+    if (!this.getProps().isFocused) {
       return
     }
 
-    this.component.props.atomicItemProps.onSpace()
+    this.getProps().onSpace()
   }
 
   public esc() {
-    if (!this.component.props.atomicItemProps.isFocused) {
+    if (!this.getProps().isFocused) {
       return
     }
 
-    this.component.setState({ shouldSubContainerBeOpened: false })
-    this.component.props.atomicItemProps.onEsc()
+    this.setState({ shouldSubContainerBeOpened: false })
+    this.getProps().onEsc()
   }
 }

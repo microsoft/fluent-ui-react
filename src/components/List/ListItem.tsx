@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
@@ -108,7 +109,15 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: ListItemBehavior as Accessibility,
   }
 
-  private atomicItemFocusHandler = new AtomicItemFocusHandler(this as any)
+  private itemRef = React.createRef<HTMLElement>()
+
+  private atomicItemFocusHandler = new AtomicItemFocusHandler(
+    () => this.props.atomicItemProps,
+    this.setState.bind(this),
+    state => {
+      this.state = { ...{ isHovering: false }, ...state }
+    },
+  )
 
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: this.atomicItemFocusHandler.moveNext.bind(this.atomicItemFocusHandler),
@@ -117,14 +126,16 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
+    console.warn('mouse enter hovering')
   }
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
+    console.warn('mouse leave hovering')
   }
 
   componentDidUpdate() {
-    this.atomicItemFocusHandler.focus()
+    this.atomicItemFocusHandler.focus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -143,6 +154,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     } = this.props
 
     const { isHovering } = this.state
+    console.warn(`isHovering: ${isHovering}`)
     const endArea = isHovering && endMedia
 
     const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
@@ -181,7 +193,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
-        ref={this.atomicItemFocusHandler.itemRef}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
