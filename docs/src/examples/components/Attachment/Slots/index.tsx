@@ -21,7 +21,7 @@ const Slots = () => (
     />
     <ComponentExample
       title="Action"
-      description="An attachment can provide the user with an action."
+      description="An attachment can provide the user with an action. Click on the icon to see the effect."
       examplePath="components/Attachment/Slots/AttachmentActionExample"
     />
     <ComponentExample
