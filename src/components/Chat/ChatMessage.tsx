@@ -11,8 +11,8 @@ import {
 } from '../../lib'
 import {
   ComponentVariablesInput,
-  IComponentPartStylesInput,
   ComponentPartStyle,
+  IComponentPartStylesInput,
 } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
@@ -27,7 +27,7 @@ export interface IChatMessageProps {
   className?: string
   content?: any
   mine?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   timestamp?: ItemShorthand
   variables?: ComponentVariablesInput
 }
@@ -122,7 +122,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     const authorComponent = Text.create(author, {
       defaultProps: {
         size: 'sm',
-        styles: { root: styles.author },
+        styles: styles.author,
         variables: variables.author,
       },
     })
@@ -131,7 +131,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       defaultProps: {
         size: 'sm',
         timestamp: true,
-        styles: { root: styles.timestamp },
+        styles: styles.timestamp,
         variables: variables.timestamp,
       },
     })
@@ -159,7 +159,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     avatar &&
     Avatar.create(avatar, {
       defaultProps: {
-        styles: { root: avatarStyles },
+        styles: avatarStyles,
         variables: variables.avatar,
       },
     })
