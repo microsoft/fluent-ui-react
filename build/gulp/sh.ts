@@ -7,7 +7,7 @@ const sh = (command: string, pipeOutputToResult: boolean = false): Promise<strin
     const options = {
       cwd: process.cwd(),
       env: process.env,
-      stdio: (pipeOutputToResult ? ['pipe', 'pipe', 'pipe'] : [0, 1, 2]) as any,
+      stdio: pipeOutputToResult ? 'pipe' : [0, 1, 2],
       shell: true,
     }
 
