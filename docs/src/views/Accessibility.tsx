@@ -539,6 +539,5 @@ export default () => (
       iconPosition="after"
       to="theming"
     />
-
   </DocPage>
 )
