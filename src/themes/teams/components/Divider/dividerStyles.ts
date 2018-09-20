@@ -36,8 +36,8 @@ const dividerStyles: IComponentPartStylesInput = {
       color: variables.textColor,
       display: 'flex',
       alignItems: 'center',
-      paddingTop: pxToRem(4),
-      paddingBottom: pxToRem(4),
+      paddingTop: pxToRem(variables.dividerPadding),
+      paddingBottom: pxToRem(variables.dividerPadding),
       ...(type === 'primary' && {
         color: variables.primaryColor,
       }),
