@@ -37,7 +37,7 @@ export interface IAccordionProps {
  * @accessibility
  * Concern: how do we optimally navigate through an Accordion element with nested children?
  */
-class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>> {
+class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
