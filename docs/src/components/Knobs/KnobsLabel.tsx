@@ -5,7 +5,7 @@ interface IKnobsLabelProps {
   value: string
 }
 
-const KnobsLabel: React.ComponentType<IKnobsLabelProps> = ({ name, value }) => (
+const KnobsLabel: React.SFC<IKnobsLabelProps> = ({ name, value }) => (
   <span>
     {name}: {JSON.stringify(value, null, 2)},
   </span>

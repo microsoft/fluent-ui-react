@@ -5,8 +5,8 @@ import { IconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import {
+  ComponentPartStyle,
   ComponentVariablesInput,
-  IComponentPartStylesInput,
   ThemeIcons,
   ThemeIconSpec,
   FontIconSpec,
@@ -36,7 +36,7 @@ export interface IIconProps {
   size?: IconSize
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

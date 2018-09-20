@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Image, Label, Status } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IAvatarProps {
@@ -15,7 +15,7 @@ export interface IAvatarProps {
   src?: string
   status?: ItemShorthand
   getInitials?: (name: string) => string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -106,17 +106,10 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     return (
       <ElementType {...rest} className={classes.root}>
         {src ? (
-          <Image
-            styles={{ root: styles.imageAvatar }}
-            fluid
-            avatar
-            src={src}
-            alt={alt}
-            title={name}
-          />
+          <Image styles={styles.imageAvatar} fluid avatar src={src} alt={alt} title={name} />
         ) : (
           <Label
-            styles={{ root: styles.avatarNameContainer }}
+            styles={styles.avatarNameContainer}
             as="div"
             content={getInitials(name || '')}
             variables={{ padding: '0px' }}
@@ -126,7 +119,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
         )}
         {Status.create(status, {
           defaultProps: {
-            styles: { root: styles.status },
+            styles: styles.status,
             size: size * 0.3125,
             variables: {
               borderColor: variables.statusBorderColor,

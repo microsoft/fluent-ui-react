@@ -4,11 +4,7 @@ import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import {
-  ComponentVariablesInput,
-  IComponentPartStylesInput,
-  ICSSInJSStyle,
-} from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle, ICSSInJSStyle } from '../../../types/theme'
 
 export interface ILayoutProps {
   as?: any
@@ -37,7 +33,7 @@ export interface ILayoutProps {
   truncateMain?: boolean
   truncateEnd?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

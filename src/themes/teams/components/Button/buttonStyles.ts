@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { disabledStyle, truncateStyle } from '../../../../styles/customCSS'
 import { IButtonProps } from '../../../../components/Button/Button'
+import { truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
@@ -19,14 +19,26 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
       backgroundColorHover,
       circularRadius,
       paddingLeftRightValue,
+      typeDisabledButtonColor,
+      typeDisabledButtonBackgroundColor,
       typePrimaryColor,
       typePrimaryBackgroundColor,
+      typePrimaryBackgroundColorActive,
       typePrimaryBackgroundColorHover,
+      typePrimaryBackgroundColorFocus,
       typePrimaryBorderColor,
+      typePrimaryBorderColorFocus,
+      typePrimaryBorderColorInsetFocus,
       typeSecondaryColor,
       typeSecondaryBackgroundColor,
+      typeSecondaryBackgroundColorActive,
       typeSecondaryBackgroundColorHover,
+      typeSecondaryBackgroundColorFocus,
       typeSecondaryBorderColor,
+      typeSecondaryBorderColorActive,
+      typeSecondaryBorderColorHover,
+      typeSecondaryBorderColorFocus,
+      typeSecondaryBorderColorInsetFocus,
       typeTextColorHover,
       typeTextPrimaryColor,
       typeTextPrimaryColorHover,
@@ -50,13 +62,6 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
       verticalAlign: 'middle',
       cursor: 'pointer',
 
-      ':focus': {
-        ...(isFromKeyboard &&
-          {
-            // focus styles should be added like this, since they should be applied only on keyboard.
-          }),
-      },
-
       ...(!text && {
         borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
         ':hover': {
@@ -76,10 +81,35 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
         !text && {
           color: typePrimaryColor,
           backgroundColor: typePrimaryBackgroundColor,
-          borderColor: typePrimaryBorderColor,
+          border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
+          ':active': {
+            backgroundColor: typePrimaryBackgroundColorActive,
+          },
           ':hover': {
             color: typePrimaryColor,
             backgroundColor: typePrimaryBackgroundColorHover,
+          },
+        }),
+
+      ...(primary &&
+        !text &&
+        !circular && {
+          outline: 0,
+          ':focus': {
+            ...(isFromKeyboard && {
+              backgroundColor: typePrimaryBackgroundColorFocus,
+              borderColor: typePrimaryBorderColorFocus,
+              '::before': {
+                content: '""',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
+                borderRadius: `${pxToRem(2)}`,
+              },
+            }),
           },
         }),
 
@@ -96,10 +126,36 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
           color: typeSecondaryColor,
           backgroundColor: typeSecondaryBackgroundColor,
           borderColor: typeSecondaryBorderColor,
+          border: `${pxToRem(1)} solid ${typeSecondaryBorderColor}`,
+          ':active': {
+            backgroundColor: typeSecondaryBackgroundColorActive,
+            borderColor: typeSecondaryBorderColorActive,
+          },
           ':hover': {
-            color: typeSecondaryColor,
-            borderColor: 'transparent',
             backgroundColor: typeSecondaryBackgroundColorHover,
+            borderColor: typeSecondaryBorderColorHover,
+          },
+        }),
+
+      ...(secondary &&
+        !text &&
+        !circular && {
+          outline: 0,
+          ':focus': {
+            ...(isFromKeyboard && {
+              backgroundColor: typeSecondaryBackgroundColorFocus,
+              borderColor: typeSecondaryBorderColorFocus,
+              '::before': {
+                content: '""',
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                right: '0',
+                bottom: '0',
+                border: `${pxToRem(1)} solid ${typeSecondaryBorderColorInsetFocus}`,
+                borderRadius: `${pxToRem(2)}`,
+              },
+            }),
           },
         }),
 
@@ -123,10 +179,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
       }),
 
       ...(disabled && {
-        ...disabledStyle,
+        cursor: 'default',
+        color: typeDisabledButtonColor,
+        backgroundColor: typeDisabledButtonBackgroundColor,
+        borderColor: typeDisabledButtonBackgroundColor,
         ':hover': {
-          borderColor: undefined,
-          backgroundColor: undefined,
+          backgroundColor: typeDisabledButtonBackgroundColor,
+          borderColor: typeDisabledButtonBackgroundColor,
         },
       }),
 

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { shallow } from 'enzyme'
 
 import { isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'

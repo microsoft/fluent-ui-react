@@ -1,6 +1,4 @@
 import getKeyDownHandlers from 'src/lib/getKeyDownHandlers'
-import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
-import { DefaultBehavior } from 'src/lib/accessibility'
 
 const testKeyCode = 27
 const props = {}

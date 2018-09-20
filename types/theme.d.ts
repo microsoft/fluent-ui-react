@@ -18,7 +18,7 @@ export type IProps = ObjectOf<any>
 
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
 }>
 
 // ========================================================
