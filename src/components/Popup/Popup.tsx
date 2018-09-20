@@ -6,7 +6,7 @@ import rtlCSSJS from 'rtl-css-js'
 
 import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
@@ -30,7 +30,7 @@ export interface IPopupProps {
   content?: ItemShorthand | ItemShorthand[]
   position?: Position
   trigger?: JSX.Element
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -182,10 +182,9 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         innerRef={ref}
         basic={basic}
         {...rtl && { dir: 'rtl' }}
-        styles={{ root: computedStyle }}
+        styles={computedStyle}
         {...accessibility.attributes.popup}
         {...accessibility.keyHandlers.popup}
-      >
         {content}
       </Popup.Content>
     )

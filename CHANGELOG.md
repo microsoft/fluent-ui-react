@@ -17,6 +17,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Fixed `Divider` wrong usage of the `typeSecondary{color, backgroundColor}` and `default{color, backgroundColor}` variables; renamed `default{color, backgroundColor}` variables to `color` and `backgroundColor` @mnajdova ([#234](https://github.com/stardust-ui/react/pull/234))
+- Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
+
+### Fixes
+- Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
+- Do not throw on missing Icon names @levithomason ([#251](https://github.com/stardust-ui/react/pull/251))
+
+### Features
+- Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
+
 <!--------------------------------[ v0.5.2 ]------------------------------- -->
 ## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.5.1...v0.5.2)
