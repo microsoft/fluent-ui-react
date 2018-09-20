@@ -38,5 +38,20 @@ jobs:
             - .yarn-cache
             - node_modules
       - run:
+          name: Lint
+          command: yarn lint
+      - run:	
+          name: Prettier	
+          command: yarn prettier	
+      - run:	
+          name: Unit Tests	
+          command: yarn test --runInBand	
+      - run:	
+          name: Report coverage	
+          command: bash <(curl -s https://codecov.io/bash)	
+      - run:	
+          name: Visual Tests	
+          command: yarn test:visual	
+      - run:
           name: Project Tests
           command: yarn test:projects:cra-ts
