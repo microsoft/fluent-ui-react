@@ -22,6 +22,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
 - `Add` `RadioGroup` compliant with ARIA patterns. `Radio` changed to `RadioGroup.Item` @jurokapsiar ([#229](https://github.com/stardust-ui/react/pull/229))
 
+### Fixes
+- Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
+- Do not throw on missing Icon names @levithomason ([#251](https://github.com/stardust-ui/react/pull/251))
+
 ### Features
 - Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
 
