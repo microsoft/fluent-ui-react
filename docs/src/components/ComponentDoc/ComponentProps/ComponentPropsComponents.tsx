@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 
@@ -14,7 +14,7 @@ const ComponentPropsComponents: any = ({
   if (displayNames.length === 1) return null
 
   return (
-    <Menu color="green" compact size="small" secondary>
+    <Menu styles={{ root: { color: 'green' } }} type="secondary" pills>
       {_.map(displayNames, displayName => (
         <Menu.Item
           key={displayName}

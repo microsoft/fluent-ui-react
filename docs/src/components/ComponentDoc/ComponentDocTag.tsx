@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Header, Message } from 'semantic-ui-react'
+import { Header } from '@stardust-ui/react'
+import { Message } from 'semantic-ui-react'
+
 const behaviorMenuItems = require('docs/src/behaviorMenu')
 
 const headerStyle = {
@@ -62,24 +64,26 @@ class ComponentDocTag extends React.Component<any, any> {
     const defaultAccBehaviorInfo = tag === 'accessibility' && this.getDefaultBehaviorInfo(info)
 
     return (
-      <Header as="h2" style={headerStyle} className="no-anchor">
-        <Header.Content>{title}</Header.Content>
-
+      <div>
+        <Header
+          as="h3"
+          styles={{ root: { whiteSpace: 'pre-line' } }}
+          className="no-anchor"
+          content={title}
+        />
         {defaultAccBehaviorInfo && (
-          <Header.Subheader>
-            {this.renderDefaultBehaviorInfo(defaultAccBehaviorInfo)}
-          </Header.Subheader>
+          <div>{this.renderDefaultBehaviorInfo(defaultAccBehaviorInfo)}</div>
         )}
 
-        <Header.Subheader>{description}</Header.Subheader>
+        <div>{description}</div>
 
         {!defaultAccBehaviorInfo &&
           !description && (
-            <Header.Subheader>
+            <div>
               <Message error content={errorMessage} compact={true} />
-            </Header.Subheader>
+            </div>
           )}
-      </Header>
+      </div>
     )
   }
 }

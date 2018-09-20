@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { repoURL } from 'docs/src/utils'
-import { Message, Icon } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
+import { Icon } from '@stardust-ui/react'
 
 const wrapStyle = { wordBreak: 'break-word' }
 

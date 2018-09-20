@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Header, Icon } from 'semantic-ui-react'
+import { Grid, Header, Icon } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -77,50 +77,47 @@ class ComponentDoc extends React.Component<any, any> {
 
     return (
       <DocumentTitle title={`${info.displayName} | Stardust`}>
-        <Grid>
-          <Grid.Row style={topRowStyle}>
-            <Grid.Column>
-              <Header
-                as="h1"
-                content={info.displayName}
-                subheader={_.join(info.docblock.description, ' ')}
-              />
-              <ComponentDocTag
-                title="Accessibility"
-                tag="accessibility"
-                errorMessage={accessibilityErrorMessage}
-                info={info}
-              />
-              <ComponentDocSee displayName={info.displayName} />
-              <ComponentDocLinks
-                displayName={info.displayName}
-                parentDisplayName={info.parentDisplayName}
-                repoPath={info.repoPath}
-                type={info.type}
-              />
-              <ComponentProps displayName={info.displayName} props={info.props} />
-            </Grid.Column>
-          </Grid.Row>
+        <Grid
+          columns="1"
+          content={[
+            <Header
+              content={info.displayName}
+              description={_.join(info.docblock.description, ' ')}
+            />,
 
-          <Grid.Row columns="equal">
-            <Grid.Column style={{ padding: '0 0 0 28px' } as React.CSSProperties}>
-              <div ref={this.handleExamplesRef}>
-                <ComponentExamples displayName={info.displayName} />
-              </div>
-              <div style={exampleEndStyle}>
-                This is the bottom <Icon name="pointing down" />
-              </div>
-            </Grid.Column>
-            <Grid.Column computer={5} largeScreen={4} widescreen={4}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+            <ComponentDocTag
+              title="Accessibility"
+              tag="accessibility"
+              errorMessage={accessibilityErrorMessage}
+              info={info}
+            />,
+
+            <ComponentDocSee displayName={info.displayName} />,
+
+            <ComponentDocLinks
+              displayName={info.displayName}
+              parentDisplayName={info.parentDisplayName}
+              repoPath={info.repoPath}
+              type={info.type}
+            />,
+            //   <ComponentSidebar
+            //   activePath={activePath}
+            //   displayName={info.displayName}
+            //   examplesRef={examplesRef}
+            //   onItemClick={this.handleSidebarItemClick}
+            // />,
+
+            <ComponentProps displayName={info.displayName} props={info.props} />,
+
+            <div ref={this.handleExamplesRef}>
+              <ComponentExamples displayName={info.displayName} />
+            </div>,
+
+            <div style={exampleEndStyle}>
+              This is the bottom <Icon name="pointing down" />
+            </div>,
+          ]}
+        />
       </DocumentTitle>
     )
   }

@@ -1,18 +1,8 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { List } from 'semantic-ui-react'
+import { List } from '@stardust-ui/react'
 
 import { repoURL } from '../../utils'
-
-const linkListStyle = {
-  background: '#f7f7f7',
-  boxShadow: '0 0 1em 0.5em #f7f7f7',
-  margin: '0.5em',
-  padding: '0.5em',
-  position: 'absolute',
-  right: '0',
-  top: '0',
-}
 
 export default class ComponentDocLinks extends React.PureComponent<any, any> {
   static propTypes = {
@@ -23,7 +13,19 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
   render() {
     const { repoPath } = this.props
     return (
-      <List link style={linkListStyle}>
+      <List
+        styles={{
+          root: {
+            background: '#f7f7f7',
+            boxShadow: '0 0 1em 0.5em #f7f7f7',
+            margin: '0.5em',
+            padding: '0.5em',
+            position: 'absolute',
+            right: '0',
+            top: '0',
+          },
+        }}
+      >
         <List.Item
           content={
             <code>
@@ -36,7 +38,6 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
               </a>
             </code>
           }
-          icon="github"
         />
       </List>
     )

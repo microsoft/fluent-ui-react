@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Header, Label } from 'semantic-ui-react'
+import { Header, Label } from '@stardust-ui/react'
 
 const titleStyle = {
   margin: 0,
@@ -23,10 +23,9 @@ export default class ComponentExampleTitle extends React.PureComponent<any, any>
             {suiVersion && (
               <Label
                 as="a"
-                color="teal"
                 content={suiVersion}
-                size="tiny"
-                title={`Available from Semantic UI ${suiVersion}`}
+                styles={{ root: { color: 'teal', fontSize: 'x-small' } }}
+                children={`Available from Semantic UI ${suiVersion}`}
               />
             )}
           </Header>

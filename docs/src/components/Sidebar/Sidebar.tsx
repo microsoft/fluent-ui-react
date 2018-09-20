@@ -5,10 +5,13 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { Menu } from '@stardust-ui/react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
+import { white, black } from 'src/themes/teams/siteVariables'
+import { Anchor } from 'brace'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
@@ -104,20 +107,31 @@ class Sidebar extends React.Component<any, any> {
       _.map(info => (
         <Menu.Item
           key={info.displayName}
-          name={info.displayName}
+          content={info.displayName}
           onClick={this.handleItemClick}
           as={NavLink}
           to={getComponentPathname(info)}
           activeClassName="active"
+          styles={{ root: { color: '#979593', background: black, padding: '0px' } }}
         />
       )),
     )([...componentMenu, ...behaviorMenu])
 
     return (
-      <Menu.Item key={nextType}>
-        <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
-        <Menu.Menu>{items}</Menu.Menu>
-      </Menu.Item>
+      <Menu.Item
+        key={nextType}
+        content={
+          <div>
+            {_.capitalize(nextType)}s
+            <Menu
+              vertical
+              items={items}
+              styles={{ root: { color: white, background: black } }}
+              pills
+            />
+          </div>
+        }
+      />
     )
   }, typeOrder)
 
@@ -148,11 +162,11 @@ class Sidebar extends React.Component<any, any> {
       return (
         <Menu.Item
           key={info.displayName}
-          name={info.displayName}
+          content={info.displayName}
           onClick={this.handleItemClick}
           active={isSelected}
-          as={NavLink}
           to={getComponentPathname(info)}
+          styles={{ anchor: { padding: '0px' } }}
         >
           {info.displayName}
           {isSelected && selectedItemLabel}
@@ -160,46 +174,74 @@ class Sidebar extends React.Component<any, any> {
       )
     }, this.filteredMenu)
 
-    return <Menu.Menu>{menuItems}</Menu.Menu>
+    return (
+      <Menu
+        vertical
+        styles={{ root: { color: white, background: black } }}
+        pills
+        items={menuItems}
+      />
+    )
   }
 
   render() {
     const { style } = this.props
     const { query } = this.state
     return (
-      <Menu vertical fixed="left" inverted style={{ ...style }}>
+      <Menu
+        vertical
+        styles={{
+          root: {
+            color: white,
+            background: black,
+            ...style,
+          },
+        }}
+        pills
+      >
         <Menu.Item>
-          <Logo spaced="right" size="mini" />
+          <Logo spaced="right" width="48px" />
           <strong>
             Stardust UI React &nbsp;
             <small>
               <em>{pkg.version}</em>
             </small>
           </strong>
-          <Menu.Menu>
-            <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
-              <Icon name="github" /> GitHub
-            </Menu.Item>
-            <Menu.Item
-              as="a"
-              href={`${repoURL}/blob/master/CHANGELOG.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="file alternate outline" /> CHANGELOG
-            </Menu.Item>
-          </Menu.Menu>
+          <Menu
+            vertical
+            pills
+            styles={{ root: { color: white, background: black } }}
+            items={[
+              {
+                key: 'github',
+                content: 'GitHub',
+                href: repoURL,
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                icon: 'github',
+              },
+              {
+                key: 'change',
+                content: 'CHANGELOG',
+                href: repoURL + '/blob/master/CHANGELOG.md',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+                icon: 'file alternate outline',
+              },
+            ]}
+          />
         </Menu.Item>
-        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
-          Introduction
-        </Menu.Item>
+        <Menu.Item as="NavLink" exact to="/" activeClassName="active" content="Introduction" />
         <Menu.Item>
           Guides
-          <Menu.Menu>
-            <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
-              Quick Start
-            </Menu.Item>
-          </Menu.Menu>
+          <Menu
+            vertical
+            styles={{ root: { color: white, background: black } }}
+            pills
+            items={[
+              { key: 'quickstart', content: <NavLink to="/quick-start">QuickStart</NavLink> },
+            ]}
+          />
         </Menu.Item>
         <Menu.Item active>
           <SemanticUIInput

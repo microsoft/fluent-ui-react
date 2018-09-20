@@ -24,6 +24,7 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
+  href?: string
   icon?: ItemShorthand
   iconOnly?: boolean
   index?: number
@@ -63,6 +64,9 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     /** A menu item can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
+    /** Clickable link target */
+    href: PropTypes.string,
+
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
 
@@ -89,6 +93,21 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
      * For vertical menu, it can point to the start of the item or to the end.
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
+
+    /**
+     * Rel element for href
+     */
+    rel: PropTypes.string,
+
+    /**
+     * Target for href
+     */
+    target: PropTypes.string,
+
+    /**
+     * to
+     */
+    to: PropTypes.string,
 
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
@@ -122,13 +141,17 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'className',
     'content',
     'disabled',
+    'href',
     'icon',
     'iconOnly',
     'index',
     'onClick',
     'pills',
     'pointing',
+    'rel',
     'styles',
+    'target',
+    'to',
     'type',
     'underlined',
     'variables',
@@ -144,7 +167,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, href, target, rel, to } = this.props
 
     return (
       <ElementType
@@ -159,6 +182,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
+            href={href}
+            target={target}
+            rel={rel}
+            to={to}
             {...accessibility.attributes.anchor}
             {...accessibility.keyHandlers.anchor}
           >

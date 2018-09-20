@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Accordion, Icon, Menu } from 'semantic-ui-react'
+import { Accordion, Icon, Menu } from '@stardust-ui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -63,7 +63,7 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
           <b>{sectionName}</b>
           <Icon name="dropdown" />
         </Accordion.Title>
-        <Accordion.Content as={Menu.Menu} active={active}>
+        <Accordion.Content as={Menu} active={active}>
           {_.map(examples, ({ title, examplePath }) => (
             <Menu.Item
               key={examplePath}

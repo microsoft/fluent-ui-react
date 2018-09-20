@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Divider } from 'semantic-ui-react'
+import { Divider } from '@stardust-ui/react'
 
 const descriptionStyle = {
   color: '#777',

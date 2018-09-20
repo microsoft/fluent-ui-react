@@ -24,11 +24,6 @@ function getElementType(Component, props, getDefault?: Function) {
   }
 
   // ----------------------------------------
-  // infer anchor links
-
-  if (props.href) return 'a'
-
-  // ----------------------------------------
   // use defaultProp or 'div'
 
   return defaultProps.as || 'div'
