@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
 import { Chat } from '@stardust-ui/react'
 
@@ -41,7 +40,7 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
       chatMessages &&
       chatMessages.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat messages={chatMessages} styles={{ root: { padding: '0 32px 0 22px' } }} />
+          <Chat messages={chatMessages} styles={{ padding: '0 32px 0 22px' }} />
         </Scrollbars>
       )
     )
