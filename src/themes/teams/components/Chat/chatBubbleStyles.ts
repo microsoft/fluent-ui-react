@@ -24,6 +24,7 @@ const chatMessageStyles = {
         }),
     maxWidth: v.messageWidth,
     width: 'max-content',
+    // TODO check if this is the right style applied
     wordBreak: 'break-all',
     wordWrap: 'break-word',
   }),
