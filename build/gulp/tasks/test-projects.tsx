@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { task, series } from 'gulp'
+import { task } from 'gulp'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
 
