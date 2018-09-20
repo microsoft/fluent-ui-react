@@ -3,15 +3,17 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import ChatMessage from './ChatMessage'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import ChatItem from './ChatItem'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import ChatAction from './ChatAction'
+import ChatBubble from './ChatBubble'
 
 export interface IChatProps {
   as?: any
   className?: string
   children?: ReactChildren
-  messages?: ItemShorthand[]
+  items?: ItemShorthand[]
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -29,8 +31,8 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
     children: PropTypes.node,
 
-    /** Shorthand array of messages. */
-    messages: PropTypes.arrayOf(PropTypes.any),
+    /** Shorthand array of the items inside the chat. */
+    items: PropTypes.arrayOf(PropTypes.any),
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -39,20 +41,20 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'messages', 'styles', 'variables']
+  static handledProps = ['as', 'children', 'className', 'items', 'styles', 'variables']
 
   static defaultProps = { as: 'ul' }
 
-  static Message = ChatMessage
+  static Item = ChatItem
+  static Action = ChatAction
+  static Bubble = ChatBubble
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, messages } = this.props
+    const { children, items } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children)
-          ? children
-          : _.map(messages, message => ChatMessage.create(message))}
+        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>
     )
   }

@@ -1,4 +1,5 @@
 import * as themes from './themes'
+
 export { themes }
 
 export { default as Accordion } from './components/Accordion'
@@ -6,7 +7,9 @@ export { default as Avatar } from './components/Avatar'
 export { default as Button } from './components/Button'
 export { ButtonGroup } from './components/Button'
 export { default as Chat } from './components/Chat'
-export { ChatMessage } from './components/Chat'
+export { ChatItem } from './components/Chat'
+export { ChatAction } from './components/Chat'
+export { ChatBubble } from './components/Chat'
 export { default as Divider } from './components/Divider'
 export { default as Grid } from './components/Grid'
 export { default as Header } from './components/Header'

@@ -6,47 +6,42 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  UIComponent,
   IRenderResultConfig,
+  UIComponent,
 } from '../../lib'
 import {
-  ComponentVariablesInput,
   ComponentPartStyle,
+  ComponentVariablesInput,
   IComponentPartStylesInput,
 } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
-import Avatar from '../Avatar'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Layout from '../Layout'
 import Text from '../Text'
+import Icon from '../Icon'
 
-export interface IChatMessageProps {
+export interface IChatActionProps {
   as?: any
-  author?: ItemShorthand
-  avatar?: ItemShorthand
+  icon?: ItemShorthand
   children?: ReactChildren
   className?: string
   content?: any
-  mine?: boolean
   styles?: ComponentPartStyle
   timestamp?: ItemShorthand
   variables?: ComponentVariablesInput
 }
 
-class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
-  static className = 'ui-chat__message'
+class ChatAction extends UIComponent<Extendable<IChatActionProps>, any> {
+  static className = 'ui-chat__action'
 
   static create: Function
 
-  static displayName = 'ChatMessage'
+  static displayName = 'ChatAction'
 
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Author of the message. */
-    author: customPropTypes.itemShorthand,
-
-    /** Chat messages can have an avatar */
-    avatar: customPropTypes.itemShorthand,
+    /** Control chat messages can have an icon */
+    icon: customPropTypes.itemShorthand,
 
     /** Child content. */
     children: PropTypes.node,
@@ -56,9 +51,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     /** Shorthand for the primary content. */
     content: PropTypes.any,
-
-    /** Indicates whether message belongs to the current user. */
-    mine: PropTypes.bool,
 
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -72,19 +64,17 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
   static handledProps = [
     'as',
-    'author',
-    'avatar',
     'children',
     'className',
     'content',
-    'mine',
+    'icon',
     'styles',
     'timestamp',
     'variables',
   ]
 
   static defaultProps = {
-    as: 'li',
+    as: 'div',
   }
 
   renderComponent({
@@ -93,8 +83,8 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     rest,
     styles,
     variables,
-  }: IRenderResultConfig<IChatMessageProps>) {
-    const { as, avatar, children, mine } = this.props
+  }: IRenderResultConfig<IChatActionProps>) {
+    const { as, icon, children } = this.props
 
     return childrenExist(children) ? (
       <ElementType {...rest} className={cx(classes.root, classes.content)}>
@@ -105,9 +95,10 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
         as={as}
         {...rest}
         className={classes.root}
-        start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
+        start={Icon.create(icon, {
+          defaultProps: { styles: styles.icon, variables: variables.icon },
+        })}
         main={this.renderContent(classes.content, styles, variables)}
-        end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
       />
     )
   }
@@ -117,15 +108,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles: IComponentPartStylesInput,
     variables: ComponentVariablesInput,
   ) => {
-    const { author, content, mine, timestamp } = this.props
-
-    const authorComponent = Text.create(author, {
-      defaultProps: {
-        size: 'sm',
-        styles: styles.author,
-        variables: variables.author,
-      },
-    })
+    const { content, timestamp } = this.props
 
     const timestampComponent = Text.create(timestamp, {
       defaultProps: {
@@ -137,34 +120,14 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     })
 
     return (
-      <Layout
-        className={contentClass}
-        vertical
-        start={
-          <>
-            {!mine && authorComponent}
-            {timestampComponent}
-          </>
-        }
-        main={content}
-      />
+      <>
+        {content}
+        {timestampComponent}
+      </>
     )
   }
-
-  private renderAvatar = (
-    avatar: ItemShorthand,
-    avatarStyles: ComponentPartStyle,
-    variables: ComponentVariablesInput,
-  ) =>
-    avatar &&
-    Avatar.create(avatar, {
-      defaultProps: {
-        styles: avatarStyles,
-        variables: variables.avatar,
-      },
-    })
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
+ChatAction.create = createShorthandFactory(ChatAction, content => ({ content }))
 
-export default ChatMessage
+export default ChatAction

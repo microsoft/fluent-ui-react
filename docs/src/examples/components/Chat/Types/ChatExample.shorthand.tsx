@@ -2,25 +2,63 @@ import React from 'react'
 
 import { Chat } from '@stardust-ui/react'
 
-const messages = [
-  { key: 1, content: 'Hello', author: 'John Doe', timestamp: 'Yesterday, 10:15 PM', mine: true },
-  { key: 2, content: 'Hi', author: 'Jane Doe', timestamp: 'Yesterday, 10:15 PM' },
+const janeAvatar = {
+  src: 'public/images/avatar/small/ade.jpg',
+  status: {
+    color: 'green',
+    icon: 'check',
+    title: 'Available',
+  },
+}
+
+const items = [
+  {
+    key: 1,
+    bubble: { content: 'Hello', author: 'John Doe', timestamp: 'Yesterday, 10:15 PM', mine: true },
+  },
+  {
+    key: 2,
+    bubble: {
+      content: 'Hi',
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      avatar: janeAvatar,
+    },
+  },
   {
     key: 3,
-    content: "Let's go get some lunch!",
-    author: 'John Doe',
-    timestamp: 'Yesterday, 10:15 PM',
-    mine: true,
+    bubble: {
+      content: 'Would you like to grab a lunch?',
+      author: 'John Doe',
+      timestamp: 'Yesterday, 10:16 PM',
+      mine: true,
+    },
   },
   {
     key: 4,
-    content:
-      'Sure thing.  I was thinking we should try the new place downtown. The name of its chief promises a delicious food being offered.',
-    author: 'Jane Doe',
-    timestamp: 'Yesterday, 10:15 PM',
+    bubble: {
+      content: "Sure! Let's try the new place downtown",
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:16 PM',
+      avatar: janeAvatar,
+    },
+  },
+  { key: 5, divider: { content: 'Today', type: 'primary', important: 'true' } },
+  {
+    key: 6,
+    bubble: {
+      content: "Let's have a call",
+      author: 'John Doe',
+      timestamp: 'Today, 11:15 PM',
+      mine: true,
+    },
+  },
+  {
+    key: 7,
+    action: { icon: 'record', content: 'Meeting started', timestamp: "'Today, 11:15 PM'" },
   },
 ]
 
-const ChatExampleShorthand = () => <Chat messages={messages} />
+const ChatExampleShorthand = () => <Chat items={items} />
 
 export default ChatExampleShorthand
