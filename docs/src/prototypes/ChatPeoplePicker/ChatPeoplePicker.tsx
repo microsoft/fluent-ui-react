@@ -213,13 +213,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     // this prevents the menu from being closed when the user
     // selects an item with a keyboard or mouse
     switch (changes.type) {
-      case Downshift.stateChangeTypes.keyDownEnter:
-      case Downshift.stateChangeTypes.clickItem:
-        return {
-          ...changes,
-          isOpen: state.isOpen,
-          highlightedIndex: state.highlightedIndex,
-        }
       case Downshift.stateChangeTypes.changeInput:
         this.setState({
           inputValue: changes.inputValue,
