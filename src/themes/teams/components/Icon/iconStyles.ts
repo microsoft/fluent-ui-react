@@ -98,9 +98,8 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
       width: '1em',
       height: '1em',
 
-      ...(isFontBased
-        ? getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())
-        : {}),
+      ...(isFontBased &&
+        getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,

@@ -256,7 +256,6 @@ export type FontFaces = IFontFace[]
 type Classes = { [iconPart: string]: string }
 type SvgIconFuncArg = {
   classes: Classes
-  props: any
 }
 
 type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
