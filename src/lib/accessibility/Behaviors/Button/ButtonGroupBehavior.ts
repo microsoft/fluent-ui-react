@@ -15,6 +15,7 @@ const ButtonGroupBehavior: Accessibility = {
     mode: FocusZoneMode.Wrap,
     props: {
       isCircularNavigation: false,
+      preventDefaultWhenHandled: true,
     },
   },
 }

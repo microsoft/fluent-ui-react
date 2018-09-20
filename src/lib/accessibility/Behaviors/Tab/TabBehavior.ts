@@ -1,4 +1,6 @@
 import { Accessibility } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
  * @description
@@ -22,9 +24,17 @@ const TabBehavior: Accessibility = (props: any) => ({
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-controls': props['aria-controls'],
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
   handledProps: ['aria-label', 'aria-labelledby', 'aria-controls', 'aria-selected'],
+  keyActions: {
+    anchor: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
+  },
 })
 
 export default TabBehavior
