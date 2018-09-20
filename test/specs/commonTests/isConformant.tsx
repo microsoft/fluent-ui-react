@@ -90,7 +90,7 @@ export default (Component, options: any = {}) => {
         ].join('\n'),
       )
     })
-    return
+    return null
   }
 
   // ----------------------------------------

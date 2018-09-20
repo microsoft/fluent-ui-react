@@ -6,10 +6,13 @@ import ChatMessage from 'src/components/Chat/ChatMessage'
 import Avatar from 'src/components/Avatar'
 import ChatMessageBehavior from 'src/lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
 import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
+import Text from 'src/components/Text'
 
 describe('ChatMessage', () => {
   isConformant(ChatMessage)
   implementsShorthandProp(ChatMessage)('avatar', Avatar, { mapsValueToProp: 'name' })
+  implementsShorthandProp(ChatMessage)('author', Text)
+  implementsShorthandProp(ChatMessage)('timestamp', Text)
 
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {

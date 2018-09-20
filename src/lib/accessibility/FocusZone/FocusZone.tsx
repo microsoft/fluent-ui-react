@@ -73,7 +73,8 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     'componentRef',
     'className',
     'direction',
-    'defaultActiveElement',
+    'defaultTabbableElement',
+    'shouldFocusOnMount',
     'disabled',
     'as',
     'isCircularNavigation',
@@ -115,7 +116,6 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
     this._processingTabKey = false
     this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
-    this.setRef = this.setRef.bind(this)
   }
 
   public componentDidMount(): void {
@@ -142,10 +142,13 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
       // Assign initial tab indexes so that we can set initial focus as appropriate.
       this.updateTabIndexes()
 
-      if (this.props.defaultActiveElement) {
+      if (this.props.defaultTabbableElement) {
         this._activeElement = this._root.current.querySelector(
-          this.props.defaultActiveElement,
+          this.props.defaultTabbableElement,
         ) as HTMLElement
+      }
+
+      if (this.props.shouldFocusOnMount) {
         this.focus()
       }
     }
@@ -265,7 +268,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     return false
   }
 
-  private setRef(elem) {
+  private setRef = (elem: React.ReactInstance): void => {
     // findDOMNode needed to get correct DOM ref with react-hot-loader, see https://github.com/gaearon/react-hot-loader/issues/964
     this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
   }
