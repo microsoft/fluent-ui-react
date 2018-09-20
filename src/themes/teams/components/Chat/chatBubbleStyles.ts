@@ -24,6 +24,8 @@ const chatMessageStyles = {
         }),
     maxWidth: v.messageWidth,
     width: 'max-content',
+    wordBreak: 'break-all',
+    wordWrap: 'break-word',
   }),
 
   avatar: ({ props: p }: { props: IChatBubbleProps }): ICSSInJSStyle => ({
