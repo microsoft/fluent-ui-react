@@ -8,6 +8,7 @@ import DocsRoot from './components/DocsRoot'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
+import Accessibility from './views/Accessibility'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -24,6 +25,7 @@ const Router = () => (
             component={require('./prototypes/chatPane/index').default}
           />
         )}
+        <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

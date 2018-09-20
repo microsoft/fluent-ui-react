@@ -15,7 +15,7 @@ const ChatPaneLayout: React.SFC<IChatPaneLayoutProps> = ({ chat }: IChatPaneLayo
     start={<ChatPaneHeader chat={chat} />}
     main={<ChatPaneContainer chat={chat} />}
     end={<ComposeMessage />}
-    styles={{ root: { backgroundColor: '#f3f2f1', height: '100%' } }}
+    styles={{ backgroundColor: '#f3f2f1', height: '100%' }}
   />
 )
 

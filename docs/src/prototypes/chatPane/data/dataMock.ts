@@ -37,6 +37,7 @@ class ChatMock {
       const user: IUser = {
         id,
         firstName,
+        lastName,
         avatar: internet.avatar(),
         displayName: internet.userName(firstName, lastName),
         email: internet.email(firstName, lastName),
