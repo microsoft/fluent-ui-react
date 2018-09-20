@@ -33,6 +33,8 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
         content: msg.content,
         mine: msg.mine,
         tabIndex: 0,
+        author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
+        timestamp: msg.date.toDateString(),
       }
     })
 
@@ -40,7 +42,7 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
       chatMessages &&
       chatMessages.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat messages={chatMessages} styles={{ padding: '0 32px 0 22px' }} />
+          <Chat messages={chatMessages} styles={{ padding: '0 32px' }} />
         </Scrollbars>
       )
     )
