@@ -126,12 +126,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
-    console.warn('mouse enter hovering')
   }
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
-    console.warn('mouse leave hovering')
   }
 
   componentDidUpdate() {
@@ -154,7 +152,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     } = this.props
 
     const { isHovering } = this.state
-    console.warn(`isHovering: ${isHovering}`)
     const endArea = isHovering && endMedia
 
     const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
