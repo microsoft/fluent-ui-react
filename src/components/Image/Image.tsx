@@ -5,7 +5,7 @@ import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IImageProps {
@@ -16,7 +16,7 @@ export interface IImageProps {
   circular?: boolean
   className?: string
   fluid?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 

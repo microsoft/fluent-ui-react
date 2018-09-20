@@ -10,7 +10,7 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  IComponentPartStylesInput,
+  ComponentPartStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
@@ -29,7 +29,7 @@ export interface IMenuProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
