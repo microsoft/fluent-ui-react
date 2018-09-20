@@ -15,9 +15,7 @@ import {
   IProps,
   IPropsWithVarsAndStyles,
   IState,
-  IThemeInput,
   IThemePrepared,
-  ThemeIcons,
 } from '../../types/theme'
 import {
   IAccessibilityBehavior,

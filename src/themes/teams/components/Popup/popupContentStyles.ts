@@ -1,5 +1,4 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from 'theme'
-import { IPopupContentVariables } from './popupContentVariables'
 import { pxToRem } from '../../../../lib'
 import { IPopupContentProps } from '../../../../components/Popup/PopupContent'
 
