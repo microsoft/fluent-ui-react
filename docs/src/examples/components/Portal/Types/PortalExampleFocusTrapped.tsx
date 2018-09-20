@@ -5,15 +5,11 @@ class PortalExamplePortal extends React.Component {
   render() {
     return (
       <Portal
-        trigger={
-          <Button
-            content={'Toggle portal'}
-            trapFocus={true}
-            focusTrapZoneProps={{
-              isClickableOutsideFocusTrap: true,
-            }}
-          />
-        }
+        trigger={<Button content={'Toggle portal'} />}
+        trapFocus={true}
+        focusTrapZoneProps={{
+          isClickableOutsideFocusTrap: true,
+        }}
       >
         <div
           style={{
