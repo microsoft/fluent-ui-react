@@ -13,7 +13,6 @@ export interface IButtonVariables {
   circularRadius: string
   paddingLeftRightValue: number
   typePrimaryColor: string
-  textSize: string
   typePrimaryBackgroundColor: string
   typePrimaryBackgroundColorActive: string
   typePrimaryBackgroundColorHover: string
@@ -50,7 +49,6 @@ export default (siteVars: any): IButtonVariables => {
     backgroundColorHover: siteVars.gray06,
     circularRadius: pxToRem(999),
     fontWeight: siteVars.fontWeightSemibold,
-    textSize: '16px',
     paddingLeftRightValue: 20,
     typePrimaryColor: siteVars.white,
     typePrimaryBackgroundColor: siteVars.brand,
