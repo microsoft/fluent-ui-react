@@ -56,6 +56,7 @@ interface IPeoplePickerState {
   selected: any[]
   focused: boolean
   inputValue: string
+  deleteOnBackspace: boolean
 }
 
 export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
@@ -69,6 +70,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
       selected: [],
       focused: false,
       inputValue: '',
+      deleteOnBackspace: true,
     }
 
     this.input = React.createRef()
@@ -95,27 +97,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
       selected.pop()
     }
     this.setState({ selected })
-  }
-
-  stateReducer = (state: DownshiftState<MenuItem>, changes: StateChangeOptions<MenuItem>) => {
-    // this prevents the menu from being closed when the user
-    // selects an item with a keyboard or mouse
-    switch (changes.type) {
-      case Downshift.stateChangeTypes.keyDownEnter:
-      case Downshift.stateChangeTypes.clickItem:
-        return {
-          ...changes,
-          isOpen: state.isOpen,
-          highlightedIndex: state.highlightedIndex,
-        }
-      case Downshift.stateChangeTypes.changeInput:
-        if (changes.hasOwnProperty('inputValue')) {
-          this.setState({ inputValue: changes.inputValue })
-        }
-        return changes
-      default:
-        return changes
-    }
   }
 
   public render(): React.ReactNode {
@@ -228,6 +209,28 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     )
   }
 
+  stateReducer = (state: DownshiftState<MenuItem>, changes: StateChangeOptions<MenuItem>) => {
+    // this prevents the menu from being closed when the user
+    // selects an item with a keyboard or mouse
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.keyDownEnter:
+      case Downshift.stateChangeTypes.clickItem:
+        return {
+          ...changes,
+          isOpen: state.isOpen,
+          highlightedIndex: state.highlightedIndex,
+        }
+      case Downshift.stateChangeTypes.changeInput:
+        this.setState({
+          inputValue: changes.inputValue,
+          deleteOnBackspace: !(changes.inputValue === '' && state.inputValue.length === 1),
+        })
+        return changes
+      default:
+        return changes
+    }
+  }
+
   onDropdownChange = element => {
     this.addToSelected(element)
   }
@@ -245,7 +248,11 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Backspace:
         if (this.state.inputValue === '' && this.state.selected.length > 0) {
-          this.removeFromSelected()
+          if (!this.state.deleteOnBackspace) {
+            this.setState({ deleteOnBackspace: true })
+          } else {
+            this.removeFromSelected()
+          }
           return
         }
       default:
