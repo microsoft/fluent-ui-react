@@ -39,6 +39,7 @@ const attachmentStyles: IComponentPartStylesInput = {
   }),
 
   description: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+    display: 'block',
     opacity: 0.5,
     fontSize: variables.descriptionFontSize,
     fontWeight: variables.descriptionFontWeight,

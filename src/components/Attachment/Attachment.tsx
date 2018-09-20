@@ -14,8 +14,8 @@ export type AttachmentProps = {
   actionable?: boolean
   as?: any
   children?: React.ReactChildren
-  description?: string
-  header?: string
+  description?: ItemShorthand
+  header?: ItemShorthand
   icon?: ItemShorthand
   progress?: string | number
   styles?: IComponentPartStylesInput
@@ -59,10 +59,10 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     children: PropTypes.node,
 
     /** A string describing the attachment. */
-    description: PropTypes.string,
+    description: customPropTypes.itemShorthand,
 
     /** The name of the attachment. */
-    header: PropTypes.string,
+    header: customPropTypes.itemShorthand,
 
     /** Shorthand for the icon. */
     icon: customPropTypes.itemShorthand,

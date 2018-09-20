@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
@@ -34,6 +34,8 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   static className = 'ui-text'
 
   static displayName = 'Text'
+
+  static create: Function
 
   static propTypes = {
     /** Change the default element type of the Text component */
@@ -113,5 +115,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     )
   }
 }
+
+Text.create = createShorthandFactory(Text, content => ({ content }))
 
 export default Text
