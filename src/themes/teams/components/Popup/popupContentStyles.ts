@@ -3,14 +3,8 @@ import { IPopupContentVariables } from './popupContentVariables'
 import { pxToRem } from '../../../../lib'
 import { IPopupContentProps } from '../../../../components/Popup/PopupContent'
 
-const popupContentStyles: IComponentPartStylesInput = {
-  root: ({
-    props,
-    variables,
-  }: {
-    props: IPopupContentProps
-    variables: IPopupContentVariables
-  }): ICSSInJSStyle => {
+const popupContentStyles: IComponentPartStylesInput<IPopupContentProps, any> = {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { basic } = props
     const { backgroundColor, borderColor, padding, zIndex } = variables
 

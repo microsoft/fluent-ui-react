@@ -1,16 +1,10 @@
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { IChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
-const chatMessageStyles = {
-  root: ({
-    props: p,
-    variables: v,
-  }: {
-    props: IChatMessageProps
-    variables: IChatMessageVariables
-  }): ICSSInJSStyle => ({
+const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     position: 'relative',
     marginTop: '1rem',
@@ -29,13 +23,7 @@ const chatMessageStyles = {
     margin: pxToRem(10),
   }),
 
-  content: ({
-    props: p,
-    variables: v,
-  }: {
-    props: IChatMessageProps
-    variables: IChatMessageVariables
-  }): ICSSInJSStyle => ({
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     flex: 1,
     padding: '1rem',
     color: 'rgb(64, 64, 64)',

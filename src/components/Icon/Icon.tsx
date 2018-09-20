@@ -1,11 +1,18 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
-
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+
+import {
+  ComponentVariablesInput,
+  IComponentPartStylesInput,
+  ThemeIcons,
+  ThemeIconSpec,
+  FontIconSpec,
+  SvgIconSpec,
+} from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 export type IconSize =
@@ -25,17 +32,26 @@ export interface IIconProps {
   circular?: boolean
   className?: string
   disabled?: boolean
-  font?: boolean | string
   name?: string
   size?: IconSize
-  svg?: boolean
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
 
+/**
+ * @accessibility
+ * Default behavior: IconBehavior
+ *  - attribute "aria-hidden='true'" is applied on icon
+ */
 class Icon extends UIComponent<Extendable<IIconProps>, any> {
+  static declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
+    isSvg: true,
+    icon: svgIcon,
+  })
+  static declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
+
   static create: Function
 
   static className = 'ui-icon'
@@ -58,9 +74,6 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
-    /** Sets font for a font-based icon.  */
-    font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
-
     /** Name of the icon. */
     name: PropTypes.string,
 
@@ -80,9 +93,6 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Render icon from SVGs collection.  */
-    svg: PropTypes.bool,
-
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -100,11 +110,9 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     'circular',
     'className',
     'disabled',
-    'font',
     'name',
     'size',
     'styles',
-    'svg',
     'variables',
     'xSpacing',
   ]
@@ -119,19 +127,21 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, icons, classes, rest, accessibility): React.ReactNode {
+  renderSvgIcon(ElementType, icons: ThemeIcons, classes, rest, accessibility): React.ReactNode {
     const { name } = this.props
-    const renderIcon = icons[name]
+    const svgIconDescriptor = icons[name].icon as SvgIconSpec
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        {renderIcon && renderIcon(classes)}
+        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
       </ElementType>
     )
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility, icons }) {
-    return this.props.svg
+  renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+    const { icons = {} } = theme
+
+    return icons[this.props.name] && icons[this.props.name].isSvg
       ? this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
       : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
