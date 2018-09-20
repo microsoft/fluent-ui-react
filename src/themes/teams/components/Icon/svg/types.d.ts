@@ -1,13 +1,11 @@
 import * as React from 'react'
-import {
-  ObjectOf,
-  ComponentPartStyleFunction,
-  RenderSvgIconFunction,
-} from '../../../../../../types/theme'
+import { SvgIconSpec, ComponentPartStyleFunction } from '../../../../../../types/theme'
+import { Extendable, ObjectOf, ObjectOrFunc } from '../../../../../../types/utils'
+import { IIconProps } from '../../../../../components/Icon/Icon'
 
-type IconSpecObject = {
-  icon: RenderSvgIconFunction
-  styles: ObjectOf<ComponentPartStyleFunction>
+type SvgIconSpecWithStyles = {
+  icon: SvgIconSpec
+  styles: ObjectOf<ComponentPartStyleFunction<IIconProps, any>>
 }
 
-export type IconSpec = IconSpecObject | RenderSvgIconFunction
+export type TeamsSvgIconSpec = SvgIconSpec | SvgIconSpecWithStyles

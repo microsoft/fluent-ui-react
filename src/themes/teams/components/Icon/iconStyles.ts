@@ -1,7 +1,9 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
+import { callable } from '../../../../lib'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IconXSpacing, IIconProps, IIconExtraProps } from '../../../../components/Icon/Icon'
+import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { ResultOf } from '../../../../../types/utils'
+import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
 
 import { getStyle as getSvgStyle } from './svg'
 
@@ -17,17 +19,17 @@ const sizes = new Map([
   ['massive', 8],
 ])
 
-const getFontIcon = name => {
-  const fontFamily = name && name.includes('outline') ? 'outline-icons' : 'Icons'
-  const content = (name && `'\\${fontAwesomeIcons(name)}'`) || '?'
+const getDefaultFontIcon = (iconName: string) => {
+  const fontFamily = iconName && iconName.includes('outline') ? 'outline-icons' : 'Icons'
+  const content = (iconName && `'\\${fontAwesomeIcons(iconName)}'`) || '?'
 
   return { content, fontFamily }
 }
 
 const getSize = size => `${sizes.get(size)}em`
 
-const getFontStyles = (name): ICSSInJSStyle => {
-  const { fontFamily, content } = getFontIcon(name)
+const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): ICSSInJSStyle => {
+  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
@@ -80,14 +82,15 @@ const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
   height: '2em',
 })
 
-const iconStyles = {
+const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   root: ({
-    props: { disabled, isFontBased, name, size, bordered, circular, xSpacing },
+    props: { disabled, name, size, bordered, circular, xSpacing },
     variables: v,
-  }: {
-    props: IIconProps & IIconExtraProps
-    variables: any
+    theme,
   }): ICSSInJSStyle => {
+    const iconSpec = theme.icons[name]
+    const isFontBased = !iconSpec || !iconSpec.isSvg
+
     return {
       display: 'inline-block',
       fontSize: getSize(size),
@@ -95,7 +98,8 @@ const iconStyles = {
       width: '1em',
       height: '1em',
 
-      ...(isFontBased ? getFontStyles(name) : {}),
+      ...(isFontBased &&
+        getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
 
       ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,
