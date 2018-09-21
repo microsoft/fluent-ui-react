@@ -102,7 +102,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   public render(): React.ReactNode {
     return (
       <div style={this.props.styles}>
-        <Label content="Add" styles={peoplePickerStyles.addLabel} id={this.labelId} />
+        <Label content="Add people" styles={peoplePickerStyles.addLabel} id={this.labelId} />
         <Downshift
           stateReducer={this.stateReducer}
           onChange={this.onDropdownChange}
@@ -117,7 +117,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             isOpen,
             inputValue,
             highlightedIndex,
-            toggleMenu,
+            selectItemAtIndex,
           }) => {
             const availableItems = this.props.source(inputValue, this.state.selected)
             return (
@@ -145,6 +145,9 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                             name: 'close',
                             onClick: this.onCloseIconClick.bind(this, element),
                             onKeyDown: this.onCloseIconKeyDown.bind(this, element),
+                            'aria-label': `Remove ${element.name} from selection.`,
+                            'aria-hidden': false,
+                            role: 'button',
                           }}
                         />
                       ))}
@@ -154,9 +157,15 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     placeholder={this.state.selected.length > 0 ? '' : 'Start typing a name'}
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
-                    {...getInputProps()}
-                    aria-labelledby={this.labelId}
-                    onBlur={this.onInputBlur.bind(this, toggleMenu, isOpen)} // must be here to override the one from getInputProps()
+                    {...getInputProps({
+                      onBlur: this.onInputBlur,
+                      'aria-labelledby': this.labelId,
+                      onKeyDown: this.onInputKeyDown.bind(
+                        this,
+                        highlightedIndex,
+                        selectItemAtIndex,
+                      ),
+                    })}
                   />
                 </div>
                 <List
@@ -232,9 +241,20 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     this.setState({ focused: true })
   }
 
-  onInputBlur = (toggleMenu, isOpen) => {
+  onInputBlur = () => {
     this.setState({ focused: false })
-    isOpen && toggleMenu()
+  }
+
+  onInputKeyDown = (highlightedIndex, selectItemAtIndex, event) => {
+    switch (keyboardKey.getCode(event)) {
+      case keyboardKey.Tab:
+        if (highlightedIndex && !event.shiftKey) {
+          selectItemAtIndex(highlightedIndex)
+        }
+        return
+      default:
+        return
+    }
   }
 
   onInputKeyUp = event => {
