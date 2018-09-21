@@ -110,14 +110,17 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     accessibility: IconBehavior,
   }
 
-  renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
+  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, icons: ThemeIcons, classes, rest, accessibility): React.ReactNode {
-    const { name } = this.props
-    const svgIconDescriptor = icons[name].icon as SvgIconSpec
-
+  private renderSvgIcon(
+    ElementType,
+    svgIconDescriptor: SvgIconSpec,
+    classes,
+    rest,
+    accessibility,
+  ): React.ReactNode {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
@@ -125,11 +128,13 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     )
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
     const { icons = {} } = theme
 
-    return icons[this.props.name] && icons[this.props.name].isSvg
-      ? this.renderSvgIcon(ElementType, icons, classes, rest, accessibility)
+    const maybeIcon = icons[this.props.name]
+
+    return maybeIcon && maybeIcon.isSvg
+      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
       : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }
