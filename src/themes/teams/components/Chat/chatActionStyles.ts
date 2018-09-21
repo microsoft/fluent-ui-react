@@ -10,7 +10,8 @@ const chatMessageStyles = {
   }),
 
   icon: (): ICSSInJSStyle => ({
-    width: pxToRem(42),
+    width: pxToRem(32),
+    margin: `0 ${pxToRem(10)} 0 0`,
   }),
 
   timestamp: (): ICSSInJSStyle => ({
