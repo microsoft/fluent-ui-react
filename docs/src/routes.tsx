@@ -10,7 +10,7 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Accessibility from './views/Accessibility'
 import Theming from './views/Theming'
-import MoreExamples from './views/MoreExamples'
+import ThemingExamples from './views/ThemingExamples'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -22,7 +22,7 @@ const Router = () => (
         <DocsLayout exact path="/quick-start" component={QuickStart} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
-        <DocsLayout exact path="/more-examples" component={MoreExamples} />
+        <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>
