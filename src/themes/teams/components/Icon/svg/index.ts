@@ -1,21 +1,15 @@
 import svgIconsAndStyles from './icons'
-import { TeamsSvgIconSpec } from './types'
+import { SvgIconSpecWithStyles, TeamsSvgIconSpec } from './types'
 
 export const getStyle = partName => {
   return args => {
     const { props } = args
 
-    if (props.isFontBased) {
-      return undefined
-    }
+    const maybeIconSpec = svgIconsAndStyles[props.name]
+    const maybeIconStyles = maybeIconSpec && (maybeIconSpec as SvgIconSpecWithStyles).styles
 
-    const iconStyles =
-      typeof svgIconsAndStyles[props.name] === 'object'
-        ? svgIconsAndStyles[props.name].styles
-        : undefined
-
-    if (iconStyles && iconStyles[partName]) {
-      return iconStyles[partName](args)
+    if (maybeIconStyles && maybeIconStyles[partName]) {
+      return maybeIconStyles[partName](args)
     }
 
     return undefined

@@ -1,3 +1,5 @@
+import { TeamsSvgIconSpec } from '../types'
+
 import call from './call'
 import callEnd from './callEnd'
 import callVideo from './callIncomingVideo'
@@ -22,4 +24,4 @@ export default {
   more,
   'team-create': teamCreate,
   umbrella,
-}
+} as { [iconName: string]: TeamsSvgIconSpec }

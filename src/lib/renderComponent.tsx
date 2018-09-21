@@ -49,7 +49,6 @@ export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
 export interface IRenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
-  getExtraProps: (any) => any
   displayName: string
   handledProps: string[]
   props: IPropsWithVarsAndStyles
@@ -101,7 +100,6 @@ const renderComponent = <P extends {}>(
   const {
     className,
     defaultProps,
-    getExtraProps,
     displayName,
     handledProps,
     props,
@@ -116,15 +114,12 @@ const renderComponent = <P extends {}>(
           siteVariables = {},
           componentVariables = {},
           componentStyles = {},
-          icons = {},
           rtl = false,
           renderer = felaRenderer,
         } = theme
-
         const ElementType = getElementType({ defaultProps }, props)
 
-        const derivedProps = getExtraProps({ icons })
-        const stateAndProps = { ...derivedProps, ...state, ...props }
+        const stateAndProps = { ...state, ...props }
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -144,7 +139,6 @@ const renderComponent = <P extends {}>(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
         )
-
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
