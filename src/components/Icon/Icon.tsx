@@ -4,12 +4,7 @@ import { callable, customPropTypes, UIComponent, createShorthandFactory } from '
 import { IconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import {
-  ComponentPartStyle,
-  ComponentVariablesInput,
-  ThemeIcons,
-  SvgIconSpec,
-} from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
