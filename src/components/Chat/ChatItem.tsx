@@ -40,19 +40,19 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Shorthand for the bubble message. */
+    /** Shorthand for the bubble message. Note: this cannot be used with the action or divider prop at the same time. */
     bubble: customPropTypes.every([
       customPropTypes.disallow(['action', 'divider']),
       customPropTypes.itemShorthand,
     ]),
 
-    /** Shorthand for the divider message. */
+    /** Shorthand for the divider item. Note: this cannot be used with the bubble or action prop at the same time. */
     divider: customPropTypes.every([
       customPropTypes.disallow(['action', 'bubble']),
       customPropTypes.itemShorthand,
     ]),
 
-    /** Shorthand for the control message. */
+    /** Shorthand for the control message item. Note: this cannot be used with the bubble or divider prop at the same time. */
     action: customPropTypes.every([
       customPropTypes.disallow(['bubble', 'divider']),
       customPropTypes.itemShorthand,

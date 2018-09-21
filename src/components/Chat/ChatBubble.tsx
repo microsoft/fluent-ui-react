@@ -45,7 +45,7 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     /** Author of the message. */
     author: customPropTypes.itemShorthand,
 
-    /** Chat messages can have an avatar */
+    /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
     /** Child content. */
