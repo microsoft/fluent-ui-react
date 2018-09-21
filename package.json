@@ -8,7 +8,6 @@
   "types": "dist/es/index.d.ts",
   "sideEffects": false,
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
@@ -36,6 +35,7 @@
     "pretest": "yarn satisfied && gulp build:docs:docgen",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:visual": "gulp screener",
+    "test:projects:cra-ts": "gulp test:projects:cra-ts",
     "test:watch": "yarn test --watchAll",
     "generate:component": "gulp generate:component"
   },
@@ -93,6 +93,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-fela": "^7.2.0",
     "react-popper": "^1.0.2",
+    "tmp": "^0.0.33",
     "what-input": "^5.1.2"
   },
   "devDependencies": {

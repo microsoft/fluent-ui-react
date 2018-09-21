@@ -202,6 +202,9 @@ class Sidebar extends React.Component<any, any> {
             <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
               Accessibility
             </Menu.Item>
+            <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
+              Theming
+            </Menu.Item>
           </Menu.Menu>
         </Menu.Item>
         {process.env.NODE_ENV !== 'production' && (
