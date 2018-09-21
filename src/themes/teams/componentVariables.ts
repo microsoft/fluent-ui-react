@@ -38,7 +38,7 @@ export { default as Menu } from './components/Menu/menuVariables'
 
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
-export { default as Radio } from './components/Radio/radioVariables'
+export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 
 export { default as Status } from './components/Status/statusVariables'
 
