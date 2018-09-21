@@ -1,10 +1,12 @@
 import React from 'react'
 import Types from './Types'
+import Items from './Items'
 
-const MessageExamples = () => (
+const ChatExamples = () => (
   <div>
     <Types />
+    <Items />
   </div>
 )
 
-export default MessageExamples
+export default ChatExamples
