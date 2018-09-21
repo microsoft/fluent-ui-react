@@ -52,3 +52,6 @@ jobs:
       - run:
           name: Visual Tests
           command: yarn test:visual
+      - run:
+          name: Project Tests
+          command: yarn test:projects:cra-ts
