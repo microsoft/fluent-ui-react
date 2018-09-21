@@ -1,6 +1,6 @@
 import { IThemeInput, ThemeIcons, SvgIconSpec } from '../../../types/theme'
 
-import Icon from '../../../src/components/Icon'
+import Icon from '../../../src/components/Icon/Icon'
 
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
