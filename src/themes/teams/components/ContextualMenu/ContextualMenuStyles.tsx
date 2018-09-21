@@ -4,15 +4,16 @@ import { IComponentPartStylesInput, ICSSInJSStyle, IProps } from '../../../../..
 const contextualMenuStyles: IComponentPartStylesInput = {
   root: ({
     props,
-    variables: { height, width, padding },
+    variables: { height, maxWidth, padding },
   }: {
     props: IProps
     variables: IContextualMenuVariables
   }): ICSSInJSStyle => {
     const styles = {
       height,
-      width,
+      maxWidth,
       padding,
+      border: '1px solid #eeeeee',
     }
 
     return styles
