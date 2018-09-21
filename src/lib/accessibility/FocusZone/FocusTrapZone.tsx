@@ -117,9 +117,16 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
 
     this._unsubscribeFromEvents()
+    const lastActiveFocusTrap = FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
 
     if (!FocusTrapZone._focusStack.length) {
       this._showContentInAccessibilityTree()
+    } else if (
+      lastActiveFocusTrap._root.current &&
+      lastActiveFocusTrap._root.current.hasAttribute(HIDDEN_FROM_ACC_TREE)
+    ) {
+      lastActiveFocusTrap._root.current.removeAttribute(HIDDEN_FROM_ACC_TREE)
+      lastActiveFocusTrap._root.current.removeAttribute('aria-hidden ')
     }
   }
 
@@ -280,13 +287,23 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
   }
 
   private _hideContentFromAccessibilityTree = () => {
+    if (!document.body.contains(this._root.current)) {
+      // In case popup render options will change
+      throw new Error(
+        'Body does not contain trap zone element as expected. If it is done intentionally, please, make sure to update FocusTrapZone.',
+      )
+    }
     const elements = (document.body && document.body.children) || []
 
-    // loop through all body's children, except the last one - which is the portal
+    // loop through all body's children, except the last one - which is the popup
     for (let index = 0; index < elements.length - 1; index++) {
       const element = elements[index]
 
-      if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE') {
+      if (
+        element.nodeName !== 'SCRIPT' &&
+        element.nodeName !== 'STYLE' &&
+        element.getAttribute('aria-hidden') !== 'true'
+      ) {
         element.setAttribute('aria-hidden', 'true')
         element.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
       }
