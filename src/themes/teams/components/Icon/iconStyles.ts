@@ -125,23 +125,7 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
 
   g: getSvgStyle('g'),
 
-  path1: getSvgStyle('path1'),
-
-  path2: getSvgStyle('path2'),
-
-  path3: getSvgStyle('path3'),
-
-  path4: getSvgStyle('path4'),
-
-  path5: getSvgStyle('path5'),
-
-  path6: getSvgStyle('path6'),
-
-  path7: getSvgStyle('path7'),
-
-  path8: getSvgStyle('path8'),
-
-  path9: getSvgStyle('path9'),
+  /* additional SVG styles for different paths could be added/used in the same way */
 }
 
 export default iconStyles
