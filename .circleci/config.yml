@@ -41,17 +41,17 @@ jobs:
           name: Lint
           command: yarn lint
       - run:
-          name: Prettier	
-          command: yarn prettier	
+          name: Prettier
+          command: yarn prettier
       - run:
-          name: Unit Tests	
+          name: Unit Tests
           command: yarn test --maxWorkers=4
       - run:
-          name: Report coverage	
-          command: bash <(curl -s https://codecov.io/bash)	
+          name: Report coverage
+          command: bash <(curl -s https://codecov.io/bash)
       - run:
-          name: Visual Tests	
-          command: yarn test:visual	
+          name: Visual Tests
+          command: yarn test:visual
       - run:
           name: Project Tests
           command: yarn test:projects:cra-ts
