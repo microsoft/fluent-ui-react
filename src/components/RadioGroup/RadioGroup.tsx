@@ -9,8 +9,12 @@ import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
 import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentVariablesObject, ComponentPartStyle } from 'theme'
-import { Extendable, ItemShorthand, ReactChildren } from 'utils'
+import {
+  ComponentVariablesInput,
+  ComponentVariablesObject,
+  ComponentPartStyle,
+} from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IRadioGroupProps {
   accessibility?: Accessibility
