@@ -105,18 +105,18 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     'variables',
   ]
 
-  public static defaultProps = {
+  public static defaultProps: IPopupProps = {
     as: Portal,
     align: 'start',
     position: 'above',
-    accessibility: PopupBehavior as Accessibility,
+    accessibility: PopupBehavior,
   }
 
   public state = { triggerRef: undefined, popupOpened: false }
 
   actionHandlers: AccessibilityActionHandlers = {
     performClick: e => this.onTriggerClick(e),
-    closeAndFocusTrigger: e => this.handlePopupState(e, false, this.focusTrigger),
+    closeAndFocusTrigger: e => this.handlePopupState(e, () => false, this.focusTrigger),
   }
 
   public renderComponent({
@@ -139,7 +139,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
           ...accessibility.attributes.trigger,
           ...accessibility.keyHandlers.trigger,
         }}
-        onOutsideClick={e => this.handlePopupState(e, false)}
+        onOutsideClick={e => this.handlePopupState(e, () => false)}
         onTriggerClick={this.onTriggerClick}
       >
         {childrenExist(children)
@@ -154,7 +154,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   private renderContent(
     popupPlacement: Placement,
-    renderChildrenCb: (props: PopperChildrenProps) => React.ReactNode,
+    renderPopperChildrenFromProps: (props: PopperChildrenProps) => React.ReactNode,
   ): JSX.Element {
     const triggerRef = this.state.triggerRef
 
@@ -163,7 +163,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         <Popper
           placement={popupPlacement}
           referenceElement={triggerRef}
-          children={renderChildrenCb}
+          children={renderPopperChildrenFromProps}
         />
       )
     )
@@ -192,12 +192,19 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   }
 
   private onTriggerClick = (e: Event) => {
-    this.handlePopupState(e, !this.state.popupOpened)
+    this.handlePopupState(e, prevOpened => !prevOpened)
   }
 
-  private handlePopupState = (e: Event, popupOpened: boolean, afterRenderCb?: () => void) => {
+  private handlePopupState = (
+    e: Event,
+    getPopupOpened: (previousOpened) => boolean,
+    afterRenderCb?: () => void,
+  ) => {
     e.preventDefault()
-    this.setState({ popupOpened }, afterRenderCb)
+    this.setState(
+      previousState => ({ popupOpened: getPopupOpened(previousState.popupOpened) }),
+      afterRenderCb,
+    )
   }
 
   private focusTrigger = () => _.invoke(this.state.triggerRef, 'focus')

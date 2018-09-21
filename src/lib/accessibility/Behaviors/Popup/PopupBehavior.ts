@@ -12,8 +12,8 @@ import _ from 'lodash'
 const PopupBehavior: Accessibility = (props: any) => ({
   attributes: {
     trigger: {
-      role: getAriaAttribute('role', props, 'button'),
-      tabIndex: getAriaAttribute('tabIndex', props, '0'),
+      role: getAriaAttributeFromProps('role', props, 'button'),
+      tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
       'aria-haspopup': 'true',
       'aria-disabled': !!props['disabled'],
     },
@@ -32,10 +32,9 @@ const PopupBehavior: Accessibility = (props: any) => ({
   },
 })
 
-const isFocusable = props => {
+const isFocusable = propsData => {
   try {
-    const { as, href } = props.trigger.props
-    const { type } = props.trigger
+    const { as, href, type } = propsData
     return (
       type === 'button' ||
       type === 'input' ||
@@ -47,18 +46,17 @@ const isFocusable = props => {
   }
 }
 
-const getAriaAttribute = (attribute, props, defaultValue) => {
-  try {
-    if (props.trigger.props[attribute]) {
-      return props.trigger.props[attribute]
-    }
-    if (isFocusable(props)) {
-      return undefined
-    }
-    return defaultValue
-  } catch {
-    return defaultValue
+const getAriaAttributeFromProps = (attributeName: string, props: any, defaultValue: string) => {
+  if (!props.trigger) return undefined
+  if (props.trigger.props[attributeName]) {
+    return props.trigger.props[attributeName]
   }
+  const { as, href } = props.trigger.props
+  const { type } = props.trigger
+  if (isFocusable({ as, href, type })) {
+    return undefined
+  }
+  return defaultValue
 }
 
 export default PopupBehavior
