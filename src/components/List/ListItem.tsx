@@ -17,6 +17,7 @@ import { Extendable } from '../../../types/utils'
 export interface IListItemProps {
   accessibility?: Accessibility
   as?: any
+  atomicItemProps?: IAtomicItemProps
   className?: string
   contentMedia?: any
   content?: any
@@ -31,7 +32,6 @@ export interface IListItemProps {
   truncateHeader?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
-  atomicItemProps?: IAtomicItemProps
 }
 
 export interface IListItemState extends IAtomicItemState {
@@ -47,6 +47,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   static propTypes = {
     as: customPropTypes.as,
+    atomicItemProps: PropTypes.object,
 
     /** Additional classes. */
     className: PropTypes.string,
@@ -80,13 +81,12 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    atomicItemProps: PropTypes.object,
   }
 
   static handledProps = [
     'accessibility',
     'as',
+    'atomicItemProps',
     'className',
     'content',
     'contentMedia',
@@ -101,7 +101,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     'truncateContent',
     'truncateHeader',
     'variables',
-    'atomicItemProps',
   ]
 
   static defaultProps = {
