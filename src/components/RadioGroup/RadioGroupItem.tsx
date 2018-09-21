@@ -5,8 +5,13 @@ import * as _ from 'lodash'
 
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
-import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
-import { ComponentVariablesInput, ComponentPartStyle } from 'theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'
