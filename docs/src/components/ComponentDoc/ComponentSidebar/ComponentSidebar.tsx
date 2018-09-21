@@ -46,7 +46,7 @@ class ComponentSidebar extends React.Component<any, any> {
       <Sticky context={examplesRef} offset={15}>
         <Menu
           fluid
-          styles={{ root: { ...sidebarStyle } }}
+          styles={{ ...sidebarStyle }}
           vertical
           content={_.map(sections, ({ examples, sectionName }) => (
             <ComponentSidebarSection

@@ -9,17 +9,15 @@ const ComponentControlsShowRtl: React.SFC = ({ active, onClick }: any) => (
     active={active}
     onClick={onClick}
     icon={{
-      styles: { root: { marginBottom: '10px' } },
+      styles: { marginBottom: '10px' },
       size: 'large',
       name: 'align right',
       xspacing: 'both',
     }}
     content="RTL"
     styles={{
-      root: {
-        display: 'grid',
-        paddingTop: '0px',
-      },
+      display: 'grid',
+      paddingTop: '0px',
     }}
   />
 )

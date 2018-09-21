@@ -18,8 +18,8 @@ export default class ComponentPropName extends React.PureComponent<any, any> {
           <Popup
             content="Required"
             align="center"
-            styles={{ root: { fontSize: 'x-small' } }}
-            trigger={<Icon styles={{ root: { color: 'red' } }} name="asterisk" size="small" />}
+            styles={{ fontSize: 'x-small' }}
+            trigger={<Icon styles={{ color: 'red' }} name="asterisk" size="small" />}
           />
         )}
       </div>

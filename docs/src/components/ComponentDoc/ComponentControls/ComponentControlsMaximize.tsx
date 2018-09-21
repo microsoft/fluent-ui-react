@@ -8,13 +8,11 @@ const ComponentControlsMaximize: any = ({ examplePath, onClick }) => (
   <Menu.Item
     onClick={onClick}
     styles={{
-      root: {
-        display: 'grid',
-        textAlign: 'center',
-      },
+      display: 'grid',
+      textAlign: 'center',
     }}
     icon={{
-      styles: { root: { color: 'grey', marginBottom: '10px' } },
+      styles: { color: 'grey', marginBottom: '10px' },
       size: 'large',
       name: 'window maximize',
       xspacing: 'both',

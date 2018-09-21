@@ -15,15 +15,13 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
     return (
       <List
         styles={{
-          root: {
-            background: '#f7f7f7',
-            boxShadow: '0 0 1em 0.5em #f7f7f7',
-            margin: '0.5em',
-            padding: '0.5em',
-            position: 'absolute',
-            right: '0',
-            top: '0',
-          },
+          background: '#f7f7f7',
+          boxShadow: '0 0 1em 0.5em #f7f7f7',
+          margin: '0.5em',
+          padding: '0.5em',
+          position: 'absolute',
+          right: '0',
+          top: '0',
         }}
       >
         <List.Item

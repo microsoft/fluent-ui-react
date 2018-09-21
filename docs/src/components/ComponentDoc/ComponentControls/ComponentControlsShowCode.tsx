@@ -9,13 +9,11 @@ const ComponentControlsShowCode: any = ({ active, onClick }) => (
     active={active}
     onClick={onClick}
     styles={{
-      root: {
-        display: 'grid',
-        textAlign: 'center',
-      },
+      display: 'grid',
+      textAlign: 'center',
     }}
     icon={{
-      styles: { root: { color: active ? 'green' : 'grey', marginBottom: '10px' } },
+      styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
       size: 'large',
       name: 'code',
       xspacing: 'both',

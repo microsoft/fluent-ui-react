@@ -5,8 +5,8 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Icon, Input as SemanticUIInput } from 'semantic-ui-react'
-import { Menu } from '@stardust-ui/react'
+import { Input as SemanticUIInput } from 'semantic-ui-react'
+import { Menu, Icon } from '@stardust-ui/react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
@@ -18,7 +18,7 @@ const componentMenu = require('docs/src/componentMenu')
 const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
-const flexDislayStyle: any = { display: 'flex' }
+const flexDislayStyle: any = { color: white, display: 'flex' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -203,7 +203,7 @@ class Sidebar extends React.Component<any, any> {
                 key: 'github',
                 content: (
                   <div style={flexDislayStyle}>
-                    GitHub<Icon name="chess rook" styles={{ root: { textAlign: 'right' } }} />
+                    GitHub<Icon name="chess rook" styles={{ textAlign: 'right', width: '100%' }} />
                   </div>
                 ),
                 href: repoURL,
@@ -212,11 +212,17 @@ class Sidebar extends React.Component<any, any> {
               },
               {
                 key: 'change',
-                content: 'CHANGELOG',
+                content: (
+                  <div style={flexDislayStyle}>
+                    CHANGELOG<Icon
+                      name="file alternate outline"
+                      styles={{ textAlign: 'right', width: '100%' }}
+                    />
+                  </div>
+                ),
                 href: repoURL + '/blob/master/CHANGELOG.md',
                 target: '_blank',
                 rel: 'noopener noreferrer',
-                icon: 'file alternate outline',
               },
             ]}
           />

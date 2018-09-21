@@ -24,7 +24,7 @@ export default class ComponentExampleTitle extends React.PureComponent<any, any>
               <Label
                 as="a"
                 content={suiVersion}
-                styles={{ root: { color: 'teal', fontSize: 'x-small' } }}
+                styles={{ color: 'teal', fontSize: 'x-small' }}
                 children={`Available from Semantic UI ${suiVersion}`}
               />
             )}

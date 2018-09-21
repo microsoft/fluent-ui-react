@@ -14,7 +14,7 @@ const ComponentPropsComponents: any = ({
   if (displayNames.length === 1) return null
 
   return (
-    <Menu styles={{ root: { color: 'green' } }} type="secondary" pills>
+    <Menu styles={{ color: 'green' }} type="secondary" pills>
       {_.map(displayNames, displayName => (
         <Menu.Item
           key={displayName}

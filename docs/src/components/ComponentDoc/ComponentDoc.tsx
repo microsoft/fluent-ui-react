@@ -77,47 +77,49 @@ class ComponentDoc extends React.Component<any, any> {
 
     return (
       <DocumentTitle title={`${info.displayName} | Stardust`}>
-        <Grid
-          columns="1"
-          content={[
-            <Header
-              content={info.displayName}
-              description={_.join(info.docblock.description, ' ')}
-            />,
+        <div>
+          <Grid
+            columns="1"
+            content={[
+              <Header
+                content={info.displayName}
+                description={_.join(info.docblock.description, ' ')}
+              />,
 
-            <ComponentDocTag
-              title="Accessibility"
-              tag="accessibility"
-              errorMessage={accessibilityErrorMessage}
-              info={info}
-            />,
+              <ComponentDocTag
+                title="Accessibility"
+                tag="accessibility"
+                errorMessage={accessibilityErrorMessage}
+                info={info}
+              />,
 
-            <ComponentDocSee displayName={info.displayName} />,
+              <ComponentDocSee displayName={info.displayName} />,
 
-            <ComponentDocLinks
-              displayName={info.displayName}
-              parentDisplayName={info.parentDisplayName}
-              repoPath={info.repoPath}
-              type={info.type}
-            />,
-            //   <ComponentSidebar
-            //   activePath={activePath}
-            //   displayName={info.displayName}
-            //   examplesRef={examplesRef}
-            //   onItemClick={this.handleSidebarItemClick}
-            // />,
+              <ComponentDocLinks
+                displayName={info.displayName}
+                parentDisplayName={info.parentDisplayName}
+                repoPath={info.repoPath}
+                type={info.type}
+              />,
 
-            <ComponentProps displayName={info.displayName} props={info.props} />,
+              <ComponentProps displayName={info.displayName} props={info.props} />,
 
-            <div ref={this.handleExamplesRef}>
-              <ComponentExamples displayName={info.displayName} />
-            </div>,
+              <div ref={this.handleExamplesRef}>
+                <ComponentExamples displayName={info.displayName} />
+              </div>,
 
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
-            </div>,
-          ]}
-        />
+              <div style={exampleEndStyle}>
+                This is the bottom <Icon name="pointing down" />
+              </div>,
+            ]}
+          />
+          <ComponentSidebar
+            activePath={activePath}
+            displayName={info.displayName}
+            examplesRef={examplesRef}
+            onItemClick={this.handleSidebarItemClick}
+          />
+        </div>
       </DocumentTitle>
     )
   }

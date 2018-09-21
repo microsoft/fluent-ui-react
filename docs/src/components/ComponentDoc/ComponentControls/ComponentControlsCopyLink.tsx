@@ -33,13 +33,11 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
       <Menu.Item
         onClick={this.handleClick}
         styles={{
-          root: {
-            display: 'grid',
-            textAlign: 'center',
-          },
+          display: 'grid',
+          textAlign: 'center',
         }}
         icon={{
-          styles: { root: { color: active ? 'green' : 'grey', marginBottom: '10px' } },
+          styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
           size: 'large',
           name: 'linkify',
           xspacing: 'both',

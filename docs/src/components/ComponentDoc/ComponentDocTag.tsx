@@ -67,7 +67,7 @@ class ComponentDocTag extends React.Component<any, any> {
       <div>
         <Header
           as="h3"
-          styles={{ root: { whiteSpace: 'pre-line' } }}
+          //          styles={{ whiteSpace: 'pre-line' }}
           className="no-anchor"
           content={title}
         />

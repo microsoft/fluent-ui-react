@@ -59,20 +59,15 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
 
     return (
       <Menu.Item>
-        <Accordion.Title active={active} onClick={this.handleTitleClick}>
-          <b>{sectionName}</b>
-          <Icon name="dropdown" />
-        </Accordion.Title>
-        <Accordion.Content as={Menu} active={active}>
-          {_.map(examples, ({ title, examplePath }) => (
-            <Menu.Item
-              key={examplePath}
-              active={activePath === examplePathToHash(examplePath)}
-              content={title}
-              onClick={this.handleItemClick(examplePath)}
-            />
-          ))}
-        </Accordion.Content>
+        <Accordion
+          onTitleClick={this.handleTitleClick}
+          panels={_.map(examples, ({ title, examplePath }) => ({
+            key: examplePath,
+            active: activePath === examplePathToHash(examplePath),
+            content: title,
+            onClick: this.handleItemClick(examplePath),
+          }))}
+        />
       </Menu.Item>
     )
   }
