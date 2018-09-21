@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Fixed `Divider` wrong usage of the `typeSecondary{color, backgroundColor}` and `default{color, backgroundColor}` variables; renamed `default{color, backgroundColor}` variables to `color` and `backgroundColor` @mnajdova ([#234](https://github.com/stardust-ui/react/pull/234))
 - Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
+- `ChatMessage` component is renamed to `ChatBubble` and should now be used as part of the `ChatItem` component; renamed the `messages` props inside the `Chat` with `items` @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
 
 ### Fixes
 - Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
@@ -27,7 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
-- Add different `Chat.Message` types @mnajdova
+- Replaced the usage of the `ChatMessage` component inside the `Chat` with the new `ChatItem` component, and added different types of items: `bubble`, `action` and `divider` types @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
 
 <!--------------------------------[ v0.5.2 ]------------------------------- -->
 ## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)
