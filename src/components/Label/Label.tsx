@@ -72,7 +72,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

@@ -66,7 +66,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

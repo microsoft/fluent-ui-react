@@ -75,7 +75,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */

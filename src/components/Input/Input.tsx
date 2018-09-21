@@ -89,7 +89,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The value of the input. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
