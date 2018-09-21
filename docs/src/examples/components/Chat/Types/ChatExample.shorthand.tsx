@@ -43,7 +43,7 @@ const items = [
       avatar: janeAvatar,
     },
   },
-  { key: 5, divider: { content: 'Today', type: 'primary', important: 'true' } },
+  { key: 5, divider: { content: 'Today', type: 'primary', important: true } },
   {
     key: 6,
     bubble: {
