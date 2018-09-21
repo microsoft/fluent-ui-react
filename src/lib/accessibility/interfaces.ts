@@ -178,4 +178,4 @@ export type ActionsKeyHandler = {
 export type KeyboardHandler = (event: KeyboardEvent) => void
 export type EventHandler = (event: Event) => void
 
-export type Accessibility = ((props: any) => IAccessibilityDefinition)
+export type Accessibility = (props: any) => IAccessibilityDefinition

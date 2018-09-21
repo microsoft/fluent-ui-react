@@ -23,7 +23,6 @@ import {
   IAccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
-  Accessibility,
 } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
