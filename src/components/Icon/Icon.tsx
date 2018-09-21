@@ -8,8 +8,6 @@ import {
   ComponentPartStyle,
   ComponentVariablesInput,
   ThemeIcons,
-  ThemeIconSpec,
-  FontIconSpec,
   SvgIconSpec,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
@@ -46,12 +44,6 @@ export interface IIconProps {
  *  - attribute "aria-hidden='true'" is applied on icon
  */
 class Icon extends UIComponent<Extendable<IIconProps>, any> {
-  static declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
-    isSvg: true,
-    icon: svgIcon,
-  })
-  static declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
-
   static create: Function
 
   static className = 'ui-icon'
