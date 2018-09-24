@@ -35,14 +35,8 @@ const getTextColor = (state: string, variables: IStatusVariables) => {
   }
 }
 
-const statusStyles: IComponentPartStylesInput = {
-  root: ({
-    props: { color, size, state },
-    variables,
-  }: {
-    props: IStatusPropsWithDefaults
-    variables: IStatusVariables
-  }): ICSSInJSStyle => ({
+const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, any> = {
+  root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => ({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -58,13 +52,7 @@ const statusStyles: IComponentPartStylesInput = {
     backgroundColor: color || getBackgroundColor(state, variables),
   }),
 
-  icon: ({
-    props: { state },
-    variables,
-  }: {
-    props: IStatusPropsWithDefaults
-    variables: IStatusVariables
-  }): ICSSInJSStyle => ({
+  icon: ({ props: { state }, variables }): ICSSInJSStyle => ({
     color: getTextColor(state, variables),
   }),
 }
