@@ -31,11 +31,11 @@ export interface ITextProps {
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
 class Text extends UIComponent<Extendable<ITextProps>, any> {
+  static create: Function
+
   static className = 'ui-text'
 
   static displayName = 'Text'
-
-  static create: Function
 
   static propTypes = {
     /** Change the default element type of the Text component */
