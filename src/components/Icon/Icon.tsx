@@ -1,12 +1,11 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
-
-import svgIcons from './svgIcons'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+
+import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 export type IconSize =
@@ -26,13 +25,11 @@ export interface IIconProps {
   circular?: boolean
   className?: string
   disabled?: boolean
-  font?: boolean | string
   name?: string
   size?: IconSize
-  svg?: boolean
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -59,9 +56,6 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
 
-    /** Sets font for a font-based icon.  */
-    font: customPropTypes.some([PropTypes.bool, PropTypes.string]),
-
     /** Name of the icon. */
     name: PropTypes.string,
 
@@ -81,10 +75,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Render icon from SVGs collection.  */
-    svg: PropTypes.bool,
-
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
@@ -101,11 +92,9 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     'circular',
     'className',
     'disabled',
-    'font',
     'name',
     'size',
     'styles',
-    'svg',
     'variables',
     'xSpacing',
   ]
@@ -116,26 +105,31 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     accessibility: IconBehavior,
   }
 
-  renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
+  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
     return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
   }
 
-  renderSvgIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    const { name } = this.props
-    const icon = name && svgIcons[name]
-
+  private renderSvgIcon(
+    ElementType,
+    svgIconDescriptor: SvgIconSpec,
+    classes,
+    rest,
+    accessibility,
+  ): React.ReactNode {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        <svg className={classes.svg} viewBox={icon && icon.viewBox}>
-          {icon && icon.element}
-        </svg>
+        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
       </ElementType>
     )
   }
 
-  renderComponent({ ElementType, classes, rest, accessibility }) {
-    return this.props.svg
-      ? this.renderSvgIcon(ElementType, classes, rest, accessibility)
+  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+    const { icons = {} } = theme
+
+    const maybeIcon = icons[this.props.name]
+
+    return maybeIcon && maybeIcon.isSvg
+      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
       : this.renderFontIcon(ElementType, classes, rest, accessibility)
   }
 }

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ITextProps {
   as?: any
@@ -20,7 +20,7 @@ export interface ITextProps {
   temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -31,6 +31,8 @@ export interface ITextProps {
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
 class Text extends UIComponent<Extendable<ITextProps>, any> {
+  static create: Function
+
   static className = 'ui-text'
 
   static displayName = 'Text'
@@ -80,7 +82,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
