@@ -30,19 +30,6 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
 
   static displayName = 'Avatar'
 
-  static handledProps = [
-    'alt',
-    'as',
-    'className',
-    'getInitials',
-    'name',
-    'size',
-    'src',
-    'status',
-    'styles',
-    'variables',
-  ]
-
   static propTypes = {
     /** The alternative text for the image used in the Avatar. */
     alt: PropTypes.string,

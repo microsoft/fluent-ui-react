@@ -79,19 +79,6 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
-    'align',
-    'as',
-    'basic',
-    'children',
-    'className',
-    'content',
-    'position',
-    'styles',
-    'trigger',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: Portal,
     align: 'start',

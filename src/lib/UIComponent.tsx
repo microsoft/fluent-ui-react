@@ -3,11 +3,22 @@ import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
+  private static handledPropsCache: string[] = undefined
+
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static handledProps: any
+
+  static getHandledProps = function () {
+    if (!this.handledPropsCache) {
+      this.handledPropsCache = Object.keys(this.propTypes || {}).sort()
+    }
+
+    return this.handledPropsCache
+  }
+
+  static propTypes: any
   protected actionHandlers: AccessibilityActionHandlers
 
   constructor(props, context) {
@@ -34,7 +45,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         className: this.childClass.className,
         defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
-        handledProps: this.childClass.handledProps,
+        handledProps: this.childClass.getHandledProps(),
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,

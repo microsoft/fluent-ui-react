@@ -48,8 +48,6 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
     as: 'p',
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
-
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
     return (

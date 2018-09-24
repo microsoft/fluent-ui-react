@@ -96,20 +96,6 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'exclusive',
-    'onTitleClick',
-    'panels',
-    'styles',
-    'variables',
-  ]
-
   public static defaultProps = {
     accessibility: DefaultBehavior as Accessibility,
   }

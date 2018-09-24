@@ -70,19 +70,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'author',
-    'avatar',
-    'children',
-    'className',
-    'content',
-    'mine',
-    'styles',
-    'timestamp',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
   }

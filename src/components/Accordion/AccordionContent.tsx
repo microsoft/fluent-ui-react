@@ -48,8 +48,6 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
     onClick: PropTypes.func,
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
-
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
 

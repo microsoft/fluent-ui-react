@@ -111,26 +111,6 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: 'button',
     accessibility: ButtonBehavior as Accessibility,

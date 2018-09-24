@@ -27,8 +27,6 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
 
   static displayName = 'Status'
 
-  static handledProps = ['as', 'className', 'color', 'icon', 'size', 'state', 'styles', 'variables']
-
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,

@@ -93,21 +93,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'className',
-    'clearable',
-    'defaultValue',
-    'fluid',
-    'icon',
-    'inline',
-    'onChange',
-    'styles',
-    'type',
-    'value',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'div',
     type: 'text',
@@ -146,7 +131,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     const { type } = this.props
     const { value } = this.state
 
-    const unhandled = getUnhandledProps(Input, this.props)
+    const unhandled = getUnhandledProps({ handledProps: Input.getHandledProps() }, this.props)
     const [htmlInputProps, rest] = partitionHTMLProps(unhandled)
 
     return [

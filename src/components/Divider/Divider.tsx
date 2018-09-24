@@ -56,18 +56,6 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'important',
-    'size',
-    'styles',
-    'type',
-    'variables',
-  ]
-
   static defaultProps = {
     size: 0,
   }

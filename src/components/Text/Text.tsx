@@ -88,24 +88,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     as: 'span',
   }
 
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'temporary',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
-
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
     return (

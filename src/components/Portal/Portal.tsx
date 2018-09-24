@@ -77,17 +77,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     triggerRef: PropTypes.func,
   }
 
-  public static handledProps = [
-    'children',
-    'content',
-    'defaultOpen',
-    'onMount',
-    'onUnmount',
-    'open',
-    'trigger',
-    'triggerRef',
-  ]
-
   public renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
