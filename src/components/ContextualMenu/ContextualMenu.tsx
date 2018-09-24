@@ -98,150 +98,50 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   }
 
   public processTree = menuTree => {
-    const newMenuTree = []
     menuTree.forEach(item => {
-      // if (item.submenuItems === undefined) {
-      //   item.styles = { ...menuItemStyle, anchor: { padding: '15px' } }
-      // }
-      if (item.submenuItems !== undefined) {
-        const submenutree = this.processTree(item.submenuItems)
-        const content = item.content
+      if (item.submenuitems === undefined) {
+        item.content = item.title
+        item.styles = { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } }
+        item.onClick = () => {
+          alert('callback')
+        }
+      }
+      if (item.submenuitems !== undefined) {
+        this.processTree(item.submenuitems)
+        console.log('one')
         item.content = (
           <Popup
             align="top"
             position="after"
-            trigger={<div style={triggerStyle}>{content}</div>}
+            trigger={<div style={{ padding: '15px' }}>{item.title}</div>}
             content={
-              <Menu defaultActiveIndex={-1} items={submenutree} pills vertical type="primary" />
+              <Menu
+                defaultActiveIndex={-1}
+                items={item.submenuitems}
+                pills
+                vertical
+                type="primary"
+              />
             }
           />
         )
-        item.submenuItems = undefined
-        item.styles = menuItemStyle
+        item.styles = { ...menuItemStyle }
       }
-      newMenuTree.push(item)
     })
-    return newMenuTree
   }
 
-  public renderMenuTree = menuTree => {
-    const newMt = this.processTree(menuTree)
-    return <Menu defaultActiveIndex={-1} items={newMt} pills vertical type="primary" />
+  public renderMenuTree = menutree => {
+    this.processTree(menutree)
+    return <Menu defaultActiveIndex={-1} items={menutree} pills vertical type="primary" />
   }
 
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
-    const { children, content, menutree, persondescription } = this.props
-    const calllback = () => {
-      alert('Callback clicked')
-    }
-    // const sub_sub_items = [
-    //   {
-    //     key: 'editorials',
-    //     styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
-    //     content: 'Editorials',
-    //   },
-    //   {
-    //     key: 'review',
-    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-    //     content: 'Reviews',
-    //     onClick: calllback,
-    //   },
-    //   {
-    //     key: 'events',
-    //     styles: menuItemStyle,
-    //     content: (
-    //       <Popup
-    //         align="top"
-    //         position="after"
-    //         trigger={<div style={triggerStyle}>Events</div>}
-    //         content={'goapl'}
-    //       />
-    //     ),
-    //   },
-    // ]
-    // const sub_items = [
-    //   {
-    //     key: 'editorials',
-    //     styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
-    //     content: 'Editorials',
-    //   },
-    //   {
-    //     key: 'review',
-    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-    //     content: 'Reviews',
-    //     onClick: calllback,
-    //   },
-    //   {
-    //     key: 'events',
-    //     styles: menuItemStyle,
-    //     content: (
-    //       <Popup
-    //         align="top"
-    //         position="after"
-    //         trigger={<div style={triggerStyle}>Events</div>}
-    //         content={
-    //           <Menu defaultActiveIndex={-1} items={sub_sub_items} pills vertical type="primary" />
-    //         }
-    //       />
-    //     ),
-    //   },
-    // ]
-    // const items = [
-    //   {
-    //     key: 'review',
-    //     icon: 'plus',
-    //     content: 'Click for callback',
-    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-    //     onClick: calllback,
-    //   },
-    //   {
-    //     key: 'events',
-    //     styles: menuItemStyle,
-    //     content: (
-    //       <Popup
-    //         align="top"
-    //         position="after"
-    //         trigger={<div style={triggerStyle}>Submenu 1</div>}
-    //         content={
-    //           <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
-    //         }
-    //       />
-    //     ),
-    //   },
-    //   {
-    //     key: 'eventgs',
-    //     styles: menuItemStyle,
-    //     content: (
-    //       <Popup
-    //         align="top"
-    //         position="after"
-    //         trigger={<div style={triggerStyle}>Submenu 2</div>}
-    //         content={
-    //           <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
-    //         }
-    //       />
-    //     ),
-    //   },
-    // ]
+    const { menutree, persondescription } = this.props
+    // console.log(menutree)
     return (
       <ElementType className={classes.root} {...rest}>
-        {/* {childrenExist(children) ? children : content} */}
-        {/* <Popup
-          align="top"
-          position="after"
-          trigger={
-            <Button
-              content="Click to open menu"
-              icon="arrow right"
-              iconPosition="after"
-              styles={{ root: { padding: '5px 5px', height: '38px', minWidth: '64px' } }}
-            />
-          }
-          content={<Menu defaultActiveIndex={0} items={items} pills vertical />}
-        /> */}
         {this.renderMenuPersonDetail(persondescription)}
         {this.renderMenuTree(menutree)}
-        {/* <Menu defaultActiveIndex={-1} items={items} pills vertical type="primary" /> */}
       </ElementType>
     )
   }
