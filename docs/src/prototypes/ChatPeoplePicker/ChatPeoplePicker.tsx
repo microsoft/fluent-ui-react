@@ -177,6 +177,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   styles={{
                     root: { width: this.props.styles.width, ...peoplePickerStyles.menu },
                   }}
+                  aria-hidden={!isOpen}
                   items={
                     availableItems.length > 0 && isOpen
                       ? availableItems.map((item, index) => {
