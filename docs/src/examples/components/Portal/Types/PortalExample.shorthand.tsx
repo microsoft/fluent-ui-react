@@ -18,6 +18,7 @@ class PortalExamplePortal extends React.Component {
     return (
       <div>
         <Portal
+          trapFocus={true}
           content={
             <div
               style={{
