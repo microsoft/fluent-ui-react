@@ -18,10 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Documentation
-- Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
-
-<!--------------------------------[ v0.5.2 ]------------------------------- -->
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
+- Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
 
 <!--------------------------------[ v0.6.0 ]------------------------------- -->
 ## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)
