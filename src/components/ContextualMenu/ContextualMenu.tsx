@@ -87,6 +87,9 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   }
 
   public renderMenuPersonDetail = personDescription => {
+    if (personDescription === undefined) {
+      return undefined
+    }
     const { iconOnly, pills, pointing, type, underlined, vertical } = this.props
     const item = {
       key: 'personDescription',
@@ -145,6 +148,9 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   }
 
   public renderMenuTree = (menutree, callback) => {
+    if (menutree === undefined) {
+      return undefined
+    }
     this.processTree(menutree, callback)
     return <Menu defaultActiveIndex={-1} items={menutree} pills vertical type="primary" />
   }
