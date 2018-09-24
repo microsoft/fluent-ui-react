@@ -114,7 +114,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   public state = { triggerRef: undefined, popupOpened: false }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     performClick: e => this.onTriggerClick(e),
     closeAndFocusTrigger: e => this.handlePopupState(e, () => false, this.focusTrigger),
   }

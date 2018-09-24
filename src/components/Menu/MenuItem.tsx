@@ -135,7 +135,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     'vertical',
   ]
 
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
