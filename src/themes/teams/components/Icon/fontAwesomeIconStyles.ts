@@ -1297,12 +1297,7 @@ const fontAwesomeIcons = new Map([
   ['star empty', 'f089'],
 ])
 
-export default name => {
-  if (!fontAwesomeIcons.has(name)) {
-    throw new Error(`Could not find ${name} in FontAwesome`)
-  }
-  return fontAwesomeIcons.get(name)
-}
+export default name => fontAwesomeIcons.get(name)
 
 /**
  * TODO We should probably declare a @fontface rule here

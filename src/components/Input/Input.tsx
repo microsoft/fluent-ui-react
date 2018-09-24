@@ -23,13 +23,13 @@ export interface IInputProps {
   children?: ReactChildren
   className?: string
   clearable?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
   fluid?: boolean
   icon?: ItemShorthand
   inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
-  value?: string
+  value?: string | number
   type?: string
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -61,7 +61,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
-    defaultValue: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
@@ -87,9 +87,9 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

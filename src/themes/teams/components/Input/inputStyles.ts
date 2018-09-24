@@ -1,6 +1,7 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IInputProps } from '../../../../components/Input/Input'
 
-const inputStyles: IComponentPartStylesInput = {
+const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { fluid } = props
 

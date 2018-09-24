@@ -37,7 +37,7 @@ export { default as MenuItem } from './components/Menu/menuItemStyles'
 
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
-export { default as Radio } from './components/Radio/radioStyles'
+export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
 

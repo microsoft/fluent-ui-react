@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -8,7 +8,6 @@
   "types": "dist/es/index.d.ts",
   "sideEffects": false,
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
@@ -36,6 +35,7 @@
     "pretest": "yarn satisfied && gulp build:docs:docgen",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:visual": "gulp screener",
+    "test:projects:cra-ts": "gulp test:projects:cra-ts",
     "test:watch": "yarn test --watchAll",
     "generate:component": "gulp generate:component"
   },
@@ -91,6 +91,7 @@
     "prop-types": "^15.6.1",
     "react-fela": "^7.2.0",
     "react-popper": "^1.0.2",
+    "tmp": "^0.0.33",
     "what-input": "^5.1.2"
   },
   "devDependencies": {
@@ -168,5 +169,8 @@
   "peerDependencies": {
     "react": ">=0.14.0 <= 16",
     "react-dom": ">=0.14.0 <= 16"
+  },
+  "resolutions": {
+    "create-react-context": "0.2.2"
   }
 }

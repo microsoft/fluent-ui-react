@@ -1,6 +1,5 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import whatInput from 'what-input'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
@@ -15,6 +14,7 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IButtonProps {
   as?: any
@@ -107,7 +107,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -138,9 +138,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
   static Group = ButtonGroup
 
-  public state = {
-    isFromKeyboard: false,
-  }
+  public state = isFromKeyboard.initial
 
   public renderComponent({
     ElementType,
@@ -196,9 +194,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.state())
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

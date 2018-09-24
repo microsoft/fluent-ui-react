@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IMenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
@@ -7,7 +7,7 @@ const solidBorder = (color: string) => ({
 })
 
 export default {
-  root: ({ props, variables }: { props: IMenuProps; variables: any }): ICSSInJSStyle => {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, type, underlined, vertical } = props
     return {
       display: 'flex',
@@ -38,4 +38,4 @@ export default {
       listStyleType: 'none',
     }
   },
-}
+} as IComponentPartStylesInput<IMenuProps, any>
