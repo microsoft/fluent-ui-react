@@ -22,11 +22,12 @@ const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
     fontSize: pxToRem(size / 2.333),
     verticalAlign: 'top',
     textAlign: 'center',
+    padding: '0px',
   }),
   status: ({ props, variables }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: `-${variables.status.borderWidth}px`,
-    right: `-${variables.status.borderWidth}px`,
+    bottom: `-${variables.statusBorderWidth}px`,
+    right: `-${variables.statusBorderWidth}px`,
   }),
 }
 

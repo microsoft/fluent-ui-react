@@ -8,8 +8,8 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       color: 'green',
       icon: 'check',
       title: 'Available',
-      variables: { borderColor: '#d3d3d3' },
     }}
+    variables={{ statusBorderColor: '#d3d3d3' }}
   />
 )
 

@@ -111,7 +111,6 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
             avatar: true,
             title: name,
             styles: styles.image,
-            variables: variables.image,
           },
         })}
         {!image &&
@@ -122,14 +121,16 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
               circular: true,
               title: name,
               styles: styles.label,
-              variables: variables.label,
             },
           })}
         {Status.create(status, {
           defaultProps: {
             styles: styles.status,
             size: size * 0.3125,
-            variables: variables.status,
+            variables: {
+              borderColor: variables.statusBorderColor,
+              borderWidth: variables.statusBorderWidth,
+            },
           },
         })}
       </ElementType>
