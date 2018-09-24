@@ -287,13 +287,14 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
   }
 
   private _hideContentFromAccessibilityTree = () => {
-    if (!document.body.contains(this._root.current)) {
+    const elements = (document.body && document.body.children) || []
+
+    if (elements.length && !document.body.contains(this._root.current)) {
       // In case popup render options will change
       throw new Error(
         'Body does not contain trap zone element as expected. If it is done intentionally, please, make sure to update FocusTrapZone.',
       )
     }
-    const elements = (document.body && document.body.children) || []
 
     // loop through all body's children, except the last one - which is the popup
     for (let index = 0; index < elements.length - 1; index++) {
