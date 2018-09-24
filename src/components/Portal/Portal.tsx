@@ -15,6 +15,10 @@ import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
+type TriggerAccessibility = {
+  attributes?: IAccessibilityAttributes
+  keyHandlers?: OnKeyDownHandler
+}
 
 export interface IPortalProps {
   children?: ReactChildren
@@ -24,7 +28,7 @@ export interface IPortalProps {
   onUnmount?: (props: IPortalProps) => void
   open?: boolean
   trigger?: JSX.Element
-  triggerAccessibility?: IAccessibilityAttributes & OnKeyDownHandler
+  triggerAccessibility?: TriggerAccessibility
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
   onOutsideClick?: (e: ReactMouseEvent) => void
@@ -112,6 +116,10 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     'triggerRef',
   ]
 
+  public static defaultProps: IPortalProps = {
+    triggerAccessibility: {},
+  }
+
   public renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
@@ -144,7 +152,8 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
         <Ref innerRef={this.handleTriggerRef}>
           {React.cloneElement(trigger, {
             onClick: this.handleTriggerClick,
-            ...triggerAccessibility,
+            ...triggerAccessibility.attributes,
+            ...triggerAccessibility.keyHandlers,
           })}
         </Ref>
       )

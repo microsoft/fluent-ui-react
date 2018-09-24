@@ -136,8 +136,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         trigger={trigger}
         triggerRef={this.handleTriggerRef}
         triggerAccessibility={{
-          ...accessibility.attributes.trigger,
-          ...accessibility.keyHandlers.trigger,
+          attributes: accessibility.attributes.trigger,
+          keyHandlers: accessibility.keyHandlers.trigger,
         }}
         onOutsideClick={e => this.handlePopupState(e, () => false)}
         onTriggerClick={this.onTriggerClick}
