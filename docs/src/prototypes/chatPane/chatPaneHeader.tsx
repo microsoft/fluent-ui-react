@@ -3,6 +3,7 @@ import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-
 
 import { IChat } from './data/interfaces'
 import { pxToRem } from '../../../../src/lib'
+import { IIconProps } from 'src/components/Icon/Icon'
 
 export interface IChatPaneHeaderProps {
   chat?: IChat
@@ -15,7 +16,7 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
         vertical
         start={this.renderBanner()}
         main={this.renderMainArea()}
-        end={<Divider type="secondary" styles={{ marginTop: 0, marginBottom: 0, width: '100%' }} />}
+        end={<Divider size={2} styles={{ padding: '0 32px' }} />}
       />
     )
   }
@@ -25,10 +26,9 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
       <Segment
         content={
           <Icon
-            svg
-            name="umbrella"
-            styles={{ margin: 'auto 0' }}
-            variables={siteVars => ({ color: siteVars.white })}
+            size="big"
+            name="team-create"
+            variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
           />
         }
         styles={({ variables: v }) => ({
@@ -36,7 +36,7 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
           borderRadius: 0,
           display: 'flex',
           height: '40px',
-          width: '100%',
+          padding: 0,
         })}
         variables={siteVars => ({ backgroundColor: siteVars.brand })}
       />
@@ -60,17 +60,19 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
   }
 
   private renderHeaderButtons(): React.ReactNode {
+    const icons: IIconProps[] = ['call-video', 'call'].map((name, index) => ({
+      key: `${index}-${name}`,
+      icon: {
+        name,
+        size: 'big',
+        variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
+      },
+      type: 'primary',
+    }))
+
     return (
       <div style={{ display: 'inline-flex' }}>
-        <Button.Group
-          circular
-          icon="call"
-          buttons={[
-            { key: 'record', icon: 'record', type: 'primary' },
-            { key: 'call', icon: 'call', type: 'primary' },
-          ]}
-          styles={{ marginRight: '20px' }}
-        />
+        <Button.Group circular buttons={icons} styles={{ marginRight: '20px' }} />
         {['user plus', 'ellipsis horizontal'].map((name, index) => (
           <Icon
             key={`${index}-${name}`}
