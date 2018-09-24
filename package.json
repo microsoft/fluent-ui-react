@@ -175,5 +175,8 @@
   "peerDependencies": {
     "react": ">=0.14.0 <= 16",
     "react-dom": ">=0.14.0 <= 16"
+  },
+  "resolutions": {
+    "create-react-context": "0.2.2"
   }
 }

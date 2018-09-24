@@ -15,7 +15,6 @@ import {
   IProps,
   IPropsWithVarsAndStyles,
   IState,
-  IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
 import {
@@ -43,6 +42,7 @@ export interface IRenderResultConfig<P> {
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
   rtl: boolean
+  theme: IThemePrepared
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -136,13 +136,14 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={({
-        siteVariables = {},
-        componentVariables = {},
-        componentStyles = {},
-        rtl = false,
-        renderer = felaRenderer,
-      }: IThemeInput | IThemePrepared = {}) => {
+      render={(theme: IThemePrepared) => {
+        const {
+          siteVariables = {},
+          componentVariables = {},
+          componentStyles = {},
+          rtl = false,
+          renderer = felaRenderer,
+        } = theme
         const ElementType = getElementType({ defaultProps }, props)
 
         const stateAndProps = { ...state, ...props }
@@ -168,6 +169,7 @@ const renderComponent = <P extends {}>(
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
+          theme,
         }
         const resolvedStyles: IComponentPartStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
@@ -185,6 +187,7 @@ const renderComponent = <P extends {}>(
           styles: resolvedStyles,
           accessibility,
           rtl,
+          theme,
         }
 
         if (accessibility.focusZone) {
