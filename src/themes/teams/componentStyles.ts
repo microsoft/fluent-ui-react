@@ -43,4 +43,7 @@ export { default as Segment } from './components/Segment/segmentStyles'
 
 export { default as Status } from './components/Status/statusStyles'
 
+export { default as Swatchcp } from './components/Swatchcp/swatchcpStyles'
+export { default as SwatchcpBase } from './components/Swatchcp/swatchcpBaseStyles'
+
 export { default as Text } from './components/Text/textStyles'
