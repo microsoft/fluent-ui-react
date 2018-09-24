@@ -6,8 +6,8 @@ import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../typ
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Popup from '../Popup/Popup'
 import Button from '../Button'
-import Menu from '../Menu'
-import { Avatar, Icon } from '@stardust-ui/react'
+import Menu, { MenuItem } from '../Menu'
+import Avatar from '../Avatar'
 
 export interface IContextualMenuProps {
   as?: any
@@ -16,6 +16,14 @@ export interface IContextualMenuProps {
   content?: ItemShorthand | ItemShorthand[]
   styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
+}
+
+const menuItemStyle = {
+  root: { padding: '0px', margin: '0px', borderRadius: '0%' },
+  anchor: { padding: '0px', minHeight: '50px' },
+}
+const triggerStyle = {
+  padding: '15px',
 }
 
 /**
@@ -52,6 +60,8 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    calllback: PropTypes.func,
   }
 
   public static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
@@ -60,133 +70,159 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
     as: 'div',
   }
 
-  public renderItems = items => {
-    const menuItemStyle = {
-      root: { padding: '0px', margin: '0px', minHeight: '50px', borderRadius: '0%' },
-      anchor: { padding: '0px' },
+  public renderMenuPersonDetail = personDescription => {
+    const { iconOnly, pills, pointing, type, underlined, vertical } = this.props
+    const item = {
+      key: 'personDescription',
+      styles: menuItemStyle,
+      content: (
+        <div style={triggerStyle}>
+          <Avatar src={personDescription.imageUrl} />
+          <span style={{ padding: '10px' }}>{personDescription.description}</span>
+        </div>
+      ),
     }
-    const triggerStyle = {
-      padding: '15px',
-    }
-    return items.map(item => {
-      item.styles = menuItemStyle
+    const index = 4
+    return MenuItem.create(item, {
+      defaultProps: {
+        iconOnly,
+        pills,
+        pointing,
+        type,
+        underlined,
+        vertical,
+        index,
+      },
+      // overrideProps: this.handleItemOverrides,
     })
   }
 
+  public processTree = menuTree => {
+    const newMenuTree = []
+    menuTree.forEach(item => {
+      // if (item.submenuItems === undefined) {
+      //   item.styles = { ...menuItemStyle, anchor: { padding: '15px' } }
+      // }
+      if (item.submenuItems !== undefined) {
+        const submenutree = this.processTree(item.submenuItems)
+        const content = item.content
+        item.content = (
+          <Popup
+            align="top"
+            position="after"
+            trigger={<div style={triggerStyle}>{content}</div>}
+            content={
+              <Menu defaultActiveIndex={-1} items={submenutree} pills vertical type="primary" />
+            }
+          />
+        )
+        item.submenuItems = undefined
+        item.styles = menuItemStyle
+      }
+      newMenuTree.push(item)
+    })
+    return newMenuTree
+  }
+
+  public renderMenuTree = menuTree => {
+    const newMt = this.processTree(menuTree)
+    return <Menu defaultActiveIndex={-1} items={newMt} pills vertical type="primary" />
+  }
+
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
-    const { children, content } = this.props
-    const menuItemStyle = {
-      root: { padding: '0px', margin: '0px', borderRadius: '0%' },
-      anchor: { padding: '0px', minHeight: '50px' },
+    const { children, content, menutree, persondescription } = this.props
+    const calllback = () => {
+      alert('Callback clicked')
     }
-    const triggerStyle = {
-      padding: '15px',
-    }
-    const sub_sub_items = [
-      {
-        key: 'editorials',
-        styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
-        content: 'Editorials',
-      },
-      {
-        key: 'review',
-        styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-        content: 'Reviews',
-        onClick: () => {
-          alert('hel')
-        },
-      },
-      {
-        key: 'events',
-        styles: menuItemStyle,
-        content: (
-          <Popup
-            align="top"
-            position="after"
-            trigger={<div style={triggerStyle}>Events</div>}
-            content={'goapl'}
-          />
-        ),
-      },
-    ]
-    const sub_items = [
-      {
-        key: 'editorials',
-        styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
-        content: 'Editorials',
-      },
-      {
-        key: 'review',
-        styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-        content: 'Reviews',
-        onClick: () => {
-          alert('hel')
-        },
-      },
-      {
-        key: 'events',
-        styles: menuItemStyle,
-        content: (
-          <Popup
-            align="top"
-            position="after"
-            trigger={<div style={triggerStyle}>Events</div>}
-            content={
-              <Menu defaultActiveIndex={-1} items={sub_sub_items} pills vertical type="primary" />
-            }
-          />
-        ),
-      },
-    ]
-    const items = [
-      {
-        key: 'editorials',
-        styles: menuItemStyle,
-        content: (
-          <div style={triggerStyle}>
-            <Avatar src="public/images/avatar/small/matt.jpg" />
-            <span style={{ padding: '10px' }}>Gopal Goel</span>
-          </div>
-        ),
-      },
-      {
-        key: 'review',
-        icon: 'search',
-        content: 'Click for callback',
-        styles: { ...menuItemStyle, anchor: { padding: '15px' } },
-        onClick: () => {
-          alert('Callback clicked...')
-        },
-      },
-      {
-        key: 'events',
-        styles: menuItemStyle,
-        content: (
-          <Popup
-            align="top"
-            position="after"
-            trigger={<div style={triggerStyle}>Submenu 1</div>}
-            content={
-              <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
-            }
-          />
-        ),
-      },
-      {
-        key: 'events',
-        styles: menuItemStyle,
-        content: (
-          <Popup
-            align="top"
-            position="after"
-            trigger={<div style={triggerStyle}>Submenu 2</div>}
-            content={
-              <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
-            }
-          />
-        ),
-      },
-    ]
+    // const sub_sub_items = [
+    //   {
+    //     key: 'editorials',
+    //     styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
+    //     content: 'Editorials',
+    //   },
+    //   {
+    //     key: 'review',
+    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
+    //     content: 'Reviews',
+    //     onClick: calllback,
+    //   },
+    //   {
+    //     key: 'events',
+    //     styles: menuItemStyle,
+    //     content: (
+    //       <Popup
+    //         align="top"
+    //         position="after"
+    //         trigger={<div style={triggerStyle}>Events</div>}
+    //         content={'goapl'}
+    //       />
+    //     ),
+    //   },
+    // ]
+    // const sub_items = [
+    //   {
+    //     key: 'editorials',
+    //     styles: { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } },
+    //     content: 'Editorials',
+    //   },
+    //   {
+    //     key: 'review',
+    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
+    //     content: 'Reviews',
+    //     onClick: calllback,
+    //   },
+    //   {
+    //     key: 'events',
+    //     styles: menuItemStyle,
+    //     content: (
+    //       <Popup
+    //         align="top"
+    //         position="after"
+    //         trigger={<div style={triggerStyle}>Events</div>}
+    //         content={
+    //           <Menu defaultActiveIndex={-1} items={sub_sub_items} pills vertical type="primary" />
+    //         }
+    //       />
+    //     ),
+    //   },
+    // ]
+    // const items = [
+    //   {
+    //     key: 'review',
+    //     icon: 'plus',
+    //     content: 'Click for callback',
+    //     styles: { ...menuItemStyle, anchor: { padding: '15px' } },
+    //     onClick: calllback,
+    //   },
+    //   {
+    //     key: 'events',
+    //     styles: menuItemStyle,
+    //     content: (
+    //       <Popup
+    //         align="top"
+    //         position="after"
+    //         trigger={<div style={triggerStyle}>Submenu 1</div>}
+    //         content={
+    //           <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
+    //         }
+    //       />
+    //     ),
+    //   },
+    //   {
+    //     key: 'eventgs',
+    //     styles: menuItemStyle,
+    //     content: (
+    //       <Popup
+    //         align="top"
+    //         position="after"
+    //         trigger={<div style={triggerStyle}>Submenu 2</div>}
+    //         content={
+    //           <Menu defaultActiveIndex={-1} items={sub_items} pills vertical type="primary" />
+    //         }
+    //       />
+    //     ),
+    //   },
+    // ]
     return (
       <ElementType className={classes.root} {...rest}>
         {/* {childrenExist(children) ? children : content} */}
@@ -203,7 +239,9 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
           }
           content={<Menu defaultActiveIndex={0} items={items} pills vertical />}
         /> */}
-        <Menu defaultActiveIndex={-1} items={items} pills vertical type="primary" />
+        {this.renderMenuPersonDetail(persondescription)}
+        {this.renderMenuTree(menutree)}
+        {/* <Menu defaultActiveIndex={-1} items={items} pills vertical type="primary" /> */}
       </ElementType>
     )
   }
