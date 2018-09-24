@@ -51,7 +51,7 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
     /** Styles to apply to this component instance **/
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Override for theme variables to allow modifications of component styling via themes. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
