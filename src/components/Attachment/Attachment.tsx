@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, createShorthandFactory, createHTMLDivision } from '../../lib'
+import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
