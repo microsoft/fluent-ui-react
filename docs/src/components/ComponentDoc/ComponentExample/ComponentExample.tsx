@@ -1,11 +1,11 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
-import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
+import { Divider, Dropdown, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import {
@@ -23,6 +23,7 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
 import { IThemeInput, IThemePrepared } from 'types/theme'
+import Text from '../../../../../src/components/Text/Text'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -33,6 +34,7 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
 
 interface IComponentExampleState {
   knobs: Object
+  themeName: string
   theme: IThemeInput
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
@@ -71,6 +73,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public state: IComponentExampleState = {
     knobs: {},
+    themeName: 'teams',
     theme: themes.teams,
     sourceCode: '',
     markup: '',
@@ -349,6 +352,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const { showRtl, theme } = this.state
 
     const newTheme: IThemeInput = {
+      ...theme,
       componentVariables: theme.componentVariables,
       rtl: showRtl,
     }
@@ -527,17 +531,43 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
+  private handleThemeChange = (event: React.SyntheticEvent, data: any) => {
+    this.setState({ theme: themes[data.value], themeName: data.value }, () => {
+      this.renderSourceCode()
+      this.renderVariables()
+    })
+  }
+
   private renderVariables = () => {
-    const { showVariables } = this.state
+    const { showVariables, themeName } = this.state
     if (!showVariables) return undefined
 
     const displayName = this.getDisplayName()
+
+    const themeOptions = Object.keys(themes).map(key => ({
+      text: key,
+      value: key,
+    }))
 
     return (
       <div>
         <Divider inverted horizontal>
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
+        <Form inverted widths="equal" style={{ padding: '1rem' }}>
+          <Text styles={{ color: 'white' }} important>
+            Theme
+          </Text>
+          <Dropdown
+            placeholder="Select Theme"
+            fluid
+            inverted
+            selection
+            defaultValue={themeName}
+            options={themeOptions}
+            onChange={this.handleThemeChange}
+          />
+        </Form>
         <Provider.Consumer
           render={({ siteVariables, componentVariables }: IThemePrepared) => {
             const variables = componentVariables[displayName]
