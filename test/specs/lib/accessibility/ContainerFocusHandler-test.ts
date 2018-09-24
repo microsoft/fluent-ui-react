@@ -117,14 +117,12 @@ describe('Container Focus Handler', () => {
     firstItem.onMoveNext()
 
     expect(setStateMock).toBeCalled()
-    expect(state.focusItemOnIdx).toBe(1)
   })
 
   test('Should move previous', () => {
     lastItem.onMovePrevious()
 
     expect(setStateMock).toBeCalled()
-    expect(state.focusItemOnIdx).toBe(1)
   })
 
   test('Should move first', () => {
