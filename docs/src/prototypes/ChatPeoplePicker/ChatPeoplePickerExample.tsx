@@ -44,7 +44,9 @@ const getUnselectedItems = (selected: { name: string }[]) => {
 }
 
 const peopleSupplier = (inputValue: string, selected: { name: string }[]) => {
-  return getUnselectedItems(selected).filter(item => !inputValue || item.name.includes(inputValue))
+  return getUnselectedItems(selected).filter(
+    item => !inputValue || item.name.toLowerCase().includes(inputValue.toLowerCase()),
+  )
 }
 
 const PeoplePickerExampleShorthand = () => (
