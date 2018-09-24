@@ -56,8 +56,12 @@ const personDescription = {
   description: 'Gopal Goel',
 }
 
+const callback = () => {
+  alert('Callback invoked')
+}
+
 const ContextualMenuExample = () => (
-  <ContextualMenu menutree={menuTree} persondescription={personDescription} />
+  <ContextualMenu menutree={menuTree} persondescription={personDescription} callback={callback} />
 )
 
 export default ContextualMenuExample
