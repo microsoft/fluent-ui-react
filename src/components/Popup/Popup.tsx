@@ -114,7 +114,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
   public state = { triggerRef: undefined, popupOpened: false }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  public actionHandlers: AccessibilityActionHandlers = {
     performClick: e => this.onTriggerClick(e),
     closeAndFocusTrigger: e => this.handlePopupState(e, () => false, this.focusTrigger),
   }
@@ -127,6 +127,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     rtl,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
     const { children, trigger, position, align } = this.props
+    const trapFocus = accessibility.focusTrapZone && accessibility.focusTrapZone.enabled
 
     return (
       <ElementType
@@ -141,6 +142,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         }}
         onOutsideClick={e => this.handlePopupState(e, () => false)}
         onTriggerClick={this.onTriggerClick}
+        trapFocus={trapFocus}
       >
         {childrenExist(children)
           ? children

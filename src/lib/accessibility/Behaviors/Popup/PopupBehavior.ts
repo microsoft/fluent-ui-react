@@ -30,6 +30,10 @@ const PopupBehavior: Accessibility = (props: any) => ({
       },
     },
   },
+
+  focusTrapZone: {
+    enabled: true,
+  },
 })
 
 const isFocusable = propsData => {

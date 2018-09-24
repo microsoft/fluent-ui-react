@@ -32,7 +32,7 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
           />
         }
         styles={({ variables: v }) => ({
-          backgroundColor: v.backgroundColor,
+          // backgroundColor: v.backgroundColor,
           borderRadius: 0,
           display: 'flex',
           height: '40px',

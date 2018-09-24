@@ -13,6 +13,7 @@ import { ItemShorthand, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
+import { FocusTrapZone, IFocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 type TriggerAccessibility = {
@@ -32,6 +33,8 @@ export interface IPortalProps {
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
   onOutsideClick?: (e: ReactMouseEvent) => void
+  trapFocus?: boolean
+  focusTrapZoneProps?: IFocusTrapZoneProps
 }
 
 export interface IPortalState {
@@ -100,17 +103,25 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {object} data - All props.
      */
     onOutsideClick: PropTypes.func,
+
+    /** Controls whether or not focus trap should be applied */
+    trapFocus: PropTypes.bool,
+
+    /** FocusTrapZone props */
+    focusTrapZoneProps: PropTypes.object,
   }
 
   public static handledProps = [
     'children',
     'content',
     'defaultOpen',
+    'focusTrapZoneProps',
     'onMount',
     'onOutsideClick',
     'onTriggerClick',
     'onUnmount',
     'open',
+    'trapFocus',
     'trigger',
     'triggerAccessibility',
     'triggerRef',
@@ -130,14 +141,19 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   }
 
   private renderPortal(): JSX.Element | undefined {
-    const { children, content } = this.props
+    const { children, content, trapFocus, focusTrapZoneProps } = this.props
     const { open } = this.state
+    const contentToRender = childrenExist(children) ? children : content
 
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
           <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
-            {childrenExist(children) ? children : content}
+            {trapFocus ? (
+              <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
+            ) : (
+              contentToRender
+            )}
           </PortalInner>
         </Ref>
       )
@@ -146,7 +162,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
 
   private renderTrigger(): JSX.Element | undefined {
     const { trigger, triggerAccessibility } = this.props
-
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
