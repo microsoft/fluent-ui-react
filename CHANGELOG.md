@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
 
