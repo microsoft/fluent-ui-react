@@ -21,6 +21,8 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import Layout from '../Layout'
 import Text from '../Text'
 import Menu from '../Menu'
+import Popup from '../Popup'
+import Button from '../Button'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -108,7 +110,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       this.getMenuItem(icon, index),
     )
 
-    items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+    // items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
 
     return (
       <Menu
@@ -173,6 +175,8 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   ) => {
     const { author, content, mine, timestamp } = this.props
 
+    console.log('content', content)
+
     const authorComponent = Text.create(author, {
       defaultProps: {
         size: 'sm',
@@ -190,18 +194,45 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       },
     })
 
+    const items = [
+      { key: 'editorials', content: 'Editorials' },
+      { key: 'review', content: 'Reviews' },
+      { key: 'events', content: 'Upcoming Events' },
+    ]
+
+    const menuButton = (
+      <Popup
+        basic
+        trigger={<Button icon="expand" />}
+        content={<Menu vertical defaultActiveIndex={0} items={items} />}
+      />
+    )
+    const emojiPopup = (
+      <Popup basic trigger={<Button icon="smile" />} content={this.renderToolbar()} />
+    )
+
     return (
-      <Layout
-        className={contentClass}
-        vertical
-        start={
-          <>
-            {!mine && authorComponent}
-            {timestampComponent}
-          </>
+      <Popup
+        align="end"
+        trigger={
+          <Layout
+            className={contentClass}
+            vertical
+            start={
+              <>
+                {!mine && authorComponent}
+                {timestampComponent}
+              </>
+            }
+            main={content}
+          />
         }
-        main={content}
-        end={this.renderToolbar()}
+        content={
+          <div>
+            {menuButton}
+            {emojiPopup}
+          </div>
+        }
       />
     )
   }
