@@ -4,10 +4,8 @@ import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 import { Extendable } from '../../../../../types/utils'
 
-type StyleParam = { props: Extendable<AttachmentProps>; variables: AttachmentVariables }
-
-const attachmentStyles: IComponentPartStylesInput = {
-  root: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVariables> = {
+  root: ({ props, variables }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -28,17 +26,17 @@ const attachmentStyles: IComponentPartStylesInput = {
     }),
   }),
 
-  content: ({ props }: StyleParam): ICSSInJSStyle => ({
+  content: ({ props }): ICSSInJSStyle => ({
     flex: 1,
   }),
 
-  header: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+  header: ({ props, variables }): ICSSInJSStyle => ({
     fontSize: variables.headerFontSize,
     fontWeight: variables.headerFontWeight,
     lineHeight: variables.headerLineHeight,
   }),
 
-  description: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+  description: ({ props, variables }): ICSSInJSStyle => ({
     display: 'block',
     opacity: 0.5,
     fontSize: variables.descriptionFontSize,
@@ -46,16 +44,16 @@ const attachmentStyles: IComponentPartStylesInput = {
     lineHeight: variables.descriptionLineHeight,
   }),
 
-  icon: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+  icon: ({ props, variables }): ICSSInJSStyle => ({
     flex: '0 0 auto',
     marginRight: variables.iconSpace,
   }),
 
-  action: ({ props }: StyleParam): ICSSInJSStyle => ({
+  action: ({ props }): ICSSInJSStyle => ({
     flex: '0 0 auto',
   }),
 
-  progress: ({ props, variables }: StyleParam): ICSSInJSStyle => ({
+  progress: ({ props, variables }): ICSSInJSStyle => ({
     transition: 'width 0.2s',
     position: 'absolute',
     display: 'block',
