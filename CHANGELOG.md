@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
-- added `image` and `label` shorthands props for `Avatar`; `src` and `alt` props are now used inside the `image` shorthand @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
+- Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
 
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
