@@ -9,8 +9,12 @@ import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
 import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentVariablesObject, ComponentPartStyle } from 'theme'
-import { Extendable, ItemShorthand, ReactChildren } from 'utils'
+import {
+  ComponentVariablesInput,
+  ComponentVariablesObject,
+  ComponentPartStyle,
+} from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IRadioGroupProps {
   accessibility?: Accessibility
@@ -64,7 +68,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A vertical radio group displays elements vertically. */

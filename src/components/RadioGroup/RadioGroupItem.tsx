@@ -5,8 +5,13 @@ import * as _ from 'lodash'
 
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
-import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
-import { ComponentVariablesInput, ComponentPartStyle } from 'theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'
@@ -112,7 +117,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A vertical radio group displays elements vertically. */

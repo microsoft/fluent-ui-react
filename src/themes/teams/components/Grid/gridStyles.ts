@@ -1,5 +1,6 @@
 import { IGridVariables } from './gridVariables'
-import { IComponentPartStylesInput, ICSSInJSStyle, IProps } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IGridProps } from '../../../../components/Grid/Grid'
 
 const getCSSTemplateValue = (template: string | number): string => {
   const templateAsNumber = Number(template)
@@ -9,13 +10,10 @@ const getCSSTemplateValue = (template: string | number): string => {
     : String(template)
 }
 
-const gridStyles: IComponentPartStylesInput = {
+const gridStyles: IComponentPartStylesInput<IGridProps, IGridVariables> = {
   root: ({
     props,
     variables: { height, width, defaultColumnCount, gridGap, padding },
-  }: {
-    props: IProps
-    variables: IGridVariables
   }): ICSSInJSStyle => {
     const { rows, columns = !props.rows && defaultColumnCount } = props
 
