@@ -119,18 +119,12 @@ export default App;
     await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
     log("Stardust is successfully added as test project's dependency.")
 
-    //////// ENABLE SKIP LIB CHECK FLAG ///////
-    log("STEP 3. Enable 'skipLibCheck' flag for test project's TS compiler")
-
-    const tsconfigPath = testAppPath('tsconfig.json')
-    enableTsCompilerFlagSync(tsconfigPath, 'skipLibCheck')
-
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
-    log("STEP 4. Reference Stardust components in test project's App.tsx")
+    log("STEP 3. Reference Stardust components in test project's App.tsx")
     fs.writeFileSync(testAppPath('src', 'App.tsx'), appTSX)
 
     //////// BUILD TEST PROJECT ///////
-    log('STEP 5. Build test project..')
+    log('STEP 4. Build test project..')
     await runInTestApp(`yarn build`)
 
     log('Test project is built successfully!')
