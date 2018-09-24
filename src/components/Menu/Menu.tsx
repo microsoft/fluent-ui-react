@@ -50,7 +50,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional css class name or space separated class names to apply **/
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -86,7 +86,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Styles to apply to this component instance **/
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme variables to allow modifications of component styling via themes. */

@@ -34,7 +34,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
 
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional css class name or space separated class names to apply **/
     className: PropTypes.string,
 
     /** Toggle debug mode */
@@ -55,7 +55,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Styles to apply to this component instance **/
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme variables to allow modifications of component styling via themes. */

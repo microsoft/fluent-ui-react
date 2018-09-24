@@ -55,7 +55,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional css class name or space separated class names to apply **/
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -89,7 +89,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Styles to apply to this component instance **/
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme variables to allow modifications of component styling via themes. */

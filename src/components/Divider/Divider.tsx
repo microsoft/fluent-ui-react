@@ -34,7 +34,7 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** Child content * */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional css class name or space separated class names to apply **/
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -49,7 +49,7 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Styles to apply to this component instance **/
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme variables to allow modifications of component styling via themes. */
