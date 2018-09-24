@@ -16,11 +16,11 @@ node -v
 v8.11.3
 ```
 
-We use `yarn` because `npm` has unfortunately become unreliable.  Get it [here][16].
+We use `yarn` because `npm` has unfortunately become unreliable. Get it [here][16].
 
 ## Contributors
 
-If you do not yet have access to the repo as a contributor, ask one of the maintainers to add you.  If you want to collaborate on the project without permissions, see [Collaborators](#collaborators).
+If you do not yet have access to the repo as a contributor, ask one of the maintainers to add you. If you want to collaborate on the project without permissions, see [Collaborators](#collaborators).
 
 ### Clone
 
@@ -42,11 +42,11 @@ Continue to [Start](#start).
 
 ## Collaborators
 
-If you are not part of the Stardust UI team, use these instructions.  If you are, or should be, use the [Contributor](#contributors) instructions.
+If you are not part of the Stardust UI team, use these instructions. If you are, or should be, use the [Contributor](#contributors) instructions.
 
 ### Fork
 
-Start by [forking Stardust UI React][2] to your GitHub account.  Then clone your fork and install dependencies:
+Start by [forking Stardust UI React][2] to your GitHub account. Then clone your fork and install dependencies:
 
 ```sh
 git clone git@github.com:<your-user>/react.git stardust-ui-react
@@ -71,13 +71,13 @@ cd stardust-ui-react
 yarn
 ```
 
-All commands are executed with `yarn`.  This will run the doc site, which is also used for development:
+All commands are executed with `yarn`. This will run the doc site, which is also used for development:
 
 ```
 yarn start
 ```
 
-Open [localhost:8080](http://localhost:8080) after the initial build has completed.  You can now hack on `/src` to make changes and see the doc site update in real-time.
+Open [localhost:8080](http://localhost:8080) after the initial build has completed. You can now hack on `/src` to make changes and see the doc site update in real-time.
 
 [1]: https://nodejs.org/
 [2]: https://github.com/Semantic-Org/Semantic-UI-React#fork-destination-box

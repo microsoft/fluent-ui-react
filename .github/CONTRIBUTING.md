@@ -32,8 +32,8 @@ CONTRIBUTING
 
 These guides will walk your through various activities for contributing:
 
-- [Setup Local Development]()
-- Add a feature
+- [Setup Local Development](setup-local-development.md)
+- [Add a feature](add-a-feature.md)
 
 ### Commit Messages
 
@@ -144,11 +144,11 @@ import * as PropTypes from 'prop-types'
 
 ### Conformance Test
 
-Review [common tests](#common-tests) below.  You should now add the [`isConformant()`](#isconformant-required) common test and get it to pass.  This will validate the `displayName` and `className` and multiple other aspects  to help you get your component off the ground.
+Review [common tests](#common-tests) below. You should now add the [`isConformant()`](#isconformant-required) common test and get it to pass. This will validate the `displayName` and `className` and multiple other aspects to help you get your component off the ground.
 
 ### Open A PR
 
-This is a good time to open your PR.  The component has been created, but the API and internals are not yet coded.  We prefer to collaborate on these things to minimize rework.
+This is a good time to open your PR. The component has been created, but the API and internals are not yet coded. We prefer to collaborate on these things to minimize rework.
 
 This will also help with getting early feedback and smaller faster iterations on your component.
 
@@ -167,11 +167,11 @@ Run tests during development with `yarn test:watch` to re-run tests on file chan
 
 All PRs must meet or exceed test coverage limits before they can be merged.
 
-Every time tests run, `/coverage` information is updated.  Open `coverage/lcov-report/index.html` to inspect test coverage.  This interactive report will reveal areas lacking test coverage.  You can then write tests for these areas and increase coverage.
+Every time tests run, `/coverage` information is updated. Open `coverage/lcov-report/index.html` to inspect test coverage. This interactive report will reveal areas lacking test coverage. You can then write tests for these areas and increase coverage.
 
 ### Common Tests
 
-There are many common things to test for.  Because of this, we have [`test/specs/commonTests`][1].
+There are many common things to test for. Because of this, we have [`test/specs/commonTests`][1].
 These tests are typically imported into individual component tests.
 
 #### Usage
@@ -192,7 +192,7 @@ describe('Divider', () => {
 
 #### isConformant (required)
 
-This is the only required test.  It ensures a consistent baseline for the framework. It also helps you get your component off the ground.  You should add this test to new components right away.
+This is the only required test. It ensures a consistent baseline for the framework. It also helps you get your component off the ground. You should add this test to new components right away.
 
 #### Writing tests
 
@@ -305,9 +305,9 @@ Label.propTypes = {
 
 ### Examples
 
-Usage examples for a component live in `docs/src/examples`.  The examples follow the doc site examples.
+Usage examples for a component live in `docs/src/examples`. The examples follow the doc site examples.
 
-Adding documentation for new components is a bit tedious.  The best way to do this (for now) is to copy an existing component's and update them.
+Adding documentation for new components is a bit tedious. The best way to do this (for now) is to copy an existing component's and update them.
 
 [1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
 [2]: https://facebook.github.io/react/docs/forms.html#controlled-components
