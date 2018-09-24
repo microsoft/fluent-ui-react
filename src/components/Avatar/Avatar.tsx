@@ -53,16 +53,16 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** The name used for displaying the initials of the avatar if the image is not provided. */
     name: PropTypes.string,
 
-    /** Shorthand for the image */
+    /** Shorthand for the image. */
     image: customPropTypes.itemShorthand,
 
-    /** Shorthand for the label */
+    /** Shorthand for the label. */
     label: customPropTypes.itemShorthand,
 
-    /** Size multiplier */
+    /** Size multiplier. */
     size: PropTypes.number,
 
-    /** Shorthand for the status of the user */
+    /** Shorthand for the status of the user. */
     status: customPropTypes.itemShorthand,
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
