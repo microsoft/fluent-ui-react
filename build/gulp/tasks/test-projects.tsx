@@ -50,17 +50,6 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
   return appProjectPath
 }
 
-const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
-  const tsConfigAsJson = JSON.parse(`${fs.readFileSync(tsconfigPath)}`)
-  if (!tsConfigAsJson.compilerOptions) {
-    tsConfigAsJson.compilerOptions = {}
-  }
-
-  tsConfigAsJson.compilerOptions[flag] = true
-
-  fs.writeFileSync(tsconfigPath, JSON.stringify(tsConfigAsJson))
-}
-
 // Tests the following scenario
 //  - Create a new react test app
 //  - Add Stardust as a app's dependency
