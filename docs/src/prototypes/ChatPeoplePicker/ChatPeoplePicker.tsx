@@ -123,6 +123,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             return (
               <div>
                 <div
+                  role="presentation"
                   style={{
                     ...peoplePickerStyles.containerDiv,
                     ...(this.state.focused ? peoplePickerStyles.containerDivOnFocus : {}),
@@ -154,18 +155,21 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   <Input
                     styles={peoplePickerStyles.textInput}
                     ref={this.input}
-                    placeholder={this.state.selected.length > 0 ? '' : 'Start typing a name'}
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
-                    {...getInputProps({
-                      onBlur: this.onInputBlur,
-                      'aria-labelledby': this.labelId,
-                      onKeyDown: this.onInputKeyDown.bind(
-                        this,
-                        highlightedIndex,
-                        selectItemAtIndex,
-                      ),
-                    })}
+                    role="presentation"
+                    input={{
+                      placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
+                      ...getInputProps({
+                        onBlur: this.onInputBlur,
+                        'aria-labelledby': this.labelId,
+                        onKeyDown: this.onInputKeyDown.bind(
+                          this,
+                          highlightedIndex,
+                          selectItemAtIndex,
+                        ),
+                      }),
+                    }}
                   />
                 </div>
                 <List

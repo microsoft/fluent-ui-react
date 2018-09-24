@@ -10,7 +10,7 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -27,11 +27,11 @@ export interface IInputProps {
   fluid?: boolean
   icon?: ItemShorthand
   inline?: boolean
-  input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
   value?: string | number
   type?: string
-  styles?: ComponentPartStyle
+  input?: ItemShorthand
+  styles?: IComponentPartStylesInput
   variables?: ComponentVariablesInput
 }
 
@@ -62,6 +62,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
     /** The default value of the input. */
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+    input: customPropTypes.itemShorthand,
 
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
@@ -104,6 +106,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     'onChange',
     'styles',
     'type',
+    'input',
     'value',
     'variables',
   ]
@@ -185,18 +188,13 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, styles, variables }) {
-    const { type } = this.props
-    const [htmlInputProps, restProps] = this.partitionProps()
-
-    const { onChange } = htmlInputProps as any
-
+  renderComponent({ ElementType, classes, styles, variables, rest }) {
+    const { input, onChange } = this.props
     const inputClasses = classes.input
 
     return (
-      <ElementType className={classes.root} {...restProps} onChange={onChange}>
-        {createHTMLInput(type, {
-          defaultProps: htmlInputProps,
+      <ElementType className={classes.root} onChange={onChange} {...rest}>
+        {createHTMLInput(input, {
           overrideProps: {
             className: inputClasses,
             ref: this.handleInputRef,
