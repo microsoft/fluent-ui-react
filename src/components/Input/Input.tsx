@@ -131,7 +131,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     const { type } = this.props
     const { value } = this.state
 
-    const unhandled = getUnhandledProps({ handledProps: Input.getHandledProps() }, this.props)
+    const unhandled = getUnhandledProps(Input, this.props)
     const [htmlInputProps, rest] = partitionHTMLProps(unhandled)
 
     return [

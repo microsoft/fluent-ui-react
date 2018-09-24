@@ -1,24 +1,28 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/interfaces'
 
 class UIComponent<P, S> extends React.Component<P, S> {
-  private static handledPropsCache: string[] = undefined
-
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
 
-  static getHandledProps = function () {
-    if (!this.handledPropsCache) {
-      this.handledPropsCache = Object.keys(this.propTypes || {}).sort()
+  static propTypes: any
+
+  /** Array of props to exclude from list of handled ones. */
+  static unhandledProps: string[] = []
+
+  private static _handledPropsCache: string[] = undefined
+  static get handledProps() {
+    if (!this._handledPropsCache) {
+      this._handledPropsCache = _.pullAll(_.keys(this.propTypes), this.unhandledProps).sort()
     }
 
-    return this.handledPropsCache
+    return this._handledPropsCache
   }
 
-  static propTypes: any
   protected actionHandlers: AccessibilityActionHandlers
 
   constructor(props, context) {
@@ -45,7 +49,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
         className: this.childClass.className,
         defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
-        handledProps: this.childClass.getHandledProps(),
+        handledProps: this.childClass.handledProps,
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,

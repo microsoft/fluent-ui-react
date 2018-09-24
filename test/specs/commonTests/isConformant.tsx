@@ -228,22 +228,20 @@ export default (Component, options: any = {}) => {
   }
 
   describe('handles props', () => {
-    const handledProps = Component.getHandledProps()
-
-    test('defines handled props in Component.getHandledProps()', () => {
-      expect(handledProps).toBeDefined()
-      expect(Array.isArray(handledProps)).toEqual(true)
+    test('defines handled props in Component.handledProps', () => {
+      expect(Component.handledProps).toBeDefined()
+      expect(Array.isArray(Component.handledProps)).toEqual(true)
     })
 
     test(`has 'styles' as handled prop`, () => {
-      expect(handledProps).toContain('styles')
+      expect(Component.handledProps).toContain('styles')
     })
 
     test(`has 'variables' as handled prop`, () => {
-      expect(handledProps).toContain('variables')
+      expect(Component.handledProps).toContain('variables')
     })
 
-    test('Component.getHandledProps() includes all handled props', () => {
+    test('Component.handledProps includes all handled props', () => {
       const computedProps = _.union(
         Component.autoControlledProps,
         _.keys(Component.defaultProps),
@@ -252,13 +250,13 @@ export default (Component, options: any = {}) => {
       const expectedProps = _.uniq(computedProps).sort()
 
       const message =
-        'Not all handled props were defined in static getHandledProps(). Add all props defined in' +
+        'Not all handled props were defined in static handledProps. Add all props defined in' +
         ' static autoControlledProps, static defaultProps and static propTypes must be defined' +
-        ' in static getHandledProps().'
+        ' in static handledProps.'
 
       expect({
         message,
-        handledProps,
+        handledProps: Component.handledProps,
       }).toEqual({
         message,
         handledProps: expectedProps,
