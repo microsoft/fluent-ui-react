@@ -175,8 +175,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   ) => {
     const { author, content, mine, timestamp } = this.props
 
-    console.log('content', content)
-
     const authorComponent = Text.create(author, {
       defaultProps: {
         size: 'sm',
