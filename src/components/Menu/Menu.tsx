@@ -47,7 +47,10 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Index of the currently active item. */
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional css class name or space separated class names to apply **/

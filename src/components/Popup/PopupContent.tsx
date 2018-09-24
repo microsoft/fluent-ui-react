@@ -32,7 +32,10 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     /** Basic CSS styling for the popup contents */
     basic: PropTypes.bool,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional css class name or space separated class names to apply **/

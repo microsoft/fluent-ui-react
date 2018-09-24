@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 import { Table } from 'semantic-ui-react'
 
 import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValue'
@@ -26,9 +27,10 @@ export default class ComponentTableRow extends React.Component<any, any> {
   render() {
     const { defaultValue, description, name, required, tags, type, value } = this.props
     const { showEnums } = this.state
+    const hideRow = this.docSiteHidden(tags)
 
     return (
-      <Table.Row key={name}>
+      <Table.Row key={name} className={hideRow ? 'hidden' : ''}>
         <Table.Cell collapsing>
           <ComponentPropName name={name} required={required} />
         </Table.Cell>
@@ -49,4 +51,13 @@ export default class ComponentTableRow extends React.Component<any, any> {
       </Table.Row>
     )
   }
+
+  docSiteHidden(tags) {
+    const hide = _.filter(tags, { title: 'docSiteIgnore' })
+    return !!hide.length
+  }
 }
+
+export const hidden = `
+    display: none
+`

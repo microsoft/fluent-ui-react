@@ -31,7 +31,10 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional css class name or space separated class names to apply **/

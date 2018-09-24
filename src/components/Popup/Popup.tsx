@@ -52,7 +52,10 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** Basic CSS styling for the popup. */
     basic: PropTypes.bool,
 
-    /** The popup content (deprecated). */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: customPropTypes.disallow(['children']),
 
     /** Additional css class name or space separated class names to apply **/

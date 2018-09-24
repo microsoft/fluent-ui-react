@@ -37,7 +37,10 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional css class name or space separated class names to apply **/

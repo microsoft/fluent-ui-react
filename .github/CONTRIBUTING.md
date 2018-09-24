@@ -549,7 +549,7 @@ Label.propTypes = {
   /** Primary content. */
   children: PropTypes.node,
 
-  /** Additional classes. */
+  /** Additional css class name or space separated class names to apply **/
   className: PropTypes.string,
 
   /** Color of the label. */

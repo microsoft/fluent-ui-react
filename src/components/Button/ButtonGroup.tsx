@@ -33,7 +33,10 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional css class name or space separated class names to apply **/
