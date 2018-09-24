@@ -12,7 +12,7 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface ILabelProps {
@@ -27,7 +27,7 @@ export interface ILabelProps {
   iconPosition?: 'start' | 'end'
   image?: ItemShorthand
   imagePosition?: 'start' | 'end'
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -72,7 +72,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -112,20 +112,18 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
       image &&
       Image.create(image, {
         defaultProps: {
-          styles: { root: styles.image },
+          styles: styles.image,
           variables: variables.image,
         },
-        generateKey: false,
       })
 
     const iconElement =
       icon &&
       Icon.create(icon, {
         defaultProps: {
+          styles: styles.icon,
           variables: variables.icon,
-          styles: { root: styles.icon },
         },
-        generateKey: false,
         overrideProps: this.handleIconOverrides,
       })
 

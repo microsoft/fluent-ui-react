@@ -10,7 +10,7 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  IComponentPartStylesInput,
+  ComponentPartStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
@@ -29,7 +29,7 @@ export interface IMenuProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -89,7 +89,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

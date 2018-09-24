@@ -7,7 +7,7 @@ import Layout from '../Layout'
 import {
   ComponentVariablesInput,
   IComponentPartClasses,
-  IComponentPartStylesInput,
+  ComponentPartStyle,
   ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
@@ -46,7 +46,7 @@ export interface IItemLayoutProps {
   endMediaCSS?: ICSSInJSStyle
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -101,7 +101,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -221,7 +221,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
       <Layout
         as={as}
         className={classes.root}
-        styles={{ root: styles.root }}
+        styles={styles.root}
         rootCSS={rootCSS}
         alignItems="center"
         gap={pxToRem(8)}

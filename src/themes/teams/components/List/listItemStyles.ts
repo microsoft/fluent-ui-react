@@ -2,13 +2,8 @@ import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IListItemProps } from '../../../../components/List/ListItem'
 
-const listItemStyles: IComponentPartStylesInput = {
-  root: ({
-    props: { selection, important },
-  }: {
-    props: IListItemProps
-    variables: any
-  }): ICSSInJSStyle => ({
+const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
+  root: ({ props: { selection, important } }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
 
@@ -22,7 +17,7 @@ const listItemStyles: IComponentPartStylesInput = {
       fontWeight: 'bold',
     }),
   }),
-  media: ({ props }: { props: IListItemProps; variables: any }): ICSSInJSStyle => {
+  media: ({ props }): ICSSInJSStyle => {
     const { important } = props
     return {
       ...(important && {

@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable } from './utils'
+import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -11,13 +11,6 @@ import { Extendable } from './utils'
 // We use these terms in typings to indicate which phase the typings apply to.
 
 // ========================================================
-// Utilities
-// ========================================================
-
-type OneOrArray<T> = T | T[]
-type ObjectOf<T> = { [key: string]: T }
-
-// ========================================================
 // Props
 // ========================================================
 
@@ -25,7 +18,7 @@ export type IProps = ObjectOf<any>
 
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
 }>
 
 // ========================================================
@@ -89,20 +82,28 @@ export interface ICSSInJSStyle extends React.CSSProperties {
   '-moz-osx-font-smoothing'?: CSSType.Globals | 'auto' | 'grayscale'
 }
 
-export interface ComponentStyleFunctionParam {
-  props: IState & IPropsWithVarsAndStyles
-  variables: ComponentVariablesObject
+export interface ComponentStyleFunctionParam<
+  TProps extends IPropsWithVarsAndStyles = IPropsWithVarsAndStyles,
+  TVars extends ComponentVariablesObject = ComponentVariablesObject
+> {
+  props: IState & TProps
+  variables: TVars
+  theme: IThemePrepared
 }
 
-export type ComponentPartStyleFunction = ((
-  styleParam?: ComponentStyleFunctionParam,
+export type ComponentPartStyleFunction<TProps = {}, TVars = {}> = ((
+  styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
 ) => ICSSInJSStyle)
 
-export type ComponentPartStyle = ComponentPartStyleFunction | ICSSInJSStyle
+export type ComponentPartStyle<TProps = {}, TVars = {}> =
+  | ComponentPartStyleFunction<TProps, TVars>
+  | ICSSInJSStyle
 
-export interface IComponentPartStylesInput extends ObjectOf<ComponentPartStyle> {}
+export interface IComponentPartStylesInput<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentPartStyle<TProps, TVars>> {}
 
-export interface IComponentPartStylesPrepared extends ObjectOf<ComponentPartStyleFunction> {}
+export interface IComponentPartStylesPrepared<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentPartStyleFunction<TProps, TVars>> {}
 
 export interface IComponentPartClasses extends ObjectOf<string> {}
 
@@ -131,6 +132,7 @@ export interface IThemeInput {
   renderer?: IRenderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
+  icons?: ThemeIcons
 }
 
 // Component variables and styles must be resolved by the component after
@@ -147,6 +149,7 @@ export interface IThemePrepared {
     [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesPrepared
   }
   componentStyles: { [key in keyof IThemeComponentStylesPrepared]: IComponentPartStylesPrepared }
+  icons: ThemeIcons
   rtl: boolean
   renderer: IRenderer
   fontFaces: FontFaces
@@ -245,3 +248,25 @@ export interface IFontFace {
 }
 
 export type FontFaces = IFontFace[]
+
+// ========================================================
+// Icons
+// ========================================================
+
+type Classes = { [iconPart: string]: string }
+type SvgIconFuncArg = {
+  classes: Classes
+}
+
+type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
+export type FontIconSpec = ObjectOrFunc<{
+  content: string
+  fontFamily: string
+}>
+
+export type ThemeIconSpec = {
+  isSvg?: boolean
+  icon: FontIconSpec | SvgIconSpec
+}
+
+export type ThemeIcons = { [iconName: string]: ThemeIconSpec }

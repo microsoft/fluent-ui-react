@@ -1,13 +1,12 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import whatInput from 'what-input'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -15,6 +14,7 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IButtonProps {
   as?: any
@@ -32,7 +32,7 @@ export interface IButtonProps {
   text?: boolean
   type?: 'primary' | 'secondary'
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -107,7 +107,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -138,9 +138,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
   static Group = ButtonGroup
 
-  public state = {
-    isFromKeyboard: false,
-  }
+  public state = isFromKeyboard.initial
 
   public renderComponent({
     ElementType,
@@ -175,7 +173,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
     return Icon.create(icon, {
       defaultProps: {
-        styles: { root: styles.icon },
+        styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },
@@ -196,9 +194,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.state())
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
