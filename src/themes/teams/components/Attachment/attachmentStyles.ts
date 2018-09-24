@@ -2,7 +2,6 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
-import { Extendable } from '../../../../../types/utils'
 
 const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
