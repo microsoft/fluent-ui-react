@@ -33,8 +33,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static handledProps = [
     'as',
     'className',
-    'image',
     'getInitials',
+    'image',
     'label',
     'name',
     'size',
