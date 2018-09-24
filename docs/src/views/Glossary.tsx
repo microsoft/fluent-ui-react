@@ -1,9 +1,18 @@
 import * as React from 'react'
+import { NavLink } from 'react-router-dom'
 
 import DocPage from '../components/DocPage'
-import Header from '../../../src/components/Header/Header'
+import Button from '../../../src/components/Button/Button'
+import Divider from '../../../src/components/Divider/Divider'
 import Grid from '../../../src/components/Grid/Grid'
+import Header from '../../../src/components/Header/Header'
 import CodeSnippet from '../components/CodeSnippet'
+
+const gridStyle = {
+  backgroundColor: 'white',
+  padding: '15px',
+  '>span': { borderBottom: '1px solid gray' },
+}
 
 export default () => (
   <DocPage title="Stardust Glossary">
@@ -17,9 +26,14 @@ export default () => (
     </p>
     <Header as="h3" content="State" />
     <p>
-      States are modifications to an element that help indicate a change in
-      [affordance](http://www.usabilityfirst.com/glossary/affordance/). Common states include
-      loading, disabled, and active.
+      States are modifications to an element that help indicate a change in{' '}
+      <a
+        href="http://www.usabilityfirst.com/glossary/affordance/"
+        target="_blank"
+        rel="noopener nofollow"
+      >
+        [affordance]
+      </a>. Common states include loading, disabled, and active.
     </p>
     <Header as="h3" content="Content" />
     <p>
@@ -38,19 +52,22 @@ export default () => (
     <Header as="h4" content="Components" />
     <p>
       A component is a general term used to refer to any user interface element packaged for
-      distribution (Not to be confused with React’s Component)
+      distribution. (Not to be confused with React’s Component)
     </p>
-    <Header as="h4" content="Shorthand/Children definition" />
+    <Header as="h4" content="Shorthand/ Children definition" />
     <p>
-      Most of the components support two ways of definition: shorthand and children. With the
-      shorthand definition we are adding some props to the component in order to define it’s
-      content, in opposite to the children where we are adding the content inside the component, or
-      using some subcomponent. For example: when defining the text displayed in the Button
-      component, we can pass the content prop or we can define the text inside the component:
+      Most of the components support two ways of definition: <code>shorthand</code> and{' '}
+      <code>children</code>. With the shorthand definition we are adding some props to the component
+      in order to define it’s content, in opposite to the children where we are adding the content
+      inside the component, or using some subcomponent.
+    </p>
+    <p>
+      For example: when defining the text displayed in the Button component, we can pass the content
+      prop or we can define the text inside the component:
     </p>
     <CodeSnippet
       label="index.jsx"
-      value={['<Button>Click me!</Button>', '<Button content="Click me!" />'].join('\n')}
+      value={['<Button content="Click me!" />', '<Button>Click me!</Button>'].join('\n')}
     />
 
     <Header as="h4" content="Subcomponents" />
@@ -88,7 +105,8 @@ export default () => (
       description. This way we are only implying that that property is applied to the component.
     </p>
     <Header as="h2" content="Design language" />
-    <Grid columns="20% 80%">
+
+    <Grid columns="20% 80%" styles={gridStyle}>
       {[
         <span>
           <strong>Term</strong>
@@ -170,7 +188,7 @@ export default () => (
       ]}
     </Grid>
     <Header as="h2" content="Accessibility Terms" />
-    <Grid columns="20% 80%">
+    <Grid columns="20% 80%" styles={gridStyle}>
       {[
         <span>
           <strong>Term</strong>
@@ -186,5 +204,24 @@ export default () => (
         </span>,
       ]}
     </Grid>
+    <Divider />
+    <br />
+    {/* Show a preview of the above snippet */}
+    <Button
+      as={NavLink}
+      content="Quick Start"
+      type="primary"
+      icon="arrow left"
+      iconPosition="before"
+      to="quick-start"
+    />
+    <Button
+      as={NavLink}
+      content="Accessibility"
+      type="primary"
+      icon="arrow right"
+      iconPosition="after"
+      to="accessibility"
+    />
   </DocPage>
 )
