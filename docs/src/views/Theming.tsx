@@ -134,7 +134,7 @@ export default () => (
     />
     <p>
       Every slot (named part) of every component also accepts <code>styles</code> that are applied
-      to the root of the slot.
+      to the root element of the slot.
     </p>
     <ExampleSnippet
       value={[
