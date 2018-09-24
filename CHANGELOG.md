@@ -31,6 +31,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
 - Add support for custom (theme-defined) SVG and font-based icons @kuzhelov ([#260](https://github.com/stardust-ui/react/pull/260))
 
+### Documentation
+- Add `Theming` guide @almedint, @levithomason ([#252](https://github.com/stardust-ui/react/pull/252))
+
 <!--------------------------------[ v0.5.2 ]------------------------------- -->
 ## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.5.1...v0.5.2)
