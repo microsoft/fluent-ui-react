@@ -23,14 +23,8 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   }),
 })
 
-const dividerStyles: IComponentPartStylesInput = {
-  root: ({
-    props,
-    variables,
-  }: {
-    props: IDividerPropsWithDefaults
-    variables: any
-  }): ICSSInJSStyle => {
+const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
+  root: ({ props, variables }): ICSSInJSStyle => {
     const { children, size, type, important, content } = props
     return {
       color: variables.textColor,
