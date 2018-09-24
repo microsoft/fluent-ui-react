@@ -54,7 +54,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** A property that will change the icon on the input and clear the input on click on Cancel */
@@ -83,7 +83,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The HTML input type. */
     type: PropTypes.string,
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */

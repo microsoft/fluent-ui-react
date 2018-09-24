@@ -44,7 +44,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Set as @mention Text component */
     atMention: PropTypes.bool,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -77,7 +77,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Truncates text as needed */
     truncated: PropTypes.bool,
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

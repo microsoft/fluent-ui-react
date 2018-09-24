@@ -50,7 +50,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** The name used for displaying the initials of the avatar if the image is not provided. */
@@ -68,7 +68,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

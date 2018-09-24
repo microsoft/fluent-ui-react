@@ -54,7 +54,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** A label can be circular. */
     circular: PropTypes.bool,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -72,7 +72,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

@@ -39,7 +39,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
      */
     children: PropTypes.node,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** The buttons inside group can appear circular. */
@@ -48,7 +48,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

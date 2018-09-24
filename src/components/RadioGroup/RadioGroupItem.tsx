@@ -62,7 +62,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      */
     children: PropTypes.node,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /** Initial checked value. */
@@ -114,7 +114,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      */
     checkedChanged: PropTypes.func,
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input value. */

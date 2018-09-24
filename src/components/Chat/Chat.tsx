@@ -24,7 +24,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional classes. */
     className: PropTypes.string,
 
     /**
@@ -36,7 +36,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     /** Shorthand array of messages. */
     messages: PropTypes.arrayOf(PropTypes.any),
 
-    /** Styles to apply to this component instance **/
+    /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
