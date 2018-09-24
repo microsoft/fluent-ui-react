@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- added `image` and `label` shorthands props for `Avatar`; `src` and `alt` props are now used inside the `image` shorthand @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
+
 <!--------------------------------[ v0.5.2 ]------------------------------- -->
 ## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.5.2...v0.6.0)
@@ -26,7 +29,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
 - Add `RadioGroup` compliant with ARIA patterns. `Radio` changed to `RadioGroup.Item` @jurokapsiar ([#229](https://github.com/stardust-ui/react/pull/229))
 - `Divider` refactored variables names and the way they are used @codepretty ([#249](https://github.com/stardust-ui/react/pull/249))
-- added `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
 
 ### Fixes
 - Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
