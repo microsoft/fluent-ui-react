@@ -11,10 +11,10 @@ const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
     height: pxToRem(size),
     width: pxToRem(size),
   }),
-  imageAvatar: (): ICSSInJSStyle => ({
+  image: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
-  avatarNameContainer: ({ props: { size } }): ICSSInJSStyle => ({
+  label: ({ props: { size } }): ICSSInJSStyle => ({
     display: 'inline-block',
     width: pxToRem(size),
     height: pxToRem(size),
@@ -25,8 +25,8 @@ const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
   }),
   status: ({ props, variables }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: `-${variables.statusBorderWidth}px`,
-    right: `-${variables.statusBorderWidth}px`,
+    bottom: `-${variables.status.borderWidth}px`,
+    right: `-${variables.status.borderWidth}px`,
   }),
 }
 

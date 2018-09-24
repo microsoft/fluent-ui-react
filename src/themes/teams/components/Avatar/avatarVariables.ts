@@ -1,4 +1,7 @@
 export default () => ({
-  statusBorderColor: 'white',
-  statusBorderWidth: 2,
+  label: { padding: '0px' },
+  status: {
+    borderColor: 'white',
+    borderWidth: 2,
+  },
 })
