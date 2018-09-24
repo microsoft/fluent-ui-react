@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PeoplePicker from './ChatPeoplePicker'
+import ChatPeoplePicker from './ChatPeoplePicker'
 
 const items = [
   {
@@ -48,7 +48,10 @@ const peopleSupplier = (inputValue: string, selected: { name: string }[]) => {
 }
 
 const PeoplePickerExampleShorthand = () => (
-  <PeoplePicker source={peopleSupplier} styles={{ width: '30rem', margin: '4rem auto 0 4rem' }} />
+  <ChatPeoplePicker
+    source={peopleSupplier}
+    styles={{ width: '30rem', margin: '4rem auto 0 4rem' }}
+  />
 )
 
 export default PeoplePickerExampleShorthand
