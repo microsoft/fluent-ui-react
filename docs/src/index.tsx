@@ -15,7 +15,6 @@ import { semanticCssOverrides } from './Style'
 // ----------------------------------------
 
 const mountNode = document.createElement('div')
-mountNode.style.height = '100%'
 document.body.appendChild(mountNode)
 
 const semanticStyleOverrides = {
