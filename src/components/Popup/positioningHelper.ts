@@ -1,3 +1,4 @@
+export { Placement } from 'popper.js'
 import { Placement } from 'popper.js'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
