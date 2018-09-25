@@ -6,11 +6,6 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Basic"
-      description="A basic popup."
-      examplePath="components/Popup/Variations/PopupExampleBasic"
-    />
-    <ComponentExample
       title="Alignment and Position"
       description="A popup can be positioned around its trigger and aligned relative to the trigger's margins. Click on a button to open a popup on a specific position and alignment."
       examplePath="components/Popup/Variations/PopupExamplePosition"
