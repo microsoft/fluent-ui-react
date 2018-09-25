@@ -17,8 +17,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
+- Update `Theming` guide @levithomason ([#274](https://github.com/stardust-ui/react/pull/274))
 - Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
 
 <!--------------------------------[ v0.6.0 ]------------------------------- -->
