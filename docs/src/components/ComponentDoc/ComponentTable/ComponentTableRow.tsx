@@ -57,7 +57,3 @@ export default class ComponentTableRow extends React.Component<any, any> {
     return !!hide.length
   }
 }
-
-export const hidden = `
-    display: none
-`
