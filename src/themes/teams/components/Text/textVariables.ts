@@ -6,7 +6,9 @@ export interface ITextVariables {
   textWeightRegular: number
   textWeightSemibold: number
   textWeightBold: number
-  atMentionTextColor: string
+  atMentionMeFontWeight: number
+  atMentionMeTextColor: string
+  atMentionOtherTextColor: string
   disabledTextColor: string
   errorTextColor: string
   successTextColor: string
@@ -32,7 +34,10 @@ export interface ITextVariables {
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionTextColor: siteVariables.orange04,
+    atMentionOtherTextColor: siteVariables.orange04,
+    atMentionMeTextColor: siteVariables.brand06,
+    atMentionMeFontWeight: siteVariables.fontWeightBold,
+
     disabledTextColor: siteVariables.gray06,
     errorTextColor: siteVariables.red,
     successTextColor: siteVariables.green04,
