@@ -16,24 +16,24 @@ export default () => (
       some parameterizable standard themes or you can create your own.
     </p>
     <p>
-      Startdust theme is constructed around css like style objects (<NavLink to="theming#styles">
+      Startdust theme is constructed around CSS-like style objects (<NavLink to="theming#styles">
         styles
       </NavLink>) and <NavLink to="theming#variables">variables</NavLink>.
     </p>
     <p>Stardust supports four levels of theming:</p>
     <ol>
       <li>
-        <strong>Default</strong> - Users who just need a good first run experience.
+        <strong>Default</strong> - for users who just need a good first run experience.
       </li>
       <li>
-        <strong>Component level styling</strong> - Users who need to change a little or a lot.
+        <strong>Component level styling</strong> - for users who need to change a little or a lot.
       </li>
       <li>
-        <strong>Theme level styling</strong> - Users who require design consistency accross the
+        <strong>Theme level styling</strong> - for users who require design consistency accross the
         application.
       </li>
       <li>
-        <strong>Nesting themes</strong> - Users who require different styling for the different
+        <strong>Nesting themes</strong> - for users who require different styling for the different
         parts of the application.
       </li>
     </ol>
@@ -180,7 +180,7 @@ export default () => (
         <code>componentStyles</code> - define CSS properties that will be applied to components of
         specific type. Those have the same scope as component variables, but serve as a lower level
         styling abstraction (and, thus, are more specific). Consider to use them when very specific
-        changes are required and not covered by the component variables available in the theme.
+        changes are required and not covered by the component variables provided by theme.
       </li>
     </ul>
 
