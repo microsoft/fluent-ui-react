@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.7.0 ]------------------------------- -->
+## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.6.0...v0.7.0)
+
 ### BREAKING CHANGES
 - Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
 
