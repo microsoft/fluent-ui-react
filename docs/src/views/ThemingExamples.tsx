@@ -296,14 +296,14 @@ export default () => (
         `  <Button type="primary">Branding</Button>`,
         `  <Divider type="primary">Branding</Divider>`,
         ``,
-        `  /* First provider theming */`,
+        `  /* First nested theming */`,
         `  <Provider`,
         `    theme={{`,
         `      siteVariables: { brand: 'darkred' },`,
         `    }}`,
         `  >`,
         `    <div>`,
-        `      <Header as="h3" content="First provider theming" />`,
+        `      <Header as="h3" content="First nested theming" />`,
         ``,
         `      <Button content="Button" />`,
         `      <Button type="primary" icon="plus" iconOnly />`,
@@ -314,7 +314,7 @@ export default () => (
         `      <Divider content="Primary Divider" type="primary" />`,
         `      <Divider content="Secondary Divider" type="secondary" />`,
         ``,
-        `      /* Second provider theming */`,
+        `      /* Second nested theming */`,
         `      <Provider`,
         `        theme={{`,
         `          componentStyles: {`,
@@ -325,7 +325,7 @@ export default () => (
         `        }}`,
         `      >`,
         `        <div>`,
-        `          <Header as="h3" content="Second provider theming" />`,
+        `          <Header as="h3" content="Second nested theming" />`,
         ``,
         `          <Button content="Button" />`,
         `          <Button type="primary" icon="plus" iconOnly />`,
@@ -360,7 +360,7 @@ export default () => (
             }}
           >
             <>
-              <Header as="h3" content="First provider theming" />
+              <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
               <Button type="primary" icon="plus" iconOnly />
@@ -382,7 +382,7 @@ export default () => (
                 }}
               >
                 <>
-                  <Header as="h3" content="Second provider theming" />
+                  <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
                   <Button type="primary" icon="plus" iconOnly />
