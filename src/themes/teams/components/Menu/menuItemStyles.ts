@@ -1,5 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import {
+  ComponentPartStyle,
+  IComponentPartStylesInput,
+  ICSSInJSStyle,
+} from '../../../../../types/theme'
 import { IMenuVariables } from './menuVariables'
 import { IMenuItemProps } from '../../../../components/Menu/MenuItem'
 
@@ -8,12 +12,9 @@ const underlinedItem = (color): ICSSInJSStyle => ({
   transition: 'color .1s ease',
 })
 
-const itemSeparator = ({
+const itemSeparator: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
   props,
   variables,
-}: {
-  props: IMenuItemProps
-  variables: IMenuVariables
 }): ICSSInJSStyle => {
   const { iconOnly, pointing, pills, type, underlined, vertical } = props
   return {
@@ -43,7 +44,10 @@ const itemSeparator = ({
   }
 }
 
-const pointingBeak = ({ props, variables }: { props: any; variables }): ICSSInJSStyle => {
+const pointingBeak: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
+  props,
+  variables,
+}): ICSSInJSStyle => {
   const { pointing, type } = props
 
   let backgroundColor: string
@@ -93,14 +97,8 @@ const pointingBeak = ({ props, variables }: { props: any; variables }): ICSSInJS
   }
 }
 
-const menuItemStyles = {
-  root: ({
-    props,
-    variables,
-  }: {
-    props: IMenuItemProps
-    variables: IMenuVariables
-  }): ICSSInJSStyle => {
+const menuItemStyles: IComponentPartStylesInput<IMenuItemProps, IMenuVariables> = {
+  root: ({ props, variables, theme }): ICSSInJSStyle => {
     const { active, iconOnly, pills, pointing, type, underlined, vertical } = props
     const { iconsMenuItemSpacing } = variables
     return {
@@ -130,7 +128,7 @@ const menuItemStyles = {
         boxShadow: 'none',
         color: variables.defaultColor,
       }),
-      ...itemSeparator({ props, variables }),
+      ...itemSeparator({ props, variables, theme }),
       ...(pointing &&
         vertical && {
           border: '1px solid transparent',
@@ -170,7 +168,7 @@ const menuItemStyles = {
             }),
           }),
         },
-        ...(pointing && !vertical && pointingBeak({ props, variables })),
+        ...(pointing && !vertical && pointingBeak({ props, variables, theme })),
         ...(pointing &&
           vertical && {
             ...(pointing === 'end'
@@ -181,13 +179,7 @@ const menuItemStyles = {
     }
   },
 
-  anchor: ({
-    props,
-    variables,
-  }: {
-    props: IMenuItemProps
-    variables: IMenuVariables
-  }): ICSSInJSStyle => {
+  anchor: ({ props, variables }): ICSSInJSStyle => {
     const { active, iconOnly, pointing, type, underlined, vertical } = props
     const { iconsMenuItemSize } = variables
 
