@@ -18,11 +18,24 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
+
+### Features
+- Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+
+### Documentation
+- Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
+- Update `Theming` guide @levithomason ([#274](https://github.com/stardust-ui/react/pull/274))
+
+<!--------------------------------[ v0.6.0 ]------------------------------- -->
+## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.2...v0.6.0)
+
+### BREAKING CHANGES
 - Fixed `Divider` wrong usage of the `typeSecondary{color, backgroundColor}` and `default{color, backgroundColor}` variables; renamed `default{color, backgroundColor}` variables to `color` and `backgroundColor` @mnajdova ([#234](https://github.com/stardust-ui/react/pull/234))
 - Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
 - Add `RadioGroup` compliant with ARIA patterns. `Radio` changed to `RadioGroup.Item` @jurokapsiar ([#229](https://github.com/stardust-ui/react/pull/229))
 - `Divider` refactored variables names and the way they are used @codepretty ([#249](https://github.com/stardust-ui/react/pull/249))
-- `ChatMessage` component is renamed to `ChatBubble` and should now be used as part of the `ChatItem` component; renamed the `messages` props inside the `Chat` with `items` @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
 
 ### Fixes
 - Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
@@ -30,7 +43,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
-- Replaced the usage of the `ChatMessage` component inside the `Chat` with the new `ChatItem` component, and added different types of items: `bubble`, `action` and `divider` types @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+- Add support for custom (theme-defined) SVG and font-based icons @kuzhelov ([#260](https://github.com/stardust-ui/react/pull/260))
 
 <!--------------------------------[ v0.5.2 ]------------------------------- -->
 ## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)

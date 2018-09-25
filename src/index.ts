@@ -3,6 +3,7 @@ import * as themes from './themes'
 export { themes }
 
 export { default as Accordion } from './components/Accordion'
+export { default as Attachment } from './components/Attachment'
 export { default as Avatar } from './components/Avatar'
 export { default as Button } from './components/Button'
 export { ButtonGroup } from './components/Button'

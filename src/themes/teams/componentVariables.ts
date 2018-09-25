@@ -1,5 +1,7 @@
 export { default as AccordionContent } from './components/Accordion/accordionContentVariables'
 
+export { default as Attachment } from './components/Attachment/attachmentVariables'
+
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'

@@ -59,7 +59,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     /** Child content * */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial checked value. */
@@ -111,13 +111,13 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      */
     checkedChanged: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A vertical radio group displays elements vertically. */
