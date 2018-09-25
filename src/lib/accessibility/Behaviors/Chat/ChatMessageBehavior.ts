@@ -21,6 +21,7 @@ const ChatMessageBehavior: Accessibility = {
     mode: FocusZoneMode.Embed,
     props: {
       handleTabKey: FocusZoneTabbableElements.all,
+      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       isCircularNavigation: true,
       direction: FocusZoneDirection.vertical,
     },

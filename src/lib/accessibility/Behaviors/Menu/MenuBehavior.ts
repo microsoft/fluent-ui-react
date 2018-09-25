@@ -1,4 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @description
@@ -13,7 +14,7 @@ const MenuBehavior: Accessibility = {
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
     },

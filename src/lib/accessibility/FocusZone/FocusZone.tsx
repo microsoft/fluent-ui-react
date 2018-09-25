@@ -217,7 +217,14 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
       const firstChild = this._root.current.firstChild as HTMLElement
 
-      return this.focusElement(getNextElement(this._root.current, firstChild, true) as HTMLElement)
+      return this.focusElement(getNextElement(
+        this._root.current,
+        firstChild,
+        true,
+        false,
+        false,
+        true,
+      ) as HTMLElement)
     }
     return false
   }
