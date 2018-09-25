@@ -3,14 +3,27 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IListItemProps } from '../../../../components/List/ListItem'
 
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
-  root: ({ props: { selection, important } }): ICSSInJSStyle => ({
+  root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
 
+      // show the end media on hover
+      '& .ui-item-layout__endMedia': { display: 'none' },
+
       ':hover': {
-        background: 'rgba(98, 100, 167, .8)',
-        color: '#fff',
+        background: variables.selectionHoverBackgroundColor,
+        color: variables.selectionHoverColor,
         cursor: 'pointer',
+
+        '& .ui-item-layout__header': { color: 'inherit' },
+        '& .ui-item-layout__content': { color: 'inherit' },
+
+        // hide the header media and content media on hover
+        '& .ui-item-layout__headerMedia': { display: 'none', color: 'inherit' },
+        '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
+
+        // show the end media on hover
+        '& .ui-item-layout__endMedia': { display: 'unset', color: 'inherit' },
       },
     }),
     ...(important && {
@@ -37,12 +50,10 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
     lineHeight: variables.headerLineHeight,
   }),
   headerMedia: ({ variables }): ICSSInJSStyle => ({
-    color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
   content: ({ variables }) => ({
-    color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),

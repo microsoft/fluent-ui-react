@@ -96,14 +96,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   state: any = {}
 
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
       as,
@@ -119,33 +111,15 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
       truncateHeader,
     } = this.props
 
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
-
     return (
       <ItemLayout
         as={as}
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
@@ -153,11 +127,9 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
         {...accessibility.attributes.root}
         {...rest}
       />

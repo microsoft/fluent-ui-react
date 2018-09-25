@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import {
-  ComponentPartStyle,
+  ComponentPartStyleFunction,
   IComponentPartStylesInput,
   ICSSInJSStyle,
 } from '../../../../../types/theme'
@@ -12,7 +12,7 @@ const underlinedItem = (color): ICSSInJSStyle => ({
   transition: 'color .1s ease',
 })
 
-const itemSeparator: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
+const itemSeparator: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
   props,
   variables,
 }): ICSSInJSStyle => {
@@ -44,7 +44,7 @@ const itemSeparator: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
   }
 }
 
-const pointingBeak: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
+const pointingBeak: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
   props,
   variables,
 }): ICSSInJSStyle => {

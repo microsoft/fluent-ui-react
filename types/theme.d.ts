@@ -54,6 +54,7 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
 }
 
 export interface ICSSInJSStyle extends React.CSSProperties {
+  [key: string]: any
   // missing React.CSSProperties
   speak?: CSSType.Globals | 'none' | 'normal' | 'spell-out'
 
