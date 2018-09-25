@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatBubbleProps } from '../../../../components/Chat/ChatBubble'
-import { IChatBubbleVariables } from './chatBubbleVariables'
+import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import { IChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
 const px10asRem = pxToRem(10)
@@ -9,8 +9,8 @@ const chatMessageStyles = {
     props: p,
     variables: v,
   }: {
-    props: IChatBubbleProps
-    variables: IChatBubbleVariables
+    props: IChatMessageProps
+    variables: IChatMessageVariables
   }): ICSSInJSStyle => ({
     position: 'relative',
     marginTop: '1rem',
@@ -28,7 +28,7 @@ const chatMessageStyles = {
     wordWrap: 'break-word',
   }),
 
-  avatar: ({ props: p }: { props: IChatBubbleProps }): ICSSInJSStyle => ({
+  avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
     marginTop: px10asRem,
     marginBottom: px10asRem,
     marginLeft: p.mine ? px10asRem : 0,
@@ -39,8 +39,8 @@ const chatMessageStyles = {
     props: p,
     variables: v,
   }: {
-    props: IChatBubbleProps
-    variables: IChatBubbleVariables
+    props: IChatMessageProps
+    variables: IChatMessageVariables
   }): ICSSInJSStyle => ({
     padding: '1rem',
     color: 'rgb(64, 64, 64)',

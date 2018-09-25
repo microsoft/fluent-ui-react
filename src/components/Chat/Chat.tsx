@@ -6,8 +6,7 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import ChatAction from './ChatAction'
-import ChatBubble from './ChatBubble'
+import ChatMessage from './ChatMessage'
 
 export interface IChatProps {
   as?: any
@@ -46,8 +45,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   static defaultProps = { as: 'ul' }
 
   static Item = ChatItem
-  static Action = ChatAction
-  static Bubble = ChatBubble
+  static Message = ChatMessage
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, items } = this.props

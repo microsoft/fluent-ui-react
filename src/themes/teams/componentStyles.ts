@@ -9,8 +9,7 @@ export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
 export { default as ChatItem } from './components/Chat/chatItemStyles'
-export { default as ChatBubble } from './components/Chat/chatBubbleStyles'
-export { default as ChatAction } from './components/Chat/chatActionStyles'
+export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
 

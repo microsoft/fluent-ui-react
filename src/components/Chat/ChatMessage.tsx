@@ -13,31 +13,34 @@ import {
   ComponentPartStyle,
   ComponentVariablesInput,
   IComponentPartStylesInput,
+  ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
 import Layout from '../Layout'
 import Text from '../Text'
 
-export interface IChatBubbleProps {
+export interface IChatMessageProps {
   as?: any
   author?: ItemShorthand
   avatar?: ItemShorthand
+  avatarStyle?: ICSSInJSStyle
   children?: ReactChildren
   className?: string
   content?: any
+  contentStyle?: ICSSInJSStyle
   mine?: boolean
   styles?: ComponentPartStyle
   timestamp?: ItemShorthand
   variables?: ComponentVariablesInput
 }
 
-class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
-  static className = 'ui-chat__bubble'
+class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
+  static className = 'ui-chat__message'
 
   static create: Function
 
-  static displayName = 'ChatBubble'
+  static displayName = 'ChatMessage'
 
   static propTypes = {
     as: customPropTypes.as,
@@ -48,6 +51,9 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
+    /** Style for the avatar of the ChatMessage. */
+    avatarStyle: PropTypes.object,
+
     /** Child content. */
     children: PropTypes.node,
 
@@ -56,6 +62,9 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
 
     /** Shorthand for the primary content. */
     content: PropTypes.any,
+
+    /** Style for the content of the ChatMessage. */
+    contentStyle: PropTypes.object,
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
@@ -74,9 +83,11 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     'as',
     'author',
     'avatar',
+    'avatarStyle',
     'children',
     'className',
     'content',
+    'contentStyle',
     'mine',
     'styles',
     'timestamp',
@@ -93,8 +104,8 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     rest,
     styles,
     variables,
-  }: IRenderResultConfig<IChatBubbleProps>) {
-    const { as, avatar, children, mine } = this.props
+  }: IRenderResultConfig<IChatMessageProps>) {
+    const { as, avatar, children, mine, mainStyle, avatarStyle } = this.props
 
     return childrenExist(children) ? (
       <ElementType {...rest} className={cx(classes.root, classes.content)}>
@@ -105,9 +116,9 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
         as={as}
         {...rest}
         className={classes.root}
-        start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
-        main={this.renderContent(classes.content, styles, variables)}
-        end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
+        start={!mine && this.renderAvatar(avatar, styles.avatar, variables, avatarStyle)}
+        main={this.renderContent(classes.content, styles, variables, mainStyle)}
+        end={mine && this.renderAvatar(avatar, styles.avatar, variables, avatarStyle)}
       />
     )
   }
@@ -116,6 +127,7 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     contentClass: string,
     styles: IComponentPartStylesInput,
     variables: ComponentVariablesInput,
+    mainStyle,
   ) => {
     const { author, content, mine, timestamp } = this.props
 
@@ -139,6 +151,7 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     return (
       <Layout
         className={contentClass}
+        rootCSS={mainStyle}
         vertical
         start={
           <>
@@ -155,16 +168,17 @@ class ChatBubble extends UIComponent<Extendable<IChatBubbleProps>, any> {
     avatar: ItemShorthand,
     avatarStyles: ComponentPartStyle,
     variables: ComponentVariablesInput,
+    avatarStyle: ICSSInJSStyle,
   ) =>
     avatar &&
     Avatar.create(avatar, {
       defaultProps: {
-        styles: avatarStyles,
+        styles: { ...avatarStyles, ...avatarStyle },
         variables: variables.avatar,
       },
     })
 }
 
-ChatBubble.create = createShorthandFactory(ChatBubble, content => ({ content }))
+ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
 
-export default ChatBubble
+export default ChatMessage
