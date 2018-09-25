@@ -3,8 +3,7 @@ import { Avatar } from '@stardust-ui/react'
 
 const AvatarExampleStatusCustomizationShorthand = () => (
   <Avatar
-    src="public/images/avatar/small/matt.jpg"
-    alt="Profile picture of Matt"
+    image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
     status={{
       color: 'green',
       icon: 'check',
