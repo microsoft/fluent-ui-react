@@ -207,6 +207,8 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       ev.preventDefault()
       ev.stopPropagation()
     }
+
+    ev.stopPropagation()
   }
 
   private _forceFocusInTrap = (ev: FocusEvent): void => {
