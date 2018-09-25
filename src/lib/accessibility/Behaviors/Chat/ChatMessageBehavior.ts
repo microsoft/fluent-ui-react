@@ -20,7 +20,7 @@ const ChatMessageBehavior: Accessibility = {
   focusZone: {
     mode: FocusZoneMode.Embed,
     props: {
-      handleTabKey: FocusZoneTabbableElements.all,
+      // handleTabKey: FocusZoneTabbableElements.all,
       isCircularNavigation: true,
       direction: FocusZoneDirection.vertical,
     },

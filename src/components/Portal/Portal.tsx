@@ -169,11 +169,30 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
             onClick: this.handleTriggerClick,
             ...triggerAccessibility.attributes,
             ...triggerAccessibility.keyHandlers,
+            // onMouseEnter:this.handleMouseEnter,
+            // onMouseLeave:this.handleMouseLeave,
+            // onFocus: this.handleMouseEnter,
+            // onBlur: this.handleMouseLeave,
           })}
         </Ref>
       )
     )
   }
+
+  // handleMouseEnter = (e: Event) => {
+  //  this.setState({open:true})
+  // }
+
+  // handleMouseLeave = (e: Event) => {
+  //   if (
+  //     doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)
+  //     doesNodeContainClick(this.portalNode, e) // event happened in the portal
+  //   ) {
+  //     return // ignore the click
+  //   }
+  //     this.setState({open:false})
+  // }
+
   private handleMount = () => {
     eventStack.sub('click', this.handleDocumentClick)
     _.invoke(this.props, 'onMount', this.props)

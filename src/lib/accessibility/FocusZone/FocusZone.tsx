@@ -275,7 +275,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const { onActiveElementChanged, stopFocusPropagation, onFocus } = this.props
+    const { onActiveElementChanged, stopFocusPropagation } = this.props
 
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement

@@ -203,6 +203,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     afterRenderCb?: () => void,
   ) => {
     e.preventDefault()
+    e.stopPropagation()
+
     this.setState(
       previousState => ({ popupOpened: getPopupOpened(previousState.popupOpened) }),
       afterRenderCb,
