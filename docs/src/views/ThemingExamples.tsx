@@ -8,13 +8,19 @@ import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 
 export default () => (
   <DocPage title="Theming Examples">
-    <Header as="h2" content="Theming needs" />
+    <Header as="h2" content="Theming techniques" />
 
     <p>
-      A Theme defines default values and functions to generate variables that will eventually be
-      used to generate styles for individual components.
+      A Theme is used to ensure design consistency accross an application. It can define styles that
+      are common accross the application and for particular component types. Stardust will provide
+      some parameterizable standard themes or you can create your own.
     </p>
-    <p>Stardust is intentional in supporting three levels of theming needs:</p>
+    <p>
+      Startdust theme is constructed around css like style objects (<NavLink to="theming#styles">
+        styles
+      </NavLink>) and <NavLink to="theming#variables">variables</NavLink>.
+    </p>
+    <p>Stardust supports four levels of theming:</p>
     <ol>
       <li>
         <strong>Default</strong> - Users who just need a good first run experience.
@@ -23,22 +29,24 @@ export default () => (
         <strong>Component level styling</strong> - Users who need to change a little or a lot.
       </li>
       <li>
-        <strong>Theme level styling</strong> - Users who have pixel perfect design requirements.
+        <strong>Theme level styling</strong> - Users who require design consistency accross the
+        application.
       </li>
       <li>
-        <strong>Nesting providers</strong> - Users who need some styling at the upper theme level
-        but also at component level.
+        <strong>Nesting themes</strong> - Users who require different styling for the different
+        parts of the application.
       </li>
     </ol>
 
     <Header as="h3" content="Default" />
-    <p>If you do not need any custom theming, just import some components and start building.</p>
+    <p>If you do not need any custom theming, just import some components and start using them.</p>
     <ExampleSnippet
       value={[
         `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
+        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
         ``,
         `export default () => `,
+        ` <Provider>`,
         `  <>`,
         `    <Button content="Button" />`,
         `    <Button type="primary" icon="plus" iconOnly />`,
@@ -49,6 +57,7 @@ export default () => (
         `    <Divider content="Primary Divider" type="primary" />`,
         `    <Divider content="Secondary Divider" type="secondary" />`,
         `  </>`,
+        ` </Provider>`,
       ].join('\n')}
       render={() => (
         <>
@@ -67,11 +76,12 @@ export default () => (
 
     <Header as="h3" content="Component Level Styling" />
     <p>
-      When you need only small amount of styling isolated per component, you can opt-in to change
-      certain local styles or the variables behind it.
+      When you need to tweak styles of specific component's instance, you can change its styles
+      directly or via theme-defined variables. This technique can be used to create component
+      wrappers, like in the examples below.
     </p>
 
-    <Header as="h4" content="Changing local styles" />
+    <Header as="h4" content="Changing component styles" />
 
     <ExampleSnippet
       value={[
@@ -151,31 +161,33 @@ export default () => (
 
     <Header as="h3" content="Theme Level Styling" />
     <p>
-      Talking about pixel perfect output, one might need to obtain more detailed changes applied to
-      the entire suite of styles. The components styling can be changed at different levels of the
+      To achieve pixel perfect output, one might need to obtain more detailed changes applied to the
+      entire suite of styles. The components styling can be changed at different levels of the
       theme:
     </p>
 
-    <ol>
+    <ul>
       <li>
-        <code>siteVariables</code> - when more general changes are requested (colors, page container
-        sizes, default fonts that can be inherited or not at the detailed component variables
-        level),
+        <code>siteVariables</code> - those define theme-wide styling parameters that could affect
+        styles of all the components. One might want to consider to modify them when more general
+        changes are requested (colors, page container sizes, default fonts that can be inherited),
       </li>
       <li>
-        <code>componentVariables</code> - when all the components of certain kind have to have same
-        output,
+        <code>componentVariables</code> - define variables that will affect styles of specific
+        component type only,
       </li>
       <li>
-        <code>componentStyles</code> - when very specific changes are required and not covered by
-        the component variables
+        <code>componentStyles</code> - define CSS properties that will be applied to components of
+        specific type. Those have the same scope as component variables, but serve as a lower level
+        styling abstraction (and, thus, are more specific). Consider to use them when very specific
+        changes are required and not covered by the component variables available in the theme.
       </li>
-    </ol>
+    </ul>
 
     <ExampleSnippet
       value={[
         `import React from 'react'`,
-        `import { Button, Divider, Provider } from '@stardust-ui/react'`,
+        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
         ``,
         `const theme = {`,
         `  siteVariables: {`,
@@ -271,24 +283,26 @@ export default () => (
       )}
     />
 
-    <Header as="h3" content="Nesting Providers" />
+    <Header as="h3" content="Nesting Themes" />
     <p>
-      If you need to customize a bigger part of the theme, you can nest the second provider and
-      overwrite the needed styles.
+      If you have areas of an application that require additional theming, you can achieve that
+      using nested providers and overwrite the needed styles.
     </p>
     <ExampleSnippet
       value={[
         `<div>`,
+        `  /* Default theming */`,
         `  <Header as="h3" content="Default" />`,
         `  <Button type="primary">Branding</Button>`,
         `  <Divider type="primary">Branding</Divider>`,
         ``,
+        `  /* First provider theming */`,
         `  <Provider`,
         `    theme={{`,
         `      siteVariables: { brand: 'darkred' },`,
         `    }}`,
         `  >`,
-        `    <>`,
+        `    <div>`,
         `      <Header as="h3" content="First provider theming" />`,
         ``,
         `      <Button content="Button" />`,
@@ -300,6 +314,7 @@ export default () => (
         `      <Divider content="Primary Divider" type="primary" />`,
         `      <Divider content="Secondary Divider" type="secondary" />`,
         ``,
+        `      /* Second provider theming */`,
         `      <Provider`,
         `        theme={{`,
         `          componentStyles: {`,
@@ -309,7 +324,7 @@ export default () => (
         `          },`,
         `        }}`,
         `      >`,
-        `        <>`,
+        `        <div>`,
         `          <Header as="h3" content="Second provider theming" />`,
         ``,
         `          <Button content="Button" />`,
@@ -320,15 +335,15 @@ export default () => (
         `          <br/><br/>`,
         `          <Divider content="Primary Divider" type="primary" />`,
         `          <Divider content="Secondary Divider" type="secondary" />`,
-        `        </>`,
+        `        </div>`,
         `      </Provider>`,
-        `    </>`,
+        `    </div>`,
         `  </Provider>`,
         `</div>`,
       ].join('\n')}
       render={() => (
         <div>
-          <Header as="h3" content="Default" />
+          <Header as="h3" content="Default theming" />
           <Button content="Button" />
           <Button type="primary" icon="plus" iconOnly />
           <Button type="secondary" icon="at" content="Send email" />
