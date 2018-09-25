@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Provider } from '@stardust-ui/react'
 
-import ChatPaneLayout from './ChatPaneLayout'
+import ChatPaneLayout from './chatPaneLayout'
 import { getChatMock } from './data/dataMock'
 
 const chatMock = getChatMock({ msgCount: 20, userCount: 4 })
