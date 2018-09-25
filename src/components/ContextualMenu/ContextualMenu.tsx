@@ -2,24 +2,25 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Popup from '../Popup/Popup'
 import Button from '../Button'
 import Menu, { MenuItem } from '../Menu'
 import Avatar from '../Avatar'
+import Provider from '../Provider'
 
 export interface IContextualMenuProps {
   as?: any
   className?: string
   children?: ReactChildren
   content?: ItemShorthand | ItemShorthand[]
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
 const menuItemStyle = {
-  root: { padding: '0px', margin: '0px', borderRadius: '0%' },
+  root: { padding: '0px', marginBottom: '0px', borderRadius: '0%' },
   anchor: { padding: '0px', minHeight: '50px' },
 }
 const triggerStyle = {
@@ -93,10 +94,9 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
     const { iconOnly, pills, pointing, type, underlined, vertical } = this.props
     const item = {
       key: 'personDescription',
-      styles: menuItemStyle,
       content: (
-        <div style={triggerStyle}>
-          <Avatar src={personDescription.imageUrl} />
+        <div>
+          <Avatar image={personDescription.imageUrl} />
           <span style={{ padding: '10px' }}>{personDescription.description}</span>
         </div>
       ),
@@ -119,18 +119,16 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   public processTree = (menuTree, callback) => {
     menuTree.forEach(item => {
       if (item.submenuitems === undefined) {
-        item.content = item.title
-        item.styles = { ...menuItemStyle, anchor: { padding: '15px', minHeight: '50px' } }
+        item.content = <span style={{ paddingLeft: '15px' }}>{item.title}</span>
         item.onClick = callback
       }
       if (item.submenuitems !== undefined) {
         this.processTree(item.submenuitems, callback)
-        console.log('one')
         item.content = (
           <Popup
             align="top"
             position="after"
-            trigger={<div style={{ padding: '15px' }}>{item.title}</div>}
+            trigger={<div style={{ paddingLeft: '15px' }}>{item.title}</div>}
             content={
               <Menu
                 defaultActiveIndex={-1}
@@ -142,7 +140,6 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
             }
           />
         )
-        item.styles = { ...menuItemStyle }
       }
     })
   }
@@ -152,7 +149,29 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
       return undefined
     }
     this.processTree(menutree, callback)
-    return <Menu defaultActiveIndex={-1} items={menutree} pills vertical type="primary" />
+    return (
+      <Provider
+        theme={{
+          componentStyles: {
+            MenuItem: {
+              root: {
+                padding: '0px',
+                margin: '0px',
+                borderRadius: '0px',
+                minWidth: '200px',
+                width: '100%',
+              },
+              anchor: { padding: '0px', height: '50px', width: '100%', lineHeight: '50px' },
+            },
+            Menu: {
+              root: { width: '100%' },
+            },
+          },
+        }}
+      >
+        <Menu defaultActiveIndex={-1} items={menutree} pills vertical type="primary" />
+      </Provider>
+    )
   }
 
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {

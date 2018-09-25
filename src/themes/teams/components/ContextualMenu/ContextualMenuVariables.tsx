@@ -1,15 +1,13 @@
 export interface IContextualMenuVariables {
   height: string
   maxWidth: string
-  defaultColumnCount: number
-  contextualMenuGap?: string
   padding?: string
+  border?: string
 }
 
 export default (): IContextualMenuVariables => ({
   height: '100%',
-  maxWidth: '200px',
-  defaultColumnCount: 5,
-  contextualMenuGap: undefined,
-  padding: undefined,
+  maxWidth: '220px',
+  padding: '0',
+  border: '1px solid #eeeeee',
 })
