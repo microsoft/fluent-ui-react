@@ -34,8 +34,8 @@ export interface ITextVariables {
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionOtherTextColor: siteVariables.orange04,
-    atMentionMeTextColor: siteVariables.brand06,
+    atMentionOtherTextColor: siteVariables.brand06,
+    atMentionMeTextColor: siteVariables.orange04,
     atMentionMeFontWeight: siteVariables.fontWeightBold,
 
     disabledTextColor: siteVariables.gray06,
