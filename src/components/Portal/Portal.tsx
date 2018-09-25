@@ -15,7 +15,7 @@ import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
-type TriggerAccessibility = {
+export type TriggerAccessibility = {
   attributes?: IAccessibilityAttributes
   keyHandlers?: OnKeyDownHandler
 }

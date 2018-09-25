@@ -7,7 +7,7 @@ import rtlCSSJS from 'rtl-css-js'
 import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import Portal from '../Portal'
+import Portal, { TriggerAccessibility } from '../Portal'
 import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
 import {
@@ -135,10 +135,12 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         open={this.state.popupOpened}
         trigger={trigger}
         triggerRef={this.handleTriggerRef}
-        triggerAccessibility={{
-          attributes: accessibility.attributes.trigger,
-          keyHandlers: accessibility.keyHandlers.trigger,
-        }}
+        triggerAccessibility={
+          {
+            attributes: accessibility.attributes.trigger,
+            keyHandlers: accessibility.keyHandlers.trigger,
+          } as TriggerAccessibility
+        }
         onOutsideClick={e => this.handlePopupState(e, () => false)}
         onTriggerClick={this.onTriggerClick}
       >
