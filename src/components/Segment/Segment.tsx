@@ -21,13 +21,13 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

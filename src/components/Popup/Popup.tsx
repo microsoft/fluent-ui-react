@@ -55,7 +55,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** The popup content (deprecated). */
     children: customPropTypes.disallow(['children']),
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The popup content. */
@@ -72,7 +72,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** Element to be rendered in-place where the popup is defined. */
     trigger: PropTypes.node,
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

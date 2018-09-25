@@ -35,7 +35,7 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
     /** Child content * */
     children: PropTypes.node,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */

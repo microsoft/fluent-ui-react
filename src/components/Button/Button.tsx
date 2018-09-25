@@ -60,7 +60,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** A button can appear circular. */
     circular: PropTypes.bool,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A button can show it is currently unable to be interacted with. */
@@ -104,7 +104,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

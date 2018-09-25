@@ -36,7 +36,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -63,7 +63,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

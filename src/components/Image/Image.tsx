@@ -50,13 +50,13 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     /** An image can appear circular. */
     circular: PropTypes.bool,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

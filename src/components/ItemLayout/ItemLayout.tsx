@@ -60,7 +60,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional css class name or space separated class names to apply **/
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -95,7 +95,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     /** Styled applied to the end media element of the rendered component. */
     endMediaCSS: PropTypes.object,
 
-    /** Styles to apply to this component instance **/
+    /** Additional CSS styles to aplly to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     truncateContent: PropTypes.bool,
