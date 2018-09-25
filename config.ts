@@ -37,6 +37,7 @@ const paths = {
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
+  withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
   posix: undefined, // all the sibling values, but with forward slashes regardless the OS
 }
 

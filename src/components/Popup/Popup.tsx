@@ -5,7 +5,7 @@ import rtlCSSJS from 'rtl-css-js'
 
 import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Portal from '../Portal'
 import PopupContent from './PopupContent'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -22,7 +22,7 @@ export interface IPopupProps {
   content?: ItemShorthand | ItemShorthand[]
   position?: Position
   trigger?: JSX.Element
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -75,7 +75,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -141,12 +141,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     const computedStyle = rtl ? rtlCSSJS(style) : style
 
     return (
-      <Popup.Content
-        innerRef={ref}
-        basic={basic}
-        {...rtl && { dir: 'rtl' }}
-        styles={{ root: computedStyle }}
-      >
+      <Popup.Content innerRef={ref} basic={basic} {...rtl && { dir: 'rtl' }} styles={computedStyle}>
         {content}
       </Popup.Content>
     )

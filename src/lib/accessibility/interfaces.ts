@@ -81,7 +81,7 @@ export type AriaRole =
 export interface IAriaWidgetAttributes {
   role?: string
   'aria-autocomplete'?: string
-  'aria-checked'?: string
+  'aria-checked'?: string | boolean
   'aria-current'?: string
   'aria-disabled'?: string | boolean
   'aria-expanded'?: string | boolean
