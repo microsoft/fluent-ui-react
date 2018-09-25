@@ -27,6 +27,9 @@ CONTRIBUTING
   - [Components](#components)
   - [Props](#props)
   - [Examples](#examples)
+- [How accessibility works](#how-accessibility-works)
+  - [Role and aria props](#role-and-aria-props)
+  - [Focus](#focus)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -34,6 +37,8 @@ These guides will walk your through various activities for contributing:
 
 - [Setup Local Development](setup-local-development.md)
 - [Add a feature](add-a-feature.md)
+- [Test a feature](test-a-feature.md)
+- [Document a feature](document-a-feature.md)
 
 ### Commit Messages
 
@@ -69,7 +74,10 @@ yarn lint:fix              // lint and attempt to fix
 
 ### Create a Component
 
-Create components in `src/components`.
+Create components in `src/components` by following the example of an existing component (e.g. Button) or by running the command
+```
+yarn generate:component
+```.
 Generally if you're updating a component, push a small change so you can open a PR early.
 
 Stateless components should be written as a `function`:
@@ -159,58 +167,6 @@ Review the documentation for the component. Spec out the component's proposed AP
 Once we have solidified the component spec, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
 
-## Testing
-
-Run tests during development with `yarn test:watch` to re-run tests on file changes.
-
-### Coverage
-
-All PRs must meet or exceed test coverage limits before they can be merged.
-
-Every time tests run, `/coverage` information is updated. Open `coverage/lcov-report/index.html` to inspect test coverage. This interactive report will reveal areas lacking test coverage. You can then write tests for these areas and increase coverage.
-
-### Common Tests
-
-There are many common things to test for. Because of this, we have [`test/specs/commonTests`][1].
-These tests are typically imported into individual component tests.
-
-#### Usage
-
-Every common test receives your component as its first argument.
-
-```tsx
-import { isConformant } from 'test/specs/commonTests'
-
-import Divider from 'src/components/Divider/Divider'
-
-describe('Divider', () => {
-  isConformant(Divider)
-})
-
-```
-
-
-#### isConformant (required)
-
-This is the only required test. It ensures a consistent baseline for the framework. It also helps you get your component off the ground. You should add this test to new components right away.
-
-#### Writing tests
-
-Create your test file in `test/specs` directory. The **specs** directory mirrors the **src** directory. The first test should always be `isConformant()`
-For every source file, there needs to be a test file and they should named as `<Component>-test.tsx`.
-
-There should be one describe block for each prop of your component.
-
-#### Running tests
-
-```bash
-# Run tests with:
-yarn test
-
-# Run tests in watch mode with:
-yarn test:watch
-```
-
 ## State
 
 Strive to use stateless functional components when possible:
@@ -235,79 +191,37 @@ class MyComponent extends AutoControlledComponent {
 }
 ```
 
-## Documentation
+## How accessibility works
 
-- [Website](#website)
-- [Components](#components)
-- [Props](#props)
-- [Examples](#examples)
+- [Role and aria props](#role-and-aria-props)
+- [Focus](#focus)
 
-Our docs are generated from doc block comments, `propTypes`, and hand written examples.
+### Role and aria props
 
-### Website
+ARIA landmarks are attributes you can add to elements in your page to define areas like the main content or a navigation region.
+It is used to help the screen readers to find the correct elements on the page, where the semantic HTML is not able to cover
+it (like for elements of type pop-up).
 
-Developing against the doc site is a good way to try your component as you build it. Run the doc site with:
+It is represented through the `role` and `aria-*` attributes which are usually added to divs and spans.
 
-```sh
-yarn start
+Stardust provides already the needed ARIA attributes to make its components accessible.
+
+For example, to make the RadioGroup component accessible, you will find the generated HTML having the following form:
+```html
+  <div role="radio" tabindex="0" aria-checked="true" class="ui-radiogroup__item">
+    <span class="ui-label">
+    <span class="ui-icon" aria-hidden="true"></span>Capricciosa</span>
+  </div>
 ```
 
-### Components
+### Focus
 
-A doc block should appear above a component class or function to describe it:
+When a user is navigating through the application using the keyboard, it's important to make the element that currently has focus
+clearly visible, so the users can see where they are on the page. This is handled in Stardust by focus indicator functionality. Focus indicator
+will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed.
+It disables keyboard mode on mouse click events.
 
-```tsx
-/**
- * A <Select /> is sugar for <Dropdown selection />.
- * @see Dropdown
- */
-function Select(props) {
-  return <Dropdown {...props} selection />
-}
-```
-
-### Props
-
-A doc block should appear above each prop in `propTypes` to describe them:
-
->Limited props shown for brevity.
-
-```tsx
-Label.propTypes = {
-  /** An element type to render as (string or function). */
-  as: customPropTypes.as,
-
-  /** A label can reduce its complexity. */
-  basic: PropTypes.bool,
-
-  /** Primary content. */
-  children: PropTypes.node,
-
-  /** Additional classes. */
-  className: PropTypes.string,
-
-  /** Color of the label. */
-  color: PropTypes.oneOf(Label._meta.props.color),
-
-  /** Place the label in one of the upper corners . */
-  corner: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.oneOf(Label._meta.props.corner),
-  ]),
-
-  /** Add an icon by icon className or pass an <Icon /> */
-  icon: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-  ]),
-}
-```
-
-### Examples
-
-Usage examples for a component live in `docs/src/examples`. The examples follow the doc site examples.
-
-Adding documentation for new components is a bit tedious. The best way to do this (for now) is to copy an existing component's and update them.
+More details at [Accessibility](../accessibility/blob/master/CONTRIBUTING.md)
 
 [1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
 [2]: https://facebook.github.io/react/docs/forms.html#controlled-components
