@@ -3,7 +3,7 @@ import React from 'react'
 import { Chat, Divider } from '@stardust-ui/react'
 
 const janeAvatar = {
-  src: 'public/images/avatar/small/ade.jpg',
+  image: 'public/images/avatar/small/ade.jpg',
   status: {
     color: 'green',
     icon: 'check',
