@@ -11,11 +11,11 @@ const AvatarExampleSizeShorthand = () =>
       <p key={size}>
         <strong>{size}</strong>
         &emsp;
-        <Avatar size={size} src="public/images/avatar/small/matt.jpg" status={status} />
+        <Avatar size={size} image="public/images/avatar/small/matt.jpg" status={status} />
         &emsp;
         <Avatar size={size} name="John Doe" status={status} />
         &emsp;
-        <Avatar size={size} src="public/images/avatar/small/matt.jpg" />
+        <Avatar size={size} image="public/images/avatar/small/matt.jpg" />
       </p>
     )
   })
