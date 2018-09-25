@@ -37,7 +37,7 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

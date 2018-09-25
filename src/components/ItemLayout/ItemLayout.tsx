@@ -95,7 +95,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     /** Styled applied to the end media element of the rendered component. */
     endMediaCSS: PropTypes.object,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     truncateContent: PropTypes.bool,

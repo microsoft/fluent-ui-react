@@ -51,7 +51,7 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

@@ -68,7 +68,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

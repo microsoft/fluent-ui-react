@@ -83,7 +83,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The HTML input type. */
     type: PropTypes.string,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */

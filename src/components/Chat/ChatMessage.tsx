@@ -60,7 +60,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Timestamp of the message. */

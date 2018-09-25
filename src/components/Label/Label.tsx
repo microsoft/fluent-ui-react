@@ -69,7 +69,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

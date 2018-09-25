@@ -72,7 +72,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** Element to be rendered in-place where the popup is defined. */
     trigger: PropTypes.node,
 
-    /** Additional CSS styles to aplly to the component instance.  */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
