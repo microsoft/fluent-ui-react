@@ -54,7 +54,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
      */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for the primary content. */
@@ -63,7 +63,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Timestamp of the message. */
