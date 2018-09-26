@@ -1,24 +1,17 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IButtonProps } from '../../../../components/Button/Button'
-import { truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
+    const { circular, disabled, type, text, isFromKeyboard } = props
     const primary = type === 'primary'
     const secondary = type === 'secondary'
 
     const {
-      height,
-      minWidth,
-      maxWidth,
-      borderRadius,
       color,
       backgroundColor,
       backgroundColorHover,
-      circularRadius,
-      paddingLeftRightValue,
       typeDisabledButtonColor,
       typeDisabledButtonBackgroundColor,
       typePrimaryColor,
@@ -47,20 +40,8 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
     } = variables
 
     return {
-      height,
-      minWidth,
-      maxWidth,
       color,
       backgroundColor,
-      borderRadius,
-      display: 'inline-flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      position: 'relative',
-      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
-      margin: `0 ${pxToRem(8)} 0 0`,
-      verticalAlign: 'middle',
-      cursor: 'pointer',
 
       ...(!text && {
         borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
@@ -167,19 +148,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
           },
         }),
 
-      ...(circular && {
-        minWidth: height,
-        padding: 0,
-        borderRadius: circularRadius,
-      }),
-
-      ...(fluid && {
-        width: '100%',
-        maxWidth: '100%',
-      }),
-
       ...(disabled && {
-        cursor: 'default',
         color: typeDisabledButtonColor,
         backgroundColor: typeDisabledButtonBackgroundColor,
         borderColor: typeDisabledButtonBackgroundColor,
@@ -188,18 +157,8 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
           borderColor: typeDisabledButtonBackgroundColor,
         },
       }),
-
-      ...(iconOnly && {
-        minWidth: height,
-        padding: 0,
-      }),
     }
   },
-
-  content: ({ props }) => ({
-    overflow: 'hidden',
-    ...(typeof props.content === 'string' && truncateStyle),
-  }),
 }
 
 export default buttonStyles
