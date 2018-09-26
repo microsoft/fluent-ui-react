@@ -10,6 +10,7 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Accessibility from './views/Accessibility'
 import Theming from './views/Theming'
+import ThemingExamples from './views/ThemingExamples'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from '../../src/lib'
@@ -48,6 +49,7 @@ class Router extends React.Component<any, any> {
               <DocsLayout exact path="/quick-start" component={QuickStart} />
               <DocsLayout exact path="/accessibility" component={Accessibility} />
               <DocsLayout exact path="/theming" component={Theming} />
+              <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
               <DocsLayout exact path="/*" component={PageNotFound} />
             </Switch>
           </Switch>
