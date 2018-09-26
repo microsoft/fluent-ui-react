@@ -8,6 +8,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
+ * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
@@ -22,11 +23,12 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
       'aria-disabled': 'aria-disabled' in props ? props['aria-disabled'] : props['disabled'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
+      'aria-describedby': props['aria-describedby'],
       [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
 
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-disabled'],
+  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
 
   keyActions: {
     anchor: {
