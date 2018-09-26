@@ -2,12 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import {
-  childrenExist,
-  customPropTypes,
-  AutoControlledComponent,
-  IRenderResultConfig,
-} from '../../lib'
+import { childrenExist, AutoControlledComponent, IRenderResultConfig } from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -57,8 +52,10 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** The popup content. */
     content: PropTypes.any,
 
+    /** Initial value for 'open'. */
     defaultOpen: PropTypes.bool,
 
+    /** Defines whether popup is displayed. */
     open: PropTypes.bool,
 
     /**
@@ -95,7 +92,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   public state = { triggerRef: undefined }
 
   public renderComponent({ rtl }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, content, trigger } = this.props
+    const { children, trigger } = this.props
 
     return (
       <>
