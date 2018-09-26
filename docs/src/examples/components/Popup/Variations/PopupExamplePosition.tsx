@@ -53,7 +53,13 @@ const triggers = [
 const PopupExamplePosition = () => (
   <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
     {triggers.map(({ position, align, icon, padding }) => (
-      <PopupArrowExample position={position} align={align} icon={icon} padding={padding} />
+      <PopupArrowExample
+        position={position}
+        align={align}
+        icon={icon}
+        padding={padding}
+        key={`${position}-${align}`}
+      />
     ))}
   </Grid>
 )
