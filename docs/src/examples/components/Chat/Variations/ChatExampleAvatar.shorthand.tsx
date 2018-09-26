@@ -11,14 +11,14 @@ const messages = [
     timestamp: 'Yesterday, 10:15 PM',
     content: 'Hello',
     mine: true,
-    avatar: { src: 'public/images/avatar/small/matt.jpg', status: availableStatus },
+    avatar: { image: 'public/images/avatar/small/matt.jpg', status: availableStatus },
   },
   {
     key: 2,
     author: 'Jenny Doe',
     timestamp: 'Yesterday, 10:17 PM',
     content: 'Hi',
-    avatar: { src: 'public/images/avatar/small/jenny.jpg', status: busyStatus },
+    avatar: { image: 'public/images/avatar/small/jenny.jpg', status: busyStatus },
   },
   {
     key: 3,
@@ -26,14 +26,14 @@ const messages = [
     timestamp: 'Yesterday, 10:18 PM',
     content: "Let's go get some lunch!",
     mine: true,
-    avatar: { src: 'public/images/avatar/small/matt.jpg', status: availableStatus },
+    avatar: { image: 'public/images/avatar/small/matt.jpg', status: availableStatus },
   },
   {
     key: 4,
     author: 'Jenny Doe',
     timestamp: 'Yesterday, 10:20 PM',
     content: 'Sure thing. I was thinking we should try the new place downtown.',
-    avatar: { src: 'public/images/avatar/small/jenny.jpg', status: busyStatus },
+    avatar: { image: 'public/images/avatar/small/jenny.jpg', status: busyStatus },
   },
 ]
 
