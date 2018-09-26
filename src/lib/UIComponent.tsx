@@ -17,7 +17,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   private static _handledPropsCache: string[] = undefined
   static get handledProps() {
     if (!this._handledPropsCache) {
-      this._handledPropsCache = _.pullAll(_.keys(this.propTypes), this.unhandledProps).sort()
+      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
     }
 
     return this._handledPropsCache
