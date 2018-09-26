@@ -51,3 +51,8 @@ export {
 
 export { default as Portal } from './components/Portal'
 export { default as Popup, PopupContent } from './components/Popup'
+
+//
+// Utilities
+//
+export { default as mergeThemes } from './lib/mergeThemes'
