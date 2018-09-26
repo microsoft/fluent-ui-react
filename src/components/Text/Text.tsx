@@ -42,7 +42,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     as: customPropTypes.as,
 
     /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
-    atMention: PropTypes.oneOfType([PropTypes.bool, 'me']),
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
