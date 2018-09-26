@@ -21,14 +21,14 @@ export const fontBlack = black
 
 export const white = '#FFF'
 
-export const brand = '#2264A7'
+export const brand = '#6264A7'
 export const brand02 = '#33344A'
 export const brand04 = '#464775'
-export const brand06 = '#2264A7'
-export const brand08 = '#228CC7'
-export const brand12 = '#22BDE6'
-export const brand14 = '#22E2F6'
-export const brand16 = '#22F4FC'
+export const brand06 = '#6264A7'
+export const brand08 = '#8B8CC7'
+export const brand12 = '#BDBDE6'
+export const brand14 = '#E2E2F6'
+export const brand16 = '#F4F4FC'
 
 export const orange04 = '#CC4A31'
 export const magenta = '#B24782'

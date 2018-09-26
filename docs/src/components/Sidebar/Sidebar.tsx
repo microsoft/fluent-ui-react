@@ -255,7 +255,7 @@ class Sidebar extends React.Component<any, any> {
 
   private getThemeOptions = () => {
     return Object.keys(themes).map(key => ({
-      text: key,
+      text: _.startCase(key),
       value: key,
     }))
   }

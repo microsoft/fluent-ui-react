@@ -9,7 +9,6 @@ import {
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
-import fontFaces from './fontFaces'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 import { default as fontIcons } from './components/Icon/font'
@@ -43,6 +42,5 @@ export default {
   siteVariables,
   componentVariables,
   componentStyles,
-  fontFaces,
   icons,
 } as IThemeInput
