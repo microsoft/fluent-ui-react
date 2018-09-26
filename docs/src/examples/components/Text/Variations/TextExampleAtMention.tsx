@@ -3,9 +3,9 @@ import { Text } from '@stardust-ui/react'
 
 const TextExampleAtMention = () => (
   <div>
-    <Text atMention="me">@Mention Me</Text>
+    <Text atMention>@someone</Text>
     <br />
-    <Text atMention="other">@Mention Another</Text>
+    <Text atMention="me">@me</Text>
   </div>
 )
 
