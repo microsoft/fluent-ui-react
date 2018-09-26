@@ -88,7 +88,7 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 
     vertical: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

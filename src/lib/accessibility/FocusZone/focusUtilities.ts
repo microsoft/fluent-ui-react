@@ -2,6 +2,7 @@ export const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 export const FOCUSZONE_SUB_ATTRIBUTE = 'data-is-sub-focuszone'
+export const FOCUSZONE_WRAP_ATTRIBUTE = 'data-focuszone-wrap'
 
 /**
  * Gets the first focusable element.

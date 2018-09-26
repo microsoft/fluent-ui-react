@@ -2,17 +2,17 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Status } from '../../'
 
-import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IAvatarProps {
-  alt?: string
   as?: any
   className?: string
+  image?: ItemShorthand
+  label?: ItemShorthand
   name?: string
   size?: number
-  src?: string
   status?: ItemShorthand
   getInitials?: (name: string) => string
   styles?: ComponentPartStyle
@@ -31,31 +31,31 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static displayName = 'Avatar'
 
   static propTypes = {
-    /** The alternative text for the image used in the Avatar. */
-    alt: PropTypes.string,
-
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The name used for displaying the initials of the avatar if the image is not provided. */
     name: PropTypes.string,
 
-    /** Size multiplier */
+    /** Shorthand for the image. */
+    image: customPropTypes.itemShorthand,
+
+    /** Shorthand for the label. */
+    label: customPropTypes.itemShorthand,
+
+    /** Size multiplier. */
     size: PropTypes.number,
 
-    /** The src of the image used in the Avatar. */
-    src: PropTypes.string,
-
-    /** Shorthand for the status of the user */
+    /** Shorthand for the status of the user. */
     status: customPropTypes.itemShorthand,
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -88,22 +88,28 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
+    const { name, status, image, label, getInitials, size } = this.props as IAvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {src ? (
-          <Image styles={styles.imageAvatar} fluid avatar src={src} alt={alt} title={name} />
-        ) : (
-          <Label
-            styles={styles.avatarNameContainer}
-            as="div"
-            content={getInitials(name || '')}
-            variables={{ padding: '0px' }}
-            circular
-            title={name}
-          />
-        )}
+        {Image.create(image, {
+          defaultProps: {
+            fluid: true,
+            avatar: true,
+            title: name,
+            styles: styles.image,
+          },
+        })}
+        {!image &&
+          Label.create(label || {}, {
+            defaultProps: {
+              as: 'div',
+              content: getInitials(name),
+              circular: true,
+              title: name,
+              styles: styles.label,
+            },
+          })}
         {Status.create(status, {
           defaultProps: {
             styles: styles.status,

@@ -33,7 +33,7 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */

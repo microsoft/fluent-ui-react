@@ -50,7 +50,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Icon can appear as circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** An icon can show it is currently unable to be interacted with. */
@@ -72,7 +72,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
       'massive',
     ]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
