@@ -19,6 +19,7 @@ const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
+const dropDownStyle: any = { borderRadius: '0px' }
 type ComponentMenuItem = { displayName: string; type: string }
 
 @inject((appState: AppStateStore) => ({
@@ -212,12 +213,11 @@ class Sidebar extends React.Component<any, any> {
             <Dropdown
               placeholder="Select theme..."
               fluid
-              inverted
               selection
               defaultValue={themeName}
               options={this.getThemeOptions()}
               onChange={this.handleThemeChange}
-              style={{ borderRadius: '0px' }}
+              style={dropDownStyle}
             />
           </Form>
         </Menu.Item>

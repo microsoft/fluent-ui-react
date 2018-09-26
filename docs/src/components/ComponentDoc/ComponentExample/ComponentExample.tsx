@@ -37,6 +37,7 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
 
 interface IComponentExampleState {
   knobs: Object
+  themeName: string
   componentVariables: Object
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
@@ -70,7 +71,7 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
   themeStore: appState.themeStore,
 }))
 @observer
-class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
+class ComponentExample extends React.Component<IComponentExampleProps, IComponentExampleState> {
   private componentRef: React.Component
   private sourceCodeMgr: ISourceCodeManager
   private anchorName: string
@@ -79,6 +80,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public state: IComponentExampleState = {
     knobs: {},
+    themeName: 'teams',
     componentVariables: {},
     sourceCode: '',
     markup: '',
@@ -125,14 +127,18 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public componentWillReceiveProps(nextProps: IComponentExampleProps) {
     // deactivate examples when switching from one to the next
-    // TODO figure out when this should be invoked!
-    this.renderSourceCode()
     if (
       this.isActiveHash() &&
       this.isActiveState() &&
       this.props.location.hash !== nextProps.location.hash
     ) {
       this.clearActiveState()
+    }
+    const {
+      themeStore: { themeName },
+    } = nextProps
+    if (this.state.themeName !== themeName) {
+      this.setState({ themeName: nextProps.themeStore.themeName }, this.renderSourceCode)
     }
   }
 
