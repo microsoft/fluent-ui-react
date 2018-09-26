@@ -37,4 +37,20 @@ export const semanticCssOverrides = `
     color: rgba(255,255,255,.7)!important;
     cursor: not-allowed!important;
   }
+
+   .ui.dropdown, .ui.dropdown.active.visible {
+    background-color: rgba(255, 255, 255, 0.15)!important;
+    color: #bebebe!important;
+  }
+  .ui.menu .ui.dropdown .menu>.item  {
+    background-color: black!important;
+    color: white!important;
+  }
+  ui.menu .ui.dropdown .menu>.item :hover {
+    background-color: rgba(255, 255, 255, 0.15)!important;
+  }
+  .ui.menu .ui.dropdown .menu>.active.item {
+    background-color: black!important;
+    color: white!important;
+  }
 `
