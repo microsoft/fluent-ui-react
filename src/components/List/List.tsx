@@ -8,14 +8,14 @@ import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   ContainerFocusHandler,
-  IContainerProps,
-  IContainerState,
-} from '../../lib/accessibility/FocusHandling/ContainerFocusHandler'
+  IFocusContainerProps,
+  IFocusContainerState,
+} from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
-export interface IListProps extends IContainerProps<ItemShorthand> {
+export interface IListProps extends IFocusContainerProps<ItemShorthand> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
@@ -28,7 +28,7 @@ export interface IListProps extends IContainerProps<ItemShorthand> {
   variables?: ComponentVariablesInput
 }
 
-class List extends UIComponent<Extendable<IListProps>, IContainerState> {
+class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -114,7 +114,7 @@ class List extends UIComponent<Extendable<IListProps>, IContainerState> {
     const itemProps = _.pick(this.props, List.itemProps)
 
     return _.map(items, (item, idx) => {
-      itemProps.atomicItemProps = this.containerFocusHandler.assignAtomicItemsProps(
+      itemProps.focusableItemProps = this.containerFocusHandler.assignAtomicItemsProps(
         idx,
         items.length,
       )

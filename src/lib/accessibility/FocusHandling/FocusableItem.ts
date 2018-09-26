@@ -1,4 +1,4 @@
-export interface IAtomicItemProps {
+export interface IFocusableItemProps {
   isFocused: boolean
 
   isFirstElement: boolean
@@ -13,7 +13,7 @@ export interface IAtomicItemProps {
   onEsc: () => void
 }
 
-export interface IAtomicItemState {
+export interface IFocusableItemState {
   shouldSubContainerBeOpened: boolean
   isLastOpened: boolean
 }
@@ -25,11 +25,11 @@ export type SetStateDelegate<P, S> = <K extends keyof S>(
   callback?: () => void,
 ) => void
 
-export class AtomicItemFocusHandler<P extends IAtomicItemProps, S extends IAtomicItemState> {
+export class FocusableItem<P extends IFocusableItemProps, S extends IFocusableItemState> {
   constructor(
     private getProps: () => P,
     private setState: SetStateDelegate<P, S>,
-    private initState: (state: IAtomicItemState) => void,
+    private initState: (state: IFocusableItemState) => void,
   ) {
     this.initState({
       shouldSubContainerBeOpened: false,
@@ -90,8 +90,12 @@ export class AtomicItemFocusHandler<P extends IAtomicItemProps, S extends IAtomi
     this.getProps().onEnter()
   }
 
+  private isFocused(): boolean {
+    return this.getProps().isFocused
+  }
+
   public space() {
-    if (!this.getProps().isFocused) {
+    if (!this.isFocused()) {
       return
     }
 

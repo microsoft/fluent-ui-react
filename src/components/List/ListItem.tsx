@@ -7,17 +7,17 @@ import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
-  AtomicItemFocusHandler,
-  IAtomicItemProps,
-  IAtomicItemState,
-} from '../../lib/accessibility/FocusHandling/AtomicItemFocusHandler'
+  FocusableItem,
+  IFocusableItemProps,
+  IFocusableItemState,
+} from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {
   accessibility?: Accessibility
   as?: any
-  atomicItemProps?: IAtomicItemProps
+  focusableItemProps?: IFocusableItemProps
   className?: string
   contentMedia?: any
   content?: any
@@ -34,7 +34,7 @@ export interface IListItemProps {
   variables?: ComponentVariablesInput
 }
 
-export interface IListItemState extends IAtomicItemState {
+export interface IListItemState extends IFocusableItemState {
   isHovering: boolean
 }
 
@@ -47,7 +47,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   static propTypes = {
     as: customPropTypes.as,
-    atomicItemProps: PropTypes.object,
+    focusableItemProps: PropTypes.object,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
@@ -86,12 +86,12 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static handledProps = [
     'accessibility',
     'as',
-    'atomicItemProps',
     'className',
     'content',
     'contentMedia',
     'debug',
     'endMedia',
+    'focusableItemProps',
     'header',
     'headerMedia',
     'important',
@@ -110,8 +110,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   private itemRef = React.createRef<HTMLElement>()
 
-  private atomicItemFocusHandler = new AtomicItemFocusHandler(
-    () => this.props.atomicItemProps,
+  private focusableItem = new FocusableItem(
+    () => this.props.focusableItemProps,
     this.setState.bind(this),
     state => {
       this.state = { ...{ isHovering: false }, ...state }
@@ -119,10 +119,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   )
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.atomicItemFocusHandler.moveNext.bind(this.atomicItemFocusHandler),
-    movePrevious: this.atomicItemFocusHandler.movePrevious.bind(this.atomicItemFocusHandler),
-    moveFirst: this.atomicItemFocusHandler.moveFirst.bind(this.atomicItemFocusHandler),
-    moveLast: this.atomicItemFocusHandler.moveLast.bind(this.atomicItemFocusHandler),
+    moveNext: this.focusableItem.moveNext.bind(this.focusableItem),
+    movePrevious: this.focusableItem.movePrevious.bind(this.focusableItem),
+    moveFirst: this.focusableItem.moveFirst.bind(this.focusableItem),
+    moveLast: this.focusableItem.moveLast.bind(this.focusableItem),
   }
 
   handleMouseEnter = () => {
@@ -134,7 +134,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   }
 
   componentDidUpdate() {
-    this.atomicItemFocusHandler.focus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
+    this.focusableItem.focus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {

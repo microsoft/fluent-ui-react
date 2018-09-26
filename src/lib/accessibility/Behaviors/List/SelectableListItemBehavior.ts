@@ -12,7 +12,7 @@ const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (pr
     root: {
       role: 'option',
       'aria-selected': !!props['active'],
-      tabIndex: props.atomicItemProps.isFocused ? '0' : '-1',
+      tabIndex: props.focusableItemProps.isFocused ? '0' : '-1',
     },
   },
   keyActions: {

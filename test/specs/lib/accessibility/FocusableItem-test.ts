@@ -1,15 +1,15 @@
 import {
-  AtomicItemFocusHandler,
-  IAtomicItemProps,
-  IAtomicItemState,
+  FocusableItem,
+  IFocusableItemProps,
+  IFocusableItemState,
   SetStateDelegate,
-} from 'src/lib/accessibility/FocusHandling/AtomicItemFocusHandler'
+} from 'src/lib/accessibility/FocusHandling/FocusableItem'
 
-describe('Atomic Item Focus Handler', () => {
+describe('Focusable Item', () => {
   type Delegate = () => void
-  let atomicItemFocusHandler: AtomicItemFocusHandler<IAtomicItemProps, IAtomicItemState>
+  let focusableItem: FocusableItem<IFocusableItemProps, IFocusableItemState>
 
-  let setStateMock: SetStateDelegate<IAtomicItemProps, IAtomicItemState>
+  let setStateMock: SetStateDelegate<IFocusableItemProps, IFocusableItemState>
 
   let onMovePreviousMock: Delegate
   let onMoveNextMock: Delegate
@@ -19,8 +19,8 @@ describe('Atomic Item Focus Handler', () => {
   let onSpaceMock: Delegate
   let onEscMock: Delegate
 
-  let props: IAtomicItemProps
-  let state: IAtomicItemState
+  let props: IFocusableItemProps
+  let state: IFocusableItemState
 
   beforeEach(() => {
     setStateMock = jest.fn()
@@ -53,7 +53,7 @@ describe('Atomic Item Focus Handler', () => {
       onEsc: onEscMock,
     }
 
-    atomicItemFocusHandler = new AtomicItemFocusHandler(() => props, setStateMock, s => {
+    focusableItem = new FocusableItem(() => props, setStateMock, s => {
       state = s
     })
   })
@@ -64,11 +64,11 @@ describe('Atomic Item Focus Handler', () => {
       shouldSubContainerBeOpened: true,
     }
 
-    const atomicItemFocusHandler = new AtomicItemFocusHandler(() => props, setStateMock, s => {
+    const focusableItem = new FocusableItem(() => props, setStateMock, s => {
       state = s
     })
 
-    expect(atomicItemFocusHandler).toBeDefined()
+    expect(focusableItem).toBeDefined()
     expect(state.isLastOpened).toBe(false)
     expect(state.shouldSubContainerBeOpened).toBe(false)
   })
@@ -78,7 +78,7 @@ describe('Atomic Item Focus Handler', () => {
     const button = document.createElement('button') as HTMLElement
 
     expect(document.activeElement).not.toBe(button)
-    atomicItemFocusHandler.focus(button)
+    focusableItem.focus(button)
     expect(document.activeElement).toBe(button)
   })
 
@@ -87,14 +87,14 @@ describe('Atomic Item Focus Handler', () => {
     const button = document.createElement('button') as HTMLElement
 
     expect(document.activeElement).not.toBe(button)
-    atomicItemFocusHandler.focus(button)
+    focusableItem.focus(button)
     expect(document.activeElement).not.toBe(button)
   })
 
   test('Should move previous', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.movePrevious()
+    focusableItem.movePrevious()
 
     expect(onMovePreviousMock).toBeCalled()
   })
@@ -102,7 +102,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not move previous, if item not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.movePrevious()
+    focusableItem.movePrevious()
 
     expect(onMovePreviousMock).not.toBeCalled()
   })
@@ -111,7 +111,7 @@ describe('Atomic Item Focus Handler', () => {
     props.isFirstElement = true
     props.isFocused = true
 
-    atomicItemFocusHandler.movePrevious()
+    focusableItem.movePrevious()
 
     expect(onMovePreviousMock).not.toBeCalled()
   })
@@ -119,7 +119,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should move next', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.moveNext()
+    focusableItem.moveNext()
 
     expect(onMoveNextMock).toBeCalled()
   })
@@ -127,7 +127,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not move next, if item not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.moveNext()
+    focusableItem.moveNext()
 
     expect(onMoveNextMock).not.toBeCalled()
   })
@@ -136,7 +136,7 @@ describe('Atomic Item Focus Handler', () => {
     props.isLastElement = true
     props.isFocused = true
 
-    atomicItemFocusHandler.moveNext()
+    focusableItem.moveNext()
 
     expect(onMoveNextMock).not.toBeCalled()
   })
@@ -144,7 +144,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should move first', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.moveFirst()
+    focusableItem.moveFirst()
 
     expect(onMoveFirstMock).toBeCalled()
   })
@@ -152,7 +152,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not move first, if item not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.moveFirst()
+    focusableItem.moveFirst()
 
     expect(onMoveFirstMock).not.toBeCalled()
   })
@@ -161,7 +161,7 @@ describe('Atomic Item Focus Handler', () => {
     props.isFirstElement = true
     props.isFocused = true
 
-    atomicItemFocusHandler.moveFirst()
+    focusableItem.moveFirst()
 
     expect(onMoveFirstMock).not.toBeCalled()
   })
@@ -169,7 +169,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should move last', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.moveLast()
+    focusableItem.moveLast()
 
     expect(onMoveLastMock).toBeCalled()
   })
@@ -177,7 +177,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not move last, if item not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.moveLast()
+    focusableItem.moveLast()
 
     expect(onMoveLastMock).not.toBeCalled()
   })
@@ -186,7 +186,7 @@ describe('Atomic Item Focus Handler', () => {
     props.isLastElement = true
     props.isFocused = true
 
-    atomicItemFocusHandler.moveLast()
+    focusableItem.moveLast()
 
     expect(onMoveLastMock).not.toBeCalled()
   })
@@ -194,7 +194,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should handle enter', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.enter()
+    focusableItem.enter()
 
     expect(onEnterMock).toBeCalled()
   })
@@ -202,7 +202,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not handle enter, if item is not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.enter()
+    focusableItem.enter()
 
     expect(onEnterMock).not.toBeCalled()
   })
@@ -210,7 +210,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should handle space', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.space()
+    focusableItem.space()
 
     expect(onSpaceMock).toBeCalled()
   })
@@ -218,7 +218,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not handle space, if item is not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.space()
+    focusableItem.space()
 
     expect(onSpaceMock).not.toBeCalled()
   })
@@ -226,7 +226,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should handle ESC', () => {
     props.isFocused = true
 
-    atomicItemFocusHandler.esc()
+    focusableItem.esc()
 
     expect(onEscMock).toBeCalled()
   })
@@ -234,7 +234,7 @@ describe('Atomic Item Focus Handler', () => {
   test('Should not handle ESC, if item is not focused', () => {
     props.isFocused = false
 
-    atomicItemFocusHandler.esc()
+    focusableItem.esc()
 
     expect(onEscMock).not.toBeCalled()
   })

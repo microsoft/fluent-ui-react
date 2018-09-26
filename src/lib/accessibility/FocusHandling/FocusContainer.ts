@@ -1,25 +1,29 @@
-import { IAtomicItemProps, SetStateDelegate } from './AtomicItemFocusHandler'
+import { IFocusableItemProps, SetStateDelegate } from './FocusableItem'
 
-export interface IContainerProps<T> {
+export interface IFocusContainerProps<T> {
   items?: T[]
 }
 
-export interface IContainerState {
+export interface IFocusContainerState {
   focusItemOnIdx: number
 }
 
-export class ContainerFocusHandler<T, P extends IContainerProps<T>, S extends IContainerState> {
+export class ContainerFocusHandler<
+  T,
+  P extends IFocusContainerProps<T>,
+  S extends IFocusContainerState
+> {
   constructor(
     private getProps: () => P,
     private setState: SetStateDelegate<P, S>,
-    private initState: (state: IContainerState) => void,
+    private initState: (state: IFocusContainerState) => void,
     private getState: () => S,
   ) {
     this.initState({ focusItemOnIdx: 0 })
   }
 
-  public assignAtomicItemsProps(idx: number, itemsLength: number): IAtomicItemProps {
-    const itemProps: IAtomicItemProps = {
+  public assignAtomicItemsProps(idx: number, itemsLength: number): IFocusableItemProps {
+    const itemProps: IFocusableItemProps = {
       isFocused: idx === this.getState().focusItemOnIdx && this.getState().focusItemOnIdx !== -1,
       isFirstElement: idx === 0,
       isLastElement: idx === itemsLength - 1,
