@@ -34,7 +34,7 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     /** Child content. */
     children: PropTypes.node,
 
-    /** Additional CSS class name(s) to apply.. */
+    /** Additional CSS class name(s) to apply. */
     className: PropTypes.string,
 
     /** Custom styles to be applied for component. */
