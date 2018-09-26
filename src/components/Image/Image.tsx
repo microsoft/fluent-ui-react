@@ -63,17 +63,6 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'avatar',
-    'circular',
-    'className',
-    'fluid',
-    'styles',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'img',
     accessibility: ImageBehavior as Accessibility,

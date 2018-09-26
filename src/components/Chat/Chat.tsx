@@ -45,16 +45,6 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'messages',
-    'styles',
-    'variables',
-  ]
-
   static defaultProps = { accessibility: ChatBehavior as Accessibility, as: 'ul' }
 
   static Message = ChatMessage

@@ -85,20 +85,6 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'bordered',
-    'circular',
-    'className',
-    'disabled',
-    'name',
-    'size',
-    'styles',
-    'variables',
-    'xSpacing',
-  ]
-
   static defaultProps = {
     as: 'span',
     size: 'normal',
