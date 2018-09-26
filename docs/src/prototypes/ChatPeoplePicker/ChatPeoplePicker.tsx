@@ -17,26 +17,19 @@ const peoplePickerStyles: any = {
     backgroundColor: '#F3F2F1',
     borderColor: 'transparent',
   },
-  personContainerLabel: {
-    root: {
-      margin: '.4rem 0 0 .4rem',
-    },
-  },
+  personContainerLabel: { margin: '.4rem 0 0 .4rem' },
   containerDivOnFocus: {
     borderColor: '#6264A7',
     borderRadius: '0.2143rem 0.2143rem 0.1429rem 0.1429rem',
   },
-  addLabel: {
-    root: { backgroundColor: '#f7f7f7' },
-  },
+  addLabel: { backgroundColor: '#f7f7f7' },
   textInput: {
     input: {
       width: '100%',
-      ':focus': {
-        borderColor: 'transparent',
-      },
     },
-    root: { flexGrow: 1 },
+    root: {
+      flexGrow: 1,
+    },
   },
   menu: {
     position: 'absolute',
@@ -153,12 +146,14 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                         />
                       ))}
                   <Input
-                    styles={peoplePickerStyles.textInput}
                     ref={this.input}
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
                     role="presentation"
+                    styles={peoplePickerStyles.textInput.root}
+                    variables={{ inputFocusBorderColor: 'transparent' }}
                     input={{
+                      style: peoplePickerStyles.textInput.input,
                       placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
                       ...getInputProps({
                         onBlur: this.onInputBlur,
