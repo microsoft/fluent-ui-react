@@ -1,4 +1,5 @@
-import { IAccessibilityDefinition } from '../../interfaces'
+import { IAccessibilityDefinition, FocusZoneMode } from '../../interfaces'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
@@ -10,6 +11,14 @@ const SelectableListBehavior: IAccessibilityDefinition = {
   attributes: {
     root: {
       role: 'listbox',
+    },
+  },
+  focusZone: {
+    mode: FocusZoneMode.Wrap,
+    props: {
+      isCircularNavigation: false,
+      direction: FocusZoneDirection.vertical,
+      preventDefaultWhenHandled: true,
     },
   },
 }

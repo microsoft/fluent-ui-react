@@ -1,11 +1,14 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { ListItemProps } from '../../../node_modules/semantic-ui-react'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IListItemProps {
   accessibility?: Accessibility
@@ -19,6 +22,8 @@ export interface IListItemProps {
   headerMedia?: any
   important?: boolean
   media?: any
+  onClick?: ComponentEventHandler<ListItemProps>
+  onFocus?: ComponentEventHandler<ListItemProps>
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -55,6 +60,21 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     important: PropTypes.bool,
     media: PropTypes.any,
 
+    /**
+     * Called on click.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onClick: PropTypes.func,
+
+    /**
+     * Called after user's focus.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onFocus: PropTypes.func,
+
     /** A list item can indicate that it can be selected. */
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
@@ -82,6 +102,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     'headerMedia',
     'important',
     'media',
+    'onClick',
+    'onFocus',
     'selection',
     'styles',
     'truncateContent',
@@ -94,7 +116,21 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     accessibility: ListItemBehavior as Accessibility,
   }
 
-  state: any = {}
+  state: any = isFromKeyboard.initial
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
+  }
+
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.state())
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -153,12 +189,15 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
         {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
       />
     )

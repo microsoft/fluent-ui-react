@@ -1,11 +1,20 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IListItemProps } from '../../../../components/List/ListItem'
+import isFromKeyboard from '../../../../lib/isFromKeyboard'
 
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
   root: ({ props: { selection, important } }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
+
+      ':focus': {
+        ...(isFromKeyboard && {
+          background: 'rgba(98, 100, 167, .8)',
+          color: '#fff',
+        }),
+        outline: 0,
+      },
 
       ':hover': {
         background: 'rgba(98, 100, 167, .8)',

@@ -1,4 +1,6 @@
 import { IAccessibilityDefinition } from '../../interfaces'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @description
@@ -11,6 +13,14 @@ const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (pr
     root: {
       role: 'option',
       'aria-selected': !!props['active'],
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
+    },
+  },
+  keyActions: {
+    root: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
     },
   },
 })
