@@ -16,10 +16,13 @@ import {
 } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 import Avatar from '../Avatar'
+import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
 
 export interface IChatMessageProps {
+  accessibility?: Accessibility
   as?: any
   author?: ItemShorthand
   avatar?: ItemShorthand
@@ -40,6 +43,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     as: customPropTypes.as,
 
     /** Author of the message. */
@@ -71,6 +77,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   static handledProps = [
+    'accessibility',
     'as',
     'author',
     'avatar',
@@ -84,31 +91,48 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   ]
 
   static defaultProps = {
+    accessibility: ChatMessageBehavior as Accessibility,
     as: 'li',
+  }
+
+  actionHandlers: AccessibilityActionHandlers = {
+    // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
+    preventDefault: event => {
+      event.preventDefault()
+    },
   }
 
   renderComponent({
     ElementType,
     classes,
+    accessibility,
     rest,
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { as, avatar, children, mine } = this.props
+    const { avatar, children, mine } = this.props
 
-    return childrenExist(children) ? (
-      <ElementType {...rest} className={cx(classes.root, classes.content)}>
-        {children}
-      </ElementType>
+    const childrenPropExists = childrenExist(children)
+    const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
+    const content = childrenPropExists ? (
+      children
     ) : (
       <Layout
-        as={as}
-        {...rest}
-        className={classes.root}
         start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
         main={this.renderContent(classes.content, styles, variables)}
         end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
       />
+    )
+
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={className}
+      >
+        {content}
+      </ElementType>
     )
   }
 

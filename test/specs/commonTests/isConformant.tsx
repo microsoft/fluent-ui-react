@@ -10,6 +10,7 @@ import helpers from './commonHelpers'
 import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export const mount = (node, options?) => {
   return enzymeMount(
@@ -40,9 +41,11 @@ export default (Component, options: any = {}) => {
       .childAt(0)
       .childAt(0)
     if (component.type() === FocusZone) {
-      component = component // <FocusZone> wrap
-        .childAt(0) // <div> inside FocusZone wrap
-        .childAt(0) // the actual component
+      // `component` is <FocusZone>
+      component = component.childAt(0) // skip through <FocusZone>
+      if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
+        component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
+      }
     }
     return component
   }
@@ -378,7 +381,7 @@ export default (Component, options: any = {}) => {
       const classes = component
         .find('[className]')
         .hostNodes()
-        .filterWhere(c => !c.prop('data-focuszone-id')) // filter out FocusZone <div>
+        .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
         .first()
         .prop('className')
       return classes
