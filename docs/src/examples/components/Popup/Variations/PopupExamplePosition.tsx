@@ -11,7 +11,6 @@ class PopupArrowExample extends React.Component<any, any> {
   render() {
     const { position, align, icon, padding } = this.props
 
-    const handleClick = () => this.togglePopupState()
     const buttonStyles = { padding, height: '38px', minWidth: '64px' }
 
     return (
@@ -25,7 +24,12 @@ class PopupArrowExample extends React.Component<any, any> {
           </p>
         }
       >
-        <Button onClick={handleClick} icon={icon} styles={buttonStyles} />
+        <Button
+          onClick={() => this.togglePopupState()}
+          onMouseLeave={() => this.setState({ popupOpen: false })}
+          icon={icon}
+          styles={buttonStyles}
+        />
       </Popup>
     )
   }
