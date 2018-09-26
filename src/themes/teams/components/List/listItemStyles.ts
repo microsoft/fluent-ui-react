@@ -2,6 +2,22 @@ import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IListItemProps } from '../../../../components/List/ListItem'
 
+const hoverStyle = variables => ({
+  background: variables.selectionHoverBackgroundColor,
+  color: variables.selectionHoverColor,
+  cursor: 'pointer',
+
+  '& .ui-item-layout__header': { color: 'inherit' },
+  '& .ui-item-layout__content': { color: 'inherit' },
+
+  // hide the header media and content media on hover
+  '& .ui-item-layout__headerMedia': { display: 'none', color: 'inherit' },
+  '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
+
+  // show the end media on hover
+  '& .ui-item-layout__endMedia': { display: 'unset', color: 'inherit' },
+})
+
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
   root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
     ...(selection && {
@@ -10,21 +26,8 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
       // show the end media on hover
       '& .ui-item-layout__endMedia': { display: 'none' },
 
-      ':hover': {
-        background: variables.selectionHoverBackgroundColor,
-        color: variables.selectionHoverColor,
-        cursor: 'pointer',
-
-        '& .ui-item-layout__header': { color: 'inherit' },
-        '& .ui-item-layout__content': { color: 'inherit' },
-
-        // hide the header media and content media on hover
-        '& .ui-item-layout__headerMedia': { display: 'none', color: 'inherit' },
-        '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
-
-        // show the end media on hover
-        '& .ui-item-layout__endMedia': { display: 'unset', color: 'inherit' },
-      },
+      '&:hover': hoverStyle(variables),
+      '&:focus': hoverStyle(variables),
     }),
     ...(important && {
       fontWeight: 'bold',
