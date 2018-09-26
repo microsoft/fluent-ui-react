@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface IButtonVariables {
   [key: string]: string | number
 
