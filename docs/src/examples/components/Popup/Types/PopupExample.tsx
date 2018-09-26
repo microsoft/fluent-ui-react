@@ -10,11 +10,9 @@ class PopupExample extends React.Component<any, any> {
 
   render() {
     return (
-      <Popup
-        open={this.state.popupOpen}
-        trigger={<Button icon="expand" onClick={() => this.togglePopup()} />}
-        content="Add users to your feed."
-      />
+      <Popup open={this.state.popupOpen} content="Add users to your feed.">
+        <Button icon="expand" onClick={() => this.togglePopup()} />
+      </Popup>
     )
   }
 }

@@ -2,7 +2,12 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  AutoControlledComponent,
+  IRenderResultConfig,
+} from '../../lib'
 import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -17,6 +22,7 @@ export interface IPopupProps {
   children?: ReactChildren
   className?: string
   content?: ItemShorthand | ItemShorthand[]
+  open?: boolean
   position?: Position
   trigger?: JSX.Element
 }
@@ -30,7 +36,7 @@ export interface IPopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupState> {
+export default class Popup extends AutoControlledComponent<Extendable<IPopupProps>, IPopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -50,6 +56,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     /** The popup content. */
     content: PropTypes.any,
 
+    open: PropTypes.bool,
+
     /**
      * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
      * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
@@ -67,6 +75,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     'children',
     'className',
     'content',
+    'open',
     'position',
     'styles',
     'trigger',
@@ -77,6 +86,8 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     align: 'start',
     position: 'above',
   }
+
+  public static autoControlledProps = ['open']
 
   public state = { triggerRef: undefined }
 
@@ -92,7 +103,7 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
         >
           {childrenExist(children) ? children : trigger}
         </Ref>
-        {this.renderPopupContent(rtl)}
+        {this.props.open && this.renderPopupContent(rtl)}
       </>
     )
   }

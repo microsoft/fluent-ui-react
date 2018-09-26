@@ -8,7 +8,7 @@ class PopupArrowExample extends React.Component<any, any> {
     this.setState(prev => ({ popupOpen: !prev.popupOpen }))
   }
 
-  render = () => {
+  render() {
     const { position, align, icon, padding } = this.props
 
     const handleClick = () => this.togglePopupState()
@@ -19,13 +19,14 @@ class PopupArrowExample extends React.Component<any, any> {
         open={this.state.popupOpen}
         align={align}
         position={position}
-        trigger={<Button onClick={handleClick} icon={icon} styles={buttonStyles} />}
         content={
           <p>
             The popup is rendered {position} the trigger<br />aligned to the {align}.
           </p>
         }
-      />
+      >
+        <Button onClick={handleClick} icon={icon} styles={buttonStyles} />
+      </Popup>
     )
   }
 }
