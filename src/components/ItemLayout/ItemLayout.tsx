@@ -101,7 +101,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

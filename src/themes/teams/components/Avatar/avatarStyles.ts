@@ -2,13 +2,8 @@ import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IAvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
-const avatarStyles: IComponentPartStylesInput = {
-  root: ({
-    props: { size },
-  }: {
-    props: IAvatarPropsWithDefaults
-    variables: any
-  }): ICSSInJSStyle => ({
+const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
+  root: ({ props: { size } }): ICSSInJSStyle => ({
     position: 'relative',
     backgroundColor: 'inherit',
     display: 'inline-block',
@@ -19,12 +14,7 @@ const avatarStyles: IComponentPartStylesInput = {
   imageAvatar: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
-  avatarNameContainer: ({
-    props: { size },
-  }: {
-    props: IAvatarPropsWithDefaults
-    variables: any
-  }): ICSSInJSStyle => ({
+  avatarNameContainer: ({ props: { size } }): ICSSInJSStyle => ({
     display: 'inline-block',
     width: pxToRem(size),
     height: pxToRem(size),
