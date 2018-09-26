@@ -80,6 +80,7 @@
     }
   },
   "dependencies": {
+    "@types/react-virtualized": "^9.18.7",
     "classnames": "^2.2.5",
     "faker": "^4.1.0",
     "fela": "^6.1.7",
@@ -94,7 +95,8 @@
     "react-fela": "^7.2.0",
     "react-popper": "^1.0.2",
     "tmp": "^0.0.33",
-    "what-input": "^5.1.2"
+    "what-input": "^5.1.2",
+    "react-virtualized": "^9.20.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",

@@ -14,6 +14,7 @@ export interface IChatProps {
   messages?: ItemShorthand[]
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
+  chatRef?: any
 }
 
 class Chat extends UIComponent<Extendable<IChatProps>, any> {
@@ -45,11 +46,15 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
   static Message = ChatMessage
 
+  handleChatRef = (ref: any) => {
+    _.invoke(this.props, 'chatRef', ref)
+  }
+
   renderComponent({ ElementType, classes, rest }) {
     const { children, messages } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} ref={this.handleChatRef}>
         {childrenExist(children)
           ? children
           : _.map(messages, message => ChatMessage.create(message, { generateKey: true }))}
