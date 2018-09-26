@@ -87,20 +87,6 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     trigger: PropTypes.node,
   }
 
-  public static handledProps = [
-    'accessibility',
-    'align',
-    'children',
-    'className',
-    'content',
-    'onOpenChange',
-    'open',
-    'position',
-    'styles',
-    'trigger',
-    'variables',
-  ]
-
   public static defaultProps: IPopupProps = {
     accessibility: PopupBehavior,
     align: 'start',

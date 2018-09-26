@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/interfaces'
 import { IFocusZone } from './accessibility/FocusZone'
@@ -8,7 +9,21 @@ class UIComponent<P, S> extends React.Component<P, S> {
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static handledProps: any
+
+  static propTypes: any
+
+  /** Array of props to exclude from list of handled ones. */
+  static unhandledProps: string[] = []
+
+  private static _handledPropsCache: string[] = undefined
+  static get handledProps() {
+    if (!this._handledPropsCache) {
+      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
+    }
+
+    return this._handledPropsCache
+  }
+
   protected actionHandlers: AccessibilityActionHandlers
   protected focusZone: IFocusZone
 
