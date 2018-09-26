@@ -2,13 +2,10 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 
-// TODO make themes a monorepo of packages
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider } from 'mobx-react'
 
 import Router from './routes'
-import { mergeThemes } from '../../src/lib'
-
-import { semanticCssOverrides } from './Style'
+import createAppStateStore from './data/models'
 
 // ----------------------------------------
 // Rendering
@@ -17,22 +14,12 @@ import { semanticCssOverrides } from './Style'
 const mountNode = document.createElement('div')
 document.body.appendChild(mountNode)
 
-const semanticStyleOverrides = {
-  staticStyles: [semanticCssOverrides],
-}
+const appStateStore = createAppStateStore()
 
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider
-        theme={mergeThemes(semanticStyleOverrides, themes.teams, {
-          // adjust Teams' theme to Semantic UI's font size scheme
-          siteVariables: {
-            htmlFontSize: '14px',
-            bodyFontSize: '1rem',
-          },
-        })}
-      >
+      <Provider {...appStateStore}>
         <NewApp />
       </Provider>
     </AppContainer>,

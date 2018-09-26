@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
-import { Divider, Dropdown, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
+import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import {
@@ -23,19 +23,21 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
 import { IThemeInput, IThemePrepared } from 'types/theme'
-import Text from '../../../../../src/components/Text/Text'
+import { inject, observer } from 'mobx-react'
+import { ThemeManager } from '../../../data/theme-manager'
+import { AppStateStore } from '../../../data/models'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
   description: string
   examplePath: string
   suiVersion?: string
+  themeStore?: ThemeManager
 }
 
 interface IComponentExampleState {
   knobs: Object
-  themeName: string
-  theme: IThemeInput
+  componentVariables: Object
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
@@ -64,6 +66,10 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
+@inject((appState: AppStateStore) => ({
+  themeStore: appState.themeStore,
+}))
+@observer
 class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
   private componentRef: React.Component
   private sourceCodeMgr: ISourceCodeManager
@@ -73,8 +79,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public state: IComponentExampleState = {
     knobs: {},
-    themeName: 'teams',
-    theme: themes.teams,
+    componentVariables: {},
     sourceCode: '',
     markup: '',
     showCode: false,
@@ -98,6 +103,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     match: PropTypes.object.isRequired,
     suiVersion: PropTypes.string,
     title: PropTypes.node,
+    themeStore: PropTypes.any,
   }
 
   public componentWillMount() {
@@ -119,6 +125,8 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
 
   public componentWillReceiveProps(nextProps: IComponentExampleProps) {
     // deactivate examples when switching from one to the next
+    // TODO figure out when this should be invoked!
+    this.renderSourceCode()
     if (
       this.isActiveHash() &&
       this.isActiveState() &&
@@ -349,11 +357,15 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
-    const { showRtl, theme } = this.state
+    const { showRtl, componentVariables } = this.state
+    const {
+      themeStore: { themeName },
+    } = this.props
+    const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
       ...theme,
-      componentVariables: theme.componentVariables,
+      componentVariables,
       rtl: showRtl,
     }
 
@@ -531,43 +543,17 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     )
   }
 
-  private handleThemeChange = (event: React.SyntheticEvent, data: any) => {
-    this.setState({ theme: themes[data.value], themeName: data.value }, () => {
-      this.renderSourceCode()
-      this.renderVariables()
-    })
-  }
-
   private renderVariables = () => {
-    const { showVariables, themeName } = this.state
+    const { showVariables } = this.state
     if (!showVariables) return undefined
 
     const displayName = this.getDisplayName()
-
-    const themeOptions = Object.keys(themes).map(key => ({
-      text: key,
-      value: key,
-    }))
 
     return (
       <div>
         <Divider inverted horizontal>
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
-        <Form inverted widths="equal" style={{ padding: '1rem' }}>
-          <Text styles={{ color: 'white' }} important>
-            Theme
-          </Text>
-          <Dropdown
-            placeholder="Select Theme"
-            fluid
-            inverted
-            selection
-            defaultValue={themeName}
-            options={themeOptions}
-            onChange={this.handleThemeChange}
-          />
-        </Form>
         <Provider.Consumer
           render={({ siteVariables, componentVariables }: IThemePrepared) => {
             const variables = componentVariables[displayName]
@@ -608,19 +594,20 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   private handleVariableChange = (component, variable) => (e, { value }) => {
+    const {
+      themeStore: { themeName },
+    } = this.props
+    const theme = themes[themeName]
     this.setState(
-      state => ({
-        theme: {
-          ...state.theme,
-          componentVariables: {
-            ...state.theme.componentVariables,
-            [component]: {
-              ...(state.theme.componentVariables && state.theme.componentVariables[component]),
-              [variable]: value,
-            },
+      {
+        componentVariables: {
+          ...theme.componentVariables,
+          [component]: {
+            ...(theme.componentVariables && theme.componentVariables[component]),
+            [variable]: value,
           },
         },
-      }),
+      },
       this.renderSourceCode,
     )
   }

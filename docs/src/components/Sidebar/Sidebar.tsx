@@ -5,10 +5,13 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { Dropdown, Form, Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
+import { inject, observer } from 'mobx-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
+import { getComponentPathname, repoURL, typeOrder } from 'docs/src/utils'
+import { themes } from '@stardust-ui/react'
+import { AppStateStore } from '../../data/models'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
@@ -18,12 +21,17 @@ const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 type ComponentMenuItem = { displayName: string; type: string }
 
+@inject((appState: AppStateStore) => ({
+  themeStore: appState.themeStore,
+}))
+@observer
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
+    themeStore: PropTypes.any,
   }
   state: any = { query: '' }
   _searchInput: any
@@ -163,8 +171,17 @@ class Sidebar extends React.Component<any, any> {
     return <Menu.Menu>{menuItems}</Menu.Menu>
   }
 
+  private handleThemeChange = (event: React.SyntheticEvent, data: any) => {
+    const { themeStore } = this.props
+    const themeName = data.value
+    themeStore.changeTheme(themeName)
+  }
+
   render() {
-    const { style } = this.props
+    const {
+      style,
+      themeStore: { themeName },
+    } = this.props
     const { query } = this.state
     return (
       <Menu vertical fixed="left" inverted style={{ ...style }}>
@@ -189,6 +206,20 @@ class Sidebar extends React.Component<any, any> {
               <Icon name="file alternate outline" /> CHANGELOG
             </Menu.Item>
           </Menu.Menu>
+        </Menu.Item>
+        <Menu.Item style={{ padding: '0px' }}>
+          <Form inverted widths="equal">
+            <Dropdown
+              placeholder="Select theme..."
+              fluid
+              inverted
+              selection
+              defaultValue={themeName}
+              options={this.getThemeOptions()}
+              onChange={this.handleThemeChange}
+              style={{ borderRadius: '0px' }}
+            />
+          </Form>
         </Menu.Item>
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
@@ -220,6 +251,13 @@ class Sidebar extends React.Component<any, any> {
         {query ? this.renderSearchItems() : this.menuItemsByType}
       </Menu>
     )
+  }
+
+  private getThemeOptions = () => {
+    return Object.keys(themes).map(key => ({
+      text: key,
+      value: key,
+    }))
   }
 }
 
