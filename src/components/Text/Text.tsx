@@ -41,8 +41,8 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
 
-    /** An @mention Text component can be formatted for myself mentioned or an other person mentioned */
-    atMention: PropTypes.oneOfType(['me', PropTypes.bool]),
+    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    atMention: PropTypes.oneOfType([PropTypes.bool, 'me']),
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
