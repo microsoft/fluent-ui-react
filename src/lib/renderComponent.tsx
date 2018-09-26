@@ -32,6 +32,7 @@ import {
   IFocusZone,
   FocusZone as FabricFocusZone,
 } from './accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -54,6 +55,7 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
+  focusZoneRef: (focusZone: IFocusZone) => void
 }
 
 const getAccessibility = (
@@ -89,8 +91,32 @@ function wrapInGenericFocusZone<
   FocusZone: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
+  ref: (focusZone: IFocusZone) => void,
 ) {
-  return <FocusZone {...props}>{children}</FocusZone>
+  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
+  return (
+    <FocusZone ref={ref} {...props}>
+      {children}
+    </FocusZone>
+  )
+}
+
+const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
+    return wrapInGenericFocusZone(
+      FabricFocusZone,
+      focusZoneDefinition.props,
+      render(config),
+      focusZoneRef,
+    )
+  }
+  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+    const originalElementType = config.ElementType
+    config.ElementType = FabricFocusZone as any
+    config.rest = { ...config.rest, ...focusZoneDefinition.props }
+    config.rest.as = originalElementType
+  }
+  return render(config)
 }
 
 const renderComponent = <P extends {}>(
@@ -105,6 +131,7 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
+    focusZoneRef,
   } = config
 
   return (
@@ -163,12 +190,10 @@ const renderComponent = <P extends {}>(
           theme,
         }
 
-        const rendered = render(config)
-
-        if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
-          return wrapInGenericFocusZone(FabricFocusZone, accessibility.focusZone.props, rendered)
+        if (accessibility.focusZone) {
+          return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
-        return rendered
+        return render(config)
       }}
     />
   )
