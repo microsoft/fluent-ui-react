@@ -22,6 +22,7 @@ export interface IPopupProps {
   children?: ReactChildren
   className?: string
   content?: ItemShorthand | ItemShorthand[]
+  defaultOpen?: boolean
   open?: boolean
   position?: Position
   trigger?: JSX.Element
@@ -55,6 +56,8 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
     /** The popup content. */
     content: PropTypes.any,
+
+    defaultOpen: PropTypes.bool,
 
     open: PropTypes.bool,
 
