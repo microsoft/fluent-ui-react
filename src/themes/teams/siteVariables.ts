@@ -43,11 +43,11 @@ export const green04 = '#237b4b'
 // FONT SIZES
 //
 export const fontSizes = {
-  xs: pxToRem(10),
-  sm: pxToRem(12),
-  md: pxToRem(14),
-  lg: pxToRem(18),
-  xl: pxToRem(24),
+  smaller: pxToRem(10),
+  small: pxToRem(12),
+  medium: pxToRem(14),
+  large: pxToRem(18),
+  larger: pxToRem(24),
 }
 
 //

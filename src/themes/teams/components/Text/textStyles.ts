@@ -57,7 +57,7 @@ export default {
         fontWeight: v.importantWeight,
         color: v.importantTextColor,
       }),
-      ...(size === Sizes.ExtraSmall && {
+      ...(size === Sizes.Smaller && {
         fontSize: v.textExtraSmallFontSize,
         lineHeight: v.textExtraSmallLineHeight,
       }),
@@ -73,7 +73,7 @@ export default {
         fontSize: v.textLargeFontSize,
         lineHeight: v.textLargeLineHeight,
       }),
-      ...(size === Sizes.ExtraLarge && {
+      ...(size === Sizes.Larger && {
         fontSize: v.textExtraLargeFontSize,
         lineHeight: v.textExtraLargeLineHeight,
       }),

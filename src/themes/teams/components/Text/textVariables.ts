@@ -33,19 +33,19 @@ export default (siteVariables): ITextVariables => {
     timestampTextColor: siteVariables.gray04,
     timestampHoverTextColor: siteVariables.gray02,
 
-    textExtraSmallFontSize: siteVariables.fontSizes.xs,
+    textExtraSmallFontSize: siteVariables.fontSizes.smaller,
     textExtraSmallLineHeight: siteVariables.lineHeightExtraSmall,
 
-    textSmallFontSize: siteVariables.fontSizes.sm,
+    textSmallFontSize: siteVariables.fontSizes.small,
     textSmallLineHeight: siteVariables.lineHeightSmall,
 
-    textMediumFontSize: siteVariables.fontSizes.md,
+    textMediumFontSize: siteVariables.fontSizes.medium,
     textMediumLineHeight: siteVariables.lineHeightBase,
 
-    textLargeFontSize: siteVariables.fontSizes.lg,
+    textLargeFontSize: siteVariables.fontSizes.large,
     textLargeLineHeight: siteVariables.lineHeightSmall,
 
-    textExtraLargeFontSize: siteVariables.fontSizes.xl,
+    textExtraLargeFontSize: siteVariables.fontSizes.larger,
     textExtraLargeLineHeight: siteVariables.lineHeightSmall,
 
     importantWeight: siteVariables.fontWeightBold,

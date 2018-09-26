@@ -14,7 +14,7 @@ export interface ITextProps {
   disabled?: boolean
   error?: boolean
   important?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
   temporary?: boolean
@@ -58,7 +58,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     important: PropTypes.bool,
 
     /** The size for the Text component */
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
 
     /** The weight for the Text component */
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
