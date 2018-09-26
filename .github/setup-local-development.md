@@ -5,18 +5,13 @@ Setup
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [Contributors](#contributors)
+  - [Clone](#clone)
+- [Collaborators](#collaborators)
+  - [Fork](#fork)
+- [Start](#start)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-Make sure you have at least [Node.js v8][1]:
-
-```sh
-node -v
-
-v8.11.3
-```
-
-We use `yarn` because `npm` has unfortunately become unreliable. Get it [here][16].
 
 ## Contributors
 
@@ -26,7 +21,7 @@ If you do not yet have access to the repo as a contributor, ask one of the maint
 
 Start by cloning Stardust UI React and installing dependencies:
 
-SSH ([learn more](https://help.github.com/articles/connecting-to-github-with-ssh/))
+SSH ([learn more][1])
 
 ```sh
 git clone git@github.com:stardust-ui/react.git stardust-ui-react
@@ -46,7 +41,7 @@ If you are not part of the Stardust UI team, use these instructions. If you are,
 
 ### Fork
 
-Start by [forking Stardust UI React][2] to your GitHub account. Then clone your fork and install dependencies:
+Start by `forking Stardust UI React` to your GitHub account. Then clone your fork and install dependencies:
 
 ```sh
 git clone git@github.com:<your-user>/react.git stardust-ui-react
@@ -62,7 +57,7 @@ git remote add upstream git@github.com:stardust-ui/react.git
 
 Continue to [Start](#start).
 
-### Start
+## Start
 
 Now, enter the directory and install dependencies:
 
@@ -79,5 +74,6 @@ yarn start
 
 Open [localhost:8080](http://localhost:8080) after the initial build has completed. You can now hack on `/src` to make changes and see the doc site update in real-time.
 
-[1]: https://nodejs.org/
-[2]: https://github.com/Semantic-Org/Semantic-UI-React#fork-destination-box
+Once setup, you can start [adding a new feature](add-a-feature.md).
+
+[1]: https://help.github.com/articles/connecting-to-github-with-ssh/

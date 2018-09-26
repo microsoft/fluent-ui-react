@@ -5,17 +5,16 @@ Document a feature
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 - [Website](#website)
 - [Components](#components)
 - [Props](#props)
 - [Examples](#examples)
 
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Our docs are generated from doc block comments, `propTypes`, and hand written examples.
 
-### Website
+## Website
 
 Developing against the doc site is a good way to try your component as you build it. Run the doc site with:
 
@@ -23,7 +22,7 @@ Developing against the doc site is a good way to try your component as you build
 yarn start
 ```
 
-### Components
+## Components
 
 A doc block should appear above a component class or function to describe it:
 
@@ -37,7 +36,7 @@ function Select(props) {
 }
 ```
 
-### Props
+## Props
 
 A doc block should appear above each prop in `propTypes` to describe them:
 
@@ -74,7 +73,7 @@ Label.propTypes = {
 }
 ```
 
-### Examples
+## Examples
 
 Usage examples for a component live in `docs/src/examples`. The examples follow the doc site examples.
 
