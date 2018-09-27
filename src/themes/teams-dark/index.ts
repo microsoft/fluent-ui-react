@@ -6,7 +6,7 @@ import * as componentStyles from './componentStyles'
 import { default as teams } from '../teams'
 import mergeThemes from '../../lib/mergeThemes'
 
-const teamsDarkOnly = {
+export const teamsDarkOnly = {
   siteVariables,
   componentVariables,
   componentStyles,
