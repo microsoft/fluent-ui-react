@@ -57,8 +57,8 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
 
-    /** The popup content (deprecated). */
-    children: PropTypes.any, // customPropTypes.disallow(['children']),
+    /** The popup content. */
+    children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
