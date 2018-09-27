@@ -1,39 +1,57 @@
 import * as React from 'react'
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
-import { Label, Input, Button, Image, MenuItem, List } from '@stardust-ui/react'
+import { Label, Input, Button, Image, MenuItem, List, Provider } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
+import { IThemePrepared, ICSSInJSStyle } from 'types/theme'
 
-const peoplePickerStyles: any = {
+type TChatPeoplePickerStyles = {
+  containerDiv: any
+  containerDivFocused: any
+  personContainerLabel: ICSSInJSStyle
+  addPeopleLabel: ICSSInJSStyle
+  editText: {
+    input: ICSSInJSStyle
+    div: any
+    variables: { inputFocusBorderColor: any }
+  }
+  listboxUL: ICSSInJSStyle
+}
+
+const peoplePickerStyles: TChatPeoplePickerStyles = {
   containerDiv: {
     display: 'flex',
     flexWrap: 'wrap',
     outline: 0,
     border: 0,
-    borderRadius: `0.2143rem`,
-    borderBottom: `0.1429rem solid transparent`,
+    borderRadius: `${pxToRem(3)}`,
+    borderBottom: `${pxToRem(2)} solid transparent`,
     color: '#252423',
     backgroundColor: '#F3F2F1',
     borderColor: 'transparent',
   },
   personContainerLabel: { margin: '.4rem 0 0 .4rem' },
-  containerDivOnFocus: {
+  containerDivFocused: {
     borderColor: '#6264A7',
     borderRadius: '0.2143rem 0.2143rem 0.1429rem 0.1429rem',
   },
-  addLabel: { backgroundColor: '#f7f7f7' },
-  textInput: {
+  addPeopleLabel: { backgroundColor: '#f7f7f7' },
+  editText: {
     input: {
       width: '100%',
     },
-    root: {
+    variables: {
+      inputFocusBorderColor: 'transparent',
+    },
+    div: {
+      flexBasis: '100px',
       flexGrow: 1,
     },
   },
-  menu: {
+  listboxUL: {
     position: 'absolute',
-    zIndex: '1000',
+    zIndex: 1000,
   },
 }
 
@@ -95,7 +113,12 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   public render(): React.ReactNode {
     return (
       <div style={this.props.styles}>
-        <Label content="Add people" styles={peoplePickerStyles.addLabel} id={this.labelId} />
+        {/* Added label outside because otherwise I could click outside the combobox on the same line with the label and listbox would not close. */}
+        <Label
+          content="Add people"
+          variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
+          id={this.labelId}
+        />
         <Downshift
           stateReducer={this.stateReducer}
           onChange={this.onDropdownChange}
@@ -119,7 +142,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   role="presentation"
                   style={{
                     ...peoplePickerStyles.containerDiv,
-                    ...(this.state.focused ? peoplePickerStyles.containerDivOnFocus : {}),
+                    ...(this.state.focused && peoplePickerStyles.containerDivFocused),
                   }}
                   onClick={this.onContainerClick.bind(this, isOpen)}
                 >
@@ -150,10 +173,13 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
                     role="presentation"
-                    styles={peoplePickerStyles.textInput.root}
-                    variables={{ inputFocusBorderColor: 'transparent' }}
+                    styles={peoplePickerStyles.editText.div}
+                    variables={{
+                      inputFocusBorderColor:
+                        peoplePickerStyles.editText.variables.inputFocusBorderColor,
+                    }}
                     input={{
-                      style: peoplePickerStyles.textInput.input,
+                      style: peoplePickerStyles.editText.input,
                       placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
                       ...getInputProps({
                         onBlur: this.onInputBlur,
@@ -167,39 +193,44 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     }}
                   />
                 </div>
-                <List
-                  {...getMenuProps()}
-                  styles={{
-                    root: { width: this.props.styles.width, ...peoplePickerStyles.menu },
+                <Provider.Consumer
+                  render={({ siteVariables }: IThemePrepared) => {
+                    return (
+                      <List
+                        {...getMenuProps()}
+                        styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
+                        aria-hidden={!isOpen}
+                        items={
+                          availableItems.length > 0 && isOpen
+                            ? availableItems.map((item, index) => {
+                                return {
+                                  key: `peoplePickerItem-${index}`,
+                                  header: item.name,
+                                  content: item.position,
+                                  variables: siteVariables => ({
+                                    ...(highlightedIndex === index && {
+                                      contentColor: siteVariables.white,
+                                      headerColor: siteVariables.white,
+                                    }),
+                                  }),
+                                  media: <Image src={item.image} avatar />,
+                                  ...getItemProps({
+                                    index,
+                                    item,
+                                    style: {
+                                      backgroundColor:
+                                        highlightedIndex === index
+                                          ? siteVariables.brand
+                                          : siteVariables.white,
+                                    },
+                                  }),
+                                }
+                              })
+                            : null
+                        }
+                      />
+                    )
                   }}
-                  aria-hidden={!isOpen}
-                  items={
-                    availableItems.length > 0 && isOpen
-                      ? availableItems.map((item, index) => {
-                          return {
-                            key: `peoplePickerItem-${index}`,
-                            header: item.name,
-                            content: item.position,
-                            styles: {
-                              header: {
-                                color: highlightedIndex === index ? 'white' : 'black',
-                              },
-                              content: {
-                                color: highlightedIndex === index ? 'white' : 'black',
-                              },
-                            },
-                            media: <Image src={item.image} avatar />,
-                            ...getItemProps({
-                              index,
-                              item,
-                              style: {
-                                backgroundColor: highlightedIndex === index ? '#6264A7' : 'white',
-                              },
-                            }),
-                          }
-                        })
-                      : null
-                  }
                 />
               </div>
             )
@@ -219,8 +250,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   }
 
   stateReducer = (state: DownshiftState<MenuItem>, changes: StateChangeOptions<MenuItem>) => {
-    // this prevents the menu from being closed when the user
-    // selects an item with a keyboard or mouse
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
         this.setState({
