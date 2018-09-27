@@ -1,14 +1,9 @@
 import React from 'react'
-
 import { Chat, Divider } from '@stardust-ui/react'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: {
-    color: 'green',
-    icon: 'check',
-    title: 'Available',
-  },
+  status: { color: 'green', icon: 'check' },
 }
 
 const ChatExample = () => (
@@ -34,7 +29,7 @@ const ChatExample = () => (
     </Chat.Item>
     <Chat.Item>
       <Chat.Message
-        content="Sure! Let&apos;s try the new place downtown"
+        content="Sure! Let's try the new place downtown"
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
         avatar={janeAvatar}
@@ -45,7 +40,7 @@ const ChatExample = () => (
     </Chat.Item>
     <Chat.Item>
       <Chat.Message
-        content="Let&apos;s have a call"
+        content="Let's have a call"
         author="John Doe"
         timestamp="Today, 11:15 PM"
         mine
