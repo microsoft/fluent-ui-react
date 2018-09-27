@@ -11,13 +11,13 @@ import * as keyboardKey from 'keyboard-key'
 import * as cx from 'classnames'
 import * as _ from 'lodash'
 import {
-  FOCUSZONE_ID_ATTRIBUTE,
   getNextElement,
   getPreviousElement,
-  IS_FOCUSABLE_ATTRIBUTE,
-  isElementFocusSubZone,
   isElementFocusZone,
+  isElementFocusSubZone,
   isElementTabbable,
+  IS_FOCUSABLE_ATTRIBUTE,
+  FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
