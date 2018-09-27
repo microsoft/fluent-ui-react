@@ -31,15 +31,21 @@ export type IState = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface ISiteVariables extends ObjectOf<any> {
+export interface ISiteVariablesInput extends ObjectOf<any> {
   brand?: string
   htmlFontSize?: string
+}
+
+export interface ISiteVariablesPrepared extends ObjectOf<any> {
+  brand?: string
+  htmlFontSize?: string
+  fontSizes: ObjectOf<string>
 }
 
 export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
-  siteVariables?: ISiteVariables,
+  siteVariables?: ISiteVariablesPrepared,
   props?: any,
 ) => ComponentVariablesObject
 
@@ -116,7 +122,7 @@ export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
 
 export type StaticStyleRenderable = string | StaticStyleObject
 
-export type StaticStyleFunction = (siteVariables?: ISiteVariables) => StaticStyleObject
+export type StaticStyleFunction = (siteVariables?: ISiteVariablesPrepared) => StaticStyleObject
 
 export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
@@ -126,7 +132,7 @@ export type StaticStyles = StaticStyle[]
 // Theme
 // ========================================================
 export interface IThemeInput {
-  siteVariables?: ISiteVariables
+  siteVariables?: ISiteVariablesInput
   componentVariables?: IThemeComponentVariablesInput
   componentStyles?: IThemeComponentStylesInput
   rtl?: boolean
@@ -145,7 +151,7 @@ export interface IThemeInput {
 // As a theme cascades down the tree and is merged with the previous theme on
 // context, the resulting theme takes this shape.
 export interface IThemePrepared {
-  siteVariables: ISiteVariables
+  siteVariables: ISiteVariablesPrepared
   componentVariables: {
     [key in keyof IThemeComponentVariablesPrepared]: ComponentVariablesPrepared
   }

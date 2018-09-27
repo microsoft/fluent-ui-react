@@ -2,15 +2,15 @@ export default siteVariables => ({
   // Header
   // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
   headerLineHeight: siteVariables.lineHeightSmall,
-  headerFontSize: siteVariables.fontSizeMedium,
+  headerFontSize: siteVariables.fontSizes.medium,
 
   // Header Media
-  headerMediaFontSize: siteVariables.fontSizeSmall,
+  headerMediaFontSize: siteVariables.fontSizes.small,
   // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
   headerMediaLineHeight: siteVariables.lineHeightSmall,
 
   // Content
-  contentFontSize: siteVariables.fontSizeSmall,
+  contentFontSize: siteVariables.fontSizes.small,
   contentLineHeight: siteVariables.lineHeightSmall,
 
   // Selection
