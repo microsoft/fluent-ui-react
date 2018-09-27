@@ -5,6 +5,7 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Sizes } from '../../lib/enums'
 
 export interface ITextProps {
   as?: any
@@ -14,7 +15,7 @@ export interface ITextProps {
   disabled?: boolean
   error?: boolean
   important?: boolean
-  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+  size?: Sizes
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
   temporary?: boolean
