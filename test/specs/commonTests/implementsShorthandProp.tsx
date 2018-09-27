@@ -17,7 +17,9 @@ export default Component => {
   ) {
     const { mapsValueToProp } = options
 
-    describe(`shorthand property for '${ShorthandComponent.displayName}'`, () => {
+    describe(`shorthand property '${shorthandPropertyName}' with default value of '${
+      ShorthandComponent.displayName
+    }' component`, () => {
       test(`is defined`, () => {
         expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
       })

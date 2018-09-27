@@ -7,7 +7,7 @@ import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface IListProps {
@@ -20,7 +20,7 @@ export interface IListProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -34,7 +34,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
 
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Toggle debug mode */
@@ -55,10 +55,10 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -66,20 +66,6 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     as: 'ul',
     accessibility: ListBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'debug',
-    'items',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
 
   static Item = ListItem
 

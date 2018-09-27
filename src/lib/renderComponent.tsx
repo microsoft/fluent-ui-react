@@ -15,17 +15,24 @@ import {
   IProps,
   IPropsWithVarsAndStyles,
   IState,
-  IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
 import {
   IAccessibilityBehavior,
-  AccessibilityActionHandlers,
   IAccessibilityDefinition,
+  AccessibilityActionHandlers,
+  FocusZoneMode,
+  Accessibility,
 } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import {
+  IFocusZoneProps,
+  IFocusZone,
+  FocusZone as FabricFocusZone,
+} from './accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -34,6 +41,8 @@ export interface IRenderResultConfig<P> {
   variables: ComponentVariablesObject
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
+  rtl: boolean
+  theme: IThemePrepared
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -46,6 +55,7 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
+  focusZoneRef: (focusZone: IFocusZone) => void
 }
 
 const getAccessibility = (
@@ -64,6 +74,51 @@ const getAccessibility = (
   }
 }
 
+/**
+ * This function provides compile-time type checking for the following:
+ * - if FocusZone implements IFocusZone interface,
+ * - if FocusZone properties extend IFocusZoneProps, and
+ * - if the passed properties extend IFocusZoneProps.
+ *
+ * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
+ * that the new implementation is backwards compatible with the old implementation.
+ */
+function wrapInGenericFocusZone<
+  COMPONENT_PROPS extends IFocusZoneProps,
+  PROPS extends COMPONENT_PROPS,
+  COMPONENT extends IFocusZone & React.Component<COMPONENT_PROPS>
+>(
+  FocusZone: { new (...args: any[]): COMPONENT },
+  props: PROPS | undefined,
+  children: React.ReactNode,
+  ref: (focusZone: IFocusZone) => void,
+) {
+  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
+  return (
+    <FocusZone ref={ref} {...props}>
+      {children}
+    </FocusZone>
+  )
+}
+
+const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
+    return wrapInGenericFocusZone(
+      FabricFocusZone,
+      focusZoneDefinition.props,
+      render(config),
+      focusZoneRef,
+    )
+  }
+  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+    const originalElementType = config.ElementType
+    config.ElementType = FabricFocusZone as any
+    config.rest = { ...config.rest, ...focusZoneDefinition.props }
+    config.rest.as = originalElementType
+  }
+  return render(config)
+}
+
 const renderComponent = <P extends {}>(
   config: IRenderConfig,
   render: RenderComponentCallback<P>,
@@ -76,29 +131,37 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
+    focusZoneRef,
   } = config
 
   return (
     <FelaTheme
-      render={({
-        siteVariables = {},
-        componentVariables = {},
-        componentStyles = {},
-        rtl = false,
-        renderer = felaRenderer,
-      }: IThemeInput | IThemePrepared = {}) => {
+      render={(theme: IThemePrepared) => {
+        const {
+          siteVariables = {},
+          componentVariables = {},
+          componentStyles = {},
+          rtl = false,
+          renderer = felaRenderer,
+        } = theme
         const ElementType = getElementType({ defaultProps }, props)
+
+        const stateAndProps = { ...state, ...props }
 
         // Resolve variables for this component, allow props.variables to override
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
-        )(siteVariables)
+        )(siteVariables, stateAndProps)
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const mergedStyles = mergeComponentStyles(componentStyles[displayName], props.styles)
-        const stateAndProps = { ...state, ...props }
-        const accessibility = getAccessibility(stateAndProps, actionHandlers)
+        const mergedStyles: IComponentPartStylesPrepared = mergeComponentStyles(
+          componentStyles[displayName],
+          {
+            root: props.styles,
+          },
+        )
+        const accessibility: Accessibility = getAccessibility(stateAndProps, actionHandlers)
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
@@ -106,8 +169,9 @@ const renderComponent = <P extends {}>(
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
+          theme,
         }
-        const resolvedStyles = Object.keys(mergedStyles).reduce(
+        const resolvedStyles: IComponentPartStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
         )
@@ -122,8 +186,13 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           styles: resolvedStyles,
           accessibility,
+          rtl,
+          theme,
         }
 
+        if (accessibility.focusZone) {
+          return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
+        }
         return render(config)
       }}
     />

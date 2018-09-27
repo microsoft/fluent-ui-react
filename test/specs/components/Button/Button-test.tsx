@@ -13,17 +13,7 @@ import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
 
-import { MenuBehavior } from 'src/lib/accessibility'
-
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
-
-jest.mock('what-input', () => {
-  return {
-    default: {
-      ask: jest.fn(),
-    },
-  }
-})
 
 describe('Button', () => {
   isConformant(Button)
@@ -33,8 +23,6 @@ describe('Button', () => {
     describe('button', () => {
       handlesAccessibility(Button, {
         defaultRootRole: undefined,
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 
@@ -42,8 +30,6 @@ describe('Button', () => {
       handlesAccessibility(Button, {
         requiredProps: { as: 'div' },
         defaultRootRole: 'button',
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 

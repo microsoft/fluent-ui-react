@@ -10,7 +10,7 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -23,14 +23,15 @@ export interface IInputProps {
   children?: ReactChildren
   className?: string
   clearable?: boolean
-  defaultValue?: string
+  defaultValue?: string | number
   fluid?: boolean
   icon?: ItemShorthand
+  inline?: boolean
   input?: ItemShorthand
   onChange?: ComponentEventHandler<IInputProps>
-  value?: string
+  value?: string | number
   type?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -53,20 +54,23 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A property that will change the icon on the input and clear the input on click on Cancel */
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
-    defaultValue: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** A button can take the width of its container. */
+    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
+
+    /** An input can be used inline with text */
+    inline: PropTypes.bool,
 
     /**
      * Called on change.
@@ -79,29 +83,15 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** The HTML input type. */
     type: PropTypes.string,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'className',
-    'clearable',
-    'defaultValue',
-    'fluid',
-    'icon',
-    'onChange',
-    'styles',
-    'type',
-    'value',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'div',
@@ -180,7 +170,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, styles }) {
+  renderComponent({ ElementType, classes, styles, variables }) {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
@@ -199,7 +189,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { styles: { root: styles.icon } },
+            defaultProps: {
+              styles: styles.icon,
+              variables: variables.icon,
+            },
             overrideProps: this.handleIconOverrides,
           })}
       </ElementType>

@@ -7,16 +7,21 @@ const Variations = () => (
     <ComponentExample
       title="Image"
       description="An Avatar can show the image of the user."
-      examplePath="components/Avatar/Variations/AvatarExampleSrc"
+      examplePath="components/Avatar/Variations/AvatarExampleImage"
     />
     <ComponentExample
-      title="Alt"
-      description="The alternative text for the image used in the Avatar."
-      examplePath="components/Avatar/Variations/AvatarExampleAlt"
+      title="Image customizations"
+      description="The image slot inside the Avatar can be customized."
+      examplePath="components/Avatar/Variations/AvatarExampleImageCustomization"
+    />
+    <ComponentExample
+      title="Label"
+      description="The avatars without image can show label containing the user's initials."
+      examplePath="components/Avatar/Variations/AvatarExampleLabel"
     />
     <ComponentExample
       title="Status"
-      description="An Avatar can have a status icon showing his presence."
+      description="An Avatar can have a status icon showing his status."
       examplePath="components/Avatar/Variations/AvatarExampleStatus"
     />
     <ComponentExample
@@ -35,9 +40,9 @@ const Variations = () => (
       examplePath="components/Avatar/Variations/AvatarExampleGetInitials"
     />
     <ComponentExample
-      title="Presence indicator customization"
-      description="The presence indicator inside the Avatar can be customize to show different background."
-      examplePath="components/Avatar/Variations/AvatarExamplePresenceIndicatorCustomization"
+      title="Status customization"
+      description="The status inside the Avatar can be customize to show different background."
+      examplePath="components/Avatar/Variations/AvatarExampleStatusCustomization"
     />
     <ComponentExample
       title="Size"

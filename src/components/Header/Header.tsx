@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any
@@ -13,7 +13,7 @@ export interface IHeaderProps {
   content?: React.ReactNode
   description?: ItemShorthand
   textAlign?: 'left' | 'center' | 'right' | 'justified'
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -40,7 +40,7 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -52,27 +52,16 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'h1',
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'description',
-    'styles',
-    'textAlign',
-    'variables',
-  ]
 
   static Description = HeaderDescription
 
@@ -93,7 +82,6 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
           ...(v.descriptionColor && { color: v.descriptionColor }),
         },
       },
-      generateKey: false,
     })
 
     return (

@@ -20,15 +20,71 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
 
+### Features
+- Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
+
+<!--------------------------------[ v0.7.0 ]------------------------------- -->
+## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.6.0...v0.7.0)
+
+### BREAKING CHANGES
+- Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
+
+### Features
+- Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+
+### Documentation
+- Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
+- Update `Theming` guide @levithomason ([#274](https://github.com/stardust-ui/react/pull/274))
+- Add `Theming Examples` guide @almedint ([#252](https://github.com/stardust-ui/react/pull/252))
+
+<!--------------------------------[ v0.6.0 ]------------------------------- -->
+## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.2...v0.6.0)
+
+### BREAKING CHANGES
+- Fixed `Divider` wrong usage of the `typeSecondary{color, backgroundColor}` and `default{color, backgroundColor}` variables; renamed `default{color, backgroundColor}` variables to `color` and `backgroundColor` @mnajdova ([#234](https://github.com/stardust-ui/react/pull/234))
+- Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))
+- Add `RadioGroup` compliant with ARIA patterns. `Radio` changed to `RadioGroup.Item` @jurokapsiar ([#229](https://github.com/stardust-ui/react/pull/229))
+- `Divider` refactored variables names and the way they are used @codepretty ([#249](https://github.com/stardust-ui/react/pull/249))
+
 ### Fixes
+- Allow string or number as Input value @levithomason ([#250](https://github.com/stardust-ui/react/pull/250))
+- Do not throw on missing Icon names @levithomason ([#251](https://github.com/stardust-ui/react/pull/251))
+
+### Features
+- Add `author` and `timestamp` props for `Chat.Message` component @Bugaa92 ([#242](https://github.com/stardust-ui/react/pull/242))
+- Add support for custom (theme-defined) SVG and font-based icons @kuzhelov ([#260](https://github.com/stardust-ui/react/pull/260))
+
+<!--------------------------------[ v0.5.2 ]------------------------------- -->
+## [v0.5.2](https://github.com/stardust-ui/react/tree/v0.5.2) (2018-09-14)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.1...v0.5.2)
+>>>>>>> master
+
+### Fixes
+- Fix Provider incorrectly rendering font face rules @levithomason ([#227](https://github.com/stardust-ui/react/pull/227))
+
+### Features
+- Add `FocusZone` to `renderComponent`, change `Menu` behavior to support arrow keys @tomasiser ([#116](https://github.com/stardust-ui/react/pull/116))
+- Add `value`, `disabled`, `checked`, `defaultChecked` and `onChange` props to `Radio` component @mnajdova ([#206](https://github.com/stardust-ui/react/pull/206))
+
+### Performance
+- Enable Webpack tree shaking with `sideEffects: false` @levithomason ([#224](https://github.com/stardust-ui/react/pull/224))
+
+<!--------------------------------[ v0.5.1 ]------------------------------- -->
+## [v0.5.1](https://github.com/stardust-ui/react/tree/v0.5.1) (2018-09-11)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.0...v0.5.1)
+
+### Fixes
+- Fixed fonts to support zwj gender emojis ([#215](https://github.com/stardust-ui/react/pull/215))
 - Correct Teams theme site variables @sergiorv ([#110](https://github.com/stardust-ui/react/pull/110))
 - Fixed missing colors in Teams' siteVariables @mnajdova ([#200](https://github.com/stardust-ui/react/pull/200))
 - Fixed Teams' siteVariables font sizes @levithomason ([#204](https://github.com/stardust-ui/react/pull/204))
 - Fixed docs examples of `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
+- Preserve fonts and static styles in mergeThemes @levithomason ([#217](https://github.com/stardust-ui/react/pull/217))
 
 ### Features
 - Add `state` to `props` in component styling functions @Bugaa92 ([#173](https://github.com/stardust-ui/react/pull/173))
-- Adding `behaviors` section to the menu, under the components @kolaps33 ([#119](https://github.com/stardust-ui/react/pull/119))
 - Add `avatar` prop to `Chat.Message` subcomponent @Bugaa92 ([#159](https://github.com/stardust-ui/react/pull/159))
 - add `iconOnly` prop to `Button` @mnajdova ([#182](https://github.com/stardust-ui/react/pull/182))
 - Add Label `image` and `imagePosition`, removed `onIconClick` prop  @mnajdova ([#55](https://github.com/stardust-ui/react/pull/55/))
@@ -38,6 +94,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add accessibility description for `Text` component @codepretty ([#205](https://github.com/stardust-ui/react/pull/205))
 - Add `Portal`, `PortalInner` and `Ref` components base implementation @Bugaa92 ([#144](https://github.com/stardust-ui/react/pull/144))
 - Support all Semantic UI FontAwesome icon names @levithomason ([#211](https://github.com/stardust-ui/react/pull/211))
+- Add `Popup` component base implementation @Bugaa92 ([#150](https://github.com/stardust-ui/react/pull/150))
+- Add Input `inline` prop @alinais ([#120](https://github.com/stardust-ui/react/pull/120))
+- Add `Status` as a separate component @musingh1 ([#208](https://github.com/stardust-ui/react/pull/208))
+
+### Documentation
+- Add `behaviors` section to the menu, under the components @kolaps33 ([#119](https://github.com/stardust-ui/react/pull/119))
+- Add accessibility description for behaviors @kolaps33 ([#181](https://github.com/stardust-ui/react/pull/181))
 
 <!--------------------------------[ v0.5.0 ]------------------------------- -->
 ## [v0.5.0](https://github.com/stardust-ui/react/tree/v0.5.0) (2018-08-30)

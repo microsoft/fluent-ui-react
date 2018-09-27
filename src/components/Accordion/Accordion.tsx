@@ -7,7 +7,7 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { DefaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
   ItemShorthand,
@@ -28,7 +28,7 @@ export interface IAccordionProps {
     title: ItemShorthand
   }[]
   accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -55,7 +55,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -89,26 +89,12 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'exclusive',
-    'onTitleClick',
-    'panels',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     accessibility: DefaultBehavior as Accessibility,

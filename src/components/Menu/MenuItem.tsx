@@ -8,7 +8,7 @@ import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
@@ -33,7 +33,7 @@ export interface IMenuItemProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -54,7 +54,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -102,10 +102,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -114,28 +114,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     accessibility: MenuItemBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'active',
-    'as',
-    'children',
-    'className',
-    'content',
-    'disabled',
-    'icon',
-    'iconOnly',
-    'index',
-    'onClick',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
-
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
 

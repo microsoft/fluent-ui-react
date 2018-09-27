@@ -51,6 +51,20 @@ export const fontSizes = {
 }
 
 //
+// STATUS COLORS
+//
+export const successStatusBackgroundColor = green
+export const successStatusTextColor = white
+export const infoStatusBackgroundColor = 'blue'
+export const infoStatusTextColor = white
+export const warningStatusBackgroundColor = yellow
+export const warningStatusTextColor = white
+export const errorStatusBackgroundColor = red
+export const errorStatusTextColor = white
+export const unknownStatusBackgroundColor = gray04
+export const unknownStatusTextColor = white
+
+//
 // FONT WEIGHTS
 //
 export const fontWeightLight = 200
@@ -71,7 +85,8 @@ export const lineHeightExtraSmall = 1.2
 //
 export const bodyPadding = 0
 export const bodyMargin = 0
-export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
+export const bodyFontFamily =
+  '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase

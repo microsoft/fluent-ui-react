@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IGridProps {
@@ -12,7 +12,7 @@ export interface IGridProps {
   columns?: string | number
   content?: ItemShorthand | ItemShorthand[]
   rows?: string | number
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -33,7 +33,7 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
@@ -51,23 +51,12 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'columns',
-    'content',
-    'rows',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',

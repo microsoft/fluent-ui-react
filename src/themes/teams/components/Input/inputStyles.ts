@@ -1,6 +1,7 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IInputProps } from '../../../../components/Input/Input'
 
-const inputStyles: IComponentPartStylesInput = {
+const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { fluid } = props
 
@@ -14,7 +15,7 @@ const inputStyles: IComponentPartStylesInput = {
   },
 
   input: ({ props, variables }): ICSSInJSStyle => {
-    const { fluid } = props
+    const { fluid, inline } = props
 
     return {
       outline: 0,
@@ -25,6 +26,7 @@ const inputStyles: IComponentPartStylesInput = {
       backgroundColor: variables.backgroundColor,
       padding: variables.inputPadding,
       ...(fluid && { width: '100%' }),
+      ...(inline && { float: 'left' }),
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,
