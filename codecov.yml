@@ -3,4 +3,5 @@ coverage:
     - docs/*
     - src/lib/*
     - src/themes/*
+    - src/styles/*
     - test/*
