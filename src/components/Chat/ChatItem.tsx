@@ -44,8 +44,6 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'children', 'className', 'styles', 'variables']
-
   static defaultProps = {
     as: 'li',
   }

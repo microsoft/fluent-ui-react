@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Add `ChatItem` component that can be used inside the `Chat` via the Children API, instead of the `items` props @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+
 ### Features
 - Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
 
@@ -26,7 +29,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
-- Add `ChatItem` component that can be used inside the `Chat` via the Children API, instead of the `items` props @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
 
 ### Features
 - Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
