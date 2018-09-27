@@ -91,20 +91,6 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
-    'accessibility',
-    'align',
-    'as',
-    'basic',
-    'children',
-    'className',
-    'content',
-    'position',
-    'styles',
-    'trigger',
-    'variables',
-  ]
-
   public static defaultProps: IPopupProps = {
     as: Portal,
     align: 'start',

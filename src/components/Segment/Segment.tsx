@@ -34,8 +34,6 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
-
   static defaultProps = {
     as: 'div',
   }

@@ -7,7 +7,11 @@ const messages = [
   { key: 2, content: 'Hi', author: 'Jane Doe', timestamp: 'Yesterday, 10:15 PM' },
   {
     key: 3,
-    content: "Let's go get some lunch!",
+    content: (
+      <>
+        Let's go get some lunch! I suggest the new <a>Downtown Burgers</a> or <a>Chef's Finest</a>.
+      </>
+    ),
     author: 'John Doe',
     timestamp: 'Yesterday, 10:15 PM',
     mine: true,

@@ -32,19 +32,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
 
   static displayName = 'Attachment'
 
-  static handledProps = [
-    'action',
-    'actionable',
-    'as',
-    'children',
-    'description',
-    'header',
-    'icon',
-    'progress',
-    'styles',
-    'variables',
-  ]
-
   static propTypes = {
     /** Button shorthand for the action slot. */
     action: customPropTypes.itemShorthand,

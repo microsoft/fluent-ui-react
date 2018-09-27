@@ -53,8 +53,6 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
     onClick: PropTypes.func,
   }
 
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
-
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
