@@ -13,7 +13,6 @@ import {
   ComponentPartStyle,
   ComponentVariablesInput,
   IComponentPartStylesInput,
-  ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
@@ -24,11 +23,9 @@ export interface IChatMessageProps {
   as?: any
   author?: ItemShorthand
   avatar?: ItemShorthand
-  avatarStyle?: ICSSInJSStyle
   children?: ReactChildren
   className?: string
   content?: any
-  contentStyle?: ICSSInJSStyle
   mine?: boolean
   styles?: ComponentPartStyle
   timestamp?: ItemShorthand
@@ -51,9 +48,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
-    /** Style for the avatar of the ChatMessage. */
-    avatarStyle: PropTypes.object,
-
     /** Child content. */
     children: PropTypes.node,
 
@@ -62,9 +56,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     /** Shorthand for the primary content. */
     content: PropTypes.any,
-
-    /** Style for the content of the ChatMessage. */
-    contentStyle: PropTypes.object,
 
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
@@ -83,11 +74,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     'as',
     'author',
     'avatar',
-    'avatarStyle',
     'children',
     'className',
     'content',
-    'contentStyle',
     'mine',
     'styles',
     'timestamp',
@@ -105,7 +94,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { as, avatar, children, mine, mainStyle, avatarStyle } = this.props
+    const { as, avatar, children, mine } = this.props
 
     return childrenExist(children) ? (
       <ElementType {...rest} className={cx(classes.root, classes.content)}>
@@ -116,9 +105,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
         as={as}
         {...rest}
         className={classes.root}
-        start={!mine && this.renderAvatar(avatar, styles.avatar, variables, avatarStyle)}
-        main={this.renderContent(classes.content, styles, variables, mainStyle)}
-        end={mine && this.renderAvatar(avatar, styles.avatar, variables, avatarStyle)}
+        start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
+        main={this.renderContent(classes.content, styles, variables)}
+        end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
       />
     )
   }
@@ -127,7 +116,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     contentClass: string,
     styles: IComponentPartStylesInput,
     variables: ComponentVariablesInput,
-    mainStyle,
   ) => {
     const { author, content, mine, timestamp } = this.props
 
@@ -151,7 +139,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     return (
       <Layout
         className={contentClass}
-        rootCSS={mainStyle}
         vertical
         start={
           <>
@@ -168,12 +155,11 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     avatar: ItemShorthand,
     avatarStyles: ComponentPartStyle,
     variables: ComponentVariablesInput,
-    avatarStyle: ICSSInJSStyle,
   ) =>
     avatar &&
     Avatar.create(avatar, {
       defaultProps: {
-        styles: { ...avatarStyles, ...avatarStyle },
+        styles: avatarStyles,
         variables: variables.avatar,
       },
     })
