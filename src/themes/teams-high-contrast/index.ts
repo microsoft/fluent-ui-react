@@ -5,11 +5,10 @@ import { IThemeInput } from '../../../types/theme'
 import mergeThemes from '../../lib/mergeThemes'
 import { default as teams } from '../teams'
 
-const teamsHighContrast = {
+const teamsHighContrastOnly = {
   siteVariables,
   componentVariables,
   componentStyles,
 } as IThemeInput
 
-export default teamsHighContrast
-export const teamsLightPlusTeamsHighContrast = mergeThemes(teams, teamsHighContrast)
+export default mergeThemes(teams, teamsHighContrastOnly)
