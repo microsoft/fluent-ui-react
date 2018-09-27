@@ -32,7 +32,7 @@ class Router extends React.Component<any, any> {
     const theme = themes[themeStore.themeName]
     return (
       <Provider
-        theme={mergeThemes(semanticStyleOverrides, themes.teams, theme, {
+        theme={mergeThemes(semanticStyleOverrides, theme, {
           // adjust Teams' theme to Semantic UI's font size scheme
           siteVariables: {
             htmlFontSize: '14px',
