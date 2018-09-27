@@ -2,16 +2,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
-  ComponentEventHandler,
   Extendable,
   ItemShorthand,
   ReactChildren,
+  ComponentEventHandler,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
