@@ -1,125 +1,203 @@
-import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { IconBehavior } from '../../lib/accessibility/'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import * as React from 'react'
+import * as _ from 'lodash'
 
-import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import {
+  AutoControlledComponent,
+  createHTMLInput,
+  customPropTypes,
+  getUnhandledProps,
+  partitionHTMLProps,
+} from '../../lib'
+import Icon from '../Icon'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
-export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-export type IconSize =
-  | 'micro'
-  | 'mini'
-  | 'tiny'
-  | 'small'
-  | 'normal'
-  | 'large'
-  | 'big'
-  | 'huge'
-  | 'massive'
-
-export interface IIconProps {
+export interface IInputProps {
   as?: any
-  bordered?: boolean
-  circular?: boolean
+  children?: ReactChildren
   className?: string
-  disabled?: boolean
-  name?: string
-  size?: IconSize
-  xSpacing?: IconXSpacing
-  accessibility?: Accessibility
+  clearable?: boolean
+  defaultValue?: string | number
+  fluid?: boolean
+  icon?: ItemShorthand
+  inline?: boolean
+  input?: ItemShorthand
+  onChange?: ComponentEventHandler<IInputProps>
+  value?: string | number
+  type?: string
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
-class Icon extends UIComponent<Extendable<IIconProps>, any> {
-  static create: Function
+/**
+ * An Input
+ * @accessibility
+ * For good screen reader experience set aria-label or aria-labelledby attribute for input.
+ *
+ *
+ * Other considerations:
+ *  - if input is search, then use "role='search'"
+ *
+ */
+class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
+  static className = 'ui-input'
 
-  static className = 'ui-icon'
-
-  static displayName = 'Icon'
+  static displayName = 'Input'
 
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Icon can appear with rectangular border. */
-    bordered: PropTypes.bool,
-
-    /** Icon can appear as circular. */
-    circular: PropTypes.bool,
-
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
-    /** An icon can show it is currently unable to be interacted with. */
-    disabled: PropTypes.bool,
+    /** A property that will change the icon on the input and clear the input on click on Cancel */
+    clearable: PropTypes.bool,
 
-    /** Name of the icon. */
-    name: PropTypes.string,
+    /** The default value of the input. */
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Size of the icon. */
-    size: PropTypes.oneOf([
-      'micro',
-      'mini',
-      'tiny',
-      'small',
-      'normal',
-      'large',
-      'big',
-      'huge',
-      'massive',
-    ]),
+    /** An input can take the width of its container. */
+    fluid: PropTypes.bool,
+
+    /** Optional Icon to display inside the Input. */
+    icon: customPropTypes.itemShorthand,
+
+    /** An input can be used inline with text */
+    inline: PropTypes.bool,
+
+    /**
+     * Called on change.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onChange: PropTypes.func,
+
+    /** The HTML input type. */
+    type: PropTypes.string,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** The value of the input. */
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
-    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
-
-    /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
-    as: 'span',
-    size: 'normal',
-    accessibility: IconBehavior,
+    as: 'div',
+    type: 'text',
   }
 
-  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
+  static autoControlledProps = ['value']
+
+  inputRef: any
+
+  state: any = { value: this.props.value || this.props.defaultValue || '' }
+
+  handleChange = e => {
+    const value = _.get(e, 'target.value')
+
+    _.invoke(this.props, 'onChange', e, { ...this.props, value })
+
+    this.trySetState({ value })
   }
 
-  private renderSvgIcon(
-    ElementType,
-    svgIconDescriptor: SvgIconSpec,
-    classes,
-    rest,
-    accessibility,
-  ): React.ReactNode {
+  handleChildOverrides = (child, defaultProps) => ({
+    ...defaultProps,
+    ...child.props,
+  })
+
+  handleInputRef = c => (this.inputRef = c)
+
+  handleOnClear = e => {
+    const { clearable } = this.props
+
+    if (clearable) {
+      this.trySetState({ value: '' })
+    }
+  }
+
+  partitionProps = () => {
+    const { type } = this.props
+    const { value } = this.state
+
+    const unhandled = getUnhandledProps(Input, this.props)
+    const [htmlInputProps, rest] = partitionHTMLProps(unhandled)
+
+    return [
+      {
+        ...htmlInputProps,
+        onChange: this.handleChange,
+        type,
+        value: value || '',
+      },
+      rest,
+    ]
+  }
+
+  computeIcon = () => {
+    const { clearable, icon } = this.props
+    const { value } = this.state
+
+    if (clearable && value.length !== 0) {
+      return 'close'
+    }
+
+    if (!_.isNil(icon)) return icon
+
+    return null
+  }
+
+  handleIconOverrides = predefinedProps => {
+    return {
+      onClick: e => {
+        this.handleOnClear(e)
+
+        this.inputRef.focus()
+        _.invoke(predefinedProps, 'onClick', e, this.props)
+      },
+      ...(predefinedProps.onClick && { tabIndex: '0' }),
+    }
+  }
+
+  renderComponent({ ElementType, classes, styles, variables }) {
+    const { type } = this.props
+    const [htmlInputProps, restProps] = this.partitionProps()
+
+    const { onChange } = htmlInputProps as any
+
+    const inputClasses = classes.input
+
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
+      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+        {createHTMLInput(type, {
+          defaultProps: htmlInputProps,
+          overrideProps: {
+            className: inputClasses,
+            ref: this.handleInputRef,
+          },
+        })}
+        {this.computeIcon() &&
+          Icon.create(this.computeIcon(), {
+            defaultProps: {
+              styles: styles.icon,
+              variables: variables.icon,
+            },
+            overrideProps: this.handleIconOverrides,
+          })}
       </ElementType>
     )
   }
-
-  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
-    const { icons = {} } = theme
-
-    const maybeIcon = icons[this.props.name]
-
-    return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
-      : this.renderFontIcon(ElementType, classes, rest, accessibility)
-  }
 }
 
-Icon.create = createShorthandFactory(Icon, name => ({ name }))
-
-export default Icon
+export default Input

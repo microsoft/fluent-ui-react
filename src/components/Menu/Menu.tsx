@@ -8,9 +8,9 @@ import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import {
-  ComponentPartStyle,
   ComponentVariablesInput,
   ComponentVariablesObject,
+  ComponentPartStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 

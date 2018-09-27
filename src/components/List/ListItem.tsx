@@ -4,7 +4,7 @@ import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {

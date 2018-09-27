@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ISegmentProps {
   as?: any

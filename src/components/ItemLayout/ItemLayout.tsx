@@ -5,9 +5,9 @@ import * as cx from 'classnames'
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
 import {
-  ComponentPartStyle,
   ComponentVariablesInput,
   IComponentPartClasses,
+  ComponentPartStyle,
   ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'

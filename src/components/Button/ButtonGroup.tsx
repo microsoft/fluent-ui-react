@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Button from './Button'
 

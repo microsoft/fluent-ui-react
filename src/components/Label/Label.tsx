@@ -12,8 +12,8 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface ILabelProps {
   accessibility?: Accessibility

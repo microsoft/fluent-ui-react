@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any

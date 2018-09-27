@@ -2,8 +2,8 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, IRenderResultConfig, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {

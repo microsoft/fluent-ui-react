@@ -4,9 +4,9 @@ import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 import rtlCSSJS from 'rtl-css-js'
 
-import { childrenExist, customPropTypes, IRenderResultConfig, UIComponent } from '../../lib'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
+import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Portal, { TriggerAccessibility } from '../Portal'
 import PopupContent from './PopupContent'
 import { PopupBehavior } from '../../lib/accessibility'
@@ -15,7 +15,7 @@ import {
   AccessibilityActionHandlers,
   IAccessibilityBehavior,
 } from '../../lib/accessibility/interfaces'
-import computePopupPlacement, { Alignment, Placement, Position } from './positioningHelper'
+import computePopupPlacement, { Alignment, Position, Placement } from './positioningHelper'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']

@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { AutoControlledComponent, createShorthandFactory, customPropTypes } from '../../lib'
+import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
 import {
   ComponentEventHandler,
@@ -11,7 +11,7 @@ import {
   ItemShorthand,
   ReactChildren,
 } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'

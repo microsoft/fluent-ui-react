@@ -1,125 +1,78 @@
-import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { IconBehavior } from '../../lib/accessibility/'
+import * as React from 'react'
+
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
-export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-export type IconSize =
-  | 'micro'
-  | 'mini'
-  | 'tiny'
-  | 'small'
-  | 'normal'
-  | 'large'
-  | 'big'
-  | 'huge'
-  | 'massive'
-
-export interface IIconProps {
+export interface IImageProps {
+  accessibility?: Accessibility
   as?: any
-  bordered?: boolean
+  avatar?: boolean
+  children?: ReactChildren
   circular?: boolean
   className?: string
-  disabled?: boolean
-  name?: string
-  size?: IconSize
-  xSpacing?: IconXSpacing
-  accessibility?: Accessibility
+  fluid?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
-class Icon extends UIComponent<Extendable<IIconProps>, any> {
+/**
+ * An image is a graphic representation of something.
+ * @accessibility
+ * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
+ *
+ * Other considerations:
+ *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph
+ *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
+ *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
+ */
+class Image extends UIComponent<Extendable<IImageProps>, any> {
   static create: Function
 
-  static className = 'ui-icon'
+  static className = 'ui-image'
 
-  static displayName = 'Icon'
+  static displayName = 'Image'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** An element type to render as. */
     as: customPropTypes.as,
 
-    /** Icon can appear with rectangular border. */
-    bordered: PropTypes.bool,
+    /** An image may be formatted to appear inline with text as an avatar. */
+    avatar: PropTypes.bool,
 
-    /** Icon can appear as circular. */
+    /** An image can appear circular. */
     circular: PropTypes.bool,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
-    /** An icon can show it is currently unable to be interacted with. */
-    disabled: PropTypes.bool,
-
-    /** Name of the icon. */
-    name: PropTypes.string,
-
-    /** Size of the icon. */
-    size: PropTypes.oneOf([
-      'micro',
-      'mini',
-      'tiny',
-      'small',
-      'normal',
-      'large',
-      'big',
-      'huge',
-      'massive',
-    ]),
+    /** An image can take up the width of its container. */
+    fluid: PropTypes.bool,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
-    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
-
-    /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
-    as: 'span',
-    size: 'normal',
-    accessibility: IconBehavior,
+    as: 'img',
+    accessibility: ImageBehavior as Accessibility,
   }
 
-  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
-  }
-
-  private renderSvgIcon(
-    ElementType,
-    svgIconDescriptor: SvgIconSpec,
-    classes,
-    rest,
-    accessibility,
-  ): React.ReactNode {
-    return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
-      </ElementType>
-    )
-  }
-
-  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
-    const { icons = {} } = theme
-
-    const maybeIcon = icons[this.props.name]
-
-    return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
-      : this.renderFontIcon(ElementType, classes, rest, accessibility)
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
   }
 }
 
-Icon.create = createShorthandFactory(Icon, name => ({ name }))
+Image.create = createShorthandFactory(Image, src => ({ src }))
 
-export default Icon
+export default Image

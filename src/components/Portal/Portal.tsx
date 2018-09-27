@@ -3,11 +3,11 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
-  AutoControlledComponent,
   childrenExist,
   customPropTypes,
-  doesNodeContainClick,
+  AutoControlledComponent,
   eventStack,
+  doesNodeContainClick,
 } from '../../lib'
 import { ItemShorthand, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'

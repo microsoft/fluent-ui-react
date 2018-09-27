@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 

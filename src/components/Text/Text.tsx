@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ITextProps {
   as?: any

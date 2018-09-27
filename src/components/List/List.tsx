@@ -2,13 +2,13 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
 
 export interface IListProps {
   accessibility?: Accessibility

@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Icon } from '../../'
 
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IStatusProps {
