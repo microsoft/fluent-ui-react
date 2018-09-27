@@ -13,15 +13,15 @@ export interface ITextVariables {
   timestampTextColor: string
   timestampHoverTextColor: string
   textExtraSmallFontSize: string
-  textExtraSmallLineHeight: string
+  textExtraSmallLineHeight: number
   textSmallFontSize: string
-  textSmallLineHeight: string
+  textSmallLineHeight: number
   textMediumFontSize: string
-  textMediumLineHeight: string
+  textMediumLineHeight: number
   textLargeFontSize: string
-  textLargeLineHeight: string
+  textLargeLineHeight: number
   textExtraLargeFontSize: string
-  textExtraLargeLineHeight: string
+  textExtraLargeLineHeight: number
 }
 
 export default (siteVariables): ITextVariables => {
