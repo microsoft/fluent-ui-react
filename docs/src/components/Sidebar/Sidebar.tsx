@@ -5,7 +5,7 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Dropdown, Form, Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
+import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 import { inject, observer } from 'mobx-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
@@ -19,7 +19,6 @@ const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-const dropDownStyle: any = { borderRadius: '0px' }
 type ComponentMenuItem = { displayName: string; type: string }
 
 @inject((appState: AppStateStore) => ({
@@ -172,9 +171,9 @@ class Sidebar extends React.Component<any, any> {
     return <Menu.Menu>{menuItems}</Menu.Menu>
   }
 
-  private handleThemeChange = (event: React.SyntheticEvent, data: any) => {
+  private handleThemeChange = (event: any) => {
     const { themeStore } = this.props
-    const themeName = data.value
+    const themeName = event.target.value
     themeStore.changeTheme(themeName)
   }
 
@@ -208,18 +207,19 @@ class Sidebar extends React.Component<any, any> {
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>
-        <Menu.Item style={{ padding: '0px' }}>
-          <Form inverted widths="equal">
-            <Dropdown
-              placeholder="Select theme..."
-              fluid
-              selection
-              defaultValue={themeName}
-              options={this.getThemeOptions()}
-              onChange={this.handleThemeChange}
-              style={dropDownStyle}
-            />
-          </Form>
+        <Menu.Item>
+          <p>Theme:</p>
+          <select
+            placeholder="Select theme..."
+            defaultValue={themeName}
+            onChange={this.handleThemeChange}
+          >
+            {this.getThemeOptions().map(o => (
+              <option key={o.value} value={o.value}>
+                {o.text}
+              </option>
+            ))}
+          </select>
         </Menu.Item>
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
