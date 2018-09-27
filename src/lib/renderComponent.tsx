@@ -18,19 +18,19 @@ import {
   IThemePrepared,
 } from '../../types/theme'
 import {
-  Accessibility,
-  AccessibilityActionHandlers,
-  FocusZoneMode,
   IAccessibilityBehavior,
   IAccessibilityDefinition,
+  AccessibilityActionHandlers,
+  FocusZoneMode,
+  Accessibility,
 } from './accessibility/interfaces'
 import { DefaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import {
-  FocusZone as FabricFocusZone,
-  IFocusZone,
   IFocusZoneProps,
+  IFocusZone,
+  FocusZone as FabricFocusZone,
 } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 

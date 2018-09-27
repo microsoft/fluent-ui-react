@@ -4,9 +4,9 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
+import ChatMessage from './ChatMessage'
 import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import ChatMessage from './ChatMessage'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
 
@@ -60,10 +60,10 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
 
     return (
       <ElementType
+        className={classes.root}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
-        className={classes.root}
       >
         {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>
