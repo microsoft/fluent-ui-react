@@ -27,7 +27,13 @@ export default {
   }: TextStylesParams): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
-      ...(atMention && { color: v.atMentionTextColor }),
+      ...(atMention === true && {
+        color: v.atMentionOtherTextColor,
+      }),
+      ...(atMention === 'me' && {
+        color: v.atMentionMeTextColor,
+        fontWeight: v.atMentionMeFontWeight,
+      }),
       ...(disabled && { color: v.disabledTextColor }),
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
@@ -57,7 +63,7 @@ export default {
         fontWeight: v.importantWeight,
         color: v.importantTextColor,
       }),
-      ...(size === Sizes.ExtraSmall && {
+      ...(size === Sizes.Smaller && {
         fontSize: v.textExtraSmallFontSize,
         lineHeight: v.textExtraSmallLineHeight,
       }),
@@ -73,21 +79,9 @@ export default {
         fontSize: v.textLargeFontSize,
         lineHeight: v.textLargeLineHeight,
       }),
-      ...(size === Sizes.ExtraLarge && {
+      ...(size === Sizes.Larger && {
         fontSize: v.textExtraLargeFontSize,
         lineHeight: v.textExtraLargeLineHeight,
-      }),
-      ...(size === Sizes['2x'] && {
-        fontSize: v.textX2FontSize,
-        lineHeight: v.textX2LineHeight,
-      }),
-      ...(size === Sizes['3x'] && {
-        fontSize: v.textX3FontSize,
-        lineHeight: v.textX3LineHeight,
-      }),
-      ...(size === Sizes['4x'] && {
-        fontSize: v.textX4FontSize,
-        lineHeight: v.textX4LineHeight,
       }),
     }
   },
