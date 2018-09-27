@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { callable, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { IconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -84,20 +84,6 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'bordered',
-    'circular',
-    'className',
-    'disabled',
-    'name',
-    'size',
-    'styles',
-    'variables',
-    'xSpacing',
-  ]
 
   static defaultProps = {
     as: 'span',

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IAccordionTitleProps {
   as?: any
@@ -52,8 +52,6 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
      */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

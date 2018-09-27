@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
+import { AutoControlledComponent, createShorthandFactory, customPropTypes } from '../../lib'
 import Label from '../Label'
 import {
   ComponentEventHandler,
@@ -11,7 +11,7 @@ import {
   ItemShorthand,
   ReactChildren,
 } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'
@@ -123,29 +123,6 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     /** A vertical radio group displays elements vertically. */
     vertical: PropTypes.bool,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checked',
-    'checkedChanged',
-    'children',
-    'className',
-    'defaultChecked',
-    'defaultIsFromKeyboard',
-    'disabled',
-    'icon',
-    'isFromKeyboard',
-    'label',
-    'name',
-    'onBlur',
-    'onClick',
-    'onFocus',
-    'styles',
-    'value',
-    'variables',
-    'vertical',
-  ]
 
   static defaultProps = {
     as: 'div',

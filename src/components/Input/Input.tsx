@@ -10,12 +10,12 @@ import {
   partitionHTMLProps,
 } from '../../lib'
 import Icon from '../Icon'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import {
+  ComponentEventHandler,
   Extendable,
   ItemShorthand,
   ReactChildren,
-  ComponentEventHandler,
 } from '../../../types/utils'
 
 export interface IInputProps {
@@ -92,21 +92,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'className',
-    'clearable',
-    'defaultValue',
-    'fluid',
-    'icon',
-    'inline',
-    'onChange',
-    'styles',
-    'type',
-    'value',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'div',

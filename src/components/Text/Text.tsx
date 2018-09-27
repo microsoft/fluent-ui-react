@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 
 export interface ITextProps {
   as?: any
@@ -87,24 +87,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   static defaultProps = {
     as: 'span',
   }
-
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'temporary',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props

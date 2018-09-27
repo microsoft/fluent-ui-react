@@ -8,9 +8,9 @@ import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import {
+  ComponentPartStyle,
   ComponentVariablesInput,
   ComponentVariablesObject,
-  ComponentPartStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
@@ -97,25 +97,6 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     as: 'ul',
     accessibility: MenuBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'fluid',
-    'iconOnly',
-    'items',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['activeIndex']
 

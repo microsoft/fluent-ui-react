@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Button from './Button'
 
@@ -51,17 +51,6 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'buttons',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',

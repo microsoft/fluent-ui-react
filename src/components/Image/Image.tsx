@@ -5,7 +5,7 @@ import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { ImageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IImageProps {
@@ -62,17 +62,6 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'avatar',
-    'circular',
-    'className',
-    'fluid',
-    'styles',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'img',

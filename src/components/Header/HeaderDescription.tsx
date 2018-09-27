@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IHeaderDescriptionProps {
@@ -47,8 +47,6 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
   static defaultProps = {
     as: 'p',
   }
-
-  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

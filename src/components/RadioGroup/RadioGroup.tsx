@@ -10,9 +10,9 @@ import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 import {
+  ComponentPartStyle,
   ComponentVariablesInput,
   ComponentVariablesObject,
-  ComponentPartStyle,
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
@@ -79,20 +79,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     as: 'div',
     accessibility: RadioGroupBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checkedValue',
-    'checkedValueChanged',
-    'children',
-    'className',
-    'defaultCheckedValue',
-    'items',
-    'styles',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['checkedValue']
 

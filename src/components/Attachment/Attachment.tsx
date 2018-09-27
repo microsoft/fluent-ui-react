@@ -2,9 +2,9 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { Extendable, ItemShorthand } from '../../../types/utils'
-import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
@@ -31,19 +31,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static className = 'ui-attachment'
 
   static displayName = 'Attachment'
-
-  static handledProps = [
-    'action',
-    'actionable',
-    'as',
-    'children',
-    'description',
-    'header',
-    'icon',
-    'progress',
-    'styles',
-    'variables',
-  ]
 
   static propTypes = {
     /** Button shorthand for the action slot. */

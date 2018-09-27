@@ -4,7 +4,7 @@ import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle, ICSSInJSStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput, ICSSInJSStyle } from '../../../types/theme'
 
 export interface ILayoutProps {
   as?: any
@@ -94,37 +94,6 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'alignItems',
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'endCSS',
-    'endSize',
-    'gap',
-    'justifyItems',
-    'main',
-    'mainCSS',
-    'mainSize',
-    'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
-    'start',
-    'startCSS',
-    'startSize',
-    'styles',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
-    'variables',
-    'vertical',
-  ]
 
   static defaultProps = {
     startSize: 'auto',

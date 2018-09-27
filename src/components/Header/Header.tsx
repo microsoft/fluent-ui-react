@@ -4,7 +4,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any
@@ -62,17 +62,6 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
   static defaultProps = {
     as: 'h1',
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'description',
-    'styles',
-    'textAlign',
-    'variables',
-  ]
 
   static Description = HeaderDescription
 

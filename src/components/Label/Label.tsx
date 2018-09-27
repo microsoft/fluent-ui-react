@@ -12,8 +12,8 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface ILabelProps {
   accessibility?: Accessibility
@@ -75,20 +75,6 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'icon',
-    'iconPosition',
-    'image',
-    'imagePosition',
-    'styles',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'span',

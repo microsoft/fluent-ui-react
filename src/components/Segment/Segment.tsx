@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
+import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 
 export interface ISegmentProps {
   as?: any
@@ -33,8 +33,6 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',

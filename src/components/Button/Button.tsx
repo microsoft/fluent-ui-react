@@ -2,16 +2,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
 import { ButtonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import {
+  ComponentEventHandler,
   Extendable,
   ItemShorthand,
   ReactChildren,
-  ComponentEventHandler,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
@@ -110,26 +110,6 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'button',

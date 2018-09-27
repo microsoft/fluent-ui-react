@@ -5,10 +5,10 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
+import { getComponentPathname, repoURL, typeOrder } from 'docs/src/utils'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
@@ -204,6 +204,9 @@ class Sidebar extends React.Component<any, any> {
             </Menu.Item>
             <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
               Theming
+            </Menu.Item>
+            <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
+              Theming Examples
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>

@@ -5,9 +5,9 @@ import * as cx from 'classnames'
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
 import Layout from '../Layout'
 import {
+  ComponentPartStyle,
   ComponentVariablesInput,
   IComponentPartClasses,
-  ComponentPartStyle,
   ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
@@ -104,32 +104,6 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'className',
-    'content',
-    'contentCSS',
-    'contentMedia',
-    'contentMediaCSS',
-    'debug',
-    'endMedia',
-    'endMediaCSS',
-    'header',
-    'headerCSS',
-    'headerMedia',
-    'headerMediaCSS',
-    'media',
-    'mediaCSS',
-    'renderContentArea',
-    'renderHeaderArea',
-    'renderMainArea',
-    'rootCSS',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'div',

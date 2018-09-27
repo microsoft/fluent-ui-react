@@ -2,8 +2,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Icon } from '../../'
 
-import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand } from '../../../types/utils'
 
 export interface IStatusProps {
@@ -26,8 +26,6 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
   static className = 'ui-status'
 
   static displayName = 'Status'
-
-  static handledProps = ['as', 'className', 'color', 'icon', 'size', 'state', 'styles', 'variables']
 
   static propTypes = {
     /** An element type to render as (string or function). */

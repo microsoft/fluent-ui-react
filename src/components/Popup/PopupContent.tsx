@@ -2,8 +2,8 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { customPropTypes, IRenderResultConfig, UIComponent } from '../../lib'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {
@@ -51,16 +51,6 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'basic',
-    'children',
-    'className',
-    'innerRef',
-    'styles',
-    'variables',
-  ]
 
   public renderComponent({
     ElementType,

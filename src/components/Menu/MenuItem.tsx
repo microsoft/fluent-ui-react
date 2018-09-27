@@ -8,7 +8,7 @@ import Icon from '../Icon'
 import { MenuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
@@ -114,28 +114,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     accessibility: MenuItemBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'active',
-    'as',
-    'children',
-    'className',
-    'content',
-    'disabled',
-    'icon',
-    'iconOnly',
-    'index',
-    'onClick',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
-
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
