@@ -109,7 +109,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     rtl,
     accessibility,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger } = this.props
+    const { children, trigger, open } = this.props
 
     return (
       <>
@@ -123,7 +123,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
             ...accessibility.keyHandlers.trigger,
           })}
         </Ref>
-        {this.props.open && this.renderPopupContent(rtl, accessibility)}
+        {open && this.renderPopupContent(rtl, accessibility)}
       </>
     )
   }
