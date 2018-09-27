@@ -63,7 +63,7 @@ export default {
         fontWeight: v.importantWeight,
         color: v.importantTextColor,
       }),
-      ...(size === Sizes.ExtraSmall && {
+      ...(size === Sizes.Smaller && {
         fontSize: v.textExtraSmallFontSize,
         lineHeight: v.textExtraSmallLineHeight,
       }),
@@ -79,21 +79,9 @@ export default {
         fontSize: v.textLargeFontSize,
         lineHeight: v.textLargeLineHeight,
       }),
-      ...(size === Sizes.ExtraLarge && {
+      ...(size === Sizes.Larger && {
         fontSize: v.textExtraLargeFontSize,
         lineHeight: v.textExtraLargeLineHeight,
-      }),
-      ...(size === Sizes['2x'] && {
-        fontSize: v.textX2FontSize,
-        lineHeight: v.textX2LineHeight,
-      }),
-      ...(size === Sizes['3x'] && {
-        fontSize: v.textX3FontSize,
-        lineHeight: v.textX3LineHeight,
-      }),
-      ...(size === Sizes['4x'] && {
-        fontSize: v.textX4FontSize,
-        lineHeight: v.textX4LineHeight,
       }),
     }
   },

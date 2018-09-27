@@ -15,21 +15,15 @@ export interface ITextVariables {
   timestampTextColor: string
   timestampHoverTextColor: string
   textExtraSmallFontSize: string
-  textExtraSmallLineHeight: string
+  textExtraSmallLineHeight: number
   textSmallFontSize: string
-  textSmallLineHeight: string
+  textSmallLineHeight: number
   textMediumFontSize: string
-  textMediumLineHeight: string
+  textMediumLineHeight: number
   textLargeFontSize: string
-  textLargeLineHeight: string
+  textLargeLineHeight: number
   textExtraLargeFontSize: string
-  textExtraLargeLineHeight: string
-  textX2FontSize: string
-  textX2LineHeight: string
-  textX3FontSize: string
-  textX3LineHeight: string
-  textX4FontSize: string
-  textX4LineHeight: string
+  textExtraLargeLineHeight: number
 }
 
 export default (siteVariables): ITextVariables => {
@@ -44,29 +38,20 @@ export default (siteVariables): ITextVariables => {
     timestampTextColor: siteVariables.gray04,
     timestampHoverTextColor: siteVariables.gray02,
 
-    textExtraSmallFontSize: siteVariables.fontSizeExtraSmall,
+    textExtraSmallFontSize: siteVariables.fontSizes.smaller,
     textExtraSmallLineHeight: siteVariables.lineHeightExtraSmall,
 
-    textSmallFontSize: siteVariables.fontSizeSmall,
+    textSmallFontSize: siteVariables.fontSizes.small,
     textSmallLineHeight: siteVariables.lineHeightSmall,
 
-    textMediumFontSize: siteVariables.fontSizeMedium,
+    textMediumFontSize: siteVariables.fontSizes.medium,
     textMediumLineHeight: siteVariables.lineHeightBase,
 
-    textLargeFontSize: siteVariables.fontSizeLarge,
+    textLargeFontSize: siteVariables.fontSizes.large,
     textLargeLineHeight: siteVariables.lineHeightSmall,
 
-    textExtraLargeFontSize: siteVariables.fontSizeExtraLarge,
+    textExtraLargeFontSize: siteVariables.fontSizes.larger,
     textExtraLargeLineHeight: siteVariables.lineHeightSmall,
-
-    textX2FontSize: siteVariables.fontSizeX2,
-    textX2LineHeight: siteVariables.lineHeightSmall,
-
-    textX3FontSize: siteVariables.fontSizeX3,
-    textX3LineHeight: siteVariables.lineHeightSmall,
-
-    textX4FontSize: siteVariables.fontSizeX4,
-    textX4LineHeight: siteVariables.lineHeightSmall,
 
     importantWeight: siteVariables.fontWeightBold,
     importantTextColor: siteVariables.red,
