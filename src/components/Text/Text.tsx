@@ -8,7 +8,7 @@ import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/them
 
 export interface ITextProps {
   as?: any
-  atMention?: boolean
+  atMention?: boolean | 'me'
   className?: string
   content?: any
   disabled?: boolean
@@ -41,8 +41,8 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
 
-    /** Set as @mention Text component */
-    atMention: PropTypes.bool,
+    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,

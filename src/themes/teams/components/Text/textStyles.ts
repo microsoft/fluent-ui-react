@@ -27,7 +27,13 @@ export default {
   }: TextStylesParams): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
-      ...(atMention && { color: v.atMentionTextColor }),
+      ...(atMention === true && {
+        color: v.atMentionOtherTextColor,
+      }),
+      ...(atMention === 'me' && {
+        color: v.atMentionMeTextColor,
+        fontWeight: v.atMentionMeFontWeight,
+      }),
       ...(disabled && { color: v.disabledTextColor }),
       ...(error && { color: v.errorTextColor }),
       ...(success && { color: v.successTextColor }),
