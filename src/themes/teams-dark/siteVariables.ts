@@ -1,93 +1,26 @@
-import { pxToRem } from '../../lib'
-
-//
-// VARIABLES
-//
-export const htmlFontSize = '10px' // what 1rem represents
-
 //
 // COLORS
 //
-export const black = '#252423'
-export const gray02 = '#484644'
-export const gray03 = '#605E5C'
-export const gray04 = '#979593'
-export const gray06 = '#C8C6C4'
-export const gray08 = '#E1DFDD'
-export const gray09 = '#EDEBE9'
-export const gray10 = '#F3F2F1'
-export const gray14 = '#FAF9F8'
-export const fontBlack = black
-
-export const white = '#FFF'
+export const gray02 = '#bfbfbf'
+export const gray03 = '#a6a6a6'
+export const gray04 = '#808080'
+export const gray06 = '#4d4d4d'
+export const gray08 = '#262626'
+export const gray09 = '#292827'
+export const gray10 = '#2d2c2c'
+export const gray14 = '#292828'
 
 export const brand = '#6264A7'
-export const brand02 = '#33344A'
-export const brand04 = '#464775'
-export const brand06 = '#6264A7'
-export const brand08 = '#8B8CC7'
-export const brand12 = '#BDBDE6'
-export const brand14 = '#E2E2F6'
-export const brand16 = '#F4F4FC'
+export const brand02 = '#e2e2f6'
+export const brand04 = '#bdbde6'
+export const brand06 = '#a6a7dc'
+export const brand08 = '#8b8cc7'
+export const brand12 = brand
+export const brand14 = '#464775'
+export const brand16 = '#33344a'
 
-export const orange04 = '#CC4A31'
-export const magenta = '#B24782'
-export const orchid = '#943670'
-export const red = '#C4314B'
-export const red08 = '#F3D6DB'
-export const yellow = '#F8D22A'
-export const green = '#92C353'
-export const green04 = '#237b4b'
-
-//
-// FONT SIZES
-//
-export const fontSizeX4 = pxToRem(72)
-export const fontSizeX3 = pxToRem(48)
-export const fontSizeX2 = pxToRem(36)
-export const fontSizeExtraLarge = pxToRem(24)
-export const fontSizeLarge = pxToRem(18)
-export const fontSizeMedium = pxToRem(14)
-export const fontSizeSmall = pxToRem(12)
-export const fontSizeExtraSmall = pxToRem(10)
-
-//
-// STATUS COLORS
-//
-export const successStatusBackgroundColor = green
-export const successStatusTextColor = white
-export const infoStatusBackgroundColor = 'blue'
-export const infoStatusTextColor = white
-export const warningStatusBackgroundColor = yellow
-export const warningStatusTextColor = white
-export const errorStatusBackgroundColor = red
-export const errorStatusTextColor = white
-export const unknownStatusBackgroundColor = gray04
-export const unknownStatusTextColor = white
-
-//
-// FONT WEIGHTS
-//
-export const fontWeightLight = 200
-export const fontWeightSemilight = 300
-export const fontWeightRegular = 400
-export const fontWeightSemibold = 600
-export const fontWeightBold = 700
-
-//
-// LINE HEIGHTS
-//
-export const lineHeightBase = 1.4286
-export const lineHeightSmall = 1.3333
-export const lineHeightExtraSmall = 1.2
-
-//
-// SEMANTIC ASSIGNMENTS
-//
-export const bodyPadding = 0
-export const bodyMargin = 0
-export const bodyFontFamily =
-  '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1.4rem'
-export const bodyColor = black
-export const bodyLineHeight = lineHeightBase
+export const orange04 = '#e97548'
+export const magenta = '#cf6098'
+export const orchid = '#ae3d84'
+export const red = '#d74654'
+export const red08 = '#4f232b'
