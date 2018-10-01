@@ -364,10 +364,6 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
 
   private renderWithProvider(ExampleComponent) {
     const { showRtl, componentVariables } = this.state
-    const {
-      themeStore: { themeName },
-    } = this.props
-    const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
       componentVariables,
