@@ -76,20 +76,13 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  private containerFocusHandler = new ContainerFocusHandler(
-    () => this.props,
-    this.setState.bind(this),
-    s => {
-      this.state = s
-    },
-    () => this.state,
-  )
+  private focusContainer = ContainerFocusHandler.create(this)
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.containerFocusHandler.moveNext.bind(this.containerFocusHandler),
-    movePrevious: this.containerFocusHandler.movePrevious.bind(this.containerFocusHandler),
-    moveFirst: this.containerFocusHandler.moveFirst.bind(this.containerFocusHandler),
-    moveLast: this.containerFocusHandler.moveLast.bind(this.containerFocusHandler),
+    moveNext: this.focusContainer.moveNext.bind(this.focusContainer),
+    movePrevious: this.focusContainer.movePrevious.bind(this.focusContainer),
+    moveFirst: this.focusContainer.moveFirst.bind(this.focusContainer),
+    moveLast: this.focusContainer.moveLast.bind(this.focusContainer),
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
@@ -112,10 +105,7 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
     const itemProps = _.pick(this.props, List.itemProps)
 
     return _.map(items, (item, idx) => {
-      itemProps.focusableItemProps = this.containerFocusHandler.assignAtomicItemsProps(
-        idx,
-        items.length,
-      )
+      itemProps.focusableItemProps = this.focusContainer.assignAtomicItemsProps(idx, items.length)
 
       return ListItem.create(item, {
         defaultProps: itemProps,

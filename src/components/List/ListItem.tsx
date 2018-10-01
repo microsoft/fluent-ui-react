@@ -9,7 +9,6 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   FocusableItem,
   IFocusableItemProps,
-  IFocusableItemState,
 } from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
@@ -34,7 +33,7 @@ export interface IListItemProps {
   variables?: ComponentVariablesInput
 }
 
-export interface IListItemState extends IFocusableItemState {
+export interface IListItemState {
   isHovering: boolean
 }
 
@@ -88,15 +87,17 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: ListItemBehavior as Accessibility,
   }
 
+  constructor(props: IListItemProps, state: IListItemState) {
+    super(props, state)
+
+    this.state = {
+      isHovering: false,
+    }
+  }
+
   private itemRef = React.createRef<HTMLElement>()
 
-  private focusableItem = new FocusableItem(
-    () => this.props.focusableItemProps,
-    this.setState.bind(this),
-    state => {
-      this.state = { ...{ isHovering: false }, ...state }
-    },
-  )
+  private focusableItem = FocusableItem.create(this)
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -107,7 +108,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   }
 
   componentDidUpdate() {
-    this.focusableItem.focus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
+    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {

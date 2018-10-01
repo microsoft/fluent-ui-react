@@ -12,8 +12,6 @@ describe('Focus Container', () => {
     IFocusContainerProps<ItemShorthand>,
     IFocusContainerState
   >
-  let firstItem
-  let lastItem
 
   const items = [{ title: 'First Item' }, { title: 'Second Item' }, { title: 'Third Item' }]
   const props: IFocusContainerProps<ItemShorthand> = {
@@ -40,9 +38,6 @@ describe('Focus Container', () => {
       },
       () => state,
     )
-
-    firstItem = focusContainer.assignAtomicItemsProps(0, props.items.length)
-    lastItem = focusContainer.assignAtomicItemsProps(props.items.length - 1, props.items.length)
   })
 
   test('Should init handler', () => {
@@ -65,9 +60,6 @@ describe('Focus Container', () => {
     expect(item.isFocused).toBe(true)
     expect(item.isFirstElement).toBe(true)
     expect(item.isLastElement).toBe(false)
-
-    expect(item.onEnter).toBeTruthy()
-    expect(item.onEsc).toBeTruthy()
   })
 
   test('Should assign item properties to middle item', () => {
@@ -76,9 +68,6 @@ describe('Focus Container', () => {
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
     expect(item.isLastElement).toBe(false)
-
-    expect(item.onEnter).toBeTruthy()
-    expect(item.onEsc).toBeTruthy()
   })
 
   test('Should assign item properties to last item', () => {
@@ -87,9 +76,6 @@ describe('Focus Container', () => {
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
     expect(item.isLastElement).toBe(true)
-
-    expect(item.onEnter).toBeTruthy()
-    expect(item.onEsc).toBeTruthy()
   })
 
   test('Should move previous', () => {
@@ -152,18 +138,6 @@ describe('Focus Container', () => {
     state.focusItemOnIdx = props.items.length - 1
 
     focusContainer.moveLast()
-
-    expect(setStateMock).not.toBeCalled()
-  })
-
-  test('Should handle Enter', () => {
-    firstItem.onEnter()
-
-    expect(setStateMock).not.toBeCalled()
-  })
-
-  test('Should handle Esc', () => {
-    firstItem.onEsc()
 
     expect(setStateMock).not.toBeCalled()
   })

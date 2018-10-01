@@ -3,14 +3,6 @@ export interface IFocusableItemProps {
 
   isFirstElement: boolean
   isLastElement: boolean
-
-  onEnter: () => void
-  onEsc: () => void
-}
-
-export interface IFocusableItemState {
-  shouldSubContainerBeOpened: boolean
-  isLastOpened: boolean
 }
 
 export type SetStateDelegate<P, S> = <K extends keyof S>(
@@ -20,45 +12,18 @@ export type SetStateDelegate<P, S> = <K extends keyof S>(
   callback?: () => void,
 ) => void
 
-export class FocusableItem<P extends IFocusableItemProps, S extends IFocusableItemState> {
-  constructor(
-    private getProps: () => P,
-    private setState: SetStateDelegate<P, S>,
-    private initState: (state: IFocusableItemState) => void,
-  ) {
-    this.initState({
-      shouldSubContainerBeOpened: false,
-      isLastOpened: false,
-    })
+export class FocusableItem<P extends {} & { focusableItemProps?: IFocusableItemProps }> {
+  constructor(private getProps: () => IFocusableItemProps) {}
+
+  public static create<P extends {} & { focusableItemProps?: IFocusableItemProps }>(
+    component: React.Component<P>,
+  ): FocusableItem<P> {
+    return new this(() => component.props.focusableItemProps)
   }
 
-  public focus(focusableElement: HTMLElement) {
+  public tryFocus(focusableElement: HTMLElement) {
     if (this.getProps().isFocused) {
       focusableElement.focus()
     }
-  }
-
-  public enter() {
-    this.setState({ isLastOpened: false })
-
-    if (!this.getProps().isFocused) {
-      return
-    }
-
-    this.setState({
-      shouldSubContainerBeOpened: true,
-      isLastOpened: true,
-    })
-
-    this.getProps().onEnter()
-  }
-
-  public esc() {
-    if (!this.getProps().isFocused) {
-      return
-    }
-
-    this.setState({ shouldSubContainerBeOpened: false })
-    this.getProps().onEsc()
   }
 }

@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import { IFocusableItemProps, SetStateDelegate } from './FocusableItem'
 
 export interface IFocusContainerProps<T> {
@@ -19,7 +20,20 @@ export class ContainerFocusHandler<
     private initState: (state: IFocusContainerState) => void,
     private getState: () => S,
   ) {
-    this.initState({ focusItemOnIdx: 0 })
+    this.initState({ focusItemOnIdx: 0 } as S)
+  }
+
+  public static create<T, P extends IFocusContainerProps<T>, S extends IFocusContainerState>(
+    component: React.Component<P, S>,
+  ): ContainerFocusHandler<T, P, S> {
+    return new this(
+      () => component.props,
+      component.setState.bind(component),
+      (state: S) => {
+        component.state = _.assign(component.state, state)
+      },
+      () => component.state,
+    )
   }
 
   public assignAtomicItemsProps(idx: number, itemsLength: number): IFocusableItemProps {
@@ -27,9 +41,6 @@ export class ContainerFocusHandler<
       isFocused: idx === this.getState().focusItemOnIdx && this.getState().focusItemOnIdx !== -1,
       isFirstElement: idx === 0,
       isLastElement: idx === itemsLength - 1,
-
-      onEnter: this.onEnter,
-      onEsc: this.onEsc,
     }
   }
 
@@ -78,8 +89,4 @@ export class ContainerFocusHandler<
       focusItemOnIdx: this.getProps().items.length - 1,
     })
   }
-
-  private onEnter = (): void => {}
-
-  private onEsc = (): void => {}
 }
