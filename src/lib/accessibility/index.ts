@@ -17,3 +17,4 @@ export { default as ToolbarButtonBehavior } from './Behaviors/Toolbar/ToolbarBut
 export { default as RadioGroupBehavior } from './Behaviors/Radio/RadioGroupBehavior'
 export { default as RadioGroupItemBehavior } from './Behaviors/Radio/RadioGroupItemBehavior'
 export { default as PopupBehavior } from './Behaviors/Popup/PopupBehavior'
+export { default as GridBehavior } from './Behaviors/Grid/GridBehavior'

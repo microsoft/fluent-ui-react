@@ -4,9 +4,16 @@ import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { GridBehavior } from '../../lib/accessibility'
+import {
+  Accessibility,
+  AccessibilityActionHandlers,
+  IAccessibilityBehavior,
+} from '../../lib/accessibility/interfaces'
 
 export interface IGridProps {
   as?: any
+  accessibility?: Accessibility
   className?: string
   children?: ReactChildren
   columns?: string | number
@@ -56,10 +63,14 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {
     as: 'div',
+    accessibility: GridBehavior,
   }
 
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {

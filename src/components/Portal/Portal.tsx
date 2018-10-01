@@ -114,19 +114,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     triggerAccessibility: {},
   }
 
-  // public static handledProps = [
-  //   'children',
-  //   'content',
-  //   'defaultOpen',
-  //   'focusTrapZoneProps',
-  //   'onMount',
-  //   'onUnmount',
-  //   'open',
-  //   'trapFocus',
-  //   'trigger',
-  //   'triggerRef',
-  // ]
-
   public renderComponent(): React.ReactNode {
     return (
       <React.Fragment>

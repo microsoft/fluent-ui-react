@@ -6,34 +6,167 @@ const imageStyle = {
 }
 
 const images = [
-  <Image styles={imageStyle} key="ade" fluid src="public/images/avatar/large/ade.jpg" />,
-  <Image styles={imageStyle} key="chris" fluid src="public/images/avatar/large/chris.jpg" />,
   <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="ade"
+    fluid
+    src="public/images/avatar/large/ade.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="chris"
+    fluid
+    src="public/images/avatar/large/chris.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
     styles={imageStyle}
     key="christian"
     fluid
     src="public/images/avatar/large/christian.jpg"
   />,
-  <Image styles={imageStyle} key="daniel" fluid src="public/images/avatar/large/daniel.jpg" />,
-  <Image styles={imageStyle} key="elliot" fluid src="public/images/avatar/large/elliot.jpg" />,
-  <Image styles={imageStyle} key="elyse" fluid src="public/images/avatar/large/elyse.png" />,
-  <Image styles={imageStyle} key="helen" fluid src="public/images/avatar/large/helen.jpg" />,
-  <Image styles={imageStyle} key="jenny" fluid src="public/images/avatar/large/jenny.jpg" />,
-  <Image styles={imageStyle} key="joe" fluid src="public/images/avatar/large/joe.jpg" />,
-  <Image styles={imageStyle} key="justen" fluid src="public/images/avatar/large/justen.jpg" />,
-  <Image styles={imageStyle} key="kristy" fluid src="public/images/avatar/large/kristy.png" />,
-  <Image styles={imageStyle} key="laura" fluid src="public/images/avatar/large/laura.jpg" />,
-  <Image styles={imageStyle} key="matt" fluid src="public/images/avatar/large/matt.jpg" />,
-  <Image styles={imageStyle} key="matthew" fluid src="public/images/avatar/large/matthew.png" />,
-  <Image styles={imageStyle} key="molly" fluid src="public/images/avatar/large/molly.png" />,
-  <Image styles={imageStyle} key="nan" fluid src="public/images/avatar/large/nan.jpg" />,
-  <Image styles={imageStyle} key="nom" fluid src="public/images/avatar/large/nom.jpg" />,
-  <Image styles={imageStyle} key="patrick" fluid src="public/images/avatar/large/patrick.png" />,
-  <Image styles={imageStyle} key="rachel" fluid src="public/images/avatar/large/rachel.png" />,
-  <Image styles={imageStyle} key="steve" fluid src="public/images/avatar/large/steve.jpg" />,
-  <Image styles={imageStyle} key="stevie" fluid src="public/images/avatar/large/stevie.jpg" />,
-  <Image styles={imageStyle} key="tom" fluid src="public/images/avatar/large/tom.jpg" />,
-  <Image styles={imageStyle} key="veronika" fluid src="public/images/avatar/large/veronika.jpg" />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="daniel"
+    fluid
+    src="public/images/avatar/large/daniel.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="elliot"
+    fluid
+    src="public/images/avatar/large/elliot.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="elyse"
+    fluid
+    src="public/images/avatar/large/elyse.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="helen"
+    fluid
+    src="public/images/avatar/large/helen.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="jenny"
+    fluid
+    src="public/images/avatar/large/jenny.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="joe"
+    fluid
+    src="public/images/avatar/large/joe.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="justen"
+    fluid
+    src="public/images/avatar/large/justen.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="kristy"
+    fluid
+    src="public/images/avatar/large/kristy.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="laura"
+    fluid
+    src="public/images/avatar/large/laura.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="matt"
+    fluid
+    src="public/images/avatar/large/matt.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="matthew"
+    fluid
+    src="public/images/avatar/large/matthew.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="molly"
+    fluid
+    src="public/images/avatar/large/molly.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="nan"
+    fluid
+    src="public/images/avatar/large/nan.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="nom"
+    fluid
+    src="public/images/avatar/large/nom.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="patrick"
+    fluid
+    src="public/images/avatar/large/patrick.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="rachel"
+    fluid
+    src="public/images/avatar/large/rachel.png"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="steve"
+    fluid
+    src="public/images/avatar/large/steve.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="stevie"
+    fluid
+    src="public/images/avatar/large/stevie.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="tom"
+    fluid
+    src="public/images/avatar/large/tom.jpg"
+  />,
+  <Image
+    data-is-focusable="true"
+    styles={imageStyle}
+    key="veronika"
+    fluid
+    src="public/images/avatar/large/veronika.jpg"
+  />,
 ]
 
 const EmojiPopup = () => (
