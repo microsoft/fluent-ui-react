@@ -11,18 +11,35 @@ const menuTree = [
   },
   {
     key: 'menuItem1',
-    icon: 'user',
-    title: 'Click for callback',
-  },
-  {
-    key: 'menuItem2',
-    icon: 'search',
-    title: 'Click for callback',
+    iconName: 'align justify',
+    title: 'Show in channel',
     divider: true,
   },
   {
+    key: 'menuItem2',
+    iconName: 'edit',
+    title: 'Edit',
+  },
+  {
     key: 'menuItem3',
-    title: 'Open Submenu 1',
+    iconName: 'file word',
+    title: 'Open in Word',
+  },
+  {
+    key: 'menuItem4',
+    iconName: 'search',
+    title: 'Get link',
+  },
+  {
+    key: 'menuItem5',
+    iconName: 'plus',
+    title: 'Add to...',
+    divider: true,
+  },
+  {
+    key: 'menuItem6',
+    iconName: 'bookmark',
+    title: 'Move to collection',
     submenuitems: [
       {
         key: 'subItem0',
@@ -45,8 +62,24 @@ const menuTree = [
     ],
   },
   {
-    key: 'menuItem4',
-    title: 'Open Submenu 2',
+    key: 'menuItem7',
+    iconName: 'copy',
+    title: 'Copy to collection',
+    submenuitems: [
+      {
+        key: 'subItem0',
+        title: 'Click for callback',
+      },
+      {
+        key: 'subItem1',
+        title: 'Click for callback',
+      },
+    ],
+  },
+  {
+    key: 'menuItem8',
+    iconName: 'delete',
+    title: 'Remove',
     submenuitems: [
       {
         key: 'subItem0',

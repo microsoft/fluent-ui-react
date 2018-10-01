@@ -5,6 +5,7 @@ import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Popup from '../Popup/Popup'
+import Icon from '../Icon'
 import Menu from '../Menu'
 import Avatar from '../Avatar'
 import Provider from '../Provider'
@@ -71,6 +72,7 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   public processTree = (menuTree, callback) => {
     menuTree.forEach(item => {
       if (item.submenuitems === undefined) {
+        if (item.iconName) item.icon = item.iconName
         if (item.persondescription !== undefined) {
           item.content = (
             <div>
@@ -98,7 +100,18 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
             <Popup
               align="top"
               position="after"
-              trigger={<div style={{ paddingLeft: '15px' }}>{item.title}</div>}
+              trigger={
+                <div>
+                  {item.iconName ? (
+                    <Icon
+                      name={item.iconName}
+                      styles={{ paddingLeft: '0', paddingRight: '15px' }}
+                    />
+                  ) : null}
+                  <span style={{ paddingLeft: '15px' }}>{item.title}</span>
+                  <Icon name="arrow right" styles={{ float: 'right', marginRight: '15px' }} />
+                </div>
+              }
               content={
                 <Menu
                   defaultActiveIndex={-1}
