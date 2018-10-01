@@ -55,19 +55,11 @@ yarn ci                    // lint, prettier and test
 
 These guides will walk your through various activities for contributing:
 
-### Setup
 - [Setup Local Development](setup-local-development.md)
-
-### Add a feature
 - [Add a feature](add-a-feature.md)
-
-### Test a feature
 - [Test a feature](test-a-feature.md)
-
-### Document a feature
 - [Document a feature](document-a-feature.md)
 
-You can find different
 ## Accessibility
 
 - [Role and aria props](#role-and-aria-props)
