@@ -4,7 +4,12 @@ import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import { childrenExist, AutoControlledComponent, IRenderResultConfig } from '../../lib'
-import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  ItemShorthand,
+  Extendable,
+  ReactChildren,
+} from '../../../types/utils'
 
 import Ref from '../Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -29,7 +34,7 @@ export interface IPopupProps {
   content?: ItemShorthand | ItemShorthand[]
   defaultOpen?: boolean
   open?: boolean
-  onOpenChange?: () => void
+  onOpenChange?: ComponentEventHandler<IPopupProps>
   position?: Position
   trigger?: JSX.Element
 }
@@ -72,7 +77,11 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Defines whether popup is displayed. */
     open: PropTypes.bool,
 
-    /** Event for request to change 'open' value. */
+    /**
+     * Event for request to change 'open' value.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
     onOpenChange: PropTypes.func,
 
     /**
@@ -96,10 +105,13 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   public static autoControlledProps = ['open']
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e => _.invoke(this.props, 'onOpenChange', e, !this.props.open),
+    toggle: e =>
+      _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
     closeAndFocusTrigger: e => {
-      _.invoke(this.props, 'onOpenChange', false)
-      _.invoke(this.state.triggerRef, 'focus')
+      if (this.props.onOpenChange) {
+        _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: false } })
+        _.invoke(this.state.triggerRef, 'focus')
+      }
     },
   }
 
