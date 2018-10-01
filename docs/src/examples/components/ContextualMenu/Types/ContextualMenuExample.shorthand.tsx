@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContextualMenu, Avatar } from '@stardust-ui/react'
+import { ContextualMenu } from '@stardust-ui/react'
 
 const menuTree = [
   {
