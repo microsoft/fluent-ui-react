@@ -1,6 +1,5 @@
 import { Accessibility } from '../../interfaces'
 import * as keyboardKey from 'keyboard-key'
-import _ from 'lodash'
 
 /**
  * @description
