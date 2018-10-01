@@ -1,9 +1,9 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import ReactNode = React.ReactNode
 
 export interface IGridProps {
   as?: any
