@@ -5,6 +5,7 @@ Setup
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [First step](#first-step)
 - [Contributors](#contributors)
   - [Clone](#clone)
 - [Collaborators](#collaborators)
@@ -12,6 +13,24 @@ Setup
 - [Start](#start)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## First step
+
+Make sure you have [Node.js][1] version v8 or later installed.
+
+```sh
+node -v
+
+v8.11.3
+```
+
+`yarn` is used for Stardust because of its [benefits][2].
+
+```sh
+yarn -v
+
+1.7.0
+```
 
 ## Contributors
 
@@ -21,7 +40,7 @@ If you do not yet have access to the repo as a contributor, ask one of the maint
 
 Start by cloning Stardust UI React and installing dependencies:
 
-SSH ([learn more][1])
+SSH ([learn more][3])
 
 ```sh
 git clone git@github.com:stardust-ui/react.git stardust-ui-react
@@ -76,4 +95,6 @@ Open [localhost:8080](http://localhost:8080) after the initial build has complet
 
 Once setup, you can start [adding a new feature](add-a-feature.md).
 
-[1]: https://help.github.com/articles/connecting-to-github-with-ssh/
+[1]: https://nodejs.org/
+[2]: https://github.com/yarnpkg/yarn/#features
+[3]: https://help.github.com/articles/connecting-to-github-with-ssh/

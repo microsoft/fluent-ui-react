@@ -8,8 +8,10 @@ Add a feature
 - [Propose feature](#propose-feature)
 - [Prototype](#prototype)
 - [Spec out the API](#spec-out-the-api)
+- [Component anatomy](#component-anatomy)
 - [Create a component](#create-a-component)
   - [How to create a component](#how-to-create-a-component)
+  - [Good practice](#good-practice)
   - [Display Name and Class Name](#display-name-and-class-name)
   - [Using propTypes](#using-proptypes)
   - [State](#state)
@@ -31,13 +33,13 @@ Build a minimal prototype showcasing the proposed feature. Do not worry about te
 
 ## Spec out the API
 
-Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how your component's API will support all the native Stardust features. You can reference this [API proposal][2] for the Menu Icons.
+Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Stardust consumer. You can reference this [API proposal][2] for the Menu Icons.
 
-Once we have solidified the component spec, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
+Once the component spec is solidified, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
 ## Component anatomy
 
-Please relate to the [Glossary][7] for more details around the component anatomy.
+Please refer to the [Glossary][7] for more details around the component anatomy.
 
 ## Create a component
 
@@ -53,10 +55,12 @@ The corresponding component directory trees are going to be created in correct p
   - the docs under `/docs/src/examples/components/MyComponent`,
   - the tests under `/test/specs/components/MyComponent`
 
-You can customize also the styles of your component by adding proper variables and styles files under the theme directory. 
+You can customize the styles of your component by adding necessary variables and styles as part of your theme. 
 E.g. for update on the `teams` theme: `/src/themes/`
 
-Generally if you're updating a component, push a small change so you can open a PR early.
+### Good practice
+
+Generally if you're updating a component, push a small change so that your PR could be reviewed quickly.
 
 Stateless components should be written as a `function`:
 
@@ -75,8 +79,6 @@ class Dropdown extends AutoControlledComponent {
   // ...
 }
 ```
-
->You probably need to extend our [`AutoControlledComponent`][3] to support both [controlled][4] and [uncontrolled][5] component patterns.
 
 You can now iterate on the component in `/src` and your doc site example will hot reload your changes. Use this workflow to iterate on the prototype for your proposed feature.
 

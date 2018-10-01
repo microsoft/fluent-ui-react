@@ -8,43 +8,28 @@ CONTRIBUTING
 - [Getting started](#getting-started)
   - [Useful Commands](#useful-commands)
 - [Workflow](#workflow)
+  - [Setup](#setup)
+  - [Add a feature](#add-a-feature)
+  - [Test a feature](#test-a-feature)
+  - [Document a feature](#document-a-feature)
 - [Accessibility](#accessibility)
   - [Role and aria props](#role-and-aria-props)
   - [Focus](#focus)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-These guides will walk your through various activities for contributing:
-
-- [Setup Local Development](setup-local-development.md)
-- [Add a feature](add-a-feature.md)
-- [Test a feature](test-a-feature.md)
-- [Document a feature](document-a-feature.md)
-
 ## Getting started
 
-Make sure you have at least [Node.js v8][1]:
+Make sure you have [Node.js][1] version v8 or later installed.
 
-```sh
-node -v
-
-v8.11.3
-```
-
-We use `yarn` because `npm` has unfortunately become unreliable. Get it [here][2].
-
-```sh
-yarn -v
-
-1.7.0
-```
+You can contribute to Stardust by being an official [contributor](setup-local-development.md#contributors) or without permissions, as a [collaborator](setup-local-development.md#collaborators)
 
 ### Useful Commands
 
 >This list contains the most useful commands. You should run `yarn run` to see all scripts.
 
 ```sh
-yarn generate:component    // generates a new component. Willa sk for the name of the component
+yarn generate:component    // generates a new component. Will ask for the name of the component
 
 yarn start                 // run doc site
 
@@ -68,11 +53,21 @@ yarn ci                    // lint, prettier and test
 
 ## Workflow
 
+These guides will walk your through various activities for contributing:
+
+### Setup
 - [Setup Local Development](setup-local-development.md)
+
+### Add a feature
 - [Add a feature](add-a-feature.md)
+
+### Test a feature
 - [Test a feature](test-a-feature.md)
+
+### Document a feature
 - [Document a feature](document-a-feature.md)
 
+You can find different
 ## Accessibility
 
 - [Role and aria props](#role-and-aria-props)
@@ -88,7 +83,7 @@ It is represented through the `role` and `aria-*` attributes which are usually a
 
 Stardust provides already the needed ARIA attributes to make its components accessible.
 
-For example, to make the RadioGroup component accessible, you will find the generated HTML having the following shape:
+For example, to make the RadioGroup component accessible, you will find the generated HTML having the following look:
 ```html
   <div role="radio" tabindex="0" aria-checked="true" class="ui-radiogroup__item">
     <span class="ui-label">
@@ -103,7 +98,7 @@ clearly visible, so the users can see where they are on the page. This is handle
 will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed.
 It disables keyboard mode on mouse click events.
 
-More details at [Accessibility](../accessibility/blob/master/CONTRIBUTING.md)
+More details at [Accessibility][2]
 
 [1]: https://nodejs.org/
-[2]: https://yarnpkg.com/
+[2]: https://github.com/stardust-ui/accessibility/blob/master/CONTRIBUTING.md

@@ -12,6 +12,8 @@ Document a feature
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+When creating a component, a special directory is created under the `docs/src/examples` location. Here you can develop different usage examples for your component that will appear in the [doc site][1].
+
 Our docs are generated from doc block comments, `propTypes`, and hand written examples.
 
 ## Website
@@ -75,7 +77,9 @@ Label.propTypes = {
 
 ## Examples
 
-Usage examples for a component live in `docs/src/examples`. The examples follow the doc site examples.
+Usage examples for a component live in `docs/src/examples`. The examples follow the doc site examples (e.g. [button][1]).
 
 Adding documentation for new components is a bit tedious. The best way to do this (for now) is to copy an existing
 component's and update it.
+
+[1]: https://stardust-ui.github.io/react/components/button

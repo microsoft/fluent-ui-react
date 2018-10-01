@@ -48,12 +48,50 @@ describe('Divider', () => {
 
 This is the only required test. It ensures a consistent baseline for the framework. It also helps you get your component off the ground. You should add this test to new components right away.
 
+isConformant asserts Component conforms to guidelines that are applicable to all components:
+
+- Component is exported or private
+- Component name and filename are correct
+- Component info file exists at `docs/src/componentInfo/${constructorName}.info.json`
+- Events are properly handled
+- Extra props are correctly spread
+- Base classNames are applied
+- The display name matches the constructor name
+
 ### Writing tests
 
 Create your test file in `test/specs` directory. The **specs** directory mirrors the **src** directory. The first test should always be `isConformant()`
 For every source file, there needs to be a test file and they should named as `<Component>-test.tsx`.
 
 There should be one describe block for each prop of your component.
+
+Example for `Button` component:
+
+```tsx
+import { isConformant } from 'test/specs/commonTests'
+
+import Button from 'src/components/Button'
+
+describe('Button', () => {
+  isConformant(Button)
+
+  describe('accessibility', () => {
+    ...
+  })
+
+  describe('type', () => {
+    ...
+  })
+
+  describe('circular', () => {
+    ...
+  })
+
+  describe('onClick', () => {
+    ...
+  })
+})
+```
 
 ### Running tests
 
