@@ -18,7 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
-- Add `ChatItem` component that can be used inside the `Chat` via the Children API, instead of the `items` props @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+- Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
+- Add `ChatItem` component that can be used inside the `Chat` via the Children API, instead of the `Chat.Message` directly @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
 
 ### Features
 - Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
@@ -32,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+- Add `atMention="me"` value to Text API @codepretty ([#277](https://github.com/stardust-ui/react/pull/277))
 
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
