@@ -18,14 +18,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
+
+### Features
+- Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
+
+<!--------------------------------[ v0.7.0 ]------------------------------- -->
+## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.6.0...v0.7.0)
+
+### BREAKING CHANGES
 - Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
 
 ### Features
 - Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+- Add `atMention="me"` value to Text API @codepretty ([#277](https://github.com/stardust-ui/react/pull/277))
 
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
 - Update `Theming` guide @levithomason ([#274](https://github.com/stardust-ui/react/pull/274))
+- Add `Theming Examples` guide @almedint ([#252](https://github.com/stardust-ui/react/pull/252))
 
 <!--------------------------------[ v0.6.0 ]------------------------------- -->
 ## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)

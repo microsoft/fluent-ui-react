@@ -55,16 +55,6 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
-    'as',
-    'basic',
-    'children',
-    'className',
-    'innerRef',
-    'styles',
-    'variables',
-  ]
-
   public renderComponent({
     ElementType,
     classes,

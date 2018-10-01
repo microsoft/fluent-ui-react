@@ -101,25 +101,6 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     accessibility: MenuBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'fluid',
-    'iconOnly',
-    'items',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
-
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem

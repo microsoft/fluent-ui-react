@@ -127,29 +127,6 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     vertical: PropTypes.bool,
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checked',
-    'checkedChanged',
-    'children',
-    'className',
-    'defaultChecked',
-    'defaultIsFromKeyboard',
-    'disabled',
-    'icon',
-    'isFromKeyboard',
-    'label',
-    'name',
-    'onBlur',
-    'onClick',
-    'onFocus',
-    'styles',
-    'value',
-    'variables',
-    'vertical',
-  ]
-
   static defaultProps = {
     as: 'div',
     accessibility: RadioGroupItemBehavior as Accessibility,

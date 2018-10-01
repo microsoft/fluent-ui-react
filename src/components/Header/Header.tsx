@@ -66,17 +66,6 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     as: 'h1',
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'description',
-    'styles',
-    'textAlign',
-    'variables',
-  ]
-
   static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, variables: v, rest }) {

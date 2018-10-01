@@ -83,20 +83,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     accessibility: RadioGroupBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checkedValue',
-    'checkedValueChanged',
-    'children',
-    'className',
-    'defaultCheckedValue',
-    'items',
-    'styles',
-    'variables',
-    'vertical',
-  ]
-
   static autoControlledProps = ['checkedValue']
 
   static Item = RadioGroupItem

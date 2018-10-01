@@ -61,17 +61,6 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'columns',
-    'content',
-    'rows',
-    'styles',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: 'div',
   }
