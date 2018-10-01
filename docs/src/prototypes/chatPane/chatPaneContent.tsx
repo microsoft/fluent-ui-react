@@ -29,7 +29,7 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
 
       return {
         key: msg.id,
-        avatar: !msg.mine && { src: fromUser.avatar, status: statusMap.get(fromUser.status) },
+        avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
         content: msg.content,
         mine: msg.mine,
         tabIndex: 0,
@@ -42,10 +42,20 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
       chatMessages &&
       chatMessages.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat messages={chatMessages} styles={{ padding: '0 32px' }} />
+          <Chat items={this.generateItems(chatMessages)} styles={{ padding: '0 32px' }} />
         </Scrollbars>
       )
     )
+  }
+
+  private generateItems = (chatMessages: IChatMessageProps[]) => {
+    return chatMessages.map(item => {
+      return (
+        <Chat.Item>
+          <Chat.Message {...item} />
+        </Chat.Item>
+      )
+    })
   }
 
   private handleScrollRef(scrollRef: Scrollbars) {
