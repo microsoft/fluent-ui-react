@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
+import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
 import { mountWithProvider } from '../../../utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
@@ -24,9 +24,9 @@ describe('ChatMessage', () => {
   describe('avatar', () => {
     it('creates an Avatar component when the avatar shorthand is provided', () => {
       const name = 'John Doe'
-      const chatMsg = mountWithProvider(<ChatMessage avatar={name} />)
+      const chatMessage = mountWithProvider(<ChatMessage avatar={name} />)
 
-      expect(chatMsg.find('Avatar').prop('name')).toEqual(name)
+      expect(chatMessage.find('Avatar').prop('name')).toEqual(name)
     })
   })
 })
