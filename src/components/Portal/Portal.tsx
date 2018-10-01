@@ -128,8 +128,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     const { open } = this.state
     const contentToRender = childrenExist(children) ? children : content
 
-    console.log('trapFocus', trapFocus)
-
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
