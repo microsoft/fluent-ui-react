@@ -4,7 +4,10 @@ import { ContextualMenu, Avatar } from '@stardust-ui/react'
 const menuTree = [
   {
     key: 'menuItem0',
-    title: 'Click for callback',
+    persondescription: {
+      imageUrl: 'public/images/avatar/small/elliot.jpg',
+      description: 'Gopal Goel',
+    },
   },
   {
     key: 'menuItem1',
@@ -12,6 +15,11 @@ const menuTree = [
   },
   {
     key: 'menuItem2',
+    title: 'Click for callback',
+    divider: true,
+  },
+  {
+    key: 'menuItem3',
     title: 'Open Submenu 1',
     submenuitems: [
       {
@@ -35,7 +43,7 @@ const menuTree = [
     ],
   },
   {
-    key: 'menuItem3',
+    key: 'menuItem4',
     title: 'Open Submenu 2',
     submenuitems: [
       {

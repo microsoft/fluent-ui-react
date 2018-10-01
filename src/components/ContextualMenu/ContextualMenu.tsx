@@ -5,10 +5,10 @@ import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Popup from '../Popup/Popup'
-import Button from '../Button'
-import Menu, { MenuItem } from '../Menu'
+import Menu from '../Menu'
 import Avatar from '../Avatar'
 import Provider from '../Provider'
+import Divider from '../Divider'
 
 export interface IContextualMenuProps {
   as?: any
@@ -72,73 +72,53 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'menutree',
-    'persondescription',
-    'styles',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: 'div',
-  }
-
-  public renderMenuPersonDetail = personDescription => {
-    if (personDescription === undefined) {
-      return undefined
-    }
-    const { iconOnly, pills, pointing, type, underlined, vertical } = this.props
-    const item = {
-      key: 'personDescription',
-      content: (
-        <div>
-          <Avatar image={personDescription.imageUrl} />
-          <span style={{ padding: '10px' }}>{personDescription.description}</span>
-        </div>
-      ),
-    }
-    const index = 4
-    return MenuItem.create(item, {
-      defaultProps: {
-        iconOnly,
-        pills,
-        pointing,
-        type,
-        underlined,
-        vertical,
-        index,
-      },
-      // overrideProps: this.handleItemOverrides,
-    })
   }
 
   public processTree = (menuTree, callback) => {
     menuTree.forEach(item => {
       if (item.submenuitems === undefined) {
-        item.content = <span style={{ paddingLeft: '15px' }}>{item.title}</span>
+        if (item.persondescription !== undefined) {
+          item.content = (
+            <div>
+              <div style={{ paddingLeft: '15px' }}>
+                <Avatar image={item.persondescription.imageUrl} />
+                <span style={{ padding: '10px' }}>{item.persondescription.description}</span>
+              </div>
+              <Divider variables={{ dividerPadding: 0 }} />
+            </div>
+          )
+        } else {
+          item.content = (
+            <span>
+              <span style={{ paddingLeft: '15px' }}>{item.title}</span>
+              {item.divider ? <Divider variables={{ dividerPadding: 0 }} /> : null}
+            </span>
+          )
+        }
         item.onClick = callback
       }
       if (item.submenuitems !== undefined) {
         this.processTree(item.submenuitems, callback)
         item.content = (
-          <Popup
-            align="top"
-            position="after"
-            trigger={<div style={{ paddingLeft: '15px' }}>{item.title}</div>}
-            content={
-              <Menu
-                defaultActiveIndex={-1}
-                items={item.submenuitems}
-                pills
-                vertical
-                type="primary"
-              />
-            }
-          />
+          <span>
+            <Popup
+              align="top"
+              position="after"
+              trigger={<div style={{ paddingLeft: '15px' }}>{item.title}</div>}
+              content={
+                <Menu
+                  defaultActiveIndex={-1}
+                  items={item.submenuitems}
+                  pills
+                  vertical
+                  type="primary"
+                />
+              }
+            />
+            {item.divider ? <Divider variables={{ dividerPadding: 0 }} /> : null}
+          </span>
         )
       }
     })
@@ -161,7 +141,7 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
                 minWidth: '200px',
                 width: '100%',
               },
-              anchor: { padding: '0px', height: '50px', width: '100%', lineHeight: '50px' },
+              anchor: { padding: '0px', height: '100%', width: '100%', lineHeight: '50px' },
             },
             Menu: {
               root: { width: '100%' },
@@ -176,10 +156,8 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
 
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
     const { menutree, persondescription, callback } = this.props
-    // console.log(menutree)
     return (
       <ElementType className={classes.root} {...rest}>
-        {this.renderMenuPersonDetail(persondescription)}
         {this.renderMenuTree(menutree, callback)}
       </ElementType>
     )
