@@ -71,20 +71,6 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
     accessibility: ListBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'debug',
-    'items',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static Item = ListItem
 
   // List props that are passed to each individual Item props

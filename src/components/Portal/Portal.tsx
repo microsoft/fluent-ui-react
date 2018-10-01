@@ -102,20 +102,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     onOutsideClick: PropTypes.func,
   }
 
-  public static handledProps = [
-    'children',
-    'content',
-    'defaultOpen',
-    'onMount',
-    'onOutsideClick',
-    'onTriggerClick',
-    'onUnmount',
-    'open',
-    'trigger',
-    'triggerAccessibility',
-    'triggerRef',
-  ]
-
   public static defaultProps: IPortalProps = {
     triggerAccessibility: {},
   }

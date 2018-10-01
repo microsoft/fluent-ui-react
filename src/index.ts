@@ -41,6 +41,17 @@ export {
 export {
   default as RadioGroupItemBehavior,
 } from './lib/accessibility/Behaviors/Radio/RadioGroupItemBehavior'
+export { default as ChatBehavior } from './lib/accessibility/Behaviors/Chat/ChatBehavior'
+export {
+  default as ChatMessageBehavior,
+} from './lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+export {
+  default as ChatBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/ChatEnterEscBehavior'
+export {
+  default as ChatMessageBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/ChatMessageEnterEscBehavior'
+
 export { default as Portal } from './components/Portal'
 export { default as Popup } from './components/Popup'
 export { PopupContent } from './components/Popup'
