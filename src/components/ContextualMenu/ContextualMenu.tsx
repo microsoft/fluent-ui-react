@@ -19,14 +19,6 @@ export interface IContextualMenuProps {
   variables?: ComponentVariablesInput
 }
 
-const menuItemStyle = {
-  root: { padding: '0px', marginBottom: '0px', borderRadius: '0%' },
-  anchor: { padding: '0px', minHeight: '50px' },
-}
-const triggerStyle = {
-  padding: '15px',
-}
-
 /**
  * A contextualMenu.
  * @accessibility This is example usage of the accessibility tag.
@@ -146,6 +138,9 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
             Menu: {
               root: { width: '100%' },
             },
+            Icon: {
+              root: { margin: '15px', marginRight: '0px' },
+            },
           },
         }}
       >
@@ -155,7 +150,7 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   }
 
   public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
-    const { menutree, persondescription, callback } = this.props
+    const { menutree, callback } = this.props
     return (
       <ElementType className={classes.root} {...rest}>
         {this.renderMenuTree(menutree, callback)}

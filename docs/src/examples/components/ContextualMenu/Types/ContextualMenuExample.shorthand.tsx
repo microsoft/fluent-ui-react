@@ -11,10 +11,12 @@ const menuTree = [
   },
   {
     key: 'menuItem1',
+    icon: 'user',
     title: 'Click for callback',
   },
   {
     key: 'menuItem2',
+    icon: 'search',
     title: 'Click for callback',
     divider: true,
   },
