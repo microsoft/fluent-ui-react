@@ -6,18 +6,16 @@ import { pxToRem } from '../../../../lib'
 const px10asRem = pxToRem(10)
 const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'flex',
+    display: 'inline-block',
     position: 'relative',
     marginTop: '1rem',
     marginBottom: '1rem',
-    ...(p.mine
-      ? {
-          marginLeft: 'auto',
-        }
-      : {
-          marginRight: 'auto',
-        }),
+    ...(p.mine && {
+      float: 'right',
+    }),
     maxWidth: v.messageWidth,
+    wordBreak: 'break-word',
+    wordWrap: 'break-word',
   }),
 
   avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({

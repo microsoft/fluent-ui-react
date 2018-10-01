@@ -17,11 +17,21 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.8.0 ]------------------------------- -->
+## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.7.0...v0.8.0)
+
 ### BREAKING CHANGES
 - Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
+- Add `ChatItem` component that can be used inside the `Chat` via the Children API or the `items` prop, instead of the `Chat.Message` used directly in the previous `messages` prop @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+- Make `Popup` to be a controlled component @kuzhelov ([#282](https://github.com/stardust-ui/react/pull/282))
 
 ### Features
 - Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
+- Add default accessibility behavior to `Popup` @sophieH29 ([#218](https://github.com/stardust-ui/react/pull/218))
+
+### Documentation
+- Improve `Contributing` documentation @alinais, @levithomason ([#189](https://github.com/stardust-ui/react/pull/189))
 
 ### Fixes
 - Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))

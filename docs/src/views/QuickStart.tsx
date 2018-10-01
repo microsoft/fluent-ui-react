@@ -62,11 +62,11 @@ export default () => (
     {/* Show a preview of the above snippet */}
     <Button
       as={NavLink}
-      content="Accessibility"
+      content="Stardust Glossary"
       type="primary"
       icon="arrow right"
       iconPosition="after"
-      to="accessibility"
+      to="glossary"
     />
   </DocPage>
 )
