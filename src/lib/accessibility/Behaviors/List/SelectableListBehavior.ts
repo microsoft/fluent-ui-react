@@ -1,3 +1,4 @@
+import * as keyboardKey from 'keyboard-key'
 import { IAccessibilityDefinition } from '../../interfaces'
 
 /**
@@ -10,6 +11,22 @@ const SelectableListBehavior: IAccessibilityDefinition = {
   attributes: {
     root: {
       role: 'listbox',
+    },
+  },
+  keyActions: {
+    root: {
+      moveNext: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+      },
+      movePrevious: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
+      },
+      moveFirst: {
+        keyCombinations: [{ keyCode: keyboardKey.Home }],
+      },
+      moveLast: {
+        keyCombinations: [{ keyCode: keyboardKey.End }],
+      },
     },
   },
 }

@@ -4,12 +4,7 @@ export interface IFocusableItemProps {
   isFirstElement: boolean
   isLastElement: boolean
 
-  onMovePrevious: () => void
-  onMoveNext: () => void
-  onMoveFirst: () => void
-  onMoveLast: () => void
   onEnter: () => void
-  onSpace: () => void
   onEsc: () => void
 }
 
@@ -43,38 +38,6 @@ export class FocusableItem<P extends IFocusableItemProps, S extends IFocusableIt
     }
   }
 
-  public movePrevious() {
-    if (this.getProps().isFirstElement || !this.getProps().isFocused) {
-      return
-    }
-
-    this.getProps().onMovePrevious()
-  }
-
-  public moveNext() {
-    if (this.getProps().isLastElement || !this.getProps().isFocused) {
-      return
-    }
-
-    this.getProps().onMoveNext()
-  }
-
-  public moveFirst() {
-    if (this.getProps().isFirstElement || !this.getProps().isFocused) {
-      return
-    }
-
-    this.getProps().onMoveFirst()
-  }
-
-  public moveLast() {
-    if (this.getProps().isLastElement || !this.getProps().isFocused) {
-      return
-    }
-
-    this.getProps().onMoveLast()
-  }
-
   public enter() {
     this.setState({ isLastOpened: false })
 
@@ -88,18 +51,6 @@ export class FocusableItem<P extends IFocusableItemProps, S extends IFocusableIt
     })
 
     this.getProps().onEnter()
-  }
-
-  private isFocused(): boolean {
-    return this.getProps().isFocused
-  }
-
-  public space() {
-    if (!this.isFocused()) {
-      return
-    }
-
-    this.getProps().onSpace()
   }
 
   public esc() {

@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import { ListBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
   ContainerFocusHandler,
   IFocusContainerProps,
@@ -85,11 +85,23 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
     () => this.state,
   )
 
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNext: this.containerFocusHandler.moveNext.bind(this.containerFocusHandler),
+    movePrevious: this.containerFocusHandler.movePrevious.bind(this.containerFocusHandler),
+    moveFirst: this.containerFocusHandler.moveFirst.bind(this.containerFocusHandler),
+    moveLast: this.containerFocusHandler.moveLast.bind(this.containerFocusHandler),
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )

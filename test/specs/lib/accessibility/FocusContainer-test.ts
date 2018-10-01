@@ -7,7 +7,7 @@ import {
 import { SetStateDelegate } from 'src/lib/accessibility/FocusHandling/FocusableItem'
 
 describe('Focus Container', () => {
-  let containerFocusHandler: ContainerFocusHandler<
+  let focusContainer: ContainerFocusHandler<
     ItemShorthand,
     IFocusContainerProps<ItemShorthand>,
     IFocusContainerState
@@ -32,7 +32,7 @@ describe('Focus Container', () => {
 
     setStateMock = jest.fn()
 
-    containerFocusHandler = new ContainerFocusHandler(
+    focusContainer = new ContainerFocusHandler(
       () => props,
       setStateMock,
       s => {
@@ -41,15 +41,12 @@ describe('Focus Container', () => {
       () => state,
     )
 
-    firstItem = containerFocusHandler.assignAtomicItemsProps(0, props.items.length)
-    lastItem = containerFocusHandler.assignAtomicItemsProps(
-      props.items.length - 1,
-      props.items.length,
-    )
+    firstItem = focusContainer.assignAtomicItemsProps(0, props.items.length)
+    lastItem = focusContainer.assignAtomicItemsProps(props.items.length - 1, props.items.length)
   })
 
   test('Should init handler', () => {
-    const focusHandler = new ContainerFocusHandler(
+    const focusContainer = new ContainerFocusHandler(
       () => props,
       setStateMock,
       s => {
@@ -58,100 +55,109 @@ describe('Focus Container', () => {
       () => state,
     )
 
-    expect(focusHandler).toBeDefined()
+    expect(focusContainer).toBeDefined()
     expect(state.focusItemOnIdx).toBe(0)
   })
 
   test('Should assign item properties to first item', () => {
-    const item = containerFocusHandler.assignAtomicItemsProps(0, props.items.length)
+    const item = focusContainer.assignAtomicItemsProps(0, props.items.length)
 
     expect(item.isFocused).toBe(true)
     expect(item.isFirstElement).toBe(true)
     expect(item.isLastElement).toBe(false)
 
-    expect(item.onMovePrevious).toBeTruthy()
-    expect(item.onMoveNext).toBeTruthy()
-    expect(item.onMoveFirst).toBeTruthy()
-    expect(item.onMoveLast).toBeTruthy()
     expect(item.onEnter).toBeTruthy()
-    expect(item.onSpace).toBeTruthy()
     expect(item.onEsc).toBeTruthy()
   })
 
   test('Should assign item properties to middle item', () => {
-    const item = containerFocusHandler.assignAtomicItemsProps(1, props.items.length)
+    const item = focusContainer.assignAtomicItemsProps(1, props.items.length)
 
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
     expect(item.isLastElement).toBe(false)
 
-    expect(item.onMovePrevious).toBeTruthy()
-    expect(item.onMoveNext).toBeTruthy()
-    expect(item.onMoveFirst).toBeTruthy()
-    expect(item.onMoveLast).toBeTruthy()
     expect(item.onEnter).toBeTruthy()
-    expect(item.onSpace).toBeTruthy()
     expect(item.onEsc).toBeTruthy()
   })
 
   test('Should assign item properties to last item', () => {
-    const item = containerFocusHandler.assignAtomicItemsProps(
-      props.items.length - 1,
-      props.items.length,
-    )
+    const item = focusContainer.assignAtomicItemsProps(props.items.length - 1, props.items.length)
 
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
     expect(item.isLastElement).toBe(true)
 
-    expect(item.onMovePrevious).toBeTruthy()
-    expect(item.onMoveNext).toBeTruthy()
-    expect(item.onMoveFirst).toBeTruthy()
-    expect(item.onMoveLast).toBeTruthy()
     expect(item.onEnter).toBeTruthy()
-    expect(item.onSpace).toBeTruthy()
     expect(item.onEsc).toBeTruthy()
   })
 
-  test('Should move next', () => {
-    firstItem.onMoveNext()
+  test('Should move previous', () => {
+    state.focusItemOnIdx = 1
+
+    focusContainer.movePrevious()
 
     expect(setStateMock).toBeCalled()
   })
 
-  test('Should move previous', () => {
-    lastItem.onMovePrevious()
+  test('Should not move previous, if first item', () => {
+    state.focusItemOnIdx = 0
+
+    focusContainer.movePrevious()
+
+    expect(setStateMock).not.toBeCalled()
+  })
+
+  test('Should move next', () => {
+    state.focusItemOnIdx = 1
+
+    focusContainer.moveNext()
 
     expect(setStateMock).toBeCalled()
+  })
+
+  test('Should not move next, if last item', () => {
+    state.focusItemOnIdx = props.items.length - 1
+
+    focusContainer.moveNext()
+
+    expect(setStateMock).not.toBeCalled()
   })
 
   test('Should move first', () => {
-    lastItem.onMoveFirst()
+    state.focusItemOnIdx = 1
+
+    focusContainer.moveFirst()
 
     expect(setStateMock).toBeCalled()
+  })
+
+  test('Should not move first, if first item', () => {
+    state.focusItemOnIdx = 0
+
+    focusContainer.moveFirst()
+
+    expect(setStateMock).not.toBeCalled()
   })
 
   test('Should move last', () => {
-    firstItem.onMoveLast()
+    state.focusItemOnIdx = 1
+
+    focusContainer.moveLast()
 
     expect(setStateMock).toBeCalled()
   })
 
-  test('Should do nothing if items not defined', () => {
-    props.items = undefined
-    firstItem.onMoveLast()
+  test('Should not move last, if last item', () => {
+    state.focusItemOnIdx = props.items.length - 1
+
+    focusContainer.moveLast()
 
     expect(setStateMock).not.toBeCalled()
   })
 
   test('Should handle Enter', () => {
     firstItem.onEnter()
-
-    expect(setStateMock).not.toBeCalled()
-  })
-
-  test('Should handle Space', () => {
-    firstItem.onSpace()
 
     expect(setStateMock).not.toBeCalled()
   })

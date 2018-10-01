@@ -1,4 +1,3 @@
-import * as keyboardKey from 'keyboard-key'
 import { IAccessibilityDefinition } from '../../interfaces'
 
 /**
@@ -13,22 +12,6 @@ const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (pr
       role: 'option',
       'aria-selected': !!props['active'],
       tabIndex: props.focusableItemProps.isFocused ? '0' : '-1',
-    },
-  },
-  keyActions: {
-    root: {
-      moveNext: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
-      },
-      movePrevious: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
-      },
-      moveFirst: {
-        keyCombinations: [{ keyCode: keyboardKey.Home }],
-      },
-      moveLast: {
-        keyCombinations: [{ keyCode: keyboardKey.End }],
-      },
     },
   },
 })

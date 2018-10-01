@@ -11,12 +11,7 @@ describe('Focusable Item', () => {
 
   let setStateMock: SetStateDelegate<IFocusableItemProps, IFocusableItemState>
 
-  let onMovePreviousMock: Delegate
-  let onMoveNextMock: Delegate
-  let onMoveFirstMock: Delegate
-  let onMoveLastMock: Delegate
   let onEnterMock: Delegate
-  let onSpaceMock: Delegate
   let onEscMock: Delegate
 
   let props: IFocusableItemProps
@@ -25,12 +20,7 @@ describe('Focusable Item', () => {
   beforeEach(() => {
     setStateMock = jest.fn()
 
-    onMovePreviousMock = jest.fn()
-    onMoveNextMock = jest.fn()
-    onMoveFirstMock = jest.fn()
-    onMoveLastMock = jest.fn()
     onEnterMock = jest.fn()
-    onSpaceMock = jest.fn()
     onEscMock = jest.fn()
 
     state = {
@@ -44,12 +34,7 @@ describe('Focusable Item', () => {
       isFirstElement: false,
       isLastElement: false,
 
-      onMovePrevious: onMovePreviousMock,
-      onMoveNext: onMoveNextMock,
-      onMoveFirst: onMoveFirstMock,
-      onMoveLast: onMoveLastMock,
       onEnter: onEnterMock,
-      onSpace: onSpaceMock,
       onEsc: onEscMock,
     }
 
@@ -91,106 +76,6 @@ describe('Focusable Item', () => {
     expect(document.activeElement).not.toBe(button)
   })
 
-  test('Should move previous', () => {
-    props.isFocused = true
-
-    focusableItem.movePrevious()
-
-    expect(onMovePreviousMock).toBeCalled()
-  })
-
-  test('Should not move previous, if item not focused', () => {
-    props.isFocused = false
-
-    focusableItem.movePrevious()
-
-    expect(onMovePreviousMock).not.toBeCalled()
-  })
-
-  test('Should not move previous, if first item', () => {
-    props.isFirstElement = true
-    props.isFocused = true
-
-    focusableItem.movePrevious()
-
-    expect(onMovePreviousMock).not.toBeCalled()
-  })
-
-  test('Should move next', () => {
-    props.isFocused = true
-
-    focusableItem.moveNext()
-
-    expect(onMoveNextMock).toBeCalled()
-  })
-
-  test('Should not move next, if item not focused', () => {
-    props.isFocused = false
-
-    focusableItem.moveNext()
-
-    expect(onMoveNextMock).not.toBeCalled()
-  })
-
-  test('Should not move next, if last item', () => {
-    props.isLastElement = true
-    props.isFocused = true
-
-    focusableItem.moveNext()
-
-    expect(onMoveNextMock).not.toBeCalled()
-  })
-
-  test('Should move first', () => {
-    props.isFocused = true
-
-    focusableItem.moveFirst()
-
-    expect(onMoveFirstMock).toBeCalled()
-  })
-
-  test('Should not move first, if item not focused', () => {
-    props.isFocused = false
-
-    focusableItem.moveFirst()
-
-    expect(onMoveFirstMock).not.toBeCalled()
-  })
-
-  test('Should not move first, if first item', () => {
-    props.isFirstElement = true
-    props.isFocused = true
-
-    focusableItem.moveFirst()
-
-    expect(onMoveFirstMock).not.toBeCalled()
-  })
-
-  test('Should move last', () => {
-    props.isFocused = true
-
-    focusableItem.moveLast()
-
-    expect(onMoveLastMock).toBeCalled()
-  })
-
-  test('Should not move last, if item not focused', () => {
-    props.isFocused = false
-
-    focusableItem.moveLast()
-
-    expect(onMoveLastMock).not.toBeCalled()
-  })
-
-  test('Should not move last, if last item', () => {
-    props.isLastElement = true
-    props.isFocused = true
-
-    focusableItem.moveLast()
-
-    expect(onMoveLastMock).not.toBeCalled()
-  })
-
   test('Should handle enter', () => {
     props.isFocused = true
 
@@ -205,22 +90,6 @@ describe('Focusable Item', () => {
     focusableItem.enter()
 
     expect(onEnterMock).not.toBeCalled()
-  })
-
-  test('Should handle space', () => {
-    props.isFocused = true
-
-    focusableItem.space()
-
-    expect(onSpaceMock).toBeCalled()
-  })
-
-  test('Should not handle space, if item is not focused', () => {
-    props.isFocused = false
-
-    focusableItem.space()
-
-    expect(onSpaceMock).not.toBeCalled()
   })
 
   test('Should handle ESC', () => {

@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { ListItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   FocusableItem,
   IFocusableItemProps,
@@ -83,26 +83,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'focusableItemProps',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
     accessibility: ListItemBehavior as Accessibility,
@@ -117,13 +97,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
       this.state = { ...{ isHovering: false }, ...state }
     },
   )
-
-  actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.focusableItem.moveNext.bind(this.focusableItem),
-    movePrevious: this.focusableItem.movePrevious.bind(this.focusableItem),
-    moveFirst: this.focusableItem.moveFirst.bind(this.focusableItem),
-    moveLast: this.focusableItem.moveLast.bind(this.focusableItem),
-  }
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -193,7 +166,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         contentCSS={contentCSS}
         ref={this.itemRef}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...rest}
       />
     )
