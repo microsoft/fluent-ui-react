@@ -6,15 +6,15 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  UIComponent,
   IRenderResultConfig,
+  UIComponent,
 } from '../../lib'
 import {
-  ComponentVariablesInput,
   ComponentPartStyle,
+  ComponentVariablesInput,
   IComponentPartStylesInput,
 } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
 import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
@@ -46,12 +46,13 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Author of the message. */
     author: customPropTypes.itemShorthand,
 
-    /** Chat messages can have an avatar */
+    /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
     /**
@@ -81,7 +82,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
   static defaultProps = {
     accessibility: ChatMessageBehavior as Accessibility,
-    as: 'li',
+    as: 'div',
   }
 
   actionHandlers: AccessibilityActionHandlers = {
