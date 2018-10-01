@@ -5,7 +5,8 @@ import {
   IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   IFontFace,
-  ISiteVariables,
+  ISiteVariablesInput,
+  ISiteVariablesPrepared,
   IThemeComponentStylesInput,
   IThemeComponentStylesPrepared,
   IThemeComponentVariablesInput,
@@ -88,10 +89,14 @@ export const mergeComponentVariables = (
  * They are flat objects and do not depend on render-time values, such as props.
  */
 export const mergeSiteVariables = (
-  target: ISiteVariables,
-  ...sources: (ISiteVariables | null | undefined)[]
-): ISiteVariables => {
-  return sources.reduce<ISiteVariables>((acc, next) => ({ ...acc, ...next }), target)
+  target: ISiteVariablesInput,
+  ...sources: (ISiteVariablesInput | null | undefined)[]
+): ISiteVariablesPrepared => {
+  const initial: ISiteVariablesPrepared = {
+    ...target,
+    fontSizes: (target && target.fontSizes) || {},
+  }
+  return sources.reduce<ISiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
 
 /**
