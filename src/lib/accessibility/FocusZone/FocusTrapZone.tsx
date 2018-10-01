@@ -126,7 +126,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       lastActiveFocusTrap._root.current.hasAttribute(HIDDEN_FROM_ACC_TREE)
     ) {
       lastActiveFocusTrap._root.current.removeAttribute(HIDDEN_FROM_ACC_TREE)
-      lastActiveFocusTrap._root.current.removeAttribute('aria-hidden ')
+      lastActiveFocusTrap._root.current.removeAttribute('aria-hidden')
     }
   }
 
