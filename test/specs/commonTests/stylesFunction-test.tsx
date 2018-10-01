@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { UIComponent } from 'src/lib'
 import { Extendable } from 'types/utils'
@@ -28,7 +29,11 @@ const testStylesForComponent = ({
 }: { props?: IProps; state?: IState; expected?: IPropsAndState } = {}) => {
   class TestComponent extends UIComponent<Extendable<IProps>, IState> {
     public static className = testClassName
-    public static handledProps = ['propsAttr', 'commonAttr', 'styles']
+    public static propTypes = {
+      propsAttr: PropTypes.any,
+      commonAttr: PropTypes.any,
+      styles: PropTypes.any,
+    }
 
     public state = state
 

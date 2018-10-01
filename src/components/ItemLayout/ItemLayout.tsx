@@ -105,32 +105,6 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'className',
-    'content',
-    'contentCSS',
-    'contentMedia',
-    'contentMediaCSS',
-    'debug',
-    'endMedia',
-    'endMediaCSS',
-    'header',
-    'headerCSS',
-    'headerMedia',
-    'headerMediaCSS',
-    'media',
-    'mediaCSS',
-    'renderContentArea',
-    'renderHeaderArea',
-    'renderMainArea',
-    'rootCSS',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'div',
 

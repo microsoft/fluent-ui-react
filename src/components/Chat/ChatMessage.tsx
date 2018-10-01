@@ -76,20 +76,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'author',
-    'avatar',
-    'children',
-    'className',
-    'content',
-    'mine',
-    'styles',
-    'timestamp',
-    'variables',
-  ]
-
   static defaultProps = {
     accessibility: ChatMessageBehavior as Accessibility,
     as: 'li',
@@ -145,7 +131,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const authorComponent = Text.create(author, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         styles: styles.author,
         variables: variables.author,
       },
@@ -153,7 +139,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const timestampComponent = Text.create(timestamp, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         timestamp: true,
         styles: styles.timestamp,
         variables: variables.timestamp,

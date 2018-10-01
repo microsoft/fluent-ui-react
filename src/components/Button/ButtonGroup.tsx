@@ -52,17 +52,6 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'buttons',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'styles',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: 'div',
   }

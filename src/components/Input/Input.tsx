@@ -93,21 +93,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'className',
-    'clearable',
-    'defaultValue',
-    'fluid',
-    'icon',
-    'inline',
-    'onChange',
-    'styles',
-    'type',
-    'value',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'div',
     type: 'text',
