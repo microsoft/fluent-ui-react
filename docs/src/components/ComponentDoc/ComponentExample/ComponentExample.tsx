@@ -370,7 +370,6 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
-      ...theme,
       componentVariables,
       rtl: showRtl,
     }
