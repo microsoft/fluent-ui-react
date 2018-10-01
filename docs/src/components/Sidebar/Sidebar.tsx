@@ -207,20 +207,22 @@ class Sidebar extends React.Component<any, any> {
             </Menu.Item>
           </Menu.Menu>
         </Menu.Item>
-        <Menu.Item>
-          <p>Theme:</p>
-          <select
-            placeholder="Select theme..."
-            defaultValue={themeName}
-            onChange={this.handleThemeChange}
-          >
-            {this.getThemeOptions().map(o => (
-              <option key={o.value} value={o.value}>
-                {o.text}
-              </option>
-            ))}
-          </select>
-        </Menu.Item>
+        {process.env.NODE_ENV !== 'production' && (
+          <Menu.Item>
+            <p>Theme:</p>
+            <select
+              placeholder="Select theme..."
+              defaultValue={themeName}
+              onChange={this.handleThemeChange}
+            >
+              {this.getThemeOptions().map(o => (
+                <option key={o.value} value={o.value}>
+                  {o.text}
+                </option>
+              ))}
+            </select>
+          </Menu.Item>
+        )}
         <Menu.Item as={NavLink} exact to="/" activeClassName="active">
           Introduction
         </Menu.Item>
