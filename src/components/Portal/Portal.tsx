@@ -85,7 +85,7 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {JSX.Element} node - Referred node.
      */
     triggerRef: PropTypes.func,
-    
+
     /** Accessibility behavior object to apply on trigger node. */
     triggerAccessibility: PropTypes.object,
 
@@ -102,26 +102,13 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {object} data - All props.
      */
     onOutsideClick: PropTypes.func,
-    
+
     /** Controls whether or not focus trap should be applied */
     trapFocus: PropTypes.bool,
 
     /** FocusTrapZone props */
-    focusTrapZoneProps: PropTypes.object,  
+    focusTrapZoneProps: PropTypes.object,
   }
-   
-  public static handledProps = [
-    'children',
-    'content',
-    'defaultOpen',
-    'focusTrapZoneProps',
-    'onMount',
-    'onUnmount',
-    'open',
-    'trapFocus',
-    'trigger',
-    'triggerRef',
-  ]
 
   public static defaultProps: IPortalProps = {
     triggerAccessibility: {},
