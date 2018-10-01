@@ -26,6 +26,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
 - Add default accessibility behavior to `Popup` @sophieH29 ([#218](https://github.com/stardust-ui/react/pull/218))
 
+### Documentation
+- Improve `Contributing` documentation @alinais, @levithomason ([#189](https://github.com/stardust-ui/react/pull/189))
+
 <!--------------------------------[ v0.7.0 ]------------------------------- -->
 ## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.6.0...v0.7.0)
