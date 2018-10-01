@@ -35,7 +35,7 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
     /** Child content * */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -52,8 +52,6 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
      */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

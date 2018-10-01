@@ -35,7 +35,7 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     /** Primary content. */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /**
@@ -45,22 +45,12 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
      */
     innerRef: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'basic',
-    'children',
-    'className',
-    'innerRef',
-    'styles',
-    'variables',
-  ]
 
   public renderComponent({
     ElementType,
