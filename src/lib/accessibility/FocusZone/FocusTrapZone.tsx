@@ -93,7 +93,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
         aria-labelledby={ariaLabelledBy}
         onKeyDown={this._onKeyboardHandler}
         onFocusCapture={this._onFocusCapture}
-        data-iiii="aaa"
       >
         {this.props.children}
       </ElementType>

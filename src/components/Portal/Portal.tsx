@@ -134,11 +134,11 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
       open && (
         <Ref innerRef={this.handlePortalRef}>
           <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
-            {/* {trapFocus ? ( */}
-            <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
-            {/* ) : ( */}
-            {/* contentToRender */}
-            {/* )} */}
+            {trapFocus ? (
+              <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
+            ) : (
+              contentToRender
+            )}
           </PortalInner>
         </Ref>
       )
