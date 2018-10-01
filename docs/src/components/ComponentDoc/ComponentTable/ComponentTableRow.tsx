@@ -53,7 +53,6 @@ export default class ComponentTableRow extends React.Component<any, any> {
   }
 
   docSiteHidden(tags) {
-    const hide = _.filter(tags, { title: 'docSiteIgnore' })
-    return !!hide.length
+    return _.some(tags, ['title', 'docSiteIgnore'])
   }
 }
