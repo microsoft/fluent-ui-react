@@ -138,7 +138,7 @@ const renderComponent = <P extends {}>(
     <FelaTheme
       render={(theme: IThemePrepared) => {
         const {
-          siteVariables = {},
+          siteVariables = { fontSizes: {} },
           componentVariables = {},
           componentStyles = {},
           rtl = false,
