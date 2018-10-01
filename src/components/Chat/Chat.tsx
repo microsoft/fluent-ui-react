@@ -29,15 +29,17 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** Child content. */
     children: PropTypes.node,
 
     /** Shorthand array of the items inside the chat. */
-    items: PropTypes.arrayOf(PropTypes.any),
+    items: PropTypes.arrayOf(customPropTypes.itemShorthand),
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

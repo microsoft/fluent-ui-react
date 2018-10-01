@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
 
 import {
   createShorthandFactory,
@@ -29,6 +28,7 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Child content. */
@@ -48,17 +48,11 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     as: 'li',
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    rest,
-    styles,
-    variables,
-  }: IRenderResultConfig<IChatItemProps>) {
+  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<IChatItemProps>) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={cx(classes.root, classes.content)}>
+      <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

@@ -46,6 +46,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Author of the message. */
