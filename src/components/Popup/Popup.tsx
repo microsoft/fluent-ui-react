@@ -160,7 +160,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   private renderPopperChildren = (
     rtl: boolean,
     accessibility: IAccessibilityBehavior,
-    { ref, style: popupPlacementStyles, placement }: PopperChildrenProps,
+    { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content } = this.props
 
@@ -171,7 +171,6 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
           style={popupPlacementStyles}
           {...accessibility.attributes.popup}
           {...accessibility.keyHandlers.popup}
-          data-placement={placement}
         >
           {content}
         </Popup.Content>
