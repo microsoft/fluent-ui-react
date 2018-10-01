@@ -193,6 +193,7 @@ class StickerPopup extends React.Component {
         data-is-focusable="true"
         styles={imageStyle}
         key={image.key}
+        alt={`image of ${image.key}`}
         aria-label={`image of ${image.key}`}
         fluid
         src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}

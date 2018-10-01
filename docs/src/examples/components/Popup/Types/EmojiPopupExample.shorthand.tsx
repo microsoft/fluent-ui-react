@@ -84,13 +84,14 @@ const images = [
   },
 ]
 
-const imagess = () => {
+const renderImages = () => {
   return _.map(images, (image, index) => (
     <Image
       data-is-focusable="true"
       styles={imageStyle}
       key={image.key}
       aria-label={`image of ${image.key}`}
+      alt={`image of ${image.key}`}
       fluid
       src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
     />
@@ -105,7 +106,7 @@ const EmojiPopup = () => (
       <div>
         {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
         {<br />}
-        {<Grid styles={{ width: '300px' }} columns="5" content={imagess()} />}
+        {<Grid styles={{ width: '300px' }} columns="5" content={renderImages()} />}
       </div>
     }
   />
