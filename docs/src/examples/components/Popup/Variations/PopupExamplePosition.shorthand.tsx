@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
-class PopupExamplePosition extends React.Component<any, any> {
+class PopupWithButton extends React.Component<any, any> {
   state = { popupOpen: false }
 
   togglePopupState = () => {
@@ -52,7 +52,7 @@ const triggers = [
 const PopupExamplePosition = () => (
   <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
     {triggers.map(({ position, align, icon, padding }) => (
-      <PopupExamplePosition
+      <PopupWithButton
         position={position}
         align={align}
         icon={icon}
