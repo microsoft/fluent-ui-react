@@ -98,9 +98,12 @@ const renderImages = () => {
   ))
 }
 
-const handleKeyDown = (e: Event) => {
-  console.log(e)
-  console.log(document.activeElement)
+const handleSelection = (e: KeyboardEvent) => {
+  const keyCode = e.which || e.keyCode
+  if (keyCode && !(keyCode === 13 || keyCode === 32)) return
+  const selectedItem = document.activeElement && document.activeElement.getAttribute('aria-label')
+  if (!selectedItem) return
+  alert(`The image was selected "${selectedItem}"`)
 }
 
 const EmojiPopup = () => (
@@ -111,14 +114,7 @@ const EmojiPopup = () => (
       <div>
         {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
         {<br />}
-        {
-          <Grid
-            onKeyDown={handleKeyDown}
-            styles={{ width: '300px' }}
-            columns="5"
-            content={renderImages()}
-          />
-        }
+        {<Grid onKeyDown={handleSelection} onClick={handleSelection} styles={{ width: '300px' }} columns="5" content={renderImages()} />}
       </div>
     }
   />

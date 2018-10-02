@@ -186,6 +186,14 @@ const arrayOfImages = [
 class StickerPopup extends React.Component {
   state = { activeMenuIndex: 0 }
 
+  handleSelection(e: KeyboardEvent) {
+    const keyCode = e.which || e.keyCode
+    if (keyCode && !(keyCode === 13 || keyCode === 32)) return
+    const selectedItem = document.activeElement && document.activeElement.getAttribute('aria-label')
+    if (!selectedItem) return
+    alert(`The image was selected "${selectedItem}"`)
+  }
+
   renderImages = () => {
     const index = arrayOfImages[this.state.activeMenuIndex] ? this.state.activeMenuIndex : 0
     return _.map(arrayOfImages[index], image => (
@@ -235,7 +243,7 @@ class StickerPopup extends React.Component {
                 />
               }
               {<br />}
-              {<Grid styles={{ width: '300px' }} columns="5" content={this.renderImages()} />}
+              {<Grid onKeyDown={this.handleSelection} styles={{ width: '300px' }} columns="5" content={this.renderImages()} />}
             </div>
           </div>
         }
