@@ -26,6 +26,7 @@ import { IThemeInput, IThemePrepared } from 'types/theme'
 import { inject, observer } from 'mobx-react'
 import { ThemeManager } from '../../../data/theme-manager'
 import { AppStateStore } from '../../../data/models'
+import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
@@ -364,9 +365,13 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
 
   private renderWithProvider(ExampleComponent) {
     const { showRtl, componentVariables } = this.state
+    const { themeName } = this.props.themeStore
+    const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
-      componentVariables,
+      componentVariables: mergeThemeVariables(theme.componentVariables, {
+        [this.getDisplayName()]: componentVariables,
+      }),
       rtl: showRtl,
     }
 
@@ -557,7 +562,10 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         </Divider>
         <Provider.Consumer
           render={({ siteVariables, componentVariables }: IThemePrepared) => {
-            const variables = componentVariables[displayName]
+            const mergedVariables = mergeThemeVariables(componentVariables, {
+              [displayName]: this.state.componentVariables,
+            })
+            const variables = mergedVariables[displayName]
 
             if (!variables) {
               return (
@@ -595,20 +603,13 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 
   private handleVariableChange = (component, variable) => (e, { value }) => {
-    const {
-      themeStore: { themeName },
-    } = this.props
-    const theme = themes[themeName]
     this.setState(
-      {
+      state => ({
         componentVariables: {
-          ...theme.componentVariables,
-          [component]: {
-            ...(theme.componentVariables && theme.componentVariables[component]),
-            [variable]: value,
-          },
+          ...state.componentVariables,
+          [variable]: value,
         },
-      },
+      }),
       this.renderSourceCode,
     )
   }
