@@ -1,14 +1,31 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import renderComponent, { IRenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/interfaces'
+import { IFocusZone } from './accessibility/FocusZone'
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static handledProps: any
+
+  static propTypes: any
+
+  /** Array of props to exclude from list of handled ones. */
+  static unhandledProps: string[] = []
+
+  private static _handledPropsCache: string[] = undefined
+  static get handledProps() {
+    if (!this._handledPropsCache) {
+      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
+    }
+
+    return this._handledPropsCache
+  }
+
   protected actionHandlers: AccessibilityActionHandlers
+  protected focusZone: IFocusZone
 
   constructor(props, context) {
     super(props, context)
@@ -38,9 +55,14 @@ class UIComponent<P, S> extends React.Component<P, S> {
         props: this.props,
         state: this.state,
         actionHandlers: this.actionHandlers,
+        focusZoneRef: this.setFocusZoneRef,
       },
       this.renderComponent,
     )
+  }
+
+  private setFocusZoneRef = (focusZone: IFocusZone): void => {
+    this.focusZone = focusZone
   }
 }
 

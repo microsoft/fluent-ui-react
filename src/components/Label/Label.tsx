@@ -76,20 +76,6 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'icon',
-    'iconPosition',
-    'image',
-    'imagePosition',
-    'styles',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'span',
     imagePosition: 'start',

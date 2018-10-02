@@ -207,5 +207,25 @@ export default () => (
       You can style all components in your app by defining component styles on a{' '}
       <NavLink to="components/provider">Provider</NavLink> at the root of your app.
     </p>
+
+    <br />
+    <Divider size={1} />
+    <br />
+    <Button
+      as={NavLink}
+      content="Accessibility"
+      type="primary"
+      icon="arrow left"
+      iconPosition="before"
+      to="/accessibility"
+    />
+    <Button
+      as={NavLink}
+      content="Theming Examples"
+      type="primary"
+      icon="arrow right"
+      iconPosition="after"
+      to="theming-examples"
+    />
   </DocPage>
 )

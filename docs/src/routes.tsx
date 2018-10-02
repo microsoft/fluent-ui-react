@@ -10,6 +10,8 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Accessibility from './views/Accessibility'
 import Theming from './views/Theming'
+import ThemingExamples from './views/ThemingExamples'
+import Glossary from './views/Glossary'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -26,8 +28,10 @@ const Router = () => (
             component={require('./prototypes/chatPane/index').default}
           />
         )}
+        <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
+        <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

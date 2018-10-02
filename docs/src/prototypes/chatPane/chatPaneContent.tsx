@@ -68,7 +68,7 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
 
       return {
         key: msg.id,
-        avatar: !msg.mine && { src: fromUser.avatar, status: statusMap.get(fromUser.status) },
+        avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
         content: msg.content,
         mine: msg.mine,
         tabIndex: 0,
@@ -109,7 +109,11 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
   ) => {
     return (
       <CellMeasurer cache={this.cache} columnIndex={0} key={key} rowIndex={index} parent={parent}>
-        <div style={style}>{ChatMessage.create(chatMessages[index], { generateKey: true })}</div>
+        <div style={style}>
+          <Chat.Item>
+            <Chat.Message {...chatMessages[index]} />
+          </Chat.Item>
+        </div>
       </CellMeasurer>
     )
   }
@@ -138,10 +142,10 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
       ) {
         this.listRef.scrollToPosition(scrollTop + changeInScrollHeight)
       }
-    }
 
-    this.mostRecentScrollHeight = scrollHeight
-    this.mostRecentScrollTop = scrollTop
+      this.mostRecentScrollHeight = scrollHeight
+      this.mostRecentScrollTop = scrollTop
+    }
   }
 
   private onRowsRendered = ({ stopIndex }: IOnRowsRendered) => {

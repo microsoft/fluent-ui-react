@@ -32,15 +32,23 @@ export interface IRadioGroupItemProps {
   styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
-  isFromKeyboard?: boolean
+  [isFromKeyboard.propertyName]?: boolean
   vertical?: boolean
+}
+
+export interface IRadioGroupItemState {
+  checked: boolean
+  [isFromKeyboard.propertyName]: boolean
 }
 
 /**
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
-class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemProps>, any> {
+class RadioGroupItem extends AutoControlledComponent<
+  Extendable<IRadioGroupItemProps>,
+  IRadioGroupItemState
+> {
   static create: Function
 
   static displayName = 'RadioGroupItem'
@@ -124,29 +132,6 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     vertical: PropTypes.bool,
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checked',
-    'checkedChanged',
-    'children',
-    'className',
-    'defaultChecked',
-    'defaultIsFromKeyboard',
-    'disabled',
-    'icon',
-    'isFromKeyboard',
-    'label',
-    'name',
-    'onBlur',
-    'onClick',
-    'onFocus',
-    'styles',
-    'value',
-    'variables',
-    'vertical',
-  ]
-
   static defaultProps = {
     as: 'div',
     accessibility: RadioGroupItemBehavior as Accessibility,
@@ -154,7 +139,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
 
-  elementRef: HTMLElement
+  private elementRef: HTMLElement
 
   componentDidMount() {
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
@@ -178,7 +163,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  handleClick = e => {
+  private handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 

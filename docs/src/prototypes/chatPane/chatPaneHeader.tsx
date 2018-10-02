@@ -3,6 +3,7 @@ import { pxToRem } from '../../../../src/lib'
 
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
 import { IChat } from './data/interfaces'
+import { Sizes } from '../../../../src/lib/enums'
 
 export interface IChatPaneHeaderProps {
   chat?: IChat
@@ -49,7 +50,11 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
       <Layout
         start={<Avatar name={chat.title} />}
         main={
-          <Text size="lg" content={chat.title} styles={{ marginLeft: '12px', fontWeight: 600 }} />
+          <Text
+            size={Sizes.Large}
+            content={chat.title}
+            styles={{ marginLeft: '12px', fontWeight: 600 }}
+          />
         }
         end={this.renderHeaderButtons()}
         alignItems="center"

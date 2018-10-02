@@ -36,6 +36,10 @@ export interface IButtonProps {
   variables?: ComponentVariablesInput
 }
 
+export interface IButtonState {
+  [isFromKeyboard.propertyName]: boolean
+}
+
 /**
  * A button.
  * @accessibility
@@ -43,7 +47,7 @@ export interface IButtonProps {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, any> {
+class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -110,26 +114,6 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'button',
