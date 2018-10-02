@@ -98,6 +98,11 @@ const renderImages = () => {
   ))
 }
 
+const handleKeyDown = (e: Event) => {
+  console.log(e)
+  console.log(document.activeElement)
+}
+
 const EmojiPopup = () => (
   <Popup
     position="below"
@@ -106,7 +111,14 @@ const EmojiPopup = () => (
       <div>
         {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
         {<br />}
-        {<Grid styles={{ width: '300px' }} columns="5" content={renderImages()} />}
+        {
+          <Grid
+            onKeyDown={handleKeyDown}
+            styles={{ width: '300px' }}
+            columns="5"
+            content={renderImages()}
+          />
+        }
       </div>
     }
   />
