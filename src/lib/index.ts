@@ -33,6 +33,7 @@ export {
 } from './htmlPropsUtils'
 
 export { default as isBrowser } from './isBrowser'
+export { default as typescriptUtils } from './typescriptUtils'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 export { default as leven } from './leven'
 
