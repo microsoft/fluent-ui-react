@@ -14,6 +14,8 @@ export interface IMessage {
   id: string
   content: string
   date: Date
+  timestamp: string
+  timestampLong: string
   from: string
   isImportant: boolean
   mine: boolean

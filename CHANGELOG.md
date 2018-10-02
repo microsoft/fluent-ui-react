@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
 
+### Documentation
+- Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
+
 <!--------------------------------[ v0.8.0 ]------------------------------- -->
 ## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.7.0...v0.8.0)
@@ -35,9 +38,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Improve `Contributing` documentation @alinais, @levithomason ([#189](https://github.com/stardust-ui/react/pull/189))
-
-### Documentation
-- Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
 
 <!--------------------------------[ v0.7.0 ]------------------------------- -->
 ## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)

@@ -1,6 +1,7 @@
-import { lorem, date, random, name, internet } from 'faker'
+import { lorem, random, name, internet } from 'faker'
 import * as _ from 'lodash'
 import { IMessage, IUser, IChat, UserStatus } from './interfaces'
+import { getTimestamp, getRandomDates } from './dateUtils'
 
 export interface ChatOptions {
   userCount?: number
@@ -12,6 +13,7 @@ const userStatuses: UserStatus[] = ['Available', 'Away', 'DoNotDisturb', 'Offlin
 class ChatMock {
   private static readonly minUserCount = 2
   private static readonly defaultCount = 10
+  private static readonly daysAgo = 40
   private static readonly defaultChatTitle = 'Test Chat'
 
   private userIds: string[] = []
@@ -29,7 +31,7 @@ class ChatMock {
       throw `[ChatMock]: A chat has a minimum of ${ChatMock.minUserCount} users`
     }
 
-    this.userIds = _.times(this.options.userCount, i => random.uuid())
+    this.userIds = _.times(this.options.userCount, random.uuid)
 
     this.userIds.forEach(id => {
       const firstName = name.firstName()
@@ -48,22 +50,27 @@ class ChatMock {
     })
 
     const currentUser = this.usersMap.get(this.userIds[0])
+    const dates = getRandomDates(this.options.msgCount, ChatMock.daysAgo)
 
     this.chatMessages = _.times(this.options.msgCount, id => {
       const mine = random.boolean()
       const from = (mine ? currentUser : this.getRandomUser()).id
+      const date = dates[id]
+      const timestamp = getTimestamp(date)
 
       const message: IMessage = {
         id,
         from,
         mine,
+        date,
         content: lorem.sentences(_.random(1, 5, false)),
-        date: date.past(),
+        timestamp: timestamp.short,
+        timestampLong: timestamp.long,
         isImportant: random.boolean(),
       }
 
       return message
-    })
+    }).sort((a, b) => a.date - b.date)
 
     this.chat = {
       id: random.uuid(),

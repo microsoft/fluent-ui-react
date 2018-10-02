@@ -4,7 +4,7 @@ import { Provider } from '@stardust-ui/react'
 import ChatPaneLayout from './chatPaneLayout'
 import { getChatMock } from './data/dataMock'
 
-const chatMock = getChatMock({ msgCount: 20, userCount: 4 })
+const chatMock = getChatMock({ msgCount: 40, userCount: 6 })
 
 export default () => (
   <Provider
