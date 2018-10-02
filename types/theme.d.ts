@@ -60,6 +60,9 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
 }
 
 export interface ICSSInJSStyle extends React.CSSProperties {
+  // TODO Questionable: how else would users target their own children?
+  [key: string]: any
+
   // missing React.CSSProperties
   speak?: CSSType.Globals | 'none' | 'normal' | 'spell-out'
 
@@ -163,7 +166,7 @@ export interface IThemePrepared {
 }
 
 export interface IThemeComponentStylesInput {
-  [key: string]: any
+  [key: string]: IComponentPartStylesInput
 
   Accordion?: IComponentPartStylesInput
   Attachment?: IComponentPartStylesInput
@@ -198,7 +201,7 @@ export interface IThemeComponentStylesInput {
 }
 
 export interface IThemeComponentStylesPrepared {
-  [key: string]: any
+  [key: string]: IComponentPartStylesPrepared
 
   Accordion?: IComponentPartStylesPrepared
   Attachment?: IComponentPartStylesPrepared
