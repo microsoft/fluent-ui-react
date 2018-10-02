@@ -28,7 +28,7 @@ export interface IContextualMenuProps {
 class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> {
   public static displayName = 'ContextualMenu'
 
-  public static className = 'ui-contextualMenu'
+  public static className = 'ui-contextualmenu'
 
   public static propTypes = {
     /** An element type to render as (string or function). */
