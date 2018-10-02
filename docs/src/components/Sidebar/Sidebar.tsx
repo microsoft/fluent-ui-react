@@ -6,12 +6,11 @@ import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
-import { inject, observer } from 'mobx-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname, repoURL, typeOrder } from 'docs/src/utils'
 import { themes } from '@stardust-ui/react'
-import { AppStateStore } from '../../data/models'
+import { ThemeContext } from '../../context/theme-context'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
@@ -21,17 +20,12 @@ const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 type ComponentMenuItem = { displayName: string; type: string }
 
-@inject((appState: AppStateStore) => ({
-  themeStore: appState.themeStore,
-}))
-@observer
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
     match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
-    themeStore: PropTypes.any,
   }
   state: any = { query: '' }
   _searchInput: any
@@ -171,93 +165,90 @@ class Sidebar extends React.Component<any, any> {
     return <Menu.Menu>{menuItems}</Menu.Menu>
   }
 
-  private handleThemeChange = (event: any) => {
-    const { themeStore } = this.props
-    const themeName = event.target.value
-    themeStore.changeTheme(themeName)
-  }
-
   render() {
-    const {
-      style,
-      themeStore: { themeName },
-    } = this.props
+    const { style } = this.props
     const { query } = this.state
     return (
-      <Menu vertical fixed="left" inverted style={{ ...style }}>
-        <Menu.Item>
-          <Logo spaced="right" size="mini" />
-          <strong>
-            Stardust UI React &nbsp;
-            <small>
-              <em>{pkg.version}</em>
-            </small>
-          </strong>
-          <Menu.Menu>
-            <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
-              <Icon name="github" /> GitHub
+      <ThemeContext.Consumer>
+        {({ themeName, changeTheme }) => (
+          <Menu vertical fixed="left" inverted style={{ ...style }}>
+            <Menu.Item>
+              <Logo spaced="right" size="mini" />
+              <strong>
+                Stardust UI React &nbsp;
+                <small>
+                  <em>{pkg.version}</em>
+                </small>
+              </strong>
+              <Menu.Menu>
+                <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" /> GitHub
+                </Menu.Item>
+                <Menu.Item
+                  as="a"
+                  href={`${repoURL}/blob/master/CHANGELOG.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name="file alternate outline" /> CHANGELOG
+                </Menu.Item>
+              </Menu.Menu>
             </Menu.Item>
-            <Menu.Item
-              as="a"
-              href={`${repoURL}/blob/master/CHANGELOG.md`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="file alternate outline" /> CHANGELOG
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                <p>Theme:</p>
+                <select
+                  placeholder="Select theme..."
+                  defaultValue={themeName}
+                  onChange={e => {
+                    changeTheme(e.target.value)
+                  }}
+                >
+                  {this.getThemeOptions().map(o => (
+                    <option key={o.value} value={o.value}>
+                      {o.text}
+                    </option>
+                  ))}
+                </select>
+              </Menu.Item>
+            )}
+            <Menu.Item as={NavLink} exact to="/" activeClassName="active">
+              Introduction
             </Menu.Item>
-          </Menu.Menu>
-        </Menu.Item>
-        {process.env.NODE_ENV !== 'production' && (
-          <Menu.Item>
-            <p>Theme:</p>
-            <select
-              placeholder="Select theme..."
-              defaultValue={themeName}
-              onChange={this.handleThemeChange}
-            >
-              {this.getThemeOptions().map(o => (
-                <option key={o.value} value={o.value}>
-                  {o.text}
-                </option>
-              ))}
-            </select>
-          </Menu.Item>
+            <Menu.Item>
+              Guides
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
+                  Quick Start
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/glossary" activeClassName="active">
+                  Glossary
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
+                  Accessibility
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
+                  Theming
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
+                  Theming Examples
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            <Menu.Item active>
+              <SemanticUIInput
+                className="transparent inverted icon"
+                icon="search"
+                placeholder="Search components..."
+                value={query}
+                onChange={this.handleSearchChange}
+                onKeyDown={this.handleSearchKeyDown}
+              />
+            </Menu.Item>
+            {query ? this.renderSearchItems() : this.menuItemsByType}
+          </Menu>
         )}
-        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
-          Introduction
-        </Menu.Item>
-        <Menu.Item>
-          Guides
-          <Menu.Menu>
-            <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
-              Quick Start
-            </Menu.Item>
-            <Menu.Item as={NavLink} exact to="/glossary" activeClassName="active">
-              Glossary
-            </Menu.Item>
-            <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
-              Accessibility
-            </Menu.Item>
-            <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
-              Theming
-            </Menu.Item>
-            <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
-              Theming Examples
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu.Item>
-        <Menu.Item active>
-          <SemanticUIInput
-            className="transparent inverted icon"
-            icon="search"
-            placeholder="Search components..."
-            value={query}
-            onChange={this.handleSearchChange}
-            onKeyDown={this.handleSearchKeyDown}
-          />
-        </Menu.Item>
-        {query ? this.renderSearchItems() : this.menuItemsByType}
-      </Menu>
+      </ThemeContext.Consumer>
     )
   }
 

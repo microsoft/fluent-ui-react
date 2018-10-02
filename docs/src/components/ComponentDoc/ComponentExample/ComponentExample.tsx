@@ -23,17 +23,15 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
 import { IThemeInput, IThemePrepared } from 'types/theme'
-import { inject, observer } from 'mobx-react'
-import { ThemeManager } from '../../../data/theme-manager'
-import { AppStateStore } from '../../../data/models'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
+import { ThemeContext } from '../../../context/theme-context'
 
 export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
   description: string
   examplePath: string
   suiVersion?: string
-  themeStore?: ThemeManager
+  themeName?: string
 }
 
 interface IComponentExampleState {
@@ -68,10 +66,6 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-@inject((appState: AppStateStore) => ({
-  themeStore: appState.themeStore,
-}))
-@observer
 class ComponentExample extends React.Component<IComponentExampleProps, IComponentExampleState> {
   private componentRef: React.Component
   private sourceCodeMgr: ISourceCodeManager
@@ -106,7 +100,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     match: PropTypes.object.isRequired,
     suiVersion: PropTypes.string,
     title: PropTypes.node,
-    themeStore: PropTypes.any,
+    themeName: PropTypes.string,
   }
 
   public componentWillMount() {
@@ -135,11 +129,9 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     ) {
       this.clearActiveState()
     }
-    const {
-      themeStore: { themeName },
-    } = nextProps
+    const { themeName } = nextProps
     if (this.state.themeName !== themeName) {
-      this.setState({ themeName: nextProps.themeStore.themeName }, this.renderSourceCode)
+      this.setState({ themeName }, this.renderSourceCode)
     }
   }
 
@@ -365,7 +357,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
 
   private renderWithProvider(ExampleComponent) {
     const { showRtl, componentVariables } = this.state
-    const { themeName } = this.props.themeStore
+    const { themeName } = this.state
     const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
@@ -716,4 +708,10 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 }
 
-export default withRouter(ComponentExample)
+const ComponentExampleWithTheme = React.forwardRef((props: IComponentExampleProps) => (
+  <ThemeContext.Consumer>
+    {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
+  </ThemeContext.Consumer>
+))
+
+export default withRouter(ComponentExampleWithTheme)

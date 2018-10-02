@@ -16,47 +16,66 @@ import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from '../../src/lib'
 import { semanticCssOverrides } from './Style'
-import { inject, observer } from 'mobx-react'
-import { AppStateStore } from './data/models'
+import { ThemeContext } from './context/theme-context'
 
 const semanticStyleOverrides = {
   staticStyles: [semanticCssOverrides],
 }
 
-@inject((appState: AppStateStore) => ({
-  themeStore: appState.themeStore,
-}))
-@observer
-class Router extends React.Component<any, any> {
+interface IRouterState {
+  themeName: string
+  changeTheme: (newTheme: string) => void
+}
+
+class Router extends React.Component<any, IRouterState> {
+  private changeTheme
+
+  constructor(props) {
+    super(props)
+
+    this.changeTheme = newTheme => {
+      this.setState({
+        themeName: newTheme,
+      })
+    }
+
+    // State also contains the updater function so it will
+    // be passed down into the context provider
+    this.state = {
+      themeName: 'teams',
+      changeTheme: this.changeTheme,
+    }
+  }
   render() {
-    const { themeStore } = this.props
-    const theme = themes[themeStore.themeName]
+    const { themeName } = this.state
     return (
-      <Provider
-        theme={mergeThemes(semanticStyleOverrides, theme, {
-          // adjust Teams' theme to Semantic UI's font size scheme
-          siteVariables: {
-            htmlFontSize: '14px',
-            bodyFontSize: '1rem',
-          },
-        })}
-      >
-        <BrowserRouter basename={__BASENAME__}>
-          <Switch>
-            <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
+      <ThemeContext.Provider value={this.state}>
+        <Provider
+          theme={mergeThemes(semanticStyleOverrides, themes[themeName], {
+            // adjust Teams' theme to Semantic UI's font size scheme
+            siteVariables: {
+              htmlFontSize: '14px',
+              bodyFontSize: '1rem',
+            },
+          })}
+        >
+          <BrowserRouter basename={__BASENAME__}>
             <Switch>
-              <DocsLayout exact path="/" component={Introduction} />
-              <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
-              <DocsLayout exact path="/quick-start" component={QuickStart} />
-              <DocsLayout exact path="/glossary" component={Glossary} />
-              <DocsLayout exact path="/accessibility" component={Accessibility} />
-              <DocsLayout exact path="/theming" component={Theming} />
-              <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
-              <DocsLayout exact path="/*" component={PageNotFound} />
+              <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
+              <Switch>
+                <DocsLayout exact path="/" component={Introduction} />
+                <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
+                <DocsLayout exact path="/quick-start" component={QuickStart} />
+                <DocsLayout exact path="/glossary" component={Glossary} />
+                <DocsLayout exact path="/accessibility" component={Accessibility} />
+                <DocsLayout exact path="/theming" component={Theming} />
+                <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
+                <DocsLayout exact path="/*" component={PageNotFound} />
+              </Switch>
             </Switch>
-          </Switch>
-        </BrowserRouter>
-      </Provider>
+          </BrowserRouter>
+        </Provider>
+      </ThemeContext.Provider>
     )
   }
 }

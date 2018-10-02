@@ -1,11 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-
-import { Provider } from 'mobx-react'
-
 import Router from './routes'
-import createAppStateStore from './data/models'
 
 // ----------------------------------------
 // Rendering
@@ -14,14 +10,10 @@ import createAppStateStore from './data/models'
 const mountNode = document.createElement('div')
 document.body.appendChild(mountNode)
 
-const appStateStore = createAppStateStore()
-
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider {...appStateStore}>
-        <NewApp />
-      </Provider>
+      <NewApp />
     </AppContainer>,
     mountNode,
   )
