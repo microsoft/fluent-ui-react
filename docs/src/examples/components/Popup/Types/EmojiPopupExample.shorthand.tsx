@@ -84,6 +84,14 @@ const images = [
   },
 ]
 
+const handleSelection = (e: KeyboardEvent) => {
+  const keyCode = e.which || e.keyCode
+  if (keyCode && !(keyCode === 13 || keyCode === 32)) return
+  const selectedItem = document.activeElement && document.activeElement.getAttribute('aria-label')
+  if (!selectedItem) return
+  alert(`The image was selected "${selectedItem}"`)
+}
+
 const renderImages = () => {
   return _.map(images, (image, index) => (
     <Image
@@ -93,17 +101,11 @@ const renderImages = () => {
       aria-label={`image of ${image.key}`}
       alt={`image of ${image.key}`}
       fluid
+      onKeyDown={handleSelection}
+      onClick={handleSelection}
       src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
     />
   ))
-}
-
-const handleSelection = (e: KeyboardEvent) => {
-  const keyCode = e.which || e.keyCode
-  if (keyCode && !(keyCode === 13 || keyCode === 32)) return
-  const selectedItem = document.activeElement && document.activeElement.getAttribute('aria-label')
-  if (!selectedItem) return
-  alert(`The image was selected "${selectedItem}"`)
 }
 
 const EmojiPopup = () => (
@@ -114,7 +116,7 @@ const EmojiPopup = () => (
       <div>
         {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
         {<br />}
-        {<Grid onKeyDown={handleSelection} onClick={handleSelection} styles={{ width: '300px' }} columns="5" content={renderImages()} />}
+        {<Grid styles={{ width: '300px' }} columns="5" content={renderImages()} />}
       </div>
     }
   />

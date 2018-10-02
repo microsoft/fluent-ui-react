@@ -204,6 +204,8 @@ class StickerPopup extends React.Component {
         alt={`image of ${image.key}`}
         aria-label={`image of ${image.key}`}
         fluid
+        onKeyDown={this.handleSelection}
+        onClick={this.handleSelection}
         src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
       />
     ))
@@ -243,7 +245,7 @@ class StickerPopup extends React.Component {
                 />
               }
               {<br />}
-              {<Grid onKeyDown={this.handleSelection} styles={{ width: '300px' }} columns="5" content={this.renderImages()} />}
+              {<Grid styles={{ width: '300px' }} columns="5" content={this.renderImages()} />}
             </div>
           </div>
         }
