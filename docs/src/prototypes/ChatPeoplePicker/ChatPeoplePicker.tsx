@@ -95,13 +95,13 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     event.stopPropagation()
   }
 
-  private addToSelected(element, clearInput = true) {
-    this.setState(({ selected, inputValue }) => {
+  private addToSelected(element) {
+    this.setState(({ selected }) => {
       const newSelected = [...selected, element]
       return {
         selected: newSelected,
-        inputValue: clearInput ? '' : undefined,
-        available: this.props.source(inputValue, newSelected),
+        available: this.props.source('', newSelected),
+        inputValue: '',
       }
     })
   }
