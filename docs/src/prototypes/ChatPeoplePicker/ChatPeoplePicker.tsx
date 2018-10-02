@@ -138,7 +138,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             getItemProps,
             getMenuProps,
             isOpen,
-            inputValue,
             highlightedIndex,
             selectItemAtIndex,
           }) => {
@@ -261,6 +260,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
         this.setState({
           inputValue: changes.inputValue,
           deleteOnBackspace: !(changes.inputValue === '' && state.inputValue.length === 1),
+          available: this.props.source(changes.inputValue, this.state.selected),
         })
         return changes
       case Downshift.stateChangeTypes.keyDownArrowUp:
@@ -292,7 +292,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   onInputKeyDown = (highlightedIndex, selectItemAtIndex, event) => {
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Tab:
-        if (highlightedIndex && !event.shiftKey) {
+        if (highlightedIndex !== undefined && !event.shiftKey) {
           selectItemAtIndex(highlightedIndex)
         }
         return
