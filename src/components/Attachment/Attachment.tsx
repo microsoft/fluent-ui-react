@@ -42,7 +42,9 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     /** An element type to render as. */
     as: customPropTypes.as,
 
-    /** Define your own children. */
+    /** Define your own children.
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A string describing the attachment. */
