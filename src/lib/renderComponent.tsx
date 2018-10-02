@@ -15,7 +15,6 @@ import {
   IProps,
   IPropsWithVarsAndStyles,
   IState,
-  IThemeInput,
   IThemePrepared,
 } from '../../types/theme'
 import {
@@ -33,6 +32,7 @@ import {
   IFocusZone,
   FocusZone as FabricFocusZone,
 } from './accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -42,6 +42,7 @@ export interface IRenderResultConfig<P> {
   styles: IComponentPartStylesPrepared
   accessibility: IAccessibilityBehavior
   rtl: boolean
+  theme: IThemePrepared
 }
 
 export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
@@ -54,6 +55,7 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
+  focusZoneRef: (focusZone: IFocusZone) => void
 }
 
 const getAccessibility = (
@@ -89,8 +91,32 @@ function wrapInGenericFocusZone<
   FocusZone: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
+  ref: (focusZone: IFocusZone) => void,
 ) {
-  return <FocusZone {...props}>{children}</FocusZone>
+  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
+  return (
+    <FocusZone ref={ref} {...props}>
+      {children}
+    </FocusZone>
+  )
+}
+
+const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
+    return wrapInGenericFocusZone(
+      FabricFocusZone,
+      focusZoneDefinition.props,
+      render(config),
+      focusZoneRef,
+    )
+  }
+  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+    const originalElementType = config.ElementType
+    config.ElementType = FabricFocusZone as any
+    config.rest = { ...config.rest, ...focusZoneDefinition.props }
+    config.rest.as = originalElementType
+  }
+  return render(config)
 }
 
 const renderComponent = <P extends {}>(
@@ -105,17 +131,19 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
+    focusZoneRef,
   } = config
 
   return (
     <FelaTheme
-      render={({
-        siteVariables = {},
-        componentVariables = {},
-        componentStyles = {},
-        rtl = false,
-        renderer = felaRenderer,
-      }: IThemeInput | IThemePrepared = {}) => {
+      render={(theme: IThemePrepared) => {
+        const {
+          siteVariables = { fontSizes: {} },
+          componentVariables = {},
+          componentStyles = {},
+          rtl = false,
+          renderer = felaRenderer,
+        } = theme
         const ElementType = getElementType({ defaultProps }, props)
 
         const stateAndProps = { ...state, ...props }
@@ -141,6 +169,7 @@ const renderComponent = <P extends {}>(
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
+          theme,
         }
         const resolvedStyles: IComponentPartStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
@@ -158,14 +187,13 @@ const renderComponent = <P extends {}>(
           styles: resolvedStyles,
           accessibility,
           rtl,
+          theme,
         }
 
-        const rendered = render(config)
-
-        if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
-          return wrapInGenericFocusZone(FabricFocusZone, accessibility.focusZone.props, rendered)
+        if (accessibility.focusZone) {
+          return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
-        return rendered
+        return render(config)
       }}
     />
   )

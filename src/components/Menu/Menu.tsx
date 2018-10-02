@@ -47,10 +47,13 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Index of the currently active item. */
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -86,10 +89,10 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
@@ -97,25 +100,6 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     as: 'ul',
     accessibility: MenuBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'fluid',
-    'iconOnly',
-    'items',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['activeIndex']
 

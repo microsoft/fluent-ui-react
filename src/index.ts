@@ -1,11 +1,14 @@
 import * as themes from './themes'
+
 export { themes }
 
 export { default as Accordion } from './components/Accordion'
+export { default as Attachment } from './components/Attachment'
 export { default as Avatar } from './components/Avatar'
 export { default as Button } from './components/Button'
 export { ButtonGroup } from './components/Button'
 export { default as Chat } from './components/Chat'
+export { ChatItem } from './components/Chat'
 export { ChatMessage } from './components/Chat'
 export { default as Divider } from './components/Divider'
 export { default as Grid } from './components/Grid'
@@ -40,6 +43,17 @@ export {
 export {
   default as RadioGroupItemBehavior,
 } from './lib/accessibility/Behaviors/Radio/RadioGroupItemBehavior'
+export { default as ChatBehavior } from './lib/accessibility/Behaviors/Chat/ChatBehavior'
+export {
+  default as ChatMessageBehavior,
+} from './lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+export {
+  default as ChatBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/ChatEnterEscBehavior'
+export {
+  default as ChatMessageBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/ChatMessageEnterEscBehavior'
+
 export { default as Portal } from './components/Portal'
 export { default as Popup } from './components/Popup'
 export { PopupContent } from './components/Popup'

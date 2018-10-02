@@ -9,8 +9,12 @@ import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
 import { RadioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentVariablesObject, ComponentPartStyle } from 'theme'
-import { Extendable, ItemShorthand, ReactChildren } from 'utils'
+import {
+  ComponentVariablesInput,
+  ComponentVariablesObject,
+  ComponentPartStyle,
+} from '../../../types/theme'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
 export interface IRadioGroupProps {
   accessibility?: Accessibility
@@ -42,10 +46,13 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     /** Value of the currently checked radio item. */
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial checkedValue value. */
@@ -61,10 +68,10 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
      */
     checkedValueChanged: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A vertical radio group displays elements vertically. */
@@ -75,20 +82,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     as: 'div',
     accessibility: RadioGroupBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checkedValue',
-    'checkedValueChanged',
-    'children',
-    'className',
-    'defaultCheckedValue',
-    'items',
-    'styles',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['checkedValue']
 

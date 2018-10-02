@@ -6,20 +6,23 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  UIComponent,
   IRenderResultConfig,
+  UIComponent,
 } from '../../lib'
 import {
-  ComponentVariablesInput,
   ComponentPartStyle,
+  ComponentVariablesInput,
   IComponentPartStylesInput,
 } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
+import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
 
 export interface IChatMessageProps {
+  accessibility?: Accessibility
   as?: any
   author?: ItemShorthand
   avatar?: ItemShorthand
@@ -40,18 +43,25 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Author of the message. */
     author: customPropTypes.itemShorthand,
 
-    /** Chat messages can have an avatar */
+    /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
-    /** Child content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for the primary content. */
@@ -60,55 +70,59 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'author',
-    'avatar',
-    'children',
-    'className',
-    'content',
-    'mine',
-    'styles',
-    'timestamp',
-    'variables',
-  ]
-
   static defaultProps = {
-    as: 'li',
+    accessibility: ChatMessageBehavior as Accessibility,
+    as: 'div',
+  }
+
+  actionHandlers: AccessibilityActionHandlers = {
+    // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
+    preventDefault: event => {
+      event.preventDefault()
+    },
   }
 
   renderComponent({
     ElementType,
     classes,
+    accessibility,
     rest,
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { as, avatar, children, mine } = this.props
+    const { avatar, children, mine } = this.props
 
-    return childrenExist(children) ? (
-      <ElementType {...rest} className={cx(classes.root, classes.content)}>
-        {children}
-      </ElementType>
+    const childrenPropExists = childrenExist(children)
+    const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
+    const content = childrenPropExists ? (
+      children
     ) : (
       <Layout
-        as={as}
-        {...rest}
-        className={classes.root}
         start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
         main={this.renderContent(classes.content, styles, variables)}
         end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
       />
+    )
+
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={className}
+      >
+        {content}
+      </ElementType>
     )
   }
 
@@ -121,7 +135,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const authorComponent = Text.create(author, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         styles: styles.author,
         variables: variables.author,
       },
@@ -129,7 +143,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const timestampComponent = Text.create(timestamp, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         timestamp: true,
         styles: styles.timestamp,
         variables: variables.timestamp,

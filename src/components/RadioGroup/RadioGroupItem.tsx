@@ -5,8 +5,13 @@ import * as _ from 'lodash'
 
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
 import Label from '../Label'
-import { ComponentEventHandler, Extendable, ItemShorthand, ReactChildren } from 'utils'
-import { ComponentVariablesInput, ComponentPartStyle } from 'theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ItemShorthand,
+  ReactChildren,
+} from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { RadioGroupItemBehavior } from '../../lib/accessibility'
@@ -27,15 +32,23 @@ export interface IRadioGroupItemProps {
   styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
-  isFromKeyboard?: boolean
+  [isFromKeyboard.propertyName]?: boolean
   vertical?: boolean
+}
+
+export interface IRadioGroupItemState {
+  checked: boolean
+  [isFromKeyboard.propertyName]: boolean
 }
 
 /**
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
-class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemProps>, any> {
+class RadioGroupItem extends AutoControlledComponent<
+  Extendable<IRadioGroupItemProps>,
+  IRadioGroupItemState
+> {
   static create: Function
 
   static displayName = 'RadioGroupItem'
@@ -51,10 +64,13 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     /** Whether or not radio item is checked. */
     checked: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial checked value. */
@@ -106,41 +122,18 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      */
     checkedChanged: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A vertical radio group displays elements vertically. */
     vertical: PropTypes.bool,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checked',
-    'checkedChanged',
-    'children',
-    'className',
-    'defaultChecked',
-    'defaultIsFromKeyboard',
-    'disabled',
-    'icon',
-    'isFromKeyboard',
-    'label',
-    'name',
-    'onBlur',
-    'onClick',
-    'onFocus',
-    'styles',
-    'value',
-    'variables',
-    'vertical',
-  ]
 
   static defaultProps = {
     as: 'div',
@@ -149,7 +142,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
 
-  elementRef: HTMLElement
+  private elementRef: HTMLElement
 
   componentDidMount() {
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
@@ -173,7 +166,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
-  handleClick = e => {
+  private handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 

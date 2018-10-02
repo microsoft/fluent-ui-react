@@ -8,10 +8,8 @@ import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {
   as?: any
-  basic?: boolean
   children?: ReactChildren
   className?: string
-  innerRef?: (node: HTMLElement) => void
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -29,38 +27,21 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Basic CSS styling for the popup contents */
-    basic: PropTypes.bool,
-
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
-    /**
-     * Called with a ref to the trigger node.
-     *
-     * @param {HTMLElement} node - Referred node.
-     */
-    innerRef: PropTypes.func,
-
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'basic',
-    'children',
-    'className',
-    'innerRef',
-    'styles',
-    'variables',
-  ]
 
   public renderComponent({
     ElementType,
@@ -68,13 +49,9 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     rest,
   }: IRenderResultConfig<IPopupContentProps>): React.ReactNode {
     return (
-      <ElementType className={classes.root} {...rest} ref={this.handleInnerRef}>
+      <ElementType className={classes.root} {...rest}>
         {this.props.children}
       </ElementType>
     )
-  }
-
-  private handleInnerRef = (triggerNode: HTMLElement) => {
-    _.invoke(this.props, 'innerRef', triggerNode)
   }
 }

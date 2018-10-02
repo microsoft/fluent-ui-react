@@ -36,6 +36,10 @@ export interface IButtonProps {
   variables?: ComponentVariablesInput
 }
 
+export interface IButtonState {
+  [isFromKeyboard.propertyName]: boolean
+}
+
 /**
  * A button.
  * @accessibility
@@ -43,7 +47,7 @@ export interface IButtonProps {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, any> {
+class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -54,13 +58,16 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Button content for childrenApi
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A button can appear circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A button can show it is currently unable to be interacted with. */
@@ -104,32 +111,12 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'button',

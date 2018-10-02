@@ -1,11 +1,12 @@
 import * as _ from 'lodash'
 import {
-  ComponentVariablesPrepared,
   ComponentVariablesInput,
+  ComponentVariablesPrepared,
   IComponentPartStylesInput,
   IComponentPartStylesPrepared,
   IFontFace,
-  ISiteVariables,
+  ISiteVariablesInput,
+  ISiteVariablesPrepared,
   IThemeComponentStylesInput,
   IThemeComponentStylesPrepared,
   IThemeComponentVariablesInput,
@@ -13,6 +14,7 @@ import {
   IThemeInput,
   IThemePrepared,
   StaticStyle,
+  ThemeIcons,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -87,10 +89,14 @@ export const mergeComponentVariables = (
  * They are flat objects and do not depend on render-time values, such as props.
  */
 export const mergeSiteVariables = (
-  target: ISiteVariables,
-  ...sources: (ISiteVariables | null | undefined)[]
-): ISiteVariables => {
-  return sources.reduce<ISiteVariables>((acc, next) => ({ ...acc, ...next }), target)
+  target: ISiteVariablesInput,
+  ...sources: (ISiteVariablesInput | null | undefined)[]
+): ISiteVariablesPrepared => {
+  const initial: ISiteVariablesPrepared = {
+    ...target,
+    fontSizes: (target && target.fontSizes) || {},
+  }
+  return sources.reduce<ISiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
 
 /**
@@ -166,6 +172,10 @@ export const mergeStaticStyles = (...sources: StaticStyle[]) => {
   return toCompactArray<StaticStyle>(...sources)
 }
 
+export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
+  return Object.assign(target, ...sources)
+}
+
 const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
@@ -173,6 +183,7 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     componentStyles: {},
     fontFaces: [],
     staticStyles: [],
+    icons: {},
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
@@ -183,6 +194,9 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
 
     acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
+
+    // Merge icons set, last one wins in case of collisions
+    acc.icons = mergeIcons(acc.icons, next.icons)
 
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)

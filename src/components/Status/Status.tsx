@@ -27,13 +27,11 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
 
   static displayName = 'Status'
 
-  static handledProps = ['as', 'className', 'color', 'icon', 'size', 'state', 'styles', 'variables']
-
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A custom color. */
@@ -48,10 +46,10 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
     /** The pre-defined state values which can be consumed directly. */
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
