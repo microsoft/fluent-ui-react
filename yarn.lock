@@ -1650,6 +1650,10 @@ crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
 
+css-color-names@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.1.tgz#5d0548fa256456ede4a9a0c2ac7ab19d3eb1ad81"
+
 css-in-js-utils@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-2.0.1.tgz#3b472b398787291b47cfe3e44fecfdd9e914ba99"
@@ -1665,6 +1669,25 @@ css-select@^1.1.0, css-select@~1.2.0:
     css-what "2.1"
     domutils "1.5.1"
     nth-check "~1.0.1"
+
+css-shorthand-expand@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/css-shorthand-expand/-/css-shorthand-expand-1.2.0.tgz#bd6ac8d79f99928581eaca9fe05a03d316d17fe5"
+  dependencies:
+    css-color-names "0.0.1"
+    css-url-regex "0.0.1"
+    hex-color-regex "^1.0.1"
+    hsl-regex "^1.0.0"
+    hsla-regex "^1.0.0"
+    map-obj "^1.0.0"
+    repeat-element "^1.1.0"
+    rgb-regex "^1.0.1"
+    rgba-regex "^1.0.0"
+    xtend "^4.0.0"
+
+css-url-regex@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/css-url-regex/-/css-url-regex-0.0.1.tgz#e05af8c6c290d451ef1632b455ea5c81b4b1395c"
 
 css-what@2.1:
   version "2.1.0"
@@ -3451,6 +3474,10 @@ he@1.1.x:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+hex-color-regex@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
+
 history@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
@@ -3497,6 +3524,14 @@ homedir-polyfill@^1.0.0, homedir-polyfill@^1.0.1:
 hosted-git-info@^2.1.4:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
+
+hsl-regex@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hsl-regex/-/hsl-regex-1.0.0.tgz#d49330c789ed819e276a4c0d272dffa30b18fe6e"
+
+hsla-regex@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
 
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
@@ -5184,6 +5219,10 @@ map-cache@^0.2.0, map-cache@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/map-cache/-/map-cache-0.2.2.tgz#c32abd0bd6525d9b051645bb4f26ac5dc98a0dbf"
 
+map-obj@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-1.0.1.tgz#d933ceb9205d82bdcf4886f6742bdc2b4dea146d"
+
 map-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/map-visit/-/map-visit-1.0.0.tgz#ecdca8f13144e660f1b5bd41f12f3479d98dfb8f"
@@ -6807,6 +6846,10 @@ renderkid@^2.0.1:
     strip-ansi "^3.0.0"
     utila "~0.3"
 
+repeat-element@^1.1.0:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/repeat-element/-/repeat-element-1.1.3.tgz#782e0d825c0c5a3bb39731f84efee6b742e6b1ce"
+
 repeat-element@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/repeat-element/-/repeat-element-1.1.2.tgz#ef089a178d1483baae4d93eb98b4f9e4e11d990a"
@@ -6994,6 +7037,14 @@ restore-cursor@^2.0.0:
 ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
+
+rgb-regex@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/rgb-regex/-/rgb-regex-1.0.1.tgz#c0e0d6882df0e23be254a475e8edd41915feaeb1"
+
+rgba-regex@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rgba-regex/-/rgba-regex-1.0.0.tgz#43374e2e2ca0968b0ef1523460b7d730ff22eeb3"
 
 right-align@^0.1.1:
   version "0.1.3"

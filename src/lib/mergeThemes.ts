@@ -19,6 +19,7 @@ import {
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
+import expandCssShorthand from './expandCssShorthand'
 
 // ----------------------------------------
 // Component level merge functions
@@ -43,7 +44,10 @@ export const mergeComponentStyles = (
       const originalSource = partStyle
 
       partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        return _.merge(
+          expandCssShorthand(callable(originalTarget)(styleParam)),
+          expandCssShorthand(callable(originalSource)(styleParam)),
+        )
       }
     })
 
