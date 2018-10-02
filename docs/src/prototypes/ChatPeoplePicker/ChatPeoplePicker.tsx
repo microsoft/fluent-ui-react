@@ -68,6 +68,7 @@ interface IPeoplePickerState {
   focused: boolean
   inputValue: string
   deleteOnBackspace: boolean
+  available: any[]
 }
 
 export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
@@ -82,6 +83,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
       focused: false,
       inputValue: '',
       deleteOnBackspace: true,
+      available: this.props.source('', []),
     }
 
     this.input = React.createRef()
@@ -94,20 +96,25 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   }
 
   private addToSelected(element, clearInput = true) {
-    this.setState(({ selected }) => ({
-      selected: [...selected, element],
-      inputValue: clearInput ? '' : undefined,
-    }))
+    this.setState(({ selected, inputValue }) => {
+      const newSelected = [...selected, element]
+      return {
+        selected: newSelected,
+        inputValue: clearInput ? '' : undefined,
+        available: this.props.source(inputValue, newSelected),
+      }
+    })
   }
 
   private removeFromSelected(element?) {
     let { selected } = this.state
+    const { inputValue } = this.state
     if (element) {
       selected = selected.filter(currentElement => currentElement !== element)
     } else {
       selected.pop()
     }
-    this.setState({ selected })
+    this.setState({ selected, available: this.props.source(inputValue, selected) })
   }
 
   public render(): React.ReactNode {
@@ -135,7 +142,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             highlightedIndex,
             selectItemAtIndex,
           }) => {
-            const availableItems = this.props.source(inputValue, this.state.selected)
             return (
               <div>
                 <div
@@ -201,8 +207,8 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                         styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
                         aria-hidden={!isOpen}
                         items={
-                          availableItems.length > 0 && isOpen
-                            ? availableItems.map((item, index) => {
+                          this.state.available.length > 0 && isOpen
+                            ? this.state.available.map((item, index) => {
                                 return {
                                   key: `peoplePickerItem-${index}`,
                                   header: item.name,
@@ -256,6 +262,15 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
           inputValue: changes.inputValue,
           deleteOnBackspace: !(changes.inputValue === '' && state.inputValue.length === 1),
         })
+        return changes
+      case Downshift.stateChangeTypes.keyDownArrowUp:
+        if (changes.highlightedIndex === null) {
+          changes.highlightedIndex = this.state.available.length - 1
+        }
+      case Downshift.stateChangeTypes.keyDownArrowDown:
+        if (changes.highlightedIndex === null) {
+          changes.highlightedIndex = 0
+        }
         return changes
       default:
         return changes
