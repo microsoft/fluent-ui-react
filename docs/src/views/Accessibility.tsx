@@ -525,11 +525,11 @@ export default () => (
     <br />
     <Button
       as={NavLink}
-      content="Quick Start"
+      content="Stardust Glossary"
       type="primary"
       icon="arrow left"
       iconPosition="before"
-      to="/quick-start"
+      to="glossary"
     />
     <Button
       as={NavLink}
