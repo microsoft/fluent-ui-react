@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
+import { UIComponent, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Popup from '../Popup/Popup'

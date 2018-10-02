@@ -1,5 +1,5 @@
 import { IContextualMenuVariables } from './contextualMenuVariables'
-import { IComponentPartStylesInput, ICSSInJSStyle, IProps } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IContextualMenuProps } from '../../../../components/ContextualMenu/ContextualMenu'
 
 const contextualMenuStyles: IComponentPartStylesInput<
