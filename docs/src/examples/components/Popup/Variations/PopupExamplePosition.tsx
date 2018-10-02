@@ -1,35 +1,36 @@
 import React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
-class PopupWithButton extends React.Component<any, any> {
+class PopupArrowExample extends React.Component<any, any> {
   state = { popupOpen: false }
 
   togglePopupState = () => {
     this.setState(prev => ({ popupOpen: !prev.popupOpen }))
   }
 
-  render = () => {
+  render() {
     const { position, align, icon, padding } = this.props
+
+    const buttonStyles = { padding, height: '38px', minWidth: '64px' }
 
     return (
       <Popup
         open={this.state.popupOpen}
         align={align}
         position={position}
-        trigger={
-          <Button
-            onClick={() => this.togglePopupState()}
-            onMouseLeave={() => this.setState({ popupOpen: false })}
-            icon={icon}
-            styles={{ padding, height: '38px', minWidth: '64px' }}
-          />
-        }
         content={
           <p>
             The popup is rendered {position} the trigger<br />aligned to the {align}.
           </p>
         }
-      />
+      >
+        <Button
+          onClick={() => this.togglePopupState()}
+          onMouseLeave={() => this.setState({ popupOpen: false })}
+          icon={icon}
+          styles={buttonStyles}
+        />
+      </Popup>
     )
   }
 }
@@ -52,7 +53,7 @@ const triggers = [
 const PopupExamplePosition = () => (
   <Grid columns="repeat(3, 30px)" variables={{ padding: '30px', gridGap: '80px' }}>
     {triggers.map(({ position, align, icon, padding }) => (
-      <PopupWithButton
+      <PopupArrowExample
         position={position}
         align={align}
         icon={icon}
