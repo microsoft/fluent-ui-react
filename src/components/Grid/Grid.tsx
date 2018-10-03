@@ -1,9 +1,9 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import ReactNode = React.ReactNode
 import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import ReactNode = React.ReactNode
 
 export interface IGridProps {
   as?: any
@@ -30,7 +30,10 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -57,17 +60,6 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'columns',
-    'content',
-    'rows',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',

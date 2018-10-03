@@ -6,15 +6,15 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  UIComponent,
   IRenderResultConfig,
+  UIComponent,
 } from '../../lib'
 import {
-  ComponentVariablesInput,
   ComponentPartStyle,
+  ComponentVariablesInput,
   IComponentPartStylesInput,
 } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
 import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
@@ -46,15 +46,19 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Author of the message. */
     author: customPropTypes.itemShorthand,
 
-    /** Chat messages can have an avatar */
+    /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
-    /** Child content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -76,23 +80,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'author',
-    'avatar',
-    'children',
-    'className',
-    'content',
-    'mine',
-    'styles',
-    'timestamp',
-    'variables',
-  ]
-
   static defaultProps = {
     accessibility: ChatMessageBehavior as Accessibility,
-    as: 'li',
+    as: 'div',
   }
 
   actionHandlers: AccessibilityActionHandlers = {
@@ -145,7 +135,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const authorComponent = Text.create(author, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         styles: styles.author,
         variables: variables.author,
       },
@@ -153,7 +143,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
 
     const timestampComponent = Text.create(timestamp, {
       defaultProps: {
-        size: 'sm',
+        size: 'small',
         timestamp: true,
         styles: styles.timestamp,
         variables: variables.timestamp,

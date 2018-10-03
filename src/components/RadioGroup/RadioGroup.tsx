@@ -46,7 +46,10 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     /** Value of the currently checked radio item. */
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -79,20 +82,6 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     as: 'div',
     accessibility: RadioGroupBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checkedValue',
-    'checkedValueChanged',
-    'children',
-    'className',
-    'defaultCheckedValue',
-    'items',
-    'styles',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['checkedValue']
 

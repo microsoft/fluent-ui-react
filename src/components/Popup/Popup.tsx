@@ -2,20 +2,26 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
-import rtlCSSJS from 'rtl-css-js'
 
-import { childrenExist, customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
-import { ItemShorthand, Extendable, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import Portal, { TriggerAccessibility } from '../Portal'
+import { childrenExist, AutoControlledComponent, IRenderResultConfig } from '../../lib'
+import {
+  ComponentEventHandler,
+  ItemShorthand,
+  Extendable,
+  ReactChildren,
+} from '../../../types/utils'
+
+import Ref from '../Ref'
+import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+
 import PopupContent from './PopupContent'
+
 import { PopupBehavior } from '../../lib/accessibility'
 import {
   Accessibility,
   AccessibilityActionHandlers,
   IAccessibilityBehavior,
 } from '../../lib/accessibility/interfaces'
-import computePopupPlacement, { Alignment, Position, Placement } from './positioningHelper'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
@@ -23,20 +29,18 @@ const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 export interface IPopupProps {
   accessibility?: Accessibility
   align?: Alignment
-  as?: any
-  basic?: boolean
   children?: ReactChildren
   className?: string
   content?: ItemShorthand | ItemShorthand[]
+  defaultOpen?: boolean
+  open?: boolean
+  onOpenChange?: ComponentEventHandler<IPopupProps>
   position?: Position
   trigger?: JSX.Element
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
 export interface IPopupState {
   triggerRef: HTMLElement
-  popupOpened?: boolean
 }
 
 /**
@@ -44,7 +48,7 @@ export interface IPopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupState> {
+export default class Popup extends AutoControlledComponent<Extendable<IPopupProps>, IPopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -52,23 +56,36 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   public static Content = PopupContent
 
   public static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
 
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Basic CSS styling for the popup. */
-    basic: PropTypes.bool,
-
-    /** The popup content (deprecated). */
-    children: customPropTypes.disallow(['children']),
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
+    children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The popup content. */
-    content: customPropTypes.itemShorthand,
+    content: PropTypes.any,
+
+    /** Initial value for 'open'. */
+    defaultOpen: PropTypes.bool,
+
+    /** Defines whether popup is displayed. */
+    open: PropTypes.bool,
+
+    /**
+     * Event for request to change 'open' value.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onOpenChange: PropTypes.func,
 
     /**
      * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
@@ -80,92 +97,64 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
 
     /** Element to be rendered in-place where the popup is defined. */
     trigger: PropTypes.node,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'accessibility',
-    'align',
-    'as',
-    'basic',
-    'children',
-    'className',
-    'content',
-    'position',
-    'styles',
-    'trigger',
-    'variables',
-  ]
 
   public static defaultProps: IPopupProps = {
-    as: Portal,
+    accessibility: PopupBehavior,
     align: 'start',
     position: 'above',
-    accessibility: PopupBehavior,
   }
 
-  public state = { triggerRef: undefined, popupOpened: false }
+  public static autoControlledProps = ['open']
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: e => this.onTriggerClick(e),
-    closeAndFocusTrigger: e => this.handlePopupState(e, () => false, this.focusTrigger),
+    toggle: e =>
+      _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
+    closeAndFocusTrigger: e => {
+      if (this.props.onOpenChange) {
+        _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: false } })
+        _.invoke(this.state.triggerRef, 'focus')
+      }
+    },
   }
 
+  public state = { triggerRef: undefined }
+
   public renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    rest,
     rtl,
+    accessibility,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger, position, align } = this.props
+    const { children, trigger, open } = this.props
 
     return (
-      <ElementType
-        className={classes.root}
-        {...rest}
-        open={this.state.popupOpened}
-        trigger={trigger}
-        triggerRef={this.handleTriggerRef}
-        triggerAccessibility={
-          {
-            attributes: accessibility.attributes.trigger,
-            keyHandlers: accessibility.keyHandlers.trigger,
-          } as TriggerAccessibility
-        }
-        onOutsideClick={e => this.handlePopupState(e, () => false)}
-        onTriggerClick={this.onTriggerClick}
-      >
-        {childrenExist(children)
-          ? children
-          : this.renderContent(
-              computePopupPlacement({ align, position, rtl }),
-              this.renderPopperChildren.bind(this, rtl, accessibility),
-            )}
-      </ElementType>
+      <>
+        <Ref
+          innerRef={domNode => {
+            this.setState({ triggerRef: domNode })
+          }}
+        >
+          {React.cloneElement(childrenExist(children) ? children : (trigger as any), {
+            ...accessibility.attributes.trigger,
+            ...accessibility.keyHandlers.trigger,
+          })}
+        </Ref>
+        {open && this.renderPopupContent(rtl, accessibility)}
+      </>
     )
   }
 
-  private renderContent(
-    popupPlacement: Placement,
-    renderPopperChildrenFromProps: (props: PopperChildrenProps) => React.ReactNode,
-  ): JSX.Element {
+  private renderPopupContent(rtl: boolean, accessibility: IAccessibilityBehavior): JSX.Element {
+    const { align, position } = this.props
     const triggerRef = this.state.triggerRef
+
+    const placement = computePopupPlacement({ align, position, rtl })
 
     return (
       triggerRef && (
         <Popper
-          placement={popupPlacement}
+          placement={placement}
           referenceElement={triggerRef}
-          children={renderPopperChildrenFromProps}
+          children={this.renderPopperChildren.bind(this, rtl, accessibility)}
         />
       )
     )
@@ -174,41 +163,21 @@ export default class Popup extends UIComponent<Extendable<IPopupProps>, IPopupSt
   private renderPopperChildren = (
     rtl: boolean,
     accessibility: IAccessibilityBehavior,
-    { ref, style }: PopperChildrenProps,
+    { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { basic, content } = this.props
-    const computedStyle = rtl ? rtlCSSJS(style) : style
+    const { content } = this.props
 
     return (
-      <Popup.Content
-        innerRef={ref}
-        basic={basic}
-        {...rtl && { dir: 'rtl' }}
-        styles={computedStyle}
-        {...accessibility.attributes.popup}
-        {...accessibility.keyHandlers.popup}
-      >
-        {content}
-      </Popup.Content>
+      <Ref innerRef={domElement => ref(domElement)}>
+        <Popup.Content
+          {...rtl && { dir: 'rtl' }}
+          style={popupPlacementStyles}
+          {...accessibility.attributes.popup}
+          {...accessibility.keyHandlers.popup}
+        >
+          {content}
+        </Popup.Content>
+      </Ref>
     )
   }
-
-  private onTriggerClick = (e: Event) => {
-    this.handlePopupState(e, prevOpened => !prevOpened)
-  }
-
-  private handlePopupState = (
-    e: Event,
-    getPopupOpened: (previousOpened) => boolean,
-    afterRenderCb?: () => void,
-  ) => {
-    e.preventDefault()
-    this.setState(
-      previousState => ({ popupOpened: getPopupOpened(previousState.popupOpened) }),
-      afterRenderCb,
-    )
-  }
-
-  private focusTrigger = () => _.invoke(this.state.triggerRef, 'focus')
-  private handleTriggerRef = (triggerRef: HTMLElement) => this.setState({ triggerRef })
 }

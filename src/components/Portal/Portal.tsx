@@ -48,7 +48,10 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Shorthand for primary content. */
@@ -101,20 +104,6 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      */
     onOutsideClick: PropTypes.func,
   }
-
-  public static handledProps = [
-    'children',
-    'content',
-    'defaultOpen',
-    'onMount',
-    'onOutsideClick',
-    'onTriggerClick',
-    'onUnmount',
-    'open',
-    'trigger',
-    'triggerAccessibility',
-    'triggerRef',
-  ]
 
   public static defaultProps: IPortalProps = {
     triggerAccessibility: {},

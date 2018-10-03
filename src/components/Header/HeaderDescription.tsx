@@ -28,7 +28,10 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -47,8 +50,6 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
   static defaultProps = {
     as: 'p',
   }
-
-  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

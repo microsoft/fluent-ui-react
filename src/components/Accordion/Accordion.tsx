@@ -52,7 +52,10 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -95,20 +98,6 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'exclusive',
-    'onTitleClick',
-    'panels',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     accessibility: DefaultBehavior as Accessibility,

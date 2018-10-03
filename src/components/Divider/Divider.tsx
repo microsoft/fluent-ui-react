@@ -31,7 +31,10 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -55,18 +58,6 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'important',
-    'size',
-    'styles',
-    'type',
-    'variables',
-  ]
 
   static defaultProps = {
     size: 0,

@@ -1,6 +1,5 @@
 import { Accessibility } from '../../interfaces'
 import * as keyboardKey from 'keyboard-key'
-import _ from 'lodash'
 
 /**
  * @description
@@ -20,7 +19,7 @@ const PopupBehavior: Accessibility = (props: any) => ({
   },
   keyActions: {
     trigger: {
-      performClick: {
+      toggle: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },

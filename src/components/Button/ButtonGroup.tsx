@@ -38,7 +38,10 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -56,18 +59,6 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'buttons',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',

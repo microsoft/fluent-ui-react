@@ -17,9 +17,28 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix Attachment `styles` prop typing @levithomason ([#299](https://github.com/stardust-ui/react/pull/299))
+
+### Features
+- Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
+- Add keyboard handling and ARIA attributes for `ButtonGroup`, `Tablist` and `Toolbar` behaviors @jurokapsiar ([#254](https://github.com/stardust-ui/react/pull/254))
+
+<!--------------------------------[ v0.8.0 ]------------------------------- -->
+## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.7.0...v0.8.0)
+
+### BREAKING CHANGES
+- Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
+- Add `ChatItem` component that can be used inside the `Chat` via the Children API or the `items` prop, instead of the `Chat.Message` used directly in the previous `messages` prop @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+- Make `Popup` to be a controlled component @kuzhelov ([#282](https://github.com/stardust-ui/react/pull/282))
+
 ### Features
 - Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
-- Add keyboard handling and ARIA attributes for `ButtonGroup`, `Tablist` and `Toolbar` behaviors @jurokapsiar ([#254](https://github.com/stardust-ui/react/pull/254))
+- Add default accessibility behavior to `Popup` @sophieH29 ([#218](https://github.com/stardust-ui/react/pull/218))
+
+### Documentation
+- Improve `Contributing` documentation @alinais, @levithomason ([#189](https://github.com/stardust-ui/react/pull/189))
 
 <!--------------------------------[ v0.7.0 ]------------------------------- -->
 ## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
@@ -30,6 +49,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+- Add `atMention="me"` value to Text API @codepretty ([#277](https://github.com/stardust-ui/react/pull/277))
 
 ### Documentation
 - Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))

@@ -70,25 +70,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
     accessibility: ListItemBehavior as Accessibility,
