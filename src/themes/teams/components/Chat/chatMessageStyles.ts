@@ -31,6 +31,7 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
     borderRadius: '0.3rem',
   }),
+
   author: {
     marginRight: px10asRem,
   },
