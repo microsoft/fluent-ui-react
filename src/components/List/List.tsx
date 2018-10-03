@@ -32,6 +32,10 @@ class List extends UIComponent<Extendable<IListProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */

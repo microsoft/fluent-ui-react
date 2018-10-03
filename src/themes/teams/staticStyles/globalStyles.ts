@@ -1,4 +1,6 @@
-const globalStyles = siteVars => ({
+import { StaticStyleFunction } from '../../../../types/theme'
+
+const globalStyles: StaticStyleFunction = siteVars => ({
   html: {
     fontSize: siteVars.htmlFontSize,
   },

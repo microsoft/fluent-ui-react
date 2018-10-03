@@ -52,7 +52,10 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -149,19 +152,14 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
 
       children.push(
         AccordionTitle.create(title, {
-          generateKey: true,
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
         }),
       )
       children.push(
-        AccordionContent.create(
-          { content },
-          {
-            generateKey: true,
-            defaultProps: { active },
-          },
-        ),
+        AccordionContent.create(content, {
+          defaultProps: { active },
+        }),
       )
     })
 
