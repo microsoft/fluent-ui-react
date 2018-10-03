@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Popup, Grid, Image, Input, Menu, List, ListItem } from '@stardust-ui/react'
 import * as _ from 'lodash'
+import ReactDOM from 'react-dom'
 
 const imageStyle = {
   width: '100%',
@@ -219,7 +220,11 @@ class StickerPopup extends React.Component {
   }
 
   onMenuItemClick = (e, props) => {
-    this.setState({ activeMenuIndex: props.index })
+    this.setState({ activeMenuIndex: props.index }, () => {
+      const popupElement = ReactDOM.findDOMNode(this) as HTMLElement
+      const input = popupElement.querySelector('input')
+      input && input.focus()
+    })
   }
 
   items = [
