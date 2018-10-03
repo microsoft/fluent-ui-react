@@ -1,5 +1,14 @@
 import React from 'react'
-import { Button, Popup, Grid, Image, Input, Menu, List, ListItem } from '@stardust-ui/react'
+import {
+  Button,
+  Popup,
+  Grid,
+  Image,
+  Input,
+  Menu,
+  TabBehavior,
+  TabListBehavior,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
 import ReactDOM from 'react-dom'
 
@@ -228,13 +237,33 @@ class StickerPopup extends React.Component {
   }
 
   items = [
-    { key: 'popular', content: 'Popular', onClick: this.onMenuItemClick },
-    { key: 'drama', content: 'Office drama', onClick: this.onMenuItemClick },
-    { key: 'meme', content: 'Meme', onClick: this.onMenuItemClick },
-    { key: 'design', content: 'Designers', onClick: this.onMenuItemClick },
-    { key: 'dev', content: 'Dev', onClick: this.onMenuItemClick },
-    { key: 'legal', content: 'Legal', onClick: this.onMenuItemClick },
-    { key: 'squatch', content: 'Team squatch', onClick: this.onMenuItemClick },
+    {
+      key: 'popular',
+      content: 'Popular',
+      onClick: this.onMenuItemClick,
+      accessibility: TabBehavior,
+    },
+    {
+      key: 'drama',
+      content: 'Office drama',
+      onClick: this.onMenuItemClick,
+      accessibility: TabBehavior,
+    },
+    { key: 'meme', content: 'Meme', onClick: this.onMenuItemClick, accessibility: TabBehavior },
+    {
+      key: 'design',
+      content: 'Designers',
+      onClick: this.onMenuItemClick,
+      accessibility: TabBehavior,
+    },
+    { key: 'dev', content: 'Dev', onClick: this.onMenuItemClick, accessibility: TabBehavior },
+    { key: 'legal', content: 'Legal', onClick: this.onMenuItemClick, accessibility: TabBehavior },
+    {
+      key: 'squatch',
+      content: 'Team squatch',
+      onClick: this.onMenuItemClick,
+      accessibility: TabBehavior,
+    },
   ]
 
   render() {
@@ -245,7 +274,13 @@ class StickerPopup extends React.Component {
         content={
           <div style={{ display: 'flex' }}>
             <div className="left-rail" style={{ paddingRight: '10px' }}>
-              <Menu activeIndex={this.state.activeMenuIndex} items={this.items} vertical pointing />
+              <Menu
+                accessibility={TabListBehavior}
+                activeIndex={this.state.activeMenuIndex}
+                items={this.items}
+                vertical
+                pointing
+              />
             </div>
             <div className="right-rail">
               {
