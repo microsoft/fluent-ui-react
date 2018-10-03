@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Popup } from '@stardust-ui/react'
+import { Button, Input, Popup } from '@stardust-ui/react'
 
 class PopupExample extends React.Component<any, any> {
   state = { popupOpen: false }
@@ -10,7 +10,14 @@ class PopupExample extends React.Component<any, any> {
 
   render() {
     return (
-      <Popup open={this.state.popupOpen} content="Add users to your feed.">
+      <Popup
+        open={this.state.popupOpen}
+        onOpenChange={(e, newProps) => {
+          alert(`Popup is requested to change its open state to "${newProps.open}".`)
+          this.setState({ popupOpen: newProps.open })
+        }}
+        content={<Input icon="search" placeholder="Search..." />}
+      >
         <Button icon="expand" onClick={() => this.togglePopup()} />
       </Popup>
     )
