@@ -1,5 +1,6 @@
 import { createRenderer } from 'fela'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
+import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
@@ -9,6 +10,8 @@ import { IRenderer } from '../../types/theme'
 
 const createRendererConfig = (options: any = {}) => ({
   plugins: [
+    felaExpandCssShorthandsPlugin(),
+
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
