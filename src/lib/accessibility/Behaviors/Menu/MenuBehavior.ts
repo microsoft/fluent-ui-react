@@ -16,6 +16,7 @@ const MenuBehavior: Accessibility = {
     mode: FocusZoneMode.Wrap,
     props: {
       isCircularNavigation: true,
+      preventDefaultWhenHandled: true,
     },
   },
 }
