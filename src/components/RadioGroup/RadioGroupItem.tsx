@@ -64,7 +64,10 @@ class RadioGroupItem extends AutoControlledComponent<
     /** Whether or not radio item is checked. */
     checked: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
