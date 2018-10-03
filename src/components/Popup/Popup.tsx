@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { createPortal } from 'react-dom'
 import * as PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import { childrenExist, AutoControlledComponent, IRenderResultConfig } from '../../lib'
+import { childrenExist, AutoControlledComponent, IRenderResultConfig, isBrowser } from '../../lib'
 import {
   ComponentEventHandler,
   ItemShorthand,
@@ -62,7 +63,10 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
 
-    /** The popup content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -104,6 +108,8 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
   public static autoControlledProps = ['open']
 
+  private static isBrowserContext = isBrowser()
+
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e =>
       _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
@@ -135,7 +141,9 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
             ...accessibility.keyHandlers.trigger,
           })}
         </Ref>
-        {open && this.renderPopupContent(rtl, accessibility)}
+        {open &&
+          Popup.isBrowserContext &&
+          createPortal(this.renderPopupContent(rtl, accessibility), document.body)}
       </>
     )
   }

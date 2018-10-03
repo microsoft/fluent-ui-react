@@ -55,7 +55,10 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
-    /** Child content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */

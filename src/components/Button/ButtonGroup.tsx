@@ -6,6 +6,8 @@ import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Button from './Button'
+import { ButtonGroupBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/interfaces'
 
 export interface IButtonGroupProps {
   as?: any
@@ -27,13 +29,19 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
   public static className = 'ui-buttons'
 
   public static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -54,6 +62,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
 
   public static defaultProps = {
     as: 'div',
+    accessibility: ButtonGroupBehavior as Accessibility,
   }
 
   public renderComponent({
@@ -67,7 +76,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     const { children, content, buttons, circular } = this.props
     if (_.isNil(buttons)) {
       return (
-        <ElementType {...rest} className={classes.root}>
+        <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
           {childrenExist(children) ? children : content}
         </ElementType>
       )
