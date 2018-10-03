@@ -18,11 +18,6 @@ const PopupBehavior: Accessibility = (props: any) => ({
     },
   },
   keyActions: {
-    trigger: {
-      toggle: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-    },
     popup: {
       closeAndFocusTrigger: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }],
