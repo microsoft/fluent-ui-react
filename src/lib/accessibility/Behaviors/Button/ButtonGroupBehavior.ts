@@ -2,13 +2,13 @@ import { Accessibility, FocusZoneMode } from '../../interfaces'
 
 /**
  * @description
- * Adds role 'tablist' to 'root' component's part.
+ * Adds role 'presentation' to 'root' component's part.
  * Wraps component in FocusZone allowing arrow key navigation through the children of the component.
  */
-const TabListBehavior: Accessibility = {
+const ButtonGroupBehavior: Accessibility = {
   attributes: {
     root: {
-      role: 'tablist',
+      role: 'presentation',
     },
   },
   focusZone: {
@@ -20,4 +20,4 @@ const TabListBehavior: Accessibility = {
   },
 }
 
-export default TabListBehavior
+export default ButtonGroupBehavior
