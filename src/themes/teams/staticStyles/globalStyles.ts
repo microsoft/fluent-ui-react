@@ -5,6 +5,8 @@ const globalStyles: StaticStyleFunction = siteVars => ({
     fontSize: siteVars.htmlFontSize,
   },
   body: {
+    background: siteVars.bodyBackground,
+    color: siteVars.bodyColor,
     padding: siteVars.bodyPadding,
     margin: siteVars.bodyMargin,
     fontFamily: siteVars.bodyFontFamily,

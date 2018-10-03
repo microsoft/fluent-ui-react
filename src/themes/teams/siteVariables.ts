@@ -87,5 +87,18 @@ export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
+export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
+
+//
+// TEXT VARIABLES
+//
+export const importantTextColor = red
+export const atMentionMeTextColor = orange04
+export const atMentionOtherTextColor = brand06
+export const disabledTextColor = gray06
+export const errorTextColor = red
+export const successTextColor = green04
+export const timestampTextColor = gray04
+export const timestampHoverTextColor = gray02

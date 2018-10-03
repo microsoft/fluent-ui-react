@@ -692,7 +692,22 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
             className={`rendered-example ${this.getKebabExamplePath()}`}
             style={{ padding: '2rem' }}
           >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
+            <div dir={showRtl ? 'rtl' : undefined}>
+              <Provider.Consumer
+                render={({ siteVariables }) => {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: siteVariables.bodyBackground,
+                        color: siteVariables.bodyColor,
+                      }}
+                    >
+                      {exampleElement}
+                    </div>
+                  )
+                }}
+              />
+            </div>
           </Grid.Column>
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}

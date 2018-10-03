@@ -28,15 +28,15 @@ export interface ITextVariables {
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionOtherTextColor: siteVariables.brand06,
-    atMentionMeTextColor: siteVariables.orange04,
+    atMentionOtherTextColor: siteVariables.atMentionOtherTextColor,
+    atMentionMeTextColor: siteVariables.atMentionMeTextColor,
     atMentionMeFontWeight: siteVariables.fontWeightBold,
 
-    disabledTextColor: siteVariables.gray06,
-    errorTextColor: siteVariables.red,
-    successTextColor: siteVariables.green04,
-    timestampTextColor: siteVariables.gray04,
-    timestampHoverTextColor: siteVariables.gray02,
+    disabledTextColor: siteVariables.disabledTextColor,
+    errorTextColor: siteVariables.errorTextColor,
+    successTextColor: siteVariables.successTextColor,
+    timestampTextColor: siteVariables.timestampTextColor,
+    timestampHoverTextColor: siteVariables.timestampHoverTextColor,
 
     textExtraSmallFontSize: siteVariables.fontSizes.smaller,
     textExtraSmallLineHeight: siteVariables.lineHeightExtraSmall,
@@ -54,7 +54,7 @@ export default (siteVariables): ITextVariables => {
     textExtraLargeLineHeight: siteVariables.lineHeightSmall,
 
     importantWeight: siteVariables.fontWeightBold,
-    importantTextColor: siteVariables.red,
+    importantTextColor: siteVariables.importantTextColor,
 
     textWeightLight: siteVariables.fontWeightLight,
     textWeightSemilight: siteVariables.fontWeightSemilight,
