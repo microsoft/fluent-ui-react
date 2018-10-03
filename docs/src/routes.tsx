@@ -9,6 +9,7 @@ import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Accessibility from './views/Accessibility'
+import Architecture from './views/Architecture'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
 import Glossary from './views/Glossary'
@@ -23,6 +24,7 @@ const Router = () => (
         <DocsLayout exact path="/quick-start" component={QuickStart} />
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
+        <DocsLayout exact path="/architecture" component={Architecture} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/*" component={PageNotFound} />

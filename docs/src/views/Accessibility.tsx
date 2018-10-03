@@ -533,11 +533,11 @@ export default () => (
     />
     <Button
       as={NavLink}
-      content="Theming"
+      content="Architecture"
       type="primary"
       icon="arrow right"
       iconPosition="after"
-      to="theming"
+      to="architecture"
     />
   </DocPage>
 )

@@ -213,11 +213,11 @@ export default () => (
     <br />
     <Button
       as={NavLink}
-      content="Accessibility"
+      content="Architecture"
       type="primary"
       icon="arrow left"
       iconPosition="before"
-      to="/accessibility"
+      to="architecture"
     />
     <Button
       as={NavLink}
