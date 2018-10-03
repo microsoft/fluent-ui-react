@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix generation of `key` for the `Accordion.Content` @mnajdova ([#305](https://github.com/stardust-ui/react/pull/305))
 - Ensure `Popup` is rendered as direct child of `body` element in the DOM tree @kuzhelov ([#302](https://github.com/stardust-ui/react/pull/302))
 - Fix toggle logic of `Popup` as reaction on key press events @kuzhelov ([#304](https://github.com/stardust-ui/react/pull/304))
+- Fix for `RadioGroup`: made `label` accept react nodes as value and fixed keyboard navigation @Bugaa92 ([#287](https://github.com/stardust-ui/react/pull/287))
 
 ### Features
 - Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
