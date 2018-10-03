@@ -553,12 +553,10 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         </Divider>
         <Provider.Consumer
           render={({ siteVariables, componentVariables }: IThemePrepared) => {
-            // const mergedVariables = mergeThemeVariables(componentVariables, {
-            //   [displayName]: this.state.componentVariables,
-            // })
-            // const variables = mergedVariables[displayName]
-
-            const variables = componentVariables[displayName]
+            const mergedVariables = mergeThemeVariables(componentVariables, {
+              [displayName]: this.state.componentVariables,
+            })
+            const variables = mergedVariables[displayName]
 
             if (!variables) {
               return (
