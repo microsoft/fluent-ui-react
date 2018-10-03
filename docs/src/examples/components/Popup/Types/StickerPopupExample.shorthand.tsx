@@ -1,9 +1,16 @@
 import React from 'react'
-import { Button, Popup, Grid, Image, Input, Menu } from '@stardust-ui/react'
+import { Button, Popup, Grid, Image, Input, Menu, List, ListItem } from '@stardust-ui/react'
 import * as _ from 'lodash'
 
 const imageStyle = {
-  padding: '5px',
+  width: '100%',
+}
+
+const imageButtonStyles = {
+  minWidth: '56px',
+  height: '56px',
+  padding: '0',
+  background: '#fff',
 }
 
 const arrayOfImages = [
@@ -186,10 +193,10 @@ const arrayOfImages = [
 class StickerPopup extends React.Component {
   state = { activeMenuIndex: 0 }
 
-  handleSelection(e: KeyboardEvent) {
-    const keyCode = e.which || e.keyCode
-    if (keyCode && !(keyCode === 13 || keyCode === 32)) return
-    const selectedItem = document.activeElement && document.activeElement.getAttribute('aria-label')
+  handleSelection(e) {
+    if (!e.target) return
+    const img = e.target.nodeName !== 'IMG' ? e.target.querySelector('img') : e.target
+    const selectedItem = img && img.getAttribute('aria-label')
     if (!selectedItem) return
     alert(`The image was selected "${selectedItem}"`)
   }
@@ -197,17 +204,17 @@ class StickerPopup extends React.Component {
   renderImages = () => {
     const index = arrayOfImages[this.state.activeMenuIndex] ? this.state.activeMenuIndex : 0
     return _.map(arrayOfImages[index], image => (
-      <Image
-        data-is-focusable="true"
-        styles={imageStyle}
-        key={image.key}
-        alt={`image of ${image.key}`}
-        aria-label={`image of ${image.key}`}
-        fluid
-        onKeyDown={this.handleSelection}
-        onClick={this.handleSelection}
-        src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
-      />
+      <li key={image.key}>
+        <Button styles={imageButtonStyles} onClick={this.handleSelection}>
+          <Image
+            styles={imageStyle}
+            alt={`image of ${image.key}`}
+            aria-label={`image of ${image.key}`}
+            fluid
+            src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
+          />
+        </Button>
+      </li>
     ))
   }
 
@@ -245,7 +252,20 @@ class StickerPopup extends React.Component {
                 />
               }
               {<br />}
-              {<Grid styles={{ width: '300px' }} columns="5" content={this.renderImages()} />}
+              {
+                <Grid
+                  as="ul"
+                  styles={{
+                    width: '320px',
+                    listStyle: 'none',
+                    padding: '0',
+                    margin: '0',
+                    gridRowGap: '10px',
+                  }}
+                  columns="5"
+                  content={this.renderImages()}
+                />
+              }
             </div>
           </div>
         }
