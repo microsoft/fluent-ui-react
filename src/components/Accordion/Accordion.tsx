@@ -152,19 +152,14 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
 
       children.push(
         AccordionTitle.create(title, {
-          generateKey: true,
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
         }),
       )
       children.push(
-        AccordionContent.create(
-          { content },
-          {
-            generateKey: true,
-            defaultProps: { active },
-          },
-        ),
+        AccordionContent.create(content, {
+          defaultProps: { active },
+        }),
       )
     })
 
