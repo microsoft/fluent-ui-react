@@ -24,5 +24,6 @@
     "noImplicitThis": false,
     "noImplicitAny": false,
     "strictNullChecks": false,
+    "noUnusedLocals": true,
   }
 }

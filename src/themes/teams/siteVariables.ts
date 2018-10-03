@@ -17,7 +17,6 @@ export const gray08 = '#E1DFDD'
 export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray14 = '#FAF9F8'
-export const fontBlack = black
 
 export const white = '#FFF'
 
