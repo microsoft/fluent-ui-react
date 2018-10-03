@@ -1,22 +1,21 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import * as _ from 'lodash'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import MenuItemLink from './MenuItemLink'
+import { /*childrenExist,*/ createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import IsFromKeyboard from '../../lib/isFromKeyboard'
-
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import Icon from '../Icon/Icon'
+import * as React from 'react'
 import {
   ComponentEventHandler,
   Extendable,
   ItemShorthand,
   ReactChildren,
 } from '../../../types/utils'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface IMenuItemProps {
+export interface IMenuItemLinkProps {
   accessibility?: Accessibility
   active?: boolean
   as?: any
@@ -27,7 +26,7 @@ export interface IMenuItemProps {
   icon?: ItemShorthand
   iconOnly?: boolean
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+  onClick?: ComponentEventHandler<IMenuItemLinkProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
   type?: 'primary' | 'secondary'
@@ -35,16 +34,13 @@ export interface IMenuItemProps {
   vertical?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
-}
-
-export interface IMenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
-  static displayName = 'MenuItem'
+class MenuItemLink extends UIComponent<Extendable<IMenuItemLinkProps>, {}> {
+  static displayName = 'MenuItemLink'
 
-  static className = 'ui-menu__item'
+  static className = 'ui-menu__itemlink'
 
   static create: Function
 
@@ -65,7 +61,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
-    content: customPropTypes.itemShorthand,
+    content: PropTypes.any,
 
     /** A menu item can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
@@ -80,7 +76,9 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     index: PropTypes.number,
 
     /**
-     * Called on click.
+     * Called on click. When passed, the component will render as an `a`
+     * tag by default instead of a `div`.
+     *
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props.
      */
@@ -112,49 +110,17 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    isFromKeyboard: PropTypes.bool,
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'a',
     accessibility: MenuItemBehavior as Accessibility,
   }
 
-  state = IsFromKeyboard.initial
-
-  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
-    const { children, content, icon } = this.props
-    const { iconOnly, pills, pointing, type, underlined, vertical, index, active } = this.props
-
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rest}
-        onClick={this.handleClick} // FIXME: hack to satisfy isConformant but onClick is now called twice!
-      >
-        {childrenExist(children)
-          ? children
-          : MenuItemLink.create(content || (icon && {}), {
-              defaultProps: {
-                iconOnly,
-                icon,
-                pills,
-                pointing,
-                type,
-                underlined,
-                vertical,
-                variables,
-                index,
-                active,
-                onClick: this.handleClick,
-                onBlur: this.handleBlur,
-                onFocus: this.handleFocus,
-                [IsFromKeyboard.propertyName]: this.state[IsFromKeyboard.propertyName],
-              },
-            })}
-      </ElementType>
-    )
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
   }
 
   private handleClick = e => {
@@ -162,18 +128,36 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.initial)
-
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.state())
-
     _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  public renderComponent({ ElementType, classes, accessibility, rest }) {
+    const { content, icon } = this.props
+
+    return (
+      <ElementType
+        className={classes.root}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor} // FIXME: separate behavior?
+        {...accessibility.keyHandlers.anchor}
+        {...rest}
+      >
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+          })}
+        {content} {/*FIXME: support children*/}
+      </ElementType>
+    )
   }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
+MenuItemLink.create = createShorthandFactory(MenuItemLink, content => ({ content }))
 
-export default MenuItem
+export default MenuItemLink

@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
+import MenuItemLink from './MenuItemLink'
 import { MenuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
@@ -104,6 +105,8 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem
+
+  static ItemLink = MenuItemLink
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {

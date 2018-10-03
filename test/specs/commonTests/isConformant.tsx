@@ -113,7 +113,7 @@ export default (Component, options: any = {}) => {
   test('is exported at the top level', () => {
     const message = [
       `'${info.displayName}' must be exported at top level.`,
-      "Export it in 'src/index.js'.",
+      "Export it in 'src/index.ts'.",
     ].join(' ')
 
     expect({ isTopLevelAPIProp, message }).toEqual({

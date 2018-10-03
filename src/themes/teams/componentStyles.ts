@@ -37,6 +37,7 @@ export { default as ListItem } from './components/List/listItemStyles'
 
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
+export { default as MenuItemLink } from './components/Menu/menuItemLinkStyles'
 
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
