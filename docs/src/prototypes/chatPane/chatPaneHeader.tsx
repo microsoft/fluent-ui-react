@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { pxToRem } from '../../../../src/lib'
-
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
-import { IChat } from './data/interfaces'
-import { Sizes } from '../../../../src/lib/enums'
+
+import { pxToRem } from 'src/lib'
+import { IChat } from './services'
+import { Sizes } from 'src/lib/enums'
 
 export interface IChatPaneHeaderProps {
   chat?: IChat

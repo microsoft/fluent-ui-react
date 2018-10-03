@@ -1,7 +1,6 @@
-import { lorem, random, name, internet } from 'faker'
 import * as _ from 'lodash'
-import { IMessage, IUser, IChat, UserStatus } from './interfaces'
-import { getTimestamp, getRandomDates } from './dateUtils'
+import { lorem, random, name, internet } from 'faker'
+import { IMessage, IUser, IChat, UserStatus, getTimestamp, getRandomDates } from '.'
 
 export interface ChatOptions {
   userCount?: number
