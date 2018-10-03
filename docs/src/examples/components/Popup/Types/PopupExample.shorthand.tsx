@@ -12,10 +12,6 @@ class PopupExample extends React.Component<any, any> {
     return (
       <Popup
         open={this.state.popupOpen}
-        onOpenChange={(e, newProps) => {
-          this.setState({ popupOpen: newProps.open })
-          alert(`Popup open state was changed to "${newProps.open ? 'true' : 'false'}".`)
-        }}
         trigger={<Button icon="expand" onClick={() => this.togglePopup()} />}
         content="Add users to your feed."
       />

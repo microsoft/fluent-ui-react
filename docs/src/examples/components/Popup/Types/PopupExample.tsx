@@ -8,18 +8,9 @@ class PopupExample extends React.Component<any, any> {
     this.setState(prev => ({ popupOpen: !prev.popupOpen }))
   }
 
-  handleOpenChange = (e, newProps) => {
-    this.setState({ popupOpen: newProps.open })
-    alert(`Popup open state was changed to "${newProps.open ? 'true' : 'false'}".`)
-  }
-
   render() {
     return (
-      <Popup
-        open={this.state.popupOpen}
-        onOpenChange={this.handleOpenChange.bind(this)}
-        content="Add users to your feed."
-      >
+      <Popup open={this.state.popupOpen} content="Add users to your feed.">
         <Button icon="expand" onClick={() => this.togglePopup()} />
       </Popup>
     )
