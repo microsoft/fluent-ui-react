@@ -62,7 +62,10 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
 
-    /** The popup content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */

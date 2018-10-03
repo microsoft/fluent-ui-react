@@ -58,7 +58,10 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Button content for childrenApi
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A button can appear circular. */
