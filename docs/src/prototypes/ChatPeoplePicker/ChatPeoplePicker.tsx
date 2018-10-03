@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
-import { Label, Input, Button, Image, MenuItem, List, Provider } from '@stardust-ui/react'
+import { Label, Input, Button, Image, MenuItem, List, Provider, Text } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
@@ -206,7 +206,8 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                         styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
                         aria-hidden={!isOpen}
                         items={
-                          this.state.available.length > 0 && isOpen
+                          isOpen &&
+                          (this.state.available.length > 0
                             ? this.state.available.map((item, index) => {
                                 return {
                                   key: `peoplePickerItem-${index}`,
@@ -231,7 +232,18 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                                   }),
                                 }
                               })
-                            : null
+                            : [
+                                {
+                                  key: 'peoplePickerNoResultsItem',
+                                  styles: {
+                                    backgroundColor: siteVariables.white,
+                                    textAlign: 'center',
+                                  },
+                                  content: (
+                                    <Text weight="bold" content="We couldn't find any matches." />
+                                  ),
+                                },
+                              ])
                         }
                       />
                     )
