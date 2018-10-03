@@ -15,7 +15,10 @@ export interface IRefProps {
  */
 export default class Ref extends Component<IRefProps> {
   static propTypes = {
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.element,
 
     /**
