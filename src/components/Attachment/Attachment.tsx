@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ItemShorthand } from '../../../types/utils'
-import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
@@ -18,7 +18,7 @@ export type AttachmentProps = {
   header?: ItemShorthand
   icon?: ItemShorthand
   progress?: string | number
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
