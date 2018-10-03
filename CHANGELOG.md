@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add keyboard handling and ARIA attributes for `ButtonGroup`, `Tablist` and `Toolbar` behaviors @jurokapsiar ([#254](https://github.com/stardust-ui/react/pull/254))
 
 ### Documentation
+- Improve `Contributing` documentation for accessibility @jurokapsiar ([#303](https://github.com/stardust-ui/react/pull/303))
 - Add theme switcher for exploring different themes on the docs (under development mode flag) @mnajdova ([#280](https://github.com/stardust-ui/react/pull/280))
 - Add `Prototypes` section and `Chat Pane` prototype @Bugaa92 (only available in development mode) ([#235](https://github.com/stardust-ui/react/pull/235))
 
