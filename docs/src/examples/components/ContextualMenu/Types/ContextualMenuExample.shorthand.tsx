@@ -93,17 +93,10 @@ const menuTree = [
   },
 ]
 
-const personDescription = {
-  imageUrl: 'public/images/avatar/small/elliot.jpg',
-  description: 'Gopal Goel',
-}
-
 const callback = () => {
   alert('Callback invoked')
 }
 
-const ContextualMenuExample = () => (
-  <ContextualMenu menutree={menuTree} persondescription={personDescription} callback={callback} />
-)
+const ContextualMenuExample = () => <ContextualMenu menutree={menuTree} callback={callback} />
 
 export default ContextualMenuExample

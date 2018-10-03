@@ -4,12 +4,11 @@ import ReactNode = React.ReactNode
 import { UIComponent, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import Popup from '../Popup/Popup'
-import Icon from '../Icon'
 import Menu from '../Menu'
 import Avatar from '../Avatar'
 import Provider from '../Provider'
 import Divider from '../Divider'
+import { PopupWithSubmenu } from './PopupWithSubmenu'
 
 export interface IContextualMenuProps {
   as?: any
@@ -94,37 +93,8 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
         item.onClick = callback
       }
       if (item.submenuitems !== undefined) {
-        this.processTree(item.submenuitems, callback)
-        item.content = (
-          <span>
-            <Popup
-              align="top"
-              position="after"
-              trigger={
-                <div>
-                  {item.iconName ? (
-                    <Icon
-                      name={item.iconName}
-                      styles={{ paddingLeft: '0', paddingRight: '15px' }}
-                    />
-                  ) : null}
-                  <span style={{ paddingLeft: '15px' }}>{item.title}</span>
-                  <Icon name="arrow right" styles={{ float: 'right', marginRight: '15px' }} />
-                </div>
-              }
-              content={
-                <Menu
-                  defaultActiveIndex={-1}
-                  items={item.submenuitems}
-                  pills
-                  vertical
-                  type="primary"
-                />
-              }
-            />
-            {item.divider ? <Divider variables={{ dividerPadding: 0 }} /> : null}
-          </span>
-        )
+        // this.processTree(item.submenuitems, callback)
+        item.content = <PopupWithSubmenu item={item} callback={callback} />
       }
     })
   }
