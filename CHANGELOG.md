@@ -23,6 +23,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
 
+### Documentation
+- Add theme switcher for exploring different themes on the docs (under development mode flag) @mnajdova ([#280](https://github.com/stardust-ui/react/pull/280))
+
 <!--------------------------------[ v0.8.0 ]------------------------------- -->
 ## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.7.0...v0.8.0)
