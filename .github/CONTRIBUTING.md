@@ -62,7 +62,7 @@ Stardust implements accessibility using accessibility behaviors. The behaviors a
 
 Behaviors apply properties, focus handling and keyboard handlers to the component slots. When developing a component, the properties and keyboard handlers need to be spreaded to the corresponding slots.
 
-For complete accessibility contributing guide see [Accessibility][2]
+For complete accessibility contributing guide, requireements and testing, see [Accessibility][2]
 
 - [Role and aria props](#role-and-aria-props)
 - [Focus](#focus)
