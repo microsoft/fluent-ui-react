@@ -356,8 +356,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
-    const { showRtl, componentVariables } = this.state
-    const { themeName } = this.state
+    const { showRtl, componentVariables, themeName } = this.state
     const theme = themes[themeName]
 
     const newTheme: IThemeInput = {
@@ -554,10 +553,12 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         </Divider>
         <Provider.Consumer
           render={({ siteVariables, componentVariables }: IThemePrepared) => {
-            const mergedVariables = mergeThemeVariables(componentVariables, {
-              [displayName]: this.state.componentVariables,
-            })
-            const variables = mergedVariables[displayName]
+            // const mergedVariables = mergeThemeVariables(componentVariables, {
+            //   [displayName]: this.state.componentVariables,
+            // })
+            // const variables = mergedVariables[displayName]
+
+            const variables = componentVariables[displayName]
 
             if (!variables) {
               return (
