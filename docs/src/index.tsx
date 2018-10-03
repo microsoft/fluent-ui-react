@@ -1,14 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-
-// TODO make themes a monorepo of packages
-import { Provider, themes } from '@stardust-ui/react'
-
-import Router from './routes'
-import { mergeThemes } from '../../src/lib'
-
-import { semanticCssOverrides } from './Style'
+import App from './app'
 
 // ----------------------------------------
 // Rendering
@@ -17,24 +10,10 @@ import { semanticCssOverrides } from './Style'
 const mountNode = document.createElement('div')
 document.body.appendChild(mountNode)
 
-const semanticStyleOverrides = {
-  staticStyles: [semanticCssOverrides],
-}
-
 const render = NewApp =>
   ReactDOM.render(
     <AppContainer>
-      <Provider
-        theme={mergeThemes(semanticStyleOverrides, themes.teams, {
-          // adjust Teams' theme to Semantic UI's font size scheme
-          siteVariables: {
-            htmlFontSize: '14px',
-            bodyFontSize: '1rem',
-          },
-        })}
-      >
-        <NewApp />
-      </Provider>
+      <NewApp />
     </AppContainer>,
     mountNode,
   )
@@ -46,13 +25,13 @@ const render = NewApp =>
 if (__DEV__) {
   // When the application source code changes, re-render the whole thing.
   if (module.hot) {
-    module.hot.accept('./routes', () => {
+    module.hot.accept('./app', () => {
       // restore scroll
       const { scrollLeft, scrollTop } = document.scrollingElement!
       ReactDOM.unmountComponentAtNode(mountNode)
 
       try {
-        render(require('./routes').default)
+        render(require('./app').default)
         document.scrollingElement!.scrollTop = scrollTop
         document.scrollingElement!.scrollLeft = scrollLeft
       } catch (e) {
@@ -66,4 +45,4 @@ if (__DEV__) {
 // Start the app
 // ----------------------------------------
 
-render(Router)
+render(App)
