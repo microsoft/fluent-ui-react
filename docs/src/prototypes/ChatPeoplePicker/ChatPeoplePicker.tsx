@@ -292,7 +292,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   onInputKeyDown = (highlightedIndex, selectItemAtIndex, event) => {
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Tab:
-        if (highlightedIndex !== undefined && !event.shiftKey) {
+        if (highlightedIndex !== undefined) {
           selectItemAtIndex(highlightedIndex)
         }
         return
