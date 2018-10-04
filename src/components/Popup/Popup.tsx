@@ -35,7 +35,7 @@ export interface IPopupProps {
   content?: ItemShorthand | ItemShorthand[]
   defaultOpen?: boolean
   open?: boolean
-  onOpenChange?: ComponentEventHandler<IPopupProps>
+  onChange?: ComponentEventHandler<IPopupProps>
   position?: Position
   trigger?: JSX.Element
 }
@@ -86,7 +86,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
      * @param {SyntheticEvent} event - React's original SyntheticEvent.
      * @param {object} data - All props and proposed value.
      */
-    onOpenChange: PropTypes.func,
+    onChange: PropTypes.func,
 
     /**
      * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
@@ -112,10 +112,10 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e =>
-      _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
+      _.invoke(this.props, 'onChange', e, { ...this.props, ...{ open: !this.props.open } }),
     closeAndFocusTrigger: e => {
-      if (this.props.onOpenChange) {
-        _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: false } })
+      if (this.props.onChange) {
+        _.invoke(this.props, 'onChange', e, { ...this.props, ...{ open: false } })
         _.invoke(this.state.triggerRef, 'focus')
       }
     },
