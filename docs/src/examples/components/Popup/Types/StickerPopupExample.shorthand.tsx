@@ -215,11 +215,13 @@ class StickerPopup extends React.Component {
     const index = arrayOfImages[this.state.activeMenuIndex] ? this.state.activeMenuIndex : 0
     return _.map(arrayOfImages[index], image => (
       <li key={image.key}>
-        <Button styles={imageButtonStyles} onClick={this.handleSelection}>
+        <Button
+          styles={imageButtonStyles}
+          onClick={this.handleSelection}
+          title={`sticker of ${image.key}`}
+        >
           <Image
             styles={imageStyle}
-            alt={`image of ${image.key}`}
-            aria-label={`image of ${image.key}`}
             fluid
             src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
           />
@@ -270,9 +272,14 @@ class StickerPopup extends React.Component {
     return (
       <Popup
         position="below"
-        trigger={<Button icon="sticky note" />}
+        trigger={<Button icon="sticky note" aria-label="Choose a sticker." />}
         content={
-          <div style={{ display: 'flex' }}>
+          <div
+            style={{ display: 'flex' }}
+            aria-label="Choose a sticker. Press Enter key to insert sticker."
+            role="dialog"
+            aria-modal="true"
+          >
             <div className="left-rail" style={{ paddingRight: '10px' }}>
               <Menu
                 accessibility={TabListBehavior}

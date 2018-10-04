@@ -102,11 +102,9 @@ const handleSelection = e => {
 const renderImages = () => {
   return _.map(images, (image, index) => (
     <li key={image.key}>
-      <Button styles={imageButtonStyles} onClick={handleSelection}>
+      <Button styles={imageButtonStyles} onClick={handleSelection} title={`emoji of ${image.key}`}>
         <Image
           styles={imageStyle}
-          alt={`image of ${image.key}`}
-          aria-label={`image of ${image.key}`}
           fluid
           src={image.src ? image.src : `public/images/avatar/large/${image.key}.jpg`}
         />
@@ -118,9 +116,13 @@ const renderImages = () => {
 const EmojiPopup = () => (
   <Popup
     position="below"
-    trigger={<Button icon="smile" />}
+    trigger={<Button icon="smile" aria-label="Choose an emoji." />}
     content={
-      <div>
+      <div
+        aria-label="Choose an emoji. Press Enter key to insert emoji."
+        role="dialog"
+        aria-modal="true"
+      >
         {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
         {<br />}
         {

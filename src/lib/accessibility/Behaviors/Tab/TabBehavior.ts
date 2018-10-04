@@ -7,7 +7,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'tab' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
- * Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'
+ * Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by property 'aria-selected'
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
