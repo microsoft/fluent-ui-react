@@ -1,11 +1,8 @@
 import * as React from 'react'
-import Scrollbars from 'react-custom-scrollbars'
-import { Chat, ChatMessage } from '@stardust-ui/react'
+import * as _ from 'lodash'
+import { Chat, Divider } from '@stardust-ui/react'
 
-import { IChat, UserStatus } from './data/interfaces'
-import { IChatMessageProps } from 'src/components/Chat'
-import { IStatusProps } from 'src/components/Status/Status'
-import { Extendable } from 'utils'
+import { IChat, ChatItemType, generateChatProps } from './services'
 
 import {
   List as VirtualizedList,
@@ -15,7 +12,6 @@ import {
   ListRowProps,
   OverscanIndexRange,
   IndexRange,
-  ScrollParams,
 } from 'react-virtualized'
 
 export interface IChatPaneContainerProps {
@@ -28,21 +24,12 @@ interface IAutoSizer {
 }
 interface IOnRowsRendered extends OverscanIndexRange, IndexRange {}
 
-type StatusProps = Extendable<IStatusProps>
-
-const statusMap: Map<UserStatus, StatusProps> = new Map([
-  ['Available', { color: 'green', icon: 'check', title: 'Available' }],
-  ['DoNotDisturb', { color: 'red', icon: 'minus', title: 'Do not disturb' }],
-  ['Away', { color: 'yellow', icon: 'clock', title: 'Away' }],
-  ['Offline', { color: 'grey', title: 'Offline' }],
-] as [UserStatus, StatusProps][])
-
 class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
   private listRef: VirtualizedList
   private mostRecentStopIndex: number
   private mostRecentScrollHeight: number
-  private mostRecentScrollTop: number
   private isCacheInitialized = false
+  private chatItemsLength: number
 
   private cache = new CellMeasurerCache({
     minHeight: 36,
@@ -61,25 +48,11 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
   }
 
   public render() {
-    const { members, messages } = this.props.chat
-
-    const chatMessages: IChatMessageProps[] = messages.map(msg => {
-      const fromUser = members.get(msg.from)
-
-      return {
-        key: msg.id,
-        avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
-        content: msg.content,
-        mine: msg.mine,
-        tabIndex: 0,
-        author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
-        timestamp: msg.date.toDateString(),
-      }
-    })
+    const chatItems: JSX.Element[] = this.generateChatItems(this.props.chat)
+    this.chatItemsLength = chatItems.length
 
     return (
-      chatMessages &&
-      chatMessages.length > 0 && (
+      this.chatItemsLength > 0 && (
         <AutoSizer>
           {({ width, height }: IAutoSizer) => (
             <Chat
@@ -89,12 +62,11 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
               height={height}
               overscanRowCount={this.overscanRowCount}
               onRowsRendered={this.onRowsRendered}
-              onScroll={this.onScroll}
               chatRef={this.setListRef}
-              rowCount={chatMessages.length}
+              rowCount={this.chatItemsLength}
               rowHeight={this.cache.rowHeight}
-              rowRenderer={this.rowRenderer.bind(this, chatMessages)}
-              scrollToIndex={chatMessages.length - 1}
+              rowRenderer={this.rowRenderer.bind(this, chatItems)}
+              scrollToIndex={this.chatItemsLength - 1}
               width={width}
             />
           )}
@@ -103,19 +75,32 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
     )
   }
 
-  private rowRenderer = (
-    chatMessages: IChatMessageProps[],
-    { style, index, key, parent }: ListRowProps,
-  ) => {
+  private rowRenderer = (chatItems: JSX.Element[], { style, index, key, parent }: ListRowProps) => {
     return (
       <CellMeasurer cache={this.cache} columnIndex={0} key={key} rowIndex={index} parent={parent}>
-        <div style={style}>
-          <Chat.Item>
-            <Chat.Message {...chatMessages[index]} />
-          </Chat.Item>
-        </div>
+        <div style={style}>{chatItems[index]}</div>
       </CellMeasurer>
     )
+  }
+
+  private generateChatItems(chat: IChat): JSX.Element[] {
+    return generateChatProps(chat).map(({ itemType, ...props }, index) => {
+      const ElementType = this.getElementType(itemType)
+      return (
+        <Chat.Item key={`chat-item-${index}`}>
+          <ElementType {...props} />
+        </Chat.Item>
+      )
+    })
+  }
+
+  private getElementType = (itemType: ChatItemType) => {
+    switch (itemType) {
+      case ChatItemType.message:
+        return Chat.Message
+      case ChatItemType.divider:
+        return Divider
+    }
   }
 
   private clearCacheAtIndex = (index = 0) => {
@@ -124,43 +109,22 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
 
   private scrollToBottom = () => {
     if (this.listRef) {
-      this.listRef.scrollToRow(this.props.chat.messages.length - 1)
-    }
-  }
-
-  private onScroll = (scrollParams: ScrollParams) => {
-    const { scrollHeight, scrollTop } = scrollParams
-    const messagesLength = this.props.chat.messages.length
-
-    if (this.isCacheInitialized) {
-      const changeInScrollHeight = scrollHeight - this.mostRecentScrollHeight
-
-      if (
-        this.listRef &&
-        this.mostRecentStopIndex !== messagesLength - 1 &&
-        changeInScrollHeight !== 0
-      ) {
-        this.listRef.scrollToPosition(scrollTop + changeInScrollHeight)
-      }
-
-      this.mostRecentScrollHeight = scrollHeight
-      this.mostRecentScrollTop = scrollTop
+      this.listRef.scrollToRow(this.chatItemsLength - 1)
     }
   }
 
   private onRowsRendered = ({ stopIndex }: IOnRowsRendered) => {
     window.requestAnimationFrame(() => {
-      const messagesLength = this.props.chat.messages.length
       if (
         !this.isCacheInitialized &&
-        this.mostRecentStopIndex === messagesLength - 1 &&
-        messagesLength > this.overscanRowCount
+        this.mostRecentStopIndex === this.chatItemsLength - 1 &&
+        this.chatItemsLength > this.overscanRowCount
       ) {
         this.listRef.scrollToPosition(this.mostRecentScrollHeight - 1)
-        this.listRef.scrollToRow(messagesLength - 1)
+        this.listRef.scrollToRow(this.chatItemsLength - 1)
 
         this.setCacheAsInitialized()
-      } else if (!this.isCacheInitialized && messagesLength <= this.overscanRowCount) {
+      } else if (!this.isCacheInitialized && this.chatItemsLength <= this.overscanRowCount) {
         this.setCacheAsInitialized()
       }
     })

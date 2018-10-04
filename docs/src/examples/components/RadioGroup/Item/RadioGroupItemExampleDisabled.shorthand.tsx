@@ -4,8 +4,8 @@ import { RadioGroup } from '@stardust-ui/react'
 const RadioGroupItemExampleDisabledShorthand = () => (
   <RadioGroup
     items={[
-      <RadioGroup.Item label="Disabled" value="1" disabled />,
-      <RadioGroup.Item label="Enabled" value="2" />,
+      <RadioGroup.Item key="1" label="Disabled" value="1" disabled />,
+      <RadioGroup.Item key="2" label="Enabled" value="2" />,
     ]}
   />
 )

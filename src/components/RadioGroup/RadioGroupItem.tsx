@@ -24,11 +24,12 @@ export interface IRadioGroupItemProps {
   checkedChanged?: ComponentEventHandler<IRadioGroupItemProps>
   children?: ReactChildren
   className?: string
+  label?: React.ReactNode
   defaultChecked?: boolean
   disabled?: boolean
   icon?: ItemShorthand
-  label?: string
   name?: string
+  shouldFocus?: boolean // TODO: RFC #306
   styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
@@ -49,6 +50,8 @@ class RadioGroupItem extends AutoControlledComponent<
   Extendable<IRadioGroupItemProps>,
   IRadioGroupItemState
 > {
+  private elementRef: HTMLElement
+
   static create: Function
 
   static displayName = 'RadioGroupItem'
@@ -64,7 +67,10 @@ class RadioGroupItem extends AutoControlledComponent<
     /** Whether or not radio item is checked. */
     checked: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -86,7 +92,7 @@ class RadioGroupItem extends AutoControlledComponent<
     isFromKeyboard: PropTypes.bool,
 
     /** The label of the radio item. */
-    label: PropTypes.string,
+    label: customPropTypes.contentShorthand,
 
     /** The HTML input name. */
     name: PropTypes.string,
@@ -119,6 +125,9 @@ class RadioGroupItem extends AutoControlledComponent<
      */
     checkedChanged: PropTypes.func,
 
+    /** Whether should focus when checked */
+    shouldFocus: PropTypes.bool,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -139,32 +148,16 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
 
-  private elementRef: HTMLElement
-
-  componentDidMount() {
-    this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
-  }
-
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
     if (checked !== prevState.checked) {
-      checked && this.elementRef.focus()
+      checked && this.props.shouldFocus && this.elementRef.focus()
       _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
     }
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.initial)
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  private handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
+  componentDidMount() {
+    this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
@@ -193,6 +186,20 @@ class RadioGroupItem extends AutoControlledComponent<
         </Label>
       </ElementType>
     )
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.state())
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.initial)
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 }
 

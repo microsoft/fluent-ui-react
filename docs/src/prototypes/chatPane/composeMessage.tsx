@@ -4,7 +4,7 @@ import { IMenuItemProps } from 'src/components/Menu/MenuItem'
 
 type ToolbarProps = IMenuItemProps & { key: string; 'aria-label'?: string }
 
-export class ComposeMessage extends React.Component {
+class ComposeMessage extends React.Component {
   public render() {
     return (
       <Layout
@@ -21,7 +21,6 @@ export class ComposeMessage extends React.Component {
       <Input
         fluid
         placeholder="Type a message"
-        input={{ styles: { height: '48px' } }}
         variables={siteVars => ({ backgroundColor: siteVars.white })}
       />
     )
@@ -69,3 +68,5 @@ export class ComposeMessage extends React.Component {
     }
   }
 }
+
+export default ComposeMessage
