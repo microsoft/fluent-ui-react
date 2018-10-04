@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { Chat, Divider } from '@stardust-ui/react'
 
-import { IChat, ChatItemType, generateChatProps } from './services'
+import { IChat, ChatItemType, generateChatProps } from '../chatPane/services'
 
 import {
   List as VirtualizedList,

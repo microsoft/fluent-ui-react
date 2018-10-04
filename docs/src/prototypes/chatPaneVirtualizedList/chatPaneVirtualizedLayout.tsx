@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Layout } from '@stardust-ui/react'
-import { IChat } from './services'
+import { IChat } from '../chatPane/services'
 
-import ChatPaneHeader from './chatPaneHeader'
+import ChatPaneHeader from '../chatPane/chatPaneHeader'
 import ChatPaneVirtualizedListContainer from './chatPaneVirtualizedContent'
-import ComposeMessage from './composeMessage'
+import ComposeMessage from '../chatPane/composeMessage'
 
 export interface IChatPaneLayoutProps {
   chat: IChat
