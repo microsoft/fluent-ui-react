@@ -35,15 +35,3 @@ export const green04 = green
 //
 export const bodyBackground = black
 export const bodyColor = white
-
-//
-// TEXT VARIABLES
-//
-export const importantTextColor = red
-export const atMentionMeTextColor = orange04
-export const atMentionOtherTextColor = brand06
-export const disabledTextColor = gray06
-export const errorTextColor = red
-export const successTextColor = green04
-export const timestampTextColor = gray04
-export const timestampHoverTextColor = gray02
