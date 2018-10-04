@@ -687,13 +687,23 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
             </Grid.Column>
           )}
 
-          <Grid.Column
-            width={16}
-            className={`rendered-example ${this.getKebabExamplePath()}`}
-            style={{ padding: '2rem' }}
-          >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
-          </Grid.Column>
+          <Provider.Consumer
+            render={({ siteVariables }) => {
+              return (
+                <Grid.Column
+                  width={16}
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  style={{
+                    padding: '2rem',
+                    backgroundColor: siteVariables.bodyBackground,
+                    color: siteVariables.bodyColor,
+                  }}
+                >
+                  <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
+                </Grid.Column>
+              )
+            }}
+          />
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}
             {this.renderError()}
