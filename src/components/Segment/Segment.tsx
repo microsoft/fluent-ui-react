@@ -8,7 +8,7 @@ export interface ISegmentProps {
   as?: any
   className?: string
   content?: any
-  styles?: ComponentPartStyle
+  styles?: ComponentPartStyle<ISegmentProps, any>
   variables?: ComponentVariablesInput
 }
 
@@ -21,20 +21,18 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',

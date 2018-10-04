@@ -17,6 +17,58 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix Attachment `styles` prop typing @levithomason ([#299](https://github.com/stardust-ui/react/pull/299))
+- Fix generation of `key` for the `Accordion.Content` @mnajdova ([#305](https://github.com/stardust-ui/react/pull/305))
+- Ensure `Popup` is rendered as direct child of `body` element in the DOM tree @kuzhelov ([#302](https://github.com/stardust-ui/react/pull/302))
+- Fix toggle logic of `Popup` as reaction on key press events @kuzhelov ([#304](https://github.com/stardust-ui/react/pull/304))
+- Fix for `RadioGroup`: made `label` accept react nodes as value and fixed keyboard navigation @Bugaa92 ([#287](https://github.com/stardust-ui/react/pull/287))
+
+### Features
+- Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
+- Add keyboard handling and ARIA attributes for `ButtonGroup`, `Tablist` and `Toolbar` behaviors @jurokapsiar ([#254](https://github.com/stardust-ui/react/pull/254))
+
+### Documentation
+- Improve `Contributing` documentation for accessibility @jurokapsiar ([#303](https://github.com/stardust-ui/react/pull/303))
+- Add theme switcher for exploring different themes on the docs (only available in development mode) @mnajdova ([#280](https://github.com/stardust-ui/react/pull/280))
+- Add `Prototypes` section and `Chat Pane` prototype (only available in development mode) @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
+
+<!--------------------------------[ v0.8.0 ]------------------------------- -->
+## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.7.0...v0.8.0)
+
+### BREAKING CHANGES
+- Change font ramp and Text size API @codepretty ([#214](https://github.com/stardust-ui/react/pull/214))
+- Add `ChatItem` component that can be used inside the `Chat` via the Children API or the `items` prop, instead of the `Chat.Message` used directly in the previous `messages` prop @mnajdova ([#255](https://github.com/stardust-ui/react/pull/255))
+- Make `Popup` to be a controlled component @kuzhelov ([#282](https://github.com/stardust-ui/react/pull/282))
+
+### Features
+- Add embed mode for `FocusZone` and use it in newly added Chat behaviors @tomasiser ([#233](https://github.com/stardust-ui/react/pull/233))
+- Add default accessibility behavior to `Popup` @sophieH29 ([#218](https://github.com/stardust-ui/react/pull/218))
+
+### Documentation
+- Improve `Contributing` documentation @alinais, @levithomason ([#189](https://github.com/stardust-ui/react/pull/189))
+
+<!--------------------------------[ v0.7.0 ]------------------------------- -->
+## [v0.7.0](https://github.com/stardust-ui/react/tree/v0.7.0) (2018-09-25)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.6.0...v0.7.0)
+
+### BREAKING CHANGES
+- Add `image` and `label` shorthands props for `Avatar` @mnajdova ([#270](https://github.com/stardust-ui/react/pull/270))
+
+### Features
+- Add `Attachment` component @levithomason ([#220](https://github.com/stardust-ui/react/pull/220))
+- Add `atMention="me"` value to Text API @codepretty ([#277](https://github.com/stardust-ui/react/pull/277))
+
+### Documentation
+- Add `Theming` guide @almedint, @levithomason ([#152](https://github.com/stardust-ui/react/pull/152))
+- Update `Theming` guide @levithomason ([#274](https://github.com/stardust-ui/react/pull/274))
+- Add `Theming Examples` guide @almedint ([#252](https://github.com/stardust-ui/react/pull/252))
+
+<!--------------------------------[ v0.6.0 ]------------------------------- -->
+## [v0.6.0](https://github.com/stardust-ui/react/tree/v0.6.0) (2018-09-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.5.2...v0.6.0)
+
 ### BREAKING CHANGES
 - Fixed `Divider` wrong usage of the `typeSecondary{color, backgroundColor}` and `default{color, backgroundColor}` variables; renamed `default{color, backgroundColor}` variables to `color` and `backgroundColor` @mnajdova ([#234](https://github.com/stardust-ui/react/pull/234))
 - Restrict the `styles` prop to styling the root element only @levithomason ([#238](https://github.com/stardust-ui/react/pull/238))

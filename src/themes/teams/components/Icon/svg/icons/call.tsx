@@ -22,7 +22,7 @@ export default {
     </svg>
   ),
   styles: {
-    svg: ({ props, variables }) => {
+    svg: ({ variables }) => {
       return {
         fill: variables.color,
       }

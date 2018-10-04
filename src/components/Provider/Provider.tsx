@@ -13,6 +13,7 @@ import {
   IFontFace,
 } from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
+import { mergeSiteVariables } from '../../lib/mergeThemes'
 
 export interface IProviderProps {
   theme: IThemeInput
@@ -74,7 +75,8 @@ class Provider extends React.Component<IProviderProps, any> {
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject((staticStyle as StaticStyleFunction)(siteVariables))
+        const preparedSiteVariables = mergeSiteVariables(siteVariables)
+        renderObject((staticStyle as StaticStyleFunction)(preparedSiteVariables))
       } else {
         throw new Error(
           `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
