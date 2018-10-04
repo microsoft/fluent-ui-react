@@ -18,8 +18,6 @@ class AvatarEmployeeCard extends React.Component<any, { popupOpen: boolean }> {
 
   timer = () =>
     setTimeout(() => {
-      // return the timeoutID
-      console.log(this.tryClose)
       if (this.tryClose === true) {
         this.setState({
           popupOpen: false,
