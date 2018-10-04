@@ -402,7 +402,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
-        className: disabled && 'crossout',
+        ...(disabled && { className: 'crossout' }),
       }
     })
 
