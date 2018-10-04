@@ -692,6 +692,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
               return (
                 <Grid.Column
                   width={16}
+                  dir={showRtl ? 'rtl' : undefined}
                   className={`rendered-example ${this.getKebabExamplePath()}`}
                   style={{
                     padding: '2rem',
@@ -699,7 +700,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
                     color: siteVariables.bodyColor,
                   }}
                 >
-                  <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
+                  {exampleElement}
                 </Grid.Column>
               )
             }}
