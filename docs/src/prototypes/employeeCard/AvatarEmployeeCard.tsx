@@ -16,7 +16,7 @@ class AvatarEmployeeCard extends React.Component<
   tryClose = false
 
   togglePopup(popupOpen) {
-    if (popupOpen === false) {
+    if (!popupOpen) {
       this.tryClose = true
       this.timer()
     } else {
@@ -27,7 +27,7 @@ class AvatarEmployeeCard extends React.Component<
 
   timer = () =>
     setTimeout(() => {
-      if (this.tryClose === true) {
+      if (this.tryClose) {
         this.setState({
           popupOpen: false,
         })
