@@ -143,7 +143,7 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
-    // accessibility: radioGroupItemBehavior as Accessibility,
+    accessibility: radioGroupItemBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
