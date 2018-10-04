@@ -3,7 +3,7 @@ import { white, green } from '../teams/siteVariables'
 //
 // COLORS
 //
-export const black = '#201f1f'
+export const black = '#201f1e'
 
 export const gray02 = '#c8c6c4'
 export const gray03 = '#b3b0ad'
