@@ -11,6 +11,7 @@ CONTRIBUTING
 - [Accessibility](#accessibility)
   - [Role and aria props](#role-and-aria-props)
   - [Focus](#focus)
+  - [Keyboard handling](#keyboard-handling)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

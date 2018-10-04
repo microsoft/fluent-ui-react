@@ -35,9 +35,6 @@ const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> =
       ...(type === 'primary' && {
         color: variables.primaryColor,
       }),
-      ...(type === 'secondary' && {
-        color: variables.secondaryColor,
-      }),
       ...(important && {
         fontWeight: variables.importantFontWeight,
       }),
