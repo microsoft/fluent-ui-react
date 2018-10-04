@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import {
-  ComponentPartStyle,
+  ComponentPartStyleFunction,
   IComponentPartStylesInput,
   ICSSInJSStyle,
 } from '../../../../../types/theme'
@@ -39,7 +39,7 @@ const getActionStyles = ({
           background: v.defaultActiveBackgroundColor,
         }
 
-const itemSeparator: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
+const itemSeparator: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
   props,
   variables: v,
 }): ICSSInJSStyle => {
@@ -72,7 +72,7 @@ const itemSeparator: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
   )
 }
 
-const pointingBeak: ComponentPartStyle<IMenuItemProps, IMenuVariables> = ({
+const pointingBeak: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
   props,
   variables: v,
 }): ICSSInJSStyle => {
@@ -264,7 +264,7 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
         ...(type === 'primary'
           ? {
               ...(iconOnly && { color: v.typePrimaryActiveBorderColor }),
-              ...(!active && underlined && underlinedItem(v.typePrimaryHoverBorderColor)),
+              ...(!active && underlined && underlinedItem(v.typePrimaryHoverBorderColor as string)),
             }
           : !active && underlined && underlinedItem(v.defaultActiveBackgroundColor)),
       },
