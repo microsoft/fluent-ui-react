@@ -5,7 +5,7 @@ import { Accessibility } from '../../interfaces'
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
-const InputBehavior: Accessibility = (props: any) => ({
+const inputBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       'aria-disabled': !!props['disabled'],
@@ -13,4 +13,4 @@ const InputBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default InputBehavior
+export default inputBehavior

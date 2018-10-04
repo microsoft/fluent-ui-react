@@ -1,4 +1,4 @@
-import { Accessibility, AccessibilityAttributes } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
 
 /**
  * @description
@@ -6,15 +6,13 @@ import { Accessibility, AccessibilityAttributes } from '../../interfaces'
  *  Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
-export const ButtonAttributes = (props: any): AccessibilityAttributes => ({
-  root: {
-    role: props.as === 'button' ? undefined : 'button',
-    'aria-disabled': !!props['disabled'],
+const buttonBehavior: Accessibility = (props: any) => ({
+  attributes: {
+    root: {
+      role: props.as === 'button' ? undefined : 'button',
+      'aria-disabled': !!props['disabled'],
+    },
   },
 })
 
-const ButtonBehavior: Accessibility = (props: any) => ({
-  attributes: ButtonAttributes(props),
-})
-
-export default ButtonBehavior
+export default buttonBehavior

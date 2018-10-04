@@ -1,5 +1,4 @@
 import { Accessibility } from '../../interfaces'
-import { ButtonAttributes } from '../Button/ButtonBehavior'
 
 /**
  * @description
@@ -8,14 +7,14 @@ import { ButtonAttributes } from '../Button/ButtonBehavior'
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  */
 
-const ToggleButtonBehavior: Accessibility = (props: any) => ({
+const toggleButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      ...ButtonAttributes(props).root,
-      'aria-pressed': !!props['active'],
+      role: props.as === 'button' ? undefined : 'button',
       'aria-disabled': !!props['disabled'],
+      'aria-pressed': !!props['active'],
     },
   },
 })
 
-export default ToggleButtonBehavior
+export default toggleButtonBehavior

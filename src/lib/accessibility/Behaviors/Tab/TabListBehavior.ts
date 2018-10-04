@@ -5,7 +5,7 @@ import { Accessibility, FocusZoneMode } from '../../interfaces'
  * Adds role 'tablist' to 'root' component's part.
  * Wraps component in FocusZone allowing arrow key navigation through the children of the component.
  */
-const TabListBehavior: Accessibility = (props: any) => ({
+const tabListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'tablist',
@@ -20,4 +20,4 @@ const TabListBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default TabListBehavior
+export default tabListBehavior

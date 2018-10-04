@@ -6,7 +6,7 @@ import { Accessibility } from '../../interfaces'
  * The listbox role is used to identify an element that creates a list from which a user may select one or more items.
  */
 
-const SelectableListBehavior: Accessibility = (props: any) => ({
+const selectableListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'listbox',
@@ -14,4 +14,4 @@ const SelectableListBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default SelectableListBehavior
+export default selectableListBehavior

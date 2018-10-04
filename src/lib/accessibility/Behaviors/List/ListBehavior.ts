@@ -1,5 +1,5 @@
 import { Accessibility } from '../../interfaces'
-import SelectableListBehavior from './SelectableListBehavior'
+import SelectableListBehavior from './selectableListBehavior'
 import BasicListBehavior from './BasicListBehavior'
 
 /**

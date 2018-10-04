@@ -6,7 +6,7 @@ import { Accessibility } from '../../interfaces'
  * The 'listitem' role is used to identify an element that is a single item in a list.
  */
 
-const BasicListItemBehavior: Accessibility = (props: any) => ({
+const basicListItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'listitem',
@@ -14,4 +14,4 @@ const BasicListItemBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default BasicListItemBehavior
+export default basicListItemBehavior

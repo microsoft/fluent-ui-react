@@ -23,7 +23,7 @@ import {
   AccessibilityActionHandlers,
   FocusZoneMode,
 } from './accessibility/interfaces'
-import { DefaultBehavior } from './accessibility'
+import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import {
@@ -64,7 +64,7 @@ const getAccessibility = (
   const { accessibility: customAccessibility, defaultAccessibility } = props
   const accessibility: IAccessibilityDefinition = (customAccessibility ||
     defaultAccessibility ||
-    DefaultBehavior)(props)
+    defaultBehavior)(props)
 
   const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
   return {

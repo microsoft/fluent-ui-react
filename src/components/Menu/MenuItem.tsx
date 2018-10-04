@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
+import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
@@ -119,7 +119,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
   }
 
   state = IsFromKeyboard.initial

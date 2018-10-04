@@ -1,9 +1,9 @@
 import { Accessibility } from '../interfaces'
 
-const DefaultBehavior: Accessibility = (props: any) => ({
+const defaultBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {},
   },
 })
 
-export default DefaultBehavior
+export default defaultBehavior

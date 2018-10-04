@@ -13,7 +13,7 @@ import * as keyboardKey from 'keyboard-key'
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
 
-const MenuItemBehavior: Accessibility = (props: any) => ({
+const menuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -39,4 +39,4 @@ const MenuItemBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default MenuItemBehavior
+export default menuItemBehavior

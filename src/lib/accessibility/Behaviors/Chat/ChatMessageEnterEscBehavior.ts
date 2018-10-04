@@ -7,7 +7,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Sets the message to be a focusable element.
  * Adds a default focus zone navigation where a user navigates using arrow keys in all directions.
  */
-const ChatMessageEnterEscBehavior: Accessibility = (props: any) => ({
+const chatMessageEnterEscBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -22,4 +22,4 @@ const ChatMessageEnterEscBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default ChatMessageEnterEscBehavior
+export default chatMessageEnterEscBehavior

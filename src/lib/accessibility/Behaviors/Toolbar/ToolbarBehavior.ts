@@ -5,7 +5,7 @@ import { Accessibility, FocusZoneMode } from '../../interfaces'
  * Adds role 'toolbar' to 'root' component's part.
  * Wraps component in FocusZone allowing arrow key navigation through the children of the component.
  */
-const ToolbarBehavior: Accessibility = (props: any) => ({
+const toolbarBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'toolbar',
@@ -20,4 +20,4 @@ const ToolbarBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default ToolbarBehavior
+export default toolbarBehavior

@@ -12,7 +12,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
-const ToolbarButtonBehavior: Accessibility = (props: any) => ({
+const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -39,4 +39,4 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default ToolbarButtonBehavior
+export default toolbarButtonBehavior
