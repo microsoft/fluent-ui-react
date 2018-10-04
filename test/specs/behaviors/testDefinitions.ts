@@ -6,7 +6,7 @@ const testHelper = new TestHelper()
 
 // Example:  Adds attribute 'aria-pressed=true' based on the property 'active'
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)\.'/g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
     const property = {}
@@ -15,8 +15,8 @@ definitions.push({
     const expectedResult = callable(parameters.behavior)(property).attributes!.root[
       attributeToBeAdded
     ]
-    expect(testHelper.convertToBooleenIfApplicable(expectedResult)).toEqual(
-      testHelper.convertToBooleenIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
   },
 })
@@ -36,7 +36,7 @@ definitions.push({
 
 // Example:  Adds role='listbox'.
 definitions.push({
-  regexp: /Adds role='([a-z]+)'./g,
+  regexp: /Adds role='([a-z]+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded] = [...parameters.props]
     const property = {}
@@ -61,7 +61,7 @@ definitions.push({
 // Example: Adds attribute 'tabIndex=0' to 'anchor' component's part.
 //          Adds attribute 'data-is-focusable=true' to 'anchor' component's part.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z]+)' component's part./g,
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = [
       ...parameters.props,
@@ -70,13 +70,15 @@ definitions.push({
     const expectedResult = callable(parameters.behavior)(property).attributes[
       elementWhereToBeAdded
     ][attributeToBeAdded]
-    expect(expectedResult).toEqual(testHelper.convertToBooleenIfApplicable(attributeExpectedValue))
+    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
   },
 })
 
 // Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
-  regexp: /Adds attribute '([a-z -]+)' based on the property '([a-z -]+)' to '([a-z -]+)' component's part./g,
+  regexp: /Adds attribute '([a-z -]+)' based on the property '([a-z -]+)' to '([a-z -]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, propertyDependingOn, elementWhereToBeAdded] = [...parameters.props]
     const property = {}
@@ -86,35 +88,35 @@ definitions.push({
       elementWhereToBeAdded
     ][attributeToBeAdded]
     expect(expectedResult).toEqual(
-      testHelper.convertToBooleenIfApplicable(propertyDependingOnValue),
+      testHelper.convertToBooleanIfApplicable(propertyDependingOnValue),
     )
   },
 })
 
 // Example: Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)', if there is no '[a-z]+' property provided.+/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)', if there is no '[a-z]+' property provided\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}
     const expectedResult = callable(parameters.behavior)(property).attributes.root[
       attributeToBeAdded
     ]
-    expect(testHelper.convertToBooleenIfApplicable(expectedResult)).toBe(
-      testHelper.convertToBooleenIfApplicable(attributeExpectedValue),
+    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
   },
 })
 
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
-  regexp: /Adds role='([a-z]+)' if element type is other than '[a-z]+'.+/g,
+  regexp: /Adds role='([a-z]+)' if element type is other than '[a-z]+'\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded] = [...parameters.props]
     const property = {}
     const expectedResult = callable(parameters.behavior)(property).attributes.root.role
-    expect(testHelper.convertToBooleenIfApplicable(expectedResult)).toBe(
-      testHelper.convertToBooleenIfApplicable(roleToBeAdded),
+    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
+      testHelper.convertToBooleanIfApplicable(roleToBeAdded),
     )
   },
 })

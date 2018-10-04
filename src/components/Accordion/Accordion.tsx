@@ -52,10 +52,13 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -89,26 +92,12 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'exclusive',
-    'onTitleClick',
-    'panels',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     accessibility: DefaultBehavior as Accessibility,
@@ -163,19 +152,14 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
 
       children.push(
         AccordionTitle.create(title, {
-          generateKey: true,
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
         }),
       )
       children.push(
-        AccordionContent.create(
-          { content },
-          {
-            generateKey: true,
-            defaultProps: { active },
-          },
-        ),
+        AccordionContent.create(content, {
+          defaultProps: { active },
+        }),
       )
     })
 

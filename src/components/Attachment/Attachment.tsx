@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ItemShorthand } from '../../../types/utils'
-import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
@@ -18,7 +18,7 @@ export type AttachmentProps = {
   header?: ItemShorthand
   icon?: ItemShorthand
   progress?: string | number
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -32,19 +32,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
 
   static displayName = 'Attachment'
 
-  static handledProps = [
-    'action',
-    'actionable',
-    'as',
-    'children',
-    'description',
-    'header',
-    'icon',
-    'progress',
-    'styles',
-    'variables',
-  ]
-
   static propTypes = {
     /** Button shorthand for the action slot. */
     action: customPropTypes.itemShorthand,
@@ -55,7 +42,9 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     /** An element type to render as. */
     as: customPropTypes.as,
 
-    /** Define your own children. */
+    /** Define your own children.
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A string describing the attachment. */

@@ -37,10 +37,13 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -52,7 +55,7 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -62,17 +65,6 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
   static defaultProps = {
     as: 'h1',
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'description',
-    'styles',
-    'textAlign',
-    'variables',
-  ]
 
   static Description = HeaderDescription
 

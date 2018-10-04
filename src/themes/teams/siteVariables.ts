@@ -17,7 +17,6 @@ export const gray08 = '#E1DFDD'
 export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray14 = '#FAF9F8'
-export const fontBlack = black
 
 export const white = '#FFF'
 
@@ -42,14 +41,13 @@ export const green04 = '#237b4b'
 //
 // FONT SIZES
 //
-export const fontSizeX4 = pxToRem(72)
-export const fontSizeX3 = pxToRem(48)
-export const fontSizeX2 = pxToRem(36)
-export const fontSizeExtraLarge = pxToRem(24)
-export const fontSizeLarge = pxToRem(18)
-export const fontSizeMedium = pxToRem(14)
-export const fontSizeSmall = pxToRem(12)
-export const fontSizeExtraSmall = pxToRem(10)
+export const fontSizes = {
+  smaller: pxToRem(10),
+  small: pxToRem(12),
+  medium: pxToRem(14),
+  large: pxToRem(18),
+  larger: pxToRem(24),
+}
 
 //
 // STATUS COLORS
