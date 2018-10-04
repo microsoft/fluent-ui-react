@@ -91,7 +91,7 @@ export class TestHelper {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
     if (!importedBehavior) {
-      throw 'Behavior file was not find, probably was not imported. Import file and add behavior.'
+      throw 'Behavior file was not found, probably was not imported. Import file and add behavior.'
     }
 
     return typeof importedBehavior === 'function'
@@ -99,7 +99,7 @@ export class TestHelper {
       : (importedBehavior as IAccessibilityDefinition)
   }
 
-  public convertToBooleenIfApplicable(stringToConvert: string) {
+  public convertToBooleanIfApplicable(stringToConvert: string) {
     if (stringToConvert === 'true' || stringToConvert === 'false') {
       return Boolean(stringToConvert)
     }

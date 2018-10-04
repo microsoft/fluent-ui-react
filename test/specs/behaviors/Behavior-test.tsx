@@ -10,6 +10,8 @@ import {
   MenuBehavior,
   MenuItemBehavior,
   ImageBehavior,
+  RadioGroupBehavior,
+  RadioGroupItemBehavior,
 } from '../../../src/lib/accessibility/'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -29,5 +31,7 @@ testHelper.addBehavior('SelectableListBehavior', SelectableListBehavior)
 testHelper.addBehavior('MenuBehavior', MenuBehavior)
 testHelper.addBehavior('MenuItemBehavior', MenuItemBehavior)
 testHelper.addBehavior('ImageBehavior', ImageBehavior)
+testHelper.addBehavior('RadioGroupBehavior', RadioGroupBehavior)
+testHelper.addBehavior('RadioGroupItemBehavior', RadioGroupItemBehavior)
 
 testHelper.run(behaviorMenuItems)

@@ -10,12 +10,14 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
     const property = {}
-    property[propertyDependingOn] = propertyDependingOn
+    property[propertyDependingOn] = attributeExpectedValue
 
     const expectedResult = callable(parameters.behavior)(property).attributes!.root[
       attributeToBeAdded
     ]
-    expect(expectedResult).toBe(testHelper.convertToBooleenIfApplicable(attributeExpectedValue))
+    expect(testHelper.convertToBooleenIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToBooleenIfApplicable(attributeExpectedValue),
+    )
   },
 })
 
