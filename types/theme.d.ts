@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
+import { Extendable, ObjectOf, ObjectOrFunc } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -178,6 +178,7 @@ export interface IThemeComponentStylesInput {
   ListItem?: IComponentPartStylesInput
   Menu?: IComponentPartStylesInput
   Text?: IComponentPartStylesInput
+  PopupContent?: IComponentPartStylesInput
 }
 
 export interface IThemeComponentStylesPrepared {
@@ -196,6 +197,7 @@ export interface IThemeComponentStylesPrepared {
   ListItem?: IComponentPartStylesPrepared
   Menu?: IComponentPartStylesPrepared
   Text?: IComponentPartStylesPrepared
+  PopupContent?: IComponentPartStylesPrepared
 }
 
 export interface IThemeComponentVariablesInput {
@@ -213,6 +215,7 @@ export interface IThemeComponentVariablesInput {
   ListItem?: ComponentVariablesInput
   Menu?: ComponentVariablesInput
   Text?: ComponentVariablesInput
+  PopupContent?: ComponentVariablesInput
 }
 
 export interface IThemeComponentVariablesPrepared {
@@ -230,6 +233,7 @@ export interface IThemeComponentVariablesPrepared {
   ListItem?: ComponentVariablesPrepared
   Menu?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared
+  PopupContent?: ComponentVariablesPrepared
 }
 
 export interface IRenderer extends IFelaRenderer {}

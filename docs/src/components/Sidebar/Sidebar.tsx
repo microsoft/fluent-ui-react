@@ -242,6 +242,14 @@ class Sidebar extends React.Component<any, any> {
                   <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
                     Chat Pane
                   </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-employee-card"
+                    activeClassName="active"
+                  >
+                    Employee Card
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}
