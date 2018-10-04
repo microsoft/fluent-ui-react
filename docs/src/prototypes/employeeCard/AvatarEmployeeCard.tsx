@@ -34,7 +34,6 @@ class AvatarEmployeeCard extends React.Component<any, { popupOpen: boolean }> {
               open={this.state.popupOpen}
               position="after"
               align="top"
-              styles={{ marginLeft: '100px' }}
               onOpenChange={(e, newProps) => {
                 this.setState({ popupOpen: newProps.open })
               }}
