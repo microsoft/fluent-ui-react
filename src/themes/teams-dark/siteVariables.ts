@@ -4,12 +4,12 @@ import { white } from '../teams/siteVariables'
 // COLORS
 //
 export const black = '#201f1f'
-export const gray02 = '#bfbfbf'
-export const gray03 = '#a6a6a6'
-export const gray04 = '#808080'
-export const gray06 = '#4d4d4d'
-export const gray08 = '#262626'
-export const gray09 = '#292827'
+export const gray02 = '#c8c6c4'
+export const gray03 = '#b3b0ad'
+export const gray04 = '#8a8886'
+export const gray06 = '#605e5c'
+export const gray08 = '#484644'
+export const gray09 = '#323130'
 export const gray10 = '#2d2c2c'
 export const gray14 = '#292828'
 

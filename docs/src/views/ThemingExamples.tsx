@@ -137,8 +137,8 @@ export default () => (
         `      }}`,
         `      content="Send email"`,
         `      variables={{`,
-        `        typeSecondaryColor: "coral",`,
-        `        typeSecondaryBackgroundColor: "charcoal"`,
+        `        secondaryColor: "coral",`,
+        `        secondaryBackgroundColor: "charcoal"`,
         `        paddingLeftRightValue: 20`,
         `      }}`,
         `    />`,
@@ -151,8 +151,8 @@ export default () => (
           content="Send email"
           icon={{ name: 'at', variables: { color: 'brown' } }}
           variables={{
-            typeSecondaryColor: 'coral',
-            typeSecondaryBackgroundColor: 'charcoal',
+            secondaryColor: 'coral',
+            secondaryBackgroundColor: 'charcoal',
             paddingLeftRightValue: 20,
           }}
         />
@@ -203,10 +203,10 @@ export default () => (
         `      minWidth: '24px',`,
         `      borderRadius: '8px',`,
         `      color: 'darkred',`,
-        `      typeSecondaryColor: '#ffffff',`,
-        `      typeSecondaryBorderColor: 'transparent',`,
-        `      typeSecondaryBackgroundColor: '#6699CC',`,
-        `      typeSecondaryBackgroundColorHover: '#91A3B0',`,
+        `      secondaryColor: '#ffffff',`,
+        `      secondaryBorderColor: 'transparent',`,
+        `      secondaryBackgroundColor: '#6699CC',`,
+        `      secondaryBackgroundColorHover: '#91A3B0',`,
         `    },`,
         `  },`,
         `  componentStyles: {`,
@@ -252,10 +252,10 @@ export default () => (
                   minWidth: '24px',
                   borderRadius: '8px',
                   color: 'darkred',
-                  typeSecondaryColor: '#ffffff',
-                  typeSecondaryBorderColor: 'transparent',
-                  typeSecondaryBackgroundColor: '#6699CC',
-                  typeSecondaryBackgroundColorHover: '#91A3B0',
+                  secondaryColor: '#ffffff',
+                  secondaryBorderColor: 'transparent',
+                  secondaryBackgroundColor: '#6699CC',
+                  secondaryBackgroundColorHover: '#91A3B0',
                 },
               },
               componentStyles: {
