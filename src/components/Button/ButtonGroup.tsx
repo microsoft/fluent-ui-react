@@ -11,7 +11,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 import Button from './Button'
-import { ButtonGroupBehavior } from '../../lib/accessibility'
+import { buttonGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 export interface IButtonGroupProps {
@@ -78,7 +78,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
 
   public static defaultProps = {
     as: 'div',
-    accessibility: ButtonGroupBehavior as Accessibility,
+    accessibility: buttonGroupBehavior as Accessibility,
   }
 
   public renderComponent({

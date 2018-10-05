@@ -15,7 +15,7 @@ import {
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { RadioGroupItemBehavior } from '../../lib/accessibility'
+import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IRadioGroupItemProps {
@@ -154,7 +154,7 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupItemBehavior as Accessibility,
+    accessibility: radioGroupItemBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]

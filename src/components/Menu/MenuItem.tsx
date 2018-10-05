@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
+import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
@@ -110,7 +110,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /**
      * A custom render function the icon slot.
@@ -130,7 +130,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
   }
 
   state = IsFromKeyboard.initial
