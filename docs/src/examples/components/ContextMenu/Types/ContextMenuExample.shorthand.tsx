@@ -1,102 +1,128 @@
 import React from 'react'
-import { ContextMenu } from '@stardust-ui/react'
+import { Avatar, ContextMenu, Icon } from '@stardust-ui/react'
 
-const menuTree = [
+const items = [
   {
     key: 'menuItem0',
-    persondescription: {
-      imageUrl: 'public/images/avatar/small/elliot.jpg',
-      description: 'Gopal Goel',
-    },
+    header: 'John Doe',
+    content: 'Saved on 10/5/2018',
+    media: <Avatar image="public/images/avatar/small/elliot.jpg" />,
   },
   {
     key: 'menuItem1',
-    iconName: 'align justify',
-    title: 'Show in channel',
-    divider: true,
+    media: <Icon name="align justify" />,
+    header: 'Show in channel',
+    onClick: () => {
+      alert('ListItem callback invoked..')
+    },
+    // divider: true,
   },
   {
     key: 'menuItem2',
-    iconName: 'edit',
-    title: 'Edit',
+    media: <Icon name="edit" />,
+    header: 'Edit',
   },
   {
     key: 'menuItem3',
-    iconName: 'file word',
-    title: 'Open in Word',
+    media: <Icon name="file word" />,
+    header: 'Open in Word',
   },
   {
     key: 'menuItem4',
-    iconName: 'search',
-    title: 'Get link',
+    media: <Icon name="search" />,
+    header: 'Get link',
   },
   {
     key: 'menuItem5',
-    iconName: 'plus',
-    title: 'Add to...',
+    media: <Icon name="plus" />,
+    header: 'Add to...',
+    headerMedia: <Icon name="arrow right" />,
     divider: true,
+    menu: {
+      items: [
+        {
+          key: 'subItem0',
+          header: 'Click for callback',
+        },
+        {
+          key: 'subItem1',
+          header: 'Click for callback',
+        },
+      ],
+    },
   },
   {
     key: 'menuItem6',
-    iconName: 'bookmark',
-    title: 'Move to collection',
-    submenuitems: [
-      {
-        key: 'subItem0',
-        title: 'Open Submenu 1.1',
-        submenuitems: [
-          {
-            key: 'subItem0',
-            title: 'Click for callback',
+    media: <Icon name="bookmark" />,
+    header: 'Move to collection',
+    headerMedia: <Icon name="arrow right" />,
+    menu: {
+      items: [
+        {
+          key: 'subItem0',
+          header: 'Open Submenu 1.1',
+          menu: {
+            items: [
+              {
+                key: 'subItem0',
+                header: 'Click for callback',
+              },
+              {
+                key: 'subItem1',
+                header: 'Click for callback',
+              },
+            ],
           },
-          {
-            key: 'subItem1',
-            title: 'Click for callback',
-          },
-        ],
-      },
-      {
-        key: 'subItem1',
-        title: 'Click for callback',
-      },
-    ],
+        },
+        {
+          key: 'subItem1',
+          header: 'Click for callback',
+        },
+      ],
+    },
   },
   {
     key: 'menuItem7',
-    iconName: 'copy',
-    title: 'Copy to collection',
-    submenuitems: [
-      {
-        key: 'subItem0',
-        title: 'Click for callback',
-      },
-      {
-        key: 'subItem1',
-        title: 'Click for callback',
-      },
-    ],
+    media: <Icon name="copy" />,
+    header: 'Copy to collection',
+    headerMedia: <Icon name="arrow right" />,
+    menu: {
+      items: [
+        {
+          key: 'subItem0',
+          header: 'Click for callback',
+        },
+        {
+          key: 'subItem1',
+          header: 'Click for callback',
+        },
+      ],
+    },
   },
   {
     key: 'menuItem8',
-    iconName: 'delete',
-    title: 'Remove',
-    submenuitems: [
-      {
-        key: 'subItem0',
-        title: 'Click for callback',
-      },
-      {
-        key: 'subItem1',
-        title: 'Click for callback',
-      },
-    ],
+    media: <Icon name="delete" />,
+    header: 'Remove',
+    headerMedia: <Icon name="arrow right" />,
+    menu: {
+      items: [
+        {
+          key: 'subItem0',
+          header: 'Click for callback',
+        },
+        {
+          key: 'subItem1',
+          header: 'Click for callback',
+        },
+      ],
+    },
   },
 ]
 
 const callback = () => {
-  alert('Callback invoked')
+  alert('ContextMenu callback invoked...')
 }
 
-const ContextMenuExample = () => <ContextMenu menutree={menuTree} callback={callback} />
+const ContextMenuExample = () => <ContextMenu items={items} onItemClick={callback} />
 
 export default ContextMenuExample
