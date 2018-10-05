@@ -10,7 +10,7 @@ import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
  * Adds a vertical circular focus zone navigation where a user navigates using a Tab key.
  * Adds a key action which prevents up and down arrow keys from navigating in FocusZone, we only want a Tab key to navigate.
  */
-const ChatMessageBehavior: Accessibility = {
+const chatMessageBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -33,6 +33,6 @@ const ChatMessageBehavior: Accessibility = {
       },
     },
   },
-}
+})
 
-export default ChatMessageBehavior
+export default chatMessageBehavior

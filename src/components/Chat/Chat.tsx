@@ -8,7 +8,7 @@ import ChatMessage from './ChatMessage'
 import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
-import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
+import { chatBehavior } from '../../lib/accessibility'
 
 export interface IChatProps {
   accessibility?: Accessibility
@@ -51,7 +51,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static defaultProps = { accessibility: ChatBehavior as Accessibility, as: 'ul' }
+  static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }
 
   static Item = ChatItem
   static Message = ChatMessage

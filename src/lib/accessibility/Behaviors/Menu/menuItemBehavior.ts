@@ -3,24 +3,24 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
 /**
- * Adds role 'presentation' to 'root' component's part.
- * Adds role 'button' to 'anchor' component's part.
- * Adds attribute 'tabIndex=0' to 'anchor' component's part.
+ * @description
+ * Adds role 'presentation' on the root element
+ * Adds role 'menuitem' on anchor element
+ * Adds attribute 'aria-expanded=true' on anchor element based on "submenuOpened" property. Based on this screen readers will recognize the expanded state of the item.
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
- * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
-const ToolbarButtonBehavior: Accessibility = (props: any) => ({
+
+const menuItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
     },
     anchor: {
-      role: 'button',
+      role: 'menuitem',
       tabIndex: '0',
-      'aria-disabled': 'aria-disabled' in props ? props['aria-disabled'] : props['disabled'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
@@ -28,7 +28,7 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
     },
   },
 
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
+  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby'],
 
   keyActions: {
     anchor: {
@@ -39,4 +39,4 @@ const ToolbarButtonBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default ToolbarButtonBehavior
+export default menuItemBehavior
