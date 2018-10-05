@@ -16,7 +16,7 @@ import {
 } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 import Avatar from '../Avatar'
-import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
@@ -55,7 +55,10 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
 
-    /** Child content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -78,7 +81,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: ChatMessageBehavior as Accessibility,
+    accessibility: chatMessageBehavior as Accessibility,
     as: 'div',
   }
 

@@ -8,7 +8,7 @@ export interface ISegmentProps {
   as?: any
   className?: string
   content?: any
-  styles?: ComponentPartStyle
+  styles?: ComponentPartStyle<ISegmentProps, any>
   variables?: ComponentVariablesInput
 }
 

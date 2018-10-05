@@ -5,8 +5,9 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
+import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import IsFromKeyboard from '../../lib/isFromKeyboard'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
@@ -37,7 +38,11 @@ export interface IMenuItemProps {
   variables?: ComponentVariablesInput
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
+export interface IMenuItemState {
+  [IsFromKeyboard.propertyName]: boolean
+}
+
+class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -51,7 +56,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -100,7 +108,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -111,16 +119,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
   }
 
-  protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleClick(event),
-  }
-
-  handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
+  state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content, icon } = this.props
@@ -138,6 +140,8 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             {...accessibility.attributes.anchor}
             {...accessibility.keyHandlers.anchor}
           >
@@ -150,6 +154,26 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
         )}
       </ElementType>
     )
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
+  }
+
+  private handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.initial)
+
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.state())
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 

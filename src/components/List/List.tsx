@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 
 import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
-import { ListBehavior } from '../../lib/accessibility'
+import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
   ContainerFocusHandler,
@@ -36,6 +36,10 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
   static propTypes = {
     as: customPropTypes.as,
 
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -57,7 +61,7 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -68,7 +72,7 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior as Accessibility,
+    accessibility: listBehavior as Accessibility,
   }
 
   static Item = ListItem

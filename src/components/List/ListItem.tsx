@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
-import { ListItemBehavior } from '../../lib/accessibility'
+import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   FocusableItem,
@@ -73,7 +73,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -84,7 +84,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior as Accessibility,
+    accessibility: listItemBehavior as Accessibility,
   }
 
   constructor(props: IListItemProps, state: IListItemState) {

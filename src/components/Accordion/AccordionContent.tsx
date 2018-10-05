@@ -30,7 +30,10 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
     /** Whether or not the content is visible. */
     active: PropTypes.bool,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */

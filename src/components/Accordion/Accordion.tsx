@@ -5,7 +5,7 @@ import * as React from 'react'
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { DefaultBehavior } from '../../lib/accessibility'
+import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
@@ -52,7 +52,10 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -87,7 +90,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     ]),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -97,7 +100,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
   }
 
   public static defaultProps = {
-    accessibility: DefaultBehavior as Accessibility,
+    accessibility: defaultBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -149,19 +152,14 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
 
       children.push(
         AccordionTitle.create(title, {
-          generateKey: true,
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
         }),
       )
       children.push(
-        AccordionContent.create(
-          { content },
-          {
-            generateKey: true,
-            defaultProps: { active },
-          },
-        ),
+        AccordionContent.create(content, {
+          defaultProps: { active },
+        }),
       )
     })
 

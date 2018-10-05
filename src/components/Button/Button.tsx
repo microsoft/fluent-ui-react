@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
-import { ButtonBehavior } from '../../lib/accessibility'
+import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
@@ -36,6 +36,10 @@ export interface IButtonProps {
   variables?: ComponentVariablesInput
 }
 
+export interface IButtonState {
+  [isFromKeyboard.propertyName]: boolean
+}
+
 /**
  * A button.
  * @accessibility
@@ -43,7 +47,7 @@ export interface IButtonProps {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, any> {
+class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -54,7 +58,10 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Button content for childrenApi
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A button can appear circular. */
@@ -102,7 +109,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -113,7 +120,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup

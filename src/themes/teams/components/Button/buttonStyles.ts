@@ -1,9 +1,9 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonProps } from '../../../../components/Button/Button'
+import { IButtonProps, IButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
 
-const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
+const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
     const primary = type === 'primary'
