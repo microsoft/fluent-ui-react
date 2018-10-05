@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Chat, Divider } from '@stardust-ui/react'
+import { Chat } from '@stardust-ui/react'
 
-import { IChat, ChatItemType, generateChatProps } from '../chatPane/services'
+import { IChat, generateChatItems } from '../chatPane/services'
 
 import {
   List as VirtualizedList,
@@ -12,6 +12,7 @@ import {
   ListRowProps,
   OverscanIndexRange,
   IndexRange,
+  ScrollParams,
 } from 'react-virtualized'
 
 export interface IChatPaneContainerProps {
@@ -32,23 +33,14 @@ class ChatPaneVirtualizedListContainer extends React.PureComponent<IChatPaneCont
   private chatItemsLength: number
 
   private cache = new CellMeasurerCache({
-    minHeight: 36,
+    minHeight: 42,
     fixedWidth: true,
   })
 
-  private overscanRowCount = 10
-
-  public componentDidUpdate(prevProps: IChatPaneContainerProps) {
-    const { messages } = this.props.chat
-    const prevMessages = prevProps.chat.messages
-    if (messages.length !== prevMessages.length) {
-      this.clearCacheAtIndex(messages.length - 1)
-      this.scrollToBottom()
-    }
-  }
+  private overscanRowCount = 20
 
   public render() {
-    const chatItems: JSX.Element[] = this.generateChatItems(this.props.chat)
+    const chatItems: JSX.Element[] = generateChatItems(this.props.chat)
     this.chatItemsLength = chatItems.length
 
     return (
@@ -66,6 +58,7 @@ class ChatPaneVirtualizedListContainer extends React.PureComponent<IChatPaneCont
               rowCount={this.chatItemsLength}
               rowHeight={this.cache.rowHeight}
               rowRenderer={this.rowRenderer.bind(this, chatItems)}
+              onScroll={this.onScroll}
               scrollToIndex={this.chatItemsLength - 1}
               width={width}
             />
@@ -83,36 +76,6 @@ class ChatPaneVirtualizedListContainer extends React.PureComponent<IChatPaneCont
     )
   }
 
-  private generateChatItems(chat: IChat): JSX.Element[] {
-    return generateChatProps(chat).map(({ itemType, ...props }, index) => {
-      const ElementType = this.getElementType(itemType)
-      return (
-        <Chat.Item key={`chat-item-${index}`}>
-          <ElementType {...props} />
-        </Chat.Item>
-      )
-    })
-  }
-
-  private getElementType = (itemType: ChatItemType) => {
-    switch (itemType) {
-      case ChatItemType.message:
-        return Chat.Message
-      case ChatItemType.divider:
-        return Divider
-    }
-  }
-
-  private clearCacheAtIndex = (index = 0) => {
-    this.cache.clear(index, 0)
-  }
-
-  private scrollToBottom = () => {
-    if (this.listRef) {
-      this.listRef.scrollToRow(this.chatItemsLength - 1)
-    }
-  }
-
   private onRowsRendered = ({ stopIndex }: IOnRowsRendered) => {
     window.requestAnimationFrame(() => {
       if (
@@ -124,12 +87,27 @@ class ChatPaneVirtualizedListContainer extends React.PureComponent<IChatPaneCont
         this.listRef.scrollToRow(this.chatItemsLength - 1)
 
         this.setCacheAsInitialized()
-      } else if (!this.isCacheInitialized && this.chatItemsLength <= this.overscanRowCount) {
-        this.setCacheAsInitialized()
       }
     })
 
     this.mostRecentStopIndex = stopIndex
+  }
+
+  private onScroll = (scrollParams: ScrollParams) => {
+    const { scrollHeight, scrollTop } = scrollParams
+    if (this.isCacheInitialized) {
+      const changeInScrollHeight = scrollHeight - this.mostRecentScrollHeight
+
+      if (
+        this.listRef &&
+        this.mostRecentStopIndex !== this.chatItemsLength - 1 &&
+        changeInScrollHeight !== 0
+      ) {
+        this.listRef.scrollToPosition(scrollTop + changeInScrollHeight)
+      }
+    }
+
+    this.mostRecentScrollHeight = scrollHeight
   }
 
   private setCacheAsInitialized = () => {

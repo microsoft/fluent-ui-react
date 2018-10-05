@@ -1,9 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import { Chat, Divider } from '@stardust-ui/react'
-
-import { IChat, ChatItemType, generateChatProps } from './services'
+import { Chat } from '@stardust-ui/react'
+import { IChat, generateChatItems } from './services'
 
 export interface IChatPaneContainerProps {
   chat: IChat
@@ -11,7 +10,7 @@ export interface IChatPaneContainerProps {
 
 class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
   public render() {
-    const items = this.generateChatItems(this.props.chat)
+    const items = generateChatItems(this.props.chat)
 
     return (
       items.length > 0 && (
@@ -20,26 +19,6 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
         </Scrollbars>
       )
     )
-  }
-
-  private generateChatItems(chat: IChat): JSX.Element[] {
-    return generateChatProps(chat).map(({ itemType, ...props }, index) => {
-      const ElementType = this.getElementType(itemType)
-      return (
-        <Chat.Item key={`chat-item-${index}`}>
-          <ElementType {...props} />
-        </Chat.Item>
-      )
-    })
-  }
-
-  private getElementType = (itemType: ChatItemType) => {
-    switch (itemType) {
-      case ChatItemType.message:
-        return Chat.Message
-      case ChatItemType.divider:
-        return Divider
-    }
   }
 
   private handleScrollRef(scrollRef: Scrollbars) {

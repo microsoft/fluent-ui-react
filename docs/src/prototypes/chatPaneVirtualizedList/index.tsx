@@ -5,7 +5,7 @@ import ChatPaneLayout from '../chatPane/chatPaneLayout'
 import ChatPaneVirtualizedListContainer from './chatPaneVirtualizedContent'
 import { getChatMock } from '../chatPane/services'
 
-const chatMock = getChatMock({ msgCount: 40, userCount: 6 })
+const chatMock = getChatMock({ msgCount: 100, userCount: 6 })
 
 export default () => (
   <Provider
