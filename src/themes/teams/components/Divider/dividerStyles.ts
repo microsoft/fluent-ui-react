@@ -11,32 +11,27 @@ const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   background: color,
 })
 
-const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
+const beforeAndAfter = (size, primary, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
   ...dividerBorderStyle(size, variables.dividerColor),
-  ...(type === 'primary' && {
+  ...(primary && {
     ...dividerBorderStyle(size, variables.primaryColor),
-  }),
-  ...(type === 'secondary' && {
-    ...dividerBorderStyle(size, variables.secondaryColor),
   }),
 })
 
 const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { children, size, type, important, content } = props
+    const { children, size, primary, important, content } = props
     return {
       color: variables.textColor,
       display: 'flex',
       alignItems: 'center',
       paddingTop: pxToRem(variables.dividerPadding),
       paddingBottom: pxToRem(variables.dividerPadding),
-      ...(type === 'primary' && {
+      ...(primary && {
         color: variables.primaryColor,
-      }),
-      ...(type === 'secondary' && {
-        color: variables.secondaryColor,
+        fontWeight: variables.importantFontWeight,
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,
@@ -47,17 +42,17 @@ const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> =
             fontSize: pxToRem(12 + size),
             lineHeight: variables.textLineHeight,
             '::before': {
-              ...beforeAndAfter(size, type, variables),
+              ...beforeAndAfter(size, primary, variables),
               marginRight: pxToRem(20),
             },
             '::after': {
-              ...beforeAndAfter(size, type, variables),
+              ...beforeAndAfter(size, primary, variables),
               marginLeft: pxToRem(20),
             },
           }
         : {
             '::before': {
-              ...beforeAndAfter(size, type, variables),
+              ...beforeAndAfter(size, primary, variables),
             },
           }),
     }

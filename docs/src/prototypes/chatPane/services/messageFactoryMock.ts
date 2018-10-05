@@ -44,8 +44,8 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
 }
 
 function generateDividerProps(props: IDividerProps): IDivider {
-  const { content, important, type = 'secondary' } = props
-  const dividerProps: IDivider = { itemType: ChatItemType.divider, content, important, type }
+  const { content, important } = props
+  const dividerProps: IDivider = { itemType: ChatItemType.divider, content, important }
 
   return dividerProps
 }
@@ -80,7 +80,7 @@ export function generateChatProps(chat: IChat): ChatItemContentProps[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', type: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', primary: true, important: true }),
     )
   }
 

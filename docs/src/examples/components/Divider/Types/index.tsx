@@ -14,16 +14,6 @@ const Types = () => (
       description="A Divider can contain text or other content displayed alongside with the line."
       examplePath="components/Divider/Types/DividerExampleContent"
     />
-    <ComponentExample
-      title="Primary divider"
-      description="A primary Divider catches the user's attention."
-      examplePath="components/Divider/Types/DividerExamplePrimary"
-    />
-    <ComponentExample
-      title="Secondary divider"
-      description="A secondary Divider is more subtle and less noticeable."
-      examplePath="components/Divider/Types/DividerExampleSecondary"
-    />
   </ExampleSection>
 )
 
