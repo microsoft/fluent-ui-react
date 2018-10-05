@@ -1,11 +1,11 @@
-export interface IContextualMenuVariables {
+export interface IContextMenuVariables {
   height: string
   maxWidth: string
   padding?: string
   border?: string
 }
 
-export default (): IContextualMenuVariables => ({
+export default (): IContextMenuVariables => ({
   height: '100%',
   maxWidth: '220px',
   padding: '0',

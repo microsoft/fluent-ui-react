@@ -1,10 +1,10 @@
 import React from 'react'
 import Types from './Types'
 
-const ContextualMenuExamples = () => (
+const ContextMenuExamples = () => (
   <div>
     <Types />
   </div>
 )
 
-export default ContextualMenuExamples
+export default ContextMenuExamples

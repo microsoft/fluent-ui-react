@@ -2,7 +2,7 @@ import * as React from 'react'
 import Popup from '../Popup/Popup'
 import Icon from '../Icon'
 import Divider from '../Divider'
-import ContextualMenu from '../ContextualMenu'
+import ContextMenu from '../ContextMenu'
 
 export class PopupWithSubmenu extends React.Component<any, any> {
   state = { popupOpen: false }
@@ -29,7 +29,7 @@ export class PopupWithSubmenu extends React.Component<any, any> {
               <Icon name="arrow right" styles={{ float: 'right', marginRight: '15px' }} />
             </div>
           }
-          content={<ContextualMenu menutree={item.submenuitems} callback={callback} />}
+          content={<ContextMenu menutree={item.submenuitems} callback={callback} />}
         />
         {item.divider ? <Divider variables={{ dividerPadding: 0 }} /> : null}
       </span>

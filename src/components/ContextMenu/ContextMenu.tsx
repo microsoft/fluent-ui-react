@@ -10,7 +10,7 @@ import Provider from '../Provider'
 import Divider from '../Divider'
 import { PopupWithSubmenu } from './PopupWithSubmenu'
 
-export interface IContextualMenuProps {
+export interface IContextMenuProps {
   as?: any
   className?: string
   children?: ReactChildren
@@ -24,10 +24,10 @@ export interface IContextualMenuProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> {
-  public static displayName = 'ContextualMenu'
+class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
+  public static displayName = 'ContextMenu'
 
-  public static className = 'ui-contextualmenu'
+  public static className = 'ui-contextmenu'
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -142,4 +142,4 @@ class ContextualMenu extends UIComponent<Extendable<IContextualMenuProps>, any> 
   }
 }
 
-export default ContextualMenu
+export default ContextMenu

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContextualMenu } from '@stardust-ui/react'
+import { ContextMenu } from '@stardust-ui/react'
 
 const menuTree = [
   {
@@ -97,6 +97,6 @@ const callback = () => {
   alert('Callback invoked')
 }
 
-const ContextualMenuExample = () => <ContextualMenu menutree={menuTree} callback={callback} />
+const ContextMenuExample = () => <ContextMenu menutree={menuTree} callback={callback} />
 
-export default ContextualMenuExample
+export default ContextMenuExample

@@ -6,8 +6,8 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="Default"
-      description="A default ContextualMenu."
-      examplePath="components/ContextualMenu/Types/ContextualMenuExample"
+      description="A default ContextMenu."
+      examplePath="components/ContextMenu/Types/ContextMenuExample"
     />
   </ExampleSection>
 )

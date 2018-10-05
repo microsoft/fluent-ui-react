@@ -1,11 +1,8 @@
-import { IContextualMenuVariables } from './contextualMenuVariables'
+import { IContextMenuVariables } from './ContextMenuVariables'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IContextualMenuProps } from '../../../../components/ContextualMenu/ContextualMenu'
+import { IContextMenuProps } from '../../../../components/ContextMenu/ContextMenu'
 
-const contextualMenuStyles: IComponentPartStylesInput<
-  IContextualMenuProps,
-  IContextualMenuVariables
-> = {
+const contextualMenuStyles: IComponentPartStylesInput<IContextMenuProps, IContextMenuVariables> = {
   root: ({ props, variables: { height, maxWidth, padding, border } }): ICSSInJSStyle => {
     const styles = {
       height,
