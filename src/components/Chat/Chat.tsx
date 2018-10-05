@@ -18,6 +18,7 @@ export interface IChatProps {
   items?: ItemShorthand[]
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
+  chatRef?: any
 }
 
 class Chat extends UIComponent<Extendable<IChatProps>, any> {
@@ -69,10 +70,15 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
+        ref={this.handleChatRef}
       >
         {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>
     )
+  }
+
+  handleChatRef = (ref: any) => {
+    _.invoke(this.props, 'chatRef', ref)
   }
 }
 

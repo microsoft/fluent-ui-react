@@ -28,6 +28,13 @@ const Router = () => (
             component={require('./prototypes/chatPane/index').default}
           />
         )}
+        {process.env.NODE_ENV !== 'production' && (
+          <DocsLayout
+            exact
+            path="/prototype-chat-pane-virtualized-list"
+            component={require('./prototypes/chatPaneVirtualizedList/index').default}
+          />
+        )}
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />

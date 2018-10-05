@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { Provider } from '@stardust-ui/react'
 
-import ChatPaneLayout from './chatPaneLayout'
-import ChatPaneContainer from './chatPaneContent'
+import ChatPaneLayout from '../chatPane/chatPaneLayout'
+import ChatPaneVirtualizedListContainer from './chatPaneVirtualizedContent'
+import { getChatMock } from '../chatPane/services'
 
-import { getChatMock } from './services'
-
-const chatMock = getChatMock({ msgCount: 40, userCount: 6 })
+const chatMock = getChatMock({ msgCount: 100, userCount: 6 })
 
 export default () => (
   <Provider
@@ -21,7 +20,7 @@ export default () => (
   >
     <ChatPaneLayout
       chat={chatMock.chat}
-      chatPaneContainer={<ChatPaneContainer chat={chatMock.chat} />}
+      chatPaneContainer={<ChatPaneVirtualizedListContainer chat={chatMock.chat} />}
     />
   </Provider>
 )
