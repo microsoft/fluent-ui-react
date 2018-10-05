@@ -1,23 +1,23 @@
 export interface ITextVariables {
-  importantTextColor: string
-  atMentionMeTextColor: string
-  atMentionOtherTextColor: string
-  disabledTextColor: string
-  errorTextColor: string
-  successTextColor: string
-  timestampTextColor: string
-  timestampHoverTextColor: string
+  atMentionMeColor: string
+  atMentionOtherColor: string
+  disabledColor: string
+  errorColor: string
+  importantColor: string
+  successColor: string
+  timestampColor: string
+  timestampHoverColor: string
 }
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionOtherTextColor: siteVariables.hyperlinkColor,
-    atMentionMeTextColor: siteVariables.hyperlinkColor,
-    disabledTextColor: siteVariables.disabledColor,
-    errorTextColor: siteVariables.red,
-    successTextColor: siteVariables.green04,
-    timestampTextColor: siteVariables.white,
-    timestampHoverTextColor: siteVariables.white,
-    importantTextColor: siteVariables.red,
+    atMentionMeColor: siteVariables.hyperlinkColor,
+    atMentionOtherColor: siteVariables.hyperlinkColor,
+    disabledColor: siteVariables.disabledColor,
+    errorColor: siteVariables.red,
+    importantColor: siteVariables.red,
+    successColor: siteVariables.green04,
+    timestampColor: siteVariables.white,
+    timestampHoverColor: siteVariables.white,
   }
 }
