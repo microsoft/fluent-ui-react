@@ -11,9 +11,9 @@ export interface ITextVariables {
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionMeColor: siteVariables.hyperlinkColor,
-    atMentionOtherColor: siteVariables.hyperlinkColor,
-    disabledColor: siteVariables.disabledColor,
+    atMentionMeColor: siteVariables.accessibleYellow,
+    atMentionOtherColor: siteVariables.accessibleYellow,
+    disabledColor: siteVariables.accessibleGreen,
     errorColor: siteVariables.red,
     importantColor: siteVariables.red,
     successColor: siteVariables.green04,

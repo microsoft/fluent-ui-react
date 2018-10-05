@@ -5,9 +5,8 @@ import { white, green } from '../teams/siteVariables'
 //
 export const black = '#000'
 
-export const hyperlinkColor = '#ffff01'
-export const disabledColor = '#3ff23f'
-export const selectionBackgroundColor = '#1aebff'
+export const accessibleYellow = '#ffff01'
+export const accessibleGreen = '#3ff23f'
 
 export const red = '#f00'
 export const green04 = green
