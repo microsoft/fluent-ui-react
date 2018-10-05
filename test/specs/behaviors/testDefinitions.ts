@@ -5,7 +5,7 @@ const testHelper = new TestHelper()
 
 // Example:  Adds attribute 'aria-pressed=true' based on the property 'active'
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)\.'/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
     const property = {}
