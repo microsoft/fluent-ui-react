@@ -1,24 +1,20 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
+import {
+  MapValueToProps,
+  ShorthandPrimitive,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../types/utils'
 
 interface IProps {
   [key: string]: any
 }
 
-type ShorthandFunction = (
-  Component: React.ReactType,
-  props: IProps,
-  children: React.ReactNode | React.ReactNodeArray,
-) => React.ReactElement<IProps>
-
-type Primitive = string | number
-type ShorthandValue = Primitive | IProps | React.ReactElement<IProps>
-type MapValueToProps = (value: Primitive) => IProps
-
 interface ICreateShorthandOptions {
   /** Override the default render implementation. */
-  render?: ShorthandFunction
+  render?: ShorthandRenderFunction
 
   /** Default props object */
   defaultProps?: IProps
@@ -50,24 +46,28 @@ export function createShorthand(
     throw new Error('createShorthand() Component must be a string or function.')
   }
   // short circuit noop values
-  if (_.isNil(value) || typeof value === 'boolean') return null
+  const valIsNoop = _.isNil(value) || typeof value === 'boolean'
+  if (valIsNoop && !options.render) return null
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)
 
-  // unhandled type return null
-  if (!valIsPrimitive && !valIsPropsObject && !valIsReactElement) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error(
-        [
-          'Shorthand value must be a string|number|object|ReactElement|function.',
-          ' Use null|undefined|boolean for none.',
-          ` Received: ${value}`,
-        ].join(''),
-      )
-    }
-    return null
+  // unhandled type warning
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    !valIsPrimitive &&
+    !valIsPropsObject &&
+    !valIsReactElement &&
+    !valIsNoop
+  ) {
+    console.error(
+      [
+        'Shorthand value must be a string|number|object|ReactElement|function.',
+        ' Use null|undefined|boolean for none.',
+        ` Received: ${value}`,
+      ].join(''),
+    )
   }
 
   // ----------------------------------------
@@ -79,7 +79,7 @@ export function createShorthand(
   const usersProps =
     (valIsReactElement && (value as React.ReactElement<IProps>).props) ||
     (valIsPropsObject && (value as IProps)) ||
-    (valIsPrimitive && mapValueToProps(value as Primitive)) ||
+    (valIsPrimitive && mapValueToProps(value as ShorthandPrimitive)) ||
     {}
 
   // Override props
