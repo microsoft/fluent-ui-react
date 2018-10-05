@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import { MenuBehavior } from '../../lib/accessibility'
+import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import {
@@ -87,7 +87,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -98,7 +98,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: MenuBehavior as Accessibility,
+    accessibility: menuBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeIndex']

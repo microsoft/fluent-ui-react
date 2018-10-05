@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { IconBehavior } from '../../lib/accessibility/'
+import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
@@ -82,13 +82,13 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'span',
     size: 'normal',
-    accessibility: IconBehavior,
+    accessibility: iconBehavior,
   }
 
   private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {

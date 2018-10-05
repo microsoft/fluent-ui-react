@@ -8,7 +8,7 @@ import * as keyboardKey from 'keyboard-key'
  *  Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
  *  Adds attribute 'aria-haspopup=true' to 'trigger' component's part.
  */
-const PopupBehavior: Accessibility = (props: any) => ({
+const popupBehavior: Accessibility = (props: any) => ({
   attributes: {
     trigger: {
       role: getAriaAttributeFromProps('role', props, 'button'),
@@ -53,4 +53,4 @@ const getAriaAttributeFromProps = (attributeName: string, props: any, defaultVal
   return defaultValue
 }
 
-export default PopupBehavior
+export default popupBehavior
