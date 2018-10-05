@@ -43,7 +43,7 @@ const items = [
     ),
   },
   {
-    content: <Divider content="Today" type="primary" important />,
+    content: <Divider content="Today" primary />,
   },
   {
     content: (
