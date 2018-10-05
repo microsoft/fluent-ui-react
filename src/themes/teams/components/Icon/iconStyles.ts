@@ -20,10 +20,7 @@ const sizes = new Map([
 ])
 
 const getDefaultFontIcon = (iconName: string) => {
-  const fontFamily = iconName && iconName.includes('outline') ? 'outline-icons' : 'Icons'
-  const content = (iconName && `'\\${fontAwesomeIcons(iconName)}'`) || '?'
-
-  return { content, fontFamily }
+  return callable(fontAwesomeIcons(iconName).icon)()
 }
 
 const getSize = size => `${sizes.get(size)}em`
