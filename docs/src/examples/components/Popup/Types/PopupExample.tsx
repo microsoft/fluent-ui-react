@@ -12,7 +12,7 @@ class PopupExample extends React.Component<any, any> {
     return (
       <Popup
         open={this.state.popupOpen}
-        onOpenChange={(e, newProps) => {
+        onChange={(e, newProps) => {
           alert(`Popup is requested to change its open state to "${newProps.open}".`)
           this.setState({ popupOpen: newProps.open })
         }}
