@@ -3,7 +3,13 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createHTMLLi,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+} from '../../lib'
 import Icon from '../Icon'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
@@ -36,6 +42,7 @@ export interface IMenuItemProps {
   vertical?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
+  wrapper?: ItemShorthand
 }
 
 export interface IMenuItemState {
@@ -115,45 +122,55 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Shorthand for the wrapper component */
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'a',
     accessibility: menuItemBehavior as Accessibility,
+    wrapper: {},
   }
 
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, wrapper } = this.props
 
-    return (
+    const menuItemInner = childrenExist(children) ? (
+      children
+    ) : (
       <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
+        className={cx('ui-menu__item__anchor', classes.anchor)}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor}
+        {...accessibility.keyHandlers.anchor}
         {...rest}
       >
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <a
-            className={cx('ui-menu__item__anchor', classes.anchor)}
-            onClick={this.handleClick}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            {...accessibility.attributes.anchor}
-            {...accessibility.keyHandlers.anchor}
-          >
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-              })}
-            {content}
-          </a>
-        )}
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+          })}
+        {content}
       </ElementType>
     )
+
+    if (wrapper) {
+      return createHTMLLi(wrapper, {
+        defaultProps: {
+          className: classes.root,
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
+        },
+        overrideProps: () => ({
+          children: menuItemInner,
+        }),
+      })
+    }
+    return menuItemInner
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
