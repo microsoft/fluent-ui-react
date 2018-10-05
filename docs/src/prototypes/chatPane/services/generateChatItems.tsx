@@ -1,5 +1,6 @@
-import { IChat, ChatItemType, generateChatProps } from './index'
+import * as React from 'react'
 import { Chat, Divider } from '@stardust-ui/react'
+import { IChat, ChatItemType, generateChatProps } from './index'
 
 const getElementType = (itemType: ChatItemType) => {
   switch (itemType) {
