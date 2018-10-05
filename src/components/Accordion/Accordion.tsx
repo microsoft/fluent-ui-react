@@ -5,7 +5,7 @@ import * as React from 'react'
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { DefaultBehavior } from '../../lib/accessibility'
+import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
@@ -93,7 +93,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     ]),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /**
      * A custom render iterator for rendering each Accordion panel title.
@@ -123,7 +123,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
   }
 
   public static defaultProps = {
-    accessibility: DefaultBehavior as Accessibility,
+    accessibility: defaultBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeIndex']

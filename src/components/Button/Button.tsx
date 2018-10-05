@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
-import { ButtonBehavior } from '../../lib/accessibility'
+import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
@@ -111,7 +111,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /**
      * A custom render function the icon slot.
@@ -131,7 +131,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
