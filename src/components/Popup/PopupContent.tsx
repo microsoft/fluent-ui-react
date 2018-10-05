@@ -30,9 +30,7 @@ class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
   public static displayName = 'PopupContent'
   public static className = 'ui-popup__content'
 
-  public static create = createShorthandFactory(PopupContent, content => {
-    content
-  })
+  public static create = createShorthandFactory(PopupContent, content => ({ content }))
 
   public static propTypes = {
     /** An element type to render as (string or function). */
