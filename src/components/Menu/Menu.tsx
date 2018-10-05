@@ -12,7 +12,12 @@ import {
   ComponentVariablesObject,
   ComponentPartStyle,
 } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 
 export interface IMenuProps {
   accessibility?: Accessibility
@@ -23,9 +28,10 @@ export interface IMenuProps {
   defaultActiveIndex?: number | string
   fluid?: boolean
   iconOnly?: boolean
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  renderItem?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
@@ -77,6 +83,16 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
+    /**
+     * A custom render iterator for rendering each of the Menu items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -116,7 +132,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
+    const { iconOnly, items, pills, pointing, renderItem, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -133,6 +149,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           active: parseInt(activeIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
   }

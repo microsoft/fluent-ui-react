@@ -7,7 +7,7 @@ import { Popper, PopperChildrenProps } from 'react-popper'
 import { childrenExist, AutoControlledComponent, IRenderResultConfig, isBrowser } from '../../lib'
 import {
   ComponentEventHandler,
-  ItemShorthand,
+  ShorthandValue,
   Extendable,
   ReactChildren,
 } from '../../../types/utils'
@@ -32,7 +32,7 @@ export interface IPopupProps {
   align?: Alignment
   children?: ReactChildren
   className?: string
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: ComponentEventHandler<IPopupProps>
