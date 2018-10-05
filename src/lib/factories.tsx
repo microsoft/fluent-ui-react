@@ -9,14 +9,17 @@ interface IProps {
 type ShorthandFunction = (
   Component: React.ReactType,
   props: IProps,
-  children: any,
+  children: React.ReactNode | React.ReactNodeArray,
 ) => React.ReactElement<IProps>
 
 type Primitive = string | number
-type ShorthandValue = Primitive | IProps | React.ReactElement<IProps> | ShorthandFunction
+type ShorthandValue = Primitive | IProps | React.ReactElement<IProps>
 type MapValueToProps = (value: Primitive) => IProps
 
 interface ICreateShorthandOptions {
+  /** Override the default render implementation. */
+  render?: ShorthandFunction
+
   /** Default props object */
   defaultProps?: IProps
 
@@ -52,10 +55,9 @@ export function createShorthand(
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)
-  const valIsFunction = typeof value === 'function'
 
   // unhandled type return null
-  if (!valIsPrimitive && !valIsPropsObject && !valIsReactElement && !valIsFunction) {
+  if (!valIsPrimitive && !valIsPropsObject && !valIsReactElement) {
     if (process.env.NODE_ENV !== 'production') {
       console.error(
         [
@@ -105,6 +107,11 @@ export function createShorthand(
     props.style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
   }
 
+  // Merge styles
+  if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
+    props.styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+  }
+
   // ----------------------------------------
   // Get key
   // ----------------------------------------
@@ -119,15 +126,17 @@ export function createShorthand(
   // ----------------------------------------
   // Create Element
   // ----------------------------------------
+  const { render } = options
+
+  if (render) {
+    return render(Component, props, props.children)
+  }
 
   // Clone ReactElements
   if (valIsReactElement) return React.cloneElement(value as React.ReactElement<IProps>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
-
-  // Call functions with args similar to createElement()
-  if (valIsFunction) return (value as Function)(Component, props, props.children)
 
   return null
 }
