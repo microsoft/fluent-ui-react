@@ -181,5 +181,4 @@ export type OnKeyDownHandler = {
 export type KeyboardHandler = (event: KeyboardEvent) => void
 export type EventHandler = (event: Event) => void
 
-export type AccessibilityDefinitionFunction = ((props: any) => IAccessibilityDefinition)
-export type Accessibility = AccessibilityDefinitionFunction | IAccessibilityDefinition
+export type Accessibility = (props: any) => IAccessibilityDefinition

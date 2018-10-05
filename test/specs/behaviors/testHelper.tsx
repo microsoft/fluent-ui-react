@@ -1,9 +1,5 @@
 import * as _ from 'lodash'
-import {
-  Accessibility,
-  AccessibilityDefinitionFunction,
-  IAccessibilityDefinition,
-} from '../../../src/lib/accessibility/interfaces'
+import { Accessibility } from '../../../src/lib/accessibility/interfaces'
 
 interface FilteredDescription {
   behaviorName: string
@@ -12,7 +8,7 @@ interface FilteredDescription {
 }
 
 export interface TestMethod {
-  behavior: AccessibilityDefinitionFunction | IAccessibilityDefinition
+  behavior: Accessibility
   props: [string]
 }
 
@@ -52,7 +48,7 @@ export class TestHelper {
         value.forEach(singleTest => {
           test(singleTest.params[0], () => {
             singleTest.testMethod({
-              behavior: this.getBehaviorWithProperType(singleTest.behaviorName),
+              behavior: this.getBehavior(singleTest.behaviorName),
               props: singleTest.params.slice(1),
             })
           })
@@ -85,18 +81,13 @@ export class TestHelper {
     })
   }
 
-  public getBehaviorWithProperType(
-    behaviorName: string,
-  ): AccessibilityDefinitionFunction | IAccessibilityDefinition {
+  public getBehavior(behaviorName: string): Accessibility {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
     if (!importedBehavior) {
       throw 'Behavior file was not found, probably was not imported. Import file and add behavior.'
     }
-
-    return typeof importedBehavior === 'function'
-      ? (importedBehavior as AccessibilityDefinitionFunction)
-      : (importedBehavior as IAccessibilityDefinition)
+    return importedBehavior
   }
 
   public convertToBooleanIfApplicable(stringToConvert: string) {

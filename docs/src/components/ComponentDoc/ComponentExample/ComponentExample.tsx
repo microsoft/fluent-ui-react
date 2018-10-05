@@ -402,7 +402,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
-        className: disabled && 'crossout',
+        ...(disabled && { className: 'crossout' }),
       }
     })
 
@@ -687,13 +687,24 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
             </Grid.Column>
           )}
 
-          <Grid.Column
-            width={16}
-            className={`rendered-example ${this.getKebabExamplePath()}`}
-            style={{ padding: '2rem' }}
-          >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
-          </Grid.Column>
+          <Provider.Consumer
+            render={({ siteVariables }) => {
+              return (
+                <Grid.Column
+                  width={16}
+                  dir={showRtl ? 'rtl' : undefined}
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  style={{
+                    padding: '2rem',
+                    backgroundColor: siteVariables.bodyBackground,
+                    color: siteVariables.bodyColor,
+                  }}
+                >
+                  {exampleElement}
+                </Grid.Column>
+              )
+            }}
+          />
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}
             {this.renderError()}

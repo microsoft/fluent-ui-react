@@ -1,5 +1,4 @@
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
-import { callable } from 'src/lib'
 
 const definitions: TestDefinition[] = []
 const testHelper = new TestHelper()
@@ -12,9 +11,7 @@ definitions.push({
     const property = {}
     property[propertyDependingOn] = attributeExpectedValue
 
-    const expectedResult = callable(parameters.behavior)(property).attributes!.root[
-      attributeToBeAdded
-    ]
+    const expectedResult = parameters.behavior(property).attributes!.root[attributeToBeAdded]
     expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
       testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
@@ -27,9 +24,7 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes!.root[
-      attributeToBeAdded
-    ]
+    const expectedResult = parameters.behavior(property).attributes!.root[attributeToBeAdded]
     expect(expectedResult).toEqual(attributeExpectedValue)
   },
 })
@@ -40,7 +35,7 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded] = [...parameters.props]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes.root['role']
+    const expectedResult = parameters.behavior(property).attributes.root['role']
     expect(expectedResult).toEqual(roleToBeAdded)
   },
 })
@@ -51,9 +46,7 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes[
-      elementWhereToBeAdded
-    ]['role']
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded]['role']
     expect(expectedResult).toEqual(roleToBeAdded)
   },
 })
@@ -67,9 +60,9 @@ definitions.push({
       ...parameters.props,
     ]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes[
-      elementWhereToBeAdded
-    ][attributeToBeAdded]
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
     expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
       testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
@@ -84,9 +77,9 @@ definitions.push({
     const property = {}
     const propertyDependingOnValue = 'value of property'
     property[propertyDependingOn] = propertyDependingOnValue
-    const expectedResult = callable(parameters.behavior)(property).attributes[
-      elementWhereToBeAdded
-    ][attributeToBeAdded]
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
     expect(expectedResult).toEqual(
       testHelper.convertToBooleanIfApplicable(propertyDependingOnValue),
     )
@@ -99,9 +92,7 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes.root[
-      attributeToBeAdded
-    ]
+    const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
     expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
       testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
@@ -114,7 +105,7 @@ definitions.push({
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded] = [...parameters.props]
     const property = {}
-    const expectedResult = callable(parameters.behavior)(property).attributes.root.role
+    const expectedResult = parameters.behavior(property).attributes.root.role
     expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toBe(
       testHelper.convertToBooleanIfApplicable(roleToBeAdded),
     )

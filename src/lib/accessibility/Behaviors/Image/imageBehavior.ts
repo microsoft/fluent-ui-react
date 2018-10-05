@@ -6,7 +6,7 @@ import { Accessibility } from '../../interfaces'
  * Image is usually only visual representation and therefore is hidden from screen readers.
  */
 
-const ImageBehavior: Accessibility = (props: any) => ({
+const imageBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       'aria-hidden': props['alt'] ? undefined : 'true',
@@ -14,4 +14,4 @@ const ImageBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default ImageBehavior
+export default imageBehavior

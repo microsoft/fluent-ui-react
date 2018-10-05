@@ -6,7 +6,7 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
-import { RadioGroupBehavior } from '../../lib/accessibility'
+import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -76,7 +76,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupBehavior as Accessibility,
+    accessibility: radioGroupBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checkedValue']

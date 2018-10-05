@@ -1,6 +1,6 @@
 import { Accessibility } from '../../interfaces'
-import SelectableListBehavior from './SelectableListBehavior'
-import BasicListBehavior from './BasicListBehavior'
+import selectableListBehavior from './selectableListBehavior'
+import basicListBehavior from './basicListBehavior'
 
 /**
  * @description
@@ -8,6 +8,6 @@ import BasicListBehavior from './BasicListBehavior'
  */
 
 const ListBehavior: Accessibility = (props: any) =>
-  props.selection ? SelectableListBehavior : BasicListBehavior
+  props.selection ? selectableListBehavior(props) : basicListBehavior(props)
 
 export default ListBehavior
