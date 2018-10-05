@@ -1,10 +1,12 @@
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import List from '../List'
+import List, { ListItem } from '../List'
+import { PopupWithSubmenu } from './PopupWithSubmenu'
 
 export interface IContextMenuProps {
   as?: any
@@ -21,11 +23,11 @@ export interface IContextMenuProps {
  * This should be replaced with the actual description after the PR is merged
  */
 class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
-  public static displayName = 'ContextMenu'
+  static displayName = 'ContextMenu'
 
-  public static className = 'ui-contextmenu'
+  static className = 'ui-contextmenu'
 
-  public static propTypes = {
+  static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
@@ -45,18 +47,68 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'div',
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
-    const { items, onItemClick } = this.props
+  constructor(props, context) {
+    super(props, context)
+    this.state = {
+      subMenuOpen: false,
+      menuItemKey: '',
+    }
+  }
+
+  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
     return (
       <ElementType className={classes.root} {...rest}>
-        <List items={items} selection onClick={onItemClick} />
+        {this.renderItems()}
       </ElementType>
     )
   }
+
+  renderItems = () => {
+    const { items, onItemClick } = this.props
+    const itemProps = _.pick(this.props, List.itemProps)
+    itemProps.selection = true
+    itemProps.onClick = onItemClick
+    const children = _.map(items, item => {
+      if (item.menu !== undefined) {
+        return <PopupWithSubmenu item={item} items={item.menu.items} onItemClick={onItemClick} />
+      }
+      return ListItem.create(item, { defaultProps: itemProps })
+    })
+    return <List selection={true}>{children}</List>
+  }
+
+  // processItems = () => {
+  //   const { items } = this.props
+  //   if (items !== undefined) {
+  //     items.map(item => {
+  //       if (item.menu) {
+  //         item.onClick = () => {
+  //           this.handleClick(item)
+  //         }
+  //         // item.content = <PopupWithSubmenu items={item.menu.items} item={}/>
+  //       }
+  //     })
+  //   }
+  // }
+
+  // handleClick = item => {
+  //   this.setState(prevState => {
+  //     if (prevState.subMenuOpen === false || prevState.menuItemKey !== item.menu.items) {
+  //       return {
+  //         subMenuOpen: true,
+  //         menuItemKey: item.menu.items,
+  //       }
+  //     }
+  //     return {
+  //       subMenuOpen: !prevState.subMenuOpen,
+  //       menuItemKey: item.menu.items,
+  //     }
+  //   })
+  // }
 }
 
 export default ContextMenu

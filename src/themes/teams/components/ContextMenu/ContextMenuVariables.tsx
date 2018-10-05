@@ -1,13 +1,13 @@
 export interface IContextMenuVariables {
   height: string
-  maxWidth: string
+  width: string
   padding?: string
   border?: string
 }
 
 export default (): IContextMenuVariables => ({
   height: '100%',
-  maxWidth: '220px',
+  width: '220px',
   padding: '0',
   border: '1px solid #eeeeee',
 })
