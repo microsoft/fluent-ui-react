@@ -65,7 +65,7 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z ]*.tsx`]
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
 const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[A-Z a-z]*.ts`]
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const markdownSrc = [
