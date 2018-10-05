@@ -5,6 +5,7 @@ import { Header, Divider } from 'semantic-ui-react'
 import { Button } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage'
+import CodeSnippet from '../components/CodeSnippet'
 
 export default () => (
   <DocPage title="Architecture">
@@ -23,7 +24,8 @@ export default () => (
         <strong>Component Library</strong>, which is the set of primitive and composed components.
       </li>
     </ul>
-    <p>The future intent is to split this parts into two separate npm packages.</p>
+    <p>The future intent is to split these parts into two separate npm packages.</p>
+
     <Header as="h2">Toolkit (Framework)</Header>
     <p>
       The responsibility of the toolkit part of the project is to provide an easy way to create UI
@@ -44,8 +46,8 @@ export default () => (
       </li>
       <li>
         <strong>Accessibility behaviors</strong> - the logic which generates appropriate
-        accessibility roles and aria-* attributes for the given component based on the component
-        state.
+        accessibility roles and <code>aria-*</code> attributes for the given component based on the
+        component state.
       </li>
       <li>
         <strong>Accessibility keyboard handlers</strong> - provides the logic to handle components
@@ -70,10 +72,11 @@ export default () => (
       accessibility integration for the entire projects which will be consumer of the library.
     </p>
     <p>
-      The library encapsulates accessibility into Behaviors. The behaviors returns the recommended
-      set of attributes and roles for the standard components (e.g. Image, DropDown, Dialog, etc),
-      based on their state (e.g. active, disabled, expanded, etc). Also, it provides the expected
-      keyboard navigation and focus handling for the components (e.g. List, Grid, Radio Group, etc).
+      The library encapsulates accessibility into <strong>Behaviors</strong>. The behaviors returns
+      the recommended set of attributes and roles for the standard components (e.g. Image, DropDown,
+      Dialog, etc), based on their state (e.g. active, disabled, expanded, etc). Also, it provides
+      the expected keyboard navigation and focus handling for the components (e.g. List, Grid, Radio
+      Group, etc).
     </p>
     <p>
       Library provides the set of accessibility behaviors and keyboard handlers for the components
@@ -88,14 +91,105 @@ export default () => (
     </p>
 
     <Header as="h3">Theming</Header>
-    <p>TODO</p>
+    <p>
+      Component logic allows to inject and switch the component theme (e.g. Light, Dark or High
+      Contrast). To achieve this, we use CSS in JS technique, which is provided by{' '}
+      <a href="http://fela.js.org/" target="_blank">
+        Fela library
+      </a>.
+    </p>
+    <p>
+      Each component has its own set of themes defined. Component logic handles theme switching and
+      style overriding by providing ability to set <strong>variables</strong> or override component
+      (ot its children) styles using <code>styles</code> property.
+    </p>
+    <p>
+      Components are relaying on the theme provider, which has to wrap components to provide default
+      theme and theme switching. Providers can be nested, this is necessary in case if you need to
+      use different theme in children and parent components.
+    </p>
 
     <Header as="h3">UIComponent</Header>
+    <p>
+      The <code>UIComponent</code> is the base component, which handles component default
+      properties, accessibility navigation and focus handling and renders the component.
+    </p>
+    <p>
+      We recommend to use <code>UIComponent</code> instead of <code>React.Component</code> when you
+      create your own primitive or composed component, to leverage ability of injecting
+      accessibility and theming, instead of implementing your own mechanisms for handling these
+      parts.
+    </p>
+
     <Header as="h3">AutoControlledComponent</Header>
+    <p>
+      The <code>AutoControlledComponent</code> is the base component, which maintains a component
+      state and allows to set its initial state based on default properties and allows to override
+      state by property with the same name.
+    </p>
 
     <Header as="h2">Component Library</Header>
+    <p>
+      The Component Library is a catalog of components, primitive and composed, which has predefined
+      behavior, themes and accessibility and can be customized using their properties or with
+      injecting additional themes and/or children components.
+    </p>
+
     <Header as="h3">Components</Header>
+    <p>
+      Each component is inherited from <code>UIComponent</code> or{' '}
+      <code>AutoControlledComponent</code> and includes the logic to handle <strong>theming</strong>{' '}
+      and <strong>accessibility</strong>. Each component has default{' '}
+      <strong>accessibility behavior</strong>, which can be overridden by consumer of the library.
+      The same can be done with component look and feel by overriding theme styles or defining theme
+      variables.
+    </p>
+    <p>
+      Additional info about how to use themes or override styles can be found in the{' '}
+      <a href="themeing">Theming guide</a>.
+    </p>
+
     <Header as="h3">Accessibility Behaviors</Header>
+    <p>
+      <strong>Accessibility Behavior</strong> is the function, which returns the set of the
+      accessibility attributes based on the component state and allows to bind keyboard navigation
+      and focus handling with the corresponding methods.
+    </p>
+    <CodeSnippet
+      label="ButtonBehavior.ts"
+      value={[
+        `import { Accessibility } from '../../interfaces'`,
+        ``,
+        `const ButtonBehavior: Accessibility = (props: any) => ({`,
+        `  attributes: {`,
+        `    root: {`,
+        `      role: props.as === 'button' ? undefined : 'button',`,
+        `      'aria-disabled': !!props['disabled'],`,
+        `    },`,
+        `  },`,
+        `})`,
+        ``,
+        `export default ButtonBehavior`,
+      ].join('\n')}
+    />
+    <p>
+      Each component has default accessibility behavior, which can be easily overridden by injecting
+      the other one using <code>accessibility</code> property of the component. Or you can override,
+      just single attribute by setting it value on the component.
+    </p>
+    <CodeSnippet
+      label="myButton.tsx"
+      value={[
+        `<Button type="primary" content="Primary" accessibility="ToggleButtonBehavior" />`,
+        `...`,
+        `<Button type="primary" content="Primary" aria-disabled="true" />`,
+      ].join('\n')}
+    />
+    <p>
+      Additional info about how to use it can be found in the{' '}
+      <a href="accessibility/#accessibility-behaviours">Accessibility guide</a>.
+    </p>
+
     <Divider />
     <br />
     {/* Show a preview of the above snippet */}
