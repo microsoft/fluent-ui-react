@@ -3,18 +3,21 @@ import { Layout } from '@stardust-ui/react'
 import { IChat } from './services'
 
 import ChatPaneHeader from './chatPaneHeader'
-import ChatPaneContainer from './chatPaneContent'
 import ComposeMessage from './composeMessage'
 
 export interface IChatPaneLayoutProps {
   chat: IChat
+  chatPaneContainer: JSX.Element
 }
 
-const ChatPaneLayout: React.SFC<IChatPaneLayoutProps> = ({ chat }: IChatPaneLayoutProps) => (
+const ChatPaneLayout: React.SFC<IChatPaneLayoutProps> = ({
+  chat,
+  chatPaneContainer,
+}: IChatPaneLayoutProps) => (
   <Layout
     vertical
     start={<ChatPaneHeader chat={chat} />}
-    main={<ChatPaneContainer chat={chat} />}
+    main={chatPaneContainer}
     end={<ComposeMessage />}
     styles={{
       backgroundColor: '#f3f2f1',
