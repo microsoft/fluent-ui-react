@@ -1,6 +1,9 @@
+import { white } from '../teams/siteVariables'
+
 //
 // COLORS
 //
+export const black = '#201f1f'
 export const gray02 = '#bfbfbf'
 export const gray03 = '#a6a6a6'
 export const gray04 = '#808080'
@@ -24,3 +27,9 @@ export const magenta = '#cf6098'
 export const orchid = '#ae3d84'
 export const red = '#d74654'
 export const red08 = '#4f232b'
+
+//
+// SEMANTIC ASSIGNMENTS
+//
+export const bodyBackground = black
+export const bodyColor = white
