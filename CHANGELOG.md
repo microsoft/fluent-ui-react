@@ -24,6 +24,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix toggle logic of `Popup` as reaction on key press events @kuzhelov ([#304](https://github.com/stardust-ui/react/pull/304))
 - Fix for `RadioGroup`: made `label` accept react nodes as value and fixed keyboard navigation @Bugaa92 ([#287](https://github.com/stardust-ui/react/pull/287))
 - Handle FontAwesome brand icons @levithomason ([#320](https://github.com/stardust-ui/react/pull/320))
+- Make `debug` a runtime dependency ([#301](https://github.com/stardust-ui/react/issues/301))
+- Fix duplicated handling of 'change' event by `Input` @kuzhelov ([#310](https://github.com/stardust-ui/react/pull/310))
+- Make theme variables and styles types extensible @levithomason ([#292](https://github.com/stardust-ui/react/pull/292))
 
 ### Features
 - Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
