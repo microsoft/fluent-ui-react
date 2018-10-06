@@ -654,10 +654,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: '1' }}>
-                <ComponentExampleTitle
-                  description={description}
-                  title={title}
-                />
+                <ComponentExampleTitle description={description} title={title} />
               </div>
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
