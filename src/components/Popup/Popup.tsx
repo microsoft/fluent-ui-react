@@ -17,7 +17,7 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
-import { PopupBehavior } from '../../lib/accessibility'
+import { popupBehavior } from '../../lib/accessibility'
 import {
   Accessibility,
   AccessibilityActionHandlers,
@@ -102,7 +102,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   }
 
   public static defaultProps: IPopupProps = {
-    accessibility: PopupBehavior,
+    accessibility: popupBehavior,
     align: 'start',
     position: 'above',
   }

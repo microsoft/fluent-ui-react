@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
-import { ListBehavior } from '../../lib/accessibility'
+import { listBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -57,7 +57,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -68,7 +68,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior as Accessibility,
+    accessibility: listBehavior as Accessibility,
   }
 
   static Item = ListItem

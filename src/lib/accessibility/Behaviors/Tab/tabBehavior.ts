@@ -13,7 +13,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'anchor' component's part.
  */
-const TabBehavior: Accessibility = (props: any) => ({
+const tabBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -45,4 +45,4 @@ const TabBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default TabBehavior
+export default tabBehavior

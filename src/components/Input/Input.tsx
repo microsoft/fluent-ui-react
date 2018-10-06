@@ -174,12 +174,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     const { type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
-    const { onChange } = htmlInputProps as any
-
     const inputClasses = classes.input
 
     return (
-      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+      <ElementType className={classes.root} {...restProps}>
         {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
