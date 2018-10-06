@@ -1,8 +1,8 @@
+import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
-import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'
 
@@ -46,6 +46,20 @@ const webpackConfig: any = {
           configFileName: paths.base('build/tsconfig.docs.json'),
           errorsAsWarnings: __DEV__,
         },
+      },
+      {
+        test: /\.md$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-react'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            },
+          },
+          '@mdx-js/loader',
+        ],
       },
     ],
   },

@@ -14,3 +14,14 @@ declare module '*.json' {
   const value: any
   export default value
 }
+
+declare module '*.md' {
+  const MDXComponent: React.ComponentType<any>
+
+  export const meta: {
+    description?: string
+    title: string
+  }
+
+  export default MDXComponent
+}
