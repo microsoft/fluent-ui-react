@@ -142,6 +142,7 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
           render: renderImage,
         })}
         {!image &&
+          !renderImage &&
           Label.create(label || {}, {
             defaultProps: {
               as: 'div',
