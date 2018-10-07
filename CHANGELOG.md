@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.9.0 ]------------------------------- -->
+## [v0.9.0](https://github.com/stardust-ui/react/tree/v0.9.0) (2018-10-07)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.8.0...v0.9.0)
+
 ### BREAKING
 - Add `render*` props for each shorthand prop @levithomason ([#328](https://github.com/stardust-ui/react/pull/328))
 
