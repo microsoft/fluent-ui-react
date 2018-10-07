@@ -39,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add theme switcher for exploring different themes on the docs (only available in development mode) @mnajdova ([#280](https://github.com/stardust-ui/react/pull/280))
 - Add `Prototypes` section and `Chat Pane` prototype (only available in development mode) @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
 - Remove cruft prop `suiVersion` from the `ComponentExample` component @layershifter ([#329](https://github.com/stardust-ui/react/pull/329))
+- Add the ability to use .mdx files in documentation @layershifter ([#330](https://github.com/stardust-ui/react/pull/330))
 
 <!--------------------------------[ v0.8.0 ]------------------------------- -->
 ## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)
