@@ -41,6 +41,7 @@ export interface IPopupProps {
 }
 
 export interface IPopupState {
+  open: boolean
   triggerRef: HTMLElement
 }
 
@@ -111,23 +112,22 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   private static isBrowserContext = isBrowser()
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e =>
-      _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
+    toggle: e => this.trySetOpen(!this.state.open, e, true),
     closeAndFocusTrigger: e => {
-      if (this.props.onOpenChange) {
-        _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: false } })
-        _.invoke(this.state.triggerRef, 'focus')
-      }
+      this.trySetOpen(false, e, true)
+      _.invoke(this.state.triggerRef, 'focus')
     },
   }
 
-  public state = { triggerRef: undefined }
+  public state = { triggerRef: undefined, open: false }
 
   public renderComponent({
     rtl,
     accessibility,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger, open } = this.props
+    const { children, trigger } = this.props
+
+    const triggerElement = childrenExist(children) ? children : (trigger as any)
 
     return (
       <>
@@ -136,12 +136,17 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
             this.setState({ triggerRef: domNode })
           }}
         >
-          {React.cloneElement(childrenExist(children) ? children : (trigger as any), {
+          {React.cloneElement(triggerElement, {
+            onClick: e => {
+              this.trySetOpen(!this.state.open, e)
+              _.invoke(triggerElement, 'props.onClick', e)
+            },
             ...accessibility.attributes.trigger,
             ...accessibility.keyHandlers.trigger,
           })}
         </Ref>
-        {open &&
+
+        {this.state.open &&
           Popup.isBrowserContext &&
           createPortal(this.renderPopupContent(rtl, accessibility), document.body)}
       </>
@@ -184,5 +189,11 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
         </Popup.Content>
       </Ref>
     )
+  }
+
+  private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
+    if (this.trySetState({ open: newValue }) || forceChangeEvent) {
+      _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
+    }
   }
 }
