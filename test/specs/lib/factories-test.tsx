@@ -17,11 +17,13 @@ const getShorthand = ({
   overrideProps,
   generateKey,
   value,
+  render,
 }: any) =>
   createShorthand(Component, mapValueToProps, value, {
     defaultProps,
     overrideProps,
     generateKey,
+    render,
   })
 
 // ----------------------------------------
@@ -164,6 +166,114 @@ describe('factories', () => {
         const badUsage = () => createShorthand(badComponent, () => ({}))
 
         expect(badUsage).toThrowError()
+      })
+    })
+
+    describe('render', () => {
+      test('is called once', () => {
+        const spy = jest.fn()
+
+        getShorthand({ value: 'hi', render: spy })
+
+        expect(spy).toHaveBeenCalledTimes(1)
+      })
+
+      test('is called with the computed component, props, and children', () => {
+        const spy = jest.fn(() => <div />)
+
+        getShorthand({
+          value: 'hi',
+          Component: 'p',
+          mapValueToProps: children => ({ children }),
+          render: spy,
+        })
+
+        expect(spy).toHaveBeenCalledWith('p', { key: 'hi', children: 'hi' }, 'hi')
+      })
+
+      test('receives defaultProps in its props argument', () => {
+        const spy = jest.fn(() => <div />)
+        const defaultProps = { defaults: true }
+
+        getShorthand({ value: 'hi', defaultProps, Component: 'p', render: spy })
+
+        expect(spy).toHaveBeenCalledWith('p', { key: 'hi', ...defaultProps }, undefined)
+      })
+
+      test('receives overrideProps in its props argument', () => {
+        const spy = jest.fn(() => <div />)
+        const overrideProps = { overrides: true }
+
+        getShorthand({ value: 'hi', overrideProps, Component: 'p', render: spy })
+
+        expect(spy).toHaveBeenCalledWith('p', { key: 'hi', ...overrideProps }, undefined)
+      })
+    })
+
+    describe('styles', () => {
+      test('deep merges styles prop onto defaultProps styles', () => {
+        expect.assertions(1)
+
+        const defaultProps = {
+          styles: {
+            color: 'override me',
+            ':hover': { color: 'blue' },
+          },
+        }
+        const props = {
+          styles: { color: 'black' },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          defaultProps,
+          render(Component, props) {
+            expect(props.styles).toMatchObject({
+              color: 'black',
+              ':hover': { color: 'blue' },
+            })
+          },
+        })
+      })
+
+      test('deep merges overrideProps styles onto styles prop', () => {
+        expect.assertions(1)
+
+        const overrideProps = {
+          styles: {
+            color: 'black',
+            ':hover': {
+              color: 'blue',
+            },
+          },
+        }
+        const props = {
+          styles: {
+            position: 'keep',
+            color: 'override',
+            ':hover': {
+              position: 'keep',
+              color: 'override',
+            },
+          },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          overrideProps,
+          render(Component, props) {
+            expect(props.styles).toMatchObject({
+              position: 'keep',
+              color: 'black',
+              ':hover': {
+                position: 'keep',
+                color: 'blue',
+              },
+            })
+          },
+        })
       })
     })
 
@@ -378,50 +488,6 @@ describe('factories', () => {
       itOverridesDefaultPropsWithFalseyProps('props object', {
         value: { undef: undefined, nil: null, zero: 0, empty: '' },
       })
-    })
-
-    describe('from a function', () => {
-      itReturnsAValidElement(() => <div />)
-      itDoesNotIncludePropsFromMapValueToProps(() => <div />)
-
-      test('is called once', () => {
-        const spy = jest.fn()
-
-        getShorthand({ value: spy })
-
-        expect(spy).toHaveBeenCalledTimes(1)
-      })
-
-      test('is called with Component, props, children', () => {
-        const spy = jest.fn(() => <div />)
-
-        getShorthand({ Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', {}, undefined)
-      })
-
-      test('receives defaultProps in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const defaultProps = { defaults: true }
-
-        getShorthand({ defaultProps, Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', defaultProps, undefined)
-      })
-
-      test('receives overrideProps in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const overrideProps = { overrides: true }
-
-        getShorthand({ overrideProps, Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', overrideProps, undefined)
-      })
-    })
-
-    describe('from an array', () => {
-      itReturnsNull(['foo'])
-      itReturnsNullGivenDefaultProps(['foo'])
     })
 
     describe('style', () => {
