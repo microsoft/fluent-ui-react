@@ -75,6 +75,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     /** An input can be used inline with text */
     inline: PropTypes.bool,
 
+    input: customPropTypes.itemShorthand,
     /**
      * Called on change.
      *
@@ -191,6 +192,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
     }
   }
 
+  /*
   renderComponent({ ElementType, classes, styles, variables }) {
     const { renderIcon, renderInput, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
@@ -215,6 +217,31 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
             },
             overrideProps: this.handleIconOverrides,
             render: renderIcon,
+          })}
+      </ElementType>
+    )
+  }
+  */
+
+  renderComponent({ ElementType, classes, styles, variables, rest }) {
+    const { input, onChange } = this.props
+    const inputClasses = classes.input
+
+    return (
+      <ElementType className={classes.root} onChange={onChange} {...rest}>
+        {createHTMLInput(input, {
+          overrideProps: {
+            className: inputClasses,
+            ref: this.handleInputRef,
+          },
+        })}
+        {this.computeIcon() &&
+          Icon.create(this.computeIcon(), {
+            defaultProps: {
+              styles: styles.icon,
+              variables: variables.icon,
+            },
+            overrideProps: this.handleIconOverrides,
           })}
       </ElementType>
     )
