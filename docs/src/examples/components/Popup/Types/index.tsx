@@ -16,9 +16,9 @@ const Types = () => (
       examplePath="components/Popup/Types/PopupControlledExample"
     />
     <ComponentExample
-      title="Popup Content"
+      title="Content Wrapper"
       description="Use 'content' prop of the Popup to set whether Popup content should be rendered with the default wrapper."
-      examplePath="components/Popup/Types/PopupContentExample"
+      examplePath="components/Popup/Types/PopupContentWrapperExample"
     />
   </ExampleSection>
 )

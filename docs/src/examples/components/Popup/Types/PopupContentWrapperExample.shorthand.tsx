@@ -1,18 +1,10 @@
 import React from 'react'
 import { Button, Popup } from '@stardust-ui/react'
 
-class PopupExample extends React.Component<any, any> {
+class PopupContentWrapperExample extends React.Component<any, any> {
   state = {
     firstPopupOpen: false,
     secondPopupOpen: false,
-  }
-
-  togglePopup(toggleFirst: boolean) {
-    if (toggleFirst) {
-      this.setState(prev => ({ firstPopupOpen: !prev.firstPopupOpen }))
-    } else {
-      this.setState(prev => ({ secondPopupOpen: !prev.secondPopupOpen }))
-    }
   }
 
   render() {
@@ -29,7 +21,7 @@ class PopupExample extends React.Component<any, any> {
           trigger={
             <Button
               icon="expand"
-              onClick={() => this.togglePopup(true)}
+              onClick={() => this.setState(prev => ({ firstPopupOpen: !prev.firstPopupOpen }))}
               content="Popup with plain content"
             />
           }
@@ -41,7 +33,7 @@ class PopupExample extends React.Component<any, any> {
           trigger={
             <Button
               icon="expand"
-              onClick={() => this.togglePopup(false)}
+              onClick={() => this.setState(prev => ({ secondPopupOpen: !prev.secondPopupOpen }))}
               content="Popup with wrapped content"
             />
           }
@@ -51,4 +43,4 @@ class PopupExample extends React.Component<any, any> {
   }
 }
 
-export default PopupExample
+export default PopupContentWrapperExample
