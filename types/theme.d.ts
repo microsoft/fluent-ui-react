@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
+import { Extendable, ObjectOf, ObjectOrFunc } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -13,8 +13,6 @@ import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
 // ========================================================
 // Props
 // ========================================================
-
-export type IProps = ObjectOf<any>
 
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
