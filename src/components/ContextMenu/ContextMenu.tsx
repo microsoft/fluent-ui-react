@@ -4,15 +4,14 @@ import * as React from 'react'
 import ReactNode = React.ReactNode
 import { UIComponent, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 import List, { ListItem } from '../List'
-import { PopupWithSubmenu } from './PopupWithSubmenu'
+import Popup from '../Popup'
+// import { PopupWithSubmenu } from './PopupWithSubmenu'
 
 export interface IContextMenuProps {
   as?: any
   className?: string
-  children?: ReactChildren
-  content?: ItemShorthand | ItemShorthand[]
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -74,7 +73,16 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
     itemProps.onClick = onItemClick
     const children = _.map(items, item => {
       if (item.menu !== undefined) {
-        return <PopupWithSubmenu item={item} items={item.menu.items} onItemClick={onItemClick} />
+        return (
+          <Popup
+            align="top"
+            position="after"
+            content={<ContextMenu items={item.menu.items} onItemClick={onItemClick} />}
+          >
+            {ListItem.create(item, { defaultProps: itemProps })}
+          </Popup>
+        )
+        // return <PopupWithSubmenu item={item} items={item.menu.items} onItemClick={onItemClick} />
       }
       return ListItem.create(item, { defaultProps: itemProps })
     })
