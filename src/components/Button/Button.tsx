@@ -30,7 +30,7 @@ export interface IButtonProps {
   onClick?: ComponentEventHandler<IButtonProps>
   onFocus?: ComponentEventHandler<IButtonProps>
   text?: boolean
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary' | 'secondaryTinted'
   accessibility?: Accessibility
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput

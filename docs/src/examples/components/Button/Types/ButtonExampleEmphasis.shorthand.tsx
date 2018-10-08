@@ -5,6 +5,7 @@ const ButtonExampleEmphasis = () => (
   <div>
     <Button type="primary" content="Primary" />
     <Button type="secondary" content="Secondary" />
+    <Button type="secondaryTinted" content="Secondary Tinted" />
   </div>
 )
 

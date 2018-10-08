@@ -16,33 +16,43 @@ export interface IButtonVariables {
   borderColorDisabled: string
 
   primaryColor: string
-  primaryColorDisabled: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
   primaryBackgroundColorFocus: string
-  primaryBackgroundColorDisabled: string
   primaryBorderColor: string
   primaryBorderColorActive: string
   primaryBorderColorHover: string
   primaryBorderColorFocus: string
   primaryBorderColorFocusIndicator: string
-  primaryBorderColorDisabled: string
+
+  secondaryTintedColor: string
+  secondaryTintedColorActive: string
+  secondaryTintedColorHover: string
+  secondaryTintedColorFocus: string
+  secondaryTintedBackgroundColor: string
+  secondaryTintedBackgroundColorActive: string
+  secondaryTintedBackgroundColorHover: string
+  secondaryTintedBackgroundColorFocus: string
+  secondaryTintedBorderColor: string
+  secondaryTintedBorderColorActive: string
+  secondaryTintedBorderColorHover: string
+  secondaryTintedBorderColorFocus: string
+  secondaryTintedBorderColorFocusIndicator: string
+
+  primaryCircularBorderColorFocusIndicator: string
 
   secondaryCircularColor: string
   secondaryCircularColorActive: string
-  secondaryCircularColorDisabled: string
   secondaryCircularBackgroundColor: string
   secondaryCircularBackgroundColorActive: string
   secondaryCircularBackgroundColorHover: string
   secondaryCircularBackgroundColorFocus: string
-  secondaryCircularBackgroundColorDisabled: string
   secondaryCircularBorderColor: string
   secondaryCircularBorderColorActive: string
   secondaryCircularBorderColorHover: string
   secondaryCircularBorderColorFocus: string
   secondaryCircularBorderColorFocusIndicator: string
-  secondaryCircularBorderColorDisabled: string
 
   textColorHover: string
   textPrimaryColor: string
@@ -68,33 +78,43 @@ export default (siteVars: any): IButtonVariables => {
     borderColorDisabled: 'transparent',
 
     primaryColor: siteVars.white,
-    primaryColorDisabled: 'red',
     primaryBackgroundColor: siteVars.brand,
     primaryBackgroundColorActive: siteVars.brand08,
     primaryBackgroundColorHover: siteVars.brand08,
     primaryBackgroundColorFocus: siteVars.brand14,
-    primaryBackgroundColorDisabled: 'red',
     primaryBorderColor: 'transparent',
     primaryBorderColorActive: 'transparent',
     primaryBorderColorHover: 'transparent',
     primaryBorderColorFocus: siteVars.black,
     primaryBorderColorFocusIndicator: siteVars.white,
-    primaryBorderColorDisabled: 'transparent',
+
+    secondaryTintedColor: siteVars.brand06,
+    secondaryTintedColorActive: siteVars.brand04,
+    secondaryTintedColorHover: siteVars.brand04,
+    secondaryTintedColorFocus: siteVars.brand02,
+    secondaryTintedBackgroundColor: siteVars.black,
+    secondaryTintedBackgroundColorActive: siteVars.brand14,
+    secondaryTintedBackgroundColorHover: siteVars.brand16,
+    secondaryTintedBackgroundColorFocus: siteVars.brand14,
+    secondaryTintedBorderColor: siteVars.brand14,
+    secondaryTintedBorderColorActive: siteVars.brand12,
+    secondaryTintedBorderColorHover: siteVars.brand12,
+    secondaryTintedBorderColorFocus: siteVars.black,
+    secondaryTintedBorderColorFocusIndicator: siteVars.brand02,
+
+    primaryCircularBorderColorFocusIndicator: siteVars.white,
 
     secondaryCircularColor: siteVars.gray02,
-    secondaryCircularColorActive: siteVars.white,
-    secondaryCircularColorDisabled: siteVars.gray06,
+    secondaryCircularColorActive: siteVars.black,
     secondaryCircularBackgroundColor: 'transparent',
     secondaryCircularBackgroundColorActive: siteVars.gray02,
     secondaryCircularBackgroundColorHover: siteVars.gray03,
-    secondaryCircularBackgroundColorFocus: siteVars.gray03,
-    secondaryCircularBackgroundColorDisabled: 'transparent',
+    secondaryCircularBackgroundColorFocus: siteVars.gray02,
     secondaryCircularBorderColor: siteVars.gray02,
     secondaryCircularBorderColorActive: 'transparent',
     secondaryCircularBorderColorHover: 'transparent',
     secondaryCircularBorderColorFocus: 'transparent',
-    secondaryCircularBorderColorFocusIndicator: siteVars.white,
-    secondaryCircularBorderColorDisabled: 'transparent',
+    secondaryCircularBorderColorFocusIndicator: siteVars.black,
 
     textColorHover: siteVars.brand04,
     textPrimaryColor: siteVars.brand,

@@ -25,33 +25,43 @@ export interface IButtonVariables {
   borderColorDisabled: string
 
   primaryColor: string
-  primaryColorDisabled: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
   primaryBackgroundColorFocus: string
-  primaryBackgroundColorDisabled: string
   primaryBorderColor: string
   primaryBorderColorActive: string
   primaryBorderColorHover: string
   primaryBorderColorFocus: string
   primaryBorderColorFocusIndicator: string
-  primaryBorderColorDisabled: string
+
+  secondaryTintedColor: string
+  secondaryTintedColorActive: string
+  secondaryTintedColorHover: string
+  secondaryTintedColorFocus: string
+  secondaryTintedBackgroundColor: string
+  secondaryTintedBackgroundColorActive: string
+  secondaryTintedBackgroundColorHover: string
+  secondaryTintedBackgroundColorFocus: string
+  secondaryTintedBorderColor: string
+  secondaryTintedBorderColorActive: string
+  secondaryTintedBorderColorHover: string
+  secondaryTintedBorderColorFocus: string
+  secondaryTintedBorderColorFocusIndicator: string
+
+  primaryCircularBorderColorFocusIndicator: string
 
   secondaryCircularColor: string
   secondaryCircularColorActive: string
-  secondaryCircularColorDisabled: string
   secondaryCircularBackgroundColor: string
   secondaryCircularBackgroundColorActive: string
   secondaryCircularBackgroundColorHover: string
   secondaryCircularBackgroundColorFocus: string
-  secondaryCircularBackgroundColorDisabled: string
   secondaryCircularBorderColor: string
   secondaryCircularBorderColorActive: string
   secondaryCircularBorderColorHover: string
   secondaryCircularBorderColorFocus: string
   secondaryCircularBorderColorFocusIndicator: string
-  secondaryCircularBorderColorDisabled: string
 
   textColorHover: string
   textPrimaryColor: string
@@ -85,7 +95,6 @@ export default (siteVars: any): IButtonVariables => {
     borderColorDisabled: 'transparent',
 
     primaryColor: siteVars.white,
-    primaryColorDisabled: siteVars.white,
     primaryBackgroundColor: siteVars.brand,
     primaryBackgroundColorActive: siteVars.brand02,
     primaryBackgroundColorHover: siteVars.brand04,
@@ -96,22 +105,34 @@ export default (siteVars: any): IButtonVariables => {
     primaryBorderColorHover: 'transparent',
     primaryBorderColorFocus: siteVars.white,
     primaryBorderColorFocusIndicator: siteVars.black,
-    primaryBorderColorDisabled: siteVars.white,
+
+    secondaryTintedColor: siteVars.brand06,
+    secondaryTintedColorActive: siteVars.brand06,
+    secondaryTintedColorHover: siteVars.brand06,
+    secondaryTintedColorFocus: siteVars.brand02,
+    secondaryTintedBackgroundColor: siteVars.white,
+    secondaryTintedBackgroundColorActive: siteVars.brand14,
+    secondaryTintedBackgroundColorHover: siteVars.brand16,
+    secondaryTintedBackgroundColorFocus: siteVars.brand14,
+    secondaryTintedBorderColor: siteVars.brand14,
+    secondaryTintedBorderColorActive: siteVars.brand12,
+    secondaryTintedBorderColorHover: siteVars.brand12,
+    secondaryTintedBorderColorFocus: siteVars.white,
+    secondaryTintedBorderColorFocusIndicator: siteVars.brand02,
+
+    primaryCircularBorderColorFocusIndicator: siteVars.white,
 
     secondaryCircularColor: siteVars.gray02,
     secondaryCircularColorActive: siteVars.white,
-    secondaryCircularColorDisabled: siteVars.gray06,
     secondaryCircularBackgroundColor: 'transparent',
     secondaryCircularBackgroundColorActive: siteVars.gray02,
     secondaryCircularBackgroundColorHover: siteVars.gray03,
     secondaryCircularBackgroundColorFocus: siteVars.gray03,
-    secondaryCircularBackgroundColorDisabled: 'transparent',
     secondaryCircularBorderColor: siteVars.gray02,
     secondaryCircularBorderColorActive: 'transparent',
     secondaryCircularBorderColorHover: 'transparent',
     secondaryCircularBorderColorFocus: 'transparent',
     secondaryCircularBorderColorFocusIndicator: siteVars.white,
-    secondaryCircularBorderColorDisabled: 'transparent',
 
     textColorHover: siteVars.brand04,
     textPrimaryColor: siteVars.brand,
