@@ -11,6 +11,7 @@ import callMicrophoneOff from './callMicrophoneOff'
 import more from './more'
 import teamCreate from './teamCreate'
 import umbrella from './umbrella'
+import teams from './teams'
 
 export default {
   call,
@@ -24,4 +25,5 @@ export default {
   more,
   'team-create': teamCreate,
   umbrella,
+  teams,
 } as { [iconName: string]: TeamsSvgIconSpec }

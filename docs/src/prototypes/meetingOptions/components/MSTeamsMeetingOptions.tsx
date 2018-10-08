@@ -6,6 +6,7 @@ import MSTeamsDivider from './MSTeamsDivider'
 export default () => {
   return (
     <div>
+      <MSTeamsDivider transparent size={40} />
       <div style={middleColumnStyles}>
         <Header as="h3" content="Fluent Design - Introduction" />
         <Layout

@@ -8,6 +8,7 @@ export interface IconVariables {
   borderColor?: string
   horizontalSpace: string
   margin: string
+  secondaryColor: string
 }
 
 export default (): IconVariables => ({
@@ -18,4 +19,5 @@ export default (): IconVariables => ({
   borderColor: undefined,
   horizontalSpace: pxToRem(10),
   margin: '0 0.25em 0 0',
+  secondaryColor: 'white',
 })
