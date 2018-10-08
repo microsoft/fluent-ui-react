@@ -2,13 +2,13 @@ import { Accessibility, FocusZoneMode } from '../../interfaces'
 
 /**
  * @description
- * Adds role 'tablist' to 'root' component's part.
+ * Adds role 'toolbar' to 'root' component's part.
  * Wraps component in FocusZone allowing arrow key navigation through the children of the component.
  */
-const TabListBehavior: Accessibility = {
+const toolbarBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: 'tablist',
+      role: 'toolbar',
     },
   },
   focusZone: {
@@ -18,6 +18,6 @@ const TabListBehavior: Accessibility = {
       preventDefaultWhenHandled: true,
     },
   },
-}
+})
 
-export default TabListBehavior
+export default toolbarBehavior

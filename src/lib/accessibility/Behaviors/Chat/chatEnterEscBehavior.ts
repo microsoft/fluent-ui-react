@@ -10,7 +10,7 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
  * Adds a vertical focus zone navigation with a last message as a default tabbable element, pressing enter key focuses inside a message.
  * Adds an escape key action which focuses the chat, i.e., moves key handling from inside a message back to the chat list.
  */
-const ChatEnterEscBehavior: Accessibility = {
+const chatEnterEscBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'presentation',
@@ -32,6 +32,6 @@ const ChatEnterEscBehavior: Accessibility = {
       },
     },
   },
-}
+})
 
-export default ChatEnterEscBehavior
+export default chatEnterEscBehavior

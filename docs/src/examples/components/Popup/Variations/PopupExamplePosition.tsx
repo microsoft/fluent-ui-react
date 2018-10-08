@@ -18,11 +18,13 @@ class PopupArrowExample extends React.Component<any, any> {
         open={this.state.popupOpen}
         align={align}
         position={position}
-        content={
-          <p>
-            The popup is rendered {position} the trigger<br />aligned to the {align}.
-          </p>
-        }
+        content={{
+          content: (
+            <p>
+              The popup is rendered {position} the trigger<br />aligned to the {align}.
+            </p>
+          ),
+        }}
       >
         <Button
           onClick={() => this.togglePopupState()}
