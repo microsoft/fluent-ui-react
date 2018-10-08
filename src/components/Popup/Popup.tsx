@@ -4,7 +4,13 @@ import * as PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import { childrenExist, AutoControlledComponent, IRenderResultConfig, isBrowser } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  AutoControlledComponent,
+  IRenderResultConfig,
+  isBrowser,
+} from '../../lib'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -32,7 +38,7 @@ export interface IPopupProps {
   align?: Alignment
   children?: ReactChildren
   className?: string
-  content?: ShorthandValue | ShorthandValue[]
+  content?: ShorthandValue
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: ComponentEventHandler<IPopupProps>
@@ -74,7 +80,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     className: PropTypes.string,
 
     /** The popup content. */
-    content: PropTypes.any,
+    content: customPropTypes.itemShorthand,
 
     /** Initial value for 'open'. */
     defaultOpen: PropTypes.bool,
@@ -179,14 +185,14 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
     return (
       <Ref innerRef={domElement => ref(domElement)}>
-        <Popup.Content
-          {...rtl && { dir: 'rtl' }}
-          style={popupPlacementStyles}
-          {...accessibility.attributes.popup}
-          {...accessibility.keyHandlers.popup}
-        >
-          {content}
-        </Popup.Content>
+        {Popup.Content.create(content, {
+          defaultProps: {
+            ...(rtl && { dir: 'rtl' }),
+            style: popupPlacementStyles,
+            ...accessibility.attributes.popup,
+            ...accessibility.keyHandlers.popup,
+          },
+        })}
       </Ref>
     )
   }
