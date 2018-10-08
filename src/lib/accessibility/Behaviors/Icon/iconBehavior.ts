@@ -6,7 +6,7 @@ import { Accessibility } from '../../interfaces'
  * Icon is usually only visual representation and therefore is hidden from screen readers.
  */
 
-const IconBehavior: Accessibility = (props: any) => ({
+const iconBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       'aria-hidden': 'true',
@@ -14,4 +14,4 @@ const IconBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default IconBehavior
+export default iconBehavior

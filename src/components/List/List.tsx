@@ -4,11 +4,16 @@ import * as PropTypes from 'prop-types'
 
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import ListItem from './ListItem'
-import { ListBehavior } from '../../lib/accessibility'
+import { listBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 
 export interface IListProps {
   accessibility?: Accessibility
@@ -16,10 +21,11 @@ export interface IListProps {
   children?: ReactChildren
   className?: string
   debug?: boolean
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
+  renderItem?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -57,7 +63,17 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+
+    /**
+     * A custom render iterator for rendering each of the List items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -68,7 +84,7 @@ class List extends UIComponent<Extendable<IListProps>, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior as Accessibility,
+    accessibility: listBehavior as Accessibility,
   }
 
   static Item = ListItem
@@ -87,10 +103,12 @@ class List extends UIComponent<Extendable<IListProps>, any> {
   }
 
   renderItems() {
-    const { items } = this.props
+    const { items, renderItem } = this.props
     const itemProps = _.pick(this.props, List.itemProps)
 
-    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
+    return _.map(items, item => {
+      return ListItem.create(item, { defaultProps: itemProps, render: renderItem })
+    })
   }
 }
 

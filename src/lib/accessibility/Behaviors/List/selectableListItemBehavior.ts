@@ -1,4 +1,4 @@
-import { IAccessibilityDefinition } from '../../interfaces'
+import { Accessibility } from '../../interfaces'
 
 /**
  * @description
@@ -6,7 +6,7 @@ import { IAccessibilityDefinition } from '../../interfaces'
  * Adds attribute 'aria-selected=true' based on the property 'active'. Based on this screen readers will recognize the selected state of the item.
  */
 
-const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (props: any) => ({
+const selectableListItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'option',
@@ -15,4 +15,4 @@ const SelectableListItemBehavior: (props: any) => IAccessibilityDefinition = (pr
   },
 })
 
-export default SelectableListItemBehavior
+export default selectableListItemBehavior
