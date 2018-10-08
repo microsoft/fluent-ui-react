@@ -212,8 +212,16 @@ class Sidebar extends React.Component<any, any> {
                 </select>
               </Menu.Item>
             )}
-            <Menu.Item as={NavLink} exact to="/" activeClassName="active">
-              Introduction
+            <Menu.Item>
+              Concepts
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/" activeClassName="active">
+                  Introduction
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
+                  Shorthand Props
+                </Menu.Item>
+              </Menu.Menu>
             </Menu.Item>
             <Menu.Item>
               Guides
@@ -249,6 +257,14 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Chat Pane Virtualized List
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-async-shorthand"
+                    activeClassName="active"
+                  >
+                    Async Shorthand
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
