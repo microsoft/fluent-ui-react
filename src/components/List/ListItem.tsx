@@ -2,9 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
-import { ListItemBehavior } from '../../lib/accessibility'
+import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {
@@ -22,7 +22,7 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -36,7 +36,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -61,37 +61,18 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior as Accessibility,
+    accessibility: listItemBehavior as Accessibility,
   }
 
   state: any = {}

@@ -1,10 +1,12 @@
 export default (siteVars: any) => {
   return {
-    defaultColor: siteVars.gray04,
-    defaultBackgroundColor: siteVars.gray12,
-    typePrimaryColor: siteVars.brand,
-    typePrimaryBackgroundColor: siteVars.brand,
-    typeSecondaryColor: siteVars.gray02,
-    typeSecondaryBackgroundColor: siteVars.gray10,
+    dividerColor: siteVars.gray09,
+    textColor: siteVars.gray03,
+    textFontSize: siteVars.fontSizeSmall,
+    textLineHeight: siteVars.lineHeightSmall,
+    primaryColor: siteVars.brand,
+    secondaryColor: siteVars.gray04,
+    importantFontWeight: siteVars.fontWeightBold,
+    dividerPadding: 4,
   }
 }

@@ -20,7 +20,11 @@ const { paths } = config
 const g = require('gulp-load-plugins')()
 const { colors, log, PluginError } = g.util
 
-const handleWatchChange = (path, stats) => log(`File ${path} was changed, running tasks...`)
+const handleWatchChange = path => log(`File ${path} was changed, running tasks...`)
+const handleWatchUnlink = (group, path) => {
+  log(`File ${path} was deleted, running tasks...`)
+  remember.forget(group, path)
+}
 
 // ----------------------------------------
 // Clean
@@ -61,10 +65,17 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${config.paths.src()}/components/*/[A-Z]*.tsx`]
-const behaviorSrc = [`${config.paths.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
-const examplesSrc = `${paths.docsSrc()}/examples/*/*/*/index.tsx`
-const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
+const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
+const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
+const markdownSrc = [
+  '.github/CONTRIBUTING.md',
+  '.github/setup-local-development.md',
+  '.github/add-a-feature.md',
+  '.github/document-a-feature.md',
+  '.github/test-a-feature.md',
+  'specifications/*.md',
+]
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })
@@ -87,6 +98,7 @@ task('build:docs:component-menu-behaviors', () =>
 
 task('build:docs:example-menu', () =>
   src(examplesSrc, { since: lastRun('build:docs:example-menu') })
+    .pipe(remember('example-menu')) // FIXME: with watch this unnecessarily processes index files for all examples
     .pipe(gulpExampleMenu())
     .pipe(dest(paths.docsSrc('exampleMenus'))),
 )
@@ -110,11 +122,10 @@ task('build:docs:images', () =>
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`, err => {
-        if (err) return done(err)
-
-        sh(`git add ${file.path}`, done)
-      })
+      sh(`doctoc ${file.path} --github --maxlevel 4`)
+        .then(() => sh(`git add ${file.path}`))
+        .then(done)
+        .catch(done)
     }),
   ),
 )
@@ -161,7 +172,9 @@ task(
 
 task('deploy:docs', cb => {
   const relativePath = path.relative(process.cwd(), paths.docsDist())
-  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`, cb)
+  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`)
+    .then(cb)
+    .catch(cb)
 })
 
 // ----------------------------------------
@@ -211,14 +224,13 @@ task('watch:docs', cb => {
   watch(componentsSrc, series('build:docs:docgen')).on('change', handleWatchChange)
 
   // rebuild example menus
-  watch(examplesSrc, series('build:docs:example-menu')).on('change', handleWatchChange)
+  watch(examplesSrc, series('build:docs:example-menu'))
+    .on('change', handleWatchChange)
+    .on('unlink', path => handleWatchUnlink('example-menu', path))
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
     .on('change', handleWatchChange)
-    .on('unlink', path => {
-      log(`File ${path} was deleted, running tasks...`)
-      remember.forget('component-menu-behaviors', path)
-    })
+    .on('unlink', path => handleWatchUnlink('component-menu-behaviors', path))
 
   // rebuild images
   watch(`${config.paths.src()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(

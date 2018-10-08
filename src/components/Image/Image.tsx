@@ -2,10 +2,10 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ImageBehavior } from '../../lib/accessibility'
+import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IImageProps {
@@ -16,16 +16,13 @@ export interface IImageProps {
   circular?: boolean
   className?: string
   fluid?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * An image is a graphic representation of something.
  * @accessibility
- * Default behavior: ImageBehavior
- *  - attribute "aria-hidden='true'" is applied on img element, if there is no 'alt' property provided
- *
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *
  * Other considerations:
@@ -42,7 +39,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
 
   static propTypes = {
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** An element type to render as. */
     as: customPropTypes.as,
@@ -53,33 +50,22 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     /** An image can appear circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'avatar',
-    'circular',
-    'className',
-    'fluid',
-    'styles',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'img',
-    accessibility: ImageBehavior as Accessibility,
+    accessibility: imageBehavior as Accessibility,
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

@@ -1,4 +1,6 @@
-const globalStyles = siteVars => ({
+import { StaticStyleFunction } from '../../../../types/theme'
+
+const globalStyles: StaticStyleFunction = siteVars => ({
   html: {
     fontSize: siteVars.htmlFontSize,
   },
@@ -7,7 +9,7 @@ const globalStyles = siteVars => ({
     margin: siteVars.bodyMargin,
     fontFamily: siteVars.bodyFontFamily,
     fontSize: siteVars.bodyFontSize,
-    lineHeight: siteVars.lineHeightBase,
+    lineHeight: siteVars.bodyLineHeight,
   },
 })
 

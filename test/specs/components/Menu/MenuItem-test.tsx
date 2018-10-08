@@ -3,11 +3,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
-import {
-  ToolbarButtonBehavior,
-  TabBehavior,
-  MenuItemBehavior,
-} from '../../../../src/lib/accessibility'
+import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {
@@ -63,7 +59,7 @@ describe('MenuItem', () => {
         const ariaLabelledByID = 'element-that-labels'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={ToolbarButtonBehavior} />,
+          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
@@ -77,7 +73,7 @@ describe('MenuItem', () => {
       test('root role should be presentation', () => {
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem accessibility={ToolbarButtonBehavior} />,
+          <MenuItem accessibility={toolbarButtonBehavior} />,
         )
         expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
       })
@@ -85,7 +81,7 @@ describe('MenuItem', () => {
       test('anchor role should be button', () => {
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem accessibility={ToolbarButtonBehavior} />,
+          <MenuItem accessibility={toolbarButtonBehavior} />,
         )
         expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('button')
       })
@@ -94,7 +90,7 @@ describe('MenuItem', () => {
         const ariaLabel = 'Useful Tool Tip'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-label={ariaLabel} accessibility={ToolbarButtonBehavior} />,
+          <MenuItem aria-label={ariaLabel} accessibility={toolbarButtonBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(undefined)
@@ -105,7 +101,7 @@ describe('MenuItem', () => {
         const ariaLabelledByID = 'element-that-labels'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={ToolbarButtonBehavior} />,
+          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
@@ -119,7 +115,7 @@ describe('MenuItem', () => {
         test(`aria-disabled should be ${disabledValue} if menuitem disabled prop is ${disabledValue}`, () => {
           const menuItemComponent = getTestingRenderedComponent(
             MenuItem,
-            <MenuItem disabled={disabledValue} accessibility={ToolbarButtonBehavior} />,
+            <MenuItem disabled={disabledValue} accessibility={toolbarButtonBehavior} />,
           )
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
@@ -136,7 +132,7 @@ describe('MenuItem', () => {
             <MenuItem
               aria-disabled={disabledValue}
               disabled={!disabledValue}
-              accessibility={ToolbarButtonBehavior}
+              accessibility={toolbarButtonBehavior}
             />,
           )
 
@@ -152,7 +148,7 @@ describe('MenuItem', () => {
       test('root role should be presentation', () => {
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem accessibility={TabBehavior} />,
+          <MenuItem accessibility={tabBehavior} />,
         )
         expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
       })
@@ -160,7 +156,7 @@ describe('MenuItem', () => {
       test('anchor role should be tab', () => {
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem accessibility={TabBehavior} />,
+          <MenuItem accessibility={tabBehavior} />,
         )
         expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('tab')
       })
@@ -169,7 +165,7 @@ describe('MenuItem', () => {
         const ariaLabel = 'Useful Tool Tip'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-label={ariaLabel} accessibility={TabBehavior} />,
+          <MenuItem aria-label={ariaLabel} accessibility={tabBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(undefined)
@@ -180,7 +176,7 @@ describe('MenuItem', () => {
         const ariaLabelledByID = 'element-that-labels'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={TabBehavior} />,
+          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={tabBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
@@ -194,7 +190,7 @@ describe('MenuItem', () => {
         test(`aria-selected should be ${activeValue} if menuitem active prop is ${activeValue}`, () => {
           const menuItemComponent = getTestingRenderedComponent(
             MenuItem,
-            <MenuItem active={activeValue} accessibility={TabBehavior} />,
+            <MenuItem active={activeValue} accessibility={tabBehavior} />,
           )
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
@@ -211,7 +207,7 @@ describe('MenuItem', () => {
             <MenuItem
               aria-selected={activeValue}
               active={!activeValue}
-              accessibility={TabBehavior}
+              accessibility={tabBehavior}
             />,
           )
 
@@ -226,7 +222,7 @@ describe('MenuItem', () => {
         const ariaControlsPanelID = 'panel-that-is-controlled'
         const menuItemComponent = getTestingRenderedComponent(
           MenuItem,
-          <MenuItem aria-controls={ariaControlsPanelID} accessibility={TabBehavior} />,
+          <MenuItem aria-controls={ariaControlsPanelID} accessibility={tabBehavior} />,
         )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-controls', '')).toBe(undefined)

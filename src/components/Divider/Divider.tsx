@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IDividerProps {
@@ -13,7 +13,7 @@ export interface IDividerProps {
   size?: number
   type?: 'primary' | 'secondary'
   important?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
@@ -31,10 +31,13 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -49,24 +52,12 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'important',
-    'size',
-    'styles',
-    'type',
-    'variables',
-  ]
 
   static defaultProps = {
     size: 0,

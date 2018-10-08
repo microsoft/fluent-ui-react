@@ -45,10 +45,21 @@ jobs:
           command: yarn prettier
       - run:
           name: Unit Tests
-          command: yarn test --runInBand
+          command: yarn test --maxWorkers=4
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
       - run:
           name: Visual Tests
           command: yarn test:visual
+      - run:
+          name: Project Tests
+          command: yarn test:projects:cra-ts
+      - run:
+          name: Publish npm package
+          command: |
+            if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
+              echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
+              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
+              npm publish --tag current
+            fi

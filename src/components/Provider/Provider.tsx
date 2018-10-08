@@ -3,15 +3,17 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
   IThemePrepared,
   IThemeInput,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
+  IFontFace,
 } from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
+import { mergeSiteVariables } from '../../lib/mergeThemes'
 
 export interface IProviderProps {
   theme: IThemeInput
@@ -42,14 +44,9 @@ class Provider extends React.Component<IProviderProps, any> {
           }),
         }),
       ),
-      staticStyles: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.object,
-        PropTypes.func,
-        PropTypes.arrayOf(
-          PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
-        ),
-      ]),
+      staticStyles: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+      ),
     }),
     children: PropTypes.element.isRequired,
   }
@@ -72,15 +69,14 @@ class Provider extends React.Component<IProviderProps, any> {
       })
     }
 
-    const staticStylesArr = toCompactArray(staticStyles)
-
-    staticStylesArr.forEach((staticStyle: StaticStyle) => {
+    staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
         felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject((staticStyle as StaticStyleFunction)(siteVariables))
+        const preparedSiteVariables = mergeSiteVariables(siteVariables)
+        renderObject((staticStyle as StaticStyleFunction)(preparedSiteVariables))
       } else {
         throw new Error(
           `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
@@ -99,15 +95,15 @@ class Provider extends React.Component<IProviderProps, any> {
 
     if (!fontFaces) return
 
-    const renderFontObject = font => {
+    const renderFontObject = (font: IFontFace) => {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
     }
 
-    fontFaces.forEach(fontObject => {
-      renderFontObject(fontObject)
+    fontFaces.forEach((font: IFontFace) => {
+      renderFontObject(font)
     })
   }
 

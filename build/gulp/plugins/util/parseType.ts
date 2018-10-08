@@ -1,17 +1,14 @@
 const _ = require('lodash')
-const SUI = require('../../../../src/lib/SUI')
 
 const evalValue = value => eval(value) // tslint:disable-line no-eval
 
-const isTransformable = value =>
-  typeof value === 'string' && (value.includes('SUI') || value.includes('names'))
+const isTransformable = value => typeof value === 'string' && value.includes('names')
 
 const uniqValues = values => _.uniqWith(values, (val, other) => `${val}` === `${other}`)
 
 const transformEnumValues = values =>
   _.flatMap(values, ({ value }) => {
     if (value === 'names') return evalValue(value)
-    if (_.startsWith(value, '...SUI')) return evalValue(value.substring(3))
     return value.replace(/'/g, '')
   })
 

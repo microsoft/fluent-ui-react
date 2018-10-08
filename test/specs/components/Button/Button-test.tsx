@@ -3,16 +3,15 @@ import * as React from 'react'
 import {
   isConformant,
   handlesAccessibility,
+  htmlIsAccessibilityCompliant,
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
 import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
-import { ToggleButtonBehavior } from '../../../../src/lib/accessibility'
+import { toggleButtonBehavior } from '../../../../src/lib/accessibility'
 
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
-
-import { MenuBehavior } from 'src/lib/accessibility'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
@@ -24,8 +23,6 @@ describe('Button', () => {
     describe('button', () => {
       handlesAccessibility(Button, {
         defaultRootRole: undefined,
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 
@@ -33,8 +30,6 @@ describe('Button', () => {
       handlesAccessibility(Button, {
         requiredProps: { as: 'div' },
         defaultRootRole: 'button',
-        accessibilityOverride: MenuBehavior,
-        overriddenRootRole: 'menu',
       })
     })
 
@@ -50,12 +45,38 @@ describe('Button', () => {
       })
     })
 
+    describe('HTML accessibility rules validation', () => {
+      describe('icon button must have textual representation for screen readers', () => {
+        test('with title', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" title="testing button" />))
+
+        test('with aria-label attribute', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="books" aria-label="testing button" />))
+
+        test('with aria-labelledby attribute', async () =>
+          await htmlIsAccessibilityCompliant(
+            <div>
+              <Button icon="books" aria-labelledby="tstBtn" />
+              <span id="tstBtn" aria-label="testing button" />
+            </div>,
+          ))
+      })
+
+      describe('different buttons variants', () => {
+        test('button', async () =>
+          await htmlIsAccessibilityCompliant(<Button>Simple test button</Button>))
+
+        test('button with text and icon', async () =>
+          await htmlIsAccessibilityCompliant(<Button icon="test" content="Simple test button" />))
+      })
+    })
+
     describe('ToggleButton behavior', () => {
       describe('role button', () => {
         test('is not defined, if compoenent is button', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button accessibility={ToggleButtonBehavior} />,
+            <Button accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'role', '')).toBe(undefined)
         })
@@ -63,7 +84,7 @@ describe('Button', () => {
         test('is defined, if compoenent is not button', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button as="div" accessibility={ToggleButtonBehavior} />,
+            <Button as="div" accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'role', '')).toBe('button')
         })
@@ -73,7 +94,7 @@ describe('Button', () => {
         test('is set to true, if active attribute is provided', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button active="true" accessibility={ToggleButtonBehavior} />,
+            <Button active="true" accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('true')
         })
@@ -81,7 +102,7 @@ describe('Button', () => {
         test('is set to false, if active attribute is not provided', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button accessibility={ToggleButtonBehavior} />,
+            <Button accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('false')
         })
@@ -91,7 +112,7 @@ describe('Button', () => {
         test('is set to true, if disabled attribute is provided', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button disabled accessibility={ToggleButtonBehavior} />,
+            <Button disabled accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
         })
@@ -99,7 +120,7 @@ describe('Button', () => {
         test('is set to false, if disabled attribute is not provided', () => {
           const renderedComponent = getTestingRenderedComponent(
             Button,
-            <Button accessibility={ToggleButtonBehavior} />,
+            <Button accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
         })
