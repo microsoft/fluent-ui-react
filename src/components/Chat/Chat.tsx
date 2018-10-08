@@ -24,7 +24,7 @@ export interface IChatProps {
   renderItem?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
-  chatRef?: any
+  chatRef?: (ref: any) => void
 }
 
 class Chat extends UIComponent<Extendable<IChatProps>, any> {
@@ -43,7 +43,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     className: PropTypes.string,
 
     /** Defines ref for initial Element type */
-    chatRef: PropTypes.any,
+    chatRef: PropTypes.func,
 
     /**
      *  Used to set content when using childrenApi - internal only
@@ -89,17 +89,13 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
-        ref={this.handleChatRef}
+        ref={this.props.chatRef}
       >
         {childrenExist(children)
           ? children
           : _.map(items, item => ChatItem.create(item, { render: renderItem }))}
       </ElementType>
     )
-  }
-
-  handleChatRef = (ref: any) => {
-    _.invoke(this.props, 'chatRef', ref)
   }
 }
 

@@ -31,6 +31,7 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-chat-pane-virtualized-list"
             path="/prototype-chat-pane-virtualized-list"
             component={require('./prototypes/chatPaneVirtualizedList/index').default}
           />,
