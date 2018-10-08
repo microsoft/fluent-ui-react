@@ -198,7 +198,6 @@ export interface IThemeComponentStylesInput {
   Segment?: IComponentPartStylesInput
   Status?: IComponentPartStylesInput
   Text?: IComponentPartStylesInput
-  PopupContent?: IComponentPartStylesInput
 }
 
 export interface IThemeComponentStylesPrepared {
@@ -234,7 +233,6 @@ export interface IThemeComponentStylesPrepared {
   Segment?: IComponentPartStylesPrepared
   Status?: IComponentPartStylesPrepared
   Text?: IComponentPartStylesPrepared
-  PopupContent?: IComponentPartStylesPrepared
 }
 
 export interface IThemeComponentVariablesInput {
@@ -270,7 +268,6 @@ export interface IThemeComponentVariablesInput {
   Segment?: ComponentVariablesInput
   Status?: ComponentVariablesInput
   Text?: ComponentVariablesInput
-  PopupContent?: ComponentVariablesInput
 }
 
 export interface IThemeComponentVariablesPrepared {
@@ -306,7 +303,6 @@ export interface IThemeComponentVariablesPrepared {
   Segment?: ComponentVariablesPrepared
   Status?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared
-  PopupContent?: ComponentVariablesPrepared
 }
 
 export interface IRenderer extends IFelaRenderer {}
