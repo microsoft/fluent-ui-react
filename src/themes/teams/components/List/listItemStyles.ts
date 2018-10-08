@@ -33,6 +33,7 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
     }
   },
   header: ({ variables }): ICSSInJSStyle => ({
+    color: variables.headerColor,
     fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),

@@ -47,6 +47,12 @@ const Router = () => (
             path="/prototype-meeting-options"
             component={require('./prototypes/meetingOptions/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-chat-people-picker"
+            path="/prototype-chat-people-picker"
+            component={require('./prototypes/ChatPeoplePicker/ChatPeoplePickerExample').default}
+          />,
         ]}
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
