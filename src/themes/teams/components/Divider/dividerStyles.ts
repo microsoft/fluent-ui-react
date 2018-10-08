@@ -25,13 +25,15 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
 
 const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { children, size, type, important, content } = props
+    const { children, fitted, size, type, important, content } = props
     return {
       color: variables.textColor,
       display: 'flex',
       alignItems: 'center',
-      paddingTop: pxToRem(variables.dividerPadding),
-      paddingBottom: pxToRem(variables.dividerPadding),
+      ...(!fitted && {
+        paddingTop: pxToRem(variables.dividerPadding),
+        paddingBottom: pxToRem(variables.dividerPadding),
+      }),
       ...(type === 'primary' && {
         color: variables.primaryColor,
       }),

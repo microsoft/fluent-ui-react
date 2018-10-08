@@ -43,6 +43,9 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
+    /** A divider can be fitted, without any space above or below it.  */
+    divider: PropTypes.bool,
+
     /** Size multiplier (default 0) * */
     size: PropTypes.number,
 
