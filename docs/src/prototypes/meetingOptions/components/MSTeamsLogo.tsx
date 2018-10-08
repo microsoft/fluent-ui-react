@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, Text, Icon } from '@stardust-ui/react'
-import { ItemShorthand } from '../../../../../types/utils'
+import { ItemShorthand } from '../../../../../dist/types/utils'
 
 export interface ILogoProps {
   companyName?: string
