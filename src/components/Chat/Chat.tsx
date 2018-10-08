@@ -42,6 +42,9 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** Defines ref for initial Element type */
+    chatRef: PropTypes.any,
+
     /**
      *  Used to set content when using childrenApi - internal only
      *  @docSiteIgnore
