@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Nested content"
-      description="An Accordion can have nested Accordians."
+      description="An Accordion can have nested Accordions."
       examplePath="components/Accordion/Variations/AccordionNestedExample"
     />
   </ExampleSection>
