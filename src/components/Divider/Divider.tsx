@@ -12,6 +12,7 @@ export interface IDividerProps {
   content?: React.ReactNode
   size?: number
   primary?: boolean
+  secondary?: boolean
   important?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -46,8 +47,11 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** Size multiplier (default 0) * */
     size: PropTypes.number,
 
-    /** A Divider can appear to show a different level of emphasis. */
+    /** A Divider can appear to show a primary level of emphasis. */
     primary: PropTypes.bool,
+
+    /** A Divider can appear more subtle and less noticeable. */
+    secondary: PropTypes.bool,
 
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
