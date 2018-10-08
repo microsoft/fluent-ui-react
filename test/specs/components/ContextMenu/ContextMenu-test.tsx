@@ -1,7 +1,7 @@
 import { isConformant } from 'test/specs/commonTests'
 
-import ContextualMenu from 'src/components/ContextualMenu'
+import ContextMenu from 'src/components/ContextMenu'
 
 describe('ContextualMenu', () => {
-  isConformant(ContextualMenu)
+  isConformant(ContextMenu)
 })
