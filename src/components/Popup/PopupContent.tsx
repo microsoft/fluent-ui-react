@@ -10,12 +10,12 @@ import {
   IRenderResultConfig,
 } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {
   as?: any
   children?: ReactChildren
-  content?: ItemShorthand
+  content?: any
   className?: string
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
