@@ -7,7 +7,7 @@ import { Accessibility } from '../../interfaces'
  *  Implements roving tabIndex
  *  Adds role 'presentation' on label element
  */
-const RadioGroupItemBehavior: Accessibility = (props: any) => ({
+const radioGroupItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'radio',
@@ -18,4 +18,4 @@ const RadioGroupItemBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default RadioGroupItemBehavior
+export default radioGroupItemBehavior

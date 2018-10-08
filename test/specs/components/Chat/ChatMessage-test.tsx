@@ -4,7 +4,7 @@ import { mountWithProvider } from '../../../utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
 import Avatar from 'src/components/Avatar'
-import ChatMessageBehavior from 'src/lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { chatMessageBehavior } from 'src/lib/accessibility'
 import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 import Text from 'src/components/Text'
 
@@ -17,7 +17,7 @@ describe('ChatMessage', () => {
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {
       defaultRootRole: 'presentation',
-      focusZoneDefinition: (ChatMessageBehavior as IAccessibilityDefinition).focusZone,
+      focusZoneDefinition: (chatMessageBehavior as IAccessibilityDefinition).focusZone,
     })
   })
 
