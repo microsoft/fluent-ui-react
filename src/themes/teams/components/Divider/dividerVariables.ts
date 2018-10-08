@@ -5,7 +5,6 @@ export default (siteVars: any) => {
     textFontSize: siteVars.fontSizeSmall,
     textLineHeight: siteVars.lineHeightSmall,
     primaryColor: siteVars.brand,
-    secondaryColor: siteVars.gray09,
     importantFontWeight: siteVars.fontWeightBold,
     dividerPadding: 4,
   }

@@ -3,6 +3,5 @@ export default (siteVars: any) => {
     dividerColor: siteVars.white,
     textColor: siteVars.white,
     primaryColor: siteVars.white,
-    secondaryColor: siteVars.white,
   }
 }
