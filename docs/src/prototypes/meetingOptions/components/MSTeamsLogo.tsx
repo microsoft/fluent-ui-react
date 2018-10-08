@@ -5,16 +5,17 @@ import { ItemShorthand } from '../../../../../types/utils'
 export interface ILogoProps {
   companyName?: string
   icon?: ItemShorthand
+  style?: React.CSSProperties
 }
 
-class Logo extends React.Component<ILogoProps, any> {
+class MSTeamsLogo extends React.Component<ILogoProps, any> {
   render() {
-    const { companyName, icon } = this.props
+    const { companyName, icon, style } = this.props
     return (
       <Provider.Consumer
         render={({ siteVariables }) => {
           return (
-            <>
+            <div style={{ lineHeight: '40px', ...style }}>
               {Icon.create(icon, {
                 defaultProps: {
                   variables: { color: siteVariables.white },
@@ -26,7 +27,7 @@ class Logo extends React.Component<ILogoProps, any> {
               <Text styles={{ color: siteVariables.white, verticalAlign: 'middle' }}>
                 {companyName}
               </Text>
-            </>
+            </div>
           )
         }}
       />
@@ -34,4 +35,4 @@ class Logo extends React.Component<ILogoProps, any> {
   }
 }
 
-export default Logo
+export default MSTeamsLogo
