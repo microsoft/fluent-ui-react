@@ -29,6 +29,16 @@ const Variations = () => (
       description="An input can be used inline with text."
       examplePath="components/Input/Variations/InputExampleInline"
     />
+    <ComponentExample
+      title="Inline, clearable with icon"
+      description="An input with a given icon can be clearable and can be used inline with text."
+      examplePath="components/Input/Variations/InputExampleInlineIconClearable"
+    />
+    <ComponentExample
+      title="Wrapper"
+      description="An input can handle the wrapper shorthand props."
+      examplePath="components/Input/Variations/InputExampleWrapper"
+    />
   </ExampleSection>
 )
 
