@@ -3,7 +3,7 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IListItemProps } from '../../../../components/List/ListItem'
 
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
-  root: ({ props: { selection, important } }): ICSSInJSStyle => ({
+  root: ({ props: { selected, selection, important } }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
 
@@ -12,6 +12,10 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
         color: '#fff',
         cursor: 'pointer',
       },
+    }),
+    ...(selected && {
+      background: 'rgba(98, 100, 167, .8)',
+      color: '#fff',
     }),
     ...(important && {
       fontWeight: 'bold',
