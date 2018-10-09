@@ -9,7 +9,7 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, ReactChildren } from '../../../types/utils'
+import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
@@ -22,7 +22,7 @@ export type TriggerAccessibility = {
 
 export interface IPortalProps {
   children?: ReactChildren
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   defaultOpen?: boolean
   onMount?: (props: IPortalProps) => void
   onUnmount?: (props: IPortalProps) => void
