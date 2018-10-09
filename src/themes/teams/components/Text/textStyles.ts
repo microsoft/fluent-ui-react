@@ -44,6 +44,11 @@ export default {
           color: v.timestampHoverColor,
         },
       }),
+      ...(important && {
+        fontWeight: v.importantWeight,
+        color: v.importantColor,
+      }),
+
       ...(weight === Weights.Light && {
         fontWeight: v.fontWeightLight,
       }),
@@ -59,10 +64,7 @@ export default {
       ...(weight === Weights.Bold && {
         fontWeight: v.fontWeightBold,
       }),
-      ...(important && {
-        fontWeight: v.importantWeight,
-        color: v.importantColor,
-      }),
+
       ...(size === Sizes.Smaller && {
         fontSize: v.fontSizeExtraSmall,
         lineHeight: v.fontLineHeightExtraSmall,
