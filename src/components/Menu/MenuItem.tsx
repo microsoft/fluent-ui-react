@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
+import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
@@ -13,8 +13,9 @@ import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/them
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
 export interface IMenuItemProps {
@@ -25,12 +26,13 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
   onClick?: ComponentEventHandler<IMenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  renderIcon?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
@@ -108,7 +110,16 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -119,13 +130,13 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
   }
 
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -148,6 +159,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
             {icon &&
               Icon.create(this.props.icon, {
                 defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+                render: renderIcon,
               })}
             {content}
           </a>

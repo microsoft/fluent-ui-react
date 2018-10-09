@@ -12,10 +12,11 @@ import {
 import Icon from '../Icon'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
   ComponentEventHandler,
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
 export interface IInputProps {
@@ -25,12 +26,14 @@ export interface IInputProps {
   clearable?: boolean
   defaultValue?: string | number
   fluid?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   inline?: boolean
-  input?: ItemShorthand
+  input?: ShorthandValue
   onChange?: ComponentEventHandler<IInputProps>
   value?: string | number
   type?: string
+  renderIcon?: ShorthandRenderFunction
+  renderInput?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -82,6 +85,24 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
 
     /** The HTML input type. */
     type: PropTypes.string,
+
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
+    /**
+     * A custom render function the input slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderInput: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -171,21 +192,20 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   }
 
   renderComponent({ ElementType, classes, styles, variables }) {
-    const { type } = this.props
+    const { renderIcon, renderInput, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
-
-    const { onChange } = htmlInputProps as any
 
     const inputClasses = classes.input
 
     return (
-      <ElementType className={classes.root} {...restProps} onChange={onChange}>
+      <ElementType className={classes.root} {...restProps}>
         {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
             ref: this.handleInputRef,
           },
+          render: renderInput,
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
@@ -194,6 +214,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
               variables: variables.icon,
             },
             overrideProps: this.handleIconOverrides,
+            render: renderIcon,
           })}
       </ElementType>
     )

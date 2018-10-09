@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ImageBehavior } from '../../lib/accessibility'
+import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -39,7 +39,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
 
   static propTypes = {
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** An element type to render as. */
     as: customPropTypes.as,
@@ -65,7 +65,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
 
   static defaultProps = {
     as: 'img',
-    accessibility: ImageBehavior as Accessibility,
+    accessibility: imageBehavior as Accessibility,
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
