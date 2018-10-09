@@ -39,6 +39,11 @@ export const green = '#92C353'
 export const green04 = '#237b4b'
 
 //
+// SHADOW LEVELS
+//
+export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
+
+//
 // FONT SIZES
 //
 export const fontSizes = {

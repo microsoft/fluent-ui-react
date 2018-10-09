@@ -68,6 +68,8 @@ export interface IButtonVariables {
   textPrimaryColorHover: string
   textSecondaryColor: string
   textSecondaryColorHover: string
+
+  boxShadow: string
 }
 
 export default (siteVars: any): IButtonVariables => {
@@ -139,5 +141,7 @@ export default (siteVars: any): IButtonVariables => {
     textPrimaryColorHover: siteVars.brand04,
     textSecondaryColor: siteVars.gray03,
     textSecondaryColorHover: siteVars.brand04,
+
+    boxShadow: siteVars.shadowLevel1,
   }
 }

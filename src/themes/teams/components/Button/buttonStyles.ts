@@ -76,6 +76,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       textPrimaryColorHover,
       // textSecondaryColor,
       // textSecondaryColorHover,
+      boxShadow,
     } = variables
 
     return {
@@ -100,6 +101,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor,
+        boxShadow,
         ':hover': {
           backgroundColor: backgroundColorHover,
           borderColor: borderColorHover,
@@ -125,6 +127,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
             ':active': {
               backgroundColor: backgroundColorActive,
               borderColor: borderColorActive,
+              boxShadow: 'none',
             },
           },
         }),
@@ -163,6 +166,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 color: secondaryCircularColorActive,
                 backgroundColor: secondaryCircularBackgroundColorActive,
                 borderColor: secondaryCircularBorderColorActive,
+                boxShadow: 'none',
               },
             },
           }),
@@ -202,6 +206,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 color: secondaryTintedColorActive,
                 backgroundColor: secondaryTintedBackgroundColorActive,
                 borderColor: secondaryTintedBorderColorActive,
+                boxShadow: 'none',
               },
             },
           }),
@@ -256,6 +261,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
               ':active': {
                 backgroundColor: primaryBackgroundColorActive,
                 borderColor: primaryBorderColorActive,
+                boxShadow: 'none',
               },
             },
           }),
@@ -293,6 +299,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         color: colorDisabled,
         backgroundColor: backgroundColorDisabled,
         borderColor: borderColorDisabled,
+        boxShadow: 'none',
         ':hover': {
           backgroundColor: backgroundColorDisabled,
           borderColor: borderColorDisabled,
