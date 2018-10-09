@@ -18,7 +18,37 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Features
+- Make `content` to be a shorthand prop for `Popup` @kuzhelov ([#322](https://github.com/stardust-ui/react/pull/322))
+
+<!--------------------------------[ v0.9.0 ]------------------------------- -->
+## [v0.9.0](https://github.com/stardust-ui/react/tree/v0.9.0) (2018-10-07)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.8.0...v0.9.0)
+
+### BREAKING
+- Add `render*` props for each shorthand prop @levithomason ([#328](https://github.com/stardust-ui/react/pull/328))
+
+### Fixes
+- Fix Attachment `styles` prop typing @levithomason ([#299](https://github.com/stardust-ui/react/pull/299))
+- Fix generation of `key` for the `Accordion.Content` @mnajdova ([#305](https://github.com/stardust-ui/react/pull/305))
+- Ensure `Popup` is rendered as direct child of `body` element in the DOM tree @kuzhelov ([#302](https://github.com/stardust-ui/react/pull/302))
+- Fix toggle logic of `Popup` as reaction on key press events @kuzhelov ([#304](https://github.com/stardust-ui/react/pull/304))
+- Fix for `RadioGroup`: made `label` accept react nodes as value and fixed keyboard navigation @Bugaa92 ([#287](https://github.com/stardust-ui/react/pull/287))
+- Handle FontAwesome brand icons @levithomason ([#320](https://github.com/stardust-ui/react/pull/320))
+- Make `debug` a runtime dependency ([#301](https://github.com/stardust-ui/react/issues/301))
+- Fix duplicated handling of 'change' event by `Input` @kuzhelov ([#310](https://github.com/stardust-ui/react/pull/310))
+- Make theme variables and styles types extensible @levithomason ([#292](https://github.com/stardust-ui/react/pull/292))
+
+### Features
 - Add focus styles for `Menu.Item` component @Bugaa92 ([#286](https://github.com/stardust-ui/react/pull/286))
+- Add keyboard handling and ARIA attributes for `ButtonGroup`, `Tablist` and `Toolbar` behaviors @jurokapsiar ([#254](https://github.com/stardust-ui/react/pull/254))
+- Add autocontrolled mode for `Popup` @kuzhelov ([#319](https://github.com/stardust-ui/react/pull/319)
+- Improve accessibility behaviors @sophieH29 ([#247](https://github.com/stardust-ui/react/pull/247))
+
+### Documentation
+- Improve `Contributing` documentation for accessibility @jurokapsiar ([#303](https://github.com/stardust-ui/react/pull/303))
+- Add theme switcher for exploring different themes on the docs (only available in development mode) @mnajdova ([#280](https://github.com/stardust-ui/react/pull/280))
+- Add `Prototypes` section and `Chat Pane` prototype (only available in development mode) @Bugaa92 ([#235](https://github.com/stardust-ui/react/pull/235))
+- Remove cruft prop `suiVersion` from the `ComponentExample` component @layershifter ([#329](https://github.com/stardust-ui/react/pull/329))
 
 <!--------------------------------[ v0.8.0 ]------------------------------- -->
 ## [v0.8.0](https://github.com/stardust-ui/react/tree/v0.8.0) (2018-10-01)

@@ -1,12 +1,19 @@
 import * as React from 'react'
+import { createPortal } from 'react-dom'
 import * as PropTypes from 'prop-types'
 import _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import { childrenExist, AutoControlledComponent, IRenderResultConfig } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  AutoControlledComponent,
+  IRenderResultConfig,
+  isBrowser,
+} from '../../lib'
 import {
   ComponentEventHandler,
-  ItemShorthand,
+  ShorthandValue,
   Extendable,
   ReactChildren,
 } from '../../../types/utils'
@@ -16,7 +23,7 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
-import { PopupBehavior } from '../../lib/accessibility'
+import { popupBehavior } from '../../lib/accessibility'
 import {
   Accessibility,
   AccessibilityActionHandlers,
@@ -31,7 +38,7 @@ export interface IPopupProps {
   align?: Alignment
   children?: ReactChildren
   className?: string
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: ComponentEventHandler<IPopupProps>
@@ -40,6 +47,7 @@ export interface IPopupProps {
 }
 
 export interface IPopupState {
+  open: boolean
   triggerRef: HTMLElement
 }
 
@@ -62,14 +70,17 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
 
-    /** The popup content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The popup content. */
-    content: PropTypes.any,
+    content: customPropTypes.itemShorthand,
 
     /** Initial value for 'open'. */
     defaultOpen: PropTypes.bool,
@@ -97,31 +108,32 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
   }
 
   public static defaultProps: IPopupProps = {
-    accessibility: PopupBehavior,
+    accessibility: popupBehavior,
     align: 'start',
     position: 'above',
   }
 
   public static autoControlledProps = ['open']
 
+  private static isBrowserContext = isBrowser()
+
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e =>
-      _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: !this.props.open } }),
+    toggle: e => this.trySetOpen(!this.state.open, e, true),
     closeAndFocusTrigger: e => {
-      if (this.props.onOpenChange) {
-        _.invoke(this.props, 'onOpenChange', e, { ...this.props, ...{ open: false } })
-        _.invoke(this.state.triggerRef, 'focus')
-      }
+      this.trySetOpen(false, e, true)
+      _.invoke(this.state.triggerRef, 'focus')
     },
   }
 
-  public state = { triggerRef: undefined }
+  public state = { triggerRef: undefined, open: false }
 
   public renderComponent({
     rtl,
     accessibility,
   }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger, open } = this.props
+    const { children, trigger } = this.props
+
+    const triggerElement = childrenExist(children) ? children : (trigger as any)
 
     return (
       <>
@@ -130,12 +142,19 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
             this.setState({ triggerRef: domNode })
           }}
         >
-          {React.cloneElement(childrenExist(children) ? children : (trigger as any), {
+          {React.cloneElement(triggerElement, {
+            onClick: e => {
+              this.trySetOpen(!this.state.open, e)
+              _.invoke(triggerElement, 'props.onClick', e)
+            },
             ...accessibility.attributes.trigger,
             ...accessibility.keyHandlers.trigger,
           })}
         </Ref>
-        {open && this.renderPopupContent(rtl, accessibility)}
+
+        {this.state.open &&
+          Popup.isBrowserContext &&
+          createPortal(this.renderPopupContent(rtl, accessibility), document.body)}
       </>
     )
   }
@@ -166,15 +185,21 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
     return (
       <Ref innerRef={domElement => ref(domElement)}>
-        <Popup.Content
-          {...rtl && { dir: 'rtl' }}
-          style={popupPlacementStyles}
-          {...accessibility.attributes.popup}
-          {...accessibility.keyHandlers.popup}
-        >
-          {content}
-        </Popup.Content>
+        {Popup.Content.create(content, {
+          defaultProps: {
+            ...(rtl && { dir: 'rtl' }),
+            style: popupPlacementStyles,
+            ...accessibility.attributes.popup,
+            ...accessibility.keyHandlers.popup,
+          },
+        })}
       </Ref>
     )
+  }
+
+  private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
+    if (this.trySetState({ open: newValue }) || forceChangeEvent) {
+      _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
+    }
   }
 }

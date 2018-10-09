@@ -9,7 +9,7 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, ReactChildren } from '../../../types/utils'
+import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref'
 import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
@@ -22,7 +22,7 @@ export type TriggerAccessibility = {
 
 export interface IPortalProps {
   children?: ReactChildren
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   defaultOpen?: boolean
   onMount?: (props: IPortalProps) => void
   onUnmount?: (props: IPortalProps) => void
@@ -48,7 +48,10 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Shorthand for primary content. */

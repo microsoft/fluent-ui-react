@@ -17,7 +17,6 @@ export const gray08 = '#E1DFDD'
 export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
 export const gray14 = '#FAF9F8'
-export const fontBlack = black
 
 export const white = '#FFF'
 
@@ -88,5 +87,6 @@ export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
+export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
