@@ -18,6 +18,19 @@ describe('felaExpandCssShorthandsPlugin', () => {
     })
   })
 
+  test('should expand borderColor prop', () => {
+    const style = {
+      borderColor: 'red',
+    }
+
+    expect(expandCssShorthands(style)).toEqual({
+      borderTopColor: 'red',
+      borderRightColor: 'red',
+      borderBottomColor: 'red',
+      borderLeftColor: 'red',
+    })
+  })
+
   test('should expand pseudo object', () => {
     const style = {
       display: 'block',

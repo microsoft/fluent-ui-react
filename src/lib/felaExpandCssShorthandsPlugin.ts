@@ -10,7 +10,7 @@ export default () => {
         return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
       }
 
-      if (SC.isShorthand(cssPropertyName)) {
+      if (SC.isShorthand(_.kebabCase(cssPropertyName))) {
         const expandedProps = SC.expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
         return { ...acc, ...transformKebabCaseKeysToCamelCase(expandedProps) }
       }
