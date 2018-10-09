@@ -87,8 +87,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: IListItemProps, state: IListItemState) {
-    super(props, state)
+  constructor(props: IListItemProps, context: any) {
+    super(props, context)
 
     this.state = {
       isHovering: false,
