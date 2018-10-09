@@ -1,4 +1,4 @@
-import { IContextMenuVariables } from './ContextMenuVariables'
+import { IContextMenuVariables } from './contextMenuVariables'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IContextMenuProps } from '../../../../components/ContextMenu/ContextMenu'
 
