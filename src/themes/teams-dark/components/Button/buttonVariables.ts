@@ -43,6 +43,7 @@ export interface IButtonVariables {
   circularBorderColorFocus: string
   circularBorderColorFocusIndicator: string
 
+  textColor: string
   textColorHover: string
   textPrimaryColor: string
   textPrimaryColorHover: string
@@ -96,6 +97,7 @@ export default (siteVars: any): IButtonVariables => {
     circularBorderColorFocus: 'transparent',
     circularBorderColorFocusIndicator: siteVars.black,
 
+    textColor: siteVars.brand,
     textColorHover: siteVars.brand04,
     textPrimaryColor: siteVars.brand,
     textPrimaryColorHover: siteVars.brand04,

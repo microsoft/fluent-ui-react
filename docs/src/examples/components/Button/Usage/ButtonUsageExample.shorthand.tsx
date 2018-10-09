@@ -24,10 +24,9 @@ const ButtonUsageExampleShorthand = () => (
         },
       }}
     >
-      <Button content="Styled for Cards in DARK theme" />
+      <Button content="Tinted Button" />
     </Provider>
-    <br />
-    This button's styling is only applicable to dark theme:
+    This button's styling is only applicable to dark theme.
     <br />
     <br />
     <Provider
@@ -51,10 +50,9 @@ const ButtonUsageExampleShorthand = () => (
         },
       }}
     >
-      <Button content="Styled for Cards in LIGHT theme" />
+      <Button content="Tinted Button" />
     </Provider>
-    <br />
-    This button's styling is only applicable to light theme:
+    This button's styling is only applicable to light theme.
   </div>
 )
 

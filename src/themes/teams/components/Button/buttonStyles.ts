@@ -58,11 +58,10 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       circularBorderColorFocus,
       circularBorderColorFocusIndicator,
 
+      textColor,
       textColorHover,
       textPrimaryColor,
       textPrimaryColorHover,
-      // textSecondaryColor,
-      // textSecondaryColorHover,
       boxShadow,
     } = variables
 
@@ -218,6 +217,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         }),
 
       ...(text && {
+        color: textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         ':hover': {
