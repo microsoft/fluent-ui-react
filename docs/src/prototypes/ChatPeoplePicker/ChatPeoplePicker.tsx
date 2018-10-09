@@ -288,15 +288,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
           available: this.props.source(changes.inputValue, this.state.selected),
         })
         return changes
-      case Downshift.stateChangeTypes.keyDownArrowUp:
-        if (changes.highlightedIndex === null) {
-          changes.highlightedIndex = this.state.available.length - 1
-        }
-      case Downshift.stateChangeTypes.keyDownArrowDown:
-        if (changes.highlightedIndex === null) {
-          changes.highlightedIndex = 0
-        }
-        return changes
       default:
         return changes
     }
