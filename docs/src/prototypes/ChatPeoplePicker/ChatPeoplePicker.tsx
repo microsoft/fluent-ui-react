@@ -5,6 +5,7 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
 import { IThemePrepared, ICSSInJSStyle } from 'types/theme'
+import { LiveAnnouncer, LiveMessage } from 'react-aria-live'
 
 type TChatPeoplePickerStyles = {
   containerDiv: any
@@ -69,6 +70,7 @@ interface IPeoplePickerState {
   inputValue: string
   deleteOnBackspace: boolean
   available: any[]
+  message: string
 }
 
 export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
@@ -84,6 +86,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
       inputValue: '',
       deleteOnBackspace: true,
       available: this.props.source('', []),
+      message: '',
     }
 
     this.input = React.createRef()
@@ -102,19 +105,25 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
         selected: newSelected,
         available: this.props.source('', newSelected),
         inputValue: '',
+        message: `${element.name} has been selected.`,
       }
     })
   }
 
   private removeFromSelected(element?) {
     let { selected } = this.state
+    let poppedElement
     const { inputValue } = this.state
     if (element) {
       selected = selected.filter(currentElement => currentElement !== element)
     } else {
-      selected.pop()
+      poppedElement = selected.pop()
     }
-    this.setState({ selected, available: this.props.source(inputValue, selected) })
+    this.setState({
+      selected,
+      available: this.props.source(inputValue, selected),
+      message: `${(element || poppedElement).name} has been removed.`,
+    })
   }
 
   public render(): React.ReactNode {
@@ -151,52 +160,55 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   }}
                   onClick={this.onContainerClick.bind(this, isOpen)}
                 >
-                  {this.state.selected.length === 0
-                    ? null
-                    : this.state.selected.map((element, index) => (
-                        <Label
-                          styles={peoplePickerStyles.personContainerLabel}
-                          circular
-                          key={`peoplePickerItem-${index}`}
-                          content={element.name}
-                          image={{
-                            src: element.image,
-                            avatar: true,
-                          }}
-                          icon={{
-                            name: 'close',
-                            onClick: this.onCloseIconClick.bind(this, element),
-                            onKeyDown: this.onCloseIconKeyDown.bind(this, element),
-                            'aria-label': `Remove ${element.name} from selection.`,
-                            'aria-hidden': false,
-                            role: 'button',
-                          }}
-                        />
-                      ))}
-                  <Input
-                    ref={this.input}
-                    onFocus={this.onInputFocus}
-                    onKeyUp={this.onInputKeyUp}
-                    role="presentation"
-                    styles={peoplePickerStyles.editText.div}
-                    variables={{
-                      inputFocusBorderColor:
-                        peoplePickerStyles.editText.variables.inputFocusBorderColor,
-                    }}
-                    input={{
-                      style: peoplePickerStyles.editText.input,
-                      placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
-                      ...getInputProps({
-                        onBlur: this.onInputBlur,
-                        'aria-labelledby': this.labelId,
-                        onKeyDown: this.onInputKeyDown.bind(
-                          this,
-                          highlightedIndex,
-                          selectItemAtIndex,
-                        ),
-                      }),
-                    }}
-                  />
+                  <LiveAnnouncer>
+                    <LiveMessage message={this.state.message} aria-live="assertive" />
+                    {this.state.selected.length === 0
+                      ? null
+                      : this.state.selected.map((element, index) => (
+                          <Label
+                            styles={peoplePickerStyles.personContainerLabel}
+                            circular
+                            key={`peoplePickerItem-${index}`}
+                            content={element.name}
+                            image={{
+                              src: element.image,
+                              avatar: true,
+                            }}
+                            icon={{
+                              name: 'close',
+                              onClick: this.onCloseIconClick.bind(this, element),
+                              onKeyDown: this.onCloseIconKeyDown.bind(this, element),
+                              'aria-label': `Remove ${element.name} from selection.`,
+                              'aria-hidden': false,
+                              role: 'button',
+                            }}
+                          />
+                        ))}
+                    <Input
+                      ref={this.input}
+                      onFocus={this.onInputFocus}
+                      onKeyUp={this.onInputKeyUp}
+                      role="presentation"
+                      styles={peoplePickerStyles.editText.div}
+                      variables={{
+                        inputFocusBorderColor:
+                          peoplePickerStyles.editText.variables.inputFocusBorderColor,
+                      }}
+                      input={{
+                        style: peoplePickerStyles.editText.input,
+                        placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
+                        ...getInputProps({
+                          onBlur: this.onInputBlur,
+                          'aria-labelledby': this.labelId,
+                          onKeyDown: this.onInputKeyDown.bind(
+                            this,
+                            highlightedIndex,
+                            selectItemAtIndex,
+                          ),
+                        }),
+                      }}
+                    />
+                  </LiveAnnouncer>
                 </div>
                 <Provider.Consumer
                   render={({ siteVariables }: IThemePrepared) => {
