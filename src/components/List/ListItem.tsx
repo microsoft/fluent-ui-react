@@ -16,11 +16,11 @@ import { Extendable } from '../../../types/utils'
 export interface IListItemProps {
   accessibility?: Accessibility
   as?: any
-  focusableItemProps?: IFocusableItemProps
   className?: string
   contentMedia?: any
   content?: any
   debug?: boolean
+  focusableItemProps?: IFocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -46,7 +46,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
   static propTypes = {
     as: customPropTypes.as,
-    focusableItemProps: PropTypes.object,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
@@ -74,6 +73,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
+    focusableItemProps: PropTypes.object,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -87,8 +87,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: IListItemProps, context: any) {
-    super(props, context)
+  constructor(props: IListItemProps) {
+    super(props, null)
 
     this.state = {
       isHovering: false,
@@ -108,7 +108,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   }
 
   componentDidUpdate() {
-    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current!) as HTMLElement)
+    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {

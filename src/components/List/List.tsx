@@ -109,7 +109,7 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
     const itemProps = _.pick(this.props, List.itemProps)
 
     return _.map(items, (item, idx) => {
-      itemProps.focusableItemProps = this.focusContainer.assignAtomicItemsProps(idx, items.length)
+      itemProps.focusableItemProps = this.focusContainer.createItemProps(idx, items.length)
 
       return ListItem.create(item, {
         defaultProps: itemProps,

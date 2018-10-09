@@ -36,7 +36,7 @@ export class ContainerFocusHandler<
     )
   }
 
-  public assignAtomicItemsProps(idx: number, itemsLength: number): IFocusableItemProps {
+  public createItemProps(idx: number, itemsLength: number): IFocusableItemProps {
     return {
       isFocused: idx === this.getState().focusItemOnIdx && this.getState().focusItemOnIdx !== -1,
       isFirstElement: idx === 0,

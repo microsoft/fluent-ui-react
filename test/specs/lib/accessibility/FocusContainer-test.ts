@@ -55,7 +55,7 @@ describe('Focus Container', () => {
   })
 
   test('Should assign item properties to first item', () => {
-    const item = focusContainer.assignAtomicItemsProps(0, props.items.length)
+    const item = focusContainer.createItemProps(0, props.items.length)
 
     expect(item.isFocused).toBe(true)
     expect(item.isFirstElement).toBe(true)
@@ -63,7 +63,7 @@ describe('Focus Container', () => {
   })
 
   test('Should assign item properties to middle item', () => {
-    const item = focusContainer.assignAtomicItemsProps(1, props.items.length)
+    const item = focusContainer.createItemProps(1, props.items.length)
 
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
@@ -71,7 +71,7 @@ describe('Focus Container', () => {
   })
 
   test('Should assign item properties to last item', () => {
-    const item = focusContainer.assignAtomicItemsProps(props.items.length - 1, props.items.length)
+    const item = focusContainer.createItemProps(props.items.length - 1, props.items.length)
 
     expect(item.isFocused).toBe(false)
     expect(item.isFirstElement).toBe(false)
