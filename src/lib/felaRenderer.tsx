@@ -10,14 +10,13 @@ import { IRenderer } from '../../types/theme'
 
 const createRendererConfig = (options: any = {}) => ({
   plugins: [
-    felaExpandCssShorthandsPlugin(),
-
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
       skip: ['content'],
     }),
 
+    felaExpandCssShorthandsPlugin(),
     felaPluginPlaceholderPrefixer(),
     felaPluginPrefixer(),
 

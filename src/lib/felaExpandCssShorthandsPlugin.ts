@@ -3,45 +3,15 @@ import * as expand from 'css-shorthand-expand'
 
 export default () => {
   const expandCssShorthands = styles => {
-    const processedStyles = {}
-
-    Object.keys(styles).forEach(cssPropertyName => {
+    return _.keys(styles).reduce((acc, cssPropertyName) => {
       const cssPropertyValue = styles[cssPropertyName]
-
-      if (typeof cssPropertyValue === 'object') {
-        processedStyles[cssPropertyName] = cssPropertyValue
-        return
+      const expandedProps = expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
+      if (expandedProps) {
+        return { ...acc, ...expandedProps }
       }
-
-      if (_.includes(shorthands, cssPropertyName)) {
-        const expandedProps = expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
-        Object.keys(expandedProps).forEach(key => {
-          processedStyles[_.camelCase(key)] = expandedProps[key]
-        })
-      } else {
-        processedStyles[cssPropertyName] = cssPropertyValue
-      }
-    })
-
-    return processedStyles
+      return { ...acc, [cssPropertyName]: cssPropertyValue }
+    }, {})
   }
 
   return expandCssShorthands
 }
-
-const shorthands = [
-  'font',
-  'padding',
-  'margin',
-  'border',
-  'borderWidth',
-  'borderStyle',
-  'borderColor',
-  'borderTop',
-  'borderRight',
-  'borderBottom',
-  'borderLeft',
-  'borderRadius',
-  'background',
-  'outline',
-]
