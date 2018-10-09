@@ -10,16 +10,6 @@ const Types = () => (
       description="A default popup."
       examplePath="components/Popup/Types/PopupExample"
     />
-    <ComponentExample
-      title="Emoji grid popup"
-      description="Emoji grid popup"
-      examplePath="components/Popup/Types/EmojiPopupExample"
-    />
-    <ComponentExample
-      title="Sticker popup"
-      description="Sticker popup"
-      examplePath="components/Popup/Types/StickerPopupExample"
-    />
   </ExampleSection>
 )
 

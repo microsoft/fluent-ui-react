@@ -20,6 +20,13 @@ const Router = () => (
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
         <DocsLayout exact path="/quick-start" component={QuickStart} />
+        {process.env.NODE_ENV !== 'production' && (
+          <DocsLayout
+            exact
+            path="/prototype-popups"
+            component={require('./prototypes/popups/index').default}
+          />
+        )}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
