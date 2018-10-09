@@ -3,6 +3,7 @@ import Types from './Types'
 import Variations from './Variations'
 import States from './States'
 import Groups from './Groups'
+import Usage from './Usage'
 
 const ButtonExamples = () => (
   <div>
@@ -10,6 +11,7 @@ const ButtonExamples = () => (
     <States />
     <Variations />
     <Groups />
+    <Usage />
   </div>
 )
 

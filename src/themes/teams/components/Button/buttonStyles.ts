@@ -7,8 +7,6 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
   root: ({ props, variables }): ICSSInJSStyle => {
     const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
     const primary = type === 'primary'
-    const secondaryTinted = type === 'secondaryTinted'
-    // const secondary = type === 'secondary'
 
     const {
       height,
@@ -19,6 +17,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       paddingLeftRightValue,
 
       color,
+      colorActive,
+      colorHover,
+      colorFocus,
       colorDisabled,
       backgroundColor,
       backgroundColorActive,
@@ -43,33 +44,19 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       primaryBorderColorFocus,
       primaryBorderColorFocusIndicator,
 
-      secondaryTintedColor,
-      secondaryTintedColorActive,
-      secondaryTintedColorHover,
-      secondaryTintedColorFocus,
-      secondaryTintedBackgroundColor,
-      secondaryTintedBackgroundColorActive,
-      secondaryTintedBackgroundColorHover,
-      secondaryTintedBackgroundColorFocus,
-      secondaryTintedBorderColor,
-      secondaryTintedBorderColorActive,
-      secondaryTintedBorderColorHover,
-      secondaryTintedBorderColorFocus,
-      secondaryTintedBorderColorFocusIndicator,
-
       primaryCircularBorderColorFocusIndicator,
 
-      secondaryCircularColor,
-      secondaryCircularColorActive,
-      secondaryCircularBackgroundColor,
-      secondaryCircularBackgroundColorActive,
-      secondaryCircularBackgroundColorHover,
-      secondaryCircularBackgroundColorFocus,
-      secondaryCircularBorderColor,
-      secondaryCircularBorderColorActive,
-      secondaryCircularBorderColorHover,
-      secondaryCircularBorderColorFocus,
-      secondaryCircularBorderColorFocusIndicator,
+      circularColor,
+      circularColorActive,
+      circularBackgroundColor,
+      circularBackgroundColorActive,
+      circularBackgroundColorHover,
+      circularBackgroundColorFocus,
+      circularBorderColor,
+      circularBorderColorActive,
+      circularBorderColorHover,
+      circularBorderColorFocus,
+      circularBorderColorFocusIndicator,
 
       textColorHover,
       textPrimaryColor,
@@ -103,11 +90,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         borderColor,
         boxShadow,
         ':hover': {
+          color: colorHover,
           backgroundColor: backgroundColorHover,
           borderColor: borderColorHover,
         },
         ...(isFromKeyboard && {
           ':focus': {
+            color: colorFocus,
             backgroundColor: backgroundColorFocus,
             borderColor: borderColorFocus,
             ':after': {
@@ -125,6 +114,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         ...(!isFromKeyboard && {
           ':focus': {
             ':active': {
+              color: colorActive,
               backgroundColor: backgroundColorActive,
               borderColor: borderColorActive,
               boxShadow: 'none',
@@ -135,19 +125,19 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
 
       ...(circular &&
         !text && {
-          color: secondaryCircularColor,
-          backgroundColor: secondaryCircularBackgroundColor,
-          borderColor: secondaryCircularBorderColor,
+          color: circularColor,
+          backgroundColor: circularBackgroundColor,
+          borderColor: circularBorderColor,
           ':hover': {
-            color: secondaryCircularColorActive,
-            backgroundColor: secondaryCircularBackgroundColorHover,
-            borderColor: secondaryCircularBorderColorHover,
+            color: circularColorActive,
+            backgroundColor: circularBackgroundColorHover,
+            borderColor: circularBorderColorHover,
           },
           ...(isFromKeyboard && {
             ':focus': {
-              color: secondaryCircularColorActive,
-              backgroundColor: secondaryCircularBackgroundColorFocus,
-              borderColor: secondaryCircularBorderColorFocus,
+              color: circularColorActive,
+              backgroundColor: circularBackgroundColorFocus,
+              borderColor: circularBorderColorFocus,
               ':after': {
                 content: '""',
                 position: 'absolute',
@@ -155,7 +145,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 right: '0',
                 bottom: '0',
                 left: '0',
-                border: `${pxToRem(1)} solid ${secondaryCircularBorderColorFocusIndicator}`,
+                border: `${pxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
               },
             },
@@ -163,49 +153,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
-                color: secondaryCircularColorActive,
-                backgroundColor: secondaryCircularBackgroundColorActive,
-                borderColor: secondaryCircularBorderColorActive,
-                boxShadow: 'none',
-              },
-            },
-          }),
-        }),
-
-      ...(secondaryTinted &&
-        !text && {
-          color: secondaryTintedColor,
-          backgroundColor: secondaryTintedBackgroundColor,
-          borderColor: secondaryTintedBorderColor,
-          ':hover': {
-            color: secondaryTintedColorHover,
-            backgroundColor: secondaryTintedBackgroundColorHover,
-            borderColor: secondaryTintedBorderColorHover,
-          },
-
-          ...(isFromKeyboard && {
-            ':focus': {
-              color: secondaryTintedColorFocus,
-              backgroundColor: secondaryTintedBackgroundColorFocus,
-              borderColor: secondaryTintedBorderColorFocus,
-              ':after': {
-                content: '""',
-                position: 'absolute',
-                top: '-2px',
-                right: '-2px',
-                bottom: '-2px',
-                left: '-2px',
-                border: `${pxToRem(1)} solid ${secondaryTintedBorderColorFocusIndicator}`,
-                borderRadius: '3px',
-              },
-            },
-          }),
-          ...(!isFromKeyboard && {
-            ':focus': {
-              ':active': {
-                color: secondaryTintedColorActive,
-                backgroundColor: secondaryTintedBackgroundColorActive,
-                borderColor: secondaryTintedBorderColorActive,
+                color: circularColorActive,
+                backgroundColor: circularBackgroundColorActive,
+                borderColor: circularBorderColorActive,
                 boxShadow: 'none',
               },
             },

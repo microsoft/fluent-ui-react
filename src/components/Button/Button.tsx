@@ -33,7 +33,7 @@ export interface IButtonProps {
   onFocus?: ComponentEventHandler<IButtonProps>
   renderIcon?: ShorthandRenderFunction
   text?: boolean
-  type?: 'primary' | 'secondary' | 'secondaryTinted'
+  type?: 'primary'
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }

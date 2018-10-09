@@ -11,6 +11,9 @@ export interface IButtonVariables {
   paddingLeftRightValue: number
 
   color: string
+  colorActive: string
+  colorHover: string
+  colorFocus: string
   colorDisabled: string
   backgroundColor: string
   backgroundColorActive: string
@@ -35,33 +38,19 @@ export interface IButtonVariables {
   primaryBorderColorFocus: string
   primaryBorderColorFocusIndicator: string
 
-  secondaryTintedColor: string
-  secondaryTintedColorActive: string
-  secondaryTintedColorHover: string
-  secondaryTintedColorFocus: string
-  secondaryTintedBackgroundColor: string
-  secondaryTintedBackgroundColorActive: string
-  secondaryTintedBackgroundColorHover: string
-  secondaryTintedBackgroundColorFocus: string
-  secondaryTintedBorderColor: string
-  secondaryTintedBorderColorActive: string
-  secondaryTintedBorderColorHover: string
-  secondaryTintedBorderColorFocus: string
-  secondaryTintedBorderColorFocusIndicator: string
-
   primaryCircularBorderColorFocusIndicator: string
 
-  secondaryCircularColor: string
-  secondaryCircularColorActive: string
-  secondaryCircularBackgroundColor: string
-  secondaryCircularBackgroundColorActive: string
-  secondaryCircularBackgroundColorHover: string
-  secondaryCircularBackgroundColorFocus: string
-  secondaryCircularBorderColor: string
-  secondaryCircularBorderColorActive: string
-  secondaryCircularBorderColorHover: string
-  secondaryCircularBorderColorFocus: string
-  secondaryCircularBorderColorFocusIndicator: string
+  circularColor: string
+  circularColorActive: string
+  circularBackgroundColor: string
+  circularBackgroundColorActive: string
+  circularBackgroundColorHover: string
+  circularBackgroundColorFocus: string
+  circularBorderColor: string
+  circularBorderColorActive: string
+  circularBorderColorHover: string
+  circularBorderColorFocus: string
+  circularBorderColorFocusIndicator: string
 
   textColorHover: string
   textPrimaryColor: string
@@ -83,6 +72,9 @@ export default (siteVars: any): IButtonVariables => {
     paddingLeftRightValue: 20,
 
     color: siteVars.black,
+    colorActive: siteVars.black,
+    colorHover: siteVars.black,
+    colorFocus: siteVars.black,
     colorDisabled: siteVars.gray06,
     backgroundColor: siteVars.white,
     backgroundColorActive: siteVars.gray08,
@@ -108,33 +100,19 @@ export default (siteVars: any): IButtonVariables => {
     primaryBorderColorFocus: siteVars.white,
     primaryBorderColorFocusIndicator: siteVars.black,
 
-    secondaryTintedColor: siteVars.brand06,
-    secondaryTintedColorActive: siteVars.brand06,
-    secondaryTintedColorHover: siteVars.brand06,
-    secondaryTintedColorFocus: siteVars.brand02,
-    secondaryTintedBackgroundColor: siteVars.white,
-    secondaryTintedBackgroundColorActive: siteVars.brand14,
-    secondaryTintedBackgroundColorHover: siteVars.brand16,
-    secondaryTintedBackgroundColorFocus: siteVars.brand14,
-    secondaryTintedBorderColor: siteVars.brand14,
-    secondaryTintedBorderColorActive: siteVars.brand12,
-    secondaryTintedBorderColorHover: siteVars.brand12,
-    secondaryTintedBorderColorFocus: siteVars.white,
-    secondaryTintedBorderColorFocusIndicator: siteVars.brand02,
-
     primaryCircularBorderColorFocusIndicator: siteVars.white,
 
-    secondaryCircularColor: siteVars.gray02,
-    secondaryCircularColorActive: siteVars.white,
-    secondaryCircularBackgroundColor: 'transparent',
-    secondaryCircularBackgroundColorActive: siteVars.gray02,
-    secondaryCircularBackgroundColorHover: siteVars.gray03,
-    secondaryCircularBackgroundColorFocus: siteVars.gray03,
-    secondaryCircularBorderColor: siteVars.gray02,
-    secondaryCircularBorderColorActive: 'transparent',
-    secondaryCircularBorderColorHover: 'transparent',
-    secondaryCircularBorderColorFocus: 'transparent',
-    secondaryCircularBorderColorFocusIndicator: siteVars.white,
+    circularColor: siteVars.gray02,
+    circularColorActive: siteVars.white,
+    circularBackgroundColor: 'transparent',
+    circularBackgroundColorActive: siteVars.gray02,
+    circularBackgroundColorHover: siteVars.gray03,
+    circularBackgroundColorFocus: siteVars.gray03,
+    circularBorderColor: siteVars.gray02,
+    circularBorderColorActive: 'transparent',
+    circularBorderColorHover: 'transparent',
+    circularBorderColorFocus: 'transparent',
+    circularBorderColorFocusIndicator: siteVars.white,
 
     textColorHover: siteVars.brand04,
     textPrimaryColor: siteVars.brand,
