@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as expand from 'css-shorthand-expand'
+import * as SC from 'shortcss'
 
 export default () => {
   const expandCssShorthands = styles => {
@@ -10,8 +10,8 @@ export default () => {
         return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
       }
 
-      const expandedProps = expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
-      if (expandedProps) {
+      if (SC.isShorthand(cssPropertyName)) {
+        const expandedProps = SC.expand(_.kebabCase(cssPropertyName), String(cssPropertyValue))
         return { ...acc, ...transformKebabCaseKeysToCamelCase(expandedProps) }
       }
 
