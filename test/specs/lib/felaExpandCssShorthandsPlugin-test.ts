@@ -3,7 +3,7 @@ import felaExpandCssShorthandsPlugin from 'src/lib/felaExpandCssShorthandsPlugin
 const expandCssShorthands = felaExpandCssShorthandsPlugin()
 
 describe('felaExpandCssShorthandsPlugin', () => {
-  test('should expand margin prop', () => {
+  test('should expand one-word css prop', () => {
     const style = {
       display: 'block',
       margin: '0px 10px',
@@ -18,7 +18,7 @@ describe('felaExpandCssShorthandsPlugin', () => {
     })
   })
 
-  test('should expand borderColor prop', () => {
+  test('should expand two-words css prop', () => {
     const style = {
       borderColor: 'red',
     }
