@@ -198,9 +198,23 @@ export default () => (
         </span>,
         <span>Virtual Cursor</span>,
         <span>
-          {' '}
           Method of navigation in JAWS screen reader. Most other screen readers have similar
           navigation modes.
+        </span>,
+        <span>focus handling</span>,
+        <span>
+          The technique which allows to focus the element using browser standard handlers, by using{' '}
+          <code>Tab, Shift+Tab</code> key combination to move focus. Or, focus element using
+          JavaScript.
+        </span>,
+        <span>Focus Zone</span>,
+        <span>
+          The component, which adds automatic focus handling to the component it wraps. It brings
+          JavaScript focus handling to such a components as List, Grid, Menu, etc.
+        </span>,
+        <span>Focus Trap</span>,
+        <span>
+          The component which allows to trap focus in some area, e.g. inside the modal dialog.
         </span>,
       ]}
     </Grid>

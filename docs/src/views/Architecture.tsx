@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Divider } from 'semantic-ui-react'
 
-import { Button } from '@stardust-ui/react'
+import { Button, Header, Divider } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
@@ -24,7 +23,6 @@ export default () => (
         <strong>Component Library</strong>, which is the set of primitive and composed components.
       </li>
     </ul>
-    <p>The future intent is to split these parts into two separate npm packages.</p>
 
     <Header as="h2">Toolkit (Framework)</Header>
     <p>
@@ -72,16 +70,29 @@ export default () => (
       accessibility integration for the entire projects which will be consumer of the library.
     </p>
     <p>
-      The library encapsulates accessibility into <strong>Behaviors</strong>. The behaviors returns
-      the recommended set of attributes and roles for the standard components (e.g. Image, DropDown,
-      Dialog, etc), based on their state (e.g. active, disabled, expanded, etc). Also, it provides
-      the expected keyboard navigation and focus handling for the components (e.g. List, Grid, Radio
-      Group, etc).
+      The library encapsulates accessibility into <strong>Behaviors</strong>. Behavior is the
+      object, which has three major responsibilities:
     </p>
+    <ul>
+      <li>
+        Define <code>aria-*</code> attributes for the standard components (e.g. Image, DropDown,
+        Dialog, etc), based on their state (e.g. active, disabled, expanded, etc).
+      </li>
+      <li>
+        Define the correct element <code>role</code>, if the HTML element tag differ from standard
+        (e.g. use <code>&lt;span&rt;</code> instead of <code>&lt;button&rt;</code>) to represent the
+        button element.
+      </li>
+      <li>
+        Define the keyboard navigation and focus handling for the composed components (e.g. List,
+        Grid, Radio Group, etc).
+      </li>
+    </ul>
     <p>
       Library provides the set of accessibility behaviors and keyboard handlers for the components
-      and allows to create and inject your own, if it is necessary for some custom components. In a
-      most of the cases there should be enough to use the existing from the library.
+      and allows to create and inject your own, if it is necessary for some custom components. In
+      most cases it should be enough to use the behaviors provided in the library, but, of course,
+      you can provide your own or extend existing behaviors.
     </p>
     <p>
       In addition to behaviors and keyboard handlers, the toolkit also provides FocusZone component,
@@ -92,8 +103,8 @@ export default () => (
 
     <Header as="h3">Theming</Header>
     <p>
-      Component logic allows to inject and switch the component theme (e.g. Light, Dark or High
-      Contrast). To achieve this, we use CSS in JS technique, which is provided by{' '}
+      You can inject different themes into Stardust components (e.g. Light, Dark or High Contrast).
+      To achieve this, we use CSS in JS technique, which is provided by{' '}
       <a href="http://fela.js.org/" target="_blank">
         Fela library
       </a>.
@@ -101,12 +112,16 @@ export default () => (
     <p>
       Each component has its own set of themes defined. Component logic handles theme switching and
       style overriding by providing ability to set <strong>variables</strong> or override component
-      (ot its children) styles using <code>styles</code> property.
+      (or its children) styles using <code>styles</code> property.
     </p>
     <p>
-      Components are relaying on the theme provider, which has to wrap components to provide default
-      theme and theme switching. Providers can be nested, this is necessary in case if you need to
-      use different theme in children and parent components.
+      Component styling is managed by the theme provider, which has to wrap components to provide
+      default theme and theme switching. Providers can be nested, this is necessary in case if you
+      need to use different theme in children and parent components.
+    </p>
+    <p>
+      Additional info about how to use themes or override styles can be found in the{' '}
+      <a href="themeing">Theming guide</a>.
     </p>
 
     <Header as="h3">UIComponent</Header>
@@ -123,15 +138,15 @@ export default () => (
 
     <Header as="h3">AutoControlledComponent</Header>
     <p>
-      The <code>AutoControlledComponent</code> is the base component, which maintains a component
-      state and allows to set its initial state based on default properties and allows to override
-      state by property with the same name.
+      The <code>AutoControlledComponent</code> is another base component that is used when it's
+      necessary to maintain state. It allows to set its initial state based on default properties
+      and allows to override state by property with the same name.
     </p>
 
     <Header as="h2">Component Library</Header>
     <p>
       The Component Library is a catalog of components, primitive and composed, which has predefined
-      behavior, themes and accessibility and can be customized using their properties or with
+      behavior, themes and accessibility and can be customized using their properties or by
       injecting additional themes and/or children components.
     </p>
 
@@ -141,17 +156,13 @@ export default () => (
       <code>AutoControlledComponent</code> and includes the logic to handle <strong>theming</strong>{' '}
       and <strong>accessibility</strong>. Each component has default{' '}
       <strong>accessibility behavior</strong>, which can be overridden by consumer of the library.
-      The same can be done with component look and feel by overriding theme styles or defining theme
+      The same can be done with component look and feel by overriding theme styles or setting theme
       variables.
-    </p>
-    <p>
-      Additional info about how to use themes or override styles can be found in the{' '}
-      <a href="themeing">Theming guide</a>.
     </p>
 
     <Header as="h3">Accessibility Behaviors</Header>
     <p>
-      <strong>Accessibility Behavior</strong> is the function, which returns the set of the
+      <strong>Accessibility Behavior</strong> is a function that returns the set of the
       accessibility attributes based on the component state and allows to bind keyboard navigation
       and focus handling with the corresponding methods.
     </p>
@@ -173,8 +184,8 @@ export default () => (
       ].join('\n')}
     />
     <p>
-      Each component has default accessibility behavior, which can be easily overridden by injecting
-      the other one using <code>accessibility</code> property of the component. Or you can override,
+      Each component has a default accessibility behavior, which can be overridden by injecting the
+      other one using <code>accessibility</code> property of the component. Or you can override,
       just single attribute by setting it value on the component.
     </p>
     <CodeSnippet
