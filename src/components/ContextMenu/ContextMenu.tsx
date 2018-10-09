@@ -7,8 +7,6 @@ import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/them
 import { Extendable } from '../../../types/utils'
 import List, { ListItem } from '../List'
 import Popup from '../Popup'
-// import { PopupWithSubmenu } from './PopupWithSubmenu'
-
 export interface IContextMenuProps {
   as?: any
   className?: string
@@ -50,14 +48,6 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
     as: 'div',
   }
 
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      subMenuOpen: false,
-      menuItemKey: '',
-    }
-  }
-
   renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
     return (
       <ElementType className={classes.root} {...rest}>
@@ -68,55 +58,31 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
 
   renderItems = () => {
     const { items, onItemClick } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
-    itemProps.selection = true
-    itemProps.onClick = onItemClick
     const children = _.map(items, item => {
+      const itemProps = _.pick(this.props, List.itemProps)
+      itemProps.selection = true
       if (item.menu !== undefined) {
         return (
           <Popup
             align="top"
             position="after"
-            content={<ContextMenu items={item.menu.items} onItemClick={onItemClick} />}
+            content={{
+              content: <ContextMenu items={item.menu.items} onItemClick={onItemClick} />,
+              styles: {
+                padding: '0px',
+              },
+            }}
+            // content={<ContextMenu items={item.menu.items} onItemClick={onItemClick} />}
           >
             {ListItem.create(item, { defaultProps: itemProps })}
           </Popup>
         )
-        // return <PopupWithSubmenu item={item} items={item.menu.items} onItemClick={onItemClick} />
       }
+      itemProps.onClick = onItemClick
       return ListItem.create(item, { defaultProps: itemProps })
     })
     return <List selection={true}>{children}</List>
   }
-
-  // processItems = () => {
-  //   const { items } = this.props
-  //   if (items !== undefined) {
-  //     items.map(item => {
-  //       if (item.menu) {
-  //         item.onClick = () => {
-  //           this.handleClick(item)
-  //         }
-  //         // item.content = <PopupWithSubmenu items={item.menu.items} item={}/>
-  //       }
-  //     })
-  //   }
-  // }
-
-  // handleClick = item => {
-  //   this.setState(prevState => {
-  //     if (prevState.subMenuOpen === false || prevState.menuItemKey !== item.menu.items) {
-  //       return {
-  //         subMenuOpen: true,
-  //         menuItemKey: item.menu.items,
-  //       }
-  //     }
-  //     return {
-  //       subMenuOpen: !prevState.subMenuOpen,
-  //       menuItemKey: item.menu.items,
-  //     }
-  //   })
-  // }
 }
 
 export default ContextMenu

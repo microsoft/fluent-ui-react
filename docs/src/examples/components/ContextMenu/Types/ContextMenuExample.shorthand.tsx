@@ -15,7 +15,6 @@ const items = [
     onClick: () => {
       alert('ListItem callback invoked..')
     },
-    // divider: true,
   },
   {
     key: 'menuItem2',
@@ -37,7 +36,6 @@ const items = [
     media: <Icon name="plus" />,
     header: 'Add to...',
     headerMedia: <Icon name="arrow right" />,
-    divider: true,
     menu: {
       items: [
         {

@@ -13,7 +13,7 @@ export default (siteVars: any): IPopupContentVariables => {
   return {
     backgroundColor: siteVars.white,
     borderColor: siteVars.gray06,
-    padding: `${pxToRem(0)} ${pxToRem(0)}`,
+    padding: `${pxToRem(10)} ${pxToRem(14)}`,
     zIndex: 1000,
   }
 }

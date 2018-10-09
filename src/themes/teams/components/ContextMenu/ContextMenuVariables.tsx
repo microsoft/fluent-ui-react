@@ -1,6 +1,6 @@
 export interface IContextMenuVariables {
-  height: string
-  width: string
+  height?: string
+  width?: string
   padding?: string
   border?: string
 }

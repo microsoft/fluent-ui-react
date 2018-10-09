@@ -2,8 +2,9 @@ import { IContextMenuVariables } from './ContextMenuVariables'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IContextMenuProps } from '../../../../components/ContextMenu/ContextMenu'
 
-const contextualMenuStyles: IComponentPartStylesInput<IContextMenuProps, IContextMenuVariables> = {
-  root: ({ props, variables: { height, width, padding, border } }): ICSSInJSStyle => {
+const contextMenuStyles: IComponentPartStylesInput<IContextMenuProps, IContextMenuVariables> = {
+  root: ({ variables }): ICSSInJSStyle => {
+    const { height, width, padding, border } = variables
     const styles = {
       height,
       width,
@@ -15,4 +16,4 @@ const contextualMenuStyles: IComponentPartStylesInput<IContextMenuProps, IContex
   },
 }
 
-export default contextualMenuStyles
+export default contextMenuStyles
