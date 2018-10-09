@@ -71,7 +71,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** A list item can have media at the leftmost position. */
     media: PropTypes.any,
 
-    /** A list item can indicate that it can be active. */
+    /** A list item can indicate that it can be selected. */
     selection: PropTypes.bool,
 
     /** Additional CSS styles to apply to the component instance.  */
