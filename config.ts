@@ -56,7 +56,7 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_devtool: __DEV__ && 'cheap-source-map',
+  compiler_devtool: __DEV__ && 'eval-source-map',
   compiler_globals: {
     __DEV__,
     __PROD__,
