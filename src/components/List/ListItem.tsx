@@ -9,6 +9,7 @@ import { Extendable } from '../../../types/utils'
 
 export interface IListItemProps {
   accessibility?: Accessibility
+  active?: boolean
   as?: any
   className?: string
   contentMedia?: any
@@ -19,7 +20,6 @@ export interface IListItemProps {
   headerMedia?: any
   important?: boolean
   media?: any
-  selected?: boolean
   selection?: boolean
   styles?: ComponentPartStyle
   truncateContent?: boolean
@@ -38,6 +38,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
 
+    /** A list item can indicate that it is active. */
+    active: PropTypes.bool,
+
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /** Additional CSS class name(s) to apply.  */
@@ -51,18 +55,22 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Toggle debug mode */
     debug: PropTypes.bool,
 
+    /** A list item can have an end media which appears at the rightmost end and only when the list item is hovered. */
     endMedia: PropTypes.any,
+
+    /** A list item can have a header of the content. */
     header: PropTypes.any,
+
+    /** A list item's can have a header media at the rightmost end. */
     headerMedia: PropTypes.any,
 
     /** A list item can appear more important and draw the user's attention. */
     important: PropTypes.bool,
+
+    /** A list item can have media at the leftmost position. */
     media: PropTypes.any,
 
-    /** A list item can indicate that it is selected. */
-    selected: PropTypes.bool,
-
-    /** A list item can indicate that it can be selected. */
+    /** A list item can indicate that it can be active. */
     selection: PropTypes.bool,
 
     /** Additional CSS styles to apply to the component instance.  */
@@ -92,6 +100,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
+      active,
       as,
       debug,
       endMedia,
@@ -100,7 +109,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
       contentMedia,
       header,
       headerMedia,
-      selected,
       selection,
       truncateContent,
       truncateHeader,
@@ -110,22 +118,22 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     const endArea = isHovering && endMedia
 
     const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-    const selectedCSS = selected ? { color: 'inherit' } : {}
+    const activeCSS = active ? { color: 'inherit' } : {}
 
     const headerCSS = {
       ...styles.header,
       ...hoveringSelectionCSS,
-      ...selectedCSS,
+      ...activeCSS,
     }
     const headerMediaCSS = {
       ...styles.headerMedia,
       ...hoveringSelectionCSS,
-      ...selectedCSS,
+      ...activeCSS,
     }
     const contentCSS = {
       ...styles.content,
       ...hoveringSelectionCSS,
-      ...selectedCSS,
+      ...activeCSS,
     }
 
     return (

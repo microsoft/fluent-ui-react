@@ -3,22 +3,22 @@ import React from 'react'
 import Knobs from 'docs/src/components/Knobs/Knobs'
 
 const ListExampleSelectedKnobs: any = props => {
-  const { onKnobChange, selected } = props
+  const { onKnobChange, active } = props
 
   return (
     <Knobs>
-      <Knobs.Boolean name="selected" value={selected} onChange={onKnobChange} />
+      <Knobs.Boolean name="active" value={active} onChange={onKnobChange} />
     </Knobs>
   )
 }
 
 ListExampleSelectedKnobs.propTypes = {
   onKnobChange: PropTypes.func.isRequired,
-  selected: PropTypes.bool,
+  active: PropTypes.bool,
 }
 
 ListExampleSelectedKnobs.defaultProps = {
-  selected: true,
+  active: true,
 }
 
 export default ListExampleSelectedKnobs

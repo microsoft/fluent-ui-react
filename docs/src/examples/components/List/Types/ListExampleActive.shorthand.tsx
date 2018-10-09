@@ -9,7 +9,7 @@ const ListExampleSelected = ({ knobs }) => {
       header: 'Irving Kuhic',
       headerMedia: '7:26:56 AM',
       content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
-      selected: knobs.selected,
+      active: knobs.active,
     },
     {
       key: 'skyler',
