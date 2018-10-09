@@ -47,6 +47,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** Media for the content */
     contentMedia: PropTypes.any,
 
     /** Shorthand for primary content. */
@@ -76,7 +77,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Truncates content */
     truncateContent: PropTypes.bool,
+
+    /** Truncates header */
     truncateHeader: PropTypes.bool,
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
