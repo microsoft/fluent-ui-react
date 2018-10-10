@@ -171,11 +171,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   }}
                   onClick={this.onContainerClick.bind(this, isOpen)}
                 >
-                  <span
-                    aria-live="assertive"
-                    aria-hidden="true"
-                    style={peoplePickerStyles.ariaLive}
-                  >
+                  <span aria-live="assertive" style={peoplePickerStyles.ariaLive}>
                     {this.state.message}
                   </span>
                   {this.state.selected.length === 0
