@@ -22,7 +22,7 @@ export class FocusableItem {
   }
 
   public tryFocus(focusableElement: HTMLElement) {
-    if (focusableElement && this.getProps().isFocused) {
+    if (focusableElement && this.getProps() && this.getProps().isFocused) {
       focusableElement.focus()
     }
   }
