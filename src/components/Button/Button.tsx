@@ -4,6 +4,7 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
+import Slot from '../Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -24,7 +25,7 @@ export interface IButtonProps {
   circular?: boolean
   className?: string
   disabled?: boolean
-  content?: React.ReactNode
+  content?: ShorthandValue
   fluid?: boolean
   icon?: ShorthandValue
   iconOnly?: boolean
@@ -160,7 +161,9 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {Slot.create(!hasChildren && content, {
+          defaultProps: { as: 'span', className: classes.content },
+        })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )

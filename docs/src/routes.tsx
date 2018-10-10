@@ -35,6 +35,12 @@ const Router = () => (
             path="/prototype-async-shorthand"
             component={require('./prototypes/AsyncShorthand/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-meeting-options"
+            path="/prototype-meeting-options"
+            component={require('./prototypes/meetingOptions/index').default}
+          />,
         ]}
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
