@@ -24,11 +24,13 @@ class PopupWithButton extends React.Component<any, any> {
             styles={{ padding, height: '38px', minWidth: '64px' }}
           />
         }
-        content={
-          <p>
-            The popup is rendered {position} the trigger<br />aligned to the {align}.
-          </p>
-        }
+        content={{
+          content: (
+            <p>
+              The popup is rendered {position} the trigger<br />aligned to the {align}.
+            </p>
+          ),
+        }}
       />
     )
   }
