@@ -3,7 +3,10 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { ILabelProps } from '../../../../components/Label/Label'
 
 const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
-  root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
+  root: ({
+    props: { icon, iconPosition, image, imagePosition, content, circular },
+    variables,
+  }): ICSSInJSStyle => ({
     padding: variables.padding,
     ...(image &&
       imagePosition === 'start' && {
@@ -13,7 +16,20 @@ const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
       imagePosition === 'end' && {
         paddingRight: variables.endPaddingRight,
       }),
-    display: 'inline-flex',
+    display: 'inline-grid',
+    // gridTemplateAreas:
+    //   '"' +
+    //   [
+    //     image && imagePosition === 'start' && 'image',
+    //     icon && iconPosition === 'start' && 'icon',
+    //     content && 'content',
+    //     icon && iconPosition === 'end' && 'icon',
+    //     image && imagePosition === 'end' && 'image',
+    //   ]
+    //     .filter(Boolean)
+    //     .join(' ') +
+    //   '"',
+    gridGap: pxToRem(3),
     alignItems: 'center',
     height: variables.height,
     fontSize: pxToRem(14),
@@ -26,11 +42,15 @@ const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
     }),
     overflow: 'hidden',
   }),
-  image: ({ variables }): ICSSInJSStyle => ({
+
+  image: ({ props, variables }): ICSSInJSStyle => ({
+    gridArea: 'image',
     height: variables.height,
     width: variables.height,
   }),
+
   icon: ({ props }): ICSSInJSStyle => ({
+    gridArea: 'icon',
     ...(props.icon &&
       typeof props.icon === 'object' &&
       (props.icon as any).onClick && {

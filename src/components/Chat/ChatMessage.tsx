@@ -24,8 +24,8 @@ import {
 import Avatar from '../Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
-import Layout from '../Layout'
 import Text from '../Text'
+import Slot from '../Slot/Slot'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -112,6 +112,8 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
 
+    template: PropTypes.string,
+
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
@@ -119,6 +121,10 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   static defaultProps = {
     accessibility: chatMessageBehavior as Accessibility,
     as: 'div',
+    template: [
+      'author   timestamp  edited', //
+      'content  content    content', //
+    ],
   }
 
   actionHandlers: AccessibilityActionHandlers = {
@@ -136,84 +142,96 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { children } = this.props
-
-    const childrenPropExists = childrenExist(children)
-    const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
-
-    return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rest}
-        className={className}
-      >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
-      </ElementType>
-    )
-  }
-
-  renderContent = (
-    classes: IComponentPartClasses,
-    styles: IComponentPartStylesInput,
-    variables: ComponentVariablesInput,
-  ) => {
     const {
       author,
       avatar,
       content,
-      mine,
+      children,
+      // mine,
       renderAuthor,
       renderAvatar,
       renderTimestamp,
       timestamp,
+      template,
     } = this.props
 
-    const avatarElement = Avatar.create(avatar, {
-      defaultProps: {
-        styles: styles.avatar,
-        variables: variables.avatar,
-      },
-      render: renderAvatar,
-    })
+    const childrenPropExists = childrenExist(children)
+    const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
-    const authorElement = Text.create(author, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.author,
-        variables: variables.author,
-      },
-      render: renderAuthor,
-    })
+    const rootProps = {
+      ...accessibility.attributes.root,
+      ...accessibility.keyHandlers.root,
+      ...rest,
+      className,
+    }
 
-    const timestampElement = Text.create(timestamp, {
-      defaultProps: {
-        size: 'small',
-        timestamp: true,
-        styles: styles.timestamp,
-        variables: variables.timestamp,
-      },
-      render: renderTimestamp,
-    })
+    if (childrenPropExists) {
+      return <ElementType {...rootProps}>{children}</ElementType>
+    }
+
+    const enabledAreas = {} as any
+    const gridTemplateAreas = []
+      .concat(template)
+      .filter(Boolean)
+      .reduce((acc, next) => {
+        // remove areas for which there is no prop
+        return (
+          acc +
+          ' "' +
+          next
+            .replace(/['"]/g, '')
+            .split(' ')
+            .filter(area => {
+              enabledAreas[area] = true
+              const exists = Boolean(this.props[area])
+              console.log(area, exists)
+              return exists
+            })
+            .join(' ') +
+          '"'
+        )
+      }, '')
+
+    console.log(gridTemplateAreas)
 
     return (
-      <Layout
-        start={!mine && avatarElement}
-        main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={content}
-          />
-        }
-        end={mine && avatarElement}
-      />
+      <ElementType {...rootProps} style={{ gridTemplateAreas }}>
+        {enabledAreas.avatar &&
+          Avatar.create(avatar, {
+            defaultProps: {
+              styles: styles.avatar,
+              variables: variables.avatar,
+            },
+            render: renderAvatar,
+          })}
+        {enabledAreas.author &&
+          Text.create(author, {
+            defaultProps: {
+              size: 'small',
+              styles: styles.author,
+              variables: variables.author,
+            },
+            render: renderAuthor,
+          })}
+        {enabledAreas.timestamp &&
+          Text.create(timestamp, {
+            defaultProps: {
+              size: 'small',
+              timestamp: true,
+              styles: styles.timestamp,
+              variables: variables.timestamp,
+            },
+            render: renderTimestamp,
+          })}
+        {/* TODO add Message.Content and separate avatar */}
+        {enabledAreas.content &&
+          Slot.create(content, {
+            defaultProps: {
+              styles: styles.content,
+              variables: variables.content,
+            },
+          })}
+      </ElementType>
     )
   }
 }

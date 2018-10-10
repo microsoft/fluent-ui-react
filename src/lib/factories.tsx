@@ -169,3 +169,4 @@ export const createHTMLImage = createShorthandFactory('img', val => ({ src: val 
 export const createHTMLInput = createShorthandFactory('input', val => ({ type: val }))
 export const createHTMLLabel = createShorthandFactory('label', val => ({ children: val }))
 export const createHTMLParagraph = createShorthandFactory('p', val => ({ children: val }))
+export const createHTMLSpan = createShorthandFactory('span', val => ({ children: val }))

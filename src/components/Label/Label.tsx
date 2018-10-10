@@ -3,13 +3,13 @@ import * as React from 'react'
 
 import {
   childrenExist,
+  createHTMLSpan,
   createShorthandFactory,
   customPropTypes,
-  pxToRem,
   UIComponent,
 } from '../../lib'
 
-import { Icon, Image, Layout } from '../..'
+import { Icon, Image } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -36,6 +36,7 @@ export interface ILabelProps {
   renderImage?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
+  template?: string | string[]
 }
 
 /**
@@ -102,12 +103,15 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    template: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
   }
 
   static defaultProps = {
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
+    template: 'image content icon',
   }
 
   handleIconOverrides = iconProps => {
@@ -129,72 +133,72 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
       imagePosition,
       renderIcon,
       renderImage,
+      template,
     } = this.props
 
-    const imageElement =
-      image &&
-      Image.create(image, {
-        defaultProps: {
-          styles: styles.image,
-          variables: variables.image,
-        },
-        render: renderImage,
-      })
-
-    const iconElement =
-      icon &&
-      Icon.create(icon, {
-        defaultProps: {
-          styles: styles.icon,
-          variables: variables.icon,
-        },
-        overrideProps: this.handleIconOverrides,
-        render: renderIcon,
-      })
-
-    let start: React.ReactNode = null
-    let end: React.ReactNode = null
-
-    // Default positioning of the image and icon
-    if (image && imagePosition === 'start') {
-      start = imageElement
-    }
-    if (icon && iconPosition === 'end') {
-      end = iconElement
+    const enabledAreas = {
+      icon: false,
+      image: false,
+      content: false,
     }
 
-    // Custom positioning of the icon and image
-    if (icon && iconPosition === 'start') {
-      if (image && imagePosition === 'start') {
-        start = (
-          <React.Fragment>
-            {imageElement}
-            {iconElement}
-          </React.Fragment>
+    const gridTemplateAreas = []
+      .concat(template)
+      .filter(Boolean)
+      .reduce((acc, next) => {
+        // remove areas for which there is no prop
+        return (
+          acc +
+          ' "' +
+          next
+            .replace(/['"]/g, '')
+            .split(' ')
+            .filter(area => {
+              enabledAreas[area] = true
+              const exists = Boolean(this.props[area])
+              console.log(area, exists)
+              return exists
+            })
+            .join(' ') +
+          '"'
         )
-      } else {
-        start = iconElement
-      }
-    }
-    if (image && imagePosition === 'end') {
-      if (icon && iconPosition === 'end') {
-        end = (
-          <React.Fragment>
-            {iconElement}
-            {imageElement}
-          </React.Fragment>
-        )
-      } else {
-        end = imageElement
-      }
-    }
+      }, '')
+
+    console.log(gridTemplateAreas)
+
+    const imageElement = Image.create(image, {
+      defaultProps: {
+        styles: styles.image,
+        variables: variables.image,
+      },
+      render: renderImage,
+    })
+
+    const iconElement = Icon.create(icon, {
+      defaultProps: {
+        styles: styles.icon,
+        variables: variables.icon,
+      },
+      overrideProps: this.handleIconOverrides,
+      render: renderIcon,
+    })
+
+    const contentElement = createHTMLSpan(content, {
+      defaultProps: { className: classes.content },
+    })
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} style={{ gridTemplateAreas }}>
         {childrenExist(children) ? (
           children
         ) : (
-          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
+          <>
+            {enabledAreas.icon && iconPosition === 'start' && iconElement}
+            {enabledAreas.image && imagePosition === 'start' && imageElement}
+            {enabledAreas.content && contentElement}
+            {enabledAreas.image && imagePosition === 'end' && imageElement}
+            {enabledAreas.icon && iconPosition === 'end' && iconElement}
+          </>
         )}
       </ElementType>
     )
