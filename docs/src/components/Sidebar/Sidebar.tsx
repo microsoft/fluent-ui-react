@@ -266,6 +266,14 @@ class Sidebar extends React.Component<any, any> {
                   >
                     Employee Card
                   </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-meeting-options"
+                    activeClassName="active"
+                  >
+                    Meeting Options
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}
