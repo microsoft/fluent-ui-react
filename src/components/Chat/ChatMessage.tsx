@@ -238,6 +238,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
                 <br />
                 <Attachment
                   icon="file word outline"
+                  aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
                   header="MeetingNotes.pptx"
                   action={{ icon: 'ellipsis horizontal' }}
                   renderAction={() => actionPopup}
@@ -245,6 +246,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
                 />
                 <Attachment
                   icon="file word outline"
+                  aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
                   header="Document.docx"
                   action={{ icon: 'ellipsis horizontal' }}
                   renderAction={() => actionPopup}
