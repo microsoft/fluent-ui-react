@@ -18,25 +18,21 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   ...(type === 'primary' && {
     ...dividerBorderStyle(size, variables.primaryColor),
   }),
-  ...(type === 'secondary' && {
-    ...dividerBorderStyle(size, variables.secondaryColor),
-  }),
 })
 
 const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { children, size, type, important, content } = props
+    const { children, fitted, size, type, important, content } = props
     return {
       color: variables.textColor,
       display: 'flex',
       alignItems: 'center',
-      paddingTop: pxToRem(variables.dividerPadding),
-      paddingBottom: pxToRem(variables.dividerPadding),
+      ...(!fitted && {
+        paddingTop: variables.dividerPadding,
+        paddingBottom: variables.dividerPadding,
+      }),
       ...(type === 'primary' && {
         color: variables.primaryColor,
-      }),
-      ...(type === 'secondary' && {
-        color: variables.secondaryColor,
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,

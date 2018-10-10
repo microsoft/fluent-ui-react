@@ -4,6 +4,7 @@ import { mount as enzymeMount } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
+import isExportedAtTopLevel from './isExportedAtTopLevel'
 import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
 import helpers from './commonHelpers'
 
@@ -11,6 +12,13 @@ import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+
+export interface IConformant {
+  eventTargets?: object
+  requiredProps?: object
+  exportedAtTopLevel?: boolean
+  rendersPortal?: boolean
+}
 
 export const mount = (node, options?) => {
   return enzymeMount(
@@ -24,11 +32,17 @@ export const mount = (node, options?) => {
  * @param {React.Component|Function} Component A component that should conform.
  * @param {Object} [options={}]
  * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
+ * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  */
-export default (Component, options: any = {}) => {
-  const { eventTargets = {}, requiredProps = {}, rendersPortal = false } = options
+export default (Component, options: IConformant = {}) => {
+  const {
+    eventTargets = {},
+    exportedAtTopLevel = true,
+    requiredProps = {},
+    rendersPortal = false,
+  } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
@@ -100,28 +114,10 @@ export default (Component, options: any = {}) => {
     expect(constructorName).toEqual(info.filenameWithoutExt)
   })
 
-  // ----------------------------------------
-  // Is exported or private
-  // ----------------------------------------
-  // detect components like: stardust.H1
-  const isTopLevelAPIProp = _.has(stardust, constructorName)
-
   // find the apiPath in the stardust object
   const foundAsSubcomponent = _.isFunction(_.get(stardust, info.apiPath))
 
-  // require all components to be exported at the top level
-  test('is exported at the top level', () => {
-    const message = [
-      `'${info.displayName}' must be exported at top level.`,
-      "Export it in 'src/index.js'.",
-    ].join(' ')
-
-    expect({ isTopLevelAPIProp, message }).toEqual({
-      message,
-      isTopLevelAPIProp: true,
-    })
-  })
-
+  exportedAtTopLevel && isExportedAtTopLevel(constructorName, info.displayName)
   if (info.isChild) {
     test('is a static component on its parent', () => {
       const message =
