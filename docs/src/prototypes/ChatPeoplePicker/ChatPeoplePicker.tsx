@@ -75,7 +75,6 @@ interface IPeoplePickerState {
 
 export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private input: any
-  private labelId: string = 'picker-label-id'
 
   constructor(props) {
     super(props, {})
@@ -130,11 +129,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     return (
       <div style={this.props.styles}>
         {/* Added label outside because otherwise I could click outside the combobox on the same line with the label and listbox would not close. */}
-        <Label
-          content="Add people"
-          variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
-          id={this.labelId}
-        />
         <Downshift
           stateReducer={this.stateReducer}
           onChange={this.onDropdownChange}
@@ -149,9 +143,15 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             isOpen,
             highlightedIndex,
             selectItemAtIndex,
+            getLabelProps,
           }) => {
             return (
-              <div>
+              <div aria-owns="silviu_menu">
+                <Label
+                  content="Add people"
+                  variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
+                  {...getLabelProps()}
+                />
                 <div
                   role="presentation"
                   style={{
@@ -199,7 +199,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                         placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
                         ...getInputProps({
                           onBlur: this.onInputBlur,
-                          'aria-labelledby': this.labelId,
                           onKeyDown: this.onInputKeyDown.bind(
                             this,
                             highlightedIndex,
