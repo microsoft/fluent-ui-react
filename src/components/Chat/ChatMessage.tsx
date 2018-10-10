@@ -26,6 +26,10 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
+import Attachment from '../Attachment'
+import Button from '../Button'
+import Popup from '../Popup'
+import Menu from '../Menu'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -196,6 +200,22 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
+    const menu = (
+      <Menu
+        defaultActiveIndex={0}
+        items={[
+          { key: 'editorials', content: 'Editorials' },
+          { key: 'review', content: 'Reviews' },
+          { key: 'events', content: 'Upcoming Events' },
+        ]}
+        vertical
+      />
+    )
+
+    const actionPopup = (
+      <Popup trigger={<Button iconOnly icon="ellipsis horizontal" />} content={{ content: menu }} />
+    )
+
     return (
       <Layout
         start={!mine && avatarElement}
@@ -209,7 +229,29 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
                 {timestampElement}
               </>
             }
-            main={content}
+            main={
+              <>
+                {content}
+                <a href="/"> Some link </a>
+                {content}
+                <br />
+                <br />
+                <Attachment
+                  icon="file word outline"
+                  header="MeetingNotes.pptx"
+                  action={{ icon: 'ellipsis horizontal' }}
+                  renderAction={() => actionPopup}
+                  data-is-focusable={true}
+                />
+                <Attachment
+                  icon="file word outline"
+                  header="Document.docx"
+                  action={{ icon: 'ellipsis horizontal' }}
+                  renderAction={() => actionPopup}
+                  data-is-focusable={true}
+                />
+              </>
+            }
           />
         }
         end={mine && avatarElement}
