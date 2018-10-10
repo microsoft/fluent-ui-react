@@ -39,6 +39,7 @@ export interface IMenuItemProps {
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
+  renderWrapper?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
@@ -128,6 +129,15 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
      */
     renderIcon: PropTypes.func,
 
+    /**
+     * A custom render function the wrapper slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderWrapper: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -147,7 +157,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon, wrapper } = this.props
+    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -177,6 +187,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
           ...accessibility.attributes.root,
           ...accessibility.keyHandlers.root,
         },
+        render: renderWrapper,
         overrideProps: () => ({
           children: menuItemInner,
         }),

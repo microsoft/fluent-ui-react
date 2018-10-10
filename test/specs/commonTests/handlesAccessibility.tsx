@@ -37,12 +37,22 @@ const TestBehavior: Accessibility = (props: any) => ({
  * @param {string} [options.partSelector=''] Selector to scope the test to a part
  * @param {FocusZoneDefinition} [options.focusZoneDefinition={}] FocusZone definition
  */
-export default (Component, options: any = {}) => {
+export default (
+  Component,
+  options: {
+    requiredProps?: any
+    defaultRootRole?: string
+    partSelector?: string
+    focusZoneDefinition?: any
+    usesWrapperSlot?: boolean
+  } = {},
+) => {
   const {
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
     focusZoneDefinition = {},
+    usesWrapperSlot = false,
   } = options
 
   test('gets default accessibility when no override used', () => {
@@ -73,20 +83,26 @@ export default (Component, options: any = {}) => {
 
     test('gets correct role when overrides role', () => {
       const testRole = 'test-role'
-      const rendered = getTestingRenderedComponent(
-        Component,
-        <Component {...requiredProps} role={testRole} />,
+      const element = usesWrapperSlot ? (
+        <Component {...requiredProps} wrapper={{ role: testRole }} />
+      ) : (
+        <Component {...requiredProps} role={testRole} />
       )
+
+      const rendered = getTestingRenderedComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })
 
     test('gets correct role when overrides both accessibility and role', () => {
       const testRole = 'test-role'
-      const rendered = getTestingRenderedComponent(
-        Component,
-        <Component {...requiredProps} accessibility={TestBehavior} role={testRole} />,
+      const element = usesWrapperSlot ? (
+        <Component {...requiredProps} accessibility={TestBehavior} wrapper={{ role: testRole }} />
+      ) : (
+        <Component {...requiredProps} accessibility={TestBehavior} role={testRole} />
       )
+
+      const rendered = getTestingRenderedComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })

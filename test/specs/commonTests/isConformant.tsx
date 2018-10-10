@@ -28,7 +28,12 @@ export const mount = (node, options?) => {
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  */
 export default (Component, options: any = {}) => {
-  const { eventTargets = {}, requiredProps = {}, rendersPortal = false } = options
+  const {
+    eventTargets = {},
+    requiredProps = {},
+    rendersPortal = false,
+    usesWrapperSlot = false,
+  } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
@@ -47,6 +52,11 @@ export default (Component, options: any = {}) => {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
+
+    if (usesWrapperSlot) {
+      component = component.childAt(0)
+    }
+
     return component
   }
 

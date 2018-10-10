@@ -5,11 +5,12 @@ import { getTestingRenderedComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 
-xdescribe('MenuItem', () => {
+describe('MenuItem', () => {
   isConformant(MenuItem, {
     eventTargets: {
       onClick: 'a',
     },
+    usesWrapperSlot: true,
   })
 
   it('content renders as `li > a`', () => {
@@ -30,7 +31,7 @@ xdescribe('MenuItem', () => {
   })
 
   describe('accessibility', () => {
-    handlesAccessibility(MenuItem, { defaultRootRole: 'presentation' })
+    handlesAccessibility(MenuItem, { defaultRootRole: 'presentation', usesWrapperSlot: true })
     handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 
     describe('as a default MenuItem', () => {
