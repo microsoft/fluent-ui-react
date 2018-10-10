@@ -10,6 +10,7 @@ export interface IDividerProps {
   children?: ReactChildren
   className?: string
   content?: React.ReactNode
+  fitted?: boolean
   size?: number
   type?: 'primary' | 'secondary'
   important?: boolean
@@ -44,7 +45,7 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     content: customPropTypes.contentShorthand,
 
     /** A divider can be fitted, without any space above or below it.  */
-    divider: PropTypes.bool,
+    fitted: PropTypes.bool,
 
     /** Size multiplier (default 0) * */
     size: PropTypes.number,
