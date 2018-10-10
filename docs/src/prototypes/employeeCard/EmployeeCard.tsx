@@ -1,9 +1,20 @@
 import * as React from 'react'
 import { Sizes } from '../../../../src/lib/enums'
-import { Extendable } from '../../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../../types/utils'
 import { Avatar, Divider, Grid } from '@stardust-ui/react'
-import { IEmployeeCardProps } from './types/IEmployeeCardProps'
 import Text from './Text'
+
+interface IEmployeeCardProps {
+  firstName?: string
+  lastName?: string
+  status?: string
+  position?: string
+  team?: string
+  location?: string
+  email?: string
+  phone?: string
+  avatar?: ShorthandValue
+}
 
 class EmployeeCard extends React.Component<Extendable<IEmployeeCardProps>, any> {
   render() {
