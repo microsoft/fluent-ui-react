@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Avatar, Popup } from '@stardust-ui/react'
-import EmployeeCard from './EmployeeCard'
+import EmployeeCard, { IEmployeeCardProps } from './EmployeeCard'
 import { Extendable } from '../../../../types/utils'
-import { IEmployeeCardProps } from './types/IEmployeeCardProps'
 
 export interface IAvatarEmployeeCardState {
   popupOpen: boolean
@@ -13,26 +12,27 @@ class AvatarEmployeeCard extends React.Component<
   IAvatarEmployeeCardState
 > {
   state = { popupOpen: false }
-  tryClose = false
+  isPopupClosing = false
 
-  togglePopup(popupOpen) {
-    if (!popupOpen) {
-      this.tryClose = true
-      this.timer()
+  setPopupOpen(newOpen) {
+    if (!newOpen) {
+      this.schedulePopupClose()
     } else {
-      this.tryClose = false
+      this.isPopupClosing = false
       this.setState({ popupOpen: true })
     }
   }
 
-  timer = () =>
+  schedulePopupClose = () => {
+    this.isPopupClosing = true
     setTimeout(() => {
-      if (this.tryClose) {
-        this.setState({
-          popupOpen: false,
-        })
+      if (this.isPopupClosing) {
+        this.setState({ popupOpen: false })
       }
+
+      this.isPopupClosing = false
     }, 500)
+  }
 
   render() {
     const {
@@ -58,10 +58,10 @@ class AvatarEmployeeCard extends React.Component<
           defaultProps: {
             name: `${firstName} ${lastName}`,
             onMouseEnter: () => {
-              this.togglePopup(true)
+              this.setPopupOpen(true)
             },
             onMouseLeave: () => {
-              this.togglePopup(false)
+              this.setPopupOpen(false)
             },
           },
         })}
@@ -79,10 +79,10 @@ class AvatarEmployeeCard extends React.Component<
               avatar={avatar}
               phone={phone}
               onMouseEnter={() => {
-                this.togglePopup(true)
+                this.setPopupOpen(true)
               }}
               onMouseLeave={() => {
-                this.togglePopup(false)
+                this.setPopupOpen(false)
               }}
             />
           ),
