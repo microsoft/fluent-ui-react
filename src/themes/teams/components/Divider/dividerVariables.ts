@@ -1,3 +1,5 @@
+import { pxToRem } from '../../../../lib'
+
 export default (siteVars: any) => {
   return {
     dividerColor: siteVars.gray09,
@@ -5,8 +7,7 @@ export default (siteVars: any) => {
     textFontSize: siteVars.fontSizeSmall,
     textLineHeight: siteVars.lineHeightSmall,
     primaryColor: siteVars.brand,
-    secondaryColor: siteVars.gray04,
     importantFontWeight: siteVars.fontWeightBold,
-    dividerPadding: 4,
+    dividerPadding: pxToRem(4),
   }
 }
