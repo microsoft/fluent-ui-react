@@ -19,8 +19,9 @@ import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/them
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
 export interface IMenuItemProps {
@@ -31,18 +32,19 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
   onClick?: ComponentEventHandler<IMenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  renderIcon?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
-  wrapper?: ItemShorthand
+  wrapper?: ShorthandValue
 }
 
 export interface IMenuItemState {
@@ -117,6 +119,15 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
 
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -136,7 +147,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, wrapper } = this.props
+    const { children, content, icon, renderIcon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -153,6 +164,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
         {icon &&
           Icon.create(this.props.icon, {
             defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            render: renderIcon,
           })}
         {content}
       </ElementType>
