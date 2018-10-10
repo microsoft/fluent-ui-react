@@ -14,8 +14,6 @@ import { Extendable, ObjectOf, ObjectOrFunc } from './utils'
 // Props
 // ========================================================
 
-export type IProps = ObjectOf<any>
-
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
   styles?: ComponentPartStyle

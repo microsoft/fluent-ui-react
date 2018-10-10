@@ -10,12 +10,12 @@ import {
   IRenderResultConfig,
 } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface IPopupContentProps {
   as?: any
   children?: ReactChildren
-  content?: ItemShorthand
+  content?: any
   className?: string
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -27,10 +27,10 @@ export interface IPopupContentProps {
  * This should be replaced with the actual description after the PR is merged
  */
 class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
+  public static create: Function
+
   public static displayName = 'PopupContent'
   public static className = 'ui-popup__content'
-
-  public static create = createShorthandFactory(PopupContent, content => ({ content }))
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -71,5 +71,7 @@ class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
     )
   }
 }
+
+PopupContent.create = createShorthandFactory(PopupContent, content => ({ content }))
 
 export default PopupContent

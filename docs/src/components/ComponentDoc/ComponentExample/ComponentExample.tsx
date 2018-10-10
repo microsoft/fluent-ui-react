@@ -30,7 +30,6 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
   description: string
   examplePath: string
-  suiVersion?: string
   themeName?: string
 }
 
@@ -98,7 +97,6 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    suiVersion: PropTypes.string,
     title: PropTypes.node,
     themeName: PropTypes.string,
   }
@@ -606,7 +604,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 
   public render() {
-    const { children, description, suiVersion, title } = this.props
+    const { children, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -656,11 +654,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: '1' }}>
-                <ComponentExampleTitle
-                  description={description}
-                  title={title}
-                  suiVersion={suiVersion}
-                />
+                <ComponentExampleTitle description={description} title={title} />
               </div>
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls

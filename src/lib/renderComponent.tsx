@@ -12,11 +12,11 @@ import {
   ComponentVariablesObject,
   IComponentPartClasses,
   IComponentPartStylesPrepared,
-  IProps,
   IPropsWithVarsAndStyles,
   IState,
   IThemePrepared,
 } from '../../types/theme'
+import { IProps } from '../../types/utils'
 import {
   IAccessibilityBehavior,
   IAccessibilityDefinition,

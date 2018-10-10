@@ -4,34 +4,37 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon'
+import Slot from '../Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
   ComponentEventHandler,
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IButtonProps {
   as?: any
+  accessibility?: Accessibility
   children?: ReactChildren
   circular?: boolean
   className?: string
   disabled?: boolean
-  content?: React.ReactNode
+  content?: ShorthandValue
   fluid?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<IButtonProps>
   onFocus?: ComponentEventHandler<IButtonProps>
+  renderIcon?: ShorthandRenderFunction
   text?: boolean
   type?: 'primary' | 'secondary'
-  accessibility?: Accessibility
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -111,6 +114,15 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
 
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -149,20 +161,23 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {Slot.create(!hasChildren && content, {
+          defaultProps: { as: 'span', className: classes.content },
+        })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
   public renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content } = this.props
+    const { icon, iconPosition, content, renderIcon } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
         styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
+        render: renderIcon,
       },
     })
   }
