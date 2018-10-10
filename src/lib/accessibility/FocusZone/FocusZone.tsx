@@ -144,9 +144,11 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
       this.updateTabIndexes()
 
       if (this.props.defaultTabbableElement) {
-        this._activeElement = this._root.current.querySelector(
+        const initialActiveElement = this._root.current.querySelector(
           this.props.defaultTabbableElement,
         ) as HTMLElement
+
+        this.setActiveElement(initialActiveElement)
       }
 
       if (this.props.shouldFocusOnMount) {
