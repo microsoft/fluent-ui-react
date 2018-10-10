@@ -35,9 +35,19 @@ const Variations = () => (
       examplePath="components/Input/Variations/InputExampleInlineIconClearable"
     />
     <ComponentExample
-      title="Wrapper"
-      description="An input can handle the wrapper shorthand props."
-      examplePath="components/Input/Variations/InputExampleWrapper"
+      title="Input slot"
+      description="The 'input' slot targets the input element and overrides input related props passed to the root."
+      examplePath="components/Input/Variations/InputExampleInputSlot"
+    />
+    <ComponentExample
+      title="Wrapper slot"
+      description="The 'wrapper' slot targets the wrapper element and overrides wrapper related props passed to the root."
+      examplePath="components/Input/Variations/InputExampleWrapperSlot"
+    />
+    <ComponentExample
+      title="Targeting slots"
+      description="An input can handle both input and wrapper slots for targetting the input and wrapper elements, respectively."
+      examplePath="components/Input/Variations/InputExampleTargeting"
     />
   </ExampleSection>
 )

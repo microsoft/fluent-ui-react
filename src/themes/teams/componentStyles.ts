@@ -24,7 +24,6 @@ export { default as Icon } from './components/Icon/iconStyles'
 
 export { default as Image } from './components/Image/imageStyles'
 
-export { default as InputBase } from './components/Input/inputBaseStyles'
 export { default as Input } from './components/Input/inputStyles'
 
 export { default as Label } from './components/Label/labelStyles'

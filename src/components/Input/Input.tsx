@@ -1,21 +1,42 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 import * as _ from 'lodash'
 
-import { AutoControlledComponent, customPropTypes } from '../../lib'
-import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
-import InputBase, { IInputBaseProps } from './InputBase'
+import {
+  AutoControlledComponent,
+  customPropTypes,
+  IRenderResultConfig,
+  partitionHTMLProps,
+} from '../../lib'
+import {
+  Extendable,
+  ShorthandValue,
+  ShorthandRenderFunction,
+  ComponentEventHandler,
+} from '../../../types/utils'
+import { ComponentPartStyle, ComponentVariablesInput } from 'theme'
 import Icon from '../Icon'
 import Slot from '../Slot'
 import Ref from '../Ref'
 
-export interface IInputProps extends IInputBaseProps {
+export interface IInputProps {
+  as?: any
+  className?: string
   clearable?: boolean
+  defaultValue?: React.ReactText
+  fluid?: boolean
   icon?: ShorthandValue
   inline?: boolean
+  input?: ShorthandValue
+  onChange?: ComponentEventHandler<IInputProps>
   renderIcon?: ShorthandRenderFunction
   renderInput?: ShorthandRenderFunction
   renderWrapper?: ShorthandRenderFunction
+  styles?: ComponentPartStyle<IInputProps, any>
+  type?: string
+  value?: React.ReactText
+  variables?: ComponentVariablesInput
   wrapper?: ShorthandValue
 }
 
@@ -57,6 +78,9 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
+    /** Shorthand for the input component */
+    input: customPropTypes.itemShorthand,
+
     /** An input can be used inline with text */
     inline: PropTypes.bool,
 
@@ -67,12 +91,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
      * @param {object} data - All props and proposed value.
      */
     onChange: PropTypes.func,
-
-    /** The HTML input placeholder. */
-    placeholder: PropTypes.string,
-
-    /** The HTML input type. */
-    type: PropTypes.string,
 
     /**
      * A custom render function the icon slot.
@@ -104,6 +122,9 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** The HTML input type. */
+    type: PropTypes.string,
+
     /** The value of the input. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
@@ -115,7 +136,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
   }
 
   static defaultProps = {
-    as: 'input',
+    as: 'div',
     type: 'text',
     wrapper: 'div',
   }
@@ -124,46 +145,52 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
 
   state = { value: this.props.value || this.props.defaultValue || '' }
 
-  renderComponent({ classes, styles, variables }) {
-    const {
-      clearable,
-      icon,
-      inline,
-      renderIcon,
-      renderInput,
-      renderWrapper,
-      wrapper,
-      ...rest
-    } = this.props
-    const { value } = this.state
+  renderComponent({
+    ElementType,
+    classes,
+    rest: restProps,
+    styles,
+    variables,
+  }: IRenderResultConfig<IInputProps>) {
+    const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
+    const { value = '' } = this.state
+    const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
-    const inputComponent = InputBase.create(this.props.type, {
-      defaultProps: { className: classes.input, ...rest, value },
-      overrideProps: { onChange: this.handleChange },
-      render: renderInput,
+    return Slot.create(wrapper, {
+      defaultProps: {
+        as: ElementType,
+        className: cx(Input.className, className),
+        styles: styles.root,
+        ...rest,
+      },
+      overrideProps: {
+        children: (
+          <>
+            <Ref innerRef={this.handleInputRef}>
+              {Slot.createHTMLInput(input || type, {
+                defaultProps: {
+                  ...htmlInputProps,
+                  type,
+                  value,
+                  className: classes.input,
+                  onChange: this.handleChange,
+                },
+                render: renderInput,
+              })}
+            </Ref>
+            {Icon.create(this.computeIcon(), {
+              defaultProps: {
+                styles: styles.icon,
+                variables: variables.icon,
+              },
+              overrideProps: this.handleIconOverrides,
+              render: renderIcon,
+            })}
+          </>
+        ),
+      },
+      render: renderWrapper,
     })
-
-    return wrapper
-      ? Slot.create(wrapper, {
-          defaultProps: { className: classes.root },
-          overrideProps: {
-            children: (
-              <>
-                <Ref innerRef={this.handleInputRef}>{inputComponent}</Ref>
-                {Icon.create(this.computeIcon(), {
-                  defaultProps: {
-                    styles: styles.icon,
-                    variables: variables.icon,
-                  },
-                  overrideProps: this.handleIconOverrides,
-                  render: renderIcon,
-                })}
-              </>
-            ),
-          },
-          render: renderWrapper,
-        })
-      : inputComponent
   }
 
   private handleInputRef = (c: HTMLInputElement) => (this.inputRef = c)
@@ -177,8 +204,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     ...(predefinedProps.onClick && { tabIndex: '0' }),
   })
 
-  private handleChange = (e: React.SyntheticEvent, { value }: { value: React.ReactText }) => {
+  private handleChange = (e: React.SyntheticEvent) => {
+    const value = _.get(e, 'target.value')
+
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
+
     this.trySetState({ value })
   }
 

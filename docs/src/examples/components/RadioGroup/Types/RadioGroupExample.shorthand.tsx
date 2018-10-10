@@ -35,7 +35,7 @@ class RadioGroupVerticalExample extends React.Component {
         label: (
           <Text>
             Choose your own{' '}
-            <Input tabIndex={this.state.inputTabIndex} inline placeholder="flavour" />
+            <Input input={{ tabIndex: this.state.inputTabIndex }} inline placeholder="flavour" />
           </Text>
         ),
         value: 'custom',
