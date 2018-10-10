@@ -16,7 +16,7 @@ class PopupControlledExample extends React.Component<any, any> {
           alert(`Popup is requested to change its open state to "${newProps.open}".`)
           this.setState({ popupOpen: newProps.open })
         }}
-        content={<Input icon="search" placeholder="Search..." />}
+        content={{ content: <Input icon="search" placeholder="Search..." /> }}
       >
         <Button icon="expand" onClick={() => this.togglePopup()} />
       </Popup>
