@@ -177,8 +177,8 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
         styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
-        render: renderIcon,
       },
+      render: renderIcon,
     })
   }
 
