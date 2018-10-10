@@ -18,9 +18,6 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   ...(type === 'primary' && {
     ...dividerBorderStyle(size, variables.primaryColor),
   }),
-  ...(type === 'secondary' && {
-    ...dividerBorderStyle(size, variables.secondaryColor),
-  }),
 })
 
 const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
@@ -30,13 +27,10 @@ const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> =
       color: variables.textColor,
       display: 'flex',
       alignItems: 'center',
-      paddingTop: pxToRem(variables.dividerPadding),
-      paddingBottom: pxToRem(variables.dividerPadding),
+      paddingTop: variables.dividerPadding,
+      paddingBottom: variables.dividerPadding,
       ...(type === 'primary' && {
         color: variables.primaryColor,
-      }),
-      ...(type === 'secondary' && {
-        color: variables.secondaryColor,
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,
