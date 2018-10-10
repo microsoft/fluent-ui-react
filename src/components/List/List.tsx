@@ -13,9 +13,14 @@ import {
 } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 
-export interface IListProps extends IFocusContainerProps<ItemShorthand> {
+export interface IListProps extends IFocusContainerProps<ShorthandValue> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
