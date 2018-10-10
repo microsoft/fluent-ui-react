@@ -36,6 +36,7 @@ export const mount = (node, options?) => {
  * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
+ * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
  */
 export default (Component, options: IConformant = {}) => {
   const {

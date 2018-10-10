@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import {
   childrenExist,
-  createHTMLLi,
+  createHTMLListItem,
   createShorthandFactory,
   customPropTypes,
   UIComponent,
@@ -181,7 +181,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
     )
 
     if (wrapper) {
-      return createHTMLLi(wrapper, {
+      return createHTMLListItem(wrapper, {
         defaultProps: {
           className: classes.root,
           ...accessibility.attributes.root,
