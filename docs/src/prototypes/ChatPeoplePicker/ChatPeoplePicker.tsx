@@ -262,6 +262,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                                             : siteVariables.white,
                                       },
                                     }),
+                                    // workaround until adding aria-controls and aria-owns to downshift
                                     id: `people-picker-item-${index}`,
                                   }
                                 })
