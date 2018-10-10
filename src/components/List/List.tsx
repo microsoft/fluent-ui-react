@@ -13,12 +13,7 @@ import {
 } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
 
 export interface IListProps extends IFocusContainerProps<ItemShorthand> {
   accessibility?: Accessibility
@@ -128,7 +123,7 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
       itemProps.focusableItemProps = this.focusContainer.createItemProps(idx, items.length)
 
       return ListItem.create(item, {
-        defaultProps: itemProps, 
+        defaultProps: itemProps,
         render: renderItem,
       })
     })
