@@ -5,7 +5,6 @@ import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
 import { IThemePrepared, ICSSInJSStyle } from 'types/theme'
-import { LiveAnnouncer, LiveMessage } from 'react-aria-live'
 
 type TChatPeoplePickerStyles = {
   containerDiv: any
@@ -18,6 +17,7 @@ type TChatPeoplePickerStyles = {
     variables: { inputFocusBorderColor: any }
   }
   listboxUL: ICSSInJSStyle
+  ariaLive: ICSSInJSStyle
 }
 
 const peoplePickerStyles: TChatPeoplePickerStyles = {
@@ -53,6 +53,16 @@ const peoplePickerStyles: TChatPeoplePickerStyles = {
   listboxUL: {
     position: 'absolute',
     zIndex: 1000,
+  },
+  ariaLive: {
+    border: '0px',
+    clip: 'rect(0px, 0px, 0px, 0px)',
+    height: '1px',
+    margin: '-1px',
+    overflow: 'hidden',
+    padding: '0px',
+    width: '1px',
+    position: 'absolute',
   },
 }
 
@@ -146,7 +156,8 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             getLabelProps,
           }) => {
             return (
-              <div aria-owns="silviu_menu">
+              // workaround until adding aria-controls and aria-owns to downshift
+              <div aria-owns="people-picker-list">
                 <Label
                   content="Add people"
                   variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
@@ -160,60 +171,74 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   }}
                   onClick={this.onContainerClick.bind(this, isOpen)}
                 >
-                  <LiveAnnouncer>
-                    <LiveMessage message={this.state.message} aria-live="assertive" />
-                    {this.state.selected.length === 0
-                      ? null
-                      : this.state.selected.map((element, index) => (
-                          <Label
-                            styles={peoplePickerStyles.personContainerLabel}
-                            circular
-                            key={`peoplePickerItem-${index}`}
-                            content={element.name}
-                            image={{
-                              src: element.image,
-                              avatar: true,
-                            }}
-                            icon={{
-                              name: 'close',
-                              onClick: this.onCloseIconClick.bind(this, element),
-                              onKeyDown: this.onCloseIconKeyDown.bind(this, element),
-                              'aria-label': `Remove ${element.name} from selection.`,
-                              'aria-hidden': false,
-                              role: 'button',
-                            }}
-                          />
-                        ))}
-                    <Input
-                      ref={this.input}
-                      onFocus={this.onInputFocus}
-                      onKeyUp={this.onInputKeyUp}
-                      role="presentation"
-                      styles={peoplePickerStyles.editText.div}
-                      variables={{
-                        inputFocusBorderColor:
-                          peoplePickerStyles.editText.variables.inputFocusBorderColor,
-                      }}
-                      input={{
-                        style: peoplePickerStyles.editText.input,
-                        placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
-                        ...getInputProps({
-                          onBlur: this.onInputBlur,
-                          onKeyDown: this.onInputKeyDown.bind(
-                            this,
-                            highlightedIndex,
-                            selectItemAtIndex,
-                          ),
-                        }),
-                      }}
-                    />
-                  </LiveAnnouncer>
+                  <span
+                    aria-live="assertive"
+                    aria-hidden="true"
+                    style={peoplePickerStyles.ariaLive}
+                  >
+                    {this.state.message}
+                  </span>
+                  {this.state.selected.length === 0
+                    ? null
+                    : this.state.selected.map((element, index) => (
+                        <Label
+                          role="presentation"
+                          styles={peoplePickerStyles.personContainerLabel}
+                          circular
+                          key={`peoplePickerItem-${index}`}
+                          content={element.name}
+                          image={{
+                            src: element.image,
+                            avatar: true,
+                          }}
+                          icon={{
+                            name: 'close',
+                            onClick: this.onCloseIconClick.bind(this, element),
+                            onKeyDown: this.onCloseIconKeyDown.bind(this, element),
+                            'aria-label': `Remove ${element.name} from selection.`,
+                            'aria-hidden': false,
+                            role: 'button',
+                          }}
+                        />
+                      ))}
+                  <Input
+                    ref={this.input}
+                    onFocus={this.onInputFocus}
+                    onKeyUp={this.onInputKeyUp}
+                    role="presentation"
+                    styles={peoplePickerStyles.editText.div}
+                    variables={{
+                      inputFocusBorderColor:
+                        peoplePickerStyles.editText.variables.inputFocusBorderColor,
+                    }}
+                    input={{
+                      type: 'text',
+                      style: peoplePickerStyles.editText.input,
+                      placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
+                      ...getInputProps({
+                        onBlur: this.onInputBlur,
+                        // workaround until adding aria-controls and aria-owns to downshift
+                        'aria-activedescendant':
+                          highlightedIndex !== null
+                            ? `people-picker-item-${highlightedIndex}`
+                            : undefined,
+                        'aria-controls': 'people-picker-list',
+                        onKeyDown: this.onInputKeyDown.bind(
+                          this,
+                          highlightedIndex,
+                          selectItemAtIndex,
+                        ),
+                      }),
+                    }}
+                  />
                 </div>
                 <Provider.Consumer
                   render={({ siteVariables }: IThemePrepared) => {
                     return (
                       <List
                         {...getMenuProps()}
+                        // workaround until adding aria-controls and aria-owns to downshift
+                        id="people-picker-list"
                         styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
                         aria-hidden={!isOpen}
                         items={
@@ -241,6 +266,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                                             : siteVariables.white,
                                       },
                                     }),
+                                    id: `people-picker-item-${index}`,
                                   }
                                 })
                               : [
