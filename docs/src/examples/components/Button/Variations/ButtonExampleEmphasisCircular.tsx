@@ -6,7 +6,7 @@ const ButtonExampleEmphasisCircular = () => (
     <Button type="primary" circular icon>
       <Icon name="coffee" xSpacing="none" />
     </Button>
-    <Button type="secondary" circular icon>
+    <Button circular icon>
       <Icon name="book" xSpacing="none" />
     </Button>
   </div>

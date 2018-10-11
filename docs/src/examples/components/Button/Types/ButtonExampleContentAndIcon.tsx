@@ -7,7 +7,7 @@ const ButtonExampleContentAndIcon = () => (
       <Icon name="book" xSpacing="after" variables={{ color: 'white' }} />
       <Text content="Click me before" />
     </Button>
-    <Button type="secondary" icon iconPosition="after">
+    <Button icon iconPosition="after">
       <Text content="Click me after" />
       <Icon name="coffee" xSpacing="before" />
     </Button>

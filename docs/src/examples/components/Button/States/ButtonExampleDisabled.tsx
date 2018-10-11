@@ -7,9 +7,6 @@ const ButtonExampleDisabled = () => (
     <Button disabled type="primary">
       Primary
     </Button>
-    <Button disabled type="secondary">
-      Secondary
-    </Button>
     <Button disabled type="primary" icon iconPosition="before">
       <Icon name="book" xSpacing="after" />
       <Text content="Click me" />

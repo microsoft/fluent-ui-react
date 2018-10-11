@@ -4,7 +4,7 @@ import { Button } from '@stardust-ui/react'
 const ButtonExampleEmphasisCircular = () => (
   <div>
     <Button type="primary" circular icon="coffee" />
-    <Button type="secondary" circular icon="book" />
+    <Button circular icon="book" />
   </div>
 )
 
