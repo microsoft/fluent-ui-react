@@ -157,7 +157,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
           }) => {
             return (
               // workaround until adding aria-controls and aria-owns to downshift
-              <div aria-owns="people-picker-list">
+              <div>
                 <Label
                   content="Add people"
                   variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
@@ -213,8 +213,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                       placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
                       ...getInputProps({
                         onBlur: this.onInputBlur,
-                        // workaround until adding aria-controls and aria-owns to downshift
-                        'aria-controls': 'people-picker-list',
                         onKeyDown: this.onInputKeyDown.bind(
                           this,
                           highlightedIndex,
@@ -229,8 +227,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     return (
                       <List
                         {...getMenuProps()}
-                        // workaround until adding aria-controls and aria-owns to downshift
-                        id="people-picker-list"
                         styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
                         aria-hidden={!isOpen}
                         items={
