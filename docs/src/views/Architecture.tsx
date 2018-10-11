@@ -56,8 +56,8 @@ export default () => (
         (theme).
       </li>
       <li>
-        <strong>Renderer</strong> - to render the HTML output, the toolkit uses renderer, which is
-        now React.
+        <strong>Renderer</strong> - to render the HTML Output. Current implementation uses React,
+        but it can be extended to other frameworks.
       </li>
     </ul>
     <p>
