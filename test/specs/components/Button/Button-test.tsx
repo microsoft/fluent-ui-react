@@ -38,11 +38,6 @@ describe('Button', () => {
         const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
       })
-
-      test('is set to false, if disabled attribute is not provided', () => {
-        const renderedComponent = getTestingRenderedComponent(Button, <Button />)
-        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
-      })
     })
 
     describe('HTML accessibility rules validation', () => {
@@ -115,14 +110,6 @@ describe('Button', () => {
             <Button disabled accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
-        })
-
-        test('is set to false, if disabled attribute is not provided', () => {
-          const renderedComponent = getTestingRenderedComponent(
-            Button,
-            <Button accessibility={toggleButtonBehavior} />,
-          )
-          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
         })
       })
     })
