@@ -62,7 +62,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** A list item can have a header. */
     header: PropTypes.any,
 
-    /** A list item's can have a header's media. */
+    /** A list item can have a header's media. */
     headerMedia: PropTypes.any,
 
     /** A list item can appear more important and draw the user's attention. */
