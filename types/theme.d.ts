@@ -175,6 +175,8 @@ export interface IThemeComponentStylesInput {
   ChatItem?: IComponentPartStylesInput
   ChatMessage?: IComponentPartStylesInput
   Divider?: IComponentPartStylesInput
+  Form?: IComponentPartStylesInput
+  FormField?: IComponentPartStylesInput
   Grid?: IComponentPartStylesInput
   Header?: IComponentPartStylesInput
   HeaderDescription?: IComponentPartStylesInput
@@ -210,6 +212,8 @@ export interface IThemeComponentStylesPrepared {
   ChatItem?: IComponentPartStylesPrepared
   ChatMessage?: IComponentPartStylesPrepared
   Divider?: IComponentPartStylesPrepared
+  Form?: IComponentPartStylesPrepared
+  FormField?: IComponentPartStylesPrepared
   Grid?: IComponentPartStylesPrepared
   Header?: IComponentPartStylesPrepared
   HeaderDescription?: IComponentPartStylesPrepared
@@ -245,6 +249,8 @@ export interface IThemeComponentVariablesInput {
   ChatItem?: ComponentVariablesInput
   ChatMessage?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
+  Form?: ComponentVariablesInput
+  FormField?: ComponentVariablesInput
   Grid?: ComponentVariablesInput
   Header?: ComponentVariablesInput
   HeaderDescription?: ComponentVariablesInput
@@ -280,6 +286,8 @@ export interface IThemeComponentVariablesPrepared {
   ChatItem?: ComponentVariablesPrepared
   ChatMessage?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
+  Form?: ComponentVariablesPrepared
+  FormField?: ComponentVariablesPrepared
   Grid?: ComponentVariablesPrepared
   Header?: ComponentVariablesPrepared
   HeaderDescription?: ComponentVariablesPrepared
