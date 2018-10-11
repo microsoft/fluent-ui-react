@@ -3,7 +3,7 @@ import { handlesAccessibility, isConformant } from 'test/specs/commonTests'
 import Chat from 'src/components/Chat'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import ChatItem from 'src/components/Chat/ChatItem'
-import ChatBehavior from 'src/lib/accessibility/Behaviors/Chat/ChatBehavior'
+import { chatBehavior } from 'src/lib/accessibility'
 import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Chat)
@@ -15,7 +15,7 @@ describe('Chat', () => {
   describe('accessibility', () => {
     handlesAccessibility(Chat, {
       defaultRootRole: 'presentation',
-      focusZoneDefinition: (ChatBehavior as IAccessibilityDefinition).focusZone,
+      focusZoneDefinition: (chatBehavior as IAccessibilityDefinition).focusZone,
     })
   })
 })

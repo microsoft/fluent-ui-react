@@ -1,10 +1,6 @@
 import React from 'react'
 import { Avatar, Icon } from '@stardust-ui/react'
 
-const iconAsImage = (Image, props, children) => {
-  return <Icon name="user" circular variables={{ color: 'blue' }} styles={{ fontSize: '16px' }} />
-}
-
 const AvatarExampleImageCustomizationShorthand = () => (
   <>
     <Avatar
@@ -12,7 +8,12 @@ const AvatarExampleImageCustomizationShorthand = () => (
       status={{ color: 'green', icon: 'check', title: 'Available' }}
     />
     &emsp;
-    <Avatar image={iconAsImage} status={{ color: 'green', icon: 'check', title: 'Available' }} />
+    <Avatar
+      renderImage={(Image, props, children) => (
+        <Icon name="user" circular variables={{ color: 'blue' }} styles={{ fontSize: '16px' }} />
+      )}
+      status={{ color: 'green', icon: 'check', title: 'Available' }}
+    />
   </>
 )
 

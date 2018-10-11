@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
-import { DefaultBehavior } from 'src/lib/accessibility'
+import { defaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
@@ -54,7 +54,7 @@ export default (Component, options: any = {}) => {
   test('does not get role when overrides to default', () => {
     const rendered = getTestingRenderedComponent(
       Component,
-      <Component {...requiredProps} accessibility={DefaultBehavior} />,
+      <Component {...requiredProps} accessibility={defaultBehavior} />,
     )
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()

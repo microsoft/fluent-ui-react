@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as IFelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
+import { Extendable, ObjectOf, ObjectOrFunc } from './utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -13,8 +13,6 @@ import { Extendable, ObjectOf, OneOrArray, ObjectOrFunc } from './utils'
 // ========================================================
 // Props
 // ========================================================
-
-export type IProps = ObjectOf<any>
 
 export type IPropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
@@ -60,6 +58,9 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
 }
 
 export interface ICSSInJSStyle extends React.CSSProperties {
+  // TODO Questionable: how else would users target their own children?
+  [key: string]: any
+
   // missing React.CSSProperties
   speak?: CSSType.Globals | 'none' | 'normal' | 'spell-out'
 
@@ -163,72 +164,142 @@ export interface IThemePrepared {
 }
 
 export interface IThemeComponentStylesInput {
+  [key: string]: IComponentPartStylesInput
+
   Accordion?: IComponentPartStylesInput
+  Attachment?: IComponentPartStylesInput
   Avatar?: IComponentPartStylesInput
   Button?: IComponentPartStylesInput
+  ButtonGroup?: IComponentPartStylesInput
   Chat?: IComponentPartStylesInput
+  ChatItem?: IComponentPartStylesInput
+  ChatMessage?: IComponentPartStylesInput
   Divider?: IComponentPartStylesInput
+  Grid?: IComponentPartStylesInput
   Header?: IComponentPartStylesInput
+  HeaderDescription?: IComponentPartStylesInput
   Icon?: IComponentPartStylesInput
   Image?: IComponentPartStylesInput
   Input?: IComponentPartStylesInput
+  ItemLayout?: IComponentPartStylesInput
   Label?: IComponentPartStylesInput
   Layout?: IComponentPartStylesInput
   List?: IComponentPartStylesInput
   ListItem?: IComponentPartStylesInput
   Menu?: IComponentPartStylesInput
+  MenuItem?: IComponentPartStylesInput
+  Portal?: IComponentPartStylesInput
+  Popup?: IComponentPartStylesInput
+  PopupContent?: IComponentPartStylesInput
+  RadioGroup?: IComponentPartStylesInput
+  RadioGroupItem?: IComponentPartStylesInput
+  Segment?: IComponentPartStylesInput
+  Status?: IComponentPartStylesInput
   Text?: IComponentPartStylesInput
 }
 
 export interface IThemeComponentStylesPrepared {
+  [key: string]: IComponentPartStylesPrepared
+
   Accordion?: IComponentPartStylesPrepared
+  Attachment?: IComponentPartStylesPrepared
   Avatar?: IComponentPartStylesPrepared
   Button?: IComponentPartStylesPrepared
+  ButtonGroup?: IComponentPartStylesPrepared
   Chat?: IComponentPartStylesPrepared
+  ChatItem?: IComponentPartStylesPrepared
+  ChatMessage?: IComponentPartStylesPrepared
   Divider?: IComponentPartStylesPrepared
+  Grid?: IComponentPartStylesPrepared
   Header?: IComponentPartStylesPrepared
+  HeaderDescription?: IComponentPartStylesPrepared
   Icon?: IComponentPartStylesPrepared
   Image?: IComponentPartStylesPrepared
   Input?: IComponentPartStylesPrepared
+  ItemLayout?: IComponentPartStylesPrepared
   Label?: IComponentPartStylesPrepared
   Layout?: IComponentPartStylesPrepared
   List?: IComponentPartStylesPrepared
   ListItem?: IComponentPartStylesPrepared
   Menu?: IComponentPartStylesPrepared
+  MenuItem?: IComponentPartStylesPrepared
+  Portal?: IComponentPartStylesPrepared
+  Popup?: IComponentPartStylesPrepared
+  PopupContent?: IComponentPartStylesPrepared
+  RadioGroup?: IComponentPartStylesPrepared
+  RadioGroupItem?: IComponentPartStylesPrepared
+  Segment?: IComponentPartStylesPrepared
+  Status?: IComponentPartStylesPrepared
   Text?: IComponentPartStylesPrepared
 }
 
 export interface IThemeComponentVariablesInput {
+  [key: string]: any
+
   Accordion?: ComponentVariablesInput
+  Attachment?: ComponentVariablesInput
   Avatar?: ComponentVariablesInput
   Button?: ComponentVariablesInput
+  ButtonGroup?: ComponentVariablesInput
   Chat?: ComponentVariablesInput
+  ChatItem?: ComponentVariablesInput
+  ChatMessage?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
+  Grid?: ComponentVariablesInput
   Header?: ComponentVariablesInput
+  HeaderDescription?: ComponentVariablesInput
   Icon?: ComponentVariablesInput
   Image?: ComponentVariablesInput
   Input?: ComponentVariablesInput
+  ItemLayout?: ComponentVariablesInput
   Label?: ComponentVariablesInput
   Layout?: ComponentVariablesInput
+  List?: ComponentVariablesInput
   ListItem?: ComponentVariablesInput
   Menu?: ComponentVariablesInput
+  MenuItem?: ComponentVariablesInput
+  Portal?: ComponentVariablesInput
+  Popup?: ComponentVariablesInput
+  PopupContent?: ComponentVariablesInput
+  RadioGroup?: ComponentVariablesInput
+  RadioGroupItem?: ComponentVariablesInput
+  Segment?: ComponentVariablesInput
+  Status?: ComponentVariablesInput
   Text?: ComponentVariablesInput
 }
 
 export interface IThemeComponentVariablesPrepared {
+  [key: string]: any
+
   Accordion?: ComponentVariablesPrepared
+  Attachment?: ComponentVariablesPrepared
   Avatar?: ComponentVariablesPrepared
   Button?: ComponentVariablesPrepared
+  ButtonGroup?: ComponentVariablesPrepared
   Chat?: ComponentVariablesPrepared
+  ChatItem?: ComponentVariablesPrepared
+  ChatMessage?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
+  Grid?: ComponentVariablesPrepared
   Header?: ComponentVariablesPrepared
+  HeaderDescription?: ComponentVariablesPrepared
   Icon?: ComponentVariablesPrepared
   Image?: ComponentVariablesPrepared
   Input?: ComponentVariablesPrepared
+  ItemLayout?: ComponentVariablesPrepared
   Label?: ComponentVariablesPrepared
   Layout?: ComponentVariablesPrepared
+  List?: ComponentVariablesPrepared
   ListItem?: ComponentVariablesPrepared
   Menu?: ComponentVariablesPrepared
+  MenuItem?: ComponentVariablesPrepared
+  Portal?: ComponentVariablesPrepared
+  Popup?: ComponentVariablesPrepared
+  PopupContent?: ComponentVariablesPrepared
+  RadioGroup?: ComponentVariablesPrepared
+  RadioGroupItem?: ComponentVariablesPrepared
+  Segment?: ComponentVariablesPrepared
+  Status?: ComponentVariablesPrepared
   Text?: ComponentVariablesPrepared
 }
 

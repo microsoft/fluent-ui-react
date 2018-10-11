@@ -5,14 +5,15 @@ import * as React from 'react'
 import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
-import { DefaultBehavior } from '../../lib/accessibility'
+import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
   ComponentEventHandler,
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
 export interface IAccordionProps {
@@ -24,9 +25,11 @@ export interface IAccordionProps {
   exclusive?: boolean
   onTitleClick?: ComponentEventHandler<IAccordionProps>
   panels?: {
-    content: ItemShorthand
-    title: ItemShorthand
+    content: ShorthandValue
+    title: ShorthandValue
   }[]
+  renderContent?: ShorthandRenderFunction
+  renderTitle?: ShorthandRenderFunction
   accessibility?: Accessibility
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -90,7 +93,27 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
     ]),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+
+    /**
+     * A custom render iterator for rendering each Accordion panel title.
+     * The default component, props, and children are available for each panel title.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderTitle: PropTypes.func,
+
+    /**
+     * A custom render iterator for rendering each Accordion panel content.
+     * The default component, props, and children are available for each panel content.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -100,7 +123,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
   }
 
   public static defaultProps = {
-    accessibility: DefaultBehavior as Accessibility,
+    accessibility: defaultBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -144,7 +167,7 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
 
   renderPanels = () => {
     const children: any[] = []
-    const { panels } = this.props
+    const { panels, renderContent, renderTitle } = this.props
 
     _.each(panels, (panel, index) => {
       const { content, title } = panel
@@ -154,11 +177,13 @@ class Accordion extends AutoControlledComponent<Extendable<IAccordionProps>, any
         AccordionTitle.create(title, {
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
+          render: renderTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
           defaultProps: { active },
+          render: renderContent,
         }),
       )
     })
