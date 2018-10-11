@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Knobs from 'docs/src/components/Knobs/Knobs'
 
-const ListExampleSelectedKnobs: any = props => {
+const ListExampleActiveKnobs: any = props => {
   const { onKnobChange, active } = props
 
   return (
@@ -12,13 +12,13 @@ const ListExampleSelectedKnobs: any = props => {
   )
 }
 
-ListExampleSelectedKnobs.propTypes = {
+ListExampleActiveKnobs.propTypes = {
   onKnobChange: PropTypes.func.isRequired,
   active: PropTypes.bool,
 }
 
-ListExampleSelectedKnobs.defaultProps = {
+ListExampleActiveKnobs.defaultProps = {
   active: true,
 }
 
-export default ListExampleSelectedKnobs
+export default ListExampleActiveKnobs

@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
-const ListExampleSelected = ({ knobs }) => {
+const ListExampleActive = ({ knobs }) => {
   const items = [
     {
       key: 'irving',
@@ -29,4 +29,4 @@ const ListExampleSelected = ({ knobs }) => {
   return <List items={items} />
 }
 
-export default ListExampleSelected
+export default ListExampleActive
