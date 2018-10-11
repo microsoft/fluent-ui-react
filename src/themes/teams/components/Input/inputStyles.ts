@@ -38,6 +38,7 @@ const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
     return {
       position: variables.iconPosition,
       right: variables.iconRight,
+      color: variables.iconColor,
       outline: 0,
     }
   },

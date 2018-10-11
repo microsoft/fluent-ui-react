@@ -7,7 +7,7 @@ export default (siteVars: any) => {
   vars.borderBottom = `${pxToRem(2)} solid transparent`
   vars.backgroundColor = siteVars.gray10
 
-  vars.fontColor = siteVars.bodyColor
+  vars.fontColor = siteVars.gray02
   vars.fontSize = siteVars.fontSizes.medium
 
   vars.inputPadding = `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`
@@ -16,6 +16,7 @@ export default (siteVars: any) => {
 
   vars.iconPosition = 'absolute'
   vars.iconRight = `${pxToRem(2)}`
+  vars.iconColor = siteVars.gray02
 
   return vars
 }
