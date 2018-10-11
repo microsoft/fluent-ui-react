@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add base focus handling for `List` component @smykhailov ([#256](https://github.com/stardust-ui/react/pull/256))
 - Add generic `Slot` component (used internally) and use it as shorthand for `Button` `content` prop @Bugaa92 ([#335](https://github.com/stardust-ui/react/pull/335))
 - Add `fitted` prop to `Divider` @gopalgoel19 ([#333](https://github.com/stardust-ui/react/pull/333))
+- Add `Form` base implementation @mnajdova
 
 <!--------------------------------[ v0.9.0 ]------------------------------- -->
 ## [v0.9.0](https://github.com/stardust-ui/react/tree/v0.9.0) (2018-10-07)
