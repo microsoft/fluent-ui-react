@@ -80,6 +80,11 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleWithIconsVertical"
     />
     <ComponentExample
+      title="Vertical End Icon"
+      description="Menu items can contain end icons."
+      examplePath="components/Menu/Variations/MenuExampleWithEndIconsVertical"
+    />
+    <ComponentExample
       title="Icon Only"
       description="Menu can contain only icons."
       examplePath="components/Menu/Variations/MenuExampleIconOnly"
