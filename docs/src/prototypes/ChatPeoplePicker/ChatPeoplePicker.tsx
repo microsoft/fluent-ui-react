@@ -214,10 +214,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                       ...getInputProps({
                         onBlur: this.onInputBlur,
                         // workaround until adding aria-controls and aria-owns to downshift
-                        'aria-activedescendant':
-                          highlightedIndex !== null
-                            ? `people-picker-item-${highlightedIndex}`
-                            : undefined,
                         'aria-controls': 'people-picker-list',
                         onKeyDown: this.onInputKeyDown.bind(
                           this,
@@ -262,8 +258,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                                             : siteVariables.white,
                                       },
                                     }),
-                                    // workaround until adding aria-controls and aria-owns to downshift
-                                    id: `people-picker-item-${index}`,
                                   }
                                 })
                               : [
