@@ -39,17 +39,18 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
       }),
     }
   },
-  header: ({ variables }): ICSSInJSStyle => ({
+  header: ({ props, variables }): ICSSInJSStyle => ({
     fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
+    ...(props.active && { color: 'inherit' }),
   }),
-  headerMedia: ({ variables }): ICSSInJSStyle => ({
-    color: variables.headerMediaColor,
+  headerMedia: ({ props, variables }): ICSSInJSStyle => ({
+    color: props.active ? 'inherit' : variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
-  content: ({ variables }) => ({
-    color: variables.contentColor,
+  content: ({ props, variables }) => ({
+    color: props.active ? 'inherit' : variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),

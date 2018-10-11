@@ -47,28 +47,28 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
-    /** Media for the content */
+    /** Media for the content. */
     contentMedia: PropTypes.any,
 
     /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Toggle debug mode */
+    /** Toggle debug mode. */
     debug: PropTypes.bool,
 
-    /** A list item can have an end media which appears at the rightmost end and only when the list item is hovered. */
+    /** A list item can have an end media. */
     endMedia: PropTypes.any,
 
-    /** A list item can have a header of the content. */
+    /** A list item can have a header. */
     header: PropTypes.any,
 
-    /** A list item's can have a header media at the rightmost end. */
+    /** A list item's can have a header's media. */
     headerMedia: PropTypes.any,
 
     /** A list item can appear more important and draw the user's attention. */
     important: PropTypes.bool,
 
-    /** A list item can have media at the leftmost position. */
+    /** A list item can have media. */
     media: PropTypes.any,
 
     /** A list item can indicate that it can be selected. */
@@ -77,10 +77,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Truncates content */
+    /** Truncates content. */
     truncateContent: PropTypes.bool,
 
-    /** Truncates header */
+    /** Truncates header. */
     truncateHeader: PropTypes.bool,
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -104,7 +104,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
-      active,
       as,
       debug,
       endMedia,
@@ -122,22 +121,18 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     const endArea = isHovering && endMedia
 
     const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-    const activeCSS = active ? { color: 'inherit' } : {}
 
     const headerCSS = {
       ...styles.header,
       ...hoveringSelectionCSS,
-      ...activeCSS,
     }
     const headerMediaCSS = {
       ...styles.headerMedia,
       ...hoveringSelectionCSS,
-      ...activeCSS,
     }
     const contentCSS = {
       ...styles.content,
       ...hoveringSelectionCSS,
-      ...activeCSS,
     }
 
     return (
