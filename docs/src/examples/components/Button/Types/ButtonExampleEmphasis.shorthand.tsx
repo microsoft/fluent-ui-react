@@ -4,7 +4,7 @@ import { Button } from '@stardust-ui/react'
 const ButtonExampleEmphasis = () => (
   <div>
     <Button type="primary" content="Primary" />
-    <Button content="Secondary" />
+    <Button type="secondary" content="Secondary" />
   </div>
 )
 
