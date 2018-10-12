@@ -156,7 +156,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             getLabelProps,
           }) => {
             return (
-              // workaround until adding aria-controls and aria-owns to downshift
               <div>
                 <Label
                   content="Add people"

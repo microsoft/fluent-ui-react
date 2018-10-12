@@ -115,7 +115,10 @@ const PeoplePickerExampleShorthand = () => (
       </ul>
       <h4>Keyboard</h4>
       <ul>
-        <li>While focus is on Input and menu is hidden, Up/Down arrow will open the menu.</li>
+        <li>
+          While focus is on Input and menu is hidden, Up/Down arrow will open the menu and highlight
+          the last/first option in the menu.
+        </li>
         <li>
           While focus is on Input and menu is shown, Up/Down arrow will navigate through the
           options, in a circular fashion.
@@ -135,7 +138,7 @@ const PeoplePickerExampleShorthand = () => (
         </li>
         <li>
           Enter while menu is open and an option is highlighted will add that person to the selected
-          people list.
+          people list and also clear the text in the text field, if any.
         </li>
         <li>
           If menu is opened, Esc will close it, without adding the highlighted person to the list of
