@@ -3,27 +3,33 @@ import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/t
 import { IAvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
-  root: ({ props: { size } }): ICSSInJSStyle => ({
-    position: 'relative',
-    backgroundColor: 'inherit',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    height: pxToRem(size),
-    width: pxToRem(size),
-  }),
+  root: ({ props: { size } }): ICSSInJSStyle => {
+    const remSize = pxToRem(size)
+    return {
+      position: 'relative',
+      backgroundColor: 'inherit',
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      height: remSize,
+      width: remSize,
+    }
+  },
   image: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
-  label: ({ props: { size } }): ICSSInJSStyle => ({
-    display: 'inline-block',
-    width: pxToRem(size),
-    height: pxToRem(size),
-    lineHeight: pxToRem(size),
-    fontSize: pxToRem(size / 2.333),
-    verticalAlign: 'top',
-    textAlign: 'center',
-    padding: '0px',
-  }),
+  label: ({ props: { size } }): ICSSInJSStyle => {
+    const remSize = pxToRem(size)
+    return {
+      display: 'inline-block',
+      width: remSize,
+      height: remSize,
+      lineHeight: remSize,
+      fontSize: pxToRem(size / 2.333),
+      verticalAlign: 'top',
+      textAlign: 'center',
+      padding: '0px',
+    }
+  },
   status: ({ props, variables }): ICSSInJSStyle => ({
     position: 'absolute',
     bottom: `-${variables.statusBorderWidth}px`,
