@@ -4,26 +4,26 @@ import { IAvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
-    const remSize = pxToRem(size)
+    const sizeInRem = pxToRem(size)
     return {
       position: 'relative',
       backgroundColor: 'inherit',
       display: 'inline-block',
       verticalAlign: 'middle',
-      height: remSize,
-      width: remSize,
+      height: sizeInRem,
+      width: sizeInRem,
     }
   },
   image: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
   label: ({ props: { size } }): ICSSInJSStyle => {
-    const remSize = pxToRem(size)
+    const sizeInRem = pxToRem(size)
     return {
       display: 'inline-block',
-      width: remSize,
-      height: remSize,
-      lineHeight: remSize,
+      width: sizeInRem,
+      height: sizeInRem,
+      lineHeight: sizeInRem,
       fontSize: pxToRem(size / 2.333),
       verticalAlign: 'top',
       textAlign: 'center',

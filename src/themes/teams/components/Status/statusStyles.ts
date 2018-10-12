@@ -37,13 +37,13 @@ const getTextColor = (state: string, variables: IStatusVariables) => {
 
 const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, IStatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
-    const remSize = pxToRem(size + 2 * (variables.borderWidth || 0))
+    const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
     return {
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
-      height: remSize,
-      width: remSize,
+      height: sizeInRem,
+      width: sizeInRem,
       verticalAlign: 'middle',
       borderRadius: '9999px',
       ...(variables.borderColor && {
