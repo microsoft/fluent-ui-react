@@ -10,7 +10,9 @@ const ButtonExampleText = () => (
     <Button text type="primary">
       Primary
     </Button>
-    <Button text>Secondary</Button>
+    <Button text type="secondary">
+      Secondary
+    </Button>
     <Button text circular>
       <Icon name="compass outline" xSpacing="none" />
     </Button>

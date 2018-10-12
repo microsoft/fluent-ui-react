@@ -5,6 +5,7 @@ const ButtonExampleDisabled = () => (
   <div>
     <Button disabled content="Default" />
     <Button disabled type="primary" content="Primary" />
+    <Button disabled type="secondary" content="Secondary" />
     <Button disabled type="primary" icon="book" content="Click me" iconPosition="before" />
     <Button disabled circular icon="coffee" />
     <br />

@@ -5,7 +5,7 @@ const ButtonExampleTextShorthand = () => (
   <div>
     <Button text icon="book" content="Default" iconPosition="before" />
     <Button text type="primary" content="Primary" />
-    <Button text content="Secondary" />
+    <Button type="secondary" text content="Secondary" />
     <Button text iconOnly icon="compass outline" />
   </div>
 )

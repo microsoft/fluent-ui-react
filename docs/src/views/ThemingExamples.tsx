@@ -50,12 +50,12 @@ export default () => (
         `  <>`,
         `    <Button content="Button" />`,
         `    <Button type="primary" icon="plus" iconOnly />`,
-        `    <Button icon="at" content="Send email" />`,
+        `    <Button type="secondary" icon="at" content="Send email" />`,
         `    <Icon name="chess rook" size="big" />`,
         `    <Label content="Label with icon" icon="close" />`,
         `    <br/><br/>`,
         `    <Divider content="Primary Divider" type="primary" />`,
-        `    <Divider content="Secondary Divider" />`,
+        `    <Divider content="Secondary Divider" type="secondary" />`,
         `  </>`,
         ` </Provider>`,
       ].join('\n')}
@@ -63,7 +63,7 @@ export default () => (
         <>
           <Button content="Button" />
           <Button type="primary" icon="plus" iconOnly />
-          <Button icon="at" content="Send email" />
+          <Button type="secondary" icon="at" content="Send email" />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -96,6 +96,7 @@ export default () => (
         `      }`,
         `const btnExample = () => `,
         `    <Button`,
+        `      type="secondary"`,
         `      content="Send email"`,
         `      icon={{`,
         `        name: "at",`,
@@ -144,6 +145,7 @@ export default () => (
       ].join('\n')}
       render={() => (
         <Button
+          type="secondary"
           content="Send email"
           icon={{ name: 'at', variables: { color: 'brown' } }}
           variables={{
@@ -219,7 +221,7 @@ export default () => (
         `    <div>`,
         `      <Button content="Button" />`,
         `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button icon="at" content="Send email" />`,
+        `      <Button type="secondary" icon="at" content="Send email" />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br /><br />`,
@@ -266,7 +268,7 @@ export default () => (
             <div>
               <Button content="Button" />
               <Button type="primary" icon="plus" iconOnly />
-              <Button icon="at" content="Send email" />
+              <Button type="secondary" icon="at" content="Send email" />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -303,7 +305,7 @@ export default () => (
         ``,
         `      <Button content="Button" />`,
         `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button icon="at" content="Send email" />`,
+        `      <Button type="secondary" icon="at" content="Send email" />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br/><br/>`,
@@ -325,7 +327,7 @@ export default () => (
         ``,
         `          <Button content="Button" />`,
         `          <Button type="primary" icon="plus" iconOnly />`,
-        `          <Button icon="at" content="Send email" />`,
+        `          <Button type="secondary" icon="at" content="Send email" />`,
         `          <Icon name="chess rook" size="big" />`,
         `          <Label content="Label with icon" icon="close" />`,
         `          <br/><br/>`,
@@ -342,7 +344,7 @@ export default () => (
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
           <Button type="primary" icon="plus" iconOnly />
-          <Button icon="at" content="Send email" />
+          <Button type="secondary" icon="at" content="Send email" />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -360,7 +362,7 @@ export default () => (
 
               <Button content="Button" />
               <Button type="primary" icon="plus" iconOnly />
-              <Button icon="at" content="Send email" />
+              <Button type="secondary" icon="at" content="Send email" />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -382,7 +384,7 @@ export default () => (
 
                   <Button content="Button" />
                   <Button type="primary" icon="plus" iconOnly />
-                  <Button icon="at" content="Send email" />
+                  <Button type="secondary" icon="at" content="Send email" />
                   <Icon name="chess rook" size="big" />
                   <Label content="Label with icon" icon="close" />
                   <br />
