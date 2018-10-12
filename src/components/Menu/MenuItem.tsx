@@ -5,6 +5,8 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
+import Menu from '../Menu'
+import Popup from '../Popup'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
@@ -29,6 +31,7 @@ export interface IMenuItemProps {
   icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
+  menu?: any
   onClick?: ComponentEventHandler<IMenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
@@ -81,6 +84,9 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
     /** MenuItem index inside Menu. */
     index: PropTypes.number,
+
+    /** MenuItem's submenu */
+    menu: PropTypes.any,
 
     /**
      * Called on click. When passed, the component will render as an `a`
@@ -136,7 +142,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon } = this.props
+    const { children, menu, vertical, type } = this.props
 
     return (
       <ElementType
@@ -147,27 +153,47 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
       >
         {childrenExist(children) ? (
           children
+        ) : !menu ? (
+          this.renderMenuItem(accessibility, classes)
         ) : (
-          <a
-            className={cx('ui-menu__item__anchor', classes.anchor)}
-            onClick={this.handleClick}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            {...accessibility.attributes.anchor}
-            {...accessibility.keyHandlers.anchor}
+          <Popup
+            align={vertical ? 'top' : 'start'}
+            position={vertical ? 'after' : 'below'}
+            content={{
+              content: <Menu items={menu.items} vertical type={type} />,
+              styles: {
+                padding: '0px',
+                border: '',
+              },
+            }}
+            // content={<Menu items={menu.items} vertical/>}
           >
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-                render: renderIcon,
-              })}
-            {content}
-          </a>
+            {this.renderMenuItem(accessibility, classes)}
+          </Popup>
         )}
       </ElementType>
     )
   }
-
+  private renderMenuItem = (accessibility, classes) => {
+    const { content, icon, renderIcon } = this.props
+    return (
+      <a
+        className={cx('ui-menu__item__anchor', classes.anchor)}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor}
+        {...accessibility.keyHandlers.anchor}
+      >
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            render: renderIcon,
+          })}
+        {content}
+      </a>
+    )
+  }
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
