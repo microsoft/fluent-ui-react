@@ -26,6 +26,7 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
+import Slot from '../Slot/Slot'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -38,6 +39,7 @@ export interface IChatMessageProps {
   mine?: boolean
   renderAuthor?: ShorthandRenderFunction
   renderAvatar?: ShorthandRenderFunction
+  renderContent?: ShorthandRenderFunction
   renderTimestamp?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   timestamp?: ShorthandValue
@@ -96,6 +98,15 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderAvatar: PropTypes.func,
+
+    /**
+     * A custom render function the content slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
 
     /**
      * A custom render function the timestamp slot.
@@ -166,6 +177,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       renderAuthor,
       renderAvatar,
       renderTimestamp,
+      renderContent,
       timestamp,
     } = this.props
 
@@ -196,6 +208,12 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
+    const contentElement = Slot.create(content, {
+      styles: styles.content,
+      variables: variables.content,
+      render: renderContent,
+    })
+
     return (
       <Layout
         start={!mine && avatarElement}
@@ -209,7 +227,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
                 {timestampElement}
               </>
             }
-            main={content}
+            main={contentElement}
           />
         }
         end={mine && avatarElement}
