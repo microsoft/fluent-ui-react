@@ -36,6 +36,7 @@ export interface IMenuItemProps {
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
+  submenuOpen?: boolean
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
@@ -106,6 +107,9 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
+    /** */
+    submenuOpen: PropTypes.bool,
+
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -142,7 +146,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { activeIndex, children, index, menu, popupOpen, vertical, type } = this.props
+    const { children, menu, submenuOpen, vertical, type } = this.props
 
     return (
       <ElementType
@@ -157,7 +161,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
           this.renderMenuItem(accessibility, classes)
         ) : (
           <Popup
-            open={index === activeIndex ? popupOpen : false}
+            open={submenuOpen}
             align={vertical ? 'top' : 'start'}
             position={vertical ? 'after' : 'below'}
             content={{

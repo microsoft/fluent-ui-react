@@ -122,24 +122,22 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   static Item = MenuItem
 
   state = {
-    popupOpen: false,
+    submenuOpen: false,
     activeIndex: '',
   }
 
   handleItemOverrides = predefinedProps => ({
-    popupOpen: this.state.popupOpen,
-    activeIndex: this.state.activeIndex,
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      // this.trySetState({ activeIndex: index })
-
       this.setState(prev => {
         if (prev.activeIndex === index) {
-          return { popupOpen: !prev.popupOpen }
+          return { submenuOpen: !prev.submenuOpen }
         }
-        return { activeIndex: index, popupOpen: true }
+        return { submenuOpen: true }
       })
+
+      this.trySetState({ activeIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
@@ -161,6 +159,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
+          submenuOpen: this.state.activeIndex === index ? this.state.submenuOpen : false,
         },
         overrideProps: this.handleItemOverrides,
         render: renderItem,
