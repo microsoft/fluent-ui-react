@@ -133,14 +133,12 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
 
       this.trySetState({ activeIndex: index })
 
-      if (menu) {
-        this.setState(prev => {
-          if (prev.menuItemOpenKey === index) {
-            return { popupOpen: !prev.popupOpen }
-          }
-          return { menuItemOpenKey: index, popupOpen: true }
-        })
-      }
+      this.setState(prev => {
+        if (prev.menuItemOpenKey === index) {
+          return { popupOpen: !prev.popupOpen }
+        }
+        return { menuItemOpenKey: index, popupOpen: true }
+      })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
