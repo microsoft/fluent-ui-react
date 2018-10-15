@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add generic `Slot` component (used internally) and use it as shorthand for `Button` `content` prop @Bugaa92 ([#335](https://github.com/stardust-ui/react/pull/335))
 - Add `fitted` prop to `Divider` @gopalgoel19 ([#333](https://github.com/stardust-ui/react/pull/333))
 - Add `content` and `renderContent` to Chat API @levithomason ([#348](https://github.com/stardust-ui/react/pull/348))
+- Add `target` prop to `Popup` @kuzhelog ([#356](https://github.com/stardust-ui/react/pull/356))
 
 <!--------------------------------[ v0.9.0 ]------------------------------- -->
 ## [v0.9.0](https://github.com/stardust-ui/react/tree/v0.9.0) (2018-10-07)
