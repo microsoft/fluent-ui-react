@@ -19,6 +19,8 @@ export interface IFormFieldProps {
   renderLabel?: ShorthandRenderFunction
   control?: React.ReactType<any>
   inline?: boolean
+  message?: ShorthandValue
+  renderMessage?: ShorthandRenderFunction
   required?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -61,7 +63,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     label: customPropTypes.itemShorthand,
 
     /**
-     * A custom render function the label slot.
+     * A custom render function for the label slot.
      *
      * @param {React.ReactType} Component - The computed component for this slot.
      * @param {object} props - The computed props for this slot.
@@ -74,6 +76,18 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     /** A field can show that input is mandatory. */
     required: PropTypes.bool,
+
+    /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
+    message: customPropTypes.itemShorthand,
+
+    /**
+     * A custom render function for the message slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderMessage: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -94,7 +108,18 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { children, control, label, content, id, type, required, renderLabel } = this.props
+    const {
+      children,
+      control,
+      label,
+      content,
+      id,
+      type,
+      required,
+      renderLabel,
+      message,
+      renderMessage,
+    } = this.props
 
     let labelContent = label
 
@@ -116,6 +141,13 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       render: renderLabel,
     })
 
+    const messageElement = Text.create(message, {
+      defaultProps: {
+        styles: styles.message,
+      },
+      render: renderMessage,
+    })
+
     const controlElement = control && React.createElement(control, { required, ...rest })
 
     // ----------------------------------------
@@ -127,6 +159,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
         return (
           <ElementType {...rest} className={classes.root}>
             {!childrenExist(children) ? content : children}
+            {messageElement}
           </ElementType>
         )
       }
@@ -134,6 +167,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       return (
         <ElementType {...rest} className={classes.root}>
           {labelElement}
+          {messageElement}
         </ElementType>
       )
     }
@@ -147,6 +181,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
         <ElementType className={classes.root}>
           {controlElement}
           {labelElement}
+          {messageElement}
         </ElementType>
       )
     }
@@ -155,6 +190,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       <ElementType className={classes.root}>
         {labelElement}
         {controlElement}
+        {messageElement}
       </ElementType>
     )
   }

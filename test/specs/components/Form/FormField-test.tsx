@@ -9,4 +9,5 @@ const formFieldImplementsShorthandProp = implementsShorthandProp(FormField)
 describe('FormField', () => {
   isConformant(FormField)
   formFieldImplementsShorthandProp('label', Text)
+  formFieldImplementsShorthandProp('message', Text)
 })

@@ -8,6 +8,9 @@ const formFieldStyles: IComponentPartStylesInput<IFormProps, any> = {
     display: 'block',
     ...(props.inline && { marginRight: pxToRem(10), display: 'inline' }),
   }),
+  message: (): ICSSInJSStyle => ({
+    display: 'block',
+  }),
 }
 
 export default formFieldStyles
