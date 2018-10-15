@@ -22,7 +22,7 @@ export interface IFormProps {
   onSubmit?: ComponentEventHandler<IFormProps>
   columns?: string | number
   fields?: ShorthandValue[]
-  renderItem?: ShorthandRenderFunction
+  renderField?: ShorthandRenderFunction
   rows?: string | number
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -59,7 +59,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
 
     /**
      * A custom render iterator for rendering each of the Form fields.
-     * The default component, props, and children are available for each item.
+     * The default component, props, and children are available for each field.
      *
      * @param {React.ReactType} Component - The computed component for this slot.
      * @param {object} props - The computed props for this slot.
