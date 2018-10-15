@@ -13,6 +13,7 @@ import {
 import { Sizes } from '../../lib/enums'
 import Grid from '../Grid/Grid'
 import FormField from './FormField'
+import { SizeContext } from './SizeContext'
 
 export interface IFormProps {
   action?: string
@@ -113,19 +114,21 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { as, rows, columns, action, children, content } = this.props
+    const { as, rows, columns, action, children, content, size } = this.props
     return (
-      <Grid
-        className={classes.root}
-        as={as}
-        columns={columns}
-        rows={rows}
-        action={action}
-        onSubmit={this.handleSubmit}
-        {...rest}
-      >
-        {childrenExist(children) ? children : content}
-      </Grid>
+      <SizeContext.Provider value={{ size }}>
+        <Grid
+          className={classes.root}
+          as={as}
+          columns={columns}
+          rows={rows}
+          action={action}
+          onSubmit={this.handleSubmit}
+          {...rest}
+        >
+          {childrenExist(children) ? children : content}
+        </Grid>
+      </SizeContext.Provider>
     )
   }
 }

@@ -9,6 +9,11 @@ const Types = () => (
       description="A default form."
       examplePath="components/Form/Types/FormExample"
     />
+    <ComponentExample
+      title="Size"
+      description="The Form component supports a number of different sizes."
+      examplePath="components/Form/Types/FormExampleSize"
+    />
   </ExampleSection>
 )
 

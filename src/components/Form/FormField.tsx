@@ -11,6 +11,7 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text'
+import { SizeContext } from './SizeContext'
 
 export interface IFormFieldProps {
   as?: any
@@ -106,14 +107,21 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
             : label
     }
 
-    const labelElement = Text.create(labelContent, {
-      defaultProps: {
-        as: 'label',
-        htmlFor: id,
-        styles: styles.label,
-      },
-      render: renderLabel,
-    })
+    const labelElement = (
+      <SizeContext.Consumer>
+        {({ size }) =>
+          Text.create(labelContent, {
+            defaultProps: {
+              size,
+              as: 'label',
+              htmlFor: id,
+              styles: styles.label,
+            },
+            render: renderLabel,
+          })
+        }
+      </SizeContext.Consumer>
+    )
 
     const controlElement = control && React.createElement(control, { required, ...rest })
 
