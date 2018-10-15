@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Fix for cropped rounded corners in `Menu` component @Bugaa92 ([#360](https://github.com/stardust-ui/react/pull/360))
 - Remove hardcoded `status` size calculations in `Avatar` component @Bugaa92 ([#358](https://github.com/stardust-ui/react/pull/358))
 
 <!--------------------------------[ v0.9.1 ]------------------------------- -->
