@@ -20,6 +20,7 @@ export interface IFormFieldProps {
   renderLabel?: ShorthandRenderFunction
   control?: React.ReactType<any>
   inline?: boolean
+  required?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -70,6 +71,9 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     /** A field can have its label next to instead of above it. */
     inline: PropTypes.bool,
 
+    /** A field can show that input is mandatory. */
+    required: PropTypes.bool,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -89,9 +93,20 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { children, control, label, content, id, type, renderLabel } = this.props
+    const { children, control, label, content, id, type, required, renderLabel } = this.props
 
-    const labelElement = Text.create(label, {
+    let labelContent = label
+
+    if (required) {
+      labelContent =
+        typeof label === 'string'
+          ? `${label} *`
+          : typeof label === 'object' && (label as any).content
+            ? { ...label, content: `${(label as any).content} *` }
+            : label
+    }
+
+    const labelElement = Text.create(labelContent, {
       defaultProps: {
         as: 'label',
         htmlFor: id,
@@ -100,7 +115,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       render: renderLabel,
     })
 
-    const controlElement = control && React.createElement(control, rest)
+    const controlElement = control && React.createElement(control, { required, ...rest })
 
     // ----------------------------------------
     // No Control
