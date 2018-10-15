@@ -19,6 +19,7 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
   }),
 
   avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
+    display: p.mine ? 'none' : undefined,
     marginTop: px10asRem,
     marginBottom: px10asRem,
     marginLeft: p.mine ? px10asRem : 0,
@@ -32,9 +33,10 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     borderRadius: '0.3rem',
   }),
 
-  author: {
+  author: ({ props: p }): ICSSInJSStyle => ({
+    display: p.mine ? 'none' : undefined,
     marginRight: px10asRem,
-  },
+  }),
 }
 
 export default chatMessageStyles

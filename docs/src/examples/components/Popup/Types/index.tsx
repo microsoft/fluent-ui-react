@@ -20,6 +20,11 @@ const Types = () => (
       description="Use 'content' prop of the Popup to set whether Popup content should be rendered with the default wrapper."
       examplePath="components/Popup/Types/PopupContentWrapperExample"
     />
+    <ComponentExample
+      title="Custom Target"
+      description="By default Popup uses trigger element as the one it is displayed for, but it is possible to provide any DOM element as popup's target."
+      examplePath="components/Popup/Types/PopupCustomTargetExample"
+    />
   </ExampleSection>
 )
 

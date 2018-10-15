@@ -18,6 +18,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Fix for cropped rounded corners in `Menu` component @Bugaa92 ([#360](https://github.com/stardust-ui/react/pull/360))
+- Remove hardcoded `status` size calculations in `Avatar` component @Bugaa92 ([#358](https://github.com/stardust-ui/react/pull/358))
+
+### Features
+- Add `target` prop to `Popup` @kuzhelog ([#356](https://github.com/stardust-ui/react/pull/356))
+- Add `Form` and `Form.Field` components @mnajdova ([#353](https://github.com/stardust-ui/react/pull/353))
+
+<!--------------------------------[ v0.9.1 ]------------------------------- -->
+## [v0.9.1](https://github.com/stardust-ui/react/tree/v0.9.1) (2018-10-11)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.9.0...v0.9.1)
+
+### Fixes
 - Fix Button's `renderIcon` prop @levithomason ([#347](https://github.com/stardust-ui/react/pull/347))
 
 ### Features
@@ -25,7 +37,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add base focus handling for `List` component @smykhailov ([#256](https://github.com/stardust-ui/react/pull/256))
 - Add generic `Slot` component (used internally) and use it as shorthand for `Button` `content` prop @Bugaa92 ([#335](https://github.com/stardust-ui/react/pull/335))
 - Add `fitted` prop to `Divider` @gopalgoel19 ([#333](https://github.com/stardust-ui/react/pull/333))
-- Add `Form` base implementation @mnajdova
+- Add `content` and `renderContent` to Chat API @levithomason ([#348](https://github.com/stardust-ui/react/pull/348))
 
 <!--------------------------------[ v0.9.0 ]------------------------------- -->
 ## [v0.9.0](https://github.com/stardust-ui/react/tree/v0.9.0) (2018-10-07)
