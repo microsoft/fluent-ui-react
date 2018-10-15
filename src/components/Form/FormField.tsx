@@ -15,7 +15,6 @@ export interface IFormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
-  content?: ShorthandValue
   label?: ShorthandValue
   renderLabel?: ShorthandRenderFunction
   control?: React.ReactType<any>
@@ -49,9 +48,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
 
     /**
      * A form control component (i.e. Input) or HTML tagName (i.e. 'input').
@@ -116,7 +112,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       children,
       control,
       label,
-      content,
       id,
       type,
       required,
@@ -162,7 +157,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       if (!label) {
         return (
           <ElementType {...rest} className={classes.root}>
-            {!childrenExist(children) ? content : children}
+            {childrenExist(children) && children}
             {messageElement}
           </ElementType>
         )
@@ -200,6 +195,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, content => ({ content }))
+FormField.create = createShorthandFactory(FormField, label => ({ label }))
 
 export default FormField

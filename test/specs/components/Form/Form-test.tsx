@@ -8,5 +8,5 @@ const formImplementsCollectionShorthandProp = implementsCollectionShorthandProp(
 
 describe('Form', () => {
   isConformant(Form)
-  formImplementsCollectionShorthandProp('fields', FormField)
+  formImplementsCollectionShorthandProp('fields', FormField, { mapsValueToProp: 'label' })
 })
