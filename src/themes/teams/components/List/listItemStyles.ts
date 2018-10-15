@@ -5,19 +5,19 @@ import { IListItemProps } from '../../../../components/List/ListItem'
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
   root: ({
     props: { active, selection, important },
-    variables: { backgroundColor, color },
+    variables: { activeBackgroundColor, color },
   }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
 
       ':hover': {
-        background: backgroundColor,
+        background: activeBackgroundColor,
         color,
         cursor: 'pointer',
       },
     }),
     ...(active && {
-      background: backgroundColor,
+      background: activeBackgroundColor,
       color,
     }),
     ...(important && {

@@ -4,6 +4,7 @@ import { List, Image } from '@stardust-ui/react'
 const ListExampleActive = ({ knobs }) => (
   <List>
     <List.Item
+      key="irving"
       media={<Image src="public/images/avatar/small/matt.jpg" avatar />}
       header="Irving Kuhic"
       headerMedia="7:26:56 AM"
@@ -11,12 +12,14 @@ const ListExampleActive = ({ knobs }) => (
       active={knobs.active}
     />
     <List.Item
+      key="skyler"
       media={<Image src="public/images/avatar/small/steve.jpg" avatar />}
       header="Skyler Parks"
       headerMedia="11:30:17 PM"
       content="Use the online FTP application to input the multi-byte application!"
     />
     <List.Item
+      key="dante"
       media={<Image src="public/images/avatar/small/nom.jpg" avatar />}
       header="Dante Schneider"
       headerMedia="5:22:40 PM"

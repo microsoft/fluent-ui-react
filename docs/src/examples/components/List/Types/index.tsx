@@ -16,7 +16,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Active"
-      description="A list can be formatted to indicate that one or more items are active."
+      description="A list item can be formatted to indicate its active state."
       examplePath="components/List/Types/ListExampleActive"
     />
   </ExampleSection>
