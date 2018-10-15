@@ -1,9 +1,15 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import {
+  FocusableItem,
+  IFocusableItemProps,
+} from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
@@ -16,6 +22,7 @@ export interface IListItemProps {
   content?: any
   debug?: boolean
   endMedia?: any
+  focusableItemProps?: IFocusableItemProps
   header?: any
   headerMedia?: any
   important?: boolean
@@ -27,7 +34,11 @@ export interface IListItemProps {
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
+export interface IListItemState {
+  isHovering: boolean
+}
+
+class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -59,6 +70,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     /** A list item can have an end media. */
     endMedia: PropTypes.any,
 
+    focusableItemProps: PropTypes.object,
+    
     /** A list item can have a header. */
     header: PropTypes.any,
 
@@ -92,7 +105,17 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  state: any = {}
+  constructor(props: IListItemProps) {
+    super(props, null)
+
+    this.state = {
+      isHovering: false,
+    }
+  }
+
+  private itemRef = React.createRef<HTMLElement>()
+
+  private focusableItem = FocusableItem.create(this)
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -100,6 +123,10 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
+  }
+
+  componentDidUpdate() {
+    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -156,6 +183,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
       />

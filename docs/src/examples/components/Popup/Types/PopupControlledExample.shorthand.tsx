@@ -17,7 +17,7 @@ class PopupControlledExample extends React.Component<any, any> {
           this.setState({ popupOpen: newProps.open })
         }}
         trigger={<Button icon="expand" onClick={() => this.togglePopup()} />}
-        content={<Input icon="search" placeholder="Search..." />}
+        content={{ content: <Input icon="search" placeholder="Search..." /> }}
       />
     )
   }

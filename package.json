@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -32,7 +32,7 @@
     "prestart": "yarn satisfied --fix yarn",
     "start": "gulp --series dll docs",
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
-    "pretest": "yarn satisfied && gulp build:docs:docgen",
+    "pretest": "yarn satisfied && gulp build:docs:docgen && gulp build:docs:component-menu-behaviors",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
