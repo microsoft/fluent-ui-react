@@ -13,10 +13,28 @@ const items = [
           content: 'item2',
           menu: { items: [{ key: '1', content: 'item1' }, { key: '2', content: 'item2' }] },
         },
+        {
+          key: '3',
+          content: 'item3',
+          menu: { items: [{ key: '1', content: 'item1' }, { key: '2', content: 'item2' }] },
+        },
       ],
     },
   },
-  { key: 'review', content: 'Reviews' },
+  {
+    key: 'review',
+    content: 'Reviews',
+    menu: {
+      items: [
+        { key: '1', content: 'item1' },
+        {
+          key: '2',
+          content: 'item2',
+          menu: { items: [{ key: '1', content: 'item1' }, { key: '2', content: 'item2' }] },
+        },
+      ],
+    },
+  },
   { key: 'events', content: 'Upcoming Events' },
 ]
 

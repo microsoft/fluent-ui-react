@@ -142,7 +142,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, menu, vertical, type } = this.props
+    const { children, index, menu, menuItemOpenKey, popupOpen, vertical, type } = this.props
 
     return (
       <ElementType
@@ -157,6 +157,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
           this.renderMenuItem(accessibility, classes)
         ) : (
           <Popup
+            open={index === menuItemOpenKey ? popupOpen : false}
             align={vertical ? 'top' : 'start'}
             position={vertical ? 'after' : 'below'}
             content={{
@@ -166,7 +167,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
                 border: '',
               },
             }}
-            // content={<Menu items={menu.items} vertical/>}
+            // content={<Menu items={menu.items} type={type} vertical/>}
           >
             {this.renderMenuItem(accessibility, classes)}
           </Popup>
