@@ -1,7 +1,7 @@
 export default siteVariables => ({
   // Root
   backgroundColor: siteVariables.brand,
-  fontColor: siteVariables.white,
+  color: siteVariables.white,
   // Header
   // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
   headerLineHeight: siteVariables.lineHeightSmall,
