@@ -1,39 +1,35 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
+import { fittedStyle } from '../../../../styles/customCSS'
 import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
+import { pxToRem } from './../../../../lib'
 
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 0.3],
-  ['mini', 0.4],
-  ['tiny', 0.5],
-  ['small', 0.75],
-  ['normal', 1],
-  ['large', 1.5],
-  ['big', 2],
-  ['huge', 4],
-  ['massive', 8],
+  ['micro', 12],
+  ['mini', 20],
+  ['tiny', 24],
+  ['small', 28],
+  ['normal', 32],
+  ['large', 34],
+  ['big', 50],
+  ['huge', 64],
+  ['massive', 78],
 ])
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
 }
 
-const getSize = size => `${sizes.get(size)}em`
-
 const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
-    width: '1.18em',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    textDecoration: 'inherit',
+
     textAlign: 'center',
 
     '-webkit-font-smoothing': 'antialiased',
@@ -65,19 +61,14 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
 
 const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
   return {
-    ...getPaddedStyle(isFontBased),
-
-    // TODO: "black" here should actually match the Icon's fill or text color
     boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
+    ...(isFontBased && {
+      paddingTop: pxToRem(8),
+      paddingBottom: pxToRem(8),
+    }),
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
-
-const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
-  padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
-  width: '2em',
-  height: '2em',
-})
 
 const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   root: ({
@@ -90,35 +81,41 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
 
     return {
       display: 'inline-block',
-      fontSize: getSize(size),
-
-      width: '1em',
-      height: '1em',
+      speak: 'none',
+      verticalAlign: 'middle',
+      overflow: 'hidden',
+      width: pxToRem(sizes.get(size)),
+      height: pxToRem(sizes.get(size)),
 
       ...(isFontBased &&
         getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
 
-      ...(isFontBased && { color: v.color }),
-      backgroundColor: v.backgroundColor,
+      ...(isFontBased && {
+        color: v.color,
+        fontSize: pxToRem(sizes.get(size) / 2),
+        padding: pxToRem(sizes.get(size) / 4),
 
-      opacity: 1,
-      margin: v.margin,
-
-      speak: 'none',
-
-      verticalAlign: 'middle',
-      overflow: 'hidden',
+        ...(disabled && {
+          color: v.disabledColor,
+        }),
+      }),
 
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
-      ...((bordered || v.borderColor || circular) &&
+      ...((bordered || circular) &&
         getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
-
-      ...(disabled && disabledStyle),
     }
   },
 
-  svg: getSvgStyle('svg'),
+  svg: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    // getSvgStyle('svg'),
+
+    fill: v.color,
+
+    ...(p.disabled && {
+      fill: v.disabledColor,
+    }),
+  }),
 
   g: getSvgStyle('g'),
 

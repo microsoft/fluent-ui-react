@@ -4,18 +4,17 @@ export interface IconVariables {
   [key: string]: string | number | undefined
 
   color?: string
-  backgroundColor?: string
   borderColor?: string
+  disabledColor?: string
+
   horizontalSpace: string
-  margin: string
 }
 
-export default (): IconVariables => ({
-  color: undefined,
+export default (siteVars): IconVariables => ({
   // TODO move initial variable discovery to JSON files
   // similar to how components have an info.json file
-  backgroundColor: undefined,
-  borderColor: undefined,
+  color: siteVars.gray02,
+  borderColor: siteVars.gray02,
+  disabledColor: siteVars.gray06,
   horizontalSpace: pxToRem(10),
-  margin: '0 0.25em 0 0',
 })
