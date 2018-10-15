@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, childrenExist } from '../../lib'
+import { UIComponent, customPropTypes, childrenExist, createShorthandFactory } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   Extendable,
@@ -10,7 +10,6 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text'
-import { SizeContext } from './SizeContext'
 
 export interface IFormFieldProps {
   as?: any
@@ -32,6 +31,8 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'
+
+  static create: Function
 
   public static propTypes = {
     /** An element type to render as (string or function). */
@@ -106,21 +107,14 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
             : label
     }
 
-    const labelElement = (
-      <SizeContext.Consumer>
-        {({ size }) =>
-          Text.create(labelContent, {
-            defaultProps: {
-              size,
-              as: 'label',
-              htmlFor: id,
-              styles: styles.label,
-            },
-            render: renderLabel,
-          })
-        }
-      </SizeContext.Consumer>
-    )
+    const labelElement = Text.create(labelContent, {
+      defaultProps: {
+        as: 'label',
+        htmlFor: id,
+        styles: styles.label,
+      },
+      render: renderLabel,
+    })
 
     const controlElement = control && React.createElement(control, { required, ...rest })
 
@@ -165,5 +159,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     )
   }
 }
+
+FormField.create = createShorthandFactory(FormField, content => ({ content }))
 
 export default FormField

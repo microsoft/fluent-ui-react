@@ -9,11 +9,10 @@ import {
   Extendable,
   ReactChildren,
   ShorthandValue,
+  ShorthandRenderFunction,
 } from '../../../types/utils'
-import { Sizes } from '../../lib/enums'
 import Grid from '../Grid/Grid'
 import FormField from './FormField'
-import { SizeContext } from './SizeContext'
 
 export interface IFormProps {
   action?: string
@@ -22,9 +21,9 @@ export interface IFormProps {
   className?: string
   onSubmit?: ComponentEventHandler<IFormProps>
   columns?: string | number
-  content?: ShorthandValue | ShorthandValue[]
+  fields?: ShorthandValue[]
+  renderItem?: ShorthandRenderFunction
   rows?: string | number
-  size?: Sizes
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -44,7 +43,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     as: customPropTypes.as,
 
     /**
-     *  Button content for childrenApi
+     *  Form content for childrenApi
      *  @docSiteIgnore
      */
     children: PropTypes.node,
@@ -55,14 +54,18 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Shorthand for primary content. */
-    content: customPropTypes.every([
-      customPropTypes.disallow(['children']),
-      PropTypes.oneOfType([
-        PropTypes.arrayOf(customPropTypes.itemShorthand),
-        customPropTypes.itemShorthand,
-      ]),
-    ]),
+    /** Shorthand array of props for the Form.Fields inside the Form. */
+    fields: customPropTypes.collectionShorthand,
+
+    /**
+     * A custom render iterator for rendering each of the Form fields.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderField: PropTypes.func,
 
     /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -76,9 +79,6 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
 
     /** The HTML form action. */
     action: PropTypes.string,
-
-    /** The size for the Text component */
-    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -102,6 +102,15 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     _.invoke(this.props, 'onSubmit', e, this.props, ...args)
   }
 
+  renderFields = () => {
+    const { fields, renderField } = this.props
+    return _.map(fields, field =>
+      FormField.create(field, {
+        render: renderField,
+      }),
+    )
+  }
+
   public renderComponent({
     ElementType,
     classes,
@@ -110,21 +119,19 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { as, rows, columns, action, children, content, size } = this.props
+    const { as, rows, columns, action, children } = this.props
     return (
-      <SizeContext.Provider value={{ size }}>
-        <Grid
-          className={classes.root}
-          as={as}
-          columns={columns}
-          rows={rows}
-          action={action}
-          onSubmit={this.handleSubmit}
-          {...rest}
-        >
-          {childrenExist(children) ? children : content}
-        </Grid>
-      </SizeContext.Provider>
+      <Grid
+        className={classes.root}
+        as={as}
+        columns={columns}
+        rows={rows}
+        action={action}
+        onSubmit={this.handleSubmit}
+        {...rest}
+      >
+        {childrenExist(children) ? children : this.renderFields()}
+      </Grid>
     )
   }
 }

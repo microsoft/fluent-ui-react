@@ -12,12 +12,12 @@ const FormExample = () => (
     <Form.Field label="Last name" control={Input} name="lastName" id="last-name" />
     <Form.Field
       label="I agree to the Terms and Conditions"
-      control={'input'}
+      control="input"
       type="checkbox"
       id="conditions"
       inline
     />
-    <Form.Field as={Button}>Submit</Form.Field>
+    <Form.Field control={Button} content="Submit" />
   </Form>
 )
 
