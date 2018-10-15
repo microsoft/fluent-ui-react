@@ -19,6 +19,7 @@ export interface IFormProps {
   as?: any
   children?: ReactChildren
   className?: string
+  content?: ShorthandValue
   onSubmit?: ComponentEventHandler<IFormProps>
   columns?: string | number
   fields?: ShorthandValue[]
@@ -50,6 +51,9 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
+
+    /** Shorthand for primary content. */
+    content: customPropTypes.contentShorthand,
 
     /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

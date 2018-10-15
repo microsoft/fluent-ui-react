@@ -15,6 +15,7 @@ export interface IFormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
+  content?: ShorthandValue
   label?: ShorthandValue
   renderLabel?: ShorthandRenderFunction
   control?: React.ReactType<any>
@@ -48,6 +49,9 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
+
+    /** Shorthand for primary content. */
+    content: customPropTypes.contentShorthand,
 
     /**
      * A form control component (i.e. Input) or HTML tagName (i.e. 'input').
