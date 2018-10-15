@@ -71,7 +71,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     endMedia: PropTypes.any,
 
     focusableItemProps: PropTypes.object,
-    
+
     /** A list item can have a header. */
     header: PropTypes.any,
 
