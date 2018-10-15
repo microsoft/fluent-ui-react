@@ -25,7 +25,6 @@ export interface IFormProps {
   content?: ShorthandValue | ShorthandValue[]
   rows?: string | number
   size?: Sizes
-  loading?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -74,9 +73,6 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
      * @param {object} data - All props.
      */
     onSubmit: PropTypes.func,
-
-    /** Automatically show a loading indicator. */
-    loading: PropTypes.bool,
 
     /** The HTML form action. */
     action: PropTypes.string,

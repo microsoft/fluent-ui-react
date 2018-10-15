@@ -1,6 +1,5 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as _ from 'lodash'
 
 import { UIComponent, customPropTypes, childrenExist } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
@@ -129,8 +128,8 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     // No Control
     // ----------------------------------------
 
-    if (_.isNil(control)) {
-      if (_.isNil(label)) {
+    if (!control) {
+      if (!label) {
         return (
           <ElementType {...rest} className={classes.root}>
             {!childrenExist(children) ? content : children}
