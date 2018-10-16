@@ -30,24 +30,24 @@ function getMessageContent(content, messageId) {
         <a href="/"> Some link </a>
         {content}
       </span>
-      <br />
-      <br />
-      <Attachment
-        icon="file word outline"
-        aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
-        header="MeetingNotes.pptx"
-        action={{ icon: 'ellipsis horizontal' }}
-        renderAction={() => actionPopup}
-        data-is-focusable={true}
-      />
-      <Attachment
-        icon="file word outline"
-        aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
-        header="Document.docx"
-        action={{ icon: 'ellipsis horizontal' }}
-        renderAction={() => actionPopup}
-        data-is-focusable={true}
-      />
+      <div style={{ marginTop: '20px' }}>
+        <Attachment
+          icon="file word outline"
+          aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
+          header="MeetingNotes.pptx"
+          action={{ icon: 'ellipsis horizontal' }}
+          renderAction={() => actionPopup}
+          data-is-focusable={true}
+        />
+        <Attachment
+          icon="file word outline"
+          aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
+          header="Document.docx"
+          action={{ icon: 'ellipsis horizontal' }}
+          renderAction={() => actionPopup}
+          data-is-focusable={true}
+        />
+      </div>
     </span>
   )
 }

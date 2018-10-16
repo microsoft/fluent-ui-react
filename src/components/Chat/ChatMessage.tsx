@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
-import { ICSSInJSStyle } from 'types/theme'
 
 import {
   childrenExist,
@@ -43,16 +42,6 @@ export interface IChatMessageProps {
   styles?: ComponentPartStyle
   timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
-}
-const ariaLive: ICSSInJSStyle = {
-  border: '0px',
-  clip: 'rect(0px, 0px, 0px, 0px)',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden',
-  padding: '0px',
-  width: '1px',
-  position: 'absolute',
 }
 
 class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
@@ -207,40 +196,24 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
-    // function getMessagePreviewForScreenReader(content: string) {
-    //   // Show the first 100 characters from the message
-    //   let messagePreview
-    //   if (content.length > 100) {
-    //     messagePreview = `${content.slice(0, 100)} ..., by ${authorElement.props.content} `
-    //     return messagePreview
-    //   }
-    //   messagePreview = `${content} ..., by ${authorElement.props.content} `
-    //   return messagePreview
-    // }
-
     return (
-      <div>
-        {/* <div style={ariaLive} role="heading" aria-level={4}>
-          {getMessagePreviewForScreenReader(content)}
-        </div> */}
-        <Layout
-          start={!mine && avatarElement}
-          main={
-            <Layout
-              className={classes.content}
-              vertical
-              start={
-                <>
-                  {!mine && authorElement}
-                  {timestampElement}
-                </>
-              }
-              main={content}
-            />
-          }
-          end={mine && avatarElement}
-        />
-      </div>
+      <Layout
+        start={!mine && avatarElement}
+        main={
+          <Layout
+            className={classes.content}
+            vertical
+            start={
+              <>
+                {authorElement}
+                {timestampElement}
+              </>
+            }
+            main={content}
+          />
+        }
+        end={mine && avatarElement}
+      />
     )
   }
 }
