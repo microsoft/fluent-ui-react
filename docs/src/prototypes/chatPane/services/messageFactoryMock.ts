@@ -15,6 +15,7 @@ interface IChatItemType {
 }
 interface IChatMessage extends IChatMessageProps, IChatItemType {
   tabIndex: number
+  role: string
   'aria-labelledby': string
   contentMessageId: any
   senderMessageId: any
@@ -36,6 +37,7 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
   const { content, mine } = msg
   const msgProps: IChatMessage = {
     // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
+    role: 'none',
     'aria-labelledby': `sender-message-${msg.id} time-message-${msg.id} message-content-${msg.id} `,
     contentMessageId: `message-content-${msg.id}`,
     senderMessageId: `sender-message-${msg.id}`,
