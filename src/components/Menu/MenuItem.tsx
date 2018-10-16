@@ -26,6 +26,7 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
+  endIcon?: boolean
   icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
@@ -72,6 +73,9 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
     /** A menu item can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
+
+    /** Name or shorthand for Menu Item End Icon. */
+    endIcon: customPropTypes.itemShorthand,
 
     /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
@@ -136,7 +140,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon } = this.props
+    const { children, content, endIcon, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -162,6 +166,16 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
                 render: renderIcon,
               })}
             {content}
+            {endIcon &&
+              Icon.create(this.props.endIcon, {
+                defaultProps: {
+                  xSpacing: !!content ? 'before' : 'none',
+                  style: {
+                    float: 'right',
+                  },
+                },
+                render: renderIcon,
+              })}
           </a>
         )}
       </ElementType>
