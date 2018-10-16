@@ -27,10 +27,6 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
-import Attachment from '../Attachment'
-import Button from '../Button'
-import Popup from '../Popup'
-import Menu from '../Menu'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
@@ -174,9 +170,6 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: ComponentVariablesInput,
   ) => {
     const {
-      contentMessageId,
-      senderMessageId,
-      timeMessageId,
       author,
       avatar,
       content,
@@ -214,38 +207,22 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
-    const menu = (
-      <Menu
-        defaultActiveIndex={0}
-        items={[
-          { key: 'editorials', content: 'Editorials' },
-          { key: 'review', content: 'Reviews' },
-          { key: 'events', content: 'Upcoming Events' },
-        ]}
-        vertical
-      />
-    )
-
-    const actionPopup = (
-      <Popup trigger={<Button iconOnly icon="ellipsis horizontal" />} content={{ content: menu }} />
-    )
-
-    function getMessagePreviewForScreenReader(content: string) {
-      // Show the first 100 characters from the message
-      let messagePreview
-      if (content.length > 100) {
-        messagePreview = `${content.slice(0, 100)} ..., by ${authorElement.props.content} `
-        return messagePreview
-      }
-      messagePreview = `${content} ..., by ${authorElement.props.content} `
-      return messagePreview
-    }
+    // function getMessagePreviewForScreenReader(content: string) {
+    //   // Show the first 100 characters from the message
+    //   let messagePreview
+    //   if (content.length > 100) {
+    //     messagePreview = `${content.slice(0, 100)} ..., by ${authorElement.props.content} `
+    //     return messagePreview
+    //   }
+    //   messagePreview = `${content} ..., by ${authorElement.props.content} `
+    //   return messagePreview
+    // }
 
     return (
       <div>
-        <div style={ariaLive} role="heading" aria-level={4}>
+        {/* <div style={ariaLive} role="heading" aria-level={4}>
           {getMessagePreviewForScreenReader(content)}
-        </div>
+        </div> */}
         <Layout
           start={!mine && avatarElement}
           main={
@@ -254,44 +231,11 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
               vertical
               start={
                 <>
-                  <span
-                    id={senderMessageId}
-                    aria-label={`message from ${authorElement.props.content}`}
-                  >
-                    {!mine && authorElement}
-                  </span>
-                  <span id={timeMessageId} aria-label={`sent on ${timestampElement.props.content}`}>
-                    {timestampElement}
-                  </span>
+                  {!mine && authorElement}
+                  {timestampElement}
                 </>
               }
-              main={
-                <span>
-                  <span id={contentMessageId}>
-                    {content}
-                    <a href="/"> Some link </a>
-                    {content}
-                  </span>
-                  <br />
-                  <br />
-                  <Attachment
-                    icon="file word outline"
-                    aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
-                    header="MeetingNotes.pptx"
-                    action={{ icon: 'ellipsis horizontal' }}
-                    renderAction={() => actionPopup}
-                    data-is-focusable={true}
-                  />
-                  <Attachment
-                    icon="file word outline"
-                    aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
-                    header="Document.docx"
-                    action={{ icon: 'ellipsis horizontal' }}
-                    renderAction={() => actionPopup}
-                    data-is-focusable={true}
-                  />
-                </span>
-              }
+              main={content}
             />
           }
           end={mine && avatarElement}

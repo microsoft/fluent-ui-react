@@ -4,6 +4,53 @@ import { IDividerProps } from 'src/components/Divider'
 import { IStatusProps } from 'src/components/Status'
 import { Extendable } from 'utils'
 import { IChat, UserStatus, IMessage, IUser, areSameDay, getFriendlyDateString } from '.'
+import { Attachment, Popup, Button, Menu } from '@stardust-ui/react'
+import * as React from 'react'
+
+function getMessageContent(content, messageId) {
+  const menu = (
+    <Menu
+      defaultActiveIndex={0}
+      items={[
+        { key: 'editorials', content: 'Editorials' },
+        { key: 'review', content: 'Reviews' },
+        { key: 'events', content: 'Upcoming Events' },
+      ]}
+      vertical
+    />
+  )
+
+  const actionPopup = (
+    <Popup trigger={<Button iconOnly icon="ellipsis horizontal" />} content={{ content: menu }} />
+  )
+  return (
+    <span>
+      <span id={`content-${messageId}`}>
+        {content}
+        <a href="/"> Some link </a>
+        {content}
+      </span>
+      <br />
+      <br />
+      <Attachment
+        icon="file word outline"
+        aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
+        header="MeetingNotes.pptx"
+        action={{ icon: 'ellipsis horizontal' }}
+        renderAction={() => actionPopup}
+        data-is-focusable={true}
+      />
+      <Attachment
+        icon="file word outline"
+        aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
+        header="Document.docx"
+        action={{ icon: 'ellipsis horizontal' }}
+        renderAction={() => actionPopup}
+        data-is-focusable={true}
+      />
+    </span>
+  )
+}
 
 export enum ChatItemType {
   message,
@@ -17,9 +64,7 @@ interface IChatMessage extends IChatMessageProps, IChatItemType {
   tabIndex: number
   role: string
   'aria-labelledby': string
-  contentMessageId: any
-  senderMessageId: any
-  timeMessageId: any
+  text: string
 }
 interface IDivider extends IDividerProps, IChatItemType {}
 
@@ -38,17 +83,24 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
   const msgProps: IChatMessage = {
     // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
     role: 'none',
-    'aria-labelledby': `sender-message-${msg.id} time-message-${msg.id} message-content-${msg.id} `,
-    contentMessageId: `message-content-${msg.id}`,
-    senderMessageId: `sender-message-${msg.id}`,
-    timeMessageId: `time-message-${msg.id}`,
-    content,
+    'aria-labelledby': `sender-${msg.id} timestamp-${msg.id} content-${msg.id}`,
+    content: getMessageContent(content, msg.id),
     mine,
     tabIndex: 0,
-    timestamp: { content: msg.timestamp, title: msg.timestampLong },
-    author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
+    timestamp: {
+      content: msg.timestamp,
+      title: msg.timestampLong,
+      id: `timestamp-${msg.id}`,
+      'aria-label': `Sent on ${msg.timestampLong}`,
+    },
+    author: fromUser && {
+      content: `${fromUser.firstName} ${fromUser.lastName}`,
+      id: `sender-${msg.id}`,
+      'aria-label': `Message from ${fromUser.firstName} ${fromUser.lastName}`,
+    },
     avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
     itemType: ChatItemType.message,
+    text: content,
   }
 
   return msgProps
