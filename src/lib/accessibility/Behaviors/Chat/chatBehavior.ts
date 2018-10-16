@@ -13,7 +13,7 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
 const ChatBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: 'presentation',
+      role: 'main',
     },
   },
   focusZone: {

@@ -15,6 +15,8 @@ export interface IDividerProps {
   important?: boolean
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
+  role?: string
+  'aria-level'?: number
 }
 
 /**

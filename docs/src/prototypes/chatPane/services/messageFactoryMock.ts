@@ -15,6 +15,10 @@ interface IChatItemType {
 }
 interface IChatMessage extends IChatMessageProps, IChatItemType {
   tabIndex: number
+  'aria-labelledby': string
+  contentMessageId: any
+  senderMessageId: any
+  timeMessageId: any
 }
 interface IDivider extends IDividerProps, IChatItemType {}
 
@@ -31,6 +35,11 @@ const statusMap: Map<UserStatus, StatusProps> = new Map([
 function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
   const { content, mine } = msg
   const msgProps: IChatMessage = {
+    // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
+    'aria-labelledby': `sender-message-${msg.id} time-message-${msg.id} message-content-${msg.id} `,
+    contentMessageId: `message-content-${msg.id}`,
+    senderMessageId: `sender-message-${msg.id}`,
+    timeMessageId: `time-message-${msg.id}`,
     content,
     mine,
     tabIndex: 0,
@@ -44,8 +53,16 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
 }
 
 function generateDividerProps(props: IDividerProps): IDivider {
-  const { content, important, type = 'secondary' } = props
-  const dividerProps: IDivider = { itemType: ChatItemType.divider, content, important, type }
+  const { content, important, type = 'secondary', role } = props
+  const ariaLevel = props['aria-level']
+  const dividerProps: IDivider = {
+    itemType: ChatItemType.divider,
+    content,
+    important,
+    type,
+    role,
+    ['aria-level']: ariaLevel,
+  }
 
   return dividerProps
 }
@@ -59,7 +76,13 @@ export function generateChatProps(chat: IChat): ChatItemContentProps[] {
   const chatProps: ChatItemContentProps[] = []
 
   // First date divider
-  chatProps.push(generateDividerProps({ content: getFriendlyDateString(messages[0].date) }))
+  chatProps.push(
+    generateDividerProps({
+      role: 'heading',
+      'aria-level': 3,
+      content: getFriendlyDateString(messages[0].date),
+    }),
+  )
 
   for (let i = 0; i < messages.length - 1; i++) {
     const [msg1, msg2] = [messages[i], messages[i + 1]]
@@ -67,7 +90,13 @@ export function generateChatProps(chat: IChat): ChatItemContentProps[] {
 
     if (!areSameDay(msg1.date, msg2.date)) {
       // Generating divider when date changes
-      chatProps.push(generateDividerProps({ content: getFriendlyDateString(msg2.date) }))
+      chatProps.push(
+        generateDividerProps({
+          role: 'heading',
+          'aria-level': 3,
+          content: getFriendlyDateString(msg2.date),
+        }),
+      )
     }
   }
 

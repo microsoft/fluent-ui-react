@@ -79,8 +79,22 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, items, renderItem } = this.props
 
+    let author = ''
+    const retypedItems = items as any
+    for (let a = 0; a < retypedItems.length; a++) {
+      if (
+        retypedItems[a].props.children.props.mine &&
+        retypedItems[a].props.children.props.mine === true
+      ) {
+        author = retypedItems[a].props.children.props.author
+        break
+      }
+    }
+
     return (
       <ElementType
+        role="main"
+        aria-label={`${author} chat content. Press right arrow key to explore message content, then use left arrow key to shift focus back to the message.`}
         className={classes.root}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
+import { ICSSInJSStyle } from 'types/theme'
 
 import {
   childrenExist,
@@ -46,6 +47,16 @@ export interface IChatMessageProps {
   styles?: ComponentPartStyle
   timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
+}
+const ariaLive: ICSSInJSStyle = {
+  border: '0px',
+  clip: 'rect(0px, 0px, 0px, 0px)',
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: '0px',
+  width: '1px',
+  position: 'absolute',
 }
 
 class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
@@ -163,6 +174,9 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     variables: ComponentVariablesInput,
   ) => {
     const {
+      contentMessageId,
+      senderMessageId,
+      timeMessageId,
       author,
       avatar,
       content,
@@ -216,48 +230,73 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       <Popup trigger={<Button iconOnly icon="ellipsis horizontal" />} content={{ content: menu }} />
     )
 
+    function getMessagePreviewForScreenReader(content: string) {
+      // Show the first 100 characters from the message
+      let messagePreview
+      if (content.length > 100) {
+        messagePreview = `${content.slice(0, 100)} ..., by ${authorElement.props.content} `
+        return messagePreview
+      }
+      messagePreview = `${content} ..., by ${authorElement.props.content} `
+      return messagePreview
+    }
+
     return (
-      <Layout
-        start={!mine && avatarElement}
-        main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={
-              <>
-                {content}
-                <a href="/"> Some link </a>
-                {content}
-                <br />
-                <br />
-                <Attachment
-                  icon="file word outline"
-                  aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
-                  header="MeetingNotes.pptx"
-                  action={{ icon: 'ellipsis horizontal' }}
-                  renderAction={() => actionPopup}
-                  data-is-focusable={true}
-                />
-                <Attachment
-                  icon="file word outline"
-                  aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
-                  header="Document.docx"
-                  action={{ icon: 'ellipsis horizontal' }}
-                  renderAction={() => actionPopup}
-                  data-is-focusable={true}
-                />
-              </>
-            }
-          />
-        }
-        end={mine && avatarElement}
-      />
+      <div>
+        <div style={ariaLive} role="heading" aria-level={4}>
+          {getMessagePreviewForScreenReader(content)}
+        </div>
+        <Layout
+          start={!mine && avatarElement}
+          main={
+            <Layout
+              className={classes.content}
+              vertical
+              start={
+                <>
+                  <span
+                    id={senderMessageId}
+                    aria-label={`message from ${authorElement.props.content}`}
+                  >
+                    {!mine && authorElement}
+                  </span>
+                  <span id={timeMessageId} aria-label={`sent on ${timestampElement.props.content}`}>
+                    {timestampElement}
+                  </span>
+                </>
+              }
+              main={
+                <span>
+                  <span id={contentMessageId}>
+                    {content}
+                    <a href="/"> Some link </a>
+                    {content}
+                  </span>
+                  <br />
+                  <br />
+                  <Attachment
+                    icon="file word outline"
+                    aria-label="File attachment MeetingNotes.pptx Press tab for more options Press Enter to open the file"
+                    header="MeetingNotes.pptx"
+                    action={{ icon: 'ellipsis horizontal' }}
+                    renderAction={() => actionPopup}
+                    data-is-focusable={true}
+                  />
+                  <Attachment
+                    icon="file word outline"
+                    aria-label="File attachment Document.docx Press tab for more options Press Enter to open the file"
+                    header="Document.docx"
+                    action={{ icon: 'ellipsis horizontal' }}
+                    renderAction={() => actionPopup}
+                    data-is-focusable={true}
+                  />
+                </span>
+              }
+            />
+          }
+          end={mine && avatarElement}
+        />
+      </div>
     )
   }
 }
