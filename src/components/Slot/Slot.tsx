@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { customPropTypes, UIComponent, childrenExist, createShorthand } from '../../lib'
+import { Extendable, MapValueToProps, ObjectOf } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ISlotProps {
@@ -12,12 +12,18 @@ export interface ISlotProps {
   variables?: ComponentVariablesInput
 }
 
+export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
+  val,
+  options: ObjectOf<any> = {},
+) => {
+  options.defaultProps = { as, ...options.defaultProps }
+  return createShorthand(Slot, mapValueToProps, val, options)
+}
+
 /**
  * A Slot is a basic component (no default styles)
  */
 class Slot extends UIComponent<Extendable<ISlotProps>, any> {
-  static create: Function
-
   static className = 'ui-slot'
 
   static displayName = 'Slot'
@@ -52,8 +58,8 @@ class Slot extends UIComponent<Extendable<ISlotProps>, any> {
       </ElementType>
     )
   }
-}
 
-Slot.create = createShorthandFactory(Slot, content => ({ content }))
+  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+}
 
 export default Slot

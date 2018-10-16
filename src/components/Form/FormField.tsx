@@ -10,6 +10,7 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text'
+import { createSlotFactory } from '../Slot/Slot'
 
 export interface IFormFieldProps {
   as?: any
@@ -17,7 +18,9 @@ export interface IFormFieldProps {
   className?: string
   label?: ShorthandValue
   renderLabel?: ShorthandRenderFunction
-  control?: React.ReactType<any>
+  controlType?: React.ReactType<any>
+  control?: ShorthandValue
+  renderControl?: ShorthandRenderFunction
   inline?: boolean
   message?: ShorthandValue
   renderMessage?: ShorthandRenderFunction
@@ -54,10 +57,22 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      * Extra FormField props are passed to the control component.
      * Mutually exclusive with children.
      */
-    control: customPropTypes.some([
+    controlType: customPropTypes.some([
       PropTypes.func,
       PropTypes.oneOf(['button', 'input', 'select', 'textarea']),
     ]),
+
+    /** A control for the form field. */
+    control: customPropTypes.itemShorthand,
+
+    /**
+     * A custom render function for the control slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderControl: PropTypes.func,
 
     /** A label for the form field. */
     label: customPropTypes.itemShorthand,
@@ -111,13 +126,15 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     const {
       children,
       control,
+      renderControl,
       label,
+      renderLabel,
       id,
       type,
       required,
-      renderLabel,
       message,
       renderMessage,
+      controlType,
     } = this.props
 
     let labelContent = label
@@ -147,13 +164,17 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       render: renderMessage,
     })
 
-    const controlElement = control && React.createElement(control, { required, ...rest })
+    const factoryMethod = createSlotFactory(controlType, name => ({ name }))
+    const controlElement = factoryMethod(control || {}, {
+      defaultProps: { required, ...rest },
+      render: renderControl,
+    })
 
     // ----------------------------------------
     // No Control
     // ----------------------------------------
 
-    if (!control) {
+    if (!controlType) {
       if (!label) {
         return (
           <ElementType {...rest} className={classes.root}>
@@ -175,7 +196,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     // Check box or radio (label should appear after the input)
     // --------------------------------------------------------
 
-    if (control && (type === 'checkbox' || type === 'radio')) {
+    if (controlType && (type === 'checkbox' || type === 'radio')) {
       return (
         <ElementType className={classes.root}>
           {controlElement}

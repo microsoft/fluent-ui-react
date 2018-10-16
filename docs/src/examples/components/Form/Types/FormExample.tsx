@@ -7,15 +7,15 @@ const FormExample = () => (
       alert('Form submitted')
     }}
   >
-    <Form.Field label="First name" control={Input} name="firstName" id="first-name" />
-    <Form.Field label="Last name" control={Input} name="lastName" id="last-name" />
+    <Form.Field label="First name" controlType={Input} name="firstName" id="first-name" />
+    <Form.Field label="Last name" controlType={Input} name="lastName" id="last-name" />
     <Form.Field
       label="I agree to the Terms and Conditions"
-      control="input"
+      controlType="input"
       type="checkbox"
       id="conditions"
     />
-    <Form.Field control={Button} content="Submit" />
+    <Form.Field controlType={Button} content="Submit" />
   </Form>
 )
 

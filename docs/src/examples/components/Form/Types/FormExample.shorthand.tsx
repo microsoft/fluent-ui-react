@@ -2,16 +2,22 @@ import React from 'react'
 import { Form, Input, Button } from '@stardust-ui/react'
 
 const fields = [
-  { label: 'First name', control: Input, name: 'firstName', id: 'first-name', key: 'first-name' },
-  { label: 'Last name', control: Input, name: 'lastName', id: 'last-name', key: 'last-name' },
+  {
+    label: 'First name',
+    controlType: Input,
+    name: 'firstName',
+    id: 'first-name',
+    key: 'first-name',
+  },
+  { label: 'Last name', controlType: Input, name: 'lastName', id: 'last-name', key: 'last-name' },
   {
     label: 'I agree to the Terms and Conditions',
-    control: 'input',
+    controlType: 'input',
     type: 'checkbox',
     id: 'conditions',
     key: 'conditions',
   },
-  { control: Button, content: 'Submit', key: 'submit' },
+  { controlType: Button, content: 'Submit', key: 'submit' },
 ]
 
 const FormExample = () => (
