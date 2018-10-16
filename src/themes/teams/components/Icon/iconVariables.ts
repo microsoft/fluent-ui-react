@@ -1,7 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 export interface IconVariables {
-  [key: string]: string | number | undefined
+  [key: string]: string | number | boolean | undefined
 
   color?: string
   backgroundColor?: string
@@ -9,6 +9,7 @@ export interface IconVariables {
   horizontalSpace: string
   margin: string
   secondaryColor: string
+  filled?: boolean
 }
 
 export default (): IconVariables => ({
@@ -20,4 +21,5 @@ export default (): IconVariables => ({
   horizontalSpace: pxToRem(10),
   margin: '0 0.25em 0 0',
   secondaryColor: 'white',
+  filled: undefined,
 })

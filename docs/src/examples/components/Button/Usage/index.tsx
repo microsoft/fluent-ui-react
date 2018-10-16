@@ -9,6 +9,11 @@ const Usage = () => (
       description="A button used in cards is a &quot;tinted&quot; version of a default button."
       examplePath="components/Button/Usage/ButtonUsageExample"
     />
+    <ComponentExample
+      title="Toolbar button"
+      description="Icon paths change on hover"
+      examplePath="components/Button/Usage/ButtonExampleToolbarButton"
+    />
   </ExampleSection>
 )
 

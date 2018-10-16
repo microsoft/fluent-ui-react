@@ -125,6 +125,9 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   /* additional SVG styles for different paths could be added/used in the same way */
   path: getSvgStyle('path'),
   secondaryPath: getSvgStyle('secondaryPath'),
+
+  unfilled: getSvgStyle('unfilled'),
+  filled: getSvgStyle('filled'),
 }
 
 export default iconStyles

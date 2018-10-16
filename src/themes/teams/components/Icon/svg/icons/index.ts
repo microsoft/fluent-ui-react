@@ -1,5 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import bold from './bold'
 import call from './call'
 import callEnd from './callEnd'
 import callVideo from './callIncomingVideo'
@@ -14,6 +15,7 @@ import umbrella from './umbrella'
 import teams from './teams'
 
 export default {
+  bold,
   call,
   'call-end': callEnd,
   'call-video': callVideo,
