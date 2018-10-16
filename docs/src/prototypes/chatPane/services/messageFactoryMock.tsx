@@ -97,7 +97,7 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
   const { content, mine } = msg
   const msgProps: IChatMessage = {
     // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
-    role: 'none',
+    role: undefined,
     'aria-labelledby': `sender-${msg.id} timestamp-${msg.id} content-${msg.id}`,
     content: getMessageContent(content, msg.id),
     mine,
@@ -114,6 +114,7 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
       ['aria-hidden']: true,
     },
     renderAuthor: fromUser && getAuthorElement(msg, fromUser),
+    author: `${fromUser.firstName} ${fromUser.lastName}`,
     itemType: ChatItemType.message,
     text: content,
   }

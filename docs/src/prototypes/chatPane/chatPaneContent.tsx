@@ -46,11 +46,10 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
     const messageText = props.text || ''
     let messagePreview
     if (messageText.length > 100) {
-      messagePreview = `${messageText.slice(0, 100)} ..., by ${props.author &&
-        props.author.content} `
+      messagePreview = `${messageText.slice(0, 100)} ..., by ${props.author} `
       return messagePreview
     }
-    messagePreview = `${messageText} ..., by ${props.author && props.author.content} `
+    messagePreview = `${messageText} ..., by ${props.author}`
     return messagePreview
   }
 

@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { lorem, random, name, internet } from 'faker'
+import { random, name, internet } from 'faker'
 import * as randomWords from 'random-words'
 
 import { IMessage, IUser, IChat, UserStatus, getTimestamp, getRandomDates } from '.'
