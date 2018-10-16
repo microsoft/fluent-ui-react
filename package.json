@@ -81,7 +81,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "debug": "^3.0.1",
     "faker": "^4.1.0",
     "fela": "^6.1.7",
     "fela-plugin-fallback-value": "^5.0.17",
