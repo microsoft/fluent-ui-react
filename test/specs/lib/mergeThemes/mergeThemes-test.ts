@@ -234,6 +234,78 @@ describe('mergeThemes', () => {
     })
   })
 
+  describe('font faces', () => {
+    test('returns a compact array', () => {
+      expect(
+        mergeThemes(
+          { fontFaces: null },
+          { fontFaces: undefined },
+          {
+            fontFaces: [
+              {
+                name: 'Segoe UI',
+                paths: ['public/fonts/segoe-ui-regular.woff2'],
+                style: { fontWeight: 400 },
+              },
+            ],
+          },
+          {
+            fontFaces: [
+              {
+                name: 'Segoe UI',
+                paths: ['public/fonts/segoe-ui-semibold.woff2'],
+                style: { fontWeight: 600 },
+              },
+            ],
+          },
+          {
+            fontFaces: [
+              {
+                name: 'Segoe UI',
+                paths: ['public/fonts/segoe-ui-bold.woff2'],
+                style: { fontWeight: 700 },
+              },
+            ],
+          },
+        ),
+      ).toMatchObject({
+        fontFaces: [
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-regular.woff2'],
+            style: { fontWeight: 400 },
+          },
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-semibold.woff2'],
+            style: { fontWeight: 600 },
+          },
+          {
+            name: 'Segoe UI',
+            paths: ['public/fonts/segoe-ui-bold.woff2'],
+            style: { fontWeight: 700 },
+          },
+        ],
+      })
+    })
+  })
+
+  describe('static styles', () => {
+    test('returns a compact array', () => {
+      expect(
+        mergeThemes(
+          { staticStyles: null },
+          { staticStyles: undefined },
+          { staticStyles: [''] },
+          { staticStyles: [{ body: { color: 'red' } }] },
+          { staticStyles: ['*{box-sizing:border-box;}'] },
+        ),
+      ).toMatchObject({
+        staticStyles: [{ body: { color: 'red' } }, '*{box-sizing:border-box;}'],
+      })
+    })
+  })
+
   describe('rtl', () => {
     test('latest boolean value wins', () => {
       expect(mergeThemes({ rtl: false }, { rtl: true })).toHaveProperty('rtl', true)

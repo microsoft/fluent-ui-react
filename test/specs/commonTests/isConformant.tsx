@@ -1,15 +1,24 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
-import { shallow, mount as enzymeMount, render } from 'enzyme'
+import { mount as enzymeMount } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
+import isExportedAtTopLevel from './isExportedAtTopLevel'
 import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
 import { felaRenderer } from 'src/lib'
+import { FocusZone } from 'src/lib/accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+
+export interface IConformant {
+  eventTargets?: object
+  requiredProps?: object
+  exportedAtTopLevel?: boolean
+  rendersPortal?: boolean
+}
 
 export const mount = (node, options?) => {
   return enzymeMount(
@@ -23,21 +32,36 @@ export const mount = (node, options?) => {
  * @param {React.Component|Function} Component A component that should conform.
  * @param {Object} [options={}]
  * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
+ * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  */
-export default (Component, options: any = {}) => {
-  const { eventTargets = {}, requiredProps = {}, rendersPortal = false } = options
+export default (Component, options: IConformant = {}) => {
+  const {
+    eventTargets = {},
+    exportedAtTopLevel = true,
+    requiredProps = {},
+    rendersPortal = false,
+  } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
 
-  // This is added because of the FelaTheme wrapper and the component itself, because it is mounted
+  // This is added because the component is mounted
   const getComponent = wrapper => {
-    return wrapper
+    // FelaTheme wrapper and the component itself:
+    let component = wrapper
       .childAt(0)
       .childAt(0)
       .childAt(0)
+    if (component.type() === FocusZone) {
+      // `component` is <FocusZone>
+      component = component.childAt(0) // skip through <FocusZone>
+      if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
+        component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
+      }
+    }
+    return component
   }
 
   // make sure components are properly exported
@@ -80,7 +104,7 @@ export default (Component, options: any = {}) => {
         ].join('\n'),
       )
     })
-    return
+    return null
   }
 
   // ----------------------------------------
@@ -90,28 +114,10 @@ export default (Component, options: any = {}) => {
     expect(constructorName).toEqual(info.filenameWithoutExt)
   })
 
-  // ----------------------------------------
-  // Is exported or private
-  // ----------------------------------------
-  // detect components like: stardust.H1
-  const isTopLevelAPIProp = _.has(stardust, constructorName)
-
   // find the apiPath in the stardust object
   const foundAsSubcomponent = _.isFunction(_.get(stardust, info.apiPath))
 
-  // require all components to be exported at the top level
-  test('is exported at the top level', () => {
-    const message = [
-      `'${info.displayName}' must be exported at top level.`,
-      "Export it in 'src/index.js'.",
-    ].join(' ')
-
-    expect({ isTopLevelAPIProp, message }).toEqual({
-      message,
-      isTopLevelAPIProp: true,
-    })
-  })
-
+  exportedAtTopLevel && isExportedAtTopLevel(constructorName, info.displayName)
   if (info.isChild) {
     test('is a static component on its parent', () => {
       const message =
@@ -339,7 +345,7 @@ export default (Component, options: any = {}) => {
         let errorMessage = 'was not called with (event)'
 
         if (_.has(Component.propTypes, listenerName)) {
-          expectedArgs = [eventShape, component.props()]
+          expectedArgs = [eventShape, expect.objectContaining(component.props())]
           errorMessage =
             'was not called with (event, data).\n' +
             `Ensure that 'props' object is passed to '${listenerName}'\n` +
@@ -367,6 +373,16 @@ export default (Component, options: any = {}) => {
   // Handles className
   // ----------------------------------------
   describe('static className (common)', () => {
+    const getClassesOfRootElement = component => {
+      const classes = component
+        .find('[className]')
+        .hostNodes()
+        .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
+        .first()
+        .prop('className')
+      return classes
+    }
+
     test(`is a static equal to "${info.componentClassName}"`, () => {
       expect(Component.className).toEqual(info.componentClassName)
     })
@@ -377,14 +393,7 @@ export default (Component, options: any = {}) => {
       // only test components that implement className
       if (component.find('[className]').hostNodes().length > 0) {
         expect(
-          _.includes(
-            component
-              .find('[className]')
-              .hostNodes()
-              .first()
-              .prop('className'),
-            `${info.componentClassName}`,
-          ),
+          _.includes(getClassesOfRootElement(component), `${info.componentClassName}`),
         ).toEqual(true)
       }
     })
@@ -413,26 +422,13 @@ export default (Component, options: any = {}) => {
         document.body.removeChild(mountNode)
       } else {
         const component = mount(<Component {...requiredProps} className={className} />)
-        expect(
-          _.includes(
-            component
-              .find('[className]')
-              .hostNodes()
-              .first()
-              .prop('className'),
-            className,
-          ),
-        ).toEqual(true)
+        expect(_.includes(getClassesOfRootElement(component), className)).toEqual(true)
       }
     })
 
     test("user's className does not override the default classes", () => {
       const component = mount(<Component {...requiredProps} />)
-      const defaultClasses = component
-        .find('[className]')
-        .hostNodes()
-        .first()
-        .prop('className')
+      const defaultClasses = getClassesOfRootElement(component)
 
       if (!defaultClasses) return
 
@@ -440,11 +436,7 @@ export default (Component, options: any = {}) => {
       const wrapperWithCustomClasses = mount(
         <Component {...requiredProps} className={userClasses} />,
       )
-      const mixedClasses = wrapperWithCustomClasses
-        .find('[className]')
-        .hostNodes()
-        .first()
-        .prop('className')
+      const mixedClasses = getClassesOfRootElement(wrapperWithCustomClasses)
 
       const message = [
         'Make sure you are using the `getUnhandledProps` util to spread the `rest` props.',

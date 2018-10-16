@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { createComponent } from 'react-fela'
 
 import { pxToRem } from 'src/lib'

@@ -1,5 +1,15 @@
-export default siteVars => ({
+export interface IChatMessageVariables {
+  messageWidth: string
+  messageColor: string
+  messageColorMine: string
+  avatar: { statusBorderColor: string }
+}
+
+export default (siteVars): IChatMessageVariables => ({
   messageWidth: '80%',
-  messageColor: 'rgba(0,0,0,0.1)',
+  messageColor: siteVars.white,
   messageColorMine: '#E0E0ED',
+  avatar: {
+    statusBorderColor: siteVars.gray10,
+  },
 })

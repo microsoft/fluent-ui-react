@@ -46,4 +46,6 @@ ComponentControls.propTypes = {
   visible: PropTypes.bool,
 }
 
-export default updateForKeys(['showRtl', 'showCode', 'showVariables', 'visible'])(ComponentControls)
+export default updateForKeys(['examplePath', 'showRtl', 'showCode', 'showVariables', 'visible'])(
+  ComponentControls,
+)

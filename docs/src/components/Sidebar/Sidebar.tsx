@@ -5,17 +5,19 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Menu, Icon, Input as SemanticUIInput } from 'semantic-ui-react'
+import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname, typeOrder, repoURL } from 'docs/src/utils'
+import { getComponentPathname, repoURL, typeOrder } from 'docs/src/utils'
+import { themes } from '@stardust-ui/react'
+import { ThemeContext } from '../../context/theme-context'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
+const behaviorMenu = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-
 type ComponentMenuItem = { displayName: string; type: string }
 
 class Sidebar extends React.Component<any, any> {
@@ -111,7 +113,7 @@ class Sidebar extends React.Component<any, any> {
           activeClassName="active"
         />
       )),
-    )(componentMenu)
+    )([...componentMenu, ...behaviorMenu])
 
     return (
       <Menu.Item key={nextType}>
@@ -123,7 +125,7 @@ class Sidebar extends React.Component<any, any> {
 
   renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
-    if (!query) return
+    if (!query) return undefined
 
     let itemIndex = -1
     const startsWithMatches: ComponentMenuItem[] = []
@@ -167,43 +169,136 @@ class Sidebar extends React.Component<any, any> {
     const { style } = this.props
     const { query } = this.state
     return (
-      <Menu vertical fixed="left" inverted style={{ ...style }}>
-        <Menu.Item>
-          <Logo spaced="right" size="mini" />
-          <strong>
-            Stardust &nbsp;
-            <small>
-              <em>{pkg.version}</em>
-            </small>
-          </strong>
-        </Menu.Item>
-        <Menu.Item as={NavLink} exact to="/" activeClassName="active">
-          Introduction
-        </Menu.Item>
-        <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
-          <Icon name="github" /> GitHub
-        </Menu.Item>
-        <Menu.Item
-          as="a"
-          href={`${repoURL}/blob/master/CHANGELOG.md`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon name="file alternate outline" /> CHANGELOG
-        </Menu.Item>
-        <Menu.Item active>
-          <SemanticUIInput
-            className="transparent inverted icon"
-            icon="search"
-            placeholder="Search components..."
-            value={query}
-            onChange={this.handleSearchChange}
-            onKeyDown={this.handleSearchKeyDown}
-          />
-        </Menu.Item>
-        {query ? this.renderSearchItems() : this.menuItemsByType}
-      </Menu>
+      <ThemeContext.Consumer>
+        {({ themeName, changeTheme }) => (
+          <Menu vertical fixed="left" inverted style={{ ...style }}>
+            <Menu.Item>
+              <Logo spaced="right" size="mini" />
+              <strong>
+                Stardust UI React &nbsp;
+                <small>
+                  <em>{pkg.version}</em>
+                </small>
+              </strong>
+              <Menu.Menu>
+                <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" /> GitHub
+                </Menu.Item>
+                <Menu.Item
+                  as="a"
+                  href={`${repoURL}/blob/master/CHANGELOG.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name="file alternate outline" /> CHANGELOG
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                <p>Theme:</p>
+                <select
+                  placeholder="Select theme..."
+                  defaultValue={themeName}
+                  onChange={e => {
+                    changeTheme(e.target.value)
+                  }}
+                >
+                  {this.getThemeOptions().map(o => (
+                    <option key={o.value} value={o.value}>
+                      {o.text}
+                    </option>
+                  ))}
+                </select>
+              </Menu.Item>
+            )}
+            <Menu.Item>
+              Concepts
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/" activeClassName="active">
+                  Introduction
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
+                  Shorthand Props
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            <Menu.Item>
+              Guides
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
+                  Quick Start
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/glossary" activeClassName="active">
+                  Glossary
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
+                  Accessibility
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
+                  Theming
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
+                  Theming Examples
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                Prototypes
+                <Menu.Menu>
+                  <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
+                    Chat Pane
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-async-shorthand"
+                    activeClassName="active"
+                  >
+                    Async Shorthand
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-employee-card"
+                    activeClassName="active"
+                  >
+                    Employee Card
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-meeting-options"
+                    activeClassName="active"
+                  >
+                    Meeting Options
+                  </Menu.Item>
+                </Menu.Menu>
+              </Menu.Item>
+            )}
+            <Menu.Item active>
+              <SemanticUIInput
+                className="transparent inverted icon"
+                icon="search"
+                placeholder="Search components..."
+                value={query}
+                onChange={this.handleSearchChange}
+                onKeyDown={this.handleSearchKeyDown}
+              />
+            </Menu.Item>
+            {query ? this.renderSearchItems() : this.menuItemsByType}
+          </Menu>
+        )}
+      </ThemeContext.Consumer>
     )
+  }
+
+  private getThemeOptions = () => {
+    return Object.keys(themes).map(key => ({
+      text: _.startCase(key),
+      value: key,
+    }))
   }
 }
 

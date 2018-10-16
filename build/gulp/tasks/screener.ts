@@ -1,4 +1,4 @@
-import { task, parallel, series } from 'gulp'
+import { task, series } from 'gulp'
 
 import sh from '../sh'
 import config from '../../../config'
@@ -10,12 +10,16 @@ const { paths } = config
 // ----------------------------------------
 
 task('screener:runner', cb => {
-  sh(`screener-runner --conf ${paths.base('screener.config.js')}`, err => {
-    cb(err)
-
-    // kill the server
-    process.exit(err ? 1 : 0)
-  })
+  // kill the server when done
+  sh(`screener-runner --conf ${paths.base('screener.config.js')}`)
+    .then(() => {
+      cb()
+      process.exit(0)
+    })
+    .catch(err => {
+      cb(err)
+      process.exit(1)
+    })
 })
 
 // ----------------------------------------

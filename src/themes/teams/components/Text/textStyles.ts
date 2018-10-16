@@ -2,71 +2,88 @@ import { Sizes, Weights } from '../../../../lib/enums'
 import { ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { ITextVariables } from './textVariables'
+import { ITextProps } from '../../../../components/Text/Text'
 
 export interface TextStylesParams {
-  props: any
+  props: ITextProps
   variables: ITextVariables
 }
 
 export default {
   root: ({
-    props: { atMention, disabled, error, size, weight, important, success, timestamp, truncated },
+    props: {
+      atMention,
+      disabled,
+      error,
+      size,
+      weight,
+      important,
+      success,
+      timestamp,
+      truncated,
+      temporary,
+    },
     variables: v,
   }: TextStylesParams): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
-      ...(atMention && { color: v.atMentionTextColor }),
-      ...(disabled && { color: v.disabledTextColor }),
-      ...(error && { color: v.errorTextColor }),
-      ...(success && { color: v.successTextColor }),
-      ...(timestamp && { color: v.timestampTextColor }),
+      ...(atMention === true && {
+        color: v.atMentionOtherColor,
+      }),
+      ...(atMention === 'me' && {
+        color: v.atMentionMeColor,
+        fontWeight: v.atMentionMeFontWeight,
+      }),
+      ...(disabled && { color: v.disabledColor }),
+      ...(error && { color: v.errorColor }),
+      ...(success && { color: v.successColor }),
+      ...(temporary && { fontStyle: 'italic' }),
+      ...(timestamp && {
+        color: v.timestampColor,
+        ':hover': {
+          color: v.timestampHoverColor,
+        },
+      }),
+      ...(important && {
+        fontWeight: v.importantWeight,
+        color: v.importantColor,
+      }),
+
       ...(weight === Weights.Light && {
-        fontWeight: v.textWeightLight,
+        fontWeight: v.fontWeightLight,
       }),
       ...(weight === Weights.Semilight && {
-        fontWeight: v.textWeightSemilight,
+        fontWeight: v.fontWeightSemilight,
       }),
       ...(weight === Weights.Regular && {
-        fontWeight: v.textWeightRegular,
+        fontWeight: v.fontWeightRegular,
       }),
       ...(weight === Weights.Semibold && {
-        fontWeight: v.textWeightSemibold,
+        fontWeight: v.fontWeightSemibold,
       }),
       ...(weight === Weights.Bold && {
-        fontWeight: v.textWeightBold,
+        fontWeight: v.fontWeightBold,
       }),
-      ...(important && { fontWeight: v.importantWeight }),
-      ...(size === Sizes.ExtraSmall && {
-        fontSize: v.textExtraSmallFontSize,
-        lineHeight: v.textExtraSmallLineHeight,
+
+      ...(size === Sizes.Smaller && {
+        fontSize: v.fontSizeExtraSmall,
+        lineHeight: v.fontLineHeightExtraSmall,
       }),
       ...(size === Sizes.Small && {
-        fontSize: v.textSmallFontSize,
-        lineHeight: v.textSmallLineHeight,
+        fontSize: v.fontSizeSmall,
+        lineHeight: v.fontLineHeightSmall,
       }),
       ...(size === Sizes.Medium && {
-        fontSize: v.textMediumFontSize,
-        lineHeight: v.textMediumLineHeight,
+        fontSize: v.fontSizeMedium,
+        lineHeight: v.fontLineHeightMedium,
       }),
       ...(size === Sizes.Large && {
-        fontSize: v.textLargeFontSize,
-        lineHeight: v.textLargeLineHeight,
+        fontSize: v.fontSizeLarge,
+        lineHeight: v.fontLineHeightLarge,
       }),
-      ...(size === Sizes.ExtraLarge && {
-        fontSize: v.textExtraLargeFontSize,
-        lineHeight: v.textExtraLargeLineHeight,
-      }),
-      ...(size === Sizes['2x'] && {
-        fontSize: v.textX2FontSize,
-        lineHeight: v.textX2LineHeight,
-      }),
-      ...(size === Sizes['3x'] && {
-        fontSize: v.textX3FontSize,
-        lineHeight: v.textX3LineHeight,
-      }),
-      ...(size === Sizes['4x'] && {
-        fontSize: v.textX4FontSize,
-        lineHeight: v.textX4LineHeight,
+      ...(size === Sizes.Larger && {
+        fontSize: v.fontSizeExtraLarge,
+        lineHeight: v.fontLineHeightExtraLarge,
       }),
     }
   },

@@ -3,17 +3,23 @@ import { FontFaces } from '../../../types/theme'
 const fontFaces: FontFaces = [
   {
     name: 'Segoe UI',
-    paths: ['public/fonts/segoe-ui-regular.woff2'],
+    paths: [
+      'https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-regular.woff2',
+    ],
     style: { fontWeight: 400 },
   },
   {
     name: 'Segoe UI',
-    paths: ['public/fonts/segoe-ui-semibold.woff2'],
+    paths: [
+      'https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semibold.woff2',
+    ],
     style: { fontWeight: 600 },
   },
   {
     name: 'Segoe UI',
-    paths: ['public/fonts/segoe-ui-bold.woff2'],
+    paths: [
+      'https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-bold.woff2',
+    ],
     style: { fontWeight: 700 },
   },
 ]

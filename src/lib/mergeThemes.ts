@@ -1,19 +1,24 @@
 import * as _ from 'lodash'
 import {
-  ComponentVariablesPrepared,
   ComponentVariablesInput,
+  ComponentVariablesPrepared,
   IComponentPartStylesInput,
   IComponentPartStylesPrepared,
-  ISiteVariables,
+  IFontFace,
+  ISiteVariablesInput,
+  ISiteVariablesPrepared,
   IThemeComponentStylesInput,
   IThemeComponentStylesPrepared,
   IThemeComponentVariablesInput,
   IThemeComponentVariablesPrepared,
   IThemeInput,
   IThemePrepared,
+  StaticStyle,
+  ThemeIcons,
 } from '../../types/theme'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
+import toCompactArray from './toCompactArray'
 
 // ----------------------------------------
 // Component level merge functions
@@ -53,13 +58,25 @@ export const mergeComponentVariables = (
   target: ComponentVariablesInput,
   ...sources: ComponentVariablesInput[]
 ): ComponentVariablesPrepared => {
-  const initial = siteVariables => callable(target)(siteVariables)
+  const initial = (...args) => callable(target)(...args) || {}
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
-    return siteVariables => ({
-      ...acc(siteVariables),
-      ...callable(next)(siteVariables),
-    })
+    return (...args) => {
+      const accumulatedVariables = acc(...args)
+      const computedComponentVariables = callable(next)(...args)
+
+      const mergedVariables = {}
+      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+        const accumulatedVariable = accumulatedVariables[variableName]
+
+        mergedVariables[variableName] =
+          _.isObject(variableToMerge) && _.isObject(accumulatedVariable)
+            ? { ...accumulatedVariable, ...variableToMerge }
+            : variableToMerge
+      })
+
+      return { ...accumulatedVariables, ...mergedVariables }
+    }
   }, initial)
 }
 
@@ -72,10 +89,14 @@ export const mergeComponentVariables = (
  * They are flat objects and do not depend on render-time values, such as props.
  */
 export const mergeSiteVariables = (
-  target: ISiteVariables,
-  ...sources: (ISiteVariables | null | undefined)[]
-): ISiteVariables => {
-  return sources.reduce<ISiteVariables>((acc, next) => ({ ...acc, ...next }), target)
+  target: ISiteVariablesInput,
+  ...sources: (ISiteVariablesInput | null | undefined)[]
+): ISiteVariablesPrepared => {
+  const initial: ISiteVariablesPrepared = {
+    ...target,
+    fontSizes: (target && target.fontSizes) || {},
+  }
+  return sources.reduce<ISiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
 
 /**
@@ -100,10 +121,10 @@ export const mergeThemeVariables = (
       const originalTarget = acc[displayName]
       const originalSource = next[displayName]
 
-      componentVariables[displayName] = siteVariables => {
+      componentVariables[displayName] = (...args) => {
         return {
-          ...callable(originalTarget)(siteVariables),
-          ...callable(originalSource)(siteVariables),
+          ...callable(originalTarget)(...args),
+          ...callable(originalSource)(...args),
         }
       }
 
@@ -143,11 +164,26 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
+export const mergeFontFaces = (...sources: IFontFace[]) => {
+  return toCompactArray<IFontFace>(...sources)
+}
+
+export const mergeStaticStyles = (...sources: StaticStyle[]) => {
+  return toCompactArray<StaticStyle>(...sources)
+}
+
+export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
+  return Object.assign(target, ...sources)
+}
+
 const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
     componentVariables: {},
     componentStyles: {},
+    fontFaces: [],
+    staticStyles: [],
+    icons: {},
   } as IThemePrepared
 
   return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
@@ -159,11 +195,18 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
 
     acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
 
+    // Merge icons set, last one wins in case of collisions
+    acc.icons = mergeIcons(acc.icons, next.icons)
+
     // Latest RTL value wins
     acc.rtl = mergeRTL(acc.rtl, next.rtl)
 
     // Use the correct renderer for RTL
     acc.renderer = acc.rtl ? felaRtlRenderer : felaRenderer
+
+    acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
+
+    acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
 
     return acc
   }, emptyTheme)

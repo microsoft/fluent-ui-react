@@ -1,21 +1,33 @@
 import { spawn } from 'child_process'
 
-const sh = (command, cb) => {
-  const [cmd, ...args] = command.split(' ')
+const sh = (command: string, pipeOutputToResult: boolean = false): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const [cmd, ...args] = command.split(' ')
 
-  const options = {
-    cwd: process.cwd(),
-    env: process.env,
-    stdio: 'inherit',
-    shell: true,
-  }
+    const options = {
+      cwd: process.cwd(),
+      env: process.env,
+      stdio: pipeOutputToResult ? 'pipe' : [0, 1, 2],
+      shell: true,
+    }
 
-  const child = spawn(cmd, args, options)
+    const child = spawn(cmd, args, options)
 
-  child.on('close', code => {
-    if (code === 0) return cb()
+    let stdoutData = ''
 
-    cb(new Error(`child process exited with code ${code}`))
+    if (child.stdout) {
+      child.stdout.on('data', data => {
+        stdoutData += data
+      })
+    }
+
+    child.on('close', code => {
+      if (code === 0) {
+        resolve(stdoutData)
+      }
+
+      reject(new Error(`child process exited with code ${code}`))
+    })
   })
 }
 

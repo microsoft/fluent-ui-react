@@ -4,14 +4,39 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  childrenExist,
   createHTMLInput,
   customPropTypes,
   getUnhandledProps,
   partitionHTMLProps,
-  UIComponent,
 } from '../../lib'
 import Icon from '../Icon'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
+
+export interface IInputProps {
+  as?: any
+  children?: ReactChildren
+  className?: string
+  clearable?: boolean
+  defaultValue?: string | number
+  fluid?: boolean
+  icon?: ShorthandValue
+  inline?: boolean
+  input?: ShorthandValue
+  onChange?: ComponentEventHandler<IInputProps>
+  value?: string | number
+  type?: string
+  renderIcon?: ShorthandRenderFunction
+  renderInput?: ShorthandRenderFunction
+  styles?: ComponentPartStyle
+  variables?: ComponentVariablesInput
+}
 
 /**
  * An Input
@@ -23,7 +48,7 @@ import Icon from '../Icon'
  *  - if input is search, then use "role='search'"
  *
  */
-class Input extends AutoControlledComponent<any, any> {
+class Input extends AutoControlledComponent<Extendable<IInputProps>, any> {
   static className = 'ui-input'
 
   static displayName = 'Input'
@@ -32,26 +57,23 @@ class Input extends AutoControlledComponent<any, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A property that will change the icon on the input and clear the input on click on Cancel */
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
-    defaultValue: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** A button can take the width of its container. */
+    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
-    /** Shorthand for creating the HTML Input. */
-    input: customPropTypes.itemShorthand,
+    /** An input can be used inline with text */
+    inline: PropTypes.bool,
 
     /**
      * Called on change.
@@ -64,31 +86,33 @@ class Input extends AutoControlledComponent<any, any> {
     /** The HTML input type. */
     type: PropTypes.string,
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
+    /**
+     * A custom render function the input slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderInput: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The value of the input. */
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'clearable',
-    'defaultValue',
-    'fluid',
-    'icon',
-    'input',
-    'onChange',
-    'styles',
-    'type',
-    'value',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'div',
@@ -118,7 +142,6 @@ class Input extends AutoControlledComponent<any, any> {
 
   handleOnClear = e => {
     const { clearable } = this.props
-    const { value } = this.state
 
     if (clearable) {
       this.trySetState({ value: '' })
@@ -168,45 +191,30 @@ class Input extends AutoControlledComponent<any, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { children, clearable, input, type } = this.props
+  renderComponent({ ElementType, classes, styles, variables }) {
+    const { renderIcon, renderInput, type } = this.props
     const [htmlInputProps, restProps] = this.partitionProps()
 
     const inputClasses = classes.input
-    const iconClasses = classes.icon
-
-    // Render with children
-    // ----------------------------------------
-    if (childrenExist(children)) {
-      // add htmlInputProps to the `<input />` child
-      const childElements = _.map(React.Children.toArray(children), child => {
-        if (typeof child === 'string' || typeof child === 'number' || child.type !== 'input') {
-          return child
-        }
-
-        return React.cloneElement(child, this.handleChildOverrides(child, htmlInputProps))
-      })
-
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {childElements}
-        </ElementType>
-      )
-    }
 
     return (
-      <ElementType {...rest} className={classes.root} {...htmlInputProps}>
-        {createHTMLInput(input || type, {
+      <ElementType className={classes.root} {...restProps}>
+        {createHTMLInput(type, {
           defaultProps: htmlInputProps,
           overrideProps: {
             className: inputClasses,
             ref: this.handleInputRef,
           },
+          render: renderInput,
         })}
         {this.computeIcon() &&
           Icon.create(this.computeIcon(), {
-            defaultProps: { styles: { root: styles.icon } },
+            defaultProps: {
+              styles: styles.icon,
+              variables: variables.icon,
+            },
             overrideProps: this.handleIconOverrides,
+            render: renderIcon,
           })}
       </ElementType>
     )

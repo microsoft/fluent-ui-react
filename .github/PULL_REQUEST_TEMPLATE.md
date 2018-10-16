@@ -2,6 +2,8 @@
 
   HEADS UP!
 
+  1. If you're not adding a new component, you can remove this template.
+ 
   1. Text in [brackets] is for example only. Replace it with your information.
 
   2. This template includes only one prop as an example (circular). If your

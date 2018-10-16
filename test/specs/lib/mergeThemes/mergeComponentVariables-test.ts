@@ -17,17 +17,17 @@ describe('mergeComponentVariables', () => {
   })
 
   test('gracefully handles null and undefined', () => {
-    expect(() => mergeComponentVariables({ color: 'black' }, null)).not.toThrow()
-    expect(() => mergeComponentVariables({ color: 'black' }, { color: null })).not.toThrow()
+    expect(mergeComponentVariables({ color: 'black' }, null)).not.toThrow()
+    expect(mergeComponentVariables({ color: 'black' }, { color: null })).not.toThrow()
 
-    expect(() => mergeComponentVariables(null, { color: 'black' })).not.toThrow()
-    expect(() => mergeComponentVariables({ color: null }, { color: 'black' })).not.toThrow()
+    expect(mergeComponentVariables(null, { color: 'black' })).not.toThrow()
+    expect(mergeComponentVariables({ color: null }, { color: 'black' })).not.toThrow()
 
-    expect(() => mergeComponentVariables({ color: 'black' }, undefined)).not.toThrow()
-    expect(() => mergeComponentVariables({ color: 'black' }, { color: undefined })).not.toThrow()
+    expect(mergeComponentVariables({ color: 'black' }, undefined)).not.toThrow()
+    expect(mergeComponentVariables({ color: 'black' }, { color: undefined })).not.toThrow()
 
-    expect(() => mergeComponentVariables(undefined, { color: 'black' })).not.toThrow()
-    expect(() => mergeComponentVariables({ color: undefined }, { color: 'black' })).not.toThrow()
+    expect(mergeComponentVariables(undefined, { color: 'black' })).not.toThrow()
+    expect(mergeComponentVariables({ color: undefined }, { color: 'black' })).not.toThrow()
   })
 
   test('merged functions return merged variables', () => {
@@ -56,6 +56,19 @@ describe('mergeComponentVariables', () => {
       two: 'two',
       source: true,
       target: true,
+    })
+  })
+
+  test('object values of variables are merged', () => {
+    const target = { foo: { bar: true }, target: true }
+    const source = { foo: { baz: false }, source: true }
+
+    const merged = mergeComponentVariables(target, source)
+
+    expect(merged()).toMatchObject({
+      source: true,
+      target: true,
+      foo: { bar: true, baz: false },
     })
   })
 })

@@ -14,8 +14,3 @@ export const truncateStyle: ICSSInJSStyle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 }
-
-export const overflowWrapStyle: ICSSInJSStyle = {
-  overflow: 'overlay',
-  overflowWrap: 'break-word',
-}

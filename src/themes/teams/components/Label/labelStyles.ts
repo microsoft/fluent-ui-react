@@ -1,24 +1,41 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ILabelProps } from '../../../../components/Label/Label'
 
-const labelStyles = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
+  root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
-    fontWeight: 500,
-    backgroundColor: 'rgb(232, 232, 232)',
+    ...(image &&
+      imagePosition === 'start' && {
+        paddingLeft: variables.startPaddingLeft,
+      }),
+    ...(image &&
+      imagePosition === 'end' && {
+        paddingRight: variables.endPaddingRight,
+      }),
+    display: 'inline-flex',
+    alignItems: 'center',
+    height: variables.height,
+    fontSize: pxToRem(14),
+    lineHeight: variables.height,
+    backgroundColor: variables.backgroundColor,
     color: variables.color,
     borderRadius: pxToRem(3),
-    ...(props.circular && {
+    ...(circular && {
       borderRadius: variables.circularRadius,
     }),
+    overflow: 'hidden',
+  }),
+  image: ({ variables }): ICSSInJSStyle => ({
+    height: variables.height,
+    width: variables.height,
   }),
   icon: ({ props }): ICSSInJSStyle => ({
-    position: 'relative',
-    top: '-0.15em',
-    ...((props.onIconClick ||
-      (props.icon && typeof props.icon === 'object' && props.icon.onClick)) && {
-      cursor: 'pointer',
-    }),
+    ...(props.icon &&
+      typeof props.icon === 'object' &&
+      (props.icon as any).onClick && {
+        cursor: 'pointer',
+      }),
   }),
 }
 

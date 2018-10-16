@@ -3,15 +3,15 @@ import { Text } from '@stardust-ui/react'
 
 const TextWeightsExampleShorthand = () => (
   <div>
-    <Text weight="light">This text is light.</Text>
+    <Text weight="light" content="This text is light." />
     <br />
-    <Text weight="semilight">This text is semilight.</Text>
+    <Text weight="semilight" content="This text is semilight." />
     <br />
-    <Text weight="regular">This text is regular.</Text>
+    <Text weight="regular" content="This text is regular." />
     <br />
-    <Text weight="semibold">This text is semibold.</Text>
+    <Text weight="semibold" content="This text is semibold." />
     <br />
-    <Text weight="bold">This text is bold.</Text>
+    <Text weight="bold" content="This text is bold." />
   </div>
 )
 export default TextWeightsExampleShorthand

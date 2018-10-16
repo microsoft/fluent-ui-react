@@ -5,11 +5,10 @@ export default (siteVars: any) => {
 
   vars.borderRadius = `${pxToRem(3)}`
   vars.borderBottom = `${pxToRem(2)} solid transparent`
-  vars.height = '100%'
   vars.backgroundColor = siteVars.gray10
 
-  vars.fontColor = siteVars.fontBlack
-  vars.fontSize = siteVars.fontSizeBase
+  vars.fontColor = siteVars.bodyColor
+  vars.fontSize = siteVars.fontSizes.medium
 
   vars.inputPadding = `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`
   vars.inputFocusBorderColor = siteVars.brand

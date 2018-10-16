@@ -11,6 +11,8 @@ require('./build/gulp/tasks/dist')
 require('./build/gulp/tasks/docs')
 require('./build/gulp/tasks/generate')
 require('./build/gulp/tasks/screener')
+require('./build/gulp/tasks/git')
+require('./build/gulp/tasks/test-projects')
 require('./build/gulp/tasks/perf')
 
 // global tasks

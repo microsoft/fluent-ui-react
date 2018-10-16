@@ -2,10 +2,11 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
-import ace from 'brace'
+import * as ace from 'brace'
 import 'brace/ext/language_tools'
-import 'brace/mode/jsx'
 import 'brace/mode/html'
+import 'brace/mode/jsx'
+import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
 import { eventStack, doesNodeContainClick } from 'src/lib'
 
@@ -45,9 +46,9 @@ const semanticUIReactCompleter = {
 languageTools.addCompleter(semanticUIReactCompleter)
 
 export interface IEditorProps extends AceEditorProps {
-  id?: string
+  id: string
   value?: string
-  mode?: 'html' | 'jsx'
+  mode?: 'html' | 'jsx' | 'sh'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
   active?: boolean
@@ -55,15 +56,16 @@ export interface IEditorProps extends AceEditorProps {
   highlightGutterLine?: boolean
 }
 
-class Editor extends React.Component<IEditorProps> {
-  private lineCount: number
+export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
+export const EDITOR_GUTTER_COLOR = '#26282d'
 
+class Editor extends React.Component<IEditorProps> {
   private static readonly refName = 'aceEditor'
 
   public static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx']),
+    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
     onClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
     active: PropTypes.bool,
@@ -90,22 +92,12 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: true,
   }
 
-  constructor(props: IEditorProps) {
-    super(props)
-
-    this.setLineCount((props as IEditorPropsWithDefaults).value)
-  }
-
   public componentWillReceiveProps(nextProps: IEditorPropsWithDefaults) {
     const previousPros = this.props
-    const { value, active, showCursor } = nextProps
+    const { active, showCursor } = nextProps
 
     if (showCursor !== previousPros.showCursor) {
       this.setCursorVisibility(showCursor)
-    }
-
-    if (value !== previousPros.value) {
-      this.setLineCount(value)
     }
 
     if (active !== previousPros.active) {
@@ -171,10 +163,6 @@ class Editor extends React.Component<IEditorProps> {
 
   private get container(): HTMLElement {
     return this.safeCall(() => this.renderer.container)
-  }
-
-  private setLineCount(value: string) {
-    this.lineCount = value && value.length ? (value.match(/\n/g) || []).length + 1 : 0
   }
 
   private setCursorVisibility(visible: boolean): void {

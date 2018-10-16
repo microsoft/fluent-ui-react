@@ -36,7 +36,9 @@ export default () => {
     }
 
     try {
-      const [type, displayName, sectionName, exampleName] = _.split(file.path, path.sep).slice(-4)
+      const pathParts = _.split(file.path, path.sep).slice(-4)
+      const displayName = pathParts[1]
+      const sectionName = pathParts[2]
       const { examples } = parseDocSection(file.contents)
 
       _.merge(exampleFilesByDisplayName, {

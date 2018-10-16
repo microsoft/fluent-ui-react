@@ -1,7 +1,8 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IListItemProps } from '../../../../components/List/ListItem'
 
-const listItemStyles: IComponentPartStylesInput = {
+const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
   root: ({ props: { selection, important } }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
@@ -31,16 +32,16 @@ const listItemStyles: IComponentPartStylesInput = {
       }),
     }
   },
-  header: ({ props, variables }): ICSSInJSStyle => ({
+  header: ({ variables }): ICSSInJSStyle => ({
     fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
-  headerMedia: ({ props, variables }): ICSSInJSStyle => ({
+  headerMedia: ({ variables }): ICSSInJSStyle => ({
     color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
-  content: ({ props, variables }) => ({
+  content: ({ variables }) => ({
     color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,

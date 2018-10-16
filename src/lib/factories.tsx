@@ -1,22 +1,21 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
+import {
+  MapValueToProps,
+  ShorthandPrimitive,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../types/utils'
 
 interface IProps {
   [key: string]: any
 }
 
-type ShorthandFunction = (
-  Component: React.ReactType,
-  props: IProps,
-  children: any,
-) => React.ReactElement<IProps>
-
-type Primitive = string | number
-type ShorthandValue = Primitive | IProps | React.ReactElement<IProps> | ShorthandFunction
-type MapValueToProps = (value: Primitive) => IProps
-
 interface ICreateShorthandOptions {
+  /** Override the default render implementation. */
+  render?: ShorthandRenderFunction
+
   /** Default props object */
   defaultProps?: IProps
 
@@ -47,25 +46,28 @@ export function createShorthand(
     throw new Error('createShorthand() Component must be a string or function.')
   }
   // short circuit noop values
-  if (_.isNil(value) || typeof value === 'boolean') return null
+  const valIsNoop = _.isNil(value) || typeof value === 'boolean'
+  if (valIsNoop && !options.render) return null
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)
-  const valIsFunction = typeof value === 'function'
 
-  // unhandled type return null
-  if (!valIsPrimitive && !valIsPropsObject && !valIsReactElement && !valIsFunction) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.error(
-        [
-          'Shorthand value must be a string|number|object|ReactElement|function.',
-          ' Use null|undefined|boolean for none.',
-          ` Received: ${value}`,
-        ].join(''),
-      )
-    }
-    return null
+  // unhandled type warning
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    !valIsPrimitive &&
+    !valIsPropsObject &&
+    !valIsReactElement &&
+    !valIsNoop
+  ) {
+    console.error(
+      [
+        'Shorthand value must be a string|number|object|ReactElements.',
+        ' Use null|undefined|boolean for none.',
+        ` Received: ${value}`,
+      ].join(''),
+    )
   }
 
   // ----------------------------------------
@@ -77,7 +79,7 @@ export function createShorthand(
   const usersProps =
     (valIsReactElement && (value as React.ReactElement<IProps>).props) ||
     (valIsPropsObject && (value as IProps)) ||
-    (valIsPrimitive && mapValueToProps(value as Primitive)) ||
+    (valIsPrimitive && mapValueToProps(value as ShorthandPrimitive)) ||
     {}
 
   // Override props
@@ -105,6 +107,11 @@ export function createShorthand(
     props.style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
   }
 
+  // Merge styles
+  if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
+    props.styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+  }
+
   // ----------------------------------------
   // Get key
   // ----------------------------------------
@@ -119,6 +126,11 @@ export function createShorthand(
   // ----------------------------------------
   // Create Element
   // ----------------------------------------
+  const { render } = options
+
+  if (render) {
+    return render(Component, props, props.children)
+  }
 
   // Clone ReactElements
   if (valIsReactElement) return React.cloneElement(value as React.ReactElement<IProps>, props)
@@ -126,8 +138,7 @@ export function createShorthand(
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
 
-  // Call functions with args similar to createElement()
-  if (valIsFunction) return (value as Function)(Component, props, props.children)
+  return null
 }
 
 // ============================================================

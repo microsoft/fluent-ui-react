@@ -2,11 +2,21 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+
+export interface IAccordionContentProps {
+  as?: any
+  active?: boolean
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  onClick?: ComponentEventHandler<IAccordionContentProps>
+}
 
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<any, any> {
+class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -20,10 +30,13 @@ class AccordionContent extends UIComponent<any, any> {
     /** Whether or not the content is visible. */
     active: PropTypes.bool,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -37,8 +50,6 @@ class AccordionContent extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

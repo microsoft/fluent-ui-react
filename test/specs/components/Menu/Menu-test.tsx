@@ -1,13 +1,19 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
 
 import Menu from 'src/components/Menu/Menu'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
+import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
+import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
+import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
+import MenuItem from 'src/components/Menu/MenuItem'
+import { menuBehavior } from 'src/lib/accessibility'
+import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
+
+const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
 describe('Menu', () => {
   isConformant(Menu)
-  handlesAccessibility(Menu, { defaultRootRole: 'menu' })
+  menuImplementsCollectionShorthandProp('items', MenuItem)
 
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
@@ -62,6 +68,52 @@ describe('Menu', () => {
 
         expect(updatedItems.at(0).props().active).toBe(false)
         expect(updatedItems.at(1).props().active).toBe(true)
+      })
+    })
+
+    describe('accessibility', () => {
+      handlesAccessibility(Menu, {
+        defaultRootRole: 'menu',
+        focusZoneDefinition: (menuBehavior as IAccessibilityDefinition).focusZone,
+      })
+
+      test('aria-label should be added to the menu', () => {
+        const ariaLabel = 'A Nice Toolbar'
+        const menuItemComponent = getTestingRenderedComponent(Menu, <Menu aria-label={ariaLabel} />)
+
+        expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(ariaLabel)
+      })
+
+      test('aria-labelledby should be added to the menu', () => {
+        const ariaLabelledByID = 'element-that-labels'
+        const menuItemComponent = getTestingRenderedComponent(
+          Menu,
+          <Menu aria-labelledby={ariaLabelledByID} />,
+        )
+
+        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(
+          ariaLabelledByID,
+        )
+      })
+
+      describe('as a Toolbar', () => {
+        test('root role should be toolbar', () => {
+          const menuItemComponent = getTestingRenderedComponent(
+            Menu,
+            <Menu accessibility={toolbarBehavior} />,
+          )
+          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('toolbar')
+        })
+      })
+
+      describe('as a TabList', () => {
+        test('root role should be tablist', () => {
+          const menuItemComponent = getTestingRenderedComponent(
+            Menu,
+            <Menu accessibility={tabListBehavior} />,
+          )
+          expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('tablist')
+        })
       })
     })
   })

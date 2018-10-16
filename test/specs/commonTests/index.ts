@@ -9,3 +9,5 @@ export { default as handlesAccessibility, getRenderedAttribute } from './handles
 
 export { default as isConformant } from './isConformant'
 export { default as rendersChildren } from './rendersChildren'
+
+export { default as htmlIsAccessibilityCompliant } from './htmlIsAccessibilityCompliant'

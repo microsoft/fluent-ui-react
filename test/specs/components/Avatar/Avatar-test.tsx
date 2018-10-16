@@ -1,9 +1,15 @@
-import { isConformant } from 'test/specs/commonTests'
+import { implementsShorthandProp, isConformant } from 'test/specs/commonTests'
 
 import Avatar from 'src/components/Avatar/Avatar'
+import Label from 'src/components/Label/Label'
+import Image from 'src/components/Image/Image'
+
+const avatarImplementsShorthandProp = implementsShorthandProp(Avatar)
 
 describe('Avatar', () => {
   isConformant(Avatar)
+  avatarImplementsShorthandProp('label', Label)
+  avatarImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 
   describe('generateInitials', () => {
     it('generateInitials should show just the initials of the first and last words in the name', () => {

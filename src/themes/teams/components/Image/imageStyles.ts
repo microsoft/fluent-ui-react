@@ -1,5 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { IImageProps } from '../../../../components/Image/Image'
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => ({
@@ -13,4 +14,4 @@ export default {
       borderRadius: variables.avatarRadius,
     }),
   }),
-}
+} as IComponentPartStylesInput<IImageProps, any>

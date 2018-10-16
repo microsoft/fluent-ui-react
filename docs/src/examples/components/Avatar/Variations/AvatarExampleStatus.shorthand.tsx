@@ -3,19 +3,27 @@ import { Avatar } from '@stardust-ui/react'
 
 const AvatarExampleStatusShorthand = () => (
   <div>
-    <Avatar src="public/images/avatar/small/matt.jpg" status="Available" />
+    <Avatar
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'green', icon: 'check', title: 'Available' }}
+    />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="Busy" />
+    <Avatar image="public/images/avatar/small/matt.jpg" status={{ color: 'red', title: 'Busy' }} />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="DoNotDisturb" />
+    <Avatar
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'red', icon: 'minus', title: 'Do not disturb' }}
+    />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="Away" />
+    <Avatar
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'yellow', icon: 'clock', title: 'Away' }}
+    />
     &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="BeRightBack" />
-    &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="Offline" />
-    &emsp;
-    <Avatar src="public/images/avatar/small/matt.jpg" status="PresenceUnknown" />
+    <Avatar
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'grey', title: 'Offline' }}
+    />
     &emsp;
   </div>
 )

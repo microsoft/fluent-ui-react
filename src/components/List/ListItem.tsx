@@ -1,11 +1,43 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout'
-import { ListItemBehavior } from '../../lib/accessibility'
+import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
+import {
+  FocusableItem,
+  IFocusableItemProps,
+} from '../../lib/accessibility/FocusHandling/FocusableItem'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Extendable } from '../../../types/utils'
 
-class ListItem extends UIComponent<any, any> {
+export interface IListItemProps {
+  accessibility?: Accessibility
+  as?: any
+  className?: string
+  contentMedia?: any
+  content?: any
+  debug?: boolean
+  focusableItemProps?: IFocusableItemProps
+  header?: any
+  endMedia?: any
+  headerMedia?: any
+  important?: boolean
+  media?: any
+  selection?: boolean
+  truncateContent?: boolean
+  truncateHeader?: boolean
+  styles?: ComponentPartStyle
+  variables?: ComponentVariablesInput
+}
+
+export interface IListItemState {
+  isHovering: boolean
+}
+
+class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -15,7 +47,7 @@ class ListItem extends UIComponent<any, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -40,40 +72,32 @@ class ListItem extends UIComponent<any, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+    focusableItemProps: PropTypes.object,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior as Accessibility,
+    accessibility: listItemBehavior as Accessibility,
   }
 
-  state: any = {}
+  constructor(props: IListItemProps) {
+    super(props, null)
+
+    this.state = {
+      isHovering: false,
+    }
+  }
+
+  private itemRef = React.createRef<HTMLElement>()
+
+  private focusableItem = FocusableItem.create(this)
 
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
@@ -81,6 +105,10 @@ class ListItem extends UIComponent<any, any> {
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
+  }
+
+  componentDidUpdate() {
+    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -137,6 +165,7 @@ class ListItem extends UIComponent<any, any> {
         headerCSS={headerCSS}
         headerMediaCSS={headerMediaCSS}
         contentCSS={contentCSS}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
       />

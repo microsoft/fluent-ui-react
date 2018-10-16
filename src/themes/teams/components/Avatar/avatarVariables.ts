@@ -1,3 +1,4 @@
 export default () => ({
-  presenceIndicatorBackground: 'white',
+  statusBorderColor: 'white',
+  statusBorderWidth: 2,
 })

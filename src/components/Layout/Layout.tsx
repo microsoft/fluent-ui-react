@@ -3,8 +3,41 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
+import { Extendable } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle, ICSSInJSStyle } from '../../../types/theme'
 
-class Layout extends UIComponent<any, any> {
+export interface ILayoutProps {
+  as?: any
+  className?: string
+  debug?: boolean
+  renderStartArea?: (params: object) => React.ReactNode
+  renderMainArea?: (params: object) => React.ReactNode
+  renderEndArea?: (params: object) => React.ReactNode
+  renderGap?: (params: object) => React.ReactNode
+  rootCSS?: ICSSInJSStyle
+  start?: any
+  startCSS?: ICSSInJSStyle
+  startSize?: string
+  main?: any
+  mainCSS?: ICSSInJSStyle
+  mainSize?: string
+  end?: any
+  endCSS?: ICSSInJSStyle
+  endSize?: string
+  justifyItems?: React.CSSProperties['justifyItems']
+  alignItems?: React.CSSProperties['alignItems']
+  gap?: string
+  reducing?: boolean
+  disappearing?: boolean
+  truncateStart?: boolean
+  truncateMain?: boolean
+  truncateEnd?: boolean
+  vertical?: boolean
+  styles?: ComponentPartStyle
+  variables?: ComponentVariablesInput
+}
+
+class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -55,43 +88,12 @@ class Layout extends UIComponent<any, any> {
 
     vertical: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'alignItems',
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'endCSS',
-    'endSize',
-    'gap',
-    'justifyItems',
-    'main',
-    'mainCSS',
-    'mainSize',
-    'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
-    'start',
-    'startCSS',
-    'startSize',
-    'styles',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
-    'variables',
-    'vertical',
-  ]
 
   static defaultProps = {
     startSize: 'auto',
@@ -130,7 +132,7 @@ class Layout extends UIComponent<any, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props
+    } = this.props as ILayoutPropsWithDefaults
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -175,3 +177,4 @@ class Layout extends UIComponent<any, any> {
 }
 
 export default Layout
+export type ILayoutPropsWithDefaults = ILayoutProps & typeof Layout.defaultProps

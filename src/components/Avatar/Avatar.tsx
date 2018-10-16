@@ -1,95 +1,99 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Image, Label, Icon } from '../../'
+import { Image, Label, Status } from '../../'
 
-import { customPropTypes, UIComponent, Extendable } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface IAvatarProps {
-  alt?: string
   as?: any
   className?: string
+  image?: ShorthandValue
+  label?: ShorthandValue
   name?: string
+  renderImage?: ShorthandRenderFunction
+  renderLabel?: ShorthandRenderFunction
+  renderStatus?: ShorthandRenderFunction
   size?: number
-  src?: string
-  status?:
-    | 'Available'
-    | 'Away'
-    | 'BeRightBack'
-    | 'Busy'
-    | 'DoNotDisturb'
-    | 'Offline'
-    | 'PresenceUnknown'
+  status?: ShorthandValue
   getInitials?: (name: string) => string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * An avatar is a graphic representation of user alongside with a presence icon.
+ * An avatar is a graphic representation of user.
  * @accessibility To be discussed
- *
  */
 class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
+  static create: Function
+
   static className = 'ui-avatar'
 
   static displayName = 'Avatar'
 
-  static handledProps = [
-    'alt',
-    'as',
-    'className',
-    'getInitials',
-    'name',
-    'size',
-    'src',
-    'status',
-    'styles',
-    'variables',
-  ]
-
   static propTypes = {
-    /** The alternative text for the image used in the Avatar. */
-    alt: PropTypes.string,
-
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The name used for displaying the initials of the avatar if the image is not provided. */
     name: PropTypes.string,
 
-    /** Size multiplier (default 5) * */
+    /** Shorthand for the image. */
+    image: customPropTypes.itemShorthand,
+
+    /** Shorthand for the label. */
+    label: customPropTypes.itemShorthand,
+
+    /** Size multiplier. */
     size: PropTypes.number,
 
-    /** The src of the image used in the Avatar. */
-    src: PropTypes.string,
-
-    /** The presence of the user, used for showing different presence icon in the Avatar. */
-    status: PropTypes.oneOf([
-      'Available',
-      'Away',
-      'BeRightBack',
-      'Busy',
-      'DoNotDisturb',
-      'Offline',
-      'PresenceUnknown',
-    ]),
+    /** Shorthand for the status of the user. */
+    status: customPropTypes.itemShorthand,
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the image slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderImage: PropTypes.func,
+
+    /**
+     * A custom render function the label slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderLabel: PropTypes.func,
+
+    /**
+     * A custom render function the status slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderStatus: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
-    size: 5,
+    size: 32,
     getInitials(name: string) {
       if (!name) {
         return ''
@@ -113,83 +117,49 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     },
   }
 
-  static statusToIcon = {
-    Available: {
-      icon: 'check',
-      color: 'green',
-    },
-    Busy: {
-      icon: '',
-      color: 'red',
-    },
-    DoNotDisturb: {
-      icon: 'minus',
-      color: 'red',
-    },
-    Away: {
-      icon: 'clock',
-      color: 'yellow',
-    },
-    BeRightBack: {
-      icon: 'clock',
-      color: 'yellow',
-    },
-    Offline: {
-      icon: '',
-      color: 'grey',
-    },
-    PresenceUnknown: {
-      icon: '',
-      color: 'grey',
-    },
-  }
-
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { src, alt, name, status, getInitials, size } = this.props as IAvatarPropsWithDefaults
-    const { icon = '', color = '' } = (status && Avatar.statusToIcon[status]) || {}
-
-    const iconVariables = {
-      color: 'white',
-      backgroundColor: color,
-    }
+  renderComponent({ ElementType, classes, rest, styles, variables }) {
+    const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
+      .props as IAvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {src ? (
-          <Image
-            styles={{ root: styles.imageAvatar }}
-            fluid
-            avatar
-            src={src}
-            alt={alt}
-            title={name}
-          />
-        ) : (
-          <Label
-            styles={{ root: styles.avatarNameContainer }}
-            as="div"
-            content={getInitials(name || '')}
-            variables={{ padding: '0px' }}
-            circular
-            title={name}
-          />
-        )}
-        {status && (
-          <div className={classes.presenceIndicatorWrapper}>
-            <Icon
-              styles={{ root: styles.presenceIndicator }}
-              size={size < 4 ? 'micro' : size < 6 ? 'mini' : 'tiny'}
-              circular
-              name={icon}
-              variables={iconVariables}
-              title={status}
-            />
-          </div>
-        )}
+        {Image.create(image, {
+          defaultProps: {
+            fluid: true,
+            avatar: true,
+            title: name,
+            styles: styles.image,
+          },
+          render: renderImage,
+        })}
+        {!image &&
+          !renderImage &&
+          Label.create(label || {}, {
+            defaultProps: {
+              as: 'div',
+              content: getInitials(name),
+              circular: true,
+              title: name,
+              styles: styles.label,
+            },
+            render: renderLabel,
+          })}
+        {Status.create(status, {
+          defaultProps: {
+            styles: styles.status,
+            variables: {
+              borderColor: variables.statusBorderColor,
+              borderWidth: variables.statusBorderWidth,
+            },
+          },
+          render: renderStatus,
+        })}
       </ElementType>
     )
   }
 }
+
+Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
 
 export default Avatar
 

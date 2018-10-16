@@ -3,11 +3,22 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+
+export interface IAccordionTitleProps {
+  as?: any
+  active?: boolean
+  children?: ReactChildren
+  className?: string
+  content?: React.ReactNode
+  index?: string | number
+  onClick?: ComponentEventHandler<IAccordionTitleProps>
+}
 
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<any, any> {
+class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function
@@ -21,10 +32,13 @@ class AccordionTitle extends UIComponent<any, any> {
     /** Whether or not the title is in the open state. */
     active: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -41,8 +55,6 @@ class AccordionTitle extends UIComponent<any, any> {
      */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

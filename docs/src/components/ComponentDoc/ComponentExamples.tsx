@@ -34,7 +34,7 @@ export default class ComponentExamples extends React.Component<IComponentExample
 
     // rule #1
     const indexPath = _.find(allPaths, path =>
-      new RegExp(`(\/|^)${displayName}\/index\.tsx$`).test(path),
+      new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
     )
     if (!indexPath) {
       return null

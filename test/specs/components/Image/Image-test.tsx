@@ -2,7 +2,6 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 
 import Image from 'src/components/Image/Image'
-import { MenuBehavior } from 'src/lib/accessibility'
 import { getTestingRenderedComponent } from 'test/utils'
 
 describe('Image', () => {
@@ -11,8 +10,6 @@ describe('Image', () => {
   describe('accessibility', () => {
     handlesAccessibility(Image, {
       defaultRootRole: undefined,
-      accessibilityOverride: MenuBehavior,
-      overriddenRootRole: 'menu',
     })
 
     describe('aria-hidden', () => {

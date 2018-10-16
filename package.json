@@ -1,13 +1,13 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.3.0",
+  "version": "0.9.1",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
+  "sideEffects": false,
   "files": [
-    "src",
     "dist"
   ],
   "scripts": {
@@ -22,6 +22,7 @@
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",
+    "prepush": "gulp git:prepush",
     "postcommit": "git update-index --again",
     "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build",
     "postrelease": "yarn deploy:docs",
@@ -31,10 +32,11 @@
     "prestart": "yarn satisfied --fix yarn",
     "start": "gulp --series dll docs",
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
-    "pretest": "yarn satisfied && gulp build:docs:docgen",
+    "pretest": "yarn satisfied && gulp build:docs:docgen && gulp build:docs:component-menu-behaviors",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:perf": "gulp perf",
     "test:visual": "gulp screener",
+    "test:projects:cra-ts": "gulp test:projects:cra-ts",
     "test:watch": "yarn test --watchAll",
     "generate:component": "gulp generate:component"
   },
@@ -80,6 +82,8 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "debug": "^3.0.1",
+    "faker": "^4.1.0",
     "fela": "^6.1.7",
     "fela-plugin-fallback-value": "^5.0.17",
     "fela-plugin-placeholder-prefixer": "^5.0.18",
@@ -88,27 +92,33 @@
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
-    "react-fela": "^7.2.0"
+    "react-custom-scrollbars": "^4.2.1",
+    "react-fela": "^7.2.0",
+    "react-popper": "^1.0.2",
+    "what-input": "^5.1.2"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.4",
+    "@types/faker": "^4.1.3",
     "@types/gulp-load-plugins": "^0.0.31",
     "@types/jest": "^23.1.0",
     "@types/node": "^10.3.2",
     "@types/react": "^16.3.17",
+    "@types/react-custom-scrollbars": "^4.0.5",
     "@types/react-dom": "^16.0.6",
     "@types/react-router": "^4.0.27",
     "awesome-typescript-loader": "4.0.1",
     "chalk": "^2.4.1",
     "connect-history-api-fallback": "^1.3.0",
     "copy-to-clipboard": "^3.0.8",
+    "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.1.4",
-    "debug": "^3.0.1",
     "doctoc": "^1.3.0",
     "doctrine": "^2.0.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "express": "^4.15.4",
+    "extract-comments": "^1.0.0",
     "fbjs": "^0.8.17",
     "gh-pages": "^1.0.0",
     "glob": "^7.1.2",
@@ -116,6 +126,7 @@
     "gulp-debug": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.2.0",
+    "gulp-remember": "^1.0.1",
     "gulp-rename": "^1.3.0",
     "gulp-replace": "^1.0.0",
     "gulp-transform": "^3.0.5",
@@ -125,6 +136,7 @@
     "husky": "^0.14.3",
     "inquirer": "^6.0.0",
     "jest": "^23.1.0",
+    "jest-axe": "^3.0.0",
     "js-beautify": "^1.6.14",
     "leven": "^2.1.0",
     "lighthouse": "^3.0.3",
@@ -151,6 +163,7 @@
     "simulant": "^0.2.2",
     "ta-scripts": "^2.5.2",
     "through2": "^2.0.3",
+    "tmp": "^0.0.33",
     "ts-jest": "^22.4.6",
     "ts-node": "^6.1.0",
     "tslint": "^5.10.0",
@@ -163,5 +176,8 @@
   "peerDependencies": {
     "react": ">=0.14.0 <= 16",
     "react-dom": ">=0.14.0 <= 16"
+  },
+  "resolutions": {
+    "create-react-context": "0.2.2"
   }
 }

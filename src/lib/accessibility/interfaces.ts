@@ -1,3 +1,5 @@
+import { IFocusZoneProps } from './FocusZone'
+
 export type AriaWidgetRole =
   | 'button'
   | 'checkbox'
@@ -79,7 +81,7 @@ export type AriaRole =
 export interface IAriaWidgetAttributes {
   role?: string
   'aria-autocomplete'?: string
-  'aria-checked'?: string
+  'aria-checked'?: string | boolean
   'aria-current'?: string
   'aria-disabled'?: string | boolean
   'aria-expanded'?: string | boolean
@@ -102,17 +104,81 @@ export interface IAriaWidgetAttributes {
   'aria-valuetext'?: string
 }
 
-export interface IAccessibilityAttributes extends IAriaWidgetAttributes {
+export interface IAriaRelationshipAttributes {
+  'aria-activedescendant'?: string
+  'aria-colcount'?: string
+  'aria-colindex'?: string
+  'aria-colspan'?: string
+  'aria-controls'?: string
+  'aria-describedby'?: string
+  'aria-details'?: string
+  'aria-errormessage'?: string
+  'aria-flowto'?: string
+  'aria-labelledby'?: string
+  'aria-owns'?: string
+  'aria-posinset'?: string
+  'aria-rowcount'?: string
+  'aria-rowindex'?: string
+  'aria-rowspan'?: string
+}
+
+export interface IAccessibilityAttributes
+  extends IAriaWidgetAttributes,
+    IAriaRelationshipAttributes {
   role?: AriaRole
   tabIndex?: string
 }
 
 export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttributes }
-export type AccessibilityKeyHandlers = { [partName: string]: AccessibilityKeyHandlers }
 
-export interface IAccessibilityDefinition {
-  attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+export enum FocusZoneMode {
+  Custom,
+  Wrap,
+  Embed,
 }
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type FocusZoneDefinition = {
+  mode: FocusZoneMode
+  props?: IFocusZoneProps
+}
+
+export type KeyActions = { [partName: string]: { [actionName: string]: IKeyAction } }
+export interface IAccessibilityDefinition {
+  attributes?: AccessibilityAttributes
+  keyActions?: KeyActions
+  handledProps?: (keyof IAccessibilityAttributes)[]
+  focusZone?: FocusZoneDefinition
+}
+
+export interface IAccessibilityBehavior extends IAccessibilityDefinition {
+  keyHandlers?: ActionsKeyHandler
+}
+
+export interface IKeyAction {
+  keyCombinations: KeyCombinations[]
+}
+
+export interface KeyCombinations {
+  keyCode: number
+  shiftKey?: boolean
+  altKey?: boolean
+  ctrlKey?: boolean
+  metaKey?: boolean
+}
+
+export type AccessibilityActionHandlers = {
+  [actionName: string]: EventHandler
+}
+
+export type ActionsKeyHandler = {
+  [partName: string]: OnKeyDownHandler
+}
+
+export type OnKeyDownHandler = {
+  onKeyDown?: KeyboardHandler
+}
+
+export type KeyboardHandler = (event: KeyboardEvent) => void
+export type EventHandler = (event: Event) => void
+
+export type Accessibility = (props: any) => IAccessibilityDefinition

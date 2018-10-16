@@ -3,22 +3,20 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes, toCompactArray } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
-  FontFaces,
   IThemePrepared,
   IThemeInput,
-  StaticStyles,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
+  IFontFace,
 } from '../../../types/theme'
 import ProviderConsumer from './ProviderConsumer'
+import { mergeSiteVariables } from '../../lib/mergeThemes'
 
 export interface IProviderProps {
-  fontFaces?: FontFaces
   theme: IThemeInput
-  staticStyles?: StaticStyles
   children: React.ReactNode
 }
 
@@ -27,32 +25,29 @@ export interface IProviderProps {
  */
 class Provider extends React.Component<IProviderProps, any> {
   static propTypes = {
-    fontFaces: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        paths: PropTypes.arrayOf(PropTypes.string),
-        style: PropTypes.shape({
-          fontStretch: PropTypes.string,
-          fontStyle: PropTypes.string,
-          fontVariant: PropTypes.string,
-          fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          localAlias: PropTypes.string,
-          unicodeRange: PropTypes.string,
-        }),
-      }),
-    ),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
       componentVariables: PropTypes.object,
       componentStyles: PropTypes.object,
       rtl: PropTypes.bool,
+      fontFaces: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          paths: PropTypes.arrayOf(PropTypes.string),
+          style: PropTypes.shape({
+            fontStretch: PropTypes.string,
+            fontStyle: PropTypes.string,
+            fontVariant: PropTypes.string,
+            fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            localAlias: PropTypes.string,
+            unicodeRange: PropTypes.string,
+          }),
+        }),
+      ),
+      staticStyles: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+      ),
     }),
-    staticStyles: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-      PropTypes.func,
-      PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func])),
-    ]),
     children: PropTypes.element.isRequired,
   }
 
@@ -64,7 +59,7 @@ class Provider extends React.Component<IProviderProps, any> {
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
-    const { theme, staticStyles } = this.props
+    const { siteVariables, staticStyles } = this.props.theme
 
     if (!staticStyles) return
 
@@ -74,15 +69,14 @@ class Provider extends React.Component<IProviderProps, any> {
       })
     }
 
-    const staticStylesArr = toCompactArray(staticStyles)
-
-    staticStylesArr.forEach((staticStyle: StaticStyle) => {
+    staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
         felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject((staticStyle as StaticStyleFunction)(theme.siteVariables))
+        const preparedSiteVariables = mergeSiteVariables(siteVariables)
+        renderObject((staticStyle as StaticStyleFunction)(preparedSiteVariables))
       } else {
         throw new Error(
           `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
@@ -97,19 +91,19 @@ class Provider extends React.Component<IProviderProps, any> {
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
-    const { fontFaces } = this.props
+    const { fontFaces } = this.props.theme
 
     if (!fontFaces) return
 
-    const renderFontObject = font => {
+    const renderFontObject = (font: IFontFace) => {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaLtrRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
     }
 
-    fontFaces.forEach(fontObject => {
-      renderFontObject(fontObject)
+    fontFaces.forEach((font: IFontFace) => {
+      renderFontObject(font)
     })
   }
 

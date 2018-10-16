@@ -1,3 +1,4 @@
+import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
@@ -51,6 +52,12 @@ const webpackConfig: any = {
   plugins: [
     new AsyncTypeScriptChecker(),
     new webpack.DefinePlugin(config.compiler_globals),
+    new CopyWebpackPlugin([
+      {
+        from: paths.docsSrc('public'),
+        to: paths.docsDist('public'),
+      },
+    ]),
     new webpack.DllReferencePlugin({
       context: paths.base('node_modules'),
       manifest: require(paths.base('dll/vendor-manifest.json')),

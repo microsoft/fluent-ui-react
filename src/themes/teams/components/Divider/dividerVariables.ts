@@ -1,10 +1,13 @@
+import { pxToRem } from '../../../../lib'
+
 export default (siteVars: any) => {
   return {
-    defaultColor: siteVars.gray04,
-    defaultBackgroundColor: siteVars.gray12,
-    typePrimaryColor: siteVars.brand,
-    typePrimaryBackgroundColor: siteVars.brand,
-    typeSecondaryColor: siteVars.gray02,
-    typeSecondaryBackgroundColor: siteVars.gray10,
+    dividerColor: siteVars.gray09,
+    textColor: siteVars.gray03,
+    textFontSize: siteVars.fontSizeSmall,
+    textLineHeight: siteVars.lineHeightSmall,
+    primaryColor: siteVars.brand,
+    importantFontWeight: siteVars.fontWeightBold,
+    dividerPadding: pxToRem(4),
   }
 }

@@ -1,12 +1,39 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+
+import { Extendable } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Sizes } from '../../lib/enums'
+
+export interface ITextProps {
+  as?: any
+  atMention?: boolean | 'me'
+  className?: string
+  content?: any
+  disabled?: boolean
+  error?: boolean
+  important?: boolean
+  size?: Sizes
+  weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
+  success?: boolean
+  temporary?: boolean
+  timestamp?: boolean
+  truncated?: boolean
+  styles?: ComponentPartStyle
+  variables?: ComponentVariablesInput
+}
 
 /**
  * A component containing text
+ * @accessibility
+ * Text is how people read the content on your website.
+ * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
-class Text extends UIComponent<any, any> {
+class Text extends UIComponent<Extendable<ITextProps>, any> {
+  static create: Function
+
   static className = 'ui-text'
 
   static displayName = 'Text'
@@ -15,10 +42,10 @@ class Text extends UIComponent<any, any> {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
 
-    /** Set as @mention Text component */
-    atMention: PropTypes.bool,
+    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -34,7 +61,7 @@ class Text extends UIComponent<any, any> {
     important: PropTypes.bool,
 
     /** The size for the Text component */
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
 
     /** The weight for the Text component */
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
@@ -42,39 +69,25 @@ class Text extends UIComponent<any, any> {
     /** Set as success Text component */
     success: PropTypes.bool,
 
+    /** The text can signify a temporary state */
+    temporary: PropTypes.bool,
+
     /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
 
     /** Truncates text as needed */
     truncated: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'span',
   }
-
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
@@ -85,5 +98,7 @@ class Text extends UIComponent<any, any> {
     )
   }
 }
+
+Text.create = createShorthandFactory(Text, content => ({ content }))
 
 export default Text
