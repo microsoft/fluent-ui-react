@@ -4,10 +4,15 @@ import { pxToRem } from '../../../../lib'
 
 const formFieldStyles: IComponentPartStylesInput<IFormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({}),
-  label: ({ props }): ICSSInJSStyle => ({
-    display: 'block',
-    ...(props.inline && { marginRight: pxToRem(10), display: 'inline' }),
-  }),
+  label: ({ props }): ICSSInJSStyle => {
+    const { type, inline } = props
+    return {
+      ...((!type || (type !== 'radio' && type !== 'checkbox')) && {
+        display: 'block',
+      }),
+      ...(inline && { marginRight: pxToRem(10), display: 'inline' }),
+    }
+  },
   message: (): ICSSInJSStyle => ({
     display: 'block',
   }),

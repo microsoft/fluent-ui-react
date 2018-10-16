@@ -8,7 +8,6 @@ const fields = [
     label: 'I agree to the Terms and Conditions',
     control: 'input',
     type: 'checkbox',
-    inline: true,
     id: 'conditions',
     key: 'conditions',
   },
@@ -17,7 +16,6 @@ const fields = [
 
 const FormExample = () => (
   <Form
-    columns={1}
     onSubmit={() => {
       alert('Form submitted')
     }}

@@ -3,7 +3,6 @@ import { Form, Input, Button } from '@stardust-ui/react'
 
 const FormExample = () => (
   <Form
-    columns={1}
     onSubmit={() => {
       alert('Form submitted')
     }}
@@ -15,7 +14,6 @@ const FormExample = () => (
       control="input"
       type="checkbox"
       id="conditions"
-      inline
     />
     <Form.Field control={Button} content="Submit" />
   </Form>

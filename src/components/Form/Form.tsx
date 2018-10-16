@@ -11,7 +11,6 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import Grid from '../Grid/Grid'
 import FormField from './FormField'
 
 export interface IFormProps {
@@ -21,10 +20,8 @@ export interface IFormProps {
   className?: string
   content?: ShorthandValue
   onSubmit?: ComponentEventHandler<IFormProps>
-  columns?: string | number
   fields?: ShorthandValue[]
   renderField?: ShorthandRenderFunction
-  rows?: string | number
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -55,9 +52,6 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
-    /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
-    columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
     /** Shorthand array of props for the Form.Fields inside the Form. */
     fields: customPropTypes.collectionShorthand,
 
@@ -70,9 +64,6 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderField: PropTypes.func,
-
-    /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
-    rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
     /**
      * The HTML form submit handler.
@@ -123,19 +114,17 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { as, rows, columns, action, children } = this.props
+    const { as, action, children } = this.props
     return (
-      <Grid
+      <ElementType
         className={classes.root}
         as={as}
-        columns={columns}
-        rows={rows}
         action={action}
         onSubmit={this.handleSubmit}
         {...rest}
       >
         {childrenExist(children) ? children : this.renderFields()}
-      </Grid>
+      </ElementType>
     )
   }
 }
