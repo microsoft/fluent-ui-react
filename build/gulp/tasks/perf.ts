@@ -51,6 +51,7 @@ async function launchChromeAndRunLighthouse(flags, config) {
     process.stdout.write(chalk.dim(measure[i].url))
     const lighthouseResult = await lighthouse(measure[i].url, flags, config).then(
       lighthouseReport =>
+        lighthouseReport.lhr.audits['user-timings'].details &&
         _.find(
           lighthouseReport.lhr.audits['user-timings'].details.items,
           i => i.name === 'stardust.perf.measureMount',
@@ -73,6 +74,14 @@ async function launchChromeAndRunLighthouse(flags, config) {
   return _.groupBy(results, 'group')
 }
 
+function median(values) {
+  values.sort((a, b) => a - b)
+  const lowMiddle = Math.floor((values.length - 1) / 2)
+  const highMiddle = Math.ceil((values.length - 1) / 2)
+  const median = (values[lowMiddle] + values[highMiddle]) / 2
+  return median
+}
+
 function printResults(results) {
   console.log()
   console.log(
@@ -91,6 +100,7 @@ function printResults(results) {
             min: sum.min ? Math.min(duration, sum.min) : duration,
             max: sum.max ? Math.max(duration, sum.max) : duration,
             total: sum.total + duration,
+            durations: [...sum.durations, duration],
           }
         } else {
           aggregate = {
@@ -104,8 +114,14 @@ function printResults(results) {
       {
         count: 0,
         total: 0,
+        durations: [],
       },
     )
+
+    if (stats.durations.length > 0) {
+      stats.median = median(stats.durations)
+      stats.avg = stats.total / stats.durations.length
+    }
 
     let details = ''
     if (stats.count > 0) {
@@ -113,9 +129,10 @@ function printResults(results) {
       if (stats.errors) {
         errorMsg = `, ${stats.errors} ERROR(S)!!!`
       }
-      details = `${errorMsg}, avg = ${stats.total / stats.count} ms, max = ${stats.max} ms, min = ${
-        stats.min
-      } ms`
+      details = `${errorMsg}, median = ${_.round(stats.median, 2)} ms, avg = ${_.round(
+        stats.avg,
+        2,
+      )} ms, max = ${_.round(stats.max, 2)} ms, min = ${stats.min} ms`
     }
 
     console.log(`${groupName} ${stats.count} test(s)${details}`)
@@ -181,4 +198,4 @@ task('lighthouse', cb => {
     })
 })
 
-task('perf', series('dll', 'build:docs', 'serve:docs', 'lighthouse'))
+task('perf', series('lighthouse'))
