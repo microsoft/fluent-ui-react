@@ -13,6 +13,8 @@ export { default as ChatItem } from './components/Chat/chatItemVariables'
 
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
+export { default as ContextMenu } from './components/ContextMenu/contextMenuVariables'
+
 export { default as Divider } from './components/Divider/dividerVariables'
 
 export { default as Grid } from './components/Grid/gridVariables'
