@@ -98,7 +98,11 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
       id: `sender-${msg.id}`,
       'aria-label': `Message from ${fromUser.firstName} ${fromUser.lastName}`,
     },
-    avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
+    avatar: !msg.mine && {
+      image: fromUser.avatar,
+      status: statusMap.get(fromUser.status),
+      ['aria-hidden']: true,
+    },
     itemType: ChatItemType.message,
     text: content,
   }
