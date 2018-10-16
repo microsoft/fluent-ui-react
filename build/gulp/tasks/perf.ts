@@ -1,4 +1,4 @@
-import { task, series, shell } from 'gulp'
+import { task, series } from 'gulp'
 import { argv } from 'yargs'
 
 const _ = require('lodash')
@@ -23,7 +23,7 @@ function getExampleFiles(filter = ''): Example[] {
   return glob
     .sync(`docs/src/examples/**/${filter}*.tsx`, { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .map(examplePath => {
-      const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
+      const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
 
       const group = /^docs\/src\/examples\/([^/]+\/[^/]+)/.exec(examplePath)
 
