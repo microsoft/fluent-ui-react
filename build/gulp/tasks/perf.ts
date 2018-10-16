@@ -135,9 +135,34 @@ function printResults(results) {
 
 task('lighthouse', cb => {
   const config = {
-    extends: 'lighthouse:default',
+    passes: [
+      {
+        passName: 'defaultPass',
+        recordTrace: true,
+        pauseAfterLoadMs: 100,
+        gatherers: [],
+      },
+    ],
+    audits: ['user-timings', 'metrics/first-meaningful-paint'],
+    groups: {
+      metrics: {
+        title: 'Metrics',
+      },
+      diagnostics: {
+        title: 'Diagnostics',
+      },
+    },
+    categories: {
+      performance: {
+        title: 'Performance',
+        auditRefs: [
+          { id: 'first-meaningful-paint', weight: 1, group: 'metrics' },
+          { id: 'user-timings', weight: 0, group: 'diagnostics' },
+        ],
+      },
+    },
     settings: {
-      onlyCategories: ['performance'],
+      output: 'json',
       useThrottling: false,
       disableDeviceEmulation: true,
     },
