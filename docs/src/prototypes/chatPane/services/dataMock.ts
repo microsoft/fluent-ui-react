@@ -1,5 +1,7 @@
 import * as _ from 'lodash'
 import { lorem, random, name, internet } from 'faker'
+import * as randomWords from 'random-words'
+
 import { IMessage, IUser, IChat, UserStatus, getTimestamp, getRandomDates } from '.'
 
 export interface ChatOptions {
@@ -61,7 +63,7 @@ class ChatMock {
         from,
         mine,
         date,
-        content: lorem.sentences(_.random(1, 5, false)),
+        content: randomWords({ min: 10, max: 20 }).join(' '),
         timestamp: timestamp.short,
         timestampLong: timestamp.long,
         isImportant: random.boolean(),

@@ -59,16 +59,14 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
       const ElementType = this.getElementType(itemType)
       const newProps = { ...props, text: undefined }
       return (
-        <>
+        <Chat.Item key={`chat-item-${index}`}>
           {itemType === ChatItemType.message && (
-            <div key={`heading-${index}`} style={ariaLive} role="heading" aria-level={4}>
+            <div style={ariaLive} role="heading" aria-level={4}>
               {this.getMessagePreviewForScreenReader(props)}
             </div>
           )}
-          <Chat.Item key={`chat-item-${index}`}>
-            <ElementType {...newProps} />
-          </Chat.Item>
-        </>
+          <ElementType {...newProps} />
+        </Chat.Item>
       )
     })
   }

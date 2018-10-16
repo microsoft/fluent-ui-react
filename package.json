@@ -91,6 +91,7 @@
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
+    "random-words": "^1.1.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-fela": "^7.2.0",
     "react-popper": "^1.0.2",

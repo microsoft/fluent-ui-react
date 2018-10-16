@@ -52,6 +52,21 @@ function getMessageContent(content, messageId) {
   )
 }
 
+function getAuthorElement(msg, fromUser) {
+  const userFullName = `${fromUser.firstName} ${fromUser.lastName} `
+  if (msg.mine) {
+    return (comp, props) => (
+      <span id={`sender-${msg.id}`} aria-label={`Message from ${userFullName}`} />
+    )
+  }
+
+  return (comp, props) => (
+    <span id={`sender-${msg.id}`} aria-label={`Message from ${userFullName}`}>
+      {userFullName}
+    </span>
+  )
+}
+
 export enum ChatItemType {
   message,
   divider,
@@ -93,16 +108,12 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
       id: `timestamp-${msg.id}`,
       'aria-label': `Sent on ${msg.timestampLong}`,
     },
-    author: fromUser && {
-      content: `${fromUser.firstName} ${fromUser.lastName}`,
-      id: `sender-${msg.id}`,
-      'aria-label': `Message from ${fromUser.firstName} ${fromUser.lastName}`,
-    },
     avatar: !msg.mine && {
       image: fromUser.avatar,
       status: statusMap.get(fromUser.status),
       ['aria-hidden']: true,
     },
+    renderAuthor: fromUser && getAuthorElement(msg, fromUser),
     itemType: ChatItemType.message,
     text: content,
   }
