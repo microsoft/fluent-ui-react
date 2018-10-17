@@ -107,7 +107,7 @@ export default App;
     //////// ADD STARDUST AS A DEPENDENCY ///////
     log('STEP 2. Add Stardust dependency to test project..')
 
-    await runInTestApp(`npm install add ${paths.base(stardustPackageFilename)}`)
+    await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
     log("Stardust is successfully added as test project's dependency.")
 
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
