@@ -1,2 +1,3 @@
-export { default as Text } from './components/Text/textVariables'
 export { default as Divider } from './components/Divider/dividerVariables'
+export { default as Input } from './components/Input/inputVariables'
+export { default as Text } from './components/Text/textVariables'

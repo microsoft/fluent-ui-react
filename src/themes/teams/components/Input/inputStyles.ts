@@ -19,7 +19,7 @@ const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
 
     return {
       outline: 0,
-      border: 0,
+      border: variables.borderStyle,
       borderRadius: variables.borderRadius,
       borderBottom: variables.borderBottom,
       color: variables.fontColor,
@@ -27,6 +27,9 @@ const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
       padding: variables.inputPadding,
       ...(fluid && { width: '100%' }),
       ...(inline && { float: 'left' }),
+      '::placeholder': {
+        color: variables.fontColor,
+      },
       ':focus': {
         borderColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,
