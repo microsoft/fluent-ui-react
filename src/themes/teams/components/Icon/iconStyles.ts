@@ -28,14 +28,11 @@ const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): IC
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
-    fontFamily,
-
-    textAlign: 'center',
-
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
     backfaceVisibility: 'hidden',
-
+    fontFamily,
+    textAlign: 'center',
     lineHeight: 1,
 
     '::before': {
@@ -78,6 +75,7 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
     const isFontBased = !iconSpec || !iconSpec.isSvg
+    const iconColor = v.color || 'currentColor'
 
     return {
       display: 'inline-block',
@@ -100,6 +98,14 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
         }),
       }),
 
+      ...(!isFontBased && {
+        fill: iconColor,
+
+        ...(disabled && {
+          fill: v.disabledColor,
+        }),
+      }),
+
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || circular) &&
@@ -107,19 +113,11 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
     }
   },
 
-  svg: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    // getSvgStyle('svg'),
-
-    fill: v.color,
-
-    ...(p.disabled && {
-      fill: v.disabledColor,
-    }),
-  }),
+  svg: getSvgStyle('svg'),
 
   g: getSvgStyle('g'),
 
-  /* additional SVG styles for different paths could be added/used in the same way */
+  path: getSvgStyle('path'),
 }
 
 export default iconStyles
