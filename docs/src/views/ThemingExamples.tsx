@@ -108,7 +108,6 @@ export default () => (
       ].join('\n')}
       render={() => (
         <Button
-          type="secondary"
           content="Send email"
           icon={{ name: 'at', styles: { color: 'brown' } }}
           styles={{
@@ -130,15 +129,14 @@ export default () => (
         ``,
         `const btnExample = () => `,
         `    <Button`,
-        `      type="secondary"`,
         `      icon={{`,
         `        name: "at",`,
         `        variables: { color: "brown" }`,
         `      }}`,
         `      content="Send email"`,
         `      variables={{`,
-        `        typeSecondaryColor: "coral",`,
-        `        typeSecondaryBackgroundColor: "charcoal"`,
+        `        secondaryColor: "coral",`,
+        `        secondaryBackgroundColor: "charcoal"`,
         `        paddingLeftRightValue: 20`,
         `      }}`,
         `    />`,
@@ -151,8 +149,8 @@ export default () => (
           content="Send email"
           icon={{ name: 'at', variables: { color: 'brown' } }}
           variables={{
-            typeSecondaryColor: 'coral',
-            typeSecondaryBackgroundColor: 'charcoal',
+            secondaryColor: 'coral',
+            secondaryBackgroundColor: 'charcoal',
             paddingLeftRightValue: 20,
           }}
         />
@@ -203,10 +201,10 @@ export default () => (
         `      minWidth: '24px',`,
         `      borderRadius: '8px',`,
         `      color: 'darkred',`,
-        `      typeSecondaryColor: '#ffffff',`,
-        `      typeSecondaryBorderColor: 'transparent',`,
-        `      typeSecondaryBackgroundColor: '#6699CC',`,
-        `      typeSecondaryBackgroundColorHover: '#91A3B0',`,
+        `      secondaryColor: '#ffffff',`,
+        `      secondaryBorderColor: 'transparent',`,
+        `      secondaryBackgroundColor: '#6699CC',`,
+        `      secondaryBackgroundColorHover: '#91A3B0',`,
         `    },`,
         `  },`,
         `  componentStyles: {`,
@@ -252,10 +250,10 @@ export default () => (
                   minWidth: '24px',
                   borderRadius: '8px',
                   color: 'darkred',
-                  typeSecondaryColor: '#ffffff',
-                  typeSecondaryBorderColor: 'transparent',
-                  typeSecondaryBackgroundColor: '#6699CC',
-                  typeSecondaryBackgroundColorHover: '#91A3B0',
+                  secondaryColor: '#ffffff',
+                  secondaryBorderColor: 'transparent',
+                  secondaryBackgroundColor: '#6699CC',
+                  secondaryBackgroundColorHover: '#91A3B0',
                 },
               },
               componentStyles: {
