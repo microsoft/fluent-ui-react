@@ -55,10 +55,9 @@ const peopleSupplier = (inputValue: string, selected: { name: string }[]) => {
 
 const PeoplePickerExampleShorthand = () => (
   <div>
-    <ChatPeoplePicker
-      source={peopleSupplier}
-      styles={{ width: '30rem', margin: '4rem auto 0 4rem' }}
-    />,
+    <div style={{ margin: '4rem auto 0 4rem' }}>
+      <ChatPeoplePicker source={peopleSupplier} width="30rem" />
+    </div>
     <div style={{ width: '50rem', margin: '1rem auto 1rem 4rem' }}>
       <h3>Chat People Picker</h3>
       <h4>Contents</h4>
@@ -71,11 +70,11 @@ const PeoplePickerExampleShorthand = () => (
         <li>Highlight option in dropdown on mouse hover and on keyboard navigation.</li>
         <li>
           Ensure keyboard navigation works in the dropdown, by keeping focus on edit text and using
-          aria active descendant attribute.
+          aria-activedescendant attribute.
         </li>
         <li>Open/Close dropdown on click and keyboard Enter/Up/Down/Esc.</li>
         <li>Provide a callback for handling the selection of an element from the list.</li>
-        <li>Append aria roles and other attributes to make it accessible with screen reader.</li>
+        <li>Append ARIA roles and other attributes to make it accessible with screen reader.</li>
       </ul>
       <p>
         Downshift provides a children callback in which we can render whatever we want, as long as

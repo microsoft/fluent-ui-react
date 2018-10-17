@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
-import { Label, Input, Button, Image, MenuItem, List, Provider, Text } from '@stardust-ui/react'
+import { Label, Button, Input, Image, MenuItem, List, Provider, Text } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
 import { pxToRem } from 'src/lib'
@@ -71,7 +71,7 @@ interface IPeoplePickerProps {
     inputValue: string,
     selected: any[],
   ) => { name: string; image: string; position: string }[]
-  styles?: any
+  width?: any
 }
 
 interface IPeoplePickerState {
@@ -137,7 +137,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
 
   public render(): React.ReactNode {
     return (
-      <div style={this.props.styles}>
+      <div style={{ width: this.props.width }}>
         {/* Added label outside because otherwise I could click outside the combobox on the same line with the label and listbox would not close. */}
         <Downshift
           stateReducer={this.stateReducer}
@@ -234,7 +234,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     return (
                       <List
                         {...getMenuProps()}
-                        styles={{ width: this.props.styles.width, ...peoplePickerStyles.listboxUL }}
+                        styles={{ width: this.props.width, ...peoplePickerStyles.listboxUL }}
                         aria-hidden={!isOpen}
                         items={
                           isOpen
