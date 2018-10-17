@@ -85,8 +85,8 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
             tabIndex={0}
             styles={{
               fontWeight: 100,
-              ...(!index && { marginRight: '1.6rem' }),
-              marginTop: '8px',
+              margin: 'auto',
+              ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
             variables={siteVars => ({ color: siteVars.gray04 })}
           />

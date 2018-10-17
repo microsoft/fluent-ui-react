@@ -15,7 +15,7 @@ import {
   ShorthandRenderFunction,
   ComponentEventHandler,
 } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from 'theme'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 import Icon from '../Icon'
 import Slot from '../Slot'
 import Ref from '../Ref'
@@ -63,10 +63,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional CSS class name(s) to apply.  */
+    /** Additional CSS class name(s) to apply. */
     className: PropTypes.string,
 
-    /** A property that will change the icon on the input and clear the input on click on Cancel */
+    /** A property that will change the icon on the input and clear the input on click on Cancel. */
     clearable: PropTypes.bool,
 
     /** The default value of the input. */
@@ -78,10 +78,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
-    /** Shorthand for the input component */
+    /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
 
-    /** An input can be used inline with text */
+    /** An input can be used inline with text. */
     inline: PropTypes.bool,
 
     /**
@@ -119,7 +119,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
      */
     renderWrapper: PropTypes.func,
 
-    /** Additional CSS styles to apply to the component instance.  */
+    /** Additional CSS styles to apply to the component instance. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input type. */
@@ -131,7 +131,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Shorthand for the wrapper component */
+    /** Shorthand for the wrapper component. */
     wrapper: customPropTypes.itemShorthand,
   }
 
@@ -142,8 +142,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
   }
 
   static autoControlledProps = ['value']
-
-  state = { value: this.props.value || this.props.defaultValue || '' }
 
   renderComponent({
     ElementType,
@@ -160,10 +158,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
       defaultProps: {
         as: ElementType,
         className: cx(Input.className, className),
-        styles: styles.root,
-        ...rest,
-      },
-      overrideProps: {
         children: (
           <>
             <Ref innerRef={this.handleInputRef}>
@@ -188,6 +182,8 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
             })}
           </>
         ),
+        styles: styles.root,
+        ...rest,
       },
       render: renderWrapper,
     })

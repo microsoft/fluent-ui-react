@@ -1,39 +1,37 @@
 import React from 'react'
 import { Grid, Input, Text } from '@stardust-ui/react'
 
-const inputStyles = { color: 'blue', background: 'yellow' }
-const wrapperStyles = { padding: '5px', background: 'red' }
-const partitionedProps = {
-  placeholder: 'Search...',
-  dir: 'ltr',
-  tabIndex: 2,
-  disabled: false,
+const propsForInput = { placeholder: 'Search...', id: 'inputId', role: 'checkbox' }
+const propsTargettingWrapper = {
+  placeholder: 'Wrapper placeholder...',
+  id: 'wrapperId',
   role: 'presentation',
-  styles: { padding: '5px', background: 'green' },
+}
+
+const propsForWrapper = { dir: 'ltr', tabIndex: 2, styles: { padding: '5px', background: 'red' } }
+const propsTargettingInput = {
+  dir: 'rtl',
+  tabIndex: 0,
+  styles: { color: 'blue', background: 'yellow' },
 }
 
 const InputExampleTargeting = () => (
-  <Grid columns="1fr 2fr" styles={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
-    <Text content="Default Input:" />
-    <Input placeholder="Search..." />
+  <Grid columns="1fr 1fr" styles={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
+    <Text content="Input with props that will be applied to either the input or the wrapper:" />
+    <Input {...propsForInput} {...propsForWrapper} />
 
-    <Text content="Default Input with partitioned props:" />
-    <Input {...partitionedProps} />
+    <Text content="Input with input slot props that have to be applied to the input element:" />
+    <Input {...propsForInput} {...propsForWrapper} input={propsTargettingInput} />
 
-    <Text content="Default Input with partitioned props and input slot targeting:" />
-    <Input {...partitionedProps} input={{ dir: 'rtl', tabIndex: 0, styles: inputStyles }} />
+    <Text content="Input with wrapper slot props that have to be applied to the wrapper element:" />
+    <Input {...propsForInput} {...propsForWrapper} wrapper={propsTargettingWrapper} />
 
-    <Text content="Default Input with partitioned props and wrapper slot targeting:" />
+    <Text content="Input with input and wrapper slot props that have to be applied to the input and wrapper elements, respectively:" />
     <Input
-      {...partitionedProps}
-      wrapper={{ disabled: true, role: 'checkbox', styles: wrapperStyles }}
-    />
-
-    <Text content="Default Input with partitioned props and input and wrapper slot targeting:" />
-    <Input
-      {...partitionedProps}
-      input={{ dir: 'rtl', tabIndex: 0, styles: inputStyles }}
-      wrapper={{ disabled: true, role: 'checkbox', styles: wrapperStyles }}
+      {...propsForInput}
+      {...propsForWrapper}
+      input={propsTargettingInput}
+      wrapper={propsTargettingWrapper}
     />
   </Grid>
 )
