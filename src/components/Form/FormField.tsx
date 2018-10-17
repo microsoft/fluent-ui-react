@@ -130,25 +130,13 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       label,
       renderLabel,
       id,
-      type,
       required,
       message,
       renderMessage,
       controlType,
     } = this.props
 
-    let labelContent = label
-
-    if (required) {
-      labelContent =
-        typeof label === 'string'
-          ? `${label} *`
-          : typeof label === 'object' && (label as any).content
-            ? { ...label, content: `${(label as any).content} *` }
-            : label
-    }
-
-    const labelElement = Text.create(labelContent, {
+    const labelElement = Text.create(label, {
       defaultProps: {
         as: 'label',
         htmlFor: id,
@@ -166,53 +154,37 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     const factoryMethod = createSlotFactory(controlType, name => ({ name }))
     const controlElement = factoryMethod(control || {}, {
-      defaultProps: { required, ...rest },
+      defaultProps: { required, ...rest, styles: styles.control },
       render: renderControl,
     })
 
-    // ----------------------------------------
-    // No Control
-    // ----------------------------------------
-
-    if (!controlType) {
-      if (!label) {
-        return (
-          <ElementType {...rest} className={classes.root}>
-            {childrenExist(children) && children}
-            {messageElement}
-          </ElementType>
-        )
-      }
-
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {labelElement}
-          {messageElement}
-        </ElementType>
-      )
-    }
-
-    // --------------------------------------------------------
-    // Check box or radio (label should appear after the input)
-    // --------------------------------------------------------
-
-    if (controlType && (type === 'checkbox' || type === 'radio')) {
-      return (
-        <ElementType className={classes.root}>
-          {controlElement}
-          {labelElement}
-          {messageElement}
-        </ElementType>
-      )
-    }
+    const content = (
+      <>
+        {this.shouldControlAppearFirst() ? (
+          <>
+            {controlElement}
+            {labelElement}
+          </>
+        ) : (
+          <>
+            {labelElement}
+            {controlElement}
+          </>
+        )}
+        {messageElement}
+      </>
+    )
 
     return (
-      <ElementType className={classes.root}>
-        {labelElement}
-        {controlElement}
-        {messageElement}
+      <ElementType {...rest} className={classes.root}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
+  }
+
+  private shouldControlAppearFirst = () => {
+    const { controlType, type } = this.props
+    return controlType && (type === 'checkbox' || type === 'radio')
   }
 }
 

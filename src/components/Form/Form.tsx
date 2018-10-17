@@ -86,25 +86,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     as: 'form',
   }
 
-  static Field = FormField
-
-  handleSubmit = (e, ...args) => {
-    const { action } = this.props
-
-    // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
-    // method.
-    if (typeof action !== 'string') _.invoke(e, 'preventDefault')
-    _.invoke(this.props, 'onSubmit', e, this.props, ...args)
-  }
-
-  renderFields = () => {
-    const { fields, renderField } = this.props
-    return _.map(fields, field =>
-      FormField.create(field, {
-        render: renderField,
-      }),
-    )
-  }
+  public static Field = FormField
 
   public renderComponent({
     ElementType,
@@ -125,6 +107,24 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
       >
         {childrenExist(children) ? children : this.renderFields()}
       </ElementType>
+    )
+  }
+
+  private handleSubmit = (e, ...args) => {
+    const { action } = this.props
+
+    // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
+    // method.
+    if (typeof action !== 'string') _.invoke(e, 'preventDefault')
+    _.invoke(this.props, 'onSubmit', e, this.props, ...args)
+  }
+
+  private renderFields = () => {
+    const { fields, renderField } = this.props
+    return _.map(fields, field =>
+      FormField.create(field, {
+        render: renderField,
+      }),
     )
   }
 }

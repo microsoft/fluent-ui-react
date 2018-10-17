@@ -9,6 +9,11 @@ const Types = () => (
       description="A default form."
       examplePath="components/Form/Types/FormExample"
     />
+    <ComponentExample
+      title="Inline"
+      description="The controls inside a form can appear next to the label instead of below it."
+      examplePath="components/Form/Types/FormExampleInline"
+    />
   </ExampleSection>
 )
 

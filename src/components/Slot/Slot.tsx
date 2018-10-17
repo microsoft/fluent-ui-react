@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist, createShorthand } from '../../lib'
-import { Extendable, MapValueToProps, ObjectOf } from '../../../types/utils'
+import { Extendable, MapValueToProps, IProps } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ISlotProps {
@@ -14,7 +14,7 @@ export interface ISlotProps {
 
 export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
   val,
-  options: ObjectOf<any> = {},
+  options: IProps = {},
 ) => {
   options.defaultProps = { as, ...options.defaultProps }
   return createShorthand(Slot, mapValueToProps, val, options)

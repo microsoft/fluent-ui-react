@@ -12,6 +12,7 @@ const FormExample = () => (
       controlType={Input}
       name="firstName"
       id="first-name"
+      inline={true}
       required={true}
     />
     <Form.Field
@@ -19,6 +20,7 @@ const FormExample = () => (
       controlType={Input}
       name="lastName"
       id="last-name"
+      inline={true}
       required={true}
     />
     <Form.Field

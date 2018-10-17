@@ -9,6 +9,7 @@ const fields = [
     id: 'first-name',
     key: 'first-name',
     required: true,
+    inline: true,
   },
   {
     label: 'Last name',
@@ -17,6 +18,7 @@ const fields = [
     id: 'last-name',
     key: 'last-name',
     required: true,
+    inline: true,
   },
   {
     label: 'I agree to the Terms and Conditions',
