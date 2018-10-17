@@ -7,7 +7,6 @@ const items = [
     icon: {
       name: 'cloud',
       circular: true,
-      xSpacing: 'both',
       size: 'small',
     },
     accessibility: ToolbarButtonBehavior,
@@ -18,7 +17,6 @@ const items = [
     icon: {
       name: 'clock',
       circular: true,
-      xSpacing: 'both',
       size: 'small',
     },
     accessibility: ToolbarButtonBehavior,
@@ -29,7 +27,6 @@ const items = [
     icon: {
       name: 'book',
       circular: true,
-      xSpacing: 'both',
       size: 'small',
     },
     accessibility: ToolbarButtonBehavior,

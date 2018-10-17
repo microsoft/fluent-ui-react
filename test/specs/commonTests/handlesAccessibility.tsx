@@ -1,10 +1,10 @@
 import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
-import { DefaultBehavior } from 'src/lib/accessibility'
+import { defaultBehavior } from 'src/lib/accessibility'
 import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_ID_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector
@@ -12,8 +12,8 @@ export const getRenderedAttribute = (renderedComponent, propName, partSelector) 
     : renderedComponent.render()
 
   let node = target.first()
-  if (node.attr(FOCUSZONE_ID_ATTRIBUTE)) {
-    node = node.children().first() // traverse through FocusZone <div>
+  if (node.attr(FOCUSZONE_WRAP_ATTRIBUTE)) {
+    node = node.children().first() // traverse through FocusZone wrap <div>
   }
   return node.prop(propName)
 }
@@ -54,7 +54,7 @@ export default (Component, options: any = {}) => {
   test('does not get role when overrides to default', () => {
     const rendered = getTestingRenderedComponent(
       Component,
-      <Component {...requiredProps} accessibility={DefaultBehavior} />,
+      <Component {...requiredProps} accessibility={defaultBehavior} />,
     )
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()
@@ -92,16 +92,25 @@ export default (Component, options: any = {}) => {
     })
   }
 
-  if (focusZoneDefinition && focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-    test('gets wrapped in FocusZone', () => {
-      const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+  if (focusZoneDefinition) {
+    if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
+      test('gets wrapped in FocusZone', () => {
+        const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
 
-      const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-      expect(focusZone.type()).toEqual(FocusZone)
+        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
+        expect(focusZone.type()).toEqual(FocusZone)
 
-      const focusZoneDiv = focusZone.childAt(0)
-      expect(focusZoneDiv.type()).toBe('div')
-      expect(focusZoneDiv.children().length).toBeGreaterThan(0)
-    })
+        const focusZoneDiv = focusZone.childAt(0)
+        expect(focusZoneDiv.type()).toBe('div')
+        expect(focusZoneDiv.children().length).toBeGreaterThan(0)
+      })
+    } else if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+      test('gets embedded with FocusZone', () => {
+        const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+
+        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
+        expect(focusZone.type()).toEqual(FocusZone)
+      })
+    }
   }
 }

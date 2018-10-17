@@ -1,5 +1,5 @@
 import { ReactType } from 'react'
-import { IProps } from '../../types/theme'
+import { IProps } from '../../types/utils'
 
 /**
  * Returns a createElement() type based on the props of the Component.

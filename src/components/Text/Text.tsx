@@ -5,16 +5,17 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Sizes } from '../../lib/enums'
 
 export interface ITextProps {
   as?: any
-  atMention?: boolean
+  atMention?: boolean | 'me'
   className?: string
   content?: any
   disabled?: boolean
   error?: boolean
   important?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+  size?: Sizes
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
   temporary?: boolean
@@ -41,10 +42,10 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
 
-    /** Set as @mention Text component */
-    atMention: PropTypes.bool,
+    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -60,7 +61,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     important: PropTypes.bool,
 
     /** The size for the Text component */
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
 
     /** The weight for the Text component */
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
@@ -77,7 +78,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Truncates text as needed */
     truncated: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -87,24 +88,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   static defaultProps = {
     as: 'span',
   }
-
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'temporary',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props

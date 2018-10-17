@@ -13,7 +13,12 @@ import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 
 export interface ILabelProps {
   accessibility?: Accessibility
@@ -23,10 +28,12 @@ export interface ILabelProps {
   className?: string
   content?: React.ReactNode
   fluid?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconPosition?: 'start' | 'end'
-  image?: ItemShorthand
+  image?: ShorthandValue
   imagePosition?: 'start' | 'end'
+  renderIcon?: ShorthandRenderFunction
+  renderImage?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -45,13 +52,16 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A label can be circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -69,26 +79,30 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
+    /**
+     * A custom render function the image slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderImage: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'icon',
-    'iconPosition',
-    'image',
-    'imagePosition',
-    'styles',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'span',
@@ -106,7 +120,16 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, variables, styles }) {
-    const { children, content, icon, iconPosition, image, imagePosition } = this.props
+    const {
+      children,
+      content,
+      icon,
+      iconPosition,
+      image,
+      imagePosition,
+      renderIcon,
+      renderImage,
+    } = this.props
 
     const imageElement =
       image &&
@@ -115,6 +138,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
           styles: styles.image,
           variables: variables.image,
         },
+        render: renderImage,
       })
 
     const iconElement =
@@ -125,6 +149,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
           variables: variables.icon,
         },
         overrideProps: this.handleIconOverrides,
+        render: renderIcon,
       })
 
     let start: React.ReactNode = null

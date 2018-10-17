@@ -1,49 +1,68 @@
 import { pxToRem } from '../../../../lib'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonProps } from '../../../../components/Button/Button'
+import { IButtonProps, IButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
 
-const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
+const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
     const primary = type === 'primary'
-    const secondary = type === 'secondary'
 
     const {
       height,
       minWidth,
       maxWidth,
       borderRadius,
-      color,
-      backgroundColor,
-      backgroundColorHover,
       circularRadius,
       paddingLeftRightValue,
-      typeDisabledButtonColor,
-      typeDisabledButtonBackgroundColor,
-      typePrimaryColor,
-      typePrimaryBackgroundColor,
-      typePrimaryBackgroundColorActive,
-      typePrimaryBackgroundColorHover,
-      typePrimaryBackgroundColorFocus,
-      typePrimaryBorderColor,
-      typePrimaryBorderColorFocus,
-      typePrimaryBorderColorInsetFocus,
-      typeSecondaryColor,
-      typeSecondaryBackgroundColor,
-      typeSecondaryBackgroundColorActive,
-      typeSecondaryBackgroundColorHover,
-      typeSecondaryBackgroundColorFocus,
-      typeSecondaryBorderColor,
-      typeSecondaryBorderColorActive,
-      typeSecondaryBorderColorHover,
-      typeSecondaryBorderColorFocus,
-      typeSecondaryBorderColorInsetFocus,
-      typeTextColorHover,
-      typeTextPrimaryColor,
-      typeTextPrimaryColorHover,
-      typeTextSecondaryColor,
-      typeTextSecondaryColorHover,
+
+      color,
+      colorActive,
+      colorHover,
+      colorFocus,
+      colorDisabled,
+      backgroundColor,
+      backgroundColorActive,
+      backgroundColorHover,
+      backgroundColorFocus,
+      backgroundColorDisabled,
+      borderColor,
+      borderColorActive,
+      borderColorHover,
+      borderColorFocus,
+      borderColorFocusIndicator,
+      borderColorDisabled,
+
+      primaryColor,
+      primaryBackgroundColor,
+      primaryBackgroundColorActive,
+      primaryBackgroundColorHover,
+      primaryBackgroundColorFocus,
+      primaryBorderColor,
+      primaryBorderColorActive,
+      primaryBorderColorHover,
+      primaryBorderColorFocus,
+      primaryBorderColorFocusIndicator,
+
+      primaryCircularBorderColorFocusIndicator,
+
+      circularColor,
+      circularColorActive,
+      circularBackgroundColor,
+      circularBackgroundColorActive,
+      circularBackgroundColorHover,
+      circularBackgroundColorFocus,
+      circularBorderColor,
+      circularBorderColorActive,
+      circularBorderColorHover,
+      circularBorderColorFocus,
+      circularBorderColorFocusIndicator,
+
+      textColor,
+      textColorHover,
+      textPrimaryColor,
+      textPrimaryColorHover,
+      boxShadow,
     } = variables
 
     return {
@@ -63,107 +82,154 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
       cursor: 'pointer',
 
       ...(!text && {
-        borderWidth: `${secondary ? (circular ? 1 : 2) : 0}px`,
+        outline: 0,
+        borderRadius: '2px',
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor,
+        boxShadow,
         ':hover': {
+          color: colorHover,
           backgroundColor: backgroundColorHover,
+          borderColor: borderColorHover,
         },
+        ...(isFromKeyboard && {
+          ':focus': {
+            color: colorFocus,
+            backgroundColor: backgroundColorFocus,
+            borderColor: borderColorFocus,
+            ':after': {
+              content: '""',
+              position: 'absolute',
+              top: '-2px',
+              right: '-2px',
+              bottom: '-2px',
+              left: '-2px',
+              border: `${pxToRem(1)} solid ${borderColorFocusIndicator}`,
+              borderRadius: '3px',
+            },
+          },
+        }),
+        ...(!isFromKeyboard && {
+          ':focus': {
+            ':active': {
+              color: colorActive,
+              backgroundColor: backgroundColorActive,
+              borderColor: borderColorActive,
+              boxShadow: 'none',
+            },
+          },
+        }),
       }),
 
+      ...(circular &&
+        !text && {
+          color: circularColor,
+          backgroundColor: circularBackgroundColor,
+          borderColor: circularBorderColor,
+          ':hover': {
+            color: circularColorActive,
+            backgroundColor: circularBackgroundColorHover,
+            borderColor: circularBorderColorHover,
+          },
+          ...(isFromKeyboard && {
+            ':focus': {
+              color: circularColorActive,
+              backgroundColor: circularBackgroundColorFocus,
+              borderColor: circularBorderColorFocus,
+              ':after': {
+                content: '""',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                bottom: '0',
+                left: '0',
+                border: `${pxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
+                borderRadius: circularRadius,
+              },
+            },
+          }),
+          ...(!isFromKeyboard && {
+            ':focus': {
+              ':active': {
+                color: circularColorActive,
+                backgroundColor: circularBackgroundColorActive,
+                borderColor: circularBorderColorActive,
+                boxShadow: 'none',
+              },
+            },
+          }),
+        }),
+
+      ...(primary &&
+        !text && {
+          color: primaryColor,
+          backgroundColor: primaryBackgroundColor,
+          borderColor: primaryBorderColor,
+          ':hover': {
+            backgroundColor: primaryBackgroundColorHover,
+            borderColor: primaryBorderColorHover,
+          },
+
+          ...(isFromKeyboard &&
+            !circular && {
+              ':focus': {
+                backgroundColor: primaryBackgroundColorFocus,
+                borderColor: primaryBorderColorFocus,
+                ':after': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '-2px',
+                  right: '-2px',
+                  bottom: '-2px',
+                  left: '-2px',
+                  border: `${pxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
+                  borderRadius: '3px',
+                },
+              },
+            }),
+          ...(isFromKeyboard &&
+            circular && {
+              ':focus': {
+                backgroundColor: primaryBackgroundColorFocus,
+                borderColor: primaryBackgroundColorFocus,
+                ':after': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '0',
+                  right: '0',
+                  bottom: '0',
+                  left: '0',
+                  border: `${pxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
+                  borderRadius: circularRadius,
+                },
+              },
+            }),
+          ...(!isFromKeyboard && {
+            ':focus': {
+              ':active': {
+                backgroundColor: primaryBackgroundColorActive,
+                borderColor: primaryBorderColorActive,
+                boxShadow: 'none',
+              },
+            },
+          }),
+        }),
+
       ...(text && {
+        color: textColor,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
         ':hover': {
-          color: typeTextColorHover,
+          color: textColorHover,
         },
       }),
 
       ...(primary &&
-        !text && {
-          color: typePrimaryColor,
-          backgroundColor: typePrimaryBackgroundColor,
-          border: `${pxToRem(1)} solid ${typePrimaryBorderColor}`,
-          ':active': {
-            backgroundColor: typePrimaryBackgroundColorActive,
-          },
-          ':hover': {
-            color: typePrimaryColor,
-            backgroundColor: typePrimaryBackgroundColorHover,
-          },
-        }),
-
-      ...(primary &&
-        !text &&
-        !circular && {
-          outline: 0,
-          ':focus': {
-            ...(isFromKeyboard && {
-              backgroundColor: typePrimaryBackgroundColorFocus,
-              borderColor: typePrimaryBorderColorFocus,
-              '::before': {
-                content: '""',
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                right: '0',
-                bottom: '0',
-                border: `${pxToRem(1)} solid ${typePrimaryBorderColorInsetFocus}`,
-                borderRadius: `${pxToRem(2)}`,
-              },
-            }),
-          },
-        }),
-
-      ...(primary &&
         text && {
-          color: typeTextPrimaryColor,
+          color: textPrimaryColor,
           ':hover': {
-            color: typeTextPrimaryColorHover,
-          },
-        }),
-
-      ...(secondary &&
-        !text && {
-          color: typeSecondaryColor,
-          backgroundColor: typeSecondaryBackgroundColor,
-          borderColor: typeSecondaryBorderColor,
-          border: `${pxToRem(1)} solid ${typeSecondaryBorderColor}`,
-          ':active': {
-            backgroundColor: typeSecondaryBackgroundColorActive,
-            borderColor: typeSecondaryBorderColorActive,
-          },
-          ':hover': {
-            backgroundColor: typeSecondaryBackgroundColorHover,
-            borderColor: typeSecondaryBorderColorHover,
-          },
-        }),
-
-      ...(secondary &&
-        !text &&
-        !circular && {
-          outline: 0,
-          ':focus': {
-            ...(isFromKeyboard && {
-              backgroundColor: typeSecondaryBackgroundColorFocus,
-              borderColor: typeSecondaryBorderColorFocus,
-              '::before': {
-                content: '""',
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                right: '0',
-                bottom: '0',
-                border: `${pxToRem(1)} solid ${typeSecondaryBorderColorInsetFocus}`,
-                borderRadius: `${pxToRem(2)}`,
-              },
-            }),
-          },
-        }),
-
-      ...(secondary &&
-        text && {
-          color: typeTextSecondaryColor,
-          ':hover': {
-            color: typeTextSecondaryColorHover,
+            color: textPrimaryColorHover,
           },
         }),
 
@@ -180,12 +246,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps, any> = {
 
       ...(disabled && {
         cursor: 'default',
-        color: typeDisabledButtonColor,
-        backgroundColor: typeDisabledButtonBackgroundColor,
-        borderColor: typeDisabledButtonBackgroundColor,
+        color: colorDisabled,
+        backgroundColor: backgroundColorDisabled,
+        borderColor: borderColorDisabled,
+        boxShadow: 'none',
         ':hover': {
-          backgroundColor: typeDisabledButtonBackgroundColor,
-          borderColor: typeDisabledButtonBackgroundColor,
+          backgroundColor: backgroundColorDisabled,
+          borderColor: borderColorDisabled,
         },
       }),
 

@@ -88,43 +88,12 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 
     vertical: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'alignItems',
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'endCSS',
-    'endSize',
-    'gap',
-    'justifyItems',
-    'main',
-    'mainCSS',
-    'mainSize',
-    'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
-    'start',
-    'startCSS',
-    'startSize',
-    'styles',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
-    'variables',
-    'vertical',
-  ]
 
   static defaultProps = {
     startSize: 'auto',

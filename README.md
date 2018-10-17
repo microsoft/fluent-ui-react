@@ -16,7 +16,7 @@
     <img alt="Gitter" src="https://img.shields.io/badge/gitter-join_chat-1dce73.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIwIiB5PSI1IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI1Ii8%2BPHJlY3QgeD0iMiIgeT0iNiIgZmlsbD0iI2ZmZiIgd2lkdGg9IjEiIGhlaWdodD0iNyIvPjxyZWN0IHg9IjQiIHk9IjYiIGZpbGw9IiNmZmYiIHdpZHRoPSIxIiBoZWlnaHQ9IjciLz48cmVjdCB4PSI2IiB5PSI2IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI0Ii8%2BPC9zdmc%2B&logoWidth=8&style=flat-square&maxAge=2592000" />
   </a>
   <a href="https://circleci.com/gh/stardust-ui/react/tree/master">
-    <img alt="Circle" src="https://img.shields.io/circleci/project/stardust-ui/react/master.svg?style=flat-square" />
+    <img alt="Circle" src="https://img.shields.io/circleci/project/github/stardust-ui/react/master.svg?style=flat-square" />
   </a>
   <a href="https://codecov.io/gh/stardust-ui/react">
     <img alt="Codecov" src="https://img.shields.io/codecov/c/github/stardust-ui/react/master.svg?style=flat-square" />
@@ -79,6 +79,12 @@ Currently, these teams are actively participating in Stardust's specifications a
 
 If you own or are building a UI component library, we'd love to have your input. [Post an issue][2] introducing yourself and your team and join us today.
 
+You can actively contribute to Stardust by refering to the [Contributing][3] documentation.
+
+## Usage examples
+
+You can find Stardust usage examples by accessing the [doc site][5]
+
 ## Semantic UI React v2
 
 See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specifications and tools from Stardust.
@@ -86,8 +92,9 @@ See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specificatio
 <!-- REPO -->
 [1]: https://github.com/stardust-ui/react/blob/master/MANIFESTO.md
 [2]: https://github.com/stardust-ui/react/issues/new/choose
-[3]: https://github.com/stardust-ui/react/.github/CONTRIBUTING.md
+[3]: https://github.com/stardust-ui/react/blob/master/.github/CONTRIBUTING.md
 [4]: https://github.com/stardust-ui/react/blob/master/CHANGELOG.md
+[5]: https://stardust-ui.github.io/react/quick-start
 
 <!-- SPECIFICATIONS -->
 [100]: https://github.com/stardust-ui/react/tree/master/specifications
@@ -107,4 +114,3 @@ See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specificatio
 <!-- EXTERNAL -->
 [300]: https://developer.microsoft.com/en-us/fabric
 [301]: https://products.office.com/en-US/microsoft-teams/group-chat-software
-

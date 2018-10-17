@@ -134,6 +134,7 @@ export type AccessibilityAttributes = { [partName: string]: IAccessibilityAttrib
 export enum FocusZoneMode {
   Custom,
   Wrap,
+  Embed,
 }
 
 export type FocusZoneDefinition = {
@@ -170,12 +171,14 @@ export type AccessibilityActionHandlers = {
 }
 
 export type ActionsKeyHandler = {
-  [partName: string]: {
-    onKeyDown?: KeyboardHandler
-  }
+  [partName: string]: OnKeyDownHandler
+}
+
+export type OnKeyDownHandler = {
+  onKeyDown?: KeyboardHandler
 }
 
 export type KeyboardHandler = (event: KeyboardEvent) => void
 export type EventHandler = (event: Event) => void
 
-export type Accessibility = IAccessibilityDefinition | ((props: any) => IAccessibilityDefinition)
+export type Accessibility = (props: any) => IAccessibilityDefinition

@@ -3,7 +3,6 @@ import * as customPropTypes from './customPropTypes'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
-export { debug, makeDebugger } from './debug'
 export { default as eventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
@@ -33,6 +32,7 @@ export {
 } from './htmlPropsUtils'
 
 export { default as isBrowser } from './isBrowser'
+export { default as typescriptUtils } from './typescriptUtils'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 export { default as leven } from './leven'
 

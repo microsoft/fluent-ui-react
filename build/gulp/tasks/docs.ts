@@ -66,9 +66,16 @@ task(
 // ----------------------------------------
 
 const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
-const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
+const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
-const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
+const markdownSrc = [
+  '.github/CONTRIBUTING.md',
+  '.github/setup-local-development.md',
+  '.github/add-a-feature.md',
+  '.github/document-a-feature.md',
+  '.github/test-a-feature.md',
+  'specifications/*.md',
+]
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })

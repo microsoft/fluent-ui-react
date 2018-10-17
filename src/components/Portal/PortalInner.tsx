@@ -17,7 +17,10 @@ export interface IPortalInnerProps {
  */
 class PortalInner extends Component<IPortalInnerProps> {
   public static propTypes = {
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node.isRequired,
 
     /** Existing element the portal should be bound to. */

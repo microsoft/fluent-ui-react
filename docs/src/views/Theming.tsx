@@ -12,8 +12,7 @@ export default () => (
     <p>
       Stardust is a fully themable component library. Theming is opt-in, allowing you to theme as
       much or as little as needed. Themes can be applied to your entire app, to specific subtrees,
-      or to individual components. You can also infinitely nest and override themes by modifying the
-      needed variables or styles.
+      or to individual components. You can also infinitely nest and override themes.
     </p>
 
     <p>Let's look at how this is done.</p>
@@ -23,7 +22,7 @@ export default () => (
       The recommended API for customizing the look and feel of components is through theme
       variables. Variables are both easier to use and more robust than styles. Setting a theme
       variable will ensure your value is properly applied to every applicable style in every
-      supported permutation.
+      supported usage of the component.
     </p>
 
     <p>Variables are defined at two levels, the site level and the component level.</p>
@@ -58,11 +57,11 @@ export default () => (
 
     <Header a="h3" content="Component variables" />
     <p>
-      Component variables are theme values specific to each component. This includes information
+      Component variables define theme values for a specific component. This includes information
       such as colors, borders, or box model values.
     </p>
 
-    <p>You can define variables on a single component instance.</p>
+    <p>You can define component variables on a single instance of a component.</p>
     <ExampleSnippet
       value={[
         `<Icon name="user" circular />`,
@@ -77,8 +76,8 @@ export default () => (
     />
 
     <p>
-      You can also define variables for all components in a tree using the{' '}
-      <NavLink to="components/provider">Provider</NavLink>.
+      You can also define component variables for all components in a part of your render tree using
+      the <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <ExampleSnippet
       value={[
@@ -107,8 +106,8 @@ export default () => (
       )}
     />
     <p>
-      You can customize all components in your app by defining component variables on a Provider at
-      the root of your app.
+      You can customize component variables for your entire app by defining component variables on a{' '}
+      <NavLink to="components/provider">Provider</NavLink> at the root of your app.
     </p>
 
     <Header as="h2" content="Styles" />
@@ -121,42 +120,112 @@ export default () => (
     </blockquote>
 
     <p>
-      All Stardust components explicitly define named parts which make up the component's anatomy.
-      Example, the <code>Button</code> anatomy defines an <code>icon</code> part.
+      Styles are available as an escape hatch for when there is no suitable theme variable available
+      for your needs. Component <code>styles</code> are CSS-like style objects that are converted to
+      real CSS and applied to your component as HTML class names.
     </p>
 
-    <p>Styles can be applied to components and their child parts.</p>
     <p>
-      {' '}
-      You can style the <code>icon</code> part of a <code>Button</code> component.
+      You can define <code>styles</code> on a single component instance.
     </p>
-
+    <ExampleSnippet
+      value={`<Text styles={{ color: 'green' }}>This is green text</Text>`}
+      render={() => <Text styles={{ color: 'green' }}>This is green text</Text>}
+    />
+    <p>
+      Every slot (named part) of every component also accepts <code>styles</code> that are applied
+      to the root element of the slot.
+    </p>
     <ExampleSnippet
       value={[
         `<Button`,
-        `  icon={{ name: "user", styles: { borderBottom: '4px solid red' } }}`,
+        `  icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }}`,
         `  content="Profile"`,
         `/>`,
       ].join('\n')}
       render={() => (
-        <Button
-          icon={{ name: 'user', styles: { borderBottom: '4px solid red' } }}
-          content="Profile"
-        />
+        <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
       )}
     />
 
     <p>
-      Also you can style the <code>color</code> css property of a <code>Text</code> component.
+      You can also define <code>styles</code> for all components in a part of your render tree using
+      the <NavLink to="components/provider">Provider</NavLink>.
+    </p>
+    <p>
+      This is done with the Provider's <code>theme</code> prop. Styles are applied based on
+      component display name and slot name. Here's how we can style the <code>Button</code> and its{' '}
+      <code>icon</code> slot.
     </p>
     <ExampleSnippet
-      label="js"
       value={[
-        `const style = { color: 'green' }`,
+        `<Button icon="user" content="Profile" />`,
+        `<Button icon="user" content="Profile" />`,
         ``,
-        `<Text styles={{ style }}>This is green text</Text>`,
+        `<Provider`,
+        `  theme={{`,
+        `    componentStyles: {`,
+        `      Button: {`,
+        `        root: { boxShadow: '0 0 0 2px blue' },`,
+        `        icon: { boxShadow: '0 0 0 2px red' },`,
+        `        content: { boxShadow: '0 0 0 2px green' },`,
+        `      },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <span>`,
+        `    <Button icon="user" content="Profile" />`,
+        `    <Button icon="user" content="Profile" />`,
+        `  </span>`,
+        `</Provider>`,
       ].join('\n')}
-      render={() => <Text styles={{ color: 'green' }}>This is green text.</Text>}
+      render={() => (
+        <div>
+          <Button icon="user" content="Profile" />
+          <Button icon="user" content="Profile" />
+
+          <Provider
+            theme={{
+              componentStyles: {
+                Button: {
+                  root: { boxShadow: '0 0 0 2px blue' },
+                  icon: { boxShadow: '0 0 0 2px red' },
+                  content: { boxShadow: '0 0 0 2px green' },
+                },
+              },
+            }}
+          >
+            <span>
+              <Button icon="user" content="Profile" />
+              <Button icon="user" content="Profile" />
+            </span>
+          </Provider>
+        </div>
+      )}
+    />
+    <p>
+      You can style all components in your app by defining component styles on a{' '}
+      <NavLink to="components/provider">Provider</NavLink> at the root of your app.
+    </p>
+
+    <br />
+    <Divider size={1} />
+    <br />
+    <Button
+      as={NavLink}
+      content="Accessibility"
+      type="primary"
+      icon="arrow left"
+      iconPosition="before"
+      to="/accessibility"
+    />
+    <Button
+      as={NavLink}
+      content="Theming Examples"
+      type="primary"
+      icon="arrow right"
+      iconPosition="after"
+      to="theming-examples"
     />
   </DocPage>
 )

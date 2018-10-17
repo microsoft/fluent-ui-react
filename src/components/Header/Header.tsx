@@ -3,16 +3,22 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
+import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
 
 export interface IHeaderProps {
   as?: any
   children?: ReactChildren
   className?: string
   content?: React.ReactNode
-  description?: ItemShorthand
+  description?: ShorthandValue
   textAlign?: 'left' | 'center' | 'right' | 'justified'
+  renderDescription?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -37,10 +43,13 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
@@ -52,7 +61,16 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the description slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderDescription: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -63,21 +81,10 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
     as: 'h1',
   }
 
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'description',
-    'styles',
-    'textAlign',
-    'variables',
-  ]
-
   static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, variables: v, rest }) {
-    const { children, content, description: descriptionContentOrProps } = this.props
+    const { children, content, description, renderDescription } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -87,18 +94,17 @@ class Header extends UIComponent<Extendable<IHeaderProps>, any> {
       )
     }
 
-    const descriptionElement = HeaderDescription.create(descriptionContentOrProps, {
-      defaultProps: {
-        variables: {
-          ...(v.descriptionColor && { color: v.descriptionColor }),
-        },
-      },
-    })
-
     return (
       <ElementType {...rest} className={classes.root}>
         {content}
-        {descriptionElement}
+        {HeaderDescription.create(description, {
+          defaultProps: {
+            variables: {
+              ...(v.descriptionColor && { color: v.descriptionColor }),
+            },
+          },
+          render: renderDescription,
+        })}
       </ElementType>
     )
   }

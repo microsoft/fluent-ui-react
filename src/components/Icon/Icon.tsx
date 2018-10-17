@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { IconBehavior } from '../../lib/accessibility/'
+import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
 import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
@@ -50,7 +50,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     /** Icon can appear as circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** An icon can show it is currently unable to be interacted with. */
@@ -72,7 +72,7 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
       'massive',
     ]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -82,27 +82,13 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'bordered',
-    'circular',
-    'className',
-    'disabled',
-    'name',
-    'size',
-    'styles',
-    'variables',
-    'xSpacing',
-  ]
 
   static defaultProps = {
     as: 'span',
     size: 'normal',
-    accessibility: IconBehavior,
+    accessibility: iconBehavior,
   }
 
   private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {

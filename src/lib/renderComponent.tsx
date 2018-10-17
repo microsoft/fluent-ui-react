@@ -12,19 +12,18 @@ import {
   ComponentVariablesObject,
   IComponentPartClasses,
   IComponentPartStylesPrepared,
-  IProps,
   IPropsWithVarsAndStyles,
   IState,
   IThemePrepared,
 } from '../../types/theme'
+import { IProps } from '../../types/utils'
 import {
   IAccessibilityBehavior,
   IAccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
-  Accessibility,
 } from './accessibility/interfaces'
-import { DefaultBehavior } from './accessibility'
+import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import {
@@ -32,6 +31,7 @@ import {
   IFocusZone,
   FocusZone as FabricFocusZone,
 } from './accessibility/FocusZone'
+import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
 export interface IRenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -54,6 +54,7 @@ export interface IRenderConfig {
   props: IPropsWithVarsAndStyles
   state: IState
   actionHandlers: AccessibilityActionHandlers
+  focusZoneRef: (focusZone: IFocusZone) => void
 }
 
 const getAccessibility = (
@@ -61,9 +62,9 @@ const getAccessibility = (
   actionHandlers: AccessibilityActionHandlers,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: IAccessibilityDefinition = callable(
-    customAccessibility || defaultAccessibility || DefaultBehavior,
-  )(props)
+  const accessibility: IAccessibilityDefinition = (customAccessibility ||
+    defaultAccessibility ||
+    defaultBehavior)(props)
 
   const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
   return {
@@ -89,8 +90,32 @@ function wrapInGenericFocusZone<
   FocusZone: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
+  ref: (focusZone: IFocusZone) => void,
 ) {
-  return <FocusZone {...props}>{children}</FocusZone>
+  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
+  return (
+    <FocusZone ref={ref} {...props}>
+      {children}
+    </FocusZone>
+  )
+}
+
+const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
+    return wrapInGenericFocusZone(
+      FabricFocusZone,
+      focusZoneDefinition.props,
+      render(config),
+      focusZoneRef,
+    )
+  }
+  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+    const originalElementType = config.ElementType
+    config.ElementType = FabricFocusZone as any
+    config.rest = { ...config.rest, ...focusZoneDefinition.props }
+    config.rest.as = originalElementType
+  }
+  return render(config)
 }
 
 const renderComponent = <P extends {}>(
@@ -105,13 +130,14 @@ const renderComponent = <P extends {}>(
     props,
     state,
     actionHandlers,
+    focusZoneRef,
   } = config
 
   return (
     <FelaTheme
       render={(theme: IThemePrepared) => {
         const {
-          siteVariables = {},
+          siteVariables = { fontSizes: {} },
           componentVariables = {},
           componentStyles = {},
           rtl = false,
@@ -134,7 +160,10 @@ const renderComponent = <P extends {}>(
             root: props.styles,
           },
         )
-        const accessibility: Accessibility = getAccessibility(stateAndProps, actionHandlers)
+        const accessibility: IAccessibilityBehavior = getAccessibility(
+          stateAndProps,
+          actionHandlers,
+        )
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
@@ -163,12 +192,10 @@ const renderComponent = <P extends {}>(
           theme,
         }
 
-        const rendered = render(config)
-
-        if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
-          return wrapInGenericFocusZone(FabricFocusZone, accessibility.focusZone.props, rendered)
+        if (accessibility.focusZone) {
+          return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
-        return rendered
+        return render(config)
       }}
     />
   )

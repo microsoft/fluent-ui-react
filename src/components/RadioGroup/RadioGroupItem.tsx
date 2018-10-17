@@ -8,13 +8,14 @@ import Label from '../Label'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { RadioGroupItemBehavior } from '../../lib/accessibility'
+import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IRadioGroupItemProps {
@@ -24,23 +25,35 @@ export interface IRadioGroupItemProps {
   checkedChanged?: ComponentEventHandler<IRadioGroupItemProps>
   children?: ReactChildren
   className?: string
+  label?: React.ReactNode
   defaultChecked?: boolean
   disabled?: boolean
-  icon?: ItemShorthand
-  label?: string
+  icon?: ShorthandValue
   name?: string
+  renderIcon?: ShorthandRenderFunction
+  shouldFocus?: boolean // TODO: RFC #306
   styles?: ComponentPartStyle
   value?: string | number
   variables?: ComponentVariablesInput
-  isFromKeyboard?: boolean
+  [isFromKeyboard.propertyName]?: boolean
   vertical?: boolean
+}
+
+export interface IRadioGroupItemState {
+  checked: boolean
+  [isFromKeyboard.propertyName]: boolean
 }
 
 /**
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
-class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemProps>, any> {
+class RadioGroupItem extends AutoControlledComponent<
+  Extendable<IRadioGroupItemProps>,
+  IRadioGroupItemState
+> {
+  private elementRef: HTMLElement
+
   static create: Function
 
   static displayName = 'RadioGroupItem'
@@ -56,10 +69,13 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     /** Whether or not radio item is checked. */
     checked: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial checked value. */
@@ -78,7 +94,7 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     isFromKeyboard: PropTypes.bool,
 
     /** The label of the radio item. */
-    label: PropTypes.string,
+    label: customPropTypes.contentShorthand,
 
     /** The HTML input name. */
     name: PropTypes.string,
@@ -111,7 +127,19 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
      */
     checkedChanged: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
+    /** Whether should focus when checked */
+    shouldFocus: PropTypes.bool,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input value. */
@@ -124,66 +152,27 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
     vertical: PropTypes.bool,
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checked',
-    'checkedChanged',
-    'children',
-    'className',
-    'defaultChecked',
-    'defaultIsFromKeyboard',
-    'disabled',
-    'icon',
-    'isFromKeyboard',
-    'label',
-    'name',
-    'onBlur',
-    'onClick',
-    'onFocus',
-    'styles',
-    'value',
-    'variables',
-    'vertical',
-  ]
-
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupItemBehavior as Accessibility,
+    accessibility: radioGroupItemBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
 
-  elementRef: HTMLElement
+  componentDidUpdate(prevProps, prevState) {
+    const checked = this.state.checked
+    if (checked !== prevState.checked) {
+      checked && this.props.shouldFocus && this.elementRef.focus()
+      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
+    }
+  }
 
   componentDidMount() {
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const checked = this.state.checked
-    if (checked !== prevState.checked) {
-      checked && this.elementRef.focus()
-      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
-    }
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.initial)
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
-
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon } = this.props
+    const { label, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -202,12 +191,27 @@ class RadioGroupItem extends AutoControlledComponent<Extendable<IRadioGroupItemP
               size: 'mini',
               variables: variables.icon,
               styles: styles.icon,
+              render: renderIcon,
             },
           })}
           {label}
         </Label>
       </ElementType>
     )
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.state())
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.initial)
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 }
 

@@ -60,7 +60,7 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleUnderlined"
     />
     <ComponentExample
-      title="Underlined primary"
+      title="Underlined Primary"
       description="A menu can underline the active element."
       examplePath="components/Menu/Variations/MenuExampleUnderlinedPrimary"
     />
@@ -85,9 +85,24 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleIconOnly"
     />
     <ComponentExample
+      title="Icon Only Primary"
+      description="Menu can contain only icons."
+      examplePath="components/Menu/Variations/MenuExampleIconOnlyPrimary"
+    />
+    <ComponentExample
+      title="Icon Only Primary Inverted"
+      description="Menu can contain only icons."
+      examplePath="components/Menu/Variations/MenuExampleIconOnlyPrimaryInverted"
+    />
+    <ComponentExample
       title="Vertical Icon Only"
       description="Vertical menu can contain only icons."
       examplePath="components/Menu/Variations/MenuExampleIconOnlyVertical"
+    />
+    <ComponentExample
+      title="Vertical Icon Only Primary"
+      description="Vertical menu can contain only icons."
+      examplePath="components/Menu/Variations/MenuExampleIconOnlyVerticalPrimary"
     />
     <ComponentExample
       title="Menu as a Tab List"

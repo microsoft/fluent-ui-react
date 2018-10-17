@@ -2,29 +2,39 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
+import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
-import { ListBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { listBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import {
+  ContainerFocusHandler,
+  IFocusContainerProps,
+  IFocusContainerState,
+} from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 
-export interface IListProps {
+export interface IListProps extends IFocusContainerProps<ShorthandValue> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
   className?: string
   debug?: boolean
-  items?: ItemShorthand[]
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
+  renderItem?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
 
-class List extends UIComponent<Extendable<IListProps>, any> {
+class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -32,9 +42,13 @@ class List extends UIComponent<Extendable<IListProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Toggle debug mode */
@@ -53,9 +67,19 @@ class List extends UIComponent<Extendable<IListProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render iterator for rendering each of the List items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
@@ -64,43 +88,50 @@ class List extends UIComponent<Extendable<IListProps>, any> {
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior as Accessibility,
+    accessibility: listBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'debug',
-    'items',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
 
   static Item = ListItem
 
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  private focusContainer = ContainerFocusHandler.create(this)
+
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNext: this.focusContainer.moveNext.bind(this.focusContainer),
+    movePrevious: this.focusContainer.movePrevious.bind(this.focusContainer),
+    moveFirst: this.focusContainer.moveFirst.bind(this.focusContainer),
+    moveLast: this.focusContainer.moveLast.bind(this.focusContainer),
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
   }
 
   renderItems() {
-    const { items } = this.props
+    const { items, renderItem } = this.props
     const itemProps = _.pick(this.props, List.itemProps)
 
-    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
+    return _.map(items, (item, idx) => {
+      itemProps.focusableItemProps = this.focusContainer.createItemProps(idx, items.length)
+
+      return ListItem.create(item, {
+        defaultProps: itemProps,
+        render: renderItem,
+      })
+    })
   }
 }
 

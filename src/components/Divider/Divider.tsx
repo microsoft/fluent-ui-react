@@ -10,6 +10,7 @@ export interface IDividerProps {
   children?: ReactChildren
   className?: string
   content?: React.ReactNode
+  fitted?: boolean
   size?: number
   type?: 'primary' | 'secondary'
   important?: boolean
@@ -31,14 +32,20 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+
+    /** A divider can be fitted, without any space above or below it.  */
+    fitted: PropTypes.bool,
 
     /** Size multiplier (default 0) * */
     size: PropTypes.number,
@@ -49,24 +56,12 @@ class Divider extends UIComponent<Extendable<IDividerProps>, any> {
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'className',
-    'content',
-    'important',
-    'size',
-    'styles',
-    'type',
-    'variables',
-  ]
 
   static defaultProps = {
     size: 0,

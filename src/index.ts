@@ -1,11 +1,14 @@
 import * as themes from './themes'
+
 export { themes }
 
 export { default as Accordion } from './components/Accordion'
+export { default as Attachment } from './components/Attachment'
 export { default as Avatar } from './components/Avatar'
 export { default as Button } from './components/Button'
 export { ButtonGroup } from './components/Button'
 export { default as Chat } from './components/Chat'
+export { ChatItem } from './components/Chat'
 export { ChatMessage } from './components/Chat'
 export { default as Divider } from './components/Divider'
 export { default as Grid } from './components/Grid'
@@ -27,19 +30,30 @@ export { default as RadioGroup } from './components/RadioGroup'
 export { RadioGroupItem } from './components/RadioGroup'
 export { default as Segment } from './components/Segment'
 export { default as Status } from './components/Status'
-export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/TabBehavior'
-export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/TabListBehavior'
+export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
+export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as Text } from './components/Text'
-export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/ToolbarBehavior'
+export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
   default as ToolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/ToolbarButtonBehavior'
+} from './lib/accessibility/Behaviors/Toolbar/toolbarButtonBehavior'
 export {
   default as RadioGroupBehavior,
-} from './lib/accessibility/Behaviors/Radio/RadioGroupBehavior'
+} from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
 export {
   default as RadioGroupItemBehavior,
-} from './lib/accessibility/Behaviors/Radio/RadioGroupItemBehavior'
+} from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
+export { default as ChatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
+export {
+  default as ChatMessageBehavior,
+} from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
+export {
+  default as ChatBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/chatEnterEscBehavior'
+export {
+  default as ChatMessageBehaviorEnterEsc,
+} from './lib/accessibility/Behaviors/Chat/chatMessageEnterEscBehavior'
+
 export { default as Portal } from './components/Portal'
 export { default as Popup } from './components/Popup'
 export { PopupContent } from './components/Popup'
