@@ -37,8 +37,11 @@ class PortalExampleFocusTrapped extends React.Component {
               }}
             >
               <Header>This is a portal with focus trap!</Header>
-              <p tabIndex={0}>Portals have tons of great callback functions to hook into.</p>
-              <p tabIndex={0}>To close, simply click the close button or click away</p>
+              <p tabIndex={0}>
+                Portal doesn't close on outside click, as 'isClickableOutsideFocusTrap' was set to
+                'false' for example purpose.
+              </p>
+              <p tabIndex={0}>To close, simply click the close button</p>
               <Button size="small" content="Do nothing" />
               <Button size="small" content="Close popup" onClick={this.closePortal} />
             </div>

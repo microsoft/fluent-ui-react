@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
-
+import * as _ from 'lodash'
 import eventStack from '../../eventStack'
 
 import {
@@ -43,19 +43,14 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
-  static handledProps = [
-    'as',
-    'className',
-    'componentRef',
-    'elementToFocusOnDismiss',
-    'ariaLabelledBy',
-    'isClickableOutsideFocusTrap',
-    'ignoreExternalFocusing',
-    'forceFocusInsideTrap',
-    'firstFocusableSelector',
-    'disableFirstFocus',
-    'focusPreviouslyFocusedInnerElement',
-  ]
+  private static _handledPropsCache: string[] = undefined
+  static get handledProps() {
+    if (!this._handledPropsCache) {
+      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
+    }
+
+    return this._handledPropsCache
+  }
 
   static defaultProps: IFocusTrapZoneProps = {
     as: 'div',
@@ -82,7 +77,12 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
   public render(): JSX.Element {
     const { className, ariaLabelledBy } = this.props
-    const rest = getUnhandledProps({ handledProps: FocusTrapZone.handledProps }, this.props)
+    const rest = getUnhandledProps(
+      { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
+      this.props,
+    )
+    console.log('FocusTrapZone.handledProps', FocusTrapZone.handledProps)
+    console.log('rest', rest)
     const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (
@@ -287,9 +287,9 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
   }
 
   private _hideContentFromAccessibilityTree = () => {
-    const elements = (document.body && document.body.children) || []
+    const bodyChildren = (document.body && document.body.children) || []
 
-    if (elements.length && !document.body.contains(this._root.current)) {
+    if (bodyChildren.length && !document.body.contains(this._root.current)) {
       // In case popup render options will change
       throw new Error(
         'Body does not contain trap zone element as expected. If it is done intentionally, please, make sure to update FocusTrapZone.',
@@ -297,14 +297,10 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
 
     // loop through all body's children, except the last one - which is the popup
-    for (let index = 0; index < elements.length - 1; index++) {
-      const element = elements[index]
+    for (let index = 0; index < bodyChildren.length - 1; index++) {
+      const element = bodyChildren[index]
 
-      if (
-        element.nodeName !== 'SCRIPT' &&
-        element.nodeName !== 'STYLE' &&
-        element.getAttribute('aria-hidden') !== 'true'
-      ) {
+      if (element.getAttribute('aria-hidden') !== 'true') {
         element.setAttribute('aria-hidden', 'true')
         element.setAttribute(HIDDEN_FROM_ACC_TREE, 'true')
       }

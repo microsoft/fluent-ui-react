@@ -439,7 +439,7 @@ export function focusAsync(element: HTMLElement | { focus: () => void } | undefi
  * @public
  */
 export function getWindow(rootElement?: Element | null): Window | undefined {
-  return rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView
-    ? rootElement.ownerDocument.defaultView
-    : window
+  return (
+    (rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView) || window
+  )
 }
