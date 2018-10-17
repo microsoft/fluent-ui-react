@@ -6,11 +6,8 @@ import {
   ShorthandPrimitive,
   ShorthandRenderFunction,
   ShorthandValue,
+  IProps,
 } from '../../types/utils'
-
-interface IProps {
-  [key: string]: any
-}
 
 interface ICreateShorthandOptions {
   /** Override the default render implementation. */
