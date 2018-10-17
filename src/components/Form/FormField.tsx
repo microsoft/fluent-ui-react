@@ -11,6 +11,7 @@ import {
 } from '../../../types/utils'
 import Text from '../Text'
 import { createSlotFactory } from '../Slot/Slot'
+import { withFormsy } from 'formsy-react'
 
 export interface IFormFieldProps {
   as?: any
@@ -109,6 +110,9 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    validations: PropTypes.any,
+    validationErrors: PropTypes.any,
   }
 
   public static defaultProps = {
@@ -152,9 +156,22 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       render: renderMessage,
     })
 
+    const systemMessageElement = Text.create(this.props.getErrorMessage(), {
+      defaultProps: {
+        styles: styles.systemMessage,
+      },
+      render: renderMessage,
+    })
+
     const factoryMethod = createSlotFactory(controlType, name => ({ name }))
     const controlElement = factoryMethod(control || {}, {
-      defaultProps: { required, ...rest, styles: styles.control },
+      defaultProps: {
+        required,
+        value: this.props.getValue(),
+        onChange: e => this.props.setValue(e.target.value),
+        styles: styles.control,
+        ...rest,
+      },
       render: renderControl,
     })
 
@@ -172,6 +189,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
           </>
         )}
         {messageElement}
+        {systemMessageElement}
       </>
     )
 
@@ -188,6 +206,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, label => ({ label }))
-
+const FormFieldWithFormsy = withFormsy(FormField)
+FormFieldWithFormsy.create = createShorthandFactory(FormFieldWithFormsy, name => ({ name }))
+export const FormsyFormField = FormFieldWithFormsy
 export default FormField

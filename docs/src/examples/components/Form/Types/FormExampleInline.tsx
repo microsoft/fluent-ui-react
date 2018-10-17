@@ -28,8 +28,9 @@ const FormExample = () => (
       controlType="input"
       type="checkbox"
       id="conditions"
+      name="conditions"
     />
-    <Form.Field controlType={Button} content="Submit" />
+    <Button content="Submit" />
   </Form>
 )
 

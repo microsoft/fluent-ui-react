@@ -11,13 +11,19 @@ const formFieldStyles: IComponentPartStylesInput<IFormProps, any> = {
         display: 'block',
       }),
       ...(inline && { marginRight: pxToRem(10), display: 'inline' }),
-      '::after': {
-        content: required ? '"*"' : '""',
-      },
+      ...(required && {
+        '::after': {
+          content: '"*"',
+        },
+      }),
     }
   },
   message: (): ICSSInJSStyle => ({
     display: 'block',
+  }),
+  systemMessage: (): ICSSInJSStyle => ({
+    display: 'block',
+    color: 'red',
   }),
 }
 

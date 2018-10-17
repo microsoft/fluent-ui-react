@@ -11,7 +11,8 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import FormField from './FormField'
+import { FormsyFormField } from './FormField'
+import Formsy from 'formsy-react'
 
 export interface IFormProps {
   action?: string
@@ -86,7 +87,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     as: 'form',
   }
 
-  public static Field = FormField
+  public static Field = FormsyFormField
 
   public renderComponent({
     ElementType,
@@ -98,7 +99,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
   }): React.ReactNode {
     const { as, action, children } = this.props
     return (
-      <ElementType
+      <Formsy
         className={classes.root}
         as={as}
         action={action}
@@ -106,7 +107,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
         {...rest}
       >
         {childrenExist(children) ? children : this.renderFields()}
-      </ElementType>
+      </Formsy>
     )
   }
 
@@ -122,7 +123,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
   private renderFields = () => {
     const { fields, renderField } = this.props
     return _.map(fields, field =>
-      FormField.create(field, {
+      Form.Field.create(field, {
         render: renderField,
       }),
     )
