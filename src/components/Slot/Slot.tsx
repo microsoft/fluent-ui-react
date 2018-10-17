@@ -1,6 +1,12 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist, createShorthand } from '../../lib'
+import {
+  customPropTypes,
+  UIComponent,
+  childrenExist,
+  IRenderResultConfig,
+  createShorthand,
+} from '../../lib'
 import { Extendable, MapValueToProps, IProps } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
@@ -49,7 +55,10 @@ class Slot extends UIComponent<Extendable<ISlotProps>, any> {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+  static createHTMLInput = createSlotFactory('input', type => ({ type }))
+
+  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ISlotProps>) {
     const { children, content } = this.props
 
     return (
@@ -58,8 +67,6 @@ class Slot extends UIComponent<Extendable<ISlotProps>, any> {
       </ElementType>
     )
   }
-
-  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
 }
 
 export default Slot
