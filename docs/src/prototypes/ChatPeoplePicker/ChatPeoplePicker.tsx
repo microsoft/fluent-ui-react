@@ -154,7 +154,20 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             highlightedIndex,
             selectItemAtIndex,
             getLabelProps,
+            getRootProps,
           }) => {
+            // making the input attributes aria 1.0 conformant
+            const inputIntegratedProps = {
+              ...getRootProps({ refKey: undefined }, { suppressRefError: true }),
+              ...getInputProps({
+                onBlur: this.onInputBlur,
+                onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
+              }),
+              'aria-haspopup': true,
+              'aria-controls': undefined,
+              'aria-labelledby': undefined,
+            }
+
             return (
               <div>
                 <Label
@@ -163,7 +176,6 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   {...getLabelProps()}
                 />
                 <div
-                  role="presentation"
                   style={{
                     ...peoplePickerStyles.containerDiv,
                     ...(this.state.focused && peoplePickerStyles.containerDivFocused),
@@ -209,15 +221,11 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     input={{
                       type: 'text',
                       style: peoplePickerStyles.editText.input,
-                      placeholder: this.state.selected.length > 0 ? '' : 'Start typing a name',
-                      ...getInputProps({
-                        onBlur: this.onInputBlur,
-                        onKeyDown: this.onInputKeyDown.bind(
-                          this,
-                          highlightedIndex,
-                          selectItemAtIndex,
-                        ),
-                      }),
+                      placeholder:
+                        this.state.selected.length > 0 || this.state.inputValue.length > 0
+                          ? ''
+                          : 'Start typing a name',
+                      ...inputIntegratedProps,
                     }}
                   />
                 </div>
