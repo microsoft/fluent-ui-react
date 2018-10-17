@@ -20,7 +20,7 @@ interface ICreateShorthandOptions {
   defaultProps?: IProps
 
   /** Override props object or function (called with regular props) */
-  overrideProps?: IProps | ((props: IProps) => IProps)
+  overrideProps?: IProps & ((props: IProps) => IProps) | IProps
 
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
@@ -86,7 +86,7 @@ export function createShorthand(
   let { overrideProps } = options
   overrideProps =
     typeof overrideProps === 'function'
-      ? overrideProps({ ...defaultProps, ...usersProps })
+      ? (overrideProps as Function)({ ...defaultProps, ...usersProps })
       : overrideProps || {}
 
   // Merge props
