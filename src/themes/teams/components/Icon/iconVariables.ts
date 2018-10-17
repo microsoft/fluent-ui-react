@@ -11,7 +11,7 @@ export interface IconVariables {
 }
 
 export default (siteVars): IconVariables => ({
-  secondaryColor: siteVars.white,
+  secondaryColor: 'white',
   color: undefined, // siteVars.gray02,
   borderColor: undefined, // siteVars.gray02,
   disabledColor: siteVars.gray06,

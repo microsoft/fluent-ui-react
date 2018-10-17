@@ -114,10 +114,9 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
   },
 
   svg: getSvgStyle('svg'),
-
   g: getSvgStyle('g'),
-
   path: getSvgStyle('path'),
+  secondaryPath: getSvgStyle('secondaryPath'),
 }
 
 export default iconStyles
