@@ -6,11 +6,16 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
-import { RadioGroupBehavior } from '../../lib/accessibility'
+import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 
 export interface IRadioGroupProps {
   accessibility?: Accessibility
@@ -19,7 +24,8 @@ export interface IRadioGroupProps {
   children?: ReactChildren
   className?: string
   defaultCheckedValue?: number | string
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
+  renderItem?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
   vertical?: boolean
@@ -64,6 +70,16 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
      */
     checkedValueChanged: PropTypes.func,
 
+    /**
+     * A custom render iterator for rendering each of the RadioGroup items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -76,7 +92,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupBehavior as Accessibility,
+    accessibility: radioGroupBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checkedValue']
@@ -167,13 +183,17 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     shouldFocus: this.state.shouldFocus,
   })
 
-  private renderItems = (vertical: boolean) =>
-    _.map(this.props.items, item =>
+  private renderItems = (vertical: boolean) => {
+    const { items, renderItem } = this.props
+
+    return _.map(items, item =>
       RadioGroupItem.create(item, {
         defaultProps: { vertical },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
+  }
 
   private setCheckedValue({
     checkedValue,

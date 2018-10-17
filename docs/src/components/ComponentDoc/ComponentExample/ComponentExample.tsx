@@ -30,7 +30,6 @@ export interface IComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
   description: string
   examplePath: string
-  suiVersion?: string
   themeName?: string
 }
 
@@ -98,7 +97,6 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    suiVersion: PropTypes.string,
     title: PropTypes.node,
     themeName: PropTypes.string,
   }
@@ -402,7 +400,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
-        className: disabled && 'crossout',
+        ...(disabled && { className: 'crossout' }),
       }
     })
 
@@ -606,7 +604,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 
   public render() {
-    const { children, description, suiVersion, title } = this.props
+    const { children, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -656,11 +654,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: '1' }}>
-                <ComponentExampleTitle
-                  description={description}
-                  title={title}
-                  suiVersion={suiVersion}
-                />
+                <ComponentExampleTitle description={description} title={title} />
               </div>
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
@@ -687,13 +681,24 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
             </Grid.Column>
           )}
 
-          <Grid.Column
-            width={16}
-            className={`rendered-example ${this.getKebabExamplePath()}`}
-            style={{ padding: '2rem' }}
-          >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
-          </Grid.Column>
+          <Provider.Consumer
+            render={({ siteVariables }) => {
+              return (
+                <Grid.Column
+                  width={16}
+                  dir={showRtl ? 'rtl' : undefined}
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  style={{
+                    padding: '2rem',
+                    backgroundColor: siteVariables.bodyBackground,
+                    color: siteVariables.bodyColor,
+                  }}
+                >
+                  {exampleElement}
+                </Grid.Column>
+              )
+            }}
+          />
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}
             {this.renderError()}

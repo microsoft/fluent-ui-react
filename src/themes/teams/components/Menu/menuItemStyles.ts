@@ -264,7 +264,7 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
         ...(type === 'primary'
           ? {
               ...(iconOnly && { color: v.typePrimaryActiveBorderColor }),
-              ...(!active && underlined && underlinedItem(v.typePrimaryHoverBorderColor)),
+              ...(!active && underlined && underlinedItem(v.typePrimaryHoverBorderColor as string)),
             }
           : !active && underlined && underlinedItem(v.defaultActiveBackgroundColor)),
       },

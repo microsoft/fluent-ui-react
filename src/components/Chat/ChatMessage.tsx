@@ -12,26 +12,37 @@ import {
 import {
   ComponentPartStyle,
   ComponentVariablesInput,
+  IComponentPartClasses,
   IComponentPartStylesInput,
 } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 import Avatar from '../Avatar'
-import ChatMessageBehavior from '../../lib/accessibility/Behaviors/Chat/ChatMessageBehavior'
+import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Layout from '../Layout'
 import Text from '../Text'
+import Slot from '../Slot/Slot'
 
 export interface IChatMessageProps {
   accessibility?: Accessibility
   as?: any
-  author?: ItemShorthand
-  avatar?: ItemShorthand
+  author?: ShorthandValue
+  avatar?: ShorthandValue
   children?: ReactChildren
   className?: string
   content?: any
   mine?: boolean
+  renderAuthor?: ShorthandRenderFunction
+  renderAvatar?: ShorthandRenderFunction
+  renderContent?: ShorthandRenderFunction
+  renderTimestamp?: ShorthandRenderFunction
   styles?: ComponentPartStyle
-  timestamp?: ItemShorthand
+  timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
 }
 
@@ -70,6 +81,42 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
 
+    /**
+     * A custom render function the author slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderAuthor: PropTypes.func,
+
+    /**
+     * A custom render function the avatar slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderAvatar: PropTypes.func,
+
+    /**
+     * A custom render function the content slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
+
+    /**
+     * A custom render function the timestamp slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderTimestamp: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -81,7 +128,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: ChatMessageBehavior as Accessibility,
+    accessibility: chatMessageBehavior as Accessibility,
     as: 'div',
   }
 
@@ -100,19 +147,10 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     styles,
     variables,
   }: IRenderResultConfig<IChatMessageProps>) {
-    const { avatar, children, mine } = this.props
+    const { children } = this.props
 
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
-    const content = childrenPropExists ? (
-      children
-    ) : (
-      <Layout
-        start={!mine && this.renderAvatar(avatar, styles.avatar, variables)}
-        main={this.renderContent(classes.content, styles, variables)}
-        end={mine && this.renderAvatar(avatar, styles.avatar, variables)}
-      />
-    )
 
     return (
       <ElementType
@@ -121,62 +159,81 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {content}
+        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
       </ElementType>
     )
   }
 
-  private renderContent = (
-    contentClass: string,
+  renderContent = (
+    classes: IComponentPartClasses,
     styles: IComponentPartStylesInput,
     variables: ComponentVariablesInput,
   ) => {
-    const { author, content, mine, timestamp } = this.props
+    const {
+      author,
+      avatar,
+      content,
+      mine,
+      renderAuthor,
+      renderAvatar,
+      renderTimestamp,
+      renderContent,
+      timestamp,
+    } = this.props
 
-    const authorComponent = Text.create(author, {
+    const avatarElement = Avatar.create(avatar, {
+      defaultProps: {
+        styles: styles.avatar,
+        variables: variables.avatar,
+      },
+      render: renderAvatar,
+    })
+
+    const authorElement = Text.create(author, {
       defaultProps: {
         size: 'small',
         styles: styles.author,
         variables: variables.author,
       },
+      render: renderAuthor,
     })
 
-    const timestampComponent = Text.create(timestamp, {
+    const timestampElement = Text.create(timestamp, {
       defaultProps: {
         size: 'small',
         timestamp: true,
         styles: styles.timestamp,
         variables: variables.timestamp,
       },
+      render: renderTimestamp,
+    })
+
+    const contentElement = Slot.create(content, {
+      styles: styles.content,
+      variables: variables.content,
+      render: renderContent,
     })
 
     return (
       <Layout
-        className={contentClass}
-        vertical
-        start={
-          <>
-            {!mine && authorComponent}
-            {timestampComponent}
-          </>
+        start={!mine && avatarElement}
+        main={
+          <Layout
+            className={classes.content}
+            vertical
+            start={
+              <>
+                {!mine && authorElement}
+                {timestampElement}
+              </>
+            }
+            main={contentElement}
+          />
         }
-        main={content}
+        end={mine && avatarElement}
       />
     )
   }
-
-  private renderAvatar = (
-    avatar: ItemShorthand,
-    avatarStyles: ComponentPartStyle,
-    variables: ComponentVariablesInput,
-  ) =>
-    avatar &&
-    Avatar.create(avatar, {
-      defaultProps: {
-        styles: avatarStyles,
-        variables: variables.avatar,
-      },
-    })
 }
 
 ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))

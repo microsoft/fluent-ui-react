@@ -3,10 +3,10 @@ import * as React from 'react'
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
-import { ToolbarBehavior, TabListBehavior } from '../../../../src/lib/accessibility'
+import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
-import { MenuBehavior } from 'src/lib/accessibility'
+import { menuBehavior } from 'src/lib/accessibility'
 import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
@@ -74,7 +74,7 @@ describe('Menu', () => {
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
-        focusZoneDefinition: (MenuBehavior as IAccessibilityDefinition).focusZone,
+        focusZoneDefinition: (menuBehavior as IAccessibilityDefinition).focusZone,
       })
 
       test('aria-label should be added to the menu', () => {
@@ -100,7 +100,7 @@ describe('Menu', () => {
         test('root role should be toolbar', () => {
           const menuItemComponent = getTestingRenderedComponent(
             Menu,
-            <Menu accessibility={ToolbarBehavior} />,
+            <Menu accessibility={toolbarBehavior} />,
           )
           expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('toolbar')
         })
@@ -110,7 +110,7 @@ describe('Menu', () => {
         test('root role should be tablist', () => {
           const menuItemComponent = getTestingRenderedComponent(
             Menu,
-            <Menu accessibility={TabListBehavior} />,
+            <Menu accessibility={tabListBehavior} />,
           )
           expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('tablist')
         })

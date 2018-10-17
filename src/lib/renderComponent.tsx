@@ -12,19 +12,18 @@ import {
   ComponentVariablesObject,
   IComponentPartClasses,
   IComponentPartStylesPrepared,
-  IProps,
   IPropsWithVarsAndStyles,
   IState,
   IThemePrepared,
 } from '../../types/theme'
+import { IProps } from '../../types/utils'
 import {
   IAccessibilityBehavior,
   IAccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
-  Accessibility,
 } from './accessibility/interfaces'
-import { DefaultBehavior } from './accessibility'
+import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import {
@@ -63,9 +62,9 @@ const getAccessibility = (
   actionHandlers: AccessibilityActionHandlers,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: IAccessibilityDefinition = callable(
-    customAccessibility || defaultAccessibility || DefaultBehavior,
-  )(props)
+  const accessibility: IAccessibilityDefinition = (customAccessibility ||
+    defaultAccessibility ||
+    defaultBehavior)(props)
 
   const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
   return {
@@ -161,7 +160,10 @@ const renderComponent = <P extends {}>(
             root: props.styles,
           },
         )
-        const accessibility: Accessibility = getAccessibility(stateAndProps, actionHandlers)
+        const accessibility: IAccessibilityBehavior = getAccessibility(
+          stateAndProps,
+          actionHandlers,
+        )
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,

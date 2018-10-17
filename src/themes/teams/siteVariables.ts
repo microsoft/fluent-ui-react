@@ -39,6 +39,11 @@ export const green = '#92C353'
 export const green04 = '#237b4b'
 
 //
+// SHADOW LEVELS
+//
+export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
+
+//
 // FONT SIZES
 //
 export const fontSizes = {
@@ -87,5 +92,6 @@ export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
 export const bodyFontSize = '1.4rem'
+export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase

@@ -2,7 +2,7 @@ import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import ButtonGroup from 'src/components/Button/ButtonGroup'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import Button from 'src/components/Button'
-import { ButtonGroupBehavior } from '../../../../src/lib/accessibility'
+import { buttonGroupBehavior } from '../../../../src/lib/accessibility'
 import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 const buttonGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
@@ -14,7 +14,7 @@ describe('ButtonGroup', () => {
   describe('accessibility', () => {
     handlesAccessibility(ButtonGroup, {
       defaultRootRole: 'presentation',
-      focusZoneDefinition: (ButtonGroupBehavior as IAccessibilityDefinition).focusZone,
+      focusZoneDefinition: (buttonGroupBehavior as IAccessibilityDefinition).focusZone,
     })
   })
 })

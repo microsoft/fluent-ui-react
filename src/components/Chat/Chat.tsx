@@ -6,16 +6,22 @@ import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
-import ChatBehavior from '../../lib/accessibility/Behaviors/Chat/ChatBehavior'
+import { chatBehavior } from '../../lib/accessibility'
 
 export interface IChatProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   children?: ReactChildren
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
+  renderItem?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
 }
@@ -44,6 +50,16 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     /** Shorthand array of the items inside the chat. */
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
 
+    /**
+     * A custom render iterator for rendering each of the Chat items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -51,7 +67,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static defaultProps = { accessibility: ChatBehavior as Accessibility, as: 'ul' }
+  static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }
 
   static Item = ChatItem
   static Message = ChatMessage
@@ -61,7 +77,7 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, items } = this.props
+    const { children, items, renderItem } = this.props
 
     return (
       <ElementType
@@ -70,7 +86,9 @@ class Chat extends UIComponent<Extendable<IChatProps>, any> {
         {...accessibility.keyHandlers.root}
         {...rest}
       >
-        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
+        {childrenExist(children)
+          ? children
+          : _.map(items, item => ChatItem.create(item, { render: renderItem }))}
       </ElementType>
     )
   }

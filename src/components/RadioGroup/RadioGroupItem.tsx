@@ -8,13 +8,14 @@ import Label from '../Label'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/interfaces'
-import { RadioGroupItemBehavior } from '../../lib/accessibility'
+import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface IRadioGroupItemProps {
@@ -27,8 +28,9 @@ export interface IRadioGroupItemProps {
   label?: React.ReactNode
   defaultChecked?: boolean
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   name?: string
+  renderIcon?: ShorthandRenderFunction
   shouldFocus?: boolean // TODO: RFC #306
   styles?: ComponentPartStyle
   value?: string | number
@@ -125,6 +127,15 @@ class RadioGroupItem extends AutoControlledComponent<
      */
     checkedChanged: PropTypes.func,
 
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
     /** Whether should focus when checked */
     shouldFocus: PropTypes.bool,
 
@@ -143,7 +154,7 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupItemBehavior as Accessibility,
+    accessibility: radioGroupItemBehavior as Accessibility,
   }
 
   static autoControlledProps = ['checked', isFromKeyboard.propertyName]
@@ -161,7 +172,7 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon } = this.props
+    const { label, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -180,6 +191,7 @@ class RadioGroupItem extends AutoControlledComponent<
               size: 'mini',
               variables: variables.icon,
               styles: styles.icon,
+              render: renderIcon,
             },
           })}
           {label}

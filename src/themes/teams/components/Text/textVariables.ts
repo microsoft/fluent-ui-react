@@ -1,65 +1,65 @@
 export interface ITextVariables {
-  importantTextColor: string
-  importantWeight: number
-  textWeightLight: number
-  textWeightSemilight: number
-  textWeightRegular: number
-  textWeightSemibold: number
-  textWeightBold: number
+  atMentionMeColor: string
   atMentionMeFontWeight: number
-  atMentionMeTextColor: string
-  atMentionOtherTextColor: string
-  disabledTextColor: string
-  errorTextColor: string
-  successTextColor: string
-  timestampTextColor: string
-  timestampHoverTextColor: string
-  textExtraSmallFontSize: string
-  textExtraSmallLineHeight: number
-  textSmallFontSize: string
-  textSmallLineHeight: number
-  textMediumFontSize: string
-  textMediumLineHeight: number
-  textLargeFontSize: string
-  textLargeLineHeight: number
-  textExtraLargeFontSize: string
-  textExtraLargeLineHeight: number
+  atMentionOtherColor: string
+  disabledColor: string
+  errorColor: string
+  importantColor: string
+  importantWeight: number
+  successColor: string
+  timestampColor: string
+  timestampHoverColor: string
+
+  fontSizeExtraSmall: string
+  fontLineHeightExtraSmall: number
+  fontSizeSmall: string
+  fontLineHeightSmall: number
+  fontSizeMedium: string
+  fontLineHeightMedium: number
+  fontSizeLarge: string
+  fontLineHeightLarge: number
+  fontSizeExtraLarge: string
+  fontLineHeightExtraLarge: number
+
+  fontWeightLight: number
+  fontWeightSemilight: number
+  fontWeightRegular: number
+  fontWeightSemibold: number
+  fontWeightBold: number
 }
 
 export default (siteVariables): ITextVariables => {
   return {
-    atMentionOtherTextColor: siteVariables.brand06,
-    atMentionMeTextColor: siteVariables.orange04,
+    atMentionOtherColor: siteVariables.brand06,
+    atMentionMeColor: siteVariables.orange04,
     atMentionMeFontWeight: siteVariables.fontWeightBold,
-
-    disabledTextColor: siteVariables.gray06,
-    errorTextColor: siteVariables.red,
-    successTextColor: siteVariables.green04,
-    timestampTextColor: siteVariables.gray04,
-    timestampHoverTextColor: siteVariables.gray02,
-
-    textExtraSmallFontSize: siteVariables.fontSizes.smaller,
-    textExtraSmallLineHeight: siteVariables.lineHeightExtraSmall,
-
-    textSmallFontSize: siteVariables.fontSizes.small,
-    textSmallLineHeight: siteVariables.lineHeightSmall,
-
-    textMediumFontSize: siteVariables.fontSizes.medium,
-    textMediumLineHeight: siteVariables.lineHeightBase,
-
-    textLargeFontSize: siteVariables.fontSizes.large,
-    textLargeLineHeight: siteVariables.lineHeightSmall,
-
-    textExtraLargeFontSize: siteVariables.fontSizes.larger,
-    textExtraLargeLineHeight: siteVariables.lineHeightSmall,
-
+    disabledColor: siteVariables.gray06,
+    errorColor: siteVariables.red,
     importantWeight: siteVariables.fontWeightBold,
-    importantTextColor: siteVariables.red,
+    importantColor: siteVariables.red,
+    successColor: siteVariables.green04,
+    timestampColor: siteVariables.gray04,
+    timestampHoverColor: siteVariables.gray02,
 
-    textWeightLight: siteVariables.fontWeightLight,
-    textWeightSemilight: siteVariables.fontWeightSemilight,
-    textWeightRegular: siteVariables.fontWeightRegular,
-    textWeightSemibold: siteVariables.fontWeightSemibold,
-    textWeightBold: siteVariables.fontWeightBold,
+    fontSizeExtraSmall: siteVariables.fontSizes.smaller,
+    fontLineHeightExtraSmall: siteVariables.lineHeightExtraSmall,
+
+    fontSizeSmall: siteVariables.fontSizes.small,
+    fontLineHeightSmall: siteVariables.lineHeightSmall,
+
+    fontSizeMedium: siteVariables.fontSizes.medium,
+    fontLineHeightMedium: siteVariables.lineHeightBase,
+
+    fontSizeLarge: siteVariables.fontSizes.large,
+    fontLineHeightLarge: siteVariables.lineHeightSmall,
+
+    fontSizeExtraLarge: siteVariables.fontSizes.larger,
+    fontLineHeightExtraLarge: siteVariables.lineHeightSmall,
+
+    fontWeightLight: siteVariables.fontWeightLight,
+    fontWeightSemilight: siteVariables.fontWeightSemilight,
+    fontWeightRegular: siteVariables.fontWeightRegular,
+    fontWeightSemibold: siteVariables.fontWeightSemibold,
+    fontWeightBold: siteVariables.fontWeightBold,
   }
 }
