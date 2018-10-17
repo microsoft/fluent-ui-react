@@ -113,7 +113,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
@@ -131,7 +130,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
         headerCSS={styles.header}

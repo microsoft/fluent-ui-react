@@ -15,7 +15,7 @@ const hoverStyle = variables => ({
   '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
 
   // show the end media on hover
-  '& .ui-item-layout__endMedia': { display: 'unset', color: 'inherit' },
+  '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
 })
 
 const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
@@ -23,7 +23,7 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
     ...(selection && {
       position: 'relative',
 
-      // show the end media on hover
+      // hide the end media by default
       '& .ui-item-layout__endMedia': { display: 'none' },
 
       '&:hover': hoverStyle(variables),
