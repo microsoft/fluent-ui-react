@@ -97,7 +97,9 @@ export default App;
     //////// CREATE TEST REACT APP ///////
     log('STEP 1. Create test React project with TSX scripts..')
 
-    const testAppPath = paths.withRootAt(await createReactApp(tmp.dirSync().name, 'test-app'))
+    const testAppPath = paths.withRootAt(
+      await createReactApp(tmp.dirSync({ prefix: 'stardust-' }).name, 'test-app'),
+    )
 
     const runInTestApp = runIn(testAppPath())
     log(`Test React project is successfully created: ${testAppPath()}`)
@@ -105,7 +107,7 @@ export default App;
     //////// ADD STARDUST AS A DEPENDENCY ///////
     log('STEP 2. Add Stardust dependency to test project..')
 
-    await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
+    await runInTestApp(`npm install add ${paths.base(stardustPackageFilename)}`)
     log("Stardust is successfully added as test project's dependency.")
 
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
