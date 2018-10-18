@@ -32,10 +32,14 @@ class FormExample extends React.Component {
         validations: {
           isEmail: true,
           maxLength: 50,
+          isMicrosoft: value => {
+            return !value.email || value.email.endsWith('@microsoft.com')
+          },
         },
         validationErrors: {
           isEmail: 'You have to type valid email',
           maxLength: 'You can not type in more than 50 characters',
+          isMicrosoft: 'The email must be @microsoft.com',
         },
       },
       {
