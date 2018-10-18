@@ -274,6 +274,14 @@ class Sidebar extends React.Component<any, any> {
                   >
                     Meeting Options
                   </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-reactive-conf-speakers"
+                    activeClassName="active"
+                  >
+                    ReactiveConf2018 Speakers
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}

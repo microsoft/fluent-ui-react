@@ -47,6 +47,12 @@ const Router = () => (
             path="/prototype-meeting-options"
             component={require('./prototypes/meetingOptions/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-reactive-conf-speakers"
+            path="/prototype-reactive-conf-speakers"
+            component={require('./prototypes/reactiveConfSpeakers/index').default}
+          />,
         ]}
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
