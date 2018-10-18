@@ -11,7 +11,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Inline"
-      description="The controls inside a form can appear next to the label instead of below it."
+      description="The form controls can appear next to the label instead of below it."
       examplePath="components/Form/Types/FormExampleInline"
     />
   </ExampleSection>

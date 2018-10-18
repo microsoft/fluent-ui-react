@@ -18,6 +18,15 @@ const formFieldStyles: IComponentPartStylesInput<IFormProps, any> = {
       }),
     }
   },
+  control: ({ props }): ICSSInJSStyle => {
+    const { type } = props
+    return {
+      ...(type &&
+        (type === 'radio' || type === 'checkbox') && {
+          marginRight: pxToRem(10),
+        }),
+    }
+  },
   message: (): ICSSInJSStyle => ({
     display: 'block',
   }),

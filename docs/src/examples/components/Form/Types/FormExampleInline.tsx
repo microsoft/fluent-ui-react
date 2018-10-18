@@ -11,7 +11,7 @@ const FormExample = () => (
       label="First name"
       controlType={Input}
       name="firstName"
-      id="first-name"
+      id="first-name-inline"
       inline={true}
       required={true}
     />
@@ -19,7 +19,7 @@ const FormExample = () => (
       label="Last name"
       controlType={Input}
       name="lastName"
-      id="last-name"
+      id="last-name-inline"
       inline={true}
       required={true}
     />
@@ -27,7 +27,7 @@ const FormExample = () => (
       label="I agree to the Terms and Conditions"
       controlType="input"
       type="checkbox"
-      id="conditions"
+      id="conditions-inline"
     />
     <Form.Field controlType={Button} control={{ content: 'Submit' }} />
   </Form>
