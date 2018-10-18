@@ -16,19 +16,19 @@ export interface IFormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
-  id?: string
-  label?: ShorthandValue
-  renderLabel?: ShorthandRenderFunction
-  controlType?: React.ReactType<any>
   control?: ShorthandValue
-  renderControl?: ShorthandRenderFunction
+  controlType?: React.ReactType<any>
+  id?: string
   inline?: boolean
+  label?: ShorthandValue
   message?: ShorthandValue
   name?: string
-  type?: string
+  renderControl?: ShorthandRenderFunction
+  renderLabel?: ShorthandRenderFunction
   renderMessage?: ShorthandRenderFunction
   required?: boolean
   styles?: ComponentPartStyle
+  type?: string
   variables?: ComponentVariablesInput
 }
 
@@ -47,7 +47,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     as: customPropTypes.as,
 
     /**
-     *  Button content for childrenApi
+     *  FormField content for childrenApi.
      *  @docSiteIgnore
      */
     children: PropTypes.node,
@@ -55,9 +55,11 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** A control for the form field. */
+    control: customPropTypes.itemShorthand,
+
     /**
      * A form control component (i.e. Input) or HTML tagName (i.e. 'input').
-     * Extra FormField props are passed to the control component.
      * Mutually exclusive with children.
      */
     controlType: customPropTypes.some([
@@ -65,8 +67,20 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       PropTypes.oneOf(['button', 'input', 'select', 'textarea']),
     ]),
 
-    /** A control for the form field. */
-    control: customPropTypes.itemShorthand,
+    /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
+    id: PropTypes.string,
+
+    /** A field can have its label next to instead of above it. */
+    inline: PropTypes.bool,
+
+    /** A label for the form field. */
+    label: customPropTypes.itemShorthand,
+
+    /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
+    message: customPropTypes.itemShorthand,
+
+    /** The HTML input name. */
+    name: PropTypes.string,
 
     /**
      * A custom render function for the control slot.
@@ -77,18 +91,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      */
     renderControl: PropTypes.func,
 
-    /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
-    id: PropTypes.string,
-
-    /** The HTML input name. */
-    name: PropTypes.string,
-
-    /** The HTML input type. */
-    type: PropTypes.string,
-
-    /** A label for the form field. */
-    label: customPropTypes.itemShorthand,
-
     /**
      * A custom render function for the label slot.
      *
@@ -97,15 +99,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderLabel: PropTypes.func,
-
-    /** A field can have its label next to instead of above it. */
-    inline: PropTypes.bool,
-
-    /** A field can show that input is mandatory. */
-    required: PropTypes.bool,
-
-    /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
-    message: customPropTypes.itemShorthand,
 
     /**
      * A custom render function for the message slot.
@@ -116,8 +109,14 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      */
     renderMessage: PropTypes.func,
 
+    /** A field can show that input is mandatory. */
+    required: PropTypes.bool,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** The HTML input type. */
+    type: PropTypes.string,
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -138,16 +137,16 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     const {
       children,
       control,
-      renderControl,
-      label,
-      renderLabel,
-      id,
-      name,
-      type,
-      required,
-      message,
-      renderMessage,
       controlType,
+      id,
+      label,
+      message,
+      name,
+      renderControl,
+      renderLabel,
+      renderMessage,
+      required,
+      type,
     } = this.props
 
     const labelElement = Text.create(label, {
@@ -174,17 +173,9 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     const content = (
       <>
-        {this.shouldControlAppearFirst() ? (
-          <>
-            {controlElement}
-            {labelElement}
-          </>
-        ) : (
-          <>
-            {labelElement}
-            {controlElement}
-          </>
-        )}
+        {this.shouldControlAppearFirst() && controlElement}
+        {labelElement}
+        {!this.shouldControlAppearFirst() && controlElement}
         {messageElement}
       </>
     )
