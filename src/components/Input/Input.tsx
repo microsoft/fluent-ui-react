@@ -53,7 +53,7 @@ export interface IInputState {
  *  - if input is search, then use "role='search'"
  */
 class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState> {
-  private inputRef: HTMLInputElement
+  private inputDomElement: HTMLInputElement
 
   static className = 'ui-input'
 
@@ -132,7 +132,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Shorthand for the wrapper component. */
-    wrapper: customPropTypes.itemShorthand,
+    wrapper: customPropTypes.wrapperShorthand,
   }
 
   static defaultProps = {
@@ -160,7 +160,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
         className: cx(Input.className, className),
         children: (
           <>
-            <Ref innerRef={this.handleInputRef}>
+            <Ref
+              innerRef={inputDomElement =>
+                (this.inputDomElement = inputDomElement as HTMLInputElement)
+              }
+            >
               {Slot.createHTMLInput(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
@@ -189,12 +193,10 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     })
   }
 
-  private handleInputRef = (c: HTMLInputElement) => (this.inputRef = c)
-
   private handleIconOverrides = predefinedProps => ({
     onClick: (e: React.SyntheticEvent) => {
       this.handleOnClear()
-      this.inputRef.focus()
+      this.inputDomElement.focus()
       _.invoke(predefinedProps, 'onClick', e, this.props)
     },
     ...(predefinedProps.onClick && { tabIndex: '0' }),

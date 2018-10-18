@@ -12,13 +12,13 @@ const InputExampleInputSlot = () => (
       placeholder="Search..."
       role="presentation"
       input={{
-        // override component's 'placeholder' attribute
+        // will override component's 'placeholder' attribute
         placeholder: 'Placeholder Override...',
 
-        // override component's 'role' attribute
+        // will override component's 'role' attribute
         role: 'checkbox',
 
-        // set custom styles for input DOM element
+        // will set custom styles for input DOM element
         styles: inputStyles,
       }}
     />

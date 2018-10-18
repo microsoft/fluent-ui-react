@@ -12,20 +12,22 @@ export interface IInputVariables {
   inputFocusBorderRadius: string
 }
 
-const [px2asRem, px3asRem, px6asRem, px12asRem, px24asRem] = [2, 3, 6, 12, 24].map(v => pxToRem(v))
+const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 24].map(v =>
+  pxToRem(v),
+)
 
 export default (siteVars): IInputVariables => ({
-  borderRadius: px3asRem,
-  borderBottom: `${px2asRem} solid transparent`,
+  borderRadius: _3px_asRem,
+  borderBottom: `${_2px_asRem} solid transparent`,
   backgroundColor: siteVars.gray10,
 
   fontColor: siteVars.bodyColor,
   fontSize: siteVars.fontSizes.medium,
 
   iconPosition: 'absolute',
-  iconRight: pxToRem(2),
+  iconRight: _2px_asRem,
 
-  inputPadding: `${px6asRem} ${px24asRem} ${px6asRem} ${px12asRem}`,
+  inputPadding: `${_6px_asRem} ${_24px_asRem} ${_6px_asRem} ${_12px_asRem}`,
   inputFocusBorderColor: siteVars.brand,
-  inputFocusBorderRadius: `${px3asRem} ${px3asRem} ${px2asRem} ${px2asRem}`,
+  inputFocusBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
 })

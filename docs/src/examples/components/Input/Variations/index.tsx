@@ -31,7 +31,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Inline, clearable with icon"
-      description="An input with a given icon can be clearable and can be used inline with text."
+      description="An input can be clearable, with icon and inlined into text."
       examplePath="components/Input/Variations/InputExampleInlineIconClearable"
     />
     <ComponentExample

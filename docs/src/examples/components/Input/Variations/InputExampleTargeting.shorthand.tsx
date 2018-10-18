@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Input, Text } from '@stardust-ui/react'
 
+// This object contains properties that will be applied to the input
 const propsForInput = { placeholder: 'Search...', id: 'inputId', role: 'checkbox' }
 const propsTargettingWrapper = {
   placeholder: 'Wrapper placeholder...',
@@ -8,7 +9,8 @@ const propsTargettingWrapper = {
   role: 'presentation',
 }
 
-const propsForWrapper = { dir: 'ltr', tabIndex: 2, styles: { padding: '5px', background: 'red' } }
+// This object contains properties that will be applied to the wrapper
+const propsForWrapper = { dir: 'ltr', tabIndex: -1, styles: { padding: '5px', background: 'red' } }
 const propsTargettingInput = {
   dir: 'rtl',
   tabIndex: 0,

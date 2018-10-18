@@ -2,7 +2,6 @@ import * as React from 'react'
 import { mount, ReactWrapper } from 'enzyme'
 
 import Slot from 'src/components/Slot'
-import Segment from 'src/components/Segment'
 import { ShorthandValue } from 'utils'
 
 export interface ImplementsWrapperPropOptions {
@@ -22,12 +21,6 @@ const implementsWrapperProp = <P extends { wrapper: ShorthandValue }>(
   }
 
   describe('"wrapper" prop', () => {
-    it('does not wrap the component when set to false', () => {
-      const wrapper = mount(<Component wrapper={false} />).find(wrappperComponentSelector)
-
-      expect(wrapper.length).toEqual(0)
-    })
-
     it('wraps the component by default', () => {
       wrapperTests(mount(<Component />).find(wrappperComponentSelector))
     })
@@ -37,22 +30,7 @@ const implementsWrapperProp = <P extends { wrapper: ShorthandValue }>(
     })
 
     it('wraps the component with a custom element using "as" prop', () => {
-      const customElem = 'p'
-      wrapperTests(mount(<Component wrapper={{ as: customElem }} />).find(customElem))
-    })
-
-    it('wraps the component with another stardust component as wrapper', () => {
-      wrapperTests(mount(<Component wrapper={<Segment />} />).find(Segment))
-    })
-
-    it('wraps the component with a custom component as wrapper', () => {
-      class MyComponent extends React.Component {
-        render() {
-          return <div>{this.props.children}</div>
-        }
-      }
-
-      wrapperTests(mount(<Component wrapper={<MyComponent />} />).find(MyComponent))
+      wrapperTests(mount(<Component wrapper={{ as: 'p' }} />).find('p'))
     })
   })
 }
