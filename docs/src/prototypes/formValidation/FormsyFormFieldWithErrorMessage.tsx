@@ -30,7 +30,6 @@ class FormFieldWrapper extends React.Component {
       label,
       renderLabel,
       controlType,
-      control,
       renderControl,
       inline,
       message,

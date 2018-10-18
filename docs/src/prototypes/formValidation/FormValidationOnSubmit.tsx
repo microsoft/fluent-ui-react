@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Input, Segment } from '@stardust-ui/react'
+import { Form, Button, Input, Segment, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormField from './FormsyFormField'
 
@@ -64,11 +64,25 @@ class FormValidationOnSubmit extends React.Component<any, any> {
         key: 'last-name',
         label: 'Email',
       },
+      {
+        controlType: RadioGroup,
+        name: 'gender',
+        ref: 'gender',
+        control: {
+          items: [
+            <RadioGroup.Item key="1" label="Male" value="1" />,
+            <RadioGroup.Item key="2" label="Female" value="2" />,
+          ],
+        },
+        id: 'gender',
+        key: 'gender',
+        label: 'Gender',
+      },
       errorMessages.length > 0 ? <Segment content={errorMessages} key="error-messages" /> : '',
       <Button content="Submit" key="submit" />,
     ]
     return fields.map((field, index) => {
-      if (index < 2) {
+      if (index < 3) {
         return <FormsyFormField {...field} />
       }
       // The last item in the fields is the submit button.

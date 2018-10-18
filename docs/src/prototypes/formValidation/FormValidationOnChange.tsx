@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Input } from '@stardust-ui/react'
+import { Form, Button, Input, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormFieldWithErrorMessage from './FormsyFormFieldWithErrorMessage'
 
@@ -51,6 +51,19 @@ class FormValidationOnChange extends React.Component<any, any> {
         id: 'email-on-change',
         key: 'last-name',
         label: 'Email',
+      },
+      {
+        controlType: RadioGroup,
+        name: 'gender',
+        control: {
+          items: [
+            <RadioGroup.Item key="1" label="Male" value="1" />,
+            <RadioGroup.Item key="2" label="Female" value="2" />,
+          ],
+        },
+        id: 'gender',
+        key: 'gender',
+        label: 'Gender',
       },
       <Button content="Submit" disabled={buttonDisabled} key="submit" />,
     ]
