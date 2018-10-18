@@ -98,15 +98,9 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { as, action, children } = this.props
+    const { action, children } = this.props
     return (
-      <ElementType
-        className={classes.root}
-        as={as}
-        action={action}
-        onSubmit={this.handleSubmit}
-        {...rest}
-      >
+      <ElementType className={classes.root} action={action} onSubmit={this.handleSubmit} {...rest}>
         {childrenExist(children) ? children : this.renderFields()}
       </ElementType>
     )
