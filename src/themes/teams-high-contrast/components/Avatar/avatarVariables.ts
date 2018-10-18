@@ -4,6 +4,6 @@ export interface IAvatarVariables {
 }
 
 export default siteVariables => ({
-  statusBorderColor: siteVariables.bodyBackground,
-  statusBorderWidth: 2,
+  statusBorderColor: siteVariables.black,
+  statusBorderWidth: 3,
 })
