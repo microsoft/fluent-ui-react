@@ -1,4 +1,5 @@
-import { childrenExist, pxToRem } from '../../../../lib'
+import { childrenExist } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import {
   IComponentPartStylesInput,
   ICSSInJSStyle,
@@ -40,15 +41,15 @@ const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> =
       ...(childrenExist(children) || content
         ? {
             textAlign: 'center',
-            fontSize: pxToRem(12 + size),
+            fontSize: teamsPxToRem(12 + size),
             lineHeight: variables.textLineHeight,
             '::before': {
               ...beforeAndAfter(size, type, variables),
-              marginRight: pxToRem(20),
+              marginRight: teamsPxToRem(20),
             },
             '::after': {
               ...beforeAndAfter(size, type, variables),
-              marginLeft: pxToRem(20),
+              marginLeft: teamsPxToRem(20),
             },
           }
         : {

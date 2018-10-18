@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IImageProps } from '../../../../components/Image/Image'
 
@@ -8,7 +8,7 @@ export default {
     verticalAlign: 'middle',
     width: (props.fluid && '100%') || variables.width,
     height: variables.height || 'auto',
-    ...(props.circular && { borderRadius: pxToRem(9999) }),
+    ...(props.circular && { borderRadius: teamsPxToRem(9999) }),
     ...(props.avatar && {
       width: (props.fluid && '100%') || variables.avatarSize,
       borderRadius: variables.avatarRadius,

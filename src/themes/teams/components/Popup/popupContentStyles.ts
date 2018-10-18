@@ -1,5 +1,5 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from 'theme'
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IPopupContentProps } from '../../../../components/Popup/PopupContent'
 
 const popupContentStyles: IComponentPartStylesInput<IPopupContentProps, any> = {
@@ -17,7 +17,7 @@ const popupContentStyles: IComponentPartStylesInput<IPopupContentProps, any> = {
       right: 'auto',
       padding,
       border: `1px solid ${borderColor}`,
-      borderRadius: pxToRem(3),
+      borderRadius: teamsPxToRem(3),
       boxShadow: `0 2px 4px 0 ${borderColor}, 0 2px 10px 0 ${borderColor}`,
     }
   },

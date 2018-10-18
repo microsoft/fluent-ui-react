@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IListItemProps } from '../../../../components/List/ListItem'
 
@@ -24,9 +24,9 @@ const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
         '::before': {
           content: '""',
           position: 'absolute',
-          left: pxToRem(8),
-          width: pxToRem(2),
-          height: pxToRem(2),
+          left: teamsPxToRem(8),
+          width: teamsPxToRem(2),
+          height: teamsPxToRem(2),
           background: '#000',
         },
       }),

@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { ILabelProps } from '../../../../components/Label/Label'
 
@@ -16,11 +16,11 @@ const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
     display: 'inline-flex',
     alignItems: 'center',
     height: variables.height,
-    fontSize: pxToRem(14),
+    fontSize: teamsPxToRem(14),
     lineHeight: variables.height,
     backgroundColor: variables.backgroundColor,
     color: variables.color,
-    borderRadius: pxToRem(3),
+    borderRadius: teamsPxToRem(3),
     ...(circular && {
       borderRadius: variables.circularRadius,
     }),

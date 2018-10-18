@@ -1,18 +1,18 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
 const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
-    width: pxToRem(300),
-    minHeight: pxToRem(48),
-    padding: pxToRem(8),
-    marginBottom: pxToRem(2),
-    marginRight: pxToRem(2),
+    width: teamsPxToRem(300),
+    minHeight: teamsPxToRem(48),
+    padding: teamsPxToRem(8),
+    marginBottom: teamsPxToRem(2),
+    marginRight: teamsPxToRem(2),
     background: variables.backgroundColor,
     color: variables.textColor,
 
@@ -60,7 +60,7 @@ const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVar
     left: 0,
     width: props.progress + '%',
     maxWidth: '100%',
-    height: pxToRem(variables.progressHeight),
+    height: teamsPxToRem(variables.progressHeight),
     background: variables.progressColor,
   }),
 }

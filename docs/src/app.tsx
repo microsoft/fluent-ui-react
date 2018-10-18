@@ -6,7 +6,7 @@ import { semanticCssOverrides } from './Style'
 import { ThemeContext } from './context/theme-context'
 import Router from './routes'
 
-const semanticStyleOverrides = {
+const semanticStylesOverrideTheme = {
   staticStyles: [semanticCssOverrides],
 }
 
@@ -38,15 +38,7 @@ class App extends React.Component<any, IAppState> {
     const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider
-          theme={mergeThemes(semanticStyleOverrides, themes[themeName], {
-            // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {
-              htmlFontSize: '14px',
-              bodyFontSize: '1rem',
-            },
-          })}
-        >
+        <Provider theme={mergeThemes(semanticStylesOverrideTheme, themes[themeName])}>
           <Router />
         </Provider>
       </ThemeContext.Provider>

@@ -1,9 +1,4 @@
-import { pxToRem } from '../../lib'
-
-//
-// VARIABLES
-//
-export const htmlFontSize = '10px' // what 1rem represents
+import { teamsPxToRem } from './utils'
 
 //
 // COLORS
@@ -47,11 +42,11 @@ export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
 // FONT SIZES
 //
 export const fontSizes = {
-  smaller: pxToRem(10),
-  small: pxToRem(12),
-  medium: pxToRem(14),
-  large: pxToRem(18),
-  larger: pxToRem(24),
+  smaller: teamsPxToRem(10),
+  small: teamsPxToRem(12),
+  medium: teamsPxToRem(14),
+  large: teamsPxToRem(18),
+  larger: teamsPxToRem(24),
 }
 
 //
@@ -91,7 +86,6 @@ export const bodyPadding = 0
 export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1.4rem'
 export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase

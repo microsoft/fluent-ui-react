@@ -8,7 +8,6 @@ const globalStyles: StaticStyleFunction = siteVars => ({
     padding: siteVars.bodyPadding,
     margin: siteVars.bodyMargin,
     fontFamily: siteVars.bodyFontFamily,
-    fontSize: siteVars.bodyFontSize,
     lineHeight: siteVars.bodyLineHeight,
   },
 })

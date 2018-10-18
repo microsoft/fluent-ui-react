@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IButtonProps, IButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
@@ -76,8 +76,8 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
-      margin: `0 ${pxToRem(8)} 0 0`,
+      padding: `0 ${teamsPxToRem(paddingLeftRightValue)}`,
+      margin: `0 ${teamsPxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
@@ -105,7 +105,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
               right: '-2px',
               bottom: '-2px',
               left: '-2px',
-              border: `${pxToRem(1)} solid ${borderColorFocusIndicator}`,
+              border: `${teamsPxToRem(1)} solid ${borderColorFocusIndicator}`,
               borderRadius: '3px',
             },
           },
@@ -144,7 +144,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 right: '0',
                 bottom: '0',
                 left: '0',
-                border: `${pxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
+                border: `${teamsPxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
               },
             },
@@ -183,7 +183,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                   right: '-2px',
                   bottom: '-2px',
                   left: '-2px',
-                  border: `${pxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
+                  border: `${teamsPxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
                   borderRadius: '3px',
                 },
               },
@@ -200,7 +200,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  border: `${pxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
+                  border: `${teamsPxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
                   borderRadius: circularRadius,
                 },
               },

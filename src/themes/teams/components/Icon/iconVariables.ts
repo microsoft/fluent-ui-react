@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
 export interface IconVariables {
   [key: string]: string | number | undefined
@@ -17,7 +17,7 @@ export default (): IconVariables => ({
   // similar to how components have an info.json file
   backgroundColor: undefined,
   borderColor: undefined,
-  horizontalSpace: pxToRem(10),
+  horizontalSpace: teamsPxToRem(10),
   margin: '0 0.25em 0 0',
   secondaryColor: 'white',
 })

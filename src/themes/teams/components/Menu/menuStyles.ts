@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IMenuProps } from '../../../../components/Menu/Menu'
 
@@ -13,7 +13,7 @@ export default {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
-        ...(!fluid && { width: pxToRem(200) }),
+        ...(!fluid && { width: teamsPxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',
@@ -27,13 +27,13 @@ export default {
           ...(type === 'primary' && {
             ...solidBorder(variables.typePrimaryBorderColor),
           }),
-          borderRadius: pxToRem(4),
+          borderRadius: teamsPxToRem(4),
           overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
       }),
-      minHeight: pxToRem(24),
+      minHeight: teamsPxToRem(24),
       margin: 0,
       padding: 0,
       listStyleType: 'none',

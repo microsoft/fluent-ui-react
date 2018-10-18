@@ -1,9 +1,9 @@
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { IChatMessageVariables } from './chatMessageVariables'
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
-const px10asRem = pxToRem(10)
+const px10asRem = teamsPxToRem(10)
 const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',

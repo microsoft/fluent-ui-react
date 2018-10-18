@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
 export interface IMenuVariables {
   defaultColor: string
@@ -38,8 +38,8 @@ export default (siteVars: any): IMenuVariables => {
     typePrimaryHoverBorderColor: siteVars.gray08,
     typePrimaryUnderlinedBorderColor: siteVars.gray08,
 
-    iconsMenuItemSize: pxToRem(32),
-    circularRadius: pxToRem(999),
+    iconsMenuItemSize: teamsPxToRem(32),
+    circularRadius: teamsPxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
   }
 }

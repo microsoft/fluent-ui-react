@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import {
   ComponentPartStyleFunction,
   IComponentPartStylesInput,
@@ -11,7 +11,7 @@ type MenuItemProps = IMenuItemProps & IMenuItemState
 
 const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
-  borderBottom: `solid ${pxToRem(4)} ${color}`,
+  borderBottom: `solid ${teamsPxToRem(4)} ${color}`,
   transition: 'color .1s ease',
 })
 
@@ -115,8 +115,8 @@ const pointingBeak: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> =
       left: '50%',
       transform: 'translateX(-50%) translateY(-50%) rotate(45deg)',
       margin: '.5px 0 0',
-      width: pxToRem(10),
-      height: pxToRem(10),
+      width: teamsPxToRem(10),
+      height: teamsPxToRem(10),
       border: 'none',
       ...borders,
       zIndex: 2,
@@ -138,19 +138,21 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
       display: 'block',
 
       ...(pills && {
-        ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
-        borderRadius: pxToRem(5),
+        ...(vertical
+          ? { margin: `0 0 ${teamsPxToRem(5)} 0` }
+          : { margin: `0 ${teamsPxToRem(8)} 0 0` }),
+        borderRadius: teamsPxToRem(5),
       }),
 
       ...(underlined && {
         display: 'flex',
         alignItems: 'center',
-        height: pxToRem(29),
+        height: teamsPxToRem(29),
         lineHeight: v.lineHeightBase,
-        padding: `0 ${pxToRem(4)}`,
-        margin: `0 ${pxToRem(4)} 0 0`,
+        padding: `0 ${teamsPxToRem(4)}`,
+        margin: `0 ${teamsPxToRem(4)} 0 0`,
         ':nth-child(n+2)': {
-          marginLeft: `${pxToRem(4)}`,
+          marginLeft: `${teamsPxToRem(4)}`,
         },
         boxShadow: 'none',
       }),
@@ -158,12 +160,12 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
       ...(pointing &&
         vertical && {
           border: '1px solid transparent',
-          borderTopLeftRadius: `${pxToRem(3)}`,
-          borderTopRightRadius: `${pxToRem(3)}`,
+          borderTopLeftRadius: `${teamsPxToRem(3)}`,
+          borderTopRightRadius: `${teamsPxToRem(3)}`,
           ...(pointing === 'end'
-            ? { borderRight: `${pxToRem(3)} solid transparent` }
-            : { borderLeft: `${pxToRem(3)} solid transparent` }),
-          marginBottom: `${pxToRem(12)}`,
+            ? { borderRight: `${teamsPxToRem(3)} solid transparent` }
+            : { borderLeft: `${teamsPxToRem(3)} solid transparent` }),
+          marginBottom: `${teamsPxToRem(12)}`,
         }),
 
       ...itemSeparator({ props, variables: v, theme }),
@@ -175,8 +177,8 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
         ...(pointing &&
           (vertical
             ? pointing === 'end'
-              ? { borderRight: `${pxToRem(3)} solid ${v.typePrimaryActiveBorderColor}` }
-              : { borderLeft: `${pxToRem(3)} solid ${v.typePrimaryActiveBorderColor}` }
+              ? { borderRight: `${teamsPxToRem(3)} solid ${v.typePrimaryActiveBorderColor}` }
+              : { borderLeft: `${teamsPxToRem(3)} solid ${v.typePrimaryActiveBorderColor}` }
             : pointingBeak({ props, variables: v, theme }))),
       }),
 
@@ -197,10 +199,10 @@ const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> =
       cursor: 'pointer',
 
       ...(underlined
-        ? { padding: `${pxToRem(4)} 0` }
+        ? { padding: `${teamsPxToRem(4)} 0` }
         : pointing && vertical
-          ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
-          : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+          ? { padding: `${teamsPxToRem(8)} ${teamsPxToRem(18)}` }
+          : { padding: `${teamsPxToRem(14)} ${teamsPxToRem(18)}` }),
 
       ...(iconOnly && {
         width: v.iconsMenuItemSize,

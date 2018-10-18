@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
 export default (siteVars: any) => {
   return {
@@ -8,6 +8,6 @@ export default (siteVars: any) => {
     textLineHeight: siteVars.lineHeightSmall,
     primaryColor: siteVars.brand,
     importantFontWeight: siteVars.fontWeightBold,
-    dividerPadding: pxToRem(4),
+    dividerPadding: teamsPxToRem(4),
   }
 }

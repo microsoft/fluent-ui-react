@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 
 export interface IPopupContentVariables {
   [key: string]: string | number
@@ -13,7 +13,7 @@ export default (siteVars: any): IPopupContentVariables => {
   return {
     backgroundColor: siteVars.white,
     borderColor: siteVars.gray06,
-    padding: `${pxToRem(10)} ${pxToRem(14)}`,
+    padding: `${teamsPxToRem(10)} ${teamsPxToRem(14)}`,
     zIndex: 1000,
   }
 }

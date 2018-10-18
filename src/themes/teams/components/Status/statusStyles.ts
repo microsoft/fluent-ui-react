@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { teamsPxToRem } from '../../utils'
 import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
 import { IStatusPropsWithDefaults } from '../../../../components/Status/Status'
 import { IStatusVariables } from './statusVariables'
@@ -37,7 +37,9 @@ const getTextColor = (state: string, variables: IStatusVariables) => {
 
 const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, IStatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
+    const sizeInRem = teamsPxToRem(
+      size + 2 * ((variables.borderColor && variables.borderWidth) || 0),
+    )
     return {
       display: 'inline-flex',
       alignItems: 'center',
@@ -48,7 +50,7 @@ const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, IStatusV
       borderRadius: '9999px',
       ...(variables.borderColor && {
         borderColor: variables.borderColor,
-        borderWidth: pxToRem(variables.borderWidth),
+        borderWidth: teamsPxToRem(variables.borderWidth),
         borderStyle: 'solid',
       }),
       backgroundColor: color || getBackgroundColor(state, variables),
