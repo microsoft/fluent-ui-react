@@ -16,6 +16,7 @@ export interface IFormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
+  id?: string
   label?: ShorthandValue
   renderLabel?: ShorthandRenderFunction
   controlType?: React.ReactType<any>
@@ -74,6 +75,9 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      */
     renderControl: PropTypes.func,
 
+    /** id for the control element, which will be used for linking it with the label for correct accessibility. */
+    id: PropTypes.string,
+
     /** A label for the form field. */
     label: customPropTypes.itemShorthand,
 
@@ -124,6 +128,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     rest,
   }): React.ReactNode {
     const {
+      as,
       children,
       control,
       renderControl,
