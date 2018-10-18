@@ -19,8 +19,8 @@ export interface IFormProps {
   children?: ReactChildren
   className?: string
   content?: ShorthandValue
-  onSubmit?: ComponentEventHandler<IFormProps>
   fields?: ShorthandValue[]
+  onSubmit?: ComponentEventHandler<IFormProps>
   renderField?: ShorthandRenderFunction
   styles?: ComponentPartStyle
   variables?: ComponentVariablesInput
@@ -39,11 +39,14 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
   public static className = 'ui-form'
 
   public static propTypes = {
+    /** The HTML form action. */
+    action: PropTypes.string,
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /**
-     *  Form content for childrenApi
+     *  Form content for childrenApi.
      *  @docSiteIgnore
      */
     children: PropTypes.node,
@@ -58,6 +61,13 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
     fields: customPropTypes.collectionShorthand,
 
     /**
+     * The HTML form submit handler.
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
+    onSubmit: PropTypes.func,
+
+    /**
      * A custom render iterator for rendering each of the Form fields.
      * The default component, props, and children are available for each field.
      *
@@ -66,16 +76,6 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderField: PropTypes.func,
-
-    /**
-     * The HTML form submit handler.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onSubmit: PropTypes.func,
-
-    /** The HTML form action. */
-    action: PropTypes.string,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

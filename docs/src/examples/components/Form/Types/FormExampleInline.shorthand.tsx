@@ -4,7 +4,7 @@ import { Form, Input, Button } from '@stardust-ui/react'
 const fields = [
   {
     label: 'First name',
-    controlType: Input,
+    control: { as: Input },
     name: 'firstName',
     id: 'first-name-inline-shorthand',
     key: 'first-name',
@@ -13,7 +13,7 @@ const fields = [
   },
   {
     label: 'Last name',
-    controlType: Input,
+    control: { as: Input },
     name: 'lastName',
     id: 'last-name-inline-shorthand',
     key: 'last-name',
@@ -22,12 +22,12 @@ const fields = [
   },
   {
     label: 'I agree to the Terms and Conditions',
-    controlType: 'input',
+    control: { as: 'input' },
     type: 'checkbox',
     id: 'conditions-inline-shorthand',
     key: 'conditions',
   },
-  { controlType: Button, control: { content: 'Submit' }, key: 'submit' },
+  { control: { as: Button, content: 'Submit' }, key: 'submit' },
 ]
 
 const FormExample = () => (

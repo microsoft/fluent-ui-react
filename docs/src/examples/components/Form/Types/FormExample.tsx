@@ -9,25 +9,25 @@ const FormExample = () => (
   >
     <Form.Field
       label="First name"
-      controlType={Input}
+      control={{ as: Input }}
       name="firstName"
       id="first-name"
       required={true}
     />
     <Form.Field
       label="Last name"
-      controlType={Input}
+      control={{ as: Input }}
       name="lastName"
       id="last-name"
       required={true}
     />
     <Form.Field
       label="I agree to the Terms and Conditions"
-      controlType="input"
+      control={{ as: 'input' }}
       type="checkbox"
       id="conditions"
     />
-    <Form.Field controlType={Button} control={{ content: 'Submit' }} />
+    <Form.Field control={{ as: Button, content: 'Submit' }} />
   </Form>
 )
 
