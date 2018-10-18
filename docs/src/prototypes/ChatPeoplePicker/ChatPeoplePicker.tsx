@@ -75,6 +75,84 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
     })
   }
 
+  private renderSelected() {
+    return this.state.selected.length === 0
+      ? null
+      : this.state.selected.map((element, index) => (
+          <Label
+            role="presentation"
+            styles={peoplePickerStyles.personContainerLabel}
+            circular
+            key={`peoplePickerItem-${index}`}
+            content={element.name}
+            image={{
+              src: element.image,
+              avatar: true,
+            }}
+            icon={{
+              name: 'close',
+              onClick: this.onCloseIconClick.bind(this, element),
+              onKeyDown: this.onCloseIconKeyDown.bind(this, element),
+              'aria-label': `Remove ${element.name} from selection.`,
+              'aria-hidden': false,
+              role: 'button',
+            }}
+          />
+        ))
+  }
+
+  private renderAvailable(siteVariables, getItemProps, highlightedIndex) {
+    return this.state.available.map((item, index) => ({
+      key: `peoplePickerItem-${index}`,
+      header: item.name,
+      content: item.position,
+      variables: siteVariables => ({
+        ...(highlightedIndex === index && {
+          contentColor: siteVariables.white,
+          headerColor: siteVariables.white,
+        }),
+      }),
+      media: <Image src={item.image} avatar />,
+      ...getItemProps({
+        index,
+        item,
+        style: {
+          backgroundColor: highlightedIndex === index ? siteVariables.brand : siteVariables.white,
+        },
+      }),
+    }))
+  }
+
+  private renderNoItemsFound(siteVariables) {
+    return [
+      {
+        key: 'peoplePickerNoResultsItem',
+        styles: {
+          backgroundColor: siteVariables.white,
+          textAlign: 'center',
+        },
+        content: <Text weight="bold" content="We couldn't find any matches." />,
+      },
+    ]
+  }
+
+  private renderList(siteVariables, getMenuProps, getItemProps, isOpen, highlightedIndex) {
+    return (
+      <List
+        {...getMenuProps()}
+        styles={{ width: this.props.width, ...peoplePickerStyles.listboxUL }}
+        aria-hidden={!isOpen}
+        items={
+          isOpen
+            ? this.state.available.length > 0
+              ? this.renderAvailable(siteVariables, getItemProps, highlightedIndex)
+              : this.renderNoItemsFound(siteVariables)
+            : []
+        }
+      />
+    )
+  }
+
   public render(): React.ReactNode {
     return (
       <div style={{ width: this.props.width }}>
@@ -125,29 +203,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   <span aria-live="assertive" style={peoplePickerStyles.ariaLive}>
                     {this.state.message}
                   </span>
-                  {this.state.selected.length === 0
-                    ? null
-                    : this.state.selected.map((element, index) => (
-                        <Label
-                          role="presentation"
-                          styles={peoplePickerStyles.personContainerLabel}
-                          circular
-                          key={`peoplePickerItem-${index}`}
-                          content={element.name}
-                          image={{
-                            src: element.image,
-                            avatar: true,
-                          }}
-                          icon={{
-                            name: 'close',
-                            onClick: this.onCloseIconClick.bind(this, element),
-                            onKeyDown: this.onCloseIconKeyDown.bind(this, element),
-                            'aria-label': `Remove ${element.name} from selection.`,
-                            'aria-hidden': false,
-                            role: 'button',
-                          }}
-                        />
-                      ))}
+                  {this.renderSelected()}
                   <Input
                     ref={this.input}
                     onFocus={this.onInputFocus}
@@ -171,53 +227,12 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                 </div>
                 <Provider.Consumer
                   render={({ siteVariables }: IThemePrepared) => {
-                    return (
-                      <List
-                        {...getMenuProps()}
-                        styles={{ width: this.props.width, ...peoplePickerStyles.listboxUL }}
-                        aria-hidden={!isOpen}
-                        items={
-                          isOpen
-                            ? this.state.available.length > 0
-                              ? this.state.available.map((item, index) => {
-                                  return {
-                                    key: `peoplePickerItem-${index}`,
-                                    header: item.name,
-                                    content: item.position,
-                                    variables: siteVariables => ({
-                                      ...(highlightedIndex === index && {
-                                        contentColor: siteVariables.white,
-                                        headerColor: siteVariables.white,
-                                      }),
-                                    }),
-                                    media: <Image src={item.image} avatar />,
-                                    ...getItemProps({
-                                      index,
-                                      item,
-                                      style: {
-                                        backgroundColor:
-                                          highlightedIndex === index
-                                            ? siteVariables.brand
-                                            : siteVariables.white,
-                                      },
-                                    }),
-                                  }
-                                })
-                              : [
-                                  {
-                                    key: 'peoplePickerNoResultsItem',
-                                    styles: {
-                                      backgroundColor: siteVariables.white,
-                                      textAlign: 'center',
-                                    },
-                                    content: (
-                                      <Text weight="bold" content="We couldn't find any matches." />
-                                    ),
-                                  },
-                                ]
-                            : []
-                        }
-                      />
+                    return this.renderList(
+                      siteVariables,
+                      getMenuProps,
+                      getItemProps,
+                      isOpen,
+                      highlightedIndex,
                     )
                   }}
                 />
