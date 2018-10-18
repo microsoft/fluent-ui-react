@@ -6,7 +6,7 @@ const fields = [
     label: 'First name',
     controlType: Input,
     name: 'firstName',
-    id: 'first-name',
+    id: 'first-name-shorthand',
     key: 'first-name',
     required: true,
   },

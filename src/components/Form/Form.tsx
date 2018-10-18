@@ -28,6 +28,8 @@ export interface IFormProps {
 
 /**
  * A Form displays a set of related user input fields in a structured way.
+ * @accessibility
+ * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
 class Form extends UIComponent<Extendable<IFormProps>, any> {
   static create: Function
