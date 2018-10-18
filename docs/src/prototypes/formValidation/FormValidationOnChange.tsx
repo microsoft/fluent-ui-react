@@ -24,7 +24,7 @@ class FormValidationOnChange extends React.Component<any, any> {
     const { buttonDisabled } = this.state
     const fields = [
       {
-        controlType: Input,
+        control: { as: Input },
         name: 'full-name-on-change',
         id: 'full-name-on-change',
         key: 'full-name',
@@ -38,7 +38,7 @@ class FormValidationOnChange extends React.Component<any, any> {
         },
       },
       {
-        controlType: Input,
+        control: { as: Input },
         name: 'email-on-change',
         validations: {
           isEmail: true,
@@ -53,9 +53,9 @@ class FormValidationOnChange extends React.Component<any, any> {
         label: 'Email',
       },
       {
-        controlType: RadioGroup,
         name: 'gender',
         control: {
+          as: RadioGroup,
           items: [
             <RadioGroup.Item key="1" label="Male" value="1" />,
             <RadioGroup.Item key="2" label="Female" value="2" />,
