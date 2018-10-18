@@ -3,68 +3,8 @@ import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
 import { Label, Button, Input, Image, MenuItem, List, Provider, Text } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import keyboardKey from 'keyboard-key'
-import { pxToRem } from 'src/lib'
-import { IThemePrepared, ICSSInJSStyle } from 'types/theme'
-
-type TChatPeoplePickerStyles = {
-  containerDiv: any
-  containerDivFocused: any
-  personContainerLabel: ICSSInJSStyle
-  addPeopleLabel: ICSSInJSStyle
-  editText: {
-    input: ICSSInJSStyle
-    div: any
-    variables: { inputFocusBorderColor: any }
-  }
-  listboxUL: ICSSInJSStyle
-  ariaLive: ICSSInJSStyle
-}
-
-const peoplePickerStyles: TChatPeoplePickerStyles = {
-  containerDiv: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    outline: 0,
-    border: 0,
-    borderRadius: `${pxToRem(3)}`,
-    borderBottom: `${pxToRem(2)} solid transparent`,
-    color: '#252423',
-    backgroundColor: '#F3F2F1',
-    borderColor: 'transparent',
-  },
-  personContainerLabel: { margin: '.4rem 0 0 .4rem' },
-  containerDivFocused: {
-    borderColor: '#6264A7',
-    borderRadius: '0.2143rem 0.2143rem 0.1429rem 0.1429rem',
-  },
-  addPeopleLabel: { backgroundColor: '#f7f7f7' },
-  editText: {
-    input: {
-      width: '100%',
-    },
-    variables: {
-      inputFocusBorderColor: 'transparent',
-    },
-    div: {
-      flexBasis: '100px',
-      flexGrow: 1,
-    },
-  },
-  listboxUL: {
-    position: 'absolute',
-    zIndex: 1000,
-  },
-  ariaLive: {
-    border: '0px',
-    clip: 'rect(0px, 0px, 0px, 0px)',
-    height: '1px',
-    margin: '-1px',
-    overflow: 'hidden',
-    padding: '0px',
-    width: '1px',
-    position: 'absolute',
-  },
-}
+import { IThemePrepared } from 'types/theme'
+import { peoplePickerStyles } from './ChatPeoplePickerStyles'
 
 interface IPeoplePickerProps {
   source: (
@@ -285,14 +225,9 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
             )
           }}
         </Downshift>
-        <div
-          style={{
-            marginTop: `${pxToRem(8)}`,
-            textAlign: 'right',
-          }}
-        >
-          <Button type="secondary" content="Cancel" style={{ margin: '0' }} />
-          <Button type="primary" content="Add" style={{ margin: `0 0 0 ${pxToRem(8)}` }} />
+        <div style={peoplePickerStyles.buttons.both}>
+          <Button type="secondary" content="Cancel" style={peoplePickerStyles.buttons.cancel} />
+          <Button type="primary" content="Add" style={peoplePickerStyles.buttons.add} />
         </div>
       </div>
     )
