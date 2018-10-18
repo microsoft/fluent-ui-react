@@ -31,6 +31,7 @@ export const peoplePickerStyles: TChatPeoplePickerStyles = {
     color: '#252423',
     backgroundColor: '#F3F2F1',
     borderColor: 'transparent',
+    width: '30rem',
   },
   personContainerLabel: { margin: '.4rem 0 0 .4rem' },
   containerDivFocused: {
@@ -53,6 +54,9 @@ export const peoplePickerStyles: TChatPeoplePickerStyles = {
   listboxUL: {
     position: 'absolute',
     zIndex: 1000,
+    maxHeight: '20rem',
+    overflowY: 'hidden',
+    width: '30rem',
   },
   ariaLive: {
     border: '0px',

@@ -32,6 +32,21 @@ const items = [
     image: 'public/images/avatar/small/veronika.jpg',
     position: 'Boss',
   },
+  {
+    name: 'Bruce Banner',
+    image: 'public/images/avatar/small/chris.jpg',
+    position: 'Senior Computer Scientist',
+  },
+  {
+    name: 'Peter Parker',
+    image: 'public/images/avatar/small/daniel.jpg',
+    position: 'Partner Software Engineer',
+  },
+  {
+    name: 'Selina Kyle',
+    image: 'public/images/avatar/small/ade.jpg',
+    position: 'Graphic Designer',
+  },
 ]
 
 const getUnselectedItems = (selected: { name: string }[]) => {

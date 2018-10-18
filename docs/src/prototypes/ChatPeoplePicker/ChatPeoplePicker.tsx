@@ -11,7 +11,8 @@ interface IPeoplePickerProps {
     inputValue: string,
     selected: any[],
   ) => { name: string; image: string; position: string }[]
-  width?: any
+  width?: string
+  maxHeight?: string
 }
 
 interface IPeoplePickerState {
@@ -137,10 +138,18 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   }
 
   private renderList(siteVariables, getMenuProps, getItemProps, isOpen, highlightedIndex) {
+    const listStyles = peoplePickerStyles.listboxUL
+    if (this.props.maxHeight) {
+      listStyles.maxHeight = this.props.maxHeight
+    }
+    if (this.props.width) {
+      listStyles.width = this.props.width
+    }
+
     return (
       <List
         {...getMenuProps()}
-        styles={{ width: this.props.width, ...peoplePickerStyles.listboxUL }}
+        styles={listStyles}
         aria-hidden={!isOpen}
         items={
           isOpen
@@ -155,7 +164,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
 
   public render(): React.ReactNode {
     return (
-      <div style={{ width: this.props.width }}>
+      <div style={{ width: this.props.width || peoplePickerStyles.containerDiv.width }}>
         {/* Added label outside because otherwise I could click outside the combobox on the same line with the label and listbox would not close. */}
         <Downshift
           stateReducer={this.stateReducer}
@@ -185,6 +194,13 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
               'aria-controls': undefined,
               'aria-labelledby': undefined,
             }
+            const containerStyles = {
+              ...peoplePickerStyles.containerDiv,
+              ...(this.state.focused && peoplePickerStyles.containerDivFocused),
+            }
+            if (this.props.width) {
+              containerStyles.width = this.props.width
+            }
 
             return (
               <div>
@@ -193,13 +209,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   variables={{ backgroundColor: peoplePickerStyles.addPeopleLabel.backgroundColor }}
                   {...getLabelProps()}
                 />
-                <div
-                  style={{
-                    ...peoplePickerStyles.containerDiv,
-                    ...(this.state.focused && peoplePickerStyles.containerDivFocused),
-                  }}
-                  onClick={this.onContainerClick.bind(this, isOpen)}
-                >
+                <div style={containerStyles} onClick={this.onContainerClick.bind(this, isOpen)}>
                   <span aria-live="assertive" style={peoplePickerStyles.ariaLive}>
                     {this.state.message}
                   </span>
