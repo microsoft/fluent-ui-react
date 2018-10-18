@@ -12,9 +12,5 @@ export default {
       </g>
     </svg>
   ),
-  styles: {
-    svg: ({ variables: v }) => ({
-      fill: v.color,
-    }),
-  },
+  styles: {},
 } as TeamsSvgIconSpec
