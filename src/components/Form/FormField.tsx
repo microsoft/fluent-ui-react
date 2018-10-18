@@ -24,6 +24,8 @@ export interface IFormFieldProps {
   renderControl?: ShorthandRenderFunction
   inline?: boolean
   message?: ShorthandValue
+  name?: string
+  type?: string
   renderMessage?: ShorthandRenderFunction
   required?: boolean
   styles?: ComponentPartStyle
@@ -75,8 +77,14 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
      */
     renderControl: PropTypes.func,
 
-    /** id for the control element, which will be used for linking it with the label for correct accessibility. */
+    /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
     id: PropTypes.string,
+
+    /** The HTML input name. */
+    name: PropTypes.string,
+
+    /** The HTML input type. */
+    type: PropTypes.string,
 
     /** A label for the form field. */
     label: customPropTypes.itemShorthand,
@@ -134,6 +142,8 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       label,
       renderLabel,
       id,
+      name,
+      type,
       required,
       message,
       renderMessage,
@@ -158,7 +168,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     const factoryMethod = createSlotFactory(controlType, name => ({ name }))
     const controlElement = factoryMethod(control || {}, {
-      defaultProps: { required, id, styles: styles.control, ...rest },
+      defaultProps: { required, id, name, type, styles: styles.control },
       render: renderControl,
     })
 
@@ -180,7 +190,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     )
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType className={classes.root} {...rest}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

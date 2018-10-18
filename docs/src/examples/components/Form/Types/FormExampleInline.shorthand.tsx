@@ -27,7 +27,7 @@ const fields = [
     id: 'conditions',
     key: 'conditions',
   },
-  { controlType: Button, content: 'Submit', key: 'submit' },
+  { controlType: Button, control: { content: 'Submit' }, key: 'submit' },
 ]
 
 const FormExample = () => (
