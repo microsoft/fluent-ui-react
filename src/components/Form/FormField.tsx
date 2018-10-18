@@ -10,14 +10,13 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text'
-import { createSlotFactory } from '../Slot/Slot'
+import { default as Slot } from '../Slot/Slot'
 
 export interface IFormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
   control?: ShorthandValue
-  controlType?: React.ReactType<any>
   id?: string
   inline?: boolean
   label?: ShorthandValue
@@ -57,15 +56,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     /** A control for the form field. */
     control: customPropTypes.itemShorthand,
-
-    /**
-     * A form control component (i.e. Input) or HTML tagName (i.e. 'input').
-     * Mutually exclusive with children.
-     */
-    controlType: customPropTypes.some([
-      PropTypes.func,
-      PropTypes.oneOf(['button', 'input', 'select', 'textarea']),
-    ]),
 
     /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
     id: PropTypes.string,
@@ -137,7 +127,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     const {
       children,
       control,
-      controlType,
       id,
       label,
       message,
@@ -165,8 +154,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
       render: renderMessage,
     })
 
-    const factoryMethod = createSlotFactory(controlType, name => ({ name }))
-    const controlElement = factoryMethod(control || {}, {
+    const controlElement = Slot.create(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
       render: renderControl,
     })
@@ -188,8 +176,8 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
   }
 
   private shouldControlAppearFirst = () => {
-    const { controlType, type } = this.props
-    return controlType && (type === 'checkbox' || type === 'radio')
+    const { type } = this.props
+    return type && (type === 'checkbox' || type === 'radio')
   }
 }
 
