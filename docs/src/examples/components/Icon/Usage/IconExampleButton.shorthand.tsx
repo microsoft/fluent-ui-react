@@ -5,7 +5,11 @@ const IconExampleButton = () => (
   <div>
     <Button type="primary" icon iconPosition="before">
       <Icon name="call" xSpacing="none" />
-      <Text content="Call us today" />
+      <Text content="Call now" />
+    </Button>
+    <Button type="secondary" icon iconPosition="before">
+      <Icon name="call" xSpacing="none" />
+      <Text content="Call now" />
     </Button>
   </div>
 )
