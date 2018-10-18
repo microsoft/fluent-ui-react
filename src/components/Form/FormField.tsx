@@ -128,7 +128,6 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
     rest,
   }): React.ReactNode {
     const {
-      as,
       children,
       control,
       renderControl,
@@ -159,7 +158,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
     const factoryMethod = createSlotFactory(controlType, name => ({ name }))
     const controlElement = factoryMethod(control || {}, {
-      defaultProps: { required, ...rest, styles: styles.control },
+      defaultProps: { required, id, styles: styles.control, ...rest },
       render: renderControl,
     })
 
