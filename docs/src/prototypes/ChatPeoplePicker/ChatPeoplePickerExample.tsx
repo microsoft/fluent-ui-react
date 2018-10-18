@@ -62,7 +62,7 @@ const PeoplePickerExampleShorthand = () => (
       <h3>Chat People Picker</h3>
       <h4>Contents</h4>
       <p>
-        Prototype built with the help of PayPal'a Downshift component and Stardust components.
+        Prototype built with the help of PayPal's Downshift component and Stardust components.
         Downshift is responsible for:
       </p>
       <ul>
