@@ -19,7 +19,7 @@ const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
 
     return {
       outline: 0,
-      border: variables.borderStyle,
+      border: variables.border,
       borderRadius: variables.borderRadius,
       borderBottom: variables.borderBottom,
       color: variables.fontColor,
@@ -31,7 +31,7 @@ const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
         color: variables.fontColor,
       },
       ':focus': {
-        borderColor: variables.inputFocusBorderColor,
+        borderBottomColor: variables.inputFocusBorderColor,
         borderRadius: variables.inputFocusBorderRadius,
       },
     }

@@ -3,8 +3,8 @@ import { pxToRem } from '../../../../lib'
 export default (siteVars: any) => {
   const vars: any = {}
 
+  vars.border = '0'
   vars.borderRadius = `${pxToRem(3)}`
-  vars.borderStyle = 0
   vars.borderBottom = `${pxToRem(2)} solid transparent`
   vars.backgroundColor = siteVars.gray10
 
