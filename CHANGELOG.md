@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `target` prop to `Popup` @kuzhelog ([#356](https://github.com/stardust-ui/react/pull/356))
+- Add new `Input` component with `wrapper` prop @Bugaa92 ([#326](https://github.com/stardust-ui/react/pull/326))
 
 <!--------------------------------[ v0.9.1 ]------------------------------- -->
 ## [v0.9.1](https://github.com/stardust-ui/react/tree/v0.9.1) (2018-10-11)
