@@ -21,7 +21,10 @@ function getMessageContent(content, messageId) {
   )
 
   const actionPopup = (
-    <Popup trigger={<Button iconOnly icon="ellipsis horizontal" />} content={{ content: menu }} />
+    <Popup
+      trigger={<Button aria-label="More attachment options" iconOnly icon="ellipsis horizontal" />}
+      content={{ content: menu }}
+    />
   )
   return (
     <span>
