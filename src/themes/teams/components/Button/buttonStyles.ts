@@ -32,8 +32,12 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       borderColorFocus,
       borderColorFocusIndicator,
       borderColorDisabled,
+      borderWidth,
 
       primaryColor,
+      primaryColorActive,
+      primaryColorHover,
+      primaryColorFocus,
       primaryBackgroundColor,
       primaryBackgroundColorActive,
       primaryBackgroundColorHover,
@@ -43,6 +47,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       primaryBorderColorHover,
       primaryBorderColorFocus,
       primaryBorderColorFocusIndicator,
+      primaryBorderWidth,
 
       primaryCircularBorderColorFocusIndicator,
 
@@ -84,7 +89,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       ...(!text && {
         outline: 0,
         borderRadius: '2px',
-        borderWidth: '1px',
+        borderWidth: `${pxToRem(borderWidth)}`,
         borderStyle: 'solid',
         borderColor,
         boxShadow,
@@ -101,11 +106,11 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
             ':after': {
               content: '""',
               position: 'absolute',
-              top: '-2px',
-              right: '-2px',
-              bottom: '-2px',
-              left: '-2px',
-              border: `${pxToRem(1)} solid ${borderColorFocusIndicator}`,
+              top: `-${pxToRem(borderWidth * 2)}`,
+              right: `-${pxToRem(borderWidth * 2)}`,
+              bottom: `-${pxToRem(borderWidth * 2)}`,
+              left: `-${pxToRem(borderWidth * 2)}`,
+              border: `${pxToRem(borderWidth)} solid ${borderColorFocusIndicator}`,
               borderRadius: '3px',
             },
           },
@@ -144,7 +149,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 right: '0',
                 bottom: '0',
                 left: '0',
-                border: `${pxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
+                border: `${pxToRem(borderWidth)} solid ${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
               },
             },
@@ -162,11 +167,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         }),
 
       ...(primary &&
-        !text && {
+        !text &&
+        !disabled && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
-          borderColor: primaryBorderColor,
+          border: `${pxToRem(primaryBorderWidth)} solid ${primaryBorderColor}`,
           ':hover': {
+            color: primaryColorHover,
             backgroundColor: primaryBackgroundColorHover,
             borderColor: primaryBorderColorHover,
           },
@@ -174,16 +181,19 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(isFromKeyboard &&
             !circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBorderColorFocus,
                 ':after': {
                   content: '""',
                   position: 'absolute',
-                  top: '-2px',
-                  right: '-2px',
-                  bottom: '-2px',
-                  left: '-2px',
-                  border: `${pxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
+                  top: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  right: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  left: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  border: `${pxToRem(
+                    primaryBorderWidth,
+                  )} solid ${primaryBorderColorFocusIndicator}`,
                   borderRadius: '3px',
                 },
               },
@@ -191,6 +201,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(isFromKeyboard &&
             circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBackgroundColorFocus,
                 ':after': {
@@ -200,7 +211,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  border: `${pxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
+                  border: `${pxToRem(
+                    primaryBorderWidth,
+                  )} solid ${primaryCircularBorderColorFocusIndicator}`,
                   borderRadius: circularRadius,
                 },
               },
@@ -208,6 +221,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
+                color: primaryColorActive,
                 backgroundColor: primaryBackgroundColorActive,
                 borderColor: primaryBorderColorActive,
                 boxShadow: 'none',
