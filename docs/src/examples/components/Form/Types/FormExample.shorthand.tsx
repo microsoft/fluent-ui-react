@@ -1,10 +1,9 @@
 import React from 'react'
-import { Form, Input, Button } from '@stardust-ui/react'
+import { Form, Button } from '@stardust-ui/react'
 
 const fields = [
   {
     label: 'First name',
-    control: { as: Input },
     name: 'firstName',
     id: 'first-name-shorthand',
     key: 'first-name',
@@ -12,7 +11,6 @@ const fields = [
   },
   {
     label: 'Last name',
-    control: { as: Input },
     name: 'lastName',
     id: 'last-name-shorthand',
     key: 'last-name',
