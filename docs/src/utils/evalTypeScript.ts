@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Stardust from '@stardust-ui/react'
 import * as _ from 'lodash'
-import * as ts from 'typescript'
+import * as ts from 'typescript-docs'
 
 /**
  * Converts import statement to expression by converting the module name in
