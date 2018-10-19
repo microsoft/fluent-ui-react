@@ -189,6 +189,7 @@ class RadioGroupItem extends AutoControlledComponent<
             defaultProps: {
               circular: true,
               size: 'mini',
+              xSpacing: 'none',
               variables: variables.icon,
               styles: styles.icon,
               render: renderIcon,

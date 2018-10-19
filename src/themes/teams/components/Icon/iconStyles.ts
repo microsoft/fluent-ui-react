@@ -1,6 +1,5 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { fittedStyle } from '../../../../styles/customCSS'
 import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
@@ -9,9 +8,9 @@ import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 12],
-  ['mini', 20],
-  ['tiny', 24],
+  ['micro', 10],
+  ['mini', 12],
+  ['tiny', 14],
   ['small', 28],
   ['normal', 32],
   ['large', 34],
@@ -46,19 +45,19 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: number): ICS
   switch (xSpacing) {
     case 'none':
       return {
-        margin: `0 -${pxToRem(svgDefaultPadding)}`,
+        margin: `-${pxToRem(svgDefaultPadding)}`,
       }
     case 'before':
       return {
-        ...fittedStyle,
-        marginLeft: pxToRem(horizontalSpace - svgDefaultPadding),
-        marginRight: `-${pxToRem(svgDefaultPadding)}`,
+        margin: `-${pxToRem(svgDefaultPadding)} -${pxToRem(svgDefaultPadding)} -${pxToRem(
+          svgDefaultPadding,
+        )} ${pxToRem(horizontalSpace - svgDefaultPadding)}`,
       }
     case 'after':
       return {
-        ...fittedStyle,
-        marginLeft: `-${pxToRem(svgDefaultPadding)}`,
-        marginRight: pxToRem(horizontalSpace - svgDefaultPadding),
+        margin: `-${pxToRem(svgDefaultPadding)} ${pxToRem(
+          horizontalSpace - svgDefaultPadding,
+        )} -${pxToRem(svgDefaultPadding)} -${pxToRem(svgDefaultPadding)}`,
       }
     case 'both':
       return {
@@ -96,6 +95,8 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
       overflow: 'hidden',
       width: pxToRem(sizes.get(size)),
       height: pxToRem(sizes.get(size)),
+
+      background: v.backgroundColor,
 
       ...(isFontBased &&
         getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
