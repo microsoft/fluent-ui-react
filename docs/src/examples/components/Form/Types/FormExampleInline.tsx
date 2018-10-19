@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Button } from '@stardust-ui/react'
+import { Form, Button } from '@stardust-ui/react'
 
 const FormExample = () => (
   <Form
@@ -9,7 +9,6 @@ const FormExample = () => (
   >
     <Form.Field
       label="First name"
-      control={{ as: Input }}
       name="firstName"
       id="first-name-inline"
       inline={true}
@@ -17,7 +16,6 @@ const FormExample = () => (
     />
     <Form.Field
       label="Last name"
-      control={{ as: Input }}
       name="lastName"
       id="last-name-inline"
       inline={true}

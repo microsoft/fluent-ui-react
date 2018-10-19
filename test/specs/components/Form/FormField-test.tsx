@@ -14,7 +14,7 @@ describe('FormField', () => {
   formFieldImplementsShorthandProp('message', Text)
   formFieldImplementsShorthandProp('control', Slot)
 
-  it('renders the control provided in the controlType prop', () => {
+  it('renders the control provided in the control shorthand prop', () => {
     const controls = [Button, Input, 'input', RadioGroup]
     controls.forEach(control => {
       const formField = mountWithProvider(
@@ -23,18 +23,6 @@ describe('FormField', () => {
 
       const controlElement = formField.find(control)
       expect(controlElement.length).toEqual(1)
-    })
-  })
-
-  it('uses the control prop as a shorthand together with the controlType', () => {
-    const controls = [Button, Input, 'input', RadioGroup]
-    controls.forEach(control => {
-      const formField = mountWithProvider(
-        <FormField control={{ as: control, name: 'firstName' }} />,
-      ).find('FormField')
-
-      const controlElement = formField.find(control)
-      expect(controlElement.first().props()).toMatchObject({ name: 'firstName' })
     })
   })
 })

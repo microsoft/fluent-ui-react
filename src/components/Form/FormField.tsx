@@ -11,6 +11,7 @@ import {
 } from '../../../types/utils'
 import Text from '../Text'
 import { default as Slot } from '../Slot/Slot'
+import Input from '../Input'
 
 export interface IFormFieldProps {
   as?: any
@@ -114,6 +115,7 @@ class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
 
   public static defaultProps = {
     as: 'div',
+    control: { as: Input },
   }
 
   public renderComponent({

@@ -111,7 +111,7 @@ class Form extends UIComponent<Extendable<IFormProps>, any> {
 
     // Heads up! Third party libs can pass own data as first argument, we need to check that it has preventDefault()
     // method.
-    if (typeof action !== 'string') _.invoke(e, 'preventDefault')
+    if (!action) _.invoke(e, 'preventDefault')
     _.invoke(this.props, 'onSubmit', e, this.props, ...args)
   }
 
