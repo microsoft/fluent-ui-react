@@ -1,21 +1,15 @@
 import * as React from 'react'
 import { Text } from '@stardust-ui/react'
 import Divider from './Divider'
-import { mainContent } from './styles'
+import { mainContentStyles, pageHeaderSpeakersStyles, pageHeaderDividerStyles } from './styles'
 import Slot from '../../../../src/components/Slot/Slot'
-import { pxToRem } from '../../../../src/lib'
 
 export default () => {
   return (
-    <Slot styles={mainContent}>
+    <Slot styles={mainContentStyles}>
       <Text content="MEET OUR STELLAR" as="div" />
-      <Text
-        content="SPEAKERES"
-        weight="bold"
-        styles={{ color: '#56b36d', fontSize: pxToRem(84), marginTop: `-${pxToRem(20)}` }}
-        as="div"
-      />
-      <Divider styles={{ marginTop: `-${pxToRem(35)}` }} />
+      <Text content="SPEAKERES" weight="bold" styles={pageHeaderSpeakersStyles} as="div" />
+      <Divider styles={pageHeaderDividerStyles} />
     </Slot>
   )
 }

@@ -1,42 +1,27 @@
 import * as React from 'react'
 import Slot from '../../../../src/components/Slot/Slot'
 import { Menu, Image, Provider, Text } from '@stardust-ui/react'
-import { pxToRem } from '../../../../src/lib'
 import Divider from './Divider'
+import {
+  footerStyles,
+  footerMenuItemStyles,
+  footerMenuStyles,
+  footerTextStyles,
+  imageStyles,
+} from './styles'
+import { pxToRem } from '../../../../src/lib'
 
 export default () => {
   return (
-    <Slot
-      styles={{
-        background: 'black',
-        height: '160px',
-        position: 'relative',
-        bottom: '0px',
-        textAlign: 'center',
-      }}
-    >
+    <Slot styles={footerStyles}>
       <Provider
         theme={{
           componentStyles: {
             MenuItem: {
-              root: () => ({
-                '::before': { background: 'transparent' },
-                ':hover': { background: 'black', color: '#56b36d' },
-                color: 'white',
-                fontSize: pxToRem(14),
-                marginTop: pxToRem(20),
-                fontWeight: 'bold',
-              }),
+              root: footerMenuItemStyles,
             },
             Menu: {
-              root: () => ({
-                border: 'transparent',
-                height: pxToRem(70),
-                background: 'black',
-                position: 'relative',
-                margin: 'auto',
-                width: '990px',
-              }),
+              root: footerMenuStyles,
             },
           },
         }}
@@ -46,8 +31,8 @@ export default () => {
             'Organized with <love/> by',
             <Image
               src="https://reactiveconf.com/images/vacuum_footer.png"
-              variables={{ height: '50px' }}
-              styles={{ marginTop: '10px' }}
+              variables={{ height: pxToRem(50) }}
+              styles={imageStyles}
             />,
             { content: 'Code of Conduct', styles: { color: '#56b36d' } },
             { content: 'General Terms and Conditions', styles: { color: '#56b36d' } },
@@ -58,7 +43,7 @@ export default () => {
       <Divider />
       <Text
         content="VacuumLabs is a team of modern backend, web, and mobile development technology experts obsessed with delivering the future to our partners and clients."
-        styles={{ color: '#56b36d', width: '70%', margin: 'auto' }}
+        styles={footerTextStyles}
         as="div"
       />
     </Slot>
