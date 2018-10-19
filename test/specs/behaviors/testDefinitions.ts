@@ -6,7 +6,7 @@ const testHelper = new TestHelper()
 
 // Example:  Adds attribute 'aria-pressed=true' based on the property 'active'
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'\.$/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, propertyDependingOn] = [...parameters.props]
     const property = {}
@@ -89,15 +89,11 @@ definitions.push({
 
 // Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '([a-z]+)'\. This can be overriden by directly providing '([a-z -]+)' property to the component\./g,
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '[a-z]+'\. This can be overriden by providing '([a-z -]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [
-      attributeToBeAdded,
-      valueOfAttributeToBeAdded,
-      component,
-      baseProperty,
-      overridingProperty,
-    ] = [...parameters.props]
+    const [attributeToBeAdded, valueOfAttributeToBeAdded, component, overridingProperty] = [
+      ...parameters.props,
+    ]
 
     const propertyWithOverride = {}
     propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
@@ -107,23 +103,14 @@ definitions.push({
     expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
       testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
     )
-
-    const property = {}
-    property[baseProperty] = valueOfAttributeToBeAdded
-    const expectedResultAttributeNotDefined = parameters.behavior(property).attributes[component][
-      attributeToBeAdded
-    ]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeNotDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
-    )
   },
 })
 
-// Example: Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
+// Example: Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' based on the property '([a-z]+)'\. This can be overriden by directly providing '([a-z -]+)' property to the component\./g,
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' based on the property '[a-z]+'\. This can be overriden by providing '([a-z -]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
-    const [attributeToBeAdded, valueOfAttributeToBeAdded, baseProperty, overridingProperty] = [
+    const [attributeToBeAdded, valueOfAttributeToBeAdded, overridingProperty] = [
       ...parameters.props,
     ]
     const propertyWithOverride = {}
@@ -133,20 +120,12 @@ definitions.push({
     expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
       testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
     )
-    const property = {}
-    property[baseProperty] = true
-    const expectedResultAttributeNotDefined = parameters.behavior(property).attributes.root[
-      attributeToBeAdded
-    ]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeNotDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
-    )
   },
 })
 
 // Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '([a-z -]+)'\.[^a-z A-Z]/g,
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '([a-z -]+)'\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, component, propertyDependsOn] = [
       ...parameters.props,
@@ -164,7 +143,7 @@ definitions.push({
 
 // Example: Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)', if there is no '[a-z]+' property provided\.+/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)', if there is no 'alt' property provided\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue] = [...parameters.props]
     const property = {}

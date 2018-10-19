@@ -2,13 +2,13 @@ import { Accessibility } from '../../interfaces'
 
 /**
  * @description
- * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
+ * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  */
 
 const inputBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      'aria-disabled': 'aria-disabled' in props ? props['aria-disabled'] : props['disabled'],
+      'aria-disabled': props['aria-disabled'] || props['disabled'],
     },
   },
 })

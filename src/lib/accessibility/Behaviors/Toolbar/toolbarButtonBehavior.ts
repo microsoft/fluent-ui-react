@@ -10,7 +10,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
- * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
+ * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
@@ -22,7 +22,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'button',
       tabIndex: '0',
-      'aria-disabled': 'aria-disabled' in props ? props['aria-disabled'] : props['disabled'],
+      'aria-disabled': props['aria-disabled'] || props['disabled'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
