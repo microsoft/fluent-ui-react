@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Provider, Divider } from '@stardust-ui/react'
+import { green } from './styles'
 
 export default props => {
   return (
@@ -7,7 +8,7 @@ export default props => {
       theme={{
         componentVariables: {
           Divider: {
-            dividerColor: '#56b36d',
+            dividerColor: green,
           },
         },
       }}

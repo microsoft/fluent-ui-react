@@ -8,6 +8,7 @@ import {
   footerMenuStyles,
   footerTextStyles,
   imageStyles,
+  green,
 } from './styles'
 import { pxToRem } from '../../../../src/lib'
 
@@ -34,9 +35,9 @@ export default () => {
               variables={{ height: pxToRem(50) }}
               styles={imageStyles}
             />,
-            { content: 'Code of Conduct', styles: { color: '#56b36d' } },
-            { content: 'General Terms and Conditions', styles: { color: '#56b36d' } },
-            { content: 'Privacy Policy', styles: { color: '#56b36d' } },
+            { content: 'Code of Conduct', styles: { color: green } },
+            { content: 'General Terms and Conditions', styles: { color: green } },
+            { content: 'Privacy Policy', styles: { color: green } },
           ]}
         />
       </Provider>

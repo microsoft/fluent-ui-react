@@ -7,6 +7,7 @@ import {
   secondaryNavbarMenuStyles,
   secondaryNavbarButtonStyles,
   secondaryNavbarScrollingItemStyles,
+  green,
 } from './styles'
 
 export default props => {
@@ -38,14 +39,14 @@ export default props => {
               variables={{ height: '50px' }}
               styles={imageStyles}
             />,
-            { content: 'SPEAKERS', styles: { color: '#56b36d' } },
+            { content: 'SPEAKERS', styles: { color: green } },
             'WORKSHOPS',
             'SCHEDULE',
             'VENUES',
             'VOLUNTEERS',
             'CONTACT',
             ,
-            { content: 'OCT 29-31, 2018', styles: { color: '#56b36d' } },
+            { content: 'OCT 29-31, 2018', styles: { color: green } },
             <Button content="BUY TICKETS" styles={secondaryNavbarButtonStyles} />,
           ]}
         />

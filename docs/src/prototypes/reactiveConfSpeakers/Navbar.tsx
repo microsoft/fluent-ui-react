@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Menu, Provider } from '@stardust-ui/react'
-import { navbarMenuStyles, navbarMenuItemStyles } from './styles'
+import { navbarMenuStyles, navbarMenuItemStyles, green } from './styles'
 
 export default () => (
   <Provider
@@ -24,7 +24,7 @@ export default () => (
           'Archive',
           'Videos',
           'Handbook',
-          { content: 'About Us', styles: { color: '#56b36d' } },
+          { content: 'About Us', styles: { color: green } },
         ]}
       />
     </>
