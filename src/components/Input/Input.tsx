@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -32,12 +31,10 @@ export interface IInputProps {
   onChange?: ComponentEventHandler<IInputProps>
   renderIcon?: ShorthandRenderFunction
   renderInput?: ShorthandRenderFunction
-  renderWrapper?: ShorthandRenderFunction
   styles?: ComponentPartStyle<IInputProps, any>
   type?: string
   value?: React.ReactText
   variables?: ComponentVariablesInput
-  wrapper?: ShorthandValue
 }
 
 export interface IInputState {
@@ -110,15 +107,6 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
      */
     renderInput: PropTypes.func,
 
-    /**
-     * A custom render function the wrapper slot.
-     *
-     * @param { React.ReactType } Component - The computed component for this slot.
-     * @param { object } props - The computed props for this slot.
-     * @param { ReactNode | ReactNodeArray } children - The computed children for this slot.
-     */
-    renderWrapper: PropTypes.func,
-
     /** Additional CSS styles to apply to the component instance. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -130,15 +118,11 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Shorthand for the wrapper component. */
-    wrapper: customPropTypes.wrapperShorthand,
   }
 
   static defaultProps = {
     as: 'div',
     type: 'text',
-    wrapper: 'div',
   }
 
   static autoControlledProps = ['value']
@@ -150,47 +134,36 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     styles,
     variables,
   }: IRenderResultConfig<IInputProps>) {
-    const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
+    const { input, renderIcon, renderInput, type } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
-    return Slot.create(wrapper, {
-      defaultProps: {
-        as: ElementType,
-        className: cx(Input.className, className),
-        children: (
-          <>
-            <Ref
-              innerRef={inputDomElement =>
-                (this.inputDomElement = inputDomElement as HTMLInputElement)
-              }
-            >
-              {Slot.createHTMLInput(input || type, {
-                defaultProps: {
-                  ...htmlInputProps,
-                  type,
-                  value,
-                  className: classes.input,
-                  onChange: this.handleChange,
-                },
-                render: renderInput,
-              })}
-            </Ref>
-            {Icon.create(this.computeIcon(), {
-              defaultProps: {
-                styles: styles.icon,
-                variables: variables.icon,
-              },
-              overrideProps: this.handleIconOverrides,
-              render: renderIcon,
-            })}
-          </>
-        ),
-        styles: styles.root,
-        ...rest,
-      },
-      render: renderWrapper,
-    })
+    return (
+      <ElementType className={classes.root} {...rest}>
+        <Ref
+          innerRef={inputDomElement => (this.inputDomElement = inputDomElement as HTMLInputElement)}
+        >
+          {Slot.createHTMLInput(input || type, {
+            defaultProps: {
+              ...htmlInputProps,
+              type,
+              value,
+              className: classes.input,
+              onChange: this.handleChange,
+            },
+            render: renderInput,
+          })}
+        </Ref>
+        {Icon.create(this.computeIcon(), {
+          defaultProps: {
+            styles: styles.icon,
+            variables: variables.icon,
+          },
+          overrideProps: this.handleIconOverrides,
+          render: renderIcon,
+        })}
+      </ElementType>
+    )
   }
 
   private handleIconOverrides = predefinedProps => ({
