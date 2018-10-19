@@ -90,7 +90,6 @@
     "keyboard-key": "^1.0.1",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
-    "react-aria-live": "^2.0.2",
     "react-custom-scrollbars": "^4.2.1",
     "react-fela": "^7.2.0",
     "react-popper": "^1.0.2",
