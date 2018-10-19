@@ -2,9 +2,10 @@ import * as React from 'react'
 import { Form, Button, Input, Segment, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormField from './FormsyFormField'
+import FormsyFormFieldRadioGroup from './FormsyFormFieldRadioGroup'
 
 class FormValidationOnSubmit extends React.Component<any, any> {
-  state = { buttonDisabled: false, errorMessages: '' }
+  state = { errorMessages: '' }
 
   render() {
     return (
@@ -12,6 +13,7 @@ class FormValidationOnSubmit extends React.Component<any, any> {
         as={Formsy}
         ref="form"
         onValidSubmit={() => {
+          this.setState({ errorMessages: '' })
           alert('Form submitted')
         }}
         onInvalidSubmit={() => {
@@ -74,16 +76,27 @@ class FormValidationOnSubmit extends React.Component<any, any> {
             <RadioGroup.Item key="2" label="Female" value="2" />,
           ],
         },
+        // TODO: this currently doesn't work
+        // required: true,
+        validations: {
+          isExisty: true,
+        },
+        validationErrors: {
+          isExisty: 'You must select your gender',
+        },
         id: 'gender',
         key: 'gender',
-        label: 'Gender',
+        label: 'Gender*',
       },
       errorMessages.length > 0 ? <Segment content={errorMessages} key="error-messages" /> : '',
       <Button content="Submit" key="submit" />,
     ]
     return fields.map((field, index) => {
-      if (index < 3) {
+      if (index < 2) {
         return <FormsyFormField {...field} />
+      }
+      if (index === 2) {
+        return <FormsyFormFieldRadioGroup {...field} />
       }
       // The last item in the fields is the submit button.
       return field

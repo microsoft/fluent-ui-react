@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Form, Button, Input, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormFieldWithErrorMessage from './FormsyFormFieldWithErrorMessage'
+import FormsyFormFieldRadioGroupWithErrorMessage from './FormsyFormFieldRadioGroupWithErrorMessage'
 
 class FormValidationOnChange extends React.Component<any, any> {
   state = { buttonDisabled: false }
@@ -61,15 +62,27 @@ class FormValidationOnChange extends React.Component<any, any> {
             <RadioGroup.Item key="2" label="Female" value="2" />,
           ],
         },
+        validations: {
+          isExisty: true,
+        },
+        validationErrors: {
+          isExisty: 'You must select your gender',
+        },
+        // TODO: this currently doesn't work
+        // required: true,
         id: 'gender',
         key: 'gender',
-        label: 'Gender',
+        label: 'Gender*',
       },
       <Button content="Submit" disabled={buttonDisabled} key="submit" />,
     ]
     return fields.map((field, index) => {
-      if (index < fields.length - 1) {
+      if (index < fields.length - 2) {
         return <FormsyFormFieldWithErrorMessage {...field} />
+      }
+      if (index === fields.length - 2) {
+        // Radio group
+        return <FormsyFormFieldRadioGroupWithErrorMessage {...field} />
       }
       // The last item in the fields is the submit button.
       return field
