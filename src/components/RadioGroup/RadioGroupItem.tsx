@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
-import Label from '../Label'
+import Label from '../Label/Label'
 import {
   ComponentEventHandler,
   Extendable,

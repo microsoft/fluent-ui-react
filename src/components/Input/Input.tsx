@@ -17,9 +17,9 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import Icon from '../Icon'
-import Slot from '../Slot'
-import Ref from '../Ref'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
+import Ref from '../Ref/Ref'
 
 export interface IInputProps {
   as?: any

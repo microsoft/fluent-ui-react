@@ -9,9 +9,9 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import Text from '../Text'
+import Text from '../Text/Text'
 import { default as Slot } from '../Slot/Slot'
-import Input from '../Input'
+import Input from '../Input/Input'
 
 export interface IFormFieldProps {
   as?: any

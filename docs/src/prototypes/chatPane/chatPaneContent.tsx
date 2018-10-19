@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
 import { Chat, Divider } from '@stardust-ui/react'
 

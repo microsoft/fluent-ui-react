@@ -10,7 +10,7 @@ import {
   doesNodeContainClick,
 } from '../../lib'
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
-import Ref from '../Ref'
+import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
 

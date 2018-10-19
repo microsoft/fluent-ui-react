@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layout, Input, ToolbarButtonBehavior, ToolbarBehavior, Menu } from '@stardust-ui/react'
+import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@stardust-ui/react'
 import { IMenuItemProps } from 'src/components/Menu/MenuItem'
 
 type ToolbarProps = IMenuItemProps & { key: string; 'aria-label'?: string }
@@ -46,7 +46,7 @@ class ComposeMessage extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        accessibility={ToolbarBehavior}
+        accessibility={toolbarBehavior}
         aria-label="Compose Editor"
         styles={{ marginTop: '10px' }}
       />
@@ -64,7 +64,7 @@ class ComposeMessage extends React.Component {
         xSpacing: 'both',
         variables: siteVars => ({ color: siteVars.gray02 }),
       },
-      accessibility: ToolbarButtonBehavior,
+      accessibility: toolbarButtonBehavior,
       'aria-label': `${name} tool`,
     }
   }

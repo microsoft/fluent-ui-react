@@ -18,7 +18,7 @@ import {
   ReactChildren,
 } from '../../../types/utils'
 
-import Ref from '../Ref'
+import Ref from '../Ref/Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'

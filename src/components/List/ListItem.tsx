@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
+import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import {

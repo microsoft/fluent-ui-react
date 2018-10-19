@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
-import { IChatMessageProps } from 'src/components/Chat'
-import { IDividerProps } from 'src/components/Divider'
-import { IStatusProps } from 'src/components/Status'
+import { IChatMessageProps } from 'src/components/Chat/ChatMessage'
+import { IDividerProps } from 'src/components/Divider/Divider'
+import { IStatusProps } from 'src/components/Status/Status'
 import { Extendable } from 'utils'
 import { IChat, UserStatus, IMessage, IUser, areSameDay, getFriendlyDateString } from '.'
 

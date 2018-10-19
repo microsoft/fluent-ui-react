@@ -21,11 +21,11 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import Avatar from '../Avatar'
+import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
-import Layout from '../Layout'
-import Text from '../Text'
+import Layout from '../Layout/Layout'
+import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
 export interface IChatMessageProps {

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
-import Layout from '../Layout'
+import Layout from '../Layout/Layout'
 import {
   ComponentVariablesInput,
   IComponentPartClasses,
