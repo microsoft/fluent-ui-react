@@ -20,6 +20,8 @@ const sizes = new Map([
   ['massive', 78],
 ])
 
+const svgDefaultPadding = 8
+
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
 }
@@ -28,40 +30,50 @@ const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): IC
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
-    '-webkit-font-smoothing': 'antialiased',
-    '-moz-osx-font-smoothing': 'grayscale',
-    backfaceVisibility: 'hidden',
+    display: 'inline-block',
     fontFamily,
     textAlign: 'center',
     lineHeight: 1,
+    speak: 'none',
 
     '::before': {
       content,
-      boxSizing: 'inherit',
-      background: '0 0',
     },
   }
 }
 
-const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
+const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: number): ICSSInJSStyle => {
   switch (xSpacing) {
     case 'none':
-      return fittedStyle
+      return {
+        margin: `0 -${pxToRem(svgDefaultPadding)}`,
+      }
     case 'before':
-      return { ...fittedStyle, marginLeft: horizontalSpace }
+      return {
+        ...fittedStyle,
+        marginLeft: pxToRem(horizontalSpace - svgDefaultPadding),
+        marginRight: `-${pxToRem(svgDefaultPadding)}`,
+      }
     case 'after':
-      return { ...fittedStyle, marginRight: horizontalSpace }
+      return {
+        ...fittedStyle,
+        marginLeft: `-${pxToRem(svgDefaultPadding)}`,
+        marginRight: pxToRem(horizontalSpace - svgDefaultPadding),
+      }
     case 'both':
-      return { ...fittedStyle, margin: `0 ${horizontalSpace}` }
+      return {
+        margin: `0 ${pxToRem(horizontalSpace - svgDefaultPadding)}`,
+      }
   }
 }
 
 const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
   return {
+    margin: `0 ${pxToRem(3)} 0 0`,
     boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
     ...(isFontBased && {
-      paddingTop: pxToRem(8),
-      paddingBottom: pxToRem(8),
+      paddingTop: pxToRem(svgDefaultPadding),
+      paddingBottom: pxToRem(svgDefaultPadding),
     }),
     ...(circular ? { borderRadius: '50%' } : {}),
   }
@@ -99,6 +111,8 @@ const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
       }),
 
       ...(!isFontBased && {
+        width: pxToRem(sizes.get(size)),
+        height: pxToRem(sizes.get(size)),
         fill: iconColor,
 
         ...(disabled && {

@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface IconVariables {
   [key: string]: string | number | undefined
 
@@ -7,7 +5,7 @@ export interface IconVariables {
   color?: string
   borderColor?: string
   disabledColor?: string
-  horizontalSpace: string
+  horizontalSpace: number
 }
 
 export default (siteVars): IconVariables => ({
@@ -15,5 +13,5 @@ export default (siteVars): IconVariables => ({
   color: undefined,
   borderColor: undefined,
   disabledColor: siteVars.gray06,
-  horizontalSpace: pxToRem(10),
+  horizontalSpace: 10,
 })
