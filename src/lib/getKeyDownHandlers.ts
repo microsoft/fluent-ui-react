@@ -5,19 +5,19 @@ import {
   ActionsKeyHandler,
   KeyActions,
 } from 'src/lib/accessibility/interfaces'
-import { IState, IPropsWithVarsAndStyles } from '../../types/theme'
+import { State, PropsWithVarsAndStyles } from '../../types/theme'
 
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
  * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
- * @param {IState & IPropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
+ * @param {State & PropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
  */
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
-  props: IState & IPropsWithVarsAndStyles,
+  props: State & PropsWithVarsAndStyles,
 ): ActionsKeyHandler => {
   const keyHandlers = {}
 

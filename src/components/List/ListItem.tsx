@@ -8,19 +8,19 @@ import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   FocusableItem,
-  IFocusableItemProps,
+  FocusableItemProps,
 } from '../../lib/accessibility/FocusHandling/FocusableItem'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps {
+export interface ListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   contentMedia?: any
   content?: any
   debug?: boolean
-  focusableItemProps?: IFocusableItemProps
+  focusableItemProps?: FocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -29,15 +29,15 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-export interface IListItemState {
+export interface ListItemState {
   isHovering: boolean
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
+class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -87,7 +87,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: IListItemProps) {
+  constructor(props: ListItemProps) {
     super(props, null)
 
     this.state = {

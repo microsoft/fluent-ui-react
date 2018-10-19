@@ -3,10 +3,10 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface IStatusProps {
+export interface StatusProps {
   as?: any
   className?: string
   color?: string
@@ -14,14 +14,14 @@ export interface IStatusProps {
   renderIcon?: ShorthandRenderFunction
   size?: number
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * A status graphically represents someone's or something's state.
  */
-class Status extends UIComponent<Extendable<IStatusProps>, any> {
+class Status extends UIComponent<Extendable<StatusProps>, any> {
   static create: Function
 
   static className = 'ui-status'
@@ -70,7 +70,7 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { icon, renderIcon } = this.props as IStatusPropsWithDefaults
+    const { icon, renderIcon } = this.props as StatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
@@ -89,4 +89,4 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
 Status.create = createShorthandFactory(Status, state => ({ state }))
 
 export default Status
-export type IStatusPropsWithDefaults = IStatusProps & typeof Status.defaultProps
+export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

@@ -1,9 +1,9 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IInputProps } from '../../../../components/Input/Input'
-import { IInputVariables } from './inputVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { InputProps } from '../../../../components/Input/Input'
+import { InputVariables } from './inputVariables'
 import { PositionProperty } from 'csstype'
 
-const inputStyles: IComponentPartStylesInput<IInputProps, IInputVariables> = {
+const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     display: 'inline-flex',
     position: 'relative',

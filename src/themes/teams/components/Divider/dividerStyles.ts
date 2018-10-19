@@ -1,10 +1,10 @@
 import { childrenExist, pxToRem } from '../../../../lib'
 import {
-  IComponentPartStylesInput,
+  ComponentSlotStylesInput,
   ICSSInJSStyle,
   ICSSPseudoElementStyle,
 } from '../../../../../types/theme'
-import { IDividerPropsWithDefaults } from '../../../../components/Divider/Divider'
+import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 
 const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
@@ -20,7 +20,7 @@ const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   }),
 })
 
-const dividerStyles: IComponentPartStylesInput<IDividerPropsWithDefaults, any> = {
+const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
     const { children, fitted, size, type, important, content } = props
     return {

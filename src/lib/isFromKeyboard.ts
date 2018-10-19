@@ -1,17 +1,17 @@
 import whatInput from 'what-input'
 import tsUtils from './typescriptUtils'
-export interface IState {
+export interface State {
   isFromKeyboard: boolean
 }
 
 export default class IsFromKeyboard {
-  static readonly propertyName = tsUtils.nameof<IState>('isFromKeyboard')
+  static readonly propertyName = tsUtils.nameof<State>('isFromKeyboard')
 
-  static initial: IState = IsFromKeyboard.getObjectWithPropValue(false)
+  static initial: State = IsFromKeyboard.getObjectWithPropValue(false)
 
-  static state = (): IState => IsFromKeyboard.getObjectWithPropValue(whatInput.ask() === 'keyboard')
+  static state = (): State => IsFromKeyboard.getObjectWithPropValue(whatInput.ask() === 'keyboard')
 
-  private static getObjectWithPropValue(value: boolean): IState {
+  private static getObjectWithPropValue(value: boolean): State {
     return { [IsFromKeyboard.propertyName]: value }
   }
 }

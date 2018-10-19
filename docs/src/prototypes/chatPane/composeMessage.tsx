@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@stardust-ui/react'
-import { IMenuItemProps } from 'src/components/Menu/MenuItem'
+import { MenuItemProps } from 'src/components/Menu/MenuItem'
 
-type ToolbarProps = IMenuItemProps & { key: string; 'aria-label'?: string }
+type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
 
 class ComposeMessage extends React.Component {
   public render() {
@@ -56,7 +56,7 @@ class ComposeMessage extends React.Component {
   private getMenuItem(
     name: string,
     index: number,
-  ): IMenuItemProps & { key: string; 'aria-label': string } {
+  ): MenuItemProps & { key: string; 'aria-label': string } {
     return {
       key: `${index}-${name}`,
       icon: {

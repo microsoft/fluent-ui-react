@@ -6,13 +6,13 @@ import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '.
 import Layout from '../Layout/Layout'
 import {
   ComponentVariablesInput,
-  IComponentPartClasses,
-  ComponentPartStyle,
+  ComponentSlotClasses,
+  ComponentSlotStyle,
   ICSSInJSStyle,
 } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
-export interface IItemLayoutProps {
+export interface ItemLayoutProps {
   as?: any
   className?: string
   contentMedia?: any
@@ -23,19 +23,19 @@ export interface IItemLayoutProps {
   headerMedia?: any
   media?: any
   renderContentArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
   renderHeaderArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
   renderMainArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
   rootCSS?: ICSSInJSStyle
   mediaCSS?: ICSSInJSStyle
@@ -46,11 +46,11 @@ export interface IItemLayoutProps {
   endMediaCSS?: ICSSInJSStyle
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -182,7 +182,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
 
   renderComponent({ ElementType, classes, rest, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as IItemLayoutPropsWithDefaults
+      .props as ItemLayoutPropsWithDefaults
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -226,4 +226,4 @@ ItemLayout.create = createShorthandFactory(ItemLayout, main => ({ main }))
 
 export default ItemLayout
 
-export type IItemLayoutPropsWithDefaults = IItemLayoutProps & typeof ItemLayout.defaultProps
+export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps

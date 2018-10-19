@@ -1,5 +1,5 @@
 import {
-  IThemeInput,
+  ThemeInput,
   ThemeIconSpec,
   ThemeIcons,
   FontIconSpec,
@@ -47,4 +47,4 @@ export default {
   fontFaces,
   staticStyles,
   icons,
-} as IThemeInput
+} as ThemeInput

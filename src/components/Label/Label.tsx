@@ -12,7 +12,7 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   Extendable,
   ReactChildren,
@@ -20,7 +20,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface ILabelProps {
+export interface LabelProps {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
@@ -34,14 +34,14 @@ export interface ILabelProps {
   imagePosition?: 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
   renderImage?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * A label displays content classification
  */
-class Label extends UIComponent<Extendable<ILabelProps>, any> {
+class Label extends UIComponent<Extendable<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function

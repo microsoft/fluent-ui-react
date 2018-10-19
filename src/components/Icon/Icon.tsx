@@ -4,7 +4,7 @@ import { callable, customPropTypes, UIComponent, createShorthandFactory } from '
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -19,7 +19,7 @@ export type IconSize =
   | 'huge'
   | 'massive'
 
-export interface IIconProps {
+export interface IconProps {
   as?: any
   bordered?: boolean
   circular?: boolean
@@ -29,11 +29,11 @@ export interface IIconProps {
   size?: IconSize
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Icon extends UIComponent<Extendable<IIconProps>, any> {
+class Icon extends UIComponent<Extendable<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'

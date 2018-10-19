@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, customPropTypes, childrenExist, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   Extendable,
   ReactChildren,
@@ -13,7 +13,7 @@ import Text from '../Text/Text'
 import { default as Slot } from '../Slot/Slot'
 import Input from '../Input/Input'
 
-export interface IFormFieldProps {
+export interface FormFieldProps {
   as?: any
   children?: ReactChildren
   className?: string
@@ -27,7 +27,7 @@ export interface IFormFieldProps {
   renderLabel?: ShorthandRenderFunction
   renderMessage?: ShorthandRenderFunction
   required?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   type?: string
   variables?: ComponentVariablesInput
 }
@@ -35,7 +35,7 @@ export interface IFormFieldProps {
 /**
  * A field is a form element containing a label and an input.
  */
-class FormField extends UIComponent<Extendable<IFormFieldProps>, any> {
+class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'

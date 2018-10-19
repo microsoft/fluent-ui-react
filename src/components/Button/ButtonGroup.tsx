@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   Extendable,
   ReactChildren,
@@ -14,7 +14,7 @@ import Button from './Button'
 import { buttonGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/interfaces'
 
-export interface IButtonGroupProps {
+export interface ButtonGroupProps {
   as?: any
   buttons?: ShorthandValue[]
   children?: ReactChildren
@@ -22,14 +22,14 @@ export interface IButtonGroupProps {
   className?: string
   content?: React.ReactNode
   renderButton?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * A button group.
  */
-class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
+class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'

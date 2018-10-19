@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
-export interface IIconVariables {
+export interface IconVariables {
   [key: string]: string | number | undefined
 
   color?: string
@@ -11,7 +11,7 @@ export interface IIconVariables {
   secondaryColor: string
 }
 
-export default (): IIconVariables => ({
+export default (): IconVariables => ({
   color: undefined,
   // TODO move initial variable discovery to JSON files
   // similar to how components have an info.json file

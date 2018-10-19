@@ -7,7 +7,7 @@ import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibil
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
 import { menuBehavior } from 'src/lib/accessibility'
-import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
+import { AccessibilityDefinition } from 'src/lib/accessibility/interfaces'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -74,7 +74,7 @@ describe('Menu', () => {
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
-        focusZoneDefinition: (menuBehavior as IAccessibilityDefinition).focusZone,
+        focusZoneDefinition: (menuBehavior as AccessibilityDefinition).focusZone,
       })
 
       test('aria-label should be added to the menu', () => {

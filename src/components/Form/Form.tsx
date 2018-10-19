@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
@@ -13,16 +13,16 @@ import {
 } from '../../../types/utils'
 import FormField from './FormField'
 
-export interface IFormProps {
+export interface FormProps {
   action?: string
   as?: any
   children?: ReactChildren
   className?: string
   content?: ShorthandValue
   fields?: ShorthandValue[]
-  onSubmit?: ComponentEventHandler<IFormProps>
+  onSubmit?: ComponentEventHandler<FormProps>
   renderField?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -31,7 +31,7 @@ export interface IFormProps {
  * @accessibility
  * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
-class Form extends UIComponent<Extendable<IFormProps>, any> {
+class Form extends UIComponent<Extendable<FormProps>, any> {
   static create: Function
 
   public static displayName = 'Form'

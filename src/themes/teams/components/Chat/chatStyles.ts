@@ -1,9 +1,9 @@
 import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatVariables } from './chatVariables'
+import { ChatVariables } from './chatVariables'
 import { pxToRem } from '../../../../lib'
 
 const chatStyles = {
-  root: ({ variables: v }: { variables: IChatVariables }): ICSSInJSStyle => ({
+  root: ({ variables: v }: { variables: ChatVariables }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     border: `1px solid ${v.backgroundColor}`,
     display: 'flex',

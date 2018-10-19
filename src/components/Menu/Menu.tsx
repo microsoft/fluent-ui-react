@@ -10,7 +10,7 @@ import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  ComponentPartStyle,
+  ComponentSlotStyle,
 } from '../../../types/theme'
 import {
   Extendable,
@@ -19,7 +19,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuProps {
+export interface MenuProps {
   accessibility?: Accessibility
   as?: any
   activeIndex?: number | string
@@ -35,11 +35,11 @@ export interface IMenuProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
+class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'

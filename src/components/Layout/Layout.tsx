@@ -4,9 +4,9 @@ import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle, ICSSInJSStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle, ICSSInJSStyle } from '../../../types/theme'
 
-export interface ILayoutProps {
+export interface LayoutProps {
   as?: any
   className?: string
   debug?: boolean
@@ -33,11 +33,11 @@ export interface ILayoutProps {
   truncateMain?: boolean
   truncateEnd?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
+class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -132,7 +132,7 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props as ILayoutPropsWithDefaults
+    } = this.props as LayoutPropsWithDefaults
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -177,4 +177,4 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 }
 
 export default Layout
-export type ILayoutPropsWithDefaults = ILayoutProps & typeof Layout.defaultProps
+export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps

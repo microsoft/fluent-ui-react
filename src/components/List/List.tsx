@@ -8,11 +8,11 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import {
   ContainerFocusHandler,
-  IFocusContainerProps,
-  IFocusContainerState,
+  FocusContainerProps,
+  FocusContainerState,
 } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   Extendable,
   ReactChildren,
@@ -20,7 +20,7 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 
-export interface IListProps extends IFocusContainerProps<ShorthandValue> {
+export interface ListProps extends FocusContainerProps<ShorthandValue> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
@@ -30,11 +30,11 @@ export interface IListProps extends IFocusContainerProps<ShorthandValue> {
   truncateContent?: boolean
   truncateHeader?: boolean
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
+class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'

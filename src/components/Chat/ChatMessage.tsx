@@ -6,14 +6,14 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  IRenderResultConfig,
+  RenderResultConfig,
   UIComponent,
 } from '../../lib'
 import {
-  ComponentPartStyle,
+  ComponentSlotStyle,
   ComponentVariablesInput,
-  IComponentPartClasses,
-  IComponentPartStylesInput,
+  ComponentSlotClasses,
+  ComponentSlotStylesInput,
 } from '../../../types/theme'
 import {
   Extendable,
@@ -28,7 +28,7 @@ import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
-export interface IChatMessageProps {
+export interface ChatMessageProps {
   accessibility?: Accessibility
   as?: any
   author?: ShorthandValue
@@ -41,12 +41,12 @@ export interface IChatMessageProps {
   renderAvatar?: ShorthandRenderFunction
   renderContent?: ShorthandRenderFunction
   renderTimestamp?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
 }
 
-class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
+class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -146,7 +146,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
     rest,
     styles,
     variables,
-  }: IRenderResultConfig<IChatMessageProps>) {
+  }: RenderResultConfig<ChatMessageProps>) {
     const { children } = this.props
 
     const childrenPropExists = childrenExist(children)
@@ -165,8 +165,8 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
   }
 
   renderContent = (
-    classes: IComponentPartClasses,
-    styles: IComponentPartStylesInput,
+    classes: ComponentSlotClasses,
+    styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
   ) => {
     const {

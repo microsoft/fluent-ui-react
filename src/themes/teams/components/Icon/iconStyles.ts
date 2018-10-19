@@ -1,9 +1,9 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
 import { ResultOf } from '../../../../../types/utils'
-import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
+import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 
 import { getStyle as getSvgStyle } from './svg'
 
@@ -79,7 +79,7 @@ const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
   height: '2em',
 })
 
-const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
+const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   root: ({
     props: { disabled, name, size, bordered, circular, xSpacing },
     variables: v,

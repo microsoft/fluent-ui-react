@@ -1,8 +1,8 @@
 import { Sizes, Weights } from '../../../../lib/enums'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../../../types/theme'
 import { truncateStyle } from '../../../../styles/customCSS'
-import { ITextVariables } from './textVariables'
-import { ITextProps } from '../../../../components/Text/Text'
+import { TextVariables } from './textVariables'
+import { TextProps } from '../../../../components/Text/Text'
 
 export default {
   root: ({
@@ -19,7 +19,7 @@ export default {
       temporary,
     },
     variables: v,
-  }: ComponentStyleFunctionParam<ITextProps, ITextVariables>): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
       ...(atMention === true && {

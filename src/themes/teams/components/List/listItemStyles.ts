@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IListItemProps } from '../../../../components/List/ListItem'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ListItemProps } from '../../../../components/List/ListItem'
 
-const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
+const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: { selection, important } }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',

@@ -1,9 +1,9 @@
 import callable from './callable'
 import {
   ComponentStyleFunctionParam,
-  IComponentPartClasses,
-  IComponentPartStylesInput,
-  IRenderer,
+  ComponentSlotClasses,
+  ComponentSlotStylesInput,
+  Renderer,
 } from '../../types/theme'
 
 /**
@@ -11,10 +11,10 @@ import {
  * Renders one or many component styles (objects of component parts) to the DOM.
  */
 const getClasses = (
-  renderer: IRenderer,
-  componentStyles: IComponentPartStylesInput,
+  renderer: Renderer,
+  componentStyles: ComponentSlotStylesInput,
   styleParam: ComponentStyleFunctionParam,
-): IComponentPartClasses => {
+): ComponentSlotClasses => {
   // root, icon, etc.
   const componentParts: string[] = Object.keys(componentStyles)
 

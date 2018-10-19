@@ -9,7 +9,7 @@ import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
@@ -18,7 +18,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   accessibility?: Accessibility
   active?: boolean
   as?: any
@@ -29,22 +29,22 @@ export interface IMenuItemProps {
   icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+  onClick?: ComponentEventHandler<MenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-export interface IMenuItemState {
+export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
+class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'

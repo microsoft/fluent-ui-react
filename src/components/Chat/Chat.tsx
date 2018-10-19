@@ -5,7 +5,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../../types/theme'
 import {
   Extendable,
   ReactChildren,
@@ -15,18 +15,18 @@ import {
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import { chatBehavior } from '../../lib/accessibility'
 
-export interface IChatProps {
+export interface ChatProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   children?: ReactChildren
   items?: ShorthandValue[]
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Chat extends UIComponent<Extendable<IChatProps>, any> {
+class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'
