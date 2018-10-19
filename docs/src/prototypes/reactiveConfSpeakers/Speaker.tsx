@@ -16,10 +16,18 @@ class Speaker extends React.Component<ISpeakerProps> {
       <Slot styles={this.getSpeakerStyles()}>
         <Image src={portrait} fluid />
         <Slot styles={this.getContentStyles()}>
-          <Image src={company} styles={this.getTextStyles()} />
-          <Text weight="semibold" content={firstName} styles={this.getTextStyles('white')} />
-          <Text weight="bold" content={lastName} styles={this.getTextStyles('white')} />
-          <Text content="FULL BIO" styles={this.getTextStyles()} />
+          <Image
+            src={company}
+            styles={{
+              height: '20px',
+              zIndex: 3,
+              position: 'relative',
+              display: 'block',
+            }}
+          />
+          <Text weight="semibold" content={firstName} styles={this.getTextStyles()} />
+          <Text weight="bold" content={lastName} styles={this.getTextStyles()} />
+          <Text content="FULL BIO" styles={this.getTextStyles('#192b4f')} />
         </Slot>
       </Slot>
     )
@@ -38,8 +46,9 @@ class Speaker extends React.Component<ISpeakerProps> {
     return () => ({
       width: '200px',
       margin: 'auto',
-      position: 'relative',
-      bottom: '10px',
+      position: 'absolute',
+      top: '220px',
+      left: '20px',
       fontSize: '20px',
     })
   }
@@ -48,6 +57,7 @@ class Speaker extends React.Component<ISpeakerProps> {
     return () => ({
       position: 'relative',
       width: '240px',
+      height: '340px',
       '::before': {
         content: '""',
         position: 'absolute',
