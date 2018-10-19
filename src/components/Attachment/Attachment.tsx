@@ -8,8 +8,12 @@ import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/them
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import * as keyboardKey from 'keyboard-key'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { attachmentBehavior } from '../../lib/accessibility'
 
 export type AttachmentProps = {
+  accessibility?: Accessibility
   action?: ShorthandValue
   actionable?: boolean
   as?: any
@@ -38,6 +42,9 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static displayName = 'Attachment'
 
   static propTypes = {
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.func,
+
     /** Button shorthand for the action slot. */
     action: customPropTypes.itemShorthand,
 
@@ -116,7 +123,11 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  static defaultProps = {
+    accessibility: attachmentBehavior as Accessibility,
+  }
+
+  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
     const {
       header,
       description,
@@ -131,7 +142,12 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...rest}
+        className={classes.root}
+        onClick={this.handleClick}
+        {...accessibility.keyHandlers.root}
+      >
         {icon && (
           <div className={classes.icon}>
             {Icon.create(icon, {
@@ -168,6 +184,21 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           })}
       </ElementType>
     )
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleKeyboardClick(event),
+  }
+
+  private handleKeyboardClick = e => {
+    if (e.keyCode === keyboardKey.Spacebar) {
+      e.preventDefault()
+    }
+    this.handleClick(e)
+  }
+
+  private handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 }
 
