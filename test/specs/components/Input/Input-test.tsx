@@ -1,7 +1,11 @@
 import * as React from 'react'
 
 import { mount, ReactWrapper } from 'enzyme'
-import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
+import {
+  isConformant,
+  implementsShorthandProp,
+  implementsWrapperProp,
+} from 'test/specs/commonTests'
 
 import Input from 'src/components/Input/Input'
 import Icon from 'src/components/Icon/Icon'
@@ -32,6 +36,11 @@ describe('Input', () => {
 
   implementsShorthandProp(Input)('input', Slot, { mapsValueToProp: 'type' })
   implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
+
+  describe('wrapper', () => {
+    implementsShorthandProp(Input)('wrapper', Slot, { mapsValueToProp: 'content' })
+    implementsWrapperProp(Input, { wrapppedComponentSelector: 'input' })
+  })
 
   it('renders a text <input> by default', () => {
     const inputComp = mount(<Input />)
