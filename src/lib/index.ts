@@ -9,6 +9,7 @@ export { default as toCompactArray } from './toCompactArray'
 
 export * from './factories'
 export { default as callable } from './callable'
+export { default as constants } from './constants'
 export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'

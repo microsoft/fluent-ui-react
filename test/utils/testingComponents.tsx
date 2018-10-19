@@ -5,7 +5,7 @@ import Provider from 'src/components/Provider/Provider'
 import { ThemeInput } from '../../src/themes/types'
 
 export const withProvider = (element: React.ReactNode, theme?: ThemeInput) => (
-  <Provider theme={theme || {}}>{element}</Provider>
+  <Provider theme={theme || { siteVariables: {} }}>{element}</Provider>
 )
 
 export const mountWithProvider = (Element: React.ReactNode, options?: {}, theme?: ThemeInput) =>

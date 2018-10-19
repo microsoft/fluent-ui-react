@@ -5,9 +5,9 @@ import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
 import { Grid, Header, Icon } from 'semantic-ui-react'
 
+import { constants } from 'src/lib'
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
-import { accessibilityErrorMessage } from 'docs/src/constants'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
@@ -88,7 +88,7 @@ class ComponentDoc extends React.Component<any, any> {
               <ComponentDocTag
                 title="Accessibility"
                 tag="accessibility"
-                errorMessage={accessibilityErrorMessage}
+                errorMessage={constants.accessibilityErrorMessage}
                 info={info}
               />
               <ComponentDocSee displayName={info.displayName} />

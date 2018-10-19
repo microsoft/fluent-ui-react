@@ -1,5 +1,6 @@
 import * as cx from 'classnames'
 import * as React from 'react'
+import * as _ from 'lodash'
 import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
@@ -7,6 +8,7 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
+import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
@@ -132,6 +134,10 @@ const renderComponent = <P extends {}>(
   return (
     <FelaTheme
       render={(theme: ThemePrepared) => {
+        if (_.isEmpty(theme)) {
+          logProviderMissingWarning()
+        }
+
         const {
           siteVariables = { fontSizes: {} },
           componentVariables = {},
