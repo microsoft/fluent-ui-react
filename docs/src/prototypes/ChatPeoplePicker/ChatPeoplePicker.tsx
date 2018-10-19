@@ -44,7 +44,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
 
   private handleCloseIconAction(element, event) {
     this.removeFromSelected(element)
-    this.input.current.inputRef.focus()
+    this.input.focus()
     event.stopPropagation()
   }
 
@@ -215,7 +215,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                   </span>
                   {this.renderSelected()}
                   <Input
-                    ref={this.input}
+                    inputRef={input => (this.input = input)}
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
                     styles={peoplePickerStyles.editText.div}
@@ -315,7 +315,7 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
   }
 
   onContainerClick = isOpen => {
-    !isOpen && this.input.current.inputRef.focus()
+    !isOpen && this.input.focus()
   }
 
   onCloseIconClick = (element, event) => this.handleCloseIconAction(element, event)
