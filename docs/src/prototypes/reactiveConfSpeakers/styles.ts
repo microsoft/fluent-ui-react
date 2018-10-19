@@ -18,4 +18,5 @@ export const mainStyle: ICSSInJSStyle = {
 export const speakersGrid: ICSSInJSStyle = {
   width: '990px',
   margin: '0 auto',
+  marginTop: '100px',
 }
