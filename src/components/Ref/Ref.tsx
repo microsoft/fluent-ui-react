@@ -34,6 +34,6 @@ export default class Ref extends Component<IRefProps> {
   }
 
   render() {
-    return Children.only(this.props.children)
+    return this.props.children && Children.only(this.props.children)
   }
 }

@@ -164,7 +164,7 @@ export interface IThemePrepared {
 }
 
 export interface IThemeComponentStylesInput {
-  [key: string]: IComponentPartStylesInput
+  [key: string]: IComponentPartStylesInput | undefined
 
   Accordion?: IComponentPartStylesInput
   Attachment?: IComponentPartStylesInput
@@ -199,7 +199,7 @@ export interface IThemeComponentStylesInput {
 }
 
 export interface IThemeComponentStylesPrepared {
-  [key: string]: IComponentPartStylesPrepared
+  [key: string]: IComponentPartStylesPrepared | undefined
 
   Accordion?: IComponentPartStylesPrepared
   Attachment?: IComponentPartStylesPrepared
