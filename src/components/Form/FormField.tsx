@@ -10,8 +10,8 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text/Text'
-import { default as Slot } from '../Slot/Slot'
 import Input from '../Input/Input'
+import Slot from '../Slot/Slot'
 
 export interface FormFieldProps {
   as?: any

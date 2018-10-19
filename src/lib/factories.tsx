@@ -22,6 +22,7 @@ interface CreateShorthandOptions {
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
 }
+
 const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   defaultProps: {},
   overrideProps: {},
@@ -145,24 +146,17 @@ export function createShorthand(
 /**
  * Creates a `createShorthand` function that is waiting for a value and options.
  *
- * @param {function|string} Component A ReactClass or string
- * @param {function} mapValueToProps A function that maps a primitive value to the Component props
+ * @param {React.ReactType} Component A ReactClass or string
+ * @param {MapValueToProps} mapValueToProps A function that maps a primitive value to the Component props
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory(Component, mapValueToProps) {
+export function createShorthandFactory(
+  Component: React.ReactType,
+  mapValueToProps?: MapValueToProps,
+) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
   return (val, options) => createShorthand(Component, mapValueToProps, val, options)
 }
-
-// ============================================================
-// HTML Factories
-// ============================================================
-export const createHTMLDivision = createShorthandFactory('div', val => ({ children: val }))
-export const createHTMLIframe = createShorthandFactory('iframe', src => ({ src }))
-export const createHTMLImage = createShorthandFactory('img', val => ({ src: val }))
-export const createHTMLInput = createShorthandFactory('input', val => ({ type: val }))
-export const createHTMLLabel = createShorthandFactory('label', val => ({ children: val }))
-export const createHTMLParagraph = createShorthandFactory('p', val => ({ children: val }))

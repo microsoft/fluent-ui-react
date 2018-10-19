@@ -18,7 +18,7 @@ import {
 } from '../../../types/utils'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import Slot, { createSlotFactory } from '../Slot/Slot'
 import Ref from '../Ref/Ref'
 
 export interface InputProps {
@@ -182,7 +182,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
         children: (
           <>
             <Ref innerRef={this.handleInputRef}>
-              {Slot.createHTMLInput(input || type, {
+              {createSlotFactory('input')(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
                   type,

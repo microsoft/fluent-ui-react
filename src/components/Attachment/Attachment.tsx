@@ -2,12 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, createShorthandFactory, createHTMLDivision } from '../../lib'
+import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import { createSlotFactory } from '../Slot/Slot'
 
 export type AttachmentProps = {
   action?: ShorthandValue
@@ -162,7 +163,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          createHTMLDivision('', {
+          createSlotFactory('div')(progress, {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}

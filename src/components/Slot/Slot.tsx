@@ -18,12 +18,29 @@ export interface SlotProps {
   variables?: ComponentVariablesInput
 }
 
-export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
-  val,
-  options: Props = {},
-) => {
-  options.defaultProps = { as, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps, val, options)
+type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
+type ShorthandProp = 'children' | 'src' | 'type' | 'content'
+
+const htmlFactoryMapping: Map<HTMLTag, ShorthandProp> = new Map([
+  ['div', 'children'],
+  ['iframe', 'src'],
+  ['img', 'src'],
+  ['input', 'type'],
+  ['label', 'children'],
+  ['p', 'children'],
+] as [HTMLTag, ShorthandProp][])
+
+const getMapValueFn = (propType: HTMLTag) => {
+  const mappedProp = htmlFactoryMapping.get(propType) || 'content'
+  return (value: string) => ({ [mappedProp]: value })
+}
+
+export const createSlotFactory = (
+  asProp: React.ReactType | HTMLTag,
+  mapValueToProps?: MapValueToProps,
+) => (val, options: Props = {}) => {
+  options.defaultProps = { as: asProp, ...options.defaultProps }
+  return createShorthand(Slot, mapValueToProps || getMapValueFn(asProp as HTMLTag), val, options)
 }
 
 /**
@@ -56,7 +73,6 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
   }
 
   static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-  static createHTMLInput = createSlotFactory('input', type => ({ type }))
 
   renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
     const { children, content } = this.props
