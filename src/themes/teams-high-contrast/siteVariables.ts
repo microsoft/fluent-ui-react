@@ -7,6 +7,7 @@ export const black = '#000'
 
 export const accessibleYellow = '#ffff01'
 export const accessibleGreen = '#3ff23f'
+export const accessibleCyan = '#1aebff'
 
 export const red = '#f00'
 export const green04 = green

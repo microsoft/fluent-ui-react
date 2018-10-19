@@ -1,7 +1,13 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import {
+  customPropTypes,
+  UIComponent,
+  childrenExist,
+  IRenderResultConfig,
+  createShorthand,
+} from '../../lib'
+import { Extendable, MapValueToProps, IProps } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 
 export interface ISlotProps {
@@ -12,12 +18,18 @@ export interface ISlotProps {
   variables?: ComponentVariablesInput
 }
 
+export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
+  val,
+  options: IProps = {},
+) => {
+  options.defaultProps = { as, ...options.defaultProps }
+  return createShorthand(Slot, mapValueToProps, val, options)
+}
+
 /**
  * A Slot is a basic component (no default styles)
  */
 class Slot extends UIComponent<Extendable<ISlotProps>, any> {
-  static create: Function
-
   static className = 'ui-slot'
 
   static displayName = 'Slot'
@@ -43,7 +55,10 @@ class Slot extends UIComponent<Extendable<ISlotProps>, any> {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+  static createHTMLInput = createSlotFactory('input', type => ({ type }))
+
+  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<ISlotProps>) {
     const { children, content } = this.props
 
     return (
@@ -53,7 +68,5 @@ class Slot extends UIComponent<Extendable<ISlotProps>, any> {
     )
   }
 }
-
-Slot.create = createShorthandFactory(Slot, content => ({ content }))
 
 export default Slot
