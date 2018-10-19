@@ -15,7 +15,7 @@ export const mainStyle: ICSSInJSStyle = {
   '-webkit-font-smoothing': 'antialiased',
 }
 
-export const speakersGrid: ICSSInJSStyle = {
+export const mainContent: ICSSInJSStyle = {
   width: '990px',
   margin: '0 auto',
   marginTop: '100px',

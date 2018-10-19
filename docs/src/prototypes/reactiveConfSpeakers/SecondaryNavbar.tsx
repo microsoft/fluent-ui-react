@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Menu, Provider, Image, Button } from '@stardust-ui/react'
+import { Menu, Provider, Image, Button, Text } from '@stardust-ui/react'
 import { pxToRem } from '../../../../src/lib'
+import Slot from '../../../../src/components/Slot/Slot'
 
 export default props => {
   const { scrolling } = props
@@ -37,35 +38,55 @@ export default props => {
         },
       }}
     >
-      <Menu
-        items={[
-          <Image
-            src="https://reactiveconf.com/images/logo.svg"
-            variables={{ height: '50px' }}
-            styles={{ marginTop: '10px' }}
-          />,
-          { content: 'SPEAKERS', styles: { color: '#56b36d' } },
-          'WORKSHOPS',
-          'SCHEDULE',
-          'VENUES',
-          'VOLUNTEERS',
-          'CONTACT',
-          ,
-          { content: 'OCT 29-31, 2018', styles: { color: '#56b36d' } },
-          <Button
-            content="BUY TICKETS"
+      <>
+        <Menu
+          items={[
+            <Image
+              src="https://reactiveconf.com/images/logo.svg"
+              variables={{ height: '50px' }}
+              styles={{ marginTop: '10px' }}
+            />,
+            { content: 'SPEAKERS', styles: { color: '#56b36d' } },
+            'WORKSHOPS',
+            'SCHEDULE',
+            'VENUES',
+            'VOLUNTEERS',
+            'CONTACT',
+            ,
+            { content: 'OCT 29-31, 2018', styles: { color: '#56b36d' } },
+            <Button
+              content="BUY TICKETS"
+              styles={{
+                background: 'rgb(6, 11, 36, 0.6)',
+                border: '3px solid #56b36d',
+                borderRadius: '0px',
+                color: 'white',
+                fontSize: pxToRem(14),
+                marginTop: pxToRem(20),
+                padding: pxToRem(5),
+              }}
+            />,
+          ]}
+        />
+        {scrolling && (
+          <Slot
             styles={{
-              background: 'rgb(6, 11, 36, 0.6)',
-              border: '3px solid #56b36d',
-              borderRadius: '0px',
-              color: 'white',
-              fontSize: pxToRem(14),
-              marginTop: pxToRem(20),
-              padding: pxToRem(5),
+              width: '1150px',
+              position: 'fixed',
+              top: '70px',
+              zIndex: 10,
+              background: '#56b36d',
+              textAlign: 'center',
             }}
-          />,
-        ]}
-      />
+            content={
+              <>
+                <Text content="Late Birds are gone! Be our " styles={{ color: '#060b24' }} />
+                <Text content="Lazy Bird!" weight="semibold" />
+              </>
+            }
+          />
+        )}
+      </>
     </Provider>
   )
 }
