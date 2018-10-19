@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.10.0 ]------------------------------- -->
+## [v0.10.0](https://github.com/stardust-ui/react/tree/v0.10.0) (2018-10-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.9.1...v0.10.0)
+
 ### BREAKING
 - Removed `type...` prefix from multiple variables in `buttonStyles.ts` @bcalvery ([#336](https://github.com/stardust-ui/react/pull/336))
 
