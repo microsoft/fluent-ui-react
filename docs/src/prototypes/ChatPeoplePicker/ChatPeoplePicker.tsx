@@ -218,15 +218,17 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
                     ref={this.input}
                     onFocus={this.onInputFocus}
                     onKeyUp={this.onInputKeyUp}
-                    role="presentation"
                     styles={peoplePickerStyles.editText.div}
                     variables={{
                       inputFocusBorderColor:
                         peoplePickerStyles.editText.variables.inputFocusBorderColor,
                     }}
+                    wrapper={{
+                      role: 'presentation',
+                    }}
                     input={{
                       type: 'text',
-                      style: peoplePickerStyles.editText.input,
+                      styles: peoplePickerStyles.editText.input,
                       placeholder:
                         this.state.selected.length > 0 || this.state.inputValue.length > 0
                           ? ''
@@ -251,8 +253,8 @@ export class ChatPeoplePicker extends React.Component<IPeoplePickerProps, IPeopl
           }}
         </Downshift>
         <div style={peoplePickerStyles.buttons.both}>
-          <Button type="secondary" content="Cancel" style={peoplePickerStyles.buttons.cancel} />
-          <Button type="primary" content="Add" style={peoplePickerStyles.buttons.add} />
+          <Button type="secondary" content="Cancel" styles={peoplePickerStyles.buttons.cancel} />
+          <Button type="primary" content="Add" styles={peoplePickerStyles.buttons.add} />
         </div>
       </div>
     )
