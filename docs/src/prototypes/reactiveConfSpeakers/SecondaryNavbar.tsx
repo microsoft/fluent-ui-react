@@ -8,6 +8,7 @@ import {
   secondaryNavbarButtonStyles,
   secondaryNavbarScrollingItemStyles,
   green,
+  secondaryNavbarBackground,
 } from './styles'
 
 export default props => {
@@ -27,6 +28,12 @@ export default props => {
                 top: '0px',
               }),
             }),
+          },
+        },
+        componentVariables: {
+          Menu: {
+            defaultActiveColor: green,
+            defaultActiveBackgroundColor: secondaryNavbarBackground,
           },
         },
       }}

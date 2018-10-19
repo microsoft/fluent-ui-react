@@ -25,6 +25,12 @@ export default () => {
               root: footerMenuStyles,
             },
           },
+          componentVariables: {
+            Menu: {
+              defaultActiveColor: green,
+              defaultActiveBackgroundColor: 'black',
+            },
+          },
         }}
       >
         <Menu

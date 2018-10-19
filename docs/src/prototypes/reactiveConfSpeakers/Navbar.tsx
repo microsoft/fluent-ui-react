@@ -13,6 +13,12 @@ export default () => (
           root: navbarMenuStyles,
         },
       },
+      componentVariables: {
+        Menu: {
+          defaultActiveColor: green,
+          defaultActiveBackgroundColor: 'black',
+        },
+      },
     }}
   >
     <>

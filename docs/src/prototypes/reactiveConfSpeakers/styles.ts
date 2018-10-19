@@ -2,6 +2,7 @@ import { ICSSInJSStyle } from '../../../../types/theme'
 import { pxToRem } from '../../../../src/lib'
 
 export const green = '#56b36d'
+export const secondaryNavbarBackground = 'rgb(6, 11, 36, 0.6)'
 
 export const mainStyle: ICSSInJSStyle = {
   backgroundColor: '#155068',
@@ -50,7 +51,7 @@ export const pageHeaderDividerStyles: ICSSInJSStyle = {
 
 export const secondaryNavbarMenuItemStyles: ICSSInJSStyle = {
   '::before': { background: 'transparent' },
-  ':hover': { background: 'rgb(6, 11, 36, 0.6)', color: green },
+  ':hover': { background: secondaryNavbarBackground, color: green },
   color: 'white',
   fontSize: pxToRem(16),
   marginTop: pxToRem(15),
@@ -64,12 +65,12 @@ export const secondaryNavbarMenuStyles: ICSSInJSStyle = {
   border: 'none',
   transform: 'translateZ(0px)',
   height: pxToRem(70),
-  backgroundColor: 'rgb(6, 11, 36, 0.6)',
+  backgroundColor: secondaryNavbarBackground,
   width: pxToRem(1150),
 }
 
 export const secondaryNavbarButtonStyles: ICSSInJSStyle = {
-  background: 'rgb(6, 11, 36, 0.6)',
+  background: secondaryNavbarBackground,
   border: `3px solid ${green}`,
   borderRadius: pxToRem(0),
   color: 'white',
