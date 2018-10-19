@@ -35,6 +35,7 @@ export interface IInputProps {
   renderWrapper?: ShorthandRenderFunction
   styles?: ComponentPartStyle<IInputProps, any>
   type?: string
+  inputRef?: (node: HTMLElement) => void
   value?: React.ReactText
   variables?: ComponentVariablesInput
   wrapper?: ShorthandValue
@@ -131,6 +132,13 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /**
+     * Called with a ref to the input node.
+     *
+     * @param {JSX.Element} node - Referred node.
+     */
+    inputRef: PropTypes.func,
+
     /** Shorthand for the wrapper component. */
     wrapper: customPropTypes.wrapperShorthand,
   }
@@ -160,11 +168,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
         className: cx(Input.className, className),
         children: (
           <>
-            <Ref
-              innerRef={inputDomElement =>
-                (this.inputDomElement = inputDomElement as HTMLInputElement)
-              }
-            >
+            <Ref innerRef={this.handleInputRef}>
               {Slot.createHTMLInput(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
@@ -191,6 +195,12 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
       },
       render: renderWrapper,
     })
+  }
+
+  private handleInputRef = (inputNode: HTMLElement) => {
+    this.inputDomElement = inputNode as HTMLInputElement
+
+    _.invoke(this.props, 'inputRef', inputNode)
   }
 
   private handleIconOverrides = predefinedProps => ({
