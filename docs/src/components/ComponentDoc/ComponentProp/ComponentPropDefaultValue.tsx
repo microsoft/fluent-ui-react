@@ -9,6 +9,8 @@ export default class ComponentPropDefaultValue extends React.PureComponent<any, 
 
   render() {
     const { value } = this.props
-    return _.isNil(value) ? null : <code>{value}</code>
+    return _.isNil(value) ? null : (
+      <code>{value.indexOf('_1.') === -1 ? value : value.split('_1.')[1]}</code>
+    )
   }
 }

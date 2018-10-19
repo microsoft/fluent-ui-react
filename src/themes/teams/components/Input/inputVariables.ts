@@ -1,21 +1,33 @@
 import { pxToRem } from '../../../../lib'
-
-export default (siteVars: any) => {
-  const vars: any = {}
-
-  vars.borderRadius = `${pxToRem(3)}`
-  vars.borderBottom = `${pxToRem(2)} solid transparent`
-  vars.backgroundColor = siteVars.gray10
-
-  vars.fontColor = siteVars.bodyColor
-  vars.fontSize = siteVars.fontSizes.medium
-
-  vars.inputPadding = `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`
-  vars.inputFocusBorderColor = siteVars.brand
-  vars.inputFocusBorderRadius = `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`
-
-  vars.iconPosition = 'absolute'
-  vars.iconRight = `${pxToRem(2)}`
-
-  return vars
+export interface IInputVariables {
+  borderRadius: string
+  borderBottom: string
+  backgroundColor: string
+  fontColor: string
+  fontSize: string
+  iconPosition: string
+  iconRight: string
+  inputPadding: string
+  inputFocusBorderColor: string
+  inputFocusBorderRadius: string
 }
+
+const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 24].map(v =>
+  pxToRem(v),
+)
+
+export default (siteVars): IInputVariables => ({
+  borderRadius: _3px_asRem,
+  borderBottom: `${_2px_asRem} solid transparent`,
+  backgroundColor: siteVars.gray10,
+
+  fontColor: siteVars.bodyColor,
+  fontSize: siteVars.fontSizes.medium,
+
+  iconPosition: 'absolute',
+  iconRight: _2px_asRem,
+
+  inputPadding: `${_6px_asRem} ${_24px_asRem} ${_6px_asRem} ${_12px_asRem}`,
+  inputFocusBorderColor: siteVars.brand,
+  inputFocusBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
+})
