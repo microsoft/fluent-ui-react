@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface StatusProps {

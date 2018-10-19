@@ -4,8 +4,8 @@ import {
   AccessibilityActionHandlers,
   ActionsKeyHandler,
   KeyActions,
-} from 'src/lib/accessibility/interfaces'
-import { State, PropsWithVarsAndStyles } from '../../types/theme'
+} from 'src/lib/accessibility/types'
+import { State, PropsWithVarsAndStyles } from '../themes/types'
 
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions

@@ -12,7 +12,7 @@ import {
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
-import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
+import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {

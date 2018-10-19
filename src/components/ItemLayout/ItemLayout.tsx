@@ -9,7 +9,7 @@ import {
   ComponentSlotClasses,
   ComponentSlotStyle,
   ICSSInJSStyle,
-} from '../../../types/theme'
+} from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
 export interface ItemLayoutProps {

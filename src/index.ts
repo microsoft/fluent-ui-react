@@ -4,7 +4,7 @@ import * as themes from './themes'
 // Theme
 //
 export { themes }
-export * from '../types/theme'
+export * from './themes/types'
 
 //
 // Components
@@ -95,7 +95,7 @@ export { default as Text, TextProps } from './components/Text/Text'
 //
 // Accessibility
 //
-export * from './lib/accessibility/interfaces'
+export * from './lib/accessibility/types'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'

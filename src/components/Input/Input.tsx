@@ -16,7 +16,7 @@ import {
   ShorthandRenderFunction,
   ComponentEventHandler,
 } from '../../../types/utils'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import Ref from '../Ref/Ref'

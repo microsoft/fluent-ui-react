@@ -1,10 +1,4 @@
-import {
-  ThemeInput,
-  ThemeIconSpec,
-  ThemeIcons,
-  FontIconSpec,
-  SvgIconSpec,
-} from '../../../types/theme'
+import { ThemeInput, ThemeIconSpec, ThemeIcons, FontIconSpec, SvgIconSpec } from '../types'
 
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'

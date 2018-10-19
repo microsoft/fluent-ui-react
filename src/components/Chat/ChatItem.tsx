@@ -9,7 +9,7 @@ import {
   UIComponent,
 } from '../../lib'
 import Slot from '../Slot/Slot'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
 
 export interface ChatItemProps {

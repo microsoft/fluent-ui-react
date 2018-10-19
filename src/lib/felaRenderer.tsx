@@ -5,7 +5,7 @@ import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import rtl from 'fela-plugin-rtl'
 
-import { Renderer } from '../../types/theme'
+import { Renderer } from '../themes/types'
 
 const createRendererConfig = (options: any = {}) => ({
   plugins: [

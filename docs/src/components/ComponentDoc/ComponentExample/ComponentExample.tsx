@@ -22,7 +22,7 @@ import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
-import { ThemeInput, ThemePrepared } from 'types/theme'
+import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 

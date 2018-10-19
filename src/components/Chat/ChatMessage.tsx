@@ -14,7 +14,7 @@ import {
   ComponentVariablesInput,
   ComponentSlotClasses,
   ComponentSlotStylesInput,
-} from '../../../types/theme'
+} from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
@@ -23,7 +23,7 @@ import {
 } from '../../../types/utils'
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'

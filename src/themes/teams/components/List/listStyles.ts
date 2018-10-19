@@ -1,5 +1,5 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListProps } from '../../../../components/List/List'
 
 const listStyles: ComponentSlotStylesInput<ListProps> = {

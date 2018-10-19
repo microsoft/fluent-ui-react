@@ -10,9 +10,9 @@ import {
 } from '../../lib'
 
 import { Icon, Image, Layout } from '../..'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   Extendable,
   ReactChildren,

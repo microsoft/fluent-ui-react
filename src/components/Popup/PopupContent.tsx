@@ -9,7 +9,7 @@ import {
   UIComponent,
   RenderResultConfig,
 } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface PopupContentProps {

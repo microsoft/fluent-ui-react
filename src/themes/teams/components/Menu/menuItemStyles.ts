@@ -1,9 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import {
-  ComponentSlotStyleFunction,
-  ComponentSlotStylesInput,
-  ICSSInJSStyle,
-} from '../../../../../types/theme'
+import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 

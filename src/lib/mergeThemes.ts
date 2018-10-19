@@ -15,7 +15,7 @@ import {
   ThemePrepared,
   StaticStyle,
   ThemeIcons,
-} from '../../types/theme'
+} from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'

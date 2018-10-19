@@ -1,5 +1,5 @@
 import { Sizes, Weights } from '../../../../lib/enums'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'

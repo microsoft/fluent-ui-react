@@ -3,9 +3,9 @@ import * as React from 'react'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface ImageProps {

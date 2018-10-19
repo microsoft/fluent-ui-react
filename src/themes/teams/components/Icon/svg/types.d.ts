@@ -1,6 +1,5 @@
-import * as React from 'react'
-import { SvgIconSpec, ComponentSlotStyleFunction } from '../../../../../../types/theme'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../../../../../../types/utils'
+import { SvgIconSpec, ComponentSlotStyleFunction } from '../../../../types'
+import { ObjectOf } from '../../../../../../types/utils'
 import { IconProps } from '../../../../../components/Icon/Icon'
 
 type SvgIconSpecWithStyles = {

@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps } from '../../../../components/List/ListItem'
 
 const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {

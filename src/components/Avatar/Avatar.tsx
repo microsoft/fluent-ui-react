@@ -3,7 +3,7 @@ import * as React from 'react'
 import { Image, Label, Status } from '../../'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface AvatarProps {

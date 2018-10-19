@@ -5,13 +5,13 @@ import * as React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
   ComponentSlotStyle,
-} from '../../../types/theme'
+} from '../../themes/types'
 import {
   Extendable,
   ReactChildren,

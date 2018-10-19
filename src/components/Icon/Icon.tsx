@@ -2,9 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'

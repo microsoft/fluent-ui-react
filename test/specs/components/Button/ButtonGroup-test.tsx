@@ -1,9 +1,9 @@
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import ButtonGroup from 'src/components/Button/ButtonGroup'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import Button from 'src/components/Button'
+import Button from 'src/components/Button/Button'
 import { buttonGroupBehavior } from '../../../../src/lib/accessibility'
-import { AccessibilityDefinition } from 'src/lib/accessibility/interfaces'
+import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 
 const buttonGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
 

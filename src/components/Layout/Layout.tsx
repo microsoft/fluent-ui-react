@@ -4,7 +4,7 @@ import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle, ICSSInJSStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle, ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutProps {
   as?: any

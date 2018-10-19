@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from './utils'
+import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -337,12 +337,11 @@ export type FontFaces = FontFace[]
 // Icons
 // ========================================================
 
-type Classes = { [iconSlot: string]: string }
 type SvgIconFuncArg = {
-  classes: Classes
+  classes: { [iconSlot: string]: string }
 }
 
-type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
+export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
 export type FontIconSpec = ObjectOrFunc<{
   content: string
   fontFamily: string

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 
-import Provider from 'src/components/Provider'
-import { ThemeInput } from 'theme'
+import Provider from 'src/components/Provider/Provider'
+import { ThemeInput } from '../../src/themes/types'
 
 export const withProvider = (element: React.ReactNode, theme?: ThemeInput) => (
   <Provider theme={theme || {}}>{element}</Provider>

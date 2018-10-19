@@ -11,7 +11,7 @@ import {
   StaticStyle,
   StaticStyleFunction,
   FontFace,
-} from '../../../types/theme'
+} from '../../themes/types'
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { InputProps } from '../../../../components/Input/Input'
 import { InputVariables } from './inputVariables'
 import { PositionProperty } from 'csstype'

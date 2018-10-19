@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers } from './accessibility/interfaces'
+import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 
 class UIComponent<P, S> extends React.Component<P, S> {

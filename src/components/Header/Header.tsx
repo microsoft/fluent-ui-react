@@ -9,7 +9,7 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 
 export interface HeaderProps {
   as?: any

@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {

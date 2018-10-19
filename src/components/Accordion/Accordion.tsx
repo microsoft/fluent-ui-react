@@ -6,8 +6,8 @@ import { AutoControlledComponent, customPropTypes, childrenExist } from '../../l
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { defaultBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,

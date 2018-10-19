@@ -15,14 +15,14 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-} from '../../types/theme'
+} from '../themes/types'
 import { Props } from '../../types/utils'
 import {
   AccessibilityBehavior,
   AccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
-} from './accessibility/interfaces'
+} from './accessibility/types'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'

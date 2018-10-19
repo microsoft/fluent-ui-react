@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from 'theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 

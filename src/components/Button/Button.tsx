@@ -6,8 +6,8 @@ import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } f
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,

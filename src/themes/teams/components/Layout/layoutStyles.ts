@@ -1,5 +1,5 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
 const truncateStyle = {
   overflow: 'hidden',

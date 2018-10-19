@@ -1,7 +1,7 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
 import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 

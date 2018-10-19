@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
-import { ThemePrepared } from '../../../types/theme'
+import { ThemePrepared } from '../../themes/types'
 
 export interface ProviderConsumerProps {
   render: (theme: ThemePrepared) => React.ReactNode

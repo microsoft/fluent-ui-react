@@ -3,10 +3,10 @@ import { handlesAccessibility, implementsShorthandProp, isConformant } from 'tes
 import { mountWithProvider } from '../../../utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
-import Avatar from 'src/components/Avatar'
+import Avatar from 'src/components/Avatar/Avatar'
 import { chatMessageBehavior } from 'src/lib/accessibility'
-import { AccessibilityDefinition } from 'src/lib/accessibility/interfaces'
-import Text from 'src/components/Text'
+import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import Text from 'src/components/Text/Text'
 
 describe('ChatMessage', () => {
   isConformant(ChatMessage)

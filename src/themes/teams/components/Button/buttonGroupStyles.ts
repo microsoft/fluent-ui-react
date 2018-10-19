@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
 
 const commonButtonsStyles = (circular: boolean) => ({

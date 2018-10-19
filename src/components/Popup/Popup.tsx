@@ -28,7 +28,7 @@ import {
   Accessibility,
   AccessibilityActionHandlers,
   AccessibilityBehavior,
-} from '../../lib/accessibility/interfaces'
+} from '../../lib/accessibility/types'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']

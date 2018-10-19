@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
 import ReactNode = React.ReactNode
 

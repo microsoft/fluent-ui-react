@@ -8,7 +8,7 @@ import {
   createShorthand,
 } from '../../lib'
 import { Extendable, MapValueToProps, Props } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
 export interface SlotProps {
   as?: any

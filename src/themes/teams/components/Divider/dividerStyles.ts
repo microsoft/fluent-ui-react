@@ -1,9 +1,5 @@
 import { childrenExist, pxToRem } from '../../../../lib'
-import {
-  ComponentSlotStylesInput,
-  ICSSInJSStyle,
-  ICSSPseudoElementStyle,
-} from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 
 const dividerBorderStyle = (size, color): ICSSInJSStyle => ({

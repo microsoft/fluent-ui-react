@@ -4,7 +4,7 @@ import {
   ComponentSlotClasses,
   ComponentSlotStylesInput,
   Renderer,
-} from '../../types/theme'
+} from '../themes/types'
 
 /**
  * Returns a string of HTML classes.

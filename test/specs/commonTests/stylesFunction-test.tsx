@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { UIComponent } from 'src/lib'
 import { Extendable } from 'types/utils'
-import { ICSSInJSStyle } from 'types/theme'
+import { ICSSInJSStyle } from 'src/themes/types'
 import { getTestingRenderedComponent } from 'test/utils'
 
 type AttrValue = 'props' | 'state'
