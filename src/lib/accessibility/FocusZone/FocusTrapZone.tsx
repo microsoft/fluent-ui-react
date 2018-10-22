@@ -43,15 +43,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
-  private static _handledPropsCache: string[] = undefined
-  static get handledProps() {
-    if (!this._handledPropsCache) {
-      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
-    }
-
-    return this._handledPropsCache
-  }
-
   static defaultProps: IFocusTrapZoneProps = {
     as: 'div',
     isClickableOutsideFocusTrap: true,
@@ -81,8 +72,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
-    console.log('FocusTrapZone.handledProps', FocusTrapZone.handledProps)
-    console.log('rest', rest)
     const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
 
     return (
@@ -110,7 +99,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     if (
       !ignoreExternalFocusing &&
       this._previouslyFocusedElementOutsideTrapZone &&
-      typeof this._previouslyFocusedElementOutsideTrapZone.focus === 'function' &&
       (this._root.current.contains(activeElement) || activeElement === document.body)
     ) {
       focusAsync(this._previouslyFocusedElementOutsideTrapZone)
@@ -291,7 +279,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
     if (bodyChildren.length && !document.body.contains(this._root.current)) {
       // In case popup render options will change
-      throw new Error(
+      console.warn(
         'Body does not contain trap zone element as expected. If it is done intentionally, please, make sure to update FocusTrapZone.',
       )
     }
