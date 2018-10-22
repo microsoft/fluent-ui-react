@@ -13,7 +13,7 @@ export { default as getClasses } from './getClasses'
 export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
-export { default as renderComponent, IRenderResultConfig } from './renderComponent'
+export { default as renderComponent, RenderResultConfig } from './renderComponent'
 export {
   useKeyOnly,
   useKeyOrValueAndKey,

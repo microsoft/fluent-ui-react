@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mount, ReactWrapper } from 'enzyme'
-import { IProps } from '../../../types/utils'
+import { Props } from '../../../types/utils'
 
 export type ShorthandTestOptions = {
   mapsValueToProp?: string
@@ -19,17 +19,17 @@ export default Component => {
     const { mapsValueToProp } = options
     const { displayName } = ShorthandComponent
 
-    const checkPropsMatch = (props: IProps, matchedProps: IProps) =>
+    const checkPropsMatch = (props: Props, matchedProps: Props) =>
       Object.keys(matchedProps).every(propName => matchedProps[propName] === props[propName])
 
-    const expectContainsSingleShorthandElement = (wrapper: ReactWrapper, withProps: IProps) =>
+    const expectContainsSingleShorthandElement = (wrapper: ReactWrapper, withProps: Props) =>
       expect(
         wrapper.findWhere(
           node => node.type() === ShorthandComponent && checkPropsMatch(node.props(), withProps),
         ).length,
       ).toEqual(1)
 
-    const expectShorthandPropsAreHandled = (withProps: IProps | string) => {
+    const expectShorthandPropsAreHandled = (withProps: Props | string) => {
       const props = { [shorthandProp]: withProps }
       const matchedProps =
         typeof withProps === 'string' ? { [mapsValueToProp]: withProps } : withProps

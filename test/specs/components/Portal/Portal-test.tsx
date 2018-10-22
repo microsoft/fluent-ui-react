@@ -3,13 +3,13 @@ import _ from 'lodash'
 import { mount } from 'enzyme'
 import { domEvent } from '../../../utils'
 
-import Portal, { IPortalProps } from 'src/components/Portal/Portal'
+import Portal, { PortalProps } from 'src/components/Portal/Portal'
 import PortalInner from 'src/components/Portal/PortalInner'
 
 describe('Portal', () => {
   let wrapper: any
 
-  const mountPortal = (props: IPortalProps = {}, options?) =>
+  const mountPortal = (props: PortalProps = {}, options?) =>
     (wrapper = mount(<Portal content={<p />} {...props} />, options))
 
   const testPortalInnerIsOpen = (visible: boolean) => {

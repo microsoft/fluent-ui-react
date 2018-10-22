@@ -4,10 +4,10 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Sizes } from '../../lib/enums'
 
-export interface ITextProps {
+export interface TextProps {
   as?: any
   atMention?: boolean | 'me'
   className?: string
@@ -21,7 +21,7 @@ export interface ITextProps {
   temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -31,7 +31,7 @@ export interface ITextProps {
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
-class Text extends UIComponent<Extendable<ITextProps>, any> {
+class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'

@@ -1,10 +1,9 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
-import { IconXSpacing, IIconProps } from '../../../../components/Icon/Icon'
+import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { pxToRem } from './../../../../lib'
-
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
@@ -78,7 +77,7 @@ const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSS
   }
 }
 
-const iconStyles: IComponentPartStylesInput<IIconProps, any> = {
+const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   root: ({
     props: { disabled, name, size, bordered, circular, xSpacing },
     variables: v,
