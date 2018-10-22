@@ -56,7 +56,7 @@ const webpackConfig: any = {
     new AsyncTypeScriptChecker(),
     new webpack.DefinePlugin(config.compiler_globals),
     new webpack.ContextReplacementPlugin(
-      /node_modules[\|/]typescript[\|/]lib/,
+      /node_modules[\\|/]typescript[\\|/]lib/,
       /typescript\.js/,
       false,
     ),
