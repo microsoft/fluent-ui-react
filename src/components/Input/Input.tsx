@@ -11,6 +11,7 @@ import {
 } from '../../lib'
 import {
   Extendable,
+  ReactChildren,
   ShorthandValue,
   ShorthandRenderFunction,
   ComponentEventHandler,
@@ -22,6 +23,7 @@ import Ref from '../Ref'
 
 export interface IInputProps {
   as?: any
+  children?: ReactChildren
   className?: string
   clearable?: boolean
   defaultValue?: React.ReactText
@@ -62,6 +64,12 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
   static propTypes = {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
+
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
+    children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply. */
     className: PropTypes.string,

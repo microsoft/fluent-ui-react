@@ -27,6 +27,7 @@ export { default as Status } from './components/Status'
 export { default as TabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as TabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as Text } from './components/Text'
+export { default as Form, FormField } from './components/Form'
 export { default as ToolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
 export {
   default as ToolbarButtonBehavior,
