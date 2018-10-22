@@ -4,7 +4,7 @@ import { Children, Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import { ReactChildren } from 'utils'
 
-export interface IRefProps {
+export interface RefProps {
   children?: ReactChildren
   innerRef?: (ref: HTMLElement) => void
 }
@@ -13,7 +13,7 @@ export interface IRefProps {
  * This component exposes a callback prop that always returns the DOM node of both functional and class component
  * children.
  */
-export default class Ref extends Component<IRefProps> {
+export default class Ref extends Component<RefProps> {
   static propTypes = {
     /**
      *  Used to set content when using childrenApi - internal only

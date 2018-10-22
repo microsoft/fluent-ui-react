@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { mount as enzymeMount } from 'enzyme'
+import { mount as enzymeMount, ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
 import { ThemeProvider } from 'react-fela'
 
@@ -13,7 +13,7 @@ import { felaRenderer } from 'src/lib'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
-export interface IConformant {
+export interface Conformant {
   eventTargets?: object
   requiredProps?: object
   exportedAtTopLevel?: boolean
@@ -32,11 +32,11 @@ export const mount = (node, options?) => {
  * @param {React.Component|Function} Component A component that should conform.
  * @param {Object} [options={}]
  * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
- * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API
+ * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  */
-export default (Component, options: IConformant = {}) => {
+export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
@@ -48,7 +48,7 @@ export default (Component, options: IConformant = {}) => {
   const componentType = typeof Component
 
   // This is added because the component is mounted
-  const getComponent = wrapper => {
+  const getComponent = (wrapper: ReactWrapper) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
       .childAt(0)

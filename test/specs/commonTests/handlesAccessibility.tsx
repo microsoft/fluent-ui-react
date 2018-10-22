@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { getTestingRenderedComponent } from 'test/utils'
 import { defaultBehavior } from 'src/lib/accessibility'
-import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
+import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
