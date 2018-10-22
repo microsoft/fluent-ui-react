@@ -9,6 +9,11 @@ const Usage = () => (
       description="You can access all icon names available in the current theme."
       examplePath="components/Icon/Usage/IconSetExample"
     />
+    <ComponentExample
+      title="Aligned icons"
+      description="You can vertically line up icons of the same size."
+      examplePath="components/Icon/Usage/IconAlignedExample"
+    />
   </ExampleSection>
 )
 

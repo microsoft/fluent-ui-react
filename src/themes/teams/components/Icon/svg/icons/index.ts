@@ -9,6 +9,7 @@ import callStopPresenting from './callControlStopPresentingNew'
 import callMicrophone from './callMicrophone'
 import callMicrophoneOff from './callMicrophoneOff'
 import more from './more'
+import paperClip from './paperClip'
 import teamCreate from './teamCreate'
 import teams from './teams'
 
@@ -22,6 +23,7 @@ export default {
   'call-microphone': callMicrophone,
   'call-microphone-off': callMicrophoneOff,
   more,
+  paperClip,
   'team-create': teamCreate,
   teams,
 } as { [iconName: string]: TeamsSvgIconSpec }
