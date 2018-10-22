@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+- Fix for dotted focus outline in Firefox for `Button` component @Bugaa92 ([#390](https://github.com/stardust-ui/react/pull/390))
 
 ### Features
 - Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
