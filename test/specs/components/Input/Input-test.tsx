@@ -9,7 +9,7 @@ import {
 
 import Input from 'src/components/Input/Input'
 import Icon from 'src/components/Icon/Icon'
-import Slot from 'src/components/Slot'
+import Slot from 'src/components/Slot/Slot'
 
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']

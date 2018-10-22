@@ -1,8 +1,8 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IListProps } from '../../../../components/List/List'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ListProps } from '../../../../components/List/List'
 
-const listStyles: IComponentPartStylesInput<IListProps> = {
+const listStyles: ComponentSlotStylesInput<ListProps> = {
   root: ({ props }): ICSSInJSStyle => {
     const { as, debug } = props
     return {
