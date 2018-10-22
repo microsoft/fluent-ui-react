@@ -7,7 +7,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
+export type IconXSpacing = 'none' | 'before' | 'after' | 'both' | 'all'
 export type IconSize =
   | 'micro'
   | 'mini'
@@ -79,7 +79,7 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
-    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
+    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both', 'all']),
 
     /** Accessibility behavior if overriden by the user. */
     accessibility: PropTypes.func,

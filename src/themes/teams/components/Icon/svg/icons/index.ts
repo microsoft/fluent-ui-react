@@ -10,7 +10,6 @@ import callMicrophone from './callMicrophone'
 import callMicrophoneOff from './callMicrophoneOff'
 import more from './more'
 import teamCreate from './teamCreate'
-import umbrella from './umbrella'
 import teams from './teams'
 
 export default {
@@ -24,6 +23,5 @@ export default {
   'call-microphone-off': callMicrophoneOff,
   more,
   'team-create': teamCreate,
-  umbrella,
   teams,
 } as { [iconName: string]: TeamsSvgIconSpec }

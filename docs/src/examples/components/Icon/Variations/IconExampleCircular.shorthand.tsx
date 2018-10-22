@@ -6,6 +6,8 @@ const IconExampleCircular = () => (
     <Icon name="chess rook" circular />
     <Icon name="book" circular />
     <Icon name="expand" circular />
+    <Icon name="call" circular />
+    <Icon name="call-video" circular />
     <Icon name="play" circular />
     <Icon name="stop" circular />
     <Icon name="calendar alternate outline" circular />

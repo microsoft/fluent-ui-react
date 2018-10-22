@@ -1,13 +1,10 @@
-import { pxToRem } from '../../../../lib'
-
 export interface IconVariables {
   [key: string]: string | number | undefined
 
   color?: string
   backgroundColor?: string
   borderColor?: string
-  horizontalSpace: string
-  margin: string
+  horizontalSpace: number
   secondaryColor: string
 }
 
@@ -17,7 +14,6 @@ export default (): IconVariables => ({
   // similar to how components have an info.json file
   backgroundColor: undefined,
   borderColor: undefined,
-  horizontalSpace: pxToRem(10),
-  margin: '0 0.25em 0 0',
+  horizontalSpace: 15,
   secondaryColor: 'white',
 })
