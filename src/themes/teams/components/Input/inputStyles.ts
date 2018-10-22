@@ -2,6 +2,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { InputProps } from '../../../../components/Input/Input'
 import { InputVariables } from './inputVariables'
 import { PositionProperty } from 'csstype'
+import { pxToRem } from '../../../../lib'
 
 const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
@@ -14,10 +15,12 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
+    border: v.border,
     borderRadius: v.borderRadius,
     borderBottom: v.borderBottom,
     color: v.fontColor,
     backgroundColor: v.backgroundColor,
+    position: 'relative',
     padding: v.inputPadding,
     ...(p.fluid && { width: '100%' }),
     ...(p.inline && { float: 'left' }),
@@ -25,8 +28,16 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
       color: v.fontColor,
     },
     ':focus': {
-      borderColor: v.inputFocusBorderColor,
+      borderBottomColor: v.inputFocusBorderColor,
+    },
+    '&::after': {
       borderRadius: v.inputFocusBorderRadius,
+      borderBottom: `${pxToRem(2)} solid transparent`,
+      content: '',
+      position: 'absolute',
+      bottom: '0',
+      left: '0',
+      right: '0',
     },
   }),
 
