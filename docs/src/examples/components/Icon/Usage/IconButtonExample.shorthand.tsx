@@ -9,7 +9,11 @@ const IconExampleButton = () => (
     </Button>
     <Button type="secondary" icon iconPosition="before">
       <Icon name="home" xSpacing="after" />
-      <Text content="Call now" />
+      <Text content="Phone home" />
+    </Button>
+    <Button type="primary" disabled icon iconPosition="before">
+      <Icon name="home" xSpacing="after" />
+      <Text content="Disabled button with icon" />
     </Button>
   </div>
 )
