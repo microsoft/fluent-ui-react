@@ -390,9 +390,8 @@ describe('FocusTrapZone', () => {
         true /*focusPreviouslyFocusedInnerElement*/,
       )
 
-      // Manually focusing FTZ when FTZ has never
-      // had focus within should go to 1st focusable inner element.
-      focusTrapZone.focus()
+      // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
+      focusTrapZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonF)
 
@@ -406,8 +405,9 @@ describe('FocusTrapZone', () => {
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonZ)
 
-      // Manually focusing FTZ should return to originally focused inner element.
-      focusTrapZone.focus()
+      // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
+      // FTZ should return to originally focused inner element.
+      focusTrapZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonB)
     })
@@ -419,9 +419,9 @@ describe('FocusTrapZone', () => {
         false /*focusPreviouslyFocusedInnerElement*/,
       )
 
-      // Manually focusing FTZ when FTZ has never
-      // had focus within should go to 1st focusable inner element.
-      focusTrapZone.focus()
+      // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
+      // Focus within should go to 1st focusable inner element.
+      focusTrapZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonF)
 
@@ -435,8 +435,9 @@ describe('FocusTrapZone', () => {
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonZ)
 
-      // Manually focusing FTZ should go to the first focusable element.
-      focusTrapZone.focus()
+      // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
+      // Focus should go to the first focusable element
+      focusTrapZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonF)
     })

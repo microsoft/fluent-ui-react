@@ -14,13 +14,12 @@ import {
   HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
 
-import { IFocusTrapZone, IFocusTrapZoneProps } from './FocusTrapZone.types'
+import { IFocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import * as customPropTypes from '../../customPropTypes'
 
-export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
-  implements IFocusTrapZone {
+export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}> {
   private static _focusStack: FocusTrapZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
@@ -31,7 +30,6 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
 
   static propTypes = {
     as: customPropTypes.as,
-    componentRef: PropTypes.object,
     className: PropTypes.string,
     elementToFocusOnDismiss: PropTypes.object,
     ariaLabelledBy: PropTypes.string,
@@ -59,7 +57,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
       !this._root.current.contains(this._previouslyFocusedElementOutsideTrapZone) &&
       !disableFirstFocus
     ) {
-      this.focus()
+      this._findElementAndFocusAsync()
     }
 
     this._hideContentFromAccessibilityTree()
@@ -105,9 +103,11 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
 
     this._unsubscribeFromEvents()
-    const lastActiveFocusTrap = FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
+    const lastActiveFocusTrap =
+      FocusTrapZone._focusStack.length &&
+      FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
 
-    if (!FocusTrapZone._focusStack.length) {
+    if (!lastActiveFocusTrap) {
       this._showContentInAccessibilityTree()
     } else if (
       lastActiveFocusTrap._root.current &&
@@ -118,7 +118,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
   }
 
-  public focus() {
+  private _findElementAndFocusAsync = () => {
     if (!this._root.current) return
     const { focusPreviouslyFocusedInnerElement, firstFocusableSelector } = this.props
 
@@ -133,26 +133,23 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
 
     const focusSelector =
-      typeof firstFocusableSelector === 'string'
+      firstFocusableSelector &&
+      (typeof firstFocusableSelector === 'string'
         ? firstFocusableSelector
-        : firstFocusableSelector && firstFocusableSelector()
+        : firstFocusableSelector())
 
-    let _firstFocusableChild
+    const firstFocusableChild = focusSelector
+      ? (this._root.current.querySelector('.' + focusSelector) as HTMLElement)
+      : getNextElement(
+          this._root.current,
+          this._root.current.firstChild as HTMLElement,
+          true,
+          false,
+          false,
+          true,
+        )
 
-    if (focusSelector) {
-      _firstFocusableChild = this._root.current.querySelector('.' + focusSelector)
-    } else {
-      _firstFocusableChild = getNextElement(
-        this._root.current,
-        this._root.current.firstChild as HTMLElement,
-        true,
-        false,
-        false,
-        true,
-      )
-    }
-
-    _firstFocusableChild && focusAsync(_firstFocusableChild)
+    firstFocusableChild && focusAsync(firstFocusableChild)
   }
 
   private _onFocusCapture = (ev: React.FocusEvent<HTMLDivElement>) => {
@@ -197,47 +194,40 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
     }
   }
 
-  private _forceFocusInTrap = (ev: FocusEvent): void => {
+  private _forceFocusInTrap = (ev: Event, triggeredElement: HTMLElement) => {
     if (
       FocusTrapZone._focusStack.length &&
       this === FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
     ) {
-      const focusedElement = document.activeElement as HTMLElement
-
-      if (!this._root.current.contains(focusedElement)) {
-        this.focus()
+      if (!this._root.current.contains(triggeredElement)) {
+        this._findElementAndFocusAsync()
         ev.preventDefault()
         ev.stopPropagation()
       }
     }
   }
 
-  private _forceClickInTrap = (ev: MouseEvent): void => {
-    if (
-      FocusTrapZone._focusStack.length &&
-      this === FocusTrapZone._focusStack[FocusTrapZone._focusStack.length - 1]
-    ) {
-      const clickedElement = ev.target as HTMLElement
+  private _handleOutsideFocus = (ev: FocusEvent): void => {
+    const focusedElement = document.activeElement as HTMLElement
+    focusedElement && this._forceFocusInTrap(ev, focusedElement)
+  }
 
-      if (clickedElement && !this._root.current.contains(clickedElement)) {
-        this.focus()
-        ev.preventDefault()
-        ev.stopPropagation()
-      }
-    }
+  private _handleOutsideClick = (ev: MouseEvent): void => {
+    const clickedElement = ev.target as HTMLElement
+    clickedElement && this._forceFocusInTrap(ev, clickedElement)
   }
 
   private _subscribeToEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.sub('focus', this._forceFocusInTrap, {
+      eventStack.sub('focus', this._handleOutsideFocus, {
         target: this.windowElement,
         useCapture: true,
       })
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.sub('click', this._forceClickInTrap, {
+      eventStack.sub('click', this._handleOutsideClick, {
         target: this.windowElement,
         useCapture: true,
       })
@@ -247,14 +237,14 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}>
   private _unsubscribeFromEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.unsub('focus', this._forceFocusInTrap, {
+      eventStack.unsub('focus', this._handleOutsideFocus, {
         target: this.windowElement,
         useCapture: true,
       })
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.unsub('click', this._forceClickInTrap, {
+      eventStack.unsub('click', this._handleOutsideClick, {
         target: this.windowElement,
         useCapture: true,
       })

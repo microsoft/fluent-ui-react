@@ -1,24 +1,10 @@
 import * as React from 'react'
 
-export interface IFocusTrapZone {
-  /**
-   * Sets focus to a descendant in the Trap Zone.
-   * See firstFocusableSelector and focusPreviouslyFocusedInnerElement for details.
-   */
-  focus: () => void
-}
-
 export interface IFocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Element type the root element will use. Default is "div".
    */
   as?: React.ReactType
-
-  /**
-   * Optional callback to access the IFocusTrapZone interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: React.RefObject<IFocusTrapZone>
 
   /**
    * Sets the HTMLElement to focus on when exiting the FocusTrapZone.
