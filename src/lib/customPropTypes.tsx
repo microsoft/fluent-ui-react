@@ -336,6 +336,12 @@ export const multipleProp = possible => (props, propName, componentName) => {
  */
 export const contentShorthand = every([disallow(['children']), PropTypes.node])
 
+export const wrapperShorthand = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.object,
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
+])
+
 /**
  * Item shorthand is a description of a component that can be a literal,
  * a props object, or an element.
