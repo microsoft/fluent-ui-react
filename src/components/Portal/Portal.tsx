@@ -28,8 +28,7 @@ export interface IPortalProps {
   onUnmount?: (props: IPortalProps) => void
   open?: boolean
   trigger?: JSX.Element
-  trapFocus?: boolean
-  focusTrapZoneProps?: IFocusTrapZoneProps
+  trapFocus?: IFocusTrapZoneProps | boolean
   triggerAccessibility?: TriggerAccessibility
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
@@ -106,11 +105,8 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      */
     onOutsideClick: PropTypes.func,
 
-    /** Controls whether or not focus trap should be applied */
-    trapFocus: PropTypes.bool,
-
-    /** FocusTrapZone props */
-    focusTrapZoneProps: PropTypes.object,
+    /** Controls whether or not focus trap should be applied, using boolean or IFocusTrapZoneProps type value */
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   public static defaultProps: IPortalProps = {
@@ -127,9 +123,10 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   }
 
   private renderPortal(): JSX.Element | undefined {
-    const { children, content, trapFocus, focusTrapZoneProps } = this.props
+    const { children, content, trapFocus } = this.props
     const { open } = this.state
     const contentToRender = childrenExist(children) ? children : content
+    const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (
       open && (

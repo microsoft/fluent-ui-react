@@ -20,26 +20,44 @@ class PortalExampleFocusTrapped extends React.Component {
       <div>
         <Button content={btnContent} onClick={this.openPortal} />
         <Portal
-          trapFocus={true}
-          focusTrapZoneProps={{
+          trapFocus={{
+            // When 'false', all clicks outside the Portal will be caught and not handled.
+            // 'true' by default.
             isClickableOutsideFocusTrap: false,
+            // Allows to pass element which you want to be focused after Portal is closed.
+            // 'null' by default, so the trigger element would be focused on close.
+            elementToFocusOnDismiss: null,
+            // Indicates whether to force focus inside a Portal, if the 'focus' event was invoked at any place.
+            // 'false' by default.
+            forceFocusInsideTrap: false,
+            // Ignore focusing element which activated Portal after it was closed.
+            // 'false' by default.
+            ignoreExternalFocusing: false,
+            // Do not focus first focusable element of Portal when opened.
+            // 'false' by default.
+            disableFirstFocus: false,
+            // Indicates an element to focus after Portal has opened.
+            // 'null' by default. The first focusable element of Portal will be focused.
+            firstFocusableSelector: null,
           }}
           open={open}
           content={
             <div
               style={{
-                background: '#ddd',
+                backgroundColor: '#fff',
                 position: 'fixed',
                 left: '40%',
                 top: '45%',
                 zIndex: 1000,
-                padding: '10px',
+                padding: '15px',
+                boxShadow: 'rgb(187, 187, 187) 0px 2px 8px',
+                border: '1px solid rgba(34,36,38,.15)',
+                borderRadius: '5px',
               }}
             >
               <Header>This is a portal with focus trap!</Header>
               <p tabIndex={0}>
-                Portal doesn't close on outside click, as 'isClickableOutsideFocusTrap' was set to
-                'false' for example purpose.
+                Portal doesn't close on outside click. See passed focus trap props.
               </p>
               <p tabIndex={0}>To close, simply click the close button</p>
               <Button size="small" content="Do nothing" />
