@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, ToolbarBehavior, ToolbarButtonBehavior } from '@stardust-ui/react'
+import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
 
 const items = [
   {
@@ -9,7 +9,7 @@ const items = [
       circular: true,
       size: 'small',
     },
-    accessibility: ToolbarButtonBehavior,
+    accessibility: toolbarButtonBehavior,
     'aria-label': 'Cloud Tool',
   },
   {
@@ -19,7 +19,7 @@ const items = [
       circular: true,
       size: 'small',
     },
-    accessibility: ToolbarButtonBehavior,
+    accessibility: toolbarButtonBehavior,
     'aria-label': 'Clock Tool',
   },
   {
@@ -29,7 +29,7 @@ const items = [
       circular: true,
       size: 'small',
     },
-    accessibility: ToolbarButtonBehavior,
+    accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
   },
 ]
@@ -41,7 +41,7 @@ class MenuExampleToolbarShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         iconOnly
-        accessibility={ToolbarBehavior}
+        accessibility={toolbarBehavior}
         aria-label="Compose Editor"
       />
     )

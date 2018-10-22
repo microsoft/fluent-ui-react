@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../types'
 
 export default {
   root: (): ICSSInJSStyle => {

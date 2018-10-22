@@ -1,28 +1,28 @@
 import { ItemShorthand } from 'utils'
 import {
   ContainerFocusHandler,
-  IFocusContainerProps,
-  IFocusContainerState,
+  FocusContainerProps,
+  FocusContainerState,
 } from 'src/lib/accessibility/FocusHandling/FocusContainer'
 import { SetStateDelegate } from 'src/lib/accessibility/FocusHandling/FocusableItem'
 
 describe('Focus Container', () => {
   let focusContainer: ContainerFocusHandler<
     ItemShorthand,
-    IFocusContainerProps<ItemShorthand>,
-    IFocusContainerState
+    FocusContainerProps<ItemShorthand>,
+    FocusContainerState
   >
 
   const items = [{ title: 'First Item' }, { title: 'Second Item' }, { title: 'Third Item' }]
-  const props: IFocusContainerProps<ItemShorthand> = {
+  const props: FocusContainerProps<ItemShorthand> = {
     items,
   }
 
-  let state: IFocusContainerState = {
+  let state: FocusContainerState = {
     focusItemOnIdx: -1,
   }
 
-  let setStateMock: SetStateDelegate<IFocusContainerProps<ItemShorthand>, IFocusContainerState>
+  let setStateMock: SetStateDelegate<FocusContainerProps<ItemShorthand>, FocusContainerState>
 
   beforeEach(() => {
     state.focusItemOnIdx = -1
