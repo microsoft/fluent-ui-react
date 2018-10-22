@@ -1,6 +1,6 @@
 import { mount } from 'enzyme'
 
-import Slot from 'src/components/Slot'
+import Slot from 'src/components/Slot/Slot'
 import { isConformant } from 'test/specs/commonTests'
 
 describe('Slot', () => {

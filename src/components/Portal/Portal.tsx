@@ -10,22 +10,23 @@ import {
   doesNodeContainClick,
 } from '../../lib'
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
-import Ref from '../Ref'
+import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, IFocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
+import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
+
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
-  attributes?: IAccessibilityAttributes
+  attributes?: AccessibilityAttributes
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface IPortalProps {
+export interface PortalProps {
   children?: ReactChildren
   content?: ShorthandValue | ShorthandValue[]
   defaultOpen?: boolean
-  onMount?: (props: IPortalProps) => void
-  onUnmount?: (props: IPortalProps) => void
+  onMount?: (props: PortalProps) => void
+  onUnmount?: (props: PortalProps) => void
   open?: boolean
   trigger?: JSX.Element
   trapFocus?: IFocusTrapZoneProps | boolean
@@ -35,14 +36,14 @@ export interface IPortalProps {
   onOutsideClick?: (e: ReactMouseEvent) => void
 }
 
-export interface IPortalState {
+export interface PortalState {
   open?: boolean
 }
 
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
+class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -109,7 +110,7 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
-  public static defaultProps: IPortalProps = {
+  public static defaultProps: PortalProps = {
     triggerAccessibility: {},
   }
 

@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../types/theme'
+import { ICSSInJSStyle } from '../themes/types'
 
 export const disabledStyle: ICSSInJSStyle = {
   opacity: 0.45,
