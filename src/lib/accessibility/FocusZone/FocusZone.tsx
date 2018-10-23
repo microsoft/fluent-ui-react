@@ -16,6 +16,7 @@ import {
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
@@ -123,7 +124,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
-      this.windowElement = this._root.current.ownerDocument.defaultView
+      this.windowElement = getWindow(this._root.current)
 
       let parentElement = getParent(this._root.current)
 
