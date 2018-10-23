@@ -34,10 +34,12 @@ class EventStack {
   sub = (name, handlers, options: any = {}) => {
     if (!isBrowser()) return
 
-    const { target = document, pool = 'default' } = options
-    const eventTarget = this._find(target)
+    setTimeout(() => {
+      const { target = document, pool = 'default' } = options
+      const eventTarget = this._find(target)
 
-    eventTarget.sub(name, handlers, pool)
+      eventTarget.sub(name, handlers, pool)
+    })
   }
 
   unsub = (name, handlers, options: any = {}) => {
