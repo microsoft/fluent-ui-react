@@ -19,6 +19,9 @@ import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import * as customPropTypes from '../../customPropTypes'
 
+/** FocusTrapZone is used to trap the focus in any html element placed in body
+ *  and hide other elements outside of Focus Trap Zone from accessibility tree.
+ *  Pressing tab will circle focus within the inner focusable elements of the FocusTrapZone. */
 export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private static _focusStack: FocusTrapZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
@@ -29,15 +32,61 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
 
   static propTypes = {
+    /**
+     * Element type the root element will use. Default is "div".
+     */
     as: customPropTypes.as,
+
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
+
+    /**
+     * Sets the HTMLElement to focus on when exiting the FocusTrapZone.
+     * @default The element.target that triggered the FTZ.
+     */
     elementToFocusOnDismiss: PropTypes.object,
+
+    /**
+     * Sets the aria-labelledby attribute.
+     */
     ariaLabelledBy: PropTypes.string,
+
+    /**
+     * Indicates if this Trap Zone will allow clicks outside the FocusTrapZone
+     * @default false
+     */
     isClickableOutsideFocusTrap: PropTypes.bool,
+
+    /**
+     * Indicates if this Trap Zone will ignore keeping track of HTMLElement that activated the Zone.
+     * @default false
+     */
     ignoreExternalFocusing: PropTypes.bool,
+
+    /**
+     * Indicates whether focus trap zone should force focus inside the focus trap zone
+     * @default true
+     */
     forceFocusInsideTrap: PropTypes.bool,
+
+    /**
+     * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.
+     */
     firstFocusableSelector: PropTypes.string,
+
+    /**
+     * Do not put focus onto first element when render focus trap zone
+     * @default false
+     */
     disableFirstFocus: PropTypes.bool,
+
+    /**
+     * Specifies the algorithm used to determine which descendant element to focus when focus() is called.
+     * If false, the first focusable descendant, filtered by the firstFocusableSelector property if present, is chosen.
+     * If true, the element that was focused when the Trap Zone last had a focused descendant is chosen.
+     * If it has never had a focused descendant before, behavior falls back to the first focused descendant.
+     * @default false
+     */
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
@@ -270,7 +319,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     if (bodyChildren.length && !document.body.contains(this._root.current)) {
       // In case popup render options will change
       console.warn(
-        'Body does not contain trap zone element as expected. If it is done intentionally, please, make sure to update FocusTrapZone.',
+        'Body element does not contain trap zone element. Please, ensure the trap zone element is placed inside body, so it will work properly.',
       )
     }
 
