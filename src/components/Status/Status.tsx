@@ -76,7 +76,8 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
         {Icon.create(icon, {
           defaultProps: {
             size: 'tiny',
-            variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
+            // HOW DO I GET THE COLOR FROM statusStyles???
+            // variables: { color: 'red' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
             xSpacing: 'none',
             render: renderIcon,
           },

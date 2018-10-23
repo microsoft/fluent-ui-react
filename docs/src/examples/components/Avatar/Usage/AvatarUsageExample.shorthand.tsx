@@ -36,7 +36,7 @@ const AvatarUsageExampleShorthand = () => (
         />
       </div>
     </div>
-    Incorrect:
+    Incorrect, unless in Contrast theme:
     <div>
       <div style={{ backgroundColor: 'violet', padding: '1rem', display: 'inline-block' }}>
         <Avatar name="John Doe (Software Developer)" status={status} />
