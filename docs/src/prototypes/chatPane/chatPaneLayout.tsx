@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { Layout } from '@stardust-ui/react'
-import { IChat } from './services'
+import { ChatData } from './services'
 
 import ChatPaneHeader from './chatPaneHeader'
 import ChatPaneContainer from './chatPaneContent'
 import ComposeMessage from './composeMessage'
 
-export interface IChatPaneLayoutProps {
-  chat: IChat
+export interface ChatPaneLayoutProps {
+  chat: ChatData
 }
 
-const ChatPaneLayout: React.SFC<IChatPaneLayoutProps> = ({ chat }: IChatPaneLayoutProps) => (
+const ChatPaneLayout: React.SFC<ChatPaneLayoutProps> = ({ chat }: ChatPaneLayoutProps) => (
   <Layout
     vertical
     start={<ChatPaneHeader chat={chat} />}

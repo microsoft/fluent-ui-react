@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
 
-import { pxToRem } from 'src/lib'
-import { IChat } from './services'
+import { ChatData } from './services'
 import { Sizes } from 'src/lib/enums'
 
-export interface IChatPaneHeaderProps {
-  chat?: IChat
+export interface ChatPaneHeaderProps {
+  chat?: ChatData
 }
 
-class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
+class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
   public render() {
     return (
       <Layout
@@ -86,8 +85,8 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
             tabIndex={0}
             styles={{
               fontWeight: 100,
-              ...(!index && { marginRight: '1.6rem' }),
-              marginTop: pxToRem(8),
+              margin: 'auto',
+              ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
             variables={siteVars => ({ color: siteVars.gray04 })}
           />

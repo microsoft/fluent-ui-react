@@ -10,12 +10,12 @@ const semanticStyleOverrides = {
   staticStyles: [semanticCssOverrides],
 }
 
-interface IAppState {
+interface AppState {
   themeName: string
   changeTheme: (newTheme: string) => void
 }
 
-class App extends React.Component<any, IAppState> {
+class App extends React.Component<any, AppState> {
   private changeTheme
 
   constructor(props) {

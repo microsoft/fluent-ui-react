@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 
-import PortalInner, { IPortalInnerProps } from 'src/components/Portal/PortalInner'
+import PortalInner, { PortalInnerProps } from 'src/components/Portal/PortalInner'
 
-const mountPortalInner = (props: IPortalInnerProps) =>
+const mountPortalInner = (props: PortalInnerProps) =>
   mount(
     <PortalInner {...props}>
       <p />

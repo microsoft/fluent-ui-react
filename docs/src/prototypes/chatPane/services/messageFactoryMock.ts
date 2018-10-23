@@ -1,56 +1,56 @@
 import * as _ from 'lodash'
-import { IChatMessageProps } from 'src/components/Chat'
-import { IDividerProps } from 'src/components/Divider'
-import { IStatusProps } from 'src/components/Status'
+import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
+import { DividerProps } from 'src/components/Divider/Divider'
+import { StatusProps } from 'src/components/Status/Status'
 import { Extendable } from 'utils'
-import { IChat, UserStatus, IMessage, IUser, areSameDay, getFriendlyDateString } from '.'
+import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
-export enum ChatItemType {
+export enum ChatItemTypes {
   message,
   divider,
 }
 
-interface IChatItemType {
-  itemType: ChatItemType
+interface ChatItem {
+  itemType: ChatItemTypes
 }
-interface IChatMessage extends IChatMessageProps, IChatItemType {
+interface ChatMessage extends ChatMessageProps, ChatItem {
   tabIndex: number
 }
-interface IDivider extends IDividerProps, IChatItemType {}
+interface Divider extends DividerProps, ChatItem {}
 
-type ChatItemContentProps = IChatMessage | IDivider
-type StatusProps = Extendable<IStatusProps>
+type ChatItemContentProps = ChatMessage | Divider
+type StatusPropsExtendable = Extendable<StatusProps>
 
-const statusMap: Map<UserStatus, StatusProps> = new Map([
+const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
   ['Available', { color: 'green', icon: 'check', title: 'Available' }],
   ['DoNotDisturb', { color: 'red', icon: 'minus', title: 'Do not disturb' }],
   ['Away', { color: 'yellow', icon: 'clock', title: 'Away' }],
   ['Offline', { color: 'grey', title: 'Offline' }],
-] as [UserStatus, StatusProps][])
+] as [UserStatus, StatusPropsExtendable][])
 
-function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
+function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
-  const msgProps: IChatMessage = {
+  const msgProps: ChatMessage = {
     content,
     mine,
     tabIndex: 0,
     timestamp: { content: msg.timestamp, title: msg.timestampLong },
     author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
     avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
-    itemType: ChatItemType.message,
+    itemType: ChatItemTypes.message,
   }
 
   return msgProps
 }
 
-function generateDividerProps(props: IDividerProps): IDivider {
+function generateDividerProps(props: DividerProps): Divider {
   const { content, important, type = 'secondary' } = props
-  const dividerProps: IDivider = { itemType: ChatItemType.divider, content, important, type }
+  const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, type }
 
   return dividerProps
 }
 
-export function generateChatProps(chat: IChat): ChatItemContentProps[] {
+export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
   if (!chat || !chat.members || !chat.messages) {
     return []
   }
