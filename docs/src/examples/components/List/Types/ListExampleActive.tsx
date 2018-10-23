@@ -2,16 +2,8 @@ import React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
 class ListExampleActive extends React.Component<any, any> {
-  state = {
-    key: 'irving',
-  }
-
-  handleClick = key => {
-    this.setState(() => ({
-      key,
-    }))
-  }
-
+  state = { key: 'irving' }
+  handleClick = key => this.setState(() => ({ key }))
   render() {
     return (
       <List>

@@ -2,16 +2,8 @@ import React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
 class ListExampleActive extends React.Component<any, any> {
-  state = {
-    key: 'irving',
-  }
-
-  handleClick = key => {
-    this.setState(() => ({
-      key,
-    }))
-  }
-
+  state = { key: 'irving' }
+  handleClick = key => this.setState(() => ({ key }))
   render() {
     const items = [
       {
@@ -38,12 +30,11 @@ class ListExampleActive extends React.Component<any, any> {
     ]
     return (
       <List
-        items={items.map(item => {
-          if (item.key === this.state.key) item['active'] = this.props.knobs.active
-          else item['active'] = false
-          item['onClick'] = () => this.handleClick(item.key)
-          return item
-        })}
+        items={items.map(item => ({
+          ...item,
+          active: item.key === this.state.key ? this.props.knobs.active : false,
+          onClick: () => this.handleClick(item.key),
+        }))}
       />
     )
   }
