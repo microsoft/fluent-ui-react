@@ -5,25 +5,25 @@ import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
-  IThemePrepared,
-  IThemeInput,
+  ThemePrepared,
+  ThemeInput,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
-  IFontFace,
-} from '../../../types/theme'
+  FontFace,
+} from '../../themes/types'
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
 
-export interface IProviderProps {
-  theme: IThemeInput
+export interface ProviderProps {
+  theme: ThemeInput
   children: React.ReactNode
 }
 
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<IProviderProps, any> {
+class Provider extends React.Component<ProviderProps, any> {
   static propTypes = {
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -95,14 +95,14 @@ class Provider extends React.Component<IProviderProps, any> {
 
     if (!fontFaces) return
 
-    const renderFontObject = (font: IFontFace) => {
+    const renderFontObject = (font: FontFace) => {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
       felaLtrRenderer.renderFont(font.name, font.paths, font.style)
     }
 
-    fontFaces.forEach((font: IFontFace) => {
+    fontFaces.forEach((font: FontFace) => {
       renderFontObject(font)
     })
   }
@@ -119,8 +119,8 @@ class Provider extends React.Component<IProviderProps, any> {
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
       <ProviderConsumer
-        render={(incomingTheme: IThemePrepared) => {
-          const outgoingTheme: IThemePrepared = mergeThemes(incomingTheme, theme)
+        render={(incomingTheme: ThemePrepared) => {
+          const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
 
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>

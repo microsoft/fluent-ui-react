@@ -1,6 +1,6 @@
 export type UserStatus = 'Available' | 'DoNotDisturb' | 'Away' | 'Offline'
 
-export interface IUser {
+export interface UserData {
   id: string
   avatar: string
   displayName: string
@@ -10,7 +10,7 @@ export interface IUser {
   status: UserStatus
 }
 
-export interface IMessage {
+export interface MessageData {
   id: string
   content: string
   date: Date
@@ -21,11 +21,11 @@ export interface IMessage {
   mine: boolean
 }
 
-export interface IChat {
+export interface ChatData {
   id: string
-  currentUser: IUser
+  currentUser: UserData
   isOneOnOne: boolean
-  members: Map<string, IUser>
-  messages: IMessage[]
+  members: Map<string, UserData>
+  messages: MessageData[]
   title: string
 }

@@ -2,17 +2,17 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
-export interface ISegmentProps {
+export interface SegmentProps {
   as?: any
   className?: string
   content?: any
-  styles?: ComponentPartStyle<ISegmentProps, any>
+  styles?: ComponentSlotStyle<SegmentProps, any>
   variables?: ComponentVariablesInput
 }
 
-class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
+class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'

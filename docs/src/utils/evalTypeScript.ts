@@ -77,7 +77,7 @@ const transpileTypeScript = (sourceCode): string => {
   })
 }
 
-interface IExecutionSandboxGlobals {
+interface ExecutionSandboxGlobals {
   REACT: any
   REACT_DOM: any
   STARDUST_UI_REACT: any
@@ -89,7 +89,7 @@ interface IExecutionSandboxGlobals {
  */
 const execute = (
   code,
-  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH }: IExecutionSandboxGlobals,
+  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH }: ExecutionSandboxGlobals,
 ) => {
   return eval(code) // tslint:disable-line
 }
