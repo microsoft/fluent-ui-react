@@ -1,4 +1,4 @@
-import Provider from 'src/components/Provider'
+import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 
 describe('Provider', () => {
