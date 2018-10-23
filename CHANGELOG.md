@@ -17,11 +17,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
+
 ### BREAKING
 - Export all typings at the top-level API @levithomason ([#382](https://github.com/stardust-ui/react/pull/382))
 
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+
+### Features
+- Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+
+### Documentation
+- Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
 
 <!--------------------------------[ v0.10.0 ]------------------------------- -->
 ## [v0.10.0](https://github.com/stardust-ui/react/tree/v0.10.0) (2018-10-19)

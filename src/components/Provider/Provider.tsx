@@ -21,7 +21,7 @@ export interface ProviderProps {
 }
 
 /**
- * The Provider passes the CSS in JS renderer and theme down context.
+ * The Provider passes the CSS in JS renderer and theme to your components.
  */
 class Provider extends React.Component<ProviderProps, any> {
   static propTypes = {
