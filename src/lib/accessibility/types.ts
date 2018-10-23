@@ -1,4 +1,4 @@
-import { IFocusTrapZoneProps, FocusZoneProps } from './FocusZone'
+import { FocusTrapZoneProps, FocusZoneProps } from './FocusZone'
 
 export type AriaWidgetRole =
   | 'button'
@@ -141,7 +141,7 @@ export type FocusZoneDefinition = {
 }
 
 export type FocusTrapZoneDefinition = {
-  props?: IFocusTrapZoneProps
+  props?: FocusTrapZoneProps
 }
 
 export type KeyActions = { [partName: string]: { [actionName: string]: KeyAction } }

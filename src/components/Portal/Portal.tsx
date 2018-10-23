@@ -12,7 +12,7 @@ import {
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
-import { FocusTrapZone, IFocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
@@ -29,7 +29,7 @@ export interface PortalProps {
   onUnmount?: (props: PortalProps) => void
   open?: boolean
   trigger?: JSX.Element
-  trapFocus?: IFocusTrapZoneProps | boolean
+  trapFocus?: FocusTrapZoneProps | boolean
   triggerAccessibility?: TriggerAccessibility
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
@@ -106,7 +106,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
      */
     onOutsideClick: PropTypes.func,
 
-    /** Controls whether or not focus trap should be applied, using boolean or IFocusTrapZoneProps type value */
+    /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value */
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 

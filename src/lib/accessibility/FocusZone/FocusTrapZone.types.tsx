@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export interface IFocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Element type the root element will use. Default is "div".
    */

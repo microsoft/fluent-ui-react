@@ -14,12 +14,12 @@ import {
   HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
 
-import { IFocusTrapZoneProps } from './FocusTrapZone.types'
+import { FocusTrapZoneProps } from './FocusTrapZone.types'
 import getUnhandledProps from '../../getUnhandledProps'
 import getElementType from '../../getElementType'
 import * as customPropTypes from '../../customPropTypes'
 
-export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}> {
+export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private static _focusStack: FocusTrapZone[] = []
   private _root: { current: HTMLElement | null } = { current: null }
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
@@ -41,7 +41,7 @@ export class FocusTrapZone extends React.Component<IFocusTrapZoneProps, {}> {
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
-  static defaultProps: IFocusTrapZoneProps = {
+  static defaultProps: FocusTrapZoneProps = {
     as: 'div',
     isClickableOutsideFocusTrap: true,
   }
