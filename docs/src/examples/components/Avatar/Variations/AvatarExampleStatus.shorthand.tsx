@@ -5,32 +5,24 @@ const AvatarExampleStatusShorthand = () => (
   <div>
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'success', icon: 'check', title: 'Available' }}
+      status={{ color: 'green', icon: 'check', title: 'Available' }}
+    />
+    &emsp;
+    <Avatar image="public/images/avatar/small/matt.jpg" status={{ color: 'red', title: 'Busy' }} />
+    &emsp;
+    <Avatar
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'red', icon: 'minus', title: 'Do not disturb' }}
     />
     &emsp;
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'error', title: 'Busy' }}
+      status={{ color: 'yellow', icon: 'clock', title: 'Away' }}
     />
     &emsp;
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'error', icon: 'minus', title: 'Do not disturb' }}
-    />
-    &emsp;
-    <Avatar
-      image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'warning', icon: 'clock', title: 'Away' }}
-    />
-    &emsp;
-    <Avatar
-      image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'error', title: 'Offline' }}
-    />
-    &emsp;
-    <Avatar
-      image="public/images/avatar/small/matt.jpg"
-      status={{ state: 'unknown', title: 'Offline' }}
+      status={{ color: 'grey', title: 'Offline' }}
     />
     &emsp;
   </div>
