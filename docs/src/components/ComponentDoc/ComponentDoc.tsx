@@ -88,7 +88,8 @@ class ComponentDoc extends React.Component<any, any> {
               <ComponentDocTag
                 title="Accessibility"
                 tag="accessibility"
-                errorMessage={constants.accessibilityErrorMessage}
+                errorMessage="No accessibility description found for this component. Please explain the
+                  accessibility concerns of the component by adding the @accessibility tag to the component's docblock."
                 info={info}
               />
               <ComponentDocSee displayName={info.displayName} />
