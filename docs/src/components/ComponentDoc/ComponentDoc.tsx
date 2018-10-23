@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Header, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react'
+import { Header } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -79,11 +80,8 @@ class ComponentDoc extends React.Component<any, any> {
         <Grid>
           <Grid.Row style={topRowStyle}>
             <Grid.Column>
-              <Header
-                as="h1"
-                content={info.displayName}
-                subheader={_.join(info.docblock.description, ' ')}
-              />
+              <Header as="h1" content={info.displayName} />
+              <p>{_.join(info.docblock.description, ' ')}</p>
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
               <ComponentDocLinks
