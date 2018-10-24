@@ -16,7 +16,7 @@ const radioGroupItemBehavior: Accessibility = (props: any) => ({
       'aria-checked': props.checked,
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
-        : props['disabled'],
+        : !!props['disabled'],
     },
   },
 })

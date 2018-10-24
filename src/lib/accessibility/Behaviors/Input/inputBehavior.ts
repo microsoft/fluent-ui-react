@@ -11,7 +11,7 @@ const inputBehavior: Accessibility = (props: any) => ({
     root: {
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
-        : props['disabled'],
+        : !!props['disabled'],
     },
   },
 })

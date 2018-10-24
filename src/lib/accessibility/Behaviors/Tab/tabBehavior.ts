@@ -1,6 +1,7 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -22,7 +23,9 @@ const tabBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'tab',
       tabIndex: '0',
-      'aria-selected': props['aria-selected'] || props['active'],
+      'aria-selected': !_.isNil(props['aria-selected'])
+        ? props['aria-selected']
+        : !!props['active'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],

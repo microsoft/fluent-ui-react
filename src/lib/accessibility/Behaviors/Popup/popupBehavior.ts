@@ -15,7 +15,7 @@ const popupBehavior: Accessibility = (props: any) => ({
       tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
-        : props['disabled'],
+        : !!props['disabled'],
     },
   },
   keyActions: {
