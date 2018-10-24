@@ -23,7 +23,6 @@ style.sidebarMain = {
 
 style.main = {
   ...style.sidebarMain,
-  maxWidth: sidebarWidth + 900,
 }
 
 export default style

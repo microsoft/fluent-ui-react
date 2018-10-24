@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../../types/theme'
+import { ICSSInJSStyle } from '../../../../src/themes/types'
 import { pxToRem } from '../../../../src/lib'
 
 export const green = '#56b36d'
@@ -16,12 +16,16 @@ export const mainStyle: ICSSInJSStyle = {
 }
 
 export const mainContentStyles: ICSSInJSStyle = {
-  width: pxToRem(990),
-  margin: '0 auto',
+  padding: `0 ${pxToRem(60)}`,
+  margin: `0 auto ${pxToRem(60)} auto`,
   marginTop: pxToRem(100),
+  justifyItems: 'center',
 }
 
 export const navbarMenuStyles: ICSSInJSStyle = {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
   border: 'transparent',
   height: pxToRem(24),
   background: 'black',
@@ -58,15 +62,15 @@ export const secondaryNavbarMenuItemStyles: ICSSInJSStyle = {
 }
 
 export const secondaryNavbarMenuStyles: ICSSInJSStyle = {
+  width: '100%',
   zIndex: 10,
   marginBottom: 0,
-  padding: 0,
+  padding: `0 ${pxToRem(60)}`,
   textTransform: 'uppercase',
   border: 'none',
   transform: 'translateZ(0px)',
   height: pxToRem(70),
   backgroundColor: secondaryNavbarBackground,
-  width: pxToRem(1150),
 }
 
 export const secondaryNavbarButtonStyles: ICSSInJSStyle = {
@@ -84,12 +88,12 @@ export const imageStyles: ICSSInJSStyle = {
 }
 
 export const secondaryNavbarScrollingItemStyles: ICSSInJSStyle = {
-  width: pxToRem(1150),
   position: 'fixed',
   top: pxToRem(70),
   zIndex: 10,
   background: green,
   textAlign: 'center',
+  padding: `0 ${pxToRem(60)}`,
 }
 
 export const footerStyles: ICSSInJSStyle = {

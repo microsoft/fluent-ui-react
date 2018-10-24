@@ -1,16 +1,6 @@
 import * as _ from 'lodash'
-import isBrowser from './isBrowser'
 
 const DEFAULT_FONT_SIZE_IN_PX = 16
-const DEFAULT_REM_SIZE_IN_PX = 10
-let _htmlFontSizeInPx: number | null = null
-
-const getComputedFontSize = (): number => {
-  return isBrowser()
-    ? getFontSizeValue(getComputedStyle(document.documentElement).fontSize) ||
-        DEFAULT_REM_SIZE_IN_PX
-    : DEFAULT_FONT_SIZE_IN_PX
-}
 
 const getFontSizeValue = (size?: string | null): number | null => {
   return (size && parseFloat(size)) || null
@@ -26,16 +16,12 @@ const getFontSizeValue = (size?: string | null): number | null => {
  * @returns {string} The value converted to the rem.
  */
 export const pxToRem = (value: number = 0): string => {
-  if (!_htmlFontSizeInPx) {
-    _htmlFontSizeInPx = getComputedFontSize()
-  }
-
   if (process.env.NODE_ENV !== 'production') {
     if (value < 0) {
       throw new Error(`Invalid value of: '${value}'.`)
     }
   }
-  const convertedValueInRems = value / _htmlFontSizeInPx
+  const convertedValueInRems = value / DEFAULT_FONT_SIZE_IN_PX
 
   return `${_.round(convertedValueInRems, 4)}rem`
 }
@@ -68,6 +54,4 @@ export const setHTMLFontSize = (fontSize?: string): void => {
       throw new Error(`Expected htmlFontSize to be in px, but got: '${htmlFontSizeUnit}'.`)
     }
   }
-
-  _htmlFontSizeInPx = htmlFontSizeValue || getComputedFontSize()
 }
