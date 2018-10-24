@@ -1,15 +1,19 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { mount as enzymeMount, ReactWrapper } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
-import { ThemeProvider } from 'react-fela'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
-import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
+import {
+  assertBodyContains,
+  consoleUtil,
+  mountWithProvider as mount,
+  syntheticEvent,
+} from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
-import { felaRenderer } from 'src/lib'
+
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
@@ -18,13 +22,6 @@ export interface Conformant {
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
-}
-
-export const mount = (node, options?) => {
-  return enzymeMount(
-    <ThemeProvider theme={{ renderer: felaRenderer }}>{node}</ThemeProvider>,
-    options,
-  )
 }
 
 /**

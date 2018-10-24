@@ -17,18 +17,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### Features
-- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
-
 ### BREAKING
 - Export all typings at the top-level API @levithomason ([#382](https://github.com/stardust-ui/react/pull/382))
 
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+- Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
 - Fix for dotted focus outline in Firefox for `Button` component @Bugaa92 ([#390](https://github.com/stardust-ui/react/pull/390))
 
 ### Features
 - Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
+- Add compose icons to Teams theme @joheredi ([#396](https://github.com/stardust-ui/react/pull/396))
+- Expose access to input element of `Input` via `inputRef` prop @silviuavram ([#377](https://github.com/stardust-ui/react/pull/377))
 
 ### Documentation
 - Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))

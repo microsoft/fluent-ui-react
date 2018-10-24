@@ -2,7 +2,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 
 import Image from 'src/components/Image/Image'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Image', () => {
   isConformant(Image)
@@ -14,12 +14,12 @@ describe('Image', () => {
 
     describe('aria-hidden', () => {
       test('is set to true, if alt attribute is not defined', () => {
-        const renderedComponent = getTestingRenderedComponent(Image, <Image />)
+        const renderedComponent = mountWithProviderAndGetComponent(Image, <Image />)
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
 
       test('is not set, if alt attribute is defined', () => {
-        const renderedComponent = getTestingRenderedComponent(
+        const renderedComponent = mountWithProviderAndGetComponent(
           Image,
           <Image alt="any alt description" />,
         )
