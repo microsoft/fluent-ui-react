@@ -16,6 +16,7 @@ import {
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
@@ -42,9 +43,10 @@ function getParent(child: HTMLElement): HTMLElement | null {
 
 export class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
   static propTypes = {
-    componentRef: PropTypes.object,
     className: PropTypes.string,
     direction: PropTypes.number,
+    defaultTabbableElement: PropTypes.string,
+    shouldFocusOnMount: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -68,27 +70,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   static displayName = 'FocusZone'
   static className = 'ms-FocusZone'
-
-  static handledProps = [
-    'componentRef',
-    'className',
-    'direction',
-    'defaultTabbableElement',
-    'shouldFocusOnMount',
-    'disabled',
-    'as',
-    'isCircularNavigation',
-    'shouldEnterInnerZone',
-    'onActiveElementChanged',
-    'shouldReceiveFocus',
-    'allowFocusRoot',
-    'handleTabKey',
-    'shouldInputLoseFocusOnArrowKey',
-    'stopFocusPropagation',
-    'onFocus',
-    'preventDefaultWhenHandled',
-    'isRtl',
-  ]
 
   private _root: { current: HTMLElement | null } = { current: null }
   private _id: string
@@ -123,7 +104,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
-      this.windowElement = this._root.current.ownerDocument.defaultView
+      this.windowElement = getWindow(this._root.current)
 
       let parentElement = getParent(this._root.current)
 
@@ -166,8 +147,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   render() {
     const { className } = this.props
     const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
-
-    const rest = getUnhandledProps({ handledProps: FocusZone.handledProps }, this.props)
+    const rest = getUnhandledProps({ handledProps: [..._.keys(FocusZone.propTypes)] }, this.props)
 
     return (
       <ElementType

@@ -22,6 +22,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+- Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
+
+### Features
+- Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
+- Add compose icons to Teams theme @joheredi ([#396](https://github.com/stardust-ui/react/pull/396))
+- Expose access to input element of `Input` via `inputRef` prop @silviuavram ([#377](https://github.com/stardust-ui/react/pull/377))
+
+### Documentation
+- Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
 
 ### Documentation
 - Add component descriptions and fix accessibility errors @levithomason ([#387](https://github.com/stardust-ui/react/pull/387))
