@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
+import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
@@ -79,14 +79,17 @@ describe('Menu', () => {
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
-        const menuItemComponent = getTestingRenderedComponent(Menu, <Menu aria-label={ariaLabel} />)
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          Menu,
+          <Menu aria-label={ariaLabel} />,
+        )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(ariaLabel)
       })
 
       test('aria-labelledby should be added to the menu', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-labelledby={ariaLabelledByID} />,
         )
@@ -98,7 +101,7 @@ describe('Menu', () => {
 
       describe('as a Toolbar', () => {
         test('root role should be toolbar', () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={toolbarBehavior} />,
           )
@@ -108,7 +111,7 @@ describe('Menu', () => {
 
       describe('as a TabList', () => {
         test('root role should be tablist', () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={tabListBehavior} />,
           )
