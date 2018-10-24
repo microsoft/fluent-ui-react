@@ -8,15 +8,9 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
-import {
-  examplePathToHash,
-  getFormattedHash,
-  knobsContext,
-  repoURL,
-  scrollToAnchor,
-} from 'docs/src/utils'
+import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, doesNodeContainClick, pxToRem } from 'src/lib'
+import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
@@ -437,7 +431,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const filename = pathParts[pathParts.length - 1]
 
     const ghEditHref = [
-      `${repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
       `?message=docs(${filename}): your description`,
     ].join('')
 
