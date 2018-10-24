@@ -1,12 +1,12 @@
 import {
   FocusableItem,
-  IFocusableItemProps,
+  FocusableItemProps,
 } from 'src/lib/accessibility/FocusHandling/FocusableItem'
 
 describe('Focusable Item', () => {
-  let focusableItem: FocusableItem<{} & { focusableItemProps: IFocusableItemProps }>
+  let focusableItem: FocusableItem<{} & { focusableItemProps: FocusableItemProps }>
 
-  let props: IFocusableItemProps
+  let props: FocusableItemProps
 
   beforeEach(() => {
     props = {

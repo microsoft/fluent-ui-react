@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from '../../../utils'
+import { mountWithProvider } from 'test/utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
-import Avatar from 'src/components/Avatar'
+import Avatar from 'src/components/Avatar/Avatar'
 import { chatMessageBehavior } from 'src/lib/accessibility'
-import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
-import Text from 'src/components/Text'
+import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import Text from 'src/components/Text/Text'
 
 describe('ChatMessage', () => {
   isConformant(ChatMessage)
@@ -17,7 +17,7 @@ describe('ChatMessage', () => {
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {
       defaultRootRole: 'presentation',
-      focusZoneDefinition: (chatMessageBehavior as IAccessibilityDefinition).focusZone,
+      focusZoneDefinition: (chatMessageBehavior as AccessibilityDefinition).focusZone,
     })
   })
 

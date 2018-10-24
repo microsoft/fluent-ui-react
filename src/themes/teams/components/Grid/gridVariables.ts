@@ -1,4 +1,4 @@
-export interface IGridVariables {
+export interface GridVariables {
   height: string
   width: string
   defaultColumnCount: number
@@ -6,7 +6,7 @@ export interface IGridVariables {
   padding?: string
 }
 
-export default (): IGridVariables => ({
+export default (): GridVariables => ({
   height: '100%',
   width: '100%',
   defaultColumnCount: 5,

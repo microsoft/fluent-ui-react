@@ -6,7 +6,7 @@ import * as _ from 'lodash'
 import {
   AutoControlledComponent,
   customPropTypes,
-  IRenderResultConfig,
+  RenderResultConfig,
   partitionHTMLProps,
 } from '../../lib'
 import {
@@ -16,12 +16,12 @@ import {
   ShorthandRenderFunction,
   ComponentEventHandler,
 } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import Icon from '../Icon'
-import Slot from '../Slot'
-import Ref from '../Ref'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
+import Ref from '../Ref/Ref'
 
-export interface IInputProps {
+export interface InputProps {
   as?: any
   children?: ReactChildren
   className?: string
@@ -31,18 +31,19 @@ export interface IInputProps {
   icon?: ShorthandValue
   inline?: boolean
   input?: ShorthandValue
-  onChange?: ComponentEventHandler<IInputProps>
+  onChange?: ComponentEventHandler<InputProps>
   renderIcon?: ShorthandRenderFunction
   renderInput?: ShorthandRenderFunction
   renderWrapper?: ShorthandRenderFunction
-  styles?: ComponentPartStyle<IInputProps, any>
+  styles?: ComponentSlotStyle<InputProps, any>
   type?: string
+  inputRef?: (node: HTMLElement) => void
   value?: React.ReactText
   variables?: ComponentVariablesInput
   wrapper?: ShorthandValue
 }
 
-export interface IInputState {
+export interface InputState {
   value?: React.ReactText
 }
 
@@ -54,7 +55,7 @@ export interface IInputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState> {
+class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> {
   private inputDomElement: HTMLInputElement
 
   static className = 'ui-input'
@@ -88,6 +89,13 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
 
     /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
+
+    /**
+     * Ref callback with an input DOM node.
+     *
+     * @param {JSX.Element} node - input DOM node.
+     */
+    inputRef: PropTypes.func,
 
     /** An input can be used inline with text. */
     inline: PropTypes.bool,
@@ -157,7 +165,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
     rest: restProps,
     styles,
     variables,
-  }: IRenderResultConfig<IInputProps>) {
+  }: RenderResultConfig<InputProps>) {
     const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
@@ -168,11 +176,7 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
         className: cx(Input.className, className),
         children: (
           <>
-            <Ref
-              innerRef={inputDomElement =>
-                (this.inputDomElement = inputDomElement as HTMLInputElement)
-              }
-            >
+            <Ref innerRef={this.handleInputRef}>
               {Slot.createHTMLInput(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
@@ -199,6 +203,12 @@ class Input extends AutoControlledComponent<Extendable<IInputProps>, IInputState
       },
       render: renderWrapper,
     })
+  }
+
+  private handleInputRef = (inputNode: HTMLElement) => {
+    this.inputDomElement = inputNode as HTMLInputElement
+
+    _.invoke(this.props, 'inputRef', inputNode)
   }
 
   private handleIconOverrides = predefinedProps => ({

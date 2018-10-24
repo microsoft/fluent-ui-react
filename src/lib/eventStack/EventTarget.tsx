@@ -32,19 +32,19 @@ export default class EventTarget {
   // Listeners handling
   // ------------------------------------
 
-  _listen = name => {
+  _listen = (name, useCapture = false) => {
     if (_.has(this._handlers, name)) return
     const handler = this._emit(name)
 
-    this.target.addEventListener(name, handler)
+    this.target.addEventListener(name, handler, useCapture)
     this._handlers[name] = handler
   }
 
-  _unlisten = name => {
+  _unlisten = (name, useCapture = false) => {
     if (_.some(this._pools, name)) return
     const { [name]: handler } = this._handlers
 
-    this.target.removeEventListener(name, handler)
+    this.target.removeEventListener(name, handler, useCapture)
     delete this._handlers[name]
   }
 
@@ -54,17 +54,17 @@ export default class EventTarget {
 
   empty = () => _.isEmpty(this._handlers)
 
-  sub = (name, handlers, pool = 'default') => {
+  sub = (name, handlers, pool = 'default', useCapture = false) => {
     const events = _.uniq([
       ..._.get(this._pools, `${pool}.${name}`, []),
       ...this._normalize(handlers),
     ])
 
-    this._listen(name)
+    this._listen(name, useCapture)
     _.set(this._pools, `${pool}.${name}`, events)
   }
 
-  unsub = (name, handlers, pool = 'default') => {
+  unsub = (name, handlers, pool = 'default', useCapture = false) => {
     const events = _.without(
       _.get(this._pools, `${pool}.${name}`, []),
       ...this._normalize(handlers),
@@ -76,6 +76,6 @@ export default class EventTarget {
     }
 
     _.set(this._pools, `${pool}.${name}`, undefined)
-    this._unlisten(name)
+    this._unlisten(name, useCapture)
   }
 }

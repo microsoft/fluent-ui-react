@@ -1,18 +1,18 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
 import ReactNode = React.ReactNode
 
-export interface IGridProps {
+export interface GridProps {
   as?: any
   className?: string
   children?: ReactChildren
   columns?: string | number
   content?: ShorthandValue | ShorthandValue[]
   rows?: string | number
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -21,7 +21,7 @@ export interface IGridProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<IGridProps>, any> {
+class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -65,7 +65,7 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     as: 'div',
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
+  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (

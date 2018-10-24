@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { Accessibility } from '../../../src/lib/accessibility/interfaces'
+import { Accessibility } from '../../../src/lib/accessibility/types'
 
 interface FilteredDescription {
   behaviorName: string
