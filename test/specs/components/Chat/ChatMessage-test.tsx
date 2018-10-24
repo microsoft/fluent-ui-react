@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from '../../../utils'
+import { mountWithProvider } from 'test/utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
 import Avatar from 'src/components/Avatar/Avatar'
