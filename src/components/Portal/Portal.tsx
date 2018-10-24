@@ -12,6 +12,7 @@ import {
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
@@ -28,6 +29,7 @@ export interface PortalProps {
   onUnmount?: (props: PortalProps) => void
   open?: boolean
   trigger?: JSX.Element
+  trapFocus?: FocusTrapZoneProps | boolean
   triggerAccessibility?: TriggerAccessibility
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
@@ -103,6 +105,9 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
      * @param {object} data - All props.
      */
     onOutsideClick: PropTypes.func,
+
+    /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value */
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
   public static defaultProps: PortalProps = {
@@ -119,14 +124,20 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   }
 
   private renderPortal(): JSX.Element | undefined {
-    const { children, content } = this.props
+    const { children, content, trapFocus } = this.props
     const { open } = this.state
+    const contentToRender = childrenExist(children) ? children : content
+    const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
           <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
-            {childrenExist(children) ? children : content}
+            {trapFocus ? (
+              <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
+            ) : (
+              contentToRender
+            )}
           </PortalInner>
         </Ref>
       )

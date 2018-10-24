@@ -118,3 +118,8 @@ export {
 export {
   default as chatMessageEnterEscBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageEnterEscBehavior'
+
+//
+// Utilities
+//
+export { default as mergeThemes } from './lib/mergeThemes'

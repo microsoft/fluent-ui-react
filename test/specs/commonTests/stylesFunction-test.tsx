@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { UIComponent } from 'src/lib'
 import { Extendable } from 'types/utils'
 import { ICSSInJSStyle } from 'src/themes/types'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 
 type AttrValue = 'props' | 'state'
 
@@ -52,7 +52,7 @@ const testStylesForComponent = ({
     />
   )
 
-  getTestingRenderedComponent(TestStylesComponent, <TestStylesComponent {...props} />)
+  mountWithProviderAndGetComponent(TestStylesComponent, <TestStylesComponent {...props} />)
 }
 
 describe('styles function', () => {

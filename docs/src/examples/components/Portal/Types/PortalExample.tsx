@@ -20,11 +20,15 @@ class PortalExamplePortal extends React.Component {
         <Portal trigger={<Button content={'Toggle portal'} onClick={this.handleClick} />}>
           <div
             style={{
-              background: '#ddd',
               position: 'fixed',
               left: '40%',
               top: '45%',
               zIndex: 1000,
+              backgroundColor: '#fff',
+              padding: '15px',
+              boxShadow: 'rgb(187, 187, 187) 0px 2px 8px',
+              border: '1px solid rgba(34,36,38,.15)',
+              borderRadius: '5px',
             }}
           >
             <Header>This is a basic portal</Header>

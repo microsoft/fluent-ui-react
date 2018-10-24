@@ -37,6 +37,7 @@ export interface InputProps {
   renderWrapper?: ShorthandRenderFunction
   styles?: ComponentSlotStyle<InputProps, any>
   type?: string
+  inputRef?: (node: HTMLElement) => void
   value?: React.ReactText
   variables?: ComponentVariablesInput
   wrapper?: ShorthandValue
@@ -47,7 +48,7 @@ export interface InputState {
 }
 
 /**
- * An Input
+ * An input is a field used to elicit a response from a user.
  * @accessibility
  * For good screen reader experience set aria-label or aria-labelledby attribute for input.
  *
@@ -88,6 +89,13 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
 
     /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
+
+    /**
+     * Ref callback with an input DOM node.
+     *
+     * @param {JSX.Element} node - input DOM node.
+     */
+    inputRef: PropTypes.func,
 
     /** An input can be used inline with text. */
     inline: PropTypes.bool,
@@ -168,11 +176,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
         className: cx(Input.className, className),
         children: (
           <>
-            <Ref
-              innerRef={inputDomElement =>
-                (this.inputDomElement = inputDomElement as HTMLInputElement)
-              }
-            >
+            <Ref innerRef={this.handleInputRef}>
               {Slot.createHTMLInput(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
@@ -199,6 +203,12 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
       },
       render: renderWrapper,
     })
+  }
+
+  private handleInputRef = (inputNode: HTMLElement) => {
+    this.inputDomElement = inputNode as HTMLInputElement
+
+    _.invoke(this.props, 'inputRef', inputNode)
   }
 
   private handleIconOverrides = predefinedProps => ({

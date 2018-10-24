@@ -1,6 +1,7 @@
 import * as React from 'react'
 
-import { mount, ReactWrapper } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider as mount } from 'test/utils'
 import {
   isConformant,
   implementsShorthandProp,
