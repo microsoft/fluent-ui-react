@@ -43,7 +43,6 @@ function getParent(child: HTMLElement): HTMLElement | null {
 
 export class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
   static propTypes = {
-    componentRef: PropTypes.object,
     className: PropTypes.string,
     direction: PropTypes.number,
     defaultTabbableElement: PropTypes.string,
