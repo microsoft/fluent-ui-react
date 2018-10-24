@@ -90,6 +90,13 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
 
+    /**
+     * Ref callback with an input DOM node.
+     *
+     * @param {JSX.Element} node - input DOM node.
+     */
+    inputRef: PropTypes.func,
+
     /** An input can be used inline with text. */
     inline: PropTypes.bool,
 
@@ -139,13 +146,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /**
-     * Called with a ref to the input node.
-     *
-     * @param {JSX.Element} node - Referred node.
-     */
-    inputRef: PropTypes.func,
 
     /** Shorthand for the wrapper component. */
     wrapper: customPropTypes.wrapperShorthand,
