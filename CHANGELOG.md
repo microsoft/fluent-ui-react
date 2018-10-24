@@ -18,6 +18,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING
+- Export all typings at the top-level API @levithomason ([#382](https://github.com/stardust-ui/react/pull/382))
+
+### Fixes
+- Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+- Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
+
+### Features
+- Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
+- Add compose icons to Teams theme @joheredi ([#396](https://github.com/stardust-ui/react/pull/396))
+- Expose access to input element of `Input` via `inputRef` prop @silviuavram ([#377](https://github.com/stardust-ui/react/pull/377))
+
+### Documentation
+- Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+
+<!--------------------------------[ v0.10.0 ]------------------------------- -->
+## [v0.10.0](https://github.com/stardust-ui/react/tree/v0.10.0) (2018-10-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.9.1...v0.10.0)
+
+### BREAKING
 - Removed `type...` prefix from multiple variables in `buttonStyles.ts` @bcalvery ([#336](https://github.com/stardust-ui/react/pull/336))
 
 ### Documentation
@@ -30,6 +50,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `target` prop to `Popup` @kuzhelog ([#356](https://github.com/stardust-ui/react/pull/356))
+- Add new `Input` component with `wrapper` prop @Bugaa92 ([#326](https://github.com/stardust-ui/react/pull/326))
+- Add `Form` and `Form.Field` components @mnajdova ([#353](https://github.com/stardust-ui/react/pull/353))
 
 <!--------------------------------[ v0.9.1 ]------------------------------- -->
 ## [v0.9.1](https://github.com/stardust-ui/react/tree/v0.9.1) (2018-10-11)

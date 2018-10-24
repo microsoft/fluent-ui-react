@@ -1,4 +1,4 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 

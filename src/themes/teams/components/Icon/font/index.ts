@@ -1,4 +1,4 @@
-import { FontIconSpec } from 'theme'
+import { FontIconSpec } from '../../../../types'
 
 const fontAwesome = (iconCode: string): FontIconSpec => ({
   fontFamily: 'Icons',

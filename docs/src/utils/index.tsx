@@ -1,4 +1,3 @@
-export * from './constants'
 export { default as componentInfoContext } from './componentInfoContext'
 export { default as componentInfoShape } from './componentInfoShape'
 export { default as exampleContext } from './exampleContext'

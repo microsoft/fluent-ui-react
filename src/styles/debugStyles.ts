@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../types/theme'
+import { ICSSInJSStyle } from '../themes/types'
 
 const debugStyle = ({ name, color, style }): ICSSInJSStyle => ({
   position: 'relative',

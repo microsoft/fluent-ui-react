@@ -8,32 +8,26 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
-import {
-  examplePathToHash,
-  getFormattedHash,
-  knobsContext,
-  repoURL,
-  scrollToAnchor,
-} from 'docs/src/utils'
+import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, doesNodeContainClick, pxToRem } from 'src/lib'
+import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
-import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { IThemeInput, IThemePrepared } from 'types/theme'
+import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
+import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 
-export interface IComponentExampleProps extends RouteComponentProps<any, any> {
+export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   title: string
   description: string
   examplePath: string
   themeName?: string
 }
 
-interface IComponentExampleState {
+interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
@@ -65,14 +59,14 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-class ComponentExample extends React.Component<IComponentExampleProps, IComponentExampleState> {
+class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
   private componentRef: React.Component
-  private sourceCodeMgr: ISourceCodeManager
+  private sourceCodeMgr: SourceCodeManager
   private anchorName: string
   private kebabExamplePath: string
   private KnobsComponent: any
 
-  public state: IComponentExampleState = {
+  public state: ComponentExampleState = {
     knobs: {},
     themeName: 'teams',
     componentVariables: {},
@@ -103,7 +97,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
 
   public componentWillMount() {
     const { examplePath } = this.props
-    this.sourceCodeMgr = getSourceCodeManager(examplePath)
+    this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
     const exampleElement = this.renderExampleFromCode(this.sourceCodeMgr.currentCode)
 
@@ -118,7 +112,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     })
   }
 
-  public componentWillReceiveProps(nextProps: IComponentExampleProps) {
+  public componentWillReceiveProps(nextProps: ComponentExampleProps) {
     // deactivate examples when switching from one to the next
     if (
       this.isActiveHash() &&
@@ -357,7 +351,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     const { showRtl, componentVariables, themeName } = this.state
     const theme = themes[themeName]
 
-    const newTheme: IThemeInput = {
+    const newTheme: ThemeInput = {
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),
@@ -437,7 +431,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     const filename = pathParts[pathParts.length - 1]
 
     const ghEditHref = [
-      `${repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
       `?message=docs(${filename}): your description`,
     ].join('')
 
@@ -550,7 +544,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables, componentVariables }: IThemePrepared) => {
+          render={({ siteVariables, componentVariables }: ThemePrepared) => {
             const mergedVariables = mergeThemeVariables(componentVariables, {
               [displayName]: this.state.componentVariables,
             })
@@ -712,7 +706,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 }
 
-const ComponentExampleWithTheme = React.forwardRef((props: IComponentExampleProps) => (
+const ComponentExampleWithTheme = React.forwardRef((props: ComponentExampleProps) => (
   <ThemeContext.Consumer>
     {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
   </ThemeContext.Consumer>
