@@ -2,7 +2,9 @@
 
 This is a list of changes made to this Stardust copy of FocusZone in comparison with the original [Fabric FocusZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusZone/FocusZone.tsx).
 
-### fix(FocusZone)with defaultTabbableElement prop set tabindexes are not updated accordingly [#342](https://github.com/stardust-ui/react/pull/342)
+### fixes
+- With defaultTabbableElement prop set tabindexes are not updated accordingly ([#342](https://github.com/stardust-ui/react/pull/342))
+- Remove unused prop `componentRef` ([#397](https://github.com/stardust-ui/react/pull/397))
 
 ### feat(FocusZone): Add embed mode for FocusZone and new Chat behavior [#233](https://github.com/stardust-ui/react/pull/233)
 - Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
