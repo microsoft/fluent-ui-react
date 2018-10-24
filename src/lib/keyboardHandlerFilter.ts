@@ -1,4 +1,4 @@
-import { KeyCombinations, KeyboardHandler } from './accessibility/interfaces'
+import { KeyCombinations, KeyboardHandler } from './accessibility/types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 

@@ -2,12 +2,12 @@ import * as React from 'react'
 
 import Menu from 'src/components/Menu/Menu'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProvider, getTestingRenderedComponent } from 'test/utils'
+import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
 import { menuBehavior } from 'src/lib/accessibility'
-import { IAccessibilityDefinition } from 'src/lib/accessibility/interfaces'
+import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -66,27 +66,30 @@ describe('Menu', () => {
 
         const updatedItems = wrapper.find('MenuItem')
 
-        expect(updatedItems.at(0).props().active).toBe(false)
-        expect(updatedItems.at(1).props().active).toBe(true)
+        expect(updatedItems.at(0).props()).toHaveProperty('active', false)
+        expect(updatedItems.at(1).props()).toHaveProperty('active', true)
       })
     })
 
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
-        focusZoneDefinition: (menuBehavior as IAccessibilityDefinition).focusZone,
+        focusZoneDefinition: (menuBehavior as AccessibilityDefinition).focusZone,
       })
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
-        const menuItemComponent = getTestingRenderedComponent(Menu, <Menu aria-label={ariaLabel} />)
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          Menu,
+          <Menu aria-label={ariaLabel} />,
+        )
 
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(ariaLabel)
       })
 
       test('aria-labelledby should be added to the menu', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           Menu,
           <Menu aria-labelledby={ariaLabelledByID} />,
         )
@@ -98,7 +101,7 @@ describe('Menu', () => {
 
       describe('as a Toolbar', () => {
         test('root role should be toolbar', () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={toolbarBehavior} />,
           )
@@ -108,7 +111,7 @@ describe('Menu', () => {
 
       describe('as a TabList', () => {
         test('root role should be tablist', () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             Menu,
             <Menu accessibility={tabListBehavior} />,
           )

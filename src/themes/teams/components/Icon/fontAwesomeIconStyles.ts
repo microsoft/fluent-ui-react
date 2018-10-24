@@ -1,4 +1,4 @@
-import { ThemeIcons, ThemeIconSpec } from '../../../../../types/theme'
+import { ThemeIcons, ThemeIconSpec } from '../../../types'
 
 const fontIcon = (content: string, fontFamily: string): ThemeIconSpec => ({
   icon: { content: `'\\${content}'`, fontFamily },
