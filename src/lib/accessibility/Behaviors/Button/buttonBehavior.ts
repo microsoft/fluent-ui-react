@@ -1,4 +1,5 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -10,7 +11,9 @@ const buttonBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: props.as === 'button' ? undefined : 'button',
-      'aria-disabled': props['aria-disabled'] || props['disabled'],
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : props['disabled'],
     },
   },
 })

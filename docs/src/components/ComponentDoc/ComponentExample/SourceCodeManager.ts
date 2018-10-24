@@ -1,4 +1,4 @@
-interface ISourceCodeData {
+interface SourceCodeData {
   path: string
   code: string
   originalCode: string
@@ -9,24 +9,15 @@ export enum SourceCodeType {
   shorthand = 'shorthand',
 }
 
-export interface ISourceCodeManager {
-  currentCode: string
-  currentPath: string
-  codeType: SourceCodeType
-  originalCodeHasChanged: boolean
-  isCodeValidForType(codeType: SourceCodeType): boolean
-  resetToOriginalCode: () => void
-}
-
 export const examplePathPatterns: { [key in SourceCodeType]: string } = {
   normal: '',
   shorthand: '.shorthand',
 }
 
-class SourceCodeManager implements ISourceCodeManager {
-  private readonly data: { [key in SourceCodeType]: ISourceCodeData } = {
-    normal: {} as ISourceCodeData,
-    shorthand: {} as ISourceCodeData,
+class SourceCodeManager {
+  private readonly data: { [key in SourceCodeType]: SourceCodeData } = {
+    normal: {} as SourceCodeData,
+    shorthand: {} as SourceCodeData,
   }
 
   public codeType: SourceCodeType
@@ -66,11 +57,11 @@ class SourceCodeManager implements ISourceCodeManager {
     this.currentCodeData.code = this.currentCodeData.originalCode
   }
 
-  private get currentCodeData(): ISourceCodeData {
+  private get currentCodeData(): SourceCodeData {
     return this.data[this.codeType]
   }
 
-  private set currentCodeData(codeData: ISourceCodeData) {
+  private set currentCodeData(codeData: SourceCodeData) {
     this.data[this.codeType] = codeData
   }
 
@@ -100,4 +91,4 @@ class SourceCodeManager implements ISourceCodeManager {
   }
 }
 
-export default (path: string): ISourceCodeManager => new SourceCodeManager(path)
+export default SourceCodeManager

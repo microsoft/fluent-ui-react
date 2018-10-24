@@ -7,7 +7,7 @@ import {
   implementsShorthandProp,
   getRenderedAttribute,
 } from 'test/specs/commonTests'
-import { getTestingRenderedComponent, mountWithProvider } from 'test/utils'
+import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import { toggleButtonBehavior } from '../../../../src/lib/accessibility'
 
 import Button from 'src/components/Button/Button'
@@ -35,8 +35,13 @@ describe('Button', () => {
 
     describe('aria-disabled', () => {
       test('is set to true, if disabled attribute is provided', () => {
-        const renderedComponent = getTestingRenderedComponent(Button, <Button disabled />)
+        const renderedComponent = mountWithProviderAndGetComponent(Button, <Button disabled />)
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+      })
+
+      test('is set to false, if disabled attribute is not provided', () => {
+        const renderedComponent = mountWithProviderAndGetComponent(Button, <Button />)
+        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
       })
     })
 
@@ -69,7 +74,7 @@ describe('Button', () => {
     describe('ToggleButton behavior', () => {
       describe('role button', () => {
         test('is not defined, if compoenent is button', () => {
-          const renderedComponent = getTestingRenderedComponent(
+          const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button accessibility={toggleButtonBehavior} />,
           )
@@ -77,7 +82,7 @@ describe('Button', () => {
         })
 
         test('is defined, if compoenent is not button', () => {
-          const renderedComponent = getTestingRenderedComponent(
+          const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button as="div" accessibility={toggleButtonBehavior} />,
           )
@@ -87,7 +92,7 @@ describe('Button', () => {
 
       describe('aria-pressed', () => {
         test('is set to true, if active attribute is provided', () => {
-          const renderedComponent = getTestingRenderedComponent(
+          const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button active="true" accessibility={toggleButtonBehavior} />,
           )
@@ -95,7 +100,7 @@ describe('Button', () => {
         })
 
         test('is set to false, if active attribute is not provided', () => {
-          const renderedComponent = getTestingRenderedComponent(
+          const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button accessibility={toggleButtonBehavior} />,
           )
@@ -105,11 +110,19 @@ describe('Button', () => {
 
       describe('aria-disabled', () => {
         test('is set to true, if disabled attribute is provided', () => {
-          const renderedComponent = getTestingRenderedComponent(
+          const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button disabled accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
+        })
+
+        test('is set to false, if disabled attribute is not provided', () => {
+          const renderedComponent = mountWithProviderAndGetComponent(
+            Button,
+            <Button accessibility={toggleButtonBehavior} />,
+          )
+          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
         })
       })
     })
@@ -119,20 +132,24 @@ describe('Button', () => {
     const typeProp = 'type'
 
     test('is not set by default', () => {
-      const btnType = getTestingRenderedComponent(Button, <Button />).prop(typeProp)
+      const btnType = mountWithProviderAndGetComponent(Button, <Button />).prop(typeProp)
       expect(btnType).toBeUndefined()
     })
 
     test('can be set to primary', () => {
       const type = 'primary'
-      const btnType = getTestingRenderedComponent(Button, <Button type={type} />).prop(typeProp)
+      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
+        typeProp,
+      )
 
       expect(btnType).toEqual(type)
     })
 
     test('can be set to secondary', () => {
       const type = 'secondary'
-      const btnType = getTestingRenderedComponent(Button, <Button type={type} />).prop(typeProp)
+      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
+        typeProp,
+      )
 
       expect(btnType).toEqual(type)
     })
@@ -142,12 +159,12 @@ describe('Button', () => {
     const circularProp = 'circular'
 
     test('is not set by default', () => {
-      const btnCircular = getTestingRenderedComponent(Button, <Button />).prop(circularProp)
+      const btnCircular = mountWithProviderAndGetComponent(Button, <Button />).prop(circularProp)
       expect(btnCircular).toBeUndefined()
     })
 
     test('can be set to true', () => {
-      const btnCircular = getTestingRenderedComponent(Button, <Button circular />).prop(
+      const btnCircular = mountWithProviderAndGetComponent(Button, <Button circular />).prop(
         circularProp,
       )
 

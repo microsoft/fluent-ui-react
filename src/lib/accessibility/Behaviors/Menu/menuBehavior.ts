@@ -1,4 +1,4 @@
-import { Accessibility, FocusZoneMode } from '../../interfaces'
+import { Accessibility, FocusZoneMode } from '../../types'
 
 /**
  * @description

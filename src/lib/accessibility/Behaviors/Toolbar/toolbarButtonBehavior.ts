@@ -1,6 +1,7 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -22,7 +23,9 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'button',
       tabIndex: '0',
-      'aria-disabled': props['aria-disabled'] || props['disabled'],
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : props['disabled'],
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],

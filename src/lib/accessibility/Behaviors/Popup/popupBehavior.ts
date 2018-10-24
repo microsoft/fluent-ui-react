@@ -1,20 +1,21 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 /**
  * @description
  *  Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  *  Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
- *  Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- *  Adds attribute 'aria-haspopup=true' to 'trigger' component's part.
+ *  Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
  */
 const popupBehavior: Accessibility = (props: any) => ({
   attributes: {
     trigger: {
       role: getAriaAttributeFromProps('role', props, 'button'),
       tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
-      'aria-haspopup': 'true',
-      'aria-disabled': props['aria-disabled'] || props['disabled'],
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : props['disabled'],
     },
   },
   keyActions: {
