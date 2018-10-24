@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
 - Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
+- Fix icon colors for Teams theme @codepretty ([#384](https://github.com/stardust-ui/react/pull/384))
 
 ### Features
 - Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
