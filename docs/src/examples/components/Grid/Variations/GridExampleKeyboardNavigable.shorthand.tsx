@@ -2,58 +2,24 @@ import React from 'react'
 import { Grid, Image, Button, gridBehavior } from '@stardust-ui/react'
 import _ from 'lodash'
 
-const images = [
-  {
-    key: 'ade',
-  },
-  {
-    key: 'chris',
-  },
-  {
-    key: 'christian',
-  },
-  {
-    key: 'daniel',
-  },
-  {
-    key: 'elliot',
-  },
-  {
-    key: 'helen',
-  },
-  {
-    key: 'jenny',
-  },
-  {
-    key: 'joe',
-  },
-  {
-    key: 'justen',
-  },
-  {
-    key: 'laura',
-  },
-  {
-    key: 'matt',
-  },
-  {
-    key: 'nan',
-  },
-  {
-    key: 'nom',
-  },
-  {
-    key: 'stevie',
-  },
-  {
-    key: 'steve',
-  },
-  {
-    key: 'tom',
-  },
-  {
-    key: 'veronika',
-  },
+const imageNames = [
+  'ade',
+  'chris',
+  'christian',
+  'daniel',
+  'elliot',
+  'helen',
+  'jenny',
+  'joe',
+  'justen',
+  'laura',
+  'matt',
+  'nan',
+  'nom',
+  'stevie',
+  'steve',
+  'tom',
+  'veronika',
 ]
 
 const imageButtonStyles = {
@@ -65,20 +31,20 @@ const imageButtonStyles = {
   background: '#fff',
 }
 const renderImages = () => {
-  return _.map(images, image => (
+  return _.map(imageNames, imageName => (
     <Image
-      key={image.key}
+      key={imageName}
       fluid
-      src={`public/images/avatar/large/${image.key}.jpg`}
+      src={`public/images/avatar/large/${imageName}.jpg`}
       data-is-focusable="true"
     />
   ))
 }
 
 const renderImageButtons = () => {
-  return _.map(images, image => (
-    <Button key={image.key} styles={imageButtonStyles}>
-      <Image fluid src={`public/images/avatar/large/${image.key}.jpg`} />
+  return _.map(imageNames, imageName => (
+    <Button key={imageName} styles={imageButtonStyles}>
+      <Image fluid src={`public/images/avatar/large/${imageName}.jpg`} />
     </Button>
   ))
 }
