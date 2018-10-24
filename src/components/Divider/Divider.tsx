@@ -19,8 +19,7 @@ export interface DividerProps {
 }
 
 /**
- * @accessibility
- * This is shown at the top.
+ * A divider visually segments content into groups.
  */
 class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static displayName = 'Divider'

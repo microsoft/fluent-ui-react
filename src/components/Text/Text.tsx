@@ -26,7 +26,7 @@ export interface TextProps {
 }
 
 /**
- * A component containing text
+ * A Text component formats occurrences of text consistently.
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.

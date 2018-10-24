@@ -36,9 +36,7 @@ export interface AccordionProps {
 }
 
 /**
- * A standard Accordion.
- * @accessibility
- * Concern: how do we optimally navigate through an Accordion element with nested children?
+ * An accordion allows users to toggle the display of sections of content.
  */
 class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any> {
   static displayName = 'Accordion'
