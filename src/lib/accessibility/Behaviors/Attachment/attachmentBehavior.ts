@@ -12,6 +12,9 @@ const attachmentBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
+      openContextMenu: {
+        keyCombinations: [{ keyCode: keyboardKey.F10, shiftKey: true }],
+      },
     },
   },
 })

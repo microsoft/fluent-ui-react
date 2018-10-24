@@ -142,10 +142,10 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
 
     return (
       <ElementType
-        {...rest}
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.keyHandlers.root}
+        {...rest}
       >
         {icon && (
           <div className={classes.icon}>
@@ -187,6 +187,14 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleKeyboardClick(event),
+    openContextMenu: event => this.handleOpenContextMenu(event),
+  }
+
+  private handleOpenContextMenu = e => {
+    if (this.props.action && this.props.action['onClick']) {
+      this.props.action['onClick']()
+      e.preventDefault()
+    }
   }
 
   private handleKeyboardClick = e => {
