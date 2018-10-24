@@ -22,6 +22,9 @@ export interface ChatItemProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A chat item represents a single event in a chat.
+ */
 class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static className = 'ui-chat__item'
 

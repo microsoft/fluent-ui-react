@@ -34,6 +34,9 @@ export interface ListProps extends FocusContainerProps<ShorthandValue> {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A list displays a group of related content.
+ */
 class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   static displayName = 'List'
 

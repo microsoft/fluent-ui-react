@@ -45,6 +45,7 @@ export interface RadioGroupItemState {
 }
 
 /**
+ * A single radio with a radio group.
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */

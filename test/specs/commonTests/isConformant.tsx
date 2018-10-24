@@ -324,7 +324,7 @@ export default (Component, options: Conformant = {}) => {
               'forgot to use `getUnhandledProps` util to spread the `rest` props.',
           )
         }
-        const customHandler = eventTarget.prop([listenerName])
+        const customHandler = eventTarget.prop(listenerName)
 
         if (customHandler) {
           customHandler(eventShape)

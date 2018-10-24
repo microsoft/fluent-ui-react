@@ -37,6 +37,9 @@ export interface ListItemState {
   isHovering: boolean
 }
 
+/**
+ * A list item contains a single piece of content within a list.
+ */
 class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
