@@ -8,8 +8,7 @@ import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
-import * as keyboardKey from 'keyboard-key'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
 
 export type AttachmentProps = {
@@ -191,14 +190,21 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 
   private handleKeyboardClick = e => {
-    if (e.keyCode === keyboardKey.Spacebar) {
-      e.preventDefault()
-    }
+    e.preventDefault()
     this.handleClick(e)
   }
 
-  private handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
+  private handleClick = (e: React.SyntheticEvent) => {
+    const { onClick, disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
+    if (onClick) {
+      onClick(e, this.props)
+    }
   }
 }
 
