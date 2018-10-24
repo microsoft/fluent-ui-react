@@ -29,10 +29,10 @@ const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): IC
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
-    display: 'inline-block',
     fontFamily,
     textAlign: 'center',
     lineHeight: 1,
+    width: '1.18em',
 
     '::before': {
       content,
