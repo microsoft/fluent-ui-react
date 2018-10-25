@@ -15,13 +15,14 @@ export const green04 = green
 //
 // STATUS COLORS
 //
-export const successStatusBackgroundColor = white
+// TODO: bcalvery - color alone is not an adequate means for differentiating in an accessible way.
+export const successStatusBackgroundColor = accessibleGreen
 export const successStatusTextColor = black
-export const infoStatusBackgroundColor = white
+export const infoStatusBackgroundColor = accessibleCyan
 export const infoStatusTextColor = black
-export const warningStatusBackgroundColor = white
+export const warningStatusBackgroundColor = accessibleYellow
 export const warningStatusTextColor = black
-export const errorStatusBackgroundColor = white
+export const errorStatusBackgroundColor = red
 export const errorStatusTextColor = black
 export const unknownStatusBackgroundColor = white
 export const unknownStatusTextColor = black
