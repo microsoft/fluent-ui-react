@@ -5,24 +5,24 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  IRenderResultConfig,
+  RenderResultConfig,
   UIComponent,
 } from '../../lib'
 import Slot from '../Slot/Slot'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
 
-export interface IChatItemProps {
+export interface ChatItemProps {
   as?: any
   content?: React.ReactNode
   children?: ReactChildren
   className?: string
   renderContent?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
+class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static className = 'ui-chat__item'
 
   static create: Function
@@ -68,7 +68,7 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     styles,
     variables,
     rest,
-  }: IRenderResultConfig<IChatItemProps>) {
+  }: RenderResultConfig<ChatItemProps>) {
     const { children, content, renderContent } = this.props
 
     return (

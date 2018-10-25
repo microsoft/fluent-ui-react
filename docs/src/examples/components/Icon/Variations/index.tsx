@@ -10,6 +10,11 @@ const Variations = () => (
       examplePath="components/Icon/Variations/IconExampleSpace"
     />
     <ComponentExample
+      title="Color"
+      description="An icon can have a different color"
+      examplePath="components/Icon/Variations/IconExampleColor"
+    />
+    <ComponentExample
       title="Size"
       description="An icon can vary in size."
       examplePath="components/Icon/Variations/IconExampleSize"

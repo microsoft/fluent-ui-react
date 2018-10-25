@@ -1,4 +1,4 @@
-export interface IFocusableItemProps {
+export interface FocusableItemProps {
   isFocused: boolean
 
   isFirstElement: boolean
@@ -13,9 +13,9 @@ export type SetStateDelegate<P, S> = <K extends keyof S>(
 ) => void
 
 export class FocusableItem {
-  constructor(private getProps: () => IFocusableItemProps) {}
+  constructor(private getProps: () => FocusableItemProps) {}
 
-  public static create<P extends {} & { focusableItemProps?: IFocusableItemProps }>(
+  public static create<P extends {} & { focusableItemProps?: FocusableItemProps }>(
     component: React.Component<P>,
   ): FocusableItem {
     return new this(() => component.props.focusableItemProps)

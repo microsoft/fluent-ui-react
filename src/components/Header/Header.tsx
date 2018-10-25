@@ -9,9 +9,9 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 
-export interface IHeaderProps {
+export interface HeaderProps {
   as?: any
   children?: ReactChildren
   className?: string
@@ -19,22 +19,21 @@ export interface IHeaderProps {
   description?: ShorthandValue
   textAlign?: 'left' | 'center' | 'right' | 'justified'
   renderDescription?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * A header provides a short summary of content
+ * A header provides a short summary of content.
  * @accessibility
  * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.
  * Nest headings by their rank (or level). The most important heading has the rank 1 (<h1>), the least important heading rank 6 (<h6>). Headings with an equal or higher rank start a new section, headings with a lower rank start new subsections that are part of the higher ranked section.
- *
  *
  * Other considerations:
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<Extendable<IHeaderProps>, any> {
+class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'

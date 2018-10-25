@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 import { defaultBehavior } from 'src/lib/accessibility'
-import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/interfaces'
+import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
@@ -46,13 +46,13 @@ export default (Component, options: any = {}) => {
   } = options
 
   test('gets default accessibility when no override used', () => {
-    const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+    const rendered = mountWithProviderAndGetComponent(Component, <Component {...requiredProps} />)
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBe(defaultRootRole)
   })
 
   test('does not get role when overrides to default', () => {
-    const rendered = getTestingRenderedComponent(
+    const rendered = mountWithProviderAndGetComponent(
       Component,
       <Component {...requiredProps} accessibility={defaultBehavior} />,
     )
@@ -63,7 +63,7 @@ export default (Component, options: any = {}) => {
   if (!partSelector) {
     // temporarily disabled as we do not support overriding of attributes applied to parts
     test('gets correct role when overrides accessibility', () => {
-      const rendered = getTestingRenderedComponent(
+      const rendered = mountWithProviderAndGetComponent(
         Component,
         <Component {...requiredProps} accessibility={TestBehavior} />,
       )
@@ -73,7 +73,7 @@ export default (Component, options: any = {}) => {
 
     test('gets correct role when overrides role', () => {
       const testRole = 'test-role'
-      const rendered = getTestingRenderedComponent(
+      const rendered = mountWithProviderAndGetComponent(
         Component,
         <Component {...requiredProps} role={testRole} />,
       )
@@ -83,7 +83,7 @@ export default (Component, options: any = {}) => {
 
     test('gets correct role when overrides both accessibility and role', () => {
       const testRole = 'test-role'
-      const rendered = getTestingRenderedComponent(
+      const rendered = mountWithProviderAndGetComponent(
         Component,
         <Component {...requiredProps} accessibility={TestBehavior} role={testRole} />,
       )
@@ -95,7 +95,10 @@ export default (Component, options: any = {}) => {
   if (focusZoneDefinition) {
     if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
       test('gets wrapped in FocusZone', () => {
-        const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+        const rendered = mountWithProviderAndGetComponent(
+          Component,
+          <Component {...requiredProps} />,
+        )
 
         const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
         expect(focusZone.type()).toEqual(FocusZone)
@@ -106,7 +109,10 @@ export default (Component, options: any = {}) => {
       })
     } else if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
       test('gets embedded with FocusZone', () => {
-        const rendered = getTestingRenderedComponent(Component, <Component {...requiredProps} />)
+        const rendered = mountWithProviderAndGetComponent(
+          Component,
+          <Component {...requiredProps} />,
+        )
 
         const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
         expect(focusZone.type()).toEqual(FocusZone)

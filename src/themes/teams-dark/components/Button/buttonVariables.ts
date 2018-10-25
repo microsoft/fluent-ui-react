@@ -1,4 +1,4 @@
-export interface IButtonVariables {
+export interface ButtonVariables {
   [key: string]: string | number
 
   color: string
@@ -58,7 +58,7 @@ export interface IButtonVariables {
   boxShadow: string
 }
 
-export default (siteVars: any): IButtonVariables => {
+export default (siteVars: any): ButtonVariables => {
   return {
     color: siteVars.white,
     colorActive: siteVars.white,

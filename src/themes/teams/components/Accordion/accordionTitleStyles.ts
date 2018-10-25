@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../types'
 
 const accordionTitleStyles = {
   root: (): ICSSInJSStyle => ({

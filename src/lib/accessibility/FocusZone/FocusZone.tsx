@@ -5,7 +5,7 @@ import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
   IFocusZone,
-  IFocusZoneProps,
+  FocusZoneProps,
 } from './FocusZone.types'
 import * as keyboardKey from 'keyboard-key'
 import * as cx from 'classnames'
@@ -16,6 +16,7 @@ import {
   isElementFocusZone,
   isElementFocusSubZone,
   isElementTabbable,
+  getWindow,
   IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
@@ -30,7 +31,7 @@ const _allInstances: {
   [key: string]: FocusZone
 } = {}
 
-interface IPoint {
+interface Point {
   left: number
   top: number
 }
@@ -40,11 +41,12 @@ function getParent(child: HTMLElement): HTMLElement | null {
   return child && child.parentElement
 }
 
-export class FocusZone extends React.Component<IFocusZoneProps> implements IFocusZone {
+export class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
   static propTypes = {
-    componentRef: PropTypes.object,
     className: PropTypes.string,
     direction: PropTypes.number,
+    defaultTabbableElement: PropTypes.string,
+    shouldFocusOnMount: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -60,7 +62,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
     isRtl: PropTypes.bool,
   }
 
-  static defaultProps: IFocusZoneProps = {
+  static defaultProps: FocusZoneProps = {
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
     as: 'div',
@@ -69,34 +71,13 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
   static displayName = 'FocusZone'
   static className = 'ms-FocusZone'
 
-  static handledProps = [
-    'componentRef',
-    'className',
-    'direction',
-    'defaultTabbableElement',
-    'shouldFocusOnMount',
-    'disabled',
-    'as',
-    'isCircularNavigation',
-    'shouldEnterInnerZone',
-    'onActiveElementChanged',
-    'shouldReceiveFocus',
-    'allowFocusRoot',
-    'handleTabKey',
-    'shouldInputLoseFocusOnArrowKey',
-    'stopFocusPropagation',
-    'onFocus',
-    'preventDefaultWhenHandled',
-    'isRtl',
-  ]
-
   private _root: { current: HTMLElement | null } = { current: null }
   private _id: string
   /** The most recently focused child element. */
   private _activeElement: HTMLElement | null
   /** The child element with tabindex=0. */
   private _defaultFocusElement: HTMLElement | null
-  private _focusAlignment: IPoint
+  private _focusAlignment: Point
   private _isInnerZone: boolean
 
   /** Used to allow us to move to next focusable element even when we're focusing on a input element when pressing tab */
@@ -104,7 +85,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
   private windowElement: Window | null
 
-  constructor(props: IFocusZoneProps) {
+  constructor(props: FocusZoneProps) {
     super(props)
 
     this._id = _.uniqueId('FocusZone')
@@ -123,7 +104,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
 
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
-      this.windowElement = this._root.current.ownerDocument.defaultView
+      this.windowElement = getWindow(this._root.current)
 
       let parentElement = getParent(this._root.current)
 
@@ -166,8 +147,7 @@ export class FocusZone extends React.Component<IFocusZoneProps> implements IFocu
   render() {
     const { className } = this.props
     const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
-
-    const rest = getUnhandledProps({ handledProps: FocusZone.handledProps }, this.props)
+    const rest = getUnhandledProps({ handledProps: [..._.keys(FocusZone.propTypes)] }, this.props)
 
     return (
       <ElementType

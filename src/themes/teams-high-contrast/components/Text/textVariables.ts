@@ -1,4 +1,4 @@
-export interface ITextVariables {
+export interface TextVariables {
   atMentionMeColor: string
   atMentionOtherColor: string
   disabledColor: string
@@ -9,7 +9,7 @@ export interface ITextVariables {
   timestampHoverColor: string
 }
 
-export default (siteVariables): ITextVariables => {
+export default (siteVariables): TextVariables => {
   return {
     atMentionMeColor: siteVariables.accessibleYellow,
     atMentionOtherColor: siteVariables.accessibleYellow,

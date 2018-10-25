@@ -1,4 +1,4 @@
-export interface ITextVariables {
+export interface TextVariables {
   atMentionMeColor: string
   atMentionMeFontWeight: number
   atMentionOtherColor: string
@@ -28,7 +28,7 @@ export interface ITextVariables {
   fontWeightBold: number
 }
 
-export default (siteVariables): ITextVariables => {
+export default (siteVariables): TextVariables => {
   return {
     atMentionOtherColor: siteVariables.brand06,
     atMentionMeColor: siteVariables.orange04,

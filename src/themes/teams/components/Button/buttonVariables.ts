@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
-export interface IButtonVariables {
+export interface ButtonVariables {
   [key: string]: string | number
 
   height: string
@@ -67,7 +67,7 @@ export interface IButtonVariables {
   boxShadow: string
 }
 
-export default (siteVars: any): IButtonVariables => {
+export default (siteVars: any): ButtonVariables => {
   return {
     height: pxToRem(32),
     minWidth: pxToRem(96),
