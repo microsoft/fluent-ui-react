@@ -6,28 +6,28 @@ import {
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  IRenderResultConfig,
+  RenderResultConfig,
   UIComponent,
 } from '../../lib'
 import {
-  ComponentPartStyle,
+  ComponentSlotStyle,
   ComponentVariablesInput,
-  IComponentPartClasses,
-  IComponentPartStylesInput,
-} from '../../../types/theme'
+  ComponentSlotClasses,
+  ComponentSlotStylesInput,
+} from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import Avatar from '../Avatar'
+import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import Text from '../Text'
 import Slot from '../Slot/Slot'
 
-export interface IChatMessageProps {
+export interface ChatMessageProps {
   accessibility?: Accessibility
   as?: any
   author?: ShorthandValue
@@ -38,13 +38,14 @@ export interface IChatMessageProps {
   mine?: boolean
   renderAuthor?: ShorthandRenderFunction
   renderAvatar?: ShorthandRenderFunction
+  renderContent?: ShorthandRenderFunction
   renderTimestamp?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
 }
 
-class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
+class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -96,6 +97,15 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderAvatar: PropTypes.func,
+
+    /**
+     * A custom render function the content slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
 
     /**
      * A custom render function the timestamp slot.
@@ -151,6 +161,7 @@ class ChatMessage extends UIComponent<Extendable<IChatMessageProps>, any> {
       renderAuthor,
       renderAvatar,
       renderTimestamp,
+      renderContent,
       timestamp,
       template,
     } = this.props

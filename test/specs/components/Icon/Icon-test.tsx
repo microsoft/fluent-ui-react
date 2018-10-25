@@ -2,7 +2,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Icon', () => {
   isConformant(Icon)
@@ -25,7 +25,7 @@ describe('Icon', () => {
       }
 
       test('font-based - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(
+        const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="fontIcon" />,
           null,
@@ -35,7 +35,7 @@ describe('Icon', () => {
       })
 
       test('svg - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(
+        const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="svgIcon" />,
           null,

@@ -1,8 +1,8 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { ILabelProps } from '../../../../components/Label/Label'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { LabelProps } from '../../../../components/Label/Label'
 
-const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
+const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
   root: ({
     props: { icon, iconPosition, image, imagePosition, content, circular },
     variables,

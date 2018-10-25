@@ -1,4 +1,4 @@
-import { FontFaces } from '../../../types/theme'
+import { FontFaces } from '../types'
 
 const fontFaces: FontFaces = [
   {

@@ -1,4 +1,4 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 
 /**
  * @description

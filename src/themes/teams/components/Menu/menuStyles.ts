@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IMenuProps } from '../../../../components/Menu/Menu'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { MenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
@@ -28,6 +28,7 @@ export default {
             ...solidBorder(variables.typePrimaryBorderColor),
           }),
           borderRadius: pxToRem(4),
+          overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
@@ -38,4 +39,4 @@ export default {
       listStyleType: 'none',
     }
   },
-} as IComponentPartStylesInput<IMenuProps, any>
+} as ComponentSlotStylesInput<MenuProps, any>

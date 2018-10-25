@@ -63,22 +63,26 @@ class CustomChatMessage extends React.Component {
         key={props.key}
         position="below"
         open={this.state.open}
-        content={
+        // <Popup.Content content="" />
+        content={{
+          content: (
+            <AsyncData
+              data={['User 1', 'User 2', 'User 3']}
+              render={data => {
+                return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
+              }}
+            />
+          ),
+        }}
+        trigger={
           <AsyncData
-            data={['User 1', 'User 2', 'User 3']}
-            render={data => {
-              return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
-            }}
+            data={3}
+            render={data => (
+              <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
+            )}
           />
         }
-      >
-        <AsyncData
-          data={3}
-          render={data => (
-            <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
-          )}
-        />
-      </Popup>
+      />
     )
   }
 

@@ -1,10 +1,10 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
-import { IChatMessageVariables } from './chatMessageVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import { ChatMessageVariables } from './chatMessageVariables'
 // import { pxToRem } from '../../../../lib'
 
 // const px10asRem = pxToRem(10)
-const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
+const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-grid',
     // display: 'inline-block',
@@ -19,7 +19,8 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     wordWrap: 'break-word',
   }),
 
-  avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
+  avatar: ({ props: p }: { props: ChatMessageProps }): ICSSInJSStyle => ({
+    display: p.mine ? 'none' : undefined,
     gridArea: 'avatar',
     // marginTop: px10asRem,
     // marginBottom: px10asRem,
@@ -30,6 +31,7 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     gridArea: 'author',
     borderTopLeftRadius: '0.3rem',
+    // display: p.mine ? 'none' : undefined,
     // marginRight: px10asRem,
   }),
 
