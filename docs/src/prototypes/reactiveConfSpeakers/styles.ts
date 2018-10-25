@@ -1,50 +1,47 @@
 import { ICSSInJSStyle } from '../../../../src/themes/types'
 import { pxToRem } from '../../../../src/lib'
+import siteVars from './siteVariables'
 
-export const green = '#56b36d'
-export const secondaryNavbarBackground = 'rgb(6, 11, 36, 0.6)'
+export const defaultSpacingStyles: ICSSInJSStyle = { padding: `0 ${pxToRem(60)}` }
 
-export const mainStyle: ICSSInJSStyle = {
+export const mainStyles: ICSSInJSStyle = {
   backgroundColor: '#155068',
-  backgroundImage: `linear-gradient(#060b24, #175169, ${green})`,
+  backgroundImage: `linear-gradient(#060b24, #175169, ${siteVars.green})`,
   backgroundRepeat: 'no-repeat',
   margin: '0',
-  color: '#ffffff',
+  color: siteVars.white,
   fontSize: pxToRem(20),
   fontFamily: '"Between1-Regular", Helvetica, Arial, sans-serif',
   '-webkit-font-smoothing': 'antialiased',
 }
 
 export const mainContentStyles: ICSSInJSStyle = {
-  padding: `0 ${pxToRem(60)}`,
-  margin: `0 auto ${pxToRem(60)} auto`,
-  marginTop: pxToRem(100),
+  ...defaultSpacingStyles,
+  margin: `${pxToRem(80)} auto ${pxToRem(60)} auto`,
   justifyItems: 'center',
 }
 
-export const navbarMenuStyles: ICSSInJSStyle = {
-  width: '100%',
-  display: 'flex',
+export const defaultMenuStyles: ICSSInJSStyle = {
+  alignItems: 'center',
   justifyContent: 'center',
   border: 'transparent',
   height: pxToRem(24),
-  background: 'black',
-  position: 'relative',
+  background: siteVars.black,
   zIndex: 30,
-  '-webkit-transform': 'translateZ(10px)',
-  transform: 'translateZ(10px)',
+}
+
+export const defaultMenuItemStyles: ICSSInJSStyle = {
+  fontSize: pxToRem(16),
+  '::before': { background: 'transparent' },
 }
 
 export const navbarMenuItemStyles: ICSSInJSStyle = {
-  '::before': { background: 'transparent' },
-  ':hover': { background: 'black', color: green },
-  color: 'white',
   fontSize: pxToRem(12),
-  marginTop: `-${pxToRem(8)}`,
+  padding: '0 1.125rem',
 }
 
 export const pageHeaderSpeakersStyles: ICSSInJSStyle = {
-  color: green,
+  color: siteVars.green,
   fontSize: pxToRem(84),
   marginTop: `-${pxToRem(20)}`,
 }
@@ -53,77 +50,60 @@ export const pageHeaderDividerStyles: ICSSInJSStyle = {
   marginTop: `-${pxToRem(35)}`,
 }
 
-export const secondaryNavbarMenuItemStyles: ICSSInJSStyle = {
-  '::before': { background: 'transparent' },
-  ':hover': { background: secondaryNavbarBackground, color: green },
-  color: 'white',
-  fontSize: pxToRem(16),
-  marginTop: pxToRem(15),
-}
-
 export const secondaryNavbarMenuStyles: ICSSInJSStyle = {
-  width: '100%',
+  ...defaultSpacingStyles,
   zIndex: 10,
-  marginBottom: 0,
-  padding: `0 ${pxToRem(60)}`,
   textTransform: 'uppercase',
-  border: 'none',
-  transform: 'translateZ(0px)',
+  justifyContent: 'initial',
+  width: '100%',
   height: pxToRem(70),
-  backgroundColor: secondaryNavbarBackground,
+  backgroundColor: siteVars.blue06,
 }
 
+const greenBackground = { backgroundColor: siteVars.green }
 export const secondaryNavbarButtonStyles: ICSSInJSStyle = {
-  background: secondaryNavbarBackground,
-  border: `3px solid ${green}`,
+  backgroundColor: siteVars.blue06,
+  border: `3px solid ${siteVars.green}`,
+  borderColor: siteVars.green,
   borderRadius: pxToRem(0),
-  color: 'white',
+  color: siteVars.white,
   fontSize: pxToRem(14),
-  marginTop: pxToRem(20),
   padding: pxToRem(5),
-}
-
-export const imageStyles: ICSSInJSStyle = {
-  marginTop: pxToRem(10),
+  ':hover': greenBackground,
+  ':focus': {
+    ...greenBackground,
+    borderColor: siteVars.green,
+  },
 }
 
 export const secondaryNavbarScrollingItemStyles: ICSSInJSStyle = {
+  ...defaultSpacingStyles,
   position: 'fixed',
   top: pxToRem(70),
   zIndex: 10,
-  background: green,
+  background: siteVars.green,
   textAlign: 'center',
-  padding: `0 ${pxToRem(60)}`,
 }
 
 export const footerStyles: ICSSInJSStyle = {
-  background: 'black',
+  background: siteVars.black,
   height: pxToRem(160),
   position: 'relative',
   bottom: pxToRem(0),
   textAlign: 'center',
 }
 
-export const footerMenuItemStyles: ICSSInJSStyle = {
-  '::before': { background: 'transparent' },
-  ':hover': { background: 'black', color: green },
-  color: 'white',
-  fontSize: pxToRem(14),
-  marginTop: pxToRem(20),
+export const footerMenuStyles: ICSSInJSStyle = {
+  height: pxToRem(70),
   fontWeight: 'bold',
 }
 
-export const footerMenuStyles: ICSSInJSStyle = {
-  border: 'transparent',
-  height: pxToRem(70),
-  background: 'black',
-  position: 'relative',
-  margin: 'auto',
-  width: pxToRem(990),
+export const footerMenuItemStyles: ICSSInJSStyle = {
+  fontSize: pxToRem(14),
+  marginTop: pxToRem(20),
 }
 
 export const footerTextStyles: ICSSInJSStyle = {
-  color: green,
   width: '70%',
   margin: 'auto',
 }
@@ -145,7 +125,7 @@ export const speakerStyles: ICSSInJSStyle = {
     pointerEvents: 'none',
     zIndex: 2,
   },
-  ':hover': {
+  ':hover,:focus': {
     '::before': {
       backgroundImage:
         'linear-gradient(to bottom, rgba(94, 117, 179, 0) 0%, rgba(94, 117, 179, 0.3) 40%, #67b579 70%, #55af6a 100%)',

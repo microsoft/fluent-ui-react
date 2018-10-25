@@ -7,22 +7,16 @@ import {
   speakerTextStyles,
   speakerImageStyles,
 } from './styles'
+import { SpeakerProps } from './data'
 
-export interface ISpeakerProps {
-  firstName?: string
-  lastName?: string
-  portrait?: string
-  company?: string
-}
-
-class Speaker extends React.Component<ISpeakerProps> {
+class Speaker extends React.Component<SpeakerProps> {
   public render() {
-    const { firstName, lastName, portrait, company } = this.props
+    const { firstName, lastName, image, companyLogo } = this.props
     return (
-      <Slot styles={speakerStyles}>
-        <Image src={portrait} fluid />
+      <Slot data-is-focusable="true" styles={speakerStyles}>
+        <Image src={image} fluid />
         <Slot styles={speakerContentStyles}>
-          <Image src={company} styles={speakerImageStyles} />
+          <Image src={companyLogo} styles={speakerImageStyles} />
           <Text weight="semibold" content={firstName} styles={speakerTextStyles} />
           <Text weight="bold" content={lastName} styles={speakerTextStyles} />
           <Text content="FULL BIO" styles={{ ...speakerTextStyles, color: '#192b4f' }} />

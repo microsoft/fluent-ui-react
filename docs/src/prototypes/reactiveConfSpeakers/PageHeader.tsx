@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Text } from '@stardust-ui/react'
-import Divider from './Divider'
+import { Divider, Text } from '@stardust-ui/react'
 import { mainContentStyles, pageHeaderSpeakersStyles, pageHeaderDividerStyles } from './styles'
 import Slot from '../../../../src/components/Slot/Slot'
 

@@ -1,15 +1,7 @@
 import * as React from 'react'
+import { Divider, Menu, Image, Provider, Text } from '@stardust-ui/react'
 import Slot from '../../../../src/components/Slot/Slot'
-import { Menu, Image, Provider, Text } from '@stardust-ui/react'
-import Divider from './Divider'
-import {
-  footerStyles,
-  footerMenuItemStyles,
-  footerMenuStyles,
-  footerTextStyles,
-  imageStyles,
-  green,
-} from './styles'
+import { footerStyles, footerMenuItemStyles, footerMenuStyles, footerTextStyles } from './styles'
 import { pxToRem } from '../../../../src/lib'
 
 export default () => {
@@ -18,32 +10,26 @@ export default () => {
       <Provider
         theme={{
           componentStyles: {
-            MenuItem: {
-              root: footerMenuItemStyles,
-            },
             Menu: {
               root: footerMenuStyles,
             },
-          },
-          componentVariables: {
-            Menu: {
-              defaultActiveColor: green,
-              defaultActiveBackgroundColor: 'black',
+            MenuItem: {
+              root: footerMenuItemStyles,
             },
           },
         }}
       >
         <Menu
+          type="primary"
           items={[
             'Organized with <love/> by',
             <Image
               src="https://reactiveconf.com/images/vacuum_footer.png"
               variables={{ height: pxToRem(50) }}
-              styles={imageStyles}
             />,
-            { content: 'Code of Conduct', styles: { color: green } },
-            { content: 'General Terms and Conditions', styles: { color: green } },
-            { content: 'Privacy Policy', styles: { color: green } },
+            'Code of Conduct',
+            'General Terms and Conditions',
+            'Privacy Policy',
           ]}
         />
       </Provider>
