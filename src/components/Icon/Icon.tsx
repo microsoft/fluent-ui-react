@@ -33,6 +33,9 @@ export interface IconProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * An icon is a glyph used to represent something else.
+ */
 class Icon extends UIComponent<Extendable<IconProps>, any> {
   static create: Function
 

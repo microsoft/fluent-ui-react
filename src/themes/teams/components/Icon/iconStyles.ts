@@ -1,6 +1,6 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
+import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
@@ -30,22 +30,12 @@ const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): IC
 
   return {
     fontFamily,
-    width: '1.18em',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    textDecoration: 'inherit',
     textAlign: 'center',
-
-    '-webkit-font-smoothing': 'antialiased',
-    '-moz-osx-font-smoothing': 'grayscale',
-    backfaceVisibility: 'hidden',
-
     lineHeight: 1,
+    width: '1.18em',
 
     '::before': {
       content,
-      boxSizing: 'inherit',
-      background: '0 0',
     },
   }
 }
@@ -67,7 +57,6 @@ const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSS
   return {
     ...getPaddedStyle(isFontBased),
 
-    // TODO: "black" here should actually match the Icon's fill or text color
     boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
@@ -87,34 +76,42 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
     const isFontBased = !iconSpec || !iconSpec.isSvg
+    const iconColor = v.color || 'currentColor'
 
     return {
+      backgroundColor: v.backgroundColor,
       display: 'inline-block',
       fontSize: getSize(size),
-
+      margin: v.margin,
+      speak: 'none',
+      verticalAlign: 'middle',
+      overflow: 'hidden',
       width: '1em',
       height: '1em',
 
       ...(isFontBased &&
         getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
 
-      ...(isFontBased && { color: v.color }),
-      backgroundColor: v.backgroundColor,
+      ...(isFontBased && {
+        color: iconColor,
 
-      opacity: 1,
-      margin: v.margin,
+        ...(disabled && {
+          color: v.disabledColor,
+        }),
+      }),
 
-      speak: 'none',
+      ...(!isFontBased && {
+        fill: iconColor,
 
-      verticalAlign: 'middle',
-      overflow: 'hidden',
+        ...(disabled && {
+          fill: v.disabledColor,
+        }),
+      }),
 
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
-
-      ...(disabled && disabledStyle),
     }
   },
 
@@ -122,8 +119,8 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
 
   g: getSvgStyle('g'),
 
-  /* additional SVG styles for different paths could be added/used in the same way */
   path: getSvgStyle('path'),
+
   secondaryPath: getSvgStyle('secondaryPath'),
 }
 

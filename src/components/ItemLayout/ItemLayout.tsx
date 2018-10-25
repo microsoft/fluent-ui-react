@@ -50,6 +50,9 @@ export interface ItemLayoutProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ */
 class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static create: Function
 
