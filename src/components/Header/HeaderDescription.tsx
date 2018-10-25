@@ -15,7 +15,7 @@ export interface HeaderDescriptionProps {
 }
 
 /**
- * Headers may contain description.
+ * A header's description provides more detailed information.
  */
 class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, any> {
   static create: Function

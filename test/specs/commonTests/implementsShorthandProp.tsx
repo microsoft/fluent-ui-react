@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { mount, ReactWrapper } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider } from 'test/utils'
 import { Props } from '../../../types/utils'
 
 export type ShorthandTestOptions = {
@@ -34,7 +35,10 @@ export default Component => {
       const matchedProps =
         typeof withProps === 'string' ? { [mapsValueToProp]: withProps } : withProps
 
-      expectContainsSingleShorthandElement(mount(<Component {...props} />), matchedProps)
+      expectContainsSingleShorthandElement(
+        mountWithProvider(<Component {...props} />),
+        matchedProps,
+      )
     }
 
     describe(`shorthand property '${shorthandProp}' with default value of '${displayName}' component`, () => {
