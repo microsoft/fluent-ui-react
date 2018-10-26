@@ -36,7 +36,7 @@ export interface ButtonProps {
   text?: boolean
   type?: 'primary' | 'secondary'
   css?: ComponentSlotStyle
-  variables?: ComponentVariaboblesInput
+  variables?: ComponentVariablesInput
 }
 
 export interface ButtonState {
