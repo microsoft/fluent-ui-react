@@ -1,8 +1,6 @@
 import { ICSSInJSStyle } from '../../../../../src/themes/types'
 import { pxToRem } from '../../../../../src/lib'
-
-export const green = '#56b36d'
-export const secondaryNavbarBackground = 'rgb(6, 11, 36, 0.6)'
+import siteVars from '../siteVariables'
 
 export const main: ICSSInJSStyle = {
   backgroundColor: '#155068',
@@ -10,33 +8,37 @@ export const main: ICSSInJSStyle = {
   paddingTop: '90px',
   backgroundRepeat: 'no-repeat',
   margin: '0',
-  color: '#ffffff',
+  color: siteVars.white,
   fontSize: pxToRem(20),
   fontFamily: '"Between1-Regular", Helvetica, Arial, sans-serif',
   '-webkit-font-smoothing': 'antialiased',
 }
 
-export const mainContent: ICSSInJSStyle = {
+export const pageContainer: ICSSInJSStyle = {
   padding: `0 ${pxToRem(60)}`,
-  margin: `0 auto ${pxToRem(120)} auto`,
-  marginTop: pxToRem(100),
-  justifyItems: 'center',
+  margin: `${pxToRem(100)} auto ${pxToRem(120)} auto`,
   maxWidth: '1000px',
 }
 
+export const speakersGrid: ICSSInJSStyle = {
+  margin: '30px 0',
+  justifyItems: 'center',
+}
+
 export const header: ICSSInJSStyle = {
-  color: green,
+  color: siteVars.green,
   fontSize: pxToRem(84),
   marginTop: `-${pxToRem(20)}`,
 }
 
 export const headerDivider: ICSSInJSStyle = {
   marginTop: `-${pxToRem(35)}`,
+  '::before': { background: siteVars.green, height: '2px' },
 }
 
 export const navbarMenuItem: ICSSInJSStyle = {
   '::before': { background: 'transparent' },
-  ':hover': { background: secondaryNavbarBackground, color: green },
+  ':hover': { background: siteVars.blue06, color: siteVars.green },
   color: 'white',
   fontSize: pxToRem(16),
   display: 'flex',
@@ -55,8 +57,8 @@ export const navbarMenu: ICSSInJSStyle = {
 }
 
 export const navbarButton: ICSSInJSStyle = {
-  background: secondaryNavbarBackground,
-  border: `3px solid ${green}`,
+  background: siteVars.blue06,
+  border: `3px solid ${siteVars.green}`,
   borderRadius: pxToRem(5),
   color: 'white',
   fontSize: pxToRem(14),
@@ -64,22 +66,13 @@ export const navbarButton: ICSSInJSStyle = {
   padding: '15px',
 
   ':hover': {
-    backgroundColor: green,
-    borderColor: green,
+    backgroundColor: siteVars.green,
+    borderColor: siteVars.green,
   },
 }
 
-export const secondaryNavbarScrollingItemStyles: ICSSInJSStyle = {
-  position: 'fixed',
-  top: pxToRem(70),
-  zIndex: 10,
-  background: green,
-  textAlign: 'center',
-  padding: `0 ${pxToRem(60)}`,
-}
-
 export const footer: ICSSInJSStyle = {
-  background: 'black',
+  background: siteVars.black,
   position: 'relative',
   bottom: pxToRem(0),
   textAlign: 'center',
@@ -87,12 +80,10 @@ export const footer: ICSSInJSStyle = {
 
 export const footerMenuItem: ICSSInJSStyle = {
   '::before': { background: 'transparent' },
-  ':hover': { background: 'black', color: green },
+  ':hover': { background: 'black', color: siteVars.green },
   color: 'white',
   fontSize: pxToRem(14),
   marginTop: pxToRem(20),
-  fontWeight: 'bold',
-  height: 'auto',
 }
 
 export const footerMenu: ICSSInJSStyle = {
@@ -105,7 +96,7 @@ export const footerMenu: ICSSInJSStyle = {
 }
 
 export const footerText: ICSSInJSStyle = {
-  color: green,
+  color: siteVars.green,
   width: '70%',
   margin: 'auto',
   padding: '45px 0',
@@ -130,7 +121,7 @@ export const speakerCard: ICSSInJSStyle = {
     pointerEvents: 'none',
     zIndex: 2,
   },
-  ':hover': {
+  ':hover,:focus': {
     '::before': {
       backgroundImage:
         'linear-gradient(to bottom, rgba(94, 117, 179, 0) 0%, rgba(94, 117, 179, 0.3) 40%, #67b579 70%, #55af6a 100%)',

@@ -26,3 +26,4 @@ export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBeha
 export {
   default as chatMessageEnterEscBehavior,
 } from './Behaviors/Chat/chatMessageEnterEscBehavior'
+export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'

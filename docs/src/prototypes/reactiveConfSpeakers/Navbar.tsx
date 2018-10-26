@@ -2,13 +2,8 @@ import * as React from 'react'
 import { Menu, Provider, Image, Button } from '@stardust-ui/react'
 
 import Dusty from './dusties'
-import {
-  navbarMenuItem,
-  navbarMenu,
-  navbarButton,
-  green,
-  secondaryNavbarBackground,
-} from './styles'
+import { navbarMenuItem, navbarMenu, navbarButton } from './styles'
+import siteVar from './siteVariables'
 import { navbar as md_navbar } from './styles/materialStyles'
 import { mergeStyles } from './utils'
 
@@ -27,8 +22,8 @@ export default props => {
         },
         componentVariables: {
           Menu: {
-            defaultActiveColor: green,
-            defaultActiveBackgroundColor: secondaryNavbarBackground,
+            defaultActiveColor: siteVar.green,
+            defaultActiveBackgroundColor: siteVar.blue06,
           },
         },
       }}
@@ -54,13 +49,13 @@ export default props => {
         <Image src="https://reactiveconf.com/images/logo.svg" variables={{ height: '50px' }} />
         <Menu
           items={[
-            { content: 'SPEAKERS', styles: { color: green } },
+            { content: 'SPEAKERS', styles: { color: siteVar.green } },
             'WORKSHOPS',
             'SCHEDULE',
             'VENUES',
             'VOLUNTEERS',
             'CONTACT',
-            { content: 'OCT 29-31, 2018', styles: { color: green } },
+            { content: 'OCT 29-31, 2018', styles: { color: siteVar.green } },
           ]}
         />
         <Button content="BUY TICKETS" styles={navbarButton} />

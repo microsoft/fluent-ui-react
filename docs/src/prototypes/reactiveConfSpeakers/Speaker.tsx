@@ -5,25 +5,22 @@ import { mergeStyles } from './utils'
 import { paper as md_paper, card as md_card } from './styles/materialStyles'
 
 import Dusty from './dusties'
+import { SpeakerProps } from './data'
 
-export interface ISpeakerProps {
-  firstName?: string
-  lastName?: string
-  portrait?: string
-  company?: string
-}
-
-class Speaker extends React.Component<ISpeakerProps> {
+class Speaker extends React.Component<SpeakerProps> {
   public render() {
-    const { firstName, lastName, portrait, company } = this.props
+    const { firstName, lastName, image, companyLogo } = this.props
     return (
       <Dusty.div styles={mergeStyles(speakerCard, md_card)}>
-        <Image src={portrait} fluid />
+        <Image src={image} fluid />
         <Dusty.div styles={speakerCardContent}>
-          <Image src={company} styles={speakerImage} />
+          <Image src={companyLogo} styles={speakerImage} />
           <Text weight="semibold" content={firstName} styles={speakerText} />
           <Text weight="bold" content={lastName} styles={speakerText} />
-          <Button content="FULL BIO" styles={mergeStyles(speakerText, md_paper(3))} />
+          <Button
+            content="FULL BIO"
+            styles={mergeStyles(speakerText, { color: '#192b4f' }, md_paper(3))}
+          />
         </Dusty.div>
       </Dusty.div>
     )
