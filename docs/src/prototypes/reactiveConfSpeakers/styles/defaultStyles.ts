@@ -120,7 +120,7 @@ export const speakerCard: ICSSInJSStyle = {
     pointerEvents: 'none',
     zIndex: 2,
   },
-  ':hover,:focus': {
+  ':hover': {
     '::before': {
       backgroundImage:
         'linear-gradient(to bottom, rgba(94, 117, 179, 0) 0%, rgba(94, 117, 179, 0.3) 40%, #67b579 70%, #55af6a 100%)',
