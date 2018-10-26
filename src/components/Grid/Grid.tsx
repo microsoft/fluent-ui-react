@@ -17,7 +17,7 @@ export interface GridProps {
 }
 
 /**
- * A grid.
+ * A grid is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */

@@ -31,6 +31,9 @@ export interface RadioGroupProps {
   vertical?: boolean
 }
 
+/**
+ * A radio group allows a user to select a value from a small set of options.
+ */
 class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 

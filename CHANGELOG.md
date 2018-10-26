@@ -23,6 +23,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
 - Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
+- Fix icon colors for Teams theme @codepretty ([#384](https://github.com/stardust-ui/react/pull/384))
+- Do not render the Attachment's `progress` value to the DOM @levithomason ([#402](https://github.com/stardust-ui/react/pull/402))
 
 ### Features
 - Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
@@ -32,6 +34,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+
+### Documentation
+- Add component descriptions and fix accessibility errors @levithomason ([#387](https://github.com/stardust-ui/react/pull/387))
 
 <!--------------------------------[ v0.10.0 ]------------------------------- -->
 ## [v0.10.0](https://github.com/stardust-ui/react/tree/v0.10.0) (2018-10-19)
