@@ -47,6 +47,12 @@ const Router = () => (
             path="/prototype-meeting-options"
             component={require('./prototypes/meetingOptions/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-search-page"
+            path="/prototype-search-page"
+            component={require('./prototypes/SearchPage/index').default}
+          />,
         ]}
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
