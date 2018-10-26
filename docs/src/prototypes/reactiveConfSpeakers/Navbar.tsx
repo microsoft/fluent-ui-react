@@ -3,7 +3,7 @@ import { Menu, Provider, Image, Button } from '@stardust-ui/react'
 
 import Dusty from './dusties'
 import { navbarMenuItem, navbarMenu, navbarButton } from './styles'
-import siteVar from './siteVariables'
+import siteVar from './styles/siteVariables'
 import { navbar as md_navbar } from './styles/materialStyles'
 import { mergeStyles } from './utils'
 

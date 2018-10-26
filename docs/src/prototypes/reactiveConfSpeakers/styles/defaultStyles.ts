@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../../../../src/themes/types'
 import { pxToRem } from '../../../../../src/lib'
-import siteVars from '../siteVariables'
+import siteVars from './siteVariables'
 
 export const main: ICSSInJSStyle = {
   backgroundColor: '#155068',
@@ -81,7 +81,6 @@ export const footer: ICSSInJSStyle = {
 export const footerMenuItem: ICSSInJSStyle = {
   '::before': { background: 'transparent' },
   ':hover': { background: 'black', color: siteVars.green },
-  color: 'white',
   fontSize: pxToRem(14),
   marginTop: pxToRem(20),
 }
@@ -133,7 +132,7 @@ export const speakerCardContent: ICSSInJSStyle = {
   width: pxToRem(200),
   margin: 'auto',
   position: 'absolute',
-  bottom: pxToRem(10),
+  bottom: pxToRem(20),
   left: pxToRem(20),
   fontSize: pxToRem(20),
 }
@@ -146,7 +145,14 @@ export const speakerImage: ICSSInJSStyle = {
 }
 
 export const speakerText: ICSSInJSStyle = {
+  color: siteVars.white,
   zIndex: 3,
   position: 'relative',
   display: 'block',
+}
+
+export const speakerButton: ICSSInJSStyle = {
+  zIndex: 3,
+  margin: '10px 0 0 0',
+  color: '#192b4f',
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { footer, footerMenu, footerMenuItem, footerText } from './styles'
-import siteVars from './siteVariables'
+import siteVars from './styles/siteVariables'
 import { Divider, Menu, Image, Provider, Text } from '@stardust-ui/react'
 import { pxToRem } from '../../../../src/lib'
 import Dusty from './dusties'

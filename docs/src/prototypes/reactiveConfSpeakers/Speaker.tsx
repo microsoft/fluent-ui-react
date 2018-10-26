@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Image, Text, Button } from '@stardust-ui/react'
-import { speakerCard, speakerCardContent, speakerText, speakerImage } from './styles'
+import { speakerCard, speakerCardContent, speakerText, speakerImage, speakerButton } from './styles'
 import { mergeStyles } from './utils'
 import { paper as md_paper, card as md_card } from './styles/materialStyles'
 
@@ -17,10 +17,7 @@ class Speaker extends React.Component<SpeakerProps> {
           <Image src={companyLogo} styles={speakerImage} />
           <Text weight="semibold" content={firstName} styles={speakerText} />
           <Text weight="bold" content={lastName} styles={speakerText} />
-          <Button
-            content="FULL BIO"
-            styles={mergeStyles(speakerText, { color: '#192b4f' }, md_paper(3))}
-          />
+          <Button content="FULL BIO" styles={mergeStyles(speakerButton, md_paper(3))} />
         </Dusty.div>
       </Dusty.div>
     )

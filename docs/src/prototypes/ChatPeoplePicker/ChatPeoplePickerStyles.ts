@@ -1,6 +1,6 @@
 import { pxToRem } from 'src/lib'
 import { ICSSInJSStyle } from 'src/themes/types'
-import siteVars from '../reactiveConfSpeakers/siteVariables'
+import siteVars from '../reactiveConfSpeakers/styles/siteVariables'
 
 export type TChatPeoplePickerStyles = {
   containerDiv: ICSSInJSStyle
