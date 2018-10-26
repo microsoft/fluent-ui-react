@@ -91,7 +91,7 @@ export default () => (
     </p>
     <Header as="h2" content="Design language" />
 
-    <Grid columns="20% 80%" styles={gridStyle}>
+    <Grid columns="20% 80%" css={gridStyle}>
       {[
         <span>
           <strong>Term</strong>
@@ -173,7 +173,7 @@ export default () => (
       ]}
     </Grid>
     <Header as="h2" content="Accessibility Terms" />
-    <Grid columns="20% 80%" styles={gridStyle}>
+    <Grid columns="20% 80%" css={gridStyle}>
       {[
         <span>
           <strong>Term</strong>

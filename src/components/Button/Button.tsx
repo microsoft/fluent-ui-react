@@ -35,8 +35,8 @@ export interface ButtonProps {
   renderIcon?: ShorthandRenderFunction
   text?: boolean
   type?: 'primary' | 'secondary'
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+  css?: ComponentSlotStyle
+  variables?: ComponentVariaboblesInput
 }
 
 export interface ButtonState {
@@ -124,7 +124,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     renderIcon: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -144,7 +144,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     classes,
     accessibility,
     variables,
-    styles,
+    css,
     rest,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
@@ -160,21 +160,21 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
         {...rest}
       >
         {hasChildren && children}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, css)}
         {Slot.create(!hasChildren && content, {
           defaultProps: { as: 'span', className: classes.content },
         })}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
+        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, css)}
       </ElementType>
     )
   }
 
-  public renderIcon = (variables, styles) => {
+  public renderIcon = (variables, css) => {
     const { icon, iconPosition, content, renderIcon } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
-        styles: styles.icon,
+        css: css.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },

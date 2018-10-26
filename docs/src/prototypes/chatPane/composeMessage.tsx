@@ -11,7 +11,7 @@ class ComposeMessage extends React.Component {
         vertical
         start={this.renderInput()}
         main={this.renderToolbar()}
-        styles={{ padding: '16px 32px' }}
+        css={{ padding: '16px 32px' }}
       />
     )
   }
@@ -21,7 +21,7 @@ class ComposeMessage extends React.Component {
       <Input
         fluid
         placeholder="Type a message"
-        input={{ styles: { height: '3.1429rem' /* 44px */ } }}
+        input={{ css: { height: '3.1429rem' /* 44px */ } }}
         variables={siteVars => ({ backgroundColor: siteVars.white })}
       />
     )
@@ -39,7 +39,7 @@ class ComposeMessage extends React.Component {
       'send',
     ].map((icon, index) => this.getMenuItem(icon, index))
 
-    items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+    items.splice(-1, 0, { key: 'separator', css: { flex: 1 } })
 
     return (
       <Menu
@@ -48,7 +48,7 @@ class ComposeMessage extends React.Component {
         iconOnly
         accessibility={toolbarBehavior}
         aria-label="Compose Editor"
-        styles={{ marginTop: '10px' }}
+        css={{ marginTop: '10px' }}
       />
     )
   }

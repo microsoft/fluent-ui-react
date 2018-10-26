@@ -30,7 +30,7 @@ class PopupArrowExample extends React.Component<any, any> {
           onClick={() => this.togglePopupState()}
           onMouseLeave={() => this.setState({ popupOpen: false })}
           icon={icon}
-          styles={buttonStyles}
+          css={buttonStyles}
         />
       </Popup>
     )

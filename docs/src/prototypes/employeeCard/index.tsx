@@ -23,7 +23,7 @@ class EmployeeCardPrototype extends React.Component<any, { popupOpen: boolean }>
         <Header
           as="h3"
           content="Employee Card"
-          description={{ content: 'Simple employee card component.', styles: { fontSize: '16px' } }}
+          description={{ content: 'Simple employee card component.', css: { fontSize: '16px' } }}
         />
         <EmployeeCard {...employee} />
         <Divider variables={{ dividerColor: 'transparent' }} />
@@ -32,7 +32,7 @@ class EmployeeCardPrototype extends React.Component<any, { popupOpen: boolean }>
           content="Avatar Employee Card"
           description={{
             content: "Avatar component that show's the employee's card on hovering.",
-            styles: { fontSize: '16px' },
+            css: { fontSize: '16px' },
           }}
         />
         <AvatarEmployeeCard {...employee} />

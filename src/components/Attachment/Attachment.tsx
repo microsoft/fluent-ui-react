@@ -23,7 +23,7 @@ export type AttachmentProps = {
   renderHeader?: ShorthandRenderFunction
   renderIcon?: ShorthandRenderFunction
   renderProgress?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -110,13 +110,13 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     renderProgress: PropTypes.func,
 
     /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, rest, css, variables }) {
     const {
       header,
       description,

@@ -6,7 +6,7 @@ export const getStyle = partName => {
     const { props } = args
 
     const maybeIconSpec = svgIconsAndStyles[props.name]
-    const maybeIconStyles = maybeIconSpec && (maybeIconSpec as SvgIconSpecWithStyles).styles
+    const maybeIconStyles = maybeIconSpec && (maybeIconSpec as SvgIconSpecWithStyles).css
 
     if (maybeIconStyles && maybeIconStyles[partName]) {
       return maybeIconStyles[partName](args)

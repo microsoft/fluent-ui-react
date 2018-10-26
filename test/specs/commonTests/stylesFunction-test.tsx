@@ -32,7 +32,7 @@ const testStylesForComponent = ({
     public static propTypes = {
       propsAttr: PropTypes.any,
       commonAttr: PropTypes.any,
-      styles: PropTypes.any,
+      css: PropTypes.any,
     }
 
     public state = state
@@ -45,7 +45,7 @@ const testStylesForComponent = ({
   const TestStylesComponent = (props: Extendable<Props>) => (
     <TestComponent
       {...props}
-      styles={({ props }: { props: PropsAndState }): ICSSInJSStyle => {
+      css={({ props }: { props: PropsAndState }): ICSSInJSStyle => {
         expect(_.mapValues(expected, (val, key) => props[key])).toEqual(expected)
         return {}
       }}
@@ -55,7 +55,7 @@ const testStylesForComponent = ({
   mountWithProviderAndGetComponent(TestStylesComponent, <TestStylesComponent {...props} />)
 }
 
-describe('styles function', () => {
+describe('css function', () => {
   it('receives as argument only props object if state is not set', () => {
     testStylesForComponent({ expected: {} })
 

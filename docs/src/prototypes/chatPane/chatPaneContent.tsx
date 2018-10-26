@@ -15,7 +15,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     return (
       items.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat items={items} styles={{ padding: '0 32px' }} />
+          <Chat items={items} css={{ padding: '0 32px' }} />
         </Scrollbars>
       )
     )

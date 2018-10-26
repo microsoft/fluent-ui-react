@@ -41,7 +41,7 @@ export interface ChatMessageProps {
   renderAvatar?: ShorthandRenderFunction
   renderContent?: ShorthandRenderFunction
   renderTimestamp?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   timestamp?: ShorthandValue
   variables?: ComponentVariablesInput
 }
@@ -118,7 +118,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     renderTimestamp: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
@@ -144,7 +144,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     classes,
     accessibility,
     rest,
-    styles,
+    css,
     variables,
   }: RenderResultConfig<ChatMessageProps>) {
     const { children } = this.props
@@ -159,14 +159,14 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
+        {childrenPropExists ? children : this.renderContent(classes, css, variables)}
       </ElementType>
     )
   }
 
   renderContent = (
     classes: ComponentSlotClasses,
-    styles: ComponentSlotStylesInput,
+    css: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
   ) => {
     const {
@@ -183,7 +183,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
 
     const avatarElement = Avatar.create(avatar, {
       defaultProps: {
-        styles: styles.avatar,
+        css: css.avatar,
         variables: variables.avatar,
       },
       render: renderAvatar,
@@ -192,7 +192,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     const authorElement = Text.create(author, {
       defaultProps: {
         size: 'small',
-        styles: styles.author,
+        css: css.author,
         variables: variables.author,
       },
       render: renderAuthor,
@@ -202,14 +202,14 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       defaultProps: {
         size: 'small',
         timestamp: true,
-        styles: styles.timestamp,
+        css: css.timestamp,
         variables: variables.timestamp,
       },
       render: renderTimestamp,
     })
 
     const contentElement = Slot.create(content, {
-      styles: styles.content,
+      css: css.content,
       variables: variables.content,
       render: renderContent,
     })

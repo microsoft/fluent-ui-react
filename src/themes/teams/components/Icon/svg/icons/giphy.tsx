@@ -14,7 +14,7 @@ export default {
       />
     </svg>
   ),
-  styles: {
+  css: {
     svg: ({ variables: v }) => ({
       fill: v.color,
     }),

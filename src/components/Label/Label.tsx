@@ -34,7 +34,7 @@ export interface LabelProps {
   imagePosition?: 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
   renderImage?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -98,7 +98,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
     renderImage: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -119,7 +119,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, variables, styles }) {
+  renderComponent({ ElementType, classes, rest, variables, css }) {
     const {
       children,
       content,
@@ -135,7 +135,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
       image &&
       Image.create(image, {
         defaultProps: {
-          styles: styles.image,
+          css: css.image,
           variables: variables.image,
         },
         render: renderImage,
@@ -145,7 +145,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
       icon &&
       Icon.create(icon, {
         defaultProps: {
-          styles: styles.icon,
+          css: css.icon,
           variables: variables.icon,
         },
         overrideProps: this.handleIconOverrides,

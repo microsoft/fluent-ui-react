@@ -15,7 +15,7 @@ const defaultAvatar = (
 const AvatarExampleStatusCustomizationShorthand = () => (
   <Grid
     columns="50% 50px 50px"
-    styles={{ justifyContent: 'start', justifyItems: 'start', gap: '10px', alignItems: 'center' }}
+    css={{ justifyContent: 'start', justifyItems: 'start', gap: '10px', alignItems: 'center' }}
   >
     <Text content="Status can receive variables" />
     {defaultAvatar}

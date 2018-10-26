@@ -229,8 +229,8 @@ export default (Component, options: Conformant = {}) => {
       expect(Array.isArray(Component.handledProps)).toEqual(true)
     })
 
-    test(`has 'styles' as handled prop`, () => {
-      expect(Component.handledProps).toContain('styles')
+    test(`has 'css' as handled prop`, () => {
+      expect(Component.handledProps).toContain('css')
     })
 
     test(`has 'variables' as handled prop`, () => {

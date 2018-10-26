@@ -89,7 +89,7 @@ class CustomChatMessage extends React.Component {
   render() {
     return (
       <Chat.Message
-        styles={{
+        css={{
           position: 'relative',
 
           '& .actions': {

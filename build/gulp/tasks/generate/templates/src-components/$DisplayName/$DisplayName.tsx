@@ -8,7 +8,7 @@ export type $DisplayNameProps = {
   as?: any
   children?: React.ReactChildren
   content?: React.ReactNode
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -19,7 +19,7 @@ class $DisplayName extends UIComponent<$DisplayNameProps, any> {
 
   static displayName = '$DisplayName'
 
-  static handledProps = ['as', 'children', 'content', 'styles', 'variables']
+  static handledProps = ['as', 'children', 'content', 'css', 'variables']
 
   static propTypes = {
     /** An element type to render as. */
@@ -32,13 +32,13 @@ class $DisplayName extends UIComponent<$DisplayNameProps, any> {
     content: PropTypes.any,
 
     /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, rest, css, variables }) {
     const { children, content } = this.props
 
     return (

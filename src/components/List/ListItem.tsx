@@ -25,7 +25,7 @@ export interface ListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -72,7 +72,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     focusableItemProps: PropTypes.object,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -98,7 +98,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     // this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
+  renderComponent({ ElementType, classes, accessibility, rest, css }) {
     const {
       as,
       debug,
@@ -116,7 +116,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
       <ItemLayout
         as={as}
         className={classes.root}
-        rootCSS={styles.root}
+        rootCSS={css.root}
         content={content}
         contentMedia={contentMedia}
         debug={debug}
@@ -124,12 +124,12 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         header={header}
         headerMedia={headerMedia}
         media={media}
-        mediaCSS={styles.media}
+        mediaCSS={css.media}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        headerCSS={styles.header}
-        headerMediaCSS={styles.headerMedia}
-        contentCSS={styles.content}
+        headerCSS={css.header}
+        headerMediaCSS={css.headerMedia}
+        contentCSS={css.content}
         ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}

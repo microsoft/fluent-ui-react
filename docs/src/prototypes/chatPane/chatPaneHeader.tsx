@@ -15,7 +15,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
         vertical
         start={this.renderBanner()}
         main={this.renderMainArea()}
-        end={<Divider size={2} styles={{ padding: '0 32px' }} />}
+        end={<Divider size={2} css={{ padding: '0 32px' }} />}
       />
     )
   }
@@ -30,7 +30,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
           />
         }
-        styles={({ variables: v }) => ({
+        css={({ variables: v }) => ({
           backgroundColor: v.backgroundColor,
           borderRadius: 0,
           display: 'flex',
@@ -52,12 +52,12 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           <Text
             size={Sizes.Large}
             content={chat.title}
-            styles={{ marginLeft: '12px', fontWeight: 600 }}
+            css={{ marginLeft: '12px', fontWeight: 600 }}
           />
         }
         end={this.renderHeaderButtons()}
         alignItems="center"
-        styles={{ padding: '16px 32px' }}
+        css={{ padding: '16px 32px' }}
       />
     )
   }
@@ -76,14 +76,14 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             },
             type: 'primary',
           }))}
-          styles={{ marginRight: '20px' }}
+          css={{ marginRight: '20px' }}
         />
         {['user plus', 'ellipsis horizontal'].map((name, index) => (
           <Icon
             key={`${index}-${name}`}
             name={name}
             tabIndex={0}
-            styles={{
+            css={{
               fontWeight: 100,
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),

@@ -66,7 +66,7 @@ class AvatarEmployeeCard extends React.Component<
           },
         })}
         content={{
-          styles: { marginLeft: '10px' },
+          css: { marginLeft: '10px' },
           content: (
             <EmployeeCard
               firstName={firstName}

@@ -26,7 +26,7 @@ export interface RadioGroupProps {
   defaultCheckedValue?: number | string
   items?: ShorthandValue[]
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   vertical?: boolean
 }
@@ -84,7 +84,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
     renderItem: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

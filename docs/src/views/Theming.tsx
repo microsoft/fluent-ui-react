@@ -129,27 +129,27 @@ export default () => (
       You can define <code>styles</code> on a single component instance.
     </p>
     <ExampleSnippet
-      value={`<Text styles={{ color: 'green' }}>This is green text</Text>`}
-      render={() => <Text styles={{ color: 'green' }}>This is green text</Text>}
+      value={`<Text css={{ color: 'green' }}>This is green text</Text>`}
+      render={() => <Text css={{ color: 'green' }}>This is green text</Text>}
     />
     <p>
-      Every slot (named part) of every component also accepts <code>styles</code> that are applied
-      to the root element of the slot.
+      Every slot (named part) of every component also accepts <code>css</code> that are applied to
+      the root element of the slot.
     </p>
     <ExampleSnippet
       value={[
         `<Button`,
-        `  icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }}`,
+        `  icon={{ name: 'user', css: { boxShadow: '0 0 0 2px red' } }}`,
         `  content="Profile"`,
         `/>`,
       ].join('\n')}
       render={() => (
-        <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
+        <Button icon={{ name: 'user', css: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
       )}
     />
 
     <p>
-      You can also define <code>styles</code> for all components in a part of your render tree using
+      You can also define <code>css</code> for all components in a part of your render tree using
       the <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <p>

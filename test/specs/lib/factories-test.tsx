@@ -210,18 +210,18 @@ describe('factories', () => {
       })
     })
 
-    describe('styles', () => {
-      test('deep merges styles prop onto defaultProps styles', () => {
+    describe('css', () => {
+      test('deep merges css prop onto defaultProps css', () => {
         expect.assertions(1)
 
         const defaultProps = {
-          styles: {
+          css: {
             color: 'override me',
             ':hover': { color: 'blue' },
           },
         }
         const props = {
-          styles: { color: 'black' },
+          css: { color: 'black' },
         }
 
         getShorthand({
@@ -229,7 +229,7 @@ describe('factories', () => {
           Component: 'p',
           defaultProps,
           render(Component, props) {
-            expect(props.styles).toMatchObject({
+            expect(props.css).toMatchObject({
               color: 'black',
               ':hover': { color: 'blue' },
             })
@@ -237,11 +237,11 @@ describe('factories', () => {
         })
       })
 
-      test('deep merges overrideProps styles onto styles prop', () => {
+      test('deep merges overrideProps css onto css prop', () => {
         expect.assertions(1)
 
         const overrideProps = {
-          styles: {
+          css: {
             color: 'black',
             ':hover': {
               color: 'blue',
@@ -249,7 +249,7 @@ describe('factories', () => {
           },
         }
         const props = {
-          styles: {
+          css: {
             position: 'keep',
             color: 'override',
             ':hover': {
@@ -264,7 +264,7 @@ describe('factories', () => {
           Component: 'p',
           overrideProps,
           render(Component, props) {
-            expect(props.styles).toMatchObject({
+            expect(props.css).toMatchObject({
               position: 'keep',
               color: 'black',
               ':hover': {

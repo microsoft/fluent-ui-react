@@ -105,8 +105,8 @@ export function createShorthand(
   }
 
   // Merge styles
-  if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+  if (defaultProps.css || overrideProps.css || usersProps.css) {
+    props.css = _.merge(defaultProps.css, usersProps.css, overrideProps.css)
   }
 
   // ----------------------------------------

@@ -51,7 +51,7 @@ export default {
       />
     </svg>
   ),
-  styles: {
+  css: {
     path: ({ variables: v }) => ({
       fill: v.color,
     }),

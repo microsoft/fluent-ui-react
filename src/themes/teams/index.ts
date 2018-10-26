@@ -23,7 +23,7 @@ const icons: ThemeIcons = Object.keys(svgIconsAndStyles as {
 }).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
-  const icon: SvgIconSpec = (iconAndMaybeStyles as any).styles
+  const icon: SvgIconSpec = (iconAndMaybeStyles as any).css
     ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
     : (iconAndMaybeStyles as SvgIconSpec)
 

@@ -21,7 +21,7 @@ class PopupWithButton extends React.Component<any, any> {
             onClick={() => this.togglePopupState()}
             onMouseLeave={() => this.setState({ popupOpen: false })}
             icon={icon}
-            styles={{ padding, height: '38px', minWidth: '64px' }}
+            css={{ padding, height: '38px', minWidth: '64px' }}
           />
         }
         content={{

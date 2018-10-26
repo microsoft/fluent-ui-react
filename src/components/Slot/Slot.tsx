@@ -14,7 +14,7 @@ export interface SlotProps {
   as?: any
   className?: string
   content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
+  css?: ComponentSlotStyle<SlotProps, any>
   variables?: ComponentVariablesInput
 }
 
@@ -45,7 +45,7 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
     content: PropTypes.any,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

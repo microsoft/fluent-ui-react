@@ -35,7 +35,7 @@ export interface InputProps {
   renderIcon?: ShorthandRenderFunction
   renderInput?: ShorthandRenderFunction
   renderWrapper?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle<InputProps, any>
+  css?: ComponentSlotStyle<InputProps, any>
   type?: string
   inputRef?: (node: HTMLElement) => void
   value?: React.ReactText
@@ -136,7 +136,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     renderWrapper: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input type. */
     type: PropTypes.string,
@@ -163,7 +163,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     ElementType,
     classes,
     rest: restProps,
-    styles,
+    css,
     variables,
   }: RenderResultConfig<InputProps>) {
     const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
@@ -190,7 +190,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
             </Ref>
             {Icon.create(this.computeIcon(), {
               defaultProps: {
-                styles: styles.icon,
+                css: css.icon,
                 variables: variables.icon,
               },
               overrideProps: this.handleIconOverrides,
@@ -198,7 +198,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
             })}
           </>
         ),
-        styles: styles.root,
+        css: css.root,
         ...rest,
       },
       render: renderWrapper,

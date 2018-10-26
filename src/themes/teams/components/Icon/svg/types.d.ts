@@ -4,7 +4,7 @@ import { IconProps } from '../../../../../components/Icon/Icon'
 
 type SvgIconSpecWithStyles = {
   icon: SvgIconSpec
-  styles: ObjectOf<ComponentSlotStyleFunction<IconProps, any>>
+  css: ObjectOf<ComponentSlotStyleFunction<IconProps, any>>
 }
 
 export type TeamsSvgIconSpec = SvgIconSpec | SvgIconSpecWithStyles

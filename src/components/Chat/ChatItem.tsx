@@ -18,7 +18,7 @@ export interface ChatItemProps {
   children?: ReactChildren
   className?: string
   renderContent?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -52,7 +52,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
     renderContent: PropTypes.func,
 
     /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -65,7 +65,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   renderComponent({
     ElementType,
     classes,
-    styles,
+    css,
     variables,
     rest,
   }: RenderResultConfig<ChatItemProps>) {
@@ -76,7 +76,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
         {childrenExist(children)
           ? children
           : Slot.create(content, {
-              styles: styles.content,
+              css: css.content,
               variables: variables.content,
               render: renderContent,
             })}

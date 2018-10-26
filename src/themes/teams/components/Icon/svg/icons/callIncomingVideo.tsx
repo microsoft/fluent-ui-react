@@ -12,7 +12,7 @@ export default {
       </g>
     </svg>
   ),
-  styles: {
+  css: {
     svg: ({ variables: v }) => ({
       fill: v.color,
     }),

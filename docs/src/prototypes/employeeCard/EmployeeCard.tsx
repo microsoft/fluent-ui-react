@@ -33,7 +33,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
     return (
       <Grid
         columns="80% 20%"
-        styles={{ width: '320px', padding: '10px 20px 10px 10px', background: 'white' }}
+        css={{ width: '320px', padding: '10px 20px 10px 10px', background: 'white' }}
         {...rest}
       >
         <div>

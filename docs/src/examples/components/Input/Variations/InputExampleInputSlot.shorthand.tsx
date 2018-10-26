@@ -3,7 +3,7 @@ import { Grid, Input, Text } from '@stardust-ui/react'
 
 const inputStyles = { color: 'blue', background: 'yellow' }
 const InputExampleInputSlot = () => (
-  <Grid columns="1fr 2fr" styles={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
+  <Grid columns="1fr 2fr" css={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
     <Text content="Input default:" />
     <Input placeholder="Search..." role="presentation" />
 
@@ -19,7 +19,7 @@ const InputExampleInputSlot = () => (
         role: 'checkbox',
 
         // will set custom styles for input DOM element
-        styles: inputStyles,
+        css: inputStyles,
       }}
     />
 
@@ -28,12 +28,7 @@ const InputExampleInputSlot = () => (
       placeholder="Search..."
       role="presentation"
       input={
-        <Text
-          as="input"
-          placeholder="Placeholder Override..."
-          role="checkbox"
-          styles={inputStyles}
-        />
+        <Text as="input" placeholder="Placeholder Override..." role="checkbox" css={inputStyles} />
       }
     />
 

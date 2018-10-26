@@ -18,7 +18,7 @@ export interface AvatarProps {
   size?: number
   status?: ShorthandValue
   getInitials?: (name: string) => string
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -85,7 +85,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
     renderStatus: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -116,7 +116,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, rest, css, variables }) {
     const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
       .props as AvatarPropsWithDefaults
 
@@ -127,7 +127,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
             fluid: true,
             avatar: true,
             title: name,
-            styles: styles.image,
+            css: css.image,
           },
           render: renderImage,
         })}
@@ -139,13 +139,13 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
               content: getInitials(name),
               circular: true,
               title: name,
-              styles: styles.label,
+              css: css.label,
             },
             render: renderLabel,
           })}
         {Status.create(status, {
           defaultProps: {
-            styles: styles.status,
+            css: css.status,
             variables: {
               borderColor: variables.statusBorderColor,
               borderWidth: variables.statusBorderWidth,

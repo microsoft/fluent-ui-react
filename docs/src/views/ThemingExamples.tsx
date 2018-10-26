@@ -81,14 +81,14 @@ export default () => (
       wrappers, like in the examples below.
     </p>
 
-    <Header as="h4" content="Changing component styles" />
+    <Header as="h4" content="Changing component css" />
 
     <ExampleSnippet
       value={[
         `import React from 'react'`,
         `import { Button } from '@stardust-ui/react'`,
         ``,
-        `const styles = {`,
+        `const css = {`,
         `        color: "coral",`,
         `        backgroundColor: "coral",`,
         `        fontSize: "14px",`,
@@ -100,17 +100,17 @@ export default () => (
         `      content="Send email"`,
         `      icon={{`,
         `        name: "at",`,
-        `        styles: { color: "brown" }`,
+        `        css: { color: "brown" }`,
         `      }}`,
-        `      styles={styles} />`,
+        `      css={css} />`,
         ``,
         `export default btnExample`,
       ].join('\n')}
       render={() => (
         <Button
           content="Send email"
-          icon={{ name: 'at', styles: { color: 'brown' } }}
-          styles={{
+          icon={{ name: 'at', css: { color: 'brown' } }}
+          css={{
             color: 'coral',
             backgroundColor: 'charcoal',
             fontSize: '14px',

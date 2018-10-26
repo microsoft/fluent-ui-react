@@ -46,7 +46,7 @@ export interface ItemLayoutProps {
   endMediaCSS?: ICSSInJSStyle
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -99,7 +99,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
     endMediaCSS: PropTypes.object,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
@@ -183,7 +183,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, rest, css }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
       .props as ItemLayoutPropsWithDefaults
 
@@ -198,7 +198,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
       <Layout
         as={as}
         className={classes.root}
-        styles={styles.root}
+        css={css.root}
         rootCSS={rootCSS}
         alignItems="center"
         gap={pxToRem(8)}

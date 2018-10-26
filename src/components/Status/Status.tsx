@@ -14,7 +14,7 @@ export interface StatusProps {
   renderIcon?: ShorthandRenderFunction
   size?: number
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -57,7 +57,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -69,14 +69,14 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, rest, variables, styles }) {
+  renderComponent({ ElementType, classes, rest, variables, css }) {
     const { icon, renderIcon } = this.props as StatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'tiny',
-            styles: styles.icon,
+            css: css.icon,
             variables: variables.icon,
             xSpacing: 'none',
             render: renderIcon,

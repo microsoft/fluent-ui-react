@@ -27,7 +27,7 @@ export interface FormFieldProps {
   renderLabel?: ShorthandRenderFunction
   renderMessage?: ShorthandRenderFunction
   required?: boolean
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   type?: string
   variables?: ComponentVariablesInput
 }
@@ -104,7 +104,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     required: PropTypes.bool,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input type. */
     type: PropTypes.string,
@@ -123,7 +123,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     classes,
     accessibility,
     variables,
-    styles,
+    css,
     rest,
   }): React.ReactNode {
     const {
@@ -144,20 +144,20 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
       defaultProps: {
         as: 'label',
         htmlFor: id,
-        styles: styles.label,
+        css: css.label,
       },
       render: renderLabel,
     })
 
     const messageElement = Text.create(message, {
       defaultProps: {
-        styles: styles.message,
+        css: css.message,
       },
       render: renderMessage,
     })
 
     const controlElement = Slot.create(control || {}, {
-      defaultProps: { required, id, name, type, styles: styles.control },
+      defaultProps: { required, id, name, type, css: css.control },
       render: renderControl,
     })
 

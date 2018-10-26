@@ -32,7 +32,7 @@ export interface RadioGroupItemProps {
   name?: string
   renderIcon?: ShorthandRenderFunction
   shouldFocus?: boolean // TODO: RFC #306
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   value?: string | number
   variables?: ComponentVariablesInput
   [isFromKeyboard.propertyName]?: boolean
@@ -140,7 +140,7 @@ class RadioGroupItem extends AutoControlledComponent<
     shouldFocus: PropTypes.bool,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** The HTML input value. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -171,7 +171,7 @@ class RadioGroupItem extends AutoControlledComponent<
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
+  renderComponent({ ElementType, classes, rest, css, variables, accessibility }) {
     const { label, icon, renderIcon } = this.props
 
     return (
@@ -184,13 +184,13 @@ class RadioGroupItem extends AutoControlledComponent<
         onClick={this.handleClick}
         className={classes.root}
       >
-        <Label styles={styles.label}>
+        <Label css={css.label}>
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
               size: 'mini',
               variables: variables.icon,
-              styles: styles.icon,
+              css: css.icon,
               render: renderIcon,
             },
           })}

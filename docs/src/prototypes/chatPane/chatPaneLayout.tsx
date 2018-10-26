@@ -16,7 +16,7 @@ const ChatPaneLayout: React.SFC<ChatPaneLayoutProps> = ({ chat }: ChatPaneLayout
     start={<ChatPaneHeader chat={chat} />}
     main={<ChatPaneContainer chat={chat} />}
     end={<ComposeMessage />}
-    styles={{
+    css={{
       backgroundColor: '#f3f2f1',
       left: 0,
       paddingLeft: '250px',

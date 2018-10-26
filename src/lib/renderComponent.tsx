@@ -36,7 +36,7 @@ export interface RenderResultConfig<P> {
   classes: ComponentSlotClasses
   rest: Props
   variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
+  css: ComponentSlotStylesPrepared
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
@@ -155,11 +155,11 @@ const renderComponent = <P extends {}>(
           props.variables,
         )(siteVariables, stateAndProps)
 
-        // Resolve styles using resolved variables, merge results, allow props.styles to override
+        // Resolve styles using resolved variables, merge results, allow props.css to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
           componentStyles[displayName],
           {
-            root: props.styles,
+            root: props.css,
           },
         )
         const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers)
@@ -185,7 +185,7 @@ const renderComponent = <P extends {}>(
           rest,
           classes,
           variables: resolvedVariables,
-          styles: resolvedStyles,
+          css: resolvedStyles,
           accessibility,
           rtl,
           theme,

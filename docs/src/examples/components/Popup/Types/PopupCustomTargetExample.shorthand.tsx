@@ -16,7 +16,7 @@ class PopupExample extends React.Component {
         {/* CUSTOM DOM ELEMENT is used as target for Popup */}
         <Popup
           target={this.state.popupTarget}
-          trigger={<Icon name="question" circular bordered styles={{ cursor: 'pointer' }} />}
+          trigger={<Icon name="question" circular bordered css={{ cursor: 'pointer' }} />}
           content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
           position="below"
         />

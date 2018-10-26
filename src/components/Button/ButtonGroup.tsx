@@ -22,7 +22,7 @@ export interface ButtonGroupProps {
   className?: string
   content?: React.ReactNode
   renderButton?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -70,7 +70,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
     renderButton: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -86,7 +86,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
     classes,
     accessibility,
     variables,
-    styles,
+    css,
     rest,
   }): React.ReactNode {
     const { children, content, buttons, circular, renderButton } = this.props
@@ -104,7 +104,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
           Button.create(button, {
             defaultProps: {
               circular,
-              styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
+              css: this.getStyleForButtonIndex(css, idx === 0, idx === buttons.length - 1),
             },
             render: renderButton,
           }),
@@ -113,16 +113,16 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
     )
   }
 
-  getStyleForButtonIndex = (styles, isFirst, isLast) => {
+  getStyleForButtonIndex = (css, isFirst, isLast) => {
     let resultStyles = {}
     if (isFirst) {
-      resultStyles = styles.firstButton
+      resultStyles = css.firstButton
     }
     if (isLast) {
-      resultStyles = { ...resultStyles, ...styles.lastButton }
+      resultStyles = { ...resultStyles, ...css.lastButton }
     }
     if (!isFirst && !isLast) {
-      resultStyles = styles.middleButton
+      resultStyles = css.middleButton
     }
     return resultStyles
   }

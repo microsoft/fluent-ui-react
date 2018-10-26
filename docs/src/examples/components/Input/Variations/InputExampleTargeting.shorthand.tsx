@@ -10,15 +10,15 @@ const propsTargettingWrapper = {
 }
 
 // This object contains properties that will be applied to the wrapper
-const propsForWrapper = { dir: 'ltr', tabIndex: -1, styles: { padding: '5px', background: 'red' } }
+const propsForWrapper = { dir: 'ltr', tabIndex: -1, css: { padding: '5px', background: 'red' } }
 const propsTargettingInput = {
   dir: 'rtl',
   tabIndex: 0,
-  styles: { color: 'blue', background: 'yellow' },
+  css: { color: 'blue', background: 'yellow' },
 }
 
 const InputExampleTargeting = () => (
-  <Grid columns="1fr 1fr" styles={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
+  <Grid columns="1fr 1fr" css={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>
     <Text content="Input with props that will be applied to either the input or the wrapper:" />
     <Input {...propsForInput} {...propsForWrapper} />
 

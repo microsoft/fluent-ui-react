@@ -35,7 +35,7 @@ export interface MenuProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -106,7 +106,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     accessibility: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    css: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

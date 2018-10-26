@@ -21,11 +21,11 @@ class MSTeamsLogo extends React.Component<LogoProps, any> {
                   variables: { color: siteVariables.brand },
                   size: 'large',
                   xSpacing: 'after',
-                  styles: { verticalAlign: 'middle' },
+                  css: { verticalAlign: 'middle' },
                 },
               })}
               <Text
-                styles={{ color: siteVariables.white, verticalAlign: 'middle', lineHeight: '40px' }}
+                css={{ color: siteVariables.white, verticalAlign: 'middle', lineHeight: '40px' }}
               >
                 {companyName}
               </Text>
