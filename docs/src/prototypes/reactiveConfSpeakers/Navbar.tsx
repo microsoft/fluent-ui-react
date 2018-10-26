@@ -1,38 +1,70 @@
 import * as React from 'react'
-import { Menu, Provider } from '@stardust-ui/react'
-import { navbarMenuStyles, navbarMenuItemStyles, green } from './styles'
+import { Menu, Provider, Image, Button } from '@stardust-ui/react'
 
-export default () => (
-  <Provider
-    theme={{
-      componentStyles: {
-        MenuItem: {
-          root: navbarMenuItemStyles,
+import Dusty from './dusties'
+import {
+  navbarMenuItem,
+  navbarMenu,
+  navbarButton,
+  green,
+  secondaryNavbarBackground,
+} from './styles'
+import { navbar as md_navbar } from './styles/materialStyles'
+import { mergeStyles } from './utils'
+
+export default props => {
+  const { scrolling } = props
+  return (
+    <Provider
+      theme={{
+        componentStyles: {
+          MenuItem: {
+            root: navbarMenuItem,
+          },
+          Menu: {
+            root: navbarMenu,
+          },
         },
-        Menu: {
-          root: navbarMenuStyles,
+        componentVariables: {
+          Menu: {
+            defaultActiveColor: green,
+            defaultActiveBackgroundColor: secondaryNavbarBackground,
+          },
         },
-      },
-      componentVariables: {
-        Menu: {
-          defaultActiveColor: green,
-          defaultActiveBackgroundColor: 'black',
-        },
-      },
-    }}
-  >
-    <>
-      <Menu
-        items={[
-          'Past Events',
-          'Blog',
-          'Partners',
-          'Archive',
-          'Videos',
-          'Handbook',
-          { content: 'About Us', styles: { color: green } },
-        ]}
-      />
-    </>
-  </Provider>
-)
+      }}
+    >
+      <Dusty.div
+        styles={mergeStyles(
+          {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#261b34',
+            padding: '5px 0',
+            width: '100%',
+            position: 'fixed',
+            margin: '0 -125px',
+            top: '0px',
+            zIndex: 30,
+          },
+          md_navbar(scrolling),
+        )}
+      >
+        <Image src="https://reactiveconf.com/images/logo.svg" variables={{ height: '50px' }} />
+        <Menu
+          items={[
+            { content: 'SPEAKERS', styles: { color: green } },
+            'WORKSHOPS',
+            'SCHEDULE',
+            'VENUES',
+            'VOLUNTEERS',
+            'CONTACT',
+            { content: 'OCT 29-31, 2018', styles: { color: green } },
+          ]}
+        />
+        <Button content="BUY TICKETS" styles={navbarButton} />
+      </Dusty.div>
+    </Provider>
+  )
+}

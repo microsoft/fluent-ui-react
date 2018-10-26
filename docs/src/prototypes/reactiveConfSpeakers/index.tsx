@@ -1,11 +1,14 @@
 import * as React from 'react'
-import { mainStyle } from './styles'
-import Slot from '../../../../src/components/Slot/Slot'
 import Navbar from './Navbar'
-import SecondaryNavbar from './SecondaryNavbar'
 import PageHeader from './PageHeader'
 import Footer from './Footer'
 import Speakers from './Speakers'
+import Dusty from './dusties'
+import { Provider } from '@stardust-ui/react'
+
+import { mergeStyles } from './utils'
+import { main } from './styles'
+import { container as md_container } from './styles/materialStyles'
 
 export default class ReactiveCongSpeakers extends React.Component<{}, any> {
   state = { scrolling: false }
@@ -18,9 +21,9 @@ export default class ReactiveCongSpeakers extends React.Component<{}, any> {
   }
 
   handleScroll = event => {
-    if (window.scrollY === 0 && this.state.scrolling === true) {
+    if (window.scrollY === 0 && this.state.scrolling) {
       this.setState({ scrolling: false })
-    } else if (window.scrollY !== 0 && this.state.scrolling !== true) {
+    } else if (window.scrollY !== 0 && !this.state.scrolling) {
       this.setState({ scrolling: true })
     }
   }
@@ -28,13 +31,24 @@ export default class ReactiveCongSpeakers extends React.Component<{}, any> {
   render() {
     const { scrolling } = this.state
     return (
-      <Slot styles={mainStyle}>
-        <Navbar />
-        <SecondaryNavbar scrolling={scrolling} />
-        <PageHeader />
-        <Speakers />
-        <Footer />
-      </Slot>
+      <Provider
+        theme={{
+          componentStyles: {
+            'Dusty.div': {
+              root: () => ({
+                ':hover': { border: '1px solid red' },
+              }), // suppose that we would be able to simplify this syntax
+            },
+          },
+        }}
+      >
+        <Dusty.div styles={mergeStyles(main, md_container)}>
+          <Navbar scrolling={scrolling} />
+          <PageHeader />
+          <Speakers />
+          <Footer />
+        </Dusty.div>
+      </Provider>
     )
   }
 }
