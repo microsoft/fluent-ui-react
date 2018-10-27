@@ -6,8 +6,11 @@ import Speaker from './Speaker'
 import ChatPeoplePicker from '../ChatPeoplePicker/ChatPeoplePicker'
 import Dusty from './dusties'
 
-export default class Speakers extends React.Component<{}, { filter: string }> {
-  public state = { filter: '' }
+export default class Speakers extends React.Component<
+  {},
+  { filter: string; selectedPeople: any[] }
+> {
+  public state = { filter: '', selectedPeople: [] }
 
   public render() {
     return (
@@ -15,7 +18,12 @@ export default class Speakers extends React.Component<{}, { filter: string }> {
         <Dusty.div styles={{ margin: '45px 0 30px 0' }}>
           <ChatPeoplePicker
             items={speakers}
-            inputValueChanged={inputValue => this.setState({ filter: inputValue })}
+            inputValueChanged={(inputValue, selectedPeople) =>
+              this.setState({
+                filter: inputValue,
+                selectedPeople,
+              })
+            }
             filter={this.applyPeopleFilter}
             width="30rem"
           />
@@ -35,11 +43,18 @@ export default class Speakers extends React.Component<{}, { filter: string }> {
     )
   }
 
-  private applyPeopleFilter = (filter: string, item: SpeakerProps) => {
-    const match = [item.name, item.description]
-      .map(str => str.toLowerCase())
-      .find(value => value.includes(filter.toLowerCase()))
+  private applyPeopleFilter = (filter: string, speaker: SpeakerProps) => {
+    const { selectedPeople } = this.state
 
-    return !!match
+    const anyFilter = filter && filter.length > 0
+    if (!anyFilter && selectedPeople.length === 0) {
+      return true
+    }
+
+    if (anyFilter) {
+      return speaker.name.toLowerCase().includes(filter.toLowerCase())
+    }
+
+    return selectedPeople.some(person => person.name.toLowerCase() === speaker.name.toLowerCase())
   }
 }

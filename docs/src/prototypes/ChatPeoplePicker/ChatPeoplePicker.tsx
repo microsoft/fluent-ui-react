@@ -38,7 +38,7 @@ export interface PeopleData extends RequiredPeopleData {
 interface PeoplePickerProps {
   items?: PeopleData[]
   filter?: (inputValue: string, item: PeopleData) => boolean
-  inputValueChanged?: (inputValue: string) => void
+  inputValueChanged?: (inputValue: string, selected: RequiredPeopleData[]) => void
   width?: string
   maxHeight?: string
   style?: ICSSInJSStyle
@@ -82,7 +82,7 @@ export class ChatPeoplePicker extends React.Component<PeoplePickerProps, PeopleP
   public componentDidUpdate(prevProps, prevState: PeoplePickerState) {
     const inputValue = this.state.inputValue
     if (inputValue !== prevState.inputValue) {
-      _.invoke(this.props, 'inputValueChanged', inputValue)
+      _.invoke(this.props, 'inputValueChanged', inputValue, this.state.selected)
     }
   }
 
