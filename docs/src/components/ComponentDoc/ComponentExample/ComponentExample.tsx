@@ -40,6 +40,7 @@ interface ComponentExampleState {
   showCode: boolean
   showHTML: boolean
   showRtl: boolean
+  showTransparent: boolean
   showVariables: boolean
   isHovering: boolean
   copiedCode: boolean
@@ -75,6 +76,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     showCode: false,
     showHTML: false,
     showRtl: false,
+    showTransparent: false,
     showVariables: false,
     isHovering: false,
     copiedCode: false,
@@ -237,6 +239,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { showVariables } = this.state
 
     this.setState({ showVariables: !showVariables }, this.updateHash)
+  }
+
+  private handleShowTransparentClick = e => {
+    e.preventDefault()
+
+    const { showTransparent } = this.state
+
+    this.setState({ showTransparent: !showTransparent })
   }
 
   private handlePass = () => {
@@ -607,6 +617,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showCode,
       showHTML,
       showRtl,
+      showTransparent,
       showVariables,
     } = this.state
 
@@ -658,9 +669,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
                   onShowVariables={this.handleShowVariablesClick}
+                  onShowTransparent={this.handleShowTransparentClick}
                   showCode={showCode}
                   showHTML={showHTML}
                   showRtl={showRtl}
+                  showTransparent={showTransparent}
                   showVariables={showVariables}
                   visible
                 />
@@ -684,8 +697,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   className={`rendered-example ${this.getKebabExamplePath()}`}
                   style={{
                     padding: '2rem',
-                    backgroundColor: siteVariables.bodyBackground,
                     color: siteVariables.bodyColor,
+                    backgroundColor: siteVariables.bodyBackground,
+                    ...(showTransparent && {
+                      backgroundImage:
+                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                      backgroundRepeat: 'repeat',
+                    }),
                   }}
                 >
                   {exampleElement}
