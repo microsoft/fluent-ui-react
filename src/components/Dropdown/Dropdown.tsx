@@ -93,6 +93,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
         <Downshift
           onChange={this.onDropdownChange}
           inputValue={inputValue}
+          stateReducer={this.stateReducer}
           itemToString={(item: DropdownListItem) => (item ? item.header : '')}
         >
           {({
@@ -282,8 +283,15 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
   onDropdownChange = element => {
     if (this.props.multiple) {
-      this.addToActive(element)
-      _.invoke(this.props, 'onChange', this.state.active)
+      const newActive = [...this.state.active, element]
+
+      _.invoke(this.props, 'onChange', newActive)
+
+      this.setState({
+        active: newActive,
+        inputValue: '',
+        message: `${element.header} has been selected.`,
+      })
     }
   }
 
@@ -307,19 +315,22 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     }
   }
 
+  stateReducer = (state, changes) => {
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.changeInput:
+        this.setState({
+          inputValue: changes.inputValue,
+        })
+        return changes
+      default:
+        return changes
+    }
+  }
+
   private handleCloseIconAction(element, event) {
     this.removeFromActive(element)
     this.inputRef.focus()
     event.stopPropagation()
-  }
-
-  private addToActive(element: DropdownListItem) {
-    this.setState(previousState => {
-      const previousActive = previousState.active
-      const active = [...previousActive, element]
-
-      return { active, inputValue: '', message: `${element.header} has been selected.` }
-    })
   }
 
   private removeFromActive(element?) {
@@ -331,6 +342,9 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     } else {
       poppedElement = active.pop()
     }
+
+    _.invoke(this.props, 'onChange', active)
+
     this.setState({
       active,
       message: `${poppedElement.header} has been removed.`,
