@@ -7,7 +7,7 @@ export default () => {
   return (
     <Dusty.div>
       <Text content="MEET OUR STELLAR" as="div" />
-      <Text content="SPEAKERES" weight="bold" styles={header} as="div" />
+      <Text content="SPEAKERS" weight="bold" styles={header} as="div" />
       <Divider styles={headerDivider} />
     </Dusty.div>
   )
