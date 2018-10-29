@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text, Divider } from '@stardust-ui/react'
 import { header, headerDivider } from './styles'
-import Dusty from './dusties'
+import * as Dusty from './dusties'
 
 export default () => {
   return (

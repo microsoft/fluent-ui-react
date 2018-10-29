@@ -10,7 +10,6 @@ import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
-  ComponentStyleFunctionParam,
   ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
@@ -167,9 +166,10 @@ const renderComponent = <P extends {}>(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
         )
-        const styleParam: ComponentStyleFunctionParam = {
+        const styleParam: any = {
           props: stateAndProps,
           variables: resolvedVariables,
+          siteVariables: theme.siteVariables,
           theme,
         }
         const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(

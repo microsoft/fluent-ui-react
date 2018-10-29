@@ -4,7 +4,7 @@ import { speakers, SpeakerProps } from './data'
 import { Grid, gridBehavior } from '@stardust-ui/react'
 import Speaker from './Speaker'
 import ChatPeoplePicker from '../ChatPeoplePicker/ChatPeoplePicker'
-import Dusty from './dusties'
+import * as Dusty from './dusties'
 
 export default class Speakers extends React.Component<
   {},

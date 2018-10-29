@@ -1,15 +1,14 @@
 import * as React from 'react'
-import { footer, footerMenu, footerMenuItem, footerText } from './styles'
+import { footerMenu, footerMenuItem, footerText } from './styles'
 import siteVars from './styles/siteVariables'
 import { Divider, Menu, Image, Provider, Text } from '@stardust-ui/react'
 import { pxToRem } from '../../../../src/lib'
-import Dusty from './dusties'
-import { footer as md_footer } from './styles/materialStyles'
-import { mergeStyles } from './utils'
+import * as Dusty from './dusties'
+import { dustify } from './utils'
 
-export default () => {
+const Footer = props => {
   return (
-    <Dusty.div styles={mergeStyles(footer, md_footer)}>
+    <div className={props.className}>
       <Provider
         theme={{
           componentStyles: {
@@ -54,6 +53,8 @@ export default () => {
         styles={footerText}
         as="div"
       />
-    </Dusty.div>
+    </div>
   )
 }
+
+export default dustify(Footer)

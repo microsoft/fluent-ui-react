@@ -6,7 +6,8 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 export const dustify = (ComponentType, displayName = null) => {
-  const dustifiedDisplayName = displayName || `Dusty.${ComponentType.displayName}`
+  const dustifiedDisplayName =
+    displayName || `Dusty(${ComponentType.displayName || ComponentType.name || ComponentType})`
 
   class Dustified extends UIComponent<any, any> {
     static displayName = dustifiedDisplayName

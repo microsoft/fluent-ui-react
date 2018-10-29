@@ -3,11 +3,10 @@ import Navbar from './Navbar'
 import PageHeader from './PageHeader'
 import Footer from './Footer'
 import Speakers from './Speakers'
-import Dusty from './dusties'
+import * as Dusty from './dusties'
 
-import { mergeStyles } from './utils'
-import { main, pageContainer } from './styles'
-import { container as md_container } from './styles/materialStyles'
+import { defaultTheme, materialTheme } from './themes'
+import { Provider, mergeThemes } from '@stardust-ui/react'
 
 export default class ReactiveConfSpeakers extends React.Component<{}, { scrolling: boolean }> {
   state = { scrolling: false }
@@ -23,16 +22,19 @@ export default class ReactiveConfSpeakers extends React.Component<{}, { scrollin
   render() {
     const { scrolling } = this.state
     return (
-      <Dusty.div styles={mergeStyles(main, md_container)}>
-        <Navbar scrolling={scrolling} />
+      // Sets theme for the subtree
+      <Provider theme={mergeThemes(defaultTheme, materialTheme)}>
+        <Dusty.MainContainer>
+          <Navbar scrolling={scrolling} />
 
-        <Dusty.div styles={pageContainer}>
-          <PageHeader />
-          <Speakers />
-        </Dusty.div>
+          <Dusty.PageContainer>
+            <PageHeader />
+            <Speakers />
+          </Dusty.PageContainer>
 
-        <Footer />
-      </Dusty.div>
+          <Footer />
+        </Dusty.MainContainer>
+      </Provider>
     )
   }
 

@@ -1,8 +1,8 @@
-const shadowKeyUmbraOpacity = 0.2
-const shadowKeyPenumbraOpacity = 0.14
-const shadowAmbientShadowOpacity = 0.12
+export const shadowKeyUmbraOpacity = 0.2
+export const shadowKeyPenumbraOpacity = 0.14
+export const shadowAmbientShadowOpacity = 0.12
 
-const createShadow = (...px) => {
+export const createShadow = (...px) => {
   return [
     `${px[0]}px ${px[1]}px ${px[2]}px ${px[3]}px rgba(0, 0, 0, ${shadowKeyUmbraOpacity})`,
     `${px[4]}px ${px[5]}px ${px[6]}px ${px[7]}px rgba(0, 0, 0, ${shadowKeyPenumbraOpacity})`,
@@ -10,7 +10,7 @@ const createShadow = (...px) => {
   ].join(',')
 }
 
-const shadows = [
+export const shadows = [
   'none',
   createShadow(0, 1, 3, 0, 0, 1, 1, 0, 0, 2, 1, -1),
   createShadow(0, 1, 5, 0, 0, 2, 2, 0, 0, 3, 1, -2),
@@ -47,56 +47,3 @@ export const paper = (elevation = 5) => ({
   borderRadius: '5px',
   ...elevate(elevation),
 })
-
-export const container = {
-  backgroundImage: `linear-gradient(#455a64, #90a4ae)`,
-}
-
-export const navbar = scrolling => ({
-  padding: '25px 0',
-  backgroundColor: '#00695C',
-  transition: 'all 0.3s',
-
-  ...elevate(15),
-  ...(scrolling && {
-    top: '0px',
-    padding: '5px 0',
-    ...elevate(5),
-  }),
-})
-
-export const footer = {
-  boxShadow: [`${-1}px ${-1}px ${10}px ${5}px rgba(0, 0, 0, ${shadowKeyUmbraOpacity})`].join(','),
-}
-
-export const card = {
-  position: 'relative',
-  top: '0px',
-  left: '0px',
-  ...paper(10),
-  ':hover': {
-    cursor: 'pointer',
-    ...paper(20),
-    ...{
-      top: '-7px',
-      left: '7px',
-    },
-  },
-  transition: 'all 0.2s',
-  borderRadius: '10px',
-  overflow: 'hidden',
-}
-
-//////
-
-// export const elevate = (elevation = 5, inversed = false) => ({ })
-
-// export const paper = (elevation = 5) => ({ });
-
-// export const container = { }
-
-// export const navbar = (scrolling) => ({ })
-
-// export const footer = { }
-
-// export const card = { }
