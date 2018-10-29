@@ -115,6 +115,24 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
     }
   },
 
+  outlinePart: ({ variables: v }): ICSSInJSStyle => {
+    return {
+      display: 'none',
+
+      ...(v.outline && {
+        display: 'block',
+      }),
+    }
+  },
+
+  filledPart: ({ variables: v }): ICSSInJSStyle => {
+    return {
+      ...(v.outline && {
+        display: 'none',
+      }),
+    }
+  },
+
   svg: getSvgStyle('svg'),
 
   g: getSvgStyle('g'),
