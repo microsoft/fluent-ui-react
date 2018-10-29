@@ -25,5 +25,6 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "noUnusedLocals": true,
+    "skipLibCheck": true
   }
 }

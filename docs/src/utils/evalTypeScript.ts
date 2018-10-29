@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as Stardust from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as ts from 'typescript'
+import MaterialButton from '@material-ui/core/Button'
 
 /**
  * Converts import statement to expression by converting the module name in
@@ -82,6 +83,7 @@ interface ExecutionSandboxGlobals {
   REACT_DOM: any
   STARDUST_UI_REACT: any
   LODASH: any
+  MATERIAL_UI_CORE_BUTTON: any
 }
 /**
  * Executes JavaScript code within our sandbox. Returns the result of the
@@ -89,7 +91,7 @@ interface ExecutionSandboxGlobals {
  */
 const execute = (
   code,
-  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH }: ExecutionSandboxGlobals,
+  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH, MATERIAL_UI_CORE_BUTTON }: ExecutionSandboxGlobals,
 ) => {
   return eval(code) // tslint:disable-line
 }
@@ -105,6 +107,7 @@ const evalTypeScript = (sourceCode): any => {
     REACT_DOM: ReactDOM,
     STARDUST_UI_REACT: Stardust,
     LODASH: _,
+    MATERIAL_UI_CORE_BUTTON: MaterialButton,
   })
 }
 
