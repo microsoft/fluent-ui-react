@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IListItemProps } from '../../../../components/List/ListItem'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ListItemProps } from '../../../../components/List/ListItem'
 
 const hoverStyle = variables => ({
   background: variables.selectionHoverBackgroundColor,
@@ -18,7 +18,7 @@ const hoverStyle = variables => ({
   '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
 })
 
-const listItemStyles: IComponentPartStylesInput<IListItemProps, any> = {
+const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',

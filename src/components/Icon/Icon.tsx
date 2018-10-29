@@ -2,9 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -19,7 +19,7 @@ export type IconSize =
   | 'huge'
   | 'massive'
 
-export interface IIconProps {
+export interface IconProps {
   as?: any
   bordered?: boolean
   circular?: boolean
@@ -29,11 +29,14 @@ export interface IIconProps {
   size?: IconSize
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Icon extends UIComponent<Extendable<IIconProps>, any> {
+/**
+ * An icon is a glyph used to represent something else.
+ */
+class Icon extends UIComponent<Extendable<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'

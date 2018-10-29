@@ -1,5 +1,5 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonGroupProps } from '../../../../components/Button/ButtonGroup'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
 
 const commonButtonsStyles = (circular: boolean) => ({
   ...(!circular && {
@@ -8,7 +8,7 @@ const commonButtonsStyles = (circular: boolean) => ({
   }),
 })
 
-const buttonGroupStyles: IComponentPartStylesInput<IButtonGroupProps, any> = {
+const buttonGroupStyles: ComponentSlotStylesInput<ButtonGroupProps, any> = {
   root: (): ICSSInJSStyle => ({}),
   middleButton: ({ props: p }) => ({
     ...commonButtonsStyles(p.circular),
