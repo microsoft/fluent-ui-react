@@ -31,8 +31,6 @@ const Navbar = props => (
           { content: 'SPEAKERS', styles: { color: siteVar.green }, key: 'speakers' },
           'WORKSHOPS',
           'SCHEDULE',
-          'VENUES',
-          'VOLUNTEERS',
           'CONTACT',
           { content: 'OCT 29-31, 2018', styles: { color: siteVar.green }, key: 'date' },
         ]}

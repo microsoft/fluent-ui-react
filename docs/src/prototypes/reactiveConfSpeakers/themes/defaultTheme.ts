@@ -25,6 +25,7 @@ export default {
    */
   componentStyles: {
     'Dusty(MainContainer)': style(({ siteVariables }) => ({
+      position: 'relative',
       backgroundColor: '#155068',
       backgroundImage: `linear-gradient(#362b44, #275169, #66b36d)`,
       paddingTop: '90px',
@@ -45,7 +46,7 @@ export default {
       padding: '5px 0',
       width: '100%',
       position: 'fixed',
-      margin: '0 -125px',
+      margin: '0 0 0 -125px',
       top: '0px',
       zIndex: 30,
     }),
