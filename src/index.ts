@@ -29,6 +29,12 @@ export {
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
 
+export {
+  default as Dropdown,
+  DropdownProps,
+  DropdownListItem,
+} from './components/Dropdown/Dropdown'
+
 export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 

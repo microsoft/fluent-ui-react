@@ -15,6 +15,8 @@ export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
 
+export { default as Dropdown } from './components/Dropdown/dropdownStyles'
+
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 

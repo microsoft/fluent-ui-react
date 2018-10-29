@@ -199,6 +199,7 @@ export interface ThemeComponentStylesInput {
   ChatItem?: ComponentSlotStylesInput
   ChatMessage?: ComponentSlotStylesInput
   Divider?: ComponentSlotStylesInput
+  Dropdown?: ComponentSlotStylesInput
   Form?: ComponentSlotStylesInput
   FormField?: ComponentSlotStylesInput
   Grid?: ComponentSlotStylesInput
@@ -236,6 +237,7 @@ export interface ThemeComponentStylesPrepared {
   ChatItem?: ComponentSlotStylesPrepared
   ChatMessage?: ComponentSlotStylesPrepared
   Divider?: ComponentSlotStylesPrepared
+  Dropdown?: ComponentSlotStylesPrepared
   Form?: ComponentSlotStylesPrepared
   FormField?: ComponentSlotStylesPrepared
   Grid?: ComponentSlotStylesPrepared
@@ -273,6 +275,7 @@ export interface ThemeComponentVariablesInput {
   ChatItem?: ComponentVariablesInput
   ChatMessage?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
+  Dropdown?: ComponentVariablesInput
   Form?: ComponentVariablesInput
   FormField?: ComponentVariablesInput
   Grid?: ComponentVariablesInput
@@ -310,6 +313,7 @@ export interface ThemeComponentVariablesPrepared {
   ChatItem?: ComponentVariablesPrepared
   ChatMessage?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
+  Dropdown?: ComponentVariablesPrepared
   Form?: ComponentVariablesPrepared
   FormField?: ComponentVariablesPrepared
   Grid?: ComponentVariablesPrepared
