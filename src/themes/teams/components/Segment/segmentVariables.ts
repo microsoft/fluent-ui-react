@@ -3,8 +3,6 @@ import { ComponentVariablesPrepared } from '@stardust-ui/react'
 
 export interface SegmentVariables {
   padding: string
-  color: string
-  fontSize: string
   background: string
   borderRadius: string
 }
