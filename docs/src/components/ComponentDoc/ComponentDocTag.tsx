@@ -61,6 +61,10 @@ class ComponentDocTag extends React.Component<any, any> {
     const description = this.getTagDescription(tag, info)
     const defaultAccBehaviorInfo = tag === 'accessibility' && this.getDefaultBehaviorInfo(info)
 
+    if (!defaultAccBehaviorInfo) {
+      return null
+    }
+
     return (
       <Header as="h2" style={headerStyle} className="no-anchor">
         <Header.Content>{title}</Header.Content>
