@@ -32,7 +32,7 @@ export default {
 
     'Dusty(Footer)': style({
       boxShadow: [
-        `${-1}px ${-1}px ${10}px ${5}px rgba(0, 0, 0, ${styles.shadowKeyUmbraOpacity})`,
+        `${-3}px ${-3}px ${20}px ${15}px rgba(0, 0, 0, ${styles.shadowKeyUmbraOpacity})`,
       ].join(','),
     }),
 
