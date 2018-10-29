@@ -5,11 +5,6 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Slots = () => (
   <ExampleSection title="Slots">
     <ComponentExample
-      title="Icon"
-      description="An attachment can have an icon."
-      examplePath="components/Attachment/Slots/AttachmentIconExample"
-    />
-    <ComponentExample
       title="Header"
       description="An attachment header informs the user of what is attached."
       examplePath="components/Attachment/Slots/AttachmentHeaderExample"
@@ -18,6 +13,11 @@ const Slots = () => (
       title="Description"
       description="The attachment's description gives more detail about the attachment."
       examplePath="components/Attachment/Slots/AttachmentDescriptionExample"
+    />
+    <ComponentExample
+      title="Icon"
+      description="An attachment can have an icon."
+      examplePath="components/Attachment/Slots/AttachmentIconExample"
     />
     <ComponentExample
       title="Action"
