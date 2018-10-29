@@ -9,7 +9,7 @@ import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
-import { themes } from '@stardust-ui/react'
+// import { themes } from '@stardust-ui/react'
 import { ThemeContext } from '../../context/theme-context'
 import { constants } from 'src/lib'
 
@@ -200,7 +200,7 @@ class Sidebar extends React.Component<any, any> {
                 </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
-            {process.env.NODE_ENV !== 'production' && (
+            {/* {process.env.NODE_ENV !== 'production' && (
               <Menu.Item>
                 <p>Theme:</p>
                 <select
@@ -217,7 +217,7 @@ class Sidebar extends React.Component<any, any> {
                   ))}
                 </select>
               </Menu.Item>
-            )}
+            )} */}
             <Menu.Item>
               Concepts
               <Menu.Menu>
@@ -253,18 +253,18 @@ class Sidebar extends React.Component<any, any> {
               <Menu.Item>
                 Prototypes
                 <Menu.Menu>
-                  <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
+                  {/* <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
                     Chat Pane
-                  </Menu.Item>
-                  <Menu.Item
+                  </Menu.Item> */}
+                  {/* <Menu.Item
                     as={NavLink}
                     exact
                     to="/prototype-async-shorthand"
                     activeClassName="active"
                   >
                     Async Shorthand
-                  </Menu.Item>
-                  <Menu.Item
+                  </Menu.Item> */}
+                  {/* <Menu.Item
                     as={NavLink}
                     exact
                     to="/prototype-employee-card"
@@ -279,7 +279,7 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Meeting Options
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item
                     as={NavLink}
                     exact
@@ -308,12 +308,12 @@ class Sidebar extends React.Component<any, any> {
     )
   }
 
-  private getThemeOptions = () => {
-    return Object.keys(themes).map(key => ({
-      text: _.startCase(key),
-      value: key,
-    }))
-  }
+  // private getThemeOptions = () => {
+  //   return Object.keys(themes).map(key => ({
+  //     text: _.startCase(key),
+  //     value: key,
+  //   }))
+  // }
 }
 
 export default withRouter(Sidebar)
