@@ -184,6 +184,7 @@ export class ChatPeoplePicker extends React.Component<PeoplePickerProps, PeopleP
 
   private handleCloseIconAction(element, event) {
     this.removeFromSelected(element)
+
     this.input.focus()
 
     event.stopPropagation()
@@ -212,6 +213,8 @@ export class ChatPeoplePicker extends React.Component<PeoplePickerProps, PeopleP
     } else {
       poppedElement = selected.pop()
     }
+
+    _.invoke(this.props, 'inputValueChanged', this.state.inputValue, selected)
 
     this.setState({
       selected,
