@@ -37,7 +37,7 @@ export default class Speakers extends React.Component<
         >
           {speakers
             .filter(speaker => this.applyPeopleFilter(this.state.filter, speaker))
-            .map(speaker => <Speaker {...speaker} />)}
+            .map(speaker => <Speaker {...speaker} key={speaker.image} />)}
         </Grid>
       </>
     )

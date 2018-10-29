@@ -39,9 +39,17 @@ const Footer = props => {
           <Menu
             styles={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}
             items={[
-              { content: 'Code of Conduct', styles: { color: siteVars.green } },
-              { content: 'General Terms and Conditions', styles: { color: siteVars.green } },
-              { content: 'Privacy Policy', styles: { color: siteVars.green } },
+              {
+                content: 'Code of Conduct',
+                styles: { color: siteVars.green },
+                key: 'code of conduct',
+              },
+              {
+                content: 'General Terms and Conditions',
+                styles: { color: siteVars.green },
+                key: 'terms',
+              },
+              { content: 'Privacy Policy', styles: { color: siteVars.green }, key: 'privacy' },
             ]}
           />
         </>

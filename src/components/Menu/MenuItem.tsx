@@ -189,6 +189,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
+MenuItem.create = createShorthandFactory(MenuItem, content => ({ content, key: content }))
 
 export default MenuItem

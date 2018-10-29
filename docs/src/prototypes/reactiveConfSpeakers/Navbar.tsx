@@ -28,13 +28,13 @@ const Navbar = props => (
       <Image src="https://reactiveconf.com/images/logo.svg" variables={{ height: '50px' }} />
       <Menu
         items={[
-          { content: 'SPEAKERS', styles: { color: siteVar.green } },
+          { content: 'SPEAKERS', styles: { color: siteVar.green }, key: 'speakers' },
           'WORKSHOPS',
           'SCHEDULE',
           'VENUES',
           'VOLUNTEERS',
           'CONTACT',
-          { content: 'OCT 29-31, 2018', styles: { color: siteVar.green } },
+          { content: 'OCT 29-31, 2018', styles: { color: siteVar.green }, key: 'date' },
         ]}
       />
       <Button content="BUY TICKETS" styles={navbarButton} />
