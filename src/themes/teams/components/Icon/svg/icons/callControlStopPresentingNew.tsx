@@ -2,7 +2,7 @@ import * as React from 'react'
 import { TeamsSvgIconSpec } from '../types'
 
 export default (
-  <svg viewBox="0 0 32 32" role="presentation">
+  <svg viewBox="8 8 16 16" role="presentation">
     <path
       d="M22.5,9h-13C8.672852,9,8,9.672852,8,10.5v9C8,20.327148,8.672852,21,9.5,21h2.006836c0.276367,0,0.5-0.223633,0.5-0.5
                 s-0.223633-0.5-0.5-0.5H9.5C9.224121,20,9,19.775391,9,19.5v-9C9,10.224121,9.224121,10,9.5,10h13c0.275391,0,0.5,0.224121,0.5,0.5
