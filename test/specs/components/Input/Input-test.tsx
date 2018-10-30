@@ -1,6 +1,7 @@
 import * as React from 'react'
 
-import { mount, ReactWrapper } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider as mount } from 'test/utils'
 import {
   isConformant,
   implementsShorthandProp,
@@ -9,7 +10,7 @@ import {
 
 import Input from 'src/components/Input/Input'
 import Icon from 'src/components/Icon/Icon'
-import Slot from 'src/components/Slot'
+import Slot from 'src/components/Slot/Slot'
 
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']

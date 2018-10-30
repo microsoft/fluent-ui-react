@@ -3,7 +3,7 @@ import { isConformant } from 'test/specs/commonTests'
 
 import { implementsShorthandProp } from '../../commonTests'
 import { Button, RadioGroup, Input, Text, FormField } from '../../../../src/'
-import { mountWithProvider } from '../../../utils'
+import { mountWithProvider } from 'test/utils'
 import Slot from '../../../../src/components/Slot/Slot'
 
 const formFieldImplementsShorthandProp = implementsShorthandProp(FormField)

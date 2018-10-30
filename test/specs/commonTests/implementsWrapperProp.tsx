@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { mount, ReactWrapper } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider as mount } from 'test/utils'
 
-import Slot from 'src/components/Slot'
+import Slot from 'src/components/Slot/Slot'
 import { ShorthandValue } from 'utils'
 
 export interface ImplementsWrapperPropOptions {

@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Header, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react'
+import { Header } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
-import { accessibilityErrorMessage } from 'docs/src/constants'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import ComponentSidebar from './ComponentSidebar'
-import ComponentDocTag from './ComponentDocTag'
+import ComponentAccessibility from './ComponentDocAccessibility'
 
 const topRowStyle = { margin: '1em' }
 const exampleEndStyle: React.CSSProperties = {
@@ -80,17 +80,9 @@ class ComponentDoc extends React.Component<any, any> {
         <Grid>
           <Grid.Row style={topRowStyle}>
             <Grid.Column>
-              <Header
-                as="h1"
-                content={info.displayName}
-                subheader={_.join(info.docblock.description, ' ')}
-              />
-              <ComponentDocTag
-                title="Accessibility"
-                tag="accessibility"
-                errorMessage={accessibilityErrorMessage}
-                info={info}
-              />
+              <Header as="h1" content={info.displayName} />
+              <p>{_.join(info.docblock.description, ' ')}</p>
+              <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
               <ComponentDocLinks
                 displayName={info.displayName}

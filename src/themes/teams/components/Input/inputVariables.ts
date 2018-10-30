@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-export interface IInputVariables {
+export interface InputVariables {
   borderRadius: string
   borderBottom: string
   backgroundColor: string
@@ -16,7 +16,7 @@ const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6,
   pxToRem(v),
 )
 
-export default (siteVars): IInputVariables => ({
+export default (siteVars): InputVariables => ({
   borderRadius: _3px_asRem,
   borderBottom: `${_2px_asRem} solid transparent`,
   backgroundColor: siteVars.gray10,
