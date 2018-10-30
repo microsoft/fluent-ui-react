@@ -3,7 +3,7 @@ import * as customPropTypes from './customPropTypes'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
-export { default as eventStack } from './eventStack'
+export { EventStackSubscription } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 

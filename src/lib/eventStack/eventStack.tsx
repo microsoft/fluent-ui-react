@@ -3,13 +3,13 @@ import EventTarget from './EventTarget'
 import normalizeTarget from './normalizeTarget'
 
 class EventStack {
-  _targets = new Map()
+  private readonly _targets = new Map()
 
   // ------------------------------------
   // Target utils
   // ------------------------------------
 
-  _find = (target, autoCreate = true) => {
+  private _find = (target, autoCreate = true) => {
     const normalized = normalizeTarget(target)
 
     if (this._targets.has(normalized)) return this._targets.get(normalized)
@@ -21,7 +21,7 @@ class EventStack {
     return eventTarget
   }
 
-  _remove = target => {
+  private _remove = target => {
     const normalized = normalizeTarget(target)
 
     this._targets.delete(normalized)
@@ -31,18 +31,21 @@ class EventStack {
   // Pub/sub
   // ------------------------------------
 
-  sub = (name, handlers, options: any = {}) => {
-    if (!isBrowser()) return
+  public sub = (name, handlers, options: any = {}): Promise<Function> => {
+    if (!isBrowser()) return Promise.resolve(() => {})
 
-    setTimeout(() => {
-      const { target = document, pool = 'default', useCapture = false } = options
-      const eventTarget = this._find(target)
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const { target = document, pool = 'default', useCapture = false } = options
+        const eventTarget = this._find(target)
 
-      eventTarget.sub(name, handlers, pool, useCapture)
+        eventTarget.sub(name, handlers, pool, useCapture)
+        resolve(() => this.unsub(name, handlers, options))
+      })
     })
   }
 
-  unsub = (name, handlers, options: any = {}) => {
+  public unsub = (name, handlers, options: any = {}) => {
     if (!isBrowser()) return
 
     const { target = document, pool = 'default', useCapture = false } = options
@@ -55,6 +58,32 @@ class EventStack {
   }
 }
 
-const instance = new EventStack()
+const eventStack = new EventStack()
 
-export default instance
+export class EventStackSubscription {
+  public static empty() {
+    return new EventStackSubscription(() => {}, true)
+  }
+
+  public static async create(name, handlers, options: any = {}) {
+    const unsubscribe = await eventStack.sub(name, (...args) => handlers(...args), options)
+    return new EventStackSubscription(unsubscribe)
+  }
+
+  private swapWith(another: EventStackSubscription) {
+    const temp = another._unsubscribe
+    another._unsubscribe = this._unsubscribe
+    this._unsubscribe = temp
+  }
+
+  private constructor(private _unsubscribe: Function, public readonly isEmpty: boolean = false) {}
+
+  public stop(): void {
+    this._unsubscribe()
+  }
+
+  public async replaceWith(name, handlers, options: any = {}): Promise<void> {
+    this.stop()
+    this.swapWith(await EventStackSubscription.create(name, handlers, options))
+  }
+}

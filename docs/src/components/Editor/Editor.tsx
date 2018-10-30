@@ -8,7 +8,7 @@ import 'brace/mode/html'
 import 'brace/mode/jsx'
 import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
-import { eventStack, doesNodeContainClick } from 'src/lib'
+import { EventStackSubscription, doesNodeContainClick } from 'src/lib'
 
 const parentComponents = []
 
@@ -61,6 +61,7 @@ export const EDITOR_GUTTER_COLOR = '#26282d'
 
 class Editor extends React.Component<EditorProps> {
   private static readonly refName = 'aceEditor'
+  private clickSubscription = EventStackSubscription.empty()
 
   public static propTypes = {
     id: PropTypes.string.isRequired,
@@ -142,11 +143,11 @@ class Editor extends React.Component<EditorProps> {
   }
 
   private addDocumentListener() {
-    eventStack.sub('click', this.handleDocumentClick)
+    this.clickSubscription.replaceWith('click', this.handleDocumentClick)
   }
 
   private removeDocumentListener() {
-    eventStack.unsub('click', this.handleDocumentClick)
+    this.clickSubscription.stop()
   }
 
   private get editor() {

@@ -9,6 +9,7 @@ import {
   customPropTypes,
   AutoControlledComponent,
   RenderResultConfig,
+  EventStackSubscription,
   isBrowser,
 } from '../../lib'
 import {
@@ -126,15 +127,44 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private static isBrowserContext = isBrowser()
 
+  private clickSubscription = EventStackSubscription.empty()
+  private triggerDomElement = null
+
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e => this.trySetOpen(!this.state.open, e, true),
-    closeAndFocusTrigger: e => {
-      this.trySetOpen(false, e, true)
-      _.invoke(this.state.target, 'focus')
+    toggle: e => {
+      this.trySetOpen(!this.state.open, e, true)
     },
+    closeAndFocusTrigger: e => this.closeAndFocusTrigger(e),
+  }
+
+  private closeAndFocusTrigger = e => {
+    if (this.state.open) {
+      this.trySetOpen(false, e, true)
+      _.invoke(this.triggerDomElement, 'focus')
+    }
+  }
+
+  private closeAndFocusTriggerOnClickIfOpen() {
+    if (this.state.open) {
+      this.clickSubscription.replaceWith('click', this.closeAndFocusTrigger)
+    } else {
+      this.clickSubscription.stop()
+    }
   }
 
   public state = { target: undefined, open: false }
+
+  public componentDidMount() {
+    this.closeAndFocusTriggerOnClickIfOpen()
+  }
+
+  public componentDidUpdate() {
+    this.closeAndFocusTriggerOnClickIfOpen()
+  }
+
+  public componentWillUnmount() {
+    this.clickSubscription.stop()
+  }
 
   public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
     const popupContent = this.renderPopupContent(rtl, accessibility)
@@ -160,6 +190,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         <Ref
           innerRef={domNode => {
             this.trySetState({ target: domNode })
+            this.triggerDomElement = domNode
           }}
         >
           {React.cloneElement(triggerElement, {
