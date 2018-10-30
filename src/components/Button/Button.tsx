@@ -44,7 +44,7 @@ export interface ButtonState {
 }
 
 /**
- * A button.
+ * A button indicates a possible user action.
  * @accessibility
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader

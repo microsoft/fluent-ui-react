@@ -162,7 +162,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          createHTMLDivision(progress, {
+          createHTMLDivision('', {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}

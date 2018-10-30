@@ -24,7 +24,6 @@ export interface AvatarProps {
 
 /**
  * An avatar is a graphic representation of user.
- * @accessibility To be discussed
  */
 class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   static create: Function

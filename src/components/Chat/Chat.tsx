@@ -26,6 +26,9 @@ export interface ChatProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A Chat displays messages between users.
+ */
 class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static className = 'ui-chat'
 

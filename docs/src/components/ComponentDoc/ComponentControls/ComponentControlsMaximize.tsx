@@ -13,8 +13,8 @@ const ComponentControlsMaximize: any = ({ examplePath }) => (
     target="_blank"
     rel="noopener noreferrer"
   >
-    <Icon color="grey" fitted name="window maximize" size="large" />
-    Maximize
+    <Icon color="grey" fitted name="external alternate" size="large" />
+    Popout
   </Menu.Item>
 )
 
