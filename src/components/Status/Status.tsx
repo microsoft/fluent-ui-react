@@ -78,7 +78,6 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
             size: 'tiny',
             styles: styles.icon,
             variables: variables.icon,
-            className: classes.icon,
             xSpacing: 'none',
             render: renderIcon,
           },
