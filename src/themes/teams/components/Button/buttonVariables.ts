@@ -103,7 +103,6 @@ export default (siteVars: any): ButtonVariables => {
     primaryBackgroundColorActive: siteVars.brand02,
     primaryBackgroundColorHover: siteVars.brand04,
     primaryBackgroundColorFocus: siteVars.brand04,
-    primaryBackgroundColorDisabled: siteVars.brand04,
     primaryBorderColor: 'transparent',
     primaryBorderColorActive: 'transparent',
     primaryBorderColorHover: 'transparent',

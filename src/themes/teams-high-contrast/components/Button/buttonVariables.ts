@@ -1,69 +1,9 @@
-export interface IButtonVariables {
-  [key: string]: string | number
+import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
+import { Partial } from 'types/utils'
 
-  color: string
-  colorActive: string
-  colorHover: string
-  colorFocus: string
-  colorDisabled: string
-  backgroundColor: string
-  backgroundColorActive: string
-  backgroundColorHover: string
-  backgroundColorFocus: string
-  backgroundColorDisabled: string
-  borderColor: string
-  borderColorActive: string
-  borderColorHover: string
-  borderColorFocus: string
-  borderColorFocusIndicator: string
-  borderColorDisabled: string
-  borderWidth: number
-
-  primaryColor: string
-  primaryColorActive: string
-  primaryColorHover: string
-  primaryColorFocus: string
-  primaryBackgroundColor: string
-  primaryBackgroundColorActive: string
-  primaryBackgroundColorHover: string
-  primaryBackgroundColorFocus: string
-  primaryBorderColor: string
-  primaryBorderColorActive: string
-  primaryBorderColorHover: string
-  primaryBorderColorFocus: string
-  primaryBorderColorFocusIndicator: string
-  primaryBorderWidth: number
-
-  primaryCircularBorderColorFocusIndicator: string
-
-  circularColor: string
-  circularColorActive: string
-  circularBackgroundColor: string
-  circularBackgroundColorActive: string
-  circularBackgroundColorHover: string
-  circularBackgroundColorFocus: string
-  circularBorderColor: string
-  circularBorderColorActive: string
-  circularBorderColorHover: string
-  circularBorderColorFocus: string
-  circularBorderColorFocusIndicator: string
-
-  textColor: string
-  textColorHover: string
-  textPrimaryColor: string
-  textPrimaryColorHover: string
-  textSecondaryColor: string
-  textSecondaryColorHover: string
-
-  boxShadow: string
-}
-
-export default (siteVars: any): IButtonVariables => {
+export default (siteVars: any): Partial<ButtonVariables> => {
   return {
     color: siteVars.white,
-    colorActive: siteVars.black,
-    colorHover: siteVars.black,
-    colorFocus: siteVars.black,
     colorDisabled: siteVars.black,
     backgroundColor: 'transparent',
     backgroundColorActive: siteVars.accessibleYellow,
@@ -75,8 +15,6 @@ export default (siteVars: any): IButtonVariables => {
     borderColorHover: 'transparent',
     borderColorFocus: siteVars.black,
     borderColorFocusIndicator: siteVars.white,
-    borderColorDisabled: 'transparent',
-    borderWidth: 1,
 
     primaryColor: siteVars.white,
     primaryColorActive: siteVars.black,
@@ -87,13 +25,11 @@ export default (siteVars: any): IButtonVariables => {
     primaryBackgroundColorHover: siteVars.accessibleYellow,
     primaryBackgroundColorFocus: siteVars.accessibleYellow,
     primaryBorderColor: siteVars.white,
-    primaryBorderColorActive: 'transparent',
-    primaryBorderColorHover: 'transparent',
     primaryBorderColorFocus: siteVars.black,
     primaryBorderColorFocusIndicator: siteVars.white,
     primaryBorderWidth: 2,
 
-    primaryCircularBorderColorFocusIndicator: siteVars.white,
+    primaryCircularBorderColorFocusIndicator: siteVars.black,
 
     circularColor: siteVars.white,
     circularColorActive: siteVars.black,
@@ -107,13 +43,13 @@ export default (siteVars: any): IButtonVariables => {
     circularBorderColorFocus: siteVars.white,
     circularBorderColorFocusIndicator: siteVars.black,
 
-    textColor: siteVars.brand,
-    textColorHover: siteVars.brand04,
-    textPrimaryColor: siteVars.brand,
-    textPrimaryColorHover: siteVars.brand04,
-    textSecondaryColor: siteVars.gray03,
-    textSecondaryColorHover: siteVars.brand04,
+    textColor: siteVars.accessibleYellow,
+    textColorHover: siteVars.accessibleYellow,
+    textPrimaryColor: siteVars.accessibleYellow,
+    textPrimaryColorHover: siteVars.accessibleYellow,
+    textSecondaryColor: siteVars.accessibleYellow,
+    textSecondaryColorHover: siteVars.accessibleYellow,
 
-    boxShadow: siteVars.shadowLevel1,
+    boxShadow: 'none',
   }
 }

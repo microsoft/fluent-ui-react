@@ -86,6 +86,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       verticalAlign: 'middle',
       cursor: 'pointer',
 
+      // rectangular button defaults
       ...(!text && {
         outline: 0,
         borderRadius: '2px',
@@ -129,11 +130,15 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
         }),
       }),
 
+      // circular button defaults
       ...(circular &&
         !text && {
+          minWidth: height,
+          padding: 0,
           color: circularColor,
           backgroundColor: circularBackgroundColor,
           borderColor: circularBorderColor,
+          borderRadius: circularRadius,
           ':hover': {
             color: circularColorActive,
             backgroundColor: circularBackgroundColorHover,
@@ -170,9 +175,25 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           }),
         }),
 
+      // text button defaults
+      ...(text && {
+        color: textColor,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        ':hover': {
+          color: textColorHover,
+        },
+        ...(primary && {
+          color: textPrimaryColor,
+          ':hover': {
+            color: textPrimaryColorHover,
+          },
+        }),
+      }),
+
+      // Overrides for "primary" buttons
       ...(primary &&
-        !text &&
-        !disabled && {
+        !text && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
           borderWidth: `${pxToRem(primaryBorderWidth)}`,
@@ -183,7 +204,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
             backgroundColor: primaryBackgroundColorHover,
             borderColor: primaryBorderColorHover,
           },
-
           ...(isFromKeyboard &&
             !circular && {
               ':focus': {
@@ -236,34 +256,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           }),
         }),
 
-      ...(text && {
-        color: textColor,
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        ':hover': {
-          color: textColorHover,
-        },
-      }),
-
-      ...(primary &&
-        text && {
-          color: textPrimaryColor,
-          ':hover': {
-            color: textPrimaryColorHover,
-          },
-        }),
-
-      ...(circular && {
-        minWidth: height,
-        padding: 0,
-        borderRadius: circularRadius,
-      }),
-
-      ...(fluid && {
-        width: '100%',
-        maxWidth: '100%',
-      }),
-
+      // Overrides for "disabled" buttons
       ...(disabled && {
         cursor: 'default',
         color: colorDisabled,
@@ -274,6 +267,11 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
           backgroundColor: backgroundColorDisabled,
           borderColor: borderColorDisabled,
         },
+      }),
+
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
       }),
 
       ...(iconOnly && {
