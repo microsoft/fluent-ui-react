@@ -8,7 +8,6 @@ const PopupArrowExample = props => {
 
   return (
     <Popup
-      open={this.state.popupOpen}
       align={align}
       position={position}
       content={{
@@ -19,12 +18,7 @@ const PopupArrowExample = props => {
         ),
       }}
     >
-      <Button
-        onClick={() => this.togglePopupState()}
-        onMouseLeave={() => this.setState({ popupOpen: false })}
-        icon={icon}
-        styles={buttonStyles}
-      />
+      <Button icon={icon} styles={buttonStyles} />
     </Popup>
   )
 }
