@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))
+
+<!--------------------------------[ v0.11.0 ]------------------------------- -->
+## [v0.11.0](https://github.com/stardust-ui/react/tree/v0.11.0) (2018-10-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.10.0...v0.11.0)
+
 ### BREAKING
 - Export all typings at the top-level API @levithomason ([#382](https://github.com/stardust-ui/react/pull/382))
 
@@ -26,7 +33,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix icon colors for Teams theme @codepretty ([#384](https://github.com/stardust-ui/react/pull/384))
 - Do not render the Attachment's `progress` value to the DOM @levithomason ([#402](https://github.com/stardust-ui/react/pull/402))
 - Add Segment background color @levithomason ([#408](https://github.com/stardust-ui/react/pull/408))
-- Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))
+- Make `eventStack` subscription logic to be always async @kuzhelov ([#391](https://github.com/stardust-ui/react/pull/391))
+- Fix for dotted focus outline in Firefox for `Button` component in docs @Bugaa92 ([#390](https://github.com/stardust-ui/react/pull/390))
 
 ### Features
 - Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
@@ -37,8 +45,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
 - Add transparent button to examples @levithomason ([#407](https://github.com/stardust-ui/react/pull/407))
-
-### Documentation
 - Add component descriptions and fix accessibility errors @levithomason ([#387](https://github.com/stardust-ui/react/pull/387))
 
 <!--------------------------------[ v0.10.0 ]------------------------------- -->
