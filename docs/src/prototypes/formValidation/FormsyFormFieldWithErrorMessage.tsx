@@ -5,6 +5,7 @@ import { withFormsy } from 'formsy-react'
 class FormFieldWrapper extends React.Component {
   state = { error: '' }
   render() {
+    const error = (this.props as any).getErrorMessage()
     const {
       children,
       className,
@@ -43,10 +44,9 @@ class FormFieldWrapper extends React.Component {
           value: (this.props as any).getValue(),
           onChange: e => {
              (this.props as any).setValue(e.target.value)
-            this.setState({ error: (this.props as any).getErrorMessage() })
           },
         },
-        message: { content: this.state.error, styles: { color: 'red' } },
+        message: { content: error, styles: { color: 'red' } },
       }),
     }
     return <FormField {...formFieldProps} />
