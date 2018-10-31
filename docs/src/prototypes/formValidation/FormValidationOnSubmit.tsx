@@ -47,11 +47,8 @@ class FormValidationOnSubmit extends React.Component<any, any> {
         ref: 'fullName',
         required: true,
         label: 'Full Name',
-        validations: {
-          isExisty: true,
-        },
         validationErrors: {
-          isExisty: 'You must enter your name.',
+          isDefaultRequiredValue: 'You must enter your name.',
         },
       },
       {
@@ -63,8 +60,8 @@ class FormValidationOnSubmit extends React.Component<any, any> {
           maxLength: 50,
         },
         validationErrors: {
-          isEmail: 'You have to type valid email',
-          maxLength: 'You can not type in more than 50 characters',
+          isEmail: 'You have to type valid email.',
+          maxLength: 'You can not type in more than 50 characters.',
         },
         id: 'email',
         key: 'last-name',
@@ -86,7 +83,7 @@ class FormValidationOnSubmit extends React.Component<any, any> {
           isExisty: true,
         },
         validationErrors: {
-          isExisty: 'You must select your gender',
+          isExisty: 'You must select your gender.',
         },
         id: 'gender',
         key: 'gender',

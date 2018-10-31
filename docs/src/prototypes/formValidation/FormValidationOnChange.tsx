@@ -30,11 +30,8 @@ class FormValidationOnChange extends React.Component<any, any> {
         key: 'full-name',
         required: true,
         label: 'Full Name',
-        validations: {
-          isExisty: true,
-        },
         validationErrors: {
-          isExisty: 'You must enter your name.',
+          isDefaultRequiredValue: 'You must enter your name.',
         },
       },
       {
@@ -45,8 +42,8 @@ class FormValidationOnChange extends React.Component<any, any> {
           maxLength: 50,
         },
         validationErrors: {
-          isEmail: 'You have to type valid email',
-          maxLength: 'You can not type in more than 50 characters',
+          isEmail: 'You have to type valid email.',
+          maxLength: 'You can not type in more than 50 characters.',
         },
         id: 'email-on-change',
         key: 'last-name',
@@ -65,7 +62,7 @@ class FormValidationOnChange extends React.Component<any, any> {
           isExisty: true,
         },
         validationErrors: {
-          isExisty: 'You must select your gender',
+          isExisty: 'You must select your gender.',
         },
         // TODO: this currently doesn't work
         // required: true,
