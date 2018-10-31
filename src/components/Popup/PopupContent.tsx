@@ -7,17 +7,17 @@ import {
   createShorthandFactory,
   customPropTypes,
   UIComponent,
-  IRenderResultConfig,
+  RenderResultConfig,
 } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
-export interface IPopupContentProps {
+export interface PopupContentProps {
   as?: any
   children?: ReactChildren
   content?: any
   className?: string
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -26,7 +26,7 @@ export interface IPopupContentProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
+class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'
@@ -61,7 +61,7 @@ class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
     ElementType,
     classes,
     rest,
-  }: IRenderResultConfig<IPopupContentProps>): React.ReactNode {
+  }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
     return (

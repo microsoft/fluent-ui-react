@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { Avatar, Popup } from '@stardust-ui/react'
-import EmployeeCard, { IEmployeeCardProps } from './EmployeeCard'
+import EmployeeCard, { EmployeeCardProps } from './EmployeeCard'
 import { Extendable } from '../../../../types/utils'
 
-export interface IAvatarEmployeeCardState {
+export interface AvatarEmployeeCardState {
   popupOpen: boolean
 }
 
 class AvatarEmployeeCard extends React.Component<
-  Extendable<IEmployeeCardProps>,
-  IAvatarEmployeeCardState
+  Extendable<EmployeeCardProps>,
+  AvatarEmployeeCardState
 > {
   state = { popupOpen: false }
   isPopupClosing = false

@@ -1,4 +1,4 @@
-import { StaticStyles } from '../../../../types/theme'
+import { StaticStyles } from '../../types'
 import globalStyles from './globalStyles'
 import normalizeCSS from './normalizeCSS'
 
