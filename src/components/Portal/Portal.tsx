@@ -162,7 +162,6 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     )
   }
   private handleMount = () => {
-    this.clickSubscription.unsubscribe()
     this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
 
     _.invoke(this.props, 'onMount', this.props)
