@@ -26,7 +26,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
         icon: 'check',
         title: 'Available',
       }}
-      variables={{ statusBorderColor: 'black' }}
+      variables={{ statusBorderColor: 'orange' }}
     />
     <Text content="Status can have different size for the same avatar size" />
     {defaultAvatar}

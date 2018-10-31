@@ -69,14 +69,15 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, rest, variables, styles }) {
     const { icon, renderIcon } = this.props as StatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'tiny',
-            variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
+            styles: styles.icon,
+            variables: variables.icon,
             xSpacing: 'none',
             render: renderIcon,
           },

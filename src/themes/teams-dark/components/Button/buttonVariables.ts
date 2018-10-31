@@ -1,64 +1,7 @@
-export interface ButtonVariables {
-  [key: string]: string | number
+import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
+import { Partial } from 'types/utils'
 
-  color: string
-  colorActive: string
-  colorHover: string
-  colorFocus: string
-  colorDisabled: string
-  backgroundColor: string
-  backgroundColorActive: string
-  backgroundColorHover: string
-  backgroundColorFocus: string
-  backgroundColorDisabled: string
-  borderColor: string
-  borderColorActive: string
-  borderColorHover: string
-  borderColorFocus: string
-  borderColorFocusIndicator: string
-  borderColorDisabled: string
-  borderWidth: number
-
-  primaryColor: string
-  primaryColorActive: string
-  primaryColorHover: string
-  primaryColorFocus: string
-  primaryBackgroundColor: string
-  primaryBackgroundColorActive: string
-  primaryBackgroundColorHover: string
-  primaryBackgroundColorFocus: string
-  primaryBorderColor: string
-  primaryBorderColorActive: string
-  primaryBorderColorHover: string
-  primaryBorderColorFocus: string
-  primaryBorderColorFocusIndicator: string
-  primaryBorderWidth: number
-
-  primaryCircularBorderColorFocusIndicator: string
-
-  circularColor: string
-  circularColorActive: string
-  circularBackgroundColor: string
-  circularBackgroundColorActive: string
-  circularBackgroundColorHover: string
-  circularBackgroundColorFocus: string
-  circularBorderColor: string
-  circularBorderColorActive: string
-  circularBorderColorHover: string
-  circularBorderColorFocus: string
-  circularBorderColorFocusIndicator: string
-
-  textColor: string
-  textColorHover: string
-  textPrimaryColor: string
-  textPrimaryColorHover: string
-  textSecondaryColor: string
-  textSecondaryColorHover: string
-
-  boxShadow: string
-}
-
-export default (siteVars: any): ButtonVariables => {
+export default (siteVars: any): Partial<ButtonVariables> => {
   return {
     color: siteVars.white,
     colorActive: siteVars.white,
