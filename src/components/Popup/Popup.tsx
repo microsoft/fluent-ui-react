@@ -127,8 +127,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private static isBrowserContext = isBrowser()
 
-  private clickSubscription = EventStack.noSubscription
+  private outsideClickSubscription = EventStack.noSubscription
+
   private triggerDomElement = null
+  private popupDomElement = null
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
@@ -147,11 +149,15 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   private closeAndFocusTriggerOnClickIfOpen() {
     if (this.state.open) {
       setTimeout(() => {
-        this.clickSubscription.unsubscribe()
-        this.clickSubscription = EventStack.subscribe('click', this.closeAndFocusTrigger)
+        this.outsideClickSubscription.unsubscribe()
+        this.outsideClickSubscription = EventStack.subscribe('click', e => {
+          if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
+            this.closeAndFocusTrigger(e)
+          }
+        })
       })
     } else {
-      this.clickSubscription.unsubscribe()
+      this.outsideClickSubscription.unsubscribe()
     }
   }
 
@@ -166,7 +172,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   }
 
   public componentWillUnmount() {
-    this.clickSubscription.unsubscribe()
+    this.outsideClickSubscription.unsubscribe()
   }
 
   public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
@@ -234,7 +240,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const { content } = this.props
 
     return (
-      <Ref innerRef={domElement => ref(domElement)}>
+      <Ref
+        innerRef={domElement => {
+          ref(domElement)
+          this.popupDomElement = domElement
+        }}
+      >
         {Popup.Content.create(content, {
           defaultProps: {
             ...(rtl && { dir: 'rtl' }),
