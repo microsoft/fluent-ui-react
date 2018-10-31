@@ -1,5 +1,5 @@
 import { eventStack } from 'src/lib'
-import { domEvent } from 'test/utils'
+import { domEvent, nextFrame } from 'test/utils'
 
 describe('eventStack', () => {
   afterEach(() => {
@@ -7,31 +7,37 @@ describe('eventStack', () => {
   })
 
   describe('sub', () => {
-    test('subscribes for single target', () => {
+    test('subscribes for single target', async () => {
       const handler = jest.fn()
 
       eventStack.sub('click', handler)
+      await nextFrame()
+
       domEvent.click(document)
 
       expect(handler).toHaveBeenCalledTimes(1)
     })
 
-    test('subscribes for custom target', () => {
+    test('subscribes for custom target', async () => {
       const handler = jest.fn()
       const target = document.createElement('div')
 
       eventStack.sub('click', handler, { target })
+      await nextFrame()
+
       domEvent.click(target)
 
       expect(handler).toHaveBeenCalledTimes(1)
     })
 
-    test('subscribes for multiple targets', () => {
+    test('subscribes for multiple targets', async () => {
       const documentHandler = jest.fn()
       const windowHandler = jest.fn()
 
       eventStack.sub('click', documentHandler)
       eventStack.sub('scroll', windowHandler, { target: window })
+      await nextFrame()
+
       domEvent.click(document)
       domEvent.scroll(window)
 
@@ -41,10 +47,12 @@ describe('eventStack', () => {
   })
 
   describe('unsub', () => {
-    test('unsubscribes and destroys eventTarget if it is empty', () => {
+    test('unsubscribes and destroys eventTarget if it is empty', async () => {
       const handler = jest.fn()
 
       eventStack.sub('click', handler)
+      await nextFrame()
+
       domEvent.click(document)
 
       eventStack.unsub('click', handler)
@@ -53,12 +61,14 @@ describe('eventStack', () => {
       expect(handler).toHaveBeenCalledTimes(1)
     })
 
-    test('unsubscribes but leaves eventTarget if it contains handlers', () => {
+    test('unsubscribes but leaves eventTarget if it contains handlers', async () => {
       const clickHandler = jest.fn()
       const keyHandler = jest.fn()
 
       eventStack.sub('click', clickHandler)
       eventStack.sub('keyDown', keyHandler)
+      await nextFrame()
+
       domEvent.click(document)
 
       eventStack.unsub('click', clickHandler)
@@ -68,10 +78,12 @@ describe('eventStack', () => {
       expect(keyHandler).not.toHaveBeenCalled()
     })
 
-    test('unsubscribes from same event multiple times', () => {
+    test('unsubscribes from same event multiple times', async () => {
       const handler = jest.fn()
 
       eventStack.sub('click', handler)
+      await nextFrame()
+
       domEvent.click(document)
 
       eventStack.unsub('click', handler)
