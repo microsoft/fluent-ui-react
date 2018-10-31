@@ -7,10 +7,10 @@ class FormValidationPrototype extends React.Component<any, any> {
   render() {
     return (
       <div style={{ margin: '10px' }}>
-        <Header content={'Form validation on change'} />
-        <FormValidationOnChange />
         <Header content={'Form validation on submit'} />
         <FormValidationOnSubmit />
+        <Header content={'Form validation on change'} />
+        <FormValidationOnChange />
       </div>
     )
   }

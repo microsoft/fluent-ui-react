@@ -43,10 +43,10 @@ class FormFieldWrapper extends React.Component {
           checkedValue: (this.props as any).getValue(),
           checkedValueChanged: (e, props) => {
              (this.props as any).setValue(props.value)
-            this.setState({ error: (this.props as any).getErrorMessage() })
+            // this.setState({ error: (this.props as any).getErrorMessage() })
           },
         },
-        message: { content: this.state.error, styles: { color: 'red' } },
+        // message: { content: this.state.error, styles: { color: 'red' } },
       }),
     }
     return <FormField {...formFieldProps} />
