@@ -43,9 +43,7 @@ class FormFieldWrapper extends React.Component {
         control: {
           ...control,
           checkedValue: (this.props as any).getValue(),
-          checkedValueChanged: (e, props) => {
-             (this.props as any).setValue(props.value)
-          },
+          checkedValueChanged: (e, props) => (this.props as any).setValue(props.value),
         },
       }),
     }

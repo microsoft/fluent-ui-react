@@ -4,6 +4,7 @@ import { withFormsy } from 'formsy-react'
 
 class FormFieldWrapper extends React.Component {
   state = { error: '' }
+
   render() {
     const error = (this.props as any).getErrorMessage()
     const {
@@ -42,9 +43,7 @@ class FormFieldWrapper extends React.Component {
         control: {
           ...control,
           checkedValue: (this.props as any).getValue(),
-          checkedValueChanged: (e, props) => {
-             (this.props as any).setValue(props.value)
-          },
+          checkedValueChanged: (e, props) => (this.props as any).setValue(props.value),
         },
         message: { content: error, styles: { color: 'red' } },
       }),

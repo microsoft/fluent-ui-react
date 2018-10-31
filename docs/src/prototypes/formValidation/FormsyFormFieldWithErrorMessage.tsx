@@ -42,9 +42,7 @@ class FormFieldWrapper extends React.Component {
         control: {
           ...control,
           value: (this.props as any).getValue(),
-          onChange: e => {
-             (this.props as any).setValue(e.target.value)
-          },
+          onChange: e => (this.props as any).setValue(e.target.value),
         },
         message: { content: error, styles: { color: 'red' } },
       }),
