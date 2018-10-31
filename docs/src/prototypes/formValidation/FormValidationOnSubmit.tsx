@@ -5,7 +5,7 @@ import FormsyFormField from './FormsyFormField'
 import FormsyFormFieldRadioGroup from './FormsyFormFieldRadioGroup'
 
 class FormValidationOnSubmit extends React.Component<any, any> {
-  state = { errorMessages: '' }
+  state = { errorMessages: [] }
 
   render() {
     return (
@@ -13,15 +13,20 @@ class FormValidationOnSubmit extends React.Component<any, any> {
         as={Formsy}
         ref="form"
         onValidSubmit={() => {
-          this.setState({ errorMessages: '' })
+          this.setState({ errorMessages: [] })
           alert('Form submitted')
         }}
         onInvalidSubmit={() => {
-          let errors = ''
+          const errors = []
           for (const ref in this.refs) {
             const element = this.refs[ref]
             if ((element as any).getErrorMessage) {
-              errors += (element as any).getErrorMessage() ? (element as any).getErrorMessage() : ''
+              const error = (element as any).getErrorMessage()
+                ? (element as any).getErrorMessage()
+                : ''
+              if (error.length > 0) {
+                errors.push(error)
+              }
             }
           }
           this.setState({ errorMessages: errors })
@@ -88,7 +93,19 @@ class FormValidationOnSubmit extends React.Component<any, any> {
         key: 'gender',
         label: 'Gender*',
       },
-      errorMessages.length > 0 ? <Segment content={errorMessages} key="error-messages" /> : '',
+      errorMessages.length > 0 ? (
+        <Segment
+          content={errorMessages.map(message => (
+            <>
+              {message}
+              <br />
+            </>
+          ))}
+          key="error-messages"
+        />
+      ) : (
+        ''
+      ),
       <Button content="Submit" key="submit" />,
     ]
     return fields.map((field, index) => {
