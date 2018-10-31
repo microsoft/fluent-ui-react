@@ -108,12 +108,15 @@ class FormValidationOnSubmit extends React.Component<any, any> {
       ),
       <Button content="Submit" key="submit" />,
     ]
-    return fields.map((field, index) => {
-      if (index < 2) {
-        return <FormsyFormField {...field} />
-      }
-      if (index === 2) {
-        return <FormsyFormFieldRadioGroup {...field} />
+    return fields.map(field => {
+      const fieldItem = field as any
+      if (fieldItem.control) {
+        if (fieldItem.control.as && fieldItem.control.as === Input) {
+          return <FormsyFormField {...field} showMessage={false} />
+        }
+        if (fieldItem.control.as && fieldItem.control.as === RadioGroup) {
+          return <FormsyFormFieldRadioGroup {...field} showMessage={false} />
+        }
       }
       // The last item in the fields is the submit button.
       return field

@@ -6,6 +6,7 @@ class FormFieldWrapper extends React.Component {
   state = { error: '' }
 
   render() {
+    const error = (this.props as any).getErrorMessage()
     const {
       children,
       className,
@@ -22,6 +23,7 @@ class FormFieldWrapper extends React.Component {
       styles,
       type,
       variables,
+      showMessage,
     } = this.props as any
 
     const formFieldProps = {
@@ -45,6 +47,7 @@ class FormFieldWrapper extends React.Component {
           checkedValue: (this.props as any).getValue(),
           checkedValueChanged: (e, props) => (this.props as any).setValue(props.value),
         },
+        ...(showMessage && { message: { content: error, styles: { color: 'red' } } }),
       }),
     }
     return <FormField {...formFieldProps} />

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Form, Button, Input, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
-import FormsyFormFieldWithErrorMessage from './FormsyFormFieldWithErrorMessage'
-import FormsyFormFieldRadioGroupWithErrorMessage from './FormsyFormFieldRadioGroupWithErrorMessage'
+import FormsyFormField from './FormsyFormField'
+import FormsyFormFieldRadioGroup from './FormsyFormFieldRadioGroup'
 
 class FormValidationOnChange extends React.Component<any, any> {
   state = { buttonDisabled: false }
@@ -76,13 +76,15 @@ class FormValidationOnChange extends React.Component<any, any> {
       },
       <Button content="Submit" disabled={buttonDisabled} key="submit" />,
     ]
-    return fields.map((field, index) => {
-      if (index < fields.length - 2) {
-        return <FormsyFormFieldWithErrorMessage {...field} />
-      }
-      if (index === fields.length - 2) {
-        // Radio group
-        return <FormsyFormFieldRadioGroupWithErrorMessage {...field} />
+    return fields.map(field => {
+      const fieldItem = field as any
+      if (fieldItem.control) {
+        if (fieldItem.control.as && fieldItem.control.as === Input) {
+          return <FormsyFormField {...field} showMessage={true} />
+        }
+        if (fieldItem.control.as && fieldItem.control.as === RadioGroup) {
+          return <FormsyFormFieldRadioGroup {...field} showMessage={true} />
+        }
       }
       // The last item in the fields is the submit button.
       return field
