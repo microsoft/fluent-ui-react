@@ -2,7 +2,7 @@ import isBrowser from '../isBrowser'
 import EventTarget from './EventTarget'
 import normalizeTarget from './normalizeTarget'
 
-class EventStack {
+class EventStackInner {
   private readonly _targets = new Map()
 
   // ------------------------------------
@@ -54,32 +54,25 @@ class EventStack {
   }
 }
 
-const eventStack = new EventStack()
+const eventStack = new EventStackInner()
 
-export class EventStackSubscription {
+class EventStackSubscription {
   public static empty() {
     return new EventStackSubscription(() => {}, true)
   }
 
-  public static create(name, handlers, options: any = {}): EventStackSubscription {
-    const unsubscribe = eventStack.sub(name, (...args) => handlers(...args), options)
-    return new EventStackSubscription(unsubscribe)
-  }
+  public constructor(private _unsubscribe: Function, public readonly isEmpty: boolean = false) {}
 
-  private swapWith(another: EventStackSubscription) {
-    const temp = another._unsubscribe
-    another._unsubscribe = this._unsubscribe
-    this._unsubscribe = temp
-  }
-
-  private constructor(private _unsubscribe: Function, public readonly isEmpty: boolean = false) {}
-
-  public stop(): void {
+  public unsubscribe(): void {
     this._unsubscribe()
   }
+}
 
-  public replaceWith(name, handlers, options: any = {}): void {
-    this.stop()
-    this.swapWith(EventStackSubscription.create(name, handlers, options))
+export class EventStack {
+  public static readonly noSubscription = EventStackSubscription.empty()
+
+  public static subscribe(name, handlers, options: any = {}): EventStackSubscription {
+    const unsubscribe = eventStack.sub(name, (...args) => handlers(...args), options)
+    return new EventStackSubscription(unsubscribe)
   }
 }

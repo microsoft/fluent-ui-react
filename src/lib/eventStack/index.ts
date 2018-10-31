@@ -1,1 +1,1 @@
-export { EventStackSubscription } from './eventStack'
+export { EventStack } from './eventStack'

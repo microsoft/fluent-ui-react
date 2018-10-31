@@ -8,8 +8,8 @@ import {
   childrenExist,
   customPropTypes,
   AutoControlledComponent,
+  EventStack,
   RenderResultConfig,
-  EventStackSubscription,
   isBrowser,
 } from '../../lib'
 import {
@@ -127,7 +127,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private static isBrowserContext = isBrowser()
 
-  private clickSubscription = EventStackSubscription.empty()
+  private clickSubscription = EventStack.noSubscription
   private triggerDomElement = null
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -146,9 +146,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private closeAndFocusTriggerOnClickIfOpen() {
     if (this.state.open) {
-      setTimeout(() => this.clickSubscription.replaceWith('click', this.closeAndFocusTrigger))
+      setTimeout(() => {
+        this.clickSubscription.unsubscribe()
+        this.clickSubscription = EventStack.subscribe('click', this.closeAndFocusTrigger)
+      })
     } else {
-      this.clickSubscription.stop()
+      this.clickSubscription.unsubscribe()
     }
   }
 
@@ -163,7 +166,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   }
 
   public componentWillUnmount() {
-    this.clickSubscription.stop()
+    this.clickSubscription.unsubscribe()
   }
 
   public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
