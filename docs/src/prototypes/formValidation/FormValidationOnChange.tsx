@@ -93,7 +93,6 @@ class FormValidationOnChange extends React.Component<any, any> {
           )
         }
       }
-      // The last item in the fields is the submit button.
       return field
     })
   }
