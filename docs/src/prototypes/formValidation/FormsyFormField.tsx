@@ -24,7 +24,13 @@ class FormFieldWrapper extends React.Component {
       type,
       variables,
       showMessage,
+      valueProp,
+      onChangeProp,
+      eventTargetAsValue,
     } = this.props as any
+
+    const value = valueProp || 'value'
+    const onChange = onChangeProp || 'onChange'
 
     const formFieldProps = {
       children,
@@ -44,8 +50,9 @@ class FormFieldWrapper extends React.Component {
       ...(!children && {
         control: {
           ...control,
-          value: (this.props as any).getValue(),
-          onChange: e => (this.props as any).setValue(e.target.value),
+          [value]: (this.props as any).getValue(),
+          [onChange]: (e, props) =>
+            (this.props as any).setValue(eventTargetAsValue ? e.target.value : props.value),
         },
         ...(showMessage && { message: { content: error, styles: { color: 'red' } } }),
       }),

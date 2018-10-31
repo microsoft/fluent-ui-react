@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Form, Button, Input, Segment, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormField from './FormsyFormField'
-import FormsyFormFieldRadioGroup from './FormsyFormFieldRadioGroup'
 
 class FormValidationOnSubmit extends React.Component<any, any> {
   state = { errorMessages: [] }
@@ -112,10 +111,18 @@ class FormValidationOnSubmit extends React.Component<any, any> {
       const fieldItem = field as any
       if (fieldItem.control) {
         if (fieldItem.control.as && fieldItem.control.as === Input) {
-          return <FormsyFormField {...field} showMessage={false} />
+          return <FormsyFormField {...field} showMessage={false} eventTargetAsValue={true} />
         }
         if (fieldItem.control.as && fieldItem.control.as === RadioGroup) {
-          return <FormsyFormFieldRadioGroup {...field} showMessage={false} />
+          return (
+            <FormsyFormField
+              {...field}
+              showMessage={false}
+              valueProp="checkedValue"
+              onChangeProp="checkedValueChanged"
+              eventTargetAsValue={false}
+            />
+          )
         }
       }
       // The last item in the fields is the submit button.
