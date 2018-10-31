@@ -16,7 +16,7 @@ import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
 
 export type PropsWithVarsAndStyles = Extendable<{
   variables?: ComponentVariablesInput
-  styles?: ComponentSlotStyle
+  css?: ComponentSlotStyle
 }>
 
 // ========================================================
