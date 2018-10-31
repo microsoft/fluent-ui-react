@@ -1,40 +1,32 @@
 import React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
-class PopupArrowExample extends React.Component<any, any> {
-  state = { popupOpen: false }
+const PopupArrowExample = props => {
+  const { position, align, icon, padding } = props
 
-  togglePopupState = () => {
-    this.setState(prev => ({ popupOpen: !prev.popupOpen }))
-  }
+  const buttonStyles = { padding, height: '38px', minWidth: '64px' }
 
-  render() {
-    const { position, align, icon, padding } = this.props
-
-    const buttonStyles = { padding, height: '38px', minWidth: '64px' }
-
-    return (
-      <Popup
-        open={this.state.popupOpen}
-        align={align}
-        position={position}
-        content={{
-          content: (
-            <p>
-              The popup is rendered {position} the trigger<br />aligned to the {align}.
-            </p>
-          ),
-        }}
-      >
-        <Button
-          onClick={() => this.togglePopupState()}
-          onMouseLeave={() => this.setState({ popupOpen: false })}
-          icon={icon}
-          styles={buttonStyles}
-        />
-      </Popup>
-    )
-  }
+  return (
+    <Popup
+      open={this.state.popupOpen}
+      align={align}
+      position={position}
+      content={{
+        content: (
+          <p>
+            The popup is rendered {position} the trigger<br />aligned to the {align}.
+          </p>
+        ),
+      }}
+    >
+      <Button
+        onClick={() => this.togglePopupState()}
+        onMouseLeave={() => this.setState({ popupOpen: false })}
+        icon={icon}
+        styles={buttonStyles}
+      />
+    </Popup>
+  )
 }
 
 const triggers = [
