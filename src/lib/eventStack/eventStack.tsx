@@ -34,20 +34,22 @@ class EventStack {
   sub = (name, handlers, options: any = {}) => {
     if (!isBrowser()) return
 
-    const { target = document, pool = 'default' } = options
-    const eventTarget = this._find(target)
+    setTimeout(() => {
+      const { target = document, pool = 'default', useCapture = false } = options
+      const eventTarget = this._find(target)
 
-    eventTarget.sub(name, handlers, pool)
+      eventTarget.sub(name, handlers, pool, useCapture)
+    })
   }
 
   unsub = (name, handlers, options: any = {}) => {
     if (!isBrowser()) return
 
-    const { target = document, pool = 'default' } = options
+    const { target = document, pool = 'default', useCapture = false } = options
     const eventTarget = this._find(target, false)
 
     if (eventTarget) {
-      eventTarget.unsub(name, handlers, pool)
+      eventTarget.unsub(name, handlers, pool, useCapture)
       if (eventTarget.empty()) this._remove(target)
     }
   }

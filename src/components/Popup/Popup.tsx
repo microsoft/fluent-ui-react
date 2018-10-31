@@ -8,7 +8,7 @@ import {
   childrenExist,
   customPropTypes,
   AutoControlledComponent,
-  IRenderResultConfig,
+  RenderResultConfig,
   isBrowser,
 } from '../../lib'
 import {
@@ -18,7 +18,7 @@ import {
   ReactChildren,
 } from '../../../types/utils'
 
-import Ref from '../Ref'
+import Ref from '../Ref/Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
@@ -27,13 +27,13 @@ import { popupBehavior } from '../../lib/accessibility'
 import {
   Accessibility,
   AccessibilityActionHandlers,
-  IAccessibilityBehavior,
-} from '../../lib/accessibility/interfaces'
+  AccessibilityBehavior,
+} from '../../lib/accessibility/types'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface IPopupProps {
+export interface PopupProps {
   accessibility?: Accessibility
   align?: Alignment
   children?: ReactChildren
@@ -41,14 +41,16 @@ export interface IPopupProps {
   content?: ShorthandValue
   defaultOpen?: boolean
   open?: boolean
-  onOpenChange?: ComponentEventHandler<IPopupProps>
+  onOpenChange?: ComponentEventHandler<PopupProps>
   position?: Position
+  target?: HTMLElement
+  defaultTarget?: HTMLElement
   trigger?: JSX.Element
 }
 
-export interface IPopupState {
+export interface PopupState {
   open: boolean
-  triggerRef: HTMLElement
+  target: HTMLElement
 }
 
 /**
@@ -56,7 +58,7 @@ export interface IPopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<Extendable<IPopupProps>, IPopupState> {
+export default class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -85,6 +87,9 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /** Initial value for 'open'. */
     defaultOpen: PropTypes.bool,
 
+    /** Initial value for 'target'. */
+    defaultTarget: PropTypes.any,
+
     /** Defines whether popup is displayed. */
     open: PropTypes.bool,
 
@@ -98,22 +103,26 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     /**
      * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
      * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
-     * and 'start' | 'end' respectively), we ignore the value set for align and make it 'center'.
-     * This is the mechanism we chose for dealing with mismatched prop values.
+     * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
      */
     position: PropTypes.oneOf(POSITIONS),
 
+    /**
+     * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
+     */
+    target: PropTypes.any,
+
     /** Element to be rendered in-place where the popup is defined. */
-    trigger: PropTypes.node,
+    trigger: PropTypes.any,
   }
 
-  public static defaultProps: IPopupProps = {
+  public static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
     position: 'above',
   }
 
-  public static autoControlledProps = ['open']
+  public static autoControlledProps = ['open', 'target']
 
   private static isBrowserContext = isBrowser()
 
@@ -121,25 +130,36 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
     toggle: e => this.trySetOpen(!this.state.open, e, true),
     closeAndFocusTrigger: e => {
       this.trySetOpen(false, e, true)
-      _.invoke(this.state.triggerRef, 'focus')
+      _.invoke(this.state.target, 'focus')
     },
   }
 
-  public state = { triggerRef: undefined, open: false }
+  public state = { target: undefined, open: false }
 
-  public renderComponent({
-    rtl,
-    accessibility,
-  }: IRenderResultConfig<IPopupProps>): React.ReactNode {
-    const { children, trigger } = this.props
-
-    const triggerElement = childrenExist(children) ? children : (trigger as any)
+  public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const popupContent = this.renderPopupContent(rtl, accessibility)
 
     return (
       <>
+        {this.renderTrigger(accessibility)}
+
+        {this.state.open &&
+          Popup.isBrowserContext &&
+          popupContent &&
+          createPortal(popupContent, document.body)}
+      </>
+    )
+  }
+
+  private renderTrigger(accessibility) {
+    const { children, trigger } = this.props
+    const triggerElement = childrenExist(children) ? children : (trigger as any)
+
+    return (
+      triggerElement && (
         <Ref
           innerRef={domNode => {
-            this.setState({ triggerRef: domNode })
+            this.trySetState({ target: domNode })
           }}
         >
           {React.cloneElement(triggerElement, {
@@ -151,25 +171,21 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
             ...accessibility.keyHandlers.trigger,
           })}
         </Ref>
-
-        {this.state.open &&
-          Popup.isBrowserContext &&
-          createPortal(this.renderPopupContent(rtl, accessibility), document.body)}
-      </>
+      )
     )
   }
 
-  private renderPopupContent(rtl: boolean, accessibility: IAccessibilityBehavior): JSX.Element {
+  private renderPopupContent(rtl: boolean, accessibility: AccessibilityBehavior): JSX.Element {
     const { align, position } = this.props
-    const triggerRef = this.state.triggerRef
+    const { target } = this.state
 
     const placement = computePopupPlacement({ align, position, rtl })
 
     return (
-      triggerRef && (
+      target && (
         <Popper
           placement={placement}
-          referenceElement={triggerRef}
+          referenceElement={target}
           children={this.renderPopperChildren.bind(this, rtl, accessibility)}
         />
       )
@@ -178,7 +194,7 @@ export default class Popup extends AutoControlledComponent<Extendable<IPopupProp
 
   private renderPopperChildren = (
     rtl: boolean,
-    accessibility: IAccessibilityBehavior,
+    accessibility: AccessibilityBehavior,
     { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content } = this.props

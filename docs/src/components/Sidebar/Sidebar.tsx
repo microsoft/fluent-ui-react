@@ -8,9 +8,10 @@ import { withRouter } from 'react-router'
 import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 
 import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname, repoURL, typeOrder } from 'docs/src/utils'
+import { getComponentPathname } from 'docs/src/utils'
 import { themes } from '@stardust-ui/react'
 import { ThemeContext } from '../../context/theme-context'
+import { constants } from 'src/lib'
 
 const pkg = require('../../../../package.json')
 const componentMenu = require('docs/src/componentMenu')
@@ -121,7 +122,7 @@ class Sidebar extends React.Component<any, any> {
         <Menu.Menu>{items}</Menu.Menu>
       </Menu.Item>
     )
-  }, typeOrder)
+  }, constants.typeOrder)
 
   renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
@@ -181,12 +182,17 @@ class Sidebar extends React.Component<any, any> {
                 </small>
               </strong>
               <Menu.Menu>
-                <Menu.Item as="a" href={repoURL} target="_blank" rel="noopener noreferrer">
+                <Menu.Item
+                  as="a"
+                  href={constants.repoURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Icon name="github" /> GitHub
                 </Menu.Item>
                 <Menu.Item
                   as="a"
-                  href={`${repoURL}/blob/master/CHANGELOG.md`}
+                  href={`${constants.repoURL}/blob/master/CHANGELOG.md`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -257,6 +263,22 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Async Shorthand
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-employee-card"
+                    activeClassName="active"
+                  >
+                    Employee Card
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-meeting-options"
+                    activeClassName="active"
+                  >
+                    Meeting Options
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>

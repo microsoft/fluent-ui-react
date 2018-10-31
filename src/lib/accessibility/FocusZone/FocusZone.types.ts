@@ -31,13 +31,7 @@ export interface IFocusZone {
 /**
  * FocusZone component props.
  */
-export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
-  /**
-   * Optional callback to access the IFocusZone interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: React.RefObject<IFocusZone>
-
+export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
   /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
    */

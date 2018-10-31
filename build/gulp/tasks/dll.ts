@@ -36,7 +36,7 @@ task('build:dll', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

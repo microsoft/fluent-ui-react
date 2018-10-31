@@ -2,6 +2,7 @@ export const IS_FOCUSABLE_ATTRIBUTE = 'data-is-focusable'
 export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'
 export const FOCUSZONE_SUB_ATTRIBUTE = 'data-is-sub-focuszone'
+export const HIDDEN_FROM_ACC_TREE = 'data-is-hidden-from-acc-tree'
 export const FOCUSZONE_WRAP_ATTRIBUTE = 'data-focuszone-wrap'
 
 /**
@@ -397,5 +398,48 @@ export function isElementFocusSubZone(element?: HTMLElement): boolean {
     element &&
     element.getAttribute &&
     element.getAttribute(FOCUSZONE_SUB_ATTRIBUTE) === 'true'
+  )
+}
+
+let targetToFocusOnNextRepaint: HTMLElement | { focus: () => void } | null | undefined = undefined
+
+/**
+ * Sets focus to an element asynchronously. The focus will be set at the next browser repaint,
+ * meaning it won't cause any extra recalculations. If more than one focusAsync is called during one frame,
+ * only the latest called focusAsync element will actually be focused
+ * @param element The element to focus
+ */
+export function focusAsync(element: HTMLElement | { focus: () => void } | undefined | null): void {
+  if (element) {
+    // An element was already queued to be focused, so replace that one with the new element
+    if (targetToFocusOnNextRepaint) {
+      targetToFocusOnNextRepaint = element
+      return
+    }
+
+    targetToFocusOnNextRepaint = element
+
+    const win = getWindow(element as Element)
+
+    if (win) {
+      // element.focus() is a no-op if the element is no longer in the DOM, meaning this is always safe
+      win.requestAnimationFrame(() => {
+        targetToFocusOnNextRepaint && targetToFocusOnNextRepaint.focus()
+
+        // We are done focusing for this frame, so reset the queued focus element
+        targetToFocusOnNextRepaint = undefined
+      })
+    }
+  }
+}
+
+/**
+ * Helper to get the window object.
+ *
+ * @public
+ */
+export function getWindow(rootElement?: Element | null): Window | undefined {
+  return (
+    (rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView) || window
   )
 }

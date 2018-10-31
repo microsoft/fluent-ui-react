@@ -3,10 +3,10 @@ import * as React from 'react'
 import { Image, Label, Status } from '../../'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface IAvatarProps {
+export interface AvatarProps {
   as?: any
   className?: string
   image?: ShorthandValue
@@ -18,15 +18,14 @@ export interface IAvatarProps {
   size?: number
   status?: ShorthandValue
   getInitials?: (name: string) => string
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * An avatar is a graphic representation of user.
- * @accessibility To be discussed
  */
-class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
+class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -118,17 +117,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const {
-      name,
-      status,
-      image,
-      label,
-      getInitials,
-      renderImage,
-      renderLabel,
-      renderStatus,
-      size,
-    } = this.props as IAvatarPropsWithDefaults
+    const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
+      .props as AvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -156,7 +146,6 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
         {Status.create(status, {
           defaultProps: {
             styles: styles.status,
-            size: size * 0.3125,
             variables: {
               borderColor: variables.statusBorderColor,
               borderWidth: variables.statusBorderWidth,
@@ -173,4 +162,4 @@ Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
 
 export default Avatar
 
-export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps
+export type AvatarPropsWithDefaults = AvatarProps & typeof Avatar.defaultProps

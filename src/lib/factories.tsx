@@ -6,26 +6,23 @@ import {
   ShorthandPrimitive,
   ShorthandRenderFunction,
   ShorthandValue,
+  Props,
 } from '../../types/utils'
 
-interface IProps {
-  [key: string]: any
-}
-
-interface ICreateShorthandOptions {
+interface CreateShorthandOptions {
   /** Override the default render implementation. */
   render?: ShorthandRenderFunction
 
   /** Default props object */
-  defaultProps?: IProps
+  defaultProps?: Props
 
   /** Override props object or function (called with regular props) */
-  overrideProps?: IProps | ((props: IProps) => IProps)
+  overrideProps?: Props & ((props: Props) => Props) | Props
 
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
 }
-const CREATE_SHORTHAND_DEFAULT_OPTIONS: ICreateShorthandOptions = {
+const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   defaultProps: {},
   overrideProps: {},
   generateKey: true,
@@ -40,8 +37,8 @@ export function createShorthand(
   Component: React.ReactType,
   mapValueToProps: MapValueToProps,
   value?: ShorthandValue,
-  options: ICreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
-): React.ReactElement<IProps> | null | undefined {
+  options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+): React.ReactElement<Props> | null | undefined {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
@@ -77,8 +74,8 @@ export function createShorthand(
 
   // User's props
   const usersProps =
-    (valIsReactElement && (value as React.ReactElement<IProps>).props) ||
-    (valIsPropsObject && (value as IProps)) ||
+    (valIsReactElement && (value as React.ReactElement<Props>).props) ||
+    (valIsPropsObject && (value as Props)) ||
     (valIsPrimitive && mapValueToProps(value as ShorthandPrimitive)) ||
     {}
 
@@ -86,7 +83,7 @@ export function createShorthand(
   let { overrideProps } = options
   overrideProps =
     typeof overrideProps === 'function'
-      ? overrideProps({ ...defaultProps, ...usersProps })
+      ? (overrideProps as Function)({ ...defaultProps, ...usersProps })
       : overrideProps || {}
 
   // Merge props
@@ -133,7 +130,7 @@ export function createShorthand(
   }
 
   // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<IProps>, props)
+  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />

@@ -2,25 +2,27 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import {
+  childrenExist,
   createShorthandFactory,
   customPropTypes,
-  IRenderResultConfig,
+  RenderResultConfig,
   UIComponent,
 } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ReactChildren } from '../../../types/utils'
-import childrenExist from '../../lib/childrenExist'
+import Slot from '../Slot/Slot'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
 
-export interface IChatItemProps {
+export interface ChatItemProps {
   as?: any
   content?: React.ReactNode
   children?: ReactChildren
   className?: string
-  styles?: ComponentPartStyle
+  renderContent?: ShorthandRenderFunction
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
+class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static className = 'ui-chat__item'
 
   static create: Function
@@ -37,6 +39,18 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     /** Additional CSS class name(s) to apply. */
     className: PropTypes.string,
 
+    /** Shorthand for the primary content. */
+    content: PropTypes.node,
+
+    /**
+     * A custom render function the content slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
+
     /** Custom styles to be applied for component. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -48,12 +62,24 @@ class ChatItem extends UIComponent<Extendable<IChatItemProps>, any> {
     as: 'li',
   }
 
-  renderComponent({ ElementType, classes, rest }: IRenderResultConfig<IChatItemProps>) {
-    const { children, content } = this.props
+  renderComponent({
+    ElementType,
+    classes,
+    styles,
+    variables,
+    rest,
+  }: RenderResultConfig<ChatItemProps>) {
+    const { children, content, renderContent } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children)
+          ? children
+          : Slot.create(content, {
+              styles: styles.content,
+              variables: variables.content,
+              render: renderContent,
+            })}
       </ElementType>
     )
   }

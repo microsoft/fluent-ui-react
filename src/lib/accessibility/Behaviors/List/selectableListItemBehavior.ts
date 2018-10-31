@@ -1,4 +1,4 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -11,6 +11,9 @@ const selectableListItemBehavior: Accessibility = (props: any) => ({
     root: {
       role: 'option',
       'aria-selected': !!props['active'],
+      ...(props.focusableItemProps && {
+        tabIndex: props.focusableItemProps.isFocused ? '0' : '-1',
+      }),
     },
   },
 })

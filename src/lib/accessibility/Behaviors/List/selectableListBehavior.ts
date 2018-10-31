@@ -1,4 +1,5 @@
-import { Accessibility } from '../../interfaces'
+import * as keyboardKey from 'keyboard-key'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -10,6 +11,22 @@ const selectableListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'listbox',
+    },
+  },
+  keyActions: {
+    root: {
+      moveNext: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+      },
+      movePrevious: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowUp }],
+      },
+      moveFirst: {
+        keyCombinations: [{ keyCode: keyboardKey.Home }],
+      },
+      moveLast: {
+        keyCombinations: [{ keyCode: keyboardKey.End }],
+      },
     },
   },
 })

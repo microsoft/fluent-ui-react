@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../types'
 
 export default {
   root: ({ props, variables: v }): ICSSInJSStyle => ({

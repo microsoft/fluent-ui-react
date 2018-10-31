@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 
@@ -14,7 +14,7 @@ describe('MenuItem', () => {
   })
 
   it('content renders as `li > a`', () => {
-    const menuItem = getTestingRenderedComponent(MenuItem, <MenuItem content="Home" />).find(
+    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem content="Home" />).find(
       '.ui-menu__item',
     )
 
@@ -24,7 +24,7 @@ describe('MenuItem', () => {
   })
 
   it('children render directly inside `li`', () => {
-    const menuItem = getTestingRenderedComponent(MenuItem, <MenuItem>Home</MenuItem>)
+    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem>Home</MenuItem>)
 
     expect(menuItem.find('.ui-menu__item').is('li')).toBe(true)
     expect(menuItem.text()).toBe('Home')
@@ -36,18 +36,18 @@ describe('MenuItem', () => {
 
     describe('as a default MenuItem', () => {
       test('root role should be presentation', () => {
-        const menuItemComponent = getTestingRenderedComponent(MenuItem, <MenuItem />)
+        const menuItemComponent = mountWithProviderAndGetComponent(MenuItem, <MenuItem />)
         expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
       })
 
       test('anchor role should be menuitem', () => {
-        const menuItemComponent = getTestingRenderedComponent(MenuItem, <MenuItem />)
+        const menuItemComponent = mountWithProviderAndGetComponent(MenuItem, <MenuItem />)
         expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('menuitem')
       })
 
       test('aria-label should be added to the child anchor', () => {
         const ariaLabel = 'Useful Tool Tip'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-label={ariaLabel} />,
         )
@@ -58,7 +58,7 @@ describe('MenuItem', () => {
 
       test('aria-labelledby should be added to the child anchor', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
         )
@@ -72,7 +72,7 @@ describe('MenuItem', () => {
 
     describe('as a ToolbarButton', () => {
       test('root role should be presentation', () => {
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem accessibility={toolbarButtonBehavior} />,
         )
@@ -80,7 +80,7 @@ describe('MenuItem', () => {
       })
 
       test('anchor role should be button', () => {
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem accessibility={toolbarButtonBehavior} />,
         )
@@ -89,7 +89,7 @@ describe('MenuItem', () => {
 
       test('aria-label should be added to the child anchor', () => {
         const ariaLabel = 'Useful Tool Tip'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-label={ariaLabel} accessibility={toolbarButtonBehavior} />,
         )
@@ -100,7 +100,7 @@ describe('MenuItem', () => {
 
       test('aria-labelledby should be added to the child anchor', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
         )
@@ -114,7 +114,7 @@ describe('MenuItem', () => {
       const disabledFlags = [true, false]
       disabledFlags.forEach(disabledValue => {
         test(`aria-disabled should be ${disabledValue} if menuitem disabled prop is ${disabledValue}`, () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             MenuItem,
             <MenuItem disabled={disabledValue} accessibility={toolbarButtonBehavior} />,
           )
@@ -128,7 +128,7 @@ describe('MenuItem', () => {
 
       disabledFlags.forEach(disabledValue => {
         test(`aria-disabled should be ${disabledValue} if menuitem also has the disabled prop and aria-disabled is ${disabledValue}`, () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             MenuItem,
             <MenuItem
               aria-disabled={disabledValue}
@@ -147,7 +147,7 @@ describe('MenuItem', () => {
 
     describe('as a Tab', () => {
       test('root role should be presentation', () => {
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem accessibility={tabBehavior} />,
         )
@@ -155,7 +155,7 @@ describe('MenuItem', () => {
       })
 
       test('anchor role should be tab', () => {
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem accessibility={tabBehavior} />,
         )
@@ -164,7 +164,7 @@ describe('MenuItem', () => {
 
       test('aria-label should be added to the child anchor', () => {
         const ariaLabel = 'Useful Tool Tip'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-label={ariaLabel} accessibility={tabBehavior} />,
         )
@@ -175,7 +175,7 @@ describe('MenuItem', () => {
 
       test('aria-labelledby should be added to the child anchor', () => {
         const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-labelledby={ariaLabelledByID} accessibility={tabBehavior} />,
         )
@@ -189,7 +189,7 @@ describe('MenuItem', () => {
       const activeFlags = [true, false]
       activeFlags.forEach(activeValue => {
         test(`aria-selected should be ${activeValue} if menuitem active prop is ${activeValue}`, () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             MenuItem,
             <MenuItem active={activeValue} accessibility={tabBehavior} />,
           )
@@ -203,7 +203,7 @@ describe('MenuItem', () => {
 
       activeFlags.forEach(activeValue => {
         test(`aria-selected should be ${activeValue} if menuitem also has the active prop and aria-selected prop is ${activeValue}`, () => {
-          const menuItemComponent = getTestingRenderedComponent(
+          const menuItemComponent = mountWithProviderAndGetComponent(
             MenuItem,
             <MenuItem
               aria-selected={activeValue}
@@ -221,7 +221,7 @@ describe('MenuItem', () => {
 
       test('aria-controls should be added to the child anchor', () => {
         const ariaControlsPanelID = 'panel-that-is-controlled'
-        const menuItemComponent = getTestingRenderedComponent(
+        const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
           <MenuItem aria-controls={ariaControlsPanelID} accessibility={tabBehavior} />,
         )

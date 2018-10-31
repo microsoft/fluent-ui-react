@@ -5,11 +5,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
-import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
+import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
@@ -17,7 +17,7 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 
-export interface IRadioGroupProps {
+export interface RadioGroupProps {
   accessibility?: Accessibility
   as?: any
   checkedValue?: number | string
@@ -26,12 +26,15 @@ export interface IRadioGroupProps {
   defaultCheckedValue?: number | string
   items?: ShorthandValue[]
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   vertical?: boolean
 }
 
-class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, any> {
+/**
+ * A radio group allows a user to select a value from a small set of options.
+ */
+class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'
@@ -118,8 +121,8 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     prevItem: event => this.setCheckedItem(event, -1),
   }
 
-  private getItemProps = (item): IRadioGroupItemProps => {
-    return (item as React.ReactElement<IRadioGroupItemProps>).props || item
+  private getItemProps = (item): RadioGroupItemProps => {
+    return (item as React.ReactElement<RadioGroupItemProps>).props || item
   }
 
   private setCheckedItem = (event, direction) => {
@@ -136,7 +139,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     event.preventDefault()
   }
 
-  private findNextEnabledCheckedItem = (direction): IRadioGroupItemProps => {
+  private findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
     if (!this.props.items || !this.props.items.length) {
       return undefined
     }
@@ -204,7 +207,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     checkedValue: number | string
     shouldFocus: boolean
     event: React.SyntheticEvent
-    props: IRadioGroupItemProps
+    props: RadioGroupItemProps
   }) {
     this.trySetState({ checkedValue })
     this.setState({ shouldFocus })

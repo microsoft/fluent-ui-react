@@ -1,7 +1,7 @@
-export interface IChatVariables {
+export interface ChatVariables {
   backgroundColor: string
 }
 
-export default (siteVars): IChatVariables => ({
+export default (siteVars): ChatVariables => ({
   backgroundColor: siteVars.gray10,
 })

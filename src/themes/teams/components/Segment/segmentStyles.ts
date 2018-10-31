@@ -1,13 +1,14 @@
-import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../types'
+import { SegmentVariables } from './segmentVariables'
 
 export default {
-  root: (): ICSSInJSStyle => {
+  root: ({ variables }: { variables: SegmentVariables }): ICSSInJSStyle => {
     return {
-      padding: '1em',
-      boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)',
+      padding: variables.padding,
+      background: variables.background,
       border: '1px solid rgba(34,36,38,.15)',
-      borderRadius: pxToRem(5),
+      borderRadius: variables.borderRadius,
+      boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)',
     }
   },
 }
