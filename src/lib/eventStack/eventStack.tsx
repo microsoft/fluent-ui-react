@@ -31,18 +31,14 @@ class EventStack {
   // Pub/sub
   // ------------------------------------
 
-  public sub = (name, handlers, options: any = {}): Promise<Function> => {
-    if (!isBrowser()) return Promise.resolve(() => {})
+  public sub = (name, handlers, options: any = {}): Function => {
+    if (!isBrowser()) return () => {}
 
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const { target = document, pool = 'default', useCapture = false } = options
-        const eventTarget = this._find(target)
+    const { target = document, pool = 'default', useCapture = false } = options
+    const eventTarget = this._find(target)
 
-        eventTarget.sub(name, handlers, pool, useCapture)
-        resolve(() => this.unsub(name, handlers, options))
-      })
-    })
+    eventTarget.sub(name, handlers, pool, useCapture)
+    return () => this.unsub(name, handlers, options)
   }
 
   public unsub = (name, handlers, options: any = {}) => {
@@ -65,8 +61,8 @@ export class EventStackSubscription {
     return new EventStackSubscription(() => {}, true)
   }
 
-  public static async create(name, handlers, options: any = {}) {
-    const unsubscribe = await eventStack.sub(name, (...args) => handlers(...args), options)
+  public static create(name, handlers, options: any = {}): EventStackSubscription {
+    const unsubscribe = eventStack.sub(name, (...args) => handlers(...args), options)
     return new EventStackSubscription(unsubscribe)
   }
 
@@ -82,8 +78,8 @@ export class EventStackSubscription {
     this._unsubscribe()
   }
 
-  public async replaceWith(name, handlers, options: any = {}): Promise<void> {
+  public replaceWith(name, handlers, options: any = {}): void {
     this.stop()
-    this.swapWith(await EventStackSubscription.create(name, handlers, options))
+    this.swapWith(EventStackSubscription.create(name, handlers, options))
   }
 }

@@ -146,7 +146,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private closeAndFocusTriggerOnClickIfOpen() {
     if (this.state.open) {
-      this.clickSubscription.replaceWith('click', this.closeAndFocusTrigger)
+      setTimeout(() => this.clickSubscription.replaceWith('click', this.closeAndFocusTrigger))
     } else {
       this.clickSubscription.stop()
     }
