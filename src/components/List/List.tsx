@@ -136,17 +136,15 @@ class List extends UIComponent<Extendable<ListProps>, any> {
 
     this.itemRefs = []
     return _.map(items, (item, idx) => {
-      let maybeSelectableItemProps = {}
+      const maybeSelectableItemProps = {} as any
 
       if (this.props.selection) {
-        const _ref = React.createRef()
-        this.itemRefs[idx] = _ref
+        const ref = React.createRef()
+        this.itemRefs[idx] = ref
 
-        maybeSelectableItemProps = {
-          tabIndex: 0,
-          ref: _ref,
-          onFocus: () => this.focusHandler.syncFocusedItemIndex(idx),
-        }
+        maybeSelectableItemProps.tabIndex = 0
+        maybeSelectableItemProps.ref = ref
+        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
       }
 
       const itemProps = {

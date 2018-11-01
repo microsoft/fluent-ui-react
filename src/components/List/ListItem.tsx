@@ -91,14 +91,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
 
   private itemRef = React.createRef<HTMLElement>()
 
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
       as,
