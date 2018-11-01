@@ -34,6 +34,17 @@ Object.keys(fontIcons).forEach(iconName => {
   icons[iconName] = declareFontBased(fontIcons[iconName])
 })
 
+const keyframes = {
+  spinner: () => ({
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(360deg)',
+    },
+  }),
+}
+
 export default {
   siteVariables,
   componentVariables,
@@ -41,4 +52,5 @@ export default {
   fontFaces,
   staticStyles,
   icons,
+  keyframes,
 } as ThemeInput

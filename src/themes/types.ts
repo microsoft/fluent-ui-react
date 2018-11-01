@@ -141,6 +141,7 @@ export interface ThemeInput {
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
+  keyframes?: { [key: string]: any }
 }
 
 // Component variables and styles must be resolved by the component after
@@ -160,6 +161,7 @@ export interface ThemePrepared {
   renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
+  keyframes: { [key: string]: any }
 }
 
 export interface ThemeComponentStylesInput {

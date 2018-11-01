@@ -184,6 +184,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     fontFaces: [],
     staticStyles: [],
     icons: {},
+    keyframes: {},
   } as ThemePrepared
 
   return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
@@ -207,6 +208,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
 
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
+
+    acc.keyframes = { ...acc.keyframes, ...next.keyframes }
 
     return acc
   }, emptyTheme)

@@ -47,6 +47,7 @@ class Provider extends React.Component<ProviderProps, any> {
       staticStyles: PropTypes.arrayOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
       ),
+      keyframes: PropTypes.object,
     }),
     children: PropTypes.element.isRequired,
   }
@@ -107,6 +108,18 @@ class Provider extends React.Component<ProviderProps, any> {
     })
   }
 
+  renderKeyframes = (keyframes, renderer) => {
+    if (!keyframes) {
+    }
+    const evaluatedKeyframes = {}
+    _.forOwn(keyframes, (value, key) => {
+      // we need this check because the keyframe may already be evaluated, thus will be a string
+      evaluatedKeyframes[key] =
+        typeof value === 'function' ? renderer.renderKeyframe(value as any, {}) : value
+    })
+    return evaluatedKeyframes
+  }
+
   componentDidMount() {
     this.renderStaticStyles()
     this.renderFontFaces()
@@ -121,7 +134,11 @@ class Provider extends React.Component<ProviderProps, any> {
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
           const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
-
+          // TODO should this be here? I need to evaluate them again after merging
+          outgoingTheme.keyframes = this.renderKeyframes(
+            outgoingTheme.keyframes,
+            outgoingTheme.renderer,
+          )
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
