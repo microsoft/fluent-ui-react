@@ -1,4 +1,5 @@
 import { parallel, series, task } from 'gulp'
+import { argv } from 'yargs'
 
 import sh from '../sh'
 
@@ -8,13 +9,15 @@ import sh from '../sh'
 const jest = ({ watch = false } = {}) => cb => {
   process.env.NODE_ENV = 'test'
 
-  if (watch) {
-    // in watch mode jest never exits
-    // let the gulp task complete to prevent blocking subsequent tasks
-    return sh('jest --coverage --watchAll')
-  }
-
-  return sh('jest --coverage --runInBand')
+  // in watch mode jest never exits
+  // let the gulp task complete to prevent blocking subsequent tasks
+  const command = [
+    'jest --coverage',
+    ...(watch ? ['--watchAll'] : []),
+    ...(argv.runInBand ? ['--runInBand'] : []),
+    ...(argv.maxWorkers ? [`--maxWorkers=${argv.maxWorkers}`] : []),
+  ].join(' ')
+  return sh(command)
 }
 
 task('test:jest:pre', () => sh('yarn satisfied'))
