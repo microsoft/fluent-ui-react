@@ -63,7 +63,10 @@ export default (Component, options: Conformant = {}) => {
     }
 
     if (usesWrapperSlot) {
-      component = component.childAt(0)
+      component = component
+        .childAt(0)
+        .childAt(0)
+        .childAt(0)
     }
 
     return component
@@ -383,7 +386,7 @@ export default (Component, options: Conformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .first()
+        .at(usesWrapperSlot ? 1 : 0)
         .prop('className')
       return classes
     }

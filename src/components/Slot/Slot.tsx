@@ -57,6 +57,7 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
 
   static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
   static createHTMLInput = createSlotFactory('input', type => ({ type }))
+  static createHTMLListItem = createSlotFactory('li', children => ({ children }))
 
   renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
     const { children, content } = this.props

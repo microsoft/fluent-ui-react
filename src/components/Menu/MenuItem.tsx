@@ -3,14 +3,9 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import {
-  childrenExist,
-  createHTMLListItem,
-  createShorthandFactory,
-  customPropTypes,
-  UIComponent,
-} from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
@@ -151,7 +146,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static defaultProps = {
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
-    wrapper: {},
+    wrapper: 'li',
   }
 
   state = IsFromKeyboard.initial
@@ -163,7 +158,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
       children
     ) : (
       <ElementType
-        className={cx('ui-menu__item__anchor', classes.anchor)}
+        className={classes.root}
         onClick={this.handleClick}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
@@ -181,9 +176,9 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     )
 
     if (wrapper) {
-      return createHTMLListItem(wrapper, {
+      return Slot.createHTMLListItem(wrapper, {
         defaultProps: {
-          className: classes.root,
+          className: cx('ui-menu__item__wrapper', classes.wrapper),
           ...accessibility.attributes.root,
           ...accessibility.keyHandlers.root,
         },

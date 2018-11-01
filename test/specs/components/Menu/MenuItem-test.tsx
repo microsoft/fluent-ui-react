@@ -14,9 +14,9 @@ describe('MenuItem', () => {
   })
 
   it('content renders as `li > a`', () => {
-    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem content="Home" />).find(
-      '.ui-menu__item',
-    )
+    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem content="Home" />)
+      .find('.ui-menu__item__wrapper')
+      .hostNodes()
 
     expect(menuItem.is('li')).toBe(true)
     expect(menuItem.childAt(0).is('a')).toBe(true)
@@ -25,8 +25,11 @@ describe('MenuItem', () => {
 
   it('children render directly inside `li`', () => {
     const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem>Home</MenuItem>)
+      .find('.ui-menu__item__wrapper')
+      .hostNodes()
 
-    expect(menuItem.find('.ui-menu__item').is('li')).toBe(true)
+    expect(menuItem.is('li')).toBe(true)
+    expect(menuItem.childAt(0).exists()).toBe(false)
     expect(menuItem.text()).toBe('Home')
   })
 
