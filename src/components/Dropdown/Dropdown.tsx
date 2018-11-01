@@ -87,12 +87,14 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
     const { label, search, multiple } = this.props
     const { inputValue } = this.state
+    const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
 
     return (
       <ElementType>
         <Downshift
           onChange={this.onDropdownChange}
           inputValue={inputValue}
+          {...selectedPropIfMultiple}
           stateReducer={this.stateReducer}
           itemToString={(item: DropdownListItem) => (item ? item.header : '')}
         >
@@ -155,16 +157,6 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   ): JSX.Element {
     const { multiple, placeholder } = this.props
     const { inputValue, active } = this.state
-    const inputIntegratedProps = {
-      ...getRootProps({ refKey: undefined }, { suppressRefError: true }),
-      ...getInputProps({
-        onBlur: this.onInputBlur,
-        onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
-      }),
-      'aria-haspopup': true,
-      'aria-controls': undefined,
-      'aria-labelledby': undefined,
-    }
 
     return (
       <Input
@@ -172,13 +164,16 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
         onFocus={this.onInputFocus}
         onKeyUp={multiple && this.onInputKeyUpIfMultiple}
         styles={styles.editTextDiv}
-        wrapper={{ role: 'presentation' }}
+        wrapper={{ ...getRootProps({ refKey: undefined }, { suppressRefError: true }) }}
         variables={{ inputFocusBorderColor: variables.editTextInputFocusBorderColor }}
         input={{
           type: 'text',
           styles: styles.editTextInput,
           placeholder: inputValue.length > 0 || (multiple && active.length > 0) ? '' : placeholder,
-          ...inputIntegratedProps,
+          ...getInputProps({
+            onBlur: this.onInputBlur,
+            onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
+          }),
         }}
       />
     )
@@ -187,7 +182,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   private renderList(styles, variables, getMenuProps, getItemProps, isOpen, highlightedIndex) {
     return (
       <List
-        {...getMenuProps()}
+        {...getMenuProps({ refKey: 'listRef' })}
         styles={styles.list}
         aria-hidden={!isOpen}
         items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
