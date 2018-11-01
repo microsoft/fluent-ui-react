@@ -5,11 +5,34 @@ const itemLayoutStyles = {
     const { debugLayout } = props
     return {
       ...(debugLayout && debugRoot()),
-      gridTemplateRows: `minmax(${variables.height}, max-content)`,
       paddingLeft: variables.paddingLeft,
       paddingRight: variables.paddingRight,
     }
   },
+
+  header: () => ({
+    // ...
+  }),
+
+  headerMedia: () => ({
+    // ...
+  }),
+
+  content: () => ({
+    // ...
+  }),
+
+  contentMedia: () => ({
+    // ...
+  }),
+
+  end: () => ({
+    // ...
+  }),
+
+  endMedia: () => ({
+    // ...
+  }),
 }
 
 export default itemLayoutStyles

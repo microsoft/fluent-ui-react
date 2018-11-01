@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-interface IKnobsLabelProps {
+interface KnobsLabelProps {
   name: string
   value: string
 }
 
-const KnobsLabel: React.ComponentType<IKnobsLabelProps> = ({ name, value }) => (
+const KnobsLabel: React.SFC<KnobsLabelProps> = ({ name, value }) => (
   <span>
     {name}: {JSON.stringify(value, null, 2)},
   </span>

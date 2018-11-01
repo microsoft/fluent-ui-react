@@ -3,13 +3,13 @@ import * as PropTypes from 'prop-types'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStylesInput } from '../../themes/types'
 
 export interface ILayoutGapProps {
   as?: any
   debug?: boolean
   size?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStylesInput
   variables?: ComponentVariablesInput
 }
 
@@ -35,8 +35,6 @@ class LayoutGap extends UIComponent<Extendable<ILayoutGapProps>, any> {
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = ['as', 'content', 'debug', 'vertical', 'size', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     return <ElementType {...rest} className={classes.root} />

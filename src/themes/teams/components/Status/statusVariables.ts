@@ -1,4 +1,4 @@
-export interface IStatusVariables {
+export interface StatusVariables {
   borderColor: string
   borderWidth: number
   successBackgroundColor: string

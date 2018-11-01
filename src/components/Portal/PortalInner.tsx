@@ -5,19 +5,22 @@ import { createPortal } from 'react-dom'
 import { ReactChildren } from '../../../types/utils'
 import { isBrowser } from '../../lib'
 
-export interface IPortalInnerProps {
+export interface PortalInnerProps {
   children?: ReactChildren
   context?: HTMLElement
-  onMount?: (props: IPortalInnerProps) => void
-  onUnmount?: (props: IPortalInnerProps) => void
+  onMount?: (props: PortalInnerProps) => void
+  onUnmount?: (props: PortalInnerProps) => void
 }
 
 /**
  * An inner component that allows you to render children outside their parent.
  */
-class PortalInner extends Component<IPortalInnerProps> {
+class PortalInner extends Component<PortalInnerProps> {
   public static propTypes = {
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node.isRequired,
 
     /** Existing element the portal should be bound to. */

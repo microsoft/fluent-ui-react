@@ -1,7 +1,7 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const layoutStyles: IComponentPartStylesInput = {
+const layoutStyles: ComponentSlotStylesInput = {
   root: ({ props }): ICSSInJSStyle => {
     const { debug, vertical } = props
 

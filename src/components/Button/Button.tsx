@@ -1,49 +1,56 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import whatInput from 'what-input'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import Icon from '../Icon'
-import { ButtonBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
+import { buttonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
   ComponentEventHandler,
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface IButtonProps {
+export interface ButtonProps {
   as?: any
+  accessibility?: Accessibility
   children?: ReactChildren
   circular?: boolean
   className?: string
   disabled?: boolean
-  content?: React.ReactNode
+  content?: ShorthandValue
   fluid?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
-  onClick?: ComponentEventHandler<IButtonProps>
-  onFocus?: ComponentEventHandler<IButtonProps>
+  onClick?: ComponentEventHandler<ButtonProps>
+  onFocus?: ComponentEventHandler<ButtonProps>
+  renderIcon?: ShorthandRenderFunction
   text?: boolean
   type?: 'primary' | 'secondary'
-  accessibility?: Accessibility
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
+export interface ButtonState {
+  [isFromKeyboard.propertyName]: boolean
+}
+
 /**
- * A button.
+ * A button indicates a possible user action.
  * @accessibility
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, any> {
+class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -54,13 +61,16 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Button content for childrenApi
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** A button can appear circular. */
     circular: PropTypes.bool,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** A button can show it is currently unable to be interacted with. */
@@ -102,45 +112,32 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
     type: PropTypes.oneOf(['primary', 'secondary']),
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
-
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
 
-  public state = {
-    isFromKeyboard: false,
-  }
+  public state = isFromKeyboard.initial
 
   public renderComponent({
     ElementType,
@@ -164,21 +161,24 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {Slot.create(!hasChildren && content, {
+          defaultProps: { as: 'span', className: classes.content },
+        })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
   public renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content } = this.props
+    const { icon, iconPosition, content, renderIcon } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
-        styles: { root: styles.icon },
+        styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },
+      render: renderIcon,
     })
   }
 
@@ -196,9 +196,7 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.state())
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

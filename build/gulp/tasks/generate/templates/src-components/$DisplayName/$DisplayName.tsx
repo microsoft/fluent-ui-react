@@ -2,13 +2,13 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { IComponentPartStylesInput, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../../themes/types'
 
 export type $DisplayNameProps = {
   as?: any
   children?: React.ReactChildren
   content?: React.ReactNode
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -18,8 +18,6 @@ class $DisplayName extends UIComponent<$DisplayNameProps, any> {
   static className = 'ui-$kebab-display-name'
 
   static displayName = '$DisplayName'
-
-  static handledProps = ['as', 'children', 'content', 'styles', 'variables']
 
   static propTypes = {
     /** An element type to render as. */

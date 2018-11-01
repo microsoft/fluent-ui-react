@@ -1,27 +1,27 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
 import ReactNode = React.ReactNode
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
 
-export interface IGridProps {
+export interface GridProps {
   as?: any
   className?: string
   children?: ReactChildren
   columns?: string | number
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   rows?: string | number
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * A grid.
+ * A grid is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<IGridProps>, any> {
+class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -30,10 +30,13 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
@@ -51,29 +54,18 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'columns',
-    'content',
-    'rows',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
+  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (

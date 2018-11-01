@@ -4,17 +4,22 @@ import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
-import { MenuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { menuBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  IComponentPartStylesInput,
-} from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+  ComponentSlotStyle,
+} from '../../themes/types'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 
-export interface IMenuProps {
+export interface MenuProps {
   accessibility?: Accessibility
   as?: any
   activeIndex?: number | string
@@ -23,17 +28,18 @@ export interface IMenuProps {
   defaultActiveIndex?: number | string
   fluid?: boolean
   iconOnly?: boolean
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  renderItem?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
+class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -47,10 +53,13 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     /** Index of the currently active item. */
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Initial activeIndex value. */
@@ -74,6 +83,16 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
+    /**
+     * A custom render iterator for rendering each of the Menu items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
     /** The menu can have primary or secondary type */
     type: PropTypes.oneOf(['primary', 'secondary']),
 
@@ -84,38 +103,19 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'ul',
-    accessibility: MenuBehavior as Accessibility,
+    accessibility: menuBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'activeIndex',
-    'as',
-    'children',
-    'className',
-    'defaultActiveIndex',
-    'fluid',
-    'iconOnly',
-    'items',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['activeIndex']
 
@@ -132,7 +132,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
+    const { iconOnly, items, pills, pointing, renderItem, type, underlined, vertical } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -149,6 +149,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           active: parseInt(activeIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
   }

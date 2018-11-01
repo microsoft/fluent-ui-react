@@ -1,7 +1,7 @@
 import { debugGap } from '../../../../styles/debugStyles'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const layoutGapStyles: IComponentPartStylesInput = {
+const layoutGapStyles: ComponentSlotStylesInput = {
   root: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugGap({ vertical: props.vertical })),
     ...(props.size && { flex: `0 0 ${props.size}` }),

@@ -1,16 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
 
-import {
-  childrenExist,
-  createHTMLDivision,
-  createShorthandFactory,
-  customPropTypes,
-  UIComponent,
-} from '../../lib'
+import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStylesInput } from '../../themes/types'
 
 export interface ILayoutProps {
   as?: any
@@ -19,7 +12,7 @@ export interface ILayoutProps {
   truncate?: boolean
   vertical?: boolean
   size?: string
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStylesInput
   variables?: ComponentVariablesInput
 }
 
@@ -57,17 +50,6 @@ class LayoutArea extends UIComponent<Extendable<ILayoutProps>, any> {
     /** Custom variables to be applied for component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'content',
-    'debug',
-    'truncate',
-    'vertical',
-    'size',
-    'styles',
-    'variables',
-  ]
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

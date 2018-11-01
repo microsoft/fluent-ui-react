@@ -27,3 +27,21 @@ style.main = {
 }
 
 export default style
+
+export const semanticCssOverrides = `
+  .crossout {
+    text-decoration: line-through!important;
+  }
+
+  .ui.secondary.inverted.menu a.item.disabled:hover {
+    color: rgba(255,255,255,.7)!important;
+    cursor: not-allowed!important;
+  }
+
+  button:-moz-focusring,
+  [type="button"]:-moz-focusring,
+  [type="reset"]:-moz-focusring,
+  [type="submit"]:-moz-focusring {
+    outline: 0;
+  }
+`

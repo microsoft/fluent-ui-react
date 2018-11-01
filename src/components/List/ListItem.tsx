@@ -1,19 +1,22 @@
 import * as React from 'react'
+
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
-import { ListItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import ItemLayout from '../ItemLayout/ItemLayout'
+import { listItemBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
+import { FocusableItemProps } from '../../lib/accessibility/FocusHandling/FocusableItem'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps {
+export interface ListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   contentMedia?: any
   content?: any
   debug?: boolean
+  focusableItemProps?: FocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -22,11 +25,11 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
+class ListItem extends UIComponent<Extendable<ListItemProps>, any> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -36,7 +39,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -61,47 +64,26 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+    focusableItemProps: PropTypes.object,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior as Accessibility,
+    accessibility: listItemBehavior as Accessibility,
   }
 
-  state: any = {}
+  private itemRef = React.createRef<HTMLElement>()
 
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
+  componentDidUpdate() {
+    // This needs to be as part of issue https://github.com/stardust-ui/react/issues/370
+    // this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -119,44 +101,40 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
       truncateHeader,
     } = this.props
 
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
     return (
       <ItemLayout
         as={as}
         className={classes.root}
         debug={debug}
         selection={selection}
-        styles={{ root: styles.root }}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
+        styles={styles.root}
         media={{
-          styles: { root: styles.media },
+          styles: styles.media,
           content: media,
         }}
         header={{
           content: header,
-          styles: { root: { ...styles.header, ...hoveringSelectionCSS } },
+          styles: styles.header,
           truncate: truncateHeader,
         }}
-        // headerMedia={{
-        //   content: headerMedia,
-        //   styles: { root: { ...styles.headerMedia, ...hoveringSelectionCSS } },
-        // }}
-        // content={{
-        //   content,
-        //   styles: { root: { ...styles.content, ...hoveringSelectionCSS } },
-        //   truncate: truncateContent,
-        // }}
-        // contentMedia={{
-        //   content: !isHovering && contentMedia,
-        // }}
-        // endMedia={{
-        //   content: endArea,
-        // }}
+        headerMedia={{
+          content: headerMedia,
+          styles: styles.headerMedia,
+        }}
+        content={{
+          content,
+          styles: styles.content,
+          truncate: truncateContent,
+        }}
+        contentMedia={{
+          content: contentMedia,
+        }}
+        endMedia={{
+          content: endMedia,
+        }}
+        truncateContent={truncateContent}
+        truncateHeader={truncateHeader}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
       />

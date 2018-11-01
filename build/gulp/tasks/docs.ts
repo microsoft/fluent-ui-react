@@ -66,9 +66,16 @@ task(
 // ----------------------------------------
 
 const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
-const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[A-Z]*.ts`]
+const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
-const markdownSrc = ['.github/CONTRIBUTING.md', 'specifications/*.md']
+const markdownSrc = [
+  '.github/CONTRIBUTING.md',
+  '.github/setup-local-development.md',
+  '.github/add-a-feature.md',
+  '.github/document-a-feature.md',
+  '.github/test-a-feature.md',
+  'specifications/*.md',
+]
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })
@@ -115,11 +122,10 @@ task('build:docs:images', () =>
 task('build:docs:toc', () =>
   src(markdownSrc, { since: lastRun('build:docs:toc') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`doctoc ${file.path} --github --maxlevel 4`, err => {
-        if (err) return done(err)
-
-        sh(`git add ${file.path}`, done)
-      })
+      sh(`doctoc ${file.path} --github --maxlevel 4`)
+        .then(() => sh(`git add ${file.path}`))
+        .then(done)
+        .catch(done)
     }),
   ),
 )
@@ -141,7 +147,7 @@ task('build:docs:webpack', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 
@@ -166,7 +172,9 @@ task(
 
 task('deploy:docs', cb => {
   const relativePath = path.relative(process.cwd(), paths.docsDist())
-  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`, cb)
+  sh(`gh-pages -d ${relativePath} -m "deploy docs [ci skip]"`)
+    .then(cb)
+    .catch(cb)
 })
 
 // ----------------------------------------

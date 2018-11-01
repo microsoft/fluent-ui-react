@@ -2,7 +2,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Icon', () => {
   isConformant(Icon)
@@ -13,13 +13,34 @@ describe('Icon', () => {
     })
 
     describe('aria-hidden', () => {
+      const themeWithDefinedIcons = {
+        icons: {
+          svgIcon: () => (
+            <svg>
+              <p />
+            </svg>
+          ),
+          fontIcon: { fontFamily: 'Icons', content: `'\\f0152'` },
+        },
+      }
+
       test('font-based - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(Icon, <Icon />)
+        const renderedComponent = mountWithProviderAndGetComponent(
+          Icon,
+          <Icon name="fontIcon" />,
+          null,
+          themeWithDefinedIcons,
+        )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
 
       test('svg - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(Icon, <Icon svg />)
+        const renderedComponent = mountWithProviderAndGetComponent(
+          Icon,
+          <Icon name="svgIcon" />,
+          null,
+          themeWithDefinedIcons,
+        )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
     })

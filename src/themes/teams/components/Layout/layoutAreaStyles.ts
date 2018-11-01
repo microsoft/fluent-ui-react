@@ -1,7 +1,7 @@
 import { debugArea } from '../../../../styles/debugStyles'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const layoutStyles: IComponentPartStylesInput = {
+const layoutAreaStyles: ComponentSlotStylesInput = {
   root: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
     flex: 1,
@@ -14,4 +14,4 @@ const layoutStyles: IComponentPartStylesInput = {
   }),
 }
 
-export default layoutStyles
+export default layoutAreaStyles

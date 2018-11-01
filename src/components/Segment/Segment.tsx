@@ -2,17 +2,17 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
-export interface ISegmentProps {
+export interface SegmentProps {
   as?: any
   className?: string
   content?: any
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle<SegmentProps, any>
   variables?: ComponentVariablesInput
 }
 
-class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
+class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'
@@ -21,20 +21,18 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',

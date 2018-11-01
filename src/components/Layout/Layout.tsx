@@ -1,21 +1,20 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
-import { Extendable, ItemShorthand } from '../../../types/utils'
-import { ComponentVariablesInput, IComponentPartStylesInput } from '../../../types/theme'
+import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
 import LayoutArea from './LayoutArea'
 import LayoutGap from './LayoutGap'
 
-export interface ILayoutProps {
+export interface LayoutProps {
   as?: any
   className?: string
   debug?: boolean
-  start?: ItemShorthand
-  main?: ItemShorthand
-  end?: ItemShorthand
+  start?: ShorthandValue
+  main?: ShorthandValue
+  end?: ShorthandValue
   gap?: string
   reducing?: boolean
   disappearing?: boolean
@@ -23,14 +22,16 @@ export interface ILayoutProps {
   truncateMain?: boolean
   truncateEnd?: boolean
   vertical?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
+
+export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps
 
 /**
  * A Layout is for arranging content areas in common ways.
  */
-class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
+class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -60,48 +61,38 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 
     vertical: PropTypes.bool,
 
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = [
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'gap',
-    'main',
-    'reducing',
-    'start',
-    'styles',
-    'variables',
-    'vertical',
-  ]
 
   static Area = LayoutArea
   static Gap = LayoutGap
 
   renderComponent({ ElementType, classes, rest }) {
-    const { reducing, debug, disappearing, start, main, end, gap } = this.props
+    const { reducing, debug, disappearing, start, main, end, gap } = this
+      .props as LayoutPropsWithDefaults
 
     const startArea = LayoutArea.create(start, {
       defaultProps: { debug, size: 'auto' },
+      generateKey: false,
     })
 
     const mainArea = LayoutArea.create(main, {
       defaultProps: { debug },
+      generateKey: false,
     })
 
     const endArea = LayoutArea.create(end, {
       defaultProps: { debug, size: 'auto' },
+      generateKey: false,
     })
 
     const gapArea = LayoutGap.create(gap, {
       defaultProps: { debug, size: gap },
+      generateKey: false,
     })
 
     if (!startArea && !mainArea && !endArea) {
@@ -117,12 +108,7 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
     }
 
     if (reducing && isSingleArea) {
-      const composedClasses = cx(
-        classes.root,
-        startArea && 'ui-layout--reduced__start',
-        mainArea && 'ui-layout--reduced__main',
-        endArea && 'ui-layout--reduced__end',
-      )
+      const composedClasses = classes.root
       return (
         <ElementType {...rest} className={composedClasses}>
           {start || main || end}

@@ -1,18 +1,16 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
 
 import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
-import Layout from '../Layout'
+import Layout from '../Layout/Layout'
 import {
+  ComponentSlotClasses,
+  ComponentSlotStyle,
   ComponentVariablesInput,
-  IComponentPartClasses,
-  IComponentPartStylesInput,
-  ICSSInJSStyle,
-} from '../../../types/theme'
+} from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export interface IItemLayoutProps {
+export interface ItemLayoutProps {
   as?: any
   className?: string
   contentMedia?: any
@@ -22,35 +20,33 @@ export interface IItemLayoutProps {
   endMedia?: any
   headerMedia?: any
   media?: any
-  renderContentArea?: (
-    props: IItemLayoutProps,
+  renderContent?: (
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
-  renderHeaderArea?: (
-    props: IItemLayoutProps,
+  renderHeader?: (
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
-  renderMainArea?: (
-    props: IItemLayoutProps,
+  renderMain?: (
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
-  rootCSS?: ICSSInJSStyle
-  mediaCSS?: ICSSInJSStyle
-  headerCSS?: ICSSInJSStyle
-  headerMediaCSS?: ICSSInJSStyle
-  contentCSS?: ICSSInJSStyle
-  contentMediaCSS?: ICSSInJSStyle
-  endMediaCSS?: ICSSInJSStyle
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: IComponentPartStylesInput
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
+export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps
+
+/**
+ * The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ */
+class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -60,7 +56,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
   static propTypes = {
     as: customPropTypes.as,
 
-    /** Additional classes. */
+    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
     contentMedia: PropTypes.any,
@@ -76,164 +72,96 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
     headerMedia: PropTypes.any,
 
     media: PropTypes.any,
-    renderContentArea: PropTypes.func,
-    renderHeaderArea: PropTypes.func,
-    renderMainArea: PropTypes.func,
+    renderContent: PropTypes.func,
+    renderHeader: PropTypes.func,
+    renderMain: PropTypes.func,
 
-    /** Styled applied to the root element of the rendered component. */
-    rootCSS: PropTypes.object,
-    /** Styled applied to the media element of the rendered component. */
-    mediaCSS: PropTypes.object,
-    /** Styled applied to the header element of the rendered component. */
-    headerCSS: PropTypes.object,
-    /** Styled applied to the header media element of the rendered component. */
-    headerMediaCSS: PropTypes.object,
-    /** Styled applied to the content element of the rendered component. */
-    contentCSS: PropTypes.object,
-    /** Styled applied to the content element of the rendered component. */
-    contentMediaCSS: PropTypes.object,
-    /** Styled applied to the end media element of the rendered component. */
-    endMediaCSS: PropTypes.object,
-
-    /** Custom styles to be applied for component. */
+    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Custom variables to be applied for component. */
+    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'as',
-    'className',
-    'content',
-    'contentCSS',
-    'contentMedia',
-    'contentMediaCSS',
-    'debug',
-    'endMedia',
-    'endMediaCSS',
-    'header',
-    'headerCSS',
-    'headerMedia',
-    'headerMediaCSS',
-    'media',
-    'mediaCSS',
-    'renderContentArea',
-    'renderHeaderArea',
-    'renderMainArea',
-    'rootCSS',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
-  static defaultProps = {
-    as: 'div',
-
-    renderMainArea: (props, state, classes) => {
-      const { renderHeaderArea, renderContentArea } = props
-
-      const headerArea = renderHeaderArea(props, state, classes)
-      const contentArea = renderContentArea(props, state, classes)
-
-      return (
-        <div
-          className="ui-item-layout__main"
-          style={{
-            gridTemplateRows: '1fr 1fr',
-          }}
-        >
-          {headerArea}
-          {contentArea}
-        </div>
-      )
-    },
-
-    renderHeaderArea: (props, state, classes) => {
-      const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
-
-      const mergedClasses = cx('ui-item-layout__header', classes.header)
-      const headerMediaClasses = cx('ui-item-layout__headerMedia', classes.headerMedia)
-
-      return !header && !headerMedia ? null : (
-        <Layout
-          className={mergedClasses}
-          // alignItems="end"
-          gap={pxToRem(8)}
-          debug={debug}
-          main={{ content: header, truncate: truncateHeader }}
-          styles={{ root: headerCSS }}
-          end={{
-            as: 'span',
-            content: headerMedia,
-            styles: { root: headerMediaCSS },
-            className: headerMediaClasses,
-          }}
-        />
-      )
-    },
-
-    renderContentArea: (props, state, classes) => {
-      const { debug, content, contentMedia, truncateContent, contentCSS, contentMediaCSS } = props
-
-      const mergedClasses = cx('ui-item-layout__content', classes.content)
-      const mediaClasses = cx('ui-item-layout__contentMedia', classes.contentMedia)
-
-      return !content && !contentMedia ? null : (
-        <Layout
-          className={mergedClasses}
-          // alignItems="start"
-          gap={pxToRem(8)}
-          debug={debug}
-          styles={{ root: contentCSS }}
-          main={{ content, truncate: truncateContent }}
-          end={{
-            as: 'span',
-            content: contentMedia,
-            styles: { root: contentMediaCSS },
-            className: mediaClasses,
-          }}
-        />
-      )
-    },
-  }
-
   renderComponent({ ElementType, classes, rest, styles }) {
-    const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as IItemLayoutPropsWithDefaults
-
-    const mergedMediaClasses = cx('ui-item-layout__media', classes.media)
-    const mergedEndMediaClasses = cx('ui-item-layout__endMedia', classes.endMedia)
+    const {
+      as,
+      content,
+      contentMedia,
+      debug,
+      endMedia,
+      header,
+      headerMedia,
+      media,
+      truncateContent,
+      truncateHeader,
+    } = this.props as ItemLayoutPropsWithDefaults
 
     return (
       <Layout
         as={as}
         className={classes.root}
         // alignItems="center"
-        debug={debug}
-        reducing
-        styles={{ root: { ...styles.root, ...rootCSS } }}
+        styles={styles.root}
         gap={pxToRem(8)}
+        debug={debug}
         start={Layout.Area.create(media, {
           defaultProps: {
             as: 'span',
-            styles: { root: mediaCSS },
-            className: mergedMediaClasses,
+            styles: styles.mediaCSS,
+            className: classes.media,
           },
         })}
-        main={{
-          content: renderMainArea(this.props, this.state, classes),
-        }}
-        end={{
-          as: 'span',
-          content: endMedia,
-          styles: { root: endMediaCSS },
-          className: mergedEndMediaClasses,
-        }}
+        main={
+          <Layout
+            vertical
+            start={
+              <Layout
+                main={Layout.Area.create(header, {
+                  truncate: truncateHeader,
+                  defaultProps: {
+                    styles: styles.header,
+                    className: classes.header,
+                  },
+                })}
+                end={Layout.Area.create(headerMedia, {
+                  defaultProps: {
+                    styles: styles.headerMedia,
+                    className: classes.headerMedia,
+                  },
+                })}
+              />
+            }
+            end={
+              <Layout
+                main={Layout.Area.create(content, {
+                  truncate: truncateContent,
+                  defaultProps: {
+                    styles: styles.content,
+                    className: classes.content,
+                  },
+                })}
+                end={Layout.Area.create(contentMedia, {
+                  defaultProps: {
+                    styles: styles.contentMedia,
+                    className: classes.contentMedia,
+                  },
+                })}
+              />
+            }
+          />
+        }
+        end={Layout.Area.create(endMedia, {
+          defaultProps: {
+            as: 'span',
+            content: endMedia,
+            styles: styles.endMedia,
+            className: classes.endMedia,
+          },
+        })}
         {...rest}
       />
     )
@@ -243,5 +171,3 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
 ItemLayout.create = createShorthandFactory(ItemLayout, main => ({ main }))
 
 export default ItemLayout
-
-export type IItemLayoutPropsWithDefaults = IItemLayoutProps & typeof ItemLayout.defaultProps

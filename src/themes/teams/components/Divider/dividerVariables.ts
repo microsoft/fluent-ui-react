@@ -1,10 +1,23 @@
-export default (siteVars: any) => {
+import { pxToRem } from '../../../../lib'
+
+export interface DividerVariables {
+  dividerColor: string
+  textColor: string
+  textFontSize: string
+  textLineHeight: string
+  primaryColor: string
+  importantFontWeight: string
+  dividerPadding: string
+}
+
+export default (siteVars: any): DividerVariables => {
   return {
-    defaultColor: siteVars.gray04,
-    defaultBackgroundColor: siteVars.gray08,
-    typePrimaryColor: siteVars.brand,
-    typePrimaryBackgroundColor: siteVars.brand,
-    typeSecondaryColor: siteVars.gray02,
-    typeSecondaryBackgroundColor: siteVars.gray10,
+    dividerColor: siteVars.gray09,
+    textColor: siteVars.gray03,
+    textFontSize: siteVars.fontSizeSmall,
+    textLineHeight: siteVars.lineHeightSmall,
+    primaryColor: siteVars.brand,
+    importantFontWeight: siteVars.fontWeightBold,
+    dividerPadding: pxToRem(4),
   }
 }
