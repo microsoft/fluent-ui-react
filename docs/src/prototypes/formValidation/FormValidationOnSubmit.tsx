@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Input, Segment, RadioGroup } from '@stardust-ui/react'
+import { Form, Button, Input, Segment, RadioGroup, Text } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormField from './FormsyFormField'
 
@@ -91,12 +91,7 @@ class FormValidationOnSubmit extends React.Component<any, any> {
       },
       errorMessages.length > 0 ? (
         <Segment
-          content={errorMessages.map(message => (
-            <>
-              {message}
-              <br />
-            </>
-          ))}
+          content={errorMessages.map(message => <Text key={message} content={message} as="div" />)}
           key="error-messages"
         />
       ) : (

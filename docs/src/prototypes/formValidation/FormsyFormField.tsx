@@ -1,26 +1,15 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import { FormField } from '@stardust-ui/react'
 import { withFormsy } from 'formsy-react'
 
 const FormFieldWrapper = props => {
   const {
     children,
-    className,
-    id,
     control,
-    inline,
-    label,
-    message,
-    name,
-    renderControl,
-    renderLabel,
-    renderMessage,
-    required,
-    styles,
-    type,
-    variables,
     showMessage,
     valueProp,
+    controlValueProp,
     onChangeProp,
     eventTargetAsValue,
     getErrorMessage,
@@ -28,30 +17,21 @@ const FormFieldWrapper = props => {
     setValue,
   } = props
 
+  const formFieldInputProps = _.pick(props, FormField.handledProps)
   const error = getErrorMessage()
   const value = valueProp || 'value'
   const onChange = onChangeProp || 'onChange'
+  const controlValue = controlValueProp || 'value'
 
   const formFieldProps = {
-    children,
-    className,
-    id,
-    inline,
-    label,
-    message,
-    name,
-    renderControl,
-    renderLabel,
-    renderMessage,
-    required,
-    styles,
-    type,
-    variables,
+    ...formFieldInputProps,
     ...(!children && {
       control: {
         ...control,
         [value]: getValue(),
-        [onChange]: (e, props) => setValue(eventTargetAsValue ? e.target.value : props.value),
+        [onChange]: (e, controlProps) => {
+          setValue(eventTargetAsValue ? e.target[controlValue] : controlProps[controlValue])
+        },
       },
       ...(showMessage && { message: { content: error, styles: { color: 'red' } } }),
     }),
