@@ -14,7 +14,7 @@ const jest = ({ watch = false } = {}) => cb => {
     return sh('jest --coverage --watchAll')
   }
 
-  return sh('jest --coverage')
+  return sh('jest --coverage --runInBand')
 }
 
 task('test:jest:pre', () => sh('yarn satisfied'))
