@@ -109,28 +109,9 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -138,21 +119,18 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
         ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}

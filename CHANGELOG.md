@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))
+
 <!--------------------------------[ v0.11.0 ]------------------------------- -->
 ## [v0.11.0](https://github.com/stardust-ui/react/tree/v0.11.0) (2018-10-30)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.10.0...v0.11.0)
@@ -29,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
 - Fix icon colors for Teams theme @codepretty ([#384](https://github.com/stardust-ui/react/pull/384))
 - Do not render the Attachment's `progress` value to the DOM @levithomason ([#402](https://github.com/stardust-ui/react/pull/402))
+- Add dark theme and contrast theme for Avatar and Status Indicator @bcalvery ([#373](https://github.com/stardust-ui/react/pull/373))
 - Add Segment background color @levithomason ([#408](https://github.com/stardust-ui/react/pull/408))
 - Make `eventStack` subscription logic to be always async @kuzhelov ([#391](https://github.com/stardust-ui/react/pull/391))
 - Fix for dotted focus outline in Firefox for `Button` component in docs @Bugaa92 ([#390](https://github.com/stardust-ui/react/pull/390))
@@ -38,6 +42,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
 - Add compose icons to Teams theme @joheredi ([#396](https://github.com/stardust-ui/react/pull/396))
 - Expose access to input element of `Input` via `inputRef` prop @silviuavram ([#377](https://github.com/stardust-ui/react/pull/377))
+- Adding `Partial` utility to enable partial Variables implementations @kuzhelov ([#373](https://github.com/stardust-ui/react/pull/373))
 
 ### Documentation
 - Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
