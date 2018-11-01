@@ -83,24 +83,24 @@ export default (
 
     test('gets correct role when overrides role', () => {
       const testRole = 'test-role'
-      const rendered = mountWithProviderAndGetComponent(
-        Component,
-        <Component {...requiredProps} role={testRole} />,
+      const element = usesWrapperSlot ? (
+        <Component {...requiredProps} wrapper={{ role: testRole }} />
+      ) : (
+        <Component {...requiredProps} role={testRole} />
       )
-
-      const rendered = getTestingRenderedComponent(Component, element)
+      const rendered = mountWithProviderAndGetComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })
 
     test('gets correct role when overrides both accessibility and role', () => {
       const testRole = 'test-role'
-      const rendered = mountWithProviderAndGetComponent(
-        Component,
-        <Component {...requiredProps} accessibility={TestBehavior} role={testRole} />,
+      const element = usesWrapperSlot ? (
+        <Component {...requiredProps} accessibility={TestBehavior} wrapper={{ role: testRole }} />
+      ) : (
+        <Component {...requiredProps} accessibility={TestBehavior} role={testRole} />
       )
-
-      const rendered = getTestingRenderedComponent(Component, element)
+      const rendered = mountWithProviderAndGetComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
     })
