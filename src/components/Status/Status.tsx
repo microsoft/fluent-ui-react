@@ -3,10 +3,10 @@ import * as React from 'react'
 import { Icon } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface IStatusProps {
+export interface StatusProps {
   as?: any
   className?: string
   color?: string
@@ -14,14 +14,14 @@ export interface IStatusProps {
   renderIcon?: ShorthandRenderFunction
   size?: number
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * A status graphically represents someone's or something's state.
  */
-class Status extends UIComponent<Extendable<IStatusProps>, any> {
+class Status extends UIComponent<Extendable<StatusProps>, any> {
   static create: Function
 
   static className = 'ui-status'
@@ -69,14 +69,15 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
-    const { icon, renderIcon } = this.props as IStatusPropsWithDefaults
+  renderComponent({ ElementType, classes, rest, variables, styles }) {
+    const { icon, renderIcon } = this.props as StatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'tiny',
-            variables: { color: 'white' }, // This is temporary. There is a ToDo to use icon's text/fill color for box-shadow, currently it uses color
+            styles: styles.icon,
+            variables: variables.icon,
             xSpacing: 'none',
             render: renderIcon,
           },
@@ -89,4 +90,4 @@ class Status extends UIComponent<Extendable<IStatusProps>, any> {
 Status.create = createShorthandFactory(Status, state => ({ state }))
 
 export default Status
-export type IStatusPropsWithDefaults = IStatusProps & typeof Status.defaultProps
+export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

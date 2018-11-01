@@ -8,7 +8,8 @@ import {
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import { mountWithProvider } from 'test/utils'
 
-import RadioGroup, { RadioGroupItem } from 'src/components/RadioGroup'
+import RadioGroup from 'src/components/RadioGroup/RadioGroup'
+import RadioGroupItem from 'src/components/RadioGroup/RadioGroupItem'
 
 const radioGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(RadioGroup)
 

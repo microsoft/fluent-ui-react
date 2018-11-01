@@ -1,13 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import {
-  ComponentPartStyleFunction,
-  IComponentPartStylesInput,
-  ICSSInJSStyle,
-} from '../../../../../types/theme'
-import { IMenuVariables } from './menuVariables'
-import { IMenuItemProps, IMenuItemState } from '../../../../components/Menu/MenuItem'
+import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { MenuVariables } from './menuVariables'
+import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
-type MenuItemProps = IMenuItemProps & IMenuItemState
+type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
 const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
@@ -20,8 +16,8 @@ const getActionStyles = ({
   variables: v,
   color,
 }: {
-  props: MenuItemProps
-  variables: IMenuVariables
+  props: MenuItemPropsAndState
+  variables: MenuVariables
   color: string
 }): ICSSInJSStyle =>
   (underlined && !isFromKeyboard) || iconOnly
@@ -39,7 +35,7 @@ const getActionStyles = ({
           background: v.defaultActiveBackgroundColor,
         }
 
-const itemSeparator: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
+const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
 }): ICSSInJSStyle => {
@@ -72,7 +68,7 @@ const itemSeparator: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> 
   )
 }
 
-const pointingBeak: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> = ({
+const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
 }): ICSSInJSStyle => {
@@ -125,7 +121,7 @@ const pointingBeak: ComponentPartStyleFunction<IMenuItemProps, IMenuVariables> =
   }
 }
 
-const menuItemStyles: IComponentPartStylesInput<MenuItemProps, IMenuVariables> = {
+const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const { active, isFromKeyboard, pills, pointing, underlined, vertical } = props
 

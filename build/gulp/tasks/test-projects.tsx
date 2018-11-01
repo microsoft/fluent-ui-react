@@ -50,17 +50,6 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
   return appProjectPath
 }
 
-const enableTsCompilerFlagSync = (tsconfigPath: string, flag: string) => {
-  const tsConfigAsJson = JSON.parse(`${fs.readFileSync(tsconfigPath)}`)
-  if (!tsConfigAsJson.compilerOptions) {
-    tsConfigAsJson.compilerOptions = {}
-  }
-
-  tsConfigAsJson.compilerOptions[flag] = true
-
-  fs.writeFileSync(tsconfigPath, JSON.stringify(tsConfigAsJson))
-}
-
 // Tests the following scenario
 //  - Create a new react test app
 //  - Add Stardust as a app's dependency
@@ -108,7 +97,9 @@ export default App;
     //////// CREATE TEST REACT APP ///////
     log('STEP 1. Create test React project with TSX scripts..')
 
-    const testAppPath = paths.withRootAt(await createReactApp(tmp.dirSync().name, 'test-app'))
+    const testAppPath = paths.withRootAt(
+      await createReactApp(tmp.dirSync({ prefix: 'stardust-' }).name, 'test-app'),
+    )
 
     const runInTestApp = runIn(testAppPath())
     log(`Test React project is successfully created: ${testAppPath()}`)
@@ -119,18 +110,12 @@ export default App;
     await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
     log("Stardust is successfully added as test project's dependency.")
 
-    //////// ENABLE SKIP LIB CHECK FLAG ///////
-    log("STEP 3. Enable 'skipLibCheck' flag for test project's TS compiler")
-
-    const tsconfigPath = testAppPath('tsconfig.json')
-    enableTsCompilerFlagSync(tsconfigPath, 'skipLibCheck')
-
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
-    log("STEP 4. Reference Stardust components in test project's App.tsx")
+    log("STEP 3. Reference Stardust components in test project's App.tsx")
     fs.writeFileSync(testAppPath('src', 'App.tsx'), appTSX)
 
     //////// BUILD TEST PROJECT ///////
-    log('STEP 5. Build test project..')
+    log('STEP 4. Build test project..')
     await runInTestApp(`yarn build`)
 
     log('Test project is built successfully!')
