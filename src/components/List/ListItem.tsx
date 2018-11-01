@@ -1,15 +1,10 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  FocusableItem,
-  FocusableItemProps,
-} from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
@@ -20,7 +15,6 @@ export interface ListItemProps {
   contentMedia?: any
   content?: any
   debug?: boolean
-  focusableItemProps?: FocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -97,18 +91,12 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
 
   private itemRef = React.createRef<HTMLElement>()
 
-  private focusableItem = FocusableItem.create(this)
-
   handleMouseEnter = () => {
     this.setState({ isHovering: true })
   }
 
   handleMouseLeave = () => {
     this.setState({ isHovering: false })
-  }
-
-  componentDidUpdate() {
-    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {

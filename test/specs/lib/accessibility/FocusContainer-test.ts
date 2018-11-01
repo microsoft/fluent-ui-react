@@ -1,144 +1,155 @@
-import { ItemShorthand } from 'utils'
-import {
-  ContainerFocusHandler,
-  FocusContainerProps,
-  FocusContainerState,
-} from 'src/lib/accessibility/FocusHandling/FocusContainer'
-import { SetStateDelegate } from 'src/lib/accessibility/FocusHandling/FocusableItem'
+import { ContainerFocusHandler } from 'src/lib/accessibility/FocusHandling/FocusContainer'
+
+const createFocusContainer = (
+  { itemsCount, setFocusAtFn }: { itemsCount: number; setFocusAtFn?: () => void } = {
+    itemsCount: 0,
+  },
+) => new ContainerFocusHandler(() => itemsCount, setFocusAtFn || (() => {}))
 
 describe('Focus Container', () => {
-  let focusContainer: ContainerFocusHandler<
-    ItemShorthand,
-    FocusContainerProps<ItemShorthand>,
-    FocusContainerState
-  >
-
-  const items = [{ title: 'First Item' }, { title: 'Second Item' }, { title: 'Third Item' }]
-  const props: FocusContainerProps<ItemShorthand> = {
-    items,
-  }
-
-  let state: FocusContainerState = {
-    focusItemOnIdx: -1,
-  }
-
-  let setStateMock: SetStateDelegate<FocusContainerProps<ItemShorthand>, FocusContainerState>
-
-  beforeEach(() => {
-    state.focusItemOnIdx = -1
-    props.items = items
-
-    setStateMock = jest.fn()
-
-    focusContainer = new ContainerFocusHandler(
-      () => props,
-      setStateMock,
-      s => {
-        state = s
-      },
-      () => state,
-    )
-  })
-
-  test('Should init handler', () => {
-    const focusContainer = new ContainerFocusHandler(
-      () => props,
-      setStateMock,
-      s => {
-        state = s
-      },
-      () => state,
-    )
+  test('inits with focused item index 0', () => {
+    const focusContainer = createFocusContainer()
 
     expect(focusContainer).toBeDefined()
-    expect(state.focusItemOnIdx).toBe(0)
+    expect(focusContainer.getFocusedItemIndex()).toBe(0)
   })
 
-  test('Should assign item properties to first item', () => {
-    const item = focusContainer.createItemProps(0, props.items.length)
+  describe('sync item index', () => {
+    test('should set focus item index', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(4)
 
-    expect(item.isFocused).toBe(true)
-    expect(item.isFirstElement).toBe(true)
-    expect(item.isLastElement).toBe(false)
+      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+    })
+
+    test('should not set focus index function', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
+
+      focusContainer.syncFocusedItemIndex(4)
+      expect(setFocusAt).not.toBeCalled()
+    })
   })
 
-  test('Should assign item properties to middle item', () => {
-    const item = focusContainer.createItemProps(1, props.items.length)
+  describe('move previous', () => {
+    test('should decrement index of focused item', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(4)
 
-    expect(item.isFocused).toBe(false)
-    expect(item.isFirstElement).toBe(false)
-    expect(item.isLastElement).toBe(false)
+      focusContainer.movePrevious()
+      expect(focusContainer.getFocusedItemIndex()).toBe(3)
+    })
+
+    test('should call set focus index function if there are any items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
+
+      focusContainer.movePrevious()
+      expect(setFocusAt).toBeCalled()
+    })
+
+    test('should skip call to set focus index function if there are no items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 0, setFocusAtFn: setFocusAt })
+
+      focusContainer.movePrevious()
+      expect(setFocusAt).not.toBeCalled()
+    })
+
+    test('focused item index should not ever become less than 0', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(0)
+
+      focusContainer.movePrevious()
+
+      expect(focusContainer.getFocusedItemIndex()).toBe(0)
+    })
   })
 
-  test('Should assign item properties to last item', () => {
-    const item = focusContainer.createItemProps(props.items.length - 1, props.items.length)
+  describe('move next', () => {
+    test('should increment index of focused item', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(3)
 
-    expect(item.isFocused).toBe(false)
-    expect(item.isFirstElement).toBe(false)
-    expect(item.isLastElement).toBe(true)
+      focusContainer.moveNext()
+      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+    })
+
+    test('should call set focus index function if there are any items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
+
+      focusContainer.moveNext()
+      expect(setFocusAt).toBeCalled()
+    })
+
+    test('should skip call to set focus index function if there are no items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 0, setFocusAtFn: setFocusAt })
+
+      focusContainer.moveNext()
+      expect(setFocusAt).not.toBeCalled()
+    })
+
+    test('focused item index should not exceed range of valid indexes', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(4)
+
+      focusContainer.moveNext()
+
+      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+    })
   })
 
-  test('Should move previous', () => {
-    state.focusItemOnIdx = 1
+  describe('move first', () => {
+    test('should set focused item index to 0', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(3)
 
-    focusContainer.movePrevious()
+      focusContainer.moveFirst()
+      expect(focusContainer.getFocusedItemIndex()).toBe(0)
+    })
 
-    expect(setStateMock).toBeCalled()
+    test('should call set focus index function if there are any items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
+
+      focusContainer.moveFirst()
+      expect(setFocusAt).toBeCalled()
+    })
+
+    test('should skip call to set focus index function if there are no items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 0, setFocusAtFn: setFocusAt })
+
+      focusContainer.moveFirst()
+      expect(setFocusAt).not.toBeCalled()
+    })
   })
 
-  test('Should not move previous, if first item', () => {
-    state.focusItemOnIdx = 0
+  describe('move last', () => {
+    test('should set focused item index to last index of valid range', () => {
+      const focusContainer = createFocusContainer({ itemsCount: 5 })
+      focusContainer.syncFocusedItemIndex(2)
 
-    focusContainer.movePrevious()
+      focusContainer.moveLast()
+      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+    })
 
-    expect(setStateMock).not.toBeCalled()
-  })
+    test('should call set focus index function if there are any items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
 
-  test('Should move next', () => {
-    state.focusItemOnIdx = 1
+      focusContainer.moveLast()
+      expect(setFocusAt).toBeCalled()
+    })
 
-    focusContainer.moveNext()
+    test('should skip call to set focus index function if there are no items', () => {
+      const setFocusAt = jest.fn()
+      const focusContainer = createFocusContainer({ itemsCount: 0, setFocusAtFn: setFocusAt })
 
-    expect(setStateMock).toBeCalled()
-  })
-
-  test('Should not move next, if last item', () => {
-    state.focusItemOnIdx = props.items.length - 1
-
-    focusContainer.moveNext()
-
-    expect(setStateMock).not.toBeCalled()
-  })
-
-  test('Should move first', () => {
-    state.focusItemOnIdx = 1
-
-    focusContainer.moveFirst()
-
-    expect(setStateMock).toBeCalled()
-  })
-
-  test('Should not move first, if first item', () => {
-    state.focusItemOnIdx = 0
-
-    focusContainer.moveFirst()
-
-    expect(setStateMock).not.toBeCalled()
-  })
-
-  test('Should move last', () => {
-    state.focusItemOnIdx = 1
-
-    focusContainer.moveLast()
-
-    expect(setStateMock).toBeCalled()
-  })
-
-  test('Should not move last, if last item', () => {
-    state.focusItemOnIdx = props.items.length - 1
-
-    focusContainer.moveLast()
-
-    expect(setStateMock).not.toBeCalled()
+      focusContainer.moveLast()
+      expect(setFocusAt).not.toBeCalled()
+    })
   })
 })
