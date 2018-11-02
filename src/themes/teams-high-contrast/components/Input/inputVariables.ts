@@ -1,10 +1,12 @@
+import { pxToRem } from '../../../../lib'
+
 export default (siteVars: any) => {
   return {
     backgroundColor: siteVars.bodyBackground,
-    borderColor: 'white',
-    borderBottomColor: siteVars.accessibleYellow,
+    border: `${pxToRem(1)} solid ${siteVars.bodyColor}`,
+    boxShadow: `0 ${pxToRem(1)} 0 ${siteVars.accessibleYellow}`,
     fontColor: siteVars.bodyColor,
     iconColor: siteVars.bodyColor,
-    inputFocusBorderColor: siteVars.accessibleYellow,
+    inputFocusBorderBottomColor: siteVars.accessibleYellow,
   }
 }
