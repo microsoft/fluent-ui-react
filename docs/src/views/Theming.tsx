@@ -40,7 +40,7 @@ export default () => (
       value={[
         `<Provider theme={{ siteVariables: { brand: 'hotpink' } }}>`,
         `  <div>`,
-        `    <Button type="primary">Branding</Button>`,
+        `    <Button primary>Branding</Button>`,
         `    <Divider type="primary">Branding</Divider>`,
         `  </div>`,
         `</Provider>`,
@@ -48,7 +48,7 @@ export default () => (
       render={() => (
         <Provider theme={{ siteVariables: { brand: 'hotpink' }, componentVariables: {} }}>
           <div>
-            <Button type="primary">Branding</Button>
+            <Button primary>Branding</Button>
             <Divider type="primary">Branding</Divider>
           </div>
         </Provider>
@@ -214,17 +214,17 @@ export default () => (
     <Button
       as={NavLink}
       content="Accessibility"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="/accessibility"
     />
     <Button
       as={NavLink}
       content="Theming Examples"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="theming-examples"
     />
   </DocPage>
