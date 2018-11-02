@@ -129,29 +129,20 @@ describe('Button', () => {
   })
 
   describe('type', () => {
-    const typeProp = 'type'
+    const types = ['button', 'submit', 'button']
 
     test('is not set by default', () => {
-      const btnType = mountWithProviderAndGetComponent(Button, <Button />).prop(typeProp)
-      expect(btnType).toBeUndefined()
+      const renderedComponent = mountWithProviderAndGetComponent(Button, <Button />)
+
+      expect(renderedComponent.prop('type')).toBeUndefined()
     })
 
-    test('can be set to primary', () => {
-      const type = 'primary'
-      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
-        typeProp,
-      )
+    types.forEach(type => {
+      test(`can be set to "${type}"`, () => {
+        const renderedComponent = mountWithProviderAndGetComponent(Button, <Button type={type} />)
 
-      expect(btnType).toEqual(type)
-    })
-
-    test('can be set to secondary', () => {
-      const type = 'secondary'
-      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
-        typeProp,
-      )
-
-      expect(btnType).toEqual(type)
+        expect(renderedComponent.prop('type')).toEqual(type)
+      })
     })
   })
 

@@ -74,7 +74,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
               size: 'big',
               variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
             },
-            type: 'primary',
+            primary: true,
           }))}
           styles={{ marginRight: '20px' }}
         />

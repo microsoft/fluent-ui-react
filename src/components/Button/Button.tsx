@@ -32,9 +32,11 @@ export interface ButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<ButtonProps>
   onFocus?: ComponentEventHandler<ButtonProps>
+  primary?: boolean
   renderIcon?: ShorthandRenderFunction
   text?: boolean
-  type?: 'primary' | 'secondary'
+  type?: 'type' | 'submit' | 'reset'
+  secondary?: boolean
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
@@ -105,11 +107,17 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
      */
     onFocus: PropTypes.func,
 
+    /** A button can be formatted to show different levels of emphasis. */
+    primary: PropTypes.bool,
+
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
+    /** The type prop specifies the type of button. */
+    type: PropTypes.oneOf(['button', 'submit', 'reset']),
+
     /** A button can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    secondary: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
@@ -147,7 +155,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     styles,
     rest,
   }): React.ReactNode {
-    const { children, content, disabled, iconPosition } = this.props
+    const { children, content, disabled, iconPosition, type } = this.props
     const hasChildren = childrenExist(children)
 
     return (
@@ -156,6 +164,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
         disabled={disabled}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
+        type={type}
         {...accessibility.attributes.root}
         {...rest}
       >
@@ -183,16 +192,14 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
