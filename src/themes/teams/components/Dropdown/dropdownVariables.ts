@@ -34,6 +34,6 @@ export default (siteVars): DropdownVariables => ({
   listItemHighlightedBackgroundColor: siteVars.brand,
 
   minWidth: pxToRem(128),
-  maxWidth: pxToRem(320),
+  maxWidth: pxToRem(368),
   width: '100%',
 })

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 import { ComponentSlotStyle } from '../../themes/types'
-import Downshift from 'downshift'
+import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
 import Label from '../Label/Label'
 import { UIComponent, customPropTypes } from '../../lib'
 import Input from '../Input/Input'
@@ -27,8 +27,9 @@ export interface DropdownProps {
 
 export interface DropdownState {
   active: DropdownListItem[]
-  inputValue?: string
+  backspaceDelete: boolean
   focused: boolean
+  inputValue?: string
   message?: string
 }
 
@@ -78,7 +79,12 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  state: DropdownState = { active: this.props.multiple ? [] : null, focused: false, inputValue: '' }
+  state: DropdownState = {
+    active: this.props.multiple ? [] : null,
+    focused: false,
+    inputValue: '',
+    backspaceDelete: true,
+  }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
     const { search, multiple } = this.props
@@ -232,7 +238,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
               name: 'close',
               onClick: this.onCloseIconClick.bind(this, item),
               onKeyDown: this.onCloseIconKeyDown.bind(this, item),
-              'aria-label': `Remove ${item['name']} from selection.`,
+              'aria-label': `Remove ${item.header} from selection.`,
               'aria-hidden': false,
               role: 'button',
             }}
@@ -253,12 +259,16 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   onInputKeyUpIfMultiple = event => {
-    const { inputValue, active } = this.state
+    const { inputValue, active, backspaceDelete } = this.state
 
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Backspace:
         if (inputValue === '' && active.length > 0) {
-          this.removeFromActive()
+          if (!backspaceDelete) {
+            this.setState({ backspaceDelete: true })
+          } else {
+            this.removeFromActive()
+          }
         }
       default:
         return
@@ -299,11 +309,12 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     }
   }
 
-  stateReducer = (state, changes) => {
+  stateReducer = (state: DownshiftState<any>, changes: StateChangeOptions<any>) => {
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
         this.setState({
           inputValue: changes.inputValue,
+          backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
         })
         return changes
       default:
