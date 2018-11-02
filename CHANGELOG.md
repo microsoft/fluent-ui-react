@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))
+- Added Dark and Contrast theme variables for `Header` @bcalvery ([#427](https://github.com/stardust-ui/react/pull/427))
 
 <!--------------------------------[ v0.11.0 ]------------------------------- -->
 ## [v0.11.0](https://github.com/stardust-ui/react/tree/v0.11.0) (2018-10-30)
