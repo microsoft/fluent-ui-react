@@ -3,10 +3,6 @@ import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
-  label: ({ variables: v }): ICSSInJSStyle => ({
-    backgroundColor: v.labelBackgroundColor,
-  }),
-
   containerDiv: ({ variables: v, props: p }): ICSSInJSStyle => {
     const { focused } = p
 
@@ -20,7 +16,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderBottom: v.containerDivBorderBottom,
       backgroundColor: v.containerDivBackgroundColor,
       borderColor: v.containerDivBorderColor,
-      // width: '30rem',
+      maxWidth: v.maxWidth,
+      minWidth: v.minWidth,
       ...(focused && {
         borderColor: v.containerDivFocusBorderColor,
         borderRadius: v.containerDivFocusBorderRadius,
@@ -49,12 +46,14 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     borderColor: 'transparent',
   }),
 
-  list: (): ICSSInJSStyle => ({
+  list: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
     zIndex: 1000,
     maxHeight: '20rem',
     overflowY: 'hidden',
-    width: '30rem',
+    maxWidth: v.maxWidth,
+    minWidth: v.minWidth,
+    width: v.width,
   }),
 
   listItemRoot: ({ variables: v }): ICSSInJSStyle => ({

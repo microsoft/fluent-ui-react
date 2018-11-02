@@ -18,7 +18,6 @@ export interface DropdownProps {
   className?: string
   fluid?: boolean
   items?: DropdownListItem[]
-  label?: ShorthandValue
   multiple?: boolean
   onChange?: (active: DropdownListItem[]) => any
   placeholder?: string
@@ -59,9 +58,6 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     /** Shorthand array of props for ListItem. */
     items: customPropTypes.collectionShorthand,
 
-    /** Dropdown can have a label. */
-    label: customPropTypes.itemShorthand,
-
     /** A dropdown can have a multiple selection. */
     multiple: PropTypes.bool,
 
@@ -85,7 +81,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   state: DropdownState = { active: this.props.multiple ? [] : null, focused: false, inputValue: '' }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
-    const { label, search, multiple } = this.props
+    const { search, multiple } = this.props
     const { inputValue } = this.state
     const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
 
@@ -105,17 +101,10 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
             isOpen,
             highlightedIndex,
             selectItemAtIndex,
-            getLabelProps,
             getRootProps,
           }) => {
             return (
-              <div>
-                {Label.create(label, {
-                  defaultProps: {
-                    styles: styles.label,
-                    ...getLabelProps(),
-                  },
-                })}
+              <React.Fragment>
                 <div style={styles.containerDiv} onClick={this.onContainerClick.bind(this, isOpen)}>
                   <span aria-live="assertive" style={styles.ariaLiveSpan}>
                     {this.state.message}
@@ -139,7 +128,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                   isOpen,
                   highlightedIndex,
                 )}
-              </div>
+              </React.Fragment>
             )
           }}
         </Downshift>
