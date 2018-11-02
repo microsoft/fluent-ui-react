@@ -200,9 +200,9 @@ definitions.push({
   },
 })
 
-// Wraps component in FocusZone allowing arrow key navigation through the children of the component.
+// [Circular navigation] Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
 definitions.push({
-  regexp: /Wraps component in FocusZone allowing arrow key navigation through the children of the component.\.+/g,
+  regexp: /Wraps component in FocusZone allowing circular arrow key navigation through the children of the component\.+/g,
   testMethod: (parameters: TestMethod) => {
     const property = {
       isCircularNavigation: undefined,
