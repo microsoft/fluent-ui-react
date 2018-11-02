@@ -5,8 +5,7 @@ import { truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
-    const primary = type === 'primary'
+    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
 
     const {
       height,

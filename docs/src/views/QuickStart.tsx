@@ -52,7 +52,7 @@ export default () => (
         `import { Button } from '@stardust-ui/react'`,
         ``,
         `export default () => (`,
-        `  <Button type="primary" content="Theming" icon="arrow right" iconPosition="after" />`,
+        `  <Button content="Theming" icon="arrow right" iconPosition="after" primary />`,
         `)`,
       ].join('\n')}
     />
@@ -63,9 +63,9 @@ export default () => (
     <Button
       as={NavLink}
       content="Stardust Glossary"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="glossary"
     />
   </DocPage>
