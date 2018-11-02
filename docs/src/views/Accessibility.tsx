@@ -485,11 +485,9 @@ export default () => (
     </p>
     <p>Example:</p>
     <CodeSnippet
-      value={[
-        'return (',
-        ' <Button icon="book" aria-label="Confirm booking" primary />',
-        ')',
-      ].join('\n')}
+      value={['return (', ' <Button icon="book" aria-label="Confirm booking" primary />', ')'].join(
+        '\n',
+      )}
     />
     <p>Rendered HTML:</p>
     <CodeSnippet
