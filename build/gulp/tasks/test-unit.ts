@@ -13,10 +13,13 @@ const jest = ({ watch = false } = {}) => cb => {
   // let the gulp task complete to prevent blocking subsequent tasks
   const command = [
     'jest --coverage',
-    ...(watch ? ['--watchAll'] : []),
-    ...(argv.runInBand ? ['--runInBand'] : []),
-    ...(argv.maxWorkers ? [`--maxWorkers=${argv.maxWorkers}`] : []),
-  ].join(' ')
+    watch && '--watchAll',
+    argv.runInBand && '--runInBand',
+    argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return sh(command)
 }
 
