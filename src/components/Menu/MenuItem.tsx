@@ -44,6 +44,9 @@ export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
 class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
