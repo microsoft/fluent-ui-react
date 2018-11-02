@@ -139,6 +139,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
     const popupContent = this.renderPopupContent(rtl, accessibility)
 
+    if (this.state.open) {
+      console.log('render', this.contentElement)
+    }
+
     return (
       <>
         {this.renderTrigger(accessibility)}
@@ -192,6 +196,17 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 
+  contentElement: HTMLElement
+  setContentElement = (elem, ref) =>  {
+    this.contentElement = elem
+    ref(elem)
+  }
+
+  componentDidUpdate() {
+    console.log('this.contentElemen', this.contentElement)
+    this.contentElement && this.contentElement.focus()
+  }
+
   private renderPopperChildren = (
     rtl: boolean,
     accessibility: AccessibilityBehavior,
@@ -200,7 +215,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const { content } = this.props
 
     return (
-      <Ref innerRef={domElement => ref(domElement)}>
+      <Ref innerRef={domElement => this.setContentElement(domElement, ref)}>
         {Popup.Content.create(content, {
           defaultProps: {
             ...(rtl && { dir: 'rtl' }),

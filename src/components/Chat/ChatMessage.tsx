@@ -23,7 +23,7 @@ import {
 } from '../../../types/utils'
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityActionHandlers, AccessibilityBehavior } from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
@@ -159,7 +159,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
+        {childrenPropExists ? children : this.renderContent(classes, styles, variables, accessibility)}
       </ElementType>
     )
   }
@@ -168,6 +168,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     classes: ComponentSlotClasses,
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
+    accessibility: AccessibilityBehavior,
   ) => {
     const {
       author,
@@ -212,23 +213,29 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       styles: styles.content,
       variables: variables.content,
       render: renderContent,
+      tabIndex: 0,
     })
+
+    const renderMainArea = ({ main, classes }) => {
+      return main &&  <div className={cx('ui-layout__main chat-message-layout', classes.main)}>{main}</div>
+    }
 
     return (
       <Layout
         start={!mine && avatarElement}
+        renderMainArea={renderMainArea}
         main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={contentElement}
-          />
+            <Layout
+              className={classes.content}
+              vertical
+              start={
+                <>
+                  {!mine && authorElement}
+                  {timestampElement}
+                </>
+              }
+              main={contentElement}
+            />
         }
         end={mine && avatarElement}
       />

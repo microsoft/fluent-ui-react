@@ -10,10 +10,11 @@ const menuBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'menu',
+      'data-is-focusable': true,
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,

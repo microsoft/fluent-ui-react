@@ -108,6 +108,8 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
     )
   }
   if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
+
+    console.log(config)
     const originalElementType = config.ElementType
     config.ElementType = FabricFocusZone as any
     config.rest = { ...config.rest, ...focusZoneDefinition.props }

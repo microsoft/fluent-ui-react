@@ -154,10 +154,15 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     )
   }
 
+  handleFocus = () => {
+    console.log('menu focused', this)
+    this.focusZone && this.focusZone.focus()
+  }
+
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} onFocus={this.handleFocus}>
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )

@@ -6,6 +6,12 @@ import { pxToRem } from '../../../../lib'
 const px10asRem = pxToRem(10)
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    ':focus': {
+      outline: 'none',
+      '& .chat-message-layout': {
+        outline: '1px solid red',
+      },
+    },
     display: 'inline-block',
     position: 'relative',
     marginTop: '1rem',
