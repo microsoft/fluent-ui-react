@@ -128,24 +128,6 @@ describe('Button', () => {
     })
   })
 
-  describe('type', () => {
-    const types = ['button', 'submit', 'button']
-
-    test('is not set by default', () => {
-      const renderedComponent = mountWithProviderAndGetComponent(Button, <Button />)
-
-      expect(renderedComponent.prop('type')).toBeUndefined()
-    })
-
-    types.forEach(type => {
-      test(`can be set to "${type}"`, () => {
-        const renderedComponent = mountWithProviderAndGetComponent(Button, <Button type={type} />)
-
-        expect(renderedComponent.prop('type')).toEqual(type)
-      })
-    })
-  })
-
   describe('circular', () => {
     const circularProp = 'circular'
 
