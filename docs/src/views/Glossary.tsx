@@ -194,17 +194,17 @@ export default () => (
     <Button
       as={NavLink}
       content="Quick Start"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="quick-start"
     />
     <Button
       as={NavLink}
       content="Accessibility"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="accessibility"
     />
   </DocPage>

@@ -27,7 +27,7 @@ export interface ButtonGroupProps {
 }
 
 /**
- * A button group.
+ * A button group presents multiple related actions.
  */
 class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static displayName = 'ButtonGroup'
