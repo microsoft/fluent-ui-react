@@ -208,67 +208,6 @@ export default () => (
       <NavLink to="components/provider">Provider</NavLink> at the root of your app.
     </p>
 
-    <Header as="h2" content="Keyframes" />
-    <p>
-      Keyframes are also part of the theme. You can define your keyframes in the keyframes property
-      inside your theme, and reuse them in the styles for the different components.
-    </p>
-
-    <ExampleSnippet
-      value={[
-        `<Provider theme={{ `,
-        `  keyframes: {`,
-        `    spinner: () => ({`,
-        `      from: {`,
-        `        transform: 'rotate(0deg)',`,
-        `      },`,
-        `      to: {`,
-        `        transform: 'rotate(360deg)',`,
-        `      },`,
-        `    })`,
-        `  }`,
-        `}}>`,
-        `  <Icon`,
-        `    name="spinner"`,
-        `    size="big"`,
-        `    styles={({theme}) => (theme.keyframes.spinner ? {animation:`,
-        `      theme.renderer.renderKeyframe(theme.keyframes.spinner, {})} + '1s infinite'} : {})}`,
-        `  />`,
-        `</Provider>`,
-      ].join('\n')}
-      render={() => (
-        <Provider
-          theme={{
-            keyframes: {
-              spinner: () => ({
-                from: {
-                  transform: 'rotate(0deg)',
-                },
-                to: {
-                  transform: 'rotate(360deg)',
-                },
-              }),
-            },
-          }}
-        >
-          <Icon
-            name="spinner"
-            size="big"
-            styles={({ theme }) =>
-              theme.keyframes.spinner
-                ? {
-                    animation: `${theme.renderer.renderKeyframe(
-                      theme.keyframes.spinner,
-                      {},
-                    )} 1s infinite`,
-                  }
-                : {}
-            }
-          />
-        </Provider>
-      )}
-    />
-
     <br />
     <Divider size={1} />
     <br />

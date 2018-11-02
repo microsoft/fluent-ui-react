@@ -4,7 +4,12 @@ import { callable, customPropTypes, UIComponent, createShorthandFactory } from '
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
+import {
+  ComponentSlotStyle,
+  ComponentVariablesInput,
+  SvgIconSpec,
+  Animation,
+} from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -20,6 +25,7 @@ export type IconSize =
   | 'massive'
 
 export interface IconProps {
+  animation?: Animation
   as?: any
   bordered?: boolean
   circular?: boolean
@@ -44,6 +50,9 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   static displayName = 'Icon'
 
   static propTypes = {
+    /** Generic animation property for adding CSS animation to the component's root element */
+    animation: PropTypes.object,
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 

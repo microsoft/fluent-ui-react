@@ -155,6 +155,38 @@ const renderComponent = <P extends {}>(
           props.variables,
         )(siteVariables, stateAndProps)
 
+        let animationCSSProp = {}
+
+        if (props.animation) {
+          const {
+            keyframe,
+            name,
+            keyframeParams,
+            delay,
+            direction,
+            duration,
+            fillMode,
+            iterationCount,
+            playState,
+            timingFunction,
+          } = props.animation
+          const evaluatedName = keyframe
+            ? theme.renderer.renderKeyframe(keyframe, keyframeParams)
+            : theme.keyframes[name]
+              ? theme.renderer.renderKeyframe(theme.keyframes[name], keyframeParams)
+              : ''
+          animationCSSProp = {
+            animationName: evaluatedName,
+            animationDelay: delay,
+            animationDirection: direction,
+            animationDuration: duration,
+            animationFillMode: fillMode,
+            animationIterationCount: iterationCount,
+            animationPlayState: playState,
+            animationTimingFunction: timingFunction,
+          }
+        }
+
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
           componentStyles[displayName],
@@ -172,6 +204,12 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           theme,
         }
+
+        mergedStyles.root = {
+          ...callable(mergedStyles.root)(styleParam),
+          ...animationCSSProp,
+        }
+
         const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
@@ -194,6 +232,7 @@ const renderComponent = <P extends {}>(
         if (accessibility.focusZone) {
           return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
+
         return render(config)
       }}
     />

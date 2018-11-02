@@ -7,7 +7,7 @@ import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { ComponentVariablesInput, ComponentSlotStyle, Animation } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
@@ -19,6 +19,7 @@ import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface ButtonProps {
+  animation?: Animation
   as?: any
   accessibility?: Accessibility
   children?: ReactChildren
@@ -58,6 +59,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
+    /** Generic animation property for adding CSS animation to the component's root element */
+    animation: PropTypes.object,
+
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 

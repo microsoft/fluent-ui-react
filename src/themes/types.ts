@@ -115,6 +115,18 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
+export type Animation = {
+  keyframe?: any
+  name?: string
+  keyframeParams?: object
+  delay?: string
+  direction?: string
+  duration?: string
+  fillMode?: string
+  iterationCount?: string
+  playState?: string
+  timingFunction?: string
+}
 // ========================================================
 // Static Styles
 // ========================================================

@@ -43,6 +43,7 @@ const keyframes = {
       transform: 'rotate(360deg)',
     },
   }),
+  popmotion: { values: [0, 1, 3] },
 }
 
 export default {
