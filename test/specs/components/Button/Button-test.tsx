@@ -153,5 +153,18 @@ describe('Button', () => {
 
       expect(onClick).not.toHaveBeenCalled()
     })
+
+    test('is called with (e, props) on a click', () => {
+      const onClick = jest.fn()
+      const button = mountWithProviderAndGetComponent(Button, <Button onClick={onClick} />)
+
+      button.simulate('click')
+
+      expect(onClick).toHaveBeenCalledTimes(1)
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ onClick }),
+      )
+    })
   })
 })
