@@ -31,8 +31,9 @@ export interface MenuProps {
   items?: ShorthandValue[]
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  primary?: boolean
   renderItem?: ShorthandRenderFunction
-  type?: 'primary' | 'secondary'
+  secondary?: boolean
   underlined?: boolean
   vertical?: boolean
   styles?: ComponentSlotStyle
@@ -86,6 +87,9 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
+    /** The menu can have primary type. */
+    primary: PropTypes.bool,
+
     /**
      * A custom render iterator for rendering each of the Menu items.
      * The default component, props, and children are available for each item.
@@ -96,8 +100,8 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
      */
     renderItem: PropTypes.func,
 
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    /** The menu can have secondary type. */
+    secondary: PropTypes.bool,
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
@@ -135,7 +139,17 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, pills, pointing, renderItem, type, underlined, vertical } = this.props
+    const {
+      iconOnly,
+      items,
+      pills,
+      pointing,
+      primary,
+      renderItem,
+      secondary,
+      underlined,
+      vertical,
+    } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -144,7 +158,8 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           iconOnly,
           pills,
           pointing,
-          type,
+          primary,
+          secondary,
           underlined,
           variables,
           vertical,
