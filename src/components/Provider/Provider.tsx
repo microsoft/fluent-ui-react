@@ -47,7 +47,7 @@ class Provider extends React.Component<ProviderProps, any> {
       staticStyles: PropTypes.arrayOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
       ),
-      keyframes: PropTypes.object,
+      animations: PropTypes.object,
     }),
     children: PropTypes.element.isRequired,
   }

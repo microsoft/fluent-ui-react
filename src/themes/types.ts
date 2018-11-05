@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype'
-import { IRenderer as FelaRenderer } from 'fela'
+import { IRenderer as FelaRenderer, TRule } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
 
@@ -115,18 +115,19 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
-export type Animation = {
-  keyframe?: any
-  name?: string
-  keyframeParams?: object
-  delay?: string
-  direction?: string
-  duration?: string
-  fillMode?: string
-  iterationCount?: string
-  playState?: string
-  timingFunction?: string
-}
+export type Animation =
+  | {
+      name: string
+      keyframeParams?: object
+      delay?: string
+      direction?: string
+      duration?: string
+      fillMode?: string
+      iterationCount?: string
+      playState?: string
+      timingFunction?: string
+    }
+  | string
 // ========================================================
 // Static Styles
 // ========================================================
@@ -141,6 +142,18 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
 export type StaticStyles = StaticStyle[]
 
+export interface ThemeAnimation {
+  keyframe: TRule<any>
+  keyframeParams?: object
+  delay?: string
+  direction?: string
+  duration?: string
+  fillMode?: string
+  iterationCount?: string
+  playState?: string
+  timingFunction?: string
+}
+
 // ========================================================
 // Theme
 // ========================================================
@@ -153,7 +166,7 @@ export interface ThemeInput {
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
-  keyframes?: { [key: string]: any }
+  animations?: { [key: string]: ThemeAnimation }
 }
 
 // Component variables and styles must be resolved by the component after
@@ -173,7 +186,7 @@ export interface ThemePrepared {
   renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
-  keyframes: { [key: string]: any }
+  animations: { [key: string]: ThemeAnimation }
 }
 
 export interface ThemeComponentStylesInput {

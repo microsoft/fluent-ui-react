@@ -15,6 +15,7 @@ import {
   ThemePrepared,
   StaticStyle,
   ThemeIcons,
+  ThemeAnimation,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -176,6 +177,13 @@ export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeI
   return Object.assign(target, ...sources)
 }
 
+export const mergeAnimations = (
+  target: { [key: string]: ThemeAnimation },
+  ...sources: { [key: string]: ThemeAnimation }[]
+): { [key: string]: ThemeAnimation } => {
+  return Object.assign(target, ...sources)
+}
+
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
@@ -184,7 +192,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     fontFaces: [],
     staticStyles: [],
     icons: {},
-    keyframes: {},
+    animations: {},
   } as ThemePrepared
 
   return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
@@ -209,7 +217,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
 
-    acc.keyframes = { ...acc.keyframes, ...next.keyframes }
+    acc.animations = mergeAnimations(acc.animations, next.animations)
 
     return acc
   }, emptyTheme)

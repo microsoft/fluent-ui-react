@@ -1,41 +1,36 @@
 import React from 'react'
 import { Icon } from '@stardust-ui/react'
 
-const keyframe = ({ startColor, endColor }) => ({
-  from: { color: startColor },
-  to: { color: endColor },
-})
-
 class IconExample extends React.Component {
   state = {
     playState: 'running',
   }
   timeout
   componentDidMount() {
+    // after 10s pause the animation
     this.timeout = setTimeout(() => {
       this.setState({ playState: 'paused' })
-    }, 15000)
+    }, 10000)
   }
   componentWillUnmount() {
     clearTimeout(this.timeout)
   }
   render() {
-    console.log(this.state.playState)
     return (
       <div>
+        <Icon name="chess rook" size="big" animation="spinner" />
         <Icon
-          name="umbrella"
+          name="chess rook"
+          size="big"
+          animation={{ name: 'spinner', duration: '1s', playState: this.state.playState }}
+        />
+        <Icon name="chess rook" size="big" animation="colorChanger" />
+        <Icon
+          name="chess rook"
           size="big"
           animation={{
-            keyframe,
-            keyframeParams: { startColor: 'red', endColor: 'yellow' },
-            duration: '5s',
-            delay: '2s',
-            iterationCount: 'infinite',
-            direction: 'alternate',
-            fillMode: 'backwards',
-            playState: this.state.playState,
-            timingFunction: 'ease',
+            name: 'colorChanger',
+            keyframeParams: { startColor: 'blue', endColor: 'green' },
           }}
         />
       </div>

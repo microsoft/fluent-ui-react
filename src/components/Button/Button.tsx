@@ -19,7 +19,7 @@ import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface ButtonProps {
-  animation?: Animation
+  animation?: string | Animation
   as?: any
   accessibility?: Accessibility
   children?: ReactChildren
@@ -60,7 +60,20 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
 
   public static propTypes = {
     /** Generic animation property for adding CSS animation to the component's root element */
-    animation: PropTypes.object,
+    animation: PropTypes.oneOfType([
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        keyframeParams: PropTypes.object,
+        delay: PropTypes.string,
+        direction: PropTypes.string,
+        duration: PropTypes.string,
+        fillMode: PropTypes.string,
+        iterationCount: PropTypes.string,
+        playState: PropTypes.string,
+        timingFunction: PropTypes.string,
+      }),
+      PropTypes.string,
+    ]),
 
     /** An element type to render as (string or function). */
     as: customPropTypes.as,

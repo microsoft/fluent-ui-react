@@ -25,7 +25,7 @@ export type IconSize =
   | 'massive'
 
 export interface IconProps {
-  animation?: Animation
+  animation?: string | Animation
   as?: any
   bordered?: boolean
   circular?: boolean
@@ -51,7 +51,20 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
 
   static propTypes = {
     /** Generic animation property for adding CSS animation to the component's root element */
-    animation: PropTypes.object,
+    animation: PropTypes.oneOfType([
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        keyframeParams: PropTypes.object,
+        delay: PropTypes.string,
+        direction: PropTypes.string,
+        duration: PropTypes.string,
+        fillMode: PropTypes.string,
+        iterationCount: PropTypes.string,
+        playState: PropTypes.string,
+        timingFunction: PropTypes.string,
+      }),
+      PropTypes.string,
+    ]),
 
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
