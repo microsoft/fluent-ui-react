@@ -184,6 +184,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
 
   private handleFocus = (e: React.SyntheticEvent) => {
     this.setState(IsFromKeyboard.state())
+    e.stopPropagation()
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

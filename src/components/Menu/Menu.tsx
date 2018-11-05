@@ -123,7 +123,8 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
-      const { index } = itemProps
+      const props = itemProps || predefinedProps
+      const { index } = props
 
       this.trySetState({ activeIndex: index })
 
@@ -154,15 +155,20 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     )
   }
 
-  handleFocus = () => {
-    console.log('menu focused', this)
-    this.focusZone && this.focusZone.focus()
+  handleFocus = e => {
+    this.focusZone && this.focusZone.focus(true)
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} onFocus={this.handleFocus}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={classes.root}
+        onFocus={this.handleFocus}
+      >
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
