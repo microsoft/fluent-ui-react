@@ -45,3 +45,5 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
+
+export { default as Transition } from './components/Transition/transitionVariables'

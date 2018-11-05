@@ -50,3 +50,5 @@ export { default as Segment } from './components/Segment/segmentStyles'
 export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
+
+export { default as Transition } from './components/Transition/transitionStyles'
