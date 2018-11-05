@@ -3,7 +3,7 @@ import { TeamsSvgIconSpec } from '../types'
 
 export default {
   icon: ({ classes }) => (
-    <svg viewBox="0 0 32 32" role="presentation" focusable="false">
+    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
       <g className={classes.filledPart}>
         <circle cx="22" cy="16" r="2" />
         <circle cx="16" cy="16" r="2" />

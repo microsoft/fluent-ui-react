@@ -3,7 +3,7 @@ import { Icon } from '@stardust-ui/react'
 
 const IconExampleDisabled = () => (
   <div>
-    <Icon disabled name="umbrella" size="big" />
+    <Icon disabled name="call-video" size="big" />
   </div>
 )
 

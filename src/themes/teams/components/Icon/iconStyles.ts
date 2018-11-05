@@ -4,38 +4,43 @@ import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
-
+import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 0.3],
-  ['mini', 0.4],
-  ['tiny', 0.5],
-  ['small', 0.75],
-  ['normal', 1],
-  ['large', 1.5],
-  ['big', 2],
-  ['huge', 4],
-  ['massive', 8],
+  ['micro', 8],
+  ['mini', 10],
+  ['tiny', 12],
+  ['small', 14],
+  ['normal', 16],
+  ['large', 20],
+  ['big', 32],
+  ['huge', 40],
+  ['massive', 64],
 ])
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
 }
 
-const getSize = size => `${sizes.get(size)}em`
-
-const getFontStyles = (iconName: string, themeIcon?: ResultOf<FontIconSpec>): ICSSInJSStyle => {
+const getFontStyles = (
+  size: string,
+  iconName: string,
+  themeIcon?: ResultOf<FontIconSpec>,
+): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
-    textAlign: 'center',
+    fontSize: getSize(size),
     lineHeight: 1,
-    width: '1.18em',
+    textAlign: 'center',
 
     '::before': {
       content,
+      display: 'block',
+      width: getSize(size),
+      height: getSize(size),
     },
   }
 }
@@ -53,20 +58,22 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
+const getBorderedStyles = (circular, borderColor, color): ICSSInJSStyle => {
   return {
-    ...getPaddedStyle(isFontBased),
+    ...getPaddedStyle(),
 
-    boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
+    boxShadow: `0 0 0 .05rem ${borderColor || color || 'black'} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
 
-const getPaddedStyle = (isFontBased: boolean): ICSSInJSStyle => ({
-  padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
-  width: '2em',
-  height: '2em',
+const getPaddedStyle = (): ICSSInJSStyle => ({
+  padding: pxToRem(4),
 })
+
+const getSize = size => pxToRem(sizes.get(size))
+
+const getIconColor = color => color || 'currentColor'
 
 const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   root: ({
@@ -76,42 +83,32 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
     const isFontBased = !iconSpec || !iconSpec.isSvg
-    const iconColor = v.color || 'currentColor'
 
     return {
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
-      fontSize: getSize(size),
       margin: v.margin,
       speak: 'none',
       verticalAlign: 'middle',
-      overflow: 'hidden',
-      width: '1em',
-      height: '1em',
+      padding: '0',
+
+      background: 'cadetblue',
 
       ...(isFontBased &&
-        getFontStyles(name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
+        getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
 
       ...(isFontBased && {
-        color: iconColor,
+        color: getIconColor(v.color),
 
         ...(disabled && {
           color: v.disabledColor,
         }),
       }),
 
-      ...(!isFontBased && {
-        fill: iconColor,
-
-        ...(disabled && {
-          fill: v.disabledColor,
-        }),
-      }),
-
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
+        getBorderedStyles(circular, v.borderColor, v.color)),
     }
   },
 
@@ -133,7 +130,20 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
     }
   },
 
-  svg: getSvgStyle('svg'),
+  svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
+    return {
+      display: 'block',
+      width: getSize(size),
+      height: getSize(size),
+      fill: getIconColor(v.color),
+
+      ...(disabled && {
+        fill: v.disabledColor,
+      }),
+
+      ...getSvgStyle('svg'),
+    }
+  },
 
   g: getSvgStyle('g'),
 
