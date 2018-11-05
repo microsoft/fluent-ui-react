@@ -32,8 +32,9 @@ export interface MenuItemProps {
   onClick?: ComponentEventHandler<MenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
+  primary?: boolean
   renderIcon?: ShorthandRenderFunction
-  type?: 'primary' | 'secondary'
+  secondary?: boolean
   underlined?: boolean
   vertical?: boolean
   styles?: ComponentSlotStyle
@@ -103,8 +104,11 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    /** The menu item can have primary type. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+
+    /** The menu item can have secondary type. */
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
