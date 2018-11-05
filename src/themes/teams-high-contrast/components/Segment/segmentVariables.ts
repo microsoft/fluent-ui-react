@@ -1,9 +1,9 @@
 import { SegmentVariables } from '../../../teams/components/Segment/segmentVariables'
 import { Partial } from 'types/utils'
 
-export default (siteVars: any): Partial<SegmentVariables> => {
+export default (siteVariables: any): Partial<SegmentVariables> => {
   return {
-    background: siteVars.black,
-    // todo: need to affect border
+    background: siteVariables.black,
+    border: '1px solid ' + siteVariables.white,
   }
 }

@@ -6,9 +6,9 @@ export default {
     return {
       padding: variables.padding,
       background: variables.background,
-      border: '1px solid rgba(34,36,38,.15)',
+      border: variables.border,
       borderRadius: variables.borderRadius,
-      boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)',
+      // boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)', Is this build-in shadow necessary for how generic Segment is?
     }
   },
 }
