@@ -123,3 +123,4 @@ export {
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { default as Tree } from './components/Tree'
