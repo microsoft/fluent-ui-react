@@ -22,11 +22,6 @@ const Router = () => (
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />
-        <DocsLayout exact path="/quick-start" component={QuickStart} />
-
-        <MarkdownProvider>
-          <DocsLayout exact path="/quick-start" component={renderPage(QuickStart)} />
-        </MarkdownProvider>
 
         {process.env.NODE_ENV !== 'production' && [
           <DocsLayout
@@ -60,11 +55,17 @@ const Router = () => (
             component={require('./prototypes/SearchPage/index').default}
           />,
         ]}
+
         <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+
+        <MarkdownProvider>
+          <DocsLayout exact path="/quick-start" component={renderPage(QuickStart)} />
+        </MarkdownProvider>
+
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>
