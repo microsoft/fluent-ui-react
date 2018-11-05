@@ -5,15 +5,21 @@ class IconExample extends React.Component {
   state = {
     playState: 'running',
   }
-  timeout
+  pauseTimeout
+  runningTimeout
   componentDidMount() {
     // after 10s pause the animation
-    this.timeout = setTimeout(() => {
+    this.pauseTimeout = setTimeout(() => {
       this.setState({ playState: 'paused' })
     }, 10000)
+    // after 20s run the animation again
+    this.runningTimeout = setTimeout(() => {
+      this.setState({ playState: 'running' })
+    }, 20000)
   }
   componentWillUnmount() {
-    clearTimeout(this.timeout)
+    clearTimeout(this.pauseTimeout)
+    clearTimeout(this.runningTimeout)
   }
   render() {
     return (
