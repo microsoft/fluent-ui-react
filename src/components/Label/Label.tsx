@@ -39,7 +39,7 @@ export interface LabelProps {
 }
 
 /**
- * A label displays content classification
+ * A label is used to classify content.
  */
 class Label extends UIComponent<Extendable<LabelProps>, any> {
   static displayName = 'Label'

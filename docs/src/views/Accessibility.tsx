@@ -397,7 +397,7 @@ export default () => (
           "  { key: 'events', content: 'Upcoming Events' },",
           ']',
           '',
-          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} type="primary" />',
+          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} primary />',
           '',
           'export default MenuExamplePrimary',
         ].join('\n')}

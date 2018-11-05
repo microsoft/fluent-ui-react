@@ -8,7 +8,7 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, type, underlined, vertical } = props
+    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
@@ -24,14 +24,14 @@ export default {
         !(pointing && vertical) &&
         !underlined && {
           ...solidBorder(variables.defaultBorderColor),
-          ...(type === 'primary' && {
-            ...solidBorder(variables.typePrimaryBorderColor),
+          ...(primary && {
+            ...solidBorder(variables.primaryBorderColor),
           }),
           borderRadius: pxToRem(4),
           overflow: 'hidden',
         }),
       ...(underlined && {
-        borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
+        borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
       }),
       minHeight: pxToRem(24),
       margin: 0,

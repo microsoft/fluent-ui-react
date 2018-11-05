@@ -42,9 +42,7 @@ const getShorthandItems = (props?: { disabledItem?: number }) => [
 ]
 
 describe('RadioGroup', () => {
-  describe('isConformant', () => {
-    isConformant(RadioGroup)
-  })
+  isConformant(RadioGroup)
 
   describe('accessibility', () => {
     handlesAccessibility(RadioGroup, {
