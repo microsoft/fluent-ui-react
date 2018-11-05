@@ -58,6 +58,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     lineHeight: variables.headerMediaLineHeight,
   }),
   content: ({ variables }) => ({
+    color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),

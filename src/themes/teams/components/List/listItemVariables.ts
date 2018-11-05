@@ -11,6 +11,7 @@ export default siteVariables => ({
   headerMediaLineHeight: siteVariables.lineHeightSmall,
 
   // Content
+  contentColor: siteVariables.gray02,
   contentFontSize: siteVariables.fontSizes.small,
   contentLineHeight: siteVariables.lineHeightSmall,
 
