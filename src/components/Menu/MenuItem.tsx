@@ -4,20 +4,21 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import { menuItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   accessibility?: Accessibility
   active?: boolean
   as?: any
@@ -25,24 +26,29 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+  onClick?: ComponentEventHandler<MenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
-  type?: 'primary' | 'secondary'
+  primary?: boolean
+  renderIcon?: ShorthandRenderFunction
+  secondary?: boolean
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-export interface IMenuItemState {
+export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -98,8 +104,11 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    /** The menu item can have primary type. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+
+    /** The menu item can have secondary type. */
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
@@ -109,6 +118,15 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
+
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -125,7 +143,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -148,6 +166,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
             {icon &&
               Icon.create(this.props.icon, {
                 defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+                render: renderIcon,
               })}
             {content}
           </a>

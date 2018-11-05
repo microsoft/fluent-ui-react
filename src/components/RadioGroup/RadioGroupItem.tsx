@@ -4,51 +4,54 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
-import Label from '../Label'
+import Label from '../Label/Label'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import Icon from '../Icon/Icon'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface IRadioGroupItemProps {
+export interface RadioGroupItemProps {
   accessibility?: Accessibility
   as?: any
   checked?: boolean
-  checkedChanged?: ComponentEventHandler<IRadioGroupItemProps>
+  checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
   children?: ReactChildren
   className?: string
   label?: React.ReactNode
   defaultChecked?: boolean
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   name?: string
+  renderIcon?: ShorthandRenderFunction
   shouldFocus?: boolean // TODO: RFC #306
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   value?: string | number
   variables?: ComponentVariablesInput
   [isFromKeyboard.propertyName]?: boolean
   vertical?: boolean
 }
 
-export interface IRadioGroupItemState {
+export interface RadioGroupItemState {
   checked: boolean
   [isFromKeyboard.propertyName]: boolean
 }
 
 /**
+ * A single radio within a radio group.
  * @accessibility
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
 class RadioGroupItem extends AutoControlledComponent<
-  Extendable<IRadioGroupItemProps>,
-  IRadioGroupItemState
+  Extendable<RadioGroupItemProps>,
+  RadioGroupItemState
 > {
   private elementRef: HTMLElement
 
@@ -125,6 +128,15 @@ class RadioGroupItem extends AutoControlledComponent<
      */
     checkedChanged: PropTypes.func,
 
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
+
     /** Whether should focus when checked */
     shouldFocus: PropTypes.bool,
 
@@ -161,7 +173,7 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon } = this.props
+    const { label, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -180,6 +192,7 @@ class RadioGroupItem extends AutoControlledComponent<
               size: 'mini',
               variables: variables.icon,
               styles: styles.icon,
+              render: renderIcon,
             },
           })}
           {label}

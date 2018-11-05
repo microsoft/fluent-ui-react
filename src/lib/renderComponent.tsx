@@ -1,5 +1,6 @@
 import * as cx from 'classnames'
 import * as React from 'react'
+import * as _ from 'lodash'
 import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
@@ -7,62 +8,59 @@ import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
+import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
-  IComponentPartClasses,
-  IComponentPartStylesPrepared,
-  IProps,
-  IPropsWithVarsAndStyles,
-  IState,
-  IThemePrepared,
-} from '../../types/theme'
+  ComponentSlotClasses,
+  ComponentSlotStylesPrepared,
+  PropsWithVarsAndStyles,
+  State,
+  ThemePrepared,
+} from '../themes/types'
+import { Props } from '../../types/utils'
 import {
-  IAccessibilityBehavior,
-  IAccessibilityDefinition,
+  AccessibilityBehavior,
+  AccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
-} from './accessibility/interfaces'
+} from './accessibility/types'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import {
-  IFocusZoneProps,
-  IFocusZone,
-  FocusZone as FabricFocusZone,
-} from './accessibility/FocusZone'
+import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 
-export interface IRenderResultConfig<P> {
+export interface RenderResultConfig<P> {
   ElementType: React.ReactType<P>
-  classes: IComponentPartClasses
-  rest: IProps
+  classes: ComponentSlotClasses
+  rest: Props
   variables: ComponentVariablesObject
-  styles: IComponentPartStylesPrepared
-  accessibility: IAccessibilityBehavior
+  styles: ComponentSlotStylesPrepared
+  accessibility: AccessibilityBehavior
   rtl: boolean
-  theme: IThemePrepared
+  theme: ThemePrepared
 }
 
-export type RenderComponentCallback<P> = (config: IRenderResultConfig<P>) => any
+export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
-export interface IRenderConfig {
+export interface RenderConfig {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
-  props: IPropsWithVarsAndStyles
-  state: IState
+  props: PropsWithVarsAndStyles
+  state: State
   actionHandlers: AccessibilityActionHandlers
-  focusZoneRef: (focusZone: IFocusZone) => void
+  focusZoneRef: (focusZone: FocusZone) => void
 }
 
 const getAccessibility = (
-  props: IState & IPropsWithVarsAndStyles,
+  props: State & PropsWithVarsAndStyles,
   actionHandlers: AccessibilityActionHandlers,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: IAccessibilityDefinition = (customAccessibility ||
+  const accessibility: AccessibilityDefinition = (customAccessibility ||
     defaultAccessibility ||
     defaultBehavior)(props)
 
@@ -75,22 +73,22 @@ const getAccessibility = (
 
 /**
  * This function provides compile-time type checking for the following:
- * - if FocusZone implements IFocusZone interface,
- * - if FocusZone properties extend IFocusZoneProps, and
- * - if the passed properties extend IFocusZoneProps.
+ * - if FocusZone implements FocusZone interface,
+ * - if FocusZone properties extend FocusZoneProps, and
+ * - if the passed properties extend FocusZoneProps.
  *
  * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
  * that the new implementation is backwards compatible with the old implementation.
  */
 function wrapInGenericFocusZone<
-  COMPONENT_PROPS extends IFocusZoneProps,
+  COMPONENT_PROPS extends FocusZoneProps,
   PROPS extends COMPONENT_PROPS,
-  COMPONENT extends IFocusZone & React.Component<COMPONENT_PROPS>
+  COMPONENT extends FocusZone & React.Component<COMPONENT_PROPS>
 >(
   FocusZone: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
-  ref: (focusZone: IFocusZone) => void,
+  ref: (focusZone: FocusZone) => void,
 ) {
   props[FOCUSZONE_WRAP_ATTRIBUTE] = true
   return (
@@ -119,7 +117,7 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
 }
 
 const renderComponent = <P extends {}>(
-  config: IRenderConfig,
+  config: RenderConfig,
   render: RenderComponentCallback<P>,
 ): React.ReactNode => {
   const {
@@ -135,7 +133,11 @@ const renderComponent = <P extends {}>(
 
   return (
     <FelaTheme
-      render={(theme: IThemePrepared) => {
+      render={(theme: ThemePrepared) => {
+        if (_.isEmpty(theme)) {
+          logProviderMissingWarning()
+        }
+
         const {
           siteVariables = { fontSizes: {} },
           componentVariables = {},
@@ -154,16 +156,13 @@ const renderComponent = <P extends {}>(
         )(siteVariables, stateAndProps)
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const mergedStyles: IComponentPartStylesPrepared = mergeComponentStyles(
+        const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
           componentStyles[displayName],
           {
             root: props.styles,
           },
         )
-        const accessibility: IAccessibilityBehavior = getAccessibility(
-          stateAndProps,
-          actionHandlers,
-        )
+        const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers)
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
@@ -173,15 +172,15 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           theme,
         }
-        const resolvedStyles: IComponentPartStylesPrepared = Object.keys(mergedStyles).reduce(
+        const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
         )
 
-        const classes: IComponentPartClasses = getClasses(renderer, mergedStyles, styleParam)
+        const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const config: IRenderResultConfig<P> = {
+        const config: RenderResultConfig<P> = {
           ElementType,
           rest,
           classes,

@@ -2,6 +2,10 @@
 
 This is a list of changes made to this Stardust copy of FocusZone in comparison with the original [Fabric FocusZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusZone/FocusZone.tsx).
 
+### fixes
+- With `defaultTabbableElement` prop set tab indexes are not updated accordingly ([#342](https://github.com/stardust-ui/react/pull/342))
+- Remove unused prop `componentRef` ([#397](https://github.com/stardust-ui/react/pull/397))
+
 ### feat(FocusZone): Add embed mode for FocusZone and new Chat behavior [#233](https://github.com/stardust-ui/react/pull/233)
 - Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
 - Replaced `ref={this.setRef}` with `this.setRef(this)` in `componentDidMount` to support functional components, which is needed to pass unit tests with embed.
@@ -34,3 +38,16 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
     - `getRTL` replaced with an `isRtl` property.
     - `createRef` replaced with a custom object and a callback which is necessary anyway because of custom component handling, see above for details.
     - Focus related utilities moved to `focusUtilities.ts`.
+
+## FocusTrapZone Changelog
+
+This is a list of changes made to the Stardust copy of FocusTrapZone in comparison with the original [Fabric FocusTrapZone @ 0f567e05952c6b50c691df2fb72d100b5e525d9e](https://github.com/OfficeDev/office-ui-fabric-react/blob/0f567e05952c6b50c691df2fb72d100b5e525d9e/packages/office-ui-fabric-react/src/components/FocusTrapZone/FocusTrapZone.tsx).
+
+### feat(Accessibility): Add focus trap zone [#239](https://github.com/stardust-ui/react/pull/239)
+- Used Stardust utils instead of Fabric utilities:
+  - Used `eventStack`.
+  - Extended `React.Component` instead of Fabric `BaseComponent`.
+  - Used `ReactDOM.findDOMNode` reference instead of `createRef` for `_root`.
+- Got rid of `componentWillMount` as it deprecated in higher versions of React.
+- Added `aria-hidden` to the body children outside of the Popup to prevent screen reader from reading background information.
+- Renamed `focus` method to `_findElementAndFocusAsync`, made it private and removed `IFocusTrapZone` interface as it's no longer needed.

@@ -33,6 +33,9 @@ const webpackConfig: any = {
   node: {
     fs: 'empty',
     module: 'empty',
+    child_process: 'empty',
+    net: 'empty',
+    readline: 'empty',
   },
   module: {
     noParse: [/\.json$/, /anchor-js/],
@@ -66,6 +69,11 @@ const webpackConfig: any = {
   plugins: [
     new AsyncTypeScriptChecker(),
     new webpack.DefinePlugin(config.compiler_globals),
+    new webpack.ContextReplacementPlugin(
+      /node_modules[\\|/]typescript[\\|/]lib/,
+      /typescript\.js/,
+      false,
+    ),
     new CopyWebpackPlugin([
       {
         from: paths.docsSrc('public'),

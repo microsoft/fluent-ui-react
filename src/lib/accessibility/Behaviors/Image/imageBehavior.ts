@@ -1,8 +1,8 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 
 /**
  * @description
- * Adds attribute 'aria-hidden=true' to <img> tag, if there is no 'alt' attribute provided.
+ * Adds attribute 'aria-hidden=true', if there is no 'alt' property provided.
  * Image is usually only visual representation and therefore is hidden from screen readers.
  */
 

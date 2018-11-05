@@ -3,27 +3,29 @@ import * as React from 'react'
 import { Image, Label, Status } from '../../'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ItemShorthand } from '../../../types/utils'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface IAvatarProps {
+export interface AvatarProps {
   as?: any
   className?: string
-  image?: ItemShorthand
-  label?: ItemShorthand
+  image?: ShorthandValue
+  label?: ShorthandValue
   name?: string
+  renderImage?: ShorthandRenderFunction
+  renderLabel?: ShorthandRenderFunction
+  renderStatus?: ShorthandRenderFunction
   size?: number
-  status?: ItemShorthand
+  status?: ShorthandValue
   getInitials?: (name: string) => string
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
  * An avatar is a graphic representation of user.
- * @accessibility To be discussed
  */
-class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
+class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -54,6 +56,33 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
 
     /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
+
+    /**
+     * A custom render function the image slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderImage: PropTypes.func,
+
+    /**
+     * A custom render function the label slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderLabel: PropTypes.func,
+
+    /**
+     * A custom render function the status slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderStatus: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -88,7 +117,8 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { name, status, image, label, getInitials, size } = this.props as IAvatarPropsWithDefaults
+    const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
+      .props as AvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -99,8 +129,10 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
             title: name,
             styles: styles.image,
           },
+          render: renderImage,
         })}
         {!image &&
+          !renderImage &&
           Label.create(label || {}, {
             defaultProps: {
               as: 'div',
@@ -109,16 +141,17 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
               title: name,
               styles: styles.label,
             },
+            render: renderLabel,
           })}
         {Status.create(status, {
           defaultProps: {
             styles: styles.status,
-            size: size * 0.3125,
             variables: {
               borderColor: variables.statusBorderColor,
               borderWidth: variables.statusBorderWidth,
             },
           },
+          render: renderStatus,
         })}
       </ElementType>
     )
@@ -129,4 +162,4 @@ Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
 
 export default Avatar
 
-export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps
+export type AvatarPropsWithDefaults = AvatarProps & typeof Avatar.defaultProps

@@ -1,10 +1,10 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import selectableListBehavior from './selectableListBehavior'
 import basicListBehavior from './basicListBehavior'
 
 /**
  * @description
- * Defines a behavior "BasicListBehavior" or "SelectableListBehavior" based on "selection" property.
+ * Defines a behavior 'BasicListBehavior' or 'SelectableListBehavior' based on property 'selection'.
  */
 
 const ListBehavior: Accessibility = (props: any) =>

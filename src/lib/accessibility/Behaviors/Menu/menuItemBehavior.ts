@@ -1,12 +1,13 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
 /**
  * @description
- * Adds role 'presentation' on the root element
- * Adds role 'menuitem' on anchor element
- * Adds attribute 'aria-expanded=true' on anchor element based on "submenuOpened" property. Based on this screen readers will recognize the expanded state of the item.
+ * Adds role 'presentation' to 'root' component's part.
+ * Adds role 'menuitem' to 'anchor' component's part.
+ * Adds attribute 'tabIndex=0' to 'anchor' component's part.
+ * Adds attribute 'data-is-focusable=true' to 'anchor' component's part.
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.

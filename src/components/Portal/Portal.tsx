@@ -9,39 +9,41 @@ import {
   eventStack,
   doesNodeContainClick,
 } from '../../lib'
-import { ItemShorthand, ReactChildren } from '../../../types/utils'
-import Ref from '../Ref'
+import { ShorthandValue, ReactChildren } from '../../../types/utils'
+import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
-import { IAccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/interfaces'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
+import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
-  attributes?: IAccessibilityAttributes
+  attributes?: AccessibilityAttributes
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface IPortalProps {
+export interface PortalProps {
   children?: ReactChildren
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   defaultOpen?: boolean
-  onMount?: (props: IPortalProps) => void
-  onUnmount?: (props: IPortalProps) => void
+  onMount?: (props: PortalProps) => void
+  onUnmount?: (props: PortalProps) => void
   open?: boolean
   trigger?: JSX.Element
+  trapFocus?: FocusTrapZoneProps | boolean
   triggerAccessibility?: TriggerAccessibility
   triggerRef?: (node: HTMLElement) => void
   onTriggerClick?: (e: ReactMouseEvent) => void
   onOutsideClick?: (e: ReactMouseEvent) => void
 }
 
-export interface IPortalState {
+export interface PortalState {
   open?: boolean
 }
 
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
+class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -103,9 +105,12 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
      * @param {object} data - All props.
      */
     onOutsideClick: PropTypes.func,
+
+    /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value */
+    trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
-  public static defaultProps: IPortalProps = {
+  public static defaultProps: PortalProps = {
     triggerAccessibility: {},
   }
 
@@ -119,14 +124,20 @@ class Portal extends AutoControlledComponent<IPortalProps, IPortalState> {
   }
 
   private renderPortal(): JSX.Element | undefined {
-    const { children, content } = this.props
+    const { children, content, trapFocus } = this.props
     const { open } = this.state
+    const contentToRender = childrenExist(children) ? children : content
+    const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
           <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
-            {childrenExist(children) ? children : content}
+            {trapFocus ? (
+              <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
+            ) : (
+              contentToRender
+            )}
           </PortalInner>
         </Ref>
       )

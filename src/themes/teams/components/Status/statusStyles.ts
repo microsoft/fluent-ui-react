@@ -1,9 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IStatusPropsWithDefaults } from '../../../../components/Status/Status'
-import { IStatusVariables } from './statusVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
+import { StatusVariables } from './statusVariables'
 
-const getBackgroundColor = (state: string, variables: IStatusVariables) => {
+const getBackgroundColor = (state: string, variables: StatusVariables) => {
   switch (state) {
     case 'success':
       return variables.successBackgroundColor
@@ -19,7 +19,7 @@ const getBackgroundColor = (state: string, variables: IStatusVariables) => {
   }
 }
 
-const getTextColor = (state: string, variables: IStatusVariables) => {
+const getTextColor = (state: string, variables: StatusVariables) => {
   switch (state) {
     case 'success':
       return variables.successTextColor
@@ -35,22 +35,25 @@ const getTextColor = (state: string, variables: IStatusVariables) => {
   }
 }
 
-const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, any> = {
-  root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => ({
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0)),
-    width: pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0)),
-    verticalAlign: 'middle',
-    borderRadius: '9999px',
-    ...(variables.borderColor && {
-      borderColor: variables.borderColor,
-      borderWidth: pxToRem(variables.borderWidth),
-      borderStyle: 'solid',
-    }),
-    backgroundColor: color || getBackgroundColor(state, variables),
-  }),
+const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVariables> = {
+  root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
+    const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
+    return {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: sizeInRem,
+      width: sizeInRem,
+      verticalAlign: 'middle',
+      borderRadius: '9999px',
+      ...(variables.borderColor && {
+        borderColor: variables.borderColor,
+        borderWidth: pxToRem(variables.borderWidth),
+        borderStyle: 'solid',
+      }),
+      backgroundColor: color || getBackgroundColor(state, variables),
+    }
+  },
 
   icon: ({ props: { state }, variables }): ICSSInJSStyle => ({
     color: getTextColor(state, variables),

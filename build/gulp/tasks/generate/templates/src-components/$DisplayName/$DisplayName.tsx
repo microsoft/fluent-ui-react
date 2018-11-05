@@ -2,13 +2,13 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 
 export type $DisplayNameProps = {
   as?: any
   children?: React.ReactChildren
   content?: React.ReactNode
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 

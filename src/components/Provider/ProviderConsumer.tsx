@@ -2,20 +2,20 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { FelaTheme } from 'react-fela'
 
-import { IThemePrepared } from '../../../types/theme'
+import { ThemePrepared } from '../../themes/types'
 
-export interface IProviderConsumerProps {
-  render: (theme: IThemePrepared) => React.ReactNode
+export interface ProviderConsumerProps {
+  render: (theme: ThemePrepared) => React.ReactNode
 }
 
 /**
- * The Provider's Consumer is for accessing the theme.
+ * The Provider's Consumer is for accessing theme.
  */
-const ProviderConsumer: React.SFC<IProviderConsumerProps> = props => <FelaTheme {...props} />
+const ProviderConsumer: React.SFC<ProviderConsumerProps> = props => <FelaTheme {...props} />
 
 ProviderConsumer.propTypes = {
   /**
-   * Uses the function children pattern to access the theme.
+   * Uses the function children pattern to access theme.
    * @param {object} theme
    * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
    */

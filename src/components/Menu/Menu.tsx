@@ -5,16 +5,21 @@ import * as React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  ComponentPartStyle,
-} from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+  ComponentSlotStyle,
+} from '../../themes/types'
+import {
+  Extendable,
+  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 
-export interface IMenuProps {
+export interface MenuProps {
   accessibility?: Accessibility
   as?: any
   activeIndex?: number | string
@@ -23,17 +28,22 @@ export interface IMenuProps {
   defaultActiveIndex?: number | string
   fluid?: boolean
   iconOnly?: boolean
-  items?: ItemShorthand[]
+  items?: ShorthandValue[]
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
-  type?: 'primary' | 'secondary'
+  primary?: boolean
+  renderItem?: ShorthandRenderFunction
+  secondary?: boolean
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
+/**
+ * A menu displays grouped navigation actions.
+ */
+class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -77,8 +87,21 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    /** The menu can have primary type. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+
+    /**
+     * A custom render iterator for rendering each of the Menu items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
+    /** The menu can have secondary type. */
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
@@ -116,7 +139,17 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
-    const { iconOnly, items, pills, pointing, type, underlined, vertical } = this.props
+    const {
+      iconOnly,
+      items,
+      pills,
+      pointing,
+      primary,
+      renderItem,
+      secondary,
+      underlined,
+      vertical,
+    } = this.props
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) =>
@@ -125,7 +158,8 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           iconOnly,
           pills,
           pointing,
-          type,
+          primary,
+          secondary,
           underlined,
           variables,
           vertical,
@@ -133,6 +167,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           active: parseInt(activeIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
   }

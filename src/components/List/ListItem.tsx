@@ -1,19 +1,22 @@
 import * as React from 'react'
+
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
+import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Accessibility } from '../../lib/accessibility/types'
+import { FocusableItemProps } from '../../lib/accessibility/FocusHandling/FocusableItem'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps {
+export interface ListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   contentMedia?: any
   content?: any
   debug?: boolean
+  focusableItemProps?: FocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -22,11 +25,18 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
+export interface ListItemState {
+  isHovering: boolean
+}
+
+/**
+ * A list item contains a single piece of content within a list.
+ */
+class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -62,6 +72,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
+    focusableItemProps: PropTypes.object,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -75,14 +86,19 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  state: any = {}
+  constructor(props: ListItemProps) {
+    super(props, null)
 
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
+    this.state = {
+      isHovering: false,
+    }
   }
 
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
+  private itemRef = React.createRef<HTMLElement>()
+
+  componentDidUpdate() {
+    // This needs to be as part of issue https://github.com/stardust-ui/react/issues/370
+    // this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -95,28 +111,9 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -124,21 +121,19 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
+        ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
       />

@@ -8,7 +8,7 @@ const items = [
 ]
 
 const MenuExampleIconOnlyVertical = () => (
-  <Menu vertical iconOnly defaultActiveIndex={0} items={items} type="primary" />
+  <Menu vertical iconOnly defaultActiveIndex={0} items={items} primary />
 )
 
 export default MenuExampleIconOnlyVertical

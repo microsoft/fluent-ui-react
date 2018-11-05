@@ -54,21 +54,6 @@ export default () => (
       A component is a general term used to refer to any user interface element packaged for
       distribution. (Not to be confused with React’s Component)
     </p>
-    <Header as="h4" content="Shorthand/ Children definition" />
-    <p>
-      Most of the components support two ways of definition: <code>shorthand</code> and{' '}
-      <code>children</code>. With the shorthand definition we are adding some props to the component
-      in order to define it’s content, in opposite to the children where we are adding the content
-      inside the component, or using some subcomponent.
-    </p>
-    <p>
-      For example: when defining the text displayed in the Button component, we can pass the content
-      prop or we can define the text inside the component:
-    </p>
-    <CodeSnippet
-      label="index.jsx"
-      value={['<Button content="Click me!" />', '<Button>Click me!</Button>'].join('\n')}
-    />
 
     <Header as="h4" content="Subcomponents" />
     <p>
@@ -206,21 +191,20 @@ export default () => (
     </Grid>
     <Divider />
     <br />
-    {/* Show a preview of the above snippet */}
     <Button
       as={NavLink}
       content="Quick Start"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="quick-start"
     />
     <Button
       as={NavLink}
       content="Accessibility"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="accessibility"
     />
   </DocPage>

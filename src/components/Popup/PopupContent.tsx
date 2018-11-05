@@ -2,15 +2,22 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { customPropTypes, UIComponent, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  RenderResultConfig,
+} from '../../lib'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
-export interface IPopupContentProps {
+export interface PopupContentProps {
   as?: any
   children?: ReactChildren
+  content?: any
   className?: string
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -19,7 +26,9 @@ export interface IPopupContentProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
+class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
+  public static create: Function
+
   public static displayName = 'PopupContent'
   public static className = 'ui-popup__content'
 
@@ -32,6 +41,11 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
      *  @docSiteIgnore
      */
     children: PropTypes.node,
+
+    /**
+     * Wraped content.
+     */
+    content: PropTypes.any,
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
@@ -47,11 +61,17 @@ export default class PopupContent extends UIComponent<Extendable<IPopupContentPr
     ElementType,
     classes,
     rest,
-  }: IRenderResultConfig<IPopupContentProps>): React.ReactNode {
+  }: RenderResultConfig<PopupContentProps>): React.ReactNode {
+    const { children, content } = this.props
+
     return (
       <ElementType className={classes.root} {...rest}>
-        {this.props.children}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
+
+PopupContent.create = createShorthandFactory(PopupContent, content => ({ content }))
+
+export default PopupContent

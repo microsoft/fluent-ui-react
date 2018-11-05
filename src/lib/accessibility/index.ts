@@ -5,6 +5,8 @@ export { default as toggleButtonBehavior } from './Behaviors/Button/toggleButton
 export { default as imageBehavior } from './Behaviors/Image/imageBehavior'
 export { default as menuBehavior } from './Behaviors/Menu/menuBehavior'
 export { default as menuItemBehavior } from './Behaviors/Menu/menuItemBehavior'
+export { default as basicListBehavior } from './Behaviors/List/listBehavior'
+export { default as basicListItemBehavior } from './Behaviors/List/basicListItemBehavior'
 export { default as listBehavior } from './Behaviors/List/listBehavior'
 export { default as listItemBehavior } from './Behaviors/List/listItemBehavior'
 export { default as selectableListBehavior } from './Behaviors/List/selectableListBehavior'
@@ -24,3 +26,4 @@ export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBeha
 export {
   default as chatMessageEnterEscBehavior,
 } from './Behaviors/Chat/chatMessageEnterEscBehavior'
+export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
