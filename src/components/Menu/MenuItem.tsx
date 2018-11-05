@@ -105,10 +105,10 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
     /** The menu item can have primary type. */
-    primary: PropTypes.bool,
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
 
     /** The menu item can have secondary type. */
-    secondary: PropTypes.bool,
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
