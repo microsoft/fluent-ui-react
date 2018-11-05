@@ -22,6 +22,9 @@ export type TransitionProps = {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A transition is an animation usually used to move content in or out of view.
+ */
 class Transition extends UIComponent<TransitionProps, any> {
   static create: Function
 
