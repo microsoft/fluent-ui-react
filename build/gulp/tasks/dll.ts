@@ -37,7 +37,7 @@ task('build:dll', cb => {
       throw new PluginError('webpack', errors.toString())
     }
     if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
+      // throw new PluginError('webpack', warnings.toString())
     }
 
     cb(err)

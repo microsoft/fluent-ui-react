@@ -1,0 +1,178 @@
+{
+  "0.2.7": {
+    "components": 15,
+    "subcomponents": 7,
+    "componentsMin": "50.6 kB",
+    "componentsGzip": "21.5 kB",
+    "Accordion": {
+      "min": "6.94 kB",
+      "gzip": "2.81 kB"
+    },
+    "Avatar": {
+      "min": "2.87 kB",
+      "gzip": "1.29 kB"
+    },
+    "Button": {
+      "min": "2.58 kB",
+      "gzip": "1.13 kB"
+    },
+    "Chat": {
+      "min": "3.33 kB",
+      "gzip": "1.53 kB"
+    },
+    "Divider": {
+      "min": "1.74 kB",
+      "gzip": "815 B"
+    },
+    "Header": {
+      "min": "3.69 kB",
+      "gzip": "1.75 kB"
+    },
+    "Icon": {
+      "min": "2.92 kB",
+      "gzip": "1.28 kB"
+    },
+    "Image": {
+      "min": "1.65 kB",
+      "gzip": "753 B"
+    },
+    "Input": {
+      "min": "2.79 kB",
+      "gzip": "1.18 kB"
+    },
+    "Label": {
+      "min": "2.56 kB",
+      "gzip": "1.15 kB"
+    },
+    "Layout": {
+      "min": "3.53 kB",
+      "gzip": "1.23 kB"
+    },
+    "List": {
+      "min": "5.93 kB",
+      "gzip": "2.27 kB"
+    },
+    "Menu": {
+      "min": "5 kB",
+      "gzip": "2.1 kB"
+    },
+    "Provider": {
+      "min": "3.44 kB",
+      "gzip": "1.44 kB"
+    },
+    "Text": {
+      "min": "1.62 kB",
+      "gzip": "790 B"
+    }
+  },
+  "0.11.0": {
+    "components": 26,
+    "subcomponents": 13,
+    "componentsMin": "89.1 kB",
+    "componentsGzip": "36.2 kB",
+    "Accordion": {
+      "min": "6.63 kB",
+      "gzip": "2.66 kB"
+    },
+    "Attachment": {
+      "min": "2.56 kB",
+      "gzip": "980 B"
+    },
+    "Avatar": {
+      "min": "2.45 kB",
+      "gzip": "1.02 kB"
+    },
+    "Button": {
+      "min": "5.1 kB",
+      "gzip": "2.09 kB"
+    },
+    "Chat": {
+      "min": "6.61 kB",
+      "gzip": "2.73 kB"
+    },
+    "Divider": {
+      "min": "1.63 kB",
+      "gzip": "732 B"
+    },
+    "Form": {
+      "min": "4.55 kB",
+      "gzip": "1.9 kB"
+    },
+    "Grid": {
+      "min": "1.66 kB",
+      "gzip": "711 B"
+    },
+    "Header": {
+      "min": "3.45 kB",
+      "gzip": "1.49 kB"
+    },
+    "Icon": {
+      "min": "2.1 kB",
+      "gzip": "898 B"
+    },
+    "Image": {
+      "min": "1.57 kB",
+      "gzip": "706 B"
+    },
+    "Input": {
+      "min": "3.22 kB",
+      "gzip": "1.26 kB"
+    },
+    "ItemLayout": {
+      "min": "3.48 kB",
+      "gzip": "1.2 kB"
+    },
+    "Label": {
+      "min": "2.54 kB",
+      "gzip": "1.04 kB"
+    },
+    "Layout": {
+      "min": "3.16 kB",
+      "gzip": "1.07 kB"
+    },
+    "List": {
+      "min": "5.01 kB",
+      "gzip": "2 kB"
+    },
+    "Menu": {
+      "min": "5.51 kB",
+      "gzip": "2.22 kB"
+    },
+    "Popup": {
+      "min": "5.93 kB",
+      "gzip": "2.45 kB"
+    },
+    "Portal": {
+      "min": "4.22 kB",
+      "gzip": "1.67 kB"
+    },
+    "Provider": {
+      "min": "3.39 kB",
+      "gzip": "1.39 kB"
+    },
+    "RadioGroup": {
+      "min": "6.72 kB",
+      "gzip": "2.52 kB"
+    },
+    "Ref": {
+      "min": "886 B",
+      "gzip": "460 B"
+    },
+    "Segment": {
+      "min": "1.37 kB",
+      "gzip": "639 B"
+    },
+    "Slot": {
+      "min": "1.7 kB",
+      "gzip": "749 B"
+    },
+    "Status": {
+      "min": "1.76 kB",
+      "gzip": "791 B"
+    },
+    "Text": {
+      "min": "1.88 kB",
+      "gzip": "817 B"
+    }
+  }
+}

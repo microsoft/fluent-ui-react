@@ -2,6 +2,7 @@ import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
+// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'
@@ -54,6 +55,10 @@ const webpackConfig: any = {
   },
   plugins: [
     new AsyncTypeScriptChecker(),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static',
+    //   generateStatsFile: true,
+    // }),
     new webpack.DefinePlugin(config.compiler_globals),
     new webpack.ContextReplacementPlugin(
       /node_modules[\\|/]typescript[\\|/]lib/,
