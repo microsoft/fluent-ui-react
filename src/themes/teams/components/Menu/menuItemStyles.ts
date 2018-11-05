@@ -121,7 +121,7 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const { active, isFromKeyboard, pills, pointing, underlined, vertical } = props
+    const { active, isFromKeyboard, pills, pointing, secondary, underlined, vertical } = props
 
     return {
       color: v.defaultColor,
@@ -130,6 +130,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       position: 'relative',
       verticalAlign: 'middle',
       display: 'block',
+
+      ...(secondary && {
+        background: 'salmon',
+      }),
 
       ...(pills && {
         ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
