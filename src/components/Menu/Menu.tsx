@@ -39,6 +39,9 @@ export interface MenuProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A menu displays grouped navigation actions.
+ */
 class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'
 

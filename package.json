@@ -32,11 +32,11 @@
     "prestart": "yarn satisfied --fix yarn",
     "start": "gulp --series dll docs",
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
-    "pretest": "yarn satisfied && gulp build:docs:docgen && gulp build:docs:component-menu-behaviors",
-    "test": "cross-env NODE_ENV=test jest --coverage",
+    "pretest": "yarn satisfied && gulp --series build:docs:docgen build:docs:component-menu-behaviors",
+    "test": "gulp test",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
-    "test:watch": "yarn test --watchAll",
+    "test:watch": "gulp test:watch",
     "generate:component": "gulp generate:component"
   },
   "lint-staged": {
