@@ -107,13 +107,13 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     onFocus: PropTypes.func,
 
     /** A button can be formatted to show different levels of emphasis. */
-    primary: PropTypes.bool,
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
 
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
     /** A button can be formatted to show different levels of emphasis. */
-    secondary: PropTypes.bool,
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
