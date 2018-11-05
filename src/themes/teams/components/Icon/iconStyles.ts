@@ -90,9 +90,6 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       margin: v.margin,
       speak: 'none',
       verticalAlign: 'middle',
-      padding: '0',
-
-      background: 'cadetblue',
 
       ...(isFontBased &&
         getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
