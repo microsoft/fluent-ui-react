@@ -30,7 +30,7 @@ import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
-import createAnimation from './createAnimation'
+import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -156,7 +156,9 @@ const renderComponent = <P extends {}>(
           props.variables,
         )(siteVariables, stateAndProps)
 
-        const animationCSSProp = props.animation ? createAnimation(props.animation, theme) : {}
+        const animationCSSProp = props.animation
+          ? createAnimationStyles(props.animation, theme)
+          : {}
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(

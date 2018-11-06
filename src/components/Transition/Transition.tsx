@@ -4,7 +4,7 @@ import * as React from 'react'
 import { UIComponent, customPropTypes, createShorthandFactory, childrenExist } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput, Animation } from '../../themes/types'
 import { ReactChildren } from '../../../types/utils'
-import createAnimation from '../../lib/createAnimation'
+import createAnimationStyles from '../../lib/createAnimationStyles'
 
 export type TransitionProps = {
   animationName?: string
@@ -91,7 +91,7 @@ class Transition extends UIComponent<TransitionProps, any> {
       timingFunction: this.props.timingFunction,
     }
 
-    const animationStyle = createAnimation(animation, theme)
+    const animationStyle = createAnimationStyles(animation, theme)
 
     const child = childrenExist(children) && React.Children.only(children)
     const result = React.cloneElement(child, { style: { ...animationStyle, ...child.props.style } })

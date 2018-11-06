@@ -1,6 +1,6 @@
 import { ThemePrepared, Animation } from '../themes/types'
 
-const createAnimation = (animation: Animation, theme: ThemePrepared) => {
+const createAnimationStyles = (animation: Animation, theme: ThemePrepared) => {
   let animationCSSProp = {}
   const { animations = {} } = theme
 
@@ -76,4 +76,4 @@ const createAnimation = (animation: Animation, theme: ThemePrepared) => {
   return animationCSSProp
 }
 
-export default createAnimation
+export default createAnimationStyles
