@@ -113,23 +113,21 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
             selectItemAtIndex,
           }) => {
             return (
-              <React.Fragment>
-                <div style={styles.containerDiv} onClick={this.onContainerClick.bind(this, isOpen)}>
-                  <span aria-live="assertive" style={styles.ariaLiveSpan}>
-                    {this.state.message}
-                  </span>
-                  {multiple && this.renderActive(styles)}
-                  {search &&
-                    this.renderInput(
-                      styles,
-                      variables,
-                      getRootProps,
-                      getInputProps,
-                      highlightedIndex,
-                      selectItemAtIndex,
-                    )}
-                  {this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
-                </div>
+              <div style={styles.containerDiv} onClick={this.onContainerClick.bind(this, isOpen)}>
+                <span aria-live="assertive" style={styles.ariaLiveSpan}>
+                  {this.state.message}
+                </span>
+                {multiple && this.renderActive(styles)}
+                {search &&
+                  this.renderInput(
+                    styles,
+                    variables,
+                    getRootProps,
+                    getInputProps,
+                    highlightedIndex,
+                    selectItemAtIndex,
+                  )}
+                {this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
                 {this.renderList(
                   styles,
                   variables,
@@ -138,7 +136,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                   isOpen,
                   highlightedIndex,
                 )}
-              </React.Fragment>
+              </div>
             )
           }}
         </Downshift>

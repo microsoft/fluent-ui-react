@@ -56,6 +56,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     maxWidth: v.containerDivMaxWidth,
     minWidth: v.containerDivMinWidth,
     width: v.listWidth,
+    top: 'calc(100% + 2px)', // leave room for container + its border
   }),
 
   listItemRoot: ({ variables: v }): ICSSInJSStyle => ({
