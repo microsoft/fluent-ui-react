@@ -99,14 +99,6 @@ export default () => (
         <span>
           <strong>Description</strong>
         </span>,
-        <span>type: primary</span>,
-        <span>Used to emphasize a componet's appearance and catch user's attention.</span>,
-        <span>type: secondary</span>,
-        <span>Used to de-emphasize a component's appearance.</span>,
-        <span>type: positive ?</span>,
-        <span>Used to hint towards a positive consequence.</span>,
-        <span>type: negative ?</span>,
-        <span>Used to hint towards a negative consequence.</span>,
         <span>children</span>,
         <span>The primary content of the component.</span>,
         <span>content</span>,
@@ -170,6 +162,10 @@ export default () => (
           Used to describe the shape of the component. For example for the Menu component, beside
           the default, we have the following shapes: ('pills', 'pointing', 'underlined')
         </span>,
+        <span>primary</span>,
+        <span>Used to emphasize a component's appearance and catch user's attention.</span>,
+        <span>secondary</span>,
+        <span>Used to de-emphasize a component's appearance.</span>,
       ]}
     </Grid>
     <Header as="h2" content="Accessibility Terms" />
@@ -194,17 +190,17 @@ export default () => (
     <Button
       as={NavLink}
       content="Quick Start"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="quick-start"
     />
     <Button
       as={NavLink}
       content="Accessibility"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="accessibility"
     />
   </DocPage>

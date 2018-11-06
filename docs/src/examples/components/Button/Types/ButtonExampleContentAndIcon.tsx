@@ -3,11 +3,11 @@ import { Button, Icon, Text } from '@stardust-ui/react'
 
 const ButtonExampleContentAndIcon = () => (
   <div>
-    <Button type="primary" icon iconPosition="before">
+    <Button icon iconPosition="before" primary>
       <Icon name="book" xSpacing="after" variables={{ color: 'white' }} />
       <Text content="Click me before" />
     </Button>
-    <Button type="secondary" icon iconPosition="after">
+    <Button icon iconPosition="after" secondary>
       <Text content="Click me after" />
       <Icon name="coffee" xSpacing="before" />
     </Button>

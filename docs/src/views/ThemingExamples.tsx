@@ -49,8 +49,8 @@ export default () => (
         ` <Provider>`,
         `  <>`,
         `    <Button content="Button" />`,
-        `    <Button type="primary" icon="plus" iconOnly />`,
-        `    <Button type="secondary" icon="at" content="Send email" />`,
+        `    <Button icon="plus" iconOnly primary />`,
+        `    <Button icon="at" content="Send email" secondary />`,
         `    <Icon name="chess rook" size="big" />`,
         `    <Label content="Label with icon" icon="close" />`,
         `    <br/><br/>`,
@@ -62,8 +62,8 @@ export default () => (
       render={() => (
         <>
           <Button content="Button" />
-          <Button type="primary" icon="plus" iconOnly />
-          <Button type="secondary" icon="at" content="Send email" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -96,12 +96,12 @@ export default () => (
         `      }`,
         `const btnExample = () => `,
         `    <Button`,
-        `      type="secondary"`,
         `      content="Send email"`,
         `      icon={{`,
         `        name: "at",`,
         `        styles: { color: "brown" }`,
         `      }}`,
+        `      secondary`,
         `      styles={styles} />`,
         ``,
         `export default btnExample`,
@@ -145,9 +145,9 @@ export default () => (
       ].join('\n')}
       render={() => (
         <Button
-          type="secondary"
           content="Send email"
           icon={{ name: 'at', variables: { color: 'brown' } }}
+          secondary
           variables={{
             secondaryColor: 'coral',
             secondaryBackgroundColor: 'charcoal',
@@ -220,8 +220,8 @@ export default () => (
         `  <Provider theme={theme}>`,
         `    <div>`,
         `      <Button content="Button" />`,
-        `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button type="secondary" icon="at" content="Send email" />`,
+        `      <Button icon="plus" iconOnly primary />`,
+        `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br /><br />`,
@@ -267,8 +267,8 @@ export default () => (
           >
             <div>
               <Button content="Button" />
-              <Button type="primary" icon="plus" iconOnly />
-              <Button type="secondary" icon="at" content="Send email" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -291,7 +291,7 @@ export default () => (
         `<div>`,
         `  /* Default theming */`,
         `  <Header as="h3" content="Default" />`,
-        `  <Button type="primary">Branding</Button>`,
+        `  <Button primary>Branding</Button>`,
         `  <Divider type="primary">Branding</Divider>`,
         ``,
         `  /* First nested theming */`,
@@ -304,8 +304,8 @@ export default () => (
         `      <Header as="h3" content="First nested theming" />`,
         ``,
         `      <Button content="Button" />`,
-        `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button type="secondary" icon="at" content="Send email" />`,
+        `      <Button icon="plus" iconOnly primary />`,
+        `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br/><br/>`,
@@ -326,8 +326,8 @@ export default () => (
         `          <Header as="h3" content="Second nested theming" />`,
         ``,
         `          <Button content="Button" />`,
-        `          <Button type="primary" icon="plus" iconOnly />`,
-        `          <Button type="secondary" icon="at" content="Send email" />`,
+        `          <Button icon="plus" iconOnly primary />`,
+        `          <Button icon="at" content="Send email" secondary />`,
         `          <Icon name="chess rook" size="big" />`,
         `          <Label content="Label with icon" icon="close" />`,
         `          <br/><br/>`,
@@ -343,8 +343,8 @@ export default () => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button type="primary" icon="plus" iconOnly />
-          <Button type="secondary" icon="at" content="Send email" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -361,8 +361,8 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button type="primary" icon="plus" iconOnly />
-              <Button type="secondary" icon="at" content="Send email" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -383,8 +383,8 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button type="primary" icon="plus" iconOnly />
-                  <Button type="secondary" icon="at" content="Send email" />
+                  <Button icon="plus" iconOnly primary />
+                  <Button icon="at" content="Send email" secondary />
                   <Icon name="chess rook" size="big" />
                   <Label content="Label with icon" icon="close" />
                   <br />
@@ -404,9 +404,9 @@ export default () => (
     <Button
       as={NavLink}
       content="Theming"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="theming"
     />
   </DocPage>

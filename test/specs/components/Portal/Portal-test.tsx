@@ -1,7 +1,7 @@
 import * as React from 'react'
 import _ from 'lodash'
 import { mount } from 'enzyme'
-import { domEvent, withProvider } from 'test/utils'
+import { domEvent, nextFrame, withProvider } from 'test/utils'
 
 import Portal, { PortalProps } from 'src/components/Portal/Portal'
 import PortalInner from 'src/components/Portal/PortalInner'
@@ -58,9 +58,11 @@ describe('Portal', () => {
   })
 
   describe('document click', () => {
-    it('closes the portal', () => {
+    it('closes the portal', async () => {
       const { wrapper } = mountPortal({ defaultOpen: true })
       testPortalInnerIsOpen(wrapper, true)
+
+      await nextFrame()
 
       domEvent.click(document)
       wrapper.update()

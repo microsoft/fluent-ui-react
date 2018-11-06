@@ -46,6 +46,9 @@ export interface ChatMessageProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A chat message represents a single statement communicated to a user.
+ */
 class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 

@@ -397,7 +397,7 @@ export default () => (
           "  { key: 'events', content: 'Upcoming Events' },",
           ']',
           '',
-          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} type="primary" />',
+          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} primary />',
           '',
           'export default MenuExamplePrimary',
         ].join('\n')}
@@ -485,11 +485,9 @@ export default () => (
     </p>
     <p>Example:</p>
     <CodeSnippet
-      value={[
-        'return (',
-        ' <Button type="primary" icon="book" aria-label="Confirm booking"/>',
-        ')',
-      ].join('\n')}
+      value={['return (', ' <Button icon="book" aria-label="Confirm booking" primary />', ')'].join(
+        '\n',
+      )}
     />
     <p>Rendered HTML:</p>
     <CodeSnippet
@@ -526,17 +524,17 @@ export default () => (
     <Button
       as={NavLink}
       content="Stardust Glossary"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="glossary"
     />
     <Button
       as={NavLink}
       content="Theming"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="theming"
     />
   </DocPage>

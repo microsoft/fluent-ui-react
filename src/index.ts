@@ -118,6 +118,7 @@ export {
 export {
   default as chatMessageEnterEscBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageEnterEscBehavior'
+export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
 
 //
 // Utilities
