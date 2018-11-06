@@ -12,10 +12,10 @@ const beforeAndAfter = (color, size, type, variables): ICSSPseudoElementStyle =>
   flex: 1,
   ...dividerBorderStyle(size, variables.dividerColor),
   ...(type === 'primary' && {
-    ...dividerBorderStyle(size, variables.colorPrimary),
+    ...dividerBorderStyle(size, variables.colors.primary),
   }),
   ...(color && {
-    ...dividerBorderStyle(size, getColorValue(variables, color)),
+    ...dividerBorderStyle(size, getColorValue(variables.colors, color)),
   }),
 })
 
@@ -31,10 +31,10 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
         paddingBottom: variables.dividerPadding,
       }),
       ...(type === 'primary' && {
-        color: variables.colorPrimary,
+        color: variables.colors.primary,
       }),
       ...(color && {
-        color: getColorValue(variables, color),
+        color: getColorValue(variables.colors, color),
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,

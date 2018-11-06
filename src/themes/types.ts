@@ -316,43 +316,27 @@ export interface Renderer extends FelaRenderer {}
 // Colors
 // ========================================================
 
-export interface ColorPaletteVariables {
-  colorPrimary: string
-  colorSecondary: string
+export interface ColorPalette {
+  primary: string
+  secondary: string
 
-  colorRed: string
-  colorOrange: string
-  colorYellow: string
-  colorOlive: string
-  colorGreen: string
-  colorTeal: string
-  colorBlue: string
-  colorViolet: string
-  colorPurple: string
-  colorPink: string
-  colorBrown: string
-  colorGrey: string
-  colorBlack: string
-  colorWhite: string
+  black: string
+  brown: string
+  blue: string
+  green: string
+  gray: string
+  olive: string
+  orange: string
+  pink: string
+  purple: string
+  teal: string
+  red: string
+  violet: string
+  white: string
+  yellow: string
 }
 
-export type ComponentColors =
-  | 'primary'
-  | 'secondary'
-  | 'red'
-  | 'orange'
-  | 'yellow'
-  | 'olive'
-  | 'green'
-  | 'teal'
-  | 'blue'
-  | 'violet'
-  | 'purple'
-  | 'pink'
-  | 'brown'
-  | 'grey'
-  | 'black'
-  | 'white'
+export type ComponentColors = keyof ColorPalette | string
 
 // ========================================================
 // Fonts

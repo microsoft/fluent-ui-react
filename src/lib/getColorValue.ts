@@ -1,9 +1,5 @@
-import * as _ from 'lodash'
+import { ColorPalette, ComponentColors } from '@stardust-ui/react'
 
-const getColorValue = (variables, color) => {
-  const colorVariable = _.camelCase(`color-${color}`)
-
-  return variables[colorVariable] || color
-}
+const getColorValue = (colors: ColorPalette, color: ComponentColors) => colors[color] || color
 
 export default getColorValue
