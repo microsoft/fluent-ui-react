@@ -27,7 +27,7 @@ export default (siteVars): InputVariables => ({
   iconRight: pxToRem(2),
   iconColor: siteVars.bodyColor,
 
-  inputPadding: `${pxToRem(6)} ${pxToRem(4)} ${pxToRem(6)} ${pxToRem(2)}`,
+  inputPadding: `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`,
   inputFocusBorderBottomColor: siteVars.brand,
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
 })
