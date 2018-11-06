@@ -26,6 +26,7 @@ export interface ListProps extends FocusContainerProps<ShorthandValue> {
   children?: ReactChildren
   className?: string
   debug?: boolean
+  listRef?: (node: HTMLElement) => void
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -34,6 +35,9 @@ export interface ListProps extends FocusContainerProps<ShorthandValue> {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A list displays a group of related content.
+ */
 class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   static displayName = 'List'
 
@@ -68,6 +72,9 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
+
+    /** Ref callback with the list DOM node. */
+    listRef: PropTypes.func,
 
     /**
      * A custom render iterator for rendering each of the List items.
@@ -114,10 +121,15 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
+        ref={this.handleListRef}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
+  }
+
+  private handleListRef = (listNode: HTMLElement) => {
+    _.invoke(this.props, 'listRef', listNode)
   }
 
   renderItems() {

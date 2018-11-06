@@ -14,7 +14,7 @@ class MenuExampleTabShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         underlined
-        type="primary"
+        primary
         accessibility={tabListBehavior}
         aria-label="Today's events"
       />

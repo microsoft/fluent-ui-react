@@ -49,6 +49,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-search-page"
+            path="/prototype-search-page"
+            component={require('./prototypes/SearchPage/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-form-validation"
             path="/prototype-form-validation"
             component={require('./prototypes/formValidation/index').default}

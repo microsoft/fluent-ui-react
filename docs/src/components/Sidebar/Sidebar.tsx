@@ -283,6 +283,14 @@ class Sidebar extends React.Component<any, any> {
                   <Menu.Item
                     as={NavLink}
                     exact
+                    to="/prototype-search-page"
+                    activeClassName="active"
+                  >
+                    Search Page
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
                     to="/prototype-form-validation"
                     activeClassName="active"
                   >
