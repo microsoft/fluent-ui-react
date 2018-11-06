@@ -2,13 +2,14 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { ComponentColors, ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
 export interface DividerProps {
   as?: any
   children?: ReactChildren
   className?: string
+  color?: ComponentColors | string
   content?: React.ReactNode
   fitted?: boolean
   size?: number
@@ -29,6 +30,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static className = 'ui-divider'
 
   static propTypes = {
+    /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
     /**
@@ -40,13 +42,36 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** A divider can have different colors. */
+    color: PropTypes.oneOfType([
+      PropTypes.oneOf([
+        'primary',
+        'secondary',
+        'red',
+        'orange',
+        'yellow',
+        'olive',
+        'green',
+        'teal',
+        'blue',
+        'violet',
+        'purple',
+        'pink',
+        'brown',
+        'grey',
+        'black',
+        'white',
+      ]),
+      PropTypes.string,
+    ]),
+
     /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
 
     /** A divider can be fitted, without any space above or below it.  */
     fitted: PropTypes.bool,
 
-    /** Size multiplier (default 0) * */
+    /** Size multiplier (default 0). */
     size: PropTypes.number,
 
     /** A Divider can be formatted to show different levels of emphasis. */
@@ -55,7 +80,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
     /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
 
-    /** Additional CSS styles to apply to the component instance.  */
+    /** Additional CSS styles to apply to the component instance. */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** Override for theme site variables to allow modifications of component styling via themes. */

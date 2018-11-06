@@ -138,6 +138,7 @@ export interface ThemeInput {
   componentStyles?: ThemeComponentStylesInput
   rtl?: boolean
   renderer?: Renderer
+  colors?: ColorPalette
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
@@ -311,6 +312,52 @@ export interface ThemeComponentVariablesPrepared {
 }
 
 export interface Renderer extends FelaRenderer {}
+
+// ========================================================
+// Colors
+// ========================================================
+
+export type ColorPalette = Partial<{
+  primary: string
+  secondary: string
+
+  red: string
+  orange: string
+  yellow: string
+  olive: string
+  green: string
+  teal: string
+  blue: string
+  violet: string
+  purple: string
+  pink: string
+  brown: string
+  grey: string
+  black: string
+  white: string
+}>
+
+export interface ColorPaletteVariables {
+  colorPrimary: string
+  colorSecondary: string
+
+  colorRed: string
+  colorOrange: string
+  colorYellow: string
+  colorOlive: string
+  colorGreen: string
+  colorTeal: string
+  colorBlue: string
+  colorViolet: string
+  colorPurple: string
+  colorPink: string
+  colorBrown: string
+  colorGrey: string
+  colorBlack: string
+  colorWhite: string
+}
+
+export type ComponentColors = keyof ColorPalette
 
 // ========================================================
 // Fonts

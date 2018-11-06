@@ -38,6 +38,19 @@ export const yellow = '#F8D22A'
 export const green = '#92C353'
 export const green04 = '#237b4b'
 
+export const primary = brand
+export const secondary = gray02 // ??
+
+export const orange = orange04
+export const olive = 'olive' // ??
+export const teal = 'teal' // ??
+export const blue = 'blue' // ??
+export const violet = brand02 // ??
+export const purple = orchid // ??
+export const pink = magenta // ??
+export const brown = 'brown' // ??
+export const grey = gray02 // ??
+
 //
 // SHADOW LEVELS
 //
