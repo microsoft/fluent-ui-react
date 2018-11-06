@@ -10,10 +10,6 @@ describe('fontSizeUtility', () => {
       expect(pxToRem(10, 10)).toEqual('1rem')
     })
 
-    it('should throw error when called with a negative number.', () => {
-      expect(() => pxToRem(-1)).toThrowError()
-    })
-
     it('returns 0.714rem with a base font size of 14px.', () => {
       expect(pxToRem(10, 14)).toEqual('0.7143rem')
     })
