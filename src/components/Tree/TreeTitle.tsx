@@ -1,28 +1,23 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 
-export type TreeProps = {
+export type TreeTitleProps = {
   as?: any
   children?: React.ReactChildren
   content?: React.ReactNode
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
-  treedata: {
-    title: string
-    submenu?: any[]
-  }[]
 }
 
-class Tree extends UIComponent<TreeProps, any> {
+class TreeTitle extends UIComponent<TreeTitleProps, any> {
   static create: Function
 
-  static className = 'ui-tree'
+  static className = 'tree-title'
 
-  static displayName = 'Tree'
+  static displayName = 'TreeTitle'
 
   // static handledProps = ['as', 'children', 'content', 'styles', 'variables']
 
@@ -42,52 +37,24 @@ class Tree extends UIComponent<TreeProps, any> {
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    treedata: PropTypes.array,
+    submenu: PropTypes.array,
   }
 
   public static defaultProps = {
-    as: 'ul',
-  }
-
-  /* renderContent() {
-    const { treedata } = this.props
-    if (!treedata) return []
-    return treedata.map(obj => {
-      return (<TreeListItem>
-        <a href="#">{obj.title}</a>
-        {obj.submenu &&
-          Tree.create('', {
-            defaultProps: {
-              treedata: obj.submenu,
-            },
-          })
-        }
-      </TreeListItem>)
-    })
-  } */
-
-  renderContent() {
-    const { treedata } = this.props
-    if (!treedata) return []
-    return treedata.map(obj => {
-      const submenu = obj.submenu
-      return TreeListItem.create(obj.title, {
-        defaultProps: { submenu },
-      })
-    })
+    as: 'a',
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { children } = this.props
+    const { children, content } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-Tree.create = createShorthandFactory(Tree, content => ({ content }))
+TreeTitle.create = createShorthandFactory(TreeTitle, content => ({ content }))
 
-export default Tree
+export default TreeTitle
