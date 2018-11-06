@@ -8,13 +8,13 @@ export interface MenuVariables {
   defaultActiveBackgroundColor: string
   defaultBorderColor: string
 
-  typePrimaryActiveColor: string
-  typePrimaryActiveBackgroundColor: string
-  typePrimaryActiveBorderColor: string
+  primaryActiveColor: string
+  primaryActiveBackgroundColor: string
+  primaryActiveBorderColor: string
 
-  typePrimaryBorderColor: string
-  typePrimaryHoverBorderColor: string
-  typePrimaryUnderlinedBorderColor: string
+  primaryBorderColor: string
+  primaryHoverBorderColor: string
+  primaryUnderlinedBorderColor: string
 
   iconsMenuItemSize?: string
   circularRadius: string
@@ -30,13 +30,13 @@ export default (siteVars: any): MenuVariables => {
     defaultActiveBackgroundColor: siteVars.gray10,
     defaultBorderColor: siteVars.gray08,
 
-    typePrimaryActiveColor: siteVars.white,
-    typePrimaryActiveBackgroundColor: siteVars.brand08,
-    typePrimaryActiveBorderColor: siteVars.brand,
+    primaryActiveColor: siteVars.white,
+    primaryActiveBackgroundColor: siteVars.brand08,
+    primaryActiveBorderColor: siteVars.brand,
 
-    typePrimaryBorderColor: siteVars.brand08,
-    typePrimaryHoverBorderColor: siteVars.gray08,
-    typePrimaryUnderlinedBorderColor: siteVars.gray08,
+    primaryBorderColor: siteVars.brand08,
+    primaryHoverBorderColor: siteVars.gray08,
+    primaryUnderlinedBorderColor: siteVars.gray08,
 
     iconsMenuItemSize: teamsPxToRem(32),
     circularRadius: teamsPxToRem(999),
