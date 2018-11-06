@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
@@ -80,8 +80,8 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      padding: `0 ${teamsPxToRem(paddingLeftRightValue)}`,
-      margin: `0 ${teamsPxToRem(8)} 0 0`,
+      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
+      margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
@@ -89,7 +89,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       ...(!text && {
         outline: 0,
         borderRadius: '2px',
-        borderWidth: `${teamsPxToRem(borderWidth)}`,
+        borderWidth: `${pxToRem(borderWidth)}`,
         borderStyle: 'solid',
         borderColor,
         boxShadow,
@@ -106,11 +106,11 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
             ':after': {
               content: '""',
               position: 'absolute',
-              top: `-${teamsPxToRem(borderWidth * 2)}`,
-              right: `-${teamsPxToRem(borderWidth * 2)}`,
-              bottom: `-${teamsPxToRem(borderWidth * 2)}`,
-              left: `-${teamsPxToRem(borderWidth * 2)}`,
-              borderWidth: `${teamsPxToRem(borderWidth)}`,
+              top: `-${pxToRem(borderWidth * 2)}`,
+              right: `-${pxToRem(borderWidth * 2)}`,
+              bottom: `-${pxToRem(borderWidth * 2)}`,
+              left: `-${pxToRem(borderWidth * 2)}`,
+              borderWidth: `${pxToRem(borderWidth)}`,
               borderStyle: 'solid',
               borderColor: `${borderColorFocusIndicator}`,
               borderRadius: '3px',
@@ -155,7 +155,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                 right: '0',
                 bottom: '0',
                 left: '0',
-                borderWidth: `${teamsPxToRem(borderWidth)}`,
+                borderWidth: `${pxToRem(borderWidth)}`,
                 borderStyle: 'solid',
                 borderColor: `${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
@@ -195,7 +195,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
         !text && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
-          borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+          borderWidth: `${pxToRem(primaryBorderWidth)}`,
           borderStyle: 'solid',
           borderColor: `${primaryBorderColor}`,
           ':hover': {
@@ -212,11 +212,11 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                 ':after': {
                   content: '""',
                   position: 'absolute',
-                  top: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
-                  right: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
-                  bottom: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
-                  left: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
-                  borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+                  top: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  right: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  left: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
                   borderStyle: 'solid',
                   borderColor: `${primaryBorderColorFocusIndicator}`,
                   borderRadius: '3px',
@@ -236,7 +236,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
                   borderStyle: 'solid',
                   borderColor: `${primaryCircularBorderColorFocusIndicator}`,
                   borderRadius: circularRadius,

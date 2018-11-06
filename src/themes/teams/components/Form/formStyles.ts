@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 const formStyles: ComponentSlotStylesInput<FormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
@@ -9,7 +9,7 @@ const formStyles: ComponentSlotStylesInput<FormProps, any> = {
     display: 'grid',
     gridTemplateColumns: '1fr',
     justifyContent: 'space-evenly',
-    gridGap: teamsPxToRem(20),
+    gridGap: pxToRem(20),
     justifyItems: 'start',
   }),
 }

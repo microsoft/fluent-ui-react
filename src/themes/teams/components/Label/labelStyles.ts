@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
 
@@ -16,11 +16,11 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
     display: 'inline-flex',
     alignItems: 'center',
     height: variables.height,
-    fontSize: teamsPxToRem(14),
+    fontSize: pxToRem(14),
     lineHeight: variables.height,
     backgroundColor: variables.backgroundColor,
     color: variables.color,
-    borderRadius: teamsPxToRem(3),
+    borderRadius: pxToRem(3),
     ...(circular && {
       borderRadius: variables.circularRadius,
     }),

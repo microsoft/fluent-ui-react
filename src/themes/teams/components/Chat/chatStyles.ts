@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../../types'
 import { ChatVariables } from './chatVariables'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 const chatStyles = {
   root: ({ variables: v }: { variables: ChatVariables }): ICSSInJSStyle => ({
@@ -9,7 +9,7 @@ const chatStyles = {
     display: 'flex',
     flexDirection: 'column',
     listStyle: 'none',
-    padding: `0 ${teamsPxToRem(10)} 0 ${teamsPxToRem(10)}`,
+    padding: `0 ${pxToRem(10)} 0 ${pxToRem(10)}`,
     margin: 0,
   }),
 }

@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export interface IconVariables {
   [key: string]: string | number | undefined
@@ -16,7 +16,7 @@ export default (siteVars): IconVariables => ({
   color: undefined,
   backgroundColor: undefined,
   borderColor: undefined,
-  horizontalSpace: teamsPxToRem(10),
+  horizontalSpace: pxToRem(10),
   margin: '0 0.25em 0 0',
   secondaryColor: siteVars.white,
   disabledColor: siteVars.gray06,

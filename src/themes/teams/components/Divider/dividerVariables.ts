@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export interface DividerVariables {
   dividerColor: string
@@ -18,6 +18,6 @@ export default (siteVars: any): DividerVariables => {
     textLineHeight: siteVars.lineHeightSmall,
     primaryColor: siteVars.brand,
     importantFontWeight: siteVars.fontWeightBold,
-    dividerPadding: teamsPxToRem(4),
+    dividerPadding: pxToRem(4),
   }
 }

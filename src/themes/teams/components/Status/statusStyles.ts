@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
@@ -37,9 +37,7 @@ const getTextColor = (state: string, variables: StatusVariables) => {
 
 const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
-    const sizeInRem = teamsPxToRem(
-      size + 2 * ((variables.borderColor && variables.borderWidth) || 0),
-    )
+    const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
     return {
       display: 'inline-flex',
       alignItems: 'center',
@@ -50,7 +48,7 @@ const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVari
       borderRadius: '9999px',
       ...(variables.borderColor && {
         borderColor: variables.borderColor,
-        borderWidth: teamsPxToRem(variables.borderWidth),
+        borderWidth: pxToRem(variables.borderWidth),
         borderStyle: 'solid',
       }),
       backgroundColor: color || getBackgroundColor(state, variables),

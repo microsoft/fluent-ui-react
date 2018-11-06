@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 const formFieldStyles: ComponentSlotStylesInput<FormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({}),
@@ -10,7 +10,7 @@ const formFieldStyles: ComponentSlotStylesInput<FormProps, any> = {
       ...((!type || (type !== 'radio' && type !== 'checkbox')) && {
         display: 'block',
       }),
-      ...(inline && { marginRight: teamsPxToRem(10), display: 'inline' }),
+      ...(inline && { marginRight: pxToRem(10), display: 'inline' }),
       ...(required && {
         '::after': {
           content: '"*"',
@@ -23,7 +23,7 @@ const formFieldStyles: ComponentSlotStylesInput<FormProps, any> = {
     return {
       ...(type &&
         (type === 'radio' || type === 'checkbox') && {
-          marginRight: teamsPxToRem(10),
+          marginRight: pxToRem(10),
         }),
     }
   },

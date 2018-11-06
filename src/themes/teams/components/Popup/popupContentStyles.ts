@@ -1,5 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 
 const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, any> = {
@@ -17,7 +17,7 @@ const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, any> = {
       right: 'auto',
       padding,
       border: `1px solid ${borderColor}`,
-      borderRadius: teamsPxToRem(3),
+      borderRadius: pxToRem(3),
       boxShadow: `0 2px 4px 0 ${borderColor}, 0 2px 10px 0 ${borderColor}`,
     }
   },

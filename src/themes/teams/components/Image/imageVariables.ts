@@ -1,8 +1,8 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export default () => ({
   width: undefined,
   height: undefined,
-  avatarRadius: teamsPxToRem(9999),
-  avatarSize: teamsPxToRem(32),
+  avatarRadius: pxToRem(9999),
+  avatarSize: pxToRem(32),
 })

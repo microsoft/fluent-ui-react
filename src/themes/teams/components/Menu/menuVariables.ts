@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export interface MenuVariables {
   defaultColor: string
@@ -38,8 +38,8 @@ export default (siteVars: any): MenuVariables => {
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
-    iconsMenuItemSize: teamsPxToRem(32),
-    circularRadius: teamsPxToRem(999),
+    iconsMenuItemSize: pxToRem(32),
+    circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
   }
 }

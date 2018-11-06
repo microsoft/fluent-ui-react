@@ -1,18 +1,18 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
-    width: teamsPxToRem(300),
-    minHeight: teamsPxToRem(48),
-    padding: teamsPxToRem(8),
-    marginBottom: teamsPxToRem(2),
-    marginRight: teamsPxToRem(2),
+    width: pxToRem(300),
+    minHeight: pxToRem(48),
+    padding: pxToRem(8),
+    marginBottom: pxToRem(2),
+    marginRight: pxToRem(2),
     background: variables.backgroundColor,
     color: variables.textColor,
 
@@ -60,7 +60,7 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     left: 0,
     width: props.progress + '%',
     maxWidth: '100%',
-    height: teamsPxToRem(variables.progressHeight),
+    height: pxToRem(variables.progressHeight),
     background: variables.progressColor,
   }),
 }

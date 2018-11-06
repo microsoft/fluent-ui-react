@@ -1,4 +1,4 @@
-import { teamsPxToRem } from './utils'
+import { pxToRem } from './utils'
 
 //
 // COLORS
@@ -42,11 +42,11 @@ export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
 // FONT SIZES
 //
 export const fontSizes = {
-  smaller: teamsPxToRem(10),
-  small: teamsPxToRem(12),
-  medium: teamsPxToRem(14),
-  large: teamsPxToRem(18),
-  larger: teamsPxToRem(24),
+  smaller: pxToRem(10),
+  small: pxToRem(12),
+  medium: pxToRem(14),
+  large: pxToRem(18),
+  larger: pxToRem(24),
 }
 
 //

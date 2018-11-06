@@ -1,13 +1,13 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export default () => {
   const vars: any = {}
 
-  vars.paddingLeft = teamsPxToRem(20)
-  vars.paddingRight = teamsPxToRem(18)
-  vars.columnGap = teamsPxToRem(8)
+  vars.paddingLeft = pxToRem(20)
+  vars.paddingRight = pxToRem(18)
+  vars.columnGap = pxToRem(8)
 
-  vars.height = teamsPxToRem(48)
+  vars.height = pxToRem(48)
 
   return vars
 }

@@ -1,3 +1,3 @@
-import { pxToRem } from '../../../lib'
+import { pxToRem as basePxToRem } from '../../../lib'
 
-export const teamsPxToRem = (sizeInPx: number) => pxToRem(sizeInPx, 14)
+export const pxToRem = (sizeInPx: number) => basePxToRem(sizeInPx, 14)

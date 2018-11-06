@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps } from '../../../../components/List/ListItem'
 
@@ -40,9 +40,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
         '::before': {
           content: '""',
           position: 'absolute',
-          left: teamsPxToRem(8),
-          width: teamsPxToRem(2),
-          height: teamsPxToRem(2),
+          left: pxToRem(8),
+          width: pxToRem(2),
+          height: pxToRem(2),
           background: '#000',
         },
       }),

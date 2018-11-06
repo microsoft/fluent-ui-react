@@ -3,7 +3,7 @@ import {
   RadioGroupItemProps,
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 const radioStyles: ComponentSlotStylesInput<RadioGroupItemProps & RadioGroupItemState, any> = {
   root: ({ props }): ICSSInJSStyle => ({
@@ -29,8 +29,8 @@ const radioStyles: ComponentSlotStylesInput<RadioGroupItemProps & RadioGroupItem
     ...(props.isFromKeyboard && {
       // this creates both inset and outset box shadow that some readers (NVDA) show when radio is not checked but it is focused
       boxShadow:
-        `0 0 0 ${teamsPxToRem(1)} ${variables.icon.outlineColor},` +
-        `0 0 0 ${teamsPxToRem(2)} ${variables.icon.outlineColor} inset`,
+        `0 0 0 ${pxToRem(1)} ${variables.icon.outlineColor},` +
+        `0 0 0 ${pxToRem(2)} ${variables.icon.outlineColor} inset`,
     }),
   }),
 }

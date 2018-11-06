@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps } from '../../../../components/Menu/Menu'
 
@@ -13,7 +13,7 @@ export default {
       display: 'flex',
       ...(vertical && {
         flexDirection: 'column',
-        ...(!fluid && { width: teamsPxToRem(200) }),
+        ...(!fluid && { width: pxToRem(200) }),
         ...(iconOnly && {
           display: 'inline-block',
           width: 'auto',
@@ -27,13 +27,13 @@ export default {
           ...(primary && {
             ...solidBorder(variables.primaryBorderColor),
           }),
-          borderRadius: teamsPxToRem(4),
+          borderRadius: pxToRem(4),
           overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
       }),
-      minHeight: teamsPxToRem(24),
+      minHeight: pxToRem(24),
       margin: 0,
       padding: 0,
       listStyleType: 'none',

@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 export interface InputVariables {
   borderRadius: string
   borderBottom: string
@@ -13,7 +13,7 @@ export interface InputVariables {
 }
 
 const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 24].map(v =>
-  teamsPxToRem(v),
+  pxToRem(v),
 )
 
 export default (siteVars): InputVariables => ({

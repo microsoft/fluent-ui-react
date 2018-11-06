@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 
 export interface ButtonVariables {
   [key: string]: string | number
@@ -69,11 +69,11 @@ export interface ButtonVariables {
 
 export default (siteVars: any): ButtonVariables => {
   return {
-    height: teamsPxToRem(32),
-    minWidth: teamsPxToRem(96),
-    maxWidth: teamsPxToRem(280),
-    borderRadius: teamsPxToRem(2),
-    circularRadius: teamsPxToRem(999),
+    height: pxToRem(32),
+    minWidth: pxToRem(96),
+    maxWidth: pxToRem(280),
+    borderRadius: pxToRem(2),
+    circularRadius: pxToRem(999),
     fontWeight: siteVars.fontWeightSemibold,
     paddingLeftRightValue: 20,
 

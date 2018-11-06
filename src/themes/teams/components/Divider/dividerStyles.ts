@@ -1,4 +1,4 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { childrenExist } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
@@ -37,15 +37,15 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
       ...(childrenExist(children) || content
         ? {
             textAlign: 'center',
-            fontSize: teamsPxToRem(12 + size),
+            fontSize: pxToRem(12 + size),
             lineHeight: variables.textLineHeight,
             '::before': {
               ...beforeAndAfter(size, type, variables),
-              marginRight: teamsPxToRem(20),
+              marginRight: pxToRem(20),
             },
             '::after': {
               ...beforeAndAfter(size, type, variables),
-              marginLeft: teamsPxToRem(20),
+              marginLeft: pxToRem(20),
             },
           }
         : {

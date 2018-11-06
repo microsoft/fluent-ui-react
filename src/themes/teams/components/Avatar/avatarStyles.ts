@@ -1,10 +1,10 @@
-import { teamsPxToRem } from '../../utils'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = teamsPxToRem(size)
+    const sizeInRem = pxToRem(size)
     return {
       position: 'relative',
       backgroundColor: 'inherit',
@@ -18,13 +18,13 @@ const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
     verticalAlign: 'top',
   }),
   label: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = teamsPxToRem(size)
+    const sizeInRem = pxToRem(size)
     return {
       display: 'inline-block',
       width: sizeInRem,
       height: sizeInRem,
       lineHeight: sizeInRem,
-      fontSize: teamsPxToRem(size / 2.333),
+      fontSize: pxToRem(size / 2.333),
       verticalAlign: 'top',
       textAlign: 'center',
       padding: '0px',
