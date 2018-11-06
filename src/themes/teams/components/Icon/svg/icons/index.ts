@@ -1,12 +1,5 @@
 import { TeamsSvgIconSpec } from '../types'
 
-import checkmark from './checkmark'
-import plus from './plus'
-import addParticipant from './addParticipant'
-import analytics from './analytics'
-import announcement from './announcement'
-import apps from './apps'
-
 import call from './call'
 import callEnd from './callEnd'
 import callVideo from './callIncomingVideo'
@@ -26,12 +19,6 @@ import fontSize from './fontSize'
 import highlight from './highlight'
 
 export default {
-  checkmark,
-  plus,
-  addParticipant,
-  analytics,
-  announcement,
-  apps,
   call,
   'call-end': callEnd,
   'call-video': callVideo,
