@@ -16,12 +16,6 @@ const DEFAULT_FONT_SIZE_IN_PX = 16
  * @returns {string} The value converted to the rem.
  */
 export const pxToRem = (value: number, baseSize?: number): string => {
-  if (process.env.NODE_ENV !== 'production') {
-    if (value < 0) {
-      throw new Error(`Invalid value of: '${value}'.`)
-    }
-  }
-
   const baseFontSize = baseSize || DEFAULT_FONT_SIZE_IN_PX
   const convertedValueInRems = value / baseFontSize
 
