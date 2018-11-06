@@ -1,9 +1,10 @@
 import * as _ from 'lodash'
+import { OneOrArray } from 'types/utils'
 
 export default class EventTarget {
-  _handlers = {}
-  _pools = {}
-  target: any
+  private _handlers: { [key: string]: EventListener } = {}
+  private _pools: { [key: string]: { [key: string]: EventListener[] } } = {}
+  private target: any
 
   constructor(target) {
     this.target = target
@@ -13,7 +14,7 @@ export default class EventTarget {
   // Utils
   // ------------------------------------
 
-  _emit = name => event => {
+  private _emit = (name: string) => (event: Event) => {
     _.forEach(this._pools, (pool, poolName) => {
       const { [name]: handlers } = pool
 
@@ -26,13 +27,14 @@ export default class EventTarget {
     })
   }
 
-  _normalize = handlers => (_.isArray(handlers) ? handlers : [handlers])
+  private _normalize = (handlers: OneOrArray<EventListener>) =>
+    _.isArray(handlers) ? handlers : [handlers]
 
   // ------------------------------------
   // Listeners handling
   // ------------------------------------
 
-  _listen = (name, useCapture = false) => {
+  private _listen = (name: string, useCapture = false) => {
     if (_.has(this._handlers, name)) return
     const handler = this._emit(name)
 
@@ -40,7 +42,7 @@ export default class EventTarget {
     this._handlers[name] = handler
   }
 
-  _unlisten = (name, useCapture = false) => {
+  private _unlisten = (name: string, useCapture = false) => {
     if (_.some(this._pools, name)) return
     const { [name]: handler } = this._handlers
 
@@ -52,23 +54,29 @@ export default class EventTarget {
   // Pub/sub
   // ------------------------------------
 
-  empty = () => _.isEmpty(this._handlers)
+  public empty = () => _.isEmpty(this._handlers)
 
-  sub = (name, handlers, pool = 'default', useCapture = false) => {
-    const events = _.uniq([
-      ..._.get(this._pools, `${pool}.${name}`, []),
-      ...this._normalize(handlers),
-    ])
+  public sub = (
+    name: string,
+    handlers: OneOrArray<EventListener>,
+    pool = 'default',
+    useCapture = false,
+  ) => {
+    const eventsForName = _.get(this._pools, `${pool}.${name}`, []) as EventListener[]
+    const events = _.uniq([...eventsForName, ...this._normalize(handlers)])
 
     this._listen(name, useCapture)
     _.set(this._pools, `${pool}.${name}`, events)
   }
 
-  unsub = (name, handlers, pool = 'default', useCapture = false) => {
-    const events = _.without(
-      _.get(this._pools, `${pool}.${name}`, []),
-      ...this._normalize(handlers),
-    )
+  public unsub = (
+    name: string,
+    handlers: OneOrArray<EventListener>,
+    pool = 'default',
+    useCapture = false,
+  ) => {
+    const eventsForName = _.get(this._pools, `${pool}.${name}`, []) as EventListener[]
+    const events = _.without(eventsForName, ...this._normalize(handlers))
 
     if (events.length > 0) {
       _.set(this._pools, `${pool}.${name}`, events)

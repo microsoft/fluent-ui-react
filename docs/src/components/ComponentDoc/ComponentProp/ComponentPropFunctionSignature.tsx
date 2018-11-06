@@ -3,7 +3,16 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { neverUpdate } from 'docs/src/hoc'
-import ComponentPropExtra from './ComponentPropExtra'
+import ComponentPropExtra, { ComponentPropExtraProps } from './ComponentPropExtra'
+
+interface ComponentPropFunctionSignature extends ComponentPropExtraProps {
+  name?: string
+  tags?: {
+    name?: string
+    description?: string
+    title?: string
+  }[]
+}
 
 const descriptionStyle = {
   flex: '5 5 0',
@@ -22,7 +31,7 @@ const rowStyle: any = {
 
 const getTagType = tag => (tag.type ? (tag.type.type === 'AllLiteral' ? 'any' : tag.type.name) : '')
 
-const ComponentPropFunctionSignature: any = ({ name, tags }) => {
+const ComponentPropFunctionSignature = ({ name, tags }: ComponentPropFunctionSignature) => {
   const params = _.filter(tags, { title: 'param' })
   const returns = _.find(tags, { title: 'returns' })
 
