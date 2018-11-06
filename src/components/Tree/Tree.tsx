@@ -20,7 +20,7 @@ export type TreeProps = {
 class Tree extends UIComponent<TreeProps, any> {
   static create: Function
 
-  static className = 'ui-tree'
+  static className = 'tree-list'
 
   static displayName = 'Tree'
 

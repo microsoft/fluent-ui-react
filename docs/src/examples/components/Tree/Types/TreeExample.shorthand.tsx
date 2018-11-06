@@ -16,9 +16,14 @@ const treeData = [
   },
   {
     title: ' two',
+    submenu: [
+      {
+        title: 'two one',
+      },
+    ],
   },
 ]
 
-const TreeExampleShorthand = () => <Tree content="Hello from Tree!" treedata={treeData} />
+const TreeExampleShorthand = () => <Tree treedata={treeData} />
 
 export default TreeExampleShorthand

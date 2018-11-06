@@ -51,7 +51,13 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   renderContent() {
     const { submenu, content } = this.props
     const children = []
-    children.push(TreeTitle.create(content))
+    children.push(
+      TreeTitle.create(content, {
+        defaultProps: {
+          href: '#',
+        },
+      }),
+    )
     submenu &&
       children.push(
         Tree.create(content, {
