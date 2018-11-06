@@ -30,6 +30,7 @@ import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
+import createAnimation from './createAnimation'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -144,7 +145,6 @@ const renderComponent = <P extends {}>(
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
-          animations = {},
         } = theme
         const ElementType = getElementType({ defaultProps }, props)
 
@@ -156,82 +156,7 @@ const renderComponent = <P extends {}>(
           props.variables,
         )(siteVariables, stateAndProps)
 
-        let animationCSSProp = {}
-
-        if (props.animation) {
-          const { animation } = props
-
-          if (typeof animation === 'string') {
-            if (animations[animation]) {
-              const {
-                keyframe,
-                keyframeParams,
-                duration,
-                delay,
-                direction,
-                fillMode,
-                iterationCount,
-                playState,
-                timingFunction,
-              } = animations[animation]
-
-              const evaluatedKeyframe = theme.renderer.renderKeyframe(
-                keyframe,
-                keyframeParams || {},
-              )
-              animationCSSProp = {
-                animationName: evaluatedKeyframe,
-                animationDelay: delay,
-                animationDirection: direction,
-                animationDuration: duration,
-                animationFillMode: fillMode,
-                animationIterationCount: iterationCount,
-                animationPlayState: playState,
-                animationTimingFunction: timingFunction,
-              }
-            }
-          } else {
-            const {
-              name,
-              keyframeParams: propKeyframeParams,
-              duration: propDuration,
-              delay: propDelay,
-              direction: propDirection,
-              fillMode: propFillMode,
-              iterationCount: propIterationCount,
-              playState: propPlayState,
-              timingFunction: propTimingFunction,
-            } = animation
-            if (animations[name]) {
-              const {
-                keyframe,
-                keyframeParams,
-                duration,
-                delay,
-                direction,
-                fillMode,
-                iterationCount,
-                playState,
-                timingFunction,
-              } = animations[name]
-
-              const evaluatedKeyframe = theme.renderer.renderKeyframe(
-                keyframe,
-                propKeyframeParams || keyframeParams || {},
-              )
-              animationCSSProp = {
-                animationName: evaluatedKeyframe,
-                animationDelay: propDelay || delay,
-                animationDirection: propDirection || direction,
-                animationDuration: propDuration || duration,
-                animationFillMode: propFillMode || fillMode,
-                animationIterationCount: propIterationCount || iterationCount,
-                animationPlayState: propPlayState || playState,
-                animationTimingFunction: propTimingFunction || timingFunction,
-              }
-            }
-          }
-        }
+        const animationCSSProp = props.animation ? createAnimation(props.animation, theme) : {}
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(

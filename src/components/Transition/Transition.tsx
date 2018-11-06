@@ -1,15 +1,15 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { UIComponent, customPropTypes, createShorthandFactory, childrenExist } from '../../lib'
+import { ComponentSlotStyle, ComponentVariablesInput, Animation } from '../../themes/types'
 import { ReactChildren } from '../../../types/utils'
+import createAnimation from '../../lib/createAnimation'
 
 export type TransitionProps = {
   animationName?: string
   as?: any
   children?: ReactChildren
-  content?: React.ReactNode
   delay?: string
   direction?: string
   duration?: string
@@ -45,9 +45,6 @@ class Transition extends UIComponent<TransitionProps, any> {
      */
     children: PropTypes.node,
 
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
     /** Delay of the animation. */
     delay: PropTypes.string,
 
@@ -80,40 +77,28 @@ class Transition extends UIComponent<TransitionProps, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
-    const {
-      children,
-      content,
-      animationName,
-      keyframeParams,
-      duration,
-      delay,
-      iterationCount,
-      direction,
-      fillMode,
-      playState,
-      timingFunction,
-    } = this.props
-    let animationProp = {}
-    if (theme.animations && theme.animations[animationName]) {
-      const animation = theme.animations[animationName]
-      const keyframe = theme.renderer.renderKeyframe(
-        animation.keyframe,
-        keyframeParams || animation.keyframeParams,
-      )
-      animationProp = {
-        animationName: keyframe,
-        animationDuration: duration || animation.duration,
-        animationDelay: delay || animation.delay,
-        animationIterationCount: iterationCount || animation.iterationCount,
-        animationDirection: direction || animation.direction,
-        animationFillMode: fillMode || animation.fillMode,
-        animationPlayState: playState || animation.playState,
-        animationTimingFunction: timingFunction || animation.timingFunction,
-      }
+    const { children, animationName } = this.props
+
+    const animation: Animation = {
+      name: animationName,
+      keyframeParams: this.props.keyframeParams,
+      duration: this.props.duration,
+      delay: this.props.delay,
+      iterationCount: this.props.iterationCount,
+      direction: this.props.direction,
+      fillMode: this.props.fillMode,
+      playState: this.props.playState,
+      timingFunction: this.props.timingFunction,
     }
+
+    const animationStyle = createAnimation(animation, theme)
+
+    const child = childrenExist(children) && React.Children.only(children)
+    const result = React.cloneElement(child, { style: { ...animationStyle, ...child.props.style } })
+
     return (
-      <ElementType {...rest} className={classes.root} style={animationProp}>
-        {childrenExist(children) ? children : content}
+      <ElementType {...rest} className={classes.root}>
+        {result}
       </ElementType>
     )
   }
