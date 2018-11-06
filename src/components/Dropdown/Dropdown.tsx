@@ -13,6 +13,7 @@ import Text from '../Text/Text'
 import Image from '../Image/Image'
 import ListItem from '../List/ListItem'
 import _ from 'lodash'
+import Icon from '../Icon/Icon'
 
 export interface DropdownProps {
   className?: string
@@ -89,6 +90,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
     const { search, multiple } = this.props
     const { inputValue } = this.state
+    // we hold active elemts in the array, downshift should not know anything.
     const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
 
     return (
@@ -104,10 +106,11 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
             getInputProps,
             getItemProps,
             getMenuProps,
+            getRootProps,
+            getToggleButtonProps,
             isOpen,
             highlightedIndex,
             selectItemAtIndex,
-            getRootProps,
           }) => {
             return (
               <React.Fragment>
@@ -117,7 +120,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                   </span>
                   {multiple && this.renderActive(styles)}
                   {search &&
-                    this.renderInputTrigger(
+                    this.renderInput(
                       styles,
                       variables,
                       getRootProps,
@@ -125,6 +128,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                       highlightedIndex,
                       selectItemAtIndex,
                     )}
+                  {this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
                 </div>
                 {this.renderList(
                   styles,
@@ -142,7 +146,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     )
   }
 
-  private renderInputTrigger(
+  private renderInput(
     styles,
     variables,
     getRootProps,
@@ -159,7 +163,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
         onFocus={this.onInputFocus}
         onKeyUp={multiple && this.onInputKeyUpIfMultiple}
         styles={styles.editTextDiv}
-        wrapper={{ ...getRootProps({ refKey: undefined }, { suppressRefError: true }) }}
+        wrapper={{ ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }) }}
         variables={{ inputFocusBorderColor: variables.editTextInputFocusBorderColor }}
         input={{
           type: 'text',
@@ -170,6 +174,18 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
             onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
           }),
         }}
+      />
+    )
+  }
+
+  private renderToggleButton(getToggleButtonProps, styles, isOpen) {
+    return (
+      <Icon
+        name={`chevron ${isOpen ? 'up' : 'down'}`}
+        as="button"
+        tabindex="-1"
+        styles={styles.toggleButton}
+        {...getToggleButtonProps()}
       />
     )
   }

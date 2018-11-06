@@ -16,8 +16,10 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderBottom: v.containerDivBorderBottom,
       backgroundColor: v.containerDivBackgroundColor,
       borderColor: v.containerDivBorderColor,
-      maxWidth: v.maxWidth,
-      minWidth: v.minWidth,
+      maxWidth: v.containerDivMaxWidth,
+      minWidth: v.containerDivMinWidth,
+      transform: 'rotateZ(0)',
+      paddingRight: '2rem',
       ...(focused && {
         borderColor: v.containerDivFocusBorderColor,
         borderRadius: v.containerDivFocusBorderRadius,
@@ -51,9 +53,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     zIndex: 1000,
     maxHeight: '20rem',
     overflowY: 'hidden',
-    maxWidth: v.maxWidth,
-    minWidth: v.minWidth,
-    width: v.width,
+    maxWidth: v.containerDivMaxWidth,
+    minWidth: v.containerDivMinWidth,
+    width: v.listWidth,
   }),
 
   listItemRoot: ({ variables: v }): ICSSInJSStyle => ({
@@ -62,6 +64,17 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
 
   activeListLabel: (): ICSSInJSStyle => ({
     margin: '.4rem 0 0 .4rem',
+  }),
+
+  toggleButton: ({ variables: v }): ICSSInJSStyle => ({
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    height: v.toggleButtonSize,
+    width: v.toggleButtonSize,
+    border: 0,
+    backgroundColor: 'transparent',
+    margin: 0,
   }),
 }
 
