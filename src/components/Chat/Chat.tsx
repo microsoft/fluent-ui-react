@@ -5,28 +5,31 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 
-export interface IChatProps {
+export interface ChatProps {
   accessibility?: Accessibility
   as?: any
   className?: string
   children?: ReactChildren
   items?: ShorthandValue[]
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Chat extends UIComponent<Extendable<IChatProps>, any> {
+/**
+ * A Chat displays messages between users.
+ */
+class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'

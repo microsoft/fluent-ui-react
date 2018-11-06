@@ -5,14 +5,14 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import {
   ContainerFocusHandler,
-  IFocusContainerProps,
-  IFocusContainerState,
+  FocusContainerProps,
+  FocusContainerState,
 } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
@@ -20,21 +20,25 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 
-export interface IListProps extends IFocusContainerProps<ShorthandValue> {
+export interface ListProps extends FocusContainerProps<ShorthandValue> {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
   className?: string
   debug?: boolean
+  listRef?: (node: HTMLElement) => void
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
+/**
+ * A list displays a group of related content.
+ */
+class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -68,6 +72,9 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
+
+    /** Ref callback with the list DOM node. */
+    listRef: PropTypes.func,
 
     /**
      * A custom render iterator for rendering each of the List items.
@@ -114,10 +121,15 @@ class List extends UIComponent<Extendable<IListProps>, IFocusContainerState> {
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
+        ref={this.handleListRef}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
+  }
+
+  private handleListRef = (listNode: HTMLElement) => {
+    _.invoke(this.props, 'listRef', listNode)
   }
 
   renderItems() {

@@ -1,6 +1,6 @@
 import { teamsPxToRem } from '../../utils'
 
-export interface IMenuVariables {
+export interface MenuVariables {
   defaultColor: string
   defaultBackgroundColor: string
 
@@ -21,7 +21,7 @@ export interface IMenuVariables {
   lineHeightBase: string
 }
 
-export default (siteVars: any): IMenuVariables => {
+export default (siteVars: any): MenuVariables => {
   return {
     defaultColor: siteVars.gray02,
     defaultBackgroundColor: 'transparent',

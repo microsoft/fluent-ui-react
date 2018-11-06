@@ -1,5 +1,5 @@
 import { teamsPxToRem } from '../../utils'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ICSSInJSStyle } from '../../../types'
 
 export default {
   root: ({ variables: v }): ICSSInJSStyle => ({

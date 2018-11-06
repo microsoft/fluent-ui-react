@@ -1,6 +1,6 @@
 import { teamsPxToRem } from '../../utils'
 
-export interface IPopupContentVariables {
+export interface PopupContentVariables {
   [key: string]: string | number
 
   backgroundColor: string
@@ -9,7 +9,7 @@ export interface IPopupContentVariables {
   zIndex: number
 }
 
-export default (siteVars: any): IPopupContentVariables => {
+export default (siteVars: any): PopupContentVariables => {
   return {
     backgroundColor: siteVars.white,
     borderColor: siteVars.gray06,

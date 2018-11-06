@@ -1,8 +1,8 @@
 import { teamsPxToRem } from '../../utils'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IAvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { AvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
-const avatarStyles: IComponentPartStylesInput<IAvatarPropsWithDefaults, any> = {
+const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = teamsPxToRem(size)
     return {

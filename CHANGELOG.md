@@ -18,6 +18,52 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING
+- Replace the `type` prop with `secondary` and `primary` for `Button` @layershifter ([#419](https://github.com/stardust-ui/react/pull/419))
+
+### Fixes
+- Fix endMedia to not be removed from DOM on mouseleave for `ListItem` @musingh1 ([#278](https://github.com/stardust-ui/react/pull/278))
+
+### Features
+- Make `Grid` keyboard navigable by implementing `gridBehavior` @sophieH29 ([#398](https://github.com/stardust-ui/react/pull/398))
+
+### Documentation
+- Add all missing component descriptions and improve those existing @levithomason ([#400](https://github.com/stardust-ui/react/pull/400))
+
+<!--------------------------------[ v0.11.0 ]------------------------------- -->
+## [v0.11.0](https://github.com/stardust-ui/react/tree/v0.11.0) (2018-10-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.10.0...v0.11.0)
+
+### BREAKING
+- Export all typings at the top-level API @levithomason ([#382](https://github.com/stardust-ui/react/pull/382))
+
+### Fixes
+- Fix build on Windows @jurokapsiar ([#383](https://github.com/stardust-ui/react/pull/383))
+- Add warning for rendering components outside provider @Bugaa92 ([#378](https://github.com/stardust-ui/react/pull/378))
+- Fix icon colors for Teams theme @codepretty ([#384](https://github.com/stardust-ui/react/pull/384))
+- Do not render the Attachment's `progress` value to the DOM @levithomason ([#402](https://github.com/stardust-ui/react/pull/402))
+- Add dark theme and contrast theme for Avatar and Status Indicator @bcalvery ([#373](https://github.com/stardust-ui/react/pull/373))
+- Add contrast theme and update dark theme for Button @bcalvery ([#381](https://github.com/stardust-ui/react/pull/381))
+- Add Segment background color @levithomason ([#408](https://github.com/stardust-ui/react/pull/408))
+- Make `eventStack` subscription logic to be always async @kuzhelov ([#391](https://github.com/stardust-ui/react/pull/391))
+- Fix for dotted focus outline in Firefox for `Button` component in docs @Bugaa92 ([#390](https://github.com/stardust-ui/react/pull/390))
+
+### Features
+- Export `mergeThemes` @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+- Add Focus Trap Zone @sophieH29 ([#239](https://github.com/stardust-ui/react/pull/239))
+- Add compose icons to Teams theme @joheredi ([#396](https://github.com/stardust-ui/react/pull/396))
+- Expose access to input element of `Input` via `inputRef` prop @silviuavram ([#377](https://github.com/stardust-ui/react/pull/377))
+- Adding `Partial` utility to enable partial Variables implementations @kuzhelov ([#373](https://github.com/stardust-ui/react/pull/373))
+
+### Documentation
+- Add `Provider` examples @levithomason ([#285](https://github.com/stardust-ui/react/pull/285))
+- Add transparent button to examples @levithomason ([#407](https://github.com/stardust-ui/react/pull/407))
+- Add component descriptions and fix accessibility errors @levithomason ([#387](https://github.com/stardust-ui/react/pull/387))
+
+<!--------------------------------[ v0.10.0 ]------------------------------- -->
+## [v0.10.0](https://github.com/stardust-ui/react/tree/v0.10.0) (2018-10-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.9.1...v0.10.0)
+
+### BREAKING
 - Removed `type...` prefix from multiple variables in `buttonStyles.ts` @bcalvery ([#336](https://github.com/stardust-ui/react/pull/336))
 
 ### Documentation
@@ -30,6 +76,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `target` prop to `Popup` @kuzhelog ([#356](https://github.com/stardust-ui/react/pull/356))
+- Add new `Input` component with `wrapper` prop @Bugaa92 ([#326](https://github.com/stardust-ui/react/pull/326))
+- Add `Form` and `Form.Field` components @mnajdova ([#353](https://github.com/stardust-ui/react/pull/353))
 
 <!--------------------------------[ v0.9.1 ]------------------------------- -->
 ## [v0.9.1](https://github.com/stardust-ui/react/tree/v0.9.1) (2018-10-11)

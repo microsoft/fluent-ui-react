@@ -4,12 +4,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import Icon from '../Icon'
+import Icon from '../Icon/Icon'
 import { menuItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
@@ -18,7 +18,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   accessibility?: Accessibility
   active?: boolean
   as?: any
@@ -29,22 +29,25 @@ export interface IMenuItemProps {
   icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+  onClick?: ComponentEventHandler<MenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
   renderIcon?: ShorthandRenderFunction
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-export interface IMenuItemState {
+export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'

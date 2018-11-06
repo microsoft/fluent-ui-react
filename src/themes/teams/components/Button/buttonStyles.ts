@@ -1,12 +1,11 @@
 import { teamsPxToRem } from '../../utils'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonProps, IButtonState } from '../../../../components/Button/Button'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
 
-const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> = {
+const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
-    const primary = type === 'primary'
+    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
 
     const {
       height,
@@ -32,8 +31,12 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       borderColorFocus,
       borderColorFocusIndicator,
       borderColorDisabled,
+      borderWidth,
 
       primaryColor,
+      primaryColorActive,
+      primaryColorHover,
+      primaryColorFocus,
       primaryBackgroundColor,
       primaryBackgroundColorActive,
       primaryBackgroundColorHover,
@@ -43,6 +46,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       primaryBorderColorHover,
       primaryBorderColorFocus,
       primaryBorderColorFocusIndicator,
+      primaryBorderWidth,
 
       primaryCircularBorderColorFocusIndicator,
 
@@ -81,10 +85,11 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       verticalAlign: 'middle',
       cursor: 'pointer',
 
+      // rectangular button defaults
       ...(!text && {
         outline: 0,
         borderRadius: '2px',
-        borderWidth: '1px',
+        borderWidth: `${teamsPxToRem(borderWidth)}`,
         borderStyle: 'solid',
         borderColor,
         boxShadow,
@@ -101,11 +106,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
             ':after': {
               content: '""',
               position: 'absolute',
-              top: '-2px',
-              right: '-2px',
-              bottom: '-2px',
-              left: '-2px',
-              border: `${teamsPxToRem(1)} solid ${borderColorFocusIndicator}`,
+              top: `-${teamsPxToRem(borderWidth * 2)}`,
+              right: `-${teamsPxToRem(borderWidth * 2)}`,
+              bottom: `-${teamsPxToRem(borderWidth * 2)}`,
+              left: `-${teamsPxToRem(borderWidth * 2)}`,
+              borderWidth: `${teamsPxToRem(borderWidth)}`,
+              borderStyle: 'solid',
+              borderColor: `${borderColorFocusIndicator}`,
               borderRadius: '3px',
             },
           },
@@ -122,11 +129,15 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         }),
       }),
 
+      // circular button defaults
       ...(circular &&
         !text && {
+          minWidth: height,
+          padding: 0,
           color: circularColor,
           backgroundColor: circularBackgroundColor,
           borderColor: circularBorderColor,
+          borderRadius: circularRadius,
           ':hover': {
             color: circularColorActive,
             backgroundColor: circularBackgroundColorHover,
@@ -144,7 +155,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 right: '0',
                 bottom: '0',
                 left: '0',
-                border: `${teamsPxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
+                borderWidth: `${teamsPxToRem(borderWidth)}`,
+                borderStyle: 'solid',
+                borderColor: `${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
               },
             },
@@ -161,29 +174,51 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           }),
         }),
 
+      // text button defaults
+      ...(text && {
+        color: textColor,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        ':hover': {
+          color: textColorHover,
+        },
+        ...(primary && {
+          color: textPrimaryColor,
+          ':hover': {
+            color: textPrimaryColorHover,
+          },
+        }),
+      }),
+
+      // Overrides for "primary" buttons
       ...(primary &&
         !text && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
-          borderColor: primaryBorderColor,
+          borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+          borderStyle: 'solid',
+          borderColor: `${primaryBorderColor}`,
           ':hover': {
+            color: primaryColorHover,
             backgroundColor: primaryBackgroundColorHover,
             borderColor: primaryBorderColorHover,
           },
-
           ...(isFromKeyboard &&
             !circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBorderColorFocus,
                 ':after': {
                   content: '""',
                   position: 'absolute',
-                  top: '-2px',
-                  right: '-2px',
-                  bottom: '-2px',
-                  left: '-2px',
-                  border: `${teamsPxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
+                  top: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
+                  right: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
+                  bottom: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
+                  left: `-${teamsPxToRem(primaryBorderWidth * 2)}`,
+                  borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+                  borderStyle: 'solid',
+                  borderColor: `${primaryBorderColorFocusIndicator}`,
                   borderRadius: '3px',
                 },
               },
@@ -191,6 +226,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(isFromKeyboard &&
             circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBackgroundColorFocus,
                 ':after': {
@@ -200,7 +236,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  border: `${teamsPxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
+                  borderWidth: `${teamsPxToRem(primaryBorderWidth)}`,
+                  borderStyle: 'solid',
+                  borderColor: `${primaryCircularBorderColorFocusIndicator}`,
                   borderRadius: circularRadius,
                 },
               },
@@ -208,6 +246,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
+                color: primaryColorActive,
                 backgroundColor: primaryBackgroundColorActive,
                 borderColor: primaryBorderColorActive,
                 boxShadow: 'none',
@@ -216,34 +255,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           }),
         }),
 
-      ...(text && {
-        color: textColor,
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        ':hover': {
-          color: textColorHover,
-        },
-      }),
-
-      ...(primary &&
-        text && {
-          color: textPrimaryColor,
-          ':hover': {
-            color: textPrimaryColorHover,
-          },
-        }),
-
-      ...(circular && {
-        minWidth: height,
-        padding: 0,
-        borderRadius: circularRadius,
-      }),
-
-      ...(fluid && {
-        width: '100%',
-        maxWidth: '100%',
-      }),
-
+      // Overrides for "disabled" buttons
       ...(disabled && {
         cursor: 'default',
         color: colorDisabled,
@@ -254,6 +266,11 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           backgroundColor: backgroundColorDisabled,
           borderColor: borderColorDisabled,
         },
+      }),
+
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
       }),
 
       ...(iconOnly && {

@@ -3,11 +3,11 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import Icon from '../Icon'
-import Slot from '../Slot'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
@@ -18,7 +18,7 @@ import {
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface IButtonProps {
+export interface ButtonProps {
   as?: any
   accessibility?: Accessibility
   children?: ReactChildren
@@ -30,27 +30,28 @@ export interface IButtonProps {
   icon?: ShorthandValue
   iconOnly?: boolean
   iconPosition?: 'before' | 'after'
-  onClick?: ComponentEventHandler<IButtonProps>
-  onFocus?: ComponentEventHandler<IButtonProps>
+  onClick?: ComponentEventHandler<ButtonProps>
+  onFocus?: ComponentEventHandler<ButtonProps>
+  primary?: boolean
   renderIcon?: ShorthandRenderFunction
   text?: boolean
-  type?: 'primary' | 'secondary'
-  styles?: ComponentPartStyle
+  secondary?: boolean
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-export interface IButtonState {
+export interface ButtonState {
   [isFromKeyboard.propertyName]: boolean
 }
 
 /**
- * A button.
+ * A button indicates a possible user action.
  * @accessibility
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
+class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -105,11 +106,14 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
      */
     onFocus: PropTypes.func,
 
+    /** A button can be formatted to show different levels of emphasis. */
+    primary: PropTypes.bool,
+
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
     /** A button can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    secondary: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
@@ -183,16 +187,14 @@ class Button extends UIComponent<Extendable<IButtonProps>, IButtonState> {
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {

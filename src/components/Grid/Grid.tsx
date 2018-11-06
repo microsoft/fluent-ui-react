@@ -1,27 +1,31 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
+
 import ReactNode = React.ReactNode
 
-export interface IGridProps {
+export interface GridProps {
   as?: any
+  accessibility?: Accessibility
   className?: string
   children?: ReactChildren
   columns?: string | number
   content?: ShorthandValue | ShorthandValue[]
   rows?: string | number
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * A grid.
+ * A grid is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<IGridProps>, any> {
+class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -59,13 +63,17 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.func,
   }
 
-  public static defaultProps = {
+  public static defaultProps: GridProps = {
     as: 'div',
+    accessibility: defaultBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
+  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (

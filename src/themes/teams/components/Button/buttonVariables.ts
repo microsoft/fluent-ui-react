@@ -1,6 +1,6 @@
 import { teamsPxToRem } from '../../utils'
 
-export interface IButtonVariables {
+export interface ButtonVariables {
   [key: string]: string | number
 
   height: string
@@ -26,8 +26,12 @@ export interface IButtonVariables {
   borderColorFocus: string
   borderColorFocusIndicator: string
   borderColorDisabled: string
+  borderWidth: number
 
   primaryColor: string
+  primaryColorActive: string
+  primaryColorHover: string
+  primaryColorFocus: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
@@ -37,6 +41,7 @@ export interface IButtonVariables {
   primaryBorderColorHover: string
   primaryBorderColorFocus: string
   primaryBorderColorFocusIndicator: string
+  primaryBorderWidth: number
 
   primaryCircularBorderColorFocusIndicator: string
 
@@ -62,7 +67,7 @@ export interface IButtonVariables {
   boxShadow: string
 }
 
-export default (siteVars: any): IButtonVariables => {
+export default (siteVars: any): ButtonVariables => {
   return {
     height: teamsPxToRem(32),
     minWidth: teamsPxToRem(96),
@@ -88,18 +93,22 @@ export default (siteVars: any): IButtonVariables => {
     borderColorFocus: siteVars.white,
     borderColorFocusIndicator: siteVars.black,
     borderColorDisabled: 'transparent',
+    borderWidth: 1,
 
     primaryColor: siteVars.white,
+    primaryColorActive: siteVars.white,
+    primaryColorHover: siteVars.white,
+    primaryColorFocus: siteVars.white,
     primaryBackgroundColor: siteVars.brand,
     primaryBackgroundColorActive: siteVars.brand02,
     primaryBackgroundColorHover: siteVars.brand04,
     primaryBackgroundColorFocus: siteVars.brand04,
-    primaryBackgroundColorDisabled: siteVars.brand04,
     primaryBorderColor: 'transparent',
     primaryBorderColorActive: 'transparent',
     primaryBorderColorHover: 'transparent',
     primaryBorderColorFocus: siteVars.white,
     primaryBorderColorFocusIndicator: siteVars.black,
+    primaryBorderWidth: 1,
 
     primaryCircularBorderColorFocusIndicator: siteVars.white,
 

@@ -1,11 +1,11 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from 'theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import {
-  IRadioGroupItemProps,
-  IRadioGroupItemState,
+  RadioGroupItemProps,
+  RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
 import { teamsPxToRem } from '../../utils'
 
-const radioStyles: IComponentPartStylesInput<IRadioGroupItemProps & IRadioGroupItemState, any> = {
+const radioStyles: ComponentSlotStylesInput<RadioGroupItemProps & RadioGroupItemState, any> = {
   root: ({ props }): ICSSInJSStyle => ({
     outline: 0,
     ...(!props.vertical && {

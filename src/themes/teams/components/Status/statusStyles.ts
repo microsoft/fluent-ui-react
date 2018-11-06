@@ -1,9 +1,9 @@
 import { teamsPxToRem } from '../../utils'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IStatusPropsWithDefaults } from '../../../../components/Status/Status'
-import { IStatusVariables } from './statusVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
+import { StatusVariables } from './statusVariables'
 
-const getBackgroundColor = (state: string, variables: IStatusVariables) => {
+const getBackgroundColor = (state: string, variables: StatusVariables) => {
   switch (state) {
     case 'success':
       return variables.successBackgroundColor
@@ -19,7 +19,7 @@ const getBackgroundColor = (state: string, variables: IStatusVariables) => {
   }
 }
 
-const getTextColor = (state: string, variables: IStatusVariables) => {
+const getTextColor = (state: string, variables: StatusVariables) => {
   switch (state) {
     case 'success':
       return variables.successTextColor
@@ -35,7 +35,7 @@ const getTextColor = (state: string, variables: IStatusVariables) => {
   }
 }
 
-const statusStyles: IComponentPartStylesInput<IStatusPropsWithDefaults, IStatusVariables> = {
+const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
     const sizeInRem = teamsPxToRem(
       size + 2 * ((variables.borderColor && variables.borderWidth) || 0),

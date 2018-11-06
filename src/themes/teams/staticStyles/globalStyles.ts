@@ -1,4 +1,4 @@
-import { StaticStyleFunction } from '../../../../types/theme'
+import { StaticStyleFunction } from '../../types'
 
 const globalStyles: StaticStyleFunction = siteVars => ({
   html: {

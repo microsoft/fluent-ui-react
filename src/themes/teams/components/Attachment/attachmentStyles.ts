@@ -1,9 +1,9 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { teamsPxToRem } from '../../utils'
 
-const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVariables> = {
+const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',

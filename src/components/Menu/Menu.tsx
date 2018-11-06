@@ -5,13 +5,13 @@ import * as React from 'react'
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentVariablesInput,
   ComponentVariablesObject,
-  ComponentPartStyle,
-} from '../../../types/theme'
+  ComponentSlotStyle,
+} from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
@@ -19,7 +19,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuProps {
+export interface MenuProps {
   accessibility?: Accessibility
   as?: any
   activeIndex?: number | string
@@ -35,11 +35,14 @@ export interface IMenuProps {
   type?: 'primary' | 'secondary'
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
+/**
+ * A menu displays grouped navigation actions.
+ */
+class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'

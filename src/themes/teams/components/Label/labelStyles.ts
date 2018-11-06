@@ -1,8 +1,8 @@
 import { teamsPxToRem } from '../../utils'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { ILabelProps } from '../../../../components/Label/Label'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { LabelProps } from '../../../../components/Label/Label'
 
-const labelStyles: IComponentPartStylesInput<ILabelProps, any> = {
+const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
   root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
     ...(image &&
