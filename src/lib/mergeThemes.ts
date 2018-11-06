@@ -19,6 +19,7 @@ import {
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
+import { ObjectOf } from 'types/utils'
 
 // ----------------------------------------
 // Component level merge functions
@@ -64,9 +65,9 @@ export const mergeComponentVariables = (
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
+      const mergedVariables: ObjectOf<any> = {}
 
-      const mergedVariables = {}
-      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+      _.forEach(computedComponentVariables, (variableToMerge, variableName) => {
         const accumulatedVariable = accumulatedVariables[variableName]
 
         mergedVariables[variableName] =
