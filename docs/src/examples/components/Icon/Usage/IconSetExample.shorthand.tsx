@@ -8,17 +8,17 @@ const cellStyles = {
 const IconSetExampleShorthand = () => (
   <Provider.Consumer
     render={theme => (
-      <Grid columns={5} style={{ textAlign: 'center' }}>
+      <Grid columns={4} style={{ textAlign: 'center' }}>
         {Object.keys(theme.icons).map(name => (
           <div key={name} style={cellStyles}>
-            <Icon name={name} size="big" />
+            <Icon name={name} />
             <br />
             <code>{name}</code>
           </div>
         ))}
         {Object.keys(theme.icons).map(name => (
           <div key={name + '-outline'} style={cellStyles}>
-            <Icon name={name} size="big" variables={{ outline: true }} />
+            <Icon name={name} variables={{ outline: true }} />
             <br />
             <code>{name} outline</code>
           </div>
