@@ -7,8 +7,8 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
 /**
  * @description
  * Adds role 'presentation' until we come up with final roles for chat.
- * Adds a vertical focus zone navigation with a last message as a default tabbable element, pressing right arrow key focuses inside a message.
- * Adds a left arrow key action which focuses the chat, i.e., moves key handling from inside a message back to the chat list.
+ * Adds a vertical focus zone navigation with a last message as a default tabbable element, pressing enter key focuses inside a message.
+ * Adds a escape key action which focuses the chat, i.e., moves key handling from inside a message back to the chat list.
  */
 const ChatBehavior: Accessibility = (props: any) => ({
   attributes: {
