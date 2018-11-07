@@ -24,6 +24,7 @@ export interface DropdownProps {
   placeholder?: string
   search?: boolean
   styles?: ComponentSlotStyle<DropdownProps, DropdownState>
+  toggleButton?: boolean
 }
 
 export interface DropdownState {
@@ -78,6 +79,9 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** A dropdown can have a toggle button. */
+    toggleButton: PropTypes.bool,
   }
 
   state: DropdownState = {
@@ -88,7 +92,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
-    const { search, multiple } = this.props
+    const { search, multiple, toggleButton } = this.props
     const { inputValue } = this.state
     // we hold active elemts in the array, downshift should not know anything.
     const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
@@ -127,7 +131,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                     highlightedIndex,
                     selectItemAtIndex,
                   )}
-                {this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
+                {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
                 {this.renderList(
                   styles,
                   variables,
@@ -231,6 +235,9 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
       {
         key: 'people-picker-no-results-item',
         content: <Text weight="bold" content={`We couldn't find any matches.`} />,
+        styles: {
+          backgroundColor: variables.listItemBackgroundColor,
+        },
       },
     ]
   }
