@@ -16,8 +16,8 @@ export interface InputVariables {
   inputFocusBorderRadius: string
 }
 
-const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 16, 24].map(
-  v => pxToRem(v),
+const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 24].map(v =>
+  pxToRem(v),
 )
 
 export default (siteVars): InputVariables => ({
