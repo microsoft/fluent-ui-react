@@ -6,14 +6,12 @@ export interface DropdownVariables {
   containerDivBorderColor: string
   containerDivFocusBorderColor: string
   containerDivFocusBorderRadius: string
-  containerDivMinWidth: string
-  containerDivMaxWidth: string
   editTextInputFocusBorderColor: string
   fontColor: string
   listItemBackgroundColor: string
   listItemHighlightedBackgroundColor: string
   listItemTextColor: string
-  listWidth: string
+  width: string
   toggleButtonSize: string
 }
 
@@ -29,13 +27,11 @@ export default (siteVars): DropdownVariables => ({
   containerDivBorderColor: 'transparent',
   containerDivFocusBorderColor: siteVars.brand,
   containerDivFocusBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
-  containerDivMinWidth: pxToRem(128),
-  containerDivMaxWidth: pxToRem(368),
 
   listItemTextColor: siteVars.white,
   listItemBackgroundColor: siteVars.white,
   listItemHighlightedBackgroundColor: siteVars.brand,
 
-  listWidth: '100%',
+  width: pxToRem(246),
   toggleButtonSize: pxToRem(30),
 })
