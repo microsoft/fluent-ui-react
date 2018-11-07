@@ -1,6 +1,27 @@
 import * as React from 'react'
 import { Dropdown, DropdownListItem } from '@stardust-ui/react'
 
+class DropdownExample extends React.Component {
+  state = {
+    items: inputItems,
+  }
+  render() {
+    return (
+      <Dropdown
+        placeholder="Start typing a name"
+        multiple
+        search
+        items={this.state.items}
+        onChange={(active: DropdownListItem[]) => {
+          this.setState({
+            items: inputItems.filter(item => active.indexOf(item) === -1),
+          })
+        }}
+      />
+    )
+  }
+}
+
 const inputItems: DropdownListItem[] = [
   {
     header: 'Bruce Wayne',
@@ -57,27 +78,5 @@ const inputItems: DropdownListItem[] = [
     content: 'Graphic Designer',
   },
 ]
-
-class DropdownExample extends React.Component {
-  state = {
-    items: inputItems,
-  }
-  render() {
-    return (
-      <Dropdown
-        label={{ content: 'Add People' }}
-        placeholder="Start typing a name"
-        multiple
-        search
-        items={this.state.items}
-        onChange={active => {
-          this.setState({
-            items: inputItems.filter(item => active.indexOf(item) === -1),
-          })
-        }}
-      />
-    )
-  }
-}
 
 export default DropdownExample

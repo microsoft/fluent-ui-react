@@ -20,7 +20,8 @@ export interface DropdownProps {
   fluid?: boolean
   items?: DropdownListItem[]
   multiple?: boolean
-  onChange?: (active: DropdownListItem[]) => any
+  onChange?: (active: DropdownListItem | DropdownListItem[]) => any
+  onSearchChange?: (inputValue: string) => any
   placeholder?: string
   search?: boolean
   styles?: ComponentSlotStyle<DropdownProps, DropdownState>
@@ -28,7 +29,7 @@ export interface DropdownProps {
 }
 
 export interface DropdownState {
-  active: DropdownListItem[]
+  active: DropdownListItem | DropdownListItem[]
   backspaceDelete: boolean
   focused: boolean
   inputValue?: string
@@ -65,11 +66,16 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     multiple: PropTypes.bool,
 
     /**
-     * Event for request to change 'open' value.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
+     * Callback for change in dropdown active element(s).
+     * @param {DropdownListItem|DropdownListItem[]} active - Dropdown active element(s).
      */
     onChange: PropTypes.func,
+
+    /**
+     * Callback for change in dropdown search value/
+     * @param {string} inputValue - The new value in the search field.
+     */
+    onSearchChange: PropTypes.func,
 
     /** A message to serve as placeholder. */
     placeholder: PropTypes.string,
@@ -100,7 +106,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     return (
       <ElementType>
         <Downshift
-          onChange={this.onDropdownChange}
+          onChange={this.handleChange}
           inputValue={inputValue}
           {...selectedPropIfMultiple}
           stateReducer={this.stateReducer}
@@ -170,7 +176,10 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
         input={{
           type: 'text',
           styles: styles.editTextInput,
-          placeholder: inputValue.length > 0 || (multiple && active.length > 0) ? '' : placeholder,
+          placeholder:
+            inputValue.length > 0 || (multiple && (active as DropdownListItem[]).length > 0)
+              ? ''
+              : placeholder,
           ...getInputProps({
             onBlur: this.onInputBlur,
             onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
@@ -243,7 +252,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   private renderActive(styles) {
-    const active = this.state.active
+    const active = this.state.active as DropdownListItem[]
 
     return active.length === 0
       ? null
@@ -284,7 +293,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Backspace:
-        if (inputValue === '' && active.length > 0) {
+        if (inputValue === '' && (active as DropdownListItem[]).length > 0) {
           if (!backspaceDelete) {
             this.setState({ backspaceDelete: true })
           } else {
@@ -296,18 +305,17 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     }
   }
 
-  onDropdownChange = element => {
-    if (this.props.multiple) {
-      const newActive = [...this.state.active, element]
+  handleChange = element => {
+    const { multiple } = this.props
+    const newActive = multiple ? [...(this.state.active as DropdownListItem[]), element] : element
 
-      _.invoke(this.props, 'onChange', newActive)
+    _.invoke(this.props, 'onChange', newActive)
 
-      this.setState({
-        active: newActive,
-        inputValue: '',
-        message: `${element.header} has been selected.`,
-      })
-    }
+    this.setState({
+      active: newActive,
+      inputValue: '',
+      message: `${element.header} has been selected.`,
+    })
   }
 
   onCloseIconClick = (element, event) => this.handleCloseIconAction(element, event)
@@ -333,6 +341,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   stateReducer = (state: DownshiftState<any>, changes: StateChangeOptions<any>) => {
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
+        _.invoke(this.props, 'onSearchChange', changes.inputValue)
         this.setState({
           inputValue: changes.inputValue,
           backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
@@ -350,7 +359,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   private removeFromActive(element?) {
-    let { active } = this.state
+    let active = this.state.active as DropdownListItem[]
     let poppedElement = element
 
     if (poppedElement) {
