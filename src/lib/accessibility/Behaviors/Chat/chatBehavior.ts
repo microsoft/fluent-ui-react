@@ -19,7 +19,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
   focusZone: {
     mode: FocusZoneMode.Wrap,
     props: {
-      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.ArrowRight,
+      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,
       defaultTabbableElement: `[${CHAT_FOCUSZONE_ATTRIBUTE}] > * > *:last-child`, // select last chat message by default
       [CHAT_FOCUSZONE_ATTRIBUTE]: '', // allows querying the default active element
@@ -28,7 +28,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
   keyActions: {
     root: {
       focus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
     },
   },
