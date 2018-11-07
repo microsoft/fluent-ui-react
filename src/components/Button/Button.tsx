@@ -17,6 +17,7 @@ import {
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
+import { commonPropTypes } from '../../lib/UIComponent'
 
 export interface ButtonProps {
   as?: any
@@ -59,9 +60,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
+    ...commonPropTypes,
     /**
      *  Button content for childrenApi
      *  @docSiteIgnore
@@ -126,12 +125,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
      * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
      */
     renderIcon: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {

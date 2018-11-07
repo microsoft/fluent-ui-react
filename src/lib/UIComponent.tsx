@@ -1,8 +1,21 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
+import { customPropTypes } from './index'
+
+export const commonPropTypes = {
+  /** An element type to render as (string or function). */
+  as: customPropTypes.as,
+
+  /** Additional CSS styles to apply to the component instance.  */
+  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+  /** Override for theme site variables to allow modifications of component styling via themes. */
+  variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+}
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
