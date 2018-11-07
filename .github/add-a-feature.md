@@ -8,6 +8,7 @@ Add a feature
 - [Propose feature](#propose-feature)
 - [Prototype](#prototype)
 - [Spec out the API](#spec-out-the-api)
+- [Component anatomy](#component-anatomy)
 - [Create a component](#create-a-component)
   - [How to create a component](#how-to-create-a-component)
   - [Good practice](#good-practice)
