@@ -88,7 +88,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
 
-    /** An Input with icon can format an Icon to appear before or after the input field */
+    /** An Input with icon can format an Icon to appear at the start or at the end of the input field. */
     iconPosition: PropTypes.oneOf(['start', 'end']),
 
     /** Shorthand for the input component. */

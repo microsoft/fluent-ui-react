@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Icon position"
-      description="The icon inside the input can be positioned in the start of the input."
+      description="The icon inside the input can be positioned at the start of the input."
       examplePath="components/Input/Variations/InputExampleIconPosition"
     />
     <ComponentExample
