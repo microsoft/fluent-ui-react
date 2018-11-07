@@ -8,7 +8,6 @@ import MarkdownProvider, { renderPage } from './components/MarkdownProvider'
 
 import Accessibility from './views/Accessibility'
 import ShorthandProps from './views/ShorthandProps'
-import Glossary from './views/Glossary'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import * as QuickStart from './views/QuickStart.md'
@@ -56,7 +55,6 @@ const Router = () => (
           />,
         ]}
 
-        <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
