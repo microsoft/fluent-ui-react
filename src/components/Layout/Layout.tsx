@@ -37,6 +37,9 @@ export interface LayoutProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A layout is a utility for arranging the content of a component.
+ */
 class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static className = 'ui-layout'
 

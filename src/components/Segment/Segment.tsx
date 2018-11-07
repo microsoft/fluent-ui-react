@@ -12,6 +12,9 @@ export interface SegmentProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A segment is used to create a grouping of related content.
+ */
 class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static className = 'ui-segment'
 

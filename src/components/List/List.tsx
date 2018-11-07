@@ -24,6 +24,7 @@ export interface ListProps {
   className?: string
   debug?: boolean
   items?: ShorthandValue[]
+  listRef?: (node: HTMLElement) => void
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -32,6 +33,9 @@ export interface ListProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A list displays a group of related content.
+ */
 class List extends UIComponent<Extendable<ListProps>, any> {
   static displayName = 'List'
 
@@ -67,6 +71,9 @@ class List extends UIComponent<Extendable<ListProps>, any> {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
 
+    /** Ref callback with the list DOM node. */
+    listRef: PropTypes.func,
+
     /**
      * A custom render iterator for rendering each of the List items.
      * The default component, props, and children are available for each item.
@@ -97,6 +104,10 @@ class List extends UIComponent<Extendable<ListProps>, any> {
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
 
+  private handleListRef = (listNode: HTMLElement) => {
+    _.invoke(this.props, 'listRef', listNode)
+  }
+
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: e => {
       e.preventDefault()
@@ -125,6 +136,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
+        ref={this.handleListRef}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
