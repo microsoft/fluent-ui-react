@@ -75,7 +75,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
-            size: 'tiny',
+            size: 'micro',
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',
