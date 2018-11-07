@@ -29,6 +29,7 @@ export interface InputProps {
   defaultValue?: React.ReactText
   fluid?: boolean
   icon?: ShorthandValue
+  iconPosition?: 'start' | 'end'
   inline?: boolean
   input?: ShorthandValue
   onChange?: ComponentEventHandler<InputProps>
@@ -86,6 +87,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
 
     /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
+
+    /** An Input with icon can format an Icon to appear before or after the input field */
+    iconPosition: PropTypes.oneOf(['start', 'end']),
 
     /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
@@ -155,6 +159,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     as: 'div',
     type: 'text',
     wrapper: 'div',
+    iconPosition: 'end',
   }
 
   static autoControlledProps = ['value']

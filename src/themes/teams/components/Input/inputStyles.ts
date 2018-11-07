@@ -26,11 +26,21 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
       borderColor: v.inputFocusBorderColor,
       borderRadius: v.inputFocusBorderRadius,
     },
+    '::placeholder': {
+      ...(p.iconPosition === 'start' && {
+        paddingLeft: v.placeholderPaddingWithIcon,
+      }),
+    },
   }),
 
-  icon: ({ variables: v }): ICSSInJSStyle => ({
+  icon: ({ props: { iconPosition }, variables: v }): ICSSInJSStyle => ({
     position: v.iconPosition as PositionProperty,
-    right: v.iconRight,
+    ...(iconPosition === 'start' && {
+      left: v.iconLeft,
+    }),
+    ...(iconPosition === 'end' && {
+      right: v.iconRight,
+    }),
     outline: 0,
   }),
 }

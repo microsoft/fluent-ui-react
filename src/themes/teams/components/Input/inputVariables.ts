@@ -1,4 +1,5 @@
 import { pxToRem } from '../../../../lib'
+
 export interface InputVariables {
   borderRadius: string
   borderBottom: string
@@ -7,14 +8,21 @@ export interface InputVariables {
   fontSize: string
   iconPosition: string
   iconRight: string
+  iconLeft: string
+  placeholderPaddingWithIcon: string
   inputPadding: string
   inputFocusBorderColor: string
   inputFocusBorderRadius: string
 }
 
-const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _24px_asRem] = [2, 3, 6, 12, 24].map(v =>
-  pxToRem(v),
-)
+const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem, _16px_asRem, _24px_asRem] = [
+  2,
+  3,
+  6,
+  12,
+  16,
+  24,
+].map(v => pxToRem(v))
 
 export default (siteVars): InputVariables => ({
   borderRadius: _3px_asRem,
@@ -26,6 +34,8 @@ export default (siteVars): InputVariables => ({
 
   iconPosition: 'absolute',
   iconRight: _2px_asRem,
+  iconLeft: _6px_asRem,
+  placeholderPaddingWithIcon: _16px_asRem,
 
   inputPadding: `${_6px_asRem} ${_24px_asRem} ${_6px_asRem} ${_12px_asRem}`,
   inputFocusBorderColor: siteVars.brand,

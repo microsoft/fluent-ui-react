@@ -10,6 +10,11 @@ const Variations = () => (
       examplePath="components/Input/Variations/InputExampleIcon"
     />
     <ComponentExample
+      title="Icon position"
+      description="The icon inside the input can be positioned in the start of the input."
+      examplePath="components/Input/Variations/InputExampleIconPosition"
+    />
+    <ComponentExample
       title="Fluid"
       description="An input can take the full width of the parent element."
       examplePath="components/Input/Variations/InputExampleFluid"
