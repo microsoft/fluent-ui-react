@@ -1,6 +1,6 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 import * as keyboardKey from 'keyboard-key'
-import { FocusZoneDirection } from '../../FocusZone'
+import { FocusZoneDirection, IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone'
 
 const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
 
@@ -19,19 +19,28 @@ const ChatBehavior: Accessibility = (props: any) => ({
   focusZone: {
     mode: FocusZoneMode.Wrap,
     props: {
-      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.ArrowRight,
+      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,
-      defaultTabbableElement: `[${CHAT_FOCUSZONE_ATTRIBUTE}] > * > *:last-child`, // select last chat message by default
+      defaultTabbableElement: getLastTabbableElement, // select last chat message by default
       [CHAT_FOCUSZONE_ATTRIBUTE]: '', // allows querying the default active element
     },
   },
   keyActions: {
     root: {
       focus: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
     },
   },
 })
 
 export default ChatBehavior
+
+const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
+  const chatItemsElements = root.querySelectorAll(
+    `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [${IS_FOCUSABLE_ATTRIBUTE}]`,
+  )
+  return (
+    chatItemsElements.length && (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)
+  )
+}
