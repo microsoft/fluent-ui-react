@@ -5,7 +5,7 @@ const props = {}
 const partElementName = 'anchor'
 let actionsDefinition
 
-const eventArg: React.KeyboardEvent = {
+const eventArg: KeyboardEvent = {
   keyCode: testKeyCode,
   altKey: false,
   charCode: null,
@@ -33,7 +33,7 @@ const eventArg: React.KeyboardEvent = {
   target: null,
   timeStamp: null,
   type: null,
-}
+} as any
 
 describe('getKeyDownHandlers', () => {
   beforeEach(() => {
@@ -124,19 +124,15 @@ describe('getKeyDownHandlers', () => {
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test("when acessibility's actionsDefinition is null", () => {
-      const actions = {
-        otherAction: (event: React.KeyboardEvent) => {},
-      }
-
+      const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, null, props)
+
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test('there are not common actions and actions definition', () => {
-      const actions = {
-        otherAction: (event: React.KeyboardEvent) => {},
-      }
-
+      const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props)
+
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
   })

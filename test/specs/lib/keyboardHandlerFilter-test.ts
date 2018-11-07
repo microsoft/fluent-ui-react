@@ -6,7 +6,7 @@ const getEventArg = (
   ctrlKey?: boolean,
   metaKey?: boolean,
   shiftKey?: boolean,
-): React.KeyboardEvent => {
+): KeyboardEvent => {
   return {
     keyCode,
     altKey,
@@ -35,7 +35,7 @@ const getEventArg = (
     target: null,
     timeStamp: null,
     type: null,
-  }
+  } as any
 }
 
 describe('addKeyDownHandler', () => {
