@@ -32,6 +32,6 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColor: siteVars.white,
   listItemHighlightedBackgroundColor: siteVars.brand,
 
-  width: pxToRem(246),
+  width: pxToRem(356),
   toggleButtonSize: pxToRem(30),
 })

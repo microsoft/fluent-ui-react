@@ -4,7 +4,7 @@ import { DropdownVariables } from './dropdownVariables'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   containerDiv: ({ variables: v, props: p }): ICSSInJSStyle => {
-    const { focused } = p
+    const { focused, toggleButton } = p
 
     return {
       display: 'flex',
@@ -18,7 +18,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderColor: v.containerDivBorderColor,
       width: p.fluid ? '100%' : v.width,
       transform: 'rotateZ(0)',
-      paddingRight: '2rem',
+      ...(toggleButton && {
+        paddingRight: '2rem',
+      }),
       ...(focused && {
         borderColor: v.containerDivFocusBorderColor,
         borderRadius: v.containerDivFocusBorderRadius,
