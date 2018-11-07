@@ -12,7 +12,7 @@ Stardust UI should be installed as a `dependency` of your app.
 ```sh
 yarn add @stardust-ui/react
 ```
-    
+
 ## Setup
 
 Stardust components are styled using CSS in JS. This technique requires a style renderer to
@@ -35,7 +35,7 @@ ReactDOM.render(
   document.getElementById('root'),
 )
 ```
-    
+
 ## Usage
 
 That's it. You can now use Stardust UI components in your app.
@@ -44,9 +44,7 @@ That's it. You can now use Stardust UI components in your app.
 import React from 'react'
 import { Button } from '@stardust-ui/react'
 
-export default () => (
-  <Button content="Theming" icon="arrow right" iconPosition="after" primary />
-)
+export default () => <Button content="Theming" icon="arrow right" iconPosition="after" primary />
 ```
 
 <Divider />
