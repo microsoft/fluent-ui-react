@@ -54,9 +54,9 @@ export default () => (
 
 <Button
   as={NavLink}
-  content="Stardust Glossary"
+  content="Accessibility"
   icon="arrow right"
   iconPosition="after"
   primary
-  to="glossary"
+  to="accessibility"
 />
