@@ -1,5 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -12,7 +13,9 @@ const popupBehavior: Accessibility = (props: any) => ({
     trigger: {
       role: getAriaAttributeFromProps('role', props, 'button'),
       tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
-      'aria-disabled': !!props['disabled'],
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : !!props['disabled'],
     },
   },
   keyActions: {

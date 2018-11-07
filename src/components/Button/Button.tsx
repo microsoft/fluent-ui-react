@@ -32,9 +32,10 @@ export interface ButtonProps {
   iconPosition?: 'before' | 'after'
   onClick?: ComponentEventHandler<ButtonProps>
   onFocus?: ComponentEventHandler<ButtonProps>
+  primary?: boolean
   renderIcon?: ShorthandRenderFunction
   text?: boolean
-  type?: 'primary' | 'secondary'
+  secondary?: boolean
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
@@ -105,11 +106,14 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
      */
     onFocus: PropTypes.func,
 
+    /** A button can be formatted to show different levels of emphasis. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+
     /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
     text: PropTypes.bool,
 
     /** A button can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
@@ -183,16 +187,14 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {

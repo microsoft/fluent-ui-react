@@ -12,7 +12,7 @@ const MenuExampleIconOnlyPrimaryInverted = () => (
     iconOnly
     defaultActiveIndex={0}
     items={items}
-    type="primary"
+    primary
     variables={siteVars => ({
       defaultColor: siteVars.gray06,
       defaultBackgroundColor: siteVars.brand,

@@ -1,15 +1,11 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 import * as PropTypes from 'prop-types'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  FocusableItem,
-  FocusableItemProps,
-} from '../../lib/accessibility/FocusHandling/FocusableItem'
+import { FocusableItemProps } from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
@@ -37,6 +33,9 @@ export interface ListItemState {
   isHovering: boolean
 }
 
+/**
+ * A list item contains a single piece of content within a list.
+ */
 class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
@@ -97,18 +96,9 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
 
   private itemRef = React.createRef<HTMLElement>()
 
-  private focusableItem = FocusableItem.create(this)
-
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
   componentDidUpdate() {
-    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
+    // This needs to be as part of issue https://github.com/stardust-ui/react/issues/370
+    // this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -121,28 +111,9 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -150,21 +121,18 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
         ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}

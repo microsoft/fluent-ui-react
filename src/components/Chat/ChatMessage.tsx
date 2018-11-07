@@ -23,7 +23,11 @@ import {
 } from '../../../types/utils'
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers, AccessibilityBehavior } from '../../lib/accessibility/types'
+import {
+  Accessibility,
+  AccessibilityActionHandlers,
+  AccessibilityBehavior,
+} from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
@@ -46,6 +50,9 @@ export interface ChatMessageProps {
   variables?: ComponentVariablesInput
 }
 
+/**
+ * A chat message represents a single statement communicated to a user.
+ */
 class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
@@ -159,7 +166,9 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables, accessibility)}
+        {childrenPropExists
+          ? children
+          : this.renderContent(classes, styles, variables, accessibility)}
       </ElementType>
     )
   }
@@ -217,7 +226,11 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     })
 
     const renderMainArea = ({ main, classes }) => {
-      return main &&  <div className={cx('ui-layout__main chat-message-layout', classes.main)}>{main}</div>
+      return (
+        main && (
+          <div className={cx('ui-layout__main chat-message-layout', classes.main)}>{main}</div>
+        )
+      )
     }
 
     return (
@@ -225,17 +238,17 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         start={!mine && avatarElement}
         renderMainArea={renderMainArea}
         main={
-            <Layout
-              className={classes.content}
-              vertical
-              start={
-                <>
-                  {!mine && authorElement}
-                  {timestampElement}
-                </>
-              }
-              main={contentElement}
-            />
+          <Layout
+            className={classes.content}
+            vertical
+            start={
+              <>
+                {!mine && authorElement}
+                {timestampElement}
+              </>
+            }
+            main={contentElement}
+          />
         }
         end={mine && avatarElement}
       />

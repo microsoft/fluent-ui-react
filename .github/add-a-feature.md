@@ -37,10 +37,6 @@ Review the documentation for the component. Spec out the component's proposed AP
 
 Once the component spec is solidified, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
-## Component anatomy
-
-Please refer to the [Glossary][7] for more details around the component anatomy.
-
 ## Create a component
 
 ### How to create a component
