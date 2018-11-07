@@ -98,10 +98,22 @@ class List extends UIComponent<Extendable<ListProps>, any> {
   private itemRefs = []
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: () => this.focusHandler.moveNext(),
-    movePrevious: () => this.focusHandler.movePrevious(),
-    moveFirst: () => this.focusHandler.moveFirst(),
-    moveLast: () => this.focusHandler.moveLast(),
+    moveNext: e => {
+      e.preventDefault()
+      this.focusHandler.moveNext()
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.focusHandler.movePrevious()
+    },
+    moveFirst: e => {
+      e.preventDefault()
+      this.focusHandler.moveFirst()
+    },
+    moveLast: e => {
+      e.preventDefault()
+      this.focusHandler.moveLast()
+    },
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

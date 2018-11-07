@@ -39,10 +39,7 @@ const getKeyDownHandlers = (
             componentPartKeyAction[actionName].keyCombinations,
           )
 
-          if (eventHandler) {
-            event.preventDefault()
-            eventHandler(event)
-          }
+          eventHandler && eventHandler(event)
         })
 
         _.invoke(props, 'onKeyDown', event)
