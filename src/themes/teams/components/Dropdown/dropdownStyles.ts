@@ -4,7 +4,7 @@ import { DropdownVariables } from './dropdownVariables'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   containerDiv: ({ variables: v, props: p }): ICSSInJSStyle => {
-    const { focused, toggleButton } = p
+    const { focused, toggleButton, fluid } = p
 
     return {
       display: 'flex',
@@ -16,7 +16,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderBottom: v.containerDivBorderBottom,
       backgroundColor: v.containerDivBackgroundColor,
       borderColor: v.containerDivBorderColor,
-      width: p.fluid ? '100%' : v.width,
+      width: fluid ? '100%' : v.width,
       transform: 'rotateZ(0)',
       ...(toggleButton && {
         paddingRight: '2rem',
@@ -49,12 +49,12 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     borderColor: 'transparent',
   }),
 
-  list: ({ variables: v, props: p }): ICSSInJSStyle => ({
+  list: ({ variables: v, props: { fluid } }): ICSSInJSStyle => ({
     position: 'absolute',
     zIndex: 1000,
     maxHeight: '20rem',
     overflowY: 'hidden',
-    width: p.fluid ? '100%' : v.width,
+    width: fluid ? '100%' : v.width,
     top: 'calc(100% + 2px)', // leave room for container + its border
   }),
 
