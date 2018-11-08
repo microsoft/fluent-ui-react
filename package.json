@@ -151,6 +151,9 @@
     "react": ">=0.14.0 <= 16",
     "react-dom": ">=0.14.0 <= 16"
   },
+  "engines": {
+    "yarn": "^1.10.0"
+  },
   "resolutions": {
     "create-react-context": "0.2.2"
   }
