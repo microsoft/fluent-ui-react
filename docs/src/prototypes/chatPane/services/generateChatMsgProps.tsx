@@ -6,7 +6,6 @@ import { StatusProps } from 'src/components/Status/Status'
 import { Extendable } from 'utils'
 import { Menu, Popup, ChatMessage as ChatMessageComponent } from '@stardust-ui/react'
 import { UserStatus, MessageData, UserData } from '.'
-import { findDOMNode } from 'react-dom'
 
 export enum ChatItemTypes {
   message,

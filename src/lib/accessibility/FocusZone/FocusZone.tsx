@@ -270,6 +270,15 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       }
     }
 
+    // If the element which is a FocusZone receives focus, focus the first focusable element inside it
+    if (
+      this.props.shouldFocusFirstElementOnFocus &&
+      this._activeElement !== document.activeElement &&
+      ev.target === this._root.current
+    ) {
+      this.focus(true)
+    }
+
     if (onActiveElementChanged) {
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }

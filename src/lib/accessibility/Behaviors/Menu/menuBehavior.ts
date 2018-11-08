@@ -19,6 +19,7 @@ const menuBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
+      shouldFocusFirstElementOnFocus: true,
     },
   },
 })
