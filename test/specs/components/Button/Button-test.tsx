@@ -128,33 +128,6 @@ describe('Button', () => {
     })
   })
 
-  describe('type', () => {
-    const typeProp = 'type'
-
-    test('is not set by default', () => {
-      const btnType = mountWithProviderAndGetComponent(Button, <Button />).prop(typeProp)
-      expect(btnType).toBeUndefined()
-    })
-
-    test('can be set to primary', () => {
-      const type = 'primary'
-      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
-        typeProp,
-      )
-
-      expect(btnType).toEqual(type)
-    })
-
-    test('can be set to secondary', () => {
-      const type = 'secondary'
-      const btnType = mountWithProviderAndGetComponent(Button, <Button type={type} />).prop(
-        typeProp,
-      )
-
-      expect(btnType).toEqual(type)
-    })
-  })
-
   describe('circular', () => {
     const circularProp = 'circular'
 
@@ -179,6 +152,19 @@ describe('Button', () => {
       button.simulate('click')
 
       expect(onClick).not.toHaveBeenCalled()
+    })
+
+    test('is called with (e, props) on a click', () => {
+      const onClick = jest.fn()
+      const button = mountWithProviderAndGetComponent(Button, <Button onClick={onClick} />)
+
+      button.simulate('click')
+
+      expect(onClick).toHaveBeenCalledTimes(1)
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ onClick }),
+      )
     })
   })
 })

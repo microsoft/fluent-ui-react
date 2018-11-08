@@ -4,13 +4,13 @@ import { Button, Icon, Text } from '@stardust-ui/react'
 const ButtonExampleDisabled = () => (
   <div>
     <Button disabled>Default</Button>
-    <Button disabled type="primary">
+    <Button disabled primary>
       Primary
     </Button>
-    <Button disabled type="secondary">
+    <Button disabled secondary>
       Secondary
     </Button>
-    <Button disabled type="primary" icon iconPosition="before">
+    <Button disabled icon iconPosition="before" primary>
       <Icon name="book" xSpacing="after" />
       <Text content="Click me" />
     </Button>
