@@ -5,7 +5,6 @@ import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } f
 
 import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Sizes } from '../../lib/enums'
 
 export interface TextProps {
   as?: any
@@ -15,7 +14,7 @@ export interface TextProps {
   disabled?: boolean
   error?: boolean
   important?: boolean
-  size?: Sizes
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
   temporary?: boolean
