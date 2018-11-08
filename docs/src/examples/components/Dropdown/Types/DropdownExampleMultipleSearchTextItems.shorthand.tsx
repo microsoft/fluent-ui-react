@@ -23,39 +23,39 @@ class DropdownExample extends React.Component {
 
 const inputItems: DropdownListItem[] = [
   {
-    content: 'Bruce Wayne',
+    header: 'Bruce Wayne',
     key: 'Bruce Wayne',
   },
   {
-    content: 'Natasha Romanoff',
+    header: 'Natasha Romanoff',
     key: 'Natasha Romanoff',
   },
   {
-    content: 'Steven Strange',
+    header: 'Steven Strange',
     key: 'Steven Strange',
   },
   {
-    content: 'Alfred Pennyworth',
+    header: 'Alfred Pennyworth',
     key: 'Alfred Pennyworth',
   },
   {
-    content: `Scarlett O'Hara`,
+    header: `Scarlett O'Hara`,
     key: `Scarlett O'Hara`,
   },
   {
-    content: 'Imperator Furiosa',
+    header: 'Imperator Furiosa',
     key: 'Imperator Furiosa',
   },
   {
-    content: 'Bruce Banner',
+    header: 'Bruce Banner',
     key: 'Bruce Banner',
   },
   {
-    content: 'Peter Parker',
+    header: 'Peter Parker',
     key: 'Peter Parker',
   },
   {
-    content: 'Selina Kyle',
+    header: 'Selina Kyle',
     key: 'Selina Kyle',
   },
 ]

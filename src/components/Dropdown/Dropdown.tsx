@@ -38,8 +38,8 @@ export interface DropdownState {
 
 export interface DropdownListItem {
   key: string
-  header?: string
-  content: string
+  header: string
+  content?: string
   image?: string
 }
 
@@ -218,12 +218,12 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
       return items.map((item, index) => {
         const optionalItemProps = {
           media: item.image && <Image src={item.image} avatar />,
-          header: item.header,
+          content: item.content,
         }
         return (
           <ListItem
             key={item.key}
-            content={item.content}
+            header={item.header}
             {...optionalItemProps}
             variables={{
               ...(highlightedIndex === index && {
@@ -269,7 +269,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
               styles={styles.activeListLabel}
               circular
               key={`active-item-${index}`}
-              content={item.content}
+              content={item.header}
               {...optionalImage}
               icon={{
                 name: 'close',
