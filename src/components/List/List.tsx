@@ -1,31 +1,29 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
 import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import {
-  ContainerFocusHandler,
-  FocusContainerProps,
-  FocusContainerState,
-} from '../../lib/accessibility/FocusHandling/FocusContainer'
+import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   Extendable,
   ReactChildren,
-  ShorthandValue,
   ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
-export interface ListProps extends FocusContainerProps<ShorthandValue> {
+export interface ListProps {
   accessibility?: Accessibility
   as?: any
   children?: ReactChildren
   className?: string
   debug?: boolean
+  items?: ShorthandValue[]
   listRef?: (node: HTMLElement) => void
   selection?: boolean
   truncateContent?: boolean
@@ -35,10 +33,14 @@ export interface ListProps extends FocusContainerProps<ShorthandValue> {
   variables?: ComponentVariablesInput
 }
 
+export interface ListState {
+  selectedItemIndex: number
+}
+
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
+class List extends UIComponent<Extendable<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -103,13 +105,34 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  private focusContainer = ContainerFocusHandler.create(this)
+  public state = {
+    selectedItemIndex: 0,
+  }
+
+  private focusHandler: ContainerFocusHandler = null
+  private itemRefs = []
+
+  private handleListRef = (listNode: HTMLElement) => {
+    _.invoke(this.props, 'listRef', listNode)
+  }
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.focusContainer.moveNext.bind(this.focusContainer),
-    movePrevious: this.focusContainer.movePrevious.bind(this.focusContainer),
-    moveFirst: this.focusContainer.moveFirst.bind(this.focusContainer),
-    moveLast: this.focusContainer.moveLast.bind(this.focusContainer),
+    moveNext: e => {
+      e.preventDefault()
+      this.focusHandler.moveNext()
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.focusHandler.movePrevious()
+    },
+    moveFirst: e => {
+      e.preventDefault()
+      this.focusHandler.moveFirst()
+    },
+    moveLast: e => {
+      e.preventDefault()
+      this.focusHandler.moveLast()
+    },
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
@@ -128,16 +151,42 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
     )
   }
 
-  private handleListRef = (listNode: HTMLElement) => {
-    _.invoke(this.props, 'listRef', listNode)
+  componentDidMount() {
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.items.length,
+      index => {
+        this.setState({ selectedItemIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
   }
 
   renderItems() {
     const { items, renderItem } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
+    const { selectedItemIndex } = this.state
+
+    this.itemRefs = []
 
     return _.map(items, (item, idx) => {
-      itemProps.focusableItemProps = this.focusContainer.createItemProps(idx, items.length)
+      const maybeSelectableItemProps = {} as any
+
+      if (this.props.selection) {
+        const ref = React.createRef()
+        this.itemRefs[idx] = ref
+
+        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
+        maybeSelectableItemProps.ref = ref
+        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
+      }
+
+      const itemProps = {
+        ..._.pick(this.props, List.itemProps),
+        ...maybeSelectableItemProps,
+      }
 
       return ListItem.create(item, {
         defaultProps: itemProps,
