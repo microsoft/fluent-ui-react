@@ -146,7 +146,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     }
   }
 
-  private closeAndFocusTriggerOnClickIfOpen() {
+  private subscribeToCloseAndFocusTriggerOnClickIfOpen() {
     this.outsideClickSubscription.unsubscribe()
 
     if (this.state.open) {
@@ -163,11 +163,11 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public state = { target: undefined, open: false }
 
   public componentDidMount() {
-    this.closeAndFocusTriggerOnClickIfOpen()
+    this.subscribeToCloseAndFocusTriggerOnClickIfOpen()
   }
 
   public componentDidUpdate() {
-    this.closeAndFocusTriggerOnClickIfOpen()
+    this.subscribeToCloseAndFocusTriggerOnClickIfOpen()
   }
 
   public componentWillUnmount() {
