@@ -3,9 +3,9 @@ import * as PropTypes from 'prop-types'
 
 import { Extendable } from '../../../types/utils'
 import { ComponentSlotStyle } from '../../themes/types'
-import Downshift, { DownshiftState, StateChangeOptions } from 'downshift'
+import Downshift, { DownshiftState, StateChangeOptions, A11yStatusMessageOptions } from 'downshift'
 import Label from '../Label/Label'
-import { UIComponent, customPropTypes } from '../../lib'
+import { UIComponent } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -18,6 +18,11 @@ import Icon from '../Icon/Icon'
 export interface DropdownProps {
   className?: string
   fluid?: boolean
+  getA11yStatusMessage?: (options: A11yStatusMessageOptions<DropdownListItem>) => string
+  getA11ySelectedMessage?: (item: DropdownListItem) => string
+  getA11yRemovedMessage?: (item: DropdownListItem) => string
+  getA11yRemoveItemMessage?: (item: DropdownListItem) => string
+  getNoResultsMessage?: () => string
   items?: DropdownListItem[]
   multiple?: boolean
   onChange?: (value: DropdownListItem | DropdownListItem[]) => any
@@ -59,8 +64,31 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
-    /** Shorthand array of props for ListItem. */
-    items: customPropTypes.collectionShorthand,
+    /** Array of props for generating dropdown items and selected item labels if multiple selection. */
+    items: PropTypes.object,
+
+    /** A function that creates custom accessability message for dropdown status.
+     * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift reoi,
+     */
+    getA11yStatusMessage: PropTypes.func,
+
+    /** A function that creates custom accessability message for dropdown selection.
+     * @param {DropdownListItem} item - Dropdown selected element.
+     */
+    getA11ySelectedMessage: PropTypes.func,
+
+    /** A function that creates custom accessability message for dropdown removal.
+     * @param {DropdownListItem} item - Dropdown removed element.
+     */
+    getA11yRemovedMessage: PropTypes.func,
+
+    /** A function that creates custom accessability message for active item remove button.
+     * @param {DropdownListItem} item - The active item to be removed.
+     */
+    getA11yRemoveItemMessage: PropTypes.func,
+
+    /** A function that creates custom accessability message for dropdown no results case. */
+    getNoResultsMessage: PropTypes.func,
 
     /** A dropdown can have a multiple selection. */
     multiple: PropTypes.bool,
@@ -98,17 +126,20 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
-    const { search, multiple, toggleButton } = this.props
+    const { search, multiple, toggleButton, getA11yStatusMessage } = this.props
     const { searchQuery } = this.state
     // in multiple dropdown, we hold active values in the array, and default active is null.
-    const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
+    const optionalDownshiftProps = {
+      ...(multiple && { selectedItem: null }),
+      getA11yStatusMessage,
+    }
 
     return (
       <ElementType>
         <Downshift
           onChange={this.handleChange}
           inputValue={searchQuery}
-          {...selectedPropIfMultiple}
+          {...optionalDownshiftProps}
           stateReducer={this.stateReducer}
           itemToString={(item: DropdownListItem) => (item ? item.header : '')}
         >
@@ -213,7 +244,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   private renderItems(variables, getItemProps, highlightedIndex) {
-    const { items } = this.props
+    const { items, getNoResultsMessage } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
         const optionalItemProps = {
@@ -246,7 +277,12 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     return [
       {
         key: 'people-picker-no-results-item',
-        content: <Text weight="bold" content={`We couldn't find any matches.`} />,
+        content: (
+          <Text
+            weight="bold"
+            content={getNoResultsMessage ? getNoResultsMessage() : `We couldn't find any matches.`}
+          />
+        ),
         styles: {
           backgroundColor: variables.listItemBackgroundColor,
         },
@@ -256,6 +292,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
   private renderActiveValues(styles) {
     const value = this.state.value as DropdownListItem[]
+    const { getA11yRemoveItemMessage } = this.props
 
     return value.length === 0
       ? null
@@ -275,7 +312,9 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                 name: 'close',
                 onClick: this.onCloseIconClick.bind(this, item),
                 onKeyDown: this.onCloseIconKeyDown.bind(this, item),
-                'aria-label': `Remove ${item.header} from selection.`,
+                'aria-label': getA11yRemoveItemMessage
+                  ? getA11yRemoveItemMessage(item)
+                  : `Remove ${item.header} from selection.`,
                 'aria-hidden': false,
                 role: 'button',
               }}
@@ -313,24 +352,26 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     }
   }
 
-  handleChange = element => {
-    const { multiple } = this.props
-    const newValue = multiple ? [...(this.state.value as DropdownListItem[]), element] : element
+  handleChange = (item: DropdownListItem) => {
+    const { multiple, getA11ySelectedMessage } = this.props
+    const newValue = multiple ? [...(this.state.value as DropdownListItem[]), item] : item
 
     _.invoke(this.props, 'onChange', newValue)
 
     this.setState({
       value: newValue,
       searchQuery: '',
-      message: `${element.header} has been selected.`,
+      message: getA11ySelectedMessage
+        ? getA11ySelectedMessage(item)
+        : `${item.header} has been selected.`,
     })
   }
 
-  onCloseIconClick = (element, event) => this.handleCloseIconAction(element, event)
+  onCloseIconClick = (item, event) => this.handleCloseIconAction(item, event)
 
-  onCloseIconKeyDown = (element, event) => {
+  onCloseIconKeyDown = (item, event) => {
     if (keyboardKey.getCode(event) === keyboardKey.Enter) {
-      this.handleCloseIconAction(element, event)
+      this.handleCloseIconAction(item, event)
     }
   }
 
@@ -360,27 +401,30 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     }
   }
 
-  private handleCloseIconAction(element, event) {
-    this.removeFromActiveValues(element)
+  private handleCloseIconAction(item: DropdownListItem, event: React.SyntheticEvent) {
+    this.removeFromActiveValues(item)
     this.inputRef.focus()
     event.stopPropagation()
   }
 
-  private removeFromActiveValues(element?) {
+  private removeFromActiveValues(item?: DropdownListItem) {
+    const { getA11yRemovedMessage } = this.props
     let value = this.state.value as DropdownListItem[]
-    let poppedElement = element
+    let poppedItem = item
 
-    if (poppedElement) {
-      value = value.filter(currentElement => currentElement !== element)
+    if (poppedItem) {
+      value = value.filter(currentElement => currentElement !== item)
     } else {
-      poppedElement = value.pop()
+      poppedItem = value.pop()
     }
 
     _.invoke(this.props, 'onChange', value)
 
     this.setState({
       value,
-      message: `${poppedElement.header} has been removed.`,
+      message: getA11yRemovedMessage
+        ? getA11yRemovedMessage(item)
+        : `${poppedItem.header} has been removed.`,
     })
   }
 }
