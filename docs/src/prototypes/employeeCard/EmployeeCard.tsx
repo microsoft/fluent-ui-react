@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Sizes } from '../../../../src/lib/enums'
 import { Extendable, ShorthandValue } from '../../../../types/utils'
 import { Avatar, Divider, Grid } from '@stardust-ui/react'
 import Text from './Text'
@@ -37,7 +36,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
         {...rest}
       >
         <div>
-          <Text size={Sizes.Medium} weight={'bold'} as="div">
+          <Text size={'medium'} weight={'bold'} as="div">
             {firstName} {lastName}
           </Text>
           <Text muted as="div">
