@@ -40,19 +40,29 @@ const renderMenuItem = (MenuItem, props) => {
     <Popup
       key={props.key}
       position="below"
-      content={<div style={{ background: '#fff', boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)', borderRadius: '.3rem', marginTop: '5px' }}>
-      <Menu
-        vertical
-        pills
-        className="actions"
-        items={[
-          { key: 'bookmark', icon: 'bookmark', content: 'Save this message', },
-          { key: 'linkify', icon: 'linkify', content: 'Copy link', },
-          { key: 'translate', icon: 'translate', content: 'Translate', },
-        ]}
-      /></div>}
+      content={
+        <div
+          style={{
+            background: '#fff',
+            boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
+            borderRadius: '.3rem',
+            marginTop: '5px',
+          }}
+        >
+          <Menu
+            vertical
+            pills
+            className="actions"
+            items={[
+              { key: 'bookmark', icon: 'bookmark', content: 'Save this message' },
+              { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+              { key: 'translate', icon: 'translate', content: 'Translate' },
+            ]}
+          />
+        </div>
+      }
     >
-     <MenuItem {...props} />
+      <MenuItem {...props} />
     </Popup>
   )
 }
@@ -61,18 +71,22 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
   const { content, mine } = msg
   const msgProps: ChatMessage = {
     content: (
-    <>
-      <Menu
-        iconOnly
-        className="actions"
-        items={[
-          { key: 'a', icon: 'thumbs up' },
-          { key: 'c', icon: 'ellipsis horizontal' },
-        ]}
-        renderItem={renderMenuItem}
-      />
-      <a href="/">Link</a> {content} <a href="/">Some Link</a>
-    </>),
+      <>
+        <Menu
+          iconOnly
+          className="actions"
+          items={[
+            { key: 'smile', icon: 'smile', class: 'smile-emoji' },
+            { key: 'smile2', icon: 'smile', class: 'smile-emoji' },
+            { key: 'smile3', icon: 'smile', class: 'smile-emoji' },
+            { key: 'a', icon: 'thumbs up' },
+            { key: 'c', icon: 'ellipsis horizontal' },
+          ]}
+          renderItem={renderMenuItem}
+        />
+        <a href="/">Link</a> {content} <a href="/">Some Link</a>
+      </>
+    ),
     mine,
     timestamp: { content: msg.timestamp, title: msg.timestampLong },
     author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
@@ -89,6 +103,16 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
         boxShadow: '0px 2px 4px #ddd',
         borderRadius: '.3rem',
         // opacity: 0,
+      },
+
+      '& .smile-emoji': {
+        display: 'none',
+      },
+
+      ':focus': {
+        '& .smile-emoji': {
+          display: 'block',
+        },
       },
 
       // ':hover': {
