@@ -2,13 +2,13 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ImageBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { imageBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
-export interface IImageProps {
+export interface ImageProps {
   accessibility?: Accessibility
   as?: any
   avatar?: boolean
@@ -16,7 +16,7 @@ export interface IImageProps {
   circular?: boolean
   className?: string
   fluid?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
@@ -30,7 +30,7 @@ export interface IImageProps {
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-class Image extends UIComponent<Extendable<IImageProps>, any> {
+class Image extends UIComponent<Extendable<ImageProps>, any> {
   static create: Function
 
   static className = 'ui-image'
@@ -39,7 +39,7 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
 
   static propTypes = {
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
 
     /** An element type to render as. */
     as: customPropTypes.as,
@@ -63,20 +63,9 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'avatar',
-    'circular',
-    'className',
-    'fluid',
-    'styles',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'img',
-    accessibility: ImageBehavior as Accessibility,
+    accessibility: imageBehavior as Accessibility,
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

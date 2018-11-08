@@ -31,13 +31,7 @@ export interface IFocusZone {
 /**
  * FocusZone component props.
  */
-export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
-  /**
-   * Optional callback to access the IFocusZone interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: React.RefObject<IFocusZone>
-
+export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
   /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
    */
@@ -50,9 +44,14 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
   direction?: FocusZoneDirection
 
   /**
-   * Optionally provide a selector for identifying the intial active element.
+   * Optionally provide a selector for identifying the intial tabbable element.
    */
-  defaultActiveElement?: string
+  defaultTabbableElement?: string
+
+  /**
+   * If a default tabbable element should be force focused on FocusZone mount.
+   */
+  shouldFocusOnMount?: boolean
 
   /**
    * If set, the FocusZone will not be tabbable and keyboard navigation will be disabled.
@@ -121,8 +120,9 @@ export interface IFocusZoneProps extends React.HTMLAttributes<HTMLElement | Focu
 
   /**
    * Callback to notify creators that focus has been set on the FocusZone
+   *  @param {FocusEvent} event - React's original FocusEvent.
    */
-  onFocusNotification?: () => void
+  onFocus?: (event: React.FocusEvent<HTMLElement | FocusZone>) => void
 
   /**
    * Whether the FocusZone prevents default when handled a key event

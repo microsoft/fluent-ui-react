@@ -4,33 +4,33 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
-export interface ITextProps {
+export interface TextProps {
   as?: any
-  atMention?: boolean
+  atMention?: boolean | 'me'
   className?: string
   content?: any
   disabled?: boolean
   error?: boolean
   important?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
   success?: boolean
   temporary?: boolean
   timestamp?: boolean
   truncated?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * A component containing text
+ * A Text component formats occurrences of text consistently.
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
-class Text extends UIComponent<Extendable<ITextProps>, any> {
+class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'
@@ -41,8 +41,8 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     /** Change the default element type of the Text component */
     as: customPropTypes.as,
 
-    /** Set as @mention Text component */
-    atMention: PropTypes.bool,
+    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
 
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
@@ -60,7 +60,7 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
     important: PropTypes.bool,
 
     /** The size for the Text component */
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
 
     /** The weight for the Text component */
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
@@ -87,24 +87,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   static defaultProps = {
     as: 'span',
   }
-
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'temporary',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props

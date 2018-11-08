@@ -1,26 +1,25 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
-import { IChatMessageVariables } from './chatMessageVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import { ChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
 const px10asRem = pxToRem(10)
-const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
+const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'flex',
+    display: 'inline-block',
     position: 'relative',
     marginTop: '1rem',
     marginBottom: '1rem',
-    ...(p.mine
-      ? {
-          marginLeft: 'auto',
-        }
-      : {
-          marginRight: 'auto',
-        }),
+    ...(p.mine && {
+      float: 'right',
+    }),
     maxWidth: v.messageWidth,
+    wordBreak: 'break-word',
+    wordWrap: 'break-word',
   }),
 
-  avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
+  avatar: ({ props: p }: { props: ChatMessageProps }): ICSSInJSStyle => ({
+    display: p.mine ? 'none' : undefined,
     marginTop: px10asRem,
     marginBottom: px10asRem,
     marginLeft: p.mine ? px10asRem : 0,
@@ -33,9 +32,11 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
     borderRadius: '0.3rem',
   }),
-  author: {
+
+  author: ({ props: p }): ICSSInJSStyle => ({
+    display: p.mine ? 'none' : undefined,
     marginRight: px10asRem,
-  },
+  }),
 }
 
 export default chatMessageStyles

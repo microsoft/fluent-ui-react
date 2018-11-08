@@ -8,7 +8,7 @@ const items = [
 ]
 
 const MenuExamplePointingStartPrimary = () => (
-  <Menu defaultActiveIndex={0} items={items} pointing="start" type="primary" />
+  <Menu defaultActiveIndex={0} items={items} pointing="start" primary />
 )
 
 export default MenuExamplePointingStartPrimary

@@ -5,20 +5,20 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
 
-export interface IAccordionTitleProps {
+export interface AccordionTitleProps {
   as?: any
   active?: boolean
   children?: ReactChildren
   className?: string
   content?: React.ReactNode
   index?: string | number
-  onClick?: ComponentEventHandler<IAccordionTitleProps>
+  onClick?: ComponentEventHandler<AccordionTitleProps>
 }
 
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> {
+class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function
@@ -32,7 +32,10 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
     /** Whether or not the title is in the open state. */
     active: PropTypes.bool,
 
-    /** Child content * */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -52,8 +55,6 @@ class AccordionTitle extends UIComponent<Extendable<IAccordionTitleProps>, any> 
      */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'index', 'onClick']
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)

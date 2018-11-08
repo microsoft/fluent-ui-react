@@ -1,10 +1,10 @@
 import React from 'react'
-import { Menu, TabBehavior, TabListBehavior } from '@stardust-ui/react'
+import { Menu, tabBehavior, tabListBehavior } from '@stardust-ui/react'
 
 const items = [
-  { key: 'editorials', content: 'Editorials', accessibility: TabBehavior },
-  { key: 'review', content: 'Reviews', accessibility: TabBehavior },
-  { key: 'events', content: 'Upcoming Events', accessibility: TabBehavior },
+  { key: 'editorials', content: 'Editorials', accessibility: tabBehavior },
+  { key: 'review', content: 'Reviews', accessibility: tabBehavior },
+  { key: 'events', content: 'Upcoming Events', accessibility: tabBehavior },
 ]
 
 class MenuExampleTabShorthand extends React.Component {
@@ -14,8 +14,8 @@ class MenuExampleTabShorthand extends React.Component {
         defaultActiveIndex={0}
         items={items}
         underlined
-        type="primary"
-        accessibility={TabListBehavior}
+        primary
+        accessibility={tabListBehavior}
         aria-label="Today's events"
       />
     )

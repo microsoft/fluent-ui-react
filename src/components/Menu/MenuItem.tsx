@@ -4,19 +4,21 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import Icon from '../Icon/Icon'
+import { menuItemBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
   ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   accessibility?: Accessibility
   active?: boolean
   as?: any
@@ -24,20 +26,29 @@ export interface IMenuItemProps {
   className?: string
   content?: any
   disabled?: boolean
-  icon?: ItemShorthand
+  icon?: ShorthandValue
   iconOnly?: boolean
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+  onClick?: ComponentEventHandler<MenuItemProps>
   pills?: boolean
   pointing?: boolean | 'start' | 'end'
-  type?: 'primary' | 'secondary'
+  primary?: boolean
+  renderIcon?: ShorthandRenderFunction
+  secondary?: boolean
   underlined?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
+export interface MenuItemState {
+  [IsFromKeyboard.propertyName]: boolean
+}
+
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -51,7 +62,10 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -90,8 +104,11 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
      */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
 
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
+    /** The menu item can have primary type. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+
+    /** The menu item can have secondary type. */
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
 
     /** Menu items can by highlighted using underline. */
     underlined: PropTypes.bool,
@@ -100,7 +117,16 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
     vertical: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+
+    /**
+     * A custom render function the icon slot.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderIcon: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -111,40 +137,13 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
 
   static defaultProps = {
     as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    accessibility: menuItemBehavior as Accessibility,
   }
 
-  static handledProps = [
-    'accessibility',
-    'active',
-    'as',
-    'children',
-    'className',
-    'content',
-    'disabled',
-    'icon',
-    'iconOnly',
-    'index',
-    'onClick',
-    'pills',
-    'pointing',
-    'styles',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
-
-  protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleClick(event),
-  }
-
-  handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
+  state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon } = this.props
+    const { children, content, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -159,18 +158,41 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
           <a
             className={cx('ui-menu__item__anchor', classes.anchor)}
             onClick={this.handleClick}
+            onBlur={this.handleBlur}
+            onFocus={this.handleFocus}
             {...accessibility.attributes.anchor}
             {...accessibility.keyHandlers.anchor}
           >
             {icon &&
               Icon.create(this.props.icon, {
                 defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+                render: renderIcon,
               })}
             {content}
           </a>
         )}
       </ElementType>
     )
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.handleClick(event),
+  }
+
+  private handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.initial)
+
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.state())
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
-import { IconBehavior } from '../../lib/accessibility/'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { iconBehavior } from '../../lib/accessibility/'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentPartStyle, ComponentVariablesInput, SvgIconSpec } from '../../../types/theme'
+import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
@@ -19,7 +19,7 @@ export type IconSize =
   | 'huge'
   | 'massive'
 
-export interface IIconProps {
+export interface IconProps {
   as?: any
   bordered?: boolean
   circular?: boolean
@@ -29,11 +29,14 @@ export interface IIconProps {
   size?: IconSize
   xSpacing?: IconXSpacing
   accessibility?: Accessibility
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Icon extends UIComponent<Extendable<IIconProps>, any> {
+/**
+ * An icon is a glyph used to represent something else.
+ */
+class Icon extends UIComponent<Extendable<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -82,27 +85,13 @@ class Icon extends UIComponent<Extendable<IIconProps>, any> {
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
 
     /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'bordered',
-    'circular',
-    'className',
-    'disabled',
-    'name',
-    'size',
-    'styles',
-    'variables',
-    'xSpacing',
-  ]
 
   static defaultProps = {
     as: 'span',
     size: 'normal',
-    accessibility: IconBehavior,
+    accessibility: iconBehavior,
   }
 
   private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {

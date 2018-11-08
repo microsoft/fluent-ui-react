@@ -1,5 +1,7 @@
 import * as React from 'react'
-import { mount } from './isConformant'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider } from 'test/utils'
+import { Props } from '../../../types/utils'
 
 export type ShorthandTestOptions = {
   mapsValueToProp?: string
@@ -11,44 +13,45 @@ export const DefaultShorthandTestOptions: ShorthandTestOptions = {
 
 export default Component => {
   return function implementsShorthandProp(
-    shorthandPropertyName: string,
+    shorthandProp: string,
     ShorthandComponent: React.ComponentType,
     options: ShorthandTestOptions = DefaultShorthandTestOptions,
   ) {
     const { mapsValueToProp } = options
+    const { displayName } = ShorthandComponent
 
-    describe(`shorthand property '${shorthandPropertyName}' with default value of '${
-      ShorthandComponent.displayName
-    }' component`, () => {
+    const checkPropsMatch = (props: Props, matchedProps: Props) =>
+      Object.keys(matchedProps).every(propName => matchedProps[propName] === props[propName])
+
+    const expectContainsSingleShorthandElement = (wrapper: ReactWrapper, withProps: Props) =>
+      expect(
+        wrapper.findWhere(
+          node => node.type() === ShorthandComponent && checkPropsMatch(node.props(), withProps),
+        ).length,
+      ).toEqual(1)
+
+    const expectShorthandPropsAreHandled = (withProps: Props | string) => {
+      const props = { [shorthandProp]: withProps }
+      const matchedProps =
+        typeof withProps === 'string' ? { [mapsValueToProp]: withProps } : withProps
+
+      expectContainsSingleShorthandElement(
+        mountWithProvider(<Component {...props} />),
+        matchedProps,
+      )
+    }
+
+    describe(`shorthand property '${shorthandProp}' with default value of '${displayName}' component`, () => {
       test(`is defined`, () => {
-        expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
+        expect(Component.propTypes[shorthandProp]).toBeTruthy()
       })
 
-      test(`string value is handled as ${
-        ShorthandComponent.displayName
-      }'s ${mapsValueToProp}`, () => {
-        const props = { [shorthandPropertyName]: 'some value' }
-        const wrapper = mount(<Component {...props} />)
-
-        const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
-        expect(shorthandComponentProps[mapsValueToProp]).toEqual('some value')
+      test(`string value is handled as ${displayName}'s ${mapsValueToProp}`, () => {
+        expectShorthandPropsAreHandled('shorthand prop value')
       })
 
-      test(`object value is spread as ${ShorthandComponent.displayName}'s props`, () => {
-        const ShorthandValue = { foo: 'foo value', bar: 'bar value' }
-
-        const props = { [shorthandPropertyName]: ShorthandValue }
-        const wrapper = mount(<Component {...props} />)
-
-        const shorthandComponentProps = wrapper.find(ShorthandComponent.displayName).props()
-
-        const allShorthandPropertiesArePassedToShorthandComponent = Object.keys(
-          ShorthandValue,
-        ).every(
-          propertyName => ShorthandValue[propertyName] === shorthandComponentProps[propertyName],
-        )
-
-        expect(allShorthandPropertiesArePassedToShorthandComponent).toBe(true)
+      test(`object value is spread as ${displayName}'s props`, () => {
+        expectShorthandPropsAreHandled({ foo: 'foo value', bar: 'bar value' })
       })
     })
   }

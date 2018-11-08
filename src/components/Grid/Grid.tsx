@@ -1,27 +1,31 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import ReactNode = React.ReactNode
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 
-export interface IGridProps {
+import ReactNode = React.ReactNode
+
+export interface GridProps {
   as?: any
+  accessibility?: Accessibility
   className?: string
   children?: ReactChildren
   columns?: string | number
-  content?: ItemShorthand | ItemShorthand[]
+  content?: ShorthandValue | ShorthandValue[]
   rows?: string | number
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * A grid.
+ * A grid is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<IGridProps>, any> {
+class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -30,7 +34,10 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -56,24 +63,17 @@ class Grid extends UIComponent<Extendable<IGridProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Accessibility behavior if overridden by the user. */
+    accessibility: PropTypes.func,
   }
 
-  public static handledProps = [
-    'as',
-    'children',
-    'className',
-    'columns',
-    'content',
-    'rows',
-    'styles',
-    'variables',
-  ]
-
-  public static defaultProps = {
+  public static defaultProps: GridProps = {
     as: 'div',
+    accessibility: defaultBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
+  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (

@@ -8,7 +8,7 @@ import 'brace/mode/html'
 import 'brace/mode/jsx'
 import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
-import { eventStack, doesNodeContainClick } from 'src/lib'
+import { doesNodeContainClick, EventStack } from 'src/lib'
 
 const parentComponents = []
 
@@ -45,7 +45,7 @@ const semanticUIReactCompleter = {
 
 languageTools.addCompleter(semanticUIReactCompleter)
 
-export interface IEditorProps extends AceEditorProps {
+export interface EditorProps extends AceEditorProps {
   id: string
   value?: string
   mode?: 'html' | 'jsx' | 'sh'
@@ -59,8 +59,9 @@ export interface IEditorProps extends AceEditorProps {
 export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 export const EDITOR_GUTTER_COLOR = '#26282d'
 
-class Editor extends React.Component<IEditorProps> {
+class Editor extends React.Component<EditorProps> {
   private static readonly refName = 'aceEditor'
+  private clickSubscription = EventStack.noSubscription
 
   public static propTypes = {
     id: PropTypes.string.isRequired,
@@ -92,7 +93,7 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: true,
   }
 
-  public componentWillReceiveProps(nextProps: IEditorPropsWithDefaults) {
+  public componentWillReceiveProps(nextProps: EditorPropsWithDefaults) {
     const previousPros = this.props
     const { active, showCursor } = nextProps
 
@@ -111,7 +112,7 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   public componentDidMount() {
-    const { active, showCursor } = this.props as IEditorPropsWithDefaults
+    const { active, showCursor } = this.props as EditorPropsWithDefaults
 
     this.setCursorVisibility(showCursor)
 
@@ -142,11 +143,12 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   private addDocumentListener() {
-    eventStack.sub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
+    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
   }
 
   private removeDocumentListener() {
-    eventStack.unsub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
   }
 
   private get editor() {
@@ -185,4 +187,4 @@ class Editor extends React.Component<IEditorProps> {
 
 export default Editor
 
-export type IEditorPropsWithDefaults = IEditorProps & (typeof Editor.defaultProps)
+export type EditorPropsWithDefaults = EditorProps & (typeof Editor.defaultProps)

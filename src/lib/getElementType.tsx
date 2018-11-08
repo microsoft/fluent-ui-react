@@ -1,5 +1,5 @@
 import { ReactType } from 'react'
-import { IProps } from '../../types/theme'
+import { Props } from '../../types/utils'
 
 /**
  * Returns a createElement() type based on the props of the Component.
@@ -11,8 +11,8 @@ import { IProps } from '../../types/theme'
  * @returns {string|function} A ReactElement type
  */
 function getElementType(
-  Component: { defaultProps?: IProps },
-  props: IProps,
+  Component: { defaultProps?: Props },
+  props: Props,
   getDefault?: () => ReactType,
 ): ReactType {
   const { defaultProps = {} } = Component

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mount } from './isConformant'
+import { mountWithProvider as mount } from 'test/utils'
 import * as _ from 'lodash'
 
 export type CollectionShorthandTestOptions = {

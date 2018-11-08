@@ -29,11 +29,11 @@ export default siteVariables => ({
   progressColor: siteVariables.green,
   progressHeight: 4,
 
-  headerFontSize: siteVariables.fontSizeMedium,
+  headerFontSize: siteVariables.fontSizes.medium,
   headerFontWeight: siteVariables.fontWeightSemibold,
   headerLineHeight: siteVariables.lineHeightSmall,
 
-  descriptionFontSize: siteVariables.fontSizeSmall,
+  descriptionFontSize: siteVariables.fontSizes.small,
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
 })

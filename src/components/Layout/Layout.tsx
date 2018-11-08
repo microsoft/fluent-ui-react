@@ -4,9 +4,9 @@ import * as cx from 'classnames'
 
 import { customPropTypes, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle, ICSSInJSStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle, ICSSInJSStyle } from '../../themes/types'
 
-export interface ILayoutProps {
+export interface LayoutProps {
   as?: any
   className?: string
   debug?: boolean
@@ -33,11 +33,14 @@ export interface ILayoutProps {
   truncateMain?: boolean
   truncateEnd?: boolean
   vertical?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
+/**
+ * A layout is a utility for arranging the content of a component.
+ */
+class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -95,37 +98,6 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'alignItems',
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'endCSS',
-    'endSize',
-    'gap',
-    'justifyItems',
-    'main',
-    'mainCSS',
-    'mainSize',
-    'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
-    'start',
-    'startCSS',
-    'startSize',
-    'styles',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
-    'variables',
-    'vertical',
-  ]
-
   static defaultProps = {
     startSize: 'auto',
     mainSize: '1fr',
@@ -163,7 +135,7 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props as ILayoutPropsWithDefaults
+    } = this.props as LayoutPropsWithDefaults
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -208,4 +180,4 @@ class Layout extends UIComponent<Extendable<ILayoutProps>, any> {
 }
 
 export default Layout
-export type ILayoutPropsWithDefaults = ILayoutProps & typeof Layout.defaultProps
+export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps

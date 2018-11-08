@@ -5,31 +5,36 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
-import RadioGroupItem, { IRadioGroupItemProps } from './RadioGroupItem'
-import { RadioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
+import { radioGroupBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
-  ComponentVariablesInput,
-  ComponentVariablesObject,
-  ComponentPartStyle,
-} from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+  Extendable,
+  ReactChildren,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 
-export interface IRadioGroupProps {
+export interface RadioGroupProps {
   accessibility?: Accessibility
   as?: any
   checkedValue?: number | string
   children?: ReactChildren
   className?: string
   defaultCheckedValue?: number | string
-  items?: ItemShorthand[]
-  styles?: ComponentPartStyle
+  items?: ShorthandValue[]
+  renderItem?: ShorthandRenderFunction
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   vertical?: boolean
 }
 
-class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, any> {
+/**
+ * A radio group allows a user to select a value from a small set of options.
+ */
+class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'
@@ -46,7 +51,10 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     /** Value of the currently checked radio item. */
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -65,6 +73,16 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
      */
     checkedValueChanged: PropTypes.func,
 
+    /**
+     * A custom render iterator for rendering each of the RadioGroup items.
+     * The default component, props, and children are available for each item.
+     *
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderItem: PropTypes.func,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
@@ -77,55 +95,58 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
 
   static defaultProps = {
     as: 'div',
-    accessibility: RadioGroupBehavior as Accessibility,
+    accessibility: radioGroupBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'checkedValue',
-    'checkedValueChanged',
-    'children',
-    'className',
-    'defaultCheckedValue',
-    'items',
-    'styles',
-    'variables',
-    'vertical',
-  ]
 
   static autoControlledProps = ['checkedValue']
 
   static Item = RadioGroupItem
 
-  actionHandlers: AccessibilityActionHandlers = {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    const { children, vertical } = this.props
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : this.renderItems(vertical)}
+      </ElementType>
+    )
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
     nextItem: event => this.setCheckedItem(event, 1),
     prevItem: event => this.setCheckedItem(event, -1),
   }
 
-  getItemProps = item => {
-    return (item as React.ReactElement<IRadioGroupItemProps>).props || item
+  private getItemProps = (item): RadioGroupItemProps => {
+    return (item as React.ReactElement<RadioGroupItemProps>).props || item
   }
 
-  setCheckedItem = (event, direction) => {
+  private setCheckedItem = (event, direction) => {
     const nextItem = this.findNextEnabledCheckedItem(direction)
 
     if (nextItem) {
-      this.trySetState({ checkedValue: nextItem.value })
-      _.invoke(this.props, 'checkedValueChanged', event, nextItem)
+      this.setCheckedValue({
+        checkedValue: nextItem.value,
+        shouldFocus: true,
+        event,
+        props: nextItem,
+      })
     }
-
     event.preventDefault()
   }
 
-  findNextEnabledCheckedItem = (direction): IRadioGroupItemProps => {
+  private findNextEnabledCheckedItem = (direction): RadioGroupItemProps => {
     if (!this.props.items || !this.props.items.length) {
       return undefined
     }
 
     const currentIndex = _.findIndex(
       this.props.items,
-      item => this.getItemProps(item as IRadioGroupItemProps).value === this.state.checkedValue,
+      item => this.getItemProps(item).value === this.state.checkedValue,
     )
 
     for (
@@ -143,7 +164,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
         return undefined
       }
 
-      const itemProps = this.getItemProps(this.props.items[newIndex] as IRadioGroupItemProps)
+      const itemProps = this.getItemProps(this.props.items[newIndex])
       if (!itemProps.disabled) {
         return itemProps
       }
@@ -151,45 +172,47 @@ class RadioGroup extends AutoControlledComponent<Extendable<IRadioGroupProps>, a
     return undefined
   }
 
-  handleItemOverrides = predefinedProps => ({
+  private handleItemOverrides = predefinedProps => ({
     checked:
       typeof this.state.checkedValue !== 'undefined' &&
       this.state.checkedValue === predefinedProps.value,
     onClick: (event, itemProps) => {
       const { value, disabled } = itemProps
       if (!disabled && value !== this.state.checkedValue) {
-        this.trySetState({ checkedValue: value })
-        _.invoke(this.props, 'checkedValueChanged', event, itemProps)
+        this.setCheckedValue({ checkedValue: value, shouldFocus: false, event, props: itemProps })
       }
       _.invoke(predefinedProps, 'onClick', event, itemProps)
     },
+    shouldFocus: this.state.shouldFocus,
   })
 
-  renderItems = (variables: ComponentVariablesObject, vertical: boolean) => {
-    const { items } = this.props
+  private renderItems = (vertical: boolean) => {
+    const { items, renderItem } = this.props
 
-    return _.map(items, (item, index) =>
+    return _.map(items, item =>
       RadioGroupItem.create(item, {
-        defaultProps: {
-          vertical,
-        },
+        defaultProps: { vertical },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
-    const { children, vertical } = this.props
-    return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rest}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : this.renderItems(variables, vertical)}
-      </ElementType>
-    )
+  private setCheckedValue({
+    checkedValue,
+    shouldFocus,
+    event,
+    props,
+  }: {
+    checkedValue: number | string
+    shouldFocus: boolean
+    event: React.SyntheticEvent
+    props: RadioGroupItemProps
+  }) {
+    this.trySetState({ checkedValue })
+    this.setState({ shouldFocus })
+
+    _.invoke(this.props, 'checkedValueChanged', event, props)
   }
 }
 

@@ -1,16 +1,15 @@
 import * as React from 'react'
+
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
-import { ListItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
-import { ListItemProps } from '../../../node_modules/semantic-ui-react'
-import isFromKeyboard from '../../lib/isFromKeyboard'
+import ItemLayout from '../ItemLayout/ItemLayout'
+import { listItemBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { Extendable } from '../../../types/utils'
 
-export interface IListItemProps {
+export interface ListItemProps {
   accessibility?: Accessibility
   as?: any
   className?: string
@@ -27,11 +26,18 @@ export interface IListItemProps {
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
+export interface ListItemState {
+  isHovering: boolean
+}
+
+/**
+ * A list item contains a single piece of content within a list.
+ */
+class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -81,7 +87,8 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     truncateHeader: PropTypes.bool,
 
     /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    accessibility: PropTypes.func,
+    focusableItemProps: PropTypes.object,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -90,33 +97,20 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  static handledProps = [
-    'accessibility',
-    'as',
-    'className',
-    'content',
-    'contentMedia',
-    'debug',
-    'endMedia',
-    'header',
-    'headerMedia',
-    'important',
-    'media',
-    'onClick',
-    'onFocus',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
   static defaultProps = {
     as: 'li',
-    accessibility: ListItemBehavior as Accessibility,
+    accessibility: listItemBehavior as Accessibility,
   }
 
-  state: any = isFromKeyboard.initial
+  constructor(props: ListItemProps) {
+    super(props, null)
+
+    this.state = {
+      isHovering: false,
+    }
+  }
+
+  private itemRef = React.createRef<HTMLElement>()
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
@@ -124,20 +118,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
-
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -150,28 +130,9 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -179,23 +140,20 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, any> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
+        ref={this.itemRef}
         onClick={this.handleClick}
-        onFocus={this.handleFocus}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}

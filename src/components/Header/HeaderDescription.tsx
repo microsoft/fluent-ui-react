@@ -2,22 +2,22 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable, ReactChildren } from '../../../types/utils'
 
-export interface IHeaderDescriptionProps {
+export interface HeaderDescriptionProps {
   as?: any
   children?: ReactChildren
   className?: string
   content?: React.ReactNode
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
 
 /**
- * Headers may contain description.
+ * A header's description provides more detailed information.
  */
-class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>, any> {
+class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'
@@ -28,7 +28,10 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
-    /** Primary content. */
+    /**
+     *  Used to set content when using childrenApi - internal only
+     *  @docSiteIgnore
+     */
     children: PropTypes.node,
 
     /** Additional CSS class name(s) to apply.  */
@@ -47,8 +50,6 @@ class HeaderDescription extends UIComponent<Extendable<IHeaderDescriptionProps>,
   static defaultProps = {
     as: 'p',
   }
-
-  static handledProps = ['as', 'children', 'className', 'content', 'styles', 'variables']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props

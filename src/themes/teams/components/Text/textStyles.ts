@@ -1,13 +1,7 @@
-import { Sizes, Weights } from '../../../../lib/enums'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { truncateStyle } from '../../../../styles/customCSS'
-import { ITextVariables } from './textVariables'
-import { ITextProps } from '../../../../components/Text/Text'
-
-export interface TextStylesParams {
-  props: ITextProps
-  variables: ITextVariables
-}
+import { TextVariables } from './textVariables'
+import { TextProps } from '../../../../components/Text/Text'
 
 export default {
   root: ({
@@ -24,70 +18,66 @@ export default {
       temporary,
     },
     variables: v,
-  }: TextStylesParams): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       ...(truncated && truncateStyle),
-      ...(atMention && { color: v.atMentionTextColor }),
-      ...(disabled && { color: v.disabledTextColor }),
-      ...(error && { color: v.errorTextColor }),
-      ...(success && { color: v.successTextColor }),
+      ...(atMention === true && {
+        color: v.atMentionOtherColor,
+      }),
+      ...(atMention === 'me' && {
+        color: v.atMentionMeColor,
+        fontWeight: v.atMentionMeFontWeight,
+      }),
+      ...(disabled && { color: v.disabledColor }),
+      ...(error && { color: v.errorColor }),
+      ...(success && { color: v.successColor }),
       ...(temporary && { fontStyle: 'italic' }),
       ...(timestamp && {
-        color: v.timestampTextColor,
+        color: v.timestampColor,
         ':hover': {
-          color: v.timestampHoverTextColor,
+          color: v.timestampHoverColor,
         },
-      }),
-      ...(weight === Weights.Light && {
-        fontWeight: v.textWeightLight,
-      }),
-      ...(weight === Weights.Semilight && {
-        fontWeight: v.textWeightSemilight,
-      }),
-      ...(weight === Weights.Regular && {
-        fontWeight: v.textWeightRegular,
-      }),
-      ...(weight === Weights.Semibold && {
-        fontWeight: v.textWeightSemibold,
-      }),
-      ...(weight === Weights.Bold && {
-        fontWeight: v.textWeightBold,
       }),
       ...(important && {
         fontWeight: v.importantWeight,
-        color: v.importantTextColor,
+        color: v.importantColor,
       }),
-      ...(size === Sizes.ExtraSmall && {
-        fontSize: v.textExtraSmallFontSize,
-        lineHeight: v.textExtraSmallLineHeight,
+
+      ...(weight === 'light' && {
+        fontWeight: v.fontWeightLight,
       }),
-      ...(size === Sizes.Small && {
-        fontSize: v.textSmallFontSize,
-        lineHeight: v.textSmallLineHeight,
+      ...(weight === 'semilight' && {
+        fontWeight: v.fontWeightSemilight,
       }),
-      ...(size === Sizes.Medium && {
-        fontSize: v.textMediumFontSize,
-        lineHeight: v.textMediumLineHeight,
+      ...(weight === 'regular' && {
+        fontWeight: v.fontWeightRegular,
       }),
-      ...(size === Sizes.Large && {
-        fontSize: v.textLargeFontSize,
-        lineHeight: v.textLargeLineHeight,
+      ...(weight === 'semibold' && {
+        fontWeight: v.fontWeightSemibold,
       }),
-      ...(size === Sizes.ExtraLarge && {
-        fontSize: v.textExtraLargeFontSize,
-        lineHeight: v.textExtraLargeLineHeight,
+      ...(weight === 'bold' && {
+        fontWeight: v.fontWeightBold,
       }),
-      ...(size === Sizes['2x'] && {
-        fontSize: v.textX2FontSize,
-        lineHeight: v.textX2LineHeight,
+
+      ...(size === 'smaller' && {
+        fontSize: v.fontSizeExtraSmall,
+        lineHeight: v.fontLineHeightExtraSmall,
       }),
-      ...(size === Sizes['3x'] && {
-        fontSize: v.textX3FontSize,
-        lineHeight: v.textX3LineHeight,
+      ...(size === 'small' && {
+        fontSize: v.fontSizeSmall,
+        lineHeight: v.fontLineHeightSmall,
       }),
-      ...(size === Sizes['4x'] && {
-        fontSize: v.textX4FontSize,
-        lineHeight: v.textX4LineHeight,
+      ...(size === 'medium' && {
+        fontSize: v.fontSizeMedium,
+        lineHeight: v.fontLineHeightMedium,
+      }),
+      ...(size === 'large' && {
+        fontSize: v.fontSizeLarge,
+        lineHeight: v.fontLineHeightLarge,
+      }),
+      ...(size === 'larger' && {
+        fontSize: v.fontSizeExtraLarge,
+        lineHeight: v.fontLineHeightExtraLarge,
       }),
     }
   },

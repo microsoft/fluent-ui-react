@@ -10,9 +10,13 @@ export { default as Button } from './components/Button/buttonStyles'
 export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
+export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
+
+export { default as Form } from './components/Form/formStyles'
+export { default as FormField } from './components/Form/formFieldStyles'
 
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'

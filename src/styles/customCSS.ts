@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../types/theme'
+import { ICSSInJSStyle } from '../themes/types'
 
 export const disabledStyle: ICSSInJSStyle = {
   opacity: 0.45,
@@ -13,9 +13,4 @@ export const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
-}
-
-export const overflowWrapStyle: ICSSInJSStyle = {
-  overflow: 'overlay',
-  overflowWrap: 'break-word',
 }

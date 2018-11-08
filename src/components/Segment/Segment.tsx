@@ -2,17 +2,20 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
-export interface ISegmentProps {
+export interface SegmentProps {
   as?: any
   className?: string
   content?: any
-  styles?: ComponentPartStyle
+  styles?: ComponentSlotStyle<SegmentProps, any>
   variables?: ComponentVariablesInput
 }
 
-class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
+/**
+ * A segment is used to create a grouping of related content.
+ */
+class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'
@@ -33,8 +36,6 @@ class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
-
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',

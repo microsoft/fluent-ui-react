@@ -2,7 +2,7 @@ import * as React from 'react'
 import { shallow, mount } from 'enzyme'
 
 import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
-import Ref from 'src/components/Ref'
+import Ref from 'src/components/Ref/Ref'
 
 const testInnerRef = Component => {
   const innerRef = jest.fn()
