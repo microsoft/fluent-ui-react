@@ -8,6 +8,7 @@ import {
   childrenExist,
   customPropTypes,
   AutoControlledComponent,
+  EventStack,
   RenderResultConfig,
   isBrowser,
 } from '../../lib'
@@ -126,15 +127,60 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private static isBrowserContext = isBrowser()
 
+  private outsideClickSubscription = EventStack.noSubscription
+
+  private triggerDomElement = null
+  private popupDomElement = null
+
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e => this.trySetOpen(!this.state.open, e, true),
-    closeAndFocusTrigger: e => {
-      this.trySetOpen(false, e, true)
-      _.invoke(this.state.target, 'focus')
+    toggle: e => {
+      this.trySetOpen(!this.state.open, e, true)
     },
+    closeAndFocusTrigger: e => this.closeAndFocusTrigger(e),
+  }
+
+  private closeAndFocusTrigger = e => {
+    if (this.state.open) {
+      this.trySetOpen(false, e, true)
+      _.invoke(this.triggerDomElement, 'focus')
+    }
+  }
+
+  private updateOutsideClickSubscription() {
+    this.outsideClickSubscription.unsubscribe()
+
+    if (this.state.open) {
+      setTimeout(() => {
+        this.outsideClickSubscription = EventStack.subscribe('click', e => {
+          if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
+            this.closeAndFocusTrigger(e)
+          }
+        })
+      })
+    }
   }
 
   public state = { target: undefined, open: false }
+
+  public componentDidMount() {
+    this.updateOutsideClickSubscription()
+
+    if (!this.state.open) {
+      this.popupDomElement = null
+    }
+  }
+
+  public componentDidUpdate() {
+    this.updateOutsideClickSubscription()
+
+    if (!this.state.open) {
+      this.popupDomElement = null
+    }
+  }
+
+  public componentWillUnmount() {
+    this.outsideClickSubscription.unsubscribe()
+  }
 
   public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
     const popupContent = this.renderPopupContent(rtl, accessibility)
@@ -160,6 +206,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         <Ref
           innerRef={domNode => {
             this.trySetState({ target: domNode })
+            this.triggerDomElement = domNode
           }}
         >
           {React.cloneElement(triggerElement, {
@@ -200,7 +247,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const { content } = this.props
 
     return (
-      <Ref innerRef={domElement => ref(domElement)}>
+      <Ref
+        innerRef={domElement => {
+          ref(domElement)
+          this.popupDomElement = domElement
+        }}
+      >
         {Popup.Content.create(content, {
           defaultProps: {
             ...(rtl && { dir: 'rtl' }),
