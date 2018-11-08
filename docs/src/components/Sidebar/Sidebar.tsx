@@ -225,6 +225,9 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/" activeClassName="active">
                   Introduction
                 </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
+                  Color Palette
+                </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
                   Shorthand Props
                 </Menu.Item>
