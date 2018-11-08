@@ -101,6 +101,10 @@ class List extends UIComponent<Extendable<ListProps>, any> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  public state = {
+    selectedIndex: 0,
+  }
+
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
 
@@ -147,18 +151,22 @@ class List extends UIComponent<Extendable<ListProps>, any> {
     this.focusHandler = new ContainerFocusHandler(
       () => this.props.items.length,
       index => {
-        const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-        const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+        this.setState({ selectedIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
 
-        targetDomNode && targetDomNode.focus()
+          targetDomNode && targetDomNode.focus()
+        })
       },
     )
   }
 
   renderItems() {
     const { items, renderItem } = this.props
+    const { selectedIndex } = this.state
 
     this.itemRefs = []
+
     return _.map(items, (item, idx) => {
       const maybeSelectableItemProps = {} as any
 
@@ -166,7 +174,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
         const ref = React.createRef()
         this.itemRefs[idx] = ref
 
-        maybeSelectableItemProps.tabIndex = 0
+        maybeSelectableItemProps.tabIndex = idx === selectedIndex ? 0 : -1
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
       }
