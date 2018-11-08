@@ -45,7 +45,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   static propTypes = {
     className: PropTypes.string,
     direction: PropTypes.number,
-    defaultTabbableElement: PropTypes.string,
+    defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
@@ -124,11 +124,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       this.updateTabIndexes()
 
       if (this.props.defaultTabbableElement) {
-        const initialActiveElement = this._root.current.querySelector(
-          this.props.defaultTabbableElement,
-        ) as HTMLElement
-
-        this.setActiveElement(initialActiveElement)
+        const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
+        initialActiveElement && this.setActiveElement(initialActiveElement)
       }
 
       if (this.props.shouldFocusOnMount) {
