@@ -14,7 +14,7 @@
     "build": "gulp build",
     "build:docs": "gulp --series dll build:docs",
     "build:dist": "gulp --series dll build:dist",
-    "ci": "yarn lint && yarn prettier && yarn test",
+    "ci": "yarn lint && yarn prettier && yarn test --strict",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
     "lint": "tslint -t stylish -p .",
@@ -56,29 +56,6 @@
     "url": "https://github.com/stardust-ui/react/issues"
   },
   "homepage": "https://github.com/stardust-ui/react#readme",
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "coverageReporters": [
-      "json",
-      "lcov"
-    ],
-    "testRegex": "/test/.*-test\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.ts",
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "moduleNameMapper": {
-      "docs/(.*)$": "<rootDir>/docs/$1",
-      "src/(.*)$": "<rootDir>/src/$1",
-      "test/(.*)$": "<rootDir>/test/$1"
-    }
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "faker": "^4.1.0",
