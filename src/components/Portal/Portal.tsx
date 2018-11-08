@@ -6,8 +6,8 @@ import {
   childrenExist,
   customPropTypes,
   AutoControlledComponent,
-  eventStack,
   doesNodeContainClick,
+  EventStack,
 } from '../../lib'
 import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref/Ref'
@@ -46,6 +46,8 @@ export interface PortalState {
 class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
+
+  private clickSubscription = EventStack.noSubscription
 
   public static autoControlledProps = ['open']
 
@@ -160,12 +162,13 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     )
   }
   private handleMount = () => {
-    eventStack.sub('click', this.handleDocumentClick)
+    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
+
     _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
-    eventStack.unsub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
