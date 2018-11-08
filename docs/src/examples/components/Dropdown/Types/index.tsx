@@ -10,6 +10,11 @@ const Types = () => (
       examplePath="components/Dropdown/Types/DropdownExampleMultipleSearch.shorthand"
     />
     <ComponentExample
+      title="Multiple Search Text Items"
+      description="A Dropdown with multi selection and search, items have only text."
+      examplePath="components/Dropdown/Types/DropdownExampleMultipleSearchTextItems.shorthand"
+    />
+    <ComponentExample
       title="Multiple Search Fluid"
       description="A Fluid Dropdown with multi selection and search."
       examplePath="components/Dropdown/Types/DropdownExampleMultipleSearchFluid.shorthand"

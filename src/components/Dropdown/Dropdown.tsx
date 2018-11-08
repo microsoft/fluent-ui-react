@@ -38,8 +38,8 @@ export interface DropdownState {
 
 export interface DropdownListItem {
   key: string
-  header: string
-  content?: string
+  header?: string
+  content: string
   image?: string
 }
 
@@ -194,7 +194,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
       <Icon
         name={`chevron ${isOpen ? 'up' : 'down'}`}
         as="button"
-        tabindex="-1"
+        tabIndex="-1"
         styles={styles.toggleButton}
         {...getToggleButtonProps()}
       />
@@ -216,12 +216,15 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     const { items } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
+        const optionalItemProps = {
+          media: item.image && <Image src={item.image} avatar />,
+          header: item.header,
+        }
         return (
           <ListItem
             key={item.key}
             content={item.content}
-            header={item.header}
-            media={<Image src={item.image} avatar />}
+            {...optionalItemProps}
             variables={{
               ...(highlightedIndex === index && {
                 headerColor: variables.listItemTextColor,
@@ -256,24 +259,29 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
     return active.length === 0
       ? null
-      : active.map((item, index) => (
-          <Label
-            role="presentation"
-            styles={styles.activeListLabel}
-            circular
-            key={`active-item-${index}`}
-            content={item.header}
-            image={{ src: item.image, avatar: true }}
-            icon={{
-              name: 'close',
-              onClick: this.onCloseIconClick.bind(this, item),
-              onKeyDown: this.onCloseIconKeyDown.bind(this, item),
-              'aria-label': `Remove ${item.header} from selection.`,
-              'aria-hidden': false,
-              role: 'button',
-            }}
-          />
-        ))
+      : active.map((item, index) => {
+          const optionalImage = {
+            image: item.image && { src: item.image, avatar: true },
+          }
+          return (
+            <Label
+              role="presentation"
+              styles={styles.activeListLabel}
+              circular
+              key={`active-item-${index}`}
+              content={item.content}
+              {...optionalImage}
+              icon={{
+                name: 'close',
+                onClick: this.onCloseIconClick.bind(this, item),
+                onKeyDown: this.onCloseIconKeyDown.bind(this, item),
+                'aria-label': `Remove ${item.header} from selection.`,
+                'aria-hidden': false,
+                role: 'button',
+              }}
+            />
+          )
+        })
   }
 
   onInputFocus = () => {
