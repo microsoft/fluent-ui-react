@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
 
 import { ChatData } from './services'
-import { Sizes } from 'src/lib/enums'
 
 export interface ChatPaneHeaderProps {
   chat?: ChatData
@@ -50,7 +49,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
         start={<Avatar name={chat.title} />}
         main={
           <Text
-            size={Sizes.Large}
+            size="large"
             content={chat.title}
             styles={{ marginLeft: '12px', fontWeight: 600 }}
           />

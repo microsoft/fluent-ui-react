@@ -16,15 +16,6 @@ export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
 export {
-  useKeyOnly,
-  useKeyOrValueAndKey,
-  useValueAndKey,
-  useMultipleProp,
-  useTextAlignProp,
-  useVerticalAlignProp,
-  useWidthProp,
-} from './classNameBuilders'
-export {
   htmlImageProps,
   htmlInputAttrs,
   htmlInputEvents,

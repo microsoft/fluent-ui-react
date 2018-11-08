@@ -125,10 +125,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
       if (this.props.defaultTabbableElement) {
         const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
-        this.setActiveElement(initialActiveElement)
-        // const initialActiveElement = this._root.current.querySelector(
-        //   this.props.defaultTabbableElement,
-        // ) as HTMLElement
+        initialActiveElement && this.setActiveElement(initialActiveElement)
       }
 
       if (this.props.shouldFocusOnMount) {
