@@ -1,4 +1,5 @@
 import { pxToRem } from '../../../../lib'
+
 export interface InputVariables {
   backgroundColor: string
   border: string
@@ -9,6 +10,9 @@ export interface InputVariables {
   iconColor: string
   iconPosition: string
   iconRight: string
+  iconLeft: string
+  inputPaddingWithIconAtStart: string
+  inputPaddingWithIconAtEnd: string
   inputPadding: string
   inputFocusBorderBottomColor: string
   inputFocusBorderRadius: string
@@ -26,8 +30,11 @@ export default (siteVars): InputVariables => ({
   iconPosition: 'absolute',
   iconRight: pxToRem(2),
   iconColor: siteVars.bodyColor,
+  iconLeft: pxToRem(6),
+  inputPaddingWithIconAtStart: `${pxToRem(6)} ${pxToRem(12)} ${pxToRem(6)} ${pxToRem(24)}`,
+  inputPaddingWithIconAtEnd: `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`,
 
-  inputPadding: `${pxToRem(6)} ${pxToRem(24)} ${pxToRem(6)} ${pxToRem(12)}`,
+  inputPadding: `${pxToRem(6)} ${pxToRem(12)} ${pxToRem(6)} ${pxToRem(12)}`,
   inputFocusBorderBottomColor: siteVars.brand,
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
 })

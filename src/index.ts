@@ -110,14 +110,8 @@ export {
 } from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
 export { default as chatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
 export {
-  default as chatEnterEscBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatEnterEscBehavior'
-export {
   default as chatMessageBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
-export {
-  default as chatMessageEnterEscBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatMessageEnterEscBehavior'
 export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
 
 //

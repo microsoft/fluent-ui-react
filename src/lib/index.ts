@@ -3,7 +3,7 @@ import * as customPropTypes from './customPropTypes'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
-export { default as eventStack } from './eventStack'
+export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 
@@ -15,15 +15,6 @@ export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
-export {
-  useKeyOnly,
-  useKeyOrValueAndKey,
-  useValueAndKey,
-  useMultipleProp,
-  useTextAlignProp,
-  useVerticalAlignProp,
-  useWidthProp,
-} from './classNameBuilders'
 export {
   htmlImageProps,
   htmlInputAttrs,
