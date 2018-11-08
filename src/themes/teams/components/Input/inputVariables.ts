@@ -9,8 +9,8 @@ export interface InputVariables {
   iconPosition: string
   iconRight: string
   iconLeft: string
-  inputPaddingWithIconOnStart: string
-  inputPaddingWithIconOnEnd: string
+  inputPaddingWithIconAtStart: string
+  inputPaddingWithIconAtEnd: string
   inputPadding: string
   inputFocusBorderColor: string
   inputFocusBorderRadius: string
@@ -31,8 +31,8 @@ export default (siteVars): InputVariables => ({
   iconPosition: 'absolute',
   iconRight: _2px_asRem,
   iconLeft: _6px_asRem,
-  inputPaddingWithIconOnStart: `${_6px_asRem} ${_12px_asRem} ${_6px_asRem} ${_24px_asRem}`,
-  inputPaddingWithIconOnEnd: `${_6px_asRem} ${_24px_asRem} ${_6px_asRem} ${_12px_asRem}`,
+  inputPaddingWithIconAtStart: `${_6px_asRem} ${_12px_asRem} ${_6px_asRem} ${_24px_asRem}`,
+  inputPaddingWithIconAtEnd: `${_6px_asRem} ${_24px_asRem} ${_6px_asRem} ${_12px_asRem}`,
 
   inputPadding: `${_6px_asRem} ${_12px_asRem} ${_6px_asRem} ${_12px_asRem}`,
   inputFocusBorderColor: siteVars.brand,

@@ -26,12 +26,10 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
       borderColor: v.inputFocusBorderColor,
       borderRadius: v.inputFocusBorderRadius,
     },
-    ...(p.iconPosition === 'start' &&
-      p.icon && {
-        padding: v.inputPaddingWithIconOnStart,
-      }),
-    ...(((p.iconPosition === 'end' && p.icon) || p.clearable) && {
-      padding: v.inputPaddingWithIconOnEnd,
+    ...(p.clearable && { padding: v.inputPaddingWithIconAtEnd }),
+    ...(p.icon && {
+      padding:
+        p.iconPosition === 'start' ? v.inputPaddingWithIconAtStart : v.inputPaddingWithIconAtEnd,
     }),
   }),
 
