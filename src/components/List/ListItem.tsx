@@ -1,5 +1,4 @@
 import * as React from 'react'
-
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
@@ -7,7 +6,7 @@ import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface ListItemProps {
   accessibility?: Accessibility
@@ -22,7 +21,6 @@ export interface ListItemProps {
   important?: boolean
   media?: any
   onClick?: ComponentEventHandler<ListItemProps>
-  onFocus?: ComponentEventHandler<ListItemProps>
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -73,13 +71,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
      * @param {object} data - All props.
      */
     onClick: PropTypes.func,
-
-    /**
-     * Called after user's focus.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onFocus: PropTypes.func,
 
     /** A list item can indicate that it can be selected. */
     selection: PropTypes.bool,
