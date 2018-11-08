@@ -11,21 +11,16 @@ import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import { commonPropTypes } from '../../lib/UIComponent'
+import { UIComponentProps } from '../../lib/UIComponent'
 
-export interface ButtonProps {
+export interface ButtonProps extends UIComponentProps {
+  /** An element type to render as (string or function). */
   as?: any
-  accessibility?: Accessibility
-  children?: ReactChildren
-  circular?: boolean
-  className?: string
-  disabled?: boolean
   content?: ShorthandValue
   fluid?: boolean
   icon?: ShorthandValue
@@ -34,9 +29,19 @@ export interface ButtonProps {
   onClick?: ComponentEventHandler<ButtonProps>
   onFocus?: ComponentEventHandler<ButtonProps>
   primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
+
   text?: boolean
   secondary?: boolean
+  /** Additional CSS styles to apply to the component instance.  */
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
 }
@@ -60,7 +65,15 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    ...commonPropTypes,
+    /** An element type to render as (string or function). */
+    as: customPropTypes.as,
+
+    /** Additional CSS styles to apply to the component instance.  */
+    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    /** Override for theme site variables to allow modifications of component styling via themes. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     /**
      *  Button content for childrenApi
      *  @docSiteIgnore
