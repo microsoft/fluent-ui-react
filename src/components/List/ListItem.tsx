@@ -5,7 +5,6 @@ import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { FocusableItemProps } from '../../lib/accessibility/FocusHandling/FocusableItem'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
@@ -16,7 +15,6 @@ export interface ListItemProps {
   contentMedia?: any
   content?: any
   debug?: boolean
-  focusableItemProps?: FocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
@@ -95,11 +93,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   }
 
   private itemRef = React.createRef<HTMLElement>()
-
-  componentDidUpdate() {
-    // This needs to be as part of issue https://github.com/stardust-ui/react/issues/370
-    // this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
-  }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
