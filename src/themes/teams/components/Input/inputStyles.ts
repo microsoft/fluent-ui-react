@@ -14,17 +14,20 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   input: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
-    border: 0,
+    border: v.border,
     borderRadius: v.borderRadius,
-    borderBottom: v.borderBottom,
     color: v.fontColor,
     backgroundColor: v.backgroundColor,
+    position: 'relative',
     padding: v.inputPadding,
     ...(p.fluid && { width: '100%' }),
     ...(p.inline && { float: 'left' }),
+    '::placeholder': {
+      color: v.fontColor,
+    },
     ':focus': {
-      borderColor: v.inputFocusBorderColor,
-      borderRadius: v.inputFocusBorderRadius,
+      borderBottomColor: v.inputFocusBorderBottomColor,
+      boxShadow: v.boxShadow,
     },
     ...(p.clearable && { padding: v.inputPaddingWithIconAtEnd }),
     ...(p.icon && {
@@ -35,6 +38,7 @@ const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
 
   icon: ({ props: { iconPosition }, variables: v }): ICSSInJSStyle => ({
     position: v.iconPosition as PositionProperty,
+    color: v.iconColor,
     ...(iconPosition === 'start' && {
       left: v.iconLeft,
     }),
