@@ -59,14 +59,13 @@ export default () => (
 
     <Divider />
     <br />
-    {/* Show a preview of the above snippet */}
     <Button
       as={NavLink}
-      content="Stardust Glossary"
+      content="Accessibility"
       icon="arrow right"
       iconPosition="after"
       primary
-      to="glossary"
+      to="accessibility"
     />
   </DocPage>
 )
