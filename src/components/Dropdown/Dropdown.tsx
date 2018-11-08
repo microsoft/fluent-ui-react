@@ -20,8 +20,8 @@ export interface DropdownProps {
   fluid?: boolean
   items?: DropdownListItem[]
   multiple?: boolean
-  onChange?: (active: DropdownListItem | DropdownListItem[]) => any
-  onSearchChange?: (inputValue: string) => any
+  onChange?: (value: DropdownListItem | DropdownListItem[]) => any
+  onSearchChange?: (searchQuery: string) => any
   placeholder?: string
   search?: boolean
   styles?: ComponentSlotStyle<DropdownProps, DropdownState>
@@ -29,10 +29,10 @@ export interface DropdownProps {
 }
 
 export interface DropdownState {
-  active: DropdownListItem | DropdownListItem[]
+  value: DropdownListItem | DropdownListItem[]
   backspaceDelete: boolean
   focused: boolean
-  inputValue?: string
+  searchQuery?: string
   message?: string
 }
 
@@ -66,14 +66,14 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     multiple: PropTypes.bool,
 
     /**
-     * Callback for change in dropdown active element(s).
-     * @param {DropdownListItem|DropdownListItem[]} active - Dropdown active element(s).
+     * Callback for change in dropdown active value(s).
+     * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
      */
     onChange: PropTypes.func,
 
     /**
      * Callback for change in dropdown search value/
-     * @param {string} inputValue - The new value in the search field.
+     * @param {string} searchQuery - The new value in the search field.
      */
     onSearchChange: PropTypes.func,
 
@@ -91,23 +91,23 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   state: DropdownState = {
-    active: this.props.multiple ? [] : null,
-    focused: false,
-    inputValue: '',
     backspaceDelete: true,
+    focused: false,
+    searchQuery: '',
+    value: this.props.multiple ? [] : null,
   }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
     const { search, multiple, toggleButton } = this.props
-    const { inputValue } = this.state
-    // we hold active elemts in the array, downshift should not know anything.
+    const { searchQuery } = this.state
+    // in multiple dropdown, we hold active values in the array, and default active is null.
     const selectedPropIfMultiple = { ...(multiple && { selectedItem: null }) }
 
     return (
       <ElementType>
         <Downshift
           onChange={this.handleChange}
-          inputValue={inputValue}
+          inputValue={searchQuery}
           {...selectedPropIfMultiple}
           stateReducer={this.stateReducer}
           itemToString={(item: DropdownListItem) => (item ? item.header : '')}
@@ -127,7 +127,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
                 <span aria-live="assertive" style={styles.ariaLiveSpan}>
                   {this.state.message}
                 </span>
-                {multiple && this.renderActive(styles)}
+                {multiple && this.renderActiveValues(styles)}
                 {search &&
                   this.renderInput(
                     styles,
@@ -163,7 +163,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     selectItemAtIndex,
   ): JSX.Element {
     const { multiple, placeholder } = this.props
-    const { inputValue, active } = this.state
+    const { searchQuery, value } = this.state
 
     return (
       <Input
@@ -177,7 +177,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
           type: 'text',
           styles: styles.editTextInput,
           placeholder:
-            inputValue.length > 0 || (multiple && (active as DropdownListItem[]).length > 0)
+            searchQuery.length > 0 || (multiple && (value as DropdownListItem[]).length > 0)
               ? ''
               : placeholder,
           ...getInputProps({
@@ -254,12 +254,12 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     ]
   }
 
-  private renderActive(styles) {
-    const active = this.state.active as DropdownListItem[]
+  private renderActiveValues(styles) {
+    const value = this.state.value as DropdownListItem[]
 
-    return active.length === 0
+    return value.length === 0
       ? null
-      : active.map((item, index) => {
+      : value.map((item, index) => {
           const optionalImage = {
             image: item.image && { src: item.image, avatar: true },
           }
@@ -297,15 +297,15 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   onInputKeyUpIfMultiple = event => {
-    const { inputValue, active, backspaceDelete } = this.state
+    const { searchQuery, value, backspaceDelete } = this.state
 
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Backspace:
-        if (inputValue === '' && (active as DropdownListItem[]).length > 0) {
+        if (searchQuery === '' && (value as DropdownListItem[]).length > 0) {
           if (!backspaceDelete) {
             this.setState({ backspaceDelete: true })
           } else {
-            this.removeFromActive()
+            this.removeFromActiveValues()
           }
         }
       default:
@@ -315,13 +315,13 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
   handleChange = element => {
     const { multiple } = this.props
-    const newActive = multiple ? [...(this.state.active as DropdownListItem[]), element] : element
+    const newValue = multiple ? [...(this.state.value as DropdownListItem[]), element] : element
 
-    _.invoke(this.props, 'onChange', newActive)
+    _.invoke(this.props, 'onChange', newValue)
 
     this.setState({
-      active: newActive,
-      inputValue: '',
+      value: newValue,
+      searchQuery: '',
       message: `${element.header} has been selected.`,
     })
   }
@@ -351,7 +351,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
       case Downshift.stateChangeTypes.changeInput:
         _.invoke(this.props, 'onSearchChange', changes.inputValue)
         this.setState({
-          inputValue: changes.inputValue,
+          searchQuery: changes.inputValue,
           backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
         })
         return changes
@@ -361,25 +361,25 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   }
 
   private handleCloseIconAction(element, event) {
-    this.removeFromActive(element)
+    this.removeFromActiveValues(element)
     this.inputRef.focus()
     event.stopPropagation()
   }
 
-  private removeFromActive(element?) {
-    let active = this.state.active as DropdownListItem[]
+  private removeFromActiveValues(element?) {
+    let value = this.state.value as DropdownListItem[]
     let poppedElement = element
 
     if (poppedElement) {
-      active = active.filter(currentElement => currentElement !== element)
+      value = value.filter(currentElement => currentElement !== element)
     } else {
-      poppedElement = active.pop()
+      poppedElement = value.pop()
     }
 
-    _.invoke(this.props, 'onChange', active)
+    _.invoke(this.props, 'onChange', value)
 
     this.setState({
-      active,
+      value,
       message: `${poppedElement.header} has been removed.`,
     })
   }
