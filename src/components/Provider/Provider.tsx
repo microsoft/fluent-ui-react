@@ -5,7 +5,6 @@ import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
 import {
-  ThemePrepared,
   ThemeInput,
   StaticStyleObject,
   StaticStyle,
@@ -119,8 +118,8 @@ class Provider extends React.Component<ProviderProps, any> {
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
       <ProviderConsumer
-        render={(incomingTheme: ThemePrepared) => {
-          const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+        render={incomingTheme => {
+          const outgoingTheme = mergeThemes(incomingTheme, theme)
 
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>

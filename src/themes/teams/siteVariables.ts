@@ -1,5 +1,33 @@
 import { pxToRem } from '../../lib'
 
+/*
+## Feature Request
+
+### Problem description
+We had feedback from the users of the library that it's hard to understand what API is available, especially when it comes to the `theme` objects we're exporting.
+
+### Proposed solution
+
+#### Make `theme` related typings more generic. I'm talking about `src/themes/types.ts`:
+
+```typescript
+export interface ThemePrepared {
+  siteVariables: SiteVariablesPrepared
+  componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+  componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+  icons: ThemeIcons
+  rtl: boolean
+  renderer: Renderer
+  fontFaces: FontFaces
+  staticStyles: StaticStyles
+}
+```
+
+`SiteVariablesPrepared`, `ComponentVariablesPrepared` and `ComponentSlotStylesPrepared` for starters should be parametrized in order to take the type of theme user's `siteVariables`. Something like:
+
+More strict typings for each theme a
+*/
+
 //
 // VARIABLES
 //

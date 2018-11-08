@@ -34,16 +34,22 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   htmlFontSize?: string
 }
 
-export interface SiteVariablesPrepared extends ObjectOf<any> {
+export type SiteVariablesPrepared<T extends ObjectOf<any> = ObjectOf<any>> = T & {
   brand?: string
   htmlFontSize?: string
   fontSizes: ObjectOf<string>
 }
 
+// export interface SiteVariablesPrepared extends ObjectOf<any> {
+//   brand?: string
+//   htmlFontSize?: string
+//   fontSizes: ObjectOf<string>
+// }
+
 export type ComponentVariablesObject = any
 
-export type ComponentVariablesPrepared = (
-  siteVariables?: SiteVariablesPrepared,
+export type ComponentVariablesPrepared<SV = any> = (
+  siteVariables?: SiteVariablesPrepared<SV>,
   props?: any,
 ) => ComponentVariablesObject
 
@@ -113,7 +119,6 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
 export interface ComponentSlotClasses extends ObjectOf<string> {}
-export interface ComponentSlotClasses extends ObjectOf<string> {}
 
 // ========================================================
 // Static Styles
@@ -132,16 +137,33 @@ export type StaticStyles = StaticStyle[]
 // ========================================================
 // Theme
 // ========================================================
-export interface ThemeInput {
-  siteVariables?: SiteVariablesInput
-  componentVariables?: ThemeComponentVariablesInput
-  componentStyles?: ThemeComponentStylesInput
+
+interface ThemeBase<SiteVariables, ComponentVariables, ComponentStyles> {
+  siteVariables?: SiteVariables
+  componentVariables?: ComponentVariables
+  componentStyles?: ComponentStyles
   rtl?: boolean
   renderer?: Renderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
 }
+
+export type ThemeInput<
+  SV extends SiteVariablesInput = SiteVariablesInput,
+  CV extends ThemeComponentVariablesInput = ThemeComponentVariablesInput,
+  CS extends ThemeComponentStylesInput = ThemeComponentStylesInput
+> = ThemeBase<SV, CV, CS>
+// export interface ThemeInput {
+//   siteVariables?: SiteVariablesInput
+//   componentVariables?: ThemeComponentVariablesInput
+//   componentStyles?: ThemeComponentStylesInput
+//   icons?: ThemeIcons
+//   rtl?: boolean
+//   renderer?: Renderer
+//   fontFaces?: FontFaces
+//   staticStyles?: StaticStyles
+// }
 
 // Component variables and styles must be resolved by the component after
 // all cascading is complete, not by any Provider in the middle of the tree.
@@ -151,16 +173,28 @@ export interface ThemeInput {
 //
 // As a theme cascades down the tree and is merged with the previous theme on
 // context, the resulting theme takes this shape.
-export interface ThemePrepared {
-  siteVariables: SiteVariablesPrepared
-  componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
-  componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
-  icons: ThemeIcons
-  rtl: boolean
-  renderer: Renderer
-  fontFaces: FontFaces
-  staticStyles: StaticStyles
-}
+// type ThemePreparedCompVars = { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+// type ThemePreparedCompStyles = { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+
+export type ThemePrepared<
+  SV extends SiteVariablesPrepared = SiteVariablesPrepared,
+  CV extends ComponentVariablesPrepared<SV> = ComponentVariablesPrepared<SV>,
+  CS extends ComponentSlotStylesPrepared = ComponentSlotStylesPrepared
+> = ThemeBase<
+  SV,
+  { [key in keyof ThemeComponentVariablesPrepared]: CV },
+  { [key in keyof ThemeComponentStylesPrepared]: CS }
+>
+// export interface ThemePrepared {
+//   siteVariables: SiteVariablesPrepared
+//   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+//   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+//   icons: ThemeIcons
+//   rtl: boolean
+//   renderer: Renderer
+//   fontFaces: FontFaces
+//   staticStyles: StaticStyles
+// }
 
 export interface ThemeComponentStylesInput {
   [key: string]: ComponentSlotStylesInput | undefined

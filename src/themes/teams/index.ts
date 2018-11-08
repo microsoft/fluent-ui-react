@@ -34,6 +34,17 @@ Object.keys(fontIcons).forEach(iconName => {
   icons[iconName] = declareFontBased(fontIcons[iconName])
 })
 
+const teamsTheme = {
+  siteVariables,
+  componentVariables,
+  componentStyles,
+  fontFaces,
+  staticStyles,
+  icons,
+} as TeamsThemeInput
+
+export type TeamsThemeInput = ThemeInput<typeof siteVariables>
+
 export default {
   siteVariables,
   componentVariables,
@@ -41,4 +52,4 @@ export default {
   fontFaces,
   staticStyles,
   icons,
-} as ThemeInput
+} as TeamsThemeInput
