@@ -269,7 +269,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
               styles={styles.activeListLabel}
               circular
               key={`active-item-${index}`}
-              content={item.header}
+              content={<Text content={item.header} onClick={event => event.stopPropagation()} />}
               {...optionalImage}
               icon={{
                 name: 'close',
