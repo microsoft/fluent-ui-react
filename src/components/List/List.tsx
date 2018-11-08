@@ -33,10 +33,14 @@ export interface ListProps {
   variables?: ComponentVariablesInput
 }
 
+export interface ListState {
+  selectedItemIndex: number
+}
+
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, any> {
+class List extends UIComponent<Extendable<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -102,7 +106,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
   public state = {
-    selectedIndex: 0,
+    selectedItemIndex: 0,
   }
 
   private focusHandler: ContainerFocusHandler = null
@@ -151,7 +155,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
     this.focusHandler = new ContainerFocusHandler(
       () => this.props.items.length,
       index => {
-        this.setState({ selectedIndex: index }, () => {
+        this.setState({ selectedItemIndex: index }, () => {
           const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
           const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
 
@@ -163,7 +167,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
 
   renderItems() {
     const { items, renderItem } = this.props
-    const { selectedIndex } = this.state
+    const { selectedItemIndex } = this.state
 
     this.itemRefs = []
 
@@ -174,7 +178,7 @@ class List extends UIComponent<Extendable<ListProps>, any> {
         const ref = React.createRef()
         this.itemRefs[idx] = ref
 
-        maybeSelectableItemProps.tabIndex = idx === selectedIndex ? 0 : -1
+        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
       }
