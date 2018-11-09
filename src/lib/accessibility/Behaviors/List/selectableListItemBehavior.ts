@@ -1,4 +1,4 @@
-import keyboardKey from 'keyboard-key'
+import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
 
 /**
