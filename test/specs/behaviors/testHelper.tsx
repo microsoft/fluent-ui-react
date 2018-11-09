@@ -21,7 +21,7 @@ const excludedFiles = [
   'chatBehavior.ts', // ticket 352152
   'chatMessageBehavior.ts', // ticket 352152
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
-  'listItemBehavior.ts', // tests are written in listBehavior-test.tsx
+  'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
 ]
 
 export class TestHelper {
@@ -94,7 +94,7 @@ export class TestHelper {
     })
     if (!regMatched) {
       test(`${behaviorName} \n LINE: ${singleLineText} `, () => {
-        fail(`Line doesn't match the regex expressions.`)
+        fail(`Line mentioned in test name doesn't match any regex expressions.`)
       })
     }
   }
