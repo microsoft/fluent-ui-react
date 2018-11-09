@@ -44,9 +44,9 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   direction?: FocusZoneDirection
 
   /**
-   * Optionally provide a selector for identifying the intial tabbable element.
+   * Function which uses root element to select and return the intial tabbable element.
    */
-  defaultTabbableElement?: string
+  defaultTabbableElement?: (root: HTMLElement) => HTMLElement
 
   /**
    * If a default tabbable element should be force focused on FocusZone mount.
