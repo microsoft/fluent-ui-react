@@ -67,6 +67,9 @@ export class TestHelper {
   public findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
+        if (!variant.specification && !variant.text) {
+          this.createMissingDescriptionTest(variant.name)
+        }
         if (!variant.specification) {
           this.verifySpecificationTag(variant.name)
         } else {
@@ -123,5 +126,11 @@ export class TestHelper {
         )
       })
     }
+  }
+
+  private createMissingDescriptionTest(behaviorFileName: string) {
+    test(`${behaviorFileName} : File is missing description.`, () => {
+      fail(`File should have description.`)
+    })
   }
 }
