@@ -188,8 +188,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     this.outsideClickSubscription.unsubscribe()
   }
 
-  public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
-    const popupContent = this.renderPopupContent(rtl, accessibility)
+  public renderComponent({
+    classes,
+    rtl,
+    accessibility,
+  }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
       <>
@@ -228,7 +232,11 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 
-  private renderPopupContent(rtl: boolean, accessibility: AccessibilityBehavior): JSX.Element {
+  private renderPopupContent(
+    popupPositionClasses: string,
+    rtl: boolean,
+    accessibility: AccessibilityBehavior,
+  ): JSX.Element {
     const { align, position } = this.props
     const { target } = this.state
 
@@ -239,27 +247,40 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         <Popper
           placement={placement}
           referenceElement={target}
-          children={this.renderPopperChildren.bind(this, rtl, accessibility)}
+          children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
         />
       )
     )
   }
 
   private renderPopperChildren = (
+    popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content, focusTrap } = this.props
 
-    const focusTrapProps = typeof focusTrap === 'boolean' ? {} : focusTrap
+    const popupContentAttributes = {
+      ...(rtl && { dir: 'rtl' }),
+      ...accessibility.attributes.popup,
+      ...accessibility.keyHandlers.popup,
+
+      className: popupPositionClasses,
+      style: popupPlacementStyles,
+    }
+
+    const focusTrapProps = {
+      ...(typeof focusTrap === 'boolean' ? {} : focusTrap),
+      ...popupContentAttributes,
+    } as FocusTrapZoneProps
 
     const popupContent = Popup.Content.create(content, {
-      defaultProps: {
-        ...(rtl && { dir: 'rtl' }),
-        ...accessibility.attributes.popup,
-        ...accessibility.keyHandlers.popup,
-      },
+      /**
+       * if there is no focus trap wrapper, we should apply
+       * HTML attributes and positioning to popup content directly
+       */
+      defaultProps: focusTrap ? {} : popupContentAttributes,
     })
 
     return (
@@ -270,9 +291,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         }}
       >
         {focusTrap ? (
-          <FocusTrapZone {...focusTrapProps} style={{ ...popupPlacementStyles, zIndex: 100 }}>
-            {popupContent}
-          </FocusTrapZone>
+          <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
         ) : (
           popupContent
         )}
