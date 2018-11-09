@@ -58,11 +58,11 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (circular, borderColor, color, boxShadowFallbackColor): ICSSInJSStyle => {
+const getBorderedStyles = (circular, boxShadowColor): ICSSInJSStyle => {
   return {
     ...getPaddedStyle(),
 
-    boxShadow: `0 0 0 .05rem ${borderColor || color || boxShadowFallbackColor} inset`,
+    boxShadow: `0 0 0 .05rem ${boxShadowColor} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
@@ -105,7 +105,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor, v.color, theme.siteVariables.bodyColor)),
+        getBorderedStyles(circular, v.borderColor || v.color || theme.siteVariables.bodyColor)),
     }
   },
 
