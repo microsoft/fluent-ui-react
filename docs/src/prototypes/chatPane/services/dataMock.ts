@@ -58,7 +58,7 @@ class ChatMock {
       const timestamp = getTimestamp(date)
 
       const message: MessageData = {
-        id,
+        id: String(id),
         from,
         mine,
         date,
@@ -69,7 +69,7 @@ class ChatMock {
       }
 
       return message
-    }).sort((a, b) => a.date - b.date)
+    }).sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
 
     this.chat = {
       id: random.uuid(),
