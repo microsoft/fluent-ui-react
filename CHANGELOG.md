@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Close `Popup` on outside click @kuzhelov ([#410](https://github.com/stardust-ui/react/pull/410))
 - Set default `chatBehavior` which uses Enter/Esc keys @sophieH29 ([#443](https://github.com/stardust-ui/react/pull/443))
 - Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442)) 
+- Handle `Enter` and `Spacebar` keys for selectable `ListItem` @jurokapsiar ([#279](https://github.com/stardust-ui/react/pull/279)) 
 
 ### Documentation
 - Add all missing component descriptions and improve those existing @levithomason ([#400](https://github.com/stardust-ui/react/pull/400))
