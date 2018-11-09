@@ -21,8 +21,8 @@ import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 
 export interface ComponentExampleProps extends RouteComponentProps<any, any> {
-  title: string
-  description: string
+  title: React.ReactNode
+  description?: React.ReactNode
   examplePath: string
   themeName?: string
 }
@@ -724,10 +724,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 }
 
-const ComponentExampleWithTheme = React.forwardRef((props: ComponentExampleProps) => (
+const ComponentExampleWithTheme = props => (
   <ThemeContext.Consumer>
     {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
   </ThemeContext.Consumer>
-))
+)
 
 export default withRouter(ComponentExampleWithTheme)

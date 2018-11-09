@@ -54,7 +54,6 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                   <div style={{ display: 'flex' }}>
                     <div style={{ flex: '1', marginBottom: '1em' }}>
                       <ComponentExampleTitle
-                        id={_.kebabCase(variation.name)}
                         title={this.baseName(variation.name)}
                         description={`Name: ${variation.name.replace('.ts', '')}`}
                       />
