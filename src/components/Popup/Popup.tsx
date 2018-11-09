@@ -25,6 +25,8 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 import PopupContent from './PopupContent'
 
 import { popupBehavior } from '../../lib/accessibility'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
+
 import {
   Accessibility,
   AccessibilityActionHandlers,
@@ -41,6 +43,7 @@ export interface PopupProps {
   className?: string
   content?: ShorthandValue
   defaultOpen?: boolean
+  focusTrap?: FocusTrapZoneProps | boolean
   open?: boolean
   onOpenChange?: ComponentEventHandler<PopupProps>
   position?: Position
@@ -91,6 +94,8 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     /** Initial value for 'target'. */
     defaultTarget: PropTypes.any,
 
+    focusTrap: PropTypes.any,
+
     /** Defines whether popup is displayed. */
     open: PropTypes.bool,
 
@@ -120,6 +125,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
+    focusTrap: true,
     position: 'above',
   }
 
@@ -244,7 +250,17 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     accessibility: AccessibilityBehavior,
     { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content } = this.props
+    const { content, focusTrap } = this.props
+
+    const focusTrapProps = typeof focusTrap === 'boolean' ? {} : focusTrap
+
+    const popupContent = Popup.Content.create(content, {
+      defaultProps: {
+        ...(rtl && { dir: 'rtl' }),
+        ...accessibility.attributes.popup,
+        ...accessibility.keyHandlers.popup,
+      },
+    })
 
     return (
       <Ref
@@ -253,14 +269,13 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           this.popupDomElement = domElement
         }}
       >
-        {Popup.Content.create(content, {
-          defaultProps: {
-            ...(rtl && { dir: 'rtl' }),
-            style: popupPlacementStyles,
-            ...accessibility.attributes.popup,
-            ...accessibility.keyHandlers.popup,
-          },
-        })}
+        {focusTrap ? (
+          <FocusTrapZone {...focusTrapProps} style={{ ...popupPlacementStyles, zIndex: 100 }}>
+            {popupContent}
+          </FocusTrapZone>
+        ) : (
+          popupContent
+        )}
       </Ref>
     )
   }
