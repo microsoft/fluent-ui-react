@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import eventStack from '../../eventStack'
+import { EventStack } from '../../../lib'
 
 import {
   getNextElement,
@@ -28,6 +28,9 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _previouslyFocusedElementOutsideTrapZone: HTMLElement
   private _previouslyFocusedElementInTrapZone?: HTMLElement
   private windowElement: Window | null
+
+  private _focusSubscription = EventStack.noSubscription
+  private _clickSubscription = EventStack.noSubscription
 
   private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
 
@@ -269,14 +272,16 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _subscribeToEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.sub('focus', this._handleOutsideFocus, {
+      this._focusSubscription.unsubscribe()
+      this._focusSubscription = EventStack.subscribe('focus', this._handleOutsideFocus, {
         target: this.windowElement,
         useCapture: true,
       })
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.sub('click', this._handleOutsideClick, {
+      this._clickSubscription.unsubscribe()
+      this._clickSubscription = EventStack.subscribe('click', this._handleOutsideClick, {
         target: this.windowElement,
         useCapture: true,
       })
@@ -286,17 +291,11 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _unsubscribeFromEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.unsub('focus', this._handleOutsideFocus, {
-        target: this.windowElement,
-        useCapture: true,
-      })
+      this._focusSubscription.unsubscribe()
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.unsub('click', this._handleOutsideClick, {
-        target: this.windowElement,
-        useCapture: true,
-      })
+      this._clickSubscription.unsubscribe()
     }
   }
 
