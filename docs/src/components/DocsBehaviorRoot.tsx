@@ -65,14 +65,24 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                 <div style={{ padding: '1em' }}>
                   <span> Description: </span>
                   <br />
-                  {variation.text.split('\n').map((splittedText, keyValue) => {
-                    return (
-                      <span key={keyValue}>
-                        {splittedText}
-                        <br />
-                      </span>
-                    )
-                  })}
+                  {variation.text &&
+                    variation.text.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
+                  {variation.specification &&
+                    variation.specification.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
                 </div>
               </Grid.Row>
             ))}

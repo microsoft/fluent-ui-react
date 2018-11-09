@@ -5,6 +5,8 @@ import * as _ from 'lodash'
 
 /**
  * @description
+ * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
+ * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'button' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
@@ -13,7 +15,6 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
- * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {

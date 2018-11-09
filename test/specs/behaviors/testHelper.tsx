@@ -17,6 +17,13 @@ export interface TestDefinition {
   testMethod: (TestMethod) => void
 }
 
+const excludedFiles = [
+  'chatBehavior.ts', // ticket 352152
+  'chatMessageBehavior.ts', // ticket 352152
+  'listBehavior.ts', // tests are written in listBehavior-test.tsx
+  'listItemBehavior.ts', // tests are written in listBehavior-test.tsx
+]
+
 export class TestHelper {
   private behaviors: Map<string, Accessibility> = new Map<string, Accessibility>()
   private testDefinitions: TestDefinition[] = []
@@ -60,18 +67,24 @@ export class TestHelper {
   public findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
-        variant.text.split('\n').forEach(singleLineText => {
-          this.iterateRegexDefinitions(singleLineText, variant.name)
-        })
+        if (!variant.specification) {
+          this.verifySpecificationTag(variant.name)
+        } else {
+          variant.specification.split('\n').forEach(singleLineText => {
+            this.iterateRegexDefinitions(singleLineText, variant.name)
+          })
+        }
       })
     })
   }
 
   public iterateRegexDefinitions(singleLineText: string, behaviorName: string) {
+    let regMatched = false
     this.testDefinitions.forEach(testDefinition => {
       const regex = new RegExp(testDefinition.regexp)
       const result = regex.exec(singleLineText)
       if (result) {
+        regMatched = true
         this.filteredDescriptionWithAssignedTestMethod.push({
           behaviorName,
           testMethod: testDefinition.testMethod,
@@ -79,6 +92,11 @@ export class TestHelper {
         })
       }
     })
+    if (!regMatched) {
+      test(`${behaviorName} \n LINE: ${singleLineText} `, () => {
+        fail(`Line doesn't match the regex expressions.`)
+      })
+    }
   }
 
   public getBehavior(behaviorName: string): Accessibility {
@@ -95,5 +113,15 @@ export class TestHelper {
       return Boolean(stringToConvert)
     }
     return stringToConvert
+  }
+
+  private verifySpecificationTag(behaviorFileName: string) {
+    if (!excludedFiles.find(item => item === behaviorFileName)) {
+      test(`${behaviorFileName} : File is missing specification tag.`, () => {
+        fail(
+          `File should have specification tag. If tests are written in separate file then add behavior file name into 'const excludedFiles'.`,
+        )
+      })
+    }
   }
 }
