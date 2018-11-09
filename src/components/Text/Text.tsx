@@ -4,7 +4,6 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { Sizes } from '../../lib/enums'
 import { UIComponentProps } from '../../lib/UIComponent'
 
 export interface TextProps extends UIComponentProps<any, any> {
@@ -24,7 +23,7 @@ export interface TextProps extends UIComponentProps<any, any> {
   important?: boolean
 
   /** The size for the Text component */
-  size?: Sizes
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
   /** The weight for the Text component */
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
