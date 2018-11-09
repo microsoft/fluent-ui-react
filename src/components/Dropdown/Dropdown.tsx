@@ -5,7 +5,7 @@ import { Extendable } from '../../../types/utils'
 import { ComponentSlotStyle } from '../../themes/types'
 import Downshift, { DownshiftState, StateChangeOptions, A11yStatusMessageOptions } from 'downshift'
 import Label from '../Label/Label'
-import { UIComponent } from '../../lib'
+import { AutoControlledComponent, customPropTypes } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -50,7 +50,10 @@ export interface DropdownListItem {
 
 /**
  */
-export default class Dropdown extends UIComponent<Extendable<DropdownProps>, DropdownState> {
+export default class Dropdown extends AutoControlledComponent<
+  Extendable<DropdownProps>,
+  DropdownState
+> {
   private inputRef: HTMLElement
 
   static displayName = 'Dropdown'
@@ -58,14 +61,23 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
   static className = 'ui-dropdown'
 
   static propTypes = {
+    /** An element type to render as (string or function). */
+    as: customPropTypes.as,
+
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
+
+    /** The default value for the search query. */
+    defaultSearchQuery: PropTypes.string,
+
+    /** The default value of the dropdown. */
+    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 
     /** An input can take the width of its container. */
     fluid: PropTypes.bool,
 
     /** Array of props for generating dropdown items and selected item labels if multiple selection. */
-    items: PropTypes.object,
+    items: PropTypes.collectionShorthand,
 
     /** A function that creates custom accessability message for dropdown status.
      * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift reoi,
@@ -100,7 +112,7 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     onChange: PropTypes.func,
 
     /**
-     * Callback for change in dropdown search value/
+     * Callback for change in dropdown search value.
      * @param {string} searchQuery - The new value in the search field.
      */
     onSearchChange: PropTypes.func,
@@ -111,12 +123,24 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     /** A dropdown can have a search field. */
     search: PropTypes.bool,
 
+    /** The value in the edit text, if dropdown is a search. */
+    searchQuery: PropTypes.string,
+
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
     /** A dropdown can have a toggle button. */
     toggleButton: PropTypes.bool,
+
+    /** The value of the dropdown. */
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   }
+
+  static defaultProps = {
+    as: 'div',
+  }
+
+  static autoControlledProps = ['searchQuery', 'value']
 
   state: DropdownState = {
     backspaceDelete: true,
@@ -358,9 +382,11 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
     _.invoke(this.props, 'onChange', newValue)
 
-    this.setState({
+    this.trySetState({
       value: newValue,
       searchQuery: '',
+    })
+    this.setState({
       message: getA11ySelectedMessage
         ? getA11ySelectedMessage(item)
         : `${item.header} has been selected.`,
@@ -391,8 +417,10 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
         _.invoke(this.props, 'onSearchChange', changes.inputValue)
-        this.setState({
+        this.trySetState({
           searchQuery: changes.inputValue,
+        })
+        this.setState({
           backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
         })
         return changes
@@ -420,8 +448,10 @@ export default class Dropdown extends UIComponent<Extendable<DropdownProps>, Dro
 
     _.invoke(this.props, 'onChange', value)
 
-    this.setState({
+    this.trySetState({
       value,
+    })
+    this.setState({
       message: getA11yRemovedMessage
         ? getA11yRemovedMessage(item)
         : `${poppedItem.header} has been removed.`,
