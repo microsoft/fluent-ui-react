@@ -19,7 +19,10 @@ import isFromKeyboard from '../../lib/isFromKeyboard'
 import { UIComponentProps } from '../../lib/UIComponent'
 
 export interface ButtonProps extends UIComponentProps<any, any> {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default buttonBehavior
+   */
   accessibility?: Accessibility
 
   /**
