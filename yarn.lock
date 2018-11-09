@@ -587,11 +587,6 @@ assign-symbols@^1.0.0:
   resolved "https://registry.yarnpkg.com/assign-symbols/-/assign-symbols-1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
   integrity sha1-WWZ/QfrdTyDMvCu5a41Pf3jsA2c=
 
-ast-types@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.10.1.tgz#f52fca9715579a14f841d67d7f8d25432ab6a3dd"
-  integrity sha512-UY7+9DPzlJ9VM8eY0b2TUZcZvF+1pO0hzMtAyjBYKhOmnvRlqYNYnWdtsMj0V16CGaMlpL0G1jnLbLo4AyotuQ==
-
 ast-types@0.11.5:
   version "0.11.5"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.5.tgz#9890825d660c03c28339f315e9fa0a360e31ec28"
@@ -887,11 +882,6 @@ babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
   integrity sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==
-
-babylon@~5.8.3:
-  version "5.8.38"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-5.8.38.tgz#ec9b120b11bf6ccd4173a18bf217e60b79859ffd"
-  integrity sha1-7JsSCxG/bM1Bc6GL8hfmC3mFn/0=
 
 bach@^1.0.0:
   version "1.2.0"
@@ -1812,7 +1802,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.7:
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.7.tgz#f972608ff0cead68b841a16a932d0b183791814e"
   integrity sha512-RszJCAxg/PP6uzXVXL6BsxSXx/B05oJAQ2vkJRjyjrEcNVycaqOmNb5OTxZPE3xa5gwZduqza6L9JOCenh/Ecw==
@@ -6430,13 +6420,6 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-dir@^0.1.10:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/node-dir/-/node-dir-0.1.17.tgz#5f5665d93351335caabef8f1c554516cf5f1e4e5"
-  integrity sha1-X1Zl2TNRM1yqvvjxxVRRbPXx5OU=
-  dependencies:
-    minimatch "^3.0.2"
-
 node-fetch@^1.0.1:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
@@ -7551,19 +7534,6 @@ react-docgen-typescript@^1.12.0:
   resolved "https://registry.yarnpkg.com/react-docgen-typescript/-/react-docgen-typescript-1.12.0.tgz#be25d3604e05676f05a1248952f8d5823d7a216a"
   integrity sha512-EAb2W5UNTTR75zTWm8bbn9iQmh+W/9DvnCazIdzDb+TnzvpcxEFCjRia+Rhpkx4FRRS3AYyJrw5Ar3zX51gJfQ==
 
-react-docgen@^2.17.0:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-2.21.0.tgz#e8f9caf50e15510096616850771f243fadbb9d7d"
-  integrity sha512-8xNPTrmvHLGNfqlsCYPdXmSkagP1njI5unP3t8WrjTJ4/5hHuP5nb3XH69CnF67HPV5zTkPoafcRBDGSQO6S6A==
-  dependencies:
-    async "^2.1.4"
-    babel-runtime "^6.9.2"
-    babylon "~5.8.3"
-    commander "^2.9.0"
-    doctrine "^2.0.0"
-    node-dir "^0.1.10"
-    recast "^0.12.6"
-
 react-document-title@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/react-document-title/-/react-document-title-2.0.3.tgz#bbf922a0d71412fc948245e4283b2412df70f2b9"
@@ -7771,17 +7741,6 @@ realpath-native@^1.0.0:
   integrity sha512-W14EcXuqUvKP8dkWkD7B95iMy77lpMnlFXbbk409bQtNCbeu0kvRE5reo+yIZ3JXxg6frbGsz2DLQ39lrCB40g==
   dependencies:
     util.promisify "^1.0.0"
-
-recast@^0.12.6:
-  version "0.12.9"
-  resolved "https://registry.yarnpkg.com/recast/-/recast-0.12.9.tgz#e8e52bdb9691af462ccbd7c15d5a5113647a15f1"
-  integrity sha512-y7ANxCWmMW8xLOaiopiRDlyjQ9ajKRENBH+2wjntIbk3A6ZR1+BLQttkmSHMY7Arl+AAZFwJ10grg2T6f1WI8A==
-  dependencies:
-    ast-types "0.10.1"
-    core-js "^2.4.1"
-    esprima "~4.0.0"
-    private "~0.1.5"
-    source-map "~0.6.1"
 
 recast@^0.15.1:
   version "0.15.1"

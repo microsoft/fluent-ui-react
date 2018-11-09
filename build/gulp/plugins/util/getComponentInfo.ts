@@ -1,19 +1,14 @@
 import * as _ from 'lodash'
 import * as path from 'path'
-// import { defaultHandlers, parse } from 'react-docgen'
 import * as fs from 'fs'
-// import * as ts from 'typescript'
 import parseDefaultValue from './parseDefaultValue'
 import parseDocblock from './parseDocblock'
-// import parserCustomHandler from './parserCustomHandler'
 import parseType from './parseType'
-// import findExportedComponentDefinitions from './findExportedComponentDefinitions'
 import * as reactDocgenTypescript from 'react-docgen-typescript'
 
 const getComponentInfo = filepath => {
   const absPath = path.resolve(process.cwd(), filepath)
 
-  // const contents = fs.readFileSync(absPath).toString()
   const dir = path.dirname(absPath)
   const dirname = path.basename(dir)
   const filename = path.basename(absPath)
@@ -23,19 +18,7 @@ const getComponentInfo = filepath => {
   // "element" for "src/elements/Button/Button.js"
   const componentType = path.basename(path.dirname(dir)).replace(/s$/, '')
 
-  // const text = ts.transpile(contents, {
-  //   jsx: ts.JsxEmit.React,
-  //   target: ts.ScriptTarget.Latest,
-  //   module: ts.ModuleKind.CommonJS,
-  //   allowSyntheticDefaultImports: true,
-  // })
-
-  // start with react-docgen info
-  // const components = parse(text, findExportedComponentDefinitions, [
-  //   // createImportHandler,
-  //   ...defaultHandlers,
-  //   parserCustomHandler,
-  // ])
+  // start with react-docgen-typescript info
   const components = reactDocgenTypescript.withDefaultConfig().parse(absPath)
 
   if (!components.length) {
