@@ -18,8 +18,8 @@ export interface TestDefinition {
 }
 
 const excludedFiles = [
-  'chatBehavior.ts', // ticket 352152
-  'chatMessageBehavior.ts', // ticket 352152
+  'chatBehavior.ts', // ticket 410026
+  'chatMessageBehavior.ts', // ticket 410026
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
 ]
