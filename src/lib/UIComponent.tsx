@@ -1,17 +1,22 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers, Accessibility } from './accessibility/types'
+import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
-import { ReactChildren } from '../../types/utils'
+import { ComponentVariablesInput, ComponentSlotStyle } from '../themes/types'
 
-export interface UIComponentProps {
-  accessibility?: Accessibility
-  children?: ReactChildren
-  /** Some description for circular */
-  circular?: boolean
+export interface UIComponentProps<P, V> {
+  /** An element type to render as (string or function). */
+  as?: any
+
+  /** Additional CSS class name(s) to apply.  */
   className?: string
-  disabled?: boolean
+
+  /** Additional CSS styles to apply to the component instance.  */
+  styles?: ComponentSlotStyle<P, V>
+
+  /** Override for theme site variables to allow modifications of component styling via themes. */
+  variables?: ComponentVariablesInput
 }
 
 class UIComponent<P, S> extends React.Component<P, S> {

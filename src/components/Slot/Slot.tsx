@@ -8,14 +8,11 @@ import {
   createShorthand,
 } from '../../lib'
 import { Extendable, MapValueToProps, Props } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { UIComponentProps } from '../../lib/UIComponent'
 
-export interface SlotProps {
-  as?: any
-  className?: string
+export interface SlotProps extends UIComponentProps<SlotProps, any> {
+  /** Shorthand for primary content. */
   content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
-  variables?: ComponentVariablesInput
 }
 
 export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
@@ -35,19 +32,10 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
   static displayName = 'Slot'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
     as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
-
-    /** Shorthand for primary content. */
     content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 

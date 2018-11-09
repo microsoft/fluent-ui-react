@@ -7,7 +7,6 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
@@ -15,11 +14,10 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
+import { UIComponentProps } from '../../lib/UIComponent'
 
-export interface AccordionProps {
-  as?: any
+export interface AccordionProps extends UIComponentProps<any, any> {
   activeIndex?: number[] | number
-  className?: string
   children?: ReactChildren
   defaultActiveIndex?: number[] | number
   exclusive?: boolean
@@ -31,8 +29,6 @@ export interface AccordionProps {
   renderContent?: ShorthandRenderFunction
   renderTitle?: ShorthandRenderFunction
   accessibility?: Accessibility
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
