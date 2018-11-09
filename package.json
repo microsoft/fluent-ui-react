@@ -34,6 +34,7 @@
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
     "pretest": "yarn satisfied && gulp --series build:docs:docgen build:docs:component-menu-behaviors",
     "test": "gulp test",
+    "test:cypress": "yarn run cypress run",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
     "test:watch": "gulp test:watch",
