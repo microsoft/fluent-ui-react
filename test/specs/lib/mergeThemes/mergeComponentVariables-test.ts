@@ -60,15 +60,15 @@ describe('mergeComponentVariables', () => {
   })
 
   test('object values of variables are merged', () => {
-    const target = { foo: { bar: true }, target: true }
-    const source = { foo: { baz: false }, source: true }
+    const target = { foo: { bar: true, deep: { first: false, same: 'target' } }, target: true }
+    const source = { foo: { baz: false, deep: { second: true, same: 'source' } }, source: true }
 
     const merged = mergeComponentVariables(target, source)
 
     expect(merged()).toMatchObject({
       source: true,
       target: true,
-      foo: { bar: true, baz: false },
+      foo: { bar: true, baz: false, deep: { first: false, second: true, same: 'source' } },
     })
   })
 })

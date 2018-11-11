@@ -1,9 +1,12 @@
+import { StatusVariables } from '../Status/statusVariables'
+
 export interface AvatarVariables {
-  statusBorderColor: string
-  statusBorderWidth: number
+  status: Partial<StatusVariables>
 }
 
 export default (siteVariables): AvatarVariables => ({
-  statusBorderColor: siteVariables.bodyBackground,
-  statusBorderWidth: 2,
+  status: {
+    borderColor: siteVariables.bodyBackground,
+    borderWidth: 2,
+  },
 })

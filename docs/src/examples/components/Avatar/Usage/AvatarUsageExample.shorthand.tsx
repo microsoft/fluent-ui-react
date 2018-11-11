@@ -11,28 +11,28 @@ const AvatarUsageExampleShorthand = () => (
         <Avatar
           name="John Doe (Software Developer)"
           status={status}
-          variables={{ statusBorderColor: 'violet' }}
+          variables={{ status: { borderColor: 'violet' } }}
         />
       </div>
       <div style={{ backgroundColor: 'yellowgreen', padding: '1rem', display: 'inline-block' }}>
         <Avatar
           name="John Doe (Software Developer)"
           status={status}
-          variables={{ statusBorderColor: 'yellowgreen' }}
+          variables={{ status: { borderColor: 'yellowgreen' } }}
         />
       </div>
       <div style={{ backgroundColor: 'orangered', padding: '1rem', display: 'inline-block' }}>
         <Avatar
           name="John Doe (Software Developer)"
           status={status}
-          variables={{ statusBorderColor: 'orangered' }}
+          variables={{ status: { borderColor: 'orangered' } }}
         />
       </div>
       <div style={{ backgroundColor: 'cornflowerblue', padding: '1rem', display: 'inline-block' }}>
         <Avatar
           name="John Doe (Software Developer)"
           status={status}
-          variables={{ statusBorderColor: 'cornflowerblue' }}
+          variables={{ status: { borderColor: 'cornflowerblue' } }}
         />
       </div>
     </div>

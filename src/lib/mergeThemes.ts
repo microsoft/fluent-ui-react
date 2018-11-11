@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+
 import {
   ComponentVariablesInput,
   ComponentVariablesPrepared,
@@ -71,7 +72,7 @@ export const mergeComponentVariables = (
 
         mergedVariables[variableName] =
           _.isObject(variableToMerge) && _.isObject(accumulatedVariable)
-            ? { ...accumulatedVariable, ...variableToMerge }
+            ? _.merge(_.clone(accumulatedVariable), variableToMerge)
             : variableToMerge
       })
 

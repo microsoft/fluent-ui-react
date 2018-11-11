@@ -1,8 +1,10 @@
+import { AvatarVariables } from '../Avatar/avatarVariables'
+
 export interface ChatMessageVariables {
   messageWidth: string
   messageColor: string
   messageColorMine: string
-  avatar: { statusBorderColor: string }
+  avatar: AvatarVariables
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -10,6 +12,8 @@ export default (siteVars): ChatMessageVariables => ({
   messageColor: siteVars.white,
   messageColorMine: '#E0E0ED',
   avatar: {
-    statusBorderColor: siteVars.gray10,
+    status: {
+      borderColor: siteVars.gray10,
+    },
   },
 })
