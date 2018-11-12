@@ -5,35 +5,13 @@ const props = {}
 const partElementName = 'anchor'
 let actionsDefinition
 
-const eventArg: KeyboardEvent = {
+const eventArg: any = {
   keyCode: testKeyCode,
   altKey: false,
-  charCode: null,
-  ctrlKey: null,
-  getModifierState: () => undefined,
-  key: null,
-  locale: null,
-  location: null,
-  metaKey: null,
-  repeat: null,
-  shiftKey: null,
-  which: null,
-  bubbles: null,
-  cancelable: null,
-  currentTarget: null,
-  defaultPrevented: null,
-  eventPhase: null,
-  isTrusted: null,
-  nativeEvent: null,
-  persist: () => undefined,
-  preventDefault: () => undefined,
-  isDefaultPrevented: () => undefined,
-  stopPropagation: () => undefined,
-  isPropagationStopped: () => undefined,
-  target: null,
-  timeStamp: null,
-  type: null,
-} as any
+  ctrlKey: false,
+  metaKey: false,
+  shiftKey: false,
+}
 
 describe('getKeyDownHandlers', () => {
   beforeEach(() => {
