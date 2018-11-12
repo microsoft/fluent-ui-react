@@ -5,7 +5,7 @@ export interface HeaderVariables {
 
 export default (siteVars: any): HeaderVariables => {
   return {
-    color: 'black',
+    color: siteVars.black,
     descriptionColor: undefined,
   }
 }
