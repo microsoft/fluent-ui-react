@@ -17,7 +17,7 @@ const PopupFocusTrapExample = () => (
       }}
     />
     <Popup
-      /** 'popupBehavior' is used as accessibility behavior by default for Popup. Trap focus is not added. */
+      /** 'popupBehavior' is used as accessibility behavior by default for Popup. Focus is not trapped by default. */
       trigger={<Button icon="expand" content="Do not trap focus" />}
       content={{
         content: (
