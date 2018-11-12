@@ -3,7 +3,7 @@ import { Button, Input, Popup, popupBehavior } from '@stardust-ui/react'
 
 const PopupNoFocusTrapExample = () => (
   <Popup
-    /** 'popupFocusTrapBehavior' is used as a default behavior for Popup */
+    /** 'popupBehavior' does not use focus trap */
     accessibility={popupBehavior}
     content={{
       content: (
