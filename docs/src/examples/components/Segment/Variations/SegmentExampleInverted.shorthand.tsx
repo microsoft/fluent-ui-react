@@ -1,15 +1,11 @@
 import * as React from 'react'
-import { Segment, Text } from '@stardust-ui/react'
+import { Segment } from '@stardust-ui/react'
 
 const SegmentExampleInvertedShorthand = () => (
   <div>
     <Segment content="Colored segment." color="purple" />
     <br />
-    <Segment
-      inverted
-      content={<Text content="Colored inverted segment." styles={{ color: 'white' }} />}
-      color="purple"
-    />
+    <Segment inverted content="Colored inverted segment" color="purple" />
   </div>
 )
 

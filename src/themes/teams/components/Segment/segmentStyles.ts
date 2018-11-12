@@ -14,6 +14,7 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
         (p.inverted
           ? {
               background: color,
+              color: '#eee',
             }
           : {
               borderTop: `2px solid ${color}`,
