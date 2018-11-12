@@ -52,6 +52,12 @@ const Router = () => (
             path="/prototype-search-page"
             component={require('./prototypes/SearchPage/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/icon-viewer"
+            path="/icon-viewer"
+            component={require('./prototypes/IconViewer/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
