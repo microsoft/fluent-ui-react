@@ -24,7 +24,7 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
-import { popupFocusTrapBehavior } from '../../lib/accessibility'
+import { popupBehavior } from '../../lib/accessibility'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 import {
@@ -120,7 +120,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   }
 
   public static defaultProps: PopupProps = {
-    accessibility: popupFocusTrapBehavior,
+    accessibility: popupBehavior,
     align: 'start',
     position: 'above',
   }
