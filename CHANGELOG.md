@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix focus behavior for `List` @kuzhelov ([#413](https://github.com/stardust-ui/react/pull/413))
 - Remove `Sizes` and `Weights` enums, use typed string in `Text` instead @jurokapsiar ([#446](https://github.com/stardust-ui/react/pull/446))
 - Fix React's version in `peerDependencies` @layershifter ([#452](https://github.com/stardust-ui/react/pull/452))
+- Added Dark and Contrast theme variables for `Header` @bcalvery ([#427](https://github.com/stardust-ui/react/pull/427))
 - Fix Teams Icons styles to match spec @codepretty ([#441](https://github.com/stardust-ui/react/pull/441))
 
 ### Features
@@ -33,7 +34,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Set the ref of the `FocusZone` in `Embed` mode @sophieH29 ([#435](https://github.com/stardust-ui/react/pull/435))
 - Close `Popup` on outside click @kuzhelov ([#410](https://github.com/stardust-ui/react/pull/410))
 - Set default `chatBehavior` which uses Enter/Esc keys @sophieH29 ([#443](https://github.com/stardust-ui/react/pull/443))
-- Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442)) 
+- Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442))
+- Add `color`, `inverted` and `renderContent` props and `content` slot to `Segment` component @Bugaa92 ([#389](https://github.com/stardust-ui/react/pull/389))
 
 ### Documentation
 - Add all missing component descriptions and improve those existing @levithomason ([#400](https://github.com/stardust-ui/react/pull/400))

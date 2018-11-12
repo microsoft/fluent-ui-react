@@ -80,7 +80,7 @@ class ComponentDoc extends React.Component<any, any> {
         <Grid>
           <Grid.Row style={topRowStyle}>
             <Grid.Column>
-              <Header as="h1" content={info.displayName} />
+              <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
               <p>{_.join(info.docblock.description, ' ')}</p>
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
