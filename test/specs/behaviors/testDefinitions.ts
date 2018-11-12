@@ -219,6 +219,22 @@ definitions.push({
   },
 })
 
+// Wraps component in FocusTrapZone.
+definitions.push({
+  regexp: /Wraps component in FocusTrapZone/,
+  testMethod: (parameters: TestMethod) => {
+    const focusTrapZoneProps = parameters.behavior({}).focusTrapZone
+
+    expect(focusTrapZoneProps).toBeDefined()
+
+    if (typeof focusTrapZoneProps === 'boolean') {
+      expect(focusTrapZoneProps).toBe(true)
+    } else {
+      expect(focusTrapZoneProps).not.toBeNull()
+    }
+  },
+})
+
 // Example: Performs 'nextItem' action on ArrowDown, ArrowRight.
 definitions.push({
   regexp: /Performs '([a-z A-Z]+)' action on ([a-z A-Z]+), ([a-z A-Z]+)\.+/g,

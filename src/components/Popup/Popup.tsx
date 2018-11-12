@@ -24,7 +24,7 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
-import { popupBehavior } from '../../lib/accessibility'
+import { popupFocusTrapBehavior } from '../../lib/accessibility'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
 import {
@@ -43,7 +43,6 @@ export interface PopupProps {
   className?: string
   content?: ShorthandValue
   defaultOpen?: boolean
-  focusTrap?: FocusTrapZoneProps | boolean
   open?: boolean
   onOpenChange?: ComponentEventHandler<PopupProps>
   position?: Position
@@ -94,8 +93,6 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     /** Initial value for 'target'. */
     defaultTarget: PropTypes.any,
 
-    focusTrap: PropTypes.any,
-
     /** Defines whether popup is displayed. */
     open: PropTypes.bool,
 
@@ -123,9 +120,8 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   }
 
   public static defaultProps: PopupProps = {
-    accessibility: popupBehavior,
+    accessibility: popupFocusTrapBehavior,
     align: 'start',
-    focusTrap: true,
     position: 'above',
   }
 
@@ -259,7 +255,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     accessibility: AccessibilityBehavior,
     { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content, focusTrap } = this.props
+    const { content } = this.props
 
     const popupContentAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -271,7 +267,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     }
 
     const focusTrapProps = {
-      ...(typeof focusTrap === 'boolean' ? {} : focusTrap),
+      ...(typeof accessibility.focusTrapZone === 'boolean' ? {} : accessibility.focusTrapZone),
       ...popupContentAttributes,
     } as FocusTrapZoneProps
 
@@ -280,7 +276,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
        * if there is no focus trap wrapper, we should apply
        * HTML attributes and positioning to popup content directly
        */
-      defaultProps: focusTrap ? {} : popupContentAttributes,
+      defaultProps: accessibility.focusTrapZone ? {} : popupContentAttributes,
     })
 
     return (
@@ -290,7 +286,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           this.popupDomElement = domElement
         }}
       >
-        {focusTrap ? (
+        {accessibility.focusTrapZone ? (
           <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
         ) : (
           popupContent

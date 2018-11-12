@@ -1,36 +1,20 @@
 import React from 'react'
-import { Button, Input, Popup } from '@stardust-ui/react'
+import { Button, Input, Popup, popupBehavior } from '@stardust-ui/react'
 
 const PopupNoFocusTrapExample = () => (
-  <>
-    <Popup
-      focusTrap={false}
-      content={{
-        content: (
-          <>
-            <p>This popup DOESN'T trap focus.</p>
-            <Input icon="search" placeholder="Search..." />
-          </>
-        ),
-      }}
-      trigger={<Button icon="expand" content="Popup with no focus trap" />}
-    />
-
-    <Popup
-      content={{
-        content: (
-          <>
-            <p>
-              Focus is trapped.<br />
-              Proceed with typing in the input field:
-            </p>
-            <Input icon="search" placeholder="Search..." />
-          </>
-        ),
-      }}
-      trigger={<Button icon="expand" content="Popup that will trap focus" />}
-    />
-  </>
+  <Popup
+    /** 'popupFocusTrapBehavior' is used as a default behavior for Popup */
+    accessibility={popupBehavior}
+    content={{
+      content: (
+        <>
+          <p>This popup DOESN'T trap focus.</p>
+          <Input icon="search" placeholder="Search..." />
+        </>
+      ),
+    }}
+    trigger={<Button icon="expand" content="Popup with no focus trap" />}
+  />
 )
 
 export default PopupNoFocusTrapExample

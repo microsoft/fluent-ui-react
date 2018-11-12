@@ -113,6 +113,7 @@ export {
   default as chatMessageBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
+export { default as popupBehavior } from './lib/accessibility/Behaviors/Popup/popupBehavior'
 
 //
 // Utilities

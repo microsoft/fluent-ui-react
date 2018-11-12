@@ -22,7 +22,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Focus Trap"
-      description="Popup content traps focus on appearance by default - at the same time, this focus trap behavior can be customized."
+      description="Popup content traps focus on appearance by default - at the same time, this focus trap properties can be customized, by creating your own behavior (see Behaviors section for Popup component)."
       examplePath="components/Popup/Types/PopupFocusTrapExample"
     />
     <ComponentExample

@@ -140,9 +140,7 @@ export type FocusZoneDefinition = {
   props?: FocusZoneProps
 }
 
-export type FocusTrapZoneDefinition = {
-  props?: FocusTrapZoneProps
-}
+export type FocusTrapZoneDefinition = FocusTrapZoneProps | boolean
 
 export type KeyActions = { [partName: string]: { [actionName: string]: KeyAction } }
 export interface AccessibilityDefinition {
