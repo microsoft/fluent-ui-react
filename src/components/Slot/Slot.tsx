@@ -1,19 +1,21 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
-import {
-  customPropTypes,
-  UIComponent,
-  childrenExist,
-  RenderResultConfig,
-  createShorthand,
-} from '../../lib'
+import { UIComponent, childrenExist, RenderResultConfig, createShorthand } from '../../lib'
 import { Extendable, MapValueToProps, Props } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/UIComponent'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
 
-export interface SlotProps extends UIComponentProps<SlotProps, any> {
-  /** Shorthand for primary content. */
-  content?: any
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
 export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
   val,
@@ -32,11 +34,9 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
   static displayName = 'Slot'
 
   static propTypes = {
-    as: customPropTypes.as,
-    className: PropTypes.string,
-    content: PropTypes.any,
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
   }
 
   static defaultProps = {

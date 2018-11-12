@@ -12,30 +12,32 @@ import {
   Extendable,
   ShorthandRenderFunction,
   ShorthandValue,
-  ReactChildren,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import { UIComponentProps } from '../../lib/UIComponent'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface ButtonProps extends UIComponentProps<any, any> {
+export interface ButtonProps
+  extends UIComponentProps<any, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default buttonBehavior
    */
   accessibility?: Accessibility
 
-  /**
-   *  Button content for childrenApi
-   *  @docSiteIgnore
-   */
-  children?: ReactChildren
-
   /** A button can appear circular. */
   circular?: boolean
-
-  /** Shorthand for primary content. */
-  content?: ShorthandValue
 
   /** A button can show it is currently unable to be interacted with. */
   disabled?: boolean
@@ -104,12 +106,11 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    as: customPropTypes.as,
-    children: PropTypes.node,
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     circular: PropTypes.bool,
-    className: PropTypes.string,
     disabled: PropTypes.bool,
-    content: customPropTypes.contentShorthand,
     fluid: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconOnly: PropTypes.bool,
@@ -121,8 +122,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
     renderIcon: PropTypes.func,
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {

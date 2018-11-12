@@ -3,21 +3,6 @@ import * as _ from 'lodash'
 import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../themes/types'
-
-export interface UIComponentProps<P, V> {
-  /** An element type to render as (string or function). */
-  as?: any
-
-  /** Additional CSS class name(s) to apply.  */
-  className?: string
-
-  /** Additional CSS styles to apply to the component instance.  */
-  styles?: ComponentSlotStyle<P, V>
-
-  /** Override for theme site variables to allow modifications of component styling via themes. */
-  variables?: ComponentVariablesInput
-}
 
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent

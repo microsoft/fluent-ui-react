@@ -10,21 +10,15 @@ import { Accessibility } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/UIComponent'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface AccordionProps extends UIComponentProps<any, any> {
+export interface AccordionProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
-
-  /**
-   *  Used to set content when using childrenApi - internal only
-   *  @docSiteIgnore
-   */
-  children?: ReactChildren
 
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
@@ -70,13 +64,12 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static propTypes = {
-    as: customPropTypes.as,
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
     activeIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-    children: PropTypes.node,
-    className: PropTypes.string,
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
@@ -95,8 +88,6 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
     accessibility: PropTypes.func,
     renderTitle: PropTypes.func,
     renderContent: PropTypes.func,
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {

@@ -4,7 +4,8 @@ import { Icon } from '../../'
 
 import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/UIComponent'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface StatusProps extends UIComponentProps<any, any> {
   /** A custom color. */
@@ -40,15 +41,12 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   static displayName = 'Status'
 
   static propTypes = {
-    as: customPropTypes.as,
-    className: PropTypes.string,
+    ...commonUIComponentPropTypes,
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     renderIcon: PropTypes.func,
     size: PropTypes.number,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {

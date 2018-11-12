@@ -1,17 +1,26 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/UIComponent'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface TextProps extends UIComponentProps<any, any> {
+export interface TextProps
+  extends UIComponentProps<any, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
-
-  /** Shorthand for primary content. */
-  content?: any
 
   /** Set as disabled Text component */
   disabled?: boolean
@@ -55,10 +64,10 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
-    as: customPropTypes.as,
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
-    className: PropTypes.string,
-    content: customPropTypes.contentShorthand,
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,
@@ -68,8 +77,6 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
     temporary: PropTypes.bool,
     timestamp: PropTypes.bool,
     truncated: PropTypes.bool,
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {

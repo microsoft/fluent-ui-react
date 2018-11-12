@@ -1,13 +1,10 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
+import { UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/UIComponent'
+import { UIComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, contentComponentPropsTypes } from '../../lib/commonPropTypes'
 
-export interface SegmentProps extends UIComponentProps<SegmentProps, any> {
-  /** Shorthand for primary content. */
-  content?: any
-}
+export interface SegmentProps extends UIComponentProps<SegmentProps, any>, ContentComponentProps {}
 
 /**
  * A segment is used to create a grouping of related content.
@@ -18,11 +15,8 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static displayName = 'Segment'
 
   static propTypes = {
-    as: customPropTypes.as,
-    className: PropTypes.string,
-    content: PropTypes.any,
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
   }
 
   static defaultProps = {
