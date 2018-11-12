@@ -16,7 +16,7 @@ export const as = (...args) =>
 /**
  * Ensure a prop is a valid DOM node.
  */
-export const domNode = (props, propName) => {
+export const domNode = (props: ObjectOf<any>, propName: string) => {
   // skip if prop is undefined
   if (props[propName] === undefined) return
   // skip if prop is valid
@@ -39,8 +39,8 @@ export const suggest = (suggestions: string[]) => {
   const findBestSuggestions = _.memoize((str: string) => {
     const propValueWords = str.split(' ')
 
-    return _.flow<string[], SuggestProps[], SuggestProps[], SuggestProps[]>(
-      _.map(suggestion => {
+    return _.flow(
+      _.map((suggestion: string) => {
         const suggestionWords = suggestion.split(' ')
 
         const propValueScore = _.flow(
@@ -76,7 +76,7 @@ export const suggest = (suggestions: string[]) => {
     return acc
   }, {})
 
-  return (props, propName, componentName) => {
+  return (props: ObjectOf<any>, propName: string, componentName: string) => {
     const propValue = props[propName]
 
     // skip if prop is undefined or is included in the suggestions
@@ -112,7 +112,11 @@ export const suggest = (suggestions: string[]) => {
  * Disallow other props from being defined with this prop.
  * @param {string[]} disallowedProps An array of props that cannot be used with this prop.
  */
-export const disallow = (disallowedProps: string[]) => (props, propName, componentName) => {
+export const disallow = (disallowedProps: string[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+) => {
   if (!Array.isArray(disallowedProps)) {
     throw new Error(
       [
@@ -151,7 +155,12 @@ export const disallow = (disallowedProps: string[]) => (props, propName, compone
  * Ensure a prop adherers to multiple prop type validators.
  * @param {function[]} validators An array of propType functions.
  */
-export const every = (validators: Function[]) => (props, propName, componentName, ...rest) => {
+export const every = (validators: Function[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any[]
+) => {
   if (!Array.isArray(validators)) {
     throw new Error(
       [
@@ -181,7 +190,12 @@ export const every = (validators: Function[]) => (props, propName, componentName
  * Ensure a prop adherers to at least one of the given prop type validators.
  * @param {function[]} validators An array of propType functions.
  */
-export const some = (validators: Function[]) => (props, propName, componentName, ...rest) => {
+export const some = (validators: Function[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any[]
+) => {
   if (!Array.isArray(validators)) {
     throw new Error(
       [
@@ -218,10 +232,10 @@ export const some = (validators: Function[]) => (props, propName, componentName,
  * @param {function} validator A propType function.
  */
 export const givenProps = (propsShape: object, validator: Function) => (
-  props,
-  propName,
-  componentName,
-  ...rest
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any
 ) => {
   if (!_.isPlainObject(propsShape)) {
     throw new Error(
@@ -276,7 +290,11 @@ export const givenProps = (propsShape: object, validator: Function) => (
  * Define prop dependencies by requiring other props.
  * @param {string[]} requiredProps An array of required prop names.
  */
-export const demand = (requiredProps: string[]) => (props, propName, componentName) => {
+export const demand = (requiredProps: string[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+) => {
   if (!Array.isArray(requiredProps)) {
     throw new Error(
       [
@@ -378,10 +396,10 @@ export const collectionShorthand = every([disallow(['children']), PropTypes.arra
  * @param {function} [validator] A propType function.
  */
 export const deprecate = (help: string, validator: Function) => (
-  props,
-  propName,
-  componentName,
-  ...args
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...args: any[]
 ) => {
   if (typeof help !== 'string') {
     throw new Error(

@@ -69,7 +69,7 @@ class ChatMock {
       }
 
       return message
-    }).sort((a, b) => a.date.getMilliseconds() - b.date.getMilliseconds())
+    }).sort((a, b) => a.date.getTime() - b.date.getTime())
 
     this.chat = {
       id: random.uuid(),

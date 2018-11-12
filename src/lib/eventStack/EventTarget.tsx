@@ -27,7 +27,7 @@ export default class EventTarget {
     })
   }
 
-  private _normalize = (handlers: OneOrArray<EventListener>) =>
+  private _normalize = (handlers: OneOrArray<EventListener>): EventListener[] =>
     _.isArray(handlers) ? handlers : [handlers]
 
   // ------------------------------------
