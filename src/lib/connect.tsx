@@ -27,7 +27,7 @@ export type ConnectOptions = {
   // maps Stardust bits to component's props
   mapToComponentProps: (stardustProps: StardustRenderProps) => any
 
-  // defaultProps, etc..
+  // accessibility, defaultProps, anything..
 }
 
 // -------------------------

@@ -24,6 +24,8 @@ const ButtonExample = () => (
     <>
       <div>
         <MyButton />
+
+        {/* 'accessibility' option for connect() could be introduced for that */}
         <MyAccessibleButton accessibility={buttonBehavior} disabled>
           I have aria-disabled=true
         </MyAccessibleButton>
