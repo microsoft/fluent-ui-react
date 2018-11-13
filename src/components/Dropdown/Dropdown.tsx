@@ -23,6 +23,7 @@ export interface DropdownProps {
   getA11yRemovedMessage?: (item: DropdownListItem) => string
   getA11yRemoveItemMessage?: (item: DropdownListItem) => string
   items?: DropdownListItem[]
+  itemToString?: (item: DropdownListItem) => string
   multiple?: boolean
   noResultsMessage?: string
   onChange?: (value: DropdownListItem | DropdownListItem[]) => any
@@ -79,12 +80,20 @@ export default class Dropdown extends AutoControlledComponent<
     /** Array of props for generating dropdown items and selected item labels if multiple selection. */
     items: PropTypes.collectionShorthand,
 
-    /** A function that creates custom accessability message for dropdown status.
+    /**
+     * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
+     * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection
+     */
+    itemToString: PropTypes.function,
+
+    /**
+     * A function that creates custom accessability message for dropdown status.
      * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift reoi,
      */
     getA11yStatusMessage: PropTypes.func,
 
-    /** A function that creates custom accessability message for dropdown selection.
+    /**
+     * A function that creates custom accessability message for dropdown selection.
      * @param {DropdownListItem} item - Dropdown selected element.
      */
     getA11ySelectedMessage: PropTypes.func,
@@ -150,7 +159,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   public renderComponent({ ElementType, styles, variables }): React.ReactNode {
-    const { search, multiple, toggleButton, getA11yStatusMessage } = this.props
+    const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
     // in multiple dropdown, we hold active values in the array, and default active is null.
     const optionalDownshiftProps = {
@@ -163,9 +172,11 @@ export default class Dropdown extends AutoControlledComponent<
         <Downshift
           onChange={this.handleChange}
           inputValue={searchQuery}
-          {...optionalDownshiftProps}
           stateReducer={this.stateReducer}
-          itemToString={(item: DropdownListItem) => (item ? item.header : '')}
+          itemToString={
+            itemToString ? itemToString : (item: DropdownListItem) => (item ? item.header : '')
+          }
+          {...optionalDownshiftProps}
         >
           {({
             getInputProps,
