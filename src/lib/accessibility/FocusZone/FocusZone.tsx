@@ -47,6 +47,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     direction: PropTypes.number,
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
+    shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -275,11 +276,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     }
 
     // If a first focusable element should be force focused when FocusZone container receives focus
-    if (
-      this.props.shouldFocusFirstElementWhenReceivedFocus &&
-      this._activeElement !== document.activeElement &&
-      ev.target === this._root.current
-    ) {
+    if (this.props.shouldFocusFirstElementWhenReceivedFocus && ev.target === this._root.current) {
       this.focus(true)
     }
 

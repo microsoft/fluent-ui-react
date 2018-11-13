@@ -1110,4 +1110,71 @@ describe('FocusZone', () => {
     expect(inputA.tabIndex).toBe(-1)
     expect(buttonB.tabIndex).toBe(0)
   })
+
+  it('should force focus to first focusable element when FocusZone container receives focus and shouldFocusFirstElementWhenReceivedFocus is set to "true"', () => {
+    const isInnerZoneKeystroke = (e: React.KeyboardEvent<HTMLElement>): boolean =>
+      keyboardKey.getCode(e) === keyboardKey.Enter
+    const isFocusableProperty = { [IS_FOCUSABLE_ATTRIBUTE]: true }
+
+    const component = ReactTestUtils.renderIntoDocument(
+      <div {...{ onFocusCapture: onFocus }}>
+        <FocusZone
+          direction={FocusZoneDirection.horizontal}
+          shouldEnterInnerZone={isInnerZoneKeystroke}
+        >
+          <button className="a">a</button>
+          <FocusZone
+            direction={FocusZoneDirection.horizontal}
+            className="b"
+            shouldFocusFirstElementWhenReceivedFocus={true}
+            {...isFocusableProperty}
+          >
+            <button className="bsub">bsub</button>
+          </FocusZone>
+        </FocusZone>
+      </div>,
+    )
+
+    const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
+
+    const buttonA = focusZone.querySelector('.a') as HTMLElement
+    const divB = focusZone.querySelector('.b') as HTMLElement
+
+    const buttonB = focusZone.querySelector('.bsub') as HTMLElement
+
+    setupElement(buttonA, {
+      clientRect: {
+        top: 0,
+        bottom: 20,
+        left: 0,
+        right: 20,
+      },
+    })
+
+    setupElement(divB, {
+      clientRect: {
+        top: 0,
+        bottom: 20,
+        left: 20,
+        right: 40,
+      },
+    })
+
+    setupElement(buttonB, {
+      clientRect: {
+        top: 5,
+        bottom: 15,
+        left: 25,
+        right: 35,
+      },
+    })
+
+    // Focus the first button.
+    ReactTestUtils.Simulate.focus(buttonA)
+    expect(lastFocusedElement).toBe(buttonA)
+
+    ReactTestUtils.Simulate.keyDown(focusZone, { which: keyboardKey.ArrowRight })
+    // Focus goes to FocusZone container, which forces focus to first focusable element - buttonB
+    expect(lastFocusedElement).toBe(buttonB)
+  })
 })
