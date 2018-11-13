@@ -94,7 +94,14 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
       // although state doesn't precisely reflect autocontrolled 'state',
       // the state of stateManager is always properly defined
-      this.setState(stateDiff, () => _.invoke(this.props, 'onOpenChange', eventArgs, newState))
+      this.setState(stateDiff, () => {
+        _.invoke(this.props, 'onOpenChange', eventArgs, newState)
+        this.updateOutsideClickSubscription(newState.open)
+
+        if (!newState.open) {
+          this.popupDomElement = null
+        }
+      })
     },
   })
 
@@ -178,10 +185,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     _.invoke(this.triggerDomElement, 'focus')
   }
 
-  private updateOutsideClickSubscription() {
+  private updateOutsideClickSubscription(isOpen: boolean) {
     this.outsideClickSubscription.unsubscribe()
 
-    if (this.stateManager.getState().open) {
+    if (isOpen) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe('click', e => {
           if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
@@ -195,15 +202,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public state = { target: undefined, open: false }
 
   public componentDidMount() {
-    this.updateOutsideClickSubscription()
-
-    if (!this.stateManager.getState().open) {
-      this.popupDomElement = null
-    }
-  }
-
-  public componentDidUpdate() {
-    this.updateOutsideClickSubscription()
+    this.updateOutsideClickSubscription(this.stateManager.getState().open)
 
     if (!this.stateManager.getState().open) {
       this.popupDomElement = null
