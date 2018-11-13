@@ -81,8 +81,8 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     },
 
     /*
-    * AUTOCONTROLLED implementation for absolute state match.
-    * - acts like a filter for the state changes that should be applied
+    * AUTOCONTROLLED implementation for absolute match of stateManager's and component's state.
+    * - this hook acts like a filter for the state changes that should be applied
     */
     // -------------
     // willSetState: ({ prevState, stateDiff, args, actionName }) => {
