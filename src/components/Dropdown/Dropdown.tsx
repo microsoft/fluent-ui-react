@@ -22,9 +22,9 @@ export interface DropdownProps {
   getA11ySelectedMessage?: (item: DropdownListItem) => string
   getA11yRemovedMessage?: (item: DropdownListItem) => string
   getA11yRemoveItemMessage?: (item: DropdownListItem) => string
-  getNoResultsMessage?: () => string
   items?: DropdownListItem[]
   multiple?: boolean
+  noResultsMessage?: string
   onChange?: (value: DropdownListItem | DropdownListItem[]) => any
   onSearchChange?: (searchQuery: string) => any
   placeholder?: string
@@ -99,11 +99,11 @@ export default class Dropdown extends AutoControlledComponent<
      */
     getA11yRemoveItemMessage: PropTypes.func,
 
-    /** A function that creates custom accessability message for dropdown no results case. */
-    getNoResultsMessage: PropTypes.func,
-
     /** A dropdown can have a multiple selection. */
     multiple: PropTypes.bool,
+
+    /** A string to be displayed when dropdown is not showing any items. */
+    noResultsMessage: PropTypes.string,
 
     /**
      * Callback for change in dropdown active value(s).
@@ -268,7 +268,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderItems(variables, getItemProps, highlightedIndex) {
-    const { items, getNoResultsMessage } = this.props
+    const { items, noResultsMessage } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
         const optionalItemProps = {
@@ -302,10 +302,7 @@ export default class Dropdown extends AutoControlledComponent<
       {
         key: 'people-picker-no-results-item',
         content: (
-          <Text
-            weight="bold"
-            content={getNoResultsMessage ? getNoResultsMessage() : `We couldn't find any matches.`}
-          />
+          <Text weight="bold" content={noResultsMessage || `We couldn't find any matches.`} />
         ),
         styles: {
           backgroundColor: variables.listItemBackgroundColor,
@@ -322,7 +319,7 @@ export default class Dropdown extends AutoControlledComponent<
       ? null
       : value.map((item, index) => {
           const optionalImage = {
-            image: item.image && { src: item.image, avatar: true },
+            image: item.image && { src: item.image, avatar: true, onClick: this.onLabelClick },
           }
           return (
             <Label
@@ -330,7 +327,7 @@ export default class Dropdown extends AutoControlledComponent<
               styles={styles.activeListLabel}
               circular
               key={`active-item-${index}`}
-              content={<Text content={item.header} onClick={event => event.stopPropagation()} />}
+              content={<Text content={item.header} onClick={this.onLabelClick} />}
               {...optionalImage}
               icon={{
                 name: 'close',
@@ -355,11 +352,11 @@ export default class Dropdown extends AutoControlledComponent<
     this.setState({ focused: false })
   }
 
-  onContainerClick = isOpen => {
+  onContainerClick = (isOpen: boolean) => {
     !isOpen && this.inputRef.focus()
   }
 
-  onInputKeyUpIfMultiple = event => {
+  onInputKeyUpIfMultiple = (event: React.SyntheticEvent) => {
     const { searchQuery, value, backspaceDelete } = this.state
 
     switch (keyboardKey.getCode(event)) {
@@ -393,15 +390,22 @@ export default class Dropdown extends AutoControlledComponent<
     })
   }
 
-  onCloseIconClick = (item, event) => this.handleCloseIconAction(item, event)
+  onCloseIconClick = (item: DropdownListItem, event: React.SyntheticEvent) =>
+    this.handleCloseIconAction(item, event)
 
-  onCloseIconKeyDown = (item, event) => {
+  onLabelClick = (event: React.SyntheticEvent) => event.stopPropagation()
+
+  onCloseIconKeyDown = (item: DropdownListItem, event: React.SyntheticEvent) => {
     if (keyboardKey.getCode(event) === keyboardKey.Enter) {
       this.handleCloseIconAction(item, event)
     }
   }
 
-  onInputKeyDown = (highlightedIndex, selectItemAtIndex, event) => {
+  onInputKeyDown = (
+    highlightedIndex: number,
+    selectItemAtIndex: (index: number) => void,
+    event,
+  ) => {
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Tab:
         if (highlightedIndex !== undefined) {
