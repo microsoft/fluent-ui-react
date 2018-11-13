@@ -2,14 +2,14 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
+import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
+import * as Stardust from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
@@ -31,7 +31,6 @@ interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
-  exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
   sourceCode: string
@@ -55,6 +54,14 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
   normal: 'Children API',
   shorthand: 'Shorthand API',
 }
+
+const imports = {
+  lodash: _,
+  react: React,
+  '@stardust-ui/react': Stardust,
+}
+
+const importResolver = importName => imports[importName]
 
 /**
  * Renders a `component` and the raw `code` that produced it.
@@ -101,16 +108,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { examplePath } = this.props
     this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
-    const exampleElement = this.renderExampleFromCode(this.sourceCodeMgr.currentCode)
 
     this.setState({
-      exampleElement,
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       showCode: this.isActiveHash(),
       showHTML: false,
       sourceCode: this.sourceCodeMgr.currentCode,
-      markup: renderToStaticMarkup(exampleElement),
     })
   }
 
@@ -125,7 +129,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
     const { themeName } = nextProps
     if (this.state.themeName !== themeName) {
-      this.setState({ themeName }, this.renderSourceCode)
+      this.setState({ themeName })
     }
   }
 
@@ -220,9 +224,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const { showRtl } = this.state
 
-    this.setState({ showRtl: !showRtl }, () => {
-      this.renderSourceCode()
-    })
+    this.setState({ showRtl: !showRtl })
   }
 
   private handleShowCodeClick = e => {
@@ -264,7 +266,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   private resetJSX = () => {
     if (this.sourceCodeMgr.originalCodeHasChanged && confirm('Lose your changes?')) {
       this.sourceCodeMgr.resetToOriginalCode()
-      this.updateAndRenderSourceCode()
     }
   }
 
@@ -278,14 +279,42 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   private hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  private setErrorDebounced = _.debounce(error => {
-    this.setState({ error })
-  }, 800)
+  private renderExampleFromCode = (): JSX.Element => {
+    const { sourceCode } = this.state
 
-  private renderExampleFromCode = (code: string): JSX.Element => {
-    const Example = code != null ? evalTypeScript(code) : this.renderMissingExample()
-    return _.isFunction(Example) ? this.renderWithProvider(Example) : Example
+    console.log('TEST', {
+      sourceCode,
+    })
+
+    if (sourceCode == null) {
+      return this.renderMissingExample()
+    }
+
+    const { showRtl, componentVariables, themeName } = this.state
+    const theme = themes[themeName]
+
+    const newTheme: ThemeInput = {
+      componentVariables: mergeThemeVariables(theme.componentVariables, {
+        [this.getDisplayName()]: componentVariables,
+      }),
+      rtl: showRtl,
+    }
+
+    return (
+      <Provider theme={newTheme}>
+        <SourceRender
+          knobs={this.getKnobsValue()}
+          onError={this.onError}
+          onSuccess={this.onSuccess}
+          source={sourceCode}
+          resolver={importResolver}
+        />
+      </Provider>
+    )
   }
+
+  private onSuccess = (e, { markup }) => this.setState({ markup, error: null })
+  private onError = error => this.setState({ error: error.toString() })
 
   private renderMissingExample = (): JSX.Element => {
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
@@ -297,40 +326,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private renderSourceCode = _.debounce(() => {
-    try {
-      const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
-
-      if (!React.isValidElement(exampleElement)) {
-        this.setErrorDebounced(
-          `Default export is not a valid React element. Check the example syntax.`,
-        )
-      } else {
-        // immediately render a null error
-        // but also ensure the last debounced error call is a null error
-        const error = undefined
-        this.setErrorDebounced(error)
-        this.setState({
-          error,
-          exampleElement,
-          markup: renderToStaticMarkup(exampleElement),
-        })
-      }
-    } catch (err) {
-      this.setErrorDebounced(err.message)
-    }
-  }, 250)
-
   private handleKnobChange = knobs => {
-    this.setState(
-      prevState => ({
-        knobs: {
-          ...prevState.knobs,
-          ...knobs,
-        },
-      }),
-      this.renderSourceCode,
-    )
+    this.setState(prevState => ({
+      knobs: {
+        ...prevState.knobs,
+        ...knobs,
+      },
+    }))
   }
 
   private getKnobsComponent = () => {
@@ -357,36 +359,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  private renderWithProvider(ExampleComponent) {
-    const { showRtl, componentVariables, themeName } = this.state
-    const theme = themes[themeName]
-
-    const newTheme: ThemeInput = {
-      componentVariables: mergeThemeVariables(theme.componentVariables, {
-        [this.getDisplayName()]: componentVariables,
-      }),
-      rtl: showRtl,
-    }
-
-    return (
-      <Provider theme={newTheme}>
-        <ExampleComponent knobs={this.getKnobsValue()} />
-      </Provider>
-    )
-  }
-
   private handleChangeCode = (sourceCode: string) => {
-    this.sourceCodeMgr.currentCode = sourceCode
-    this.updateAndRenderSourceCode()
-  }
-
-  private updateAndRenderSourceCode = () => {
-    this.setState({ sourceCode: this.sourceCodeMgr.currentCode }, this.renderSourceCode)
+    this.setState({ sourceCode })
   }
 
   private setApiCodeType = (codeType: SourceCodeType) => {
-    this.sourceCodeMgr.codeType = codeType
-    this.updateAndRenderSourceCode()
+    // TODO:
   }
 
   private renderApiCodeMenu = (): JSX.Element => {
@@ -395,8 +373,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
       // we disable the menu button for Children API in case we don't have the example for it
-      const disabled =
-        codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
+      const disabled = true
+      codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
 
       return {
         active: this.sourceCodeMgr.codeType === codeType,
@@ -596,15 +574,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   private handleVariableChange = (component, variable) => (e, { value }) => {
-    this.setState(
-      state => ({
-        componentVariables: {
-          ...state.componentVariables,
-          [variable]: value,
-        },
-      }),
-      this.renderSourceCode,
-    )
+    this.setState(state => ({
+      componentVariables: {
+        ...state.componentVariables,
+        [variable]: value,
+      },
+    }))
   }
 
   public render() {
@@ -612,7 +587,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const {
       handleMouseLeave,
       handleMouseMove,
-      exampleElement,
       isHovering,
       showCode,
       showHTML,
@@ -706,7 +680,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                     }),
                   }}
                 >
-                  {exampleElement}
+                  {this.renderExampleFromCode()}
                 </Grid.Column>
               )
             }}
