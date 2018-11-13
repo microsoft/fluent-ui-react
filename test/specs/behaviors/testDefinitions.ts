@@ -219,11 +219,11 @@ definitions.push({
   },
 })
 
-// Wraps component in FocusTrapZone.
+// [FocusTrapZone] Traps focus inside component
 definitions.push({
-  regexp: /Wraps component in FocusTrapZone/,
+  regexp: /Traps focus inside component/,
   testMethod: (parameters: TestMethod) => {
-    const focusTrapZoneProps = parameters.behavior({}).focusTrapZone
+    const focusTrapZoneProps = parameters.behavior({}).focusTrap
 
     expect(focusTrapZoneProps).toBeDefined()
 
@@ -231,6 +231,7 @@ definitions.push({
       expect(focusTrapZoneProps).toBe(true)
     } else {
       expect(focusTrapZoneProps).not.toBeNull()
+      expect(typeof focusTrapZoneProps).toBe('object')
     }
   },
 })
