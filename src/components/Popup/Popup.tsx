@@ -66,6 +66,51 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   public static Content = PopupContent
 
+  private stateManager = {
+    // framework agnostic actions
+    actions: {
+      open: manager => {
+        manager.setState({ open: true })
+      },
+      close: manager => {
+        manager.setState({ open: false })
+      },
+      toggle: manager => {
+        const state = manager.getState()
+
+        if (state.isOpen) {
+          manager.actions.close()
+        } else {
+          manager.actions.open()
+        }
+      },
+    },
+
+    bindings: {
+      // here is where framework code goes, component's logic
+      getState: () => {
+        return { ...this.state, ...this.props } /* returns component's state */
+      },
+
+      willSetState: (prevState, stateDiff) => {
+        // diif object could be filtered
+        // this logic should be a default for autocontrolled components
+        return stateDiff
+      },
+      setState: (stateDiff, prevState, newState, actionName, args) => {
+        const { forceChangeEvent, eventArgs } = args
+
+        if (stateDiff) {
+          this.setState(newState)
+        }
+
+        if (stateDiff || forceChangeEvent) {
+          _.invoke(this.props, 'onOpenChange', eventArgs, newState)
+        }
+      },
+    },
+  }
+
   public static propTypes = {
     /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -134,9 +179,19 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
-      this.trySetOpen(!this.state.open, e, true)
+      // this.trySetOpen(!this.state.open, e, true)
+      this.stateManager.actions.toggle(e)
     },
-    closeAndFocusTrigger: e => this.closeAndFocusTrigger(e),
+    closeAndFocusTrigger: e => {
+      // this.closeAndFocusTrigger(e),
+      this.stateManager.actions.close(e)
+      _.invoke(this.triggerDomElement, 'focus')
+
+      // if (this.state.open) {
+      //   this.trySetOpen(false, e, true)
+      //   _.invoke(this.triggerDomElement, 'focus')
+      // }
+    },
   }
 
   private closeAndFocusTrigger = e => {
