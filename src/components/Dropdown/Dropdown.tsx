@@ -155,7 +155,7 @@ export default class Dropdown extends AutoControlledComponent<
     // in multiple dropdown, we hold active values in the array, and default active is null.
     const optionalDownshiftProps = {
       ...(multiple && { selectedItem: null }),
-      getA11yStatusMessage,
+      ...(getA11yStatusMessage && getA11yStatusMessage),
     }
 
     return (
@@ -319,7 +319,7 @@ export default class Dropdown extends AutoControlledComponent<
       ? null
       : value.map((item, index) => {
           const optionalImage = {
-            image: item.image && { src: item.image, avatar: true, onClick: this.onLabelClick },
+            ...(item.image && { src: item.image, avatar: true, onClick: this.onLabelClick }),
           }
           return (
             <Label
@@ -404,7 +404,7 @@ export default class Dropdown extends AutoControlledComponent<
   onInputKeyDown = (
     highlightedIndex: number,
     selectItemAtIndex: (index: number) => void,
-    event,
+    event: React.SyntheticEvent,
   ) => {
     switch (keyboardKey.getCode(event)) {
       case keyboardKey.Tab:
@@ -417,7 +417,10 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  stateReducer = (state: DownshiftState<any>, changes: StateChangeOptions<any>) => {
+  stateReducer = (
+    state: DownshiftState<DropdownListItem>,
+    changes: StateChangeOptions<DropdownListItem>,
+  ) => {
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
         _.invoke(this.props, 'onSearchChange', changes.inputValue)
