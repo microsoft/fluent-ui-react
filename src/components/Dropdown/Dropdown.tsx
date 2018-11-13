@@ -155,7 +155,7 @@ export default class Dropdown extends AutoControlledComponent<
     // in multiple dropdown, we hold active values in the array, and default active is null.
     const optionalDownshiftProps = {
       ...(multiple && { selectedItem: null }),
-      ...(getA11yStatusMessage && getA11yStatusMessage),
+      ...(getA11yStatusMessage && { getA11yStatusMessage }),
     }
 
     return (
@@ -319,7 +319,9 @@ export default class Dropdown extends AutoControlledComponent<
       ? null
       : value.map((item, index) => {
           const optionalImage = {
-            ...(item.image && { src: item.image, avatar: true, onClick: this.onLabelClick }),
+            ...(item.image && {
+              image: { src: item.image, avatar: true, onClick: this.onLabelClick },
+            }),
           }
           return (
             <Label
