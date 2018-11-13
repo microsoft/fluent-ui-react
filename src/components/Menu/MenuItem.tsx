@@ -9,36 +9,83 @@ import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface MenuItemProps {
+export interface MenuItemProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
+
+  /** A menu item can be active. */
   active?: boolean
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: any
+
+  /** A menu item can show it is currently unable to be interacted with. */
   disabled?: boolean
+
+  /** Name or shorthand for Menu Item Icon */
   icon?: ShorthandValue
+
+  /** A menu may have just icons. */
   iconOnly?: boolean
+
+  /** MenuItem index inside Menu. */
   index?: number
+
+  /**
+   * Called on click. When passed, the component will render as an `a`
+   * tag by default instead of a `div`.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onClick?: ComponentEventHandler<MenuItemProps>
+
+  /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
+
+  /**
+   * A menu can point to show its relationship to nearby content.
+   * For vertical menu, it can point to the start of the item or to the end.
+   */
   pointing?: boolean | 'start' | 'end'
+
+  /** The menu item can have primary type. */
   primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
+
+  /** The menu item can have secondary type. */
   secondary?: boolean
+
+  /** Menu items can by highlighted using underline. */
   underlined?: boolean
+
+  /** A vertical menu displays elements vertically. */
   vertical?: boolean
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 export interface MenuItemState {
@@ -56,83 +103,23 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    /** A menu item can be active. */
-    active: PropTypes.bool,
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** A menu item can show it is currently unable to be interacted with. */
-    disabled: PropTypes.bool,
-
-    /** Name or shorthand for Menu Item Icon */
-    icon: customPropTypes.itemShorthand,
-
-    /** A menu may have just icons. */
-    iconOnly: PropTypes.bool,
-
-    /** MenuItem index inside Menu. */
-    index: PropTypes.number,
-
-    /**
-     * Called on click. When passed, the component will render as an `a`
-     * tag by default instead of a `div`.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
-
-    /** A menu can adjust its appearance to de-emphasize its contents. */
-    pills: PropTypes.bool,
-
-    /**
-     * A menu can point to show its relationship to nearby content.
-     * For vertical menu, it can point to the start of the item or to the end.
-     */
-    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
-
-    /** The menu item can have primary type. */
-    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
-
-    /** The menu item can have secondary type. */
-    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-
-    /** Menu items can by highlighted using underline. */
-    underlined: PropTypes.bool,
-
-    /** A vertical menu displays elements vertically. */
-    vertical: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     accessibility: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
+    active: PropTypes.bool,
+    disabled: PropTypes.bool,
+    icon: customPropTypes.itemShorthand,
+    iconOnly: PropTypes.bool,
+    index: PropTypes.number,
+    onClick: PropTypes.func,
+    pills: PropTypes.bool,
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    underlined: PropTypes.bool,
+    vertical: PropTypes.bool,
     renderIcon: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
