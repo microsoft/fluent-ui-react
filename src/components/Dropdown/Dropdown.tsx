@@ -17,6 +17,8 @@ import Icon from '../Icon/Icon'
 
 export interface DropdownProps {
   className?: string
+  defaultSearchQuery?: string
+  defaultValue?: DropdownListItem | DropdownListItem[]
   fluid?: boolean
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<DropdownListItem>) => string
   getA11ySelectedMessage?: (item: DropdownListItem) => string
@@ -49,8 +51,6 @@ export interface DropdownListItem {
   image?: string
 }
 
-/**
- */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
   DropdownState
@@ -88,7 +88,7 @@ export default class Dropdown extends AutoControlledComponent<
 
     /**
      * A function that creates custom accessability message for dropdown status.
-     * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift reoi,
+     * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
      */
     getA11yStatusMessage: PropTypes.func,
 
@@ -158,7 +158,7 @@ export default class Dropdown extends AutoControlledComponent<
     value: this.props.multiple ? [] : null,
   }
 
-  public renderComponent({ ElementType, styles, variables }): React.ReactNode {
+  public renderComponent({ ElementType, classes, styles, variables }): React.ReactNode {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
     // in multiple dropdown, we hold active values in the array, and default active is null.
@@ -189,7 +189,10 @@ export default class Dropdown extends AutoControlledComponent<
             selectItemAtIndex,
           }) => {
             return (
-              <div style={styles.containerDiv} onClick={this.onContainerClick.bind(this, isOpen)}>
+              <div
+                className={classes.containerDiv}
+                onClick={this.onContainerClick.bind(this, isOpen)}
+              >
                 <span aria-live="assertive" style={styles.ariaLiveSpan}>
                   {this.state.message}
                 </span>
