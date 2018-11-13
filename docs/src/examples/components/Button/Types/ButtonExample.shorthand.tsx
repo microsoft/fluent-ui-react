@@ -47,7 +47,7 @@ const ButtonExample = () => (
         {/* - provided acc behavior adds necessary attributes to custom component */}
         {/* - 'accessibility' option for connect() could be introduced, so that it won't be necessary to define attribute here. */}
         <MyAccessibleButton disabled accessibility={buttonBehavior}>
-          I am disabled, have 'role' and 'aria-disabled'
+          I am disabled, have 'role' and 'aria-disabled' set
         </MyAccessibleButton>
       </div>
 

@@ -6,7 +6,8 @@ import { connect } from '../../lib'
 // - note that this could be any component that client was previously working on,
 // - and now it is just function call away from collecting Stardust styles, accessibility and other bits
 //
-// - this original component cares about 'disabled' attribute for button, but hasn't any further accessibility support
+// - the original component cared about 'disabled' attribute for button, but hadn't any further accessibility support
+// - further accessibility support was added by Stardust's buttonBehavior
 //  -------------------------------
 class MyAccessibleButton extends React.Component<any, any> {
   render() {
