@@ -1,6 +1,43 @@
 import { TeamsSvgIconSpec } from '../types'
 
 // IMPORTS
+import trashcan from './icons-trash-can'
+import fullscreen from './icons-fullscreen'
+import format from './icons-format'
+import fontsize from './icons-font-size'
+import fontcolor from './icons-font-color'
+import followchannel from './icons-follow-channel'
+import folderupload from './icons-folder-upload'
+import foldernew from './icons-folder-new'
+import folderdownload from './icons-folder-download'
+import folder from './icons-folder'
+import filter from './icons-filter'
+import filesuploadsmall from './icons-files-upload-small'
+import filesupload from './icons-files-upload'
+import filessound from './icons-files-sound'
+import filesphotoshop from './icons-files-photoshop'
+import filesmissing from './icons-files-missing'
+import fileslink from './icons-files-link'
+import filesindesign from './icons-files-indesign'
+import filesillustrator from './icons-files-illustrator'
+import filesflash from './icons-files-flash'
+import fileserrorfull from './icons-files-error-full'
+import filesdocument from './icons-files-document'
+import filesaftereffects from './icons-files-aftereffects'
+import files from './icons-files'
+import feedback from './icons-feedback'
+import faq from './icons-faq'
+import eyefriendlier from './icons-eye-friendlier'
+import expand from './icons-expand'
+import error from './icons-error'
+import emoji from './icons-emoji'
+import email from './icons-email'
+import edit from './icons-edit'
+import dropdown from './icons-dropdown'
+import downloaded from './icons-downloaded'
+import download from './icons-download'
+import document from './icons-document'
+import desktop from './icons-desktop'
 import cortana from './icons-cortana'
 import copy from './icons-copy'
 import contactlist from './icons-contact-list'
@@ -97,6 +134,43 @@ import accept from './icons-accept'
 
 export default {
   // EXPORTS
+  trashcan,
+  fullscreen,
+  format,
+  fontsize,
+  fontcolor,
+  followchannel,
+  folderupload,
+  foldernew,
+  folderdownload,
+  folder,
+  filter,
+  filesuploadsmall,
+  filesupload,
+  filessound,
+  filesphotoshop,
+  filesmissing,
+  fileslink,
+  filesindesign,
+  filesillustrator,
+  filesflash,
+  fileserrorfull,
+  filesdocument,
+  filesaftereffects,
+  files,
+  feedback,
+  faq,
+  eyefriendlier,
+  expand,
+  error,
+  emoji,
+  email,
+  edit,
+  dropdown,
+  downloaded,
+  download,
+  document,
+  desktop,
   cortana,
   copy,
   contactlist,

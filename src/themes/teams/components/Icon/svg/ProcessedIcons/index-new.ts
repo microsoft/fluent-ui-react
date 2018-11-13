@@ -1,8 +1,43 @@
 import { TeamsSvgIconSpec } from '../types'
 
 // IMPORTS
-import customvotesmall from './icons-custom-vote-small'
-import customvote from './icons-custom-vote'
+import trashcan from './icons-trash-can'
+import fullscreen from './icons-fullscreen'
+import format from './icons-format'
+import fontsize from './icons-font-size'
+import fontcolor from './icons-font-color'
+import followchannel from './icons-follow-channel'
+import folderupload from './icons-folder-upload'
+import foldernew from './icons-folder-new'
+import folderdownload from './icons-folder-download'
+import folder from './icons-folder'
+import filter from './icons-filter'
+import filesuploadsmall from './icons-files-upload-small'
+import filesupload from './icons-files-upload'
+import filessound from './icons-files-sound'
+import filesphotoshop from './icons-files-photoshop'
+import filesmissing from './icons-files-missing'
+import fileslink from './icons-files-link'
+import filesindesign from './icons-files-indesign'
+import filesillustrator from './icons-files-illustrator'
+import filesflash from './icons-files-flash'
+import fileserrorfull from './icons-files-error-full'
+import filesdocument from './icons-files-document'
+import filesaftereffects from './icons-files-aftereffects'
+import files from './icons-files'
+import feedback from './icons-feedback'
+import faq from './icons-faq'
+import eyefriendlier from './icons-eye-friendlier'
+import expand from './icons-expand'
+import error from './icons-error'
+import emoji from './icons-emoji'
+import email from './icons-email'
+import edit from './icons-edit'
+import dropdown from './icons-dropdown'
+import downloaded from './icons-downloaded'
+import download from './icons-download'
+import document from './icons-document'
+import desktop from './icons-desktop'
 import cortana from './icons-cortana'
 import copy from './icons-copy'
 import contactlist from './icons-contact-list'
@@ -10,32 +45,22 @@ import connectorbadge from './icons-connector-badge'
 import composeextmenuitem from './icons-compose-ext-menu-item'
 import composeextensionunpin from './icons-compose-extension-unpin'
 import composeextensionpin from './icons-compose-extension-pin'
-import composeextensionbadge from './icons-compose-extension-badge'
 import compose from './icons-compose'
 import collapse from './icons-collapse'
 import codesnippet from './icons-codesnippet'
 import code from './icons-code'
-import closeendcall from './icons-close-end-call'
 import closedcaption from './icons-closed-caption'
 import close from './icons-close'
 import chromeunmaximize from './icons-chrome-unmaximize'
 import chromeminimize from './icons-chrome-minimize'
 import chromemaximize from './icons-chrome-maximize'
-import chromeforward from './icons-chrome-forward'
-import chromeback from './icons-chrome-back'
-import chevronsmright from './icons-chevronsm-right'
 import chevronright from './icons-chevron-right'
 import chevronmedright from './icons-chevronmed-right'
 import chevronmedleft from './icons-chevronmed-left'
-import chevronleftsmall from './icons-chevron-left-small'
 import chevronleft from './icons-chevron-left'
 import chevrondown from './icons-chevron-down'
-import checksmall from './icons-check-small'
-import checked from './icons-checked'
 import checkboxunselected from './icons-checkbox-unselected'
 import checkboxselected from './icons-checkbox-selected'
-import checkbox from './icons-checkbox'
-import check from './icons-check'
 import chat from './icons-chat'
 import channelicon from './icons-channel-icon'
 import changename from './icons-changename'
@@ -47,7 +72,6 @@ import callvideo from './icons-call-video'
 import calltransfernotification from './icons-call-transfer-notification'
 import calltransfer from './icons-call-transfer'
 import callswitchcamera from './icons-call-switch-camera'
-import callresume from './icons-call-resume'
 import callrecording from './icons-call-recording'
 import callpstnfull from './icons-call-pstn-full'
 import callpstn from './icons-call-pstn'
@@ -69,16 +93,11 @@ import callmeetupfilled from './icons-call-meetup-filled'
 import callincomingvideo from './icons-call-incoming-video'
 import callhold from './icons-call-hold'
 import callend from './icons-call-end'
-import callemergency from './icons-call-emergency'
 import calldialpad from './icons-call-dialpad'
 import callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
 import callcontrolpresentnew from './icons-call-control-present-new'
-import callconsultation from './icons-call-consultation'
-import callchatoff from './icons-call-chat-off'
-import callchat from './icons-call-chat'
 import callblocked from './icons-call-blocked'
 import callaudio from './icons-call-audio'
-import callalertfullbody from './icons-call-alert-full-body'
 import callalert from './icons-call-alert'
 import calladmitall from './icons-call-admit-all'
 import call from './icons-call'
@@ -115,8 +134,43 @@ import accept from './icons-accept'
 
 export default {
   // EXPORTS
-  customvotesmall,
-  customvote,
+  trashcan,
+  fullscreen,
+  format,
+  fontsize,
+  fontcolor,
+  followchannel,
+  folderupload,
+  foldernew,
+  folderdownload,
+  folder,
+  filter,
+  filesuploadsmall,
+  filesupload,
+  filessound,
+  filesphotoshop,
+  filesmissing,
+  fileslink,
+  filesindesign,
+  filesillustrator,
+  filesflash,
+  fileserrorfull,
+  filesdocument,
+  filesaftereffects,
+  files,
+  feedback,
+  faq,
+  eyefriendlier,
+  expand,
+  error,
+  emoji,
+  email,
+  edit,
+  dropdown,
+  downloaded,
+  download,
+  document,
+  desktop,
   cortana,
   copy,
   contactlist,
@@ -124,32 +178,22 @@ export default {
   composeextmenuitem,
   composeextensionunpin,
   composeextensionpin,
-  composeextensionbadge,
   compose,
   collapse,
   codesnippet,
   code,
-  closeendcall,
   closedcaption,
   close,
   chromeunmaximize,
   chromeminimize,
   chromemaximize,
-  chromeforward,
-  chromeback,
-  chevronsmright,
   chevronright,
   chevronmedright,
   chevronmedleft,
-  chevronleftsmall,
   chevronleft,
   chevrondown,
-  checksmall,
-  checked,
   checkboxunselected,
   checkboxselected,
-  checkbox,
-  check,
   chat,
   channelicon,
   changename,
@@ -161,7 +205,6 @@ export default {
   calltransfernotification,
   calltransfer,
   callswitchcamera,
-  callresume,
   callrecording,
   callpstnfull,
   callpstn,
@@ -183,16 +226,11 @@ export default {
   callincomingvideo,
   callhold,
   callend,
-  callemergency,
   calldialpad,
   callcontrolstoppresentingnew,
   callcontrolpresentnew,
-  callconsultation,
-  callchatoff,
-  callchat,
   callblocked,
   callaudio,
-  callalertfullbody,
   callalert,
   calladmitall,
   call,
