@@ -4,7 +4,7 @@ import { Button, Input, Header, Popup, popupFocusTrapBehavior } from '@stardust-
 const PopupFocusTrapExample = () => (
   <>
     <Popup
-      /** 'popupFocusTrapBehavior' adds focus trap ability to Popup. */
+      /** Provided behavior introduces focus trap to popup content. */
       accessibility={popupFocusTrapBehavior}
       trigger={<Button icon="expand" content="Trap focus on appearence" />}
       content={{
@@ -16,13 +16,14 @@ const PopupFocusTrapExample = () => (
         ),
       }}
     />
+
+    {/* Default Popup behavior doesn't introduce focus trap. */}
     <Popup
-      /** 'popupBehavior' is used as accessibility behavior by default for Popup. Focus is not trapped by default. */
       trigger={<Button icon="expand" content="Do not trap focus" />}
       content={{
         content: (
           <>
-            <Header as="h4">Focus is not trapped for this content</Header>
+            <Header as="h4">Focus is not trapped for this content.</Header>
             <Input icon="search" placeholder="Search..." />
           </>
         ),
