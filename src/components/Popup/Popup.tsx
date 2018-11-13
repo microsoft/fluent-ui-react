@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 import * as PropTypes from 'prop-types'
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
+
+import popupStateManager from './popupStateManager'
 
 import {
   childrenExist,
@@ -66,50 +68,35 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   public static Content = PopupContent
 
-  private stateManager = {
-    // framework agnostic actions
-    actions: {
-      open: manager => {
-        manager.setState({ open: true })
-      },
-      close: manager => {
-        manager.setState({ open: false })
-      },
-      toggle: manager => {
-        const state = manager.getState()
-
-        if (state.isOpen) {
-          manager.actions.close()
-        } else {
-          manager.actions.open()
-        }
-      },
+  // React bindings for autocontrolled component are introduced
+  private stateManager = popupStateManager.withBindings({
+    /* derives state from component */
+    getState: () => {
+      // AUTOCONTROLLED state logic
+      // note, sloppy implementation, but just to provide an idea:
+      // - 'state' that is seen by state manager could be composed from different data sources in the way necessary
+      //
+      // edge cases of null/undefined are not covered, but this is pretty easy implementation task
+      return { ...this.state, ...this.props }
     },
 
-    bindings: {
-      // here is where framework code goes, component's logic
-      getState: () => {
-        return { ...this.state, ...this.props } /* returns component's state */
-      },
+    /*
+    * AUTOCONTROLLED implementation for absolute state match.
+    * - acts like a filter for the state changes that should be applied
+    */
+    // -------------
+    // willSetState: ({ prevState, stateDiff, args, actionName }) => {
+    //   return excludeControlledProps(stateDiff, this.props)
+    // },
 
-      willSetState: (prevState, stateDiff) => {
-        // diif object could be filtered
-        // this logic should be a default for autocontrolled components
-        return stateDiff
-      },
-      setState: (stateDiff, prevState, newState, actionName, args) => {
-        const { forceChangeEvent, eventArgs } = args
+    setState: ({ stateDiff, prevState, newState, actionName, userArgs }) => {
+      const { eventArgs } = userArgs
 
-        if (stateDiff) {
-          this.setState(newState)
-        }
-
-        if (stateDiff || forceChangeEvent) {
-          _.invoke(this.props, 'onOpenChange', eventArgs, newState)
-        }
-      },
+      // although state doesn't precisely reflect autocontrolled 'state',
+      // the state of stateManager is always properly defined
+      this.setState(stateDiff, () => _.invoke(this.props, 'onOpenChange', eventArgs, newState))
     },
-  }
+  })
 
   public static propTypes = {
     /** Accessibility behavior if overridden by the user. */
@@ -179,32 +166,22 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
-      // this.trySetOpen(!this.state.open, e, true)
-      this.stateManager.actions.toggle(e)
+      this.stateManager.toggle({ eventArgs: e })
     },
     closeAndFocusTrigger: e => {
-      // this.closeAndFocusTrigger(e),
-      this.stateManager.actions.close(e)
-      _.invoke(this.triggerDomElement, 'focus')
-
-      // if (this.state.open) {
-      //   this.trySetOpen(false, e, true)
-      //   _.invoke(this.triggerDomElement, 'focus')
-      // }
+      this.closeAndFocusTrigger(e)
     },
   }
 
   private closeAndFocusTrigger = e => {
-    if (this.state.open) {
-      this.trySetOpen(false, e, true)
-      _.invoke(this.triggerDomElement, 'focus')
-    }
+    this.stateManager.close({ eventArgs: e })
+    _.invoke(this.triggerDomElement, 'focus')
   }
 
   private updateOutsideClickSubscription() {
     this.outsideClickSubscription.unsubscribe()
 
-    if (this.state.open) {
+    if (this.stateManager.getState().open) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe('click', e => {
           if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
@@ -220,7 +197,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public componentDidMount() {
     this.updateOutsideClickSubscription()
 
-    if (!this.state.open) {
+    if (!this.stateManager.getState().open) {
       this.popupDomElement = null
     }
   }
@@ -228,7 +205,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public componentDidUpdate() {
     this.updateOutsideClickSubscription()
 
-    if (!this.state.open) {
+    if (!this.stateManager.getState().open) {
       this.popupDomElement = null
     }
   }
@@ -244,7 +221,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       <>
         {this.renderTrigger(accessibility)}
 
-        {this.state.open &&
+        {this.stateManager.getState().open &&
           Popup.isBrowserContext &&
           popupContent &&
           createPortal(popupContent, document.body)}
@@ -264,9 +241,13 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
             this.triggerDomElement = domNode
           }}
         >
+          {/* HEADS UP, critical defect was introduced by element clone (not caused by proposed changes) -
+          with each new rendered element previous subscriptions are effectively 'wrapped' by new one.
+          Thus, amount of processing logic DOUBlES each time trigger component is rerendered!
+          Will introduce fix SHORTLY. */}
           {React.cloneElement(triggerElement, {
             onClick: e => {
-              this.trySetOpen(!this.state.open, e)
+              this.stateManager.toggle({ eventArgs: e })
               _.invoke(triggerElement, 'props.onClick', e)
             },
             ...accessibility.attributes.trigger,
@@ -318,11 +299,5 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         })}
       </Ref>
     )
-  }
-
-  private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
-    if (this.trySetState({ open: newValue }) || forceChangeEvent) {
-      _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
-    }
   }
 }
