@@ -46,7 +46,12 @@ class DocsBehaviorRoot extends React.Component<any, any> {
           {behaviorMenuItems
             .find(behavior => behavior.displayName === _.capitalize(match.params.name))
             .variations.map((variation, keyValue) => (
-              <Grid.Row key={keyValue} className="docs-example" style={exampleStyle}>
+              <Grid.Row
+                key={keyValue}
+                className="docs-example"
+                id={_.kebabCase(variation.name)}
+                style={exampleStyle}
+              >
                 <Grid.Column
                   width={16}
                   style={{ borderBottom: '1px solid #ddd', padding: '0 0 0 1em' }}
