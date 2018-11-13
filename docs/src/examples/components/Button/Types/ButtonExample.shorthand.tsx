@@ -9,12 +9,17 @@ import {
 } from '@stardust-ui/react'
 
 const ButtonExample = () => (
+  // this Provider defines styles for custom components
+  // - component name is intuitively used as a selector
   <Provider
     theme={{
       componentStyles: {
+        // styles for MyButton custom component
         MyButton: {
           root: { border: '1px solid red' },
         },
+
+        // styles for MyAccessibleButton custom component
         MyAccessibleButton: {
           root: { border: '1px solid blue' },
         },
