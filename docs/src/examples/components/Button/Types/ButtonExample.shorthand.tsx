@@ -30,7 +30,8 @@ const ButtonExample = () => (
       <div>
         <MyButton />
 
-        {/* 'accessibility' option for connect() could be introduced for that */}
+        {/* 'accessibility' option for connect() could be introduced,
+        so that it won't be necessary to define attribute here. */}
         <MyAccessibleButton accessibility={buttonBehavior} disabled>
           I have aria-disabled=true
         </MyAccessibleButton>
