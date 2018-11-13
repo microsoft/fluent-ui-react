@@ -145,7 +145,7 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
 
   renderItems = (variables: ComponentVariablesObject) => {
     const { iconOnly, items, pills, pointing, renderItem, type, underlined, vertical } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex, submenuOpen } = this.state
 
     return _.map(items, (item, index) =>
       MenuItem.create(item, {
@@ -159,7 +159,10 @@ class Menu extends AutoControlledComponent<Extendable<IMenuProps>, any> {
           vertical,
           index,
           active: parseInt(activeIndex, 10) === index,
-          submenuOpen: this.state.activeIndex === index ? this.state.submenuOpen : false,
+          ...(activeIndex === index && { submenuOpen }),
+          ...(item.menu && {
+            styles: { position: 'relative' },
+          }),
         },
         overrideProps: this.handleItemOverrides,
         render: renderItem,

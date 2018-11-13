@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu, Provider } from '@stardust-ui/react'
 
 const items = [
   {
@@ -38,6 +38,20 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleWithSubMenu = () => <Menu defaultActiveIndex={0} items={items} />
+const MenuExampleWithSubMenu = () => (
+  <Provider
+    theme={{
+      componentStyles: {
+        Menu: {
+          root: {
+            zIndex: 1000,
+          },
+        },
+      },
+    }}
+  >
+    <Menu defaultActiveIndex={0} items={items} />
+  </Provider>
+)
 
 export default MenuExampleWithSubMenu

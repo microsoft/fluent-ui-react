@@ -6,7 +6,7 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon'
 import Menu from '../Menu'
-import Popup from '../Popup'
+// import Provider from '../Provider'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
@@ -146,7 +146,7 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, menu, submenuOpen, vertical, type } = this.props
+    const { children } = this.props
 
     return (
       <ElementType
@@ -155,48 +155,45 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, IMenuItemState> {
         {...accessibility.keyHandlers.root}
         {...rest}
       >
-        {childrenExist(children) ? (
-          children
-        ) : !menu ? (
-          this.renderMenuItem(accessibility, classes)
-        ) : (
-          <Popup
-            open={submenuOpen}
-            align={vertical ? 'top' : 'start'}
-            position={vertical ? 'after' : 'below'}
-            content={{
-              content: <Menu items={menu.items} vertical type={type} />,
-              styles: {
-                padding: '0px',
-                border: '',
-              },
-            }}
-            // content={<Menu items={menu.items} type={type} vertical/>}
-          >
-            {this.renderMenuItem(accessibility, classes)}
-          </Popup>
-        )}
+        {childrenExist(children) ? children : this.renderMenuItem(accessibility, classes)}
       </ElementType>
     )
   }
   private renderMenuItem = (accessibility, classes) => {
-    const { content, icon, renderIcon } = this.props
+    const { content, icon, renderIcon, menu, type, vertical, submenuOpen } = this.props
     return (
-      <a
-        className={cx('ui-menu__item__anchor', classes.anchor)}
-        onClick={this.handleClick}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        {...accessibility.attributes.anchor}
-        {...accessibility.keyHandlers.anchor}
-      >
-        {icon &&
-          Icon.create(this.props.icon, {
-            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-            render: renderIcon,
-          })}
-        {content}
-      </a>
+      <>
+        <a
+          className={cx('ui-menu__item__anchor', classes.anchor)}
+          onClick={this.handleClick}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          {...accessibility.attributes.anchor}
+          {...accessibility.keyHandlers.anchor}
+        >
+          {icon &&
+            Icon.create(this.props.icon, {
+              defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              render: renderIcon,
+            })}
+          {content}
+        </a>
+        {menu && submenuOpen ? (
+          <Menu
+            accessibility={null}
+            items={menu.items}
+            vertical
+            type={type}
+            styles={{
+              // background: 'white',
+              // zIndex: '1000',
+              position: 'absolute',
+              top: vertical ? '0' : '100%',
+              left: vertical ? '100%' : '0',
+            }}
+          />
+        ) : null}
+      </>
     )
   }
   protected actionHandlers: AccessibilityActionHandlers = {

@@ -24,7 +24,7 @@ export interface IMenuVariables {
 export default (siteVars: any): IMenuVariables => {
   return {
     defaultColor: siteVars.gray02,
-    defaultBackgroundColor: 'transparent',
+    defaultBackgroundColor: '#FFF',
 
     defaultActiveColor: siteVars.black,
     defaultActiveBackgroundColor: siteVars.gray10,
