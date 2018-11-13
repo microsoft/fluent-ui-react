@@ -16,7 +16,14 @@ const ButtonExample = () => (
       componentStyles: {
         // styles for MyClickableButton custom component
         MyClickableButton: {
-          root: { margin: '0 15px 15px 0' },
+          root: {
+            marginRight: '15px',
+            padding: '10px 15px',
+            ':hover': {
+              backgroundColor: 'red',
+              color: 'white',
+            },
+          },
         },
 
         // styles for MyAccessibleButton custom component
@@ -40,7 +47,7 @@ const ButtonExample = () => (
         {/* - provided acc behavior adds necessary attributes to custom component */}
         {/* - 'accessibility' option for connect() could be introduced, so that it won't be necessary to define attribute here. */}
         <MyAccessibleButton disabled accessibility={buttonBehavior}>
-          I am disabled and have 'aria-disabled'=true
+          I am disabled, have 'role' and 'aria-disabled'
         </MyAccessibleButton>
       </div>
 
