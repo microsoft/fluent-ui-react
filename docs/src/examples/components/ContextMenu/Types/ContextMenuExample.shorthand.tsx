@@ -1,120 +1,28 @@
 import React from 'react'
-import { Avatar, ContextMenu, Icon } from '@stardust-ui/react'
+import { ContextMenu } from '@stardust-ui/react'
 
 const items = [
   {
-    key: 'menuItem0',
-    header: 'John Doe',
-    content: 'Saved on 10/5/2018',
-    media: <Avatar image="public/images/avatar/small/elliot.jpg" />,
-  },
-  {
-    key: 'menuItem1',
-    media: <Icon name="align justify" />,
-    header: 'Show in channel',
-    onClick: () => {
-      alert('ListItem callback invoked..')
-    },
-  },
-  {
-    key: 'menuItem2',
-    media: <Icon name="edit" />,
-    header: 'Edit',
-  },
-  {
-    key: 'menuItem3',
-    media: <Icon name="file word" />,
-    header: 'Open in Word',
-  },
-  {
-    key: 'menuItem4',
-    media: <Icon name="search" />,
-    header: 'Get link',
-  },
-  {
-    key: 'menuItem5',
-    media: <Icon name="plus" />,
-    header: 'Add to...',
-    headerMedia: <Icon name="arrow right" />,
+    key: 'show',
+    content: 'Show in channel',
+    icon: 'search',
+    divider: true,
     menu: {
       items: [
+        { key: '1', content: 'item1' },
         {
-          key: 'subItem0',
-          header: 'Click for callback',
-        },
-        {
-          key: 'subItem1',
-          header: 'Click for callback',
+          key: '2',
+          content: 'item2',
+          menu: { items: [{ key: '1', content: 'item1' }, { key: '2', content: 'item2' }] },
         },
       ],
     },
   },
-  {
-    key: 'menuItem6',
-    media: <Icon name="bookmark" />,
-    header: 'Move to collection',
-    headerMedia: <Icon name="arrow right" />,
-    menu: {
-      items: [
-        {
-          key: 'subItem0',
-          header: 'Open Submenu 1.1',
-          menu: {
-            items: [
-              {
-                key: 'subItem0',
-                header: 'Click for callback',
-              },
-              {
-                key: 'subItem1',
-                header: 'Click for callback',
-              },
-            ],
-          },
-        },
-        {
-          key: 'subItem1',
-          header: 'Click for callback',
-        },
-      ],
-    },
-  },
-  {
-    key: 'menuItem7',
-    media: <Icon name="copy" />,
-    header: 'Copy to collection',
-    headerMedia: <Icon name="arrow right" />,
-    menu: {
-      items: [
-        {
-          key: 'subItem0',
-          header: 'Click for callback',
-        },
-        {
-          key: 'subItem1',
-          header: 'Click for callback',
-        },
-      ],
-    },
-  },
-  {
-    key: 'menuItem8',
-    media: <Icon name="delete" />,
-    header: 'Remove',
-    headerMedia: <Icon name="arrow right" />,
-    menu: {
-      items: [
-        {
-          key: 'subItem0',
-          header: 'Click for callback',
-        },
-        {
-          key: 'subItem1',
-          header: 'Click for callback',
-        },
-      ],
-    },
-  },
+  { key: 'move', content: 'Move to collection', icon: 'arrow right' },
+  { key: 'copy', content: 'Copy to collection', icon: 'copy' },
+  { key: 'remove', content: 'Remove', icon: 'delete', divider: true },
+  { key: 'edit', content: 'Edit', icon: 'edit' },
+  { key: 'getlink', content: 'Get link', icon: 'file' },
 ]
 
 const callback = () => {

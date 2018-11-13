@@ -5,8 +5,9 @@ import ReactNode = React.ReactNode
 import { UIComponent, customPropTypes, IRenderResultConfig } from '../../lib'
 import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import { Extendable } from '../../../types/utils'
-import List, { ListItem } from '../List'
-import Popup from '../Popup'
+import Menu, { MenuItem } from '../Menu'
+// import List, { ListItem } from '../List'
+// import Popup from '../Popup'
 export interface IContextMenuProps {
   as?: any
   className?: string
@@ -51,37 +52,31 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
   renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
     return (
       <ElementType className={classes.root} {...rest}>
-        {this.renderItems()}
+        {this.renderItems1()}
       </ElementType>
     )
   }
 
-  renderItems = () => {
-    const { items, onItemClick } = this.props
-    const children = _.map(items, item => {
-      const itemProps = _.pick(this.props, List.itemProps)
-      itemProps.selection = true
-      if (item.menu !== undefined) {
-        return (
-          <Popup
-            align="top"
-            position="after"
-            content={{
-              content: <ContextMenu items={item.menu.items} onItemClick={onItemClick} />,
+  renderItems1 = () => {
+    const { items } = this.props
+    return (
+      <Menu vertical>
+        {_.map(items, (item, index) =>
+          MenuItem.create(item, {
+            defaultProps: {
+              index,
               styles: {
-                padding: '0px',
+                color: 'rgba(37,36,36,0.75)',
+                fontFamily: 'Segoe UI',
+                ...(item.divider && {
+                  borderBottom: '2px solid #F3F2F1',
+                }),
               },
-            }}
-            // content={<ContextMenu items={item.menu.items} onItemClick={onItemClick} />}
-          >
-            {ListItem.create(item, { defaultProps: itemProps })}
-          </Popup>
-        )
-      }
-      itemProps.onClick = onItemClick
-      return ListItem.create(item, { defaultProps: itemProps })
-    })
-    return <List selection={true}>{children}</List>
+            },
+          }),
+        )}
+      </Menu>
+    )
   }
 }
 

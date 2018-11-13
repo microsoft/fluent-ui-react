@@ -7,7 +7,7 @@ export interface IContextMenuVariables {
 
 export default (): IContextMenuVariables => ({
   height: '100%',
-  width: '220px',
+  width: '100%',
   padding: '0',
-  border: '1px solid #eeeeee',
+  // border: '1px solid #eeeeee',
 })
