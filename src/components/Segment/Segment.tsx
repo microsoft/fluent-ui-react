@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
 import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import Slot from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 
 export interface SegmentProps {
   as?: any
@@ -35,7 +35,7 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
     color: PropTypes.string,
 
     /** Shorthand for primary content. */
-    content: PropTypes.contentShorthand,
+    content: customPropTypes.itemShorthand,
 
     /** A segment can have its colors inverted for contrast. */
     inverted: PropTypes.bool,
@@ -64,7 +64,7 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : Slot.create(content, { render: renderContent })}
+        {childrenExist(children) ? children : createSlot(content, { render: renderContent })}
       </ElementType>
     )
   }

@@ -1,14 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import {
-  customPropTypes,
-  UIComponent,
-  childrenExist,
-  RenderResultConfig,
-  createShorthand,
-} from '../../lib'
-import { Extendable, MapValueToProps, Props } from '../../../types/utils'
+import { customPropTypes, childrenExist, createShorthand } from '../../lib'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import createComponent from '../../lib/createComponent'
+import { MapValueToProps, Props } from 'types/utils'
 
 export interface SlotProps {
   as?: any
@@ -18,23 +13,15 @@ export interface SlotProps {
   variables?: ComponentVariablesInput
 }
 
-export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
-  val,
-  options: Props = {},
-) => {
-  options.defaultProps = { as, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps, val, options)
-}
-
 /**
  * A Slot is a basic component (no default styles)
  */
-class Slot extends UIComponent<Extendable<SlotProps>, any> {
-  static className = 'ui-slot'
+const Slot = createComponent<SlotProps>({
+  displayName: 'Slot',
 
-  static displayName = 'Slot'
+  className: 'ui-slot',
 
-  static propTypes = {
+  propTypes: {
     /** An element type to render as (string or function). */
     as: customPropTypes.as,
 
@@ -49,16 +36,9 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
 
     /** Override for theme site variables to allow modifications of component styling via themes. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  }
+  },
 
-  static defaultProps = {
-    as: 'div',
-  }
-
-  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-  static createHTMLInput = createSlotFactory('input', type => ({ type }))
-
-  renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
+  render({ ElementType, classes, rest }) {
     const { children, content } = this.props
 
     return (
@@ -66,7 +46,18 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
         {childrenExist(children) ? children : content}
       </ElementType>
     )
-  }
+  },
+})
+
+const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
+  val,
+  options: Props = {},
+) => {
+  options.defaultProps = { as, ...options.defaultProps }
+  return createShorthand(Slot, mapValueToProps, val, options)
 }
+
+export const createSlot = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+export const createHTMLInput = createSlotFactory('input', type => ({ type }))
 
 export default Slot
