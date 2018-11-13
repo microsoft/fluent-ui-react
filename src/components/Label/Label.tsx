@@ -201,6 +201,6 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory(Label, content => ({ content }))
+Label.create = createShorthandFactory(Label, 'content')
 
 export default Label

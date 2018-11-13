@@ -1,13 +1,10 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
-import {
-  MapValueToProps,
-  ShorthandPrimitive,
-  ShorthandRenderFunction,
-  ShorthandValue,
-  Props,
-} from '../../types/utils'
+import { ShorthandRenderFunction, ShorthandValue, Props, ObjectOf } from '../../types/utils'
+
+type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
+type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
   /** Override the default render implementation. */
@@ -29,6 +26,15 @@ const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   generateKey: true,
 }
 
+const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
+  div: 'children',
+  iframe: 'src',
+  img: 'src',
+  input: 'type',
+  label: 'children',
+  p: 'children',
+}
+
 // ============================================================
 // Factories
 // ============================================================
@@ -36,7 +42,7 @@ const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
 /** A more robust React.createElement. It can create elements from primitive values. */
 export function createShorthand(
   Component: React.ReactType,
-  mapValueToProps: MapValueToProps,
+  mappedProp: string,
   value?: ShorthandValue,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ): React.ReactElement<Props> | null | undefined {
@@ -77,7 +83,6 @@ export function createShorthand(
   const usersProps =
     (valIsReactElement && (value as React.ReactElement<Props>).props) ||
     (valIsPropsObject && (value as Props)) ||
-    (valIsPrimitive && mapValueToProps(value as ShorthandPrimitive)) ||
     {}
 
   // Override props
@@ -87,8 +92,17 @@ export function createShorthand(
       ? (overrideProps as Function)({ ...defaultProps, ...usersProps })
       : overrideProps || {}
 
+  // mapped props for primitive values
+  const primitiveProps: ObjectOf<any> = valIsPrimitive
+    ? {
+        [mappedProps[overrideProps.as || usersProps.as || defaultProps.as] ||
+        mappedProp ||
+        'children']: value,
+      }
+    : {}
+
   // Merge props
-  const props = { ...defaultProps, ...usersProps, ...overrideProps }
+  const props = { ...defaultProps, ...primitiveProps, ...usersProps, ...overrideProps }
 
   // Merge className
   if (defaultProps.className || overrideProps.className || usersProps.className) {
@@ -144,19 +158,14 @@ export function createShorthand(
 // ============================================================
 
 /**
- * Creates a `createShorthand` function that is waiting for a value and options.
- *
  * @param {React.ReactType} Component A ReactClass or string
- * @param {MapValueToProps} mapValueToProps A function that maps a primitive value to the Component props
+ * @param {string} mappedProp A function that maps a primitive value to the Component props
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory(
-  Component: React.ReactType,
-  mapValueToProps?: MapValueToProps,
-) {
+export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
-  return (val, options) => createShorthand(Component, mapValueToProps, val, options)
+  return (val, options) => createShorthand(Component, mappedProp, val, options)
 }

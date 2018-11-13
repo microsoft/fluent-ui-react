@@ -225,7 +225,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   }
 }
 
-ItemLayout.create = createShorthandFactory(ItemLayout, main => ({ main }))
+ItemLayout.create = createShorthandFactory(ItemLayout, 'main')
 
 export default ItemLayout
 

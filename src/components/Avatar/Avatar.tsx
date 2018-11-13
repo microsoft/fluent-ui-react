@@ -158,7 +158,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   }
 }
 
-Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
+Avatar.create = createShorthandFactory(Avatar, 'name')
 
 export default Avatar
 

@@ -77,7 +77,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory(Divider, content => ({ content }))
+Divider.create = createShorthandFactory(Divider, 'content')
 
 export default Divider
 

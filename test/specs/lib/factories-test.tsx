@@ -1,7 +1,8 @@
+import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import * as React from 'react'
 import { createShorthand, createShorthandFactory } from 'src/lib'
+import { Props, ShorthandValue } from 'types/utils'
 import { consoleUtil } from 'test/utils'
 
 // ----------------------------------------
@@ -13,13 +14,21 @@ import { consoleUtil } from 'test/utils'
 const getShorthand = ({
   Component = 'div',
   defaultProps,
-  mapValueToProps = () => ({}),
+  mappedProp = '',
   overrideProps,
   generateKey,
   value,
   render,
-}: any) =>
-  createShorthand(Component, mapValueToProps, value, {
+}: {
+  Component?: React.ReactType
+  defaultProps?: Props
+  mappedProp?: string
+  overrideProps?: Props & ((props: Props) => Props) | Props
+  generateKey?: boolean
+  value?: ShorthandValue
+  render?: any
+}) =>
+  createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
     generateKey,
@@ -60,12 +69,10 @@ const itAppliesDefaultProps = value => {
 
 const itDoesNotIncludePropsFromMapValueToProps = value => {
   test('does not include props from mapValueToProps', () => {
-    const props = { 'data-foo': 'foo' }
-    const wrapper = shallow(getShorthand({ value, mapValueToProps: () => props }))
+    const mappedProp = 'data-foo'
+    const wrapper = shallow(getShorthand({ value, mappedProp }))
 
-    _.each(props, (val, key) => {
-      expect(wrapper.props()).not.toHaveProperty(key, val)
-    })
+    expect(wrapper.prop(mappedProp)).not.toBeDefined()
   })
 }
 
@@ -118,13 +125,13 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, () => ({}))
+      const goodUsage = () => createShorthandFactory(() => <div />, '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthandFactory('div', () => ({}))
+      const goodUsage = () => createShorthandFactory('div', '')
 
       expect(goodUsage).not.toThrowError()
     })
@@ -134,7 +141,7 @@ describe('factories', () => {
       const badComponents = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthandFactory(badComponent, () => ({}))
+        const badUsage = () => createShorthandFactory(badComponent, '')
 
         expect(badUsage).toThrowError()
       })
@@ -147,13 +154,13 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthand(() => <div />, () => ({}))
+      const goodUsage = () => createShorthand(() => <div />, '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthand('div', () => ({}))
+      const goodUsage = () => createShorthand('div', '')
 
       expect(goodUsage).not.toThrowError()
     })
@@ -163,7 +170,7 @@ describe('factories', () => {
       const badComponents = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthand(badComponent, () => ({}))
+        const badUsage = () => createShorthand(badComponent, '')
 
         expect(badUsage).toThrowError()
       })
@@ -184,7 +191,7 @@ describe('factories', () => {
         getShorthand({
           value: 'hi',
           Component: 'p',
-          mapValueToProps: children => ({ children }),
+          mappedProp: 'children',
           render: spy,
         })
 
@@ -391,10 +398,10 @@ describe('factories', () => {
         const defaultProps = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
         const value = 'foo'
-        const mapValueToProps = val => ({ 'data-mapped': val })
+        const mappedProp = 'data-mapped'
 
-        shallow(getShorthand({ defaultProps, mapValueToProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...mapValueToProps(value) })
+        shallow(getShorthand({ defaultProps, mappedProp, overrideProps, value }))
+        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...{ [mappedProp]: value } })
       })
     })
 

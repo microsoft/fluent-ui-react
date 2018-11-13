@@ -5,9 +5,9 @@ import {
   UIComponent,
   childrenExist,
   RenderResultConfig,
-  createShorthand,
+  createShorthandFactory,
 } from '../../lib'
-import { Extendable, MapValueToProps, Props } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 
 export interface SlotProps {
@@ -16,31 +16,6 @@ export interface SlotProps {
   content?: any
   styles?: ComponentSlotStyle<SlotProps, any>
   variables?: ComponentVariablesInput
-}
-
-type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
-type ShorthandProp = 'children' | 'src' | 'type' | 'content'
-
-const htmlFactoryMapping: Map<HTMLTag, ShorthandProp> = new Map([
-  ['div', 'children'],
-  ['iframe', 'src'],
-  ['img', 'src'],
-  ['input', 'type'],
-  ['label', 'children'],
-  ['p', 'children'],
-] as [HTMLTag, ShorthandProp][])
-
-const getMapValueFn = (propType: HTMLTag) => {
-  const mappedProp = htmlFactoryMapping.get(propType) || 'content'
-  return (value: string) => ({ [mappedProp]: value })
-}
-
-export const createSlotFactory = (
-  asProp: React.ReactType | HTMLTag,
-  mapValueToProps?: MapValueToProps,
-) => (val, options: Props = {}) => {
-  options.defaultProps = { as: asProp, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps || getMapValueFn(asProp as HTMLTag), val, options)
 }
 
 /**
@@ -72,7 +47,8 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
     as: 'div',
   }
 
-  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+  static createHTMLElement: Function
+  static create: Function
 
   renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
     const { children, content } = this.props
@@ -84,5 +60,8 @@ class Slot extends UIComponent<Extendable<SlotProps>, any> {
     )
   }
 }
+
+Slot.createHTMLElement = createShorthandFactory(Slot)
+Slot.create = createShorthandFactory(Slot, 'content')
 
 export default Slot

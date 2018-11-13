@@ -30,9 +30,7 @@ export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: 
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandPrimitive = string | number
 export type ShorthandValue = React.ReactNode | Props
-export type MapValueToProps = (value: ShorthandPrimitive) => Props
 export type ShorthandRenderFunction = (
   Component: React.ReactType,
   props: Props,

@@ -88,6 +88,6 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   }
 }
 
-ChatItem.create = createShorthandFactory(ChatItem, content => ({ content }))
+ChatItem.create = createShorthandFactory(ChatItem, 'content')
 
 export default ChatItem

@@ -183,6 +183,6 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory(FormField, label => ({ label }))
+FormField.create = createShorthandFactory(FormField, 'label')
 
 export default FormField

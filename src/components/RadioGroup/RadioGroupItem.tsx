@@ -216,6 +216,6 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 }
 
-RadioGroupItem.create = createShorthandFactory(RadioGroupItem, () => ({}))
+RadioGroupItem.create = createShorthandFactory(RadioGroupItem)
 
 export default RadioGroupItem

@@ -61,6 +61,6 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
   }
 }
 
-HeaderDescription.create = createShorthandFactory(HeaderDescription, content => ({ content }))
+HeaderDescription.create = createShorthandFactory(HeaderDescription, 'content')
 
 export default HeaderDescription

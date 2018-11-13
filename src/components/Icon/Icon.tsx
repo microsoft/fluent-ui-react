@@ -123,6 +123,6 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory(Icon, name => ({ name }))
+Icon.create = createShorthandFactory(Icon, 'name')
 
 export default Icon

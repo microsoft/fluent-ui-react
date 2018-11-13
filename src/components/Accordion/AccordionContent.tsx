@@ -62,6 +62,6 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
   }
 }
 
-AccordionContent.create = createShorthandFactory(AccordionContent, content => ({ content }))
+AccordionContent.create = createShorthandFactory(AccordionContent, 'content')
 
 export default AccordionContent

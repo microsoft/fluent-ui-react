@@ -73,6 +73,6 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   }
 }
 
-Image.create = createShorthandFactory(Image, src => ({ src }))
+Image.create = createShorthandFactory(Image, 'src')
 
 export default Image

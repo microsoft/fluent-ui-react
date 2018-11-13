@@ -239,6 +239,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
+ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 
 export default ChatMessage

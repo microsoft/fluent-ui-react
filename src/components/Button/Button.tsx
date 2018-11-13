@@ -204,6 +204,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 }
 
-Button.create = createShorthandFactory(Button, content => ({ content }))
+Button.create = createShorthandFactory(Button, 'content')
 
 export default Button

@@ -8,7 +8,7 @@ import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
-import { createSlotFactory } from '../Slot/Slot'
+import Slot from '../Slot/Slot'
 
 export type AttachmentProps = {
   action?: ShorthandValue
@@ -163,7 +163,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          createSlotFactory('div')(progress, {
+          Slot.createHTMLElement('', {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}
@@ -172,6 +172,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, header => ({ header }))
+Attachment.create = createShorthandFactory(Attachment, 'header')
 
 export default Attachment

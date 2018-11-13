@@ -98,6 +98,6 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, content => ({ content }))
+Text.create = createShorthandFactory(Text, 'content')
 
 export default Text

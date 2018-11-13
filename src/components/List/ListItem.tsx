@@ -134,6 +134,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   }
 }
 
-ListItem.create = createShorthandFactory(ListItem, main => ({ main }))
+ListItem.create = createShorthandFactory(ListItem, 'main')
 
 export default ListItem

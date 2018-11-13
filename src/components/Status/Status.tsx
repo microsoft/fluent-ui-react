@@ -87,7 +87,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory(Status, state => ({ state }))
+Status.create = createShorthandFactory(Status, 'state')
 
 export default Status
 export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

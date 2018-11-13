@@ -118,3 +118,4 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { default as Slot } from './components/Slot/Slot'
