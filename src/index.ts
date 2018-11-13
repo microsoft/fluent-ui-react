@@ -17,6 +17,10 @@ export { default as Attachment, AttachmentProps } from './components/Attachment/
 export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
 
 export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
+
+export { default as MyButton } from './components/Button/MyButton'
+export { default as MyAccessibleButton } from './components/Button/MyAccessibleButton'
+
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
@@ -96,6 +100,8 @@ export { default as Text, TextProps } from './components/Text/Text'
 // Accessibility
 //
 export * from './lib/accessibility/types'
+
+export { default as buttonBehavior } from './lib/accessibility/Behaviors/Button/buttonBehavior'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
@@ -118,3 +124,5 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+
+export { connect } from './lib'

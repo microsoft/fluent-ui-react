@@ -124,13 +124,17 @@ const renderComponent = <P extends {}>(
   const {
     className,
     defaultProps,
-    displayName,
+    displayName: nonNormalizedDisplayName,
     handledProps,
     props,
     state,
     actionHandlers,
     focusZoneRef,
   } = config
+
+  // maps name of wrappers for custom components to original plain component names
+  // - 'Stardust.ComponentName' -> 'ComponentName'
+  const displayName = nonNormalizedDisplayName.replace(/^(Stardust\.)/, '')
 
   return (
     <FelaTheme
