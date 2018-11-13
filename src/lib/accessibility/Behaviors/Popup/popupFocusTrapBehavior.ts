@@ -7,7 +7,7 @@ import * as _ from 'lodash'
  * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
- * Traps focus inside component and by default allowing click outside this component.
+ * Traps focus inside component.
  */
 const popupFocusTrapBehavior: Accessibility = (props: any) => ({
   ...popupBehavior(props),
