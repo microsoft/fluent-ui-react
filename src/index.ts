@@ -18,8 +18,8 @@ export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './compo
 
 export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
 
-export { default as MyButton } from './components/Button/MyButton'
-export { default as MyAccessibleButton } from './components/Button/MyAccessibleButton'
+export { default as MyClickableButton } from './custom/Button/MyClickableButton'
+export { default as MyAccessibleButton } from './custom/Button/MyAccessibleButton'
 
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 

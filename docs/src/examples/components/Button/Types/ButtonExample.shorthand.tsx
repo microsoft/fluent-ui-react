@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Provider,
   Button,
-  MyButton,
+  MyClickableButton,
   MyAccessibleButton,
   buttonBehavior,
   Divider,
@@ -14,32 +14,38 @@ const ButtonExample = () => (
   <Provider
     theme={{
       componentStyles: {
-        // styles for MyButton custom component
-        MyButton: {
-          root: { border: '1px solid red' },
+        // styles for MyClickableButton custom component
+        MyClickableButton: {
+          root: { margin: '0 15px 15px 0' },
         },
 
         // styles for MyAccessibleButton custom component
         MyAccessibleButton: {
-          root: { border: '1px solid blue' },
+          root: { border: '1px solid grey' },
         },
       },
     }}
   >
     <>
-      <div>
-        <MyButton />
+      <Divider>Custom components</Divider>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
+        <MyClickableButton
+          onClick={() =>
+            alert('Originally I was clickable - if you see this message, then I still am :)')
+          }
+        >
+          Click me!
+        </MyClickableButton>
 
-        {/* 'accessibility' option for connect() could be introduced,
-        so that it won't be necessary to define attribute here. */}
-        <MyAccessibleButton accessibility={buttonBehavior} disabled>
-          I have aria-disabled=true
+        {/* - provided acc behavior adds necessary attributes to custom component */}
+        {/* - 'accessibility' option for connect() could be introduced, so that it won't be necessary to define attribute here. */}
+        <MyAccessibleButton disabled accessibility={buttonBehavior}>
+          I am disabled and have 'aria-disabled'=true
         </MyAccessibleButton>
       </div>
 
-      <Divider />
-
-      <div>
+      <Divider>First-class components</Divider>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Button content="Click here" />
         <Button content="See how this very long text shows up on the button" />
       </div>

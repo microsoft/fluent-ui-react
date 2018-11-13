@@ -1,17 +1,19 @@
 import * as React from 'react'
-import { connect } from 'src/lib'
+import { connect } from '../../lib'
 
 // -------------------------------
 // CLASS component example
 // - note that this could be any component that client was previously working on,
 // - and now it is just function call away from collecting Stardust styles, accessibility and other bits
+//
+// - this original component cares about 'disabled' attribute for button, but hasn't any further accessibility support
 //  -------------------------------
 class MyAccessibleButton extends React.Component<any, any> {
   render() {
-    const { classes, accessibility, children } = this.props
+    const { classes, accessibility, children, disabled } = this.props
 
     return (
-      <button className={classes.root} {...accessibility.attributes.root}>
+      <button disabled={disabled} className={classes.root} {...accessibility.attributes.root}>
         {children}
       </button>
     )
