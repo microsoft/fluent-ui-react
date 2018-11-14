@@ -8,6 +8,7 @@ import {
   ShorthandValue,
   Props,
 } from '../../types/utils'
+import { mergeStyles } from './mergeThemes'
 
 interface CreateShorthandOptions {
   /** Override the default render implementation. */
@@ -106,7 +107,7 @@ export function createShorthand(
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
   }
 
   // ----------------------------------------

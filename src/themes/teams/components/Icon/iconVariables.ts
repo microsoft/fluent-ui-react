@@ -1,11 +1,12 @@
 import { pxToRem } from '../../../../lib'
 
 export interface IconVariables {
-  [key: string]: string | number | undefined
+  [key: string]: string | number | boolean | undefined
 
   redColor?: string
   brandColor?: string
 
+  outline?: boolean
   color?: string
   backgroundColor?: string
   borderColor?: string
@@ -16,11 +17,12 @@ export interface IconVariables {
 }
 
 export default (siteVars): IconVariables => ({
+  outline: undefined,
   color: undefined,
   backgroundColor: undefined,
   borderColor: undefined,
   horizontalSpace: pxToRem(10),
-  margin: '0 0.25em 0 0',
+  margin: `0 ${pxToRem(8)} 0 0`,
   secondaryColor: siteVars.white,
   disabledColor: siteVars.gray06,
 

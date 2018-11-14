@@ -1,23 +1,28 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import ReactNode = React.ReactNode
 
-export interface GridProps {
-  as?: any
+export interface GridProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   * */
   accessibility?: Accessibility
-  className?: string
-  children?: ReactChildren
+
+  /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   columns?: string | number
+
+  /** Shorthand for primary content. */
   content?: ShorthandValue | ShorthandValue[]
+
+  /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   rows?: string | number
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -31,22 +36,10 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static className = 'ui-grid'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    accessibility: PropTypes.func,
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** Shorthand for primary content. */
     content: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([
@@ -54,18 +47,7 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
         customPropTypes.itemShorthand,
       ]),
     ]),
-
-    /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.func,
   }
 
   public static defaultProps: GridProps = {
