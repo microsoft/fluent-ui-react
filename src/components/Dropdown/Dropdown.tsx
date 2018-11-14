@@ -2,10 +2,23 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentSlotStyle } from '../../themes/types'
-import Downshift, { DownshiftState, StateChangeOptions, A11yStatusMessageOptions } from 'downshift'
+import {
+  ComponentSlotStyle,
+  ComponentSlotStylesInput,
+  ComponentVariablesInput,
+} from '../../themes/types'
+import Downshift, {
+  DownshiftState,
+  StateChangeOptions,
+  A11yStatusMessageOptions,
+  GetMenuPropsOptions,
+  GetPropsCommonOptions,
+  GetInputPropsOptions,
+  GetToggleButtonPropsOptions,
+  GetItemPropsOptions,
+} from 'downshift'
 import Label from '../Label/Label'
-import { AutoControlledComponent, customPropTypes } from '../../lib'
+import { AutoControlledComponent, customPropTypes, RenderResultConfig } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -158,11 +171,16 @@ export default class Dropdown extends AutoControlledComponent<
     value: this.props.multiple ? [] : null,
   }
 
-  public renderComponent({ ElementType, classes, styles, variables }): React.ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    styles,
+    variables,
+  }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
-    // in multiple dropdown, we hold active values in the array, and default active is null.
     const optionalDownshiftProps = {
+      // in multiple dropdown, we hold active values in the array, and default active is null.
       ...(multiple && { selectedItem: null }),
       ...(getA11yStatusMessage && { getA11yStatusMessage }),
     }
@@ -193,7 +211,7 @@ export default class Dropdown extends AutoControlledComponent<
                 className={classes.containerDiv}
                 onClick={this.onContainerClick.bind(this, isOpen)}
               >
-                <span aria-live="assertive" style={styles.ariaLiveSpan}>
+                <span aria-live="assertive" className={classes.ariaLiveSpan}>
                   {this.state.message}
                 </span>
                 {multiple && this.renderActiveValues(styles)}
@@ -224,12 +242,16 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderInput(
-    styles,
-    variables,
-    getRootProps,
-    getInputProps,
-    highlightedIndex,
-    selectItemAtIndex,
+    styles: ComponentSlotStylesInput,
+    variables: ComponentVariablesInput,
+    getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    getInputProps: (options?: GetInputPropsOptions) => any,
+    highlightedIndex: number,
+    selectItemAtIndex: (
+      index: number,
+      otherStateToSet?: Partial<StateChangeOptions<any>>,
+      cb?: () => void,
+    ) => void,
   ): JSX.Element {
     const { multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
@@ -258,7 +280,11 @@ export default class Dropdown extends AutoControlledComponent<
     )
   }
 
-  private renderToggleButton(getToggleButtonProps, styles, isOpen) {
+  private renderToggleButton(
+    getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
+    styles: ComponentSlotStylesInput,
+    isOpen: boolean,
+  ) {
     return (
       <Icon
         name={`chevron ${isOpen ? 'up' : 'down'}`}
@@ -270,7 +296,14 @@ export default class Dropdown extends AutoControlledComponent<
     )
   }
 
-  private renderList(styles, variables, getMenuProps, getItemProps, isOpen, highlightedIndex) {
+  private renderList(
+    styles: ComponentSlotStylesInput,
+    variables: ComponentVariablesInput,
+    getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    getItemProps: (options: GetItemPropsOptions<DropdownListItem>) => any,
+    isOpen: boolean,
+    highlightedIndex: number,
+  ) {
     return (
       <List
         {...getMenuProps({ refKey: 'listRef' })}
@@ -281,7 +314,11 @@ export default class Dropdown extends AutoControlledComponent<
     )
   }
 
-  private renderItems(variables, getItemProps, highlightedIndex) {
+  private renderItems(
+    variables: ComponentVariablesInput,
+    getItemProps: (options: GetItemPropsOptions<DropdownListItem>) => any,
+    highlightedIndex: number,
+  ) {
     const { items, noResultsMessage } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
@@ -325,7 +362,7 @@ export default class Dropdown extends AutoControlledComponent<
     ]
   }
 
-  private renderActiveValues(styles) {
+  private renderActiveValues(styles: ComponentSlotStylesInput) {
     const value = this.state.value as DropdownListItem[]
     const { getA11yRemoveItemMessage } = this.props
 
@@ -360,19 +397,19 @@ export default class Dropdown extends AutoControlledComponent<
         })
   }
 
-  onInputFocus = () => {
+  private onInputFocus = () => {
     this.setState({ focused: true })
   }
 
-  onInputBlur = () => {
+  private onInputBlur = () => {
     this.setState({ focused: false })
   }
 
-  onContainerClick = (isOpen: boolean) => {
+  private onContainerClick = (isOpen: boolean) => {
     !isOpen && this.inputRef.focus()
   }
 
-  onInputKeyUpIfMultiple = (event: React.SyntheticEvent) => {
+  private onInputKeyUpIfMultiple = (event: React.SyntheticEvent) => {
     const { searchQuery, value, backspaceDelete } = this.state
 
     switch (keyboardKey.getCode(event)) {
@@ -389,7 +426,7 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  handleChange = (item: DropdownListItem) => {
+  private handleChange = (item: DropdownListItem) => {
     const { multiple, getA11ySelectedMessage } = this.props
     const newValue = multiple ? [...(this.state.value as DropdownListItem[]), item] : item
 
@@ -406,20 +443,24 @@ export default class Dropdown extends AutoControlledComponent<
     })
   }
 
-  onCloseIconClick = (item: DropdownListItem, event: React.SyntheticEvent) =>
+  private onCloseIconClick = (item: DropdownListItem, event: React.SyntheticEvent) =>
     this.handleCloseIconAction(item, event)
 
-  onLabelClick = (event: React.SyntheticEvent) => event.stopPropagation()
+  private onLabelClick = (event: React.SyntheticEvent) => event.stopPropagation()
 
-  onCloseIconKeyDown = (item: DropdownListItem, event: React.SyntheticEvent) => {
+  private onCloseIconKeyDown = (item: DropdownListItem, event: React.SyntheticEvent) => {
     if (keyboardKey.getCode(event) === keyboardKey.Enter) {
       this.handleCloseIconAction(item, event)
     }
   }
 
-  onInputKeyDown = (
+  private onInputKeyDown = (
     highlightedIndex: number,
-    selectItemAtIndex: (index: number) => void,
+    selectItemAtIndex: (
+      index: number,
+      otherStateToSet?: Partial<StateChangeOptions<any>>,
+      cb?: () => void,
+    ) => void,
     event: React.SyntheticEvent,
   ) => {
     switch (keyboardKey.getCode(event)) {
@@ -433,7 +474,7 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  stateReducer = (
+  private stateReducer = (
     state: DownshiftState<DropdownListItem>,
     changes: StateChangeOptions<DropdownListItem>,
   ) => {
