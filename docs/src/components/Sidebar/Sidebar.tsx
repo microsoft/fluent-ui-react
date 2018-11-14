@@ -285,6 +285,9 @@ class Sidebar extends React.Component<any, any> {
                   >
                     Search Page
                   </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/prototype-popups" activeClassName="active">
+                    Popups
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}
