@@ -1,13 +1,17 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { customPropTypes, UIComponent, childrenExist } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { createSlot } from '../Slot/Slot'
 
 export interface SegmentProps {
   as?: any
   className?: string
-  content?: any
+  color?: string
+  content?: ShorthandValue
+  inverted?: boolean
+  renderContent?: ShorthandRenderFunction
   styles?: ComponentSlotStyle<SegmentProps, any>
   variables?: ComponentVariablesInput
 }
@@ -27,8 +31,22 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
     /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
 
+    /** A segment can have different colors */
+    color: PropTypes.string,
+
     /** Shorthand for primary content. */
-    content: PropTypes.any,
+    content: customPropTypes.itemShorthand,
+
+    /** A segment can have its colors inverted for contrast. */
+    inverted: PropTypes.bool,
+
+    /**
+     * A custom render function the content slot.
+     * @param {React.ReactType} Component - The computed component for this slot.
+     * @param {object} props - The computed props for this slot.
+     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+     */
+    renderContent: PropTypes.func,
 
     /** Additional CSS styles to apply to the component instance.  */
     styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
@@ -42,11 +60,11 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+    const { children, content, renderContent } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? children : createSlot(content, { render: renderContent })}
       </ElementType>
     )
   }

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import * as React from 'react'
 import { createShorthand, createShorthandFactory } from 'src/lib'
 import { consoleUtil } from 'test/utils'
+import callable from '../../../src/lib/callable'
 
 // ----------------------------------------
 // Utils
@@ -229,7 +230,7 @@ describe('factories', () => {
           Component: 'p',
           defaultProps,
           render(Component, props) {
-            expect(props.styles).toMatchObject({
+            expect(callable(props.styles)()).toMatchObject({
               color: 'black',
               ':hover': { color: 'blue' },
             })
@@ -264,7 +265,72 @@ describe('factories', () => {
           Component: 'p',
           overrideProps,
           render(Component, props) {
-            expect(props.styles).toMatchObject({
+            expect(callable(props.styles)()).toMatchObject({
+              position: 'keep',
+              color: 'black',
+              ':hover': {
+                position: 'keep',
+                color: 'blue',
+              },
+            })
+          },
+        })
+      })
+
+      test('deep merges styles prop as function onto defaultProps styles', () => {
+        expect.assertions(1)
+
+        const defaultProps = {
+          styles: () => ({
+            color: 'override me',
+            ':hover': { color: 'blue' },
+          }),
+        }
+        const props = {
+          styles: { color: 'black' },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          defaultProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
+              color: 'black',
+              ':hover': { color: 'blue' },
+            })
+          },
+        })
+      })
+
+      test('deep merges overrideProps styles as function onto styles prop', () => {
+        expect.assertions(1)
+
+        const overrideProps = {
+          styles: () => ({
+            color: 'black',
+            ':hover': {
+              color: 'blue',
+            },
+          }),
+        }
+        const props = {
+          styles: {
+            position: 'keep',
+            color: 'override',
+            ':hover': {
+              position: 'keep',
+              color: 'override',
+            },
+          },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          overrideProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
               position: 'keep',
               color: 'black',
               ':hover': {
