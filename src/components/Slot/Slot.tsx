@@ -3,9 +3,10 @@ import * as PropTypes from 'prop-types'
 import { customPropTypes, childrenExist, createShorthand } from '../../lib'
 import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import createComponent from '../../lib/createComponent'
-import { MapValueToProps, Props } from 'types/utils'
+import { MapValueToProps, Props, ReactChildren } from 'types/utils'
 
 export interface SlotProps {
+  children: ReactChildren
   as?: any
   className?: string
   content?: any
@@ -38,8 +39,9 @@ const Slot = createComponent<SlotProps>({
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   },
 
-  render({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+  render(config, props) {
+    const { ElementType, classes, rest } = config
+    const { children, content } = props
 
     return (
       <ElementType {...rest} className={classes.root}>

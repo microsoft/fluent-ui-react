@@ -118,7 +118,7 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
   return render(config)
 }
 
-const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactNode => {
+const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
   const {
     className,
     defaultProps,

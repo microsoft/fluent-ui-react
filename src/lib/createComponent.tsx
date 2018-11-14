@@ -15,10 +15,10 @@ export interface CreateComponentConfig<P> {
   propTypes?: React.ValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
   focusZoneRef?: (focusZone: FocusZone) => void
-  render: (this: React.Component<P>, config: RenderResultConfig<P>) => React.ReactNode
+  render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
-type CreateComponentReturnType<P> = React.ComponentType<P> & {
+type CreateComponentReturnType<P> = React.SFC<P> & {
   create: Function
 }
 
@@ -38,47 +38,31 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     ...(defaultProps as any),
   }
 
-  return class StardustComponent extends React.Component<P, S> {
-    static className = className
-
-    static create = createShorthandFactory(mergedDefaultProps.as, val => ({
-      [shorthandPropName]: val,
-    }))
-
-    static displayName = displayName
-
-    static propTypes = propTypes // TODO: generate prop types
-
-    static defaultProps = mergedDefaultProps
-
-    static unhandledProps: string[] = []
-
-    private static _handledPropsCache: string[] = undefined
-    static get handledProps() {
-      if (!this._handledPropsCache) {
-        this._handledPropsCache = _.difference(
-          _.keys(propTypes).concat(handledProps),
-          this.unhandledProps,
-        ).sort()
-      }
-
-      return this._handledPropsCache
-    }
-
-    render() {
-      return renderComponent({
-        className,
-        defaultProps,
-        displayName,
-        handledProps: StardustComponent.handledProps,
-        props: this.props,
-        state: this.state,
-        actionHandlers,
-        focusZoneRef,
-        render: render.bind(this),
-      })
-    }
+  const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+    return renderComponent({
+      className,
+      defaultProps,
+      displayName,
+      handledProps: _.keys(propTypes).concat(handledProps),
+      props,
+      state: {},
+      actionHandlers,
+      focusZoneRef,
+      render: config => render(config, props),
+    })
   }
+
+  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, val => ({
+    [shorthandPropName]: val,
+  }))
+
+  StardustComponent.displayName = displayName
+
+  StardustComponent.propTypes = propTypes // TODO: generate prop types
+
+  StardustComponent.defaultProps = mergedDefaultProps
+
+  return StardustComponent
 }
 
 export default createComponent
