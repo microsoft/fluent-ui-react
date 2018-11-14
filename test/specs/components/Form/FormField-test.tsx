@@ -3,7 +3,7 @@ import { ComponentClass } from 'enzyme'
 
 import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
-import { Button, RadioGroup, Input, Text, FormField } from '../../../../src'
+import { Button, RadioGroup, Input, Text, FormField } from 'src/index'
 import Slot from 'src/components/Slot/Slot'
 
 const formFieldImplementsShorthandProp = implementsShorthandProp(FormField)
