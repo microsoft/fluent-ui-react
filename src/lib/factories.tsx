@@ -8,7 +8,7 @@ import {
   ShorthandValue,
   Props,
 } from '../../types/utils'
-import callable from './callable'
+import { mergeStyles } from './mergeThemes'
 
 interface CreateShorthandOptions {
   /** Override the default render implementation. */
@@ -107,13 +107,7 @@ export function createShorthand(
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = (...args) => {
-      return _.merge(
-        callable(defaultProps.styles)(...args),
-        callable(usersProps.styles)(...args),
-        callable(overrideProps.styles)(...args),
-      )
-    }
+    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
   }
 
   // ----------------------------------------
