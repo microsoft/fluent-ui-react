@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
-import { ShorthandRenderFunction, ShorthandValue, Props, ObjectOf } from '../../types/utils'
+import { ShorthandRenderFunction, ShorthandValue, Props } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
@@ -93,17 +93,13 @@ export function createShorthand(
       ? (overrideProps as Function)({ ...defaultProps, ...usersProps })
       : overrideProps || {}
 
-  // mapped props for primitive values
-  const primitiveProps: ObjectOf<any> = valIsPrimitive
-    ? {
-        [mappedProps[overrideProps.as || usersProps.as || defaultProps.as] ||
-        mappedProp ||
-        'children']: value,
-      }
-    : {}
-
   // Merge props
-  const props = { ...defaultProps, ...primitiveProps, ...usersProps, ...overrideProps }
+  const props = { ...defaultProps, ...usersProps, ...overrideProps }
+
+  // Map prop for primitive value
+  if (valIsPrimitive) {
+    props[mappedProps[overrideProps.as || defaultProps.as] || mappedProp || 'children'] = value
+  }
 
   // Merge className
   if (defaultProps.className || overrideProps.className || usersProps.className) {
