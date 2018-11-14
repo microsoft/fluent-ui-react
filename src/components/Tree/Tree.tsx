@@ -13,6 +13,7 @@ export type TreeProps = {
   variables?: ComponentVariablesInput
   treedata: {
     title: string
+    onItemClick?: Function
     subtree?: any[]
   }[]
 }
@@ -78,6 +79,7 @@ class Tree extends UIComponent<TreeProps, any> {
           variables: variables.listItem,
           titleStyles: styles.title,
           titleVariables: variables.title,
+          onItemClick: obj.onItemClick,
         },
       })
     })

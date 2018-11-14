@@ -18,6 +18,7 @@ export type TreeListItemProps = {
   active?: boolean
   titleStyles?: any
   titleVariables?: any
+  onItemClick?: Function
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
@@ -55,6 +56,8 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
 
     subtree: PropTypes.array,
     active: PropTypes.bool,
+
+    onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
 
   public static defaultProps = {
@@ -77,19 +80,22 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     const { active } = this.state
     const children = []
     children.push(
-      TreeTitle.create(content, {
-        defaultProps: {
-          href: '#',
-          styles: titleStyles,
-          variables: titleVariables,
+      TreeTitle.create(
+        { content },
+        {
+          defaultProps: {
+            href: '#',
+            styles: titleStyles,
+            variables: titleVariables,
+          },
+          overrideProps: this.handleItemOverrides,
         },
-        overrideProps: this.handleItemOverrides,
-      }),
+      ),
     )
     subtree &&
       active &&
       children.push(
-        Tree.create(content, {
+        Tree.create('', {
           defaultProps: {
             treedata: subtree,
             className: 'sub-tree',
