@@ -1,65 +1,48 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
+import { childrenExist, createShorthand } from '../../lib'
 import {
-  customPropTypes,
-  UIComponent,
-  childrenExist,
-  RenderResultConfig,
-  createShorthandFactory,
-} from '../../lib'
-import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
+import createComponent from '../../lib/createComponent'
+import { MapValueToProps, Props } from 'types/utils'
 
-export interface SlotProps {
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
-  variables?: ComponentVariablesInput
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
  */
-class Slot extends UIComponent<Extendable<SlotProps>, any> {
-  static className = 'ui-slot'
+const Slot = createComponent<SlotProps>({
+  displayName: 'Slot',
 
-  static displayName = 'Slot'
+  className: 'ui-slot',
 
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
+  propTypes: {
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
+  },
 
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  }
-
-  static defaultProps = {
-    as: 'div',
-  }
-
-  static createHTMLElement: Function
-  static create: Function
-
-  renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
-    const { children, content } = this.props
+  render(config, props) {
+    const { ElementType, classes, rest } = config
+    const { children, content } = props
 
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
-  }
-}
+  },
+})
 
 Slot.createHTMLElement = createShorthandFactory(Slot)
 Slot.create = createShorthandFactory(Slot, 'content')

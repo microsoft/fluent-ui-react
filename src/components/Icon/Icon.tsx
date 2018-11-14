@@ -1,11 +1,13 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import { callable, UIComponent, createShorthandFactory } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentSlotStyle, ComponentVariablesInput, SvgIconSpec } from '../../themes/types'
+import { SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 export type IconSize =
@@ -19,18 +21,30 @@ export type IconSize =
   | 'huge'
   | 'massive'
 
-export interface IconProps {
-  as?: any
-  bordered?: boolean
-  circular?: boolean
-  className?: string
-  disabled?: boolean
-  name?: string
-  size?: IconSize
-  xSpacing?: IconXSpacing
+export interface IconProps extends UIComponentProps<any, any> {
+  /**
+   * Accessibility behavior if overriden by the user.
+   * @default iconBehavior
+   * */
   accessibility?: Accessibility
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+
+  /** Icon can appear with rectangular border. */
+  bordered?: boolean
+
+  /** Icon can appear as circular. */
+  circular?: boolean
+
+  /** An icon can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
+  /** Name of the icon. */
+  name?: string
+
+  /** Size of the icon. */
+  size?: IconSize
+
+  /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
+  xSpacing?: IconXSpacing
 }
 
 /**
@@ -44,25 +58,12 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   static displayName = 'Icon'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Icon can appear with rectangular border. */
+    ...commonUIComponentPropTypes,
+    accessibility: PropTypes.func,
     bordered: PropTypes.bool,
-
-    /** Icon can appear as circular. */
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** An icon can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
-
-    /** Name of the icon. */
     name: PropTypes.string,
-
-    /** Size of the icon. */
     size: PropTypes.oneOf([
       'micro',
       'mini',
@@ -74,18 +75,7 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
       'huge',
       'massive',
     ]),
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Adds space to the before, after or on both sides of the icon, or removes the default space around the icon ('none' value) */
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
-
-    /** Accessibility behavior if overriden by the user. */
-    accessibility: PropTypes.func,
   }
 
   static defaultProps = {

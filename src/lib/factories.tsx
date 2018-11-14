@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
 import { ShorthandRenderFunction, ShorthandValue, Props, ObjectOf } from '../../types/utils'
+import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -121,7 +122,7 @@ export function createShorthand(
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
   }
 
   // ----------------------------------------
