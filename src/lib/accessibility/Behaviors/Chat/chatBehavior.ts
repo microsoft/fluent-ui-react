@@ -38,9 +38,9 @@ const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
   const chatItemsElements = root.querySelectorAll(
     `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [${IS_FOCUSABLE_ATTRIBUTE}]`,
   )
-  return (
-    chatItemsElements.length > 0 && (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)
-  )
+  return chatItemsElements.length > 0
+    ? (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)
+    : null
 }
 
 export default ChatBehavior

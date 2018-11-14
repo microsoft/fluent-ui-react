@@ -38,6 +38,7 @@ const getKeyDownHandlers = (
             componentActionHandlers[actionName],
             componentPartKeyAction[actionName].keyCombinations,
           )
+
           eventHandler && eventHandler(event)
         })
 
