@@ -18,9 +18,11 @@ import isFromKeyboard from '../../lib/isFromKeyboard'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-// TODO defaultIsFromKeyboard is not in the interface
 export interface RadioGroupItemProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default radioGroupItemBehavior
+   * */
   accessibility?: Accessibility
 
   /** Whether or not radio item is checked. */
@@ -38,6 +40,9 @@ export interface RadioGroupItemProps extends UIComponentProps<any, any>, Childre
 
   /** Initial checked value. */
   defaultChecked?: boolean
+
+  /** Default value for isFromKeyboard (autocontrolled). */
+  defaultIsFromKeyboard?: boolean
 
   /** A radio item can appear disabled and be unable to change states. */
   disabled?: boolean

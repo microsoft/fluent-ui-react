@@ -19,6 +19,13 @@ export interface ChatItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * A custom render function the content slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderContent?: ShorthandRenderFunction
 }
 

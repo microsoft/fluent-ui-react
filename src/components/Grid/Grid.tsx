@@ -9,7 +9,10 @@ import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../li
 import ReactNode = React.ReactNode
 
 export interface GridProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   * */
   accessibility?: Accessibility
 
   /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */

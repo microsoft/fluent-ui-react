@@ -31,7 +31,10 @@ const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
 export interface PopupProps extends ChildrenComponentProps, ContentComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default popupBehavior
+   * */
   accessibility?: Accessibility
 
   /** Alignment for the popup. */

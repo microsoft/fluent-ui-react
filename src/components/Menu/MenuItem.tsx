@@ -30,7 +30,10 @@ export interface MenuItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default menuItemBehavior
+   * */
   accessibility?: Accessibility
 
   /** A menu item can be active. */

@@ -24,7 +24,7 @@ export interface ContentComponentProps {
 
 export interface ChildrenComponentProps {
   /**
-   *  Button content for childrenApi
+   *  Content for childrenApi
    *  @docSiteIgnore
    */
   children?: ReactChildren

@@ -36,7 +36,10 @@ export interface ChatMessageProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatMessageBehavior
+   * */
   accessibility?: Accessibility
 
   /** Author of the message. */

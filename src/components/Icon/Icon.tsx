@@ -22,7 +22,10 @@ export type IconSize =
   | 'massive'
 
 export interface IconProps extends UIComponentProps<any, any> {
-  /** Accessibility behavior if overriden by the user. */
+  /**
+   * Accessibility behavior if overriden by the user.
+   * @default iconBehavior
+   * */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */

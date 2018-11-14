@@ -10,7 +10,10 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ListItemProps extends UIComponentProps<any, any> {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listItemBehavior
+   * */
   accessibility?: Accessibility
   contentMedia?: any
   /** Shorthand for primary content. */

@@ -10,7 +10,10 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ImageProps extends UIComponentProps<any, any> {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default imageBehavior
+   * */
   accessibility?: Accessibility
 
   /** An image may be formatted to appear inline with text as an avatar. */

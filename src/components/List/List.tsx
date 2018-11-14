@@ -14,7 +14,10 @@ import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropIn
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listBehavior
+   * */
   accessibility?: Accessibility
 
   /** Toggle debug mode */

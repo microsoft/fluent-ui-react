@@ -20,7 +20,10 @@ import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../li
 
 // TODO check if the checkedValueChanged args are correct
 export interface RadioGroupProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default radioGroupBehavior
+   * */
   accessibility?: Accessibility
 
   /** Value of the currently checked radio item. */

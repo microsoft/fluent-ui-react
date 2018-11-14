@@ -24,6 +24,7 @@ export interface ButtonGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default buttonGroupBehavior
    */
   accessibility?: Accessibility
 

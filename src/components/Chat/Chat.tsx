@@ -12,7 +12,10 @@ import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropIn
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ChatProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatBehavior
+   * */
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */

@@ -13,7 +13,10 @@ import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropIn
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponentProps {
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default menuBehavior
+   * */
   accessibility?: Accessibility
 
   /** Index of the currently active item. */

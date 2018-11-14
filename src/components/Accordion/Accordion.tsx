@@ -49,9 +49,21 @@ export interface AccordionProps extends UIComponentProps<any, any>, ChildrenComp
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderContent?: ShorthandRenderFunction
+
+  /**
+   * A custom render iterator for rendering each Accordion panel title.
+   * The default component, props, and children are available for each panel title.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderTitle?: ShorthandRenderFunction
 
-  /** Accessibility behavior if overridden by the user. */
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   * */
   accessibility?: Accessibility
 }
 
