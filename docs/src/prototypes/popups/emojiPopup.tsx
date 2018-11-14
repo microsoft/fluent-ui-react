@@ -22,8 +22,7 @@ const EmojiPopup = () => (
           role="dialog"
           aria-modal="true"
         >
-          {<Input styles={{ marginBottom: '5px' }} fluid icon="search" placeholder="Search..." />}
-          {<br />}
+          {<Input styles={{ marginBottom: '10px' }} fluid icon="search" placeholder="Search..." />}
           {
             <Grid
               as="ul"

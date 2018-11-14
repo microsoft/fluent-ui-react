@@ -15,6 +15,36 @@ import { arrayOfStickerImages, renderImages } from './helper'
 
 import ReactDOM from 'react-dom'
 
+const tabListItems = [
+  {
+    key: 'popular',
+    content: 'Popular',
+    onClick: this.onMenuItemClick,
+    accessibility: tabBehavior,
+  },
+  {
+    key: 'drama',
+    content: 'Office drama',
+    onClick: this.onMenuItemClick,
+    accessibility: tabBehavior,
+  },
+  { key: 'meme', content: 'Meme', onClick: this.onMenuItemClick, accessibility: tabBehavior },
+  {
+    key: 'design',
+    content: 'Designers',
+    onClick: this.onMenuItemClick,
+    accessibility: tabBehavior,
+  },
+  { key: 'dev', content: 'Dev', onClick: this.onMenuItemClick, accessibility: tabBehavior },
+  { key: 'legal', content: 'Legal', onClick: this.onMenuItemClick, accessibility: tabBehavior },
+  {
+    key: 'squatch',
+    content: 'Team squatch',
+    onClick: this.onMenuItemClick,
+    accessibility: tabBehavior,
+  },
+]
+
 class StickerPopup extends React.Component {
   state = { activeMenuIndex: 0 }
 
@@ -30,36 +60,6 @@ class StickerPopup extends React.Component {
       input && input.focus()
     })
   }
-
-  items = [
-    {
-      key: 'popular',
-      content: 'Popular',
-      onClick: this.onMenuItemClick,
-      accessibility: tabBehavior,
-    },
-    {
-      key: 'drama',
-      content: 'Office drama',
-      onClick: this.onMenuItemClick,
-      accessibility: tabBehavior,
-    },
-    { key: 'meme', content: 'Meme', onClick: this.onMenuItemClick, accessibility: tabBehavior },
-    {
-      key: 'design',
-      content: 'Designers',
-      onClick: this.onMenuItemClick,
-      accessibility: tabBehavior,
-    },
-    { key: 'dev', content: 'Dev', onClick: this.onMenuItemClick, accessibility: tabBehavior },
-    { key: 'legal', content: 'Legal', onClick: this.onMenuItemClick, accessibility: tabBehavior },
-    {
-      key: 'squatch',
-      content: 'Team squatch',
-      onClick: this.onMenuItemClick,
-      accessibility: tabBehavior,
-    },
-  ]
 
   render() {
     return (
@@ -79,7 +79,7 @@ class StickerPopup extends React.Component {
                 <Menu
                   accessibility={tabListBehavior}
                   activeIndex={this.state.activeMenuIndex}
-                  items={this.items}
+                  items={tabListItems}
                   vertical
                   pointing
                 />
