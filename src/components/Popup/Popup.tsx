@@ -6,18 +6,12 @@ import { Popper, PopperChildrenProps } from 'react-popper'
 
 import {
   childrenExist,
-  customPropTypes,
   AutoControlledComponent,
   EventStack,
   RenderResultConfig,
   isBrowser,
 } from '../../lib'
-import {
-  ComponentEventHandler,
-  ShorthandValue,
-  Extendable,
-  ReactChildren,
-} from '../../../types/utils'
+import { ComponentEventHandler, Extendable } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -32,22 +26,54 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
+import { ChildrenComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
+import { contentComponentPropsTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps {
+export interface PopupProps extends ChildrenComponentProps, ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default popupBehavior
+   * */
   accessibility?: Accessibility
+
+  /** Alignment for the popup. */
   align?: Alignment
-  children?: ReactChildren
+
+  /** Additional CSS class name(s) to apply.  */
   className?: string
-  content?: ShorthandValue
+
+  /** Initial value for 'open'. */
   defaultOpen?: boolean
+
+  /** Defines whether popup is displayed. */
   open?: boolean
+
+  /**
+   * Event for request to change 'open' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onOpenChange?: ComponentEventHandler<PopupProps>
+
+  /**
+   * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
+   * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
+   * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
+   */
   position?: Position
+
+  /**
+   * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
+   */
   target?: HTMLElement
+
+  /** Initial value for 'target'. */
   defaultTarget?: HTMLElement
+
+  /** Element to be rendered in-place where the popup is defined. */
   trigger?: JSX.Element
 }
 
@@ -69,53 +95,17 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Alignment for the popup. */
     align: PropTypes.oneOf(ALIGNMENTS),
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
-
-    /** The popup content. */
-    content: customPropTypes.itemShorthand,
-
-    /** Initial value for 'open'. */
     defaultOpen: PropTypes.bool,
-
-    /** Initial value for 'target'. */
     defaultTarget: PropTypes.any,
-
-    /** Defines whether popup is displayed. */
     open: PropTypes.bool,
-
-    /**
-     * Event for request to change 'open' value.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onOpenChange: PropTypes.func,
-
-    /**
-     * Position for the popup. Position has higher priority than align. If position is vertical ('above' | 'below')
-     * and align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'
-     * and 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.
-     */
     position: PropTypes.oneOf(POSITIONS),
-
-    /**
-     * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
-     */
     target: PropTypes.any,
-
-    /** Element to be rendered in-place where the popup is defined. */
     trigger: PropTypes.any,
   }
 

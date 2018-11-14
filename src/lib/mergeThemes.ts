@@ -15,6 +15,7 @@ import {
   ThemePrepared,
   StaticStyle,
   ThemeIcons,
+  ComponentSlotStyle,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -174,6 +175,14 @@ export const mergeStaticStyles = (...sources: StaticStyle[]) => {
 
 export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
   return Object.assign(target, ...sources)
+}
+
+export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
+  return (...args) => {
+    return sources.reduce((acc, next) => {
+      return _.merge(acc, callable(next)(...args))
+    }, {})
+  }
 }
 
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
