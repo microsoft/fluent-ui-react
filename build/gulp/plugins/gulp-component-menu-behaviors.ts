@@ -19,6 +19,11 @@ type BehaviorMenuItem = {
   }
 }
 
+const getTextFromCommentToken = (commentTokens, tokenTitle): string => {
+  const token = commentTokens.find(token => token.title === tokenTitle)
+  return token ? token.description : ''
+}
+
 export default () => {
   const result: BehaviorMenuItem[] = []
   function bufferContents(file, enc, cb) {
@@ -47,10 +52,11 @@ export default () => {
       // getting object that describes '@description' and '@specification' part of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
-        const descriptionToken = commentTokens.find(token => token.title === 'description')
-        const specificationToken = commentTokens.find(token => token.title === 'specification')
-        specificationText = specificationToken ? specificationToken.description : ''
-        description = descriptionToken ? descriptionToken.description : ''
+        const descriptionTokenDesc = getTextFromCommentToken(commentTokens, 'description')
+        const specificationTokenDesc = getTextFromCommentToken(commentTokens, 'specification')
+
+        specificationText = specificationTokenDesc ? specificationTokenDesc : ''
+        description = descriptionTokenDesc ? descriptionTokenDesc : ''
       }
 
       result.push({

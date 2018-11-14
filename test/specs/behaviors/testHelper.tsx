@@ -18,8 +18,8 @@ export interface TestDefinition {
 }
 
 const excludedFiles = [
-  'chatBehavior.ts', // ticket 410026
-  'chatMessageBehavior.ts', // ticket 410026
+  'chatBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
+  'chatMessageBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
 ]
@@ -122,7 +122,7 @@ export class TestHelper {
     if (!excludedFiles.find(item => item === behaviorFileName)) {
       test(`${behaviorFileName} : File is missing specification tag.`, () => {
         fail(
-          `File should have specification tag. If tests are written in separate file then add behavior file name into 'const excludedFiles'.`,
+          `File should have specification tag. If tests are written in separate file then add behavior file name into 'excludedFiles'.`,
         )
       })
     }
