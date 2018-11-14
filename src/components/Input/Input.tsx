@@ -16,8 +16,8 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import Icon from '../Icon/Icon'
-import { createHTMLInput, createSlot } from '../Slot/Slot'
 import Ref from '../Ref/Ref'
+import Slot from '../Slot/Slot'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 

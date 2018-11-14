@@ -4,7 +4,7 @@ import { UIComponent, childrenExist } from '../../lib'
 import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import { UIComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, contentComponentPropsTypes } from '../../lib/commonPropTypes'
-import { createSlot } from '../Slot/Slot'
+import Slot from '../Slot/Slot'
 
 export interface SegmentProps extends UIComponentProps<SegmentProps, any>, ContentComponentProps {
   /** A segment can have its colors inverted for contrast. */
@@ -43,7 +43,7 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : createSlot(content, { render: renderContent })}
+        {childrenExist(children) ? children : Slot.create(content, { render: renderContent })}
       </ElementType>
     )
   }

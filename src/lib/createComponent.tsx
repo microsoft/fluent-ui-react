@@ -53,9 +53,7 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     })
   }
 
-  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, val => ({
-    [shorthandPropName]: val,
-  }))
+  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)
 
   StardustComponent.displayName = displayName
 
