@@ -47,6 +47,7 @@ export interface DropdownProps {
   search?: boolean
   styles?: ComponentSlotStyle<DropdownProps, DropdownState>
   toggleButton?: boolean
+  variables?: ComponentVariablesInput
 }
 
 export interface DropdownState {
@@ -63,7 +64,9 @@ export interface DropdownListItem {
   content?: string
   image?: string
 }
-
+/**
+ * A Dropdown allows a user to select a value or a multitude of values from a number of options.
+ */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
   DropdownState
@@ -91,11 +94,11 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
 
     /** Array of props for generating dropdown items and selected item labels if multiple selection. */
-    items: PropTypes.collectionShorthand,
+    items: PropTypes.arrayOf(customPropTypes.itemShorthand),
 
     /**
      * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
-     * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection
+     * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
      */
     itemToString: PropTypes.function,
 
@@ -121,7 +124,7 @@ export default class Dropdown extends AutoControlledComponent<
      */
     getA11yRemoveItemMessage: PropTypes.func,
 
-    /** A dropdown can have a multiple selection. */
+    /** A dropdown can perform a multiple selection. */
     multiple: PropTypes.bool,
 
     /** A string to be displayed when dropdown is not showing any items. */
@@ -156,6 +159,9 @@ export default class Dropdown extends AutoControlledComponent<
 
     /** The value of the dropdown. */
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+
+    /** Override for theme site variables to allow modifications of component styling via themes. */
+    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -176,6 +182,7 @@ export default class Dropdown extends AutoControlledComponent<
     classes,
     styles,
     variables,
+    rest,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
@@ -186,7 +193,7 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     return (
-      <ElementType>
+      <ElementType {...rest}>
         <Downshift
           onChange={this.handleChange}
           inputValue={searchQuery}
