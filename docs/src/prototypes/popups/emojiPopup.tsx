@@ -27,7 +27,6 @@ const EmojiPopup = () => (
           {
             <Grid
               as="ul"
-              role="list"
               accessibility={gridBehavior}
               styles={{
                 width: '320px',
