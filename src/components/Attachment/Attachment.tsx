@@ -1,7 +1,6 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
+import * as _ from 'lodash'
 import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'

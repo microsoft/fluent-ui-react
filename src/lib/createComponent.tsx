@@ -5,6 +5,7 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
+import { Extendable } from '../../types/utils'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -32,7 +33,7 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
   actionHandlers,
   focusZoneRef, // TODO: setFocusZoneRef
   render,
-}: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
+}: CreateComponentConfig<P>): Extendable<CreateComponentReturnType<P>> => {
   const mergedDefaultProps = {
     as: 'div',
     ...(defaultProps as any),

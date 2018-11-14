@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { childrenExist, createShorthand } from '../../lib'
+import { childrenExist, createShorthandFactory } from '../../lib'
 import {
   UIComponentProps,
   ContentComponentProps,
@@ -11,7 +11,6 @@ import {
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
 import createComponent from '../../lib/createComponent'
-import { MapValueToProps, Props } from 'types/utils'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps, any>,
