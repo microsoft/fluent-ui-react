@@ -20,7 +20,7 @@ const rowStyle: any = {
   flexDirection: 'row',
 }
 
-const getTagType = tag => (tag.type.type === 'AllLiteral' ? 'any' : tag.type.name)
+const getTagType = tag => (tag.type ? (tag.type.type === 'AllLiteral' ? 'any' : tag.type.name) : '')
 
 const ComponentPropFunctionSignature: any = ({ name, tags }) => {
   const params = _.filter(tags, { title: 'param' })
