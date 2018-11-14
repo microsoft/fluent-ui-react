@@ -5,6 +5,11 @@ import { FelaTheme } from 'react-fela'
 import { ThemePrepared } from '../../themes/types'
 
 export interface ProviderConsumerProps {
+  /**
+   * Uses the function children pattern to access theme.
+   * @param {object} theme
+   * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
+   */
   render: (theme: ThemePrepared) => React.ReactNode
 }
 
@@ -14,11 +19,6 @@ export interface ProviderConsumerProps {
 const ProviderConsumer: React.SFC<ProviderConsumerProps> = props => <FelaTheme {...props} />
 
 ProviderConsumer.propTypes = {
-  /**
-   * Uses the function children pattern to access theme.
-   * @param {object} theme
-   * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
-   */
   render: PropTypes.func.isRequired,
 }
 
