@@ -13,7 +13,7 @@ export type TreeProps = {
   variables?: ComponentVariablesInput
   treedata: {
     title: string
-    submenu?: any[]
+    subtree?: any[]
   }[]
 }
 
@@ -70,9 +70,9 @@ class Tree extends UIComponent<TreeProps, any> {
     const { treedata } = this.props
     if (!treedata) return []
     return treedata.map(obj => {
-      const submenu = obj.submenu
+      const subtree = obj.subtree
       return TreeListItem.create(obj.title, {
-        defaultProps: { submenu },
+        defaultProps: { subtree },
       })
     })
   }

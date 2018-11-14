@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -13,7 +14,8 @@ export type TreeListItemProps = {
   content?: React.ReactNode
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
-  submenu?: any
+  subtree?: any
+  active?: boolean
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
@@ -22,6 +24,10 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   static className = 'tree-list-item'
 
   static displayName = 'TreeListItem'
+
+  state = {
+    active: this.props.active,
+  }
 
   // static handledProps = ['as', 'children', 'content', 'styles', 'variables']
 
@@ -41,28 +47,45 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
-    submenu: PropTypes.array,
+    subtree: PropTypes.array,
+    active: PropTypes.bool,
   }
 
   public static defaultProps = {
     as: 'li',
   }
 
+  handleItemOverrides = predefinedProps => ({
+    onClick: e => {
+      e.preventDefault()
+      console.log(e.target)
+      console.log(this)
+      this.setState({
+        active: !this.state.active,
+      })
+      _.invoke(predefinedProps, 'onClick', e)
+      _.invoke(this.props, 'onItemClick', e)
+    },
+  })
+
   renderContent() {
-    const { submenu, content } = this.props
+    const { subtree, content } = this.props
+    const { active } = this.state
     const children = []
     children.push(
       TreeTitle.create(content, {
         defaultProps: {
           href: '#',
         },
+        overrideProps: this.handleItemOverrides,
       }),
     )
-    submenu &&
+    subtree &&
+      active &&
       children.push(
         Tree.create(content, {
           defaultProps: {
-            treedata: submenu,
+            treedata: subtree,
           },
         }),
       )

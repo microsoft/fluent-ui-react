@@ -3,10 +3,10 @@ import { Tree } from '@stardust-ui/react'
 const treeData = [
   {
     title: 'one',
-    submenu: [
+    subtree: [
       {
         title: 'one one',
-        submenu: [
+        subtree: [
           {
             title: 'one one one',
           },
@@ -16,7 +16,7 @@ const treeData = [
   },
   {
     title: ' two',
-    submenu: [
+    subtree: [
       {
         title: 'two one',
       },
