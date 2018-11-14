@@ -19,7 +19,12 @@ const ComponentDocAccessibility = ({ info }) => {
 
   return (
     <>
-      <Header as="h2" className="no-anchor" content="Accessibility" />
+      <Header
+        as="h2"
+        className="no-anchor"
+        content="Accessibility"
+        variables={{ color: 'black' }}
+      />
 
       {behaviorName && (
         <p>

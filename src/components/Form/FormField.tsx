@@ -4,7 +4,7 @@ import * as React from 'react'
 import { UIComponent, customPropTypes, childrenExist, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import Text from '../Text/Text'
-import { default as Slot } from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 import Input from '../Input/Input'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
@@ -131,7 +131,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
       render: renderMessage,
     })
 
-    const controlElement = Slot.create(control || {}, {
+    const controlElement = createSlot(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
       render: renderControl,
     })

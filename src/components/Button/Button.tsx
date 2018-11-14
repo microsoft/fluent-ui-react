@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
@@ -155,7 +155,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
+        {createSlot(!hasChildren && content, {
           defaultProps: { as: 'span', className: classes.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
