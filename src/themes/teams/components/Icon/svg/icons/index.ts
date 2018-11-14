@@ -1,5 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import bookmark from './bookmark'
 import call from './call'
 import callEnd from './callEnd'
 import callVideo from './callIncomingVideo'
@@ -17,8 +18,12 @@ import giphy from './giphy'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import highlight from './highlight'
+import bullets from './bullets'
+import gallery from './gallery'
+import menu from './menu'
 
 export default {
+  bookmark,
   call,
   'call-end': callEnd,
   'call-video': callVideo,
@@ -34,6 +39,9 @@ export default {
   format,
   giphy,
   highlight,
+  bullets,
+  gallery,
+  menu,
   'font-color': fontColor,
   'font-size': fontSize,
 } as { [iconName: string]: TeamsSvgIconSpec }
