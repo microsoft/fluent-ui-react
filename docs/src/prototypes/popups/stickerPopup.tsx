@@ -61,10 +61,6 @@ class StickerPopup extends React.Component {
     },
   ]
 
-  handleOpenChange() {
-    console.warn('componentDidMount')
-  }
-
   render() {
     return (
       <Popup
