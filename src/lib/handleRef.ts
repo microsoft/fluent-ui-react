@@ -27,7 +27,8 @@ const handleRef = <P extends string, N>(props: HandleRefProps<P, N>, propName: P
   }
 
   if (typeof ref === 'object') {
-    // @ts-ignore The `current` property is defined as readonly, however it a valid way
+    // @ts-ignore The `current` property is defined as readonly, however it's a valid way because
+    // `ref` is a mutable object
     ref.current = node
   }
 }
