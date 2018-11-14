@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { Extendable } from '../../../types/utils'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
   ComponentSlotStyle,
   ComponentSlotStylesInput,
@@ -41,7 +41,15 @@ export interface DropdownProps {
   itemToString?: (item: DropdownListItem) => string
   multiple?: boolean
   noResultsMessage?: string
+  onBackspaceDelete?: ComponentEventHandler<DropdownProps>
   onChange?: (value: DropdownListItem | DropdownListItem[]) => any
+  onCloseIconClick?: ComponentEventHandler<DropdownProps>
+  onCloseIconKeyDown?: ComponentEventHandler<DropdownProps>
+  onContainerClick?: ComponentEventHandler<DropdownProps>
+  onInputBlur?: ComponentEventHandler<DropdownProps>
+  onInputFocus?: ComponentEventHandler<DropdownProps>
+  onInputKeyDown?: ComponentEventHandler<DropdownProps>
+  onLabelClick?: ComponentEventHandler<DropdownProps>
   onSearchChange?: (searchQuery: string) => any
   placeholder?: string
   search?: boolean
@@ -131,10 +139,74 @@ export default class Dropdown extends AutoControlledComponent<
     noResultsMessage: PropTypes.string,
 
     /**
+     * Called on deletion by backspace when dropdown is a multiple search.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onBackspaceDelete: PropTypes.func,
+
+    /**
      * Callback for change in dropdown active value(s).
      * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
      */
     onChange: PropTypes.func,
+
+    /**
+     * Called on clicking the 'X' icon corresponding to an active value.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onCloseIconClick: PropTypes.func,
+
+    /**
+     * Called on key down on the 'X' icon corresponding to an active value.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onCloseIconKeyDown: PropTypes.func,
+
+    /**
+     * Called on container click.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onContainerClick: PropTypes.func,
+
+    /**
+     * Called on input blur.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onInputBlur: PropTypes.func,
+
+    /**
+     * Called on input focus.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onInputFocus: PropTypes.func,
+
+    /**
+     * Called on input key down.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onInputKeyDown: PropTypes.func,
+
+    /**
+     * Called when clicking on an active value, on the text or avatar, if any.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onLabelClick: PropTypes.func,
 
     /**
      * Callback for change in dropdown search value.
@@ -177,6 +249,31 @@ export default class Dropdown extends AutoControlledComponent<
     value: this.props.multiple ? [] : null,
   }
 
+  private removeFromActiveValues(item?: DropdownListItem): DropdownListItem {
+    const { getA11yRemovedMessage } = this.props
+    let value = this.state.value as DropdownListItem[]
+    let poppedItem = item
+
+    if (poppedItem) {
+      value = value.filter(currentElement => currentElement !== item)
+    } else {
+      poppedItem = value.pop()
+    }
+
+    this.trySetState({
+      value,
+    })
+    this.setState({
+      message: getA11yRemovedMessage
+        ? getA11yRemovedMessage(item)
+        : `${poppedItem.header} has been removed.`,
+    })
+
+    _.invoke(this.props, 'onChange', value)
+
+    return poppedItem
+  }
+
   public renderComponent({
     ElementType,
     classes,
@@ -193,7 +290,7 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     return (
-      <ElementType {...rest}>
+      <ElementType {...rest} className={classes.root}>
         <Downshift
           onChange={this.handleChange}
           inputValue={searchQuery}
@@ -216,7 +313,7 @@ export default class Dropdown extends AutoControlledComponent<
             return (
               <div
                 className={classes.containerDiv}
-                onClick={this.onContainerClick.bind(this, isOpen)}
+                onClick={this.handleContainerClick.bind(this, isOpen)}
               >
                 <span aria-live="assertive" className={classes.ariaLiveSpan}>
                   {this.state.message}
@@ -266,8 +363,8 @@ export default class Dropdown extends AutoControlledComponent<
     return (
       <Input
         inputRef={input => (this.inputRef = input)}
-        onFocus={this.onInputFocus}
-        onKeyUp={multiple && this.onInputKeyUpIfMultiple}
+        onFocus={this.handleInputFocus}
+        onKeyUp={multiple && this.handleBackspaceDelete}
         styles={styles.editTextDiv}
         wrapper={{ ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }) }}
         variables={{ inputFocusBorderColor: variables.editTextInputFocusBorderColor }}
@@ -279,8 +376,8 @@ export default class Dropdown extends AutoControlledComponent<
               ? ''
               : placeholder,
           ...getInputProps({
-            onBlur: this.onInputBlur,
-            onKeyDown: this.onInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
+            onBlur: this.handleInputBlur,
+            onKeyDown: this.handleInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
           }),
         }}
       />
@@ -378,7 +475,7 @@ export default class Dropdown extends AutoControlledComponent<
       : value.map((item, index) => {
           const optionalImage = {
             ...(item.image && {
-              image: { src: item.image, avatar: true, onClick: this.onLabelClick },
+              image: { src: item.image, avatar: true, onClick: this.handleLabelClick },
             }),
           }
           return (
@@ -387,12 +484,12 @@ export default class Dropdown extends AutoControlledComponent<
               styles={styles.activeListLabel}
               circular
               key={`active-item-${index}`}
-              content={<Text content={item.header} onClick={this.onLabelClick} />}
+              content={<Text content={item.header} onClick={this.handleLabelClick} />}
               {...optionalImage}
               icon={{
                 name: 'close',
-                onClick: this.onCloseIconClick.bind(this, item),
-                onKeyDown: this.onCloseIconKeyDown.bind(this, item),
+                onClick: this.handleCloseIconClick.bind(this, item),
+                onKeyDown: this.handleCloseIconKeyDown.bind(this, item),
                 'aria-label': getA11yRemoveItemMessage
                   ? getA11yRemoveItemMessage(item)
                   : `Remove ${item.header} from selection.`,
@@ -404,28 +501,54 @@ export default class Dropdown extends AutoControlledComponent<
         })
   }
 
-  private onInputFocus = () => {
+  private stateReducer = (
+    state: DownshiftState<DropdownListItem>,
+    changes: StateChangeOptions<DropdownListItem>,
+  ) => {
+    switch (changes.type) {
+      case Downshift.stateChangeTypes.changeInput:
+        this.trySetState({
+          searchQuery: changes.inputValue,
+        })
+        this.setState({
+          backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
+        })
+        _.invoke(this.props, 'onSearchChange', changes.inputValue)
+        return changes
+      default:
+        return changes
+    }
+  }
+
+  private handleInputFocus = (e: React.SyntheticEvent) => {
     this.setState({ focused: true })
+
+    _.invoke(this.props, 'onInputFocus', e, this.props)
   }
 
-  private onInputBlur = () => {
+  private handleInputBlur = (e: React.SyntheticEvent) => {
     this.setState({ focused: false })
+
+    _.invoke(this.props, 'onInputBlur', e, this.props)
   }
 
-  private onContainerClick = (isOpen: boolean) => {
+  private handleContainerClick = (isOpen: boolean, e: React.SyntheticEvent) => {
     !isOpen && this.inputRef.focus()
+
+    _.invoke(this.props, 'onContainerClick', e, { ...this.props, isOpen })
   }
 
-  private onInputKeyUpIfMultiple = (event: React.SyntheticEvent) => {
-    const { searchQuery, value, backspaceDelete } = this.state
-
-    switch (keyboardKey.getCode(event)) {
+  private handleBackspaceDelete = (e: React.SyntheticEvent) => {
+    switch (keyboardKey.getCode(e)) {
       case keyboardKey.Backspace:
+        const { searchQuery, value, backspaceDelete } = this.state
+
         if (searchQuery === '' && (value as DropdownListItem[]).length > 0) {
           if (!backspaceDelete) {
             this.setState({ backspaceDelete: true })
           } else {
-            this.removeFromActiveValues()
+            const removedValue = this.removeFromActiveValues()
+            _.invoke(this.props, 'onBackspaceDelete', e, { ...this.props, removedValue })
           }
         }
       default:
@@ -437,8 +560,6 @@ export default class Dropdown extends AutoControlledComponent<
     const { multiple, getA11ySelectedMessage } = this.props
     const newValue = multiple ? [...(this.state.value as DropdownListItem[]), item] : item
 
-    _.invoke(this.props, 'onChange', newValue)
-
     this.trySetState({
       value: newValue,
       searchQuery: '',
@@ -448,84 +569,60 @@ export default class Dropdown extends AutoControlledComponent<
         ? getA11ySelectedMessage(item)
         : `${item.header} has been selected.`,
     })
+
+    _.invoke(this.props, 'onChange', newValue)
   }
 
-  private onCloseIconClick = (item: DropdownListItem, event: React.SyntheticEvent) =>
-    this.handleCloseIconAction(item, event)
+  private handleCloseIconClick = (item: DropdownListItem, e: React.SyntheticEvent) => {
+    this.handleCloseIconAction(item, e)
 
-  private onLabelClick = (event: React.SyntheticEvent) => event.stopPropagation()
+    _.invoke(this.props, 'onCloseIconClick', e, { ...this.props, item })
+  }
 
-  private onCloseIconKeyDown = (item: DropdownListItem, event: React.SyntheticEvent) => {
+  private handleLabelClick = (e: React.SyntheticEvent) => {
+    e.stopPropagation()
+
+    _.invoke(this.props, 'onLabelClick', e, this.props)
+  }
+
+  private handleCloseIconKeyDown = (item: DropdownListItem, e: React.SyntheticEvent) => {
     if (keyboardKey.getCode(event) === keyboardKey.Enter) {
-      this.handleCloseIconAction(item, event)
+      this.handleCloseIconAction(item, e)
     }
+    _.invoke(this.props, 'onCloseIconKeyDown', e, { ...this.props, item })
   }
 
-  private onInputKeyDown = (
+  private handleInputKeyDown = (
     highlightedIndex: number,
     selectItemAtIndex: (
       index: number,
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    event: React.SyntheticEvent,
+    e: React.SyntheticEvent,
   ) => {
-    switch (keyboardKey.getCode(event)) {
+    switch (keyboardKey.getCode(e)) {
       case keyboardKey.Tab:
         if (highlightedIndex !== undefined) {
           selectItemAtIndex(highlightedIndex)
         }
-        return
       default:
+        _.invoke(this.props, 'onInputKeyDown', e, {
+          ...this.props,
+          highlightedIndex,
+          selectItemAtIndex,
+        })
         return
     }
   }
 
-  private stateReducer = (
-    state: DownshiftState<DropdownListItem>,
-    changes: StateChangeOptions<DropdownListItem>,
-  ) => {
-    switch (changes.type) {
-      case Downshift.stateChangeTypes.changeInput:
-        _.invoke(this.props, 'onSearchChange', changes.inputValue)
-        this.trySetState({
-          searchQuery: changes.inputValue,
-        })
-        this.setState({
-          backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
-        })
-        return changes
-      default:
-        return changes
-    }
-  }
-
-  private handleCloseIconAction(item: DropdownListItem, event: React.SyntheticEvent) {
+  /**
+   * Common function used by click and keydown handlers for label X icon.
+   * Removes item from active values, focuses on edit text and stops event propagation.
+   */
+  private handleCloseIconAction(item: DropdownListItem, e: React.SyntheticEvent) {
     this.removeFromActiveValues(item)
     this.inputRef.focus()
-    event.stopPropagation()
-  }
-
-  private removeFromActiveValues(item?: DropdownListItem) {
-    const { getA11yRemovedMessage } = this.props
-    let value = this.state.value as DropdownListItem[]
-    let poppedItem = item
-
-    if (poppedItem) {
-      value = value.filter(currentElement => currentElement !== item)
-    } else {
-      poppedItem = value.pop()
-    }
-
-    _.invoke(this.props, 'onChange', value)
-
-    this.trySetState({
-      value,
-    })
-    this.setState({
-      message: getA11yRemovedMessage
-        ? getA11yRemovedMessage(item)
-        : `${poppedItem.header} has been removed.`,
-    })
+    e.stopPropagation()
   }
 }
