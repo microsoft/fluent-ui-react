@@ -36,8 +36,6 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
 
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    submenu: PropTypes.array,
   }
 
   public static defaultProps = {

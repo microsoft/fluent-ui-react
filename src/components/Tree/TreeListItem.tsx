@@ -16,6 +16,8 @@ export type TreeListItemProps = {
   variables?: ComponentVariablesInput
   subtree?: any
   active?: boolean
+  titleStyles?: any
+  titleVariables?: any
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
@@ -47,6 +49,10 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    titleStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
     subtree: PropTypes.array,
     active: PropTypes.bool,
   }
@@ -58,8 +64,6 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   handleItemOverrides = predefinedProps => ({
     onClick: e => {
       e.preventDefault()
-      console.log(e.target)
-      console.log(this)
       this.setState({
         active: !this.state.active,
       })
@@ -68,14 +72,16 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     },
   })
 
-  renderContent() {
-    const { subtree, content } = this.props
+  renderContent(styles, variables) {
+    const { subtree, content, titleStyles, titleVariables } = this.props
     const { active } = this.state
     const children = []
     children.push(
       TreeTitle.create(content, {
         defaultProps: {
           href: '#',
+          styles: titleStyles,
+          variables: titleVariables,
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -86,6 +92,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
         Tree.create(content, {
           defaultProps: {
             treedata: subtree,
+            className: 'sub-tree',
           },
         }),
       )
@@ -97,7 +104,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : this.renderContent(styles, variables)}
       </ElementType>
     )
   }

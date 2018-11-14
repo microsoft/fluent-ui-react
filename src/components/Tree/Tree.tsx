@@ -66,13 +66,19 @@ class Tree extends UIComponent<TreeProps, any> {
     })
   } */
 
-  renderContent() {
+  renderContent(styles, variables) {
     const { treedata } = this.props
     if (!treedata) return []
     return treedata.map(obj => {
       const subtree = obj.subtree
       return TreeListItem.create(obj.title, {
-        defaultProps: { subtree },
+        defaultProps: {
+          styles: styles.listItem,
+          subtree,
+          variables: variables.listItem,
+          titleStyles: styles.title,
+          titleVariables: variables.title,
+        },
       })
     })
   }
@@ -82,7 +88,7 @@ class Tree extends UIComponent<TreeProps, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : this.renderContent(styles, variables)}
       </ElementType>
     )
   }
