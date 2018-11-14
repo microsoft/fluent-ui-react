@@ -30,9 +30,7 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
         <Scrollbars ref={this.handleScrollRef}>
           <Chat
             role="main"
-            aria-label={`${
-              chat.title
-            } chat content. Press right arrow key to explore message content, then use left arrow key to shift focus back to the message.`}
+            aria-label={`${chat.title} chat content.`}
             items={items}
             styles={{ padding: '0 32px' }}
           />
@@ -45,8 +43,9 @@ class ChatPaneContainer extends React.PureComponent<IChatPaneContainerProps> {
     // Show the first 100 characters from the message
     const messageText = props.text || ''
     let messagePreview
-    if (messageText.length > 100) {
-      messagePreview = `${messageText.slice(0, 100)} ..., by ${props.author} `
+    // making it shorter for 60 char. otherwise NVDA was splitting it into 2 lines
+    if (messageText.length > 60) {
+      messagePreview = `${messageText.slice(0, 60)} ..., by ${props.author} `
       return messagePreview
     }
     messagePreview = `${messageText} ..., by ${props.author}`

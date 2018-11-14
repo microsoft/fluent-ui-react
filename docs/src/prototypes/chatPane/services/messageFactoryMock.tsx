@@ -31,7 +31,6 @@ function getMessageContent(content, messageId) {
       <span id={`content-${messageId}`}>
         {content}
         <a href="/"> Some link </a>
-        {content}
       </span>
       <div style={{ marginTop: '20px' }}>
         <Attachment
@@ -59,15 +58,13 @@ function getAuthorElement(msg, fromUser) {
   const userFullName = `${fromUser.firstName} ${fromUser.lastName} `
   if (msg.mine) {
     return (comp, props) => (
-      <span id={`sender-${msg.id}`} aria-label={`Message from ${userFullName}`} />
+      // aria-label when message is from myself, because we don't display element in UI.
+      // Otherwise user has no information about message sender.
+      <span id={`sender-${msg.id}`} aria-label={`${userFullName}`} />
     )
   }
 
-  return (comp, props) => (
-    <span id={`sender-${msg.id}`} aria-label={`Message from ${userFullName}`}>
-      {userFullName}
-    </span>
-  )
+  return (comp, props) => <span id={`sender-${msg.id}`}>{userFullName}</span>
 }
 
 export enum ChatItemType {
@@ -82,6 +79,8 @@ interface IChatMessage extends IChatMessageProps, IChatItemType {
   tabIndex: number
   role: string
   'aria-labelledby': string
+  // aria describedby was narrating more information as we needed
+  // 'aria-describedby': string
   text: string
 }
 interface IDivider extends IDividerProps, IChatItemType {}
@@ -109,7 +108,9 @@ function generateChatMsgProps(msg: IMessage, fromUser: IUser): IChatMessage {
       content: msg.timestamp,
       title: msg.timestampLong,
       id: `timestamp-${msg.id}`,
-      'aria-label': `Sent on ${msg.timestampLong}`,
+      // had to put aria-label as it was not narrating title, where we have already this information.
+      // without aria-label it narrates content of the element, which has date in wrong format.
+      'aria-label': `${msg.timestampLong}`,
     },
     avatar: !msg.mine && {
       image: fromUser.avatar,
