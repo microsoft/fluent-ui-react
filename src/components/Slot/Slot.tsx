@@ -45,7 +45,7 @@ const Slot: CreateComponentReturnType<SlotProps> & {
   },
 })
 
-Slot.createHTMLElement = createShorthandFactory(Slot) // TODO: fix types
+Slot.createHTMLElement = createShorthandFactory(Slot)
 Slot.create = createShorthandFactory(Slot, 'content')
 
 export default Slot
