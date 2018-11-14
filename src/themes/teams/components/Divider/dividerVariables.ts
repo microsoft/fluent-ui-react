@@ -1,6 +1,16 @@
 import { pxToRem } from '../../../../lib'
 
-export default (siteVars: any) => {
+export interface DividerVariables {
+  dividerColor: string
+  textColor: string
+  textFontSize: string
+  textLineHeight: string
+  primaryColor: string
+  importantFontWeight: string
+  dividerPadding: string
+}
+
+export default (siteVars: any): DividerVariables => {
   return {
     dividerColor: siteVars.gray09,
     textColor: siteVars.gray03,

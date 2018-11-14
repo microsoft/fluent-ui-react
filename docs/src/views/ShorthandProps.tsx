@@ -27,19 +27,13 @@ class ShorthandProps extends React.Component {
         </p>
         <CodeSnippet
           value={[
-            `<Button type="primary" icon iconOnly>`,
+            `<Button icon iconOnly primary>`,
             `  <Icon name="book" xSpacing="none" />`,
             `</Button>`,
           ].join('\n')}
         />
         <br />
-        <Button
-          as={NavLink}
-          content="Quick Start"
-          type="primary"
-          icon="arrow right"
-          to="quick-start"
-        />
+        <Button as={NavLink} content="Quick Start" icon="arrow right" primary to="quick-start" />
       </DocPage>
     )
   }

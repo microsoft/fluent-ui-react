@@ -15,6 +15,7 @@ import {
   ThemePrepared,
   StaticStyle,
   ThemeIcons,
+  ComponentSlotStyle,
   ThemeAnimation,
 } from '../themes/types'
 import callable from './callable'
@@ -182,6 +183,14 @@ export const mergeAnimations = (
   ...sources: { [key: string]: ThemeAnimation }[]
 ): { [key: string]: ThemeAnimation } => {
   return Object.assign(target, ...sources)
+}
+
+export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
+  return (...args) => {
+    return sources.reduce((acc, next) => {
+      return _.merge(acc, callable(next)(...args))
+    }, {})
+  }
 }
 
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {

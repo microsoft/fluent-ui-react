@@ -4,6 +4,11 @@ import config from '../config'
 const { paths } = config
 const webpackDllConfig: any = { module: {} }
 
+webpackDllConfig.mode = 'production'
+webpackDllConfig.performance = {
+  hints: false,
+}
+
 // ------------------------------------
 // Entry Points
 // ------------------------------------

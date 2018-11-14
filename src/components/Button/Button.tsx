@@ -4,40 +4,87 @@ import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentVariablesInput, ComponentSlotStyle, Animation } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface ButtonProps {
-  animation?: string | Animation
-  as?: any
+export interface ButtonProps
+  extends UIComponentProps<any, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default buttonBehavior
+   */
   accessibility?: Accessibility
-  children?: ReactChildren
+
+  /** A button can appear circular. */
   circular?: boolean
-  className?: string
+
+  /** A button can show it is currently unable to be interacted with. */
   disabled?: boolean
-  content?: ShorthandValue
+
+  /** A button can take the width of its container. */
   fluid?: boolean
+
+  /** Button can have an icon. */
   icon?: ShorthandValue
+
+  /** A button may indicate that it has only icon. */
   iconOnly?: boolean
+
+  /** An icon button can format an Icon to appear before or after the button */
   iconPosition?: 'before' | 'after'
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onClick?: ComponentEventHandler<ButtonProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onFocus?: ComponentEventHandler<ButtonProps>
+
+  /** A button can be formatted to show different levels of emphasis. */
+  primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
+
+  /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean
-  type?: 'primary' | 'secondary'
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+
+  /** A button can be formatted to show different levels of emphasis. */
+  secondary?: boolean
 }
 
 export interface ButtonState {
@@ -59,92 +106,22 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    /** Generic animation property for adding CSS animation to the component's root element */
-    animation: PropTypes.oneOfType([
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        keyframeParams: PropTypes.object,
-        delay: PropTypes.string,
-        direction: PropTypes.string,
-        duration: PropTypes.string,
-        fillMode: PropTypes.string,
-        iterationCount: PropTypes.string,
-        playState: PropTypes.string,
-        timingFunction: PropTypes.string,
-      }),
-      PropTypes.string,
-    ]),
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Button content for childrenApi
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** A button can appear circular. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** A button can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** A button can take the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Button can have an icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** A button may indicate that it has only icon. */
     iconOnly: PropTypes.bool,
-
-    /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),
-
-    /**
-     * Called after user's click.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onClick: PropTypes.func,
-
-    /**
-     * Called after user's focus.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onFocus: PropTypes.func,
-
-    /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     text: PropTypes.bool,
-
-    /** A button can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** Accessibility behavior if overridden by the user. */
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderIcon: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {
@@ -178,7 +155,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
+        {createSlot(!hasChildren && content, {
           defaultProps: { as: 'span', className: classes.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
@@ -200,16 +177,14 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
