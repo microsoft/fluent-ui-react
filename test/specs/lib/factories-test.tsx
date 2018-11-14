@@ -128,7 +128,6 @@ const mappedProps = {
   iframe: 'src',
   img: 'src',
   input: 'type',
-  label: 'children',
   p: 'children',
 }
 

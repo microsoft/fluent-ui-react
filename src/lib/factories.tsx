@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ShorthandRenderFunction, ShorthandValue, Props } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
 
-type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'label' | 'p'
+type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'p'
 type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
@@ -32,7 +32,6 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
   iframe: 'src',
   img: 'src',
   input: 'type',
-  label: 'children',
   p: 'children',
 }
 

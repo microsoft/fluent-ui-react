@@ -14,17 +14,28 @@ describe('Slot', () => {
   it(`create renders a ${Slot.defaultProps.as} element with content prop`, () => {
     const testContent = 'test content'
     const slot = createSlotComp(Slot.create, testContent)
-    const { as, content } = slot.props()
 
-    expect(as).toEqual(Slot.defaultProps.as)
-    expect(content).toEqual(testContent)
+    expect(slot.prop('as')).toEqual(Slot.defaultProps.as)
+    expect(slot.prop('content')).toEqual(testContent)
   })
 
-  it(`createHTMLInput renders an input element with type prop`, () => {
-    const testType = 'test type'
-    const slot = createSlotComp(Slot.createHTMLElement, testType)
+  describe(`createHTMLElement`, () => {
+    it(`renders an HTML element with 'children' prop by default`, () => {
+      const childrenValue = 'test type'
+      const slot = createSlotComp(Slot.createHTMLElement, childrenValue)
 
-    expect(slot.prop('as')).toEqual('input')
-    expect(slot.prop('type')).toEqual(testType)
+      expect(slot.prop('as')).toEqual('div')
+      expect(slot.prop('children')).toEqual(childrenValue)
+    })
+
+    it(`renders an HTML element with correct prop`, () => {
+      const testType = 'test type'
+      const slot = createSlotComp(Slot.createHTMLElement, testType, {
+        defaultProps: { as: 'input' },
+      })
+
+      expect(slot.prop('as')).toEqual('input')
+      expect(slot.prop('type')).toEqual(testType)
+    })
   })
 })

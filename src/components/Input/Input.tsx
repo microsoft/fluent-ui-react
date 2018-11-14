@@ -137,9 +137,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static defaultProps = {
     as: 'div',
     type: 'text',
-    wrapper: {
-      as: 'div',
-    },
+    wrapper: {},
     iconPosition: 'end',
   }
 
@@ -156,9 +154,8 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
-    return Slot.create(wrapper, {
+    return Slot.createHTMLElement(wrapper, {
       defaultProps: {
-        as: ElementType,
         className: cx(Input.className, className),
         children: (
           <>
@@ -187,6 +184,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
         ),
         styles: styles.root,
         ...rest,
+      },
+      overrideProps: {
+        as: (wrapper && (wrapper as any).as) || ElementType,
       },
       render: renderWrapper,
     })
