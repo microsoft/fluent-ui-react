@@ -137,7 +137,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static defaultProps = {
     as: 'div',
     type: 'text',
-    wrapper: 'div',
+    wrapper: {
+      as: 'div',
+    },
     iconPosition: 'end',
   }
 

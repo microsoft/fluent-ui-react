@@ -10,7 +10,7 @@ import {
   contentComponentPropsTypes,
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
-import createComponent from '../../lib/createComponent'
+import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps, any>,
@@ -20,7 +20,9 @@ export interface SlotProps
 /**
  * A Slot is a basic component (no default styles)
  */
-const Slot = createComponent<SlotProps>({
+const Slot: CreateComponentReturnType<SlotProps> & {
+  createHTMLElement?: Function
+} = createComponent<SlotProps>({
   displayName: 'Slot',
 
   className: 'ui-slot',
@@ -43,7 +45,7 @@ const Slot = createComponent<SlotProps>({
   },
 })
 
-Slot.createHTMLElement = createShorthandFactory(Slot)
+Slot.createHTMLElement = createShorthandFactory(Slot) // TODO: fix types
 Slot.create = createShorthandFactory(Slot, 'content')
 
 export default Slot

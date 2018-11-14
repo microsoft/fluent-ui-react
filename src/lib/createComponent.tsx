@@ -5,7 +5,6 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 import { createShorthandFactory } from './factories'
-import { Extendable } from '../../types/utils'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -19,7 +18,7 @@ export interface CreateComponentConfig<P> {
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
-type CreateComponentReturnType<P> = React.SFC<P> & {
+export type CreateComponentReturnType<P> = React.SFC<P> & {
   create: Function
 }
 
@@ -33,7 +32,7 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
   actionHandlers,
   focusZoneRef, // TODO: setFocusZoneRef
   render,
-}: CreateComponentConfig<P>): Extendable<CreateComponentReturnType<P>> => {
+}: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
   const mergedDefaultProps = {
     as: 'div',
     ...(defaultProps as any),
