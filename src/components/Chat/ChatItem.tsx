@@ -8,7 +8,7 @@ import {
   RenderResultConfig,
   UIComponent,
 } from '../../lib'
-import Slot from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { Extendable, ReactChildren, ShorthandRenderFunction } from '../../../types/utils'
 
@@ -78,7 +78,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children)
           ? children
-          : Slot.create(content, {
+          : createSlot(content, {
               styles: styles.content,
               variables: variables.content,
               render: renderContent,

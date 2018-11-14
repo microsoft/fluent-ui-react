@@ -26,7 +26,7 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 
 export interface ChatMessageProps {
   accessibility?: Accessibility
@@ -211,7 +211,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
-    const contentElement = Slot.create(content, {
+    const contentElement = createSlot(content, {
       styles: styles.content,
       variables: variables.content,
       render: renderContent,

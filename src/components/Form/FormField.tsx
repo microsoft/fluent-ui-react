@@ -10,7 +10,7 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import Text from '../Text/Text'
-import { default as Slot } from '../Slot/Slot'
+import { createSlot } from '../Slot/Slot'
 import Input from '../Input/Input'
 
 export interface FormFieldProps {
@@ -156,7 +156,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
       render: renderMessage,
     })
 
-    const controlElement = Slot.create(control || {}, {
+    const controlElement = createSlot(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
       render: renderControl,
     })
