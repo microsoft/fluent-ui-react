@@ -1,5 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
+import add from './add'
 import bookmark from './bookmark'
 import call from './call'
 import callEnd from './callEnd'
@@ -23,6 +24,7 @@ import gallery from './gallery'
 import menu from './menu'
 
 export default {
+  add,
   bookmark,
   call,
   'call-end': callEnd,
