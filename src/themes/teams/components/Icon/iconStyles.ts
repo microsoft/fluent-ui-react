@@ -8,7 +8,7 @@ import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 8],
+  ['micro', 7],
   ['mini', 10],
   ['tiny', 12],
   ['small', 14],
