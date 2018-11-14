@@ -133,13 +133,6 @@ if (__PROD__) {
     new webpack.LoaderOptionsPlugin({
       minimize: true,
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     unused: true,
-    //     dead_code: true,
-    //     warnings: false,
-    //   },
-    // }),
   )
 }
 

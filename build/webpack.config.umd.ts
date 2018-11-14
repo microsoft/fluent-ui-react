@@ -1,5 +1,3 @@
-// import * as webpack from 'webpack'
-
 import config from '../config'
 import webpackConfig from '../webpack.config'
 
@@ -25,15 +23,6 @@ const webpackUMDConfig = {
     publicPath: '/',
     pathinfo: true,
   },
-  // plugins: [
-  //   new webpack.optimize.UglifyJsPlugin({
-  //     compress: {
-  //       unused: true,
-  //       dead_code: true,
-  //       warnings: false,
-  //     },
-  //   }),
-  // ],
   resolve: webpackConfig.resolve,
   module: {
     noParse: webpackConfig.module.noParse,
