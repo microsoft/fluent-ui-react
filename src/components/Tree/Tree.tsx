@@ -13,6 +13,7 @@ export type TreeProps = {
   variables?: ComponentVariablesInput
   treedata: {
     title: string
+    activeContent?: string
     onItemClick?: Function
     subtree?: any[]
   }[]
