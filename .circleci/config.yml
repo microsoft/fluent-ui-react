@@ -56,6 +56,9 @@ jobs:
           name: Project Tests
           command: yarn test:projects:cra-ts
       - run:
+          name: Bundle Statistics
+          command: yarn build:stats
+      - run:
           name: Publish npm package
           command: |
             if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
