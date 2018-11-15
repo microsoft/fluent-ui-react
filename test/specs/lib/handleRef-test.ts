@@ -6,7 +6,7 @@ describe('handleRef', () => {
     const node = document.createElement('div')
 
     expect(() => {
-      handleRef({ ref: 'ref' }, 'ref', node)
+      handleRef('ref', node)
     }).toThrowError()
   })
 
@@ -14,7 +14,7 @@ describe('handleRef', () => {
     const ref = jest.fn()
     const node = document.createElement('div')
 
-    handleRef({ ref }, 'ref', node)
+    handleRef(ref, node)
 
     expect(ref).toBeCalledWith(node)
   })
@@ -23,7 +23,7 @@ describe('handleRef', () => {
     const ref = React.createRef<HTMLDivElement>()
     const node = document.createElement('div')
 
-    handleRef({ ref }, 'ref', node)
+    handleRef(ref, node)
 
     expect(ref.current).toBe(node)
   })

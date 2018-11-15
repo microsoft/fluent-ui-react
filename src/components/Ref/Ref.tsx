@@ -31,11 +31,11 @@ export default class Ref extends React.Component<RefProps> {
   }
 
   componentDidMount() {
-    handleRef(this.props, 'innerRef', findDOMNode(this))
+    handleRef(this.props.innerRef, findDOMNode(this))
   }
 
   componentWillUnmount() {
-    handleRef(this.props, 'innerRef', null)
+    handleRef(this.props.innerRef, null)
   }
 
   render() {
