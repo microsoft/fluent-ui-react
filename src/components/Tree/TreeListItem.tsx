@@ -61,12 +61,18 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     /** Shorthand array of props for sub tree. */
     subtree: PropTypes.array,
 
-    /** Whether or not the item is in the open state. */
+    /** Whether or not the subtree of the item is in the open state. */
     active: PropTypes.bool,
 
     /** Shorthand for content when the item is in an open state. */
     activeContent: PropTypes.any,
 
+    /**
+     * Called when a tree title is clicked.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All title props.
+     */
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
 
