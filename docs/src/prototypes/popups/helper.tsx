@@ -273,7 +273,6 @@ const handleSelection = e => {
   const img = e.target.nodeName !== 'IMG' ? e.target.querySelector('img') : e.target
   const selectedItem = img && img.getAttribute('aria-label')
   if (!selectedItem) return
-  alert(`The image was selected "${selectedItem}"`)
 }
 
 export const renderImages = (images, ariaLabelPart) => {
