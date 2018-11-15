@@ -153,13 +153,13 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
-    return Slot.createHTMLElement(wrapper, {
+    return Slot.create(wrapper, {
       defaultProps: {
         className: cx(Input.className, className),
         children: (
           <>
             <Ref innerRef={this.handleInputRef}>
-              {Slot.createHTMLElement(input || type, {
+              {Slot.create(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
                   as: 'input',

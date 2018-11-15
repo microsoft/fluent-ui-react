@@ -124,11 +124,9 @@ const itOverridesDefaultProps = (propsSource, defaultProps, expectedProps, short
 }
 
 const mappedProps = {
-  div: 'children',
   iframe: 'src',
   img: 'src',
   input: 'type',
-  p: 'children',
 }
 
 const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) => {

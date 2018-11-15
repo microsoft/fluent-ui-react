@@ -147,7 +147,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          Slot.createHTMLElement('', {
+          Slot.create('', {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}

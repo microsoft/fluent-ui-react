@@ -21,7 +21,7 @@ export interface SlotProps
  * A Slot is a basic component (no default styles)
  */
 const Slot: CreateComponentReturnType<SlotProps> & {
-  createHTMLElement?: Function
+  create?: Function
 } = createComponent<SlotProps>({
   displayName: 'Slot',
 
@@ -45,7 +45,6 @@ const Slot: CreateComponentReturnType<SlotProps> & {
   },
 })
 
-Slot.createHTMLElement = createShorthandFactory(Slot)
-Slot.create = createShorthandFactory(Slot, 'content')
+Slot.create = createShorthandFactory(Slot)
 
 export default Slot

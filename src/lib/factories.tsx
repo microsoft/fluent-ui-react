@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ShorthandRenderFunction, ShorthandValue, Props } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
 
-type HTMLTag = 'div' | 'iframe' | 'img' | 'input' | 'p'
+type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
@@ -27,12 +27,11 @@ const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   generateKey: true,
 }
 
+// It's only necessary to map props that don't use 'children' as value ('children' is the default)
 const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
-  div: 'children',
   iframe: 'src',
   img: 'src',
   input: 'type',
-  p: 'children',
 }
 
 // ============================================================
