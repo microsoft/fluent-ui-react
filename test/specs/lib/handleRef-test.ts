@@ -15,7 +15,6 @@ describe('handleRef', () => {
     const node = document.createElement('div')
 
     handleRef(ref, node)
-
     expect(ref).toBeCalledWith(node)
   })
 
@@ -24,7 +23,6 @@ describe('handleRef', () => {
     const node = document.createElement('div')
 
     handleRef(ref, node)
-
     expect(ref.current).toBe(node)
   })
 })
