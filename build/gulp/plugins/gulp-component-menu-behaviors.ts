@@ -52,11 +52,8 @@ export default () => {
       // getting object that describes '@description' and '@specification' part of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
-        const descriptionTokenDesc = getTextFromCommentToken(commentTokens, 'description')
-        const specificationTokenDesc = getTextFromCommentToken(commentTokens, 'specification')
-
-        specificationText = specificationTokenDesc ? specificationTokenDesc : ''
-        description = descriptionTokenDesc ? descriptionTokenDesc : ''
+        description = getTextFromCommentToken(commentTokens, 'description')
+        specificationText = getTextFromCommentToken(commentTokens, 'specification')
       }
 
       result.push({
