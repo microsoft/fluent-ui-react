@@ -48,7 +48,7 @@ export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
   chatProps.push(generateChatMsgProps(lastMsg, members.get(lastMsg.from)))
 
   // Last read divider
-  const myLastMsgIndex: number = _.findLastIndex(chatProps, item => item.mine)
+  const myLastMsgIndex = _.findLastIndex(chatProps, item => (item as ChatMessage).mine)
   if (myLastMsgIndex < chatProps.length - 1) {
     chatProps.splice(
       myLastMsgIndex + 1,
