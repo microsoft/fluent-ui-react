@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Extendable } from 'types/utils'
 
@@ -34,11 +33,5 @@ const ComponentPropExtra = ({
     <div style={inline ? contentInlineStyle : contentBlockStyle}>{children}</div>
   </div>
 )
-
-ComponentPropExtra.propTypes = {
-  children: PropTypes.node,
-  inline: PropTypes.bool,
-  title: PropTypes.node,
-}
 
 export default ComponentPropExtra
