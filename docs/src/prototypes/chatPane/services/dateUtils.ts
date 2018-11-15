@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import moment from 'moment'
+import * as moment from 'moment'
 import { date } from 'faker'
 
 const getNowDate = (): Date => new Date()
