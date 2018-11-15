@@ -16,8 +16,13 @@ export { default as Attachment, AttachmentProps } from './components/Attachment/
 
 export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
 
-export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
-export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
+export {
+  Button,
+  ButtonGroup,
+  ButtonProps,
+  ButtonState,
+  ButtonGroupProps,
+} from './components/Button'
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
 export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'

@@ -1,5 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
+import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup.types'
 
 const commonButtonsStyles = (circular: boolean) => ({
   ...(!circular && {

@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
+import { ButtonProps, ButtonState } from '../../../../components/Button/Button.types'
 import { truncateStyle } from '../../../../styles/customCSS'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
