@@ -2,7 +2,7 @@ import { customPropTypes } from 'src/lib'
 
 describe('suggest prop type', () => {
   test('should throw error when non-array argument given', () => {
-    expect(() => customPropTypes.suggest('foo')).toThrowError(Error)
+    expect(() => customPropTypes.suggest('foo' as any)).toThrowError(Error)
   })
 
   test('should return undefined when prop is valid', () => {

@@ -1,4 +1,5 @@
 import { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
+import { ComponentStyleFunctionParam } from 'src/themes/types'
 
 describe('mergeComponentStyles', () => {
   test(`always returns an object`, () => {
@@ -90,10 +91,10 @@ describe('mergeComponentStyles', () => {
 
     const merged = mergeComponentStyles(target, source)
 
-    const styleParam = {
+    const styleParam: ComponentStyleFunctionParam = {
       variables: { iconSize: 'large' },
       props: { primary: true },
-    }
+    } as any
 
     expect(merged.root(styleParam)).toMatchObject({
       source: true,
