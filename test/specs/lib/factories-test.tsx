@@ -161,7 +161,7 @@ describe('factories', () => {
 
     test('throw if passed Component that is not a string nor function', () => {
       consoleUtil.disableOnce()
-      const badComponents = [undefined, null, true, false, [], {}, 123]
+      const badComponents: any[] = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
         const badUsage = () => createShorthand(badComponent, () => ({}))
