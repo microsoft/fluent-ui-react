@@ -82,6 +82,9 @@ const makeConfig = (srcPath, name) => ({
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
+  performance: {
+    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
+  },
 })
 
 export default [
