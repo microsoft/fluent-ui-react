@@ -16,8 +16,8 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import Icon from '../Icon/Icon'
-import { createHTMLInput, createSlot } from '../Slot/Slot'
 import Ref from '../Ref/Ref'
+import Slot from '../Slot/Slot'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
@@ -136,7 +136,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
 
   static defaultProps = {
     type: 'text',
-    wrapper: 'div',
+    wrapper: {},
     iconPosition: 'end',
   }
 
@@ -153,16 +153,16 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
-    return createSlot(wrapper, {
+    return Slot.create(wrapper, {
       defaultProps: {
-        as: ElementType,
         className: cx(Input.className, className),
         children: (
           <>
             <Ref innerRef={this.handleInputRef}>
-              {createHTMLInput(input || type, {
+              {Slot.create(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
+                  as: 'input',
                   type,
                   value,
                   className: classes.input,
@@ -183,6 +183,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
         ),
         styles: styles.root,
         ...rest,
+      },
+      overrideProps: {
+        as: (wrapper && (wrapper as any).as) || ElementType,
       },
       render: renderWrapper,
     })
