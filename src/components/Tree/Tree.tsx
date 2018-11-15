@@ -12,7 +12,7 @@ export type TreeProps = {
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   treedata: {
-    title: string
+    title: any
     activeContent?: string
     onItemClick?: Function
     subtree?: any[]

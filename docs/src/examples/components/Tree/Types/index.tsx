@@ -9,6 +9,11 @@ const Types = () => (
       description="A default Tree."
       examplePath="components/Tree/Types/TreeExample"
     />
+    <ComponentExample
+      title="Exclusive"
+      description="A Tree with components as title."
+      examplePath="components/Tree/Types/TreeExclusiveExample"
+    />
   </ExampleSection>
 )
 
