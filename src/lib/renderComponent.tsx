@@ -44,7 +44,7 @@ export interface RenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
-export interface RenderConfig {
+export interface RenderConfig<P> {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
@@ -53,6 +53,7 @@ export interface RenderConfig {
   state: State
   actionHandlers: AccessibilityActionHandlers
   focusZoneRef: (focusZone: FocusZone) => void
+  render: RenderComponentCallback<P>
 }
 
 const getAccessibility = (
@@ -117,10 +118,7 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
   return render(config)
 }
 
-const renderComponent = <P extends {}>(
-  config: RenderConfig,
-  render: RenderComponentCallback<P>,
-): React.ReactNode => {
+const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
   const {
     className,
     defaultProps,
@@ -130,6 +128,7 @@ const renderComponent = <P extends {}>(
     state,
     actionHandlers,
     focusZoneRef,
+    render,
   } = config
 
   return (

@@ -12,30 +12,55 @@ import {
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
 
-export interface LabelProps {
+export interface LabelProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
+
+  /** A label can be circular. */
   circular?: boolean
-  className?: string
+
+  /** Shorthand for primary content. */
   content?: React.ReactNode
+
+  /** A Label can take the width of its container. */
   fluid?: boolean
+
+  /** Label can have an icon. */
   icon?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
   iconPosition?: 'start' | 'end'
+
+  /** Label can have an icon. */
   image?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
   imagePosition?: 'start' | 'end'
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the image slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderImage?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -49,59 +74,18 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** A label can be circular. */
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
-
-    /** Label can have an icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Label can have an icon. */
     image: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
+    fluid: PropTypes.bool,
     renderIcon: PropTypes.func,
-
-    /**
-     * A custom render function the image slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderImage: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
