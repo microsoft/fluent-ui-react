@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { IThemeInput } from 'types/theme'
+import { ThemeInput } from 'src/themes/types'
 
 describe('ProviderConsumer', () => {
   test('is exported', () => {
@@ -18,7 +18,7 @@ describe('ProviderConsumer', () => {
     test('is a callback that receives the prepared theme', () => {
       expect.assertions(13)
 
-      const inputTheme: IThemeInput = {
+      const inputTheme: ThemeInput = {
         siteVariables: { a: 'b' },
         componentVariables: { Button: { color: 'red' } },
         componentStyles: { Button: { root: { color: 'red' } } },
