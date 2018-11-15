@@ -15,7 +15,7 @@ describe('FormField', () => {
   isConformant(FormField)
   formFieldImplementsShorthandProp('label', Text)
   formFieldImplementsShorthandProp('message', Text)
-  formFieldImplementsShorthandProp('control', Slot)
+  formFieldImplementsShorthandProp('control', Slot, { mapsValueToProp: 'children' })
 
   it('renders the component control provided in the control shorthand prop', () => {
     const controls = [Button, Input, RadioGroup]
