@@ -25,7 +25,7 @@ type Example = {
 const parseDocSection = buffer => {
   const ast = parseBuffer(buffer)
   const examples: Example[] = []
-  let sectionName
+  let sectionName: string
 
   traverse(ast, {
     JSXOpeningElement: path => {
