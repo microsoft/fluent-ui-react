@@ -10,6 +10,7 @@ export type TreeTitleProps = {
   content?: React.ReactNode
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
+  active?: boolean
 }
 
 class TreeTitle extends UIComponent<TreeTitleProps, any> {
@@ -36,6 +37,8 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
 
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+
+    active: PropTypes.bool,
   }
 
   public static defaultProps = {

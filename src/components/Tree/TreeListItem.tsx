@@ -93,6 +93,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
             href: '#',
             styles: titleStyles,
             variables: titleVariables,
+            active,
           },
           overrideProps: this.handleItemOverrides,
         },
