@@ -7,6 +7,7 @@ import TreeTitle from './TreeTitle'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 
 export type TreeListItemProps = {
   as?: any
@@ -14,18 +15,18 @@ export type TreeListItemProps = {
   content?: React.ReactNode
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
-  subtree?: any
+  subtree?: any[]
   active?: boolean
-  titleStyles?: any
-  titleVariables?: any
-  onItemClick?: Function
-  activeContent?: any
+  titleStyles?: ComponentSlotStyle
+  titleVariables?: ComponentVariablesInput
+  onItemClick?: ComponentEventHandler<TreeListItemProps>
+  activeContent?: ShorthandValue
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
   static create: Function
 
-  static className = 'tree-list-item'
+  static className = 'tree-list__item'
 
   static displayName = 'TreeListItem'
 
@@ -51,12 +52,19 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Custom styles to be applied to the tree title. */
     titleStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Custom variables to be applied to the tree title. */
     titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Shorthand array of props for sub tree. */
     subtree: PropTypes.array,
+
+    /** Whether or not the item is in the open state. */
     active: PropTypes.bool,
+
+    /** Shorthand for content when the item is in an open state. */
     activeContent: PropTypes.any,
 
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
@@ -67,13 +75,13 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   }
 
   handleItemOverrides = predefinedProps => ({
-    onClick: e => {
+    onClick: (e, titleProps) => {
       e.preventDefault()
       this.setState({
         active: !this.state.active,
       })
-      _.invoke(predefinedProps, 'onClick', e)
-      _.invoke(this.props, 'onItemClick', e)
+      _.invoke(predefinedProps, 'onClick', e, titleProps)
+      _.invoke(this.props, 'onItemClick', e, titleProps)
     },
   })
 

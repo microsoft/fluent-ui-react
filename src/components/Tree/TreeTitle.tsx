@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -45,11 +46,15 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
     as: 'a',
   }
 
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
   renderComponent({ ElementType, classes, rest, styles, variables }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

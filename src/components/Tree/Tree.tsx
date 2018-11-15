@@ -4,6 +4,7 @@ import * as React from 'react'
 import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 
 export type TreeProps = {
   as?: any
@@ -12,9 +13,8 @@ export type TreeProps = {
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   treedata: {
-    title: any
-    activeContent?: string
-    onItemClick?: Function
+    title: ShorthandValue
+    onItemClick?: ComponentEventHandler<TreeProps>
     subtree?: any[]
   }[]
 }
@@ -44,6 +44,7 @@ class Tree extends UIComponent<TreeProps, any> {
     /** Custom variables to be applied to the component. */
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 
+    /** Shorthand array of props for Tree. */
     treedata: PropTypes.array,
   }
 
