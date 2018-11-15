@@ -9,28 +9,44 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface ListProps {
+export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
-  className?: string
+
+  /** Toggle debug mode */
   debug?: boolean
+
+  /** Shorthand array of props for ListItem. */
   items?: ShorthandValue[]
+
+  /** Ref callback with the list DOM node. */
   listRef?: (node: HTMLElement) => void
+
+  /** A selection list formats list items as possible choices. */
   selection?: boolean
+
+  /** Truncates content */
   truncateContent?: boolean
+
+  /** Truncates header */
   truncateHeader?: boolean
+
+  /**
+   * A custom render iterator for rendering each of the List items.
+   * The default component, props, and children are available for each item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 export interface ListState {
@@ -46,53 +62,16 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   static className = 'ui-list'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Toggle debug mode */
-    debug: PropTypes.bool,
-
-    /** Shorthand array of props for ListItem. */
-    items: customPropTypes.collectionShorthand,
-
-    /** A selection list formats list items as possible choices. */
-    selection: PropTypes.bool,
-
-    /** Truncates content */
-    truncateContent: PropTypes.bool,
-
-    /** Truncates header */
-    truncateHeader: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
     accessibility: PropTypes.func,
-
-    /** Ref callback with the list DOM node. */
+    debug: PropTypes.bool,
+    items: customPropTypes.collectionShorthand,
+    selection: PropTypes.bool,
+    truncateContent: PropTypes.bool,
+    truncateHeader: PropTypes.bool,
     listRef: PropTypes.func,
-
-    /**
-     * A custom render iterator for rendering each of the List items.
-     * The default component, props, and children are available for each item.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderItem: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
