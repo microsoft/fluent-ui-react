@@ -54,18 +54,18 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone direction={FocusZoneDirection.vertical}>
-          <button className="a">a</button>
-          <button className="b">b</button>
-          <button className="c">c</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
     // Assign bounding locations to buttons.
     setupElement(buttonA, {
@@ -151,16 +151,16 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone direction={FocusZoneDirection.vertical}>
-          <button className="a">a</button>
-          <button className="b">b</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
 
     // Assign bounding locations to buttons.
     setupElement(buttonA, {
@@ -197,17 +197,17 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone direction={FocusZoneDirection.horizontal}>
-          <button className="a">a</button>
-          <button className="b">b</button>
-          <button className="c">c</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
     // Assign bounding locations to buttons.
     setupElement(buttonA, {
@@ -293,23 +293,23 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone>
-          <button className="a">a</button>
-          <button className="b">b</button>
-          <button className="c">c</button>
-          <button className="hidden">hidden</button>
-          <button className="d">d</button>
-          <button className="e">e</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
+          <button id="hidden">hidden</button>
+          <button id="d">d</button>
+          <button id="e">e</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
-    const hiddenButton = focusZone.querySelector('.hidden') as HTMLElement
-    const buttonD = focusZone.querySelector('.d') as HTMLElement
-    const buttonE = focusZone.querySelector('.e') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
+    const hiddenButton = focusZone.querySelector('#hidden') as HTMLElement
+    const buttonD = focusZone.querySelector('#d') as HTMLElement
+    const buttonE = focusZone.querySelector('#e') as HTMLElement
 
     // Set up a grid like so:
     // A B
@@ -407,19 +407,19 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone>
-          <button className="a">a</button>
-          <button className="b">b</button>
-          <button className="c">c</button>
-          <button className="d">d</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
+          <button id="d">d</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
-    const buttonD = focusZone.querySelector('.d') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
+    const buttonD = focusZone.querySelector('#d') as HTMLElement
 
     // Set up a grid like so:
     // A B
@@ -492,19 +492,19 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
         <FocusZone>
-          <button className="a">a</button>
-          <button className="b" data-not-focusable={false}>
+          <button id="a">a</button>
+          <button id="b" data-not-focusable={false}>
             b
           </button>
-          <button className="c">c</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
     // Set up a grid like so:
     // A B
@@ -564,22 +564,22 @@ describe('FocusZone', () => {
           direction={FocusZoneDirection.horizontal}
           shouldEnterInnerZone={isInnerZoneKeystroke}
         >
-          <button className="a">a</button>
-          <div className="b" data-is-sub-focuszone={true} {...isFocusableProperty}>
-            <button className="bsub">bsub</button>
+          <button id="a">a</button>
+          <div id="b" data-is-sub-focuszone={true} {...isFocusableProperty}>
+            <button id="bsub">bsub</button>
           </div>
-          <button className="c">c</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const divB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const divB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
-    const buttonB = focusZone.querySelector('.bsub') as HTMLElement
+    const buttonB = focusZone.querySelector('#bsub') as HTMLElement
 
     setupElement(buttonA, {
       clientRect: {
@@ -651,26 +651,22 @@ describe('FocusZone', () => {
           direction={FocusZoneDirection.horizontal}
           shouldEnterInnerZone={isInnerZoneKeystroke}
         >
-          <button className="a">a</button>
-          <FocusZone
-            direction={FocusZoneDirection.horizontal}
-            className="b"
-            {...isFocusableProperty}
-          >
-            <button className="bsub">bsub</button>
+          <button id="a">a</button>
+          <FocusZone direction={FocusZoneDirection.horizontal} id="b" {...isFocusableProperty}>
+            <button id="bsub">bsub</button>
           </FocusZone>
-          <button className="c">c</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const divB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const divB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
-    const buttonB = focusZone.querySelector('.bsub') as HTMLElement
+    const buttonB = focusZone.querySelector('#bsub') as HTMLElement
 
     setupElement(buttonA, {
       clientRect: {
@@ -737,14 +733,14 @@ describe('FocusZone', () => {
     let buttonB: any
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus }}>
-        <textarea className="t" />
+        <textarea id="t" />
         <FocusZone
           ref={focus => {
             focusZone = focus
           }}
         >
           <button
-            className="a"
+            id="a"
             ref={button => {
               buttonA = button
             }}
@@ -752,7 +748,7 @@ describe('FocusZone', () => {
             a
           </button>
           <button
-            className="b"
+            id="b"
             ref={button => {
               buttonB = button
             }}
@@ -811,7 +807,7 @@ describe('FocusZone', () => {
           }}
         >
           <button
-            className="a"
+            id="a"
             ref={button => {
               buttonA = button
             }}
@@ -819,7 +815,7 @@ describe('FocusZone', () => {
             a
           </button>
           <button
-            className="b"
+            id="b"
             ref={button => {
               buttonB = button
             }}
@@ -832,7 +828,7 @@ describe('FocusZone', () => {
 
     const focusZoneElement = ReactDOM.findDOMNode(component as React.ReactInstance)!
       .firstChild as Element
-    const buttonAElement = focusZoneElement.querySelector('.a') as HTMLElement
+    const buttonAElement = focusZoneElement.querySelector('#a') as HTMLElement
 
     // HACK declare that elements are not null at this point.
     // Type narrowing doesn't work because TypeScript is not considering the assignments inside `ref` lambdas.
@@ -886,18 +882,18 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
         <FocusZone {...{ handleTabKey: FocusZoneTabbableElements.all, isCircularNavigation: true }}>
-          <button className="a">a</button>
-          <button className="b">b</button>
-          <button className="c">c</button>
+          <button id="a">a</button>
+          <button id="b">b</button>
+          <button id="c">c</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
-    const buttonC = focusZone.querySelector('.c') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
+    const buttonC = focusZone.querySelector('#c') as HTMLElement
 
     setupElement(buttonA, {
       clientRect: {
@@ -968,14 +964,14 @@ describe('FocusZone', () => {
     const component = ReactTestUtils.renderIntoDocument(
       <div {...{ onFocusCapture: onFocus, onKeyDown: tabDownListener }}>
         <FocusZone>
-          <button className="a">a</button>
+          <button id="a">a</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
 
     setupElement(buttonA, {
       clientRect: {
@@ -1005,16 +1001,16 @@ describe('FocusZone', () => {
         <FocusZone
           {...{ handleTabKey: FocusZoneTabbableElements.inputOnly, isCircularNavigation: false }}
         >
-          <input type="text" className="a" />
-          <button className="b">b</button>
+          <input type="text" id="a" />
+          <button id="b">b</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const inputA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
+    const inputA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
 
     setupElement(inputA, {
       clientRect: {
@@ -1071,16 +1067,16 @@ describe('FocusZone', () => {
             },
           }}
         >
-          <input type="text" className="a" />
-          <button className="b">b</button>
+          <input type="text" id="a" />
+          <button id="b">b</button>
         </FocusZone>
       </div>,
     )
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const inputA = focusZone.querySelector('.a') as HTMLElement
-    const buttonB = focusZone.querySelector('.b') as HTMLElement
+    const inputA = focusZone.querySelector('#a') as HTMLElement
+    const buttonB = focusZone.querySelector('#b') as HTMLElement
 
     setupElement(inputA, {
       clientRect: {
@@ -1122,14 +1118,14 @@ describe('FocusZone', () => {
           direction={FocusZoneDirection.horizontal}
           shouldEnterInnerZone={isInnerZoneKeystroke}
         >
-          <button className="a">a</button>
+          <button id="a">a</button>
           <FocusZone
             direction={FocusZoneDirection.horizontal}
-            className="b"
+            id="b"
             shouldFocusFirstElementWhenReceivedFocus={true}
             {...isFocusableProperty}
           >
-            <button className="bsub">bsub</button>
+            <button id="bsub">bsub</button>
           </FocusZone>
         </FocusZone>
       </div>,
@@ -1137,10 +1133,10 @@ describe('FocusZone', () => {
 
     const focusZone = ReactDOM.findDOMNode(component as React.ReactInstance)!.firstChild as Element
 
-    const buttonA = focusZone.querySelector('.a') as HTMLElement
-    const divB = focusZone.querySelector('.b') as HTMLElement
+    const buttonA = focusZone.querySelector('#a') as HTMLElement
+    const divB = focusZone.querySelector('#b') as HTMLElement
 
-    const buttonB = focusZone.querySelector('.bsub') as HTMLElement
+    const buttonB = focusZone.querySelector('#bsub') as HTMLElement
 
     setupElement(buttonA, {
       clientRect: {
