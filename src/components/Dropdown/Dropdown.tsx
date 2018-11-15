@@ -42,7 +42,7 @@ export interface DropdownProps {
   multiple?: boolean
   noResultsMessage?: string
   onBackspaceDelete?: ComponentEventHandler<DropdownProps>
-  onChange?: (value: DropdownListItem | DropdownListItem[]) => any
+  handleChange?: (value: DropdownListItem | DropdownListItem[]) => any
   onCloseIconClick?: ComponentEventHandler<DropdownProps>
   onCloseIconKeyDown?: ComponentEventHandler<DropdownProps>
   onContainerClick?: ComponentEventHandler<DropdownProps>
@@ -50,7 +50,7 @@ export interface DropdownProps {
   onInputFocus?: ComponentEventHandler<DropdownProps>
   onInputKeyDown?: ComponentEventHandler<DropdownProps>
   onLabelClick?: ComponentEventHandler<DropdownProps>
-  onSearchChange?: (searchQuery: string) => any
+  handleSearchChange?: (searchQuery: string) => any
   placeholder?: string
   search?: boolean
   styles?: ComponentSlotStyle<DropdownProps, DropdownState>
@@ -108,7 +108,7 @@ export default class Dropdown extends AutoControlledComponent<
      * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
      * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
      */
-    itemToString: PropTypes.function,
+    itemToString: PropTypes.func,
 
     /**
      * A function that creates custom accessability message for dropdown status.
@@ -150,7 +150,7 @@ export default class Dropdown extends AutoControlledComponent<
      * Callback for change in dropdown active value(s).
      * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
      */
-    onChange: PropTypes.func,
+    handleChange: PropTypes.func,
 
     /**
      * Called on clicking the 'X' icon corresponding to an active value.
@@ -212,7 +212,7 @@ export default class Dropdown extends AutoControlledComponent<
      * Callback for change in dropdown search value.
      * @param {string} searchQuery - The new value in the search field.
      */
-    onSearchChange: PropTypes.func,
+    handleSearchChange: PropTypes.func,
 
     /** A message to serve as placeholder. */
     placeholder: PropTypes.string,
@@ -269,7 +269,7 @@ export default class Dropdown extends AutoControlledComponent<
         : `${poppedItem.header} has been removed.`,
     })
 
-    _.invoke(this.props, 'onChange', value)
+    _.invoke(this.props, 'handleChange', value)
 
     return poppedItem
   }
@@ -513,7 +513,7 @@ export default class Dropdown extends AutoControlledComponent<
         this.setState({
           backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
         })
-        _.invoke(this.props, 'onSearchChange', changes.inputValue)
+        _.invoke(this.props, 'handleSearchChange', changes.inputValue)
         return changes
       default:
         return changes
@@ -570,7 +570,7 @@ export default class Dropdown extends AutoControlledComponent<
         : `${item.header} has been selected.`,
     })
 
-    _.invoke(this.props, 'onChange', newValue)
+    _.invoke(this.props, 'handleChange', newValue)
   }
 
   private handleCloseIconClick = (item: DropdownListItem, e: React.SyntheticEvent) => {

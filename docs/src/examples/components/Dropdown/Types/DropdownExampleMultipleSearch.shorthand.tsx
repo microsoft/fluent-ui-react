@@ -11,7 +11,7 @@ class DropdownExample extends React.Component {
         multiple
         search
         items={this.state.items}
-        onChange={(value: DropdownListItem[]) => {
+        handleChange={(value: DropdownListItem[]) => {
           this.setState({
             items: inputItems.filter(item => value.indexOf(item) === -1),
           })
