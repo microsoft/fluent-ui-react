@@ -1,24 +1,50 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
+import { childrenExist, createShorthand } from '../../lib'
 import {
-  customPropTypes,
-  UIComponent,
-  childrenExist,
-  RenderResultConfig,
-  createShorthand,
-} from '../../lib'
-import { Extendable, MapValueToProps, Props } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
+import createComponent from '../../lib/createComponent'
+import { MapValueToProps, Props } from 'types/utils'
 
-export interface SlotProps {
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
-  variables?: ComponentVariablesInput
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
-export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
+/**
+ * A Slot is a basic component (no default styles)
+ */
+const Slot = createComponent<SlotProps>({
+  displayName: 'Slot',
+
+  className: 'ui-slot',
+
+  propTypes: {
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
+  },
+
+  render(config, props) {
+    const { ElementType, classes, rest } = config
+    const { children, content } = props
+
+    return (
+      <ElementType {...rest} className={classes.root}>
+        {childrenExist(children) ? children : content}
+      </ElementType>
+    )
+  },
+})
+
+const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
   val,
   options: Props = {},
 ) => {
@@ -26,47 +52,7 @@ export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => 
   return createShorthand(Slot, mapValueToProps, val, options)
 }
 
-/**
- * A Slot is a basic component (no default styles)
- */
-class Slot extends UIComponent<Extendable<SlotProps>, any> {
-  static className = 'ui-slot'
-
-  static displayName = 'Slot'
-
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  }
-
-  static defaultProps = {
-    as: 'div',
-  }
-
-  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-  static createHTMLInput = createSlotFactory('input', type => ({ type }))
-
-  renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
-    const { children, content } = this.props
-
-    return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
-      </ElementType>
-    )
-  }
-}
+export const createSlot = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
+export const createHTMLInput = createSlotFactory('input', type => ({ type }))
 
 export default Slot
