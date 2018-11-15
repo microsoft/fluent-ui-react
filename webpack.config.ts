@@ -13,6 +13,7 @@ const { __DEV__, __PROD__ } = config.compiler_globals
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
+  mode: __DEV__ ? 'development' : 'production',
   entry: {
     app: paths.docsSrc('index'),
     vendor: config.compiler_vendor,
@@ -39,7 +40,7 @@ const webpackConfig: any = {
     readline: 'empty',
   },
   module: {
-    noParse: [/\.json$/, /anchor-js/],
+    noParse: [/anchor-js/],
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
@@ -103,6 +104,9 @@ const webpackConfig: any = {
       'package.json': paths.base('package.json'),
     },
   },
+  performance: {
+    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
+  },
 }
 
 // ------------------------------------
@@ -133,13 +137,6 @@ if (__PROD__) {
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false,
-      },
     }),
   )
 }
