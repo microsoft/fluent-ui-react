@@ -32,9 +32,10 @@ task('build:stats:bundle', cb => {
   const compiler = webpack(webpackStatsConfig)
 
   compiler.run((err, stats) => {
-    const { errors, warnings } = stats.toJson()
+    const statsJson = stats.toJson()
+    const { errors, warnings } = statsJson
 
-    log(stats.toString(config.compiler_stats))
+    // log(stats.toString(config.compiler_stats))
 
     if (err) {
       log('Webpack compiler encountered a fatal error.')
@@ -45,8 +46,25 @@ task('build:stats:bundle', cb => {
       throw new PluginError('webpack', errors.toString())
     }
     if (warnings.length > 0) {
-      // throw new PluginError('webpack', warnings.toString())
+      throw new PluginError('webpack', warnings.toString())
     }
+
+    const results = _(statsJson.children)
+      .flatMap('assets')
+      .map(({ name, size }) => ({ name, size }))
+      .sortBy('name')
+      .value()
+
+    log(
+      JSON.stringify(
+        results.map(({ size, ...rest }) => ({
+          size: prettyBytes(size),
+          ...rest,
+        })),
+        null,
+        2,
+      ),
+    )
 
     cb(err)
   })

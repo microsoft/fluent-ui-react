@@ -88,20 +88,20 @@ const makeConfig = (srcPath, name) => ({
 })
 
 export default [
-  // // entire package
-  // makeConfig('index', 'stardust-ui-react'),
-  //
-  // // lib (core)
-  // makeConfig('lib/index', 'stardust-ui-core'),
+  // entire package
+  makeConfig('index', 'bundle-stardust-ui-react'),
+
+  // lib (core)
+  makeConfig('lib/index', 'bundle-stardust-ui-core'),
 
   // individual components
   ...fs
     .readdirSync(paths.src('components'))
-    .map(dir => makeConfig(`components/${dir}/${dir}`, dir)),
+    .map(dir => makeConfig(`components/${dir}/${dir}`, `component-${dir}`)),
 
-  // // individual themes
-  // ...fs
-  //   .readdirSync(paths.src('themes'))
-  //   .filter(dir => !/.*\.\w+$/.test(dir))
-  //   .map(dir => makeConfig(`themes/${dir}`, `theme-${dir}`)),
+  // individual themes
+  ...fs
+    .readdirSync(paths.src('themes'))
+    .filter(dir => !/.*\.\w+$/.test(dir))
+    .map(dir => makeConfig(`themes/${dir}`, `theme-${dir}`)),
 ]
