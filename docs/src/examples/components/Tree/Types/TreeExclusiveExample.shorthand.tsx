@@ -16,7 +16,7 @@ const treeData = [
         </div>
       ),
     },
-    key: 1,
+    key: '1',
     subtree: [
       {
         title: {
@@ -33,11 +33,11 @@ const treeData = [
             </div>
           ),
         },
-        key: 2,
+        key: '2',
         subtree: [
           {
             title: 'one one one',
-            key: 3,
+            key: '3',
           },
         ],
       },
@@ -58,11 +58,11 @@ const treeData = [
         </div>
       ),
     },
-    key: 4,
+    key: '4',
     subtree: [
       {
         title: 'two one',
-        key: 5,
+        key: '5',
       },
     ],
   },

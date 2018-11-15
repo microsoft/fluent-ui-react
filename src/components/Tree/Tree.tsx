@@ -51,23 +51,6 @@ class Tree extends UIComponent<TreeProps, any> {
     as: 'ul',
   }
 
-  /* renderContent() {
-    const { treedata } = this.props
-    if (!treedata) return []
-    return treedata.map(obj => {
-      return (<TreeListItem>
-        <a href="#">{obj.title}</a>
-        {obj.submenu &&
-          Tree.create('', {
-            defaultProps: {
-              treedata: obj.submenu,
-            },
-          })
-        }
-      </TreeListItem>)
-    })
-  } */
-
   renderContent(styles, variables) {
     const { treedata } = this.props
     if (!treedata) return []
