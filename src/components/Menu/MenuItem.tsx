@@ -143,7 +143,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static defaultProps = {
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
-    wrapper: 'li',
+    wrapper: { as: 'li' },
   }
 
   state = IsFromKeyboard.initial
