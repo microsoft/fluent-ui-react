@@ -93,6 +93,8 @@ export { default as Status, StatusPropsWithDefaults, StatusProps } from './compo
 
 export { default as Text, TextProps } from './components/Text/Text'
 
+export { default as Transition, TransitionProps } from './components/Transition/Transition'
+
 //
 // Accessibility
 //
