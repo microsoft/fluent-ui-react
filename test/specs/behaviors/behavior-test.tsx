@@ -15,6 +15,7 @@ import {
   menuBehavior,
   menuItemBehavior,
   popupBehavior,
+  popupFocusTrapBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
@@ -24,6 +25,7 @@ import {
   toggleButtonBehavior,
   toolbarBehavior,
   toolbarButtonBehavior,
+  gridBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -42,6 +44,7 @@ testHelper.addBehavior('imageBehavior', imageBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
+testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
@@ -51,5 +54,6 @@ testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
+testHelper.addBehavior('gridBehavior', gridBehavior)
 
 testHelper.run(behaviorMenuItems)

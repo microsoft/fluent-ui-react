@@ -200,9 +200,9 @@ definitions.push({
   },
 })
 
-// Wraps component in FocusZone allowing arrow key navigation through the children of the component.
+// [Circular navigation] Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
 definitions.push({
-  regexp: /Wraps component in FocusZone allowing arrow key navigation through the children of the component.\.+/g,
+  regexp: /Wraps component in FocusZone allowing circular arrow key navigation through the children of the component\.+/g,
   testMethod: (parameters: TestMethod) => {
     const property = {
       isCircularNavigation: undefined,
@@ -216,6 +216,23 @@ definitions.push({
     expect(expectedMode).toBe(1)
     expect(expectedIsCircularNav).toBe(true)
     expect(expectedPreventDefault).toBe(true)
+  },
+})
+
+// [FocusTrapZone] Traps focus inside component
+definitions.push({
+  regexp: /Traps focus inside component/,
+  testMethod: (parameters: TestMethod) => {
+    const focusTrapZoneProps = parameters.behavior({}).focusTrap
+
+    expect(focusTrapZoneProps).toBeDefined()
+
+    if (typeof focusTrapZoneProps === 'boolean') {
+      expect(focusTrapZoneProps).toBe(true)
+    } else {
+      expect(focusTrapZoneProps).not.toBeNull()
+      expect(typeof focusTrapZoneProps).toBe('object')
+    }
   },
 })
 

@@ -7,7 +7,6 @@ import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
 import ShorthandProps from './views/ShorthandProps'
-import Glossary from './views/Glossary'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
@@ -47,8 +46,13 @@ const Router = () => (
             path="/prototype-meeting-options"
             component={require('./prototypes/meetingOptions/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-search-page"
+            path="/prototype-search-page"
+            component={require('./prototypes/SearchPage/index').default}
+          />,
         ]}
-        <DocsLayout exact path="/glossary" component={Glossary} />
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />

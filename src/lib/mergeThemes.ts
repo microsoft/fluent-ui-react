@@ -15,10 +15,12 @@ import {
   ThemePrepared,
   StaticStyle,
   ThemeIcons,
+  ComponentSlotStyle,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
+import { ObjectOf } from 'types/utils'
 
 // ----------------------------------------
 // Component level merge functions
@@ -64,9 +66,9 @@ export const mergeComponentVariables = (
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
+      const mergedVariables: ObjectOf<any> = {}
 
-      const mergedVariables = {}
-      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+      _.forEach(computedComponentVariables, (variableToMerge, variableName) => {
         const accumulatedVariable = accumulatedVariables[variableName]
 
         mergedVariables[variableName] =
@@ -174,6 +176,14 @@ export const mergeStaticStyles = (...sources: StaticStyle[]) => {
 
 export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeIcons => {
   return Object.assign(target, ...sources)
+}
+
+export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
+  return (...args) => {
+    return sources.reduce((acc, next) => {
+      return _.merge(acc, callable(next)(...args))
+    }, {})
+  }
 }
 
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {

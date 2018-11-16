@@ -1,30 +1,78 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
-import { UIComponent, customPropTypes, createShorthandFactory, createHTMLDivision } from '../../lib'
+import * as _ from 'lodash'
+import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import Slot from '../Slot/Slot'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export type AttachmentProps = {
+export interface AttachmentProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /** Button shorthand for the action slot. */
   action?: ShorthandValue
+
+  /** An Attachment can be styled to indicate possible user interaction. */
   actionable?: boolean
-  as?: any
-  children?: React.ReactChildren
+
+  /** A string describing the attachment. */
   description?: ShorthandValue
+
+  /** The name of the attachment. */
   header?: ShorthandValue
+
+  /** Shorthand for the icon. */
   icon?: ShorthandValue
+
+  /** Value indicating percent complete. */
   progress?: string | number
+
+  /**
+   * A custom render function the action slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderAction?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the description slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderDescription?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the header slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderHeader?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the progress slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderProgress?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -38,82 +86,19 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static displayName = 'Attachment'
 
   static propTypes = {
-    /** Button shorthand for the action slot. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
     action: customPropTypes.itemShorthand,
-
-    /** An Attachment can be styled to indicate possible user interaction. */
     actionable: PropTypes.bool,
-
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** Define your own children.
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** A string describing the attachment. */
     description: customPropTypes.itemShorthand,
-
-    /** The name of the attachment. */
     header: customPropTypes.itemShorthand,
-
-    /** Shorthand for the icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** Value indicating percent complete. */
     progress: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /**
-     * A custom render function the action slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderAction: PropTypes.func,
-
-    /**
-     * A custom render function the description slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderDescription: PropTypes.func,
-
-    /**
-     * A custom render function the header slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderHeader: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderIcon: PropTypes.func,
-
-    /**
-     * A custom render function the progress slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderProgress: PropTypes.func,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
@@ -162,7 +147,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          createHTMLDivision('', {
+          Slot.create('', {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}
@@ -171,6 +156,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, header => ({ header }))
+Attachment.create = createShorthandFactory(Attachment, 'header')
 
 export default Attachment

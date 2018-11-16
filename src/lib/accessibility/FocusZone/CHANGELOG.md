@@ -5,13 +5,18 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 ### fixes
 - With `defaultTabbableElement` prop set tab indexes are not updated accordingly ([#342](https://github.com/stardust-ui/react/pull/342))
 - Remove unused prop `componentRef` ([#397](https://github.com/stardust-ui/react/pull/397))
+- Fix `defaultTabbableElement` prop to be as a function ([#450](https://github.com/stardust-ui/react/pull/450))
 
-### feat(FocusZone): Add embed mode for FocusZone and new Chat behavior [#233](https://github.com/stardust-ui/react/pull/233)
-- Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
-- Replaced `ref={this.setRef}` with `this.setRef(this)` in `componentDidMount` to support functional components, which is needed to pass unit tests with embed.
-- Renamed `defaultActiveElement` to `defaultTabbableElement` and changed behavior:
-    - Changed to query only descendants of the focus zone instead of the whole document, which enables to write simpler selectors. Note that we do not lose any functionality by this, because selecting elements outside of focus zone had no effect.
-    - Changed not to call `this.focus()` on component mount (this was causing issues e.g., in docsite, where every change in source code would refocus the mounted component). Instead, you can now use a new property `shouldFocusOnMount`.
+### Features
+- Add embed mode for FocusZone and new Chat behavior ([#233](https://github.com/stardust-ui/react/pull/233))
+    - Replaced `onFocusNotification` with a regular `onFocus` event callback to pass unit tests with embed.
+    - Replaced `ref={this.setRef}` with `this.setRef(this)` in `componentDidMount` to support functional components, which is needed to pass unit tests with embed.
+    - Renamed `defaultActiveElement` to `defaultTabbableElement` and changed behavior:
+        - Changed to query only descendants of the focus zone instead of the whole document, which enables to write simpler selectors. Note that we do not lose any functionality by this, because selecting elements outside of focus zone had no effect.
+        - Changed not to call `this.focus()` on component mount (this was causing issues e.g., in docsite, where every change in source code would refocus the mounted component). Instead, you can now use a new property `shouldFocusOnMount`.
+
+- Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
+
 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.

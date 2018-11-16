@@ -116,6 +116,27 @@ export default (Component, options: Conformant = {}) => {
   }
 
   // ----------------------------------------
+  // Docblock description
+  // ----------------------------------------
+  const hasDocblockDescription = info.docblock.description.join('').trim().length > 0
+
+  test('has a docblock description', () => {
+    expect(hasDocblockDescription).toEqual(true)
+  })
+
+  if (hasDocblockDescription) {
+    const minWords = 5
+    const maxWords = 25
+    test(`docblock description is long enough to be meaningful (>${minWords} words)`, () => {
+      expect(_.words(info.docblock.description).length).toBeGreaterThan(minWords)
+    })
+
+    test(`docblock description is short enough to be quickly understood (<${maxWords} words)`, () => {
+      expect(_.words(info.docblock.description).length).toBeLessThan(maxWords)
+    })
+  }
+
+  // ----------------------------------------
   // Class and file name
   // ----------------------------------------
   test(`constructor name matches filename "${constructorName}"`, () => {
@@ -314,7 +335,7 @@ export default (Component, options: Conformant = {}) => {
               'forgot to use `getUnhandledProps` util to spread the `rest` props.',
           )
         }
-        const customHandler = eventTarget.prop([listenerName])
+        const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
           customHandler(eventShape)
