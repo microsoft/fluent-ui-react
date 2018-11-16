@@ -86,6 +86,7 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
+export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
@@ -115,6 +116,9 @@ export {
   default as chatMessageBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
+export {
+  default as popupFocusTrapBehavior,
+} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
 
 //
 // Utilities

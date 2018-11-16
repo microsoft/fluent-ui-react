@@ -61,7 +61,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
-            size: 'tiny',
+            size: 'micro',
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',
@@ -73,7 +73,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory(Status, state => ({ state }))
+Status.create = createShorthandFactory(Status, 'state')
 
 export default Status
 export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

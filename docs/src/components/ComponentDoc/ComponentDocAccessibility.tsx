@@ -9,7 +9,7 @@ const ComponentDocAccessibility = ({ info }) => {
   const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
 
   const stem = defaultValue && defaultValue.split('.').pop()
-  const filename = stem && stem + '.ts'
+  const filename = stem && `${stem}.ts`
 
   const behaviorName = behaviorMenu.reduce((acc, next) => {
     return _.find(next.variations, { name: filename }) ? next.displayName : acc

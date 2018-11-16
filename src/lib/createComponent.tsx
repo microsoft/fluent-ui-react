@@ -18,7 +18,7 @@ export interface CreateComponentConfig<P> {
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
-type CreateComponentReturnType<P> = React.SFC<P> & {
+export type CreateComponentReturnType<P> = React.SFC<P> & {
   create: Function
 }
 
@@ -52,9 +52,7 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     })
   }
 
-  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, val => ({
-    [shorthandPropName]: val,
-  }))
+  StardustComponent.create = createShorthandFactory(mergedDefaultProps.as, shorthandPropName)
 
   StardustComponent.displayName = displayName
 
