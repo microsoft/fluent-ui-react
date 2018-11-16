@@ -364,9 +364,11 @@ export default (Component, options: Conformant = {}) => {
           expect(handlerSpy).toHaveBeenCalled()
         } catch (err) {
           throw new Error(
-            `<${info.displayName} ${listenerName}={${handlerName}} />\n` +
-              `${leftPad} ^ was not called once on "${eventName}".` +
+            [
+              `<${info.displayName} ${listenerName}={${handlerName}} />\n`,
+              `${leftPad} ^ was not called once on "${eventName}".`,
               'You may need to hoist your event handlers up to the root element.\n',
+            ].join(''),
           )
         }
 
@@ -375,10 +377,11 @@ export default (Component, options: Conformant = {}) => {
 
         if (_.has(Component.propTypes, listenerName)) {
           expectedArgs = [eventShape, expect.objectContaining(component.props())]
-          errorMessage =
-            'was not called with (event, data).\n' +
-            `Ensure that 'props' object is passed to '${listenerName}'\n` +
-            `event handler of <${Component.displayName} />.`
+          errorMessage = [
+            'was not called with (event, data).\n',
+            `Ensure that 'props' object is passed to '${listenerName}'\n`,
+            `event handler of <${Component.displayName} />.`,
+          ].join('')
         }
 
         // Components should return the event first, then any data
