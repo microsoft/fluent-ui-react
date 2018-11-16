@@ -32,7 +32,7 @@
     "prestart": "yarn satisfied --fix yarn",
     "start": "gulp --series dll docs",
     "satisfied": "satisfied --skip-invalid --ignore \"^typescript$\"",
-    "pretest": "yarn satisfied && gulp --series build:docs:docgen build:docs:component-menu-behaviors",
+    "pretest": "yarn satisfied",
     "test": "gulp test",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
