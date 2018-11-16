@@ -42,6 +42,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442))
 - Add `color`, `inverted` and `renderContent` props and `content` slot to `Segment` component @Bugaa92 ([#389](https://github.com/stardust-ui/react/pull/389))
 - Add focus trap behavior to `Popup` @kuzhelov ([#457](https://github.com/stardust-ui/react/pull/457))
+- Export `Ref` component and add `handleRef` util @layershifter ([#459](https://github.com/stardust-ui/react/pull/459))
 
 ### Documentation
 - Add all missing component descriptions and improve those existing @levithomason ([#400](https://github.com/stardust-ui/react/pull/400))
