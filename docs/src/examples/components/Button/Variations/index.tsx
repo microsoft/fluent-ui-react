@@ -24,11 +24,11 @@ const Variations = () => (
       description="A button can be shown in form of a text to indicate some less-pronounced actions."
       examplePath="components/Button/Variations/ButtonExampleText"
     />
-    <ComponentExample
-      title="Animated"
-      description="A button can have some animation applied on it."
-      examplePath="components/Button/Variations/ButtonAnimated"
-    />
+    {/*<ComponentExample*/}
+    {/*title="Animated"*/}
+    {/*description="A button can have some animation applied on it."*/}
+    {/*examplePath="components/Button/Variations/ButtonAnimated"*/}
+    {/*/>*/}
   </ExampleSection>
 )
 

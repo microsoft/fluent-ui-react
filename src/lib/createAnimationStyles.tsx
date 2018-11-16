@@ -1,25 +1,30 @@
 import { ThemePrepared, Animation } from '../themes/types'
+import { callable } from './index'
 
 const createAnimationStyles = (animation: Animation, theme: ThemePrepared) => {
   let animationCSSProp = {}
   const { animations = {} } = theme
 
   if (animation) {
-    if (typeof animation === 'string') {
-      if (animations[animation]) {
-        const {
-          keyframe,
-          keyframeParams,
-          duration,
-          delay,
-          direction,
-          fillMode,
-          iterationCount,
-          playState,
-          timingFunction,
-        } = animations[animation]
+    const animationName = typeof animation === 'string' ? animation : animation.name
+    if (animations[animationName]) {
+      const {
+        keyframe,
+        duration,
+        delay,
+        direction,
+        fillMode,
+        iterationCount,
+        playState,
+        timingFunction,
+      } = animations[animationName]
 
-        const evaluatedKeyframe = theme.renderer.renderKeyframe(keyframe, keyframeParams || {})
+      const evaluatedKeyframe =
+        typeof keyframe === 'string'
+          ? keyframe
+          : theme.renderer.renderKeyframe(callable(keyframe), {})
+
+      if (typeof animation === 'string') {
         animationCSSProp = {
           animationName: evaluatedKeyframe,
           animationDelay: delay,
@@ -30,45 +35,16 @@ const createAnimationStyles = (animation: Animation, theme: ThemePrepared) => {
           animationPlayState: playState,
           animationTimingFunction: timingFunction,
         }
-      }
-    } else {
-      const {
-        name,
-        keyframeParams: propKeyframeParams,
-        duration: propDuration,
-        delay: propDelay,
-        direction: propDirection,
-        fillMode: propFillMode,
-        iterationCount: propIterationCount,
-        playState: propPlayState,
-        timingFunction: propTimingFunction,
-      } = animation
-      if (animations[name]) {
-        const {
-          keyframe,
-          keyframeParams,
-          duration,
-          delay,
-          direction,
-          fillMode,
-          iterationCount,
-          playState,
-          timingFunction,
-        } = animations[name]
-
-        const evaluatedKeyframe = theme.renderer.renderKeyframe(
-          keyframe,
-          propKeyframeParams || keyframeParams || {},
-        )
+      } else {
         animationCSSProp = {
           animationName: evaluatedKeyframe,
-          animationDelay: propDelay || delay,
-          animationDirection: propDirection || direction,
-          animationDuration: propDuration || duration,
-          animationFillMode: propFillMode || fillMode,
-          animationIterationCount: propIterationCount || iterationCount,
-          animationPlayState: propPlayState || playState,
-          animationTimingFunction: propTimingFunction || timingFunction,
+          animationDelay: animation.delay || delay,
+          animationDirection: animation.direction || direction,
+          animationDuration: animation.duration || duration,
+          animationFillMode: animation.fillMode || fillMode,
+          animationIterationCount: animation.iterationCount || iterationCount,
+          animationPlayState: animation.playState || playState,
+          animationTimingFunction: animation.timingFunction || timingFunction,
         }
       }
     }

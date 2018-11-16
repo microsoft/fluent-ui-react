@@ -30,3 +30,4 @@ export { default as leven } from './leven'
 
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
 export { customPropTypes }
+export { default as createAnimationStyles } from './createAnimationStyles'

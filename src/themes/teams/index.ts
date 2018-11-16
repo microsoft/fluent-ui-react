@@ -36,23 +36,22 @@ Object.keys(fontIcons).forEach(iconName => {
 
 const animations = {
   spinner: {
-    keyframe: () => ({
+    keyframe: {
       from: {
         transform: 'rotate(0deg)',
       },
       to: {
         transform: 'rotate(360deg)',
       },
-    }),
+    },
     duration: '5s',
     iterationCount: 'infinite',
   },
   colorChanger: {
-    keyframe: ({ startColor, endColor }) => ({
-      from: { color: startColor },
-      to: { color: endColor },
-    }),
-    keyframeParams: { startColor: 'red', endColor: 'yellow' },
+    keyframe: {
+      from: { color: 'red' },
+      to: { color: 'blue' },
+    },
     duration: '3s',
     iterationCount: 'infinite',
   },

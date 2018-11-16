@@ -92,6 +92,8 @@ export { default as Status, StatusPropsWithDefaults, StatusProps } from './compo
 
 export { default as Text, TextProps } from './components/Text/Text'
 
+export { default as Transition, TransitionProps } from './components/Transition/Transition'
+
 //
 // Accessibility
 //
@@ -118,4 +120,3 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
-export { default as Transition } from './components/Transition'

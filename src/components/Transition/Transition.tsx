@@ -2,24 +2,71 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, customPropTypes, createShorthandFactory, childrenExist } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput, Animation } from '../../themes/types'
-import { ReactChildren } from '../../../types/utils'
+import { Animation } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
+import { ChildrenComponentProps, StyledComponentProps } from '../../lib/commonPropInterfaces'
+import { styledComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export type TransitionProps = {
-  animationName?: string
+export interface TransitionProps extends StyledComponentProps<any, any>, ChildrenComponentProps {
+  /** An element type to render as (string or function). */
   as?: any
-  children?: ReactChildren
+
+  /** Additional CSS class name(s) to apply.  */
+  className?: string
+
+  /** The name for the animation that should be applied, defined in the theme. */
+  animationName?: string
+
+  /** The delay property specifies a delay for the start of an animation. Negative values are
+   * also allowed. If using negative values, the animation will start as if it had already been
+   * playing for N seconds.
+   */
   delay?: string
+
+  /** The direction property specifies whether an animation should be played forwards, backwards
+   * or in alternate cycles. It can have the following values:
+   * - normal - The animation is played as normal (forwards). This is default
+   * - reverse - The animation is played in reverse direction (backwards)
+   * - alternate - The animation is played forwards first, then backwards
+   * - alternate-reverse - The animation is played backwards first, then forwards.
+   */
   direction?: string
+
+  /** The duration property defines how long time an animation should take to complete. */
   duration?: string
+
+  /**
+   * The fillMode property specifies a style for the target element when the animation
+   * is not playing (before it starts, after it ends, or both). It can have the following values:
+   * - none - Default value. Animation will not apply any styles to the element before or after it is executing
+   * - forwards - The element will retain the style values that is set by the last keyframe (depends on animation-direction and animation-iteration-count)
+   * - backwards - The element will get the style values that is set by the first keyframe (depends on animation-direction), and retain this during the animation-delay period
+   * - both - The animation will follow the rules for both forwards and backwards, extending the animation properties in both directions
+   * */
   fillMode?: string
+
+  /** The animation-iteration-count property specifies the number of times an animation should run. */
   iterationCount?: string
-  keyframeParams?: object
+
+  /**
+   * The playState property specifies whether the animation is running or paused. It can have the following values:
+   * - paused - Specifies that the animation is paused
+   * - running - Default value. Specifies that the animation is running
+   * - initial - Sets this property to its default value.
+   * - inherit - Inherits this property from its parent element.
+   * */
   playState?: string
-  styles?: ComponentSlotStyle
+
+  /**
+   * The timingFunction property specifies the speed curve of the animation. It can have the following values:
+   * - ease - Specifies an animation with a slow start, then fast, then end slowly (this is default)
+   * - linear - Specifies an animation with the same speed from start to end
+   * - ease-in - Specifies an animation with a slow start
+   * - ease-out - Specifies an animation with a slow end
+   * - ease-in-out - Specifies an animation with a slow start and end
+   * - cubic-bezier(n,n,n,n) - Lets you define your own values in a cubic-bezier function
+   */
   timingFunction?: string
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -33,47 +80,18 @@ class Transition extends UIComponent<TransitionProps, any> {
   static displayName = 'Transition'
 
   static propTypes = {
-    /** The animation to be run. */
+    ...styledComponentPropTypes,
+    ...childrenComponentPropTypes,
     animationName: PropTypes.string,
-
-    /** An element type to render as. */
     as: customPropTypes.as,
-
-    /**
-     *  Button content for childrenApi
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Delay of the animation. */
+    className: PropTypes.string,
     delay: PropTypes.string,
-
-    /** Direction of the animation. */
     direction: PropTypes.string,
-
-    /** Duration of the animation. */
     duration: PropTypes.string,
-
-    /** Fill mode of the animation. */
     fillMode: PropTypes.string,
-
-    /** Iteration count of the animation. */
     iterationCount: PropTypes.string,
-
-    /** Optional params for the keyframe of the animation. */
-    keyframeParams: PropTypes.object,
-
-    /** Play state of the animation. */
     playState: PropTypes.string,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Timing function of the animation. */
     timingFunction: PropTypes.string,
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
@@ -81,7 +99,6 @@ class Transition extends UIComponent<TransitionProps, any> {
 
     const animation: Animation = {
       name: animationName,
-      keyframeParams: this.props.keyframeParams,
       duration: this.props.duration,
       delay: this.props.delay,
       iterationCount: this.props.iterationCount,

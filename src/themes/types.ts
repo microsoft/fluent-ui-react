@@ -1,5 +1,5 @@
 import * as CSSType from 'csstype'
-import { IRenderer as FelaRenderer, TRule } from 'fela'
+import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
 import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
 
@@ -118,7 +118,6 @@ export interface ComponentSlotClasses extends ObjectOf<string> {}
 export type Animation =
   | {
       name: string
-      keyframeParams?: object
       delay?: string
       direction?: string
       duration?: string
@@ -143,8 +142,7 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 export type StaticStyles = StaticStyle[]
 
 export interface ThemeAnimation {
-  keyframe: TRule<any>
-  keyframeParams?: object
+  keyframe: any
   delay?: string
   direction?: string
   duration?: string
