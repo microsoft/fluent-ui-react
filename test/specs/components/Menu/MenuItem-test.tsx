@@ -120,7 +120,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            '' + disabledValue,
+            `${disabledValue}`,
           )
         })
       })
@@ -138,7 +138,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            '' + disabledValue,
+            `${disabledValue}`,
           )
         })
       })
@@ -195,7 +195,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            '' + activeValue,
+            `${activeValue}`,
           )
         })
       })
@@ -213,7 +213,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            '' + activeValue,
+            `${activeValue}`,
           )
         })
       })

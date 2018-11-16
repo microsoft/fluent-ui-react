@@ -27,7 +27,7 @@ export const getTimestamp = (date: Date): { short: string; long: string } => {
   const timeString = dateMoment.format('LT')
 
   return {
-    short: `${areMomentsSameDay(dateMoment) ? '' : dateMoment.format('M/D') + ' '}${timeString}`,
+    short: `${areMomentsSameDay(dateMoment) ? '' : `${dateMoment.format('M/D')} `}${timeString}`,
     long: `${dateMoment.format('ll')} ${timeString}`,
   }
 }
