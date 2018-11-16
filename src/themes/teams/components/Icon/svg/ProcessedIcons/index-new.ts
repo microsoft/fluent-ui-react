@@ -1,7 +1,180 @@
 import { TeamsSvgIconSpec } from '../types'
 
 // IMPORTS
+import zoomout from './icons-zoom-out'
+import zoomin from './icons-zoom-in'
+import zip from './icons-zip'
+import youtube from './icons-youtube'
+import yammer from './icons-yammer'
+import whiteboard from './icons-whiteboard'
+import website from './icons-website'
+import waffle from './icons-waffle'
+import voicemail from './icons-voicemail'
+import viewsmall from './icons-view-small'
+import videooff from './icons-video-off'
+import video from './icons-video'
+import urgent from './icons-urgent'
+import unread from './icons-unread'
+import unhide from './icons-unhide'
+import unfollowchannel from './icons-unfollow-channel'
+import underline from './icons-underline'
+import txt from './icons-txt'
+import triangleupsmall from './icons-triangle-up-small'
+import trianglerightsmall from './icons-triangle-right-small'
+import triangledownsmall from './icons-triangle-down-small'
+import trianglediagonalrightsmall from './icons-triangle-diagonal-right-small'
+import trending from './icons-trending'
 import trashcan from './icons-trash-can'
+import translation from './icons-translation'
+import timezonenight from './icons-time-zone-night'
+import timezoneday from './icons-time-zone-day'
+import tentative from './icons-tentative'
+import teams from './icons-teams'
+import teamdiscover from './icons-team-discover'
+import teamcreate from './icons-team-create'
+import tabledelete from './icons-table-delete'
+import tableadd from './icons-table-add'
+import table from './icons-table'
+import tabbadge from './icons-tab-badge'
+import sticker from './icons-sticker'
+import statusyo from './icons-status-yo'
+import starred from './icons-starred'
+import star from './icons-star'
+import speakerslashed from './icons-speaker-slashed'
+import speakeroff from './icons-speaker-off'
+import sketch from './icons-sketch'
+import shareobject from './icons-share-object'
+import share from './icons-share'
+import sfbviewbox32 from './icons-sfb-viewbox-32'
+import settings from './icons-settings'
+import send from './icons-send'
+import search from './icons-search'
+import screenzoomout from './icons-screen-zoom-out'
+import screenzoomin from './icons-screen-zoom-in'
+import roster from './icons-roster'
+import retry from './icons-retry'
+import resetzoom from './icons-reset-zoom'
+import reply from './icons-reply'
+import refresh from './icons-refresh'
+import redbang from './icons-redbang'
+import recurrence from './icons-recurrence'
+import recents from './icons-recents'
+import recent from './icons-recent'
+import readaloud from './icons-read-aloud'
+import quote from './icons-quote'
+import quickresponse from './icons-quick-response'
+import qna from './icons-qna'
+import promotemember from './icons-promote-member'
+import promoted from './icons-promoted'
+import pluscircled from './icons-plus-circled'
+import playsoundmute from './icons-play-sound-mute'
+import playpause from './icons-play-pause'
+import playforward from './icons-play-forward'
+import play from './icons-play'
+import pin from './icons-pin'
+import personslim from './icons-person-slim'
+import person from './icons-person'
+import peoplepane from './icons-people-pane'
+import pdf from './icons-pdf'
+import pcaudiostop from './icons-pc-audio-stop'
+import pcaudio from './icons-pc-audio'
+import patharrow from './icons-patharrow'
+import paste from './icons-paste'
+import participantremove from './icons-participant-remove'
+import outline from './icons-outline'
+import orgwide from './icons-org-wide'
+import org from './icons-org'
+import openoutside from './icons-open-outside'
+import opennewwindowfilled from './icons-open-new-window-filled'
+import opennewwindow from './icons-open-new-window'
+import openinsidesmall from './icons-open-inside-small'
+import openinside from './icons-open-inside'
+import openexternallinkoff from './icons-open-external-link-off'
+import oof from './icons-oof'
+import onenotesection from './icons-onenote-section'
+import numberlist from './icons-number-list'
+import notificationoff from './icons-notification-off'
+import notes from './icons-notes'
+import nochat from './icons-no-chat'
+import newtab from './icons-newtab'
+import newcontactgroup from './icons-new-contactgroup'
+import myactivity from './icons-my-activity'
+import mutechat from './icons-mutechat'
+import msftxlonline from './icons-msft-xl-online'
+import msftxl from './icons-msft-xl'
+import msftwordonline from './icons-msft-word-online'
+import msftword from './icons-msft-word'
+import msftvisio from './icons-msft-visio'
+import msftteams from './icons-msft-teams'
+import msftstream from './icons-msft-stream'
+import msftspdoclibrary from './icons-msft-sp-doc-library'
+import msftsharepoint from './icons-msft-sharepoint'
+import msftpptonline from './icons-msft-ppt-online'
+import msftppt from './icons-msft-ppt'
+import msftpowerbi from './icons-msft-powerbi'
+import msftplanner from './icons-msft-planner'
+import msftoutlookcolored from './icons-msft-outlook-colored'
+import msftoutlook from './icons-msft-outlook'
+import msftonenoteonline from './icons-msft-onenote-online'
+import msftonenote from './icons-msft-onenote'
+import msftonedrive from './icons-msft-onedrive'
+import msftoffice from './icons-msft-office'
+import msftexchange from './icons-msft-exchange'
+import msftdelve from './icons-msft-delve'
+import msftcanvas from './icons-msft-canvas'
+import move from './icons-move'
+import mov from './icons-mov'
+import more from './icons-more'
+import micoff from './icons-mic-off'
+import mic from './icons-mic'
+import message from './icons-message'
+import menulight from './icons-menu-light'
+import menu from './icons-menu'
+import mention from './icons-mention'
+import megaphone from './icons-megaphone'
+import meetingnotes from './icons-meeting-notes'
+import meetingnew from './icons-meeting-new'
+import mediaoff from './icons-media-off'
+import markasunread from './icons-mark-as-unread'
+import markasread from './icons-mark-as-read'
+import manageteams from './icons-manage-teams'
+import lock18 from './icons-lock-18'
+import lock14 from './icons-lock-14'
+import lock from './icons-lock'
+import locationoff from './icons-location-off'
+import location from './icons-location'
+import link from './icons-link'
+import liked from './icons-liked'
+import like from './icons-like'
+import leavedoors from './icons-leave-doors'
+import leave from './icons-leave'
+import kollective from './icons-kollective'
+import keyboard from './icons-keyboard'
+import italic from './icons-italic'
+import invitetentative from './icons-invite-tentative'
+import inviteperson from './icons-invite-person'
+import invitenotresponded from './icons-invite-not-responded'
+import invitedeclined from './icons-invite-declined'
+import invitecancelled from './icons-invite-cancelled'
+import inviteaccepted from './icons-invite-accepted'
+import insert from './icons-insert'
+import inputvalid from './icons-input-valid'
+import inputinvalid from './icons-input-invalid'
+import info from './icons-info'
+import inferred from './icons-inferred'
+import indicator from './icons-indicator'
+import image from './icons-image'
+import home from './icons-home'
+import hive from './icons-hive'
+import highlight from './icons-highlight'
+import hide from './icons-hide'
+import helparticle from './icons-helparticle'
+import headset from './icons-headset'
+import groups from './icons-groups'
+import giphy from './icons-giphy'
+import gif from './icons-gif'
+import gettingstarted from './icons-gettingstarted'
+import gallery from './icons-gallery'
 import fullscreen from './icons-fullscreen'
 import format from './icons-format'
 import fontsize from './icons-font-size'
@@ -134,7 +307,180 @@ import accept from './icons-accept'
 
 export default {
   // EXPORTS
+  zoomout,
+  zoomin,
+  zip,
+  youtube,
+  yammer,
+  whiteboard,
+  website,
+  waffle,
+  voicemail,
+  viewsmall,
+  videooff,
+  video,
+  urgent,
+  unread,
+  unhide,
+  unfollowchannel,
+  underline,
+  txt,
+  triangleupsmall,
+  trianglerightsmall,
+  triangledownsmall,
+  trianglediagonalrightsmall,
+  trending,
   trashcan,
+  translation,
+  timezonenight,
+  timezoneday,
+  tentative,
+  teams,
+  teamdiscover,
+  teamcreate,
+  tabledelete,
+  tableadd,
+  table,
+  tabbadge,
+  sticker,
+  statusyo,
+  starred,
+  star,
+  speakerslashed,
+  speakeroff,
+  sketch,
+  shareobject,
+  share,
+  sfbviewbox32,
+  settings,
+  send,
+  search,
+  screenzoomout,
+  screenzoomin,
+  roster,
+  retry,
+  resetzoom,
+  reply,
+  refresh,
+  redbang,
+  recurrence,
+  recents,
+  recent,
+  readaloud,
+  quote,
+  quickresponse,
+  qna,
+  promotemember,
+  promoted,
+  pluscircled,
+  playsoundmute,
+  playpause,
+  playforward,
+  play,
+  pin,
+  personslim,
+  person,
+  peoplepane,
+  pdf,
+  pcaudiostop,
+  pcaudio,
+  patharrow,
+  paste,
+  participantremove,
+  outline,
+  orgwide,
+  org,
+  openoutside,
+  opennewwindowfilled,
+  opennewwindow,
+  openinsidesmall,
+  openinside,
+  openexternallinkoff,
+  oof,
+  onenotesection,
+  numberlist,
+  notificationoff,
+  notes,
+  nochat,
+  newtab,
+  newcontactgroup,
+  myactivity,
+  mutechat,
+  msftxlonline,
+  msftxl,
+  msftwordonline,
+  msftword,
+  msftvisio,
+  msftteams,
+  msftstream,
+  msftspdoclibrary,
+  msftsharepoint,
+  msftpptonline,
+  msftppt,
+  msftpowerbi,
+  msftplanner,
+  msftoutlookcolored,
+  msftoutlook,
+  msftonenoteonline,
+  msftonenote,
+  msftonedrive,
+  msftoffice,
+  msftexchange,
+  msftdelve,
+  msftcanvas,
+  move,
+  mov,
+  more,
+  micoff,
+  mic,
+  message,
+  menulight,
+  menu,
+  mention,
+  megaphone,
+  meetingnotes,
+  meetingnew,
+  mediaoff,
+  markasunread,
+  markasread,
+  manageteams,
+  lock18,
+  lock14,
+  lock,
+  locationoff,
+  location,
+  link,
+  liked,
+  like,
+  leavedoors,
+  leave,
+  kollective,
+  keyboard,
+  italic,
+  invitetentative,
+  inviteperson,
+  invitenotresponded,
+  invitedeclined,
+  invitecancelled,
+  inviteaccepted,
+  insert,
+  inputvalid,
+  inputinvalid,
+  info,
+  inferred,
+  indicator,
+  image,
+  home,
+  hive,
+  highlight,
+  hide,
+  helparticle,
+  headset,
+  groups,
+  giphy,
+  gif,
+  gettingstarted,
+  gallery,
   fullscreen,
   format,
   fontsize,

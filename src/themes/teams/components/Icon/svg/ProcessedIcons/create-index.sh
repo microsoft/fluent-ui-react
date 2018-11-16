@@ -19,8 +19,8 @@ for icons in $(ls *.tsx); do
   echo "Name is: $Name"
 
   # REPLACE INSTANCES IN IMPORT & EXPORT TEMPLATES
-  ImportTest=$(echo "$importTemplate" | sed "s/ICONNAME/'$UnprocessedName'/" | sed "s/ICONPATH/$Path/")
-  ExportTest=$(echo "$exportTemplate" | sed "s/ICONNAME/'$UnprocessedName'/")
+  ImportTest=$(echo "$importTemplate" | sed "s/ICONNAME/$Name/" | sed "s/ICONPATH/$Path/")
+  ExportTest=$(echo "$exportTemplate" | sed "s/ICONNAME/$Name/")
 
   # CREATE IMPORT
   sed -i "/IMPORT/a  $ImportTest" $FileName
