@@ -16,7 +16,7 @@ export interface IContextMenuProps {
 }
 
 /**
- * A contextualMenu.
+ * A contextMenu.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
@@ -35,7 +35,7 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
     /** The tree of menu containing submenus and it's submenus and so on. */
     items: PropTypes.arrayOf(PropTypes.object),
 
-    /** Function passed which needs to be invoked when menuitem has no submenu */
+    /** Function passed which needs to be invoked when the menuitem has no submenu. */
     onItemClick: PropTypes.func,
 
     /** Custom styles to be applied for component. */
@@ -52,12 +52,12 @@ class ContextMenu extends UIComponent<Extendable<IContextMenuProps>, any> {
   renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
     return (
       <ElementType className={classes.root} {...rest}>
-        {this.renderItems1()}
+        {this.renderItems()}
       </ElementType>
     )
   }
 
-  renderItems1 = () => {
+  renderItems = () => {
     const { items } = this.props
     return (
       <Menu vertical>
