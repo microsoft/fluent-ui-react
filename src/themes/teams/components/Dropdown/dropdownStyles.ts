@@ -41,12 +41,14 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
 
   editTextInput: (): ICSSInJSStyle => ({
     width: '100%',
+    ':focus': {
+      borderBottomColor: 'transparent',
+    },
   }),
 
   editTextDiv: (): ICSSInJSStyle => ({
     flexBasis: '100px',
     flexGrow: 1,
-    borderColor: 'transparent',
   }),
 
   list: ({ variables: v, props: { fluid } }): ICSSInJSStyle => ({

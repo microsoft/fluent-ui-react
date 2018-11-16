@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
@@ -25,7 +26,6 @@ import List from '../List/List'
 import Text from '../Text/Text'
 import Image from '../Image/Image'
 import ListItem from '../List/ListItem'
-import _ from 'lodash'
 import Icon from '../Icon/Icon'
 
 export interface DropdownProps {
@@ -365,8 +365,10 @@ export default class Dropdown extends AutoControlledComponent<
         inputRef={input => (this.inputRef = input)}
         onFocus={this.handleInputFocus}
         onKeyUp={multiple && this.handleBackspaceDelete}
-        styles={styles.editTextDiv}
-        wrapper={{ ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }) }}
+        wrapper={{
+          styles: styles.editTextDiv,
+          ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }),
+        }}
         variables={{ inputFocusBorderColor: variables.editTextInputFocusBorderColor }}
         input={{
           type: 'text',
