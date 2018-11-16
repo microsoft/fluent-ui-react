@@ -6,35 +6,13 @@ const getEventArg = (
   ctrlKey?: boolean,
   metaKey?: boolean,
   shiftKey?: boolean,
-): React.KeyboardEvent => {
+): any => {
   return {
     keyCode,
     altKey,
-    charCode: null,
     ctrlKey,
-    getModifierState: () => undefined,
-    key: null,
-    locale: null,
-    location: null,
     metaKey,
-    repeat: null,
     shiftKey,
-    which: null,
-    bubbles: null,
-    cancelable: null,
-    currentTarget: null,
-    defaultPrevented: null,
-    eventPhase: null,
-    isTrusted: null,
-    nativeEvent: null,
-    persist: () => undefined,
-    preventDefault: () => undefined,
-    isDefaultPrevented: () => undefined,
-    stopPropagation: () => undefined,
-    isPropagationStopped: () => undefined,
-    target: null,
-    timeStamp: null,
-    type: null,
   }
 }
 

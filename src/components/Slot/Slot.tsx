@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { childrenExist, createShorthand } from '../../lib'
+import { childrenExist, createShorthandFactory } from '../../lib'
 import {
   UIComponentProps,
   ContentComponentProps,
@@ -10,8 +10,7 @@ import {
   contentComponentPropsTypes,
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
-import createComponent from '../../lib/createComponent'
-import { MapValueToProps, Props } from 'types/utils'
+import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps, any>,
@@ -21,7 +20,9 @@ export interface SlotProps
 /**
  * A Slot is a basic component (no default styles)
  */
-const Slot = createComponent<SlotProps>({
+const Slot: CreateComponentReturnType<SlotProps> & {
+  create?: Function
+} = createComponent<SlotProps>({
   displayName: 'Slot',
 
   className: 'ui-slot',
@@ -44,15 +45,6 @@ const Slot = createComponent<SlotProps>({
   },
 })
 
-const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
-  val,
-  options: Props = {},
-) => {
-  options.defaultProps = { as, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps, val, options)
-}
-
-export const createSlot = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-export const createHTMLInput = createSlotFactory('input', type => ({ type }))
+Slot.create = createShorthandFactory(Slot)
 
 export default Slot
