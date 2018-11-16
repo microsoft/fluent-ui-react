@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, createShorthandFactory, childrenExist } from '../../lib'
+import { UIComponent, customPropTypes, childrenExist } from '../../lib'
 import { Animation } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 import { ChildrenComponentProps, StyledComponentProps } from '../../lib/commonPropInterfaces'
@@ -111,16 +111,18 @@ class Transition extends UIComponent<TransitionProps, any> {
     const animationStyle = createAnimationStyles(animation, theme)
 
     const child = childrenExist(children) && React.Children.only(children)
-    const result = React.cloneElement(child, { style: { ...animationStyle, ...child.props.style } })
+    const result = child
+      ? React.cloneElement(child, {
+          style: { ...animationStyle, ...(child.props && child.props.style) },
+        })
+      : ''
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType className={classes.root} {...rest}>
         {result}
       </ElementType>
     )
   }
 }
-
-Transition.create = createShorthandFactory(Transition, content => ({ content }))
 
 export default Transition
