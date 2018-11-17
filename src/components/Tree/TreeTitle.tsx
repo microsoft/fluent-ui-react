@@ -62,6 +62,6 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
   }
 }
 
-TreeTitle.create = createShorthandFactory(TreeTitle, content => ({ content }))
+TreeTitle.create = createShorthandFactory(TreeTitle, 'content')
 
 export default TreeTitle

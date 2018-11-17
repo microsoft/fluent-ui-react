@@ -137,6 +137,6 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   }
 }
 
-TreeListItem.create = createShorthandFactory(TreeListItem, content => ({ content }))
+TreeListItem.create = createShorthandFactory(TreeListItem, 'content')
 
 export default TreeListItem

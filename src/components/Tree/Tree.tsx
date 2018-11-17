@@ -81,6 +81,6 @@ class Tree extends UIComponent<TreeProps, any> {
   }
 }
 
-Tree.create = createShorthandFactory(Tree, content => ({ content }))
+Tree.create = createShorthandFactory(Tree, 'content')
 
 export default Tree
