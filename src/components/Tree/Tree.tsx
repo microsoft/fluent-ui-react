@@ -5,6 +5,8 @@ import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import { treeBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 export type TreeProps = {
   as?: any
@@ -17,6 +19,7 @@ export type TreeProps = {
     onItemClick?: ComponentEventHandler<TreeProps>
     subtree?: any[]
   }[]
+  isSubTree?: boolean
 }
 
 class Tree extends UIComponent<TreeProps, any> {
@@ -46,10 +49,14 @@ class Tree extends UIComponent<TreeProps, any> {
 
     /** Shorthand array of props for Tree. */
     treedata: PropTypes.array,
+
+    /** Whether the tree is a subtree. */
+    isSubTree: PropTypes.boolean,
   }
 
   public static defaultProps = {
     as: 'ul',
+    accessibility: treeBehavior as Accessibility,
   }
 
   renderContent(styles, variables) {
@@ -70,11 +77,11 @@ class Tree extends UIComponent<TreeProps, any> {
     })
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...rest} className={classes.root} {...accessibility.attributes.root}>
         {childrenExist(children) ? children : this.renderContent(styles, variables)}
       </ElementType>
     )

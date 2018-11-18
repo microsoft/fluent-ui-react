@@ -4,6 +4,8 @@ import * as React from 'react'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { treeTitleBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 export type TreeTitleProps = {
   as?: any
@@ -12,6 +14,7 @@ export type TreeTitleProps = {
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   active?: boolean
+  hasSubtree?: boolean
 }
 
 class TreeTitle extends UIComponent<TreeTitleProps, any> {
@@ -41,21 +44,30 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
 
     /** Whether or not the subtree of the item is in the open state. */
     active: PropTypes.bool,
+
+    /** Whether or not the item has a subtree. */
+    hasSubtree: PropTypes.bool,
   }
 
   public static defaultProps = {
     as: 'a',
+    accessibility: treeTitleBehavior as Accessibility,
   }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        {...rest}
+        className={classes.root}
+        onClick={this.handleClick}
+        {...accessibility.attributes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

@@ -108,6 +108,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
             styles: titleStyles,
             variables: titleVariables,
             active,
+            hasSubtree: subtree,
           },
           overrideProps: this.handleItemOverrides,
         },
@@ -120,6 +121,10 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
           defaultProps: {
             treedata: subtree,
             className: 'sub-tree',
+            isSubTree: true,
+            style: {
+              display: active ? 'block' : 'none',
+            },
           },
         }),
       )

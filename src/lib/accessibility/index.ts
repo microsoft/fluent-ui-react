@@ -24,3 +24,5 @@ export { default as popupFocusTrapBehavior } from './Behaviors/Popup/popupFocusT
 export { default as chatBehavior } from './Behaviors/Chat/chatBehavior'
 export { default as chatMessageBehavior } from './Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './Behaviors/Grid/gridBehavior'
+export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
+export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
