@@ -8,7 +8,7 @@ import * as _ from 'lodash'
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
  * Adds attribute 'aria-modal=true' to 'popup' component's part.
- * Adds attribute 'role=modal' to 'popup' component's part.
+ * Adds attribute 'role=dialog' to 'popup' component's part.
  * Traps focus inside component.
  */
 const dialogBehavior: Accessibility = (props: any) => {
