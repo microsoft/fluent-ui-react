@@ -1,8 +1,6 @@
 const ensureDefaultValuesProvided = options => {
   const defaultBindings = {
     getState: () => ({}) /* empty object as state by default */,
-
-    willSetState: ({ stateDiff }) => stateDiff /* one-to-one transform by default */,
     setState: () => {} /* do nothing */,
   }
 
@@ -12,7 +10,7 @@ const ensureDefaultValuesProvided = options => {
 }
 
 class StateManager {
-  public static create = unsafeOptions => {
+  static create(unsafeOptions) {
     const options: any = ensureDefaultValuesProvided(unsafeOptions)
 
     const stateManager: any = new StateManager(options)
@@ -21,39 +19,36 @@ class StateManager {
 
     // assign actions
     Object.keys(options.actions).forEach(actionName => {
-      stateManager[actionName] = userArgs => {
+      stateManager[actionName] = (userArgs, skipSetState = false) => {
         const prevState = stateManager.getState()
         const clonedStateManager: any = Object.assign({}, stateManager)
 
         Object.keys(options.actions).forEach(otherActionName => {
-          if (otherActionName === actionName) return
+          if (otherActionName === actionName) {
+            return
+          }
 
           const originalActionHandler = clonedStateManager[otherActionName]
-          clonedStateManager[otherActionName] = () => originalActionHandler(userArgs)
+
+          clonedStateManager[otherActionName] = () => originalActionHandler(userArgs, true)
         })
 
-        // decorate state manager's methods
-        const willSetState = stateDiff =>
-          options.bindings.willSetState({
-            prevState,
-            stateDiff,
-            userArgs,
-            actionName,
-          })
-
         clonedStateManager.setState = stateDiff => {
-          const preprocessedStateDiff = willSetState(stateDiff)
-
           options.bindings.setState({
-            stateDiff: preprocessedStateDiff,
+            stateDiff,
             prevState,
-            newState: { ...prevState, ...preprocessedStateDiff },
+            newState: { ...prevState, ...stateDiff },
             actionName,
             userArgs,
           })
         }
 
-        options.actions[actionName](clonedStateManager)
+        const newState = options.actions[actionName](clonedStateManager)
+        if (!skipSetState) {
+          clonedStateManager.setState(newState)
+        }
+
+        return newState
       }
     })
 

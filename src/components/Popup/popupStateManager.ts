@@ -4,20 +4,12 @@ import StateManager from './stateManager'
 const stateManager = StateManager.create({
   // framework agnostic actions
   actions: {
-    open: it => {
-      it.setState({ open: true })
-    },
-    close: it => {
-      it.setState({ open: false })
-    },
+    init: () => ({ open: false }),
+    open: () => ({ open: true }),
+    close: () => ({ open: false }),
     toggle: it => {
       const state = it.getState()
-
-      if (state.open) {
-        it.close()
-      } else {
-        it.open()
-      }
+      return state.open ? it.close() : it.open()
     },
   },
 })
