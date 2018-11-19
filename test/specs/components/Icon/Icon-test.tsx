@@ -33,7 +33,7 @@ describe('Icon', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="fontIcon" />,
-          null,
+          undefined,
           themeWithDefinedIcons,
         )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
@@ -43,7 +43,7 @@ describe('Icon', () => {
         const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="svgIcon" />,
-          null,
+          undefined,
           themeWithDefinedIcons,
         )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
