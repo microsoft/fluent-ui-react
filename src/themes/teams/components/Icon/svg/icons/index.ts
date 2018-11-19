@@ -2,6 +2,7 @@ import { TeamsSvgIconSpec } from '../types'
 
 import add from './add'
 import bookmark from './bookmark'
+import bullets from './bullets'
 import call from './call'
 import callEnd from './callEnd'
 import callVideo from './callIncomingVideo'
@@ -10,6 +11,8 @@ import callStartPresenting from './callControlPresentNew'
 import callStopPresenting from './callControlStopPresentingNew'
 import callMicrophone from './callMicrophone'
 import callMicrophoneOff from './callMicrophoneOff'
+import gallery from './gallery'
+import menu from './menu'
 import more from './more'
 import teamCreate from './teamCreate'
 import umbrella from './umbrella'
@@ -19,13 +22,11 @@ import giphy from './giphy'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import highlight from './highlight'
-import bullets from './bullets'
-import gallery from './gallery'
-import menu from './menu'
 
 export default {
   add,
   bookmark,
+  bullets,
   call,
   'call-end': callEnd,
   'call-video': callVideo,
@@ -34,6 +35,8 @@ export default {
   'call-stop-presenting': callStopPresenting,
   'call-microphone': callMicrophone,
   'call-microphone-off': callMicrophoneOff,
+  gallery,
+  menu,
   more,
   'team-create': teamCreate,
   umbrella,
@@ -41,9 +44,6 @@ export default {
   format,
   giphy,
   highlight,
-  bullets,
-  gallery,
-  menu,
   'font-color': fontColor,
   'font-size': fontSize,
 } as { [iconName: string]: TeamsSvgIconSpec }
