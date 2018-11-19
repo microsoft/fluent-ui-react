@@ -10,12 +10,10 @@ import whiteboard from './icons-whiteboard'
 import website from './icons-website'
 import waffle from './icons-waffle'
 import voicemail from './icons-voicemail'
-import viewsmall from './icons-view-small'
 import videooff from './icons-video-off'
 import video from './icons-video'
 import urgent from './icons-urgent'
-import unread from './icons-unread'
-import unhide from './icons-unhide'
+import eye from './icons-eye'
 import unfollowchannel from './icons-unfollow-channel'
 import underline from './icons-underline'
 import txt from './icons-txt'
@@ -64,7 +62,6 @@ import readaloud from './icons-read-aloud'
 import quote from './icons-quote'
 import quickresponse from './icons-quick-response'
 import qna from './icons-qna'
-import promotemember from './icons-promote-member'
 import promoted from './icons-promoted'
 import pluscircled from './icons-plus-circled'
 import playsoundmute from './icons-play-sound-mute'
@@ -72,9 +69,7 @@ import playpause from './icons-play-pause'
 import playforward from './icons-play-forward'
 import play from './icons-play'
 import pin from './icons-pin'
-import personslim from './icons-person-slim'
 import person from './icons-person'
-import peoplepane from './icons-people-pane'
 import pdf from './icons-pdf'
 import pcaudiostop from './icons-pc-audio-stop'
 import pcaudio from './icons-pc-audio'
@@ -127,7 +122,6 @@ import mov from './icons-mov'
 import more from './icons-more'
 import micoff from './icons-mic-off'
 import mic from './icons-mic'
-import message from './icons-message'
 import menulight from './icons-menu-light'
 import menu from './icons-menu'
 import mention from './icons-mention'
@@ -146,7 +140,6 @@ import location from './icons-location'
 import link from './icons-link'
 import liked from './icons-liked'
 import like from './icons-like'
-import leavedoors from './icons-leave-doors'
 import leave from './icons-leave'
 import kollective from './icons-kollective'
 import keyboard from './icons-keyboard'
@@ -157,7 +150,6 @@ import invitenotresponded from './icons-invite-not-responded'
 import invitedeclined from './icons-invite-declined'
 import invitecancelled from './icons-invite-cancelled'
 import inviteaccepted from './icons-invite-accepted'
-import insert from './icons-insert'
 import inputvalid from './icons-input-valid'
 import inputinvalid from './icons-input-invalid'
 import info from './icons-info'
@@ -167,7 +159,7 @@ import image from './icons-image'
 import home from './icons-home'
 import hive from './icons-hive'
 import highlight from './icons-highlight'
-import hide from './icons-hide'
+import eyeslash from './icons-eye-slash'
 import helparticle from './icons-helparticle'
 import headset from './icons-headset'
 import groups from './icons-groups'
@@ -299,7 +291,6 @@ import arrowleft from './icons-arrow-left'
 import arrowdown from './icons-arrow-down'
 import archive from './icons-archive'
 import apps from './icons-apps'
-import announcement from './icons-announcement'
 import analytics from './icons-analytics'
 import addparticipant from './icons-add-participant'
 import add from './icons-add'
@@ -316,12 +307,9 @@ export default {
   website,
   waffle,
   voicemail,
-  viewsmall,
   videooff,
   video,
   urgent,
-  unread,
-  unhide,
   unfollowchannel,
   underline,
   txt,
@@ -370,7 +358,6 @@ export default {
   quote,
   quickresponse,
   qna,
-  promotemember,
   promoted,
   pluscircled,
   playsoundmute,
@@ -378,9 +365,7 @@ export default {
   playforward,
   play,
   pin,
-  personslim,
   person,
-  peoplepane,
   pdf,
   pcaudiostop,
   pcaudio,
@@ -433,7 +418,6 @@ export default {
   more,
   micoff,
   mic,
-  message,
   menulight,
   menu,
   mention,
@@ -452,7 +436,6 @@ export default {
   link,
   liked,
   like,
-  leavedoors,
   leave,
   kollective,
   keyboard,
@@ -463,7 +446,6 @@ export default {
   invitedeclined,
   invitecancelled,
   inviteaccepted,
-  insert,
   inputvalid,
   inputinvalid,
   info,
@@ -473,7 +455,6 @@ export default {
   home,
   hive,
   highlight,
-  hide,
   helparticle,
   headset,
   groups,
@@ -507,6 +488,8 @@ export default {
   feedback,
   faq,
   eyefriendlier,
+  eyeslash,
+  eye,
   expand,
   error,
   emoji,
@@ -605,7 +588,6 @@ export default {
   arrowdown,
   archive,
   apps,
-  announcement,
   analytics,
   addparticipant,
   add,
