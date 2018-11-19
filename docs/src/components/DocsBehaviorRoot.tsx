@@ -18,7 +18,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
   }
 
   baseName(fileName: string) {
-    const divided = _.startCase(fileName.replace('ts', ''))
+    const divided = _.startCase(fileName.replace(/\.ts$/, ''))
     return _.upperFirst(_.lowerCase(divided))
   }
 
