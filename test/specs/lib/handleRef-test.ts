@@ -18,6 +18,14 @@ describe('handleRef', () => {
     expect(ref).toBeCalledWith(node)
   })
 
+  it('does not do anything when "ref" is null', () => {
+    const node = document.createElement('div')
+
+    expect(() => {
+      handleRef(null, node)
+    }).not.toThrowError()
+  })
+
   it('assigns to "current" when "ref" is object', () => {
     const ref = React.createRef<HTMLDivElement>()
     const node = document.createElement('div')
