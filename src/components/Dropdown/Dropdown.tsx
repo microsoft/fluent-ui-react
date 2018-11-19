@@ -3,11 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
-import {
-  ComponentSlotStyle,
-  ComponentSlotStylesInput,
-  ComponentVariablesInput,
-} from '../../themes/types'
+import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
   StateChangeOptions,
@@ -19,7 +15,7 @@ import Downshift, {
   GetItemPropsOptions,
 } from 'downshift'
 import Label from '../Label/Label'
-import { AutoControlledComponent, customPropTypes, RenderResultConfig } from '../../lib'
+import { AutoControlledComponent, RenderResultConfig } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -27,35 +23,146 @@ import Text from '../Text/Text'
 import Image from '../Image/Image'
 import ListItem from '../List/ListItem'
 import Icon from '../Icon/Icon'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface DropdownProps {
-  className?: string
+  /** The default value for the search query. */
   defaultSearchQuery?: string
+
+  /** The default value for the dropdown. */
   defaultValue?: DropdownListItem | DropdownListItem[]
+
+  /** A dropdown can take the full width of its container. */
   fluid?: boolean
+
+  /**
+   * A function that creates custom accessability message for dropdown status.
+   * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
+   */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<DropdownListItem>) => string
+
+  /**
+   * A function that creates custom accessability message for dropdown item selection.
+   * @param {DropdownListItem} item - Dropdown selected element.
+   */
   getA11ySelectedMessage?: (item: DropdownListItem) => string
+
+  /** A function that creates custom accessability message for dropdown item removal.
+   * @param {DropdownListItem} item - Dropdown removed element.
+   */
   getA11yRemovedMessage?: (item: DropdownListItem) => string
+
+  /** A function that creates custom aria label accessability message for the remove item button.
+   * @param {DropdownListItem} item - The active item to be removed.
+   */
   getA11yRemoveItemMessage?: (item: DropdownListItem) => string
+
+  /** Array of props for generating dropdown items and selected item labels if multiple selection. */
   items?: DropdownListItem[]
+
+  /**
+   * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
+   * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
+   */
   itemToString?: (item: DropdownListItem) => string
+
+  /** A dropdown can perform a multiple selection. */
   multiple?: boolean
+
+  /** A string to be displayed when dropdown does not have available items to show. */
   noResultsMessage?: string
+
+  /**
+   * Called on deletion by backspace when dropdown is a multiple search.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onBackspaceDelete?: ComponentEventHandler<DropdownProps>
-  handleChange?: (value: DropdownListItem | DropdownListItem[]) => any
+
+  /**
+   * Callback for change in dropdown active value(s).
+   * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
+   */
+  onDropdownChange?: (value: DropdownListItem | DropdownListItem[]) => any
+
+  /**
+   * Called on clicking the 'X' icon corresponding to an active value.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onCloseIconClick?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called on key down on the 'X' icon corresponding to an active value.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onCloseIconKeyDown?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called on container click. Especially useful for multiple search case, when user
+   * can click the container outside the edit text or active values.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onContainerClick?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called on edit text blur.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onInputBlur?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called on edit text focus.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onInputFocus?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called on edit text key down.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onInputKeyDown?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Called when clicking on an active value, on the text or avatar, if any.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onLabelClick?: ComponentEventHandler<DropdownProps>
-  handleSearchChange?: (searchQuery: string) => any
+
+  /**
+   * Callback for change in dropdown search query value.
+   * @param {string} searchQuery - The new value in the search field.
+   */
+  onSearchQueryChange?: (searchQuery: string) => any
+
+  /** A message to serve as placeholder. */
   placeholder?: string
+
+  /** A dropdown can have a search field instead of trigger button. */
   search?: boolean
-  styles?: ComponentSlotStyle<DropdownProps, DropdownState>
+
+  /** The value in the edit text, if dropdown is a search. */
+  searchQuery?: string
+
+  /** A dropdown can have a toggle button. */
   toggleButton?: boolean
-  variables?: ComponentVariablesInput
+
+  /** The value of the dropdown. */
+  value?: DropdownListItem | DropdownListItem[]
 }
 
 export interface DropdownState {
@@ -67,8 +174,8 @@ export interface DropdownState {
 }
 
 export interface DropdownListItem {
-  key: string
   header: string
+  key?: string
   content?: string
   image?: string
 }
@@ -86,154 +193,33 @@ export default class Dropdown extends AutoControlledComponent<
   static className = 'ui-dropdown'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** The default value for the search query. */
+    ...commonUIComponentPropTypes,
     defaultSearchQuery: PropTypes.string,
-
-    /** The default value of the dropdown. */
     defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-
-    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Array of props for generating dropdown items and selected item labels if multiple selection. */
-    items: PropTypes.arrayOf(customPropTypes.itemShorthand),
-
-    /**
-     * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
-     * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
-     */
-    itemToString: PropTypes.func,
-
-    /**
-     * A function that creates custom accessability message for dropdown status.
-     * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
-     */
     getA11yStatusMessage: PropTypes.func,
-
-    /**
-     * A function that creates custom accessability message for dropdown selection.
-     * @param {DropdownListItem} item - Dropdown selected element.
-     */
     getA11ySelectedMessage: PropTypes.func,
-
-    /** A function that creates custom accessability message for dropdown removal.
-     * @param {DropdownListItem} item - Dropdown removed element.
-     */
     getA11yRemovedMessage: PropTypes.func,
-
-    /** A function that creates custom accessability message for active item remove button.
-     * @param {DropdownListItem} item - The active item to be removed.
-     */
     getA11yRemoveItemMessage: PropTypes.func,
-
-    /** A dropdown can perform a multiple selection. */
+    items: PropTypes.arrayOf(PropTypes.object),
+    itemToString: PropTypes.func,
     multiple: PropTypes.bool,
-
-    /** A string to be displayed when dropdown is not showing any items. */
     noResultsMessage: PropTypes.string,
-
-    /**
-     * Called on deletion by backspace when dropdown is a multiple search.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onBackspaceDelete: PropTypes.func,
-
-    /**
-     * Callback for change in dropdown active value(s).
-     * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
-     */
-    handleChange: PropTypes.func,
-
-    /**
-     * Called on clicking the 'X' icon corresponding to an active value.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onCloseIconClick: PropTypes.func,
-
-    /**
-     * Called on key down on the 'X' icon corresponding to an active value.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onCloseIconKeyDown: PropTypes.func,
-
-    /**
-     * Called on container click.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onContainerClick: PropTypes.func,
-
-    /**
-     * Called on input blur.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
+    onDropdownChange: PropTypes.func,
     onInputBlur: PropTypes.func,
-
-    /**
-     * Called on input focus.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onInputFocus: PropTypes.func,
-
-    /**
-     * Called on input key down.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onInputKeyDown: PropTypes.func,
-
-    /**
-     * Called when clicking on an active value, on the text or avatar, if any.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onLabelClick: PropTypes.func,
-
-    /**
-     * Callback for change in dropdown search value.
-     * @param {string} searchQuery - The new value in the search field.
-     */
-    handleSearchChange: PropTypes.func,
-
-    /** A message to serve as placeholder. */
+    onSearchQueryChange: PropTypes.func,
     placeholder: PropTypes.string,
-
-    /** A dropdown can have a search field. */
     search: PropTypes.bool,
-
-    /** The value in the edit text, if dropdown is a search. */
     searchQuery: PropTypes.string,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** A dropdown can have a toggle button. */
     toggleButton: PropTypes.bool,
-
-    /** The value of the dropdown. */
     value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -243,35 +229,10 @@ export default class Dropdown extends AutoControlledComponent<
   static autoControlledProps = ['searchQuery', 'value']
 
   state: DropdownState = {
-    backspaceDelete: true,
+    backspaceDelete: this.props.multiple ? true : undefined,
     focused: false,
-    searchQuery: '',
+    searchQuery: this.props.search ? '' : undefined,
     value: this.props.multiple ? [] : null,
-  }
-
-  private removeFromActiveValues(item?: DropdownListItem): DropdownListItem {
-    const { getA11yRemovedMessage } = this.props
-    let value = this.state.value as DropdownListItem[]
-    let poppedItem = item
-
-    if (poppedItem) {
-      value = value.filter(currentElement => currentElement !== item)
-    } else {
-      poppedItem = value.pop()
-    }
-
-    this.trySetState({
-      value,
-    })
-    this.setState({
-      message: getA11yRemovedMessage
-        ? getA11yRemovedMessage(item)
-        : `${poppedItem.header} has been removed.`,
-    })
-
-    _.invoke(this.props, 'handleChange', value)
-
-    return poppedItem
   }
 
   public renderComponent({
@@ -286,7 +247,6 @@ export default class Dropdown extends AutoControlledComponent<
     const optionalDownshiftProps = {
       // in multiple dropdown, we hold active values in the array, and default active is null.
       ...(multiple && { selectedItem: null }),
-      ...(getA11yStatusMessage && { getA11yStatusMessage }),
     }
 
     return (
@@ -295,6 +255,7 @@ export default class Dropdown extends AutoControlledComponent<
           onChange={this.handleChange}
           inputValue={searchQuery}
           stateReducer={this.stateReducer}
+          getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
           itemToString={
             itemToString ? itemToString : (item: DropdownListItem) => (item ? item.header : '')
           }
@@ -369,7 +330,7 @@ export default class Dropdown extends AutoControlledComponent<
           styles: styles.editTextDiv,
           ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }),
         }}
-        variables={{ inputFocusBorderColor: variables.editTextInputFocusBorderColor }}
+        variables={{ inputFocusBorderBottomColor: variables.editTextInputFocusBorderColor }}
         input={{
           type: 'text',
           styles: styles.editTextInput,
@@ -428,13 +389,14 @@ export default class Dropdown extends AutoControlledComponent<
     const { items, noResultsMessage } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
+        // to avoid passing undefined for these props, will spread.
         const optionalItemProps = {
           media: item.image && <Image src={item.image} avatar />,
           content: item.content,
         }
         return (
           <ListItem
-            key={item.key}
+            key={item.key || item.header}
             header={item.header}
             {...optionalItemProps}
             variables={{
@@ -454,7 +416,7 @@ export default class Dropdown extends AutoControlledComponent<
         )
       })
     }
-    // render no match error.
+    // render no match message.
     return [
       {
         key: 'people-picker-no-results-item',
@@ -485,7 +447,7 @@ export default class Dropdown extends AutoControlledComponent<
               role="presentation"
               styles={styles.activeListLabel}
               circular
-              key={`active-item-${index}`}
+              key={`active-item-${item.key || item.header}`}
               content={<Text content={item.header} onClick={this.handleLabelClick} />}
               {...optionalImage}
               icon={{
@@ -515,11 +477,33 @@ export default class Dropdown extends AutoControlledComponent<
         this.setState({
           backspaceDelete: !(state.inputValue.length > 0 && changes.inputValue.length === 0),
         })
-        _.invoke(this.props, 'handleSearchChange', changes.inputValue)
+        _.invoke(this.props, 'onSearchQueryChange', changes.inputValue)
         return changes
       default:
         return changes
     }
+  }
+
+  private getA11yStatusMessage = ({
+    highlightedItem,
+    isOpen,
+    itemToString,
+    previousResultCount,
+    resultCount,
+    selectedItem,
+  }: A11yStatusMessageOptions<DropdownListItem>) => {
+    if (!isOpen) {
+      return selectedItem ? itemToString(selectedItem) : ''
+    }
+    if (!resultCount) {
+      return 'No results are available.'
+    }
+    if (!highlightedItem || resultCount !== previousResultCount) {
+      return `${resultCount} result${
+        resultCount === 1 ? 'is' : 's are'
+      } available, use up and down arrow keys to navigate. Press Enter key to select.`
+    }
+    return ''
   }
 
   private handleInputFocus = (e: React.SyntheticEvent) => {
@@ -572,13 +556,7 @@ export default class Dropdown extends AutoControlledComponent<
         : `${item.header} has been selected.`,
     })
 
-    _.invoke(this.props, 'handleChange', newValue)
-  }
-
-  private handleCloseIconClick = (item: DropdownListItem, e: React.SyntheticEvent) => {
-    this.handleCloseIconAction(item, e)
-
-    _.invoke(this.props, 'onCloseIconClick', e, { ...this.props, item })
+    _.invoke(this.props, 'onDropdownChange', newValue)
   }
 
   private handleLabelClick = (e: React.SyntheticEvent) => {
@@ -587,8 +565,14 @@ export default class Dropdown extends AutoControlledComponent<
     _.invoke(this.props, 'onLabelClick', e, this.props)
   }
 
+  private handleCloseIconClick = (item: DropdownListItem, e: React.SyntheticEvent) => {
+    this.handleCloseIconAction(item, e)
+
+    _.invoke(this.props, 'onCloseIconClick', e, { ...this.props, item })
+  }
+
   private handleCloseIconKeyDown = (item: DropdownListItem, e: React.SyntheticEvent) => {
-    if (keyboardKey.getCode(event) === keyboardKey.Enter) {
+    if (keyboardKey.getCode(e) === keyboardKey.Enter) {
       this.handleCloseIconAction(item, e)
     }
     _.invoke(this.props, 'onCloseIconKeyDown', e, { ...this.props, item })
@@ -626,5 +610,30 @@ export default class Dropdown extends AutoControlledComponent<
     this.removeFromActiveValues(item)
     this.inputRef.focus()
     e.stopPropagation()
+  }
+
+  private removeFromActiveValues(item?: DropdownListItem): DropdownListItem {
+    const { getA11yRemovedMessage } = this.props
+    let value = this.state.value as DropdownListItem[]
+    let poppedItem = item
+
+    if (poppedItem) {
+      value = value.filter(currentElement => currentElement !== item)
+    } else {
+      poppedItem = value.pop()
+    }
+
+    this.trySetState({
+      value,
+    })
+    this.setState({
+      message: getA11yRemovedMessage
+        ? getA11yRemovedMessage(item)
+        : `${poppedItem.header} has been removed.`,
+    })
+
+    _.invoke(this.props, 'onDropdownChange', value)
+
+    return poppedItem
   }
 }

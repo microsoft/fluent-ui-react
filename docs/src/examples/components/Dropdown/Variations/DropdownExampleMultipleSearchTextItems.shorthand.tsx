@@ -11,7 +11,7 @@ class DropdownExample extends React.Component {
         multiple
         search
         items={this.state.items}
-        handleChange={(value: DropdownListItem[]) => {
+        onDropdownChange={(value: DropdownListItem[]) => {
           this.setState({
             items: inputItems.filter(item => value.indexOf(item) === -1),
           })
@@ -24,39 +24,30 @@ class DropdownExample extends React.Component {
 const inputItems: DropdownListItem[] = [
   {
     header: 'Bruce Wayne',
-    key: 'Bruce Wayne',
   },
   {
     header: 'Natasha Romanoff',
-    key: 'Natasha Romanoff',
   },
   {
     header: 'Steven Strange',
-    key: 'Steven Strange',
   },
   {
     header: 'Alfred Pennyworth',
-    key: 'Alfred Pennyworth',
   },
   {
     header: `Scarlett O'Hara`,
-    key: `Scarlett O'Hara`,
   },
   {
     header: 'Imperator Furiosa',
-    key: 'Imperator Furiosa',
   },
   {
     header: 'Bruce Banner',
-    key: 'Bruce Banner',
   },
   {
     header: 'Peter Parker',
-    key: 'Peter Parker',
   },
   {
     header: 'Selina Kyle',
-    key: 'Selina Kyle',
   },
 ]
 
