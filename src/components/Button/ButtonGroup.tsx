@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import Button from './Button'
 import { buttonGroupBehavior } from '../../lib/accessibility'
@@ -99,4 +100,4 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   }
 }
 
-export default ButtonGroup
+export default forwardRefFactory(ButtonGroup)

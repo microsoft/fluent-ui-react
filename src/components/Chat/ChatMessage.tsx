@@ -12,6 +12,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import {
   ComponentVariablesInput,
@@ -152,6 +153,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+const ForwardedChatMessage = forwardRefFactory(ChatMessage)
+ForwardedChatMessage.create = createShorthandFactory(ForwardedChatMessage, 'content')
 
-export default ChatMessage
+export default ForwardedChatMessage

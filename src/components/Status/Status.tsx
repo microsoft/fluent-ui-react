@@ -6,6 +6,7 @@ import {
   customPropTypes,
   UIComponent,
   createShorthandFactory,
+  forwardRefFactory,
   UIComponentProps,
   commonPropTypes,
 } from '../../lib'
@@ -25,9 +26,6 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-/**
- * A status graphically represents someone's or something's state.
- */
 class Status extends UIComponent<Extendable<StatusProps>, any> {
   static create: Function
 
@@ -71,5 +69,9 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
 
 Status.create = createShorthandFactory(Status, 'state')
 
-export default Status
+/**
+ * A status graphically represents someone's or something's state.
+ */
+export default forwardRefFactory(Status)
+
 export type StatusPropsWithDefaults = StatusProps & typeof Status.defaultProps

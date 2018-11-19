@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import Slot from '../Slot/Slot'
 
@@ -60,6 +61,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   }
 }
 
-ChatItem.create = createShorthandFactory(ChatItem, 'content')
+const ForwardedChatItem = forwardRefFactory(ChatItem)
+ForwardedChatItem.create = createShorthandFactory(ForwardedChatItem, 'content')
 
-export default ChatItem
+export default ForwardedChatItem

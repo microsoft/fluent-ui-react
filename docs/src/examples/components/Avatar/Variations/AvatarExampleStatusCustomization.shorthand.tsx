@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, Grid, Status, Text } from '@stardust-ui/react'
+import { Avatar, Grid, Text } from '@stardust-ui/react'
 
 const defaultAvatar = (
   <Avatar
@@ -54,12 +54,12 @@ const AvatarExampleStatusCustomizationShorthand = () => (
     {defaultAvatar}
     <Avatar
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
-      size={Avatar.defaultProps.size * 1.5}
+      size={48}
       status={{
         color: 'green',
         icon: 'check',
         title: 'Available',
-        size: Status.defaultProps.size * 1.5,
+        size: 48,
       }}
     />
   </Grid>

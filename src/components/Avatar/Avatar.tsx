@@ -8,6 +8,7 @@ import {
   UIComponent,
   UIComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
@@ -114,8 +115,9 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   }
 }
 
-Avatar.create = createShorthandFactory(Avatar, 'name')
+const ForwardedAvatar = forwardRefFactory(Avatar)
+ForwardedAvatar.create = createShorthandFactory(ForwardedAvatar, 'name')
 
-export default Avatar
+export default ForwardedAvatar
 
 export type AvatarPropsWithDefaults = AvatarProps & typeof Avatar.defaultProps

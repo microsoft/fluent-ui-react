@@ -2,7 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
+  commonPropTypes,
+  forwardRefFactory,
+} from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { Extendable, ShorthandValue } from '../../../types/utils'
@@ -62,4 +68,4 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
   }
 }
 
-export default Chat
+export default forwardRefFactory(Chat)

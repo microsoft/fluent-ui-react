@@ -10,6 +10,7 @@ import {
   ColorComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import { Extendable } from '../../../types/utils'
 
@@ -60,8 +61,9 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory(Divider, 'content')
+const ForwardedDivider = forwardRefFactory(Divider)
+ForwardedDivider.create = createShorthandFactory(ForwardedDivider, 'content')
 
-export default Divider
+export default ForwardedDivider
 
 export type DividerPropsWithDefaults = DividerProps & typeof Divider.defaultProps

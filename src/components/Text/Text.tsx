@@ -9,6 +9,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
@@ -95,6 +96,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, 'content')
+const ForwardedText = forwardRefFactory(Text)
+ForwardedText.create = createShorthandFactory(ForwardedText, 'content')
 
-export default Text
+export default ForwardedText

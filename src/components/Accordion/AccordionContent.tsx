@@ -9,6 +9,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
@@ -28,9 +29,6 @@ export interface AccordionContentProps
   onClick?: ComponentEventHandler<AccordionContentProps>
 }
 
-/**
- * A standard AccordionContent.
- */
 class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
@@ -55,6 +53,10 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
   }
 }
 
-AccordionContent.create = createShorthandFactory(AccordionContent, 'content')
+const ForwardedAccordionContent = forwardRefFactory(AccordionContent)
+ForwardedAccordionContent.create = createShorthandFactory(ForwardedAccordionContent, 'content')
 
-export default AccordionContent
+/**
+ * A standard AccordionContent.
+ */
+export default ForwardedAccordionContent

@@ -11,6 +11,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
@@ -177,6 +178,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 }
 
-Button.create = createShorthandFactory(Button, 'content')
+const ForwardedButton = forwardRefFactory(Button)
+ForwardedButton.create = createShorthandFactory(ForwardedButton, 'content')
 
-export default Button
+export default ForwardedButton

@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
@@ -96,6 +97,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, 'header')
+const ForwardedAttachment = forwardRefFactory(Attachment)
+ForwardedAttachment.create = createShorthandFactory(ForwardedAttachment, 'header')
 
-export default Attachment
+export default ForwardedAttachment

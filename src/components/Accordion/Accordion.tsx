@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  forwardRefFactory,
 } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
@@ -69,9 +70,6 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   accessibility?: Accessibility
 }
 
-/**
- * An accordion allows users to toggle the display of sections of content.
- */
 class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any> {
   static displayName = 'Accordion'
 
@@ -186,4 +184,7 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
   }
 }
 
-export default Accordion
+/**
+ * An accordion allows users to toggle the display of sections of content.
+ */
+export default forwardRefFactory(Accordion)
