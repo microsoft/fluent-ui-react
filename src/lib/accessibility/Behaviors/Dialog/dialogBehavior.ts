@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import popupBehavior from '../Popup/popupBehavior'
+import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 import * as _ from 'lodash'
 
 /**
@@ -11,15 +11,14 @@ import * as _ from 'lodash'
  * Adds attribute 'role=modal' to 'popup' component's part.
  * Traps focus inside component.
  */
-const dialogBehavior: Accessibility = (props: any) => ({
-  attributes: _.assign(popupBehavior(props).attributes, {
-    popup: {
-      role: 'modal',
-      'aria-modal': true,
-    },
-  }),
-  focusTrap: true,
-  keyActions: popupBehavior(props).keyActions,
-})
+const dialogBehavior: Accessibility = (props: any) => {
+  const behaviorData = popupFocusTrapBehavior(props)
+  behaviorData.attributes.popup = {
+    role: 'dialog',
+    'aria-modal': true,
+  }
+
+  return behaviorData
+}
 
 export default dialogBehavior
