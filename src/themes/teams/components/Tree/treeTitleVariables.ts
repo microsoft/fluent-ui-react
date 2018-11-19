@@ -1,5 +1,3 @@
-// import { pxToRem } from '../../../../lib'
-
 export interface TreeTitleVariables {
   defaultColor: string
 }

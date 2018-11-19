@@ -8,18 +8,42 @@ import TreeTitle from './TreeTitle'
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
 
-export type TreeListItemProps = {
-  as?: any
-  children?: React.ReactChildren
-  content?: React.ReactNode
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+export interface TreeListItemProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Shorthand array of props for sub tree. */
   subtree?: any[]
+
+  /** Whether or not the subtree of the item is in the open state. */
   active?: boolean
+
+  /** Custom styles to be applied to the tree title. */
   titleStyles?: ComponentSlotStyle
+
+  /** Custom variables to be applied to the tree title. */
   titleVariables?: ComponentVariablesInput
+
+  /**
+   * Called when a tree title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All title props.
+   */
   onItemClick?: ComponentEventHandler<TreeListItemProps>
+
+  /** Shorthand for content when the item is in an open state. */
   activeContent?: ShorthandValue
 }
 
@@ -34,45 +58,15 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     active: this.props.active,
   }
 
-  // static handledProps = ['as', 'children', 'content', 'styles', 'variables']
-
   static propTypes = {
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** Define your own children. */
-    children: PropTypes.node,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom styles to be applied to the tree title. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     titleStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the tree title. */
     titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Shorthand array of props for sub tree. */
     subtree: PropTypes.array,
-
-    /** Whether or not the subtree of the item is in the open state. */
     active: PropTypes.bool,
-
-    /** Shorthand for content when the item is in an open state. */
     activeContent: PropTypes.any,
-
-    /**
-     * Called when a tree title is clicked.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All title props.
-     */
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
 

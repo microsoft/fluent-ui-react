@@ -5,7 +5,6 @@ import * as _ from 'lodash'
  * @description
  *  Adds attribute 'aria-expanded=true' based on whether the folowing subtree is expanded or not.
  */
-
 const treeTitleBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {

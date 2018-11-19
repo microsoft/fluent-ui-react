@@ -1,24 +1,24 @@
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import TreeListItem from './TreeListItem'
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
 import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import { treeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
-export type TreeProps = {
-  as?: any
-  children?: React.ReactChildren
-  content?: React.ReactNode
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /** Shorthand array of props for Tree. */
   treedata: {
     title: ShorthandValue
     onItemClick?: ComponentEventHandler<TreeProps>
     subtree?: any[]
   }[]
+
+  /** Whether the tree is a subtree. */
   isSubTree?: boolean
 }
 
@@ -29,28 +29,10 @@ class Tree extends UIComponent<TreeProps, any> {
 
   static displayName = 'Tree'
 
-  // static handledProps = ['as', 'children', 'content', 'styles', 'variables']
-
   static propTypes = {
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** Define your own children. */
-    children: PropTypes.node,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Shorthand array of props for Tree. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
     treedata: PropTypes.array,
-
-    /** Whether the tree is a subtree. */
     isSubTree: PropTypes.boolean,
   }
 
@@ -62,7 +44,7 @@ class Tree extends UIComponent<TreeProps, any> {
   renderContent(styles, variables) {
     const { treedata } = this.props
     if (!treedata) return []
-    return treedata.map(obj => {
+    return _.map(treedata, obj => {
       const subtree = obj.subtree
       return TreeListItem.create(obj.title, {
         defaultProps: {

@@ -2,50 +2,43 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
 
-export type TreeTitleProps = {
-  as?: any
-  children?: React.ReactChildren
-  content?: React.ReactNode
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+export interface TreeTitleProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Whether or not the subtree of the item is in the open state. */
   active?: boolean
+
+  /** Whether or not the item has a subtree. */
   hasSubtree?: boolean
 }
 
 class TreeTitle extends UIComponent<TreeTitleProps, any> {
   static create: Function
 
-  static className = 'tree-title'
+  static className = 'tree-list__title'
 
   static displayName = 'TreeTitle'
 
-  // static handledProps = ['as', 'children', 'content', 'styles', 'variables']
-
   static propTypes = {
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** Define your own children. */
-    children: PropTypes.node,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Whether or not the subtree of the item is in the open state. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     active: PropTypes.bool,
-
-    /** Whether or not the item has a subtree. */
     hasSubtree: PropTypes.bool,
   }
 
