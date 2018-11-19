@@ -119,7 +119,11 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     const { children } = this.props
 
     return (
-      <Ref innerRef={this.handleListRef}>
+      <Ref
+        innerRef={(listNode: HTMLElement) => {
+          _.invoke(this.props, 'listRef', listNode)
+        }}
+      >
         <ElementType
           {...accessibility.attributes.root}
           {...accessibility.keyHandlers.root}
@@ -174,10 +178,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
         render: renderItem,
       })
     })
-  }
-
-  private handleListRef = (listNode: HTMLElement) => {
-    _.invoke(this.props, 'listRef', listNode)
   }
 }
 
