@@ -1,13 +1,13 @@
 import * as React from 'react'
-import EmojiPopup from './emojiPopup'
-import StickerPopup from './stickerPopup'
+import EmojiPicker from './emojiPicker'
+import StickerPicker from './stickerPicker'
 
 export default () => (
   <div style={{ display: 'flex', flexDirection: 'column', width: '180px', padding: '20px' }}>
     <span>Emojii popup:</span>
-    <EmojiPopup />
+    <EmojiPicker />
     <br />
     <span>Sticker popup:</span>
-    <StickerPopup />
+    <StickerPicker />
   </div>
 )

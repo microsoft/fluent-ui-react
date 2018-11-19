@@ -1,39 +1,41 @@
 import * as React from 'react'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 import { Grid, Input, gridBehavior } from '@stardust-ui/react'
-import GridImagePickerItem, { GridItemProps } from './GridImagePickerItem'
+import GridImagePickerItem, { GridPickerItemProps } from './GridImagePickerItem'
 
 export interface GridPickerProps {
   as?: keyof React.ReactHTML
-  items: GridItemProps[]
-  gridColumns: string | number
+  items: GridPickerItemProps[]
+  gridColumns?: string | number
+}
+
+const gridStyles = {
+  width: '320px',
+  listStyle: 'none',
+  padding: '0',
+  margin: '0',
+  gridRowGap: '10px',
+}
+
+const inputStyles = {
+  marginBottom: '10px',
 }
 
 class GridImagePicker extends React.Component<GridPickerProps, any> {
-  gridStyles = {
-    width: '320px',
-    listStyle: 'none',
-    padding: '0',
-    margin: '0',
-    gridRowGap: '10px',
-  }
-
-  inputStyles = {
-    marginBottom: '10px',
+  static defaultProps = {
+    as: 'ul',
   }
 
   render() {
-    const gridTag = this.props.as || 'ul'
-
     return (
       <>
-        <Input styles={this.inputStyles} fluid icon="search" placeholder="Search..." />
+        <Input styles={inputStyles} fluid icon="search" placeholder="Search..." />
         <Grid
-          as={gridTag}
+          as={this.props.as}
           accessibility={gridBehavior}
           columns={this.props.gridColumns}
-          style={this.gridStyles}
+          style={gridStyles}
           content={this.renderGridItems()}
         />
       </>
@@ -41,7 +43,7 @@ class GridImagePicker extends React.Component<GridPickerProps, any> {
   }
 
   renderGridItems() {
-    return _.map(this.props.items, (item, idx) => (
+    return _.map(this.props.items, item => (
       <GridImagePickerItem imageSrc={item.imageSrc} title={item.title} />
     ))
   }

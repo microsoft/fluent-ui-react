@@ -1,25 +1,27 @@
 import * as React from 'react'
-
 import { Image, Button } from '@stardust-ui/react'
+import * as _ from 'lodash'
 
-import _ from 'lodash'
-
-export interface GridItemProps {
+export interface GridPickerItemProps {
   as?: keyof React.ReactHTML
   title?: string
   imageSrc: string
 }
 
-class GridImageItemPicker extends React.Component<GridItemProps, any> {
-  imageStyle = {
-    width: '100%',
-  }
+const imageStyles = {
+  width: '100%',
+}
 
-  imageButtonStyles = {
-    minWidth: '56px',
-    height: '56px',
-    padding: '0',
-    background: '#fff',
+const imageButtonStyles = {
+  minWidth: '56px',
+  height: '56px',
+  padding: '0',
+  background: '#fff',
+}
+
+class GridImageItemPicker extends React.Component<GridPickerItemProps, any> {
+  static defaultProps = {
+    as: 'li',
   }
 
   handleClick = e => {
@@ -28,14 +30,13 @@ class GridImageItemPicker extends React.Component<GridItemProps, any> {
 
   render() {
     const { title, imageSrc } = this.props
-    const Tag = this.props.as || 'li'
 
     return (
-      <Tag>
-        <Button styles={this.imageButtonStyles} onClick={this.handleClick} title={title}>
-          {imageSrc && <Image styles={this.imageStyle} src={imageSrc} fluid />}
+      <this.props.as>
+        <Button styles={imageButtonStyles} onClick={this.handleClick} title={title} role="listitem">
+          {imageSrc && <Image styles={imageStyles} src={imageSrc} fluid />}
         </Button>
-      </Tag>
+      </this.props.as>
     )
   }
 }
