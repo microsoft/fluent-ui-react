@@ -21,6 +21,11 @@ const Types = () => (
       examplePath="components/Popup/Types/PopupContentWrapperExample"
     />
     <ComponentExample
+      title="Focus Trap"
+      description="Popup content traps focus on appearance by using dedicated accessibility behavior."
+      examplePath="components/Popup/Types/PopupFocusTrapExample"
+    />
+    <ComponentExample
       title="Custom Target"
       description="By default Popup uses trigger element as the one it is displayed for, but it is possible to provide any DOM element as popup's target."
       examplePath="components/Popup/Types/PopupCustomTargetExample"

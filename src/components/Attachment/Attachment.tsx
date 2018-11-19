@@ -1,12 +1,12 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
-import { UIComponent, customPropTypes, createShorthandFactory, createHTMLDivision } from '../../lib'
+import * as _ from 'lodash'
+import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import Slot from '../Slot/Slot'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
@@ -128,12 +128,12 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
-              defaultProps: { className: classes.header },
+              defaultProps: { styles: styles.header },
               render: renderHeader,
             })}
 
             {Text.create(description, {
-              defaultProps: { className: classes.description },
+              defaultProps: { styles: styles.description },
               render: renderDescription,
             })}
           </div>
@@ -147,7 +147,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          createHTMLDivision('', {
+          Slot.create('', {
             defaultProps: { className: classes.progress },
             render: renderProgress,
           })}
@@ -156,6 +156,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 }
 
-Attachment.create = createShorthandFactory(Attachment, header => ({ header }))
+Attachment.create = createShorthandFactory(Attachment, 'header')
 
 export default Attachment

@@ -50,6 +50,6 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   }
 }
 
-PopupContent.create = createShorthandFactory(PopupContent, content => ({ content }))
+PopupContent.create = createShorthandFactory(PopupContent, 'content')
 
 export default PopupContent
