@@ -8,9 +8,8 @@ const ExampleButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
 ))
 
 class RefExampleForwardRef extends React.Component {
-  state = { isMounted: false }
-
   forwardedRef = React.createRef<HTMLButtonElement>()
+  state = { isMounted: false }
 
   componentDidMount() {
     this.setState({ isMounted: true })
