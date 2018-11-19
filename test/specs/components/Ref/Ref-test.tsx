@@ -4,6 +4,12 @@ import * as React from 'react'
 import Ref from 'src/components/Ref/Ref'
 import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 
+const TestButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
+  <div>
+    <button ref={ref} />
+  </div>
+))
+
 const testInnerRef = Component => {
   const innerRef = jest.fn()
   const node = mount(
@@ -56,6 +62,20 @@ describe('Ref', () => {
 
       expect(innerRef).toHaveBeenCalledTimes(1)
       expect(innerRef).toHaveBeenCalledWith(null)
+    })
+
+    it('works with "forwardRef" API', () => {
+      const forwardedRef = React.createRef<HTMLButtonElement>()
+      const innerRef = React.createRef()
+
+      mount(
+        <Ref innerRef={innerRef}>
+          <TestButton ref={forwardedRef} />
+        </Ref>,
+      )
+
+      expect(forwardedRef.current).toBeInstanceOf(Element)
+      expect(innerRef.current).toBeInstanceOf(Element)
     })
   })
 })

@@ -15,6 +15,15 @@ const RefTypesExamples = () => (
       }
       examplePath="components/Ref/Types/RefExampleRef"
     />
+    <ComponentExample
+      title="Forward Ref"
+      description={
+        <span>
+          Works with <code>forwardRef</code> API.
+        </span>
+      }
+      examplePath="components/Ref/Types/RefExampleForwardRef"
+    />
   </ExampleSection>
 )
 
