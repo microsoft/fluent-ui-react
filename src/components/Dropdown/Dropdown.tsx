@@ -170,7 +170,6 @@ export interface DropdownState {
   backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
-  message?: string
 }
 
 export interface DropdownListItem {
@@ -276,9 +275,6 @@ export default class Dropdown extends AutoControlledComponent<
                 className={classes.containerDiv}
                 onClick={this.handleContainerClick.bind(this, isOpen)}
               >
-                <span aria-live="assertive" className={classes.ariaLiveSpan}>
-                  {this.state.message}
-                </span>
                 {multiple && this.renderActiveValues(styles)}
                 {search &&
                   this.renderInput(
@@ -498,12 +494,38 @@ export default class Dropdown extends AutoControlledComponent<
     if (!resultCount) {
       return 'No results are available.'
     }
-    if (!highlightedItem || resultCount !== previousResultCount) {
+    if (!highlightedItem && resultCount !== previousResultCount) {
       return `${resultCount} result${
         resultCount === 1 ? 'is' : 's are'
       } available, use up and down arrow keys to navigate. Press Enter key to select.`
     }
     return ''
+  }
+
+  private setA11yStatus = (statusMessage: string) => {
+    const elementId = 'stardust-dropdown-a11y-status'
+    let statusDiv = document.getElementById(elementId)
+
+    if (!statusDiv) {
+      statusDiv = document.createElement('div')
+      statusDiv.setAttribute('id', elementId)
+      statusDiv.setAttribute('role', 'status')
+      statusDiv.setAttribute('aria-live', 'polite')
+      statusDiv.setAttribute('aria-relevant', 'additions text')
+      Object.assign(statusDiv.style, {
+        border: '0',
+        clip: 'rect(0 0 0 0)',
+        height: '1px',
+        margin: '-1px',
+        overflow: 'hidden',
+        padding: '0',
+        position: 'absolute',
+        width: '1px',
+      })
+      document.body.appendChild(statusDiv)
+    }
+
+    statusDiv.textContent = statusMessage
   }
 
   private handleInputFocus = (e: React.SyntheticEvent) => {
@@ -550,11 +572,9 @@ export default class Dropdown extends AutoControlledComponent<
       value: newValue,
       searchQuery: '',
     })
-    this.setState({
-      message: getA11ySelectedMessage
-        ? getA11ySelectedMessage(item)
-        : `${item.header} has been selected.`,
-    })
+    this.setA11yStatus(
+      getA11ySelectedMessage ? getA11ySelectedMessage(item) : `${item.header} has been selected.`,
+    )
 
     _.invoke(this.props, 'onDropdownChange', newValue)
   }
@@ -626,11 +646,11 @@ export default class Dropdown extends AutoControlledComponent<
     this.trySetState({
       value,
     })
-    this.setState({
-      message: getA11yRemovedMessage
+    this.setA11yStatus(
+      getA11yRemovedMessage
         ? getA11yRemovedMessage(item)
         : `${poppedItem.header} has been removed.`,
-    })
+    )
 
     _.invoke(this.props, 'onDropdownChange', value)
 

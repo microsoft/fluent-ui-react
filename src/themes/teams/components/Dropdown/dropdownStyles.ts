@@ -28,17 +28,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     }
   },
 
-  ariaLiveSpan: (): ICSSInJSStyle => ({
-    border: '0px',
-    clip: 'rect(0px, 0px, 0px, 0px)',
-    height: '1px',
-    margin: '-1px',
-    overflow: 'hidden',
-    padding: '0px',
-    width: '1px',
-    position: 'absolute',
-  }),
-
   editTextInput: (): ICSSInJSStyle => ({
     width: '100%',
   }),
