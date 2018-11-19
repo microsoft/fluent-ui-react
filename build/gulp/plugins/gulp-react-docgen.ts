@@ -19,7 +19,7 @@ export default () =>
       return
     }
 
-    const infoFilename = file.basename.replace(/tsx$/, 'info.json')
+    const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
     const nextChecksum = getBufferChecksum(file.contents)
 
     if (getInfoChecksum(infoFilename) === nextChecksum) {
