@@ -48,3 +48,4 @@ export { default as Status } from './components/Status/statusVariables'
 export { default as Text } from './components/Text/textVariables'
 
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
+export { default as Transition } from './components/Transition/transitionVariables'

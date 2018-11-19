@@ -22,6 +22,7 @@ export interface Conformant {
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
+  usesWrapperSlot?: boolean
 }
 
 /**
@@ -32,6 +33,7 @@ export interface Conformant {
  * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
+ * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
  */
 export default (Component, options: Conformant = {}) => {
   const {
@@ -39,6 +41,7 @@ export default (Component, options: Conformant = {}) => {
     exportedAtTopLevel = true,
     requiredProps = {},
     rendersPortal = false,
+    usesWrapperSlot = false,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -58,6 +61,14 @@ export default (Component, options: Conformant = {}) => {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
+
+    if (usesWrapperSlot) {
+      component = component
+        .childAt(0)
+        .childAt(0)
+        .childAt(0)
+    }
+
     return component
   }
 
@@ -353,9 +364,11 @@ export default (Component, options: Conformant = {}) => {
           expect(handlerSpy).toHaveBeenCalled()
         } catch (err) {
           throw new Error(
-            `<${info.displayName} ${listenerName}={${handlerName}} />\n` +
-              `${leftPad} ^ was not called once on "${eventName}".` +
+            [
+              `<${info.displayName} ${listenerName}={${handlerName}} />\n`,
+              `${leftPad} ^ was not called once on "${eventName}".`,
               'You may need to hoist your event handlers up to the root element.\n',
+            ].join(''),
           )
         }
 
@@ -364,10 +377,11 @@ export default (Component, options: Conformant = {}) => {
 
         if (_.has(Component.propTypes, listenerName)) {
           expectedArgs = [eventShape, expect.objectContaining(component.props())]
-          errorMessage =
-            'was not called with (event, data).\n' +
-            `Ensure that 'props' object is passed to '${listenerName}'\n` +
-            `event handler of <${Component.displayName} />.`
+          errorMessage = [
+            'was not called with (event, data).\n',
+            `Ensure that 'props' object is passed to '${listenerName}'\n`,
+            `event handler of <${Component.displayName} />.`,
+          ].join('')
         }
 
         // Components should return the event first, then any data
@@ -396,7 +410,7 @@ export default (Component, options: Conformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .first()
+        .at(usesWrapperSlot ? 1 : 0)
         .prop('className')
       return classes
     }

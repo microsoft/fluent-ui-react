@@ -6,8 +6,13 @@ export const styledComponentPropTypes = {
   variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 }
 
+export const animatedComponentPropTypes = {
+  animation: customPropTypes.animation,
+}
+
 export const commonUIComponentPropTypes = {
   ...styledComponentPropTypes,
+  ...animatedComponentPropTypes,
   as: customPropTypes.as,
   className: PropTypes.string,
 }

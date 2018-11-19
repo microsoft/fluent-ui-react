@@ -6,7 +6,7 @@ import parseDocblock from './parseDocblock'
 import parseType from './parseType'
 import * as reactDocgenTypescript from 'react-docgen-typescript'
 
-const getComponentInfo = filepath => {
+const getComponentInfo = (filepath: string, checksum?: string) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)
@@ -36,6 +36,9 @@ const getComponentInfo = filepath => {
 
   // remove keys we don't use
   delete info.methods
+
+  // add checksum
+  info.checksum = checksum
 
   // add exported Component info
   const Component = require(absPath).default

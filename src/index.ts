@@ -86,11 +86,14 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
+export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
+
+export { default as Transition, TransitionProps } from './components/Transition/Transition'
 
 //
 // Accessibility
