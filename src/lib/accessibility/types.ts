@@ -102,6 +102,7 @@ export interface AriaWidgetAttributes {
   'aria-valuemin'?: string
   'aria-valuenow'?: string
   'aria-valuetext'?: string
+  'aria-modal'?: boolean
 }
 
 export interface AriaRelationshipAttributes {
