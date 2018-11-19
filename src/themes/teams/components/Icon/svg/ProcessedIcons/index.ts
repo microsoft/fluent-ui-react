@@ -1,595 +1,595 @@
 import { TeamsSvgIconSpec } from '../types'
 
 // IMPORTS
-import zoomout from './icons-zoom-out'
-import zoomin from './icons-zoom-in'
-import zip from './icons-zip'
-import youtube from './icons-youtube'
-import yammer from './icons-yammer'
-import whiteboard from './icons-whiteboard'
-import website from './icons-website'
-import waffle from './icons-waffle'
-import voicemail from './icons-voicemail'
-import videooff from './icons-video-off'
-import video from './icons-video'
-import urgent from './icons-urgent'
-import eye from './icons-eye'
-import unfollowchannel from './icons-unfollow-channel'
-import underline from './icons-underline'
-import txt from './icons-txt'
-import triangleupsmall from './icons-triangle-up-small'
-import trianglerightsmall from './icons-triangle-right-small'
-import triangledownsmall from './icons-triangle-down-small'
-import trianglediagonalrightsmall from './icons-triangle-diagonal-right-small'
-import trending from './icons-trending'
-import trashcan from './icons-trash-can'
-import translation from './icons-translation'
-import timezonenight from './icons-time-zone-night'
-import timezoneday from './icons-time-zone-day'
-import tentative from './icons-tentative'
-import teams from './icons-teams'
-import teamdiscover from './icons-team-discover'
-import teamcreate from './icons-team-create'
-import tabledelete from './icons-table-delete'
-import tableadd from './icons-table-add'
-import table from './icons-table'
-import tabbadge from './icons-tab-badge'
-import sticker from './icons-sticker'
-import statusyo from './icons-status-yo'
-import starred from './icons-starred'
-import star from './icons-star'
-import speakerslashed from './icons-speaker-slashed'
-import speakeroff from './icons-speaker-off'
-import sketch from './icons-sketch'
-import shareobject from './icons-share-object'
-import share from './icons-share'
-import sfbviewbox32 from './icons-sfb-viewbox-32'
-import settings from './icons-settings'
-import send from './icons-send'
-import search from './icons-search'
-import screenzoomout from './icons-screen-zoom-out'
-import screenzoomin from './icons-screen-zoom-in'
-import roster from './icons-roster'
-import retry from './icons-retry'
-import resetzoom from './icons-reset-zoom'
-import reply from './icons-reply'
-import refresh from './icons-refresh'
-import redbang from './icons-redbang'
-import recurrence from './icons-recurrence'
-import recents from './icons-recents'
-import recent from './icons-recent'
-import readaloud from './icons-read-aloud'
-import quote from './icons-quote'
-import quickresponse from './icons-quick-response'
-import qna from './icons-qna'
-import promoted from './icons-promoted'
-import pluscircled from './icons-plus-circled'
-import playsoundmute from './icons-play-sound-mute'
-import playpause from './icons-play-pause'
-import playforward from './icons-play-forward'
-import play from './icons-play'
-import pin from './icons-pin'
-import person from './icons-person'
-import pdf from './icons-pdf'
-import pcaudiostop from './icons-pc-audio-stop'
-import pcaudio from './icons-pc-audio'
-import patharrow from './icons-patharrow'
-import paste from './icons-paste'
-import participantremove from './icons-participant-remove'
-import outline from './icons-outline'
-import orgwide from './icons-org-wide'
-import org from './icons-org'
-import openoutside from './icons-open-outside'
-import opennewwindowfilled from './icons-open-new-window-filled'
-import opennewwindow from './icons-open-new-window'
-import openinsidesmall from './icons-open-inside-small'
-import openinside from './icons-open-inside'
-import openexternallinkoff from './icons-open-external-link-off'
-import oof from './icons-oof'
-import onenotesection from './icons-onenote-section'
-import numberlist from './icons-number-list'
-import notificationoff from './icons-notification-off'
-import notes from './icons-notes'
-import nochat from './icons-no-chat'
-import newtab from './icons-newtab'
-import newcontactgroup from './icons-new-contactgroup'
-import myactivity from './icons-my-activity'
-import mutechat from './icons-mutechat'
-import msftxlonline from './icons-msft-xl-online'
-import msftxl from './icons-msft-xl'
-import msftwordonline from './icons-msft-word-online'
-import msftword from './icons-msft-word'
-import msftvisio from './icons-msft-visio'
-import msftteams from './icons-msft-teams'
-import msftstream from './icons-msft-stream'
-import msftspdoclibrary from './icons-msft-sp-doc-library'
-import msftsharepoint from './icons-msft-sharepoint'
-import msftpptonline from './icons-msft-ppt-online'
-import msftppt from './icons-msft-ppt'
-import msftpowerbi from './icons-msft-powerbi'
-import msftplanner from './icons-msft-planner'
-import msftoutlookcolored from './icons-msft-outlook-colored'
-import msftoutlook from './icons-msft-outlook'
-import msftonenoteonline from './icons-msft-onenote-online'
-import msftonenote from './icons-msft-onenote'
-import msftonedrive from './icons-msft-onedrive'
-import msftoffice from './icons-msft-office'
-import msftexchange from './icons-msft-exchange'
-import msftdelve from './icons-msft-delve'
-import msftcanvas from './icons-msft-canvas'
-import move from './icons-move'
-import mov from './icons-mov'
-import more from './icons-more'
-import micoff from './icons-mic-off'
-import mic from './icons-mic'
-import menulight from './icons-menu-light'
-import menu from './icons-menu'
-import mention from './icons-mention'
-import megaphone from './icons-megaphone'
-import meetingnotes from './icons-meeting-notes'
-import meetingnew from './icons-meeting-new'
-import mediaoff from './icons-media-off'
-import markasunread from './icons-mark-as-unread'
-import markasread from './icons-mark-as-read'
-import manageteams from './icons-manage-teams'
-import lock18 from './icons-lock-18'
-import lock14 from './icons-lock-14'
-import lock from './icons-lock'
-import locationoff from './icons-location-off'
-import location from './icons-location'
-import link from './icons-link'
-import liked from './icons-liked'
-import like from './icons-like'
-import leave from './icons-leave'
-import kollective from './icons-kollective'
-import keyboard from './icons-keyboard'
-import italic from './icons-italic'
-import invitetentative from './icons-invite-tentative'
-import inviteperson from './icons-invite-person'
-import invitenotresponded from './icons-invite-not-responded'
-import invitedeclined from './icons-invite-declined'
-import invitecancelled from './icons-invite-cancelled'
-import inviteaccepted from './icons-invite-accepted'
-import inputvalid from './icons-input-valid'
-import inputinvalid from './icons-input-invalid'
-import info from './icons-info'
-import inferred from './icons-inferred'
-import indicator from './icons-indicator'
-import image from './icons-image'
-import home from './icons-home'
-import hive from './icons-hive'
-import highlight from './icons-highlight'
-import eyeslash from './icons-eye-slash'
-import helparticle from './icons-helparticle'
-import headset from './icons-headset'
-import groups from './icons-groups'
-import giphy from './icons-giphy'
-import gif from './icons-gif'
-import gettingstarted from './icons-gettingstarted'
-import gallery from './icons-gallery'
-import fullscreen from './icons-fullscreen'
-import format from './icons-format'
-import fontsize from './icons-font-size'
-import fontcolor from './icons-font-color'
-import followchannel from './icons-follow-channel'
-import folderupload from './icons-folder-upload'
-import foldernew from './icons-folder-new'
-import folderdownload from './icons-folder-download'
-import folder from './icons-folder'
-import filter from './icons-filter'
-import filesuploadsmall from './icons-files-upload-small'
-import filesupload from './icons-files-upload'
-import filessound from './icons-files-sound'
-import filesphotoshop from './icons-files-photoshop'
-import filesmissing from './icons-files-missing'
-import fileslink from './icons-files-link'
-import filesindesign from './icons-files-indesign'
-import filesillustrator from './icons-files-illustrator'
-import filesflash from './icons-files-flash'
-import fileserrorfull from './icons-files-error-full'
-import filesdocument from './icons-files-document'
-import filesaftereffects from './icons-files-aftereffects'
-import files from './icons-files'
-import feedback from './icons-feedback'
-import faq from './icons-faq'
-import eyefriendlier from './icons-eye-friendlier'
-import expand from './icons-expand'
-import error from './icons-error'
-import emoji from './icons-emoji'
-import email from './icons-email'
-import edit from './icons-edit'
-import dropdown from './icons-dropdown'
-import downloaded from './icons-downloaded'
-import download from './icons-download'
-import document from './icons-document'
-import desktop from './icons-desktop'
-import cortana from './icons-cortana'
-import copy from './icons-copy'
-import contactlist from './icons-contact-list'
-import connectorbadge from './icons-connector-badge'
-import composeextmenuitem from './icons-compose-ext-menu-item'
-import composeextensionunpin from './icons-compose-extension-unpin'
-import composeextensionpin from './icons-compose-extension-pin'
-import compose from './icons-compose'
-import collapse from './icons-collapse'
-import codesnippet from './icons-codesnippet'
-import code from './icons-code'
-import closedcaption from './icons-closed-caption'
-import close from './icons-close'
-import chromeunmaximize from './icons-chrome-unmaximize'
-import chromeminimize from './icons-chrome-minimize'
-import chromemaximize from './icons-chrome-maximize'
-import chevronright from './icons-chevron-right'
-import chevronmedright from './icons-chevronmed-right'
-import chevronmedleft from './icons-chevronmed-left'
-import chevronleft from './icons-chevron-left'
-import chevrondown from './icons-chevron-down'
-import checkboxunselected from './icons-checkbox-unselected'
-import checkboxselected from './icons-checkbox-selected'
-import chat from './icons-chat'
-import channelicon from './icons-channel-icon'
-import changename from './icons-changename'
-import canvasaddpage from './icons-canvas-addpage'
-import callvideolineoff from './icons-call-video-line-off'
-import callvideoline from './icons-call-video-line'
-import callvideofilled from './icons-call-video-filled'
-import callvideo from './icons-call-video'
-import calltransfernotification from './icons-call-transfer-notification'
-import calltransfer from './icons-call-transfer'
-import callswitchcamera from './icons-call-switch-camera'
-import callrecording from './icons-call-recording'
-import callpstnfull from './icons-call-pstn-full'
-import callpstn from './icons-call-pstn'
-import callparticipantonhold from './icons-call-participant-onhold'
-import callparticipantincomingline from './icons-call-participant-incoming-line'
-import callparticipantincoming from './icons-call-participant-incoming'
-import callparticipantfailed from './icons-call-participant-failed'
-import callparticipantending from './icons-call-participant-ending'
-import callparticipantconnectingline from './icons-call-participant-connecting-line'
-import callparticipantconnecting from './icons-call-participant-connecting'
-import callparticipantconnected from './icons-call-participant-connected'
-import callmissedlinefilled from './icons-call-missed-line-filled'
-import callmissedline from './icons-call-missed-line'
-import callmissed from './icons-call-missed'
-import callmicrophoneunmuting from './icons-call-microphone-unmuting'
-import callmicrophoneofffilled from './icons-call-microphone-off-filled'
-import callmeetupline from './icons-call-meetup-line'
-import callmeetupfilled from './icons-call-meetup-filled'
-import callincomingvideo from './icons-call-incoming-video'
-import callhold from './icons-call-hold'
-import callend from './icons-call-end'
-import calldialpad from './icons-call-dialpad'
-import callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
-import callcontrolpresentnew from './icons-call-control-present-new'
-import callblocked from './icons-call-blocked'
-import callaudio from './icons-call-audio'
-import callalert from './icons-call-alert'
-import calladmitall from './icons-call-admit-all'
-import call from './icons-call'
-import calendar from './icons-calendar'
-import bullets from './icons-bullets'
-import broadcastviewright from './icons-broadcast-view-right'
-import broadcastviewleft from './icons-broadcast-view-left'
-import broadcastviewfullscreen from './icons-broadcast-view-fullscreen'
-import bot from './icons-bot'
-import bookmark from './icons-bookmark'
-import bold from './icons-bold'
-import blurbackground from './icons-blur-background'
-import block from './icons-block'
-import bellmute from './icons-bell-mute'
-import bell from './icons-bell'
-import badgeadd from './icons-badge-add'
-import badge from './icons-badge'
-import backspace from './icons-backspace'
-import audio from './icons-audio'
-import attachment from './icons-attachment'
-import assignments from './icons-assignments'
-import arrowupsmall from './icons-arrow-up-small'
-import arrowup from './icons-arrow-up'
-import arrowright from './icons-arrow-right'
-import arrowleft from './icons-arrow-left'
-import arrowdown from './icons-arrow-down'
-import archive from './icons-archive'
-import apps from './icons-apps'
-import analytics from './icons-analytics'
-import addparticipant from './icons-add-participant'
-import add from './icons-add'
-import accept from './icons-accept'
+import processedIcons_zoomout from './icons-zoom-out'
+import processedIcons_zoomin from './icons-zoom-in'
+import processedIcons_zip from './icons-zip'
+import processedIcons_youtube from './icons-youtube'
+import processedIcons_yammer from './icons-yammer'
+import processedIcons_whiteboard from './icons-whiteboard'
+import processedIcons_website from './icons-website'
+import processedIcons_waffle from './icons-waffle'
+import processedIcons_voicemail from './icons-voicemail'
+import processedIcons_videooff from './icons-video-off'
+import processedIcons_video from './icons-video'
+import processedIcons_urgent from './icons-urgent'
+import processedIcons_unfollowchannel from './icons-unfollow-channel'
+import processedIcons_underline from './icons-underline'
+import processedIcons_txt from './icons-txt'
+import processedIcons_triangleupsmall from './icons-triangle-up-small'
+import processedIcons_trianglerightsmall from './icons-triangle-right-small'
+import processedIcons_triangledownsmall from './icons-triangle-down-small'
+import processedIcons_trianglediagonalrightsmall from './icons-triangle-diagonal-right-small'
+import processedIcons_trending from './icons-trending'
+import processedIcons_trashcan from './icons-trash-can'
+import processedIcons_translation from './icons-translation'
+import processedIcons_timezonenight from './icons-time-zone-night'
+import processedIcons_timezoneday from './icons-time-zone-day'
+import processedIcons_tentative from './icons-tentative'
+import processedIcons_teams from './icons-teams'
+import processedIcons_teamdiscover from './icons-team-discover'
+import processedIcons_teamcreate from './icons-team-create'
+import processedIcons_tabledelete from './icons-table-delete'
+import processedIcons_tableadd from './icons-table-add'
+import processedIcons_table from './icons-table'
+import processedIcons_tabbadge from './icons-tab-badge'
+import processedIcons_sticker from './icons-sticker'
+import processedIcons_statusyo from './icons-status-yo'
+import processedIcons_starred from './icons-starred'
+import processedIcons_star from './icons-star'
+import processedIcons_speakerslashed from './icons-speaker-slashed'
+import processedIcons_speakeroff from './icons-speaker-off'
+import processedIcons_sketch from './icons-sketch'
+import processedIcons_shareobject from './icons-share-object'
+import processedIcons_share from './icons-share'
+import processedIcons_sfbviewbox32 from './icons-sfb-viewbox-32'
+import processedIcons_settings from './icons-settings'
+import processedIcons_send from './icons-send'
+import processedIcons_search from './icons-search'
+import processedIcons_screenzoomout from './icons-screen-zoom-out'
+import processedIcons_screenzoomin from './icons-screen-zoom-in'
+import processedIcons_roster from './icons-roster'
+import processedIcons_retry from './icons-retry'
+import processedIcons_resetzoom from './icons-reset-zoom'
+import processedIcons_reply from './icons-reply'
+import processedIcons_refresh from './icons-refresh'
+import processedIcons_redbang from './icons-redbang'
+import processedIcons_recurrence from './icons-recurrence'
+import processedIcons_recents from './icons-recents'
+import processedIcons_recent from './icons-recent'
+import processedIcons_readaloud from './icons-read-aloud'
+import processedIcons_quote from './icons-quote'
+import processedIcons_quickresponse from './icons-quick-response'
+import processedIcons_qna from './icons-qna'
+import processedIcons_promoted from './icons-promoted'
+import processedIcons_pluscircled from './icons-plus-circled'
+import processedIcons_playsoundmute from './icons-play-sound-mute'
+import processedIcons_playpause from './icons-play-pause'
+import processedIcons_playforward from './icons-play-forward'
+import processedIcons_play from './icons-play'
+import processedIcons_pin from './icons-pin'
+import processedIcons_person from './icons-person'
+import processedIcons_pdf from './icons-pdf'
+import processedIcons_pcaudiostop from './icons-pc-audio-stop'
+import processedIcons_pcaudio from './icons-pc-audio'
+import processedIcons_patharrow from './icons-patharrow'
+import processedIcons_paste from './icons-paste'
+import processedIcons_participantremove from './icons-participant-remove'
+import processedIcons_outline from './icons-outline'
+import processedIcons_orgwide from './icons-org-wide'
+import processedIcons_org from './icons-org'
+import processedIcons_openoutside from './icons-open-outside'
+import processedIcons_opennewwindowfilled from './icons-open-new-window-filled'
+import processedIcons_opennewwindow from './icons-open-new-window'
+import processedIcons_openinsidesmall from './icons-open-inside-small'
+import processedIcons_openinside from './icons-open-inside'
+import processedIcons_openexternallinkoff from './icons-open-external-link-off'
+import processedIcons_oof from './icons-oof'
+import processedIcons_onenotesection from './icons-onenote-section'
+import processedIcons_numberlist from './icons-number-list'
+import processedIcons_notificationoff from './icons-notification-off'
+import processedIcons_notes from './icons-notes'
+import processedIcons_nochat from './icons-no-chat'
+import processedIcons_newtab from './icons-newtab'
+import processedIcons_newcontactgroup from './icons-new-contactgroup'
+import processedIcons_myactivity from './icons-my-activity'
+import processedIcons_mutechat from './icons-mutechat'
+import processedIcons_msftxlonline from './icons-msft-xl-online'
+import processedIcons_msftxl from './icons-msft-xl'
+import processedIcons_msftwordonline from './icons-msft-word-online'
+import processedIcons_msftword from './icons-msft-word'
+import processedIcons_msftvisio from './icons-msft-visio'
+import processedIcons_msftteams from './icons-msft-teams'
+import processedIcons_msftstream from './icons-msft-stream'
+import processedIcons_msftspdoclibrary from './icons-msft-sp-doc-library'
+import processedIcons_msftsharepoint from './icons-msft-sharepoint'
+import processedIcons_msftpptonline from './icons-msft-ppt-online'
+import processedIcons_msftppt from './icons-msft-ppt'
+import processedIcons_msftpowerbi from './icons-msft-powerbi'
+import processedIcons_msftplanner from './icons-msft-planner'
+import processedIcons_msftoutlookcolored from './icons-msft-outlook-colored'
+import processedIcons_msftoutlook from './icons-msft-outlook'
+import processedIcons_msftonenoteonline from './icons-msft-onenote-online'
+import processedIcons_msftonenote from './icons-msft-onenote'
+import processedIcons_msftonedrive from './icons-msft-onedrive'
+import processedIcons_msftoffice from './icons-msft-office'
+import processedIcons_msftexchange from './icons-msft-exchange'
+import processedIcons_msftdelve from './icons-msft-delve'
+import processedIcons_msftcanvas from './icons-msft-canvas'
+import processedIcons_move from './icons-move'
+import processedIcons_mov from './icons-mov'
+import processedIcons_more from './icons-more'
+import processedIcons_micoff from './icons-mic-off'
+import processedIcons_mic from './icons-mic'
+import processedIcons_menulight from './icons-menu-light'
+import processedIcons_menu from './icons-menu'
+import processedIcons_mention from './icons-mention'
+import processedIcons_megaphone from './icons-megaphone'
+import processedIcons_meetingnotes from './icons-meeting-notes'
+import processedIcons_meetingnew from './icons-meeting-new'
+import processedIcons_mediaoff from './icons-media-off'
+import processedIcons_markasunread from './icons-mark-as-unread'
+import processedIcons_markasread from './icons-mark-as-read'
+import processedIcons_manageteams from './icons-manage-teams'
+import processedIcons_lock18 from './icons-lock-18'
+import processedIcons_lock14 from './icons-lock-14'
+import processedIcons_lock from './icons-lock'
+import processedIcons_locationoff from './icons-location-off'
+import processedIcons_location from './icons-location'
+import processedIcons_link from './icons-link'
+import processedIcons_liked from './icons-liked'
+import processedIcons_like from './icons-like'
+import processedIcons_leave from './icons-leave'
+import processedIcons_kollective from './icons-kollective'
+import processedIcons_keyboard from './icons-keyboard'
+import processedIcons_italic from './icons-italic'
+import processedIcons_invitetentative from './icons-invite-tentative'
+import processedIcons_inviteperson from './icons-invite-person'
+import processedIcons_invitenotresponded from './icons-invite-not-responded'
+import processedIcons_invitedeclined from './icons-invite-declined'
+import processedIcons_invitecancelled from './icons-invite-cancelled'
+import processedIcons_inviteaccepted from './icons-invite-accepted'
+import processedIcons_inputvalid from './icons-input-valid'
+import processedIcons_inputinvalid from './icons-input-invalid'
+import processedIcons_info from './icons-info'
+import processedIcons_inferred from './icons-inferred'
+import processedIcons_indicator from './icons-indicator'
+import processedIcons_image from './icons-image'
+import processedIcons_home from './icons-home'
+import processedIcons_hive from './icons-hive'
+import processedIcons_highlight from './icons-highlight'
+import processedIcons_helparticle from './icons-helparticle'
+import processedIcons_headset from './icons-headset'
+import processedIcons_groups from './icons-groups'
+import processedIcons_giphy from './icons-giphy'
+import processedIcons_gif from './icons-gif'
+import processedIcons_gettingstarted from './icons-gettingstarted'
+import processedIcons_gallery from './icons-gallery'
+import processedIcons_fullscreen from './icons-fullscreen'
+import processedIcons_format from './icons-format'
+import processedIcons_fontsize from './icons-font-size'
+import processedIcons_fontcolor from './icons-font-color'
+import processedIcons_followchannel from './icons-follow-channel'
+import processedIcons_folderupload from './icons-folder-upload'
+import processedIcons_foldernew from './icons-folder-new'
+import processedIcons_folderdownload from './icons-folder-download'
+import processedIcons_folder from './icons-folder'
+import processedIcons_filter from './icons-filter'
+import processedIcons_filesuploadsmall from './icons-files-upload-small'
+import processedIcons_filesupload from './icons-files-upload'
+import processedIcons_filessound from './icons-files-sound'
+import processedIcons_filesphotoshop from './icons-files-photoshop'
+import processedIcons_filesmissing from './icons-files-missing'
+import processedIcons_fileslink from './icons-files-link'
+import processedIcons_filesindesign from './icons-files-indesign'
+import processedIcons_filesillustrator from './icons-files-illustrator'
+import processedIcons_filesflash from './icons-files-flash'
+import processedIcons_fileserrorfull from './icons-files-error-full'
+import processedIcons_filesdocument from './icons-files-document'
+import processedIcons_filesaftereffects from './icons-files-aftereffects'
+import processedIcons_files from './icons-files'
+import processedIcons_feedback from './icons-feedback'
+import processedIcons_faq from './icons-faq'
+import processedIcons_eyeslash from './icons-eye-slash'
+import processedIcons_eyefriendlier from './icons-eye-friendlier'
+import processedIcons_eye from './icons-eye'
+import processedIcons_expand from './icons-expand'
+import processedIcons_error from './icons-error'
+import processedIcons_emoji from './icons-emoji'
+import processedIcons_email from './icons-email'
+import processedIcons_edit from './icons-edit'
+import processedIcons_dropdown from './icons-dropdown'
+import processedIcons_downloaded from './icons-downloaded'
+import processedIcons_download from './icons-download'
+import processedIcons_document from './icons-document'
+import processedIcons_desktop from './icons-desktop'
+import processedIcons_cortana from './icons-cortana'
+import processedIcons_copy from './icons-copy'
+import processedIcons_contactlist from './icons-contact-list'
+import processedIcons_connectorbadge from './icons-connector-badge'
+import processedIcons_composeextmenuitem from './icons-compose-ext-menu-item'
+import processedIcons_composeextensionunpin from './icons-compose-extension-unpin'
+import processedIcons_composeextensionpin from './icons-compose-extension-pin'
+import processedIcons_compose from './icons-compose'
+import processedIcons_collapse from './icons-collapse'
+import processedIcons_codesnippet from './icons-codesnippet'
+import processedIcons_code from './icons-code'
+import processedIcons_closedcaption from './icons-closed-caption'
+import processedIcons_close from './icons-close'
+import processedIcons_chromeunmaximize from './icons-chrome-unmaximize'
+import processedIcons_chromeminimize from './icons-chrome-minimize'
+import processedIcons_chromemaximize from './icons-chrome-maximize'
+import processedIcons_chevronright from './icons-chevron-right'
+import processedIcons_chevronmedright from './icons-chevronmed-right'
+import processedIcons_chevronmedleft from './icons-chevronmed-left'
+import processedIcons_chevronleft from './icons-chevron-left'
+import processedIcons_chevrondown from './icons-chevron-down'
+import processedIcons_checkboxunselected from './icons-checkbox-unselected'
+import processedIcons_checkboxselected from './icons-checkbox-selected'
+import processedIcons_chat from './icons-chat'
+import processedIcons_channelicon from './icons-channel-icon'
+import processedIcons_changename from './icons-changename'
+import processedIcons_canvasaddpage from './icons-canvas-addpage'
+import processedIcons_callvideolineoff from './icons-call-video-line-off'
+import processedIcons_callvideoline from './icons-call-video-line'
+import processedIcons_callvideofilled from './icons-call-video-filled'
+import processedIcons_callvideo from './icons-call-video'
+import processedIcons_calltransfernotification from './icons-call-transfer-notification'
+import processedIcons_calltransfer from './icons-call-transfer'
+import processedIcons_callswitchcamera from './icons-call-switch-camera'
+import processedIcons_callrecording from './icons-call-recording'
+import processedIcons_callpstnfull from './icons-call-pstn-full'
+import processedIcons_callpstn from './icons-call-pstn'
+import processedIcons_callparticipantonhold from './icons-call-participant-onhold'
+import processedIcons_callparticipantincomingline from './icons-call-participant-incoming-line'
+import processedIcons_callparticipantincoming from './icons-call-participant-incoming'
+import processedIcons_callparticipantfailed from './icons-call-participant-failed'
+import processedIcons_callparticipantending from './icons-call-participant-ending'
+import processedIcons_callparticipantconnectingline from './icons-call-participant-connecting-line'
+import processedIcons_callparticipantconnecting from './icons-call-participant-connecting'
+import processedIcons_callparticipantconnected from './icons-call-participant-connected'
+import processedIcons_callmissedlinefilled from './icons-call-missed-line-filled'
+import processedIcons_callmissedline from './icons-call-missed-line'
+import processedIcons_callmissed from './icons-call-missed'
+import processedIcons_callmicrophoneunmuting from './icons-call-microphone-unmuting'
+import processedIcons_callmicrophoneofffilled from './icons-call-microphone-off-filled'
+import processedIcons_callmeetupline from './icons-call-meetup-line'
+import processedIcons_callmeetupfilled from './icons-call-meetup-filled'
+import processedIcons_callincomingvideo from './icons-call-incoming-video'
+import processedIcons_callhold from './icons-call-hold'
+import processedIcons_callend from './icons-call-end'
+import processedIcons_calldialpad from './icons-call-dialpad'
+import processedIcons_callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
+import processedIcons_callcontrolpresentnew from './icons-call-control-present-new'
+import processedIcons_callblocked from './icons-call-blocked'
+import processedIcons_callaudio from './icons-call-audio'
+import processedIcons_callalert from './icons-call-alert'
+import processedIcons_calladmitall from './icons-call-admit-all'
+import processedIcons_call from './icons-call'
+import processedIcons_calendar from './icons-calendar'
+import processedIcons_bullets from './icons-bullets'
+import processedIcons_broadcastviewright from './icons-broadcast-view-right'
+import processedIcons_broadcastviewleft from './icons-broadcast-view-left'
+import processedIcons_broadcastviewfullscreen from './icons-broadcast-view-fullscreen'
+import processedIcons_bot from './icons-bot'
+import processedIcons_bookmark from './icons-bookmark'
+import processedIcons_bold from './icons-bold'
+import processedIcons_blurbackground from './icons-blur-background'
+import processedIcons_block from './icons-block'
+import processedIcons_bellmute from './icons-bell-mute'
+import processedIcons_bell from './icons-bell'
+import processedIcons_badgeadd from './icons-badge-add'
+import processedIcons_badge from './icons-badge'
+import processedIcons_backspace from './icons-backspace'
+import processedIcons_audio from './icons-audio'
+import processedIcons_attachment from './icons-attachment'
+import processedIcons_assignments from './icons-assignments'
+import processedIcons_arrowupsmall from './icons-arrow-up-small'
+import processedIcons_arrowup from './icons-arrow-up'
+import processedIcons_arrowright from './icons-arrow-right'
+import processedIcons_arrowleft from './icons-arrow-left'
+import processedIcons_arrowdown from './icons-arrow-down'
+import processedIcons_archive from './icons-archive'
+import processedIcons_apps from './icons-apps'
+import processedIcons_analytics from './icons-analytics'
+import processedIcons_addparticipant from './icons-add-participant'
+import processedIcons_add from './icons-add'
+import processedIcons_accept from './icons-accept'
 
 export default {
   // EXPORTS
-  zoomout,
-  zoomin,
-  zip,
-  youtube,
-  yammer,
-  whiteboard,
-  website,
-  waffle,
-  voicemail,
-  videooff,
-  video,
-  urgent,
-  unfollowchannel,
-  underline,
-  txt,
-  triangleupsmall,
-  trianglerightsmall,
-  triangledownsmall,
-  trianglediagonalrightsmall,
-  trending,
-  trashcan,
-  translation,
-  timezonenight,
-  timezoneday,
-  tentative,
-  teams,
-  teamdiscover,
-  teamcreate,
-  tabledelete,
-  tableadd,
-  table,
-  tabbadge,
-  sticker,
-  statusyo,
-  starred,
-  star,
-  speakerslashed,
-  speakeroff,
-  sketch,
-  shareobject,
-  share,
-  sfbviewbox32,
-  settings,
-  send,
-  search,
-  screenzoomout,
-  screenzoomin,
-  roster,
-  retry,
-  resetzoom,
-  reply,
-  refresh,
-  redbang,
-  recurrence,
-  recents,
-  recent,
-  readaloud,
-  quote,
-  quickresponse,
-  qna,
-  promoted,
-  pluscircled,
-  playsoundmute,
-  playpause,
-  playforward,
-  play,
-  pin,
-  person,
-  pdf,
-  pcaudiostop,
-  pcaudio,
-  patharrow,
-  paste,
-  participantremove,
-  outline,
-  orgwide,
-  org,
-  openoutside,
-  opennewwindowfilled,
-  opennewwindow,
-  openinsidesmall,
-  openinside,
-  openexternallinkoff,
-  oof,
-  onenotesection,
-  numberlist,
-  notificationoff,
-  notes,
-  nochat,
-  newtab,
-  newcontactgroup,
-  myactivity,
-  mutechat,
-  msftxlonline,
-  msftxl,
-  msftwordonline,
-  msftword,
-  msftvisio,
-  msftteams,
-  msftstream,
-  msftspdoclibrary,
-  msftsharepoint,
-  msftpptonline,
-  msftppt,
-  msftpowerbi,
-  msftplanner,
-  msftoutlookcolored,
-  msftoutlook,
-  msftonenoteonline,
-  msftonenote,
-  msftonedrive,
-  msftoffice,
-  msftexchange,
-  msftdelve,
-  msftcanvas,
-  move,
-  mov,
-  more,
-  micoff,
-  mic,
-  menulight,
-  menu,
-  mention,
-  megaphone,
-  meetingnotes,
-  meetingnew,
-  mediaoff,
-  markasunread,
-  markasread,
-  manageteams,
-  lock18,
-  lock14,
-  lock,
-  locationoff,
-  location,
-  link,
-  liked,
-  like,
-  leave,
-  kollective,
-  keyboard,
-  italic,
-  invitetentative,
-  inviteperson,
-  invitenotresponded,
-  invitedeclined,
-  invitecancelled,
-  inviteaccepted,
-  inputvalid,
-  inputinvalid,
-  info,
-  inferred,
-  indicator,
-  image,
-  home,
-  hive,
-  highlight,
-  helparticle,
-  headset,
-  groups,
-  giphy,
-  gif,
-  gettingstarted,
-  gallery,
-  fullscreen,
-  format,
-  fontsize,
-  fontcolor,
-  followchannel,
-  folderupload,
-  foldernew,
-  folderdownload,
-  folder,
-  filter,
-  filesuploadsmall,
-  filesupload,
-  filessound,
-  filesphotoshop,
-  filesmissing,
-  fileslink,
-  filesindesign,
-  filesillustrator,
-  filesflash,
-  fileserrorfull,
-  filesdocument,
-  filesaftereffects,
-  files,
-  feedback,
-  faq,
-  eyefriendlier,
-  eyeslash,
-  eye,
-  expand,
-  error,
-  emoji,
-  email,
-  edit,
-  dropdown,
-  downloaded,
-  download,
-  document,
-  desktop,
-  cortana,
-  copy,
-  contactlist,
-  connectorbadge,
-  composeextmenuitem,
-  composeextensionunpin,
-  composeextensionpin,
-  compose,
-  collapse,
-  codesnippet,
-  code,
-  closedcaption,
-  close,
-  chromeunmaximize,
-  chromeminimize,
-  chromemaximize,
-  chevronright,
-  chevronmedright,
-  chevronmedleft,
-  chevronleft,
-  chevrondown,
-  checkboxunselected,
-  checkboxselected,
-  chat,
-  channelicon,
-  changename,
-  canvasaddpage,
-  callvideolineoff,
-  callvideoline,
-  callvideofilled,
-  callvideo,
-  calltransfernotification,
-  calltransfer,
-  callswitchcamera,
-  callrecording,
-  callpstnfull,
-  callpstn,
-  callparticipantonhold,
-  callparticipantincomingline,
-  callparticipantincoming,
-  callparticipantfailed,
-  callparticipantending,
-  callparticipantconnectingline,
-  callparticipantconnecting,
-  callparticipantconnected,
-  callmissedlinefilled,
-  callmissedline,
-  callmissed,
-  callmicrophoneunmuting,
-  callmicrophoneofffilled,
-  callmeetupline,
-  callmeetupfilled,
-  callincomingvideo,
-  callhold,
-  callend,
-  calldialpad,
-  callcontrolstoppresentingnew,
-  callcontrolpresentnew,
-  callblocked,
-  callaudio,
-  callalert,
-  calladmitall,
-  call,
-  calendar,
-  bullets,
-  broadcastviewright,
-  broadcastviewleft,
-  broadcastviewfullscreen,
-  bot,
-  bookmark,
-  bold,
-  blurbackground,
-  block,
-  bellmute,
-  bell,
-  badgeadd,
-  badge,
-  backspace,
-  audio,
-  attachment,
-  assignments,
-  arrowupsmall,
-  arrowup,
-  arrowright,
-  arrowleft,
-  arrowdown,
-  archive,
-  apps,
-  analytics,
-  addparticipant,
-  add,
-  accept,
+  processedIcons_zoomout,
+  processedIcons_zoomin,
+  processedIcons_zip,
+  processedIcons_youtube,
+  processedIcons_yammer,
+  processedIcons_whiteboard,
+  processedIcons_website,
+  processedIcons_waffle,
+  processedIcons_voicemail,
+  processedIcons_videooff,
+  processedIcons_video,
+  processedIcons_urgent,
+  processedIcons_unfollowchannel,
+  processedIcons_underline,
+  processedIcons_txt,
+  processedIcons_triangleupsmall,
+  processedIcons_trianglerightsmall,
+  processedIcons_triangledownsmall,
+  processedIcons_trianglediagonalrightsmall,
+  processedIcons_trending,
+  processedIcons_trashcan,
+  processedIcons_translation,
+  processedIcons_timezonenight,
+  processedIcons_timezoneday,
+  processedIcons_tentative,
+  processedIcons_teams,
+  processedIcons_teamdiscover,
+  processedIcons_teamcreate,
+  processedIcons_tabledelete,
+  processedIcons_tableadd,
+  processedIcons_table,
+  processedIcons_tabbadge,
+  processedIcons_sticker,
+  processedIcons_statusyo,
+  processedIcons_starred,
+  processedIcons_star,
+  processedIcons_speakerslashed,
+  processedIcons_speakeroff,
+  processedIcons_sketch,
+  processedIcons_shareobject,
+  processedIcons_share,
+  processedIcons_sfbviewbox32,
+  processedIcons_settings,
+  processedIcons_send,
+  processedIcons_search,
+  processedIcons_screenzoomout,
+  processedIcons_screenzoomin,
+  processedIcons_roster,
+  processedIcons_retry,
+  processedIcons_resetzoom,
+  processedIcons_reply,
+  processedIcons_refresh,
+  processedIcons_redbang,
+  processedIcons_recurrence,
+  processedIcons_recents,
+  processedIcons_recent,
+  processedIcons_readaloud,
+  processedIcons_quote,
+  processedIcons_quickresponse,
+  processedIcons_qna,
+  processedIcons_promoted,
+  processedIcons_pluscircled,
+  processedIcons_playsoundmute,
+  processedIcons_playpause,
+  processedIcons_playforward,
+  processedIcons_play,
+  processedIcons_pin,
+  processedIcons_person,
+  processedIcons_pdf,
+  processedIcons_pcaudiostop,
+  processedIcons_pcaudio,
+  processedIcons_patharrow,
+  processedIcons_paste,
+  processedIcons_participantremove,
+  processedIcons_outline,
+  processedIcons_orgwide,
+  processedIcons_org,
+  processedIcons_openoutside,
+  processedIcons_opennewwindowfilled,
+  processedIcons_opennewwindow,
+  processedIcons_openinsidesmall,
+  processedIcons_openinside,
+  processedIcons_openexternallinkoff,
+  processedIcons_oof,
+  processedIcons_onenotesection,
+  processedIcons_numberlist,
+  processedIcons_notificationoff,
+  processedIcons_notes,
+  processedIcons_nochat,
+  processedIcons_newtab,
+  processedIcons_newcontactgroup,
+  processedIcons_myactivity,
+  processedIcons_mutechat,
+  processedIcons_msftxlonline,
+  processedIcons_msftxl,
+  processedIcons_msftwordonline,
+  processedIcons_msftword,
+  processedIcons_msftvisio,
+  processedIcons_msftteams,
+  processedIcons_msftstream,
+  processedIcons_msftspdoclibrary,
+  processedIcons_msftsharepoint,
+  processedIcons_msftpptonline,
+  processedIcons_msftppt,
+  processedIcons_msftpowerbi,
+  processedIcons_msftplanner,
+  processedIcons_msftoutlookcolored,
+  processedIcons_msftoutlook,
+  processedIcons_msftonenoteonline,
+  processedIcons_msftonenote,
+  processedIcons_msftonedrive,
+  processedIcons_msftoffice,
+  processedIcons_msftexchange,
+  processedIcons_msftdelve,
+  processedIcons_msftcanvas,
+  processedIcons_move,
+  processedIcons_mov,
+  processedIcons_more,
+  processedIcons_micoff,
+  processedIcons_mic,
+  processedIcons_menulight,
+  processedIcons_menu,
+  processedIcons_mention,
+  processedIcons_megaphone,
+  processedIcons_meetingnotes,
+  processedIcons_meetingnew,
+  processedIcons_mediaoff,
+  processedIcons_markasunread,
+  processedIcons_markasread,
+  processedIcons_manageteams,
+  processedIcons_lock18,
+  processedIcons_lock14,
+  processedIcons_lock,
+  processedIcons_locationoff,
+  processedIcons_location,
+  processedIcons_link,
+  processedIcons_liked,
+  processedIcons_like,
+  processedIcons_leave,
+  processedIcons_kollective,
+  processedIcons_keyboard,
+  processedIcons_italic,
+  processedIcons_invitetentative,
+  processedIcons_inviteperson,
+  processedIcons_invitenotresponded,
+  processedIcons_invitedeclined,
+  processedIcons_invitecancelled,
+  processedIcons_inviteaccepted,
+  processedIcons_inputvalid,
+  processedIcons_inputinvalid,
+  processedIcons_info,
+  processedIcons_inferred,
+  processedIcons_indicator,
+  processedIcons_image,
+  processedIcons_home,
+  processedIcons_hive,
+  processedIcons_highlight,
+  processedIcons_helparticle,
+  processedIcons_headset,
+  processedIcons_groups,
+  processedIcons_giphy,
+  processedIcons_gif,
+  processedIcons_gettingstarted,
+  processedIcons_gallery,
+  processedIcons_fullscreen,
+  processedIcons_format,
+  processedIcons_fontsize,
+  processedIcons_fontcolor,
+  processedIcons_followchannel,
+  processedIcons_folderupload,
+  processedIcons_foldernew,
+  processedIcons_folderdownload,
+  processedIcons_folder,
+  processedIcons_filter,
+  processedIcons_filesuploadsmall,
+  processedIcons_filesupload,
+  processedIcons_filessound,
+  processedIcons_filesphotoshop,
+  processedIcons_filesmissing,
+  processedIcons_fileslink,
+  processedIcons_filesindesign,
+  processedIcons_filesillustrator,
+  processedIcons_filesflash,
+  processedIcons_fileserrorfull,
+  processedIcons_filesdocument,
+  processedIcons_filesaftereffects,
+  processedIcons_files,
+  processedIcons_feedback,
+  processedIcons_faq,
+  processedIcons_eyeslash,
+  processedIcons_eyefriendlier,
+  processedIcons_eye,
+  processedIcons_expand,
+  processedIcons_error,
+  processedIcons_emoji,
+  processedIcons_email,
+  processedIcons_edit,
+  processedIcons_dropdown,
+  processedIcons_downloaded,
+  processedIcons_download,
+  processedIcons_document,
+  processedIcons_desktop,
+  processedIcons_cortana,
+  processedIcons_copy,
+  processedIcons_contactlist,
+  processedIcons_connectorbadge,
+  processedIcons_composeextmenuitem,
+  processedIcons_composeextensionunpin,
+  processedIcons_composeextensionpin,
+  processedIcons_compose,
+  processedIcons_collapse,
+  processedIcons_codesnippet,
+  processedIcons_code,
+  processedIcons_closedcaption,
+  processedIcons_close,
+  processedIcons_chromeunmaximize,
+  processedIcons_chromeminimize,
+  processedIcons_chromemaximize,
+  processedIcons_chevronright,
+  processedIcons_chevronmedright,
+  processedIcons_chevronmedleft,
+  processedIcons_chevronleft,
+  processedIcons_chevrondown,
+  processedIcons_checkboxunselected,
+  processedIcons_checkboxselected,
+  processedIcons_chat,
+  processedIcons_channelicon,
+  processedIcons_changename,
+  processedIcons_canvasaddpage,
+  processedIcons_callvideolineoff,
+  processedIcons_callvideoline,
+  processedIcons_callvideofilled,
+  processedIcons_callvideo,
+  processedIcons_calltransfernotification,
+  processedIcons_calltransfer,
+  processedIcons_callswitchcamera,
+  processedIcons_callrecording,
+  processedIcons_callpstnfull,
+  processedIcons_callpstn,
+  processedIcons_callparticipantonhold,
+  processedIcons_callparticipantincomingline,
+  processedIcons_callparticipantincoming,
+  processedIcons_callparticipantfailed,
+  processedIcons_callparticipantending,
+  processedIcons_callparticipantconnectingline,
+  processedIcons_callparticipantconnecting,
+  processedIcons_callparticipantconnected,
+  processedIcons_callmissedlinefilled,
+  processedIcons_callmissedline,
+  processedIcons_callmissed,
+  processedIcons_callmicrophoneunmuting,
+  processedIcons_callmicrophoneofffilled,
+  processedIcons_callmeetupline,
+  processedIcons_callmeetupfilled,
+  processedIcons_callincomingvideo,
+  processedIcons_callhold,
+  processedIcons_callend,
+  processedIcons_calldialpad,
+  processedIcons_callcontrolstoppresentingnew,
+  processedIcons_callcontrolpresentnew,
+  processedIcons_callblocked,
+  processedIcons_callaudio,
+  processedIcons_callalert,
+  processedIcons_calladmitall,
+  processedIcons_call,
+  processedIcons_calendar,
+  processedIcons_bullets,
+  processedIcons_broadcastviewright,
+  processedIcons_broadcastviewleft,
+  processedIcons_broadcastviewfullscreen,
+  processedIcons_bot,
+  processedIcons_bookmark,
+  processedIcons_bold,
+  processedIcons_blurbackground,
+  processedIcons_block,
+  processedIcons_bellmute,
+  processedIcons_bell,
+  processedIcons_badgeadd,
+  processedIcons_badge,
+  processedIcons_backspace,
+  processedIcons_audio,
+  processedIcons_attachment,
+  processedIcons_assignments,
+  processedIcons_arrowupsmall,
+  processedIcons_arrowup,
+  processedIcons_arrowright,
+  processedIcons_arrowleft,
+  processedIcons_arrowdown,
+  processedIcons_archive,
+  processedIcons_apps,
+  processedIcons_analytics,
+  processedIcons_addparticipant,
+  processedIcons_add,
+  processedIcons_accept,
 } as { [iconName: string]: TeamsSvgIconSpec }

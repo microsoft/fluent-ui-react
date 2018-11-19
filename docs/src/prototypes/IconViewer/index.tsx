@@ -28,13 +28,15 @@ class IconViewerExample extends React.Component<any, {}> {
                     <Header as="h3" content="Regular" />
                   </Divider>
                   <Grid columns={4} style={{ textAlign: 'center' }}>
-                    {Object.keys(theme.icons).map(name => (
-                      <div key={name} style={cellStyles}>
-                        <Icon name={name} />
-                        <br />
-                        <code>{name}</code>
-                      </div>
-                    ))}
+                    {Object.keys(theme.icons)
+                      .filter(name => name.indexOf('processedIcons_') !== -1)
+                      .map(name => (
+                        <div key={name} style={cellStyles}>
+                          <Icon name={name} />
+                          <br />
+                          <code>{name.replace('processedIcons_', '')}</code>
+                        </div>
+                      ))}
                   </Grid>
                 </div>
                 <div>
@@ -42,13 +44,15 @@ class IconViewerExample extends React.Component<any, {}> {
                     <Header as="h3" content="Outline" />
                   </Divider>
                   <Grid columns={4} style={{ textAlign: 'center' }}>
-                    {Object.keys(theme.icons).map(name => (
-                      <div key={name + '-outline'} style={cellStyles}>
-                        <Icon name={name} variables={{ outline: true }} />
-                        <br />
-                        <code>{name} outline</code>
-                      </div>
-                    ))}
+                    {Object.keys(theme.icons)
+                      .filter(name => name.indexOf('processedIcons_') !== -1)
+                      .map(name => (
+                        <div key={name + '-outline'} style={cellStyles}>
+                          <Icon name={name} variables={{ outline: true }} />
+                          <br />
+                          <code>{name.replace('processedIcons_', '')} outline</code>
+                        </div>
+                      ))}
                   </Grid>
                 </div>
               </div>

@@ -12,7 +12,7 @@ for icons in $(ls *.tsx); do
   Path=${icons/\.tsx/}
   echo "Path is: $Path"
 
-  UnprocessedName=${Path//icons-/}
+  UnprocessedName=${Path//icons-/processedIcons_}
   echo "UnprocessedName is: $UnprocessedName"
 
   Name=${UnprocessedName//-/}
