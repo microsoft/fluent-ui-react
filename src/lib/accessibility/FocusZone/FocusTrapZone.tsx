@@ -145,7 +145,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
         : firstFocusableSelector())
 
     const firstFocusableChild = focusSelector
-      ? (this._root.current.querySelector('.' + focusSelector) as HTMLElement)
+      ? (this._root.current.querySelector(`.${focusSelector}`) as HTMLElement)
       : getNextElement(
           this._root.current,
           this._root.current.firstChild as HTMLElement,

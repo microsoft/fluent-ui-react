@@ -77,6 +77,6 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   }
 }
 
-AccordionTitle.create = createShorthandFactory(AccordionTitle, content => ({ content }))
+AccordionTitle.create = createShorthandFactory(AccordionTitle, 'content')
 
 export default AccordionTitle

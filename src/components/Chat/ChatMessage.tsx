@@ -20,7 +20,7 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
-import { createSlot } from '../Slot/Slot'
+import Slot from '../Slot/Slot'
 import {
   UIComponentProps,
   ChildrenComponentProps,
@@ -197,7 +197,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       render: renderTimestamp,
     })
 
-    const contentElement = createSlot(content, {
+    const contentElement = Slot.create(content, {
       styles: styles.content,
       variables: variables.content,
       render: renderContent,
@@ -225,6 +225,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
+ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 
 export default ChatMessage

@@ -32,7 +32,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const { match } = this.props
-    const pageTitle = _.capitalize(match.params.name) + ' behaviors'
+    const pageTitle = `${_.capitalize(match.params.name)} behaviors`
     return (
       <DocumentTitle title={pageTitle}>
         <Grid>
@@ -41,7 +41,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
               <Header
                 as="h1"
                 content={pageTitle}
-                subheader={'Keyboard and Screenreader options for ' + match.params.name + 's.'}
+                subheader={`Keyboard and Screenreader options for ${match.params.name}s.`}
               />
             </Grid.Column>
           </Grid.Row>

@@ -1,8 +1,8 @@
-import * as React from 'react'
 import { shallow, mount } from 'enzyme'
+import * as React from 'react'
 
-import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 import Ref from 'src/components/Ref/Ref'
+import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
 
 const testInnerRef = Component => {
   const innerRef = jest.fn()
@@ -41,6 +41,21 @@ describe('Ref', () => {
 
     it('returns node from a class component', () => {
       testInnerRef(CompositeClass)
+    })
+
+    it('returns "null" after unmount', () => {
+      const innerRef = jest.fn()
+      const wrapper = mount(
+        <Ref innerRef={innerRef}>
+          <CompositeClass />
+        </Ref>,
+      )
+
+      innerRef.mockClear()
+      wrapper.unmount()
+
+      expect(innerRef).toHaveBeenCalledTimes(1)
+      expect(innerRef).toHaveBeenCalledWith(null)
     })
   })
 })

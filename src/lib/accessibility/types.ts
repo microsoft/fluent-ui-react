@@ -90,6 +90,7 @@ export interface AriaWidgetAttributes {
   'aria-invalid'?: string
   'aria-label'?: string
   'aria-level'?: string
+  'aria-modal'?: boolean
   'aria-multiline'?: string
   'aria-multiselectable'?: string
   'aria-orientation'?: string

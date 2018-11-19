@@ -1,6 +1,6 @@
 import { mountWithProvider as mount } from 'test/utils'
 
-import Slot, { createSlot, createHTMLInput } from 'src/components/Slot/Slot'
+import Slot from 'src/components/Slot/Slot'
 import { isConformant } from 'test/specs/commonTests'
 
 describe('Slot', () => {
@@ -11,21 +11,23 @@ describe('Slot', () => {
     isConformant(Slot, { exportedAtTopLevel: false })
   })
 
-  it(`create renders a ${Slot.defaultProps.as} element with content prop`, () => {
-    const testContent = 'test content'
-    const slot = createSlotComp(createSlot, testContent)
-    const { as, content } = slot.props()
+  describe(`create`, () => {
+    it(`renders a ${Slot.defaultProps.as} element with children prop`, () => {
+      const testChildren = 'test children'
+      const slot = createSlotComp(Slot.create, testChildren)
 
-    expect(as).toEqual(Slot.defaultProps.as)
-    expect(content).toEqual(testContent)
-  })
+      expect(slot.prop('as')).toEqual(Slot.defaultProps.as)
+      expect(slot.prop('children')).toEqual(testChildren)
+    })
 
-  it(`createHTMLInput renders an input element with type prop`, () => {
-    const testType = 'test type'
-    const slot = createSlotComp(createHTMLInput, testType)
-    const { as, type } = slot.props()
+    it(`renders an HTML element with correct prop`, () => {
+      const testType = 'test type'
+      const slot = createSlotComp(Slot.create, testType, {
+        defaultProps: { as: 'input' },
+      })
 
-    expect(as).toEqual('input')
-    expect(type).toEqual(testType)
+      expect(slot.prop('as')).toEqual('input')
+      expect(slot.prop('type')).toEqual(testType)
+    })
   })
 })
