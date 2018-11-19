@@ -25,6 +25,11 @@ import ListItem from '../List/ListItem'
 import Icon from '../Icon/Icon'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
+// To be replaced when Downshift will add highlightedItem in their interface.
+export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
+  highlightedItem: Item
+}
+
 export interface DropdownProps {
   /** The default value for the search query. */
   defaultSearchQuery?: string
@@ -39,7 +44,7 @@ export interface DropdownProps {
    * A function that creates custom accessability message for dropdown status.
    * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
-  getA11yStatusMessage?: (options: A11yStatusMessageOptions<DropdownListItem>) => string
+  getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<DropdownListItem>) => string
 
   /**
    * A function that creates custom accessability message for dropdown item selection.
@@ -487,7 +492,7 @@ export default class Dropdown extends AutoControlledComponent<
     previousResultCount,
     resultCount,
     selectedItem,
-  }: A11yStatusMessageOptions<DropdownListItem>) => {
+  }: DownshiftA11yStatusMessageOptions<DropdownListItem>) => {
     if (!isOpen) {
       return selectedItem ? itemToString(selectedItem) : ''
     }
