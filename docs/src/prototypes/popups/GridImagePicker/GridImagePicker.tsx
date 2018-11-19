@@ -28,16 +28,14 @@ class GridImagePicker extends React.Component<GridPickerProps, any> {
 
     return (
       <>
-        {<Input styles={this.inputStyles} fluid icon="search" placeholder="Search..." />}
-        {
-          <Grid
-            as={gridTag}
-            accessibility={gridBehavior}
-            columns={this.props.gridColumns}
-            style={this.gridStyles}
-            content={this.renderGridItems()}
-          />
-        }
+        <Input styles={this.inputStyles} fluid icon="search" placeholder="Search..." />
+        <Grid
+          as={gridTag}
+          accessibility={gridBehavior}
+          columns={this.props.gridColumns}
+          style={this.gridStyles}
+          content={this.renderGridItems()}
+        />
       </>
     )
   }
