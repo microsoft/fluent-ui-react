@@ -9,7 +9,7 @@ interface DocPageProps {
 }
 
 const DocPage = ({ title, description, children }: DocPageProps) => (
-  <DocumentTitle title={'Stardust - ' + title}>
+  <DocumentTitle title={`Stardust - ${title}`}>
     <div style={{ padding: '2rem', fontSize: '1.15rem', maxWidth: '80ch' }}>
       <Header as="h1" content={title} subheader={description} textAlign="center" />
 

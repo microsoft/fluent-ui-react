@@ -1,6 +1,6 @@
-import mergeThemes, { mergeStyles } from '../../../../src/lib/mergeThemes'
-import { felaRenderer, felaRtlRenderer } from '../../../../src/lib'
-import { ICSSInJSStyle } from '../../../../src/themes/types'
+import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
+import { felaRenderer, felaRtlRenderer } from 'src/lib'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -121,7 +121,7 @@ describe('mergeThemes', () => {
 
       const merged = mergeThemes(target, source)
 
-      const siteVariables = { one: 'one', two: 'two' }
+      const siteVariables = { one: 'one', two: 'two', fontSizes: {} }
 
       expect(merged.componentVariables.Button(siteVariables)).toMatchObject({
         one: 'one',
@@ -222,10 +222,10 @@ describe('mergeThemes', () => {
 
       const merged = mergeThemes(target, source)
 
-      const styleParam = {
+      const styleParam: ComponentStyleFunctionParam = {
         variables: { iconSize: 'large' },
         props: { primary: true },
-      }
+      } as any
 
       expect(merged.componentStyles.Button.root(styleParam)).toMatchObject({
         source: true,

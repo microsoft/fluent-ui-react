@@ -1,10 +1,12 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-const behaviorMenuItems = require('docs/src/behaviorMenu')
 import { Grid, Header } from 'semantic-ui-react'
 import DocumentTitle from 'react-document-title'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
+
+const behaviorMenuItems = require('docs/src/behaviorMenu')
+
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
     children: PropTypes.node,
@@ -30,7 +32,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const { match } = this.props
-    const pageTitle = _.capitalize(match.params.name) + ' behaviors'
+    const pageTitle = `${_.capitalize(match.params.name)} behaviors`
     return (
       <DocumentTitle title={pageTitle}>
         <Grid>
@@ -39,7 +41,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
               <Header
                 as="h1"
                 content={pageTitle}
-                subheader={'Keyboard and Screenreader options for ' + match.params.name + 's.'}
+                subheader={`Keyboard and Screenreader options for ${match.params.name}s.`}
               />
             </Grid.Column>
           </Grid.Row>

@@ -3,18 +3,18 @@ import { Accessibility } from '../../../src/lib/accessibility/types'
 
 interface FilteredDescription {
   behaviorName: string
-  testMethod: ([string]) => void
+  testMethod: (arg: TestMethod) => void
   params: RegExpExecArray
 }
 
 export interface TestMethod {
   behavior: Accessibility
-  props: [string]
+  props: string[]
 }
 
 export interface TestDefinition {
   regexp: RegExp
-  testMethod: (TestMethod) => void
+  testMethod: (arg: TestMethod) => void
 }
 
 const excludedFiles = [
@@ -34,7 +34,7 @@ export class TestHelper {
     this.behaviors.set(name, behavior)
   }
 
-  public addTest(regexp: RegExp, testMethod: (TestMethod) => void) {
+  public addTest(regexp: RegExp, testMethod: (arg: TestMethod) => void) {
     this.testDefinitions.push({ regexp, testMethod })
   }
 

@@ -16,10 +16,12 @@ import {
   StaticStyle,
   ThemeIcons,
   ComponentSlotStyle,
+  ThemeAnimation,
 } from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
+import { ObjectOf } from 'types/utils'
 
 // ----------------------------------------
 // Component level merge functions
@@ -65,9 +67,9 @@ export const mergeComponentVariables = (
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
+      const mergedVariables: ObjectOf<any> = {}
 
-      const mergedVariables = {}
-      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+      _.forEach(computedComponentVariables, (variableToMerge, variableName) => {
         const accumulatedVariable = accumulatedVariables[variableName]
 
         mergedVariables[variableName] =
@@ -177,6 +179,13 @@ export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeI
   return Object.assign(target, ...sources)
 }
 
+export const mergeAnimations = (
+  target: { [key: string]: ThemeAnimation },
+  ...sources: { [key: string]: ThemeAnimation }[]
+): { [key: string]: ThemeAnimation } => {
+  return Object.assign(target, ...sources)
+}
+
 export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
   return (...args) => {
     return sources.reduce((acc, next) => {
@@ -193,6 +202,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     fontFaces: [],
     staticStyles: [],
     icons: {},
+    animations: {},
   } as ThemePrepared
 
   return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
@@ -216,6 +226,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
 
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
+
+    acc.animations = mergeAnimations(acc.animations, next.animations)
 
     return acc
   }, emptyTheme)

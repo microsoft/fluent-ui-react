@@ -1,42 +1,36 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
-import { customPropTypes, childrenExist, createShorthand } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import createComponent from '../../lib/createComponent'
-import { MapValueToProps, Props, ReactChildren } from 'types/utils'
+import { childrenExist, createShorthandFactory } from '../../lib'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
+import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
-export interface SlotProps {
-  children: ReactChildren
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
-  variables?: ComponentVariablesInput
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
  */
-const Slot = createComponent<SlotProps>({
+const Slot: CreateComponentReturnType<SlotProps> & {
+  create?: Function
+} = createComponent<SlotProps>({
   displayName: 'Slot',
 
   className: 'ui-slot',
 
   propTypes: {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
   },
 
   render(config, props) {
@@ -51,15 +45,6 @@ const Slot = createComponent<SlotProps>({
   },
 })
 
-const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
-  val,
-  options: Props = {},
-) => {
-  options.defaultProps = { as, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps, val, options)
-}
-
-export const createSlot = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-export const createHTMLInput = createSlotFactory('input', type => ({ type }))
+Slot.create = createShorthandFactory(Slot)
 
 export default Slot
