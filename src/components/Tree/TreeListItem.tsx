@@ -88,29 +88,27 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     const { items, content, renderTitle } = this.props
     const { active } = this.state
 
-    const children = []
-    children.push(
-      TreeTitle.create(content, {
-        defaultProps: {
-          href: '#',
-          active,
-          hasSubtree: !!(items && items.length),
-        },
-        render: renderTitle,
-        overrideProps: this.handleItemOverrides,
-      }),
-    )
-    items &&
-      active &&
-      children.push(
-        Tree.create('', {
+    return (
+      <>
+        {TreeTitle.create(content, {
           defaultProps: {
-            items,
-            isSubTree: true,
+            href: '#',
+            active,
+            hasSubtree: !!(items && items.length),
           },
-        }),
-      )
-    return children
+          render: renderTitle,
+          overrideProps: this.handleItemOverrides,
+        })}
+        {items &&
+          active &&
+          Tree.create('', {
+            defaultProps: {
+              items,
+              isSubTree: true,
+            },
+          })}
+      </>
+    )
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
