@@ -29,12 +29,6 @@ export interface TreeListItemProps
   /** Whether or not the subtree of the item is in the open state. */
   active?: boolean
 
-  /** Custom styles to be applied to the tree title. */
-  titleStyles?: ComponentSlotStyle
-
-  /** Custom variables to be applied to the tree title. */
-  titleVariables?: ComponentVariablesInput
-
   /**
    * Called when a tree title is clicked.
    *
@@ -69,8 +63,6 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
-    titleStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     items: PropTypes.array,
     active: PropTypes.bool,
     renderTitle: PropTypes.func,
@@ -93,7 +85,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   })
 
   renderContent(styles, variables) {
-    const { items, content, titleStyles, titleVariables, renderTitle } = this.props
+    const { items, content, renderTitle } = this.props
     const { active } = this.state
 
     const children = []
@@ -101,8 +93,6 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
       TreeTitle.create(content, {
         defaultProps: {
           href: '#',
-          styles: titleStyles,
-          variables: titleVariables,
           active,
           hasSubtree: !!(items && items.length),
         },

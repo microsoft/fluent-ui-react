@@ -72,8 +72,6 @@ class Tree extends UIComponent<TreeProps, any> {
           styles: styles.listItem,
           items: obj.items,
           variables: variables.listItem,
-          titleStyles: styles.title,
-          titleVariables: variables.title,
           onItemClick: obj.onItemClick,
           renderTitle,
         },
