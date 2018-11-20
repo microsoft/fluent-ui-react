@@ -63,18 +63,18 @@ class Tree extends UIComponent<TreeProps, any> {
     accessibility: treeBehavior as Accessibility,
   }
 
-  renderContent(styles, variables) {
+  renderContent() {
     const { items, renderTitle } = this.props
 
-    return _.map(items, obj => {
-      return TreeListItem.create(obj.title, {
+    return _.map(items, obj =>
+      TreeListItem.create(obj.title, {
         defaultProps: {
           items: obj.items,
           onItemClick: obj.onItemClick,
           renderTitle,
         },
-      })
-    })
+      }),
+    )
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
@@ -82,7 +82,7 @@ class Tree extends UIComponent<TreeProps, any> {
 
     return (
       <ElementType {...rest} className={classes.root} {...accessibility.attributes.root}>
-        {childrenExist(children) ? children : this.renderContent(styles, variables)}
+        {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
   }
