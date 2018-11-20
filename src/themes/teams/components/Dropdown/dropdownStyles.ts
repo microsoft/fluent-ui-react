@@ -13,6 +13,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       containerDivFocusBorderColor,
       containerDivFocusBorderRadius,
       containerDivColor,
+      toggleButtonSize,
       width,
     },
   }): ICSSInJSStyle => {
@@ -27,9 +28,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderColor: containerDivBorderColor,
       color: containerDivColor,
       width: fluid ? '100%' : width,
-      transform: 'rotateZ(0)',
+      position: 'relative',
       ...(toggleButton && {
-        paddingRight: '2rem',
+        paddingRight: toggleButtonSize,
       }),
       ...(focused && {
         borderColor: containerDivFocusBorderColor,
@@ -65,15 +66,14 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     margin: '.4rem 0 0 .4rem',
   }),
 
-  toggleButton: ({ variables: { toggleButtonSize } }): ICSSInJSStyle => ({
+  toggleButton: ({ variables: { toggleButtonSize, width }, props: { fluid } }): ICSSInJSStyle => ({
     position: 'absolute',
-    right: 0,
-    top: 0,
     height: toggleButtonSize,
     width: toggleButtonSize,
     border: 0,
     backgroundColor: 'transparent',
     margin: 0,
+    ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
   }),
 }
 
