@@ -1,37 +1,40 @@
 import { pxToRem } from '../../../../lib'
 export interface DropdownVariables {
+  backgroundColor: string
   containerDivBorderRadius: string
   containerDivBorderBottom: string
-  containerDivBackgroundColor: string
   containerDivBorderColor: string
+  containerDivColor: string
   containerDivFocusBorderColor: string
   containerDivFocusBorderRadius: string
-  editTextInputFocusBorderColor: string
-  fontColor: string
+  editTextFlexBasis: string
   listItemBackgroundColor: string
   listItemHighlightedBackgroundColor: string
   listItemTextColor: string
-  width: string
+  listMaxHeight: string
   toggleButtonSize: string
+  width: string
 }
 
 const [_2px_asRem, _3px_asRem] = [2, 3].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
-  editTextInputFocusBorderColor: 'transparent',
-  fontColor: siteVars.bodyColor,
+  backgroundColor: siteVars.gray10,
 
   containerDivBorderRadius: _3px_asRem,
   containerDivBorderBottom: `${_2px_asRem} solid transparent`,
-  containerDivBackgroundColor: siteVars.gray10,
   containerDivBorderColor: 'transparent',
+  containerDivColor: siteVars.bodyColor,
   containerDivFocusBorderColor: siteVars.brand,
   containerDivFocusBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
+
+  editTextFlexBasis: '100px',
 
   listItemTextColor: siteVars.white,
   listItemBackgroundColor: siteVars.white,
   listItemHighlightedBackgroundColor: siteVars.brand,
+  listMaxHeight: '20rem',
 
-  width: pxToRem(356),
   toggleButtonSize: pxToRem(30),
+  width: pxToRem(356),
 })
