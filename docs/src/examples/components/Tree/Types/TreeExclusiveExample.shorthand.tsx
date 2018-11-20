@@ -3,28 +3,28 @@ import { Icon, Tree } from '@stardust-ui/react'
 
 const items = [
   {
-    title: 'one',
     key: '1',
+    title: 'one',
     items: [
       {
-        title: 'one one',
         key: '2',
+        title: 'one one',
         subtree: [
           {
-            title: 'one one one',
             key: '3',
+            title: 'one one one',
           },
         ],
       },
     ],
   },
   {
-    title: 'two',
     key: '4',
+    title: 'two',
     items: [
       {
-        title: 'two one',
         key: '5',
+        title: 'two one',
       },
     ],
   },
