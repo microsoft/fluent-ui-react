@@ -22,7 +22,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   items: ShorthandValue[]
 
   /** Whether the tree is a subtree. */
-  isSubTree?: boolean
+  nested?: boolean
 
   /**
    * A custom render function the title slot.
@@ -46,7 +46,7 @@ class Tree extends UIComponent<TreeProps, any> {
     ...childrenComponentPropTypes,
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
-    isSubTree: PropTypes.boolean,
+    nested: PropTypes.boolean,
     renderTitle: PropTypes.func,
   }
 

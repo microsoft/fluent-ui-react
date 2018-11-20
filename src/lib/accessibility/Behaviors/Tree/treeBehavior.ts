@@ -7,7 +7,7 @@ import { Accessibility } from '../../types'
 const treeBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: props.isSubTree ? 'group' : 'tree',
+      role: props.nested ? 'group' : 'tree',
     },
   },
 })
