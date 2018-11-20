@@ -43,27 +43,25 @@ export default () => {
       const componentType = _.lowerFirst(path.basename(path.dirname(dir)).replace(/s$/, ''))
       const behaviorVariantName = file.basename
       const behaviorName = path.basename(dir)
-
-      let descriptionText
-      let specificationText
       const fileContent = fs.readFileSync(file.path).toString()
       const blockComments = extract(fileContent).filter(comment => comment.type === 'BlockComment') // filtering only block comments
+      const variation = {
+        name: behaviorVariantName,
+        description: '',
+        specification: '',
+      }
 
-      // getting specification of the comment's text
+      // getting description and specification of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
-        descriptionText = getTextFromCommentToken(commentTokens, 'description')
-        specificationText = getTextFromCommentToken(commentTokens, 'specification')
+        variation.description = getTextFromCommentToken(commentTokens, 'description')
+        variation.specification = getTextFromCommentToken(commentTokens, 'specification')
       }
 
       result.push({
         displayName: behaviorName,
         type: componentType,
-        variations: {
-          name: behaviorVariantName,
-          description: descriptionText,
-          specification: specificationText,
-        },
+        variations: variation,
       })
       cb()
     } catch (err) {
