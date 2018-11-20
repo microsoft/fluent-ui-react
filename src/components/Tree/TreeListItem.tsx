@@ -111,7 +111,6 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
       <>
         {TreeTitle.create(title, {
           defaultProps: {
-            href: '#',
             open,
             hasSubtree: !!(items && items.length),
           },
