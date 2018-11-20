@@ -1,5 +1,4 @@
 import { Accessibility } from '../../types'
-import * as _ from 'lodash'
 
 /**
  * @description
