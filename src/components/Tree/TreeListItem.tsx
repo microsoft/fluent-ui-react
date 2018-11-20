@@ -5,7 +5,12 @@ import * as React from 'react'
 import Tree from './Tree'
 import TreeTitle from './TreeTitle'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+} from '../../lib'
 import {
   ComponentEventHandler,
   ShorthandRenderFunction,
@@ -26,6 +31,9 @@ export interface TreeListItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
+  /** Initial activeIndex value. */
+  defaultOpen?: boolean
+
   /** Shorthand array of props for sub tree. */
   items?: any[]
 
@@ -54,21 +62,24 @@ export interface TreeListItemProps
   title?: ShorthandValue
 }
 
-class TreeListItem extends UIComponent<TreeListItemProps> {
+export interface TreeListItemState {
+  open?: boolean
+}
+
+class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListItemState> {
   static create: Function
 
   static className = 'ui-tree__list__item'
 
   static displayName = 'TreeListItem'
 
-  state = {
-    open: this.props.open,
-  }
+  static autoControlledProps = ['open']
 
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
+    defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     onItemClick: PropTypes.func,
     open: PropTypes.bool,
@@ -83,9 +94,10 @@ class TreeListItem extends UIComponent<TreeListItemProps> {
   handleItemOverrides = predefinedProps => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
-      this.setState({
+      this.trySetState({
         open: !this.state.open,
       })
+
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onItemClick', e, titleProps)
     },
