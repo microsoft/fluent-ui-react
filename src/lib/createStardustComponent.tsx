@@ -30,17 +30,15 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
   displayName = 'StardustComponent',
   render,
 }: CreateStardustComponentConfig<P>): React.SFC<P> => {
-  const StardustComponent: React.SFC<P> = createComponentInternal({
+  return createComponentInternal({
     displayName,
     render(config, props) {
       // TODO add here everything that the client may expect
-      const restrictedConfig = _.pick(config, ['classes', 'variables', 'styles', 'rtl', 'theme'])
+      const filteredConfig = _.pick(config, ['classes', 'variables', 'styles', 'rtl', 'theme'])
 
-      return render(restrictedConfig, props)
+      return render(filteredConfig, props)
     },
   })
-  StardustComponent.displayName = displayName
-  return StardustComponent
 }
 
 export default createComponent
