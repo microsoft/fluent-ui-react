@@ -73,9 +73,9 @@ export class TestHelper {
         if (!variant.specification && !skipSpecChecksForFiles.find(item => item === variant.name)) {
           this.failSpecificationPresenceTest(variant.name)
         } else {
-          variant.specification.split('\n').forEach(singleSpecLine => {
-            if (singleSpecLine) {
-              this.iterateRegexDefinitions(singleSpecLine, variant.name)
+          variant.specification.split('\n').forEach(specLine => {
+            if (specLine) {
+              this.iterateRegexDefinitions(specLine, variant.name)
             }
           })
         }
@@ -83,11 +83,11 @@ export class TestHelper {
     })
   }
 
-  public iterateRegexDefinitions(singleSpecLine: string, behaviorName: string) {
+  public iterateRegexDefinitions(specLine: string, behaviorName: string) {
     let regexMatched = false
     this.testDefinitions.forEach(testDefinition => {
       const regex = new RegExp(testDefinition.regexp)
-      const result = regex.exec(singleSpecLine)
+      const result = regex.exec(specLine)
       if (result) {
         regexMatched = true
         this.filteredSpecificationWithAssignedTestMethod.push({
@@ -98,7 +98,7 @@ export class TestHelper {
       }
     })
     if (!regexMatched) {
-      test(`${behaviorName} \n LINE: ${singleSpecLine} `, () => {
+      test(`${behaviorName} \n LINE: ${specLine} `, () => {
         fail(
           `Line mentioned in **behavior specification** doesn't match any regex expression of validation tests.`,
         )
