@@ -10,18 +10,18 @@ export interface RenderStardustResultConfig {
 
 export interface CreateStardustComponentConfig<P> {
   displayName?: string
-  render: (config: RenderStardustResultConfig, props: P) => React.ReactNode
+  render: (props: P & { stardust: RenderStardustResultConfig }) => React.ReactNode
 }
 
 const createComponent = <P extends {} = {}, S extends {} = {}>({
   displayName = 'StardustComponent',
   render,
 }: CreateStardustComponentConfig<P>): React.SFC<P> => {
-  return createComponentInternal({
+  return createComponentInternal<P, S>({
     displayName,
-    render(config, props) {
+    render: (config, props) => {
       const filteredConfig = pick(config, ['classes', 'rtl'])
-      return render(filteredConfig, props)
+      return render(Object.assign({ stardust: filteredConfig }, props))
     },
   })
 }
