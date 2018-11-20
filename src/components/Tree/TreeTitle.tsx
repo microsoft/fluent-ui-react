@@ -27,7 +27,7 @@ export interface TreeTitleProps
   accessibility?: Accessibility
 
   /** Whether or not the subtree of the item is in the open state. */
-  active?: boolean
+  open?: boolean
 
   /** Whether or not the item has a subtree. */
   hasSubtree?: boolean
@@ -45,7 +45,7 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
     accessibility: PropTypes.func,
-    active: PropTypes.bool,
+    open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
   }
 

@@ -26,7 +26,7 @@ export interface TreeListItemProps
   items?: any[]
 
   /** Whether or not the subtree of the item is in the open state. */
-  active?: boolean
+  open?: boolean
 
   /**
    * Called when a tree title is clicked.
@@ -55,7 +55,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   static displayName = 'TreeListItem'
 
   state = {
-    active: this.props.active,
+    open: this.props.open,
   }
 
   static propTypes = {
@@ -63,7 +63,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
     items: PropTypes.array,
-    active: PropTypes.bool,
+    open: PropTypes.bool,
     renderTitle: PropTypes.func,
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
@@ -76,7 +76,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     onClick: (e, titleProps) => {
       e.preventDefault()
       this.setState({
-        active: !this.state.active,
+        open: !this.state.open,
       })
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onItemClick', e, titleProps)
@@ -85,21 +85,21 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
 
   renderContent(styles, variables) {
     const { items, content, renderTitle } = this.props
-    const { active } = this.state
+    const { open } = this.state
 
     return (
       <>
         {TreeTitle.create(content, {
           defaultProps: {
             href: '#',
-            active,
+            open,
             hasSubtree: !!(items && items.length),
           },
           render: renderTitle,
           overrideProps: this.handleItemOverrides,
         })}
         {items &&
-          active &&
+          open &&
           Tree.create('', {
             defaultProps: {
               items,
