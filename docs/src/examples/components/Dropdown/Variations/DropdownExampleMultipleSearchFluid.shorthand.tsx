@@ -11,6 +11,7 @@ class DropdownExample extends React.Component {
         multiple
         search
         fluid
+        placeholder="Start typing a name"
         items={this.state.items}
         onDropdownChange={(value: DropdownListItem[]) => {
           this.setState({

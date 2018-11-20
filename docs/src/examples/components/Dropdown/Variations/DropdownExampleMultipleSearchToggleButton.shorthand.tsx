@@ -10,6 +10,7 @@ class DropdownExample extends React.Component {
       <Dropdown
         multiple
         search
+        placeholder="Start typing a name"
         toggleButton
         items={this.state.items}
         onDropdownChange={(value: DropdownListItem[]) => {
