@@ -1,19 +1,11 @@
 import createComponentInternal from './createComponent'
 import * as React from 'react'
 import * as _ from 'lodash'
-import {
-  ComponentSlotClasses,
-  ThemePrepared,
-  ComponentSlotStylesPrepared,
-  ComponentVariablesObject,
-} from '../themes/types'
+import { ComponentSlotClasses } from '../themes/types'
 
 export interface RenderStardustResultConfig {
   classes: ComponentSlotClasses
-  variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
   rtl: boolean
-  theme: ThemePrepared
 }
 
 export type RenderStardustComponentCallback<P> = (
@@ -34,7 +26,7 @@ const createComponent = <P extends {} = {}, S extends {} = {}>({
     displayName,
     render(config, props) {
       // TODO add here everything that the client may expect
-      const filteredConfig = _.pick(config, ['classes', 'variables', 'styles', 'rtl', 'theme'])
+      const filteredConfig = _.pick(config, ['classes', 'rtl'])
 
       return render(filteredConfig, props)
     },
