@@ -322,7 +322,7 @@ export default class Dropdown extends AutoControlledComponent<
     const { searchQuery, value } = this.state
 
     return (
-      <this.Wrapper>
+      <this.RefProvidingWrapper>
         <Input
           inputRef={input => (this.inputRef = input)}
           onFocus={this.handleInputFocus}
@@ -345,7 +345,7 @@ export default class Dropdown extends AutoControlledComponent<
             }),
           }}
         />
-      </this.Wrapper>
+      </this.RefProvidingWrapper>
     )
   }
 
@@ -374,14 +374,14 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     return (
-      <this.Wrapper>
+      <this.RefProvidingWrapper>
         <List
           {...getMenuProps({ refKey: 'innerRef' })}
           styles={styles.list}
           aria-hidden={!isOpen}
           items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
         />
-      </this.Wrapper>
+      </this.RefProvidingWrapper>
     )
   }
 
@@ -469,7 +469,7 @@ export default class Dropdown extends AutoControlledComponent<
         })
   }
 
-  Wrapper = ({ children }) => (
+  RefProvidingWrapper = ({ children }) => (
     <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
   )
 
