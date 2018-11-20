@@ -6,7 +6,6 @@ import Tree from './Tree'
 import TreeTitle from './TreeTitle'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
 import { ComponentEventHandler, ShorthandRenderFunction } from '../../../types/utils'
 import {
   commonUIComponentPropTypes,
