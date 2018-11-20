@@ -1,12 +1,13 @@
-import * as React from 'react'
 import { Image, Button } from '@stardust-ui/react'
+
+import * as React from 'react'
 import * as _ from 'lodash'
 
 export interface GridPickerItemProps {
   as?: keyof React.ReactHTML
   title?: string
   imageSrc: string
-  onClick?: (e) => void
+  onClick?: (e: React.SyntheticEvent, props: GridPickerItemProps) => void
 }
 
 const imageStyles = {
@@ -20,30 +21,24 @@ const imageButtonStyles = {
   background: '#fff',
 }
 
-class GridImagePickerItem extends React.Component<GridPickerItemProps, any> {
+class GridImagePickerItem extends React.Component<GridPickerItemProps> {
   static defaultProps = {
     as: 'li',
   }
 
   handleClick = e => {
-    if (e.target) {
-      const btn = e.target.nodeName !== 'IMG' ? e.target : e.target.parentElement
-      const selectedItem = btn && btn.title
-      selectedItem && alert(`Selected item is: ${selectedItem}`)
-    }
-
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
   render() {
-    const { title, imageSrc } = this.props
+    const { title, imageSrc, as: ElementType } = this.props
 
     return (
-      <this.props.as>
+      <ElementType>
         <Button styles={imageButtonStyles} onClick={this.handleClick} title={title} role="listitem">
           {imageSrc && <Image styles={imageStyles} src={imageSrc} fluid />}
         </Button>
-      </this.props.as>
+      </ElementType>
     )
   }
 }

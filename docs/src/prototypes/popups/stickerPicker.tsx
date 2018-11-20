@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import {
   Button,
   Popup,
@@ -35,9 +34,7 @@ class StickerPicker extends React.Component {
 
   onMenuItemClick = (e, props) => {
     this.setState({ activeMenuIndex: props.index }, () => {
-      const gridPickerElement = ReactDOM.findDOMNode(this.gridPickerRef.current) as HTMLElement
-      const input = gridPickerElement && gridPickerElement.querySelector('input')
-      input && input.focus()
+      this.gridPickerRef.current && this.gridPickerRef.current.focusInput()
     })
   }
 
