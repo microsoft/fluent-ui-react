@@ -19,12 +19,21 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   items: {
     title: ShorthandValue
     onItemClick?: ComponentEventHandler<TreeProps>
-    subtree?: any[]
+    items?: any[]
     renderTitle?: ShorthandRenderFunction
   }[]
 
   /** Whether the tree is a subtree. */
   isSubTree?: boolean
+
+  /**
+   * A custom render function the title slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderTitle?: ShorthandRenderFunction
 }
 
 class Tree extends UIComponent<TreeProps, any> {
@@ -39,6 +48,7 @@ class Tree extends UIComponent<TreeProps, any> {
     ...childrenComponentPropTypes,
     items: PropTypes.array,
     isSubTree: PropTypes.boolean,
+    renderTitle: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -47,18 +57,18 @@ class Tree extends UIComponent<TreeProps, any> {
   }
 
   renderContent(styles, variables) {
-    const { items } = this.props
+    const { items, renderTitle } = this.props
+
     return _.map(items, obj => {
-      const subtree = obj.subtree
       return TreeListItem.create(obj.title, {
         defaultProps: {
           styles: styles.listItem,
-          subtree,
+          items: obj.items,
           variables: variables.listItem,
           titleStyles: styles.title,
           titleVariables: variables.title,
           onItemClick: obj.onItemClick,
-          renderTitle: obj.renderTitle,
+          renderTitle,
         },
       })
     })

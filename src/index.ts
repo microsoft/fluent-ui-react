@@ -95,6 +95,8 @@ export { default as Text, TextProps } from './components/Text/Text'
 
 export { default as Transition, TransitionProps } from './components/Transition/Transition'
 
+export { default as Tree } from './components/Tree'
+
 //
 // Accessibility
 //
@@ -125,4 +127,3 @@ export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
-export { default as Tree } from './components/Tree'

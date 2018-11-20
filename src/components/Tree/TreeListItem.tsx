@@ -28,7 +28,7 @@ export interface TreeListItemProps
     ChildrenComponentProps,
     ContentComponentProps {
   /** Shorthand array of props for sub tree. */
-  subtree?: any[]
+  items?: any[]
 
   /** Whether or not the subtree of the item is in the open state. */
   active?: boolean
@@ -78,7 +78,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     ...contentComponentPropsTypes,
     titleStyles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    subtree: PropTypes.array,
+    items: PropTypes.array,
     active: PropTypes.bool,
     activeContent: PropTypes.any,
     renderTitle: PropTypes.func,
@@ -101,7 +101,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   })
 
   renderContent(styles, variables) {
-    const { subtree, content, titleStyles, titleVariables, renderTitle } = this.props
+    const { items, content, titleStyles, titleVariables, renderTitle } = this.props
     let { activeContent } = this.props
     const { active } = this.state
     if (_.isUndefined(activeContent)) {
@@ -115,18 +115,18 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
           styles: titleStyles,
           variables: titleVariables,
           active,
-          hasSubtree: !!(subtree && subtree.length),
+          hasSubtree: !!(items && items.length),
         },
         render: renderTitle,
         overrideProps: this.handleItemOverrides,
       }),
     )
-    subtree &&
+    items &&
       active &&
       children.push(
         Tree.create('', {
           defaultProps: {
-            items: subtree,
+            items,
             className: 'sub-tree',
             isSubTree: true,
             style: {

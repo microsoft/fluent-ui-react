@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { Tree } from '@stardust-ui/react'
 
-const treeData = [
+const items = [
   {
     title: 'one',
-    subtree: [
+    items: [
       {
         title: 'one one',
-        subtree: [
+        items: [
           {
             title: 'one one one',
           },
@@ -17,7 +17,7 @@ const treeData = [
   },
   {
     title: ' two',
-    subtree: [
+    items: [
       {
         title: 'two one',
       },
@@ -25,6 +25,6 @@ const treeData = [
   },
 ]
 
-const TreeExampleShorthand = () => <Tree items={treeData} />
+const TreeExampleShorthand = () => <Tree items={items} />
 
 export default TreeExampleShorthand
