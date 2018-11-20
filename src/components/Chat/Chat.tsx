@@ -53,8 +53,8 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  actionHandlers: AccessibilityActionHandlers = {
-    focus: event => this.focusZone && this.focusZone.focus(),
+  protected actionHandlers: AccessibilityActionHandlers = {
+    focus: () => this.focusZone && this.focusZone.focus(),
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {

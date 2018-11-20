@@ -18,7 +18,6 @@ import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../ty
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 import {
@@ -26,11 +25,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
 } from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ChatMessageProps
   extends UIComponentProps<any, any>,
@@ -104,10 +99,10 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,
+    content: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     renderAuthor: PropTypes.func,
     renderAvatar: PropTypes.func,
@@ -175,6 +170,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         styles: styles.avatar,
         variables: variables.avatar,
       },
+      generateKey: true,
       render: renderAvatar,
     })
 
@@ -198,29 +194,26 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     })
 
     const contentElement = Slot.create(content, {
-      styles: styles.content,
-      variables: variables.content,
+      defaultProps: {
+        styles: styles.content,
+        variables: variables.content,
+      },
       render: renderContent,
     })
 
     return (
-      <Layout
-        start={!mine && avatarElement}
-        main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={contentElement}
-          />
-        }
-        end={mine && avatarElement}
-      />
+      <>
+        {!mine && avatarElement}
+        <Slot
+          key="chat-message-body"
+          className={cx('ui-chat__message__messageBody', classes.messageBody)}
+        >
+          {!mine && authorElement}
+          {timestampElement}
+          {contentElement}
+        </Slot>
+        {mine && avatarElement}
+      </>
     )
   }
 }

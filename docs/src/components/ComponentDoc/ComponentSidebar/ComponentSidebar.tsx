@@ -44,11 +44,11 @@ class ComponentSidebar extends React.Component<any, any> {
     return (
       <Sticky context={examplesRef} offset={15}>
         <Menu as={Accordion} fluid style={sidebarStyle} text vertical>
-          {_.map(sections, ({ examples, sectionName }) => (
+          {_.map(sections, ({ examples, sectionName }, index) => (
             <ComponentSidebarSection
               activePath={activePath}
               examples={examples}
-              key={sectionName}
+              key={`${sectionName}-${index}`}
               sectionName={sectionName}
               onItemClick={onItemClick}
             />
