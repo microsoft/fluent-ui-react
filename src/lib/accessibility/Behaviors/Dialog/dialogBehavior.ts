@@ -6,6 +6,8 @@ import * as _ from 'lodash'
  * @description
  * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
+ *
+ * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
  * Adds attribute 'aria-modal=true' to 'popup' component's part.
  * Adds attribute 'role=dialog' to 'popup' component's part.
