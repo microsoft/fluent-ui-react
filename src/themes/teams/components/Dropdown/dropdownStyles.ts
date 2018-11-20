@@ -53,7 +53,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     position: 'absolute',
     zIndex: 1000,
     maxHeight: listMaxHeight,
-    overflowY: 'hidden',
+    overflowY: 'auto',
     width: fluid ? '100%' : width,
     top: 'calc(100% + 2px)', // leave room for container + its border
   }),
