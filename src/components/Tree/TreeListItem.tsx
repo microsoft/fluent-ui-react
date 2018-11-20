@@ -29,9 +29,6 @@ export interface TreeListItemProps
   /** Shorthand array of props for sub tree. */
   items?: any[]
 
-  /** Whether or not the subtree of the item is in the open state. */
-  open?: boolean
-
   /**
    * Called when a tree title is clicked.
    *
@@ -39,6 +36,9 @@ export interface TreeListItemProps
    * @param {object} data - All title props.
    */
   onItemClick?: ComponentEventHandler<TreeListItemProps>
+
+  /** Whether or not the subtree of the item is in the open state. */
+  open?: boolean
 
   /**
    * A custom render iterator for rendering each Accordion panel title.
@@ -70,9 +70,9 @@ class TreeListItem extends UIComponent<TreeListItemProps> {
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
     items: customPropTypes.collectionShorthand,
+    onItemClick: PropTypes.func,
     open: PropTypes.bool,
     renderTitle: PropTypes.func,
-    onItemClick: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -122,7 +122,7 @@ class TreeListItem extends UIComponent<TreeListItemProps> {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         {childrenExist(children) ? children : this.renderContent(styles, variables)}
       </ElementType>
     )

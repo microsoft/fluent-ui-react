@@ -63,10 +63,10 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
 
     return (
       <ElementType
-        {...rest}
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
+        {...rest}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

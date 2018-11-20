@@ -71,7 +71,7 @@ class Tree extends UIComponent<TreeProps> {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root} {...accessibility.attributes.root}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
