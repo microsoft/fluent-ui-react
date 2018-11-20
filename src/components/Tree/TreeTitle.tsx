@@ -20,6 +20,12 @@ export interface TreeTitleProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default treeTitleBehavior
+   */
+  accessibility?: Accessibility
+
   /** Whether or not the subtree of the item is in the open state. */
   active?: boolean
 
@@ -30,7 +36,7 @@ export interface TreeTitleProps
 class TreeTitle extends UIComponent<TreeTitleProps, any> {
   static create: Function
 
-  static className = 'ui-tree-list__title'
+  static className = 'ui-tree__title'
 
   static displayName = 'TreeTitle'
 
@@ -38,6 +44,7 @@ class TreeTitle extends UIComponent<TreeTitleProps, any> {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
+    accessibility: PropTypes.func,
     active: PropTypes.bool,
     hasSubtree: PropTypes.bool,
   }

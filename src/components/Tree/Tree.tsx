@@ -15,6 +15,12 @@ import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../li
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
 export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default treeBehavior
+   */
+  accessibility?: Accessibility
+
   /** Shorthand array of props for Tree. */
   items: {
     title: ShorthandValue
@@ -46,6 +52,7 @@ class Tree extends UIComponent<TreeProps, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
+    accessibility: PropTypes.func,
     items: PropTypes.array,
     isSubTree: PropTypes.boolean,
     renderTitle: PropTypes.func,
