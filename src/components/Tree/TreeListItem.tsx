@@ -91,7 +91,7 @@ class TreeListItem extends UIComponent<TreeListItemProps> {
     },
   })
 
-  renderContent(styles, variables) {
+  renderContent() {
     const { items, title, renderTitle } = this.props
     const { open } = this.state
 
@@ -112,18 +112,19 @@ class TreeListItem extends UIComponent<TreeListItemProps> {
             defaultProps: {
               items,
               nested: true,
+              renderTitle,
             },
           })}
       </>
     )
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, accessibility, classes, rest, styles, variables }) {
     const { children } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        {childrenExist(children) ? children : this.renderContent(styles, variables)}
+        {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
   }
