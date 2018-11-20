@@ -69,9 +69,7 @@ class Tree extends UIComponent<TreeProps, any> {
     return _.map(items, obj => {
       return TreeListItem.create(obj.title, {
         defaultProps: {
-          styles: styles.listItem,
           items: obj.items,
-          variables: variables.listItem,
           onItemClick: obj.onItemClick,
           renderTitle,
         },
