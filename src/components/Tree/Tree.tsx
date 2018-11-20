@@ -39,7 +39,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
 class Tree extends UIComponent<TreeProps, any> {
   static create: Function
 
-  static className = 'ui-tree-list'
+  static className = 'ui-tree'
 
   static displayName = 'Tree'
 
