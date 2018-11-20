@@ -33,7 +33,7 @@ export interface TreeTitleProps
   hasSubtree?: boolean
 }
 
-class TreeTitle extends UIComponent<TreeTitleProps, any> {
+class TreeTitle extends UIComponent<TreeTitleProps> {
   static create: Function
 
   static className = 'ui-tree__title'

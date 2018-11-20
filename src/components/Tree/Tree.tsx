@@ -34,7 +34,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   renderTitle?: ShorthandRenderFunction
 }
 
-class Tree extends UIComponent<TreeProps, any> {
+class Tree extends UIComponent<TreeProps> {
   static create: Function
 
   static className = 'ui-tree'

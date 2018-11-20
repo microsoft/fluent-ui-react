@@ -54,7 +54,7 @@ export interface TreeListItemProps
   title?: ShorthandValue
 }
 
-class TreeListItem extends UIComponent<TreeListItemProps, any> {
+class TreeListItem extends UIComponent<TreeListItemProps> {
   static create: Function
 
   static className = 'ui-tree__list__item'
