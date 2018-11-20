@@ -24,6 +24,7 @@ import Image from '../Image/Image'
 import ListItem from '../List/ListItem'
 import Icon from '../Icon/Icon'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import Ref from '../Ref/Ref'
 
 // To be replaced when Downshift will add highlightedItem in their interface.
 export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
@@ -284,7 +285,6 @@ export default class Dropdown extends AutoControlledComponent<
                 {search &&
                   this.renderInput(
                     styles,
-                    variables,
                     getRootProps,
                     getInputProps,
                     highlightedIndex,
@@ -309,7 +309,6 @@ export default class Dropdown extends AutoControlledComponent<
 
   private renderInput(
     styles: ComponentSlotStylesInput,
-    variables: ComponentVariablesInput,
     getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
     highlightedIndex: number,
@@ -323,28 +322,30 @@ export default class Dropdown extends AutoControlledComponent<
     const { searchQuery, value } = this.state
 
     return (
-      <Input
-        inputRef={input => (this.inputRef = input)}
-        onFocus={this.handleInputFocus}
-        onKeyUp={multiple && this.handleBackspaceDelete}
-        wrapper={{
-          styles: styles.editTextDiv,
-          ...getRootProps({ refKey: 'slotRef' }, { suppressRefError: true }),
-        }}
-        variables={{ inputFocusBorderBottomColor: variables.editTextInputFocusBorderColor }}
-        input={{
-          type: 'text',
-          styles: styles.editTextInput,
-          placeholder:
-            searchQuery.length > 0 || (multiple && (value as DropdownListItem[]).length > 0)
-              ? ''
-              : placeholder,
-          ...getInputProps({
-            onBlur: this.handleInputBlur,
-            onKeyDown: this.handleInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
-          }),
-        }}
-      />
+      <this.Wrapper>
+        <Input
+          inputRef={input => (this.inputRef = input)}
+          onFocus={this.handleInputFocus}
+          onKeyUp={multiple && this.handleBackspaceDelete}
+          wrapper={{
+            styles: styles.editTextDiv,
+            ...getRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
+          }}
+          variables={{ inputFocusBorderBottomColor: 'transparent' }}
+          input={{
+            type: 'text',
+            styles: styles.editTextInput,
+            placeholder:
+              searchQuery.length > 0 || (multiple && (value as DropdownListItem[]).length > 0)
+                ? ''
+                : placeholder,
+            ...getInputProps({
+              onBlur: this.handleInputBlur,
+              onKeyDown: this.handleInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
+            }),
+          }}
+        />
+      </this.Wrapper>
     )
   }
 
@@ -373,12 +374,14 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     return (
-      <List
-        {...getMenuProps({ refKey: 'listRef' })}
-        styles={styles.list}
-        aria-hidden={!isOpen}
-        items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
-      />
+      <this.Wrapper>
+        <List
+          {...getMenuProps({ refKey: 'innerRef' })}
+          styles={styles.list}
+          aria-hidden={!isOpen}
+          items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
+        />
+      </this.Wrapper>
     )
   }
 
@@ -465,6 +468,10 @@ export default class Dropdown extends AutoControlledComponent<
           )
         })
   }
+
+  Wrapper = ({ children }) => (
+    <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
+  )
 
   private stateReducer = (
     state: DownshiftState<DropdownListItem>,

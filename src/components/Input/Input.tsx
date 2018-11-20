@@ -37,6 +37,13 @@ export interface InputProps extends UIComponentProps<any, any>, ChildrenComponen
   /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
 
+  /**
+   * Ref callback with the input wrapper DOM node.
+   *
+   * @param {JSX.Element} node - input wrapper DOM node.
+   */
+  innerRef?: (node: HTMLElement) => void
+
   /** An input can be used inline with text. */
   inline?: boolean
 
@@ -123,6 +130,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
+    innerRef: PropTypes.func,
     inputRef: PropTypes.func,
     inline: PropTypes.bool,
     onChange: PropTypes.func,

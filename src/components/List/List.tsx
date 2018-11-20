@@ -5,7 +5,6 @@ import * as PropTypes from 'prop-types'
 
 import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
-import Ref from '../Ref/Ref'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
@@ -24,15 +23,15 @@ export interface ListProps extends UIComponentProps<any, any>, ChildrenComponent
   /** Toggle debug mode */
   debug?: boolean
 
-  /** Shorthand array of props for ListItem. */
-  items?: ShorthandValue[]
-
   /**
    * Ref callback with the list DOM node.
    *
    * @param {JSX.Element} node - list DOM node.
    */
-  listRef?: (node: HTMLElement) => void
+  innerRef?: (node: HTMLElement) => void
+
+  /** Shorthand array of props for ListItem. */
+  items?: ShorthandValue[]
 
   /** A selection list formats list items as possible choices. */
   selection?: boolean
@@ -72,7 +71,7 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
-    listRef: PropTypes.func,
+    innerRef: PropTypes.func,
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
@@ -119,20 +118,14 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     const { children } = this.props
 
     return (
-      <Ref
-        innerRef={(listNode: HTMLElement) => {
-          _.invoke(this.props, 'listRef', listNode)
-        }}
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
       >
-        <ElementType
-          {...accessibility.attributes.root}
-          {...accessibility.keyHandlers.root}
-          {...rest}
-          className={classes.root}
-        >
-          {childrenExist(children) ? children : this.renderItems()}
-        </ElementType>
-      </Ref>
+        {childrenExist(children) ? children : this.renderItems()}
+      </ElementType>
     )
   }
 
