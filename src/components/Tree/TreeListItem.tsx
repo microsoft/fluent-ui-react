@@ -113,7 +113,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
       children.push(
         Tree.create('', {
           defaultProps: {
-            treedata: subtree,
+            items: subtree,
             className: 'sub-tree',
             isSubTree: true,
             style: {

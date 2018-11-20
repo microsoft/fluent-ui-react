@@ -32,7 +32,7 @@ class Tree extends UIComponent<TreeProps, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    treedata: PropTypes.array,
+    items: PropTypes.array,
     isSubTree: PropTypes.boolean,
   }
 
