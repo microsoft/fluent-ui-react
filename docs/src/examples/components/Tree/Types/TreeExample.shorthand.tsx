@@ -25,6 +25,6 @@ const treeData = [
   },
 ]
 
-const TreeExampleShorthand = () => <Tree treedata={treeData} />
+const TreeExampleShorthand = () => <Tree items={treeData} />
 
 export default TreeExampleShorthand

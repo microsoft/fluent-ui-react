@@ -30,7 +30,7 @@ export interface TreeTitleProps
 class TreeTitle extends UIComponent<TreeTitleProps, any> {
   static create: Function
 
-  static className = 'tree-list__title'
+  static className = 'ui-tree-list__title'
 
   static displayName = 'TreeTitle'
 

@@ -12,7 +12,7 @@ import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropIn
 
 export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** Shorthand array of props for Tree. */
-  treedata: {
+  items: {
     title: ShorthandValue
     onItemClick?: ComponentEventHandler<TreeProps>
     subtree?: any[]
@@ -25,7 +25,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
 class Tree extends UIComponent<TreeProps, any> {
   static create: Function
 
-  static className = 'tree-list'
+  static className = 'ui-tree-list'
 
   static displayName = 'Tree'
 
@@ -42,9 +42,8 @@ class Tree extends UIComponent<TreeProps, any> {
   }
 
   renderContent(styles, variables) {
-    const { treedata } = this.props
-    if (!treedata) return []
-    return _.map(treedata, obj => {
+    const { items } = this.props
+    return _.map(items, obj => {
       const subtree = obj.subtree
       return TreeListItem.create(obj.title, {
         defaultProps: {

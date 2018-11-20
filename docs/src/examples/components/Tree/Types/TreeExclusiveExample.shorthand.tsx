@@ -68,6 +68,6 @@ const treeData = [
   },
 ]
 
-const TreeExclusiveExample = () => <Tree treedata={treeData} />
+const TreeExclusiveExample = () => <Tree items={treeData} />
 
 export default TreeExclusiveExample
