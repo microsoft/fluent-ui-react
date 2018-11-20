@@ -4,7 +4,11 @@ import * as React from 'react'
 
 import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import { treeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
@@ -16,6 +20,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
     title: ShorthandValue
     onItemClick?: ComponentEventHandler<TreeProps>
     subtree?: any[]
+    renderTitle?: ShorthandRenderFunction
   }[]
 
   /** Whether the tree is a subtree. */
@@ -53,6 +58,7 @@ class Tree extends UIComponent<TreeProps, any> {
           titleStyles: styles.title,
           titleVariables: variables.title,
           onItemClick: obj.onItemClick,
+          renderTitle: obj.renderTitle,
         },
       })
     })

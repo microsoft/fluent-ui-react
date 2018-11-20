@@ -1,38 +1,25 @@
 import * as React from 'react'
 import { Tree, Icon } from '@stardust-ui/react'
+const titleRenderer = (Component, props, children) => {
+  return (
+    <Component {...props}>
+      <div>
+        <Icon name={props.active ? 'arrow down' : 'arrow right'} />
+        <span>{props.content}</span>
+      </div>
+    </Component>
+  )
+}
+
 const treeData = [
   {
-    title: {
-      content: (
-        <div>
-          <Icon name="arrow right" />
-          <span>one</span>
-        </div>
-      ),
-      activeContent: (
-        <div>
-          <Icon name="arrow down" />
-          <span>one</span>
-        </div>
-      ),
-    },
+    title: 'one',
+    renderTitle: titleRenderer,
     key: '1',
     subtree: [
       {
-        title: {
-          content: (
-            <div>
-              <Icon name="arrow right" />
-              <span>one one</span>
-            </div>
-          ),
-          activeContent: (
-            <div>
-              <Icon name="arrow down" />
-              <span>one one</span>
-            </div>
-          ),
-        },
+        title: 'one one',
+        renderTitle: titleRenderer,
         key: '2',
         subtree: [
           {
@@ -44,20 +31,8 @@ const treeData = [
     ],
   },
   {
-    title: {
-      content: (
-        <div>
-          <Icon name="arrow right" />
-          <span>two</span>
-        </div>
-      ),
-      activeContent: (
-        <div>
-          <Icon name="arrow down" />
-          <span>two</span>
-        </div>
-      ),
-    },
+    title: 'two',
+    renderTitle: titleRenderer,
     key: '4',
     subtree: [
       {

@@ -7,7 +7,11 @@ import TreeTitle from './TreeTitle'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
-import { ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
@@ -45,6 +49,16 @@ export interface TreeListItemProps
 
   /** Shorthand for content when the item is in an open state. */
   activeContent?: ShorthandValue
+
+  /**
+   * A custom render iterator for rendering each Accordion panel title.
+   * The default component, props, and children are available for each panel title.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderTitle?: ShorthandRenderFunction
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
@@ -67,6 +81,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     subtree: PropTypes.array,
     active: PropTypes.bool,
     activeContent: PropTypes.any,
+    renderTitle: PropTypes.func,
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
 
@@ -86,7 +101,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   })
 
   renderContent(styles, variables) {
-    const { subtree, content, titleStyles, titleVariables } = this.props
+    const { subtree, content, titleStyles, titleVariables, renderTitle } = this.props
     let { activeContent } = this.props
     const { active } = this.state
     if (_.isUndefined(activeContent)) {
@@ -94,19 +109,17 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     }
     const children = []
     children.push(
-      TreeTitle.create(
-        { content: active ? activeContent : content },
-        {
-          defaultProps: {
-            href: '#',
-            styles: titleStyles,
-            variables: titleVariables,
-            active,
-            hasSubtree: subtree,
-          },
-          overrideProps: this.handleItemOverrides,
+      TreeTitle.create(content, {
+        defaultProps: {
+          href: '#',
+          styles: titleStyles,
+          variables: titleVariables,
+          active,
+          hasSubtree: !!(subtree && subtree.length),
         },
-      ),
+        render: renderTitle,
+        overrideProps: this.handleItemOverrides,
+      }),
     )
     subtree &&
       active &&
