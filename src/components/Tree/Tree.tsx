@@ -34,6 +34,9 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   renderTitle?: ShorthandRenderFunction
 }
 
+/**
+ * A tree allows users to display nested trees.
+ */
 class Tree extends UIComponent<TreeProps> {
   static create: Function
 
@@ -46,7 +49,7 @@ class Tree extends UIComponent<TreeProps> {
     ...childrenComponentPropTypes,
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
-    nested: PropTypes.boolean,
+    nested: PropTypes.bool,
     renderTitle: PropTypes.func,
   }
 
