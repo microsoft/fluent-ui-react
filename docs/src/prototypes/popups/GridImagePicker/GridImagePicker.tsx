@@ -25,6 +25,7 @@ const inputStyles = {
 class GridImagePicker extends React.Component<GridPickerProps, any> {
   static defaultProps = {
     as: 'ul',
+    gridColumns: 5,
   }
 
   render() {

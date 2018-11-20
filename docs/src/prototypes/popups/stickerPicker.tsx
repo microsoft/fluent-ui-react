@@ -24,6 +24,7 @@ const tabListItemsContent = [
 
 class StickerPicker extends React.Component {
   state = { activeMenuIndex: 0 }
+  gridPickerRef = React.createRef<GridImagePicker>()
 
   getStickersData = () => {
     const index = arrayOfStickerImagesNames[this.state.activeMenuIndex]
@@ -34,8 +35,8 @@ class StickerPicker extends React.Component {
 
   onMenuItemClick = (e, props) => {
     this.setState({ activeMenuIndex: props.index }, () => {
-      const popupElement = ReactDOM.findDOMNode(this) as HTMLElement
-      const input = popupElement.querySelector('input')
+      const gridPickerElement = ReactDOM.findDOMNode(this.gridPickerRef.current) as HTMLElement
+      const input = gridPickerElement && gridPickerElement.querySelector('input')
       input && input.focus()
     })
   }
@@ -69,7 +70,7 @@ class StickerPicker extends React.Component {
                 />
               </div>
               <div className="right-rail">
-                <GridImagePicker items={this.getStickersData()} />
+                <GridImagePicker ref={this.gridPickerRef} items={this.getStickersData()} />
               </div>
             </div>
           ),
