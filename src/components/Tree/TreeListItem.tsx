@@ -106,11 +106,7 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
         Tree.create('', {
           defaultProps: {
             items,
-            className: 'sub-tree',
             isSubTree: true,
-            style: {
-              display: active ? 'block' : 'none',
-            },
           },
         }),
       )
