@@ -3,7 +3,6 @@
 // ========================================================
 
 import * as React from 'react'
-import { ComponentSlotClasses } from '../src/themes/types'
 
 export type Extendable<T> = T & {
   [key: string]: any
@@ -18,16 +17,6 @@ export type OneOrArray<T> = T | T[]
 export type ObjectOf<T> = { [key: string]: T }
 
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
-
-export interface RenderStardustResultConfig {
-  classes: ComponentSlotClasses
-  rtl: boolean
-}
-
-export interface CreateStardustComponentConfig<P> {
-  displayName?: string
-  render: (config: RenderStardustResultConfig, props: P) => React.ReactNode
-}
 
 // ========================================================
 // Props

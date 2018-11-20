@@ -126,4 +126,7 @@ export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/
 //
 export { default as mergeThemes } from './lib/mergeThemes'
 export { createComponent } from './lib'
-export { RenderStardustResultConfig, CreateStardustComponentConfig } from '../types/utils'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'
