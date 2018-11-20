@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Provider, Text } from '@stardust-ui/react'
+import { Button, Divider, Icon, Provider, Text, Transition } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -206,6 +206,82 @@ export default () => (
     <p>
       You can style all components in your app by defining component styles on a{' '}
       <NavLink to="components/provider">Provider</NavLink> at the root of your app.
+    </p>
+
+    <Header as="h2" content="Animations" />
+    <p>
+      Another important part of the theming in Stardust are the <code>animations</code>. You can
+      define the animations in a very similar way as you would define them using css, by providing a
+      keyframe, as well as the other animation properties: duration, delay, timingFunction etc.
+    </p>
+
+    <p>
+      You can define the <code>animations</code> in a part of your render tree using the{' '}
+      <NavLink to="components/provider">Provider</NavLink>.
+    </p>
+    <p>
+      This is done with the Provider's <code>theme</code> prop. The animations are then are applied
+      based on their name by using the <NavLink to="components/transition">Transition</NavLink>{' '}
+      component, or the <code>animation</code> property available on all UI component. Here's how we
+      can define the <code>animations</code> and use them in our components.
+    </p>
+    <ExampleSnippet
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <div>`,
+        `    <Transition animationName="spinner"><Icon name="user" circular /></Transition>`,
+        `    <Icon name="book" animation="spinner" circular/>`,
+        `  </div>`,
+        `</Provider>`,
+      ].join('\n')}
+      render={() => (
+        <div>
+          <Transition animationName="spinner">
+            <Icon name="user" circular />
+          </Transition>
+          <Icon name="book" animation="spinner" circular />
+        </div>
+      )}
+    />
+
+    <p>
+      You can also override some of the defined <code>animation</code> properties, by providing
+      additional properties to the <code>Transition</code> component, or the <code>animation</code>{' '}
+      prop.
+    </p>
+
+    <ExampleSnippet
+      value={[
+        `<Transition animationName="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Transition>`,
+        `<Icon name="book" animation="spinner" delay="5s" duration="2s" circular/>`,
+      ].join('\n')}
+      render={() => (
+        <div>
+          <Transition animationName="spinner" delay="2s" duration="1s">
+            <Icon name="user" circular />
+          </Transition>
+          <Icon name="book" animation="spinner" delay="5s" duration="2s" circular />
+        </div>
+      )}
+    />
+
+    <p>
+      For more details, please see the examples in the{' '}
+      <NavLink to="components/transition">Transition</NavLink> component, or the structure of the{' '}
+      <code>animation</code> property in any of the UI components.
     </p>
 
     <br />
