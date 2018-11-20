@@ -30,9 +30,9 @@ const items = [
   },
 ]
 
-const titleRenderer = (Component, { active, content, ...rest }) => (
+const titleRenderer = (Component, { content, open, ...rest }) => (
   <Component {...rest}>
-    <Icon name={active ? 'arrow down' : 'arrow right'} />
+    <Icon name={open ? 'arrow down' : 'arrow right'} />
     <span>{content}</span>
   </Component>
 )
