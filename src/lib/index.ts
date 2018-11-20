@@ -33,4 +33,4 @@ export { default as leven } from './leven'
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
-export { default as createStardustComponent } from './createStardustComponent'
+export { default as createComponent } from './createStardustComponent'

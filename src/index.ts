@@ -125,4 +125,4 @@ export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
-export { createStardustComponent } from './lib'
+export { createComponent } from './lib'

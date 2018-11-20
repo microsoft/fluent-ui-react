@@ -1,4 +1,4 @@
-import createComponent from './createComponent'
+import createComponentInternal from './createComponent'
 import * as React from 'react'
 import * as _ from 'lodash'
 import {
@@ -26,11 +26,11 @@ export interface CreateStardustComponentConfig<P> {
   render: RenderStardustComponentCallback<P>
 }
 
-const createStardustComponent = <P extends {} = {}, S extends {} = {}>({
+const createComponent = <P extends {} = {}, S extends {} = {}>({
   displayName = 'StardustComponent',
   render,
 }: CreateStardustComponentConfig<P>): React.SFC<P> => {
-  const StardustComponent: React.SFC<P> = createComponent({
+  const StardustComponent: React.SFC<P> = createComponentInternal({
     displayName,
     render(config, props) {
       // TODO add here everything that the client may expect
@@ -43,4 +43,4 @@ const createStardustComponent = <P extends {} = {}, S extends {} = {}>({
   return StardustComponent
 }
 
-export default createStardustComponent
+export default createComponent
