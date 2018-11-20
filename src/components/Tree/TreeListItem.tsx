@@ -7,11 +7,7 @@ import TreeTitle from './TreeTitle'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
 import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
-import {
-  ComponentEventHandler,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
+import { ComponentEventHandler, ShorthandRenderFunction } from '../../../types/utils'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
@@ -47,9 +43,6 @@ export interface TreeListItemProps
    */
   onItemClick?: ComponentEventHandler<TreeListItemProps>
 
-  /** Shorthand for content when the item is in an open state. */
-  activeContent?: ShorthandValue
-
   /**
    * A custom render iterator for rendering each Accordion panel title.
    * The default component, props, and children are available for each panel title.
@@ -80,7 +73,6 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     titleVariables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     items: PropTypes.array,
     active: PropTypes.bool,
-    activeContent: PropTypes.any,
     renderTitle: PropTypes.func,
     onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
   }
@@ -102,11 +94,8 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
 
   renderContent(styles, variables) {
     const { items, content, titleStyles, titleVariables, renderTitle } = this.props
-    let { activeContent } = this.props
     const { active } = this.state
-    if (_.isUndefined(activeContent)) {
-      activeContent = content
-    }
+
     const children = []
     children.push(
       TreeTitle.create(content, {
