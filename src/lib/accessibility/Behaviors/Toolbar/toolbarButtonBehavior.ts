@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 /**
  * @description
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
+ *
  * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'button' to 'anchor' component's part.

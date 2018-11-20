@@ -3,6 +3,7 @@ import { Accessibility } from '../../types'
 /**
  * @description
  * The 'listitem' role is used to identify an element that is a single item in a list.
+ *
  * @specification
  * Adds role='listitem'.
  */

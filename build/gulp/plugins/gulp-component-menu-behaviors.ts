@@ -14,7 +14,7 @@ type BehaviorMenuItem = {
   type: string
   variations: {
     name: string
-    text: string
+    description: string
     specification: string
   }
 }
@@ -44,15 +44,15 @@ export default () => {
       const behaviorVariantName = file.basename
       const behaviorName = path.basename(dir)
 
-      let description
+      let descriptionText
       let specificationText
       const fileContent = fs.readFileSync(file.path).toString()
       const blockComments = extract(fileContent).filter(comment => comment.type === 'BlockComment') // filtering only block comments
 
-      // getting object that describes '@description' and '@specification' part of the comment's text
+      // getting specification of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
-        description = getTextFromCommentToken(commentTokens, 'description')
+        descriptionText = getTextFromCommentToken(commentTokens, 'description')
         specificationText = getTextFromCommentToken(commentTokens, 'specification')
       }
 
@@ -61,7 +61,7 @@ export default () => {
         type: componentType,
         variations: {
           name: behaviorVariantName,
-          text: description,
+          description: descriptionText,
           specification: specificationText,
         },
       })

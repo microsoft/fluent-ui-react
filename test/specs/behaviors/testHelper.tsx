@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { Accessibility } from '../../../src/lib/accessibility/types'
 
-interface FilteredDescription {
+interface FilteredSpecification {
   behaviorName: string
   testMethod: (arg: TestMethod) => void
   params: RegExpExecArray
@@ -17,7 +17,7 @@ export interface TestDefinition {
   testMethod: (arg: TestMethod) => void
 }
 
-const excludedFiles = [
+const skipSpecChecksForFiles = [
   'chatBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'chatMessageBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
@@ -28,7 +28,7 @@ export class TestHelper {
   private behaviors: Map<string, Accessibility> = new Map<string, Accessibility>()
   private testDefinitions: TestDefinition[] = []
 
-  private filteredDescriptionWithAssignedTestMethod: FilteredDescription[] = []
+  private filteredSpecificationWithAssignedTestMethod: FilteredSpecification[] = []
 
   public addBehavior(name: string, behavior: Accessibility) {
     this.behaviors.set(name, behavior)
@@ -47,7 +47,7 @@ export class TestHelper {
   public run(behaviorMenuItems: any) {
     this.findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems)
 
-    const groupedByBehavior = _(this.filteredDescriptionWithAssignedTestMethod)
+    const groupedByBehavior = _(this.filteredSpecificationWithAssignedTestMethod)
       .groupBy('behaviorName')
       .value()
     _.each(groupedByBehavior, (value, key) => {
@@ -67,37 +67,41 @@ export class TestHelper {
   public findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
-        if (!variant.specification && !variant.text) {
-          this.createMissingDescriptionTest(variant.name)
+        if (!variant.specification && !variant.description) {
+          this.failDescriptionPresenceTest(variant.name)
         }
-        if (!variant.specification) {
-          this.verifySpecificationTag(variant.name)
+        if (!variant.specification && !skipSpecChecksForFiles.find(item => item === variant.name)) {
+          this.failSpecificationPresenceTest(variant.name)
         } else {
-          variant.specification.split('\n').forEach(singleLineText => {
-            this.iterateRegexDefinitions(singleLineText, variant.name)
+          variant.specification.split('\n').forEach(singleSpecLine => {
+            if (singleSpecLine) {
+              this.iterateRegexDefinitions(singleSpecLine, variant.name)
+            }
           })
         }
       })
     })
   }
 
-  public iterateRegexDefinitions(singleLineText: string, behaviorName: string) {
-    let regMatched = false
+  public iterateRegexDefinitions(singleSpecLine: string, behaviorName: string) {
+    let regexMatched = false
     this.testDefinitions.forEach(testDefinition => {
       const regex = new RegExp(testDefinition.regexp)
-      const result = regex.exec(singleLineText)
+      const result = regex.exec(singleSpecLine)
       if (result) {
-        regMatched = true
-        this.filteredDescriptionWithAssignedTestMethod.push({
+        regexMatched = true
+        this.filteredSpecificationWithAssignedTestMethod.push({
           behaviorName,
           testMethod: testDefinition.testMethod,
           params: result,
         })
       }
     })
-    if (!regMatched) {
-      test(`${behaviorName} \n LINE: ${singleLineText} `, () => {
-        fail(`Line mentioned in test name doesn't match any regex expressions.`)
+    if (!regexMatched) {
+      test(`${behaviorName} \n LINE: ${singleSpecLine} `, () => {
+        fail(
+          `Line mentioned in **behavior specification** doesn't match any regex expression of validation tests.`,
+        )
       })
     }
   }
@@ -106,7 +110,7 @@ export class TestHelper {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
     if (!importedBehavior) {
-      throw 'Behavior file was not found, probably was not imported. Import file and add behavior.'
+      throw 'Accessibility behavior file was not found, probably was not imported. Import file and add behavior.'
     }
     return importedBehavior
   }
@@ -118,19 +122,17 @@ export class TestHelper {
     return stringToConvert
   }
 
-  private verifySpecificationTag(behaviorFileName: string) {
-    if (!excludedFiles.find(item => item === behaviorFileName)) {
-      test(`${behaviorFileName} : File is missing specification tag.`, () => {
-        fail(
-          `File should have specification tag. If tests are written in separate file then add behavior file name into 'excludedFiles'.`,
-        )
-      })
-    }
+  private failSpecificationPresenceTest(behaviorFileName: string) {
+    test(`${behaviorFileName} : Accessibility behavior is missing specification tag.`, () => {
+      fail(
+        `Accessibility behavior should have specification tag. If tests are written in separate file then add behavior file name into 'skipSpecChecksForFiles'.`,
+      )
+    })
   }
 
-  private createMissingDescriptionTest(behaviorFileName: string) {
-    test(`${behaviorFileName} : File is missing description.`, () => {
-      fail(`File should have description.`)
+  private failDescriptionPresenceTest(behaviorFileName: string) {
+    test(`${behaviorFileName} : Accessibility behavior is missing description.`, () => {
+      fail('Accessibility behavior should have description.')
     })
   }
 }

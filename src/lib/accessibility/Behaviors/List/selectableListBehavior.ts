@@ -4,6 +4,7 @@ import { Accessibility } from '../../types'
 /**
  * @description
  * The listbox role is used to identify an element that creates a list from which a user may select one or more items.
+ *
  * @specification
  * Adds role='listbox'.
  */

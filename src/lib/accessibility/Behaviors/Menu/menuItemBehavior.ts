@@ -5,6 +5,7 @@ import * as keyboardKey from 'keyboard-key'
 /**
  * @description
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
+ *
  * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'menuitem' to 'anchor' component's part.
