@@ -41,7 +41,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
   }
 
   render() {
-    const { as, gridColumns, inputIcon, inputPlaceholder } = this.props
+    const { as: ElementType, gridColumns, inputIcon, inputPlaceholder } = this.props
 
     return (
       <>
@@ -53,7 +53,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
           inputRef={this.setInputNode}
         />
         <Grid
-          as={as}
+          as={ElementType}
           accessibility={gridBehavior}
           columns={gridColumns}
           style={gridStyles}
