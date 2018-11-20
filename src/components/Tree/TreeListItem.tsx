@@ -6,7 +6,11 @@ import Tree from './Tree'
 import TreeTitle from './TreeTitle'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import { ComponentEventHandler, ShorthandRenderFunction } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
@@ -45,6 +49,9 @@ export interface TreeListItemProps
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderTitle?: ShorthandRenderFunction
+
+  /** Shorthand for TreeTitle. */
+  title?: ShorthandValue
 }
 
 class TreeListItem extends UIComponent<TreeListItemProps, any> {
@@ -62,10 +69,11 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
-    items: PropTypes.array,
+    items: customPropTypes.collectionShorthand,
     open: PropTypes.bool,
     renderTitle: PropTypes.func,
-    onItemClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
+    onItemClick: PropTypes.func,
+    title: customPropTypes.itemShorthand,
   }
 
   public static defaultProps = {
@@ -84,12 +92,12 @@ class TreeListItem extends UIComponent<TreeListItemProps, any> {
   })
 
   renderContent(styles, variables) {
-    const { items, content, renderTitle } = this.props
+    const { items, title, renderTitle } = this.props
     const { open } = this.state
 
     return (
       <>
-        {TreeTitle.create(content, {
+        {TreeTitle.create(title, {
           defaultProps: {
             href: '#',
             open,

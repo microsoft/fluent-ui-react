@@ -4,15 +4,12 @@ import * as React from 'react'
 
 import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import {
-  ComponentEventHandler,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
+import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { treeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import * as customPropTypes from '../../lib/customPropTypes'
 
 export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /**
@@ -22,12 +19,7 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   accessibility?: Accessibility
 
   /** Shorthand array of props for Tree. */
-  items: {
-    title: ShorthandValue
-    onItemClick?: ComponentEventHandler<TreeProps>
-    items?: any[]
-    renderTitle?: ShorthandRenderFunction
-  }[]
+  items: ShorthandValue[]
 
   /** Whether the tree is a subtree. */
   isSubTree?: boolean
@@ -53,7 +45,7 @@ class Tree extends UIComponent<TreeProps, any> {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     accessibility: PropTypes.func,
-    items: PropTypes.array,
+    items: customPropTypes.collectionShorthand,
     isSubTree: PropTypes.boolean,
     renderTitle: PropTypes.func,
   }
@@ -66,11 +58,9 @@ class Tree extends UIComponent<TreeProps, any> {
   renderContent() {
     const { items, renderTitle } = this.props
 
-    return _.map(items, obj =>
-      TreeListItem.create(obj.title, {
+    return _.map(items, item =>
+      TreeListItem.create(item, {
         defaultProps: {
-          items: obj.items,
-          onItemClick: obj.onItemClick,
           renderTitle,
         },
       }),
