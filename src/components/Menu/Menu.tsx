@@ -16,6 +16,7 @@ export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponent
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
+   * @available toolbarBehavior, tabListBehavior
    * */
   accessibility?: Accessibility
 

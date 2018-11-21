@@ -12,6 +12,7 @@ export interface GridProps extends UIComponentProps<any, any>, ChildrenComponent
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
+   * @available gridBehavior
    * */
   accessibility?: Accessibility
 

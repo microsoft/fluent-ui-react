@@ -36,6 +36,7 @@ export interface PopupProps extends ChildrenComponentProps, ContentComponentProp
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
+   * @available popupFocusTrapBehavior, dialogBehavior
    * */
   accessibility?: Accessibility
 
