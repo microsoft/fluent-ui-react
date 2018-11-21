@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 import * as _ from 'lodash'
 
 /**
- * @description
+ * @specification
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  */
 

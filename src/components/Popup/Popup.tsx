@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createPortal } from 'react-dom'
 import * as PropTypes from 'prop-types'
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import {
@@ -19,6 +19,8 @@ import computePopupPlacement, { Alignment, Position } from './positioningHelper'
 import PopupContent from './PopupContent'
 
 import { popupBehavior } from '../../lib/accessibility'
+import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
+
 import {
   Accessibility,
   AccessibilityActionHandlers,
@@ -172,8 +174,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     this.outsideClickSubscription.unsubscribe()
   }
 
-  public renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
-    const popupContent = this.renderPopupContent(rtl, accessibility)
+  public renderComponent({
+    classes,
+    rtl,
+    accessibility,
+  }: RenderResultConfig<PopupProps>): React.ReactNode {
+    const popupContent = this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
       <>
@@ -212,7 +218,11 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 
-  private renderPopupContent(rtl: boolean, accessibility: AccessibilityBehavior): JSX.Element {
+  private renderPopupContent(
+    popupPositionClasses: string,
+    rtl: boolean,
+    accessibility: AccessibilityBehavior,
+  ): JSX.Element {
     const { align, position } = this.props
     const { target } = this.state
 
@@ -223,18 +233,41 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         <Popper
           placement={placement}
           referenceElement={target}
-          children={this.renderPopperChildren.bind(this, rtl, accessibility)}
+          children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
         />
       )
     )
   }
 
   private renderPopperChildren = (
+    popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
     { ref, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content } = this.props
+
+    const popupContentAttributes = {
+      ...(rtl && { dir: 'rtl' }),
+      ...accessibility.attributes.popup,
+      ...accessibility.keyHandlers.popup,
+
+      className: popupPositionClasses,
+      style: popupPlacementStyles,
+    }
+
+    const focusTrapProps = {
+      ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
+      ...popupContentAttributes,
+    } as FocusTrapZoneProps
+
+    const popupContent = Popup.Content.create(content, {
+      /**
+       * if there is no focus trap wrapper, we should apply
+       * HTML attributes and positioning to popup content directly
+       */
+      defaultProps: accessibility.focusTrap ? {} : popupContentAttributes,
+    })
 
     return (
       <Ref
@@ -243,14 +276,11 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           this.popupDomElement = domElement
         }}
       >
-        {Popup.Content.create(content, {
-          defaultProps: {
-            ...(rtl && { dir: 'rtl' }),
-            style: popupPlacementStyles,
-            ...accessibility.attributes.popup,
-            ...accessibility.keyHandlers.popup,
-          },
-        })}
+        {accessibility.focusTrap ? (
+          <FocusTrapZone {...focusTrapProps}>{popupContent}</FocusTrapZone>
+        ) : (
+          popupContent
+        )}
       </Ref>
     )
   }

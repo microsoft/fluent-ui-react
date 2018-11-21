@@ -121,7 +121,6 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
           !renderImage &&
           Label.create(label || {}, {
             defaultProps: {
-              as: 'div',
               content: getInitials(name),
               circular: true,
               title: name,
@@ -144,7 +143,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   }
 }
 
-Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
+Avatar.create = createShorthandFactory(Avatar, 'name')
 
 export default Avatar
 

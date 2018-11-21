@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, RenderResultConfig, UIComponent } from '../../lib'
-import { createSlot } from '../Slot/Slot'
+import Slot from '../Slot/Slot'
 import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import {
   UIComponentProps,
@@ -63,7 +63,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children)
           ? children
-          : createSlot(content, {
+          : Slot.create(content, {
               styles: styles.content,
               variables: variables.content,
               render: renderContent,
@@ -73,6 +73,6 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   }
 }
 
-ChatItem.create = createShorthandFactory(ChatItem, content => ({ content }))
+ChatItem.create = createShorthandFactory(ChatItem, 'content')
 
 export default ChatItem
