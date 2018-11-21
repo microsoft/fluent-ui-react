@@ -171,13 +171,10 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
 
     // Solve the next state for autoControlledProps
     const newState = autoControlledProps.reduce((acc, prop) => {
-      const isNextUndefined = _.isUndefined(nextProps[prop])
-      const propWasRemoved = !_.isUndefined(this.props[prop]) && isNextUndefined
+      const isNextDefined = !_.isUndefined(nextProps[prop])
 
       // if next is defined then use its value
-      if (!isNextUndefined) acc[prop] = nextProps[prop]
-      // reinitialize state for props just removed / set undefined
-      else if (propWasRemoved) acc[prop] = getAutoControlledStateValue(prop, nextProps)
+      if (isNextDefined) acc[prop] = nextProps[prop]
 
       return acc
     }, {})
