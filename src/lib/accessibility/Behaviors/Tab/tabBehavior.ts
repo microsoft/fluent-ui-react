@@ -4,7 +4,7 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as _ from 'lodash'
 
 /**
- * @description
+ * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'tab' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.

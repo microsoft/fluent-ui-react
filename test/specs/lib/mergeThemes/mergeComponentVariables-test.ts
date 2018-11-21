@@ -49,7 +49,7 @@ describe('mergeComponentVariables', () => {
 
     const merged = mergeComponentVariables(target, source)
 
-    const siteVariables = { one: 'one', two: 'two' }
+    const siteVariables = { one: 'one', two: 'two', fontSizes: {} }
 
     expect(merged(siteVariables)).toMatchObject({
       one: 'one',
