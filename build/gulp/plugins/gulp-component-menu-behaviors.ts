@@ -14,8 +14,14 @@ type BehaviorMenuItem = {
   type: string
   variations: {
     name: string
-    text: string
+    description: string
+    specification: string
   }
+}
+
+const getTextFromCommentToken = (commentTokens, tokenTitle): string => {
+  const token = commentTokens.find(token => token.title === tokenTitle)
+  return token ? token.description : ''
 }
 
 export default () => {
@@ -37,28 +43,25 @@ export default () => {
       const componentType = _.lowerFirst(path.basename(path.dirname(dir)).replace(/s$/, ''))
       const behaviorVariantName = file.basename
       const behaviorName = path.basename(dir)
-
-      let description
       const fileContent = fs.readFileSync(file.path).toString()
       const blockComments = extract(fileContent).filter(comment => comment.type === 'BlockComment') // filtering only block comments
-      const emptyDescriptionText = 'Behavior file has no description.'
+      const variation = {
+        name: behaviorVariantName,
+        description: '',
+        specification: '',
+      }
 
-      // getting object that describes '@description' part of the comment's text
+      // getting description and specification of the comment's text
       if (!_.isEmpty(blockComments)) {
         const commentTokens = doctrine.parse(blockComments[0].raw, { unwrap: true }).tags
-        const descriptionToken = commentTokens.find(token => token.title === 'description')
-        description = descriptionToken ? descriptionToken.description : emptyDescriptionText
-      } else {
-        description = emptyDescriptionText
+        variation.description = getTextFromCommentToken(commentTokens, 'description')
+        variation.specification = getTextFromCommentToken(commentTokens, 'specification')
       }
 
       result.push({
         displayName: behaviorName,
         type: componentType,
-        variations: {
-          name: behaviorVariantName,
-          text: description,
-        },
+        variations: variation,
       })
       cb()
     } catch (err) {
