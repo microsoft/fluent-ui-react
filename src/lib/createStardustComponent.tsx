@@ -9,12 +9,12 @@ export interface RenderStardustResultConfig {
 }
 
 export interface CreateStardustComponentConfig<P> {
-  displayName?: string
+  displayName: string
   render: (props: P & { stardust: RenderStardustResultConfig }) => React.ReactNode
 }
 
 const createComponent = <P extends {} = {}, S extends {} = {}>({
-  displayName = 'StardustComponent',
+  displayName,
   render,
 }: CreateStardustComponentConfig<P>): React.SFC<P> => {
   return createComponentInternal<P, S>({
