@@ -1,4 +1,4 @@
-interface ISourceCodeData {
+interface SourceCodeData {
   path: string
   code: string
   originalCode: string
@@ -9,24 +9,15 @@ export enum SourceCodeType {
   shorthand = 'shorthand',
 }
 
-export interface ISourceCodeManager {
-  currentCode: string
-  currentPath: string
-  codeType: SourceCodeType
-  originalCodeHasChanged: boolean
-  isCodeValidForType(codeType: SourceCodeType): boolean
-  resetToOriginalCode: () => void
-}
-
 export const examplePathPatterns: { [key in SourceCodeType]: string } = {
   normal: '',
   shorthand: '.shorthand',
 }
 
-class SourceCodeManager implements ISourceCodeManager {
-  private readonly data: { [key in SourceCodeType]: ISourceCodeData } = {
-    normal: null,
-    shorthand: null,
+class SourceCodeManager {
+  private readonly data: { [key in SourceCodeType]: SourceCodeData } = {
+    normal: {} as SourceCodeData,
+    shorthand: {} as SourceCodeData,
   }
 
   public codeType: SourceCodeType
@@ -66,17 +57,23 @@ class SourceCodeManager implements ISourceCodeManager {
     this.currentCodeData.code = this.currentCodeData.originalCode
   }
 
-  private get currentCodeData(): ISourceCodeData {
+  private get currentCodeData(): SourceCodeData {
     return this.data[this.codeType]
   }
 
-  private set currentCodeData(codeData: ISourceCodeData) {
+  private set currentCodeData(codeData: SourceCodeData) {
     this.data[this.codeType] = codeData
   }
 
   private setDataForCodeType(sourceCodeType: SourceCodeType): void {
     const path = this.sourceCodePath + examplePathPatterns[sourceCodeType]
     const code = this.safeRequire(path)
+
+    if (!code) {
+      // Returning as there are no examples provided for this type
+      // - e.g. there is no children API example for component
+      return
+    }
 
     this.data[sourceCodeType] = {
       path,
@@ -85,13 +82,13 @@ class SourceCodeManager implements ISourceCodeManager {
     }
   }
 
-  private safeRequire = (path: string): string => {
+  private safeRequire = (path: string): string | undefined => {
     try {
       return require(`!raw-loader!../../../examples/${path}`)
     } catch (e) {
-      return null
+      return undefined
     }
   }
 }
 
-export default (path: string): ISourceCodeManager => new SourceCodeManager(path)
+export default SourceCodeManager

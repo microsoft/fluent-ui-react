@@ -3,20 +3,19 @@ import { pxToRem } from '../../lib'
 //
 // VARIABLES
 //
+export const htmlFontSize = '10px' // what 1rem represents
 
-export const htmlFontSize = '14px' // what 1rem represents
-
-const blackRgbaFormat = alpha => `rgba(37, 36, 36, ${alpha})`
-export const black = blackRgbaFormat(1)
-export const gray01 = blackRgbaFormat(0.95)
-export const gray02 = blackRgbaFormat(0.75)
-export const gray03 = blackRgbaFormat(0.65)
-export const gray04 = blackRgbaFormat(0.5)
-export const gray06 = blackRgbaFormat(0.3)
-export const gray08 = blackRgbaFormat(0.15)
+//
+// COLORS
+//
+export const black = '#252423'
+export const gray02 = '#484644'
+export const gray03 = '#605E5C'
+export const gray04 = '#979593'
+export const gray06 = '#C8C6C4'
+export const gray08 = '#E1DFDD'
 export const gray09 = '#EDEBE9'
 export const gray10 = '#F3F2F1'
-export const gray12 = blackRgbaFormat(0.05)
 export const gray14 = '#FAF9F8'
 
 export const white = '#FFF'
@@ -37,58 +36,62 @@ export const red = '#C4314B'
 export const red08 = '#F3D6DB'
 export const yellow = '#F8D22A'
 export const green = '#92C353'
+export const green04 = '#237b4b'
+
+//
+// SHADOW LEVELS
+//
+export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
+
+//
+// FONT SIZES
+//
+export const fontSizes = {
+  smaller: pxToRem(10),
+  small: pxToRem(12),
+  medium: pxToRem(14),
+  large: pxToRem(18),
+  larger: pxToRem(24),
+}
+
+//
+// STATUS COLORS
+//
+export const successStatusBackgroundColor = green
+export const successStatusTextColor = white
+export const infoStatusBackgroundColor = 'blue'
+export const infoStatusTextColor = white
+export const warningStatusBackgroundColor = yellow
+export const warningStatusTextColor = white
+export const errorStatusBackgroundColor = red
+export const errorStatusTextColor = white
+export const unknownStatusBackgroundColor = gray04
+export const unknownStatusTextColor = white
+
+//
+// FONT WEIGHTS
+//
+export const fontWeightLight = 200
+export const fontWeightSemilight = 300
+export const fontWeightRegular = 400
+export const fontWeightSemibold = 600
+export const fontWeightBold = 700
+
+//
+// LINE HEIGHTS
+//
+export const lineHeightBase = 1.4286
+export const lineHeightSmall = 1.3333
+export const lineHeightExtraSmall = 1.2
 
 //
 // SEMANTIC ASSIGNMENTS
 //
-
 export const bodyPadding = 0
 export const bodyMargin = 0
-export const bodyFontFamily = '"Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1rem'
+export const bodyFontFamily =
+  '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
+export const bodyFontSize = '1.4rem'
+export const bodyBackground = white
 export const bodyColor = black
-export const bodyLineHeight = pxToRem(20)
-
-//
-// Colors
-//
-export const atMentionTextColor = orange04
-export const disabledTextColor = gray06
-export const errorTextColor = red
-export const mutedTextColor = gray02
-export const successTextColor = green
-export const timestampTextColor = gray04
-
-//
-// Fonts
-//
-export const fontSizeBase = pxToRem(14)
-export const fontSizeSmall = pxToRem(12)
-export const fontSizeExtraSmall = pxToRem(10)
-
-//
-// Line Heights
-//
-export const lineHeightBase = pxToRem(20)
-export const lineHeightSmall = pxToRem(16)
-export const lineHeightExtraSmall = pxToRem(12)
-
-//
-// Text Component
-//
-export const textExtraSmallFontSize = '10pt'
-export const textExtraSmallLineHeight = '12pt'
-export const textSmallFontSize = '12pt'
-export const textSmallLineHeight = '16pt'
-export const textMediumFontSize = '14pt'
-export const textMediumLineHeight = '20pt'
-export const textLargeFontSize = '18pt'
-export const textLargeLineHeight = '24pt'
-export const textExtraLargeFontSize = '24pt'
-export const textExtraLargeLineHeight = '32pt'
-export const textX2FontSize = ''
-export const textX2LineHeight = ''
-export const textX3FontSize = ''
-export const textX3LineHeight = ''
-export const textX4FontSize = ''
-export const textX4LineHeight = ''
+export const bodyLineHeight = lineHeightBase

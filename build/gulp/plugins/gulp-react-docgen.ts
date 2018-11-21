@@ -1,9 +1,9 @@
-import gutil from 'gulp-util'
-import path from 'path'
-import through2 from 'through2'
-import Vinyl from 'vinyl'
+import * as gutil from 'gulp-util'
+import * as path from 'path'
+import * as through2 from 'through2'
+import * as Vinyl from 'vinyl'
 
-import { getComponentInfo } from './util'
+import { getComponentInfo, getBufferChecksum, getInfoChecksum } from './util'
 
 const pluginName = 'gulp-react-docgen'
 
@@ -19,11 +19,18 @@ export default () =>
       return
     }
 
-    try {
-      const contents = getComponentInfo(file.path)
+    const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
+    const nextChecksum = getBufferChecksum(file.contents)
 
+    if (getInfoChecksum(infoFilename) === nextChecksum) {
+      cb(null)
+      return
+    }
+
+    try {
+      const contents = getComponentInfo(file.path, nextChecksum)
       const infoFile = new Vinyl({
-        path: `./${file.basename.replace(/tsx$/, 'info.json')}`,
+        path: `./${infoFilename}`,
         contents: Buffer.from(JSON.stringify(contents, null, 2)),
       })
 

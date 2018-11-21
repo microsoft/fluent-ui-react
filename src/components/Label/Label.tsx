@@ -1,15 +1,72 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  pxToRem,
+  UIComponent,
+} from '../../lib'
 
-import labelRules from './labelRules'
-import labelVariables from './labelVariables'
+import { Icon, Image, Layout } from '../..'
+import { Accessibility } from '../../lib/accessibility/types'
+
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
+
+export interface LabelProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  accessibility?: Accessibility
+
+  /** A label can be circular. */
+  circular?: boolean
+
+  /** Shorthand for primary content. */
+  content?: React.ReactNode
+
+  /** A Label can take the width of its container. */
+  fluid?: boolean
+
+  /** Label can have an icon. */
+  icon?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
+  iconPosition?: 'start' | 'end'
+
+  /** Label can have an icon. */
+  image?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
+  imagePosition?: 'start' | 'end'
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the image slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderImage?: ShorthandRenderFunction
+}
 
 /**
- * A label displays content classification
+ * A label is used to classify content.
  */
-class Label extends UIComponent<any, any> {
+class Label extends UIComponent<Extendable<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function
@@ -17,42 +74,117 @@ class Label extends UIComponent<any, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** A label can be circular. */
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
     circular: PropTypes.bool,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
+    icon: customPropTypes.itemShorthand,
+    iconPosition: PropTypes.oneOf(['start', 'end']),
+    image: customPropTypes.itemShorthand,
+    imagePosition: PropTypes.oneOf(['start', 'end']),
+    fluid: PropTypes.bool,
+    renderIcon: PropTypes.func,
+    renderImage: PropTypes.func,
   }
-
-  static handledProps = ['as', 'children', 'circular', 'className', 'content']
 
   static defaultProps = {
-    as: 'label',
+    as: 'span',
+    imagePosition: 'start',
+    iconPosition: 'end',
   }
 
-  static rules = labelRules
+  handleIconOverrides = iconProps => {
+    return {
+      ...(iconProps.onClick && { tabIndex: '0' }),
+      ...(!iconProps.xSpacing && {
+        xSpacing: 'none',
+      }),
+    }
+  }
 
-  static variables = labelVariables
+  renderComponent({ ElementType, classes, rest, variables, styles }) {
+    const {
+      children,
+      content,
+      icon,
+      iconPosition,
+      image,
+      imagePosition,
+      renderIcon,
+      renderImage,
+    } = this.props
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+    const imageElement =
+      image &&
+      Image.create(image, {
+        defaultProps: {
+          styles: styles.image,
+          variables: variables.image,
+        },
+        render: renderImage,
+      })
+
+    const iconElement =
+      icon &&
+      Icon.create(icon, {
+        defaultProps: {
+          styles: styles.icon,
+          variables: variables.icon,
+        },
+        overrideProps: this.handleIconOverrides,
+        render: renderIcon,
+      })
+
+    let start: React.ReactNode = null
+    let end: React.ReactNode = null
+
+    // Default positioning of the image and icon
+    if (image && imagePosition === 'start') {
+      start = imageElement
+    }
+    if (icon && iconPosition === 'end') {
+      end = iconElement
+    }
+
+    // Custom positioning of the icon and image
+    if (icon && iconPosition === 'start') {
+      if (image && imagePosition === 'start') {
+        start = (
+          <React.Fragment>
+            {imageElement}
+            {iconElement}
+          </React.Fragment>
+        )
+      } else {
+        start = iconElement
+      }
+    }
+    if (image && imagePosition === 'end') {
+      if (icon && iconPosition === 'end') {
+        end = (
+          <React.Fragment>
+            {iconElement}
+            {imageElement}
+          </React.Fragment>
+        )
+      } else {
+        end = imageElement
+      }
+    }
+
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
+        )}
       </ElementType>
     )
   }
 }
 
-Label.create = createShorthandFactory(Label, content => ({ content }))
+Label.create = createShorthandFactory(Label, 'content')
 
 export default Label

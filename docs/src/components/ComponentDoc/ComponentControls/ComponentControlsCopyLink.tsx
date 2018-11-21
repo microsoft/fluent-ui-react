@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 
-export default class ComponentControlsCopyLink extends Component<any, any> {
+export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
   private readonly btnLabel = 'Permalink'
 

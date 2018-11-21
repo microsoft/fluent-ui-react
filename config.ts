@@ -1,4 +1,5 @@
-import path from 'path'
+import * as path from 'path'
+import * as _ from 'lodash'
 
 // ------------------------------------
 // Environment vars
@@ -36,7 +37,11 @@ const paths = {
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
+  withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
+  posix: undefined, // all the sibling values, but with forward slashes regardless the OS
 }
+
+paths.posix = _.mapValues(paths, func => (...args) => func(...args).replace(/\\/g, '/'))
 
 const config = {
   ...envConfig,
@@ -51,7 +56,7 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_devtool: __DEV__ && 'cheap-source-map',
+  compiler_devtool: __DEV__ && 'eval-source-map',
   compiler_globals: {
     __DEV__,
     __PROD__,
@@ -62,7 +67,6 @@ const config = {
     __PATH_SEP__: JSON.stringify(path.sep),
   },
   compiler_hash_type: __PROD__ ? 'chunkhash' : 'hash',
-  compiler_fail_on_warning: __PROD__,
   compiler_output_path: paths.base(envConfig.dir_docs_dist),
   compiler_public_path: __BASENAME__,
   compiler_stats: {

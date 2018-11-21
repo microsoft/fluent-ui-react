@@ -1,18 +1,24 @@
-const { FelaTheme } = require('react-fela')
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+import { FelaTheme } from 'react-fela'
 
-/**
- * The Provider's Consumer is for accessing the theme.
- */
-const ProviderConsumer: any = props => <FelaTheme {...props} />
+import { ThemePrepared } from '../../themes/types'
 
-ProviderConsumer.propTypes = {
+export interface ProviderConsumerProps {
   /**
-   * Uses the function children pattern to access the theme.
+   * Uses the function children pattern to access theme.
    * @param {object} theme
    * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
    */
+  render: (theme: ThemePrepared) => React.ReactNode
+}
+
+/**
+ * The Provider's Consumer is for accessing theme.
+ */
+const ProviderConsumer: React.SFC<ProviderConsumerProps> = props => <FelaTheme {...props} />
+
+ProviderConsumer.propTypes = {
   render: PropTypes.func.isRequired,
 }
 

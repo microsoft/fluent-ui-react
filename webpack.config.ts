@@ -1,6 +1,7 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
-import _ from 'lodash'
-import webpack from 'webpack'
+import * as CopyWebpackPlugin from 'copy-webpack-plugin'
+import * as HtmlWebpackPlugin from 'html-webpack-plugin'
+import * as _ from 'lodash'
+import * as webpack from 'webpack'
 import { CheckerPlugin as AsyncTypeScriptChecker } from 'awesome-typescript-loader'
 
 import config from './config'
@@ -11,6 +12,7 @@ const { __DEV__, __PROD__ } = config.compiler_globals
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
+  mode: __DEV__ ? 'development' : 'production',
   entry: {
     app: paths.docsSrc('index'),
     vendor: config.compiler_vendor,
@@ -32,9 +34,12 @@ const webpackConfig: any = {
   node: {
     fs: 'empty',
     module: 'empty',
+    child_process: 'empty',
+    net: 'empty',
+    readline: 'empty',
   },
   module: {
-    noParse: [/\.json$/, /anchor-js/],
+    noParse: [/anchor-js/],
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
@@ -51,6 +56,17 @@ const webpackConfig: any = {
   plugins: [
     new AsyncTypeScriptChecker(),
     new webpack.DefinePlugin(config.compiler_globals),
+    new webpack.ContextReplacementPlugin(
+      /node_modules[\\|/]typescript[\\|/]lib/,
+      /typescript\.js/,
+      false,
+    ),
+    new CopyWebpackPlugin([
+      {
+        from: paths.docsSrc('public'),
+        to: paths.docsDist('public'),
+      },
+    ]),
     new webpack.DllReferencePlugin({
       context: paths.base('node_modules'),
       manifest: require(paths.base('dll/vendor-manifest.json')),
@@ -83,6 +99,9 @@ const webpackConfig: any = {
       'package.json': paths.base('package.json'),
     },
   },
+  performance: {
+    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
+  },
 }
 
 // ------------------------------------
@@ -113,13 +132,6 @@ if (__PROD__) {
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false,
-      },
     }),
   )
 }

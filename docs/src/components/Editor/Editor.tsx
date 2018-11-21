@@ -1,13 +1,14 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
-import ace from 'brace'
+import * as ace from 'brace'
 import 'brace/ext/language_tools'
-import 'brace/mode/jsx'
 import 'brace/mode/html'
+import 'brace/mode/jsx'
+import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
-import { eventStack, doesNodeContainClick } from 'src/lib'
+import { doesNodeContainClick, EventStack } from 'src/lib'
 
 const parentComponents = []
 
@@ -15,9 +16,15 @@ const parentComponents = []
 // https://github.com/thlorenz/brace/issues/19
 const languageTools = ace.acequire('ace/ext/language_tools')
 
+type Completion = {
+  caption: string
+  value: string
+  meta: string
+}
+
 const semanticUIReactCompleter = {
   getCompletions(editor, session, pos, prefix, callback) {
-    const completions = []
+    const completions: Completion[] = []
 
     _.each(parentComponents, component => {
       const { name } = component._meta
@@ -38,10 +45,10 @@ const semanticUIReactCompleter = {
 
 languageTools.addCompleter(semanticUIReactCompleter)
 
-export interface IEditorProps extends AceEditorProps {
+export interface EditorProps extends AceEditorProps {
   id: string
-  value: string
-  mode?: 'html' | 'jsx'
+  value?: string
+  mode?: 'html' | 'jsx' | 'sh'
   onClick?: () => void
   onOutsideClick?: (e: Event) => void
   active?: boolean
@@ -49,22 +56,24 @@ export interface IEditorProps extends AceEditorProps {
   highlightGutterLine?: boolean
 }
 
-class Editor extends React.Component<IEditorProps> {
-  private lineCount: number
+export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
+export const EDITOR_GUTTER_COLOR = '#26282d'
 
+class Editor extends React.Component<EditorProps> {
   private static readonly refName = 'aceEditor'
+  private clickSubscription = EventStack.noSubscription
 
   public static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx']),
+    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
     onClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
     active: PropTypes.bool,
     showCursor: PropTypes.bool,
   }
 
-  public static defaultProps: IEditorProps = {
+  public static defaultProps = {
     id: '',
     value: '',
     mode: 'jsx',
@@ -84,22 +93,12 @@ class Editor extends React.Component<IEditorProps> {
     showCursor: true,
   }
 
-  constructor(props: IEditorProps) {
-    super(props)
-
-    this.setLineCount(props.value)
-  }
-
-  public componentWillReceiveProps(nextProps: IEditorProps) {
+  public componentWillReceiveProps(nextProps: EditorPropsWithDefaults) {
     const previousPros = this.props
-    const { value, active, showCursor } = nextProps
+    const { active, showCursor } = nextProps
 
     if (showCursor !== previousPros.showCursor) {
       this.setCursorVisibility(showCursor)
-    }
-
-    if (value !== previousPros.value) {
-      this.setLineCount(value)
     }
 
     if (active !== previousPros.active) {
@@ -113,7 +112,7 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   public componentDidMount() {
-    const { active, showCursor } = this.props
+    const { active, showCursor } = this.props as EditorPropsWithDefaults
 
     this.setCursorVisibility(showCursor)
 
@@ -144,11 +143,12 @@ class Editor extends React.Component<IEditorProps> {
   }
 
   private addDocumentListener() {
-    eventStack.sub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
+    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
   }
 
   private removeDocumentListener() {
-    eventStack.unsub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
   }
 
   private get editor() {
@@ -167,17 +167,13 @@ class Editor extends React.Component<IEditorProps> {
     return this.safeCall(() => this.renderer.container)
   }
 
-  private setLineCount(value: string) {
-    this.lineCount = value && value.length ? (value.match(/\n/g) || []).length + 1 : 0
-  }
-
   private setCursorVisibility(visible: boolean): void {
     this.safeCall(() => {
       this.cursor.style.display = visible ? '' : 'none'
     })
   }
 
-  private safeCall<T>(cb: () => T, logError?: boolean): T {
+  private safeCall<T>(cb: () => T, logError?: boolean): T | undefined {
     try {
       return cb()
     } catch (error) {
@@ -190,3 +186,5 @@ class Editor extends React.Component<IEditorProps> {
 }
 
 export default Editor
+
+export type EditorPropsWithDefaults = EditorProps & (typeof Editor.defaultProps)

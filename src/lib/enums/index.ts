@@ -1,1 +1,0 @@
-export { Sizes } from './sizes'

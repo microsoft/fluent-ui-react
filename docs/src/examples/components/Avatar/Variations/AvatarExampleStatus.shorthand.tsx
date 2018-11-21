@@ -2,42 +2,29 @@ import React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
 const AvatarExampleStatusShorthand = () => (
-  <div style={{ background: 'white' }}>
+  <div>
     <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="Available"
-      style={{ marginRight: '15px' }}
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'green', icon: 'check', title: 'Available' }}
     />
+    &emsp;
+    <Avatar image="public/images/avatar/small/matt.jpg" status={{ color: 'red', title: 'Busy' }} />
+    &emsp;
     <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="Busy"
-      style={{ marginRight: '15px' }}
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'red', icon: 'minus', title: 'Do not disturb' }}
     />
+    &emsp;
     <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="DoNotDisturb"
-      style={{ marginRight: '15px' }}
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'yellow', icon: 'clock', title: 'Away' }}
     />
+    &emsp;
     <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="Away"
-      style={{ marginRight: '15px' }}
+      image="public/images/avatar/small/matt.jpg"
+      status={{ color: 'grey', title: 'Offline' }}
     />
-    <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="BeRightBack"
-      style={{ marginRight: '15px' }}
-    />
-    <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="Offline"
-      style={{ marginRight: '15px' }}
-    />
-    <Avatar
-      src="/public/images/avatar/small/matt.jpg"
-      status="PresenceUnknown"
-      style={{ marginRight: '15px' }}
-    />
+    &emsp;
   </div>
 )
 

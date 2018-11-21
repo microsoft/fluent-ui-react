@@ -1,4 +1,4 @@
-import simulant from 'simulant'
+import * as simulant from 'simulant'
 
 // ----------------------------------------
 // Simulate DOM Events on real DOM nodes

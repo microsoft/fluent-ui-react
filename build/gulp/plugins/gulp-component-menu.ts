@@ -1,14 +1,19 @@
-import gutil from 'gulp-util'
-import path from 'path'
-import through2 from 'through2'
-import Vinyl from 'vinyl'
+import * as gutil from 'gulp-util'
+import * as path from 'path'
+import * as through2 from 'through2'
+import * as Vinyl from 'vinyl'
 
 import getComponentInfo from './util/getComponentInfo'
 
 const pluginName = 'gulp-component-menu'
 
+type ComponentMenuItem = {
+  displayName: string
+  type: string
+}
+
 export default () => {
-  const result = []
+  const result: ComponentMenuItem[] = []
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {

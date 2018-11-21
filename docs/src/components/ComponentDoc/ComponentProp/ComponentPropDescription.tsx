@@ -1,8 +1,8 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import * as React from 'react'
 
-export default class ComponentPropDescription extends PureComponent<any, any> {
+export default class ComponentPropDescription extends React.PureComponent<any, any> {
   static propTypes = {
     description: PropTypes.arrayOf(PropTypes.string),
   }

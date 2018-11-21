@@ -1,20 +1,56 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import cx from 'classnames'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as cx from 'classnames'
 
-import { customPropTypes, UIComponent } from '../../lib'
-import layoutRules from './layoutRules'
+import { UIComponent } from '../../lib'
+import { Extendable } from '../../../types/utils'
+import { ICSSInJSStyle } from '../../themes/types'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-class Layout extends UIComponent<any, any> {
+export interface LayoutProps extends UIComponentProps<any, any> {
+  debug?: boolean
+  renderStartArea?: (params: object) => React.ReactNode
+  renderMainArea?: (params: object) => React.ReactNode
+  renderEndArea?: (params: object) => React.ReactNode
+  renderGap?: (params: object) => React.ReactNode
+  /** Styled applied to the root element of the rendered component. */
+  rootCSS?: ICSSInJSStyle
+  start?: any
+  startCSS?: ICSSInJSStyle
+  startSize?: string
+  main?: any
+  mainCSS?: ICSSInJSStyle
+  mainSize?: string
+  end?: any
+  endCSS?: ICSSInJSStyle
+  endSize?: string
+  /** How to align items on-axis within the layout (i.e. vertical or not). */
+  justifyItems?: React.CSSProperties['justifyItems']
+  /** How to align cross-axis items within the layout (i.e. vertical or not). */
+  alignItems?: React.CSSProperties['alignItems']
+  /** A layout can have gaps of whitespace between areas. */
+  gap?: string
+  /** A layout can reduce to the minimum required areas. */
+  reducing?: boolean
+  /** A layout can render its content directly if only one piece of content exists. */
+  disappearing?: boolean
+  truncateStart?: boolean
+  truncateMain?: boolean
+  truncateEnd?: boolean
+  vertical?: boolean
+}
+
+/**
+ * A layout is a utility for arranging the content of a component.
+ */
+class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
 
-  static rules = layoutRules
-
   static propTypes = {
-    as: customPropTypes.as,
-    className: PropTypes.string,
+    ...commonUIComponentPropTypes,
     debug: PropTypes.bool,
 
     renderStartArea: PropTypes.func,
@@ -22,7 +58,6 @@ class Layout extends UIComponent<any, any> {
     renderEndArea: PropTypes.func,
     renderGap: PropTypes.func,
 
-    /** Styled applied to the root element of the rendered component. */
     rootCSS: PropTypes.object,
 
     start: PropTypes.any,
@@ -37,19 +72,12 @@ class Layout extends UIComponent<any, any> {
     endCSS: PropTypes.object,
     endSize: PropTypes.string,
 
-    /** How to align items on-axis within the layout (i.e. vertical or not). */
     justifyItems: PropTypes.any,
 
-    /** How to align cross-axis items within the layout (i.e. vertical or not). */
     alignItems: PropTypes.any,
 
-    /** A layout can have gaps of whitespace between areas. */
     gap: PropTypes.string,
-
-    /** A layout can reduce to the minimum required areas. */
     reducing: PropTypes.bool,
-
-    /** A layout can render its content directly if only one piece of content exists. */
     disappearing: PropTypes.bool,
 
     truncateStart: PropTypes.bool,
@@ -59,37 +87,7 @@ class Layout extends UIComponent<any, any> {
     vertical: PropTypes.bool,
   }
 
-  static handledProps = [
-    'alignItems',
-    'as',
-    'className',
-    'debug',
-    'disappearing',
-    'end',
-    'endCSS',
-    'endSize',
-    'gap',
-    'justifyItems',
-    'main',
-    'mainCSS',
-    'mainSize',
-    'reducing',
-    'renderEndArea',
-    'renderGap',
-    'renderMainArea',
-    'renderStartArea',
-    'rootCSS',
-    'start',
-    'startCSS',
-    'startSize',
-    'truncateEnd',
-    'truncateMain',
-    'truncateStart',
-    'vertical',
-  ]
-
   static defaultProps = {
-    as: 'div',
     startSize: 'auto',
     mainSize: '1fr',
     endSize: 'auto',
@@ -126,7 +124,7 @@ class Layout extends UIComponent<any, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props
+    } = this.props as LayoutPropsWithDefaults
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -171,3 +169,4 @@ class Layout extends UIComponent<any, any> {
 }
 
 export default Layout
+export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps

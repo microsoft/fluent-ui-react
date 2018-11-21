@@ -1,14 +1,32 @@
-import React from 'react'
-import renderComponent, { IRenderResultConfig } from './renderComponent'
+import * as React from 'react'
+import * as _ from 'lodash'
+import renderComponent, { RenderResultConfig } from './renderComponent'
+import { AccessibilityActionHandlers } from './accessibility/types'
+import { FocusZone } from './accessibility/FocusZone'
 
+// TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
   static className: string
-  static variables?: any
-  static rules?: any
-  static handledProps: any
+
+  static propTypes: any
+
+  /** Array of props to exclude from list of handled ones. */
+  static unhandledProps: string[] = []
+
+  private static _handledPropsCache: string[] = undefined
+  static get handledProps() {
+    if (!this._handledPropsCache) {
+      this._handledPropsCache = _.difference(_.keys(this.propTypes), this.unhandledProps).sort()
+    }
+
+    return this._handledPropsCache
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers
+  protected focusZone: FocusZone
 
   constructor(props, context) {
     super(props, context)
@@ -24,23 +42,26 @@ class UIComponent<P, S> extends React.Component<P, S> {
     this.renderComponent = this.renderComponent.bind(this)
   }
 
-  renderComponent(config: IRenderResultConfig<P>): React.ReactNode {
+  renderComponent(config: RenderResultConfig<P>): React.ReactNode {
     throw new Error('renderComponent is not implemented.')
   }
 
   render() {
-    return renderComponent(
-      {
-        className: this.childClass.className,
-        defaultProps: this.childClass.defaultProps,
-        displayName: this.childClass.displayName,
-        handledProps: this.childClass.handledProps,
-        props: this.props,
-        rules: this.childClass.rules,
-        variables: this.childClass.variables,
-      },
-      this.renderComponent,
-    )
+    return renderComponent({
+      className: this.childClass.className,
+      defaultProps: this.childClass.defaultProps,
+      displayName: this.childClass.displayName,
+      handledProps: this.childClass.handledProps,
+      props: this.props,
+      state: this.state,
+      actionHandlers: this.actionHandlers,
+      focusZoneRef: this.setFocusZoneRef,
+      render: this.renderComponent,
+    })
+  }
+
+  private setFocusZoneRef = (focusZone: FocusZone): void => {
+    this.focusZone = focusZone
   }
 }
 

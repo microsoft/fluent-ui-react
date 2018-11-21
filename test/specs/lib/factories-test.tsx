@@ -1,28 +1,49 @@
-import _ from 'lodash'
+import * as React from 'react'
+import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import React, { isValidElement } from 'react'
 import { createShorthand, createShorthandFactory } from 'src/lib'
+import { Props, ShorthandValue, ObjectOf } from 'types/utils'
 import { consoleUtil } from 'test/utils'
+import callable from '../../../src/lib/callable'
 
 // ----------------------------------------
 // Utils
 // ----------------------------------------
+
+type GetShorthandArgs = {
+  Component?: React.ReactType
+  defaultProps?: Props
+  mappedProp?: string
+  overrideProps?: Props & ((props: Props) => Props) | Props
+  generateKey?: boolean
+  value?: ShorthandValue
+  render?: any
+}
+
 /**
  * Returns the result of a shorthand factory.
  */
 const getShorthand = ({
   Component = 'div',
   defaultProps,
-  mapValueToProps = () => ({}),
+  mappedProp = '',
   overrideProps,
   generateKey,
   value,
-}: any) =>
-  createShorthand(Component, mapValueToProps, value, {
+  render,
+}: GetShorthandArgs) =>
+  createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
     generateKey,
+    render,
   })
+
+const isValuePrimitive = (value: ShorthandValue) =>
+  typeof value === 'string' || typeof value === 'number'
+
+const testCreateShorthand = (shorthandArgs: GetShorthandArgs, expectedResult: ObjectOf<any>) =>
+  expect(shallow(getShorthand(shorthandArgs)).props()).toEqual(expectedResult)
 
 // ----------------------------------------
 // Common tests
@@ -44,37 +65,47 @@ const itReturnsNullGivenDefaultProps = value => {
 
 const itReturnsAValidElement = value => {
   test('returns a valid element', () => {
-    expect(isValidElement(getShorthand({ value }))).toBe(true)
+    expect(React.isValidElement(getShorthand({ value }))).toBe(true)
   })
 }
 
-const itAppliesDefaultProps = value => {
+const itAppliesDefaultProps = (value: ShorthandValue) => {
   test('applies defaultProps', () => {
     const defaultProps = { some: 'defaults' }
+    const expectedResult = isValuePrimitive(value)
+      ? { ...defaultProps, children: value }
+      : defaultProps
 
-    expect(shallow(getShorthand({ value, defaultProps })).props()).toEqual(defaultProps)
+    testCreateShorthand({ value, defaultProps }, expectedResult)
   })
 }
 
-const itDoesNotIncludePropsFromMapValueToProps = value => {
-  test('does not include props from mapValueToProps', () => {
-    const props = { 'data-foo': 'foo' }
-    const wrapper = shallow(getShorthand({ value, mapValueToProps: () => props }))
+const itDoesNotIncludePropsFromMappedProp = value => {
+  test('does not include props from mappedProp', () => {
+    const mappedProp = 'data-foo'
+    const wrapper = shallow(getShorthand({ value, mappedProp }))
 
-    _.each(props, (val, key) => {
-      expect(wrapper.props()).not.toHaveProperty(key, val)
-    })
+    expect(wrapper.prop(mappedProp)).not.toBeDefined()
   })
 }
 
-const itMergesClassNames = (classNameSource, extraClassName, shorthandConfig) => {
+const itMergesClassNames = (
+  classNameSource: string,
+  extraClassName: string,
+  shorthandConfig: { value?: ShorthandValue; mappedProp?: string },
+) => {
   test(`merges defaultProps className and ${classNameSource} className`, () => {
     const defaultProps = { className: 'default' }
     const overrideProps = { className: 'override' }
 
+    let expectedClassNames = 'default override'
+    if (!isValuePrimitive(shorthandConfig.value)) {
+      expectedClassNames += ` ${extraClassName}`
+    }
+
     expect(
       shallow(getShorthand({ defaultProps, overrideProps, ...shorthandConfig })).hasClass(
-        `default override ${extraClassName}`,
+        expectedClassNames,
       ),
     ).toBe(true)
   })
@@ -82,16 +113,20 @@ const itMergesClassNames = (classNameSource, extraClassName, shorthandConfig) =>
 
 const itAppliesProps = (propsSource, expectedProps, shorthandConfig) => {
   test(`applies props from the ${propsSource} props`, () => {
-    expect(shallow(getShorthand(shorthandConfig)).props()).toEqual(expectedProps)
+    testCreateShorthand(shorthandConfig, expectedProps)
   })
 }
 
 const itOverridesDefaultProps = (propsSource, defaultProps, expectedProps, shorthandConfig) => {
   test(`overrides defaultProps with ${propsSource} props`, () => {
-    expect(shallow(getShorthand({ defaultProps, ...shorthandConfig })).props()).toEqual(
-      expectedProps,
-    )
+    testCreateShorthand({ defaultProps, ...shorthandConfig }, expectedProps)
   })
+}
+
+const mappedProps = {
+  iframe: 'src',
+  img: 'src',
+  input: 'type',
 }
 
 const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) => {
@@ -99,9 +134,7 @@ const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) =>
     const defaultProps = { undef: '-', nil: '-', zero: '-', empty: '-' }
     const expectedProps = { undef: undefined, nil: null, zero: 0, empty: '' }
 
-    expect(shallow(getShorthand({ defaultProps, ...shorthandConfig })).props()).toEqual(
-      expectedProps,
-    )
+    testCreateShorthand({ defaultProps, ...shorthandConfig }, expectedProps)
   })
 }
 
@@ -116,23 +149,23 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, () => ({}))
+      const goodUsage = () => createShorthandFactory(() => <div />, '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthandFactory('div', () => ({}))
+      const goodUsage = () => createShorthandFactory('div', '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('throw if passed Component that is not a string nor function', () => {
       consoleUtil.disableOnce()
-      const badComponents = [undefined, null, true, false, [], {}, 123]
+      const badComponents: any = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthandFactory(badComponent, () => ({}))
+        const badUsage = () => createShorthandFactory(badComponent, '')
 
         expect(badUsage).toThrowError()
       })
@@ -145,32 +178,215 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthand(() => <div />, () => ({}))
+      const goodUsage = () => createShorthand(() => <div />, '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthand('div', () => ({}))
+      const goodUsage = () => createShorthand('div', '')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('throw if passed Component that is not a string nor function', () => {
       consoleUtil.disableOnce()
-      const badComponents = [undefined, null, true, false, [], {}, 123]
+      const badComponents: any[] = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthand(badComponent, () => ({}))
+        const badUsage = () => createShorthand(badComponent, '')
 
         expect(badUsage).toThrowError()
+      })
+    })
+
+    describe('render', () => {
+      const testValue = 'hi'
+
+      test('is called once', () => {
+        const spy = jest.fn()
+
+        getShorthand({ value: testValue, render: spy })
+
+        expect(spy).toHaveBeenCalledTimes(1)
+      })
+
+      test('is called with the computed component, props, and children', () => {
+        const spy = jest.fn(() => <div />)
+
+        getShorthand({
+          value: testValue,
+          Component: 'p',
+          mappedProp: 'children',
+          render: spy,
+        })
+
+        expect(spy).toHaveBeenCalledWith('p', { key: testValue, children: testValue }, testValue)
+      })
+
+      test('receives defaultProps and defaults mappedProp to children in its props argument', () => {
+        const spy = jest.fn(() => <div />)
+        const defaultProps = { defaults: true }
+
+        getShorthand({ value: testValue, defaultProps, Component: 'p', render: spy })
+
+        expect(spy).toHaveBeenCalledWith(
+          'p',
+          { key: testValue, children: testValue, ...defaultProps },
+          testValue,
+        )
+      })
+
+      test('receives overrideProps and defaults mappedProp to children in its props argument', () => {
+        const spy = jest.fn(() => <div />)
+        const overrideProps = { overrides: true }
+
+        getShorthand({ value: testValue, overrideProps, Component: 'p', render: spy })
+
+        expect(spy).toHaveBeenCalledWith(
+          'p',
+          { key: testValue, children: testValue, ...overrideProps },
+          testValue,
+        )
+      })
+    })
+
+    describe('styles', () => {
+      test('deep merges styles prop onto defaultProps styles', () => {
+        expect.assertions(1)
+
+        const defaultProps = {
+          styles: {
+            color: 'override me',
+            ':hover': { color: 'blue' },
+          },
+        }
+        const props = {
+          styles: { color: 'black' },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          defaultProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
+              color: 'black',
+              ':hover': { color: 'blue' },
+            })
+          },
+        })
+      })
+
+      test('deep merges overrideProps styles onto styles prop', () => {
+        expect.assertions(1)
+
+        const overrideProps = {
+          styles: {
+            color: 'black',
+            ':hover': {
+              color: 'blue',
+            },
+          },
+        }
+        const props = {
+          styles: {
+            position: 'keep',
+            color: 'override',
+            ':hover': {
+              position: 'keep',
+              color: 'override',
+            },
+          },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          overrideProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
+              position: 'keep',
+              color: 'black',
+              ':hover': {
+                position: 'keep',
+                color: 'blue',
+              },
+            })
+          },
+        })
+      })
+
+      test('deep merges styles prop as function onto defaultProps styles', () => {
+        expect.assertions(1)
+
+        const defaultProps = {
+          styles: () => ({
+            color: 'override me',
+            ':hover': { color: 'blue' },
+          }),
+        }
+        const props = {
+          styles: { color: 'black' },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          defaultProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
+              color: 'black',
+              ':hover': { color: 'blue' },
+            })
+          },
+        })
+      })
+
+      test('deep merges overrideProps styles as function onto styles prop', () => {
+        expect.assertions(1)
+
+        const overrideProps = {
+          styles: () => ({
+            color: 'black',
+            ':hover': {
+              color: 'blue',
+            },
+          }),
+        }
+        const props = {
+          styles: {
+            position: 'keep',
+            color: 'override',
+            ':hover': {
+              position: 'keep',
+              color: 'override',
+            },
+          },
+        }
+
+        getShorthand({
+          value: props,
+          Component: 'p',
+          overrideProps,
+          render(Component, props) {
+            expect(callable(props.styles)()).toMatchObject({
+              position: 'keep',
+              color: 'black',
+              ':hover': {
+                position: 'keep',
+                color: 'blue',
+              },
+            })
+          },
+        })
       })
     })
 
     describe('defaultProps', () => {
       test('can be an object', () => {
         const defaultProps = { 'data-some': 'defaults' }
-        expect(shallow(getShorthand({ defaultProps, value: 'foo' })).props()).toEqual(defaultProps)
+        testCreateShorthand({ defaultProps, value: 'foo' }, { ...defaultProps, children: 'foo' })
       })
     })
 
@@ -242,20 +458,21 @@ describe('factories', () => {
     })
 
     describe('overrideProps', () => {
+      const testValue = 'foo'
+
       test('can be an object', () => {
         const overrideProps = { 'data-some': 'overrides' }
 
-        expect(shallow(getShorthand({ overrideProps, value: 'foo' })).props()).toEqual(
-          overrideProps,
+        testCreateShorthand(
+          { overrideProps, value: testValue },
+          { ...overrideProps, children: testValue },
         )
       })
 
       test('can be a function that returns defaultProps', () => {
-        const overrideProps = () => ({ 'data-some': 'overrides' })
+        const overrideProps = () => ({ 'data-some': 'overrides', children: testValue })
 
-        expect(shallow(getShorthand({ overrideProps, value: 'foo' })).props()).toEqual(
-          overrideProps(),
-        )
+        testCreateShorthand({ overrideProps, value: testValue }, overrideProps())
       })
 
       test("is called with the user's element's and default props", () => {
@@ -275,16 +492,6 @@ describe('factories', () => {
 
         shallow(getShorthand({ defaultProps, overrideProps, value: userProps }))
         expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
-      })
-
-      test('is called with the result of mapValueToProps', () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const value = 'foo'
-        const mapValueToProps = val => ({ 'data-mapped': val })
-
-        shallow(getShorthand({ defaultProps, mapValueToProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...mapValueToProps(value) })
       })
     })
 
@@ -311,7 +518,7 @@ describe('factories', () => {
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
       itAppliesDefaultProps(<div />)
-      itDoesNotIncludePropsFromMapValueToProps(<div />)
+      itDoesNotIncludePropsFromMappedProp(<div />)
       itMergesClassNames('element', 'user', { value: <div className="user" /> })
       itAppliesProps('element', { foo: 'foo' }, { value: <div {...{ foo: 'foo' } as any} /> })
       itOverridesDefaultProps(
@@ -328,40 +535,138 @@ describe('factories', () => {
     describe('from a string', () => {
       itReturnsAValidElement('foo')
       itAppliesDefaultProps('foo')
-      itMergesClassNames('mapValueToProps', 'mapped', {
+      itMergesClassNames('mappedProp', 'mapped', {
         value: 'foo',
-        mapValueToProps: () => ({ className: 'mapped' }),
+        mappedProp: 'className',
       })
 
       itAppliesProps(
-        'mapValueToProps',
-        { 'data-prop': 'present' },
+        'mappedProp',
+        { 'data-prop': 'foo' },
         {
           value: 'foo',
-          mapValueToProps: () => ({ 'data-prop': 'present' }),
+          mappedProp: 'data-prop',
         },
       )
 
       itOverridesDefaultProps(
-        'mapValueToProps',
-        { some: 'defaults', overridden: false },
-        { some: 'defaults', overridden: true },
+        'mappedProp',
+        { some: 'defaults', overridden: 'false' },
+        { some: 'defaults', overridden: 'true' },
         {
-          value: 'a string',
-          mapValueToProps: () => ({ overridden: true }),
+          value: 'true',
+          mappedProp: 'overridden',
         },
       )
 
-      itOverridesDefaultPropsWithFalseyProps('mapValueToProps', {
-        value: 'a string',
-        mapValueToProps: () => ({ undef: undefined, nil: null, zero: 0, empty: '' }),
+      const mappedProp = 'test-mapped-prop'
+      const value = 'test-value'
+
+      describe(`when sending HTML tag `, () => {
+        _.forEach(mappedProps, (val, as) => {
+          const testMsg = `spreads { ${[mappedProps[as]]}: '${value}' }`
+
+          describe(`'${as}' as 'as' prop to defaultProps`, () => {
+            test(`overrides ${mappedProp} and ${testMsg}`, () => {
+              testCreateShorthand(
+                { mappedProp, value, defaultProps: { as } },
+                { as, [mappedProps[as]]: value },
+              )
+            })
+          })
+
+          describe(`'${as}' as 'as' prop to overrideProps`, () => {
+            test(`overrides ${mappedProp} and ${testMsg}`, () => {
+              testCreateShorthand(
+                { mappedProp, value, overrideProps: { as } },
+                { as, [mappedProps[as]]: value },
+              )
+            })
+          })
+
+          describe(`'${as}' as 'as' prop to overrideProps`, () => {
+            test(`overrides defaultProps, ${mappedProp} and ${testMsg}`, () => {
+              testCreateShorthand(
+                { mappedProp, value, defaultProps: { as: 'overriden' }, overrideProps: { as } },
+                { as, [mappedProps[as]]: value },
+              )
+            })
+          })
+        })
+      })
+
+      describe(`when sending ${mappedProp} as mappedProp`, () => {
+        const testMsg = `spreads { ${[mappedProp]}: '${value}' }`
+
+        describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { mappedProp, value, defaultProps: { as: 'unsupported' } },
+              { as: 'unsupported', [mappedProp]: value },
+            )
+          })
+        })
+
+        describe(`and an unsupported tag as 'as' prop to overrideProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { mappedProp, value, overrideProps: { as: 'unsupported' } },
+              { as: 'unsupported', [mappedProp]: value },
+            )
+          })
+        })
+
+        describe(`an unsupported tag as 'as' prop to overrideProps and a supported tag to defaultProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              {
+                mappedProp,
+                value,
+                defaultProps: { as: 'div' },
+                overrideProps: { as: 'unsupported' },
+              },
+              { as: 'unsupported', [mappedProp]: value },
+            )
+          })
+        })
+      })
+
+      describe(`when sending no mappedProp`, () => {
+        const testMsg = `spreads { children: '${value}' } by default`
+
+        describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { value, defaultProps: { as: 'unsupported' } },
+              { as: 'unsupported', children: value },
+            )
+          })
+        })
+
+        describe(`and an unsupported tag as 'as' prop to overrideProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { value, overrideProps: { as: 'unsupported' } },
+              { as: 'unsupported', children: value },
+            )
+          })
+        })
+
+        describe(`an unsupported tag as 'as' prop to overrideProps and a supported tag to defaultProps`, () => {
+          test(testMsg, () => {
+            testCreateShorthand(
+              { value, defaultProps: { as: 'div' }, overrideProps: { as: 'unsupported' } },
+              { as: 'unsupported', children: value },
+            )
+          })
+        })
       })
     })
 
     describe('from a props object', () => {
       itReturnsAValidElement({})
       itAppliesDefaultProps({})
-      itDoesNotIncludePropsFromMapValueToProps({})
+      itDoesNotIncludePropsFromMappedProp({})
       itMergesClassNames('props object', 'user', {
         value: { className: 'user' },
       })
@@ -378,50 +683,6 @@ describe('factories', () => {
       itOverridesDefaultPropsWithFalseyProps('props object', {
         value: { undef: undefined, nil: null, zero: 0, empty: '' },
       })
-    })
-
-    describe('from a function', () => {
-      itReturnsAValidElement(() => <div />)
-      itDoesNotIncludePropsFromMapValueToProps(() => <div />)
-
-      test('is called once', () => {
-        const spy = jest.fn()
-
-        getShorthand({ value: spy })
-
-        expect(spy).toHaveBeenCalledTimes(1)
-      })
-
-      test('is called with Component, props, children', () => {
-        const spy = jest.fn(() => <div />)
-
-        getShorthand({ Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', {}, undefined)
-      })
-
-      test('receives defaultProps in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const defaultProps = { defaults: true }
-
-        getShorthand({ defaultProps, Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', defaultProps, undefined)
-      })
-
-      test('receives overrideProps in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const overrideProps = { overrides: true }
-
-        getShorthand({ overrideProps, Component: 'p', value: spy })
-
-        expect(spy).toHaveBeenCalledWith('p', overrideProps, undefined)
-      })
-    })
-
-    describe('from an array', () => {
-      itReturnsNull(['foo'])
-      itReturnsNullGivenDefaultProps(['foo'])
     })
 
     describe('style', () => {

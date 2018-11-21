@@ -1,13 +1,34 @@
-import { exec } from 'child_process'
+import { spawn } from 'child_process'
 
-const sh = (cmd, cb) => {
-  const options = {
-    cwd: process.cwd(),
-    env: process.env,
-    stdio: 'inherit',
-  }
+const sh = (command: string, pipeOutputToResult: boolean = false): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const [cmd, ...args] = command.split(' ')
 
-  exec(cmd, options, cb)
+    const options = {
+      cwd: process.cwd(),
+      env: process.env,
+      stdio: pipeOutputToResult ? 'pipe' : [0, 1, 2],
+      shell: true,
+    }
+
+    const child = spawn(cmd, args, options)
+
+    let stdoutData = ''
+
+    if (child.stdout) {
+      child.stdout.on('data', data => {
+        stdoutData += data
+      })
+    }
+
+    child.on('close', code => {
+      if (code === 0) {
+        resolve(stdoutData)
+      }
+
+      reject(new Error(`child process exited with code ${code}`))
+    })
+  })
 }
 
 export default sh

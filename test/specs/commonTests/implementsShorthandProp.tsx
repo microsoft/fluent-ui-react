@@ -1,123 +1,58 @@
-import _ from 'lodash'
-import { shallow } from 'enzyme'
-import React, { createElement } from 'react'
+import * as React from 'react'
+import { ReactWrapper } from 'enzyme'
+import { mountWithProvider } from 'test/utils'
+import { Props } from '../../../types/utils'
 
-import { createShorthand } from 'src/lib'
-import { consoleUtil } from 'test/utils'
-import { noDefaultClassNameFromProp } from './classNameHelpers'
-import helpers from './commonHelpers'
-
-const shorthandComponentName = ShorthandComponent => {
-  if (typeof ShorthandComponent === 'string') return ShorthandComponent
-  return (
-    _.get(ShorthandComponent, '_meta.name') ||
-    ShorthandComponent.displayName ||
-    ShorthandComponent.name
-  )
+export type ShorthandTestOptions = {
+  mapsValueToProp?: string
 }
 
-/**
- * Assert that a Component correctly implements a shorthand prop.
- *
- * @param {function} Component The component to test.
- * @param {object} options
- * @param {string} options.propKey The name of the shorthand prop.
- * @param {string|function} options.ShorthandComponent The component that should be rendered from the shorthand value.
- * @param {boolean} [options.alwaysPresent] Whether or not the shorthand exists by default.
- * @param {boolean} [options.assertExactMatch] Selects an assertion method, `contain` will be used if true.
- * @param {boolean} [options.generateKey=false] Whether or not automatic key generation is allowed for the shorthand component.
- * @param {function} options.mapValueToProps A function that maps a primitive value to the Component props.
- * @param {Object} [options.requiredProps={}] Props required to render the component.
- * @param {Object} [options.shorthandDefaultProps] Default props for the shorthand component.
- * @param {Object} [options.shorthandOverrideProps] Override props for the shorthand component.
- */
-export default (Component, options: any = {}) => {
-  const {
-    alwaysPresent,
-    assertExactMatch = true,
-    generateKey = false,
-    mapValueToProps,
-    propKey,
-    ShorthandComponent,
-    shorthandDefaultProps = {},
-    shorthandOverrideProps = {},
-    requiredProps = {},
-  } = options
-  const { assertRequired } = helpers('implementsShorthandProp', Component)
-  const assertMethod = assertExactMatch ? 'contain' : 'containMatchingElement'
+export const DefaultShorthandTestOptions: ShorthandTestOptions = {
+  mapsValueToProp: 'content',
+}
 
-  describe(`${propKey} shorthand prop (common)`, () => {
-    assertRequired(Component, 'a `Component`')
-    assertRequired(_.isPlainObject(options), 'an `options` object')
-    assertRequired(propKey, 'a `propKey`')
-    assertRequired(ShorthandComponent, 'a `ShorthandComponent`')
+export default Component => {
+  return function implementsShorthandProp(
+    shorthandProp: string,
+    ShorthandComponent: React.ComponentType,
+    options: ShorthandTestOptions = DefaultShorthandTestOptions,
+  ) {
+    const { mapsValueToProp } = options
+    const { displayName } = ShorthandComponent
 
-    const name = shorthandComponentName(ShorthandComponent)
-    const assertValidShorthand = value => {
-      const expectedShorthandElement = createShorthand(ShorthandComponent, mapValueToProps, value, {
-        defaultProps: shorthandDefaultProps,
-        overrideProps: shorthandOverrideProps,
-        generateKey,
-      })
-      const element = createElement(Component, { ...requiredProps, [propKey]: value })
-      const wrapper = shallow(element)
+    const checkPropsMatch = (props: Props, matchedProps: Props) =>
+      Object.keys(matchedProps).every(propName => matchedProps[propName] === props[propName])
 
-      wrapper.should[assertMethod](expectedShorthandElement)
+    const expectContainsSingleShorthandElement = (wrapper: ReactWrapper, withProps: Props) =>
+      expect(
+        wrapper.findWhere(
+          node => node.type() === ShorthandComponent && checkPropsMatch(node.props(), withProps),
+        ).length,
+      ).toEqual(1)
 
-      // Enzyme's .key() method is not consistent with React for elements with
-      // no key (`undefined` vs `null`), so use the underlying element instead
-      // Will fail if more than one element of this type is found
-      const shorthandElement = wrapper.find(ShorthandComponent).getElement()
-      expect(shorthandElement.key).to.equal(expectedShorthandElement.key, "key doesn't match")
+    const expectShorthandPropsAreHandled = (withProps: Props | string) => {
+      const props = { [shorthandProp]: withProps }
+      const matchedProps =
+        typeof withProps === 'string' ? { [mapsValueToProp]: withProps } : withProps
+
+      expectContainsSingleShorthandElement(
+        mountWithProvider(<Component {...props} />),
+        matchedProps,
+      )
     }
 
-    if (alwaysPresent || (Component.defaultProps && Component.defaultProps[propKey])) {
-      it(`has default ${name} when not defined`, () => {
-        shallow(<Component {...requiredProps} />).should.have.descendants(name)
+    describe(`shorthand property '${shorthandProp}' with default value of '${displayName}' component`, () => {
+      test(`is defined`, () => {
+        expect(Component.propTypes[shorthandProp]).toBeTruthy()
       })
-    } else {
-      noDefaultClassNameFromProp(Component, propKey, [], options)
 
-      it(`has no ${name} when not defined`, () => {
-        shallow(<Component {...requiredProps} />).should.not.have.descendants(name)
+      test(`string value is handled as ${displayName}'s ${mapsValueToProp}`, () => {
+        expectShorthandPropsAreHandled('shorthand prop value')
       })
-    }
 
-    if (!alwaysPresent) {
-      it(`has no ${name} when null`, () => {
-        shallow(
-          createElement(Component, { ...requiredProps, [propKey]: null }),
-        ).should.not.have.descendants(ShorthandComponent)
+      test(`object value is spread as ${displayName}'s props`, () => {
+        expectShorthandPropsAreHandled({ foo: 'foo value', bar: 'bar value' })
       })
-    }
-
-    it(`renders a ${name} from strings`, () => {
-      consoleUtil.disableOnce()
-      assertValidShorthand('string')
     })
-
-    it(`renders a ${name} from numbers`, () => {
-      consoleUtil.disableOnce()
-      assertValidShorthand(123)
-    })
-
-    // the Input maps shorthand to `type`
-    // React uses the default prop ('text') in place of type={0}
-    if (propKey !== 'input') {
-      it(`renders a ${name} from number 0`, () => {
-        consoleUtil.disableOnce()
-        assertValidShorthand(0)
-      })
-    }
-
-    it(`renders a ${name} from a props object`, () => {
-      consoleUtil.disableOnce()
-      assertValidShorthand(mapValueToProps('foo'))
-    })
-
-    it(`renders a ${name} from elements`, () => {
-      consoleUtil.disableOnce()
-      assertValidShorthand(<ShorthandComponent />)
-    })
-  })
+  }
 }

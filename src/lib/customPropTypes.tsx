@@ -1,6 +1,9 @@
-import _ from 'lodash/fp'
-import PropTypes from 'prop-types'
+import * as _ from 'lodash/fp'
+import * as PropTypes from 'prop-types'
 import leven from './leven'
+import { ObjectOf } from '../../types/utils'
+
+type SuggestProps = { score: number; suggestion: string }
 
 const typeOf = x => Object.prototype.toString.call(x)
 
@@ -8,12 +11,12 @@ const typeOf = x => Object.prototype.toString.call(x)
  * Ensure a component can render as a give prop value.
  */
 export const as = (...args) =>
-  PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.symbol])(...args)
+  (PropTypes.oneOfType([PropTypes.func, PropTypes.string, PropTypes.symbol]) as any)(...args)
 
 /**
  * Ensure a prop is a valid DOM node.
  */
-export const domNode = (props, propName) => {
+export const domNode = (props: ObjectOf<any>, propName: string) => {
   // skip if prop is undefined
   if (props[propName] === undefined) return
   // skip if prop is valid
@@ -28,16 +31,16 @@ export const domNode = (props, propName) => {
  * Useful for very large lists of options (e.g. Icon name, Flag name, etc.)
  * @param {string[]} suggestions An array of allowed values.
  */
-export const suggest = suggestions => {
+export const suggest = (suggestions: string[]) => {
   if (!Array.isArray(suggestions)) {
     throw new Error('Invalid argument supplied to suggest, expected an instance of array.')
   }
 
-  const findBestSuggestions = _.memoize(str => {
+  const findBestSuggestions = _.memoize((str: string) => {
     const propValueWords = str.split(' ')
 
     return _.flow(
-      _.map(suggestion => {
+      _.map((suggestion: string) => {
         const suggestionWords = suggestion.split(' ')
 
         const propValueScore = _.flow(
@@ -54,7 +57,7 @@ export const suggest = suggestions => {
 
         return { suggestion, score: propValueScore + suggestionScore }
       }),
-      _.sortBy(['score', 'suggestion']),
+      _.sortBy<SuggestProps>(['score', 'suggestion']),
       _.take(3),
     )(suggestions)
   })
@@ -73,11 +76,11 @@ export const suggest = suggestions => {
     return acc
   }, {})
 
-  return (props, propName, componentName) => {
+  return (props: ObjectOf<any>, propName: string, componentName: string) => {
     const propValue = props[propName]
 
     // skip if prop is undefined or is included in the suggestions
-    if (!propValue || suggestionsLookup[propValue]) return
+    if (!propValue || suggestionsLookup[propValue]) return undefined
 
     // check if the words were correct but ordered differently.
     // Since we're matching for classNames we need to allow any word order
@@ -86,13 +89,13 @@ export const suggest = suggestions => {
       .split(' ')
       .sort()
       .join(' ')
-    if (suggestionsLookup[propValueSorted]) return
+    if (suggestionsLookup[propValueSorted]) return undefined
 
     // find best suggestions
     const bestMatches = findBestSuggestions(propValue)
 
     // skip if a match scored 0
-    if (bestMatches.some(x => x.score === 0)) return
+    if (bestMatches.some(x => x.score === 0)) return undefined
 
     return new Error(
       [
@@ -109,7 +112,11 @@ export const suggest = suggestions => {
  * Disallow other props from being defined with this prop.
  * @param {string[]} disallowedProps An array of props that cannot be used with this prop.
  */
-export const disallow = disallowedProps => (props, propName, componentName) => {
+export const disallow = (disallowedProps: string[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+) => {
   if (!Array.isArray(disallowedProps)) {
     throw new Error(
       [
@@ -120,7 +127,7 @@ export const disallow = disallowedProps => (props, propName, componentName) => {
   }
 
   // skip if prop is undefined
-  if (_.isNil(props[propName]) || props[propName] === false) return
+  if (_.isNil(props[propName]) || props[propName] === false) return undefined
 
   // find disallowed props with values
   const disallowed = disallowedProps.reduce((acc, disallowedProp) => {
@@ -140,13 +147,20 @@ export const disallow = disallowedProps => (props, propName, componentName) => {
       ].join(' '),
     )
   }
+
+  return undefined
 }
 
 /**
  * Ensure a prop adherers to multiple prop type validators.
  * @param {function[]} validators An array of propType functions.
  */
-export const every = validators => (props, propName, componentName, ...rest) => {
+export const every = (validators: Function[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any[]
+) => {
   if (!Array.isArray(validators)) {
     throw new Error(
       [
@@ -176,7 +190,12 @@ export const every = validators => (props, propName, componentName, ...rest) => 
  * Ensure a prop adherers to at least one of the given prop type validators.
  * @param {function[]} validators An array of propType functions.
  */
-export const some = validators => (props, propName, componentName, ...rest) => {
+export const some = (validators: Function[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any[]
+) => {
   if (!Array.isArray(validators)) {
     throw new Error(
       [
@@ -187,22 +206,24 @@ export const some = validators => (props, propName, componentName, ...rest) => {
   }
 
   const errors = _.compact(
-    _.map(validators, validator => {
+    _.map(validator => {
       if (!_.isFunction(validator)) {
         throw new Error(
           `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
       return validator(props, propName, componentName, ...rest)
-    }),
+    }, validators),
   )
 
   // fail only if all validators failed
   if (errors.length === validators.length) {
     const error = new Error('One of these validators must pass:')
-    error.message += `\n${_.map(errors, (err, i) => `[${i + 1}]: ${err.message}`).join('\n')}`
+    error.message += `\n${_.map(err => `- ${err.message}`, errors).join('\n')}`
     return error
   }
+
+  return undefined
 }
 
 /**
@@ -210,7 +231,12 @@ export const some = validators => (props, propName, componentName, ...rest) => {
  * @param {object} propsShape An object describing the prop shape.
  * @param {function} validator A propType function.
  */
-export const givenProps = (propsShape, validator) => (props, propName, componentName, ...rest) => {
+export const givenProps = (propsShape: object, validator: Function) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...rest: any
+) => {
   if (!_.isPlainObject(propsShape)) {
     throw new Error(
       [
@@ -237,7 +263,7 @@ export const givenProps = (propsShape, validator) => (props, propName, component
       : val === props[propName]
   })
 
-  if (!shouldValidate) return
+  if (!shouldValidate) return undefined
 
   const error = validator(props, propName, componentName, ...rest)
 
@@ -264,7 +290,11 @@ export const givenProps = (propsShape, validator) => (props, propName, component
  * Define prop dependencies by requiring other props.
  * @param {string[]} requiredProps An array of required prop names.
  */
-export const demand = requiredProps => (props, propName, componentName) => {
+export const demand = (requiredProps: string[]) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+) => {
   if (!Array.isArray(requiredProps)) {
     throw new Error(
       [
@@ -275,7 +305,7 @@ export const demand = requiredProps => (props, propName, componentName) => {
   }
 
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
 
   const missingRequired = requiredProps.filter(requiredProp => props[requiredProp] === undefined)
   if (missingRequired.length > 0) {
@@ -285,13 +315,19 @@ export const demand = requiredProps => (props, propName, componentName) => {
       )}\`.`,
     )
   }
+
+  return undefined
 }
 
 /**
  * Ensure an multiple prop contains a string with only possible values.
  * @param {string[]} possible An array of possible values to prop.
  */
-export const multipleProp = possible => (props, propName, componentName) => {
+export const multipleProp = (possible: string[]) => (
+  props: ObjectOf<string | false>,
+  propName: string,
+  componentName: string,
+) => {
   if (!Array.isArray(possible)) {
     throw new Error(
       [
@@ -304,7 +340,7 @@ export const multipleProp = possible => (props, propName, componentName) => {
   const propValue = props[propName]
 
   // skip if prop is undefined
-  if (_.isNil(propValue) || propValue === false) return
+  if (_.isNil(propValue) || propValue === false) return undefined
 
   const values = propValue
     .replace('large screen', 'large-screen')
@@ -321,12 +357,20 @@ export const multipleProp = possible => (props, propName, componentName) => {
       )}\`.`,
     )
   }
+
+  return undefined
 }
 
 /**
  * Ensure a component can render as a node passed as a prop value in place of children.
  */
 export const contentShorthand = every([disallow(['children']), PropTypes.node])
+
+export const wrapperShorthand = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.object,
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
+])
 
 /**
  * Item shorthand is a description of a component that can be a literal,
@@ -351,7 +395,12 @@ export const collectionShorthand = every([disallow(['children']), PropTypes.arra
  * @param {string} help A help message to display with the deprecation warning.
  * @param {function} [validator] A propType function.
  */
-export const deprecate = (help, validator) => (props, propName, componentName, ...args) => {
+export const deprecate = (help: string, validator: Function) => (
+  props: ObjectOf<any>,
+  propName: string,
+  componentName: string,
+  ...args: any[]
+) => {
   if (typeof help !== 'string') {
     throw new Error(
       [
@@ -362,7 +411,7 @@ export const deprecate = (help, validator) => (props, propName, componentName, .
   }
 
   // skip if prop is undefined
-  if (props[propName] === undefined) return
+  if (props[propName] === undefined) return undefined
 
   // deprecation error and help
   const error = new Error(`The \`${propName}\` prop in \`${componentName}\` is deprecated.`)
@@ -387,3 +436,17 @@ export const deprecate = (help, validator) => (props, propName, componentName, .
 
   return error
 }
+
+export const animation = PropTypes.oneOfType([
+  PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    delay: PropTypes.string,
+    direction: PropTypes.string,
+    duration: PropTypes.string,
+    fillMode: PropTypes.string,
+    iterationCount: PropTypes.string,
+    playState: PropTypes.string,
+    timingFunction: PropTypes.string,
+  }),
+  PropTypes.string,
+])

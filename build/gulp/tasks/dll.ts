@@ -1,11 +1,10 @@
 import { task, series } from 'gulp'
-import loadPlugins from 'gulp-load-plugins'
-import rimraf from 'rimraf'
-import webpack from 'webpack'
+import * as rimraf from 'rimraf'
+import * as webpack from 'webpack'
 
 import config from '../../../config'
 
-const g = loadPlugins()
+const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
 // ----------------------------------------
@@ -37,7 +36,7 @@ task('build:dll', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

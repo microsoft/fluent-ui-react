@@ -1,17 +1,17 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { Component, createElement } from 'react'
+import * as React from 'react'
 
-import { exampleContext, truncateStyle } from 'docs/src/utils'
+import { exampleContext } from 'docs/src/utils'
 import { Grid, List } from 'semantic-ui-react'
 import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 
-interface IComponentExamples {
+interface ComponentExamplesProps {
   displayName: string
 }
 
-export default class ComponentExamples extends Component<IComponentExamples, any> {
+export default class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
   public static propTypes = {
     displayName: PropTypes.string.isRequired,
   }
@@ -28,17 +28,19 @@ export default class ComponentExamples extends Component<IComponentExamples, any
    * 2. for every ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
    *              ./docs/src/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
    */
-  private renderExamples = (): JSX.Element => {
+  private renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
     const allPaths = exampleContext.keys()
 
     // rule #1
-    const indexPath = _.find(allPaths, path => new RegExp(`${displayName}/index.tsx$`).test(path))
+    const indexPath = _.find(allPaths, path =>
+      new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
+    )
     if (!indexPath) {
       return null
     }
 
-    const ExamplesElement = createElement(exampleContext(indexPath).default) as any
+    const ExamplesElement = React.createElement(exampleContext(indexPath).default) as any
     if (!ExamplesElement) {
       return null
     }
@@ -59,9 +61,7 @@ export default class ComponentExamples extends Component<IComponentExamples, any
 
     return this.renderElementWrappedInGrid(
       <ContributionPrompt>
-        <div style={truncateStyle}>
-          Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code> examples.
-        </div>
+        Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code> examples.
       </ContributionPrompt>,
     )
   }

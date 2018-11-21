@@ -1,0 +1,380 @@
+import * as CSSType from 'csstype'
+import { IRenderer as FelaRenderer } from 'fela'
+import * as React from 'react'
+import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
+
+// Themes go through 3 phases.
+// 1. Input - (from the user), variable and style objects/functions, some values optional
+// 2. Prepared - (on context), variable and style functions only, all values required
+// 3. Resolved - (for rendering), plain object variables and styles, all values required
+//
+// We use these terms in typings to indicate which phase the typings apply to.
+
+// ========================================================
+// Props
+// ========================================================
+
+export type PropsWithVarsAndStyles = Extendable<{
+  variables?: ComponentVariablesInput
+  styles?: ComponentSlotStyle
+}>
+
+// ========================================================
+// State
+// ========================================================
+
+export type State = ObjectOf<any>
+
+// ========================================================
+// Variables
+// ========================================================
+
+export interface SiteVariablesInput extends ObjectOf<any> {
+  brand?: string
+  htmlFontSize?: string
+}
+
+export interface SiteVariablesPrepared extends ObjectOf<any> {
+  brand?: string
+  htmlFontSize?: string
+  fontSizes: ObjectOf<string>
+}
+
+export type ComponentVariablesObject = any
+
+export type ComponentVariablesPrepared = (
+  siteVariables?: SiteVariablesPrepared,
+  props?: any,
+) => ComponentVariablesObject
+
+export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
+
+// ========================================================
+// Styles
+// ========================================================
+
+export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
+  content?: string
+}
+
+export interface ICSSInJSStyle extends React.CSSProperties {
+  // TODO Questionable: how else would users target their own children?
+  [key: string]: any
+
+  // missing React.CSSProperties
+  speak?: CSSType.Globals | 'none' | 'normal' | 'spell-out'
+
+  // CSS in JS Properties
+  '::before'?: ICSSPseudoElementStyle
+  '::after'?: ICSSPseudoElementStyle
+
+  ':hover'?: ICSSInJSStyle
+  ':active'?: ICSSInJSStyle
+  ':focus'?: ICSSInJSStyle
+  ':visited'?: ICSSInJSStyle
+
+  // TODO Questionable: avoid order specific styles
+  ':first-child'?: ICSSInJSStyle
+  ':last-child'?: ICSSInJSStyle
+  ':nth-child(n+2)'?: ICSSInJSStyle
+
+  // TODO Questionable: unsupported by autoprefixer, one-off vendors
+  // we could expand these ourselves so that "font-smoothing" works, but which values?
+  '-webkit-font-smoothing'?:
+    | CSSType.Globals
+    | 'auto'
+    | 'none'
+    | 'antialiased'
+    | 'subpixel-antialiased'
+  '-moz-osx-font-smoothing'?: CSSType.Globals | 'auto' | 'grayscale'
+}
+
+export interface ComponentStyleFunctionParam<
+  TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
+  TVars extends ComponentVariablesObject = ComponentVariablesObject
+> {
+  props: State & TProps
+  variables: TVars
+  theme: ThemePrepared
+}
+
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+  styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
+) => ICSSInJSStyle)
+
+export type ComponentSlotStyle<TProps = {}, TVars = {}> =
+  | ComponentSlotStyleFunction<TProps, TVars>
+  | ICSSInJSStyle
+
+export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentSlotStyle<TProps, TVars>> {}
+
+export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
+  extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
+
+export interface ComponentSlotClasses extends ObjectOf<string> {}
+export interface ComponentSlotClasses extends ObjectOf<string> {}
+
+export type Animation =
+  | {
+      name: string
+      delay?: string
+      direction?: string
+      duration?: string
+      fillMode?: string
+      iterationCount?: string
+      playState?: string
+      timingFunction?: string
+    }
+  | string
+// ========================================================
+// Static Styles
+// ========================================================
+
+export type StaticStyleObject = ObjectOf<ICSSInJSStyle>
+
+export type StaticStyleRenderable = string | StaticStyleObject
+
+export type StaticStyleFunction = (siteVariables?: SiteVariablesPrepared) => StaticStyleObject
+
+export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
+
+export type StaticStyles = StaticStyle[]
+
+export interface ThemeAnimation {
+  keyframe: any
+  delay?: string
+  direction?: string
+  duration?: string
+  fillMode?: string
+  iterationCount?: string
+  playState?: string
+  timingFunction?: string
+}
+
+// ========================================================
+// Theme
+// ========================================================
+export interface ThemeInput {
+  siteVariables?: SiteVariablesInput
+  componentVariables?: ThemeComponentVariablesInput
+  componentStyles?: ThemeComponentStylesInput
+  rtl?: boolean
+  renderer?: Renderer
+  fontFaces?: FontFaces
+  staticStyles?: StaticStyles
+  icons?: ThemeIcons
+  animations?: { [key: string]: ThemeAnimation }
+}
+
+// Component variables and styles must be resolved by the component after
+// all cascading is complete, not by any Provider in the middle of the tree.
+// This ensures the final site variables are used in the component's variables
+// and styles. Resolving component variables/styles in the Provider would mean
+// the latest site variables might not be applied to the component.
+//
+// As a theme cascades down the tree and is merged with the previous theme on
+// context, the resulting theme takes this shape.
+export interface ThemePrepared {
+  siteVariables: SiteVariablesPrepared
+  componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+  componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+  icons: ThemeIcons
+  rtl: boolean
+  renderer: Renderer
+  fontFaces: FontFaces
+  staticStyles: StaticStyles
+  animations: { [key: string]: ThemeAnimation }
+}
+
+export interface ThemeComponentStylesInput {
+  [key: string]: ComponentSlotStylesInput | undefined
+
+  Accordion?: ComponentSlotStylesInput
+  Attachment?: ComponentSlotStylesInput
+  Avatar?: ComponentSlotStylesInput
+  Button?: ComponentSlotStylesInput
+  ButtonGroup?: ComponentSlotStylesInput
+  Chat?: ComponentSlotStylesInput
+  ChatItem?: ComponentSlotStylesInput
+  ChatMessage?: ComponentSlotStylesInput
+  Divider?: ComponentSlotStylesInput
+  Form?: ComponentSlotStylesInput
+  FormField?: ComponentSlotStylesInput
+  Grid?: ComponentSlotStylesInput
+  Header?: ComponentSlotStylesInput
+  HeaderDescription?: ComponentSlotStylesInput
+  Icon?: ComponentSlotStylesInput
+  Image?: ComponentSlotStylesInput
+  Input?: ComponentSlotStylesInput
+  ItemLayout?: ComponentSlotStylesInput
+  Label?: ComponentSlotStylesInput
+  Layout?: ComponentSlotStylesInput
+  List?: ComponentSlotStylesInput
+  ListItem?: ComponentSlotStylesInput
+  Menu?: ComponentSlotStylesInput
+  MenuItem?: ComponentSlotStylesInput
+  Portal?: ComponentSlotStylesInput
+  Popup?: ComponentSlotStylesInput
+  PopupContent?: ComponentSlotStylesInput
+  RadioGroup?: ComponentSlotStylesInput
+  RadioGroupItem?: ComponentSlotStylesInput
+  Segment?: ComponentSlotStylesInput
+  Status?: ComponentSlotStylesInput
+  Text?: ComponentSlotStylesInput
+}
+
+export interface ThemeComponentStylesPrepared {
+  [key: string]: ComponentSlotStylesPrepared | undefined
+
+  Accordion?: ComponentSlotStylesPrepared
+  Attachment?: ComponentSlotStylesPrepared
+  Avatar?: ComponentSlotStylesPrepared
+  Button?: ComponentSlotStylesPrepared
+  ButtonGroup?: ComponentSlotStylesPrepared
+  Chat?: ComponentSlotStylesPrepared
+  ChatItem?: ComponentSlotStylesPrepared
+  ChatMessage?: ComponentSlotStylesPrepared
+  Divider?: ComponentSlotStylesPrepared
+  Form?: ComponentSlotStylesPrepared
+  FormField?: ComponentSlotStylesPrepared
+  Grid?: ComponentSlotStylesPrepared
+  Header?: ComponentSlotStylesPrepared
+  HeaderDescription?: ComponentSlotStylesPrepared
+  Icon?: ComponentSlotStylesPrepared
+  Image?: ComponentSlotStylesPrepared
+  Input?: ComponentSlotStylesPrepared
+  ItemLayout?: ComponentSlotStylesPrepared
+  Label?: ComponentSlotStylesPrepared
+  Layout?: ComponentSlotStylesPrepared
+  List?: ComponentSlotStylesPrepared
+  ListItem?: ComponentSlotStylesPrepared
+  Menu?: ComponentSlotStylesPrepared
+  MenuItem?: ComponentSlotStylesPrepared
+  Portal?: ComponentSlotStylesPrepared
+  Popup?: ComponentSlotStylesPrepared
+  PopupContent?: ComponentSlotStylesPrepared
+  RadioGroup?: ComponentSlotStylesPrepared
+  RadioGroupItem?: ComponentSlotStylesPrepared
+  Segment?: ComponentSlotStylesPrepared
+  Status?: ComponentSlotStylesPrepared
+  Text?: ComponentSlotStylesPrepared
+}
+
+export interface ThemeComponentVariablesInput {
+  [key: string]: any
+
+  Accordion?: ComponentVariablesInput
+  Attachment?: ComponentVariablesInput
+  Avatar?: ComponentVariablesInput
+  Button?: ComponentVariablesInput
+  ButtonGroup?: ComponentVariablesInput
+  Chat?: ComponentVariablesInput
+  ChatItem?: ComponentVariablesInput
+  ChatMessage?: ComponentVariablesInput
+  Divider?: ComponentVariablesInput
+  Form?: ComponentVariablesInput
+  FormField?: ComponentVariablesInput
+  Grid?: ComponentVariablesInput
+  Header?: ComponentVariablesInput
+  HeaderDescription?: ComponentVariablesInput
+  Icon?: ComponentVariablesInput
+  Image?: ComponentVariablesInput
+  Input?: ComponentVariablesInput
+  ItemLayout?: ComponentVariablesInput
+  Label?: ComponentVariablesInput
+  Layout?: ComponentVariablesInput
+  List?: ComponentVariablesInput
+  ListItem?: ComponentVariablesInput
+  Menu?: ComponentVariablesInput
+  MenuItem?: ComponentVariablesInput
+  Portal?: ComponentVariablesInput
+  Popup?: ComponentVariablesInput
+  PopupContent?: ComponentVariablesInput
+  RadioGroup?: ComponentVariablesInput
+  RadioGroupItem?: ComponentVariablesInput
+  Segment?: ComponentVariablesInput
+  Status?: ComponentVariablesInput
+  Text?: ComponentVariablesInput
+}
+
+export interface ThemeComponentVariablesPrepared {
+  [key: string]: any
+
+  Accordion?: ComponentVariablesPrepared
+  Attachment?: ComponentVariablesPrepared
+  Avatar?: ComponentVariablesPrepared
+  Button?: ComponentVariablesPrepared
+  ButtonGroup?: ComponentVariablesPrepared
+  Chat?: ComponentVariablesPrepared
+  ChatItem?: ComponentVariablesPrepared
+  ChatMessage?: ComponentVariablesPrepared
+  Divider?: ComponentVariablesPrepared
+  Form?: ComponentVariablesPrepared
+  FormField?: ComponentVariablesPrepared
+  Grid?: ComponentVariablesPrepared
+  Header?: ComponentVariablesPrepared
+  HeaderDescription?: ComponentVariablesPrepared
+  Icon?: ComponentVariablesPrepared
+  Image?: ComponentVariablesPrepared
+  Input?: ComponentVariablesPrepared
+  ItemLayout?: ComponentVariablesPrepared
+  Label?: ComponentVariablesPrepared
+  Layout?: ComponentVariablesPrepared
+  List?: ComponentVariablesPrepared
+  ListItem?: ComponentVariablesPrepared
+  Menu?: ComponentVariablesPrepared
+  MenuItem?: ComponentVariablesPrepared
+  Portal?: ComponentVariablesPrepared
+  Popup?: ComponentVariablesPrepared
+  PopupContent?: ComponentVariablesPrepared
+  RadioGroup?: ComponentVariablesPrepared
+  RadioGroupItem?: ComponentVariablesPrepared
+  Segment?: ComponentVariablesPrepared
+  Status?: ComponentVariablesPrepared
+  Text?: ComponentVariablesPrepared
+}
+
+export interface Renderer extends FelaRenderer {}
+
+// ========================================================
+// Fonts
+// ========================================================
+
+export interface FontFaceStyle {
+  fontStretch?: string
+  fontStyle?: string
+  fontVariant?: string
+  fontWeight?: number
+  localAlias?: string
+  unicodeRange?: string
+}
+
+export interface FontFace {
+  name: string
+  paths: string[]
+  style: FontFaceStyle
+}
+
+export type FontFaces = FontFace[]
+
+// ========================================================
+// Icons
+// ========================================================
+
+type SvgIconFuncArg = {
+  classes: { [iconSlot: string]: string }
+}
+
+export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
+export type FontIconSpec = ObjectOrFunc<{
+  content: string
+  fontFamily: string
+}>
+
+export type ThemeIconSpec = {
+  isSvg?: boolean
+  icon: FontIconSpec | SvgIconSpec
+}
+
+export type ThemeIcons = { [iconName: string]: ThemeIconSpec }

@@ -1,4 +1,4 @@
 // Themes
-import * as teams from './teams'
-
-export { teams }
+export { default as teams } from './teams'
+export { default as teamsDark } from './teams-dark'
+export { default as teamsHighContrast } from './teams-high-contrast'

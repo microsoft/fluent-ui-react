@@ -1,10 +1,11 @@
-import gutil from 'gulp-util'
-import _ from 'lodash'
-import path from 'path'
-import through2 from 'through2'
-import Vinyl from 'vinyl'
+import * as gutil from 'gulp-util'
+import * as _ from 'lodash'
+import * as path from 'path'
+import * as through2 from 'through2'
+import * as Vinyl from 'vinyl'
 
 import { parseDocSection } from './util'
+import { ObjectOf } from 'types/utils'
 
 const SECTION_ORDER = {
   Types: 1,
@@ -22,7 +23,13 @@ const getSectionOrder = sectionName =>
 const pluginName = 'gulp-example-menu'
 
 export default () => {
-  const exampleFilesByDisplayName = {}
+  const exampleFilesByDisplayName: ObjectOf<
+    ObjectOf<{
+      sectionName: string
+      examples: ObjectOf<any>
+      order: number
+    }>
+  > = {}
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {
@@ -36,7 +43,9 @@ export default () => {
     }
 
     try {
-      const [type, displayName, sectionName, exampleName] = _.split(file.path, path.sep).slice(-4)
+      const pathParts = _.split(file.path, path.sep).slice(-4)
+      const displayName = pathParts[1]
+      const sectionName = pathParts[2]
       const { examples } = parseDocSection(file.contents)
 
       _.merge(exampleFilesByDisplayName, {

@@ -22,7 +22,7 @@
  *    Some instance methods may be exposed to users via refs.  Again, these are lost with HOC unless
  *    hoisted and exposed by the HOC.
  */
-import _ from 'lodash'
+import * as _ from 'lodash'
 import UIComponent from './UIComponent'
 
 const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(1)}`
@@ -42,10 +42,10 @@ const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(
  *  @param {boolean} [includeDefaults=false] Whether or not to heed the default props or initial state
  */
 export const getAutoControlledStateValue = (
-  propName,
-  props,
-  state = undefined,
-  includeDefaults = false,
+  propName: string,
+  props: any,
+  state: any = undefined,
+  includeDefaults: boolean = false,
 ) => {
   // regular props
   const propValue = props[propName]
@@ -71,7 +71,7 @@ export const getAutoControlledStateValue = (
   // otherwise, undefined
 }
 
-export default class AutoControlledComponent<P, S> extends UIComponent<P, S> {
+export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent<P, S> {
   constructor(props, ctx) {
     super(props, ctx)
 
@@ -171,13 +171,10 @@ export default class AutoControlledComponent<P, S> extends UIComponent<P, S> {
 
     // Solve the next state for autoControlledProps
     const newState = autoControlledProps.reduce((acc, prop) => {
-      const isNextUndefined = _.isUndefined(nextProps[prop])
-      const propWasRemoved = !_.isUndefined(this.props[prop]) && isNextUndefined
+      const isNextDefined = !_.isUndefined(nextProps[prop])
 
       // if next is defined then use its value
-      if (!isNextUndefined) acc[prop] = nextProps[prop]
-      // reinitialize state for props just removed / set undefined
-      else if (propWasRemoved) acc[prop] = getAutoControlledStateValue(prop, nextProps)
+      if (isNextDefined) acc[prop] = nextProps[prop]
 
       return acc
     }, {})
@@ -191,7 +188,7 @@ export default class AutoControlledComponent<P, S> extends UIComponent<P, S> {
    * @param {object} maybeState State that corresponds to controlled props.
    * @param {object} [state] Actual state, useful when you also need to setState.
    */
-  trySetState = (maybeState, state?) => {
+  trySetState = (maybeState, state?): boolean => {
     const { autoControlledProps } = this.constructor as any
     if (process.env.NODE_ENV !== 'production') {
       const { name } = this.constructor
@@ -221,6 +218,11 @@ export default class AutoControlledComponent<P, S> extends UIComponent<P, S> {
 
     if (state) newState = { ...newState, ...state }
 
-    if (Object.keys(newState).length > 0) this.setState(newState)
+    if (Object.keys(newState).length > 0) {
+      this.setState(newState)
+      return true
+    }
+
+    return false
   }
 }

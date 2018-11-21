@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 /**
  * Determines if a click's coordinates are within the bounds of a node.
@@ -39,7 +39,7 @@ const doesNodeContainClick = (node, e) => {
   if (!node.offsetWidth || !node.offsetHeight || !clientRects || !clientRects.length) return false
 
   // false if the node doesn't have a valid bounding rect
-  const { top, bottom, left, right } = _.first(clientRects)
+  const { top, bottom, left, right } = _.first(clientRects) as any
   if (_.some([top, bottom, left, right], _.isNil)) return false
 
   // we add a small decimal to the upper bound just to make it inclusive

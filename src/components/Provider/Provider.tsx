@@ -1,111 +1,135 @@
-import _ from 'lodash'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, felaRtlRenderer } from '../../lib'
+import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
+import {
+  ThemePrepared,
+  ThemeInput,
+  StaticStyleObject,
+  StaticStyle,
+  StaticStyleFunction,
+  FontFace,
+} from '../../themes/types'
 import ProviderConsumer from './ProviderConsumer'
+import { mergeSiteVariables } from '../../lib/mergeThemes'
+
+export interface ProviderProps {
+  theme: ThemeInput
+  children: React.ReactNode
+}
 
 /**
- * The Provider passes the CSS in JS renderer and theme down context.
+ * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends Component<any, any> {
+class Provider extends React.Component<ProviderProps, any> {
   static propTypes = {
-    fontFaces: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        paths: PropTypes.arrayOf(PropTypes.string),
-        style: PropTypes.shape({
-          fontStretch: PropTypes.string,
-          fontStyle: PropTypes.string,
-          fontVariant: PropTypes.string,
-          fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          localAlias: PropTypes.string,
-          unicodeRange: PropTypes.string,
+    theme: PropTypes.shape({
+      siteVariables: PropTypes.object,
+      componentVariables: PropTypes.object,
+      componentStyles: PropTypes.object,
+      rtl: PropTypes.bool,
+      fontFaces: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          paths: PropTypes.arrayOf(PropTypes.string),
+          style: PropTypes.shape({
+            fontStretch: PropTypes.string,
+            fontStyle: PropTypes.string,
+            fontVariant: PropTypes.string,
+            fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            localAlias: PropTypes.string,
+            unicodeRange: PropTypes.string,
+          }),
         }),
-      }),
-    ),
-    siteVariables: PropTypes.object,
-    componentVariables: PropTypes.object,
-    staticStyles: PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
-    ),
-    rtl: PropTypes.bool,
+      ),
+      staticStyles: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
+      ),
+      animations: PropTypes.object,
+    }),
     children: PropTypes.element.isRequired,
   }
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = felaRenderer => {
-    const { siteVariables, staticStyles } = this.props
+  renderStaticStyles = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
+    const { siteVariables, staticStyles } = this.props.theme
 
     if (!staticStyles) return
 
-    const renderObject = object => {
+    const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaRenderer.renderStatic(style, selector)
+        felaLtrRenderer.renderStatic(style, selector)
       })
     }
 
-    const staticStylesArr = [].concat(staticStyles)
-
-    staticStylesArr.forEach(staticStyle => {
-      if (_.isString(staticStyle)) {
-        felaRenderer.renderStatic(staticStyle)
+    staticStyles.forEach((staticStyle: StaticStyle) => {
+      if (typeof staticStyle === 'string') {
+        felaLtrRenderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
-        renderObject(staticStyle)
+        renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
-        renderObject(staticStyle(siteVariables))
+        const preparedSiteVariables = mergeSiteVariables(siteVariables)
+        renderObject((staticStyle as StaticStyleFunction)(preparedSiteVariables))
       } else {
         throw new Error(
-          `staticStyles array must contain CSS strings, style objects, or rule functions, got: ${typeof staticStyle}`,
+          `staticStyles array must contain CSS strings, style objects, or style functions, got: ${typeof staticStyle}`,
         )
       }
     })
   }
 
-  renderFontFaces = felaRenderer => {
-    const { siteVariables, fontFaces } = this.props
+  renderFontFaces = () => {
+    // RTL WARNING
+    // This function sets static styles which are global and renderer agnostic
+    // With current implementation, static styles cannot differ between LTR and RTL
+    // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
+
+    const { fontFaces } = this.props.theme
 
     if (!fontFaces) return
 
-    const renderFontObject = font => {
+    const renderFontObject = (font: FontFace) => {
       if (!_.isPlainObject(font)) {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
-      felaRenderer.renderFont(font.name, font.path, font.style)
+      felaLtrRenderer.renderFont(font.name, font.paths, font.style)
     }
 
-    const fontFaceArr = [].concat(_.isFunction(fontFaces) ? fontFaces(siteVariables) : fontFaces)
-
-    fontFaceArr.forEach(fontObject => {
-      renderFontObject(fontObject)
+    fontFaces.forEach((font: FontFace) => {
+      renderFontObject(font)
     })
   }
 
   componentDidMount() {
-    const felaRenderer = this.props.rtl ? felaRtlRenderer : felaLtrRenderer
-    this.renderStaticStyles(felaRenderer)
-    this.renderFontFaces(felaRenderer)
+    this.renderStaticStyles()
+    this.renderFontFaces()
   }
 
   render() {
-    const { componentVariables, siteVariables, children, rtl } = this.props
+    const { theme, children } = this.props
 
-    // ensure we don't assign `undefined` values to the theme context
-    // they will override values down stream
-    const theme: any = { rtl: !!rtl }
-    if (siteVariables) {
-      theme.siteVariables = siteVariables
-    }
-    if (componentVariables) {
-      theme.componentVariables = componentVariables
-    }
-
+    // rehydration disabled to avoid leaking styles between renderers
+    // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     return (
-      <RendererProvider renderer={this.props.rtl ? felaRtlRenderer : felaLtrRenderer}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
-      </RendererProvider>
+      <ProviderConsumer
+        render={(incomingTheme: ThemePrepared) => {
+          const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+
+          return (
+            <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
+              <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
+            </RendererProvider>
+          )
+        }}
+      />
     )
   }
 }

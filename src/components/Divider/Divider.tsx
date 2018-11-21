@@ -1,49 +1,55 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import * as PropTypes from 'prop-types'
 
-import dividerRules from './dividerRules'
-import dividerVariables from './dividerVariables'
+import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
+import { Extendable } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+export interface DividerProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** A divider can be fitted, without any space above or below it.  */
+  fitted?: boolean
+
+  /** Size multiplier (default 0) * */
+  size?: number
+
+  /** A Divider can be formatted to show different levels of emphasis. */
+  type?: 'primary' | 'secondary'
+
+  /** A divider can appear more important and draw the user's attention. */
+  important?: boolean
+}
 
 /**
- * @accessibility
- * This is shown at the top.
+ * A divider visually segments content into groups.
  */
-class Divider extends UIComponent<any, any> {
+class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
 
   static className = 'ui-divider'
 
-  static rules = dividerRules
-
-  static variables = dividerVariables
-
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Child content * */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Size multiplier (default 0) * */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
+    fitted: PropTypes.bool,
     size: PropTypes.number,
-
-    /** A Divider can be formatted to show different levels of emphasis. */
     type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** A divider can appear more important and draw the user's attention. */
     important: PropTypes.bool,
   }
-
-  static handledProps = ['as', 'children', 'className', 'content', 'important', 'size', 'type']
 
   static defaultProps = {
     size: 0,
@@ -60,6 +66,8 @@ class Divider extends UIComponent<any, any> {
   }
 }
 
-Divider.create = createShorthandFactory(Divider, content => ({ content }))
+Divider.create = createShorthandFactory(Divider, 'content')
 
 export default Divider
+
+export type DividerPropsWithDefaults = DividerProps & typeof Divider.defaultProps

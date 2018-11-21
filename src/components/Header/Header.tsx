@@ -1,49 +1,72 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import HeaderSubheader from './HeaderSubheader'
-import headerRules from './headerRules'
-import headerVariables from './headerVariables'
+import HeaderDescription from './HeaderDescription'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
+
+export interface HeaderProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Shorthand for Header.Description. */
+  description?: ShorthandValue
+
+  /** Align header content. */
+  textAlign?: 'left' | 'center' | 'right' | 'justified'
+
+  /**
+   * A custom render function the description slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderDescription?: ShorthandRenderFunction
+}
 
 /**
- * A header provides a short summary of content
+ * A header provides a short summary of content.
+ * @accessibility
+ * Headings communicate the organization of the content on the page. Web browsers, plug-ins, and assistive technologies can use them to provide in-page navigation.
+ * Nest headings by their rank (or level). The most important heading has the rank 1 (<h1>), the least important heading rank 6 (<h6>). Headings with an equal or higher rank start a new section, headings with a lower rank start new subsections that are part of the higher ranked section.
+ *
+ * Other considerations:
+ *  - when the description property is used in header, readers will narrate both header content and description within the element.
+ *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<any, any> {
+class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Shorthand for Header.Subheader. */
-    subheader: customPropTypes.itemShorthand,
-
-    /** Align header content. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
+    description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+    renderDescription: PropTypes.func,
   }
 
-  static handledProps = ['as', 'children', 'className', 'content', 'subheader', 'textAlign']
+  static defaultProps = {
+    as: 'h1',
+  }
 
-  static rules = headerRules
+  static Description = HeaderDescription
 
-  static variables = headerVariables
-
-  static Subheader = HeaderSubheader
-
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content, subheader } = this.props
+  renderComponent({ ElementType, classes, variables: v, rest }) {
+    const { children, content, description, renderDescription } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -53,12 +76,17 @@ class Header extends UIComponent<any, any> {
       )
     }
 
-    const subheaderElement = HeaderSubheader.create(subheader, { generateKey: false })
-
     return (
       <ElementType {...rest} className={classes.root}>
         {content}
-        {subheaderElement}
+        {HeaderDescription.create(description, {
+          defaultProps: {
+            variables: {
+              ...(v.descriptionColor && { color: v.descriptionColor }),
+            },
+          },
+          render: renderDescription,
+        })}
       </ElementType>
     )
   }

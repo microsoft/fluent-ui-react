@@ -1,10 +1,14 @@
-import { createComponent } from 'react-fela'
+import * as React from 'react'
 
-const KnobsLabel = createComponent(
-  () => ({
-    fontFamily: 'monospace',
-  }),
-  'label',
+interface KnobsLabelProps {
+  name: string
+  value: string
+}
+
+const KnobsLabel: React.SFC<KnobsLabelProps> = ({ name, value }) => (
+  <span>
+    {name}: {JSON.stringify(value, null, 2)},
+  </span>
 )
 
 export default KnobsLabel

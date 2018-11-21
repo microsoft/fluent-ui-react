@@ -6,7 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Circular"
-      description="A label can be circular"
+      description="A label can be circular."
       examplePath="components/Label/Variations/LabelExampleCircular"
     />
   </ExampleSection>

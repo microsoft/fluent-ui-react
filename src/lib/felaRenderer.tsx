@@ -1,13 +1,23 @@
 import { createRenderer } from 'fela'
+import felaSanitizeCss from './felaSanitizeCssPlugin'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import rtl from 'fela-plugin-rtl'
 
+import { Renderer } from '../themes/types'
+
 const createRendererConfig = (options: any = {}) => ({
   plugins: [
+    // is necessary to prevent accidental style typos
+    // from breaking ALL the styles on the page
+    felaSanitizeCss({
+      skip: ['content'],
+    }),
+
     felaPluginPlaceholderPrefixer(),
     felaPluginPrefixer(),
+
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
@@ -17,7 +27,7 @@ const createRendererConfig = (options: any = {}) => ({
   ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
 })
 
-export const felaRenderer = createRenderer(createRendererConfig())
-export const felaRtlRenderer = createRenderer(createRendererConfig({ isRtl: true }))
+export const felaRenderer: Renderer = createRenderer(createRendererConfig())
+export const felaRtlRenderer: Renderer = createRenderer(createRendererConfig({ isRtl: true }))
 
 export default felaRenderer

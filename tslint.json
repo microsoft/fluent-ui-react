@@ -7,6 +7,7 @@
     "linebreak-style": [true, "LF"],
     "max-line-length": [false],
     "no-increment-decrement": false,
+    "no-unused-variable": true,
     "object-curly-spacing": [false],
     "object-shorthand-properties-first": [false],
     "quotemark": [false],
@@ -14,6 +15,16 @@
     "ter-arrow-parens": [false],
     "ter-computed-property-spacing": [false],
     "ter-indent": [false],
+    "trailing-comma": [true, {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "always",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ],
     "variable-name": false
   }
 }

@@ -1,17 +1,26 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 
-import { repoURL, overflowWrap } from 'docs/src/utils'
 import { Message, Icon } from 'semantic-ui-react'
+import { constants } from 'src/lib'
+
+const wrapStyle = { wordBreak: 'break-word' }
 
 const ContributionPrompt: any = ({ children }) => (
-  <Message info icon>
+  <Message info icon style={wrapStyle}>
     <Icon name="bullhorn" />
-    <Message.Content style={overflowWrap}>
-      <div>{children}</div>
+    <Message.Content>
+      {children && <div>{children}</div>}
       <p>
-        If there's no <a href={`${repoURL}/pulls`}>pull request</a> open for this, you should{' '}
-        <a href={`${repoURL}/blob/master/.github/CONTRIBUTING.md`}>contribute</a>!
+        If there's no{' '}
+        <a href={`${constants.repoURL}/pulls`}>
+          pull request <Icon fitted size="small" name="external" />
+        </a>{' '}
+        open for this, you should{' '}
+        <a href={`${constants.repoURL}/blob/master/.github/CONTRIBUTING.md`}>
+          contribute <Icon fitted size="small" name="external" />
+        </a>{' '}
+        one!
       </p>
     </Message.Content>
   </Message>

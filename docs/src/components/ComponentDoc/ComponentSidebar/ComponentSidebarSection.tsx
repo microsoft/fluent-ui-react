@@ -1,11 +1,11 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import * as React from 'react'
 import { Accordion, Icon, Menu } from 'semantic-ui-react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
-export default class ComponentSidebarSection extends PureComponent<any, any> {
+export default class ComponentSidebarSection extends React.PureComponent<any, any> {
   static propTypes = {
     activePath: PropTypes.string,
     examples: PropTypes.arrayOf(

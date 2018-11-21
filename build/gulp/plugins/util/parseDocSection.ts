@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import traverse from 'babel-traverse'
 
 import parseBuffer from './parseBuffer'
@@ -11,6 +11,11 @@ const getJSXAttributes = jsxPath =>
 
 const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name }), 'value')
 
+type Example = {
+  title: string
+  examplePath: string
+}
+
 /**
  * Parses the section view of component examples and builds an object with examples titles and paths.
  *
@@ -19,8 +24,8 @@ const getAttributeValue = (attributes, name) => _.get(_.find(attributes, { name 
  */
 const parseDocSection = buffer => {
   const ast = parseBuffer(buffer)
-  const examples = []
-  let sectionName
+  const examples: Example[] = []
+  let sectionName: string
 
   traverse(ast, {
     JSXOpeningElement: path => {

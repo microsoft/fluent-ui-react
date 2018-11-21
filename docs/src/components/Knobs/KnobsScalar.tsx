@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import * as React from 'react'
 
 import KnobsField from './KnobsField'
 import KnobsLabel from './KnobsLabel'
-import KnobsValue from './KnobsValue'
+import KnobsControl from './KnobsControl'
 
-class KnobsScalar extends Component<any, any> {
+class KnobsScalar extends React.Component<any, any> {
   static propTypes = {
     onChange: PropTypes.func,
     name: PropTypes.string.isRequired,
@@ -39,17 +39,18 @@ class KnobsScalar extends Component<any, any> {
 
     return (
       <KnobsField>
-        <KnobsLabel>{name}</KnobsLabel>
-        <KnobsValue>{value}</KnobsValue>
-        <br />
-        <input
-          type="range"
-          min="0"
-          max={this.defaultValue * 3}
-          step="1"
-          value={this.parseValue(value)}
-          onChange={this.handleChange}
-        />
+        <KnobsControl>
+          <input
+            type="range"
+            min="0"
+            max={this.defaultValue * 3}
+            step="1"
+            value={this.parseValue(value)}
+            onChange={this.handleChange}
+            style={{ width: '100%' }}
+          />
+        </KnobsControl>
+        <KnobsLabel name={name} value={value} />
       </KnobsField>
     )
   }

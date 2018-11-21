@@ -1,13 +1,12 @@
 import { task, series, parallel, src, dest } from 'gulp'
-import loadPlugins from 'gulp-load-plugins'
-import merge2 from 'merge2'
-import rimraf from 'rimraf'
-import webpack from 'webpack'
+import * as merge2 from 'merge2'
+import * as rimraf from 'rimraf'
+import * as webpack from 'webpack'
 
 import config from '../../../config'
 
 const { paths } = config
-const g = loadPlugins()
+const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
 
 // ----------------------------------------
@@ -27,15 +26,28 @@ task('build:dist:commonjs', () => {
   const typescript = g.typescript.createProject(tsConfig, settings)
 
   const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const types = src(paths.base('types/**'))
 
-  return merge2([dts.pipe(dest(paths.dist('types'))), js.pipe(dest(paths.dist('commonjs')))])
+  return merge2([
+    dts.pipe(dest(paths.dist('commonjs'))),
+    js.pipe(dest(paths.dist('commonjs'))),
+    types.pipe(dest(paths.dist('types'))),
+  ])
 })
 
 task('build:dist:es', () => {
-  const typescript = g.typescript.createProject(paths.base('build/tsconfig.es.json'))
-  return src(paths.src('**/*.{ts,tsx}'))
-    .pipe(typescript())
-    .pipe(dest(paths.dist('es')))
+  const tsConfig = paths.base('build/tsconfig.es.json')
+  const settings = { declaration: true }
+  const typescript = g.typescript.createProject(tsConfig, settings)
+
+  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const types = src(paths.base('types/**'))
+
+  return merge2([
+    dts.pipe(dest(paths.dist('es'))),
+    js.pipe(dest(paths.dist('es'))),
+    types.pipe(dest(paths.dist('types'))),
+  ])
 })
 
 task('build:dist:umd', cb => {
@@ -56,7 +68,7 @@ task('build:dist:umd', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

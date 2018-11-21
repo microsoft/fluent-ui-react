@@ -7,10 +7,8 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-class MenuExampleUnderlinedPrimaryShorthand extends React.Component {
-  render() {
-    return <Menu defaultActiveIndex={0} items={items} shape="underlined" type="primary" />
-  }
-}
+const MenuExampleUnderlinedPrimary = () => (
+  <Menu defaultActiveIndex={0} items={items} underlined primary />
+)
 
-export default MenuExampleUnderlinedPrimaryShorthand
+export default MenuExampleUnderlinedPrimary

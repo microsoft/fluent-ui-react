@@ -1,4 +1,4 @@
-import _ from 'lodash/fp'
+import * as _ from 'lodash/fp'
 import parseExamplePath from './parseExamplePath'
 
 /**
