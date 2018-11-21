@@ -13,7 +13,7 @@ const RefTypesExamples = () => (
           both functional and class component children.
         </span>
       }
-      examplePath="components/Ref/Types/RefExampleRef"
+      examplePath="components/Ref/Types/RefExample"
     />
     <ComponentExample
       title="Forward Ref"
@@ -22,7 +22,7 @@ const RefTypesExamples = () => (
           Works with <code>forwardRef</code> API.
         </span>
       }
-      examplePath="components/Ref/Types/RefExampleForwardRef"
+      examplePath="components/Ref/Types/RefForwardingExample"
     />
   </ExampleSection>
 )

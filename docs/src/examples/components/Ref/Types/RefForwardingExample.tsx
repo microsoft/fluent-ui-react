@@ -7,7 +7,7 @@ const ExampleButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
   </div>
 ))
 
-class RefExampleForwardRef extends React.Component {
+class RefForwardingExample extends React.Component {
   forwardedRef = React.createRef<HTMLButtonElement>()
   state = { isMounted: false }
 
@@ -51,4 +51,4 @@ class RefExampleForwardRef extends React.Component {
   }
 }
 
-export default RefExampleForwardRef
+export default RefForwardingExample
