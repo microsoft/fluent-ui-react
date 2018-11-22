@@ -31,7 +31,7 @@ const items = [
 ]
 
 const titleRenderer = (Component, { content, open, ...rest }) => (
-  <Component {...rest}>
+  <Component open={open} {...rest}>
     <Icon name={open ? 'arrow down' : 'arrow right'} />
     <span>{content}</span>
   </Component>
