@@ -111,7 +111,29 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
   // sort props
   info.props = _.sortBy(info.props, 'name')
 
+  // available behaviors
+  info.behaviors = getAvailableBehaviors(info.props.accessibility)
+
   return info
+}
+
+const getAvailableBehaviors = accessibilityProp => {
+  const availableBehaviorNames =
+    (accessibilityProp &&
+      _.get(_.find(accessibilityProp.tags, { title: 'available' }), 'description')) ||
+    ''
+
+  return (
+    availableBehaviorNames &&
+    availableBehaviorNames
+      .replace(/\s/g, '')
+      .split(',')
+      .map(name => ({
+        name,
+        displayName: _.upperFirst(name.replace('Behavior', '')),
+        category: _.upperFirst(name.split(/(?=[A-Z])/)[0]),
+      }))
+  )
 }
 
 export default getComponentInfo
