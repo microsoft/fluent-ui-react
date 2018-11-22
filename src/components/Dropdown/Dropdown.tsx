@@ -110,15 +110,6 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   onCloseIconKeyDown?: ComponentEventHandler<DropdownProps>
 
   /**
-   * Called on container click. Especially useful for multiple search case, when user
-   * can click the container outside the edit text or active values.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onContainerClick?: ComponentEventHandler<DropdownProps>
-
-  /**
    * Called on edit text blur.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
@@ -214,7 +205,6 @@ export default class Dropdown extends AutoControlledComponent<
     onBackspaceDelete: PropTypes.func,
     onCloseIconClick: PropTypes.func,
     onCloseIconKeyDown: PropTypes.func,
-    onContainerClick: PropTypes.func,
     onDropdownChange: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputFocus: PropTypes.func,
@@ -554,8 +544,6 @@ export default class Dropdown extends AutoControlledComponent<
 
   private handleContainerClick = (isOpen: boolean, e: React.SyntheticEvent) => {
     !isOpen && this.inputRef.focus()
-
-    _.invoke(this.props, 'onContainerClick', e, { ...this.props, isOpen })
   }
 
   private handleBackspaceDelete = (e: React.SyntheticEvent) => {
