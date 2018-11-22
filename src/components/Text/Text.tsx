@@ -88,10 +88,10 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
     const hasChidlren = childrenExist(children)
 
-    const maybeDirAuto = !hasChidlren && typeof content === 'string' ? { dir: 'auto' } : {}
+    const maybeDirAuto = !hasChidlren && typeof content === 'string' ? { dir: 'auto' } : null
 
     return (
-      <ElementType {...rest} className={classes.root} {...maybeDirAuto}>
+      <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
         {hasChidlren ? children : content}
       </ElementType>
     )
