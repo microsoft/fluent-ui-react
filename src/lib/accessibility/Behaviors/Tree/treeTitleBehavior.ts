@@ -7,7 +7,6 @@ import { Accessibility } from '../../types'
 const treeTitleBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: 'treeitem',
       ...(props.hasSubtree && { 'aria-expanded': props.open ? 'true' : 'false' }),
     },
   },
