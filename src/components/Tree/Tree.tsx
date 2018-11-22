@@ -6,6 +6,7 @@ import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import * as customPropTypes from '../../lib/customPropTypes'
@@ -13,7 +14,7 @@ import * as customPropTypes from '../../lib/customPropTypes'
 export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default treeBehavior
+   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -54,6 +55,7 @@ class Tree extends UIComponent<TreeProps> {
 
   public static defaultProps = {
     as: 'ul',
+    accessibility: defaultBehavior,
   }
 
   renderContent() {

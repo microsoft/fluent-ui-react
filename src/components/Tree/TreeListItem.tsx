@@ -4,6 +4,8 @@ import * as React from 'react'
 
 import Tree from './Tree'
 import TreeTitle from './TreeTitle'
+import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   AutoControlledComponent,
@@ -31,6 +33,12 @@ export interface TreeListItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   */
+  accessibility?: Accessibility
+
   /** Initial activeIndex value. */
   defaultOpen?: boolean
 
@@ -79,6 +87,7 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
+    accessibility: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     onItemClick: PropTypes.func,
@@ -89,6 +98,7 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
 
   public static defaultProps = {
     as: 'li',
+    accessibility: defaultBehavior,
   }
 
   handleItemOverrides = predefinedProps => ({
