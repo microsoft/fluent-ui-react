@@ -129,6 +129,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       this.trySetOpen(!this.state.open, e, true)
     },
     closeAndFocusTrigger: e => this.closeAndFocusTrigger(e),
+    stopPropagation: e => e.stopPropagation(),
   }
 
   private closeAndFocusTrigger = e => {
