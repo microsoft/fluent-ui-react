@@ -36,6 +36,7 @@ export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
 
+export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
@@ -45,3 +46,5 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
+
+export { default as Transition } from './components/Transition/transitionVariables'
