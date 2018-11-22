@@ -6,6 +6,12 @@ import parseDocblock from './parseDocblock'
 import parseType from './parseType'
 import * as reactDocgenTypescript from 'react-docgen-typescript'
 
+interface BehaviorInfo {
+  name: string
+  displayName: string
+  category: string
+}
+
 const getComponentInfo = (filepath: string, checksum?: string) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
@@ -117,23 +123,21 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
   return info
 }
 
-const getAvailableBehaviors = accessibilityProp => {
-  const availableBehaviorNames =
-    (accessibilityProp &&
-      _.get(_.find(accessibilityProp.tags, { title: 'available' }), 'description')) ||
-    ''
+const getAvailableBehaviors: (
+  accessibilityProp: { tags: [] },
+) => BehaviorInfo = accessibilityProp => {
+  const docTags = accessibilityProp && accessibilityProp.tags
+  const availableTag = _.find(docTags, { title: 'available' })
+  const availableBehaviorNames = _.get(availableTag, 'description', '')
 
-  return (
-    availableBehaviorNames &&
-    availableBehaviorNames
-      .replace(/\s/g, '')
-      .split(',')
-      .map(name => ({
-        name,
-        displayName: _.upperFirst(name.replace('Behavior', '')),
-        category: _.upperFirst(name.split(/(?=[A-Z])/)[0]),
-      }))
-  )
+  return availableBehaviorNames
+    .replace(/\s/g, '')
+    .split(',')
+    .map(name => ({
+      name,
+      displayName: _.upperFirst(name.replace('Behavior', '')),
+      category: _.upperFirst(name.split(/(?=[A-Z])/)[0]),
+    }))
 }
 
 export default getComponentInfo
