@@ -47,6 +47,7 @@ const ChatMessageExampleStyled = () => (
     <Chat
       items={[
         {
+          key: 'chat-item',
           content: (
             <Chat.Message
               content="Style me the way you want!"
