@@ -5,45 +5,112 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface MenuItemProps {
+export interface MenuItemProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default menuItemBehavior
+   * */
   accessibility?: Accessibility
+
+  /** A menu item can be active. */
   active?: boolean
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: any
+
+  /** A menu item can show it is currently unable to be interacted with. */
   disabled?: boolean
+
+  /** Name or shorthand for Menu Item Icon */
   icon?: ShorthandValue
+
+  /** A menu may have just icons. */
   iconOnly?: boolean
+
+  /** MenuItem index inside Menu. */
   index?: number
+
+  /**
+   * Called on click. When passed, the component will render as an `a`
+   * tag by default instead of a `div`.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onClick?: ComponentEventHandler<MenuItemProps>
+
+  /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
+
+  /**
+   * A menu can point to show its relationship to nearby content.
+   * For vertical menu, it can point to the start of the item or to the end.
+   */
   pointing?: boolean | 'start' | 'end'
+
+  /** The menu item can have primary type. */
+  primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderIcon?: ShorthandRenderFunction
-  type?: 'primary' | 'secondary'
+
+  /**
+   * A custom render function the wrapper slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderWrapper?: ShorthandRenderFunction
+
+  /** The menu item can have secondary type. */
+  secondary?: boolean
+
+  /** Menu items can by highlighted using underline. */
   underlined?: boolean
+
+  /** A vertical menu displays elements vertically. */
   vertical?: boolean
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+
+  /** Shorthand for the wrapper component. */
+  wrapper?: ShorthandValue
 }
 
 export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
 }
 
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
 class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
@@ -52,120 +119,73 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    /** A menu item can be active. */
-    active: PropTypes.bool,
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** A menu item can show it is currently unable to be interacted with. */
-    disabled: PropTypes.bool,
-
-    /** Name or shorthand for Menu Item Icon */
-    icon: customPropTypes.itemShorthand,
-
-    /** A menu may have just icons. */
-    iconOnly: PropTypes.bool,
-
-    /** MenuItem index inside Menu. */
-    index: PropTypes.number,
-
-    /**
-     * Called on click. When passed, the component will render as an `a`
-     * tag by default instead of a `div`.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
-    onClick: PropTypes.func,
-
-    /** A menu can adjust its appearance to de-emphasize its contents. */
-    pills: PropTypes.bool,
-
-    /**
-     * A menu can point to show its relationship to nearby content.
-     * For vertical menu, it can point to the start of the item or to the end.
-     */
-    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
-
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** Menu items can by highlighted using underline. */
-    underlined: PropTypes.bool,
-
-    /** A vertical menu displays elements vertically. */
-    vertical: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     accessibility: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
+    active: PropTypes.bool,
+    disabled: PropTypes.bool,
+    icon: customPropTypes.itemShorthand,
+    iconOnly: PropTypes.bool,
+    index: PropTypes.number,
+    onClick: PropTypes.func,
+    pills: PropTypes.bool,
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    underlined: PropTypes.bool,
+    vertical: PropTypes.bool,
     renderIcon: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+    renderWrapper: PropTypes.func,
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'a',
     accessibility: menuItemBehavior as Accessibility,
+    wrapper: { as: 'li' },
   }
 
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon } = this.props
+    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
 
-    return (
+    const menuItemInner = childrenExist(children) ? (
+      children
+    ) : (
       <ElementType
         className={classes.root}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor}
+        {...accessibility.keyHandlers.anchor}
         {...rest}
       >
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <a
-            className={cx('ui-menu__item__anchor', classes.anchor)}
-            onClick={this.handleClick}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            {...accessibility.attributes.anchor}
-            {...accessibility.keyHandlers.anchor}
-          >
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-                render: renderIcon,
-              })}
-            {content}
-          </a>
-        )}
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            render: renderIcon,
+          })}
+        {content}
       </ElementType>
     )
+
+    if (wrapper) {
+      return Slot.create(wrapper, {
+        defaultProps: {
+          className: cx('ui-menu__item__wrapper', classes.wrapper),
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
+        },
+        render: renderWrapper,
+        overrideProps: () => ({
+          children: menuItemInner,
+        }),
+      })
+    }
+    return menuItemInner
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -189,6 +209,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
+MenuItem.create = createShorthandFactory(MenuItem, 'content')
 
 export default MenuItem

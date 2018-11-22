@@ -2,14 +2,14 @@ import isBrowser from '../isBrowser'
 import EventTarget from './EventTarget'
 import normalizeTarget from './normalizeTarget'
 
-class EventStack {
-  _targets = new Map()
+class EventStackInner {
+  private readonly _targets = new Map()
 
   // ------------------------------------
   // Target utils
   // ------------------------------------
 
-  _find = (target, autoCreate = true) => {
+  private _find = (target, autoCreate = true) => {
     const normalized = normalizeTarget(target)
 
     if (this._targets.has(normalized)) return this._targets.get(normalized)
@@ -21,7 +21,7 @@ class EventStack {
     return eventTarget
   }
 
-  _remove = target => {
+  private _remove = target => {
     const normalized = normalizeTarget(target)
 
     this._targets.delete(normalized)
@@ -31,16 +31,17 @@ class EventStack {
   // Pub/sub
   // ------------------------------------
 
-  sub = (name, handlers, options: any = {}) => {
-    if (!isBrowser()) return
+  public sub = (name, handlers, options: any = {}): Function => {
+    if (!isBrowser()) return () => {}
 
     const { target = document, pool = 'default', useCapture = false } = options
     const eventTarget = this._find(target)
 
     eventTarget.sub(name, handlers, pool, useCapture)
+    return () => this.unsub(name, handlers, options)
   }
 
-  unsub = (name, handlers, options: any = {}) => {
+  public unsub = (name, handlers, options: any = {}) => {
     if (!isBrowser()) return
 
     const { target = document, pool = 'default', useCapture = false } = options
@@ -53,6 +54,25 @@ class EventStack {
   }
 }
 
-const instance = new EventStack()
+const eventStack = new EventStackInner()
 
-export default instance
+class EventStackSubscription {
+  public static empty() {
+    return new EventStackSubscription(() => {}, true)
+  }
+
+  public constructor(private _unsubscribe: Function, public readonly isEmpty: boolean = false) {}
+
+  public unsubscribe(): void {
+    this._unsubscribe()
+  }
+}
+
+export class EventStack {
+  public static readonly noSubscription = EventStackSubscription.empty()
+
+  public static subscribe(name, handlers, options: any = {}): EventStackSubscription {
+    const unsubscribe = eventStack.sub(name, (...args) => handlers(...args), options)
+    return new EventStackSubscription(unsubscribe)
+  }
+}

@@ -13,13 +13,14 @@ import { themes } from '@stardust-ui/react'
 import { ThemeContext } from '../../context/theme-context'
 import { constants } from 'src/lib'
 
+type ComponentMenuItem = { displayName: string; type: string }
+
 const pkg = require('../../../../package.json')
-const componentMenu = require('docs/src/componentMenu')
-const behaviorMenu = require('docs/src/behaviorMenu')
+const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
+const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-type ComponentMenuItem = { displayName: string; type: string }
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -51,7 +52,7 @@ class Sidebar extends React.Component<any, any> {
     this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
   }
 
-  handleDocumentKeyDown = e => {
+  private handleDocumentKeyDown = e => {
     const code = keyboardKey.getCode(e)
     const isAZ = code >= 65 && code <= 90
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
@@ -60,20 +61,20 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
   }
 
-  handleItemClick = () => {
+  private handleItemClick = () => {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
     if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  handleSearchChange = e =>
+  private handleSearchChange = e =>
     this.setState({
       selectedItemIndex: 0,
       query: e.target.value,
     })
 
-  handleSearchKeyDown = e => {
+  private handleSearchKeyDown = e => {
     const { history } = this.props
     const { selectedItemIndex } = this.state
     const code = keyboardKey.getCode(e)
@@ -101,9 +102,9 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  menuItemsByType = _.map(nextType => {
+  private menuItemsByType = _.map(nextType => {
     const items = _.flow(
-      _.filter(({ type }) => type === nextType),
+      _.filter<ComponentMenuItem>(({ type }) => type === nextType),
       _.map(info => (
         <Menu.Item
           key={info.displayName}
@@ -124,7 +125,7 @@ class Sidebar extends React.Component<any, any> {
     )
   }, constants.typeOrder)
 
-  renderSearchItems = () => {
+  private renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
     if (!query) return undefined
 
@@ -235,9 +236,6 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
                   Quick Start
                 </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/glossary" activeClassName="active">
-                  Glossary
-                </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
                   Accessibility
                 </Menu.Item>
@@ -279,6 +277,14 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Meeting Options
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-search-page"
+                    activeClassName="active"
+                  >
+                    Search Page
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>

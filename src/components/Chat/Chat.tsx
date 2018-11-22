@@ -5,66 +5,47 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
+import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface ChatProps {
+export interface ChatProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  className?: string
-  children?: ReactChildren
+
+  /** Shorthand array of the items inside the chat. */
   items?: ShorthandValue[]
+
+  /**
+   * A custom render iterator for rendering each of the Chat items.
+   * The default component, props, and children are available for each item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderItem?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
+/**
+ * A Chat displays messages between users.
+ */
 class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'
 
   static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Shorthand array of the items inside the chat. */
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
-
-    /**
-     * A custom render iterator for rendering each of the Chat items.
-     * The default component, props, and children are available for each item.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderItem: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }

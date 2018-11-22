@@ -30,6 +30,7 @@ import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
+import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ReactType<P>
@@ -44,7 +45,7 @@ export interface RenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
-export interface RenderConfig {
+export interface RenderConfig<P> {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
@@ -53,6 +54,7 @@ export interface RenderConfig {
   state: State
   actionHandlers: AccessibilityActionHandlers
   focusZoneRef: (focusZone: FocusZone) => void
+  render: RenderComponentCallback<P>
 }
 
 const getAccessibility = (
@@ -112,14 +114,12 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
     config.ElementType = FabricFocusZone as any
     config.rest = { ...config.rest, ...focusZoneDefinition.props }
     config.rest.as = originalElementType
+    config.rest.ref = focusZoneRef
   }
   return render(config)
 }
 
-const renderComponent = <P extends {}>(
-  config: RenderConfig,
-  render: RenderComponentCallback<P>,
-): React.ReactNode => {
+const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
   const {
     className,
     defaultProps,
@@ -129,6 +129,7 @@ const renderComponent = <P extends {}>(
     state,
     actionHandlers,
     focusZoneRef,
+    render,
   } = config
 
   return (
@@ -155,6 +156,10 @@ const renderComponent = <P extends {}>(
           props.variables,
         )(siteVariables, stateAndProps)
 
+        const animationCSSProp = props.animation
+          ? createAnimationStyles(props.animation, theme)
+          : {}
+
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
           componentStyles[displayName],
@@ -172,6 +177,12 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           theme,
         }
+
+        mergedStyles.root = {
+          ...callable(mergedStyles.root)(styleParam),
+          ...animationCSSProp,
+        }
+
         const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
@@ -194,6 +205,7 @@ const renderComponent = <P extends {}>(
         if (accessibility.focusZone) {
           return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
+
         return render(config)
       }}
     />

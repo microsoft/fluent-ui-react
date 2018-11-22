@@ -10,42 +10,90 @@ import {
   UIComponent,
 } from '../../lib'
 import {
-  ComponentSlotStyle,
   ComponentVariablesInput,
   ComponentSlotClasses,
   ComponentSlotStylesInput,
 } from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface ChatMessageProps {
+export interface ChatMessageProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatMessageBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
+
+  /** Author of the message. */
   author?: ShorthandValue
+
+  /** Chat messages can have an avatar. */
   avatar?: ShorthandValue
-  children?: ReactChildren
-  className?: string
-  content?: any
+
+  /** Indicates whether message belongs to the current user. */
   mine?: boolean
+
+  /**
+   * A custom render function the author slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderAuthor?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the avatar slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderAvatar?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the content slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderContent?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the timestamp slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
   renderTimestamp?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+
+  /** Timestamp of the message. */
   timestamp?: ShorthandValue
-  variables?: ComponentVariablesInput
 }
 
+/**
+ * A chat message represents a single statement communicated to a user.
+ */
 class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
@@ -54,77 +102,18 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Author of the message. */
     author: customPropTypes.itemShorthand,
-
-    /** Chat messages can have an avatar. */
     avatar: customPropTypes.itemShorthand,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for the primary content. */
-    content: PropTypes.any,
-
-    /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
-
-    /**
-     * A custom render function the author slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderAuthor: PropTypes.func,
-
-    /**
-     * A custom render function the avatar slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderAvatar: PropTypes.func,
-
-    /**
-     * A custom render function the content slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderContent: PropTypes.func,
-
-    /**
-     * A custom render function the timestamp slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
     renderTimestamp: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -236,6 +225,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
+ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 
 export default ChatMessage

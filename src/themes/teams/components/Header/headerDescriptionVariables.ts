@@ -1,3 +1,3 @@
 export default siteVariables => ({
-  color: 'rgba(0,0,0,.6)',
+  color: siteVariables.gray04,
 })

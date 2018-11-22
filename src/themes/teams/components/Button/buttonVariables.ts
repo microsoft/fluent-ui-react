@@ -26,8 +26,12 @@ export interface ButtonVariables {
   borderColorFocus: string
   borderColorFocusIndicator: string
   borderColorDisabled: string
+  borderWidth: number
 
   primaryColor: string
+  primaryColorActive: string
+  primaryColorHover: string
+  primaryColorFocus: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
@@ -37,6 +41,7 @@ export interface ButtonVariables {
   primaryBorderColorHover: string
   primaryBorderColorFocus: string
   primaryBorderColorFocusIndicator: string
+  primaryBorderWidth: number
 
   primaryCircularBorderColorFocusIndicator: string
 
@@ -88,18 +93,22 @@ export default (siteVars: any): ButtonVariables => {
     borderColorFocus: siteVars.white,
     borderColorFocusIndicator: siteVars.black,
     borderColorDisabled: 'transparent',
+    borderWidth: 1,
 
     primaryColor: siteVars.white,
+    primaryColorActive: siteVars.white,
+    primaryColorHover: siteVars.white,
+    primaryColorFocus: siteVars.white,
     primaryBackgroundColor: siteVars.brand,
     primaryBackgroundColorActive: siteVars.brand02,
     primaryBackgroundColorHover: siteVars.brand04,
     primaryBackgroundColorFocus: siteVars.brand04,
-    primaryBackgroundColorDisabled: siteVars.brand04,
     primaryBorderColor: 'transparent',
     primaryBorderColorActive: 'transparent',
     primaryBorderColorHover: 'transparent',
     primaryBorderColorFocus: siteVars.white,
     primaryBorderColorFocusIndicator: siteVars.black,
+    primaryBorderWidth: 1,
 
     primaryCircularBorderColorFocusIndicator: siteVars.white,
 

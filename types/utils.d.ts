@@ -8,6 +8,8 @@ export type Extendable<T> = T & {
   [key: string]: any
 }
 
+export type Partial<T> = { [Key in keyof T]?: T[Key] }
+
 export type ArgOf<T> = T extends (arg: infer TArg) => any ? TArg : never
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
@@ -28,9 +30,7 @@ export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: 
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandPrimitive = string | number
 export type ShorthandValue = React.ReactNode | Props
-export type MapValueToProps = (value: ShorthandPrimitive) => Props
 export type ShorthandRenderFunction = (
   Component: React.ReactType,
   props: Props,

@@ -4,9 +4,9 @@ import { Button } from '@stardust-ui/react'
 const ButtonExampleDisabled = () => (
   <div>
     <Button disabled content="Default" />
-    <Button disabled type="primary" content="Primary" />
-    <Button disabled type="secondary" content="Secondary" />
-    <Button disabled type="primary" icon="book" content="Click me" iconPosition="before" />
+    <Button disabled content="Primary" primary />
+    <Button disabled content="Secondary" secondary />
+    <Button disabled icon="book" content="Click me" iconPosition="before" primary />
     <Button disabled circular icon="coffee" />
     <br />
     <br />

@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import eventStack from '../../eventStack'
+import { EventStack } from '../../../lib'
 
 import {
   getNextElement,
@@ -29,64 +29,21 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _previouslyFocusedElementInTrapZone?: HTMLElement
   private windowElement: Window | null
 
+  private _focusSubscription = EventStack.noSubscription
+  private _clickSubscription = EventStack.noSubscription
+
   private createRef = elem => (this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement)
 
   static propTypes = {
-    /**
-     * Element type the root element will use. Default is "div".
-     */
     as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
     className: PropTypes.string,
-
-    /**
-     * Sets the HTMLElement to focus on when exiting the FocusTrapZone.
-     * @default The element.target that triggered the FTZ.
-     */
     elementToFocusOnDismiss: PropTypes.object,
-
-    /**
-     * Sets the aria-labelledby attribute.
-     */
     ariaLabelledBy: PropTypes.string,
-
-    /**
-     * Indicates if this Trap Zone will allow clicks outside the FocusTrapZone
-     * @default false
-     */
     isClickableOutsideFocusTrap: PropTypes.bool,
-
-    /**
-     * Indicates if this Trap Zone will ignore keeping track of HTMLElement that activated the Zone.
-     * @default false
-     */
     ignoreExternalFocusing: PropTypes.bool,
-
-    /**
-     * Indicates whether focus trap zone should force focus inside the focus trap zone
-     * @default true
-     */
     forceFocusInsideTrap: PropTypes.bool,
-
-    /**
-     * Indicates the selector for first focusable item.  Only applies if focusPreviouslyFocusedInnerElement == false.
-     */
     firstFocusableSelector: PropTypes.string,
-
-    /**
-     * Do not put focus onto first element when render focus trap zone
-     * @default false
-     */
     disableFirstFocus: PropTypes.bool,
-
-    /**
-     * Specifies the algorithm used to determine which descendant element to focus when focus() is called.
-     * If false, the first focusable descendant, filtered by the firstFocusableSelector property if present, is chosen.
-     * If true, the element that was focused when the Trap Zone last had a focused descendant is chosen.
-     * If it has never had a focused descendant before, behavior falls back to the first focused descendant.
-     * @default false
-     */
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
   }
 
@@ -188,7 +145,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
         : firstFocusableSelector())
 
     const firstFocusableChild = focusSelector
-      ? (this._root.current.querySelector('.' + focusSelector) as HTMLElement)
+      ? (this._root.current.querySelector(`.${focusSelector}`) as HTMLElement)
       : getNextElement(
           this._root.current,
           this._root.current.firstChild as HTMLElement,
@@ -269,14 +226,16 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _subscribeToEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.sub('focus', this._handleOutsideFocus, {
+      this._focusSubscription.unsubscribe()
+      this._focusSubscription = EventStack.subscribe('focus', this._handleOutsideFocus, {
         target: this.windowElement,
         useCapture: true,
       })
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.sub('click', this._handleOutsideClick, {
+      this._clickSubscription.unsubscribe()
+      this._clickSubscription = EventStack.subscribe('click', this._handleOutsideClick, {
         target: this.windowElement,
         useCapture: true,
       })
@@ -286,17 +245,11 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   private _unsubscribeFromEvents = () => {
     const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
     if (forceFocusInsideTrap) {
-      eventStack.unsub('focus', this._handleOutsideFocus, {
-        target: this.windowElement,
-        useCapture: true,
-      })
+      this._focusSubscription.unsubscribe()
     }
 
     if (!isClickableOutsideFocusTrap) {
-      eventStack.unsub('click', this._handleOutsideClick, {
-        target: this.windowElement,
-        useCapture: true,
-      })
+      this._clickSubscription.unsubscribe()
     }
   }
 

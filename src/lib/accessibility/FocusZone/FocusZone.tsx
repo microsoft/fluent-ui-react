@@ -43,11 +43,11 @@ function getParent(child: HTMLElement): HTMLElement | null {
 
 export class FocusZone extends React.Component<FocusZoneProps> implements IFocusZone {
   static propTypes = {
-    componentRef: PropTypes.object,
     className: PropTypes.string,
     direction: PropTypes.number,
-    defaultTabbableElement: PropTypes.string,
+    defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
+    shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -125,11 +125,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       this.updateTabIndexes()
 
       if (this.props.defaultTabbableElement) {
-        const initialActiveElement = this._root.current.querySelector(
-          this.props.defaultTabbableElement,
-        ) as HTMLElement
-
-        this.setActiveElement(initialActiveElement)
+        const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
+        initialActiveElement && this.setActiveElement(initialActiveElement)
       }
 
       if (this.props.shouldFocusOnMount) {
@@ -276,6 +273,11 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
     if (onActiveElementChanged) {
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
+    }
+
+    // If a first focusable element should be force focused when FocusZone container receives focus
+    if (this.props.shouldFocusFirstElementWhenReceivedFocus && ev.target === this._root.current) {
+      this.focus(true)
     }
 
     if (stopFocusPropagation) {

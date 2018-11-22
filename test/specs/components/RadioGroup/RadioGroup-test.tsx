@@ -42,9 +42,7 @@ const getShorthandItems = (props?: { disabledItem?: number }) => [
 ]
 
 describe('RadioGroup', () => {
-  describe('isConformant', () => {
-    isConformant(RadioGroup)
-  })
+  isConformant(RadioGroup)
 
   describe('accessibility', () => {
     handlesAccessibility(RadioGroup, {
@@ -167,7 +165,7 @@ describe('RadioGroup', () => {
 
     describe('keyDown event handler', () => {
       const testKeyDown = (testName, items, initialValue, keyCode, expectedValue) => {
-        it('keyDown test - ' + testName, () => {
+        it(`keyDown test - ${testName}`, () => {
           const checkedValueChanged = jest.fn()
           const wrapper = mountWithProvider(
             <RadioGroup
