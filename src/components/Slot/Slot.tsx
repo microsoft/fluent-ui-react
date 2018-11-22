@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { childrenExist, createShorthandFactory } from '../../lib'
 import {
   UIComponentProps,
@@ -12,11 +11,19 @@ import {
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
+import * as PropTypes from 'prop-types'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps, any>,
     ContentComponentProps,
-    ChildrenComponentProps {}
+    ChildrenComponentProps {
+  /**
+   * Ref callback with the input wrapper DOM node.
+   *
+   * @param {JSX.Element} node - input wrapper DOM node.
+   */
+  innerRef?: (node: HTMLElement) => void
+}
 
 /**
  * A Slot is a basic component (no default styles)
@@ -32,6 +39,7 @@ const Slot: CreateComponentReturnType<SlotProps> & {
     ...commonUIComponentPropTypes,
     ...contentComponentPropsTypes,
     ...childrenComponentPropTypes,
+    innerRef: PropTypes.func,
   },
 
   render(config, props) {
