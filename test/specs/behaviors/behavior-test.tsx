@@ -5,6 +5,7 @@
 //  OR
 //  - 'yarn test' which has creating json file predefined in "pretest" step
 import {
+  attachmentBehavior,
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
@@ -35,6 +36,7 @@ const behaviorMenuItems = require('docs/src/behaviorMenu')
 const testHelper = new TestHelper()
 testHelper.addTests(definitions)
 
+testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
