@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Button, Transition } from '@stardust-ui/react'
+import { Icon, Button, Animation } from '@stardust-ui/react'
 
 class IconExample extends React.Component {
   state = {
@@ -23,9 +23,9 @@ class IconExample extends React.Component {
         />
         <br />
         <br />
-        <Transition animationName="spinner" playState={this.state.playState}>
+        <Animation name="spinner" playState={this.state.playState}>
           <Icon name="umbrella" circular />
-        </Transition>
+        </Animation>
       </div>
     )
   }

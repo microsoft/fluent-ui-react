@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Provider, Text, Transition } from '@stardust-ui/react'
+import { Button, Divider, Icon, Provider, Text, Animation } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -210,20 +210,40 @@ export default () => (
 
     <Header as="h2" content="Animations" />
     <p>
-      Another important part of the theming in Stardust are the <code>animations</code>. You can
-      define the animations in a very similar way as you would define them using css, by providing a
-      keyframe, as well as the other animation properties: duration, delay, timingFunction etc.
+      You define animations in Stardust in a very similar way to CSS, by providing keyframes and
+      animation properties.
     </p>
+
+    <ExampleSnippet
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        ` ... `,
+        `</Provider>`,
+      ].join('\n')}
+    />
 
     <p>
       You can define the <code>animations</code> in a part of your render tree using the{' '}
       <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <p>
-      This is done with the Provider's <code>theme</code> prop. The animations are then are applied
-      based on their name by using the <NavLink to="components/transition">Transition</NavLink>{' '}
-      component, or the <code>animation</code> property available on all UI component. Here's how we
-      can define the <code>animations</code> and use them in our components.
+      This is done with the Provider's <code>theme</code> prop. The animations are then applied
+      based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
+      component, or the <code>animation</code> property available on all Stardust component. Here's
+      how we can use them in our components.
     </p>
     <ExampleSnippet
       value={[
@@ -242,16 +262,16 @@ export default () => (
         `  }}`,
         `>`,
         `  <div>`,
-        `    <Transition animationName="spinner"><Icon name="user" circular /></Transition>`,
+        `    <Animation name="spinner"><Icon name="user" circular /></Animation>`,
         `    <Icon name="book" animation="spinner" circular/>`,
         `  </div>`,
         `</Provider>`,
       ].join('\n')}
       render={() => (
         <div>
-          <Transition animationName="spinner">
+          <Animation name="spinner">
             <Icon name="user" circular />
-          </Transition>
+          </Animation>
           <Icon name="book" animation="spinner" circular />
         </div>
       )}
@@ -259,29 +279,33 @@ export default () => (
 
     <p>
       You can also override some of the defined <code>animation</code> properties, by providing
-      additional properties to the <code>Transition</code> component, or the <code>animation</code>{' '}
+      additional properties to the <code>Animation</code> component, or the <code>animation</code>{' '}
       prop.
     </p>
 
     <ExampleSnippet
       value={[
-        `<Transition animationName="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Transition>`,
+        `<Animation name="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Animation>`,
         `<Icon name="book" animation="spinner" delay="5s" duration="2s" circular/>`,
       ].join('\n')}
       render={() => (
         <div>
-          <Transition animationName="spinner" delay="2s" duration="1s">
+          <Animation name="spinner" delay="2s" duration="1s">
             <Icon name="user" circular />
-          </Transition>
+          </Animation>
           <Icon name="book" animation="spinner" delay="5s" duration="2s" circular />
         </div>
       )}
     />
 
     <p>
-      For more details, please see the examples in the{' '}
-      <NavLink to="components/transition">Transition</NavLink> component, or the structure of the{' '}
-      <code>animation</code> property in any of the UI components.
+      The difference between using the Animation component versus the animation property is that,
+      the Animation component can be safely use for applying animations on{' '}
+      <i>all components (Stardust, custom and third party components)</i>. For the Stardust
+      components, we recommend using the animation property as there will be no wrapper element
+      added just for the purpose of defining the animation. For more details, please see the
+      examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
+      structure of the <code>animation</code> property in any of the Stardust components.
     </p>
 
     <br />
