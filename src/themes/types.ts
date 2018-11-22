@@ -115,6 +115,18 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
+export type Animation =
+  | {
+      name: string
+      delay?: string
+      direction?: string
+      duration?: string
+      fillMode?: string
+      iterationCount?: string
+      playState?: string
+      timingFunction?: string
+    }
+  | string
 // ========================================================
 // Static Styles
 // ========================================================
@@ -129,6 +141,17 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
 export type StaticStyles = StaticStyle[]
 
+export interface ThemeAnimation {
+  keyframe: any
+  delay?: string
+  direction?: string
+  duration?: string
+  fillMode?: string
+  iterationCount?: string
+  playState?: string
+  timingFunction?: string
+}
+
 // ========================================================
 // Theme
 // ========================================================
@@ -141,6 +164,7 @@ export interface ThemeInput {
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
+  animations?: { [key: string]: ThemeAnimation }
 }
 
 // Component variables and styles must be resolved by the component after
@@ -160,6 +184,7 @@ export interface ThemePrepared {
   renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
+  animations: { [key: string]: ThemeAnimation }
 }
 
 export interface ThemeComponentStylesInput {
