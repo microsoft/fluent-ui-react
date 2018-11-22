@@ -80,14 +80,6 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   noResultsMessage?: string
 
   /**
-   * Called on deletion by backspace when dropdown is a multiple search.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onBackspaceDelete?: ComponentEventHandler<DropdownProps>
-
-  /**
    * Callback for change in dropdown active value(s).
    * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
    */
@@ -202,7 +194,6 @@ export default class Dropdown extends AutoControlledComponent<
     itemToString: PropTypes.func,
     multiple: PropTypes.bool,
     noResultsMessage: PropTypes.string,
-    onBackspaceDelete: PropTypes.func,
     onCloseIconClick: PropTypes.func,
     onCloseIconKeyDown: PropTypes.func,
     onDropdownChange: PropTypes.func,
@@ -554,8 +545,7 @@ export default class Dropdown extends AutoControlledComponent<
         if (!backspaceDelete) {
           this.setState({ backspaceDelete: true })
         } else {
-          const removedValue = this.removeFromActiveValues()
-          _.invoke(this.props, 'onBackspaceDelete', e, { ...this.props, removedValue })
+          this.removeFromActiveValues()
         }
       }
     }
@@ -625,7 +615,7 @@ export default class Dropdown extends AutoControlledComponent<
     e.stopPropagation()
   }
 
-  private removeFromActiveValues(item?: DropdownListItem): DropdownListItem {
+  private removeFromActiveValues(item?: DropdownListItem): void {
     const { getA11yRemovedMessage } = this.props
     let value = this.state.value as DropdownListItem[]
     let poppedItem = item
@@ -646,7 +636,5 @@ export default class Dropdown extends AutoControlledComponent<
     )
 
     _.invoke(this.props, 'onDropdownChange', value)
-
-    return poppedItem
   }
 }
