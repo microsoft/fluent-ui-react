@@ -23,13 +23,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix the behaviour of `AutoControlledComponent` when `undefined` is passed as a prop value @layershifter ([#499](https://github.com/stardust-ui/react/pull/499))
 
+### Documentation
+- Display available behaviors for component @jurokapsiar ([#510](https://github.com/stardust-ui/react/pull/510))
+
 <!--------------------------------[ v0.12.0 ]------------------------------- -->
 ## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.11.0...v0.12.0)
 
 ### Documentation
 - Replace react-docgen with react-docgen-typescript for generating the props from the TS props interfaces @mnajdova ([#460](https://github.com/stardust-ui/react/pull/460))
-
 ### BREAKING
 - Replace the `type` prop with `secondary` and `primary` for `Button` @layershifter ([#419](https://github.com/stardust-ui/react/pull/419))
 - Replace the `type` prop with `secondary` and `primary` for `Menu` @layershifter ([#429](https://github.com/stardust-ui/react/pull/429))
