@@ -58,7 +58,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     top: 'calc(100% + 2px)', // leave room for container + its border
   }),
 
-  listItemRoot: ({ variables: { listItemBackgroundColor } }): ICSSInJSStyle => ({
+  listItem: ({ variables: { listItemBackgroundColor } }): ICSSInJSStyle => ({
     backgroundColor: listItemBackgroundColor,
   }),
 

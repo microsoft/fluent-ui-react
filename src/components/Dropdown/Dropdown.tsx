@@ -25,13 +25,14 @@ import ListItem from '../List/ListItem'
 import Icon from '../Icon/Icon'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import Ref from '../Ref/Ref'
+import { UIComponentProps } from 'src/lib/commonPropInterfaces'
 
 // To be replaced when Downshift will add highlightedItem in their interface.
 export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
   highlightedItem: Item
 }
 
-export interface DropdownProps {
+export interface DropdownProps extends UIComponentProps<any, any> {
   /** The default value for the search query. */
   defaultSearchQuery?: string
 
@@ -234,7 +235,8 @@ export default class Dropdown extends AutoControlledComponent<
   static autoControlledProps = ['searchQuery', 'value']
 
   state: DropdownState = {
-    backspaceDelete: this.props.multiple ? true : undefined,
+    // prevent deletion of last character + last selected value at the same time on backspace.
+    backspaceDelete: this.props.multiple,
     focused: false,
     searchQuery: this.props.search ? '' : undefined,
     value: this.props.multiple ? [] : null,
@@ -249,10 +251,8 @@ export default class Dropdown extends AutoControlledComponent<
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
-    const optionalDownshiftProps = {
-      // in multiple dropdown, we hold active values in the array, and default active is null.
-      ...(multiple && { selectedItem: null }),
-    }
+    // in multiple dropdown, we hold active values in the array, and default active is null.
+    const optionalDownshiftProps = (multiple && { selectedItem: null }) || {}
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -261,9 +261,7 @@ export default class Dropdown extends AutoControlledComponent<
           inputValue={searchQuery}
           stateReducer={this.stateReducer}
           getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
-          itemToString={
-            itemToString ? itemToString : (item: DropdownListItem) => (item ? item.header : '')
-          }
+          itemToString={itemToString || ((item: DropdownListItem) => (item ? item.header : ''))}
           {...optionalDownshiftProps}
         >
           {({
@@ -438,35 +436,37 @@ export default class Dropdown extends AutoControlledComponent<
     const value = this.state.value as DropdownListItem[]
     const { getA11yRemoveItemMessage } = this.props
 
-    return value.length === 0
-      ? null
-      : value.map((item, index) => {
-          const optionalImage = {
-            ...(item.image && {
-              image: { src: item.image, avatar: true, onClick: this.handleLabelClick },
-            }),
-          }
-          return (
-            <Label
-              role="presentation"
-              styles={styles.activeListLabel}
-              circular
-              key={`active-item-${item.key || item.header}`}
-              content={<Text content={item.header} onClick={this.handleLabelClick} />}
-              {...optionalImage}
-              icon={{
-                name: 'close',
-                onClick: this.handleCloseIconClick.bind(this, item),
-                onKeyDown: this.handleCloseIconKeyDown.bind(this, item),
-                'aria-label': getA11yRemoveItemMessage
-                  ? getA11yRemoveItemMessage(item)
-                  : `Remove ${item.header} from selection.`,
-                'aria-hidden': false,
-                role: 'button',
-              }}
-            />
-          )
-        })
+    if (value.length === 0) {
+      return null
+    }
+
+    return value.map(item => {
+      const optionalImage = {
+        ...(item.image && {
+          image: { src: item.image, avatar: true, onClick: this.handleLabelClick },
+        }),
+      }
+      return (
+        <Label
+          role="presentation"
+          styles={styles.activeListLabel}
+          circular
+          key={`active-item-${item.key || item.header}`}
+          content={<Text content={item.header} onClick={this.handleLabelClick} />}
+          {...optionalImage}
+          icon={{
+            name: 'close',
+            onClick: this.handleCloseIconClick.bind(this, item),
+            onKeyDown: this.handleCloseIconKeyDown.bind(this, item),
+            'aria-label': getA11yRemoveItemMessage
+              ? getA11yRemoveItemMessage(item)
+              : `Remove ${item.header} from selection.`,
+            'aria-hidden': false,
+            role: 'button',
+          }}
+        />
+      )
+    })
   }
 
   RefProvidingWrapper = ({ children }) => (
@@ -559,20 +559,17 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleBackspaceDelete = (e: React.SyntheticEvent) => {
-    switch (keyboardKey.getCode(e)) {
-      case keyboardKey.Backspace:
-        const { searchQuery, value, backspaceDelete } = this.state
+    if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
+      const { searchQuery, value, backspaceDelete } = this.state
 
-        if (searchQuery === '' && (value as DropdownListItem[]).length > 0) {
-          if (!backspaceDelete) {
-            this.setState({ backspaceDelete: true })
-          } else {
-            const removedValue = this.removeFromActiveValues()
-            _.invoke(this.props, 'onBackspaceDelete', e, { ...this.props, removedValue })
-          }
+      if (searchQuery === '' && (value as DropdownListItem[]).length > 0) {
+        if (!backspaceDelete) {
+          this.setState({ backspaceDelete: true })
+        } else {
+          const removedValue = this.removeFromActiveValues()
+          _.invoke(this.props, 'onBackspaceDelete', e, { ...this.props, removedValue })
         }
-      default:
-        return
+      }
     }
   }
 
@@ -619,19 +616,15 @@ export default class Dropdown extends AutoControlledComponent<
     ) => void,
     e: React.SyntheticEvent,
   ) => {
-    switch (keyboardKey.getCode(e)) {
-      case keyboardKey.Tab:
-        if (highlightedIndex !== undefined) {
-          selectItemAtIndex(highlightedIndex)
-        }
-      default:
-        _.invoke(this.props, 'onInputKeyDown', e, {
-          ...this.props,
-          highlightedIndex,
-          selectItemAtIndex,
-        })
-        return
+    if (keyboardKey.getCode(e) === keyboardKey.Tab && highlightedIndex !== undefined) {
+      selectItemAtIndex(highlightedIndex)
     }
+
+    _.invoke(this.props, 'onInputKeyDown', e, {
+      ...this.props,
+      highlightedIndex,
+      selectItemAtIndex,
+    })
   }
 
   /**

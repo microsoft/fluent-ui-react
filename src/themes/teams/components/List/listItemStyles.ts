@@ -49,7 +49,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     }
   },
   header: ({ variables }): ICSSInJSStyle => ({
-    color: variables.headerColor,
+    ...(variables.headerColor && {
+      color: variables.headerColor,
+    }),
     fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
@@ -58,7 +60,9 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     lineHeight: variables.headerMediaLineHeight,
   }),
   content: ({ variables }) => ({
-    color: variables.contentColor,
+    ...(variables.contentColor && {
+      color: variables.contentColor,
+    }),
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),
