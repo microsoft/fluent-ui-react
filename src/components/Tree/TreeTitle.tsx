@@ -3,6 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
+import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import {
   commonUIComponentPropTypes,
@@ -51,6 +52,7 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
   public static defaultProps = {
     as: 'a',
     href: '#',
+    accessibility: treeTitleBehavior as Accessibility,
   }
 
   handleClick = e => {
