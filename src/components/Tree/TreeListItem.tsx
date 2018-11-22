@@ -35,7 +35,7 @@ export interface TreeListItemProps
   defaultOpen?: boolean
 
   /** Shorthand array of props for sub tree. */
-  items?: any[]
+  items?: ShorthandValue[]
 
   /**
    * Called when a tree title is clicked.

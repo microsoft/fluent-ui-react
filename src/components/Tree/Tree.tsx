@@ -5,7 +5,6 @@ import * as React from 'react'
 import TreeListItem from './TreeListItem'
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
-import { treeBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -55,7 +54,6 @@ class Tree extends UIComponent<TreeProps> {
 
   public static defaultProps = {
     as: 'ul',
-    accessibility: treeBehavior as Accessibility,
   }
 
   renderContent() {
