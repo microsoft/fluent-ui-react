@@ -85,9 +85,14 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
+
+    const hasChidlren = childrenExist(children)
+
+    const maybeDirAuto = !hasChidlren && typeof content === 'string' ? { dir: 'auto' } : {}
+
     return (
-      <ElementType {...rest} className={classes.root} dir="auto">
-        {childrenExist(children) ? children : content}
+      <ElementType {...rest} className={classes.root} {...maybeDirAuto}>
+        {hasChidlren ? children : content}
       </ElementType>
     )
   }
