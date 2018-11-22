@@ -69,7 +69,9 @@ export default () => (
       ].join('\n')}
     />
 
-    <p>Let's go step by step throughout all bits from the renderComponent method.</p>
+    <p>
+      Let's go step by step throughout all bits from the <code>createComponent</code> method.
+    </p>
 
     <p>
       The first argument to the <code>createComponent</code> config's param is the displayName. This
