@@ -409,5 +409,13 @@ export default () => (
       primary
       to="theming"
     />
+    <Button
+      as={NavLink}
+      content="Custom Components"
+      icon="arrow right"
+      iconPosition="after"
+      primary
+      to="custom-components"
+    />
   </DocPage>
 )
