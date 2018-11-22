@@ -170,7 +170,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         styles: styles.avatar,
         variables: variables.avatar,
       },
-      generateKey: true,
       render: renderAvatar,
     })
 
@@ -204,10 +203,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     return (
       <>
         {!mine && avatarElement}
-        <Slot
-          key="chat-message-body"
-          className={cx('ui-chat__message__messageBody', classes.messageBody)}
-        >
+        <Slot className={cx('ui-chat__message__messageBody', classes.messageBody)}>
           {!mine && authorElement}
           {timestampElement}
           {contentElement}
