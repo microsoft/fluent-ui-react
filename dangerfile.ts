@@ -4,5 +4,7 @@ import { danger, warn } from 'danger'
 const hasChangelog = danger.git.modified_files.some(f => f === 'CHANGELOG.md')
 
 if (!hasChangelog) {
-  warn('Please add a changelog entry for your changes.')
+  warn(
+    'There are no updates provided to CHANGELOG. Ensure there are no publicly visible changes introduced by this PR.',
+  )
 }
