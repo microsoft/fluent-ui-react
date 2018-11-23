@@ -34,6 +34,8 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
   input: 'type',
 }
 
+const getElementProps = (Element?: React.ReactElement<Props>) => (Element ? Element.props : {})
+
 // ============================================================
 // Factories
 // ============================================================
@@ -47,18 +49,17 @@ export function createShorthand(
 ): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
   if (valIsRenderFunction) {
-    const getElementProps = (Element?: React.ReactElement<Props>) => (Element ? Element.props : {})
-
     const render = (shorthandValueOrRenderTree, renderTree) => {
       if (typeof shorthandValueOrRenderTree === 'function') {
-        const ShorthandElement = createShorthand(Component, mappedProp, {}, options)
-
         const asRenderTree = shorthandValueOrRenderTree
+
+        const ShorthandElement = createShorthand(Component, mappedProp, {}, options)
         return (asRenderTree as any)(Component, getElementProps(ShorthandElement))
       }
 
       const shorthandValue = shorthandValueOrRenderTree
       const ShorthandElement = createShorthand(Component, mappedProp, shorthandValue, options)
+
       if (React.isValidElement(shorthandValue) || !renderTree) {
         return ShorthandElement
       }
