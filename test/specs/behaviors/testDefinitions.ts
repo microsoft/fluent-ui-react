@@ -166,7 +166,6 @@ definitions.push({
 definitions.push({
   regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' and '([a-zA-Z]+)'/g,
   testMethod: (parameters: TestMethod) => {
-    console.log(parameters.props)
     const [
       attributeToBeAdded,
       attributeExpectedValue,
