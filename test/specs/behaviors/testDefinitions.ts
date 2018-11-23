@@ -162,6 +162,28 @@ definitions.push({
   },
 })
 
+// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' and 'hasSubtree'
+definitions.push({
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' and '([a-zA-Z]+)'/g,
+  testMethod: (parameters: TestMethod) => {
+    console.log(parameters.props)
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyDependingOnFirst,
+      propertyDependingOnSecond,
+    ] = [...parameters.props]
+    const property = {}
+    property[propertyDependingOnFirst] = attributeExpectedValue
+    property[propertyDependingOnSecond] = true
+
+    const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+  },
+})
+
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
   regexp: /Adds role='([a-z]+)' if element type is other than '[a-z]+'\.+/g,
