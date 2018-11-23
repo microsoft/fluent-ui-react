@@ -162,9 +162,9 @@ definitions.push({
   },
 })
 
-// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' and 'hasSubtree'
+// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
 definitions.push({
-  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' and '([a-zA-Z]+)'/g,
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' if the component has '([a-zA-Z]+)' property./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -172,14 +172,36 @@ definitions.push({
       propertyDependingOnFirst,
       propertyDependingOnSecond,
     ] = [...parameters.props]
+
     const property = {}
+
     property[propertyDependingOnFirst] = attributeExpectedValue
     property[propertyDependingOnSecond] = true
-
     const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
     expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
       testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
+
+    const propertyFirstPropNegate = {}
+    propertyFirstPropNegate[propertyDependingOnFirst] = !testHelper.convertToBooleanIfApplicable(
+      attributeExpectedValue,
+    )
+    propertyFirstPropNegate[propertyDependingOnSecond] = true
+    const expectedResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate)
+      .attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(expectedResultFirstPropertyNegate)).toEqual(
+      !testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropUndefined = {}
+    propertyFirstPropUndefined[propertyDependingOnFirst] = true
+    propertyFirstPropUndefined[propertyDependingOnSecond] = undefined
+    const expectedResultFirstPropertyNegateUndefined = parameters.behavior(
+      propertyFirstPropUndefined,
+    ).attributes.root[attributeToBeAdded]
+    expect(
+      testHelper.convertToBooleanIfApplicable(expectedResultFirstPropertyNegateUndefined),
+    ).toEqual(undefined)
   },
 })
 

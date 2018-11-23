@@ -13,7 +13,7 @@ import {
   customPropTypes,
   createShorthandFactory,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandRenderFunction, ShorthandValue } from 'utils'
+import { ShorthandRenderFunction, ShorthandValue } from 'utils'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,

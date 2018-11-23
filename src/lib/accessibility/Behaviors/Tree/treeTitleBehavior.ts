@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 
 /**
  * @specification
- * Adds attribute 'aria-expanded=true' based on the property 'open' and 'hasSubtree'
+ * Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
  */
 const treeTitleBehavior: Accessibility = (props: any) => ({
   attributes: {
