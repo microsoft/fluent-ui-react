@@ -9,7 +9,6 @@ const toolbarBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'toolbar',
-      'data-is-focusable': true,
     },
   },
   focusZone: {

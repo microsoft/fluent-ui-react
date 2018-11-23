@@ -44,6 +44,7 @@ class Popover extends React.Component<PopoverProps> {
         onFocus={handleFocus}
         onBlur={handleBlur}
         accessibility={toolbarBehavior}
+        data-is-focusable={true}
       />
     )
   }
