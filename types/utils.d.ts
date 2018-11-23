@@ -30,7 +30,21 @@ export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: 
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandValue = React.ReactNode | Props
+export type ShorthandRenderTreeFunc = (
+  Component: React.ReactType,
+  props: Props,
+) => React.ReactElement<any>
+
+export type ShorthandRenderCallback = (
+  value: ShorthandValue | ShorthandRenderTreeFunc,
+  renderTree?: ShorthandRenderTreeFunc,
+) => React.ReactElement<any>
+
+export type ShorthandRenderer = (render: ShorthandRenderCallback) => React.ReactElement<any>
+
+export type ShorthandValue = React.ReactNode | Props | ShorthandRenderer
+
+// OBSOLETE
 export type ShorthandRenderFunction = (
   Component: React.ReactType,
   props: Props,

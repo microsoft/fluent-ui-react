@@ -1,7 +1,14 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
-import { ShorthandRenderFunction, ShorthandValue, Props } from '../../types/utils'
+import {
+  ShorthandRenderFunction,
+  ShorthandValue,
+  Props,
+  ShorthandRenderCallback,
+  ShorthandRenderTreeFunc,
+  ShorthandRenderer,
+} from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
@@ -47,7 +54,7 @@ export function createShorthand(
 ): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
   if (valIsRenderFunction) {
-    const render = (shorthandValueOrRenderTree, renderTreeArg) => {
+    const render: ShorthandRenderCallback = (shorthandValueOrRenderTree, renderTreeArg) => {
       const shorthandArgType = {
         isReactElement: React.isValidElement(shorthandValueOrRenderTree),
         isRenderTreeFunc: typeof shorthandValueOrRenderTree === 'function',
@@ -56,12 +63,13 @@ export function createShorthand(
       const ShorthandElement = createShorthand(
         Component,
         mappedProp,
-        shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as Object),
+        shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as ShorthandValue),
         options,
       )
 
       const renderTree =
-        (shorthandArgType.isRenderTreeFunc && (shorthandValueOrRenderTree as Function)) ||
+        (shorthandArgType.isRenderTreeFunc &&
+          (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)) ||
         renderTreeArg
 
       return shorthandArgType.isReactElement || !renderTree
@@ -69,7 +77,7 @@ export function createShorthand(
         : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
     }
 
-    return (value as any)(render)
+    return (value as ShorthandRenderer)(render)
   }
 
   if (typeof Component !== 'function' && typeof Component !== 'string') {
