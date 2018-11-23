@@ -5,6 +5,7 @@ import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+import { pxToRem } from '../../../src/lib'
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -411,11 +412,12 @@ export default () => (
     />
     <Button
       as={NavLink}
-      content="Custom Components"
+      content="Integrate Custom Components"
       icon="arrow right"
       iconPosition="after"
       primary
-      to="custom-components"
+      to="integrate-custom-components"
+      variables={{ maxWidth: pxToRem(300) }}
     />
   </DocPage>
 )
