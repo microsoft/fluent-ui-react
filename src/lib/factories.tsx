@@ -47,7 +47,15 @@ export function createShorthand(
 ): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
   if (valIsRenderFunction) {
-    const render = shorthandValue => createShorthand(Component, mappedProp, shorthandValue, options)
+    const render = (shorthandValue, renderTree) => {
+      const ShorthandElement = createShorthand(Component, mappedProp, shorthandValue, options)
+      if (React.isValidElement(shorthandValue) || !renderTree) {
+        return ShorthandElement
+      }
+
+      return renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
+    }
+
     return (value as any)(render)
   }
 
