@@ -6,7 +6,7 @@ import { pxToRem } from '../../../../lib'
 const px10asRem = pxToRem(10)
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-flex',
     position: 'relative',
     marginTop: '1rem',
@@ -19,8 +19,8 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     wordWrap: 'break-word',
     ':focus': {
       outline: 'none',
-      '& .ui-chat__message__messageBody': {
-        outline: `.2rem solid ${siteVariables.brand}`,
+      messageBody: {
+        outline: `.2rem solid ${v.messageBody.focusOutlineColor}`,
       },
     },
   }),
@@ -46,11 +46,11 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     marginRight: px10asRem,
   }),
 
-  content: ({ theme: { siteVariables } }): ICSSInJSStyle => ({
+  content: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     '& a:focus': {
       outline: 'none',
-      color: siteVariables.brand,
+      color: v.messageBody.focusOutlineColor,
       textDecoration: 'underline',
     },
   }),

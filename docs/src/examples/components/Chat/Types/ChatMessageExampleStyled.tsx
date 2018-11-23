@@ -6,6 +6,15 @@ const janeAvatar = {
   status: { color: 'green', icon: 'check' },
 }
 
+const content = (
+  <div>
+    Sure! Try one of these places:<br />
+    <a href="#">www.goodFood1.com</a>,<br />
+    <a href="#">www.goodFood2.com</a> or<br />
+    <a href="#">www.goodFood3.com</a>
+  </div>
+)
+
 const slotLabelStyles: any = (label, beforeStyles) => ({
   position: 'relative',
   border: '1px solid #000',
@@ -42,12 +51,27 @@ const ChatMessageExampleStyled = () => (
           timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
         },
       },
+      componentVariables: {
+        ChatMessage: siteVars => ({
+          messageBody: {
+            focusOutlineColor: siteVars.white,
+          },
+        }),
+      },
     }}
   >
     <Chat>
       <Chat.Item>
         <Chat.Message
-          content="Style me the way you want!"
+          content="Hey, do you know any restaurants with good food?"
+          author="John Doe"
+          timestamp="Yesterday, 10:15 PM"
+          mine
+        />
+      </Chat.Item>
+      <Chat.Item>
+        <Chat.Message
+          content={{ content }}
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
           avatar={janeAvatar}

@@ -6,15 +6,6 @@ const janeAvatar = {
   status: { color: 'green', icon: 'check' },
 }
 
-const content = (
-  <div>
-    Sure! Let's try one of these places:<br />
-    <a href="#">www.goodFood1.com</a>,<br />
-    <a href="#">www.goodFood2.com</a> or<br />
-    <a href="#">www.goodFood3.com</a>
-  </div>
-)
-
 const ChatExample = () => (
   <Chat>
     <Chat.Item>
@@ -38,7 +29,7 @@ const ChatExample = () => (
     </Chat.Item>
     <Chat.Item>
       <Chat.Message
-        content={{ content }}
+        content="Sure! Let's try the new place downtown"
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
         avatar={janeAvatar}
