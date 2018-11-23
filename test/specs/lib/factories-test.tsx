@@ -542,7 +542,7 @@ describe('factories', () => {
         value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
       })
 
-      test('applies only the element props and returns the element', () => {
+      test('forwards original element "as is"', () => {
         testCreateShorthand(
           {
             Component: 'p',

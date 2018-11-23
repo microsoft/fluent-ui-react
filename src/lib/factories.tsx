@@ -106,8 +106,7 @@ function createShorthandFromValue(
   if (valIsNoop && !options.render) return null
 
   // just return ReactElements
-  const valIsReactElement = React.isValidElement(value)
-  if (valIsReactElement) {
+  if (React.isValidElement(value)) {
     return value as React.ReactElement<Props>
   }
 
@@ -115,13 +114,7 @@ function createShorthandFromValue(
   const valIsPropsObject = _.isPlainObject(value)
 
   // unhandled type warning
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    !valIsPrimitive &&
-    !valIsPropsObject &&
-    !valIsReactElement &&
-    !valIsNoop
-  ) {
+  if (process.env.NODE_ENV !== 'production' && !valIsPrimitive && !valIsPropsObject && !valIsNoop) {
     console.error(
       [
         'Shorthand value must be a string|number|object|ReactElements.',
@@ -137,10 +130,7 @@ function createShorthandFromValue(
   const { defaultProps = {} } = options
 
   // User's props
-  const usersProps =
-    (valIsReactElement && (value as React.ReactElement<Props>).props) ||
-    (valIsPropsObject && (value as Props)) ||
-    {}
+  const usersProps = valIsPropsObject ? (value as Props) : {}
 
   // Override props
   let { overrideProps } = options
