@@ -19,9 +19,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `renderComponent` function in the public API @mnajdova ([#503](https://github.com/stardust-ui/react/pull/503))
+- Apply `dir=auto` attribute to string content of `Text` @kuzhelov  ([#5](https://github.com/stardust-ui/react/pull/5))
 
 ### Fixes
 - Fix the behaviour of `AutoControlledComponent` when `undefined` is passed as a prop value @layershifter ([#499](https://github.com/stardust-ui/react/pull/499))
+- Stop event propagation when press Escape on the popup @sophieH29 ([#515](https://github.com/stardust-ui/react/pull/515))
 
 <!--------------------------------[ v0.12.0 ]------------------------------- -->
 ## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
@@ -44,6 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix styles as functions in shorthands are not applied @mnajdova ([#470](https://github.com/stardust-ui/react/pull/470))
 - Add `lodash` typings and fix compilation errors @Bugaa92 ([#438](https://github.com/stardust-ui/react/pull/438))
 - Remove unsafe `listRef` from `List` API @kuzhelov ([#489](https://github.com/stardust-ui/react/pull/489))
+- Fix Popup trigger's props are not passed in onClick handler @sophieH29 ([#521](https://github.com/stardust-ui/react/pull/521))
 
 ### Features
 - Make `Grid` keyboard navigable by implementing `gridBehavior` @sophieH29 ([#398](https://github.com/stardust-ui/react/pull/398))
