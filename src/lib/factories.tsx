@@ -45,6 +45,12 @@ export function createShorthand(
   value?: ShorthandValue,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ): React.ReactElement<Props> | null | undefined {
+  const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
+  if (valIsRenderFunction) {
+    const render = shorthandValue => createShorthand(Component, mappedProp, shorthandValue, options)
+    return (value as any)(render)
+  }
+
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
