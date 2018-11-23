@@ -10,10 +10,6 @@ export interface GridPickerItemProps {
   onClick?: (e: React.SyntheticEvent, props: GridPickerItemProps) => void
 }
 
-const imageStyles = {
-  width: '100%',
-}
-
 const imageButtonStyles = {
   minWidth: '56px',
   height: '56px',
@@ -26,17 +22,13 @@ class GridImagePickerItem extends React.Component<GridPickerItemProps> {
     as: 'li',
   }
 
-  handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
-
   render() {
-    const { title, imageSrc, as: ElementType } = this.props
+    const { title, imageSrc, as: ElementType, onClick } = this.props
 
     return (
       <ElementType>
-        <Button styles={imageButtonStyles} onClick={this.handleClick} title={title} role="listitem">
-          {imageSrc && <Image styles={imageStyles} src={imageSrc} fluid />}
+        <Button styles={imageButtonStyles} onClick={onClick} title={title} role="listitem">
+          {imageSrc && <Image src={imageSrc} fluid />}
         </Button>
       </ElementType>
     )

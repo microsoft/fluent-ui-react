@@ -74,4 +74,5 @@ export const arrayOfStickerImagesNames = [
   ],
   ['chris', 'elliot', 'helen', 'jenny', 'stevie', 'steve', 'tom'],
   ['jenny', 'joe', 'justen', 'nan', 'nom', 'stevie'],
+  ['chris', 'christian', 'elliot', 'joe', 'justen', 'laura', 'matt', 'stevie', 'steve', 'tom'],
 ]

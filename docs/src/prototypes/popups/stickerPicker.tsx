@@ -8,7 +8,7 @@ import {
   tabListBehavior,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
-import { arrayOfStickerImagesNames, getItemsData } from './helper'
+import { arrayOfStickerImagesNames, getItemsData } from './dataMocks'
 import GridImagePicker from './GridImagePicker/GridImagePicker'
 
 const tabListItemsContent = [
@@ -26,10 +26,7 @@ class StickerPicker extends React.Component {
   gridPickerRef = React.createRef<GridImagePicker>()
 
   getStickersData = () => {
-    const index = arrayOfStickerImagesNames[this.state.activeMenuIndex]
-      ? this.state.activeMenuIndex
-      : 0
-    return getItemsData(arrayOfStickerImagesNames[index], 'sticker of')
+    return getItemsData(arrayOfStickerImagesNames[this.state.activeMenuIndex], 'sticker of')
   }
 
   onMenuItemClick = (e, props) => {

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import GridImagePicker from './GridImagePicker/GridImagePicker'
-import { imageNames, getItemsData } from './helper'
+import { imageNames, getItemsData } from './dataMocks'
 import { Button, Popup, dialogBehavior } from '@stardust-ui/react'
 
 const EmojiPicker = () => (
