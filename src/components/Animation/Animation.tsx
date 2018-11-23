@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { UIComponent, customPropTypes, childrenExist } from '../../lib'
-import { Animation as ThemeAnimation } from '../../themes/types'
+import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 import { ChildrenComponentProps, StyledComponentProps } from '../../lib/commonPropInterfaces'
 import { styledComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
@@ -97,7 +97,7 @@ class Animation extends UIComponent<AnimationProps, any> {
   renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
     const { children, name } = this.props
 
-    const animation: ThemeAnimation = {
+    const animation: AnimationProp = {
       name,
       duration: this.props.duration,
       delay: this.props.delay,

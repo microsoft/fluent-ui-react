@@ -115,7 +115,7 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
-export type Animation =
+export type AnimationProp =
   | {
       name: string
       delay?: string

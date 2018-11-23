@@ -283,24 +283,31 @@ export default () => (
       prop.
     </p>
 
+    <blockquote>
+      <strong>Keyframes are static</strong> - Keyframes cannot be overridden using the properties.
+      If you want to add new keyframes or change some existing, please use the <code>Provider</code>{' '}
+      for this. The API for
+      <i>using</i> the animations doesn't provide any way for changing the keyframes.
+    </blockquote>
+
     <ExampleSnippet
       value={[
         `<Animation name="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Animation>`,
-        `<Icon name="book" animation="spinner" delay="5s" duration="2s" circular/>`,
+        `<Icon name="book" animation={{name: "spinner", delay: "5s", duration: "2s"}} circular/>`,
       ].join('\n')}
       render={() => (
         <div>
           <Animation name="spinner" delay="2s" duration="1s">
             <Icon name="user" circular />
           </Animation>
-          <Icon name="book" animation="spinner" delay="5s" duration="2s" circular />
+          <Icon name="book" animation={{ name: 'spinner', delay: '5s', duration: '2s' }} circular />
         </div>
       )}
     />
 
     <p>
       The difference between using the Animation component versus the animation property is that,
-      the Animation component can be safely use for applying animations on{' '}
+      the Animation component can be safely used for applying animations on{' '}
       <i>all components (Stardust, custom and third party components)</i>. For the Stardust
       components, we recommend using the animation property as there will be no wrapper element
       added just for the purpose of defining the animation. For more details, please see the
