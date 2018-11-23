@@ -18,7 +18,7 @@ export const commonUIComponentPropTypes = {
 }
 
 export const contentComponentPropsTypes = {
-  content: customPropTypes.contentShorthand,
+  content: customPropTypes.itemShorthand,
 }
 
 export const childrenComponentPropTypes = {
