@@ -13,11 +13,7 @@ import {
   customPropTypes,
   createShorthandFactory,
 } from '../../lib'
-import {
-  ComponentEventHandler,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentEventHandler, ShorthandRenderFunction, ShorthandValue } from 'utils'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
@@ -29,7 +25,7 @@ import {
   ContentComponentProps,
 } from '../../lib/commonPropInterfaces'
 
-export interface TreeListItemProps
+export interface TreeItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
     ContentComponentProps {
@@ -42,16 +38,8 @@ export interface TreeListItemProps
   /** Initial activeIndex value. */
   defaultOpen?: boolean
 
-  /** Shorthand array of props for sub tree. */
+  /** Array of props for sub tree. */
   items?: ShorthandValue[]
-
-  /**
-   * Called when a tree title is clicked.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All title props.
-   */
-  onItemClick?: ComponentEventHandler<TreeListItemProps>
 
   /** Whether or not the subtree of the item is in the open state. */
   open?: boolean
@@ -64,22 +52,22 @@ export interface TreeListItemProps
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction
 
-  /** Shorthand for TreeTitle. */
+  /** Properties for TreeTitle. */
   title?: ShorthandValue
 }
 
-export interface TreeListItemState {
+export interface TreeItemState {
   open?: boolean
 }
 
-class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListItemState> {
+class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
   static create: Function
 
-  static className = 'ui-tree__list__item'
+  static className = 'ui-tree__item'
 
-  static displayName = 'TreeListItem'
+  static displayName = 'TreeItem'
 
   static autoControlledProps = ['open']
 
@@ -90,9 +78,8 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
     accessibility: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
-    onItemClick: PropTypes.func,
     open: PropTypes.bool,
-    renderTitle: PropTypes.func,
+    renderItemTitle: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -101,20 +88,18 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
     accessibility: defaultBehavior,
   }
 
-  handleItemOverrides = predefinedProps => ({
+  handleTitleOverrides = predefinedProps => ({
     onClick: (e, titleProps) => {
       e.preventDefault()
       this.trySetState({
         open: !this.state.open,
       })
-
       _.invoke(predefinedProps, 'onClick', e, titleProps)
-      _.invoke(this.props, 'onItemClick', e, titleProps)
     },
   })
 
   renderContent() {
-    const { items, title, renderTitle } = this.props
+    const { items, title, renderItemTitle } = this.props
     const { open } = this.state
 
     return (
@@ -124,8 +109,8 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
             open,
             hasSubtree: !!(items && items.length),
           },
-          render: renderTitle,
-          overrideProps: this.handleItemOverrides,
+          render: renderItemTitle,
+          overrideProps: this.handleTitleOverrides,
         })}
         {items &&
           open &&
@@ -133,7 +118,7 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
             defaultProps: {
               items,
               nested: true,
-              renderTitle,
+              renderItemTitle,
             },
           })}
       </>
@@ -151,6 +136,6 @@ class TreeListItem extends AutoControlledComponent<TreeListItemProps, TreeListIt
   }
 }
 
-TreeListItem.create = createShorthandFactory(TreeListItem, 'content')
+TreeItem.create = createShorthandFactory(TreeItem, 'content')
 
-export default TreeListItem
+export default TreeItem

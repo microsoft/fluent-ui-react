@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import TreeListItem from './TreeListItem'
+import TreeItem from './TreeItem'
 import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -25,17 +25,17 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   nested?: boolean
 
   /**
-   * A custom render function the title slot.
+   * A custom render function for the title slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction
 }
 
 /**
- * A tree allows users to display nested trees.
+ * Allows users to display data organised in tree-hierarchy.
  */
 class Tree extends UIComponent<TreeProps> {
   static create: Function
@@ -50,7 +50,7 @@ class Tree extends UIComponent<TreeProps> {
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     nested: PropTypes.bool,
-    renderTitle: PropTypes.func,
+    renderItemTitle: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -59,12 +59,12 @@ class Tree extends UIComponent<TreeProps> {
   }
 
   renderContent() {
-    const { items, renderTitle } = this.props
+    const { items, renderItemTitle } = this.props
 
     return _.map(items, item =>
-      TreeListItem.create(item, {
+      TreeItem.create(item, {
         defaultProps: {
-          renderTitle,
+          renderItemTitle,
         },
       }),
     )

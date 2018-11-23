@@ -1,8 +1,9 @@
 import { ICSSInJSStyle } from '../../../types'
+import { pxToRem } from '../../../../lib'
 
 const treeTitleStyles = {
   root: ({ variables }): ICSSInJSStyle => ({
-    padding: '.1rem 0',
+    padding: `${pxToRem(1)} 0`,
     cursor: 'pointer',
     color: variables.defaultColor,
   }),

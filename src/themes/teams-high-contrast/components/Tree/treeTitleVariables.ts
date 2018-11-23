@@ -1,6 +1,4 @@
-export interface TreeTitleVariables {
-  defaultColor: string
-}
+import { TreeTitleVariables } from '../../../teams/components/Tree/treeTitleVariables'
 
 export default (siteVars: any): TreeTitleVariables => {
   return {

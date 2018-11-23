@@ -31,12 +31,12 @@ const items = [
 ]
 
 const titleRenderer = (Component, { content, open, hasSubtree, ...rest }) => (
-  <Component open={open} {...rest}>
+  <Component open={open} hasSubtree={hasSubtree} {...rest}>
     {hasSubtree && <Icon name={open ? 'arrow down' : 'arrow right'} />}
     <span>{content}</span>
   </Component>
 )
 
-const TreeExclusiveExample = () => <Tree items={items} renderTitle={titleRenderer} />
+const TreeTitleCustomizationExample = () => <Tree items={items} renderItemTitle={titleRenderer} />
 
-export default TreeExclusiveExample
+export default TreeTitleCustomizationExample
