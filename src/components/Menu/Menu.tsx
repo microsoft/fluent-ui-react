@@ -105,6 +105,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
+      // const props = itemProps || predefinedProps
       const { index } = itemProps
 
       this.trySetState({ activeIndex: index })

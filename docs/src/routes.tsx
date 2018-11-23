@@ -30,6 +30,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-chat-message-with-popover"
+            path="/prototype-chat-message-with-popover"
+            component={require('./prototypes/chatMessageWithPopover/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-async-shorthand"
             path="/prototype-async-shorthand"
             component={require('./prototypes/AsyncShorthand/index').default}

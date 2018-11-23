@@ -9,13 +9,15 @@ const toolbarBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'toolbar',
+      'data-is-focusable': true,
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: false,
       preventDefaultWhenHandled: true,
+      shouldFocusFirstElementWhenReceivedFocus: true,
     },
   },
 })
