@@ -34,8 +34,6 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
   input: 'type',
 }
 
-const getElementProps = (Element?: React.ReactElement<Props>) => (Element ? Element.props : {})
-
 // ============================================================
 // Factories
 // ============================================================
@@ -49,22 +47,26 @@ export function createShorthand(
 ): React.ReactElement<Props> | null | undefined {
   const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
   if (valIsRenderFunction) {
-    const render = (shorthandValueOrRenderTree, renderTree) => {
-      if (typeof shorthandValueOrRenderTree === 'function') {
-        const asRenderTree = shorthandValueOrRenderTree
-
-        const ShorthandElement = createShorthand(Component, mappedProp, {}, options)
-        return (asRenderTree as any)(Component, getElementProps(ShorthandElement))
+    const render = (shorthandValueOrRenderTree, renderTreeArg) => {
+      const shorthandArgType = {
+        isReactElement: React.isValidElement(shorthandValueOrRenderTree),
+        isRenderTreeFunc: typeof shorthandValueOrRenderTree === 'function',
       }
 
-      const shorthandValue = shorthandValueOrRenderTree
-      const ShorthandElement = createShorthand(Component, mappedProp, shorthandValue, options)
+      const ShorthandElement = createShorthand(
+        Component,
+        mappedProp,
+        shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as Object),
+        options,
+      )
 
-      if (React.isValidElement(shorthandValue) || !renderTree) {
-        return ShorthandElement
-      }
+      const renderTree =
+        (shorthandArgType.isRenderTreeFunc && (shorthandValueOrRenderTree as Function)) ||
+        renderTreeArg
 
-      return renderTree(Component, getElementProps(ShorthandElement))
+      return shorthandArgType.isReactElement || !renderTree
+        ? ShorthandElement
+        : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
     }
 
     return (value as any)(render)
