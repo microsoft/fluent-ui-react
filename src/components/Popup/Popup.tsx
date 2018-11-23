@@ -209,9 +209,9 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           }}
         >
           {React.cloneElement(triggerElement, {
-            onClick: e => {
+            onClick: (e, ...rest) => {
               this.trySetOpen(!this.state.open, e)
-              _.invoke(triggerElement, 'props.onClick', e)
+              _.invoke(triggerElement, 'props.onClick', e, ...rest)
             },
             ...accessibility.attributes.trigger,
             ...accessibility.keyHandlers.trigger,
