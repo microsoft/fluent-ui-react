@@ -19,6 +19,7 @@ export interface MessageData {
   from: string
   isImportant: boolean
   mine: boolean
+  withAttachment?: boolean
 }
 
 export interface ChatData {
