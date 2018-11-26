@@ -14,7 +14,6 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
-import Slot from '../Slot/Slot'
 
 export interface HeaderProps
   extends UIComponentProps<any, any>,
@@ -66,7 +65,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, rest, styles }) {
+  renderComponent({ ElementType, classes, variables: v, rest }) {
     const { children, content, description, renderDescription } = this.props
 
     if (childrenExist(children)) {
@@ -79,9 +78,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {Slot.create(content, {
-          defaultProps: { as: 'span', styles: styles.content },
-        })}
+        {content}
         {HeaderDescription.create(description, {
           defaultProps: {
             variables: {

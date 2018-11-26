@@ -14,7 +14,6 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
-import Slot from '../Slot/Slot'
 
 export interface TextProps
   extends UIComponentProps<any, any>,
@@ -88,7 +87,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }): React.ReactNode {
+  renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
 
     const hasChildren = childrenExist(children)
@@ -97,11 +96,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
     return (
       <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
-        {hasChildren
-          ? children
-          : Slot.create(content, {
-              defaultProps: { as: 'span', styles: styles.content },
-            })}
+        {hasChildren ? children : content}
       </ElementType>
     )
   }
