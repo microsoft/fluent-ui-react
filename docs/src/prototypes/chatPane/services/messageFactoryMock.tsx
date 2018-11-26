@@ -34,7 +34,7 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    content: createMessageContent(content),
+    content: { content: createMessageContent(content) },
     mine,
     tabIndex: 0,
     timestamp: { content: msg.timestamp, title: msg.timestampLong },
@@ -83,7 +83,12 @@ function createMessageContent(content: string) {
             action={{ icon: 'ellipsis horizontal' }}
             renderAction={() => actionPopup}
             data-is-focusable={true}
-            style={index === 1 ? { marginLeft: '15px' } : {}}
+            styles={{
+              '&:focus': {
+                outline: '.2rem solid #6264A7',
+              },
+              ...(index === 1 ? { marginLeft: '15px' } : {}),
+            }}
           />
         ))}
       </div>
