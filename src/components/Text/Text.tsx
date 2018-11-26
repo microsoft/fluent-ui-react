@@ -55,6 +55,10 @@ export interface TextProps
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
+ *
+ * To ensure that RTL mode will be properly handled for provided 'content' value, ensure that either:
+ * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
+ * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
 class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
@@ -85,9 +89,14 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
+
+    const hasChildren = childrenExist(children)
+
+    const maybeDirAuto = !hasChildren && typeof content === 'string' ? { dir: 'auto' } : null
+
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+      <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
+        {hasChildren ? children : content}
       </ElementType>
     )
   }

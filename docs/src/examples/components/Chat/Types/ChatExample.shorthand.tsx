@@ -11,6 +11,7 @@ const items = [
     content: (
       <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
     ),
+    key: 'message-id-1',
   },
   {
     content: (
@@ -21,6 +22,7 @@ const items = [
         avatar={janeAvatar}
       />
     ),
+    key: 'message-id-2',
   },
   {
     content: (
@@ -31,6 +33,7 @@ const items = [
         mine
       />
     ),
+    key: 'message-id-3',
   },
   {
     content: (
@@ -41,9 +44,11 @@ const items = [
         avatar={janeAvatar}
       />
     ),
+    key: 'message-id-4',
   },
   {
     content: <Divider content="Today" type="primary" important />,
+    key: 'message-id-5',
   },
   {
     content: (
@@ -54,6 +59,7 @@ const items = [
         mine
       />
     ),
+    key: 'message-id-6',
   },
 ]
 
