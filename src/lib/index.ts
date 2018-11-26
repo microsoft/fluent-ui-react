@@ -15,6 +15,8 @@ export { default as getElementType } from './getElementType'
 export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as renderComponent, RenderResultConfig } from './renderComponent'
+
+export { default as handleRef } from './handleRef'
 export {
   htmlImageProps,
   htmlInputAttrs,
@@ -30,3 +32,5 @@ export { default as leven } from './leven'
 
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
 export { customPropTypes }
+export { default as createAnimationStyles } from './createAnimationStyles'
+export { default as createComponent } from './createStardustComponent'

@@ -30,7 +30,7 @@ const IconSetExampleShorthand = () => (
           </Divider>
           <Grid columns={4} style={{ textAlign: 'center' }}>
             {Object.keys(theme.icons).map(name => (
-              <div key={name + '-outline'} style={cellStyles}>
+              <div key={`${name}-outline`} style={cellStyles}>
                 <Icon name={name} variables={{ outline: true }} />
                 <br />
                 <code>{name} outline</code>

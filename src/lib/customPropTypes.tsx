@@ -436,3 +436,17 @@ export const deprecate = (help: string, validator: Function) => (
 
   return error
 }
+
+export const animation = PropTypes.oneOfType([
+  PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    delay: PropTypes.string,
+    direction: PropTypes.string,
+    duration: PropTypes.string,
+    fillMode: PropTypes.string,
+    iterationCount: PropTypes.string,
+    playState: PropTypes.string,
+    timingFunction: PropTypes.string,
+  }),
+  PropTypes.string,
+])

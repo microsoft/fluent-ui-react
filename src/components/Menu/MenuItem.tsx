@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
@@ -81,6 +82,15 @@ export interface MenuItemProps
    */
   renderIcon?: ShorthandRenderFunction
 
+  /**
+   * A custom render function the wrapper slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderWrapper?: ShorthandRenderFunction
+
   /** The menu item can have secondary type. */
   secondary?: boolean
 
@@ -89,6 +99,9 @@ export interface MenuItemProps
 
   /** A vertical menu displays elements vertically. */
   vertical?: boolean
+
+  /** Shorthand for the wrapper component. */
+  wrapper?: ShorthandValue
 }
 
 export interface MenuItemState {
@@ -123,46 +136,56 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     renderIcon: PropTypes.func,
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+    renderWrapper: PropTypes.func,
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'a',
     accessibility: menuItemBehavior as Accessibility,
+    wrapper: { as: 'li' },
   }
 
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon } = this.props
+    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
 
-    return (
+    const menuItemInner = childrenExist(children) ? (
+      children
+    ) : (
       <ElementType
         className={classes.root}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor}
+        {...accessibility.keyHandlers.anchor}
         {...rest}
       >
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <a
-            className={cx('ui-menu__item__anchor', classes.anchor)}
-            onClick={this.handleClick}
-            onBlur={this.handleBlur}
-            onFocus={this.handleFocus}
-            {...accessibility.attributes.anchor}
-            {...accessibility.keyHandlers.anchor}
-          >
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-                render: renderIcon,
-              })}
-            {content}
-          </a>
-        )}
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            render: renderIcon,
+          })}
+        {content}
       </ElementType>
     )
+
+    if (wrapper) {
+      return Slot.create(wrapper, {
+        defaultProps: {
+          className: cx('ui-menu__item__wrapper', classes.wrapper),
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
+        },
+        render: renderWrapper,
+        overrideProps: () => ({
+          children: menuItemInner,
+        }),
+      })
+    }
+    return menuItemInner
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {

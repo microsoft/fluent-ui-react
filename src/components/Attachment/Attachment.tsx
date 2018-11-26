@@ -128,12 +128,12 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
-              defaultProps: { className: classes.header },
+              defaultProps: { styles: styles.header },
               render: renderHeader,
             })}
 
             {Text.create(description, {
-              defaultProps: { className: classes.description },
+              defaultProps: { styles: styles.description },
               render: renderDescription,
             })}
           </div>

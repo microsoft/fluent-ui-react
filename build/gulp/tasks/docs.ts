@@ -30,10 +30,6 @@ const handleWatchUnlink = (group, path) => {
 // Clean
 // ----------------------------------------
 
-task('clean:docs:component-info', cb => {
-  rimraf(paths.docsSrc('componentInfo'), cb)
-})
-
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
 })
@@ -53,7 +49,6 @@ task('clean:docs:example-menus', cb => {
 task(
   'clean:docs',
   parallel(
-    'clean:docs:component-info',
     'clean:docs:component-menu',
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',

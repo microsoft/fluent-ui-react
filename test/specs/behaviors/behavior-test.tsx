@@ -16,6 +16,7 @@ import {
   menuItemBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
+  dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
@@ -55,5 +56,6 @@ testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
+testHelper.addBehavior('dialogBehavior', dialogBehavior)
 
 testHelper.run(behaviorMenuItems)

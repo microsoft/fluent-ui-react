@@ -18,7 +18,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
   }
 
   baseName(fileName: string) {
-    const divided = _.startCase(fileName.replace('ts', ''))
+    const divided = _.startCase(fileName.replace(/\.ts$/, ''))
     return _.upperFirst(_.lowerCase(divided))
   }
 
@@ -32,7 +32,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const { match } = this.props
-    const pageTitle = _.capitalize(match.params.name) + ' behaviors'
+    const pageTitle = `${_.capitalize(match.params.name)} behaviors`
     return (
       <DocumentTitle title={pageTitle}>
         <Grid>
@@ -41,7 +41,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
               <Header
                 as="h1"
                 content={pageTitle}
-                subheader={'Keyboard and Screenreader options for ' + match.params.name + 's.'}
+                subheader={`Keyboard and Screenreader options for ${match.params.name}s.`}
               />
             </Grid.Column>
           </Grid.Row>
@@ -71,14 +71,24 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                 <div style={{ padding: '1em' }}>
                   <span> Description: </span>
                   <br />
-                  {variation.text.split('\n').map((splittedText, keyValue) => {
-                    return (
-                      <span key={keyValue}>
-                        {splittedText}
-                        <br />
-                      </span>
-                    )
-                  })}
+                  {variation.description &&
+                    variation.description.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
+                  {variation.specification &&
+                    variation.specification.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
                 </div>
               </Grid.Row>
             ))}

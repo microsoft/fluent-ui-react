@@ -26,9 +26,6 @@ export interface ListProps extends UIComponentProps<any, any>, ChildrenComponent
   /** Shorthand array of props for ListItem. */
   items?: ShorthandValue[]
 
-  /** Ref callback with the list DOM node. */
-  listRef?: (node: HTMLElement) => void
-
   /** A selection list formats list items as possible choices. */
   selection?: boolean
 
@@ -70,7 +67,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
-    listRef: PropTypes.func,
     renderItem: PropTypes.func,
   }
 
@@ -90,10 +86,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
-
-  private handleListRef = (listNode: HTMLElement) => {
-    _.invoke(this.props, 'listRef', listNode)
-  }
 
   actionHandlers: AccessibilityActionHandlers = {
     moveNext: e => {
@@ -123,7 +115,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
-        ref={this.handleListRef}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
