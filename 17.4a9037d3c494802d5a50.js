@@ -1,7 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[17],{1501:
-/*!**************************************************!*\
-  !*** ./docs/src/exampleMenus/List.examples.json ***!
-  \**************************************************/
-/*! exports provided: 0, 1, 2, default */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */function(e){e.exports=[{sectionName:"Types",examples:[{title:"Default",examplePath:"components/List/Types/ListExample"},{title:"Selection",examplePath:"components/List/Types/ListExampleSelection"}]},{sectionName:"Content",examples:[{title:"Header",examplePath:"components/List/Content/ListExampleHeader"},{title:"Content",examplePath:"components/List/Content/ListExampleContent"},{title:"Header & Content",examplePath:"components/List/Content/ListExampleHeaderContent"},{title:"Media",examplePath:"components/List/Content/ListExampleMedia"},{title:"Header Media",examplePath:"components/List/Content/ListExampleHeaderMedia"},{title:"Content Media",examplePath:"components/List/Content/ListExampleContentMedia"},{title:"End Media",examplePath:"components/List/Content/ListExampleEndMedia"}]},{sectionName:"Variations",examples:[{title:"Truncate",examplePath:"components/List/Variations/ListExampleTruncate"}]}]}}]);
