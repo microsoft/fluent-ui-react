@@ -48,7 +48,7 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
     renderItem: PropTypes.func,
   }
 
-  static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }
+  static defaultProps = { accessibility: chatBehavior, as: 'ul' }
 
   static Item = ChatItem
   static Message = ChatMessage

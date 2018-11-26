@@ -19,7 +19,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     wordWrap: 'break-word',
     ':focus': {
       outline: 'none',
-      messageBody: {
+      '& .ui-chat__message__messageBody': {
         outline: `.2rem solid ${v.messageBody.focusOutlineColor}`,
       },
     },

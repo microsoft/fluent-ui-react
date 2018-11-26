@@ -112,11 +112,11 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: chatMessageBehavior as Accessibility,
+    accessibility: chatMessageBehavior,
     as: 'div',
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
@@ -132,7 +132,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     variables,
   }: RenderResultConfig<ChatMessageProps>) {
     const { children } = this.props
-
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -148,7 +147,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     )
   }
 
-  renderContent = (
+  private renderContent = (
     classes: ComponentSlotClasses,
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
@@ -177,7 +176,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       defaultProps: {
         size: 'small',
         styles: styles.author,
-        variables: variables.author,
       },
       render: renderAuthor,
     })
@@ -186,17 +184,12 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       defaultProps: {
         size: 'small',
         timestamp: true,
-        styles: styles.timestamp,
-        variables: variables.timestamp,
       },
       render: renderTimestamp,
     })
 
     const contentElement = Slot.create(content, {
-      defaultProps: {
-        styles: styles.content,
-        variables: variables.content,
-      },
+      defaultProps: { styles: styles.content },
       render: renderContent,
     })
 
