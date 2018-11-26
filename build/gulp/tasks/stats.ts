@@ -138,10 +138,7 @@ task('build:stats:without-imports', cb => {
 task(
   'stats',
   series(
-    parallel(
-      series('clean:dist:es', 'build:dist:es'),
-      series('clean:docs:component-info', 'build:docs:component-info'),
-    ),
+    parallel(series('clean:dist:es', 'build:dist:es'), 'build:docs:component-info'),
     parallel(
       'build:stats:bundle',
       // TODO: update this 'build:stats:without-imports',
