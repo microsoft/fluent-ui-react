@@ -23,7 +23,6 @@ const chatMessageBehavior: Accessibility = (props: any) => ({
       handleTabKey: FocusZoneTabbableElements.all,
       isCircularNavigation: true,
       direction: FocusZoneDirection.vertical,
-      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
     },
   },
   keyActions: {
