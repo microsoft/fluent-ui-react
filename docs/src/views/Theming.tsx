@@ -6,6 +6,19 @@ import { Button, Divider, Icon, Provider, Text, Animation } from '@stardust-ui/r
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
 
+const spinner = {
+  keyframe: {
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(360deg)',
+    },
+  },
+  duration: '5s',
+  iterationCount: 'infinite',
+}
+
 export default () => (
   <DocPage title="Theming">
     <Header as="h2" content="Overview" />
@@ -268,12 +281,14 @@ export default () => (
         `</Provider>`,
       ].join('\n')}
       render={() => (
-        <div>
-          <Animation name="spinner">
-            <Icon name="user" circular />
-          </Animation>
-          <Icon name="book" animation="spinner" circular />
-        </div>
+        <Provider theme={{ animations: { spinner } }}>
+          <div>
+            <Animation name="spinner">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon name="book" animation="spinner" circular />
+          </div>
+        </Provider>
       )}
     />
 
@@ -292,16 +307,37 @@ export default () => (
 
     <ExampleSnippet
       value={[
-        `<Animation name="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Animation>`,
-        `<Icon name="book" animation={{name: "spinner", delay: "5s", duration: "2s"}} circular/>`,
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <Animation name="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Animation>`,
+        `  <Icon name="book" animation={{name: "spinner", delay: "5s", duration: "2s"}} circular/>`,
+        `</Provider>`,
       ].join('\n')}
       render={() => (
-        <div>
-          <Animation name="spinner" delay="2s" duration="1s">
-            <Icon name="user" circular />
-          </Animation>
-          <Icon name="book" animation={{ name: 'spinner', delay: '5s', duration: '2s' }} circular />
-        </div>
+        <Provider theme={{ animations: { spinner } }}>
+          <div>
+            <Animation name="spinner" delay="2s" duration="1s">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon
+              name="book"
+              animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
+              circular
+            />
+          </div>
+        </Provider>
       )}
     />
 
