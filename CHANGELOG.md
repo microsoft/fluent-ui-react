@@ -27,6 +27,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix the behaviour of `AutoControlledComponent` when `undefined` is passed as a prop value @layershifter ([#499](https://github.com/stardust-ui/react/pull/499))
 - Stop event propagation when press Escape on the popup @sophieH29 ([#515](https://github.com/stardust-ui/react/pull/515))
 
+### Documentation
+- Add `Integrate Custom Components` guide page in the docs @mnajdova ([#517](https://github.com/stardust-ui/react/pull/517))
+
 <!--------------------------------[ v0.12.0 ]------------------------------- -->
 ## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.11.0...v0.12.0)
