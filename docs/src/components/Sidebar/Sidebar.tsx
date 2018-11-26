@@ -245,6 +245,14 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
                   Theming Examples
                 </Menu.Item>
+                <Menu.Item
+                  as={NavLink}
+                  exact
+                  to="/integrate-custom-components"
+                  activeClassName="active"
+                >
+                  Integrate Custom Components
+                </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
             {process.env.NODE_ENV !== 'production' && (
