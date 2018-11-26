@@ -13,15 +13,16 @@ import {
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+import { ReactChildren } from '../../../types/utils'
 
 interface StyledButtonProps {
   className?: string
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
-  children?: React.ReactNodeArray | React.ReactNode
+  children?: ReactChildren
 }
 
-const StyledButton: React.SFC<StyledButtonProps> = createComponent<StyledButtonProps, {}>({
+const StyledButton: React.SFC<StyledButtonProps> = createComponent<StyledButtonProps>({
   displayName: 'StyledButton',
   render({ stardust, className, children }) {
     const { classes } = stardust
@@ -82,7 +83,7 @@ export default () => (
         `      StyledButton: {`,
         `        root: ({ props, variables, theme: {siteVariables} }) => ({`,
         `          backgroundColor: siteVariables.brand,`,
-        `          color: (variables as any).color,`,
+        `          color: variables.color,`,
         `        }),`,
         `      },`,
         `    },`,
