@@ -12,6 +12,7 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
+import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -62,6 +63,11 @@ const Router = () => (
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+        <DocsLayout
+          exact
+          path="/integrate-custom-components"
+          component={IntegrateCustomComponents}
+        />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>
