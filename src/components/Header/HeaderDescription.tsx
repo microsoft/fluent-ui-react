@@ -5,18 +5,18 @@ import { Extendable } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  SimpleContentComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  simpleContentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    SimpleContentComponentProps {}
 
 /**
  * A header's description provides more detailed information.
@@ -31,7 +31,7 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...simpleContentComponentPropsTypes,
   }
 
   static defaultProps = {

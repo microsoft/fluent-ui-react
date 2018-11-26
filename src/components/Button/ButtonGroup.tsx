@@ -10,18 +10,18 @@ import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  SimpleContentComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  simpleContentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface ButtonGroupProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    SimpleContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default buttonGroupBehavior
@@ -56,7 +56,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...simpleContentComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,

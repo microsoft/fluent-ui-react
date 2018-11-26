@@ -21,6 +21,10 @@ export const contentComponentPropsTypes = {
   content: customPropTypes.itemShorthand,
 }
 
+export const simpleContentComponentPropsTypes = {
+  content: customPropTypes.contentShorthand,
+}
+
 export const childrenComponentPropTypes = {
   children: PropTypes.node,
 }

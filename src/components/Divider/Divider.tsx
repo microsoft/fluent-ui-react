@@ -6,18 +6,18 @@ import { Extendable } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  SimpleContentComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  simpleContentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface DividerProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    SimpleContentComponentProps {
   /** A divider can be fitted, without any space above or below it.  */
   fitted?: boolean
 
@@ -44,7 +44,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...simpleContentComponentPropsTypes,
     fitted: PropTypes.bool,
     size: PropTypes.number,
     type: PropTypes.oneOf(['primary', 'secondary']),

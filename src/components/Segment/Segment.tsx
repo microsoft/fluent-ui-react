@@ -2,10 +2,15 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import { UIComponent, childrenExist } from '../../lib'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, contentComponentPropsTypes } from '../../lib/commonPropTypes'
+import { UIComponentProps, SimpleContentComponentProps } from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  simpleContentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface SegmentProps extends UIComponentProps<SegmentProps, any>, ContentComponentProps {
+export interface SegmentProps
+  extends UIComponentProps<SegmentProps, any>,
+    SimpleContentComponentProps {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 }
@@ -20,7 +25,7 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
 
   static propTypes = {
     ...commonUIComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...simpleContentComponentPropsTypes,
     inverted: PropTypes.bool,
     renderContent: PropTypes.func,
   }

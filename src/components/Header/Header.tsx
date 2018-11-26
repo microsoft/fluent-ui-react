@@ -7,18 +7,18 @@ import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../ty
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  SimpleContentComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  simpleContentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface HeaderProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    SimpleContentComponentProps {
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 
@@ -53,7 +53,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...simpleContentComponentPropsTypes,
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
     renderDescription: PropTypes.func,
