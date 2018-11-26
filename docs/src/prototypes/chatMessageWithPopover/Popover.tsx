@@ -62,6 +62,7 @@ const renderContextMenu = (MenuItem, props) => {
       key={props.key}
       position="below"
       accessibility={popupFocusTrapBehavior}
+      trigger={<MenuItem {...props} />}
       content={
         <div
           style={{
@@ -83,20 +84,14 @@ const renderContextMenu = (MenuItem, props) => {
           />
         </div>
       }
-    >
-      <MenuItem {...props} />
-    </Popup>
+    />
   )
 }
 
 export const handleFocus = e => {
   const currentTarget = e.currentTarget
-  const target = e.target
-
-  if (currentTarget === target || currentTarget.contains(target)) {
+  if (!currentTarget.classList.contains('focused')) {
     currentTarget.classList.add('focused')
-  } else {
-    currentTarget.classList.remove('focused')
   }
 }
 
