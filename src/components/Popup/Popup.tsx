@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
-import popupStateManager from './popupStateManager'
+import getPopupStateManager from './getPopupStateManager'
 
 import {
   childrenExist,
@@ -69,7 +69,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   // React bindings for autocontrolled component are introduced
-  private stateManager = popupStateManager.withBindings({
+  private stateManager = getPopupStateManager().withBindings({
     /* derives state from component */
     getState: () => {
       // AUTOCONTROLLED state logic

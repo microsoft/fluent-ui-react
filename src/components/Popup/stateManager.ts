@@ -1,17 +1,27 @@
 const ensureDefaultValuesProvided = options => {
-  const defaultBindings = {
-    getState: () => ({}) /* empty object as state by default */,
-    setState: () => {} /* do nothing */,
+  const createDefaultBindings = () => {
+    let state = {}
+
+    return {
+      onStateChange: () => {} /* do nothing */,
+      getState: () => state /* empty object as state by default */,
+
+      willSetState: ({ stateDiff }) => stateDiff /* one-to-one transform by default */,
+
+      setState: ({ stateDiff }) => {
+        state = { ...state, ...stateDiff }
+      } /* do nothing */,
+    }
   }
 
-  options.bindings = { ...defaultBindings, ...options.bindings }
+  options.bindings = { ...createDefaultBindings(), ...options.bindings }
 
   return options
 }
 
 class StateManager {
   static create(unsafeOptions) {
-    const options: any = ensureDefaultValuesProvided(unsafeOptions)
+    const options = ensureDefaultValuesProvided(unsafeOptions)
 
     const stateManager: any = new StateManager(options)
 
@@ -21,26 +31,38 @@ class StateManager {
     Object.keys(options.actions).forEach(actionName => {
       stateManager[actionName] = (userArgs, skipSetState = false) => {
         const prevState = stateManager.getState()
-        const clonedStateManager: any = Object.assign({}, stateManager)
+        const clonedStateManager = Object.assign({}, stateManager)
 
         Object.keys(options.actions).forEach(otherActionName => {
-          if (otherActionName === actionName) {
-            return
-          }
+          if (otherActionName === actionName) return
 
           const originalActionHandler = clonedStateManager[otherActionName]
 
           clonedStateManager[otherActionName] = () => originalActionHandler(userArgs, true)
         })
 
-        clonedStateManager.setState = stateDiff => {
-          options.bindings.setState({
-            stateDiff,
+        // decorate state manager's methods
+        const willSetState = stateDiff =>
+          options.bindings.willSetState({
             prevState,
-            newState: { ...prevState, ...stateDiff },
+            stateDiff,
+            userArgs,
+            actionName,
+          })
+
+        clonedStateManager.setState = stateDiff => {
+          const preprocessedStateDiff = willSetState(stateDiff)
+
+          const setStateArg = {
+            stateDiff: preprocessedStateDiff,
+            prevState,
+            newState: { ...prevState, ...preprocessedStateDiff },
             actionName,
             userArgs,
-          })
+          }
+
+          options.bindings.setState(setStateArg)
+          options.onStateChange(setStateArg)
         }
 
         const newState = options.actions[actionName](clonedStateManager)
@@ -55,10 +77,17 @@ class StateManager {
     return stateManager
   }
 
-  private constructor(private readonly options) {}
+  constructor(options) {
+     (this as any).options = options
+  }
 
-  public withBindings(bindings) {
-    const updatedOptions = { ...this.options, ...{ bindings } }
+  withBindings(bindings) {
+    const updatedOptions = { ...(this as any).options, ...{ bindings } }
+    return StateManager.create(updatedOptions)
+  }
+
+  withStateChangeHandler(onStateChange) {
+    const updatedOptions = { ...(this as any).options, ...{ onStateChange } }
     return StateManager.create(updatedOptions)
   }
 }
