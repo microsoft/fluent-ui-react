@@ -5,18 +5,18 @@ import { Extendable } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface PopupContentProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentNodeComponentProps {}
 
 /**
  * A PopupContent displays the content of a Popup component
@@ -32,7 +32,7 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   public static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
   }
 
   public renderComponent({

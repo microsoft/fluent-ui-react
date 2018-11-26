@@ -26,13 +26,19 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
-import { ChildrenComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
-import { contentComponentPropsTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import {
+  ChildrenComponentProps,
+  ContentShorthandComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  contentShorthandComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps extends ChildrenComponentProps, ContentComponentProps {
+export interface PopupProps extends ChildrenComponentProps, ContentShorthandComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
@@ -95,7 +101,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    ...contentComponentPropsTypes,
+    ...contentShorthandComponentPropsTypes,
     ...childrenComponentPropTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),

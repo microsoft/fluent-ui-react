@@ -23,14 +23,18 @@ import Slot from '../Slot/Slot'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  ContentShorthandComponentProps,
 } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentShorthandComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
 export interface ChatMessageProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentShorthandComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default chatMessageBehavior
@@ -99,10 +103,10 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
+    ...contentShorthandComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,
-    content: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     renderAuthor: PropTypes.func,
     renderAvatar: PropTypes.func,

@@ -13,21 +13,25 @@ import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentNodeComponentProps,
+} from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
 
-export interface LabelProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface LabelProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentNodeComponentProps {
   accessibility?: Accessibility
 
   /** A label can be circular. */
   circular?: boolean
-
-  /** Shorthand for primary content. */
-  content?: React.ReactNode
 
   /** A Label can take the width of its container. */
   fluid?: boolean
@@ -75,10 +79,9 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
 
   static propTypes = {
     ...commonUIComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     ...childrenComponentPropTypes,
     circular: PropTypes.bool,
-    content: customPropTypes.contentShorthand,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     image: customPropTypes.itemShorthand,

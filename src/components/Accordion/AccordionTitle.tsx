@@ -6,18 +6,18 @@ import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
   UIComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
   ChildrenComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface AccordionTitleProps
   extends UIComponentProps<any, any>,
-    ContentComponentProps,
+    ContentNodeComponentProps,
     ChildrenComponentProps {
   /** Whether or not the title is in the open state. */
   active?: boolean
@@ -47,7 +47,7 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,

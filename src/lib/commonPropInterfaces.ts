@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { ComponentVariablesInput, ComponentSlotStyle, Animation } from '../themes/types'
 import { ShorthandValue, ReactChildren } from '../../types/utils'
 
@@ -22,9 +23,14 @@ export interface UIComponentProps<P, V> extends StyledComponentProps<P, V>, Anim
   className?: string
 }
 
-export interface ContentComponentProps {
+export interface ContentShorthandComponentProps {
   /** Shorthand for primary content. */
   content?: ShorthandValue
+}
+
+export interface ContentNodeComponentProps {
+  /** Shorthand for primary content. */
+  content?: React.ReactNode
 }
 
 export interface ChildrenComponentProps {

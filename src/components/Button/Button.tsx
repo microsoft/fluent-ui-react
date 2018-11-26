@@ -17,18 +17,18 @@ import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 import {
   UIComponentProps,
-  ContentComponentProps,
+  ContentShorthandComponentProps,
   ChildrenComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentShorthandComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface ButtonProps
   extends UIComponentProps<any, any>,
-    ContentComponentProps,
+    ContentShorthandComponentProps,
     ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -108,7 +108,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentShorthandComponentPropsTypes,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,

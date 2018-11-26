@@ -19,18 +19,18 @@ import {
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface MenuItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentNodeComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
@@ -121,7 +121,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,

@@ -6,18 +6,18 @@ import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
 import { Extendable } from '../../../types/utils'
 import {
   UIComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
   ChildrenComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface TextProps
   extends UIComponentProps<any, any>,
-    ContentComponentProps,
+    ContentNodeComponentProps,
     ChildrenComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
@@ -71,7 +71,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,

@@ -24,6 +24,7 @@ export type TriggerAccessibility = {
 }
 
 export interface PortalProps extends ChildrenComponentProps {
+  // TODO: This should be React.Node?
   /** Shorthand for primary content. */
   content?: ShorthandValue | ShorthandValue[]
 

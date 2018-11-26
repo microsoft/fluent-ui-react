@@ -6,18 +6,18 @@ import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface AccordionContentProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentNodeComponentProps {
   /** Whether or not the content is visible. */
   active?: boolean
 
@@ -43,7 +43,7 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     active: PropTypes.bool,
     onClick: PropTypes.func,
   }

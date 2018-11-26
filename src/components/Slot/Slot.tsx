@@ -2,19 +2,19 @@ import * as React from 'react'
 import { childrenExist, createShorthandFactory } from '../../lib'
 import {
   UIComponentProps,
-  ContentComponentProps,
+  ContentNodeComponentProps,
   ChildrenComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
-  contentComponentPropsTypes,
+  contentNodeComponentPropsTypes,
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps, any>,
-    ContentComponentProps,
+    ContentNodeComponentProps,
     ChildrenComponentProps {}
 
 /**
@@ -29,7 +29,7 @@ const Slot: CreateComponentReturnType<SlotProps> & {
 
   propTypes: {
     ...commonUIComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentNodeComponentPropsTypes,
     ...childrenComponentPropTypes,
   },
 

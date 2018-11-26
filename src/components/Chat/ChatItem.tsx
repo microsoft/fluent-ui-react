@@ -7,18 +7,18 @@ import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
+  ContentShorthandComponentProps,
 } from '../../lib/commonPropInterfaces'
 import {
   commonUIComponentPropTypes,
   childrenComponentPropTypes,
-  contentComponentPropsTypes,
+  contentShorthandComponentPropsTypes,
 } from '../../lib/commonPropTypes'
 
 export interface ChatItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentShorthandComponentProps {
   /**
    * A custom render function the content slot.
    *
@@ -42,7 +42,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...contentShorthandComponentPropsTypes,
     renderContent: PropTypes.func,
   }
 
