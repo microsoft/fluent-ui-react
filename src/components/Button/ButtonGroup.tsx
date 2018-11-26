@@ -17,6 +17,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface ButtonGroupProps
   extends UIComponentProps<any, any>,
@@ -80,7 +81,11 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
     if (_.isNil(buttons)) {
       return (
         <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
-          {childrenExist(children) ? children : content}
+          {childrenExist(children)
+            ? children
+            : Slot.create(content, {
+                defaultProps: { as: 'span', styles: styles.content },
+              })}
         </ElementType>
       )
     }

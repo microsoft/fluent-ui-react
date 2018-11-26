@@ -13,6 +13,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface AccordionContentProps
   extends UIComponentProps<any, any>,
@@ -48,12 +49,16 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
     onClick: PropTypes.func,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { children, content } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children)
+          ? children
+          : Slot.create(content, {
+              defaultProps: { as: 'span', styles: styles.content },
+            })}
       </ElementType>
     )
   }

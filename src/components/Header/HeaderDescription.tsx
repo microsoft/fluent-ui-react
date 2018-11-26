@@ -12,6 +12,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps<any, any>,
@@ -38,11 +39,15 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { children, content } = this.props
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children)
+          ? children
+          : Slot.create(content, {
+              defaultProps: { as: 'span', styles: styles.content },
+            })}
       </ElementType>
     )
   }

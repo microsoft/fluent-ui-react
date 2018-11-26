@@ -8,6 +8,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface ListItemProps extends UIComponentProps<any, any> {
   /**
@@ -98,12 +99,16 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
       truncateHeader,
     } = this.props
 
+    const contentSlot = Slot.create(content, {
+      defaultProps: { as: 'span', styles: styles.content },
+    })
+
     return (
       <ItemLayout
         as={as}
         className={classes.root}
         rootCSS={styles.root}
-        content={content}
+        content={contentSlot}
         contentMedia={contentMedia}
         debug={debug}
         endMedia={endMedia}

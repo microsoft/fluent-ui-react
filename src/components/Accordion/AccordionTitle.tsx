@@ -14,6 +14,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface AccordionTitleProps
   extends UIComponentProps<any, any>,
@@ -57,7 +58,7 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, rest, styles }) {
     const { active, children, content } = this.props
 
     if (childrenExist(children)) {
@@ -71,7 +72,9 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
     return (
       <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
         {active ? <span>&#9660;</span> : <span>&#9654;</span>}
-        {content}
+        {Slot.create(content, {
+          defaultProps: { as: 'span', styles: styles.content },
+        })}
       </ElementType>
     )
   }

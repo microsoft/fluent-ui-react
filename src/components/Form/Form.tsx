@@ -10,21 +10,10 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import FormField from './FormField'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface FormProps
-  extends UIComponentProps<any, any>,
-    ChildrenComponentProps,
-    ContentComponentProps {
+export interface FormProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** The HTML form action. */
   action?: string
 
@@ -64,7 +53,6 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   public static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,

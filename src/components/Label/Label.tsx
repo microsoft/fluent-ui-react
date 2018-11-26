@@ -19,6 +19,7 @@ import {
   contentComponentPropsTypes,
   childrenComponentPropTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface LabelProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   accessibility?: Accessibility
@@ -173,12 +174,16 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
       }
     }
 
+    const main = Slot.create(content, {
+      defaultProps: { as: 'span', styles: styles.content },
+    })
+
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? (
           children
         ) : (
-          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
+          <Layout main={main} start={start} end={end} gap={pxToRem(3)} />
         )}
       </ElementType>
     )

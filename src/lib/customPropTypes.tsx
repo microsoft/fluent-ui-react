@@ -378,11 +378,7 @@ export const wrapperShorthand = PropTypes.oneOfType([
  */
 export const itemShorthand = every([
   disallow(['children']),
-  PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
-  ]),
+  PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
 ])
 
 /**

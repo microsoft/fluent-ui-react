@@ -12,6 +12,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
 export interface PopupContentProps
   extends UIComponentProps<any, any>,
@@ -39,12 +40,17 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
     ElementType,
     classes,
     rest,
+    styles,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
     return (
       <ElementType className={classes.root} {...rest}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children)
+          ? children
+          : Slot.create(content, {
+              defaultProps: { as: 'span', styles: styles.content },
+            })}
       </ElementType>
     )
   }
