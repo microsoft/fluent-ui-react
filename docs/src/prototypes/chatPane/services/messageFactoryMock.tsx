@@ -34,7 +34,9 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    content: { content: createMessageContent(content) },
+    content: msg.withAttachment
+      ? { content: createMessageContentWithAttachments(content) }
+      : content,
     mine,
     tabIndex: 0,
     timestamp: { content: msg.timestamp, title: msg.timestampLong },
@@ -46,7 +48,7 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
   return msgProps
 }
 
-function createMessageContent(content: string) {
+function createMessageContentWithAttachments(content: string) {
   const contextMenu = (
     <Menu
       items={[
