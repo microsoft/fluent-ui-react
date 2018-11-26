@@ -9,6 +9,11 @@ const Types = () => (
       description="A default Chat."
       examplePath="components/Chat/Types/ChatExample"
     />
+    <ComponentExample
+      title="Styled Chat Item"
+      description="A Chat item with custom styles for every slot."
+      examplePath="components/Chat/Types/ChatMessageExampleStyled"
+    />
   </ExampleSection>
 )
 
