@@ -164,7 +164,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       ...(pointing &&
         vertical && {
-          border: '1px solid transparent',
           borderTopLeftRadius: `${pxToRem(3)}`,
           borderTopRightRadius: `${pxToRem(3)}`,
           ...(pointing === 'end'
@@ -206,6 +205,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color: 'inherit',
       display: 'block',
       cursor: 'pointer',
+
+      ...(((pointing && vertical) || iconOnly) && { border: '1px solid transparent' }),
 
       ...(underlined
         ? { padding: `${pxToRem(4)} 0` }
