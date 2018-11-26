@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import * as prettyBytes from 'pretty-bytes'
 import * as uglifyES from 'uglify-es'
 import * as webpack from 'webpack'
+import * as stableStringify from 'json-stable-stringify-without-jsonify'
 
 import config from '../../../config'
 
@@ -26,6 +27,60 @@ task('build:stats:file', () => {
   return js.pipe(dest(paths.base('build/stats')))
 })
 
+const UNRELEASED_VERSION_STRING = 'Unreleased'
+const SEMVER_MATCHER = /(\d+)\.(\d+)\.(\d+)/
+
+const semverCmp = (a, b) => {
+  const left = a.key
+  const right = b.key
+
+  // Unreleased first
+  if (left === UNRELEASED_VERSION_STRING) {
+    return -1
+  }
+  if (right === UNRELEASED_VERSION_STRING) {
+    return 1
+  }
+
+  // x.y.z semver DESC
+  const leftMatch = left.match(SEMVER_MATCHER)
+  const rightMatch = right.match(SEMVER_MATCHER)
+  if (leftMatch && rightMatch) {
+    console.log(leftMatch, rightMatch)
+    for (let i = 1; i <= 3; i++) {
+      const partOfLeft = Number(leftMatch[i])
+      const partOfRight = Number(rightMatch[i])
+      if (partOfLeft > partOfRight) return -1
+      if (partOfRight > partOfLeft) return 1
+    }
+  }
+
+  // rest ASC
+  if (left < right) return -1
+  if (left > right) return 1
+
+  return 0
+}
+
+function updateStatsFile(filePath: string, currentBundleStats: any) {
+  let stats = {}
+  if (fs.existsSync(filePath)) {
+    stats = require(filePath)
+  }
+
+  stats[UNRELEASED_VERSION_STRING] = {
+    bundles: currentBundleStats,
+  }
+
+  fs.writeFileSync(
+    filePath,
+    stableStringify(stats, {
+      cmp: semverCmp,
+      space: 2,
+    }),
+  )
+}
+
 task('build:stats:bundle', cb => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
@@ -34,8 +89,6 @@ task('build:stats:bundle', cb => {
   compiler.run((err, stats) => {
     const statsJson = stats.toJson()
     const { errors, warnings } = statsJson
-
-    // log(stats.toString(config.compiler_stats))
 
     if (err) {
       log('Webpack compiler encountered a fatal error.')
@@ -55,16 +108,7 @@ task('build:stats:bundle', cb => {
       .sortBy('name')
       .value()
 
-    log(
-      JSON.stringify(
-        results.map(({ size, ...rest }) => ({
-          size: prettyBytes(size),
-          ...rest,
-        })),
-        null,
-        2,
-      ),
-    )
+    updateStatsFile(paths.docsSrc('bundleStats.json'), results)
 
     cb(err)
   })
