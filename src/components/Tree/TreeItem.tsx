@@ -35,7 +35,7 @@ export interface TreeItemProps
    */
   accessibility?: Accessibility
 
-  /** Initial activeIndex value. */
+  /** Initial open value. */
   defaultOpen?: boolean
 
   /** Array of props for sub tree. */
@@ -102,17 +102,19 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
     const { items, title, renderItemTitle } = this.props
     const { open } = this.state
 
+    const hasSubtree = !!(items && items.length)
+
     return (
       <>
         {TreeTitle.create(title, {
           defaultProps: {
             open,
-            hasSubtree: !!(items && items.length),
+            hasSubtree,
           },
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {items &&
+        {hasSubtree &&
           open &&
           Tree.create('', {
             defaultProps: {

@@ -178,8 +178,8 @@ definitions.push({
 
     property[propertyDependingOnFirst] = attributeExpectedValue
     property[propertyDependingOnSecond] = true
-    const expectedResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResult)).toEqual(
+    const actualResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResult)).toEqual(
       testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
 
@@ -188,20 +188,19 @@ definitions.push({
       attributeExpectedValue,
     )
     propertyFirstPropNegate[propertyDependingOnSecond] = true
-    const expectedResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate)
-      .attributes.root[attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultFirstPropertyNegate)).toEqual(
+    const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate).attributes
+      .root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegate)).toEqual(
       !testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
     )
 
     const propertyFirstPropUndefined = {}
     propertyFirstPropUndefined[propertyDependingOnFirst] = true
     propertyFirstPropUndefined[propertyDependingOnSecond] = undefined
-    const expectedResultFirstPropertyNegateUndefined = parameters.behavior(
-      propertyFirstPropUndefined,
-    ).attributes.root[attributeToBeAdded]
+    const actualResultFirstPropertyNegateUndefined = parameters.behavior(propertyFirstPropUndefined)
+      .attributes.root[attributeToBeAdded]
     expect(
-      testHelper.convertToBooleanIfApplicable(expectedResultFirstPropertyNegateUndefined),
+      testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegateUndefined),
     ).toEqual(undefined)
   },
 })

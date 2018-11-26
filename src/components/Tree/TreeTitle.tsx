@@ -52,7 +52,7 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
   public static defaultProps = {
     as: 'a',
     href: '#',
-    accessibility: treeTitleBehavior as Accessibility,
+    accessibility: treeTitleBehavior,
   }
 
   handleClick = e => {
