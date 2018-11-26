@@ -30,6 +30,15 @@ class Popover extends React.Component<PopoverProps> {
           '&:hover .smile-emoji': {
             display: 'flex',
           },
+
+          '& a:focus': {
+            textDecoration: 'none',
+            color: 'inherit',
+          },
+
+          '& a': {
+            color: 'inherit',
+          },
         }}
         iconOnly
         className={this.props.className}

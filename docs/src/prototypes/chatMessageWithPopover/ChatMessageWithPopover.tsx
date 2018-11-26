@@ -21,15 +21,20 @@ class ChatMessageWithPopover extends React.Component {
           ':hover .actions': {
             opacity: 1,
           },
+          '& a': {
+            color: '#6264A7',
+          },
         }}
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
-        content={
-          <>
-            <Popover className="actions" />
-            <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-          </>
-        }
+        content={{
+          content: (
+            <div>
+              <Popover className="actions" />
+              <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+            </div>
+          ),
+        }}
         avatar={janeAvatar}
         onFocus={handleFocus}
         onBlur={handleBlur}
