@@ -34,7 +34,7 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    content: getMessageContent(content),
+    content: createMessageContent(content),
     mine,
     tabIndex: 0,
     timestamp: { content: msg.timestamp, title: msg.timestampLong },
@@ -46,7 +46,7 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
   return msgProps
 }
 
-function getMessageContent(content: string) {
+function createMessageContent(content: string) {
   const contextMenu = (
     <Menu
       items={[
@@ -74,20 +74,18 @@ function getMessageContent(content: string) {
       <span>
         {content} <a href="/"> Some link </a>
       </span>
-      <div style={{ marginTop: '20px' }}>
-        {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => {
-          return (
-            <Attachment
-              icon="file word outline"
-              aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
-              header={fileName}
-              action={{ icon: 'ellipsis horizontal' }}
-              renderAction={() => actionPopup}
-              data-is-focusable={true}
-              style={index === 1 ? { marginLeft: '15px' } : {}}
-            />
-          )
-        })}
+      <div style={{ marginTop: '20px', display: 'flex' }}>
+        {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => (
+          <Attachment
+            icon="file word outline"
+            aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
+            header={fileName}
+            action={{ icon: 'ellipsis horizontal' }}
+            renderAction={() => actionPopup}
+            data-is-focusable={true}
+            style={index === 1 ? { marginLeft: '15px' } : {}}
+          />
+        ))}
       </div>
     </>
   )
