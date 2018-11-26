@@ -3,6 +3,7 @@ export interface ChatMessageVariables {
   messageColor: string
   messageColorMine: string
   avatar: { statusBorderColor: string }
+  messageBody: { focusOutlineColor: string }
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -12,4 +13,5 @@ export default (siteVars): ChatMessageVariables => ({
   avatar: {
     statusBorderColor: siteVars.gray10,
   },
+  messageBody: { focusOutlineColor: siteVars.brand },
 })
