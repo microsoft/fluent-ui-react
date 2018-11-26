@@ -159,7 +159,7 @@ export default () => (
       value={[
         `<Provider`,
         `  theme={{`,
-        `    // other theme parts`,
+        `    // component's displayName arg is used as a selector`,
         `    componentStyles: {`,
         `      StyledButton: {`,
         `        root: () => ({`,
@@ -236,6 +236,7 @@ export default () => (
       value={[
         `<Provider`,
         `  theme={{`,
+        `    // component's displayName arg is used as a selector`,
         `    componentVariables: {`,
         `      StyledButton: {`,
         `        color: "red"`,
