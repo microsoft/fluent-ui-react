@@ -6,7 +6,7 @@ import { Accessibility, FocusZoneMode } from '../../types'
  *
  * @specification
  * Adds role='menu'.
- * Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.
+ * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
  */
 
 const menuBehavior: Accessibility = (props: any) => ({
@@ -16,10 +16,11 @@ const menuBehavior: Accessibility = (props: any) => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
+      shouldFocusFirstElementWhenReceivedFocus: true,
     },
   },
 })
