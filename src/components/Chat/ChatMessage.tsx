@@ -183,6 +183,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     const timestampElement = Text.create(timestamp, {
       defaultProps: {
         size: 'small',
+        styles: styles.timestamp,
         timestamp: true,
       },
       render: renderTimestamp,
