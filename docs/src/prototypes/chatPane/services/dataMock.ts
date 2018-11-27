@@ -66,6 +66,7 @@ class ChatMock {
         timestamp: timestamp.short,
         timestampLong: timestamp.long,
         isImportant: random.boolean(),
+        withAttachment: random.boolean(),
       }
 
       return message
