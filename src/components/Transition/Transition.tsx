@@ -19,7 +19,7 @@ export interface TransitionProps extends StyledComponentProps<any, any> {
    *  Content for childrenApi
    *  @docSiteIgnore
    */
-  children?: React.ReactNode
+  children?: React.ReactChild
 
   /** Additional CSS class name(s) to apply.  */
   className?: string

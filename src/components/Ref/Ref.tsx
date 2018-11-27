@@ -9,7 +9,7 @@ export interface RefProps {
    *  Used to set content when using childrenApi - internal only
    *  @docSiteIgnore
    */
-  children?: React.ReactNode
+  children?: React.ReactChild
   /**
    * Called when a child component will be mounted or updated.
    *
