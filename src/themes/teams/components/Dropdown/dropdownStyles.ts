@@ -49,6 +49,10 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     flexGrow: 1,
   }),
 
+  activeListLabel: (): ICSSInJSStyle => ({
+    margin: '.4rem 0 0 .4rem',
+  }),
+
   list: ({ variables: { listMaxHeight, width }, props: { fluid } }): ICSSInJSStyle => ({
     position: 'absolute',
     zIndex: 1000,
@@ -60,10 +64,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
 
   listItem: ({ variables: { listItemBackgroundColor } }): ICSSInJSStyle => ({
     backgroundColor: listItemBackgroundColor,
-  }),
-
-  activeListLabel: (): ICSSInJSStyle => ({
-    margin: '.4rem 0 0 .4rem',
   }),
 
   toggleButton: ({ variables: { toggleButtonSize, width }, props: { fluid } }): ICSSInJSStyle => ({

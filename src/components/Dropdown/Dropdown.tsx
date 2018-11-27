@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { Extendable, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
@@ -14,18 +14,17 @@ import Downshift, {
   GetToggleButtonPropsOptions,
   GetItemPropsOptions,
 } from 'downshift'
-import Label from '../Label/Label'
 import { AutoControlledComponent, RenderResultConfig } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
 import Text from '../Text/Text'
-import Image from '../Image/Image'
-import ListItem from '../List/ListItem'
 import Icon from '../Icon/Icon'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import Ref from '../Ref/Ref'
-import { UIComponentProps } from 'src/lib/commonPropInterfaces'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import DropdownItem from './DropdownItem'
+import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
 
 // To be replaced when Downshift will add highlightedItem in their interface.
 export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
@@ -37,7 +36,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   defaultSearchQuery?: string
 
   /** The default value for the dropdown. */
-  defaultValue?: DropdownListItem | DropdownListItem[]
+  defaultValue?: ShorthandValue | ShorthandValue[]
 
   /** A dropdown can take the full width of its container. */
   fluid?: boolean
@@ -46,32 +45,27 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    * A function that creates custom accessability message for dropdown status.
    * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
-  getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<DropdownListItem>) => string
+  getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
   /**
    * A function that creates custom accessability message for dropdown item selection.
    * @param {DropdownListItem} item - Dropdown selected element.
    */
-  getA11ySelectedMessage?: (item: DropdownListItem) => string
+  getA11ySelectedMessage?: (item: ShorthandValue) => string
 
   /** A function that creates custom accessability message for dropdown item removal.
-   * @param {DropdownListItem} item - Dropdown removed element.
+   * @param {ShorthandValue} item - Dropdown removed element.
    */
-  getA11yRemovedMessage?: (item: DropdownListItem) => string
-
-  /** A function that creates custom aria label accessability message for the remove item button.
-   * @param {DropdownListItem} item - The active item to be removed.
-   */
-  getA11yRemoveItemMessage?: (item: DropdownListItem) => string
+  getA11yRemovedMessage?: (item: ShorthandValue) => string
 
   /** Array of props for generating dropdown items and selected item labels if multiple selection. */
-  items?: DropdownListItem[]
+  items?: ShorthandValue[]
 
   /**
    * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
    * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
    */
-  itemToString?: (item: DropdownListItem) => string
+  itemToString?: (item: ShorthandValue) => string
 
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
@@ -81,25 +75,9 @@ export interface DropdownProps extends UIComponentProps<any, any> {
 
   /**
    * Callback for change in dropdown active value(s).
-   * @param {DropdownListItem|DropdownListItem[]} value - Dropdown active value(s).
+   * @param {ShorthandValue|ShorthandValue[]} value - Dropdown active value(s).
    */
-  onDropdownChange?: (value: DropdownListItem | DropdownListItem[]) => any
-
-  /**
-   * Called on clicking the 'X' icon corresponding to an active value.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onCloseIconClick?: ComponentEventHandler<DropdownProps>
-
-  /**
-   * Called on key down on the 'X' icon corresponding to an active value.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onCloseIconKeyDown?: ComponentEventHandler<DropdownProps>
+  onDropdownChange?: (value: ShorthandValue | ShorthandValue[]) => any
 
   /**
    * Called on edit text blur.
@@ -126,14 +104,6 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   onInputKeyDown?: ComponentEventHandler<DropdownProps>
 
   /**
-   * Called when clicking on an active value, on the text or avatar, if any.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onLabelClick?: ComponentEventHandler<DropdownProps>
-
-  /**
    * Callback for change in dropdown search query value.
    * @param {string} searchQuery - The new value in the search field.
    */
@@ -152,22 +122,16 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   toggleButton?: boolean
 
   /** The value of the dropdown. */
-  value?: DropdownListItem | DropdownListItem[]
+  value?: ShorthandValue | ShorthandValue[]
 }
 
 export interface DropdownState {
-  value: DropdownListItem | DropdownListItem[]
+  value: ShorthandValue | ShorthandValue[]
   backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
 }
 
-export interface DropdownListItem {
-  header: string
-  key?: string
-  content?: string
-  image?: string
-}
 /**
  * A Dropdown allows a user to select a value or a multitude of values from a number of options.
  */
@@ -194,13 +158,10 @@ export default class Dropdown extends AutoControlledComponent<
     itemToString: PropTypes.func,
     multiple: PropTypes.bool,
     noResultsMessage: PropTypes.string,
-    onCloseIconClick: PropTypes.func,
-    onCloseIconKeyDown: PropTypes.func,
     onDropdownChange: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputFocus: PropTypes.func,
     onInputKeyDown: PropTypes.func,
-    onLabelClick: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
     placeholder: PropTypes.string,
     search: PropTypes.bool,
@@ -242,7 +203,7 @@ export default class Dropdown extends AutoControlledComponent<
           inputValue={searchQuery}
           stateReducer={this.stateReducer}
           getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
-          itemToString={itemToString || ((item: DropdownListItem) => (item ? item.header : ''))}
+          itemToString={itemToString || this.itemToString}
           {...optionalDownshiftProps}
         >
           {({
@@ -260,7 +221,7 @@ export default class Dropdown extends AutoControlledComponent<
                 className={classes.containerDiv}
                 onClick={this.handleContainerClick.bind(this, isOpen)}
               >
-                {multiple && this.renderActiveValues(styles)}
+                {multiple && this.renderLabels(styles)}
                 {search &&
                   this.renderInput(
                     styles,
@@ -305,7 +266,7 @@ export default class Dropdown extends AutoControlledComponent<
         <Input
           inputRef={input => (this.inputRef = input)}
           onFocus={this.handleInputFocus}
-          onKeyUp={multiple && this.handleBackspaceDelete}
+          onKeyUp={multiple && this.handleBackspaceRemove}
           wrapper={{
             styles: styles.editTextDiv,
             ...getRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
@@ -315,7 +276,7 @@ export default class Dropdown extends AutoControlledComponent<
             type: 'text',
             styles: styles.editTextInput,
             placeholder:
-              searchQuery.length > 0 || (multiple && (value as DropdownListItem[]).length > 0)
+              searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
                 ? ''
                 : placeholder,
             ...getInputProps({
@@ -348,7 +309,7 @@ export default class Dropdown extends AutoControlledComponent<
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
-    getItemProps: (options: GetItemPropsOptions<DropdownListItem>) => any,
+    getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     isOpen: boolean,
     highlightedIndex: number,
   ) {
@@ -366,37 +327,31 @@ export default class Dropdown extends AutoControlledComponent<
 
   private renderItems(
     variables: ComponentVariablesInput,
-    getItemProps: (options: GetItemPropsOptions<DropdownListItem>) => any,
+    getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { items, noResultsMessage } = this.props
+    const { items, noResultsMessage, renderItem } = this.props
     if (items.length > 0) {
       return items.map((item, index) => {
-        // to avoid passing undefined for these props, will spread.
-        const optionalItemProps = {
-          media: item.image && <Image src={item.image} avatar />,
-          content: item.content,
+        let itemAsListItem = item
+        if (typeof item === 'object') {
+          itemAsListItem = _.pickBy(item, (value, key) =>
+            _.includes(['key', ...DropdownItem.handledProps], key),
+          )
         }
-        return (
-          <ListItem
-            key={item.key || item.header}
-            header={item.header}
-            {...optionalItemProps}
-            variables={{
-              ...(highlightedIndex === index && {
-                headerColor: variables.listItemTextColor,
-                contentColor: variables.listItemTextColor,
+        const downshiftItemProps = getItemProps({ index, item })
+        return DropdownItem.create(itemAsListItem, {
+          defaultProps: {
+            highlighted: highlightedIndex === index,
+            variables,
+            ...(typeof item === 'object' &&
+              !item.hasOwnProperty('key') && {
+                key: (item as any).header,
               }),
-            }}
-            styles={{
-              backgroundColor:
-                highlightedIndex === index
-                  ? variables.listItemHighlightedBackgroundColor
-                  : variables.listItemBackgroundColor,
-            }}
-            {...getItemProps({ index, item })}
-          />
-        )
+            ...downshiftItemProps,
+          },
+          render: renderItem,
+        })
       })
     }
     // render no match message.
@@ -406,47 +361,46 @@ export default class Dropdown extends AutoControlledComponent<
         content: (
           <Text weight="bold" content={noResultsMessage || `We couldn't find any matches.`} />
         ),
-        styles: {
+        variables: {
           backgroundColor: variables.listItemBackgroundColor,
         },
       },
     ]
   }
 
-  private renderActiveValues(styles: ComponentSlotStylesInput) {
-    const value = this.state.value as DropdownListItem[]
-    const { getA11yRemoveItemMessage } = this.props
+  private renderLabels(styles: ComponentSlotStylesInput) {
+    const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
       return null
     }
 
     return value.map(item => {
-      const optionalImage = {
-        ...(item.image && {
-          image: { src: item.image, avatar: true, onClick: this.handleLabelClick },
-        }),
+      let itemAsLabel = item
+      if (typeof item === 'object') {
+        itemAsLabel = _.pickBy(item, (value, key) =>
+          _.includes(['key', ...DropdownLabel.handledProps], key),
+        )
       }
-      return (
-        <Label
-          role="presentation"
-          styles={styles.activeListLabel}
-          circular
-          key={`active-item-${item.key || item.header}`}
-          content={<Text content={item.header} onClick={this.handleLabelClick} />}
-          {...optionalImage}
-          icon={{
-            name: 'close',
-            onClick: this.handleCloseIconClick.bind(this, item),
-            onKeyDown: this.handleCloseIconKeyDown.bind(this, item),
-            'aria-label': getA11yRemoveItemMessage
-              ? getA11yRemoveItemMessage(item)
-              : `Remove ${item.header} from selection.`,
-            'aria-hidden': false,
-            role: 'button',
-          }}
-        />
-      )
+      return DropdownLabel.create(itemAsLabel, {
+        defaultProps: {
+          styles: styles.activeListLabel,
+          ...(typeof item === 'object' &&
+            !item.hasOwnProperty('key') && {
+              key: (item as any).header,
+            }),
+        },
+        overrideProps: predefinedProps => ({
+          onRemove: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+            this.handleLabelRemove(e, item)
+            _.invoke(predefinedProps, 'onRemove', e, dropdownLabelProps)
+          },
+          onClick: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+            e.stopPropagation()
+            _.invoke(predefinedProps, 'onClick', e, dropdownLabelProps)
+          },
+        }),
+      })
     })
   }
 
@@ -455,8 +409,8 @@ export default class Dropdown extends AutoControlledComponent<
   )
 
   private stateReducer = (
-    state: DownshiftState<DropdownListItem>,
-    changes: StateChangeOptions<DropdownListItem>,
+    state: DownshiftState<ShorthandValue>,
+    changes: StateChangeOptions<ShorthandValue>,
   ) => {
     switch (changes.type) {
       case Downshift.stateChangeTypes.changeInput:
@@ -473,6 +427,19 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
+  private itemToString = (item: ShorthandValue): string => {
+    if (!item) {
+      return ''
+    }
+    if (typeof item === 'object') {
+      return (item as any).header || ''
+    }
+    if (typeof item === 'string') {
+      return item
+    }
+    return ''
+  }
+
   private getA11yStatusMessage = ({
     highlightedItem,
     isOpen,
@@ -480,7 +447,7 @@ export default class Dropdown extends AutoControlledComponent<
     previousResultCount,
     resultCount,
     selectedItem,
-  }: DownshiftA11yStatusMessageOptions<DropdownListItem>) => {
+  }: DownshiftA11yStatusMessageOptions<ShorthandValue>) => {
     if (!isOpen) {
       return selectedItem ? itemToString(selectedItem) : ''
     }
@@ -537,52 +504,21 @@ export default class Dropdown extends AutoControlledComponent<
     !isOpen && this.inputRef.focus()
   }
 
-  private handleBackspaceDelete = (e: React.SyntheticEvent) => {
-    if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
-      const { searchQuery, value, backspaceDelete } = this.state
-
-      if (searchQuery === '' && (value as DropdownListItem[]).length > 0) {
-        if (!backspaceDelete) {
-          this.setState({ backspaceDelete: true })
-        } else {
-          this.removeFromActiveValues()
-        }
-      }
-    }
-  }
-
-  private handleChange = (item: DropdownListItem) => {
+  private handleChange = (item: ShorthandValue) => {
     const { multiple, getA11ySelectedMessage } = this.props
-    const newValue = multiple ? [...(this.state.value as DropdownListItem[]), item] : item
+    const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
     this.trySetState({
       value: newValue,
       searchQuery: '',
     })
     this.setA11yStatus(
-      getA11ySelectedMessage ? getA11ySelectedMessage(item) : `${item.header} has been selected.`,
+      getA11ySelectedMessage
+        ? getA11ySelectedMessage(item)
+        : `${typeof item === 'object' ? (item as any).header : item} has been selected.`,
     )
 
     _.invoke(this.props, 'onDropdownChange', newValue)
-  }
-
-  private handleLabelClick = (e: React.SyntheticEvent) => {
-    e.stopPropagation()
-
-    _.invoke(this.props, 'onLabelClick', e, this.props)
-  }
-
-  private handleCloseIconClick = (item: DropdownListItem, e: React.SyntheticEvent) => {
-    this.handleCloseIconAction(item, e)
-
-    _.invoke(this.props, 'onCloseIconClick', e, { ...this.props, item })
-  }
-
-  private handleCloseIconKeyDown = (item: DropdownListItem, e: React.SyntheticEvent) => {
-    if (keyboardKey.getCode(e) === keyboardKey.Enter) {
-      this.handleCloseIconAction(item, e)
-    }
-    _.invoke(this.props, 'onCloseIconKeyDown', e, { ...this.props, item })
   }
 
   private handleInputKeyDown = (
@@ -605,19 +541,29 @@ export default class Dropdown extends AutoControlledComponent<
     })
   }
 
-  /**
-   * Common function used by click and keydown handlers for label X icon.
-   * Removes item from active values, focuses on edit text and stops event propagation.
-   */
-  private handleCloseIconAction(item: DropdownListItem, e: React.SyntheticEvent) {
+  private handleBackspaceRemove = (e: React.SyntheticEvent) => {
+    if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
+      const { searchQuery, value, backspaceDelete } = this.state
+
+      if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
+        if (!backspaceDelete) {
+          this.setState({ backspaceDelete: true })
+        } else {
+          this.removeFromActiveValues()
+        }
+      }
+    }
+  }
+
+  private handleLabelRemove(e: React.SyntheticEvent, item: ShorthandValue) {
     this.removeFromActiveValues(item)
     this.inputRef.focus()
     e.stopPropagation()
   }
 
-  private removeFromActiveValues(item?: DropdownListItem): void {
+  private removeFromActiveValues(item?: ShorthandValue) {
     const { getA11yRemovedMessage } = this.props
-    let value = this.state.value as DropdownListItem[]
+    let value = this.state.value as ShorthandValue[]
     let poppedItem = item
 
     if (poppedItem) {
@@ -632,7 +578,9 @@ export default class Dropdown extends AutoControlledComponent<
     this.setA11yStatus(
       getA11yRemovedMessage
         ? getA11yRemovedMessage(item)
-        : `${poppedItem.header} has been removed.`,
+        : `${
+            typeof poppedItem === 'object' ? (poppedItem as any).header : poppedItem
+          } has been removed.`,
     )
 
     _.invoke(this.props, 'onDropdownChange', value)

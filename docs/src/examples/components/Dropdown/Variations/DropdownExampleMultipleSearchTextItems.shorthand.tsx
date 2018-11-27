@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, DropdownListItem } from '@stardust-ui/react'
+import { Dropdown } from '@stardust-ui/react'
 
 class DropdownExample extends React.Component {
   state = {
@@ -12,7 +12,7 @@ class DropdownExample extends React.Component {
         search
         placeholder="Start typing a name"
         items={this.state.items}
-        onDropdownChange={(value: DropdownListItem[]) => {
+        onDropdownChange={(value: any[]) => {
           this.setState({
             items: inputItems.filter(item => value.indexOf(item) === -1),
           })
@@ -22,7 +22,7 @@ class DropdownExample extends React.Component {
   }
 }
 
-const inputItems: DropdownListItem[] = [
+const inputItems = [
   {
     header: 'Bruce Wayne',
   },

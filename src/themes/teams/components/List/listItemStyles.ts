@@ -20,6 +20,9 @@ const hoverStyle = variables => ({
 
 const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
+    ...(variables.backgroundColor && {
+      backgroundColor: variables.backgroundColor,
+    }),
     ...(selection && {
       position: 'relative',
 
