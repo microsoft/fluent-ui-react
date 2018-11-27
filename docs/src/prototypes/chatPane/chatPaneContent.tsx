@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { Chat, Divider, ChatMessage } from '@stardust-ui/react'
+import { Chat, Divider } from '@stardust-ui/react'
 import { ChatData, ChatItemTypes, generateChatProps } from './services'
 
-const ariaLiveStyle: React.CSSProperties = {
+const screenReaderMessageContainerStyles: React.CSSProperties = {
   border: '0px',
   clip: 'rect(0px, 0px, 0px, 0px)',
   height: '1px',
@@ -20,7 +20,7 @@ export interface ChatPaneContainerProps {
 
 class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   public render() {
-    const chat = this.props.chat
+    const { chat } = this.props
     const items = this.generateChatItems(chat)
 
     return (
@@ -40,15 +40,14 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   private generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(({ itemType, ...props }, index) => {
       const ElementType = this.getElementType(itemType)
-      const newProps = { ...props, text: undefined }
       return (
         <Chat.Item key={`chat-item-${index}`}>
           {itemType === ChatItemTypes.message && (
-            <div style={ariaLiveStyle} role="heading" aria-level={4}>
+            <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
               {this.getMessagePreviewForScreenReader(props)}
             </div>
           )}
-          <ElementType {...newProps} />
+          <ElementType {...props} text={undefined} />
         </Chat.Item>
       )
     })
@@ -70,14 +69,9 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   }
 
   private getMessagePreviewForScreenReader(props) {
-    // Show the first 60 characters from the message.
-    // If to show more, NVDA splits it into 2 lines
+    // Show the first 60 characters from the message, as NVDA splits it into 2 lines if more is shown
     const messageText = props.text || ''
-    if (messageText.length > 60) {
-      return `${messageText.slice(0, 60)} ..., by ${props.author}`
-    }
-
-    return `${messageText} ..., by ${props.author}`
+    return `${messageText.slice(0, 60)} ..., by ${props.author}`
   }
 }
 

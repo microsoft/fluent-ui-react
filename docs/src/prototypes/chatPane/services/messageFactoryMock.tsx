@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
 import { DividerProps } from 'src/components/Divider/Divider'
 import { StatusProps } from 'src/components/Status/Status'
-import { Extendable } from 'utils'
+import { Extendable, ShorthandValue } from 'utils'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {
@@ -37,8 +37,8 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
     role: undefined,
+    // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
     'aria-labelledby': `sender-${msg.id} timestamp-${msg.id} content-${msg.id}`,
     content: createMessageContent(msg),
     mine,
@@ -63,16 +63,14 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
   return msgProps
 }
 
-function createMessageContent(msg: MessageData) {
+function createMessageContent(msg: MessageData): ShorthandValue {
   return {
     id: `content-${msg.id}`,
-    ...(msg.withAttachment
-      ? { content: createMessageContentWithAttachments(msg.content) }
-      : { content: msg.content }),
+    content: msg.withAttachment ? createMessageContentWithAttachments(msg.content) : msg.content,
   }
 }
 
-function createMessageContentWithAttachments(content: string) {
+function createMessageContentWithAttachments(content: string): JSX.Element {
   const contextMenu = (
     <Menu
       items={[
