@@ -40,6 +40,13 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   private generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(({ itemType, ...props }, index) => {
       const ElementType = this.getElementType(itemType)
+      const maybeAttributesForDivider =
+        itemType === ChatItemTypes.divider
+          ? {
+              role: 'heading',
+              'aria-level': 3,
+            }
+          : {}
       return (
         <Chat.Item key={`chat-item-${index}`}>
           {itemType === ChatItemTypes.message && (
@@ -47,7 +54,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
               {this.getMessagePreviewForScreenReader(props)}
             </div>
           )}
-          <ElementType {...props} text={undefined} />
+          <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
         </Chat.Item>
       )
     })
