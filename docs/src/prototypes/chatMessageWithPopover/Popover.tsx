@@ -1,59 +1,81 @@
+import { Menu, Popup, toolbarBehavior, popupFocusTrapBehavior, Provider } from '@stardust-ui/react'
 import * as React from 'react'
-import { Menu, Popup, toolbarBehavior, popupFocusTrapBehavior } from '@stardust-ui/react'
+import * as cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
 }
 
 class Popover extends React.Component<PopoverProps> {
+  state = {
+    focused: false,
+  }
+
+  changeFocusState = (isFocused: boolean) => {
+    this.state.focused !== isFocused && this.setState({ focused: isFocused })
+  }
+
+  handleFocus = () => {
+    this.changeFocusState(true)
+  }
+
+  handleBlur = e => {
+    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
+    this.changeFocusState(shouldPreserveFocusState)
+  }
+
   render() {
     return (
-      <Menu
-        styles={{
-          transition: 'opacity 0.2s',
-          position: 'absolute',
-          top: '-20px',
-          right: '5px',
-          background: '#fff',
-          boxShadow: '0px 2px 4px #ddd',
-          borderRadius: '.3rem',
-          opacity: 0,
+      <Provider.Consumer
+        render={({ siteVariables }) => (
+          <Menu
+            styles={{
+              transition: 'opacity 0.2s',
+              position: 'absolute',
+              top: '-20px',
+              right: '5px',
+              background: siteVariables.white,
+              boxShadow: '0px 2px 4px #ddd',
+              borderRadius: '.3rem',
+              opacity: 0,
 
-          '& .smile-emoji': {
-            display: 'none',
-          },
+              '& .smile-emoji': {
+                display: 'none',
+              },
 
-          '&.focused .smile-emoji': {
-            display: 'flex',
-          },
+              '&.focused .smile-emoji': {
+                display: 'flex',
+              },
 
-          '&:hover .smile-emoji': {
-            display: 'flex',
-          },
+              '&:hover .smile-emoji': {
+                display: 'flex',
+              },
 
-          '& a:focus': {
-            textDecoration: 'none',
-            color: 'inherit',
-          },
+              '& a:focus': {
+                textDecoration: 'none',
+                color: 'inherit',
+              },
 
-          '& a': {
-            color: 'inherit',
-          },
-        }}
-        iconOnly
-        className={this.props.className}
-        items={[
-          { key: 'smile', icon: 'smile', className: 'smile-emoji' },
-          { key: 'smile2', icon: 'smile', className: 'smile-emoji' },
-          { key: 'smile3', icon: 'smile', className: 'smile-emoji' },
-          { key: 'a', icon: 'thumbs up' },
-          { key: 'c', icon: 'ellipsis horizontal' },
-        ]}
-        renderItem={renderContextMenu}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        accessibility={toolbarBehavior}
-        data-is-focusable={true}
+              '& a': {
+                color: 'inherit',
+              },
+            }}
+            iconOnly
+            className={cx(this.props.className, this.state.focused ? 'focused' : '')}
+            items={[
+              { key: 'smile', icon: 'smile', className: 'smile-emoji' },
+              { key: 'smile2', icon: 'smile', className: 'smile-emoji' },
+              { key: 'smile3', icon: 'smile', className: 'smile-emoji' },
+              { key: 'a', icon: 'thumbs up' },
+              { key: 'c', icon: 'ellipsis horizontal' },
+            ]}
+            renderItem={renderContextMenu}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            accessibility={toolbarBehavior}
+            data-is-focusable={true}
+          />
+        )}
       />
     )
   }
@@ -95,24 +117,4 @@ const renderContextMenu = (MenuItem, props) => {
       }
     />
   )
-}
-
-export const handleFocus = e => {
-  const currentTarget = e.currentTarget
-  if (!currentTarget.classList.contains('focused')) {
-    currentTarget.classList.add('focused')
-  }
-}
-
-export const handleBlur = e => {
-  const currentTarget = e.currentTarget
-  const relatedTarget = e.relatedTarget
-
-  if (currentTarget.contains(relatedTarget)) {
-    if (!currentTarget.classList.contains('focused')) {
-      currentTarget.classList.add('focused')
-    }
-  } else {
-    currentTarget.classList.remove('focused')
-  }
 }

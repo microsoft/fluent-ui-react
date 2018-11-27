@@ -1,7 +1,7 @@
-import { Chat } from '@stardust-ui/react'
+import { Chat, Provider } from '@stardust-ui/react'
 
 import * as React from 'react'
-import Popover, { handleBlur, handleFocus } from './Popover'
+import Popover from './Popover'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -9,41 +9,63 @@ const janeAvatar = {
 }
 
 class ChatMessageWithPopover extends React.Component {
+  state = {
+    focused: false,
+  }
+
+  changeFocusState = (isFocused: boolean) => {
+    this.state.focused !== isFocused && this.setState({ focused: isFocused })
+  }
+
+  handleFocus = () => {
+    this.changeFocusState(true)
+  }
+
+  handleBlur = e => {
+    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
+    this.changeFocusState(shouldPreserveFocusState)
+  }
+
   render() {
     return (
-      <Chat.Message
-        styles={{
-          position: 'relative',
+      <Provider.Consumer
+        render={({ siteVariables }) => (
+          <Chat.Message
+            styles={{
+              position: 'relative',
 
-          '&.focused .actions': {
-            opacity: 1,
-          },
-          ':hover .actions': {
-            opacity: 1,
-          },
-          '& a': {
-            color: '#6264A7',
-          },
-        }}
-        author="Jane Doe"
-        timestamp="Yesterday, 10:15 PM"
-        content={{
-          content: (
-            <div>
-              <Popover className="actions" />
-              <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-            </div>
-          ),
-        }}
-        avatar={janeAvatar}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+              '&.focused .actions': {
+                opacity: 1,
+              },
+              ':hover .actions': {
+                opacity: 1,
+              },
+              '& a': {
+                color: siteVariables.brand,
+              },
+            }}
+            author="Jane Doe"
+            timestamp="Yesterday, 10:15 PM"
+            content={{
+              content: (
+                <div>
+                  <Popover className="actions" />
+                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                </div>
+              ),
+            }}
+            avatar={janeAvatar}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+            className={this.state.focused ? 'focused' : undefined}
+          />
+        )}
       />
     )
   }
 }
 
-const CustomChat = () => (
+const ChatWithPopover = () => (
   <Chat
     items={[
       { key: 'a', content: <ChatMessageWithPopover /> },
@@ -53,4 +75,4 @@ const CustomChat = () => (
   />
 )
 
-export default CustomChat
+export default ChatWithPopover
