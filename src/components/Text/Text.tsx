@@ -14,7 +14,7 @@ import {
 import { Extendable } from '../../../types/utils'
 
 export interface TextProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ContentNodeComponentProps,
     ChildrenComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */

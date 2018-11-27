@@ -10,7 +10,7 @@ import {
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
 export interface SlotProps
-  extends UIComponentProps<SlotProps, any>,
+  extends UIComponentProps<SlotProps>,
     ContentNodeComponentProps,
     ChildrenComponentProps {}
 

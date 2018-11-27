@@ -27,7 +27,7 @@ import {
 } from '../../../types/utils'
 
 export interface MenuItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {
   /**

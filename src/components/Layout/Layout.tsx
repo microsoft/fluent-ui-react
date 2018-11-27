@@ -6,7 +6,7 @@ import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { Extendable } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
 
-export interface LayoutProps extends UIComponentProps<any, any> {
+export interface LayoutProps extends UIComponentProps {
   debug?: boolean
   renderStartArea?: (params: object) => React.ReactNode
   renderMainArea?: (params: object) => React.ReactNode

@@ -18,7 +18,7 @@ import {
 } from '../../../types/utils'
 import FormField from './FormField'
 
-export interface FormProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML form action. */
   action?: string
 

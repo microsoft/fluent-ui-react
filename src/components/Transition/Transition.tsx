@@ -11,7 +11,7 @@ import {
 import { Animation } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 
-export interface TransitionProps extends StyledComponentProps<any, any> {
+export interface TransitionProps extends StyledComponentProps {
   /** An element type to render as (string or function). */
   as?: any
 

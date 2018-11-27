@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface StatusProps extends UIComponentProps<any, any> {
+export interface StatusProps extends UIComponentProps {
   /** A custom color. */
   color?: string
 

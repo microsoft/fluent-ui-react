@@ -14,7 +14,7 @@ import {
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionTitleProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ContentNodeComponentProps,
     ChildrenComponentProps {
   /** Whether or not the title is in the open state. */

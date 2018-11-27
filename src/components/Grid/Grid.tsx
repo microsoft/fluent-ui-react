@@ -14,7 +14,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode
 
-export interface GridProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior

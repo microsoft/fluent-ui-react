@@ -11,7 +11,7 @@ import {
 } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface AvatarProps extends UIComponentProps<any, any> {
+export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the image. */
   image?: ShorthandValue
 

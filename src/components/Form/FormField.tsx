@@ -15,7 +15,7 @@ import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Slot from '../Slot/Slot'
 
-export interface FormFieldProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /** A control for the form field. */
   control?: ShorthandValue
 

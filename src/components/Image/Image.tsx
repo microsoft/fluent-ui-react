@@ -7,7 +7,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import { Extendable } from '../../../types/utils'
 
-export interface ImageProps extends UIComponentProps<any, any> {
+export interface ImageProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default imageBehavior

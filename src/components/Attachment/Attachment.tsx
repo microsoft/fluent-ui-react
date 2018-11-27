@@ -15,7 +15,7 @@ import Button from '../Button/Button'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
-export interface AttachmentProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
   /** Button shorthand for the action slot. */
   action?: ShorthandValue
 

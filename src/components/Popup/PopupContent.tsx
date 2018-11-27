@@ -13,7 +13,7 @@ import {
 import { Extendable } from '../../../types/utils'
 
 export interface PopupContentProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {}
 

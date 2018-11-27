@@ -22,7 +22,7 @@ import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
 
-export interface InputProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
 

@@ -23,7 +23,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
-export interface RadioGroupItemProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupItemBehavior

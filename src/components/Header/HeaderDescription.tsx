@@ -12,7 +12,7 @@ import {
 import { Extendable } from '../../../types/utils'
 
 export interface HeaderDescriptionProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {}
 

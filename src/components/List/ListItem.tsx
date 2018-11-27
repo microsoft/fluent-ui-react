@@ -7,7 +7,7 @@ import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
 
-export interface ListItemProps extends UIComponentProps<any, any> {
+export interface ListItemProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior

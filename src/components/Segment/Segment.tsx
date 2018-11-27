@@ -12,7 +12,7 @@ import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
 export interface SegmentProps
-  extends UIComponentProps<SegmentProps, any>,
+  extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
     ContentShorthandComponentProps {
   /** A segment can have its colors inverted for contrast. */

@@ -4,14 +4,13 @@ import * as _ from 'lodash'
 
 import {
   childrenExist,
-  customPropTypes,
   AutoControlledComponent,
   doesNodeContainClick,
   EventStack,
   ChildrenComponentProps,
   commonPropTypes,
+  ContentNodeComponentProps,
 } from '../../lib'
-import { ShorthandValue } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -23,11 +22,7 @@ export type TriggerAccessibility = {
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface PortalProps extends ChildrenComponentProps {
-  // TODO: This should be React.Node?
-  /** Shorthand for primary content. */
-  content?: ShorthandValue | ShorthandValue[]
-
+export interface PortalProps extends ChildrenComponentProps, ContentNodeComponentProps {
   /** Initial value of open. */
   defaultOpen?: boolean
 
@@ -96,7 +91,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
   public static propTypes = {
     ...commonPropTypes.childrenComponentPropTypes,
-    content: customPropTypes.contentShorthand,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
     defaultOpen: PropTypes.bool,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,

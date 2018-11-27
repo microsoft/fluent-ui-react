@@ -25,7 +25,7 @@ export type IconSize =
   | 'huge'
   | 'massive'
 
-export interface IconProps extends UIComponentProps<any, any> {
+export interface IconProps extends UIComponentProps {
   /**
    * Accessibility behavior if overriden by the user.
    * @default iconBehavior

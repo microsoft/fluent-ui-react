@@ -19,7 +19,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface LabelProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {
   accessibility?: Accessibility

@@ -23,7 +23,7 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 
-export interface RadioGroupProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupBehavior

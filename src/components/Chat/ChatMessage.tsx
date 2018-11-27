@@ -26,7 +26,7 @@ import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
 export interface ChatMessageProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentShorthandComponentProps {
   /**

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ComponentVariablesInput, ComponentSlotStyle, Animation } from '../themes/types'
 import { ShorthandValue, ReactChildren } from '../../types/utils'
 
-export interface StyledComponentProps<P, V> {
+export interface StyledComponentProps<P = any, V = any> {
   /** Additional CSS styles to apply to the component instance.  */
   styles?: ComponentSlotStyle<P, V>
 
@@ -15,7 +15,9 @@ export interface AnimatedComponentProps {
   animation?: Animation
 }
 
-export interface UIComponentProps<P, V> extends StyledComponentProps<P, V>, AnimatedComponentProps {
+export interface UIComponentProps<P = any, V = any>
+  extends StyledComponentProps<P, V>,
+    AnimatedComponentProps {
   /** An element type to render as (string or function). */
   as?: any
 

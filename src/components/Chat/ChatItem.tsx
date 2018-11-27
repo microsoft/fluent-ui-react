@@ -15,7 +15,7 @@ import Slot from '../Slot/Slot'
 import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 
 export interface ChatItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentShorthandComponentProps {
   /**

@@ -17,7 +17,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior

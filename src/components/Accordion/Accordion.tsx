@@ -21,7 +21,7 @@ import {
   ShorthandValue,
 } from '../../../types/utils'
 
-export interface AccordionProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
   activeIndex?: number[] | number
 

@@ -26,7 +26,7 @@ import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface ButtonProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ContentShorthandComponentProps,
     ChildrenComponentProps {
   /**

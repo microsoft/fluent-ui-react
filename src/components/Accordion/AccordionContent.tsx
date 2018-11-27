@@ -13,7 +13,7 @@ import {
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionContentProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {
   /** Whether or not the content is visible. */

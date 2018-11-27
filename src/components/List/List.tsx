@@ -18,7 +18,7 @@ import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/Foc
 
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
-export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listBehavior

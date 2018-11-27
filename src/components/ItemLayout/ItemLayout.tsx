@@ -13,7 +13,7 @@ import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export interface ItemLayoutProps extends UIComponentProps<any, any> {
+export interface ItemLayoutProps extends UIComponentProps {
   contentMedia?: any
   /** Shorthand for primary content. */
   content?: any

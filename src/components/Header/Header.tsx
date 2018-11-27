@@ -14,7 +14,7 @@ import HeaderDescription from './HeaderDescription'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface HeaderProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentNodeComponentProps {
   /** Shorthand for Header.Description. */
