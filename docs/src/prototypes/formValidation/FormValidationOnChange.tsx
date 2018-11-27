@@ -3,7 +3,11 @@ import { Form, Button, Input, RadioGroup } from '@stardust-ui/react'
 import Formsy from 'formsy-react'
 import FormsyFormField from './FormsyFormField'
 
-class FormValidationOnChange extends React.Component<any, any> {
+export interface FormValidationOnChangeState {
+  buttonDisabled: boolean
+}
+
+class FormValidationOnChange extends React.Component<{}, FormValidationOnChangeState> {
   state = { buttonDisabled: false }
 
   render() {
