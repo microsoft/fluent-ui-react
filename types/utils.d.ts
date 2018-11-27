@@ -35,14 +35,14 @@ export type ShorthandRenderTreeFunc = (
   props: Props,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderCallback = (
+export type ShorthandRenderer = (
   value: ShorthandValue | ShorthandRenderTreeFunc,
   renderTree?: ShorthandRenderTreeFunc,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderer = (render: ShorthandRenderCallback) => React.ReactElement<any>
+export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
 
-export type ShorthandValue = React.ReactNode | Props | ShorthandRenderer
+export type ShorthandValue = React.ReactNode | Props
 
 // OBSOLETE
 export type ShorthandRenderFunction = (

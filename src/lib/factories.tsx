@@ -49,36 +49,55 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
 export function createShorthand(
   Component: React.ReactType,
   mappedProp: string,
-  value?: ShorthandValue,
+  valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ): React.ReactElement<Props> | null | undefined {
-  const valIsRenderFunction = typeof value === 'function' && !React.isValidElement(value)
+  const valIsRenderFunction =
+    typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
-    const render: ShorthandRenderCallback = (shorthandValueOrRenderTree, renderTreeArg) => {
-      const shorthandArgType = {
-        isReactElement: React.isValidElement(shorthandValueOrRenderTree),
-        isRenderTreeFunc: typeof shorthandValueOrRenderTree === 'function',
-      }
-
-      const ShorthandElement = createShorthand(
-        Component,
-        mappedProp,
-        shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as ShorthandValue),
-        options,
-      )
-
-      const renderTree = shorthandArgType.isRenderTreeFunc
-        ? (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)
-        : renderTreeArg
-
-      return shorthandArgType.isReactElement || !renderTree
-        ? ShorthandElement
-        : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
-    }
-
-    return (value as ShorthandRenderer)(render)
+    return createShorthandFromRenderCallback(
+      Component,
+      mappedProp,
+      valueOrRenderCallback as ShorthandRenderCallback,
+      options,
+    )
   }
 
+  return createShorthandFromValue(
+    Component,
+    mappedProp,
+    valueOrRenderCallback as ShorthandValue,
+    options,
+  )
+}
+
+// ============================================================
+// Factory Creators
+// ============================================================
+
+/**
+ * @param {React.ReactType} Component A ReactClass or string
+ * @param {string} mappedProp A function that maps a primitive value to the Component props
+ * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
+ */
+export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
+  if (typeof Component !== 'function' && typeof Component !== 'string') {
+    throw new Error('createShorthandFactory() Component must be a string or function.')
+  }
+
+  return (val, options) => createShorthand(Component, mappedProp, val, options)
+}
+
+// ============================================================
+// Private Utils
+// ============================================================
+
+function createShorthandFromValue(
+  Component: React.ReactType,
+  mappedProp: string,
+  value?: ShorthandValue,
+  options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
@@ -182,19 +201,33 @@ export function createShorthand(
   return null
 }
 
-// ============================================================
-// Factory Creators
-// ============================================================
+function createShorthandFromRenderCallback(
+  Component: React.ReactType,
+  mappedProp: string,
+  renderCallback: ShorthandRenderCallback,
+  options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+) {
+  const render: ShorthandRenderer = (shorthandValueOrRenderTree, renderTreeArg) => {
+    const shorthandArgType = {
+      isReactElement: React.isValidElement(shorthandValueOrRenderTree),
+      isRenderTreeFunc: typeof shorthandValueOrRenderTree === 'function',
+    }
 
-/**
- * @param {React.ReactType} Component A ReactClass or string
- * @param {string} mappedProp A function that maps a primitive value to the Component props
- * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
- */
-export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
-  if (typeof Component !== 'function' && typeof Component !== 'string') {
-    throw new Error('createShorthandFactory() Component must be a string or function.')
+    const ShorthandElement = createShorthandFromValue(
+      Component,
+      mappedProp,
+      shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as ShorthandValue),
+      options,
+    )
+
+    const renderTree = shorthandArgType.isRenderTreeFunc
+      ? (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)
+      : renderTreeArg
+
+    return shorthandArgType.isReactElement || !renderTree
+      ? ShorthandElement
+      : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
   }
 
-  return (val, options) => createShorthand(Component, mappedProp, val, options)
+  return renderCallback(render)
 }
