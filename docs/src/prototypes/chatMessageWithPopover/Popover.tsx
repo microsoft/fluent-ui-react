@@ -89,32 +89,36 @@ const renderContextMenu = (MenuItem, props) => {
   }
 
   return (
-    <Popup
-      key={props.key}
-      position="below"
-      accessibility={popupFocusTrapBehavior}
-      trigger={<MenuItem {...props} />}
-      content={
-        <div
-          style={{
-            background: '#fff',
-            boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
-            borderRadius: '.3rem',
-            marginTop: '5px',
-          }}
-        >
-          <Menu
-            vertical
-            pills
-            className="actions"
-            items={[
-              { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-              { key: 'linkify', icon: 'linkify', content: 'Copy link' },
-              { key: 'translate', icon: 'translate', content: 'Translate' },
-            ]}
-          />
-        </div>
-      }
+    <Provider.Consumer
+      render={({ siteVariables }) => (
+        <Popup
+          key={props.key}
+          position="below"
+          accessibility={popupFocusTrapBehavior}
+          trigger={<MenuItem {...props} />}
+          content={
+            <div
+              style={{
+                background: siteVariables.white,
+                boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
+                borderRadius: '.3rem',
+                marginTop: '5px',
+              }}
+            >
+              <Menu
+                vertical
+                pills
+                className="actions"
+                items={[
+                  { key: 'bookmark', icon: 'folder', content: 'Save this message' },
+                  { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                  { key: 'translate', icon: 'translate', content: 'Translate' },
+                ]}
+              />
+            </div>
+          }
+        />
+      )}
     />
   )
 }
