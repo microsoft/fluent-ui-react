@@ -61,6 +61,9 @@ jobs:
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
               yarn danger ci
             fi
+      - run: 
+          name: Vulnerability Tests
+          command: yarn test:vulns
       - run:
           name: Publish npm package
           command: |
