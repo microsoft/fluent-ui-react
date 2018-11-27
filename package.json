@@ -176,9 +176,6 @@
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
-  "engines": {
-    "yarn": "^1.10.0"
-  },
   "resolutions": {
     "create-react-context": "0.2.2"
   }
