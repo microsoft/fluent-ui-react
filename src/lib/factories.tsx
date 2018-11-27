@@ -67,10 +67,9 @@ export function createShorthand(
         options,
       )
 
-      const renderTree =
-        (shorthandArgType.isRenderTreeFunc &&
-          (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)) ||
-        renderTreeArg
+      const renderTree = shorthandArgType.isRenderTreeFunc
+        ? (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)
+        : renderTreeArg
 
       return shorthandArgType.isReactElement || !renderTree
         ? ShorthandElement
