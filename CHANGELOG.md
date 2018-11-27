@@ -20,6 +20,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - rename `Transition` component to `Animation`, and `animationName` property to `name` @mnajdova ([#505](https://github.com/stardust-ui/react/pull/505))
 
+### Documentation
+- add `Animations` guide as part of the `Theming` docs page @mnajdova ([#505](https://github.com/stardust-ui/react/pull/505))
+
+<!--------------------------------[ v0.12.1 ]------------------------------- -->
+## [v0.12.1](https://github.com/stardust-ui/react/tree/v0.12.1) (2018-11-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.12.0...v0.12.1)
+
 ### Features
 - Add `createComponent` function in the public API @mnajdova ([#503](https://github.com/stardust-ui/react/pull/503))
 - Apply `dir=auto` attribute to string content of `Text` @kuzhelov  ([#5](https://github.com/stardust-ui/react/pull/5))
@@ -32,9 +39,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add `Integrate Custom Components` guide page in the docs @mnajdova ([#517](https://github.com/stardust-ui/react/pull/517))
-
-### Documentation
-- add `Animations` guide as part of the `Theming` docs page @mnajdova ([#505](https://github.com/stardust-ui/react/pull/505))
 
 <!--------------------------------[ v0.12.0 ]------------------------------- -->
 ## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
