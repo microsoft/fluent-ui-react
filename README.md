@@ -21,6 +21,9 @@
   <a href="https://codecov.io/gh/stardust-ui/react">
     <img alt="Codecov" src="https://img.shields.io/codecov/c/github/stardust-ui/react/master.svg?style=flat-square" />
   </a>
+  <a href="https://snyk.io/test/github/stardust-ui/react?targetFile=package.json">
+    <img src="https://snyk.io/test/github/stardust-ui/react/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/stardust-ui/react?targetFile=package.json" style="max-width:100%;">
+  </a>
   <a href="https://david-dm.org/stardust-ui/react">
     <img alt="David" src="https://img.shields.io/david/stardust-ui/react.svg?style=flat-square" />
   </a>
