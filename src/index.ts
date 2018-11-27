@@ -86,11 +86,14 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
+export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
+
+export { default as Transition, TransitionProps } from './components/Transition/Transition'
 
 //
 // Accessibility
@@ -110,17 +113,20 @@ export {
 } from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
 export { default as chatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
 export {
-  default as chatEnterEscBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatEnterEscBehavior'
-export {
   default as chatMessageBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
-export {
-  default as chatMessageEnterEscBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatMessageEnterEscBehavior'
 export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
+export {
+  default as popupFocusTrapBehavior,
+} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 
 //
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { createComponent } from './lib'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'
