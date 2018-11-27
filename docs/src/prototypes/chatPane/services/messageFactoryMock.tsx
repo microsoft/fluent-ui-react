@@ -18,7 +18,6 @@ interface ChatItem {
 
 interface ChatMessage extends ChatMessageProps, ChatItem {
   tabIndex: number
-  role: string
   'aria-labelledby': string
   text: string
 }
@@ -37,7 +36,6 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    role: undefined,
     // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
     'aria-labelledby': `sender-${msg.id} timestamp-${msg.id} content-${msg.id}`,
     content: createMessageContent(msg),
@@ -64,13 +62,16 @@ function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage
 }
 
 function createMessageContent(msg: MessageData): ShorthandValue {
+  const msgId = `content-${msg.id}`
   return {
-    id: `content-${msg.id}`,
-    content: msg.withAttachment ? createMessageContentWithAttachments(msg.content) : msg.content,
+    id: msg.withAttachment ? undefined : msgId,
+    content: msg.withAttachment
+      ? createMessageContentWithAttachments(msg.content, msgId)
+      : msg.content,
   }
 }
 
-function createMessageContentWithAttachments(content: string): JSX.Element {
+function createMessageContentWithAttachments(content: string, msgId: string): JSX.Element {
   const contextMenu = (
     <Menu
       items={[
@@ -95,7 +96,7 @@ function createMessageContentWithAttachments(content: string): JSX.Element {
 
   return (
     <>
-      <span>
+      <span id={msgId}>
         {content} <a href="/"> Some link </a>
       </span>
       <div style={{ marginTop: '20px', display: 'flex' }}>
