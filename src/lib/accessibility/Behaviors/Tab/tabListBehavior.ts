@@ -1,9 +1,9 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 
 /**
- * @description
+ * @specification
  * Adds role 'tablist' to 'root' component's part.
- * Wraps component in FocusZone allowing arrow key navigation through the children of the component.
+ * Embeds FocusZone into component allowing arrow key navigation through the children of the component.
  */
 const tabListBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -12,10 +12,11 @@ const tabListBehavior: Accessibility = (props: any) => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Wrap,
+    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: false,
       preventDefaultWhenHandled: true,
+      shouldFocusFirstElementWhenReceivedFocus: true,
     },
   },
 })

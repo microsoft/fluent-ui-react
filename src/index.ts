@@ -93,7 +93,7 @@ export { default as Status, StatusPropsWithDefaults, StatusProps } from './compo
 
 export { default as Text, TextProps } from './components/Text/Text'
 
-export { default as Transition, TransitionProps } from './components/Transition/Transition'
+export { default as Animation, AnimationProps } from './components/Animation/Animation'
 
 //
 // Accessibility
@@ -125,3 +125,8 @@ export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { createComponent } from './lib'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'

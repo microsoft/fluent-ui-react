@@ -18,7 +18,6 @@ import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../ty
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import Layout from '../Layout/Layout'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 import {
@@ -26,11 +25,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
 } from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ChatMessageProps
   extends UIComponentProps<any, any>,
@@ -104,10 +99,10 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,
+    content: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     renderAuthor: PropTypes.func,
     renderAvatar: PropTypes.func,
@@ -117,11 +112,11 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: chatMessageBehavior as Accessibility,
+    accessibility: chatMessageBehavior,
     as: 'div',
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
@@ -137,7 +132,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     variables,
   }: RenderResultConfig<ChatMessageProps>) {
     const { children } = this.props
-
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -153,7 +147,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     )
   }
 
-  renderContent = (
+  private renderContent = (
     classes: ComponentSlotClasses,
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
@@ -182,7 +176,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
       defaultProps: {
         size: 'small',
         styles: styles.author,
-        variables: variables.author,
       },
       render: renderAuthor,
     })
@@ -190,37 +183,27 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     const timestampElement = Text.create(timestamp, {
       defaultProps: {
         size: 'small',
-        timestamp: true,
         styles: styles.timestamp,
-        variables: variables.timestamp,
+        timestamp: true,
       },
       render: renderTimestamp,
     })
 
     const contentElement = Slot.create(content, {
-      styles: styles.content,
-      variables: variables.content,
+      defaultProps: { styles: styles.content },
       render: renderContent,
     })
 
     return (
-      <Layout
-        start={!mine && avatarElement}
-        main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={contentElement}
-          />
-        }
-        end={mine && avatarElement}
-      />
+      <>
+        {!mine && avatarElement}
+        <Slot className={cx('ui-chat__message__messageBody', classes.messageBody)}>
+          {!mine && authorElement}
+          {timestampElement}
+          {contentElement}
+        </Slot>
+        {mine && avatarElement}
+      </>
     )
   }
 }
