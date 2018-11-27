@@ -14,7 +14,7 @@ import Downshift, {
   GetToggleButtonPropsOptions,
   GetItemPropsOptions,
 } from 'downshift'
-import { AutoControlledComponent, RenderResultConfig } from '../../lib'
+import { AutoControlledComponent, RenderResultConfig, customPropTypes } from '../../lib'
 import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -148,13 +148,15 @@ export default class Dropdown extends AutoControlledComponent<
   static propTypes = {
     ...commonUIComponentPropTypes,
     defaultSearchQuery: PropTypes.string,
-    defaultValue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    defaultValue: PropTypes.oneOfType([
+      customPropTypes.itemShorthand,
+      customPropTypes.collectionShorthand,
+    ]),
     fluid: PropTypes.bool,
     getA11yStatusMessage: PropTypes.func,
     getA11ySelectedMessage: PropTypes.func,
     getA11yRemovedMessage: PropTypes.func,
-    getA11yRemoveItemMessage: PropTypes.func,
-    items: PropTypes.arrayOf(PropTypes.object),
+    items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     multiple: PropTypes.bool,
     noResultsMessage: PropTypes.string,
@@ -167,7 +169,10 @@ export default class Dropdown extends AutoControlledComponent<
     search: PropTypes.bool,
     searchQuery: PropTypes.string,
     toggleButton: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    value: PropTypes.oneOfType([
+      customPropTypes.itemShorthand,
+      customPropTypes.collectionShorthand,
+    ]),
   }
 
   static defaultProps = {
