@@ -2,13 +2,7 @@ import { shallow, mount } from 'enzyme'
 import * as React from 'react'
 
 import Ref from 'src/components/Ref/Ref'
-import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
-
-const TestButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
-  <div>
-    <button ref={ref} />
-  </div>
-))
+import { CompositeClass, CompositeFunction, DOMClass, DOMFunction, ForwardedRef } from './fixtures'
 
 const testInnerRef = Component => {
   const innerRef = jest.fn()
@@ -70,7 +64,7 @@ describe('Ref', () => {
 
       mount(
         <Ref innerRef={innerRef}>
-          <TestButton ref={forwardedRef} />
+          <ForwardedRef ref={forwardedRef} />
         </Ref>,
       )
 
