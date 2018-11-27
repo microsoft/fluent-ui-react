@@ -1,14 +1,19 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
+import {
+  UIComponent,
+  customPropTypes,
+  createShorthandFactory,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface AttachmentProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** Button shorthand for the action slot. */
@@ -86,8 +91,8 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static displayName = 'Attachment'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     action: customPropTypes.itemShorthand,
     actionable: PropTypes.bool,
     description: customPropTypes.itemShorthand,

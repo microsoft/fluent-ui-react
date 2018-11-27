@@ -2,11 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
-import { UIComponent } from '../../lib'
+import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { Extendable } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface LayoutProps extends UIComponentProps<any, any> {
   debug?: boolean
@@ -50,7 +48,7 @@ class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static displayName = 'Layout'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
     debug: PropTypes.bool,
 
     renderStartArea: PropTypes.func,

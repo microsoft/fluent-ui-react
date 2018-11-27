@@ -1,17 +1,16 @@
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent, RenderResultConfig } from '../../lib'
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
+  RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
   ContentNodeComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentNodeComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { Extendable } from '../../../types/utils'
 
 export interface PopupContentProps
   extends UIComponentProps<any, any>,
@@ -30,9 +29,9 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   public static className = 'ui-popup__content'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentNodeComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
   }
 
   public renderComponent({

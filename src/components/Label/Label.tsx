@@ -7,22 +7,16 @@ import {
   customPropTypes,
   pxToRem,
   UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentNodeComponentProps,
+  commonPropTypes,
 } from '../../lib'
 
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentNodeComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  contentNodeComponentPropsTypes,
-  childrenComponentPropTypes,
-} from '../../lib/commonPropTypes'
 
 export interface LabelProps
   extends UIComponentProps<any, any>,
@@ -78,9 +72,9 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...contentNodeComponentPropsTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

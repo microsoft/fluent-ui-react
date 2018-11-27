@@ -1,13 +1,11 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ImageProps extends UIComponentProps<any, any> {
   /**
@@ -44,7 +42,7 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
     accessibility: PropTypes.func,
     avatar: PropTypes.bool,
     circular: PropTypes.bool,

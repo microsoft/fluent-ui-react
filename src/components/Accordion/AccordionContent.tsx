@@ -1,18 +1,16 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentNodeComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentNodeComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionContentProps
   extends UIComponentProps<any, any>,
@@ -41,9 +39,9 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
   static className = 'ui-accordion__content'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentNodeComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
     active: PropTypes.bool,
     onClick: PropTypes.func,
   }

@@ -3,7 +3,16 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentNodeComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
@@ -16,16 +25,6 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentNodeComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentNodeComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface MenuItemProps
   extends UIComponentProps<any, any>,
@@ -119,9 +118,9 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentNodeComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,

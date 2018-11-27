@@ -2,7 +2,14 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
+import {
+  AutoControlledComponent,
+  customPropTypes,
+  childrenExist,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { defaultBehavior } from '../../lib/accessibility'
@@ -13,8 +20,6 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
 } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface AccordionProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** Index of the currently active panel. */
@@ -76,8 +81,8 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     activeIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),

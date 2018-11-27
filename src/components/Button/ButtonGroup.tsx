@@ -2,21 +2,19 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentNodeComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Button from './Button'
 import { buttonGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentNodeComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentNodeComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface ButtonGroupProps
   extends UIComponentProps<any, any>,
@@ -54,9 +52,9 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static className = 'ui-buttons'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentNodeComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentNodeComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,

@@ -2,12 +2,16 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
-import { createShorthandFactory, pxToRem, UIComponent } from '../../lib'
+import {
+  createShorthandFactory,
+  pxToRem,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ItemLayoutProps extends UIComponentProps<any, any> {
   contentMedia?: any
@@ -63,7 +67,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static className = 'ui-itemlayout'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
     contentMedia: PropTypes.any,
     content: PropTypes.any,
     debug: PropTypes.bool,

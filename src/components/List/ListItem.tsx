@@ -1,13 +1,11 @@
 import * as React from 'react'
 
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ListItemProps extends UIComponentProps<any, any> {
   /**
@@ -49,7 +47,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
     contentMedia: PropTypes.any,
     content: PropTypes.any,
 

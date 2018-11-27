@@ -1,15 +1,25 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, childrenExist } from '../../lib'
+import {
+  UIComponent,
+  customPropTypes,
+  childrenExist,
+  StyledComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Animation } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ChildrenComponentProps, StyledComponentProps } from '../../lib/commonPropInterfaces'
-import { styledComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface TransitionProps extends StyledComponentProps<any, any>, ChildrenComponentProps {
+export interface TransitionProps extends StyledComponentProps<any, any> {
   /** An element type to render as (string or function). */
   as?: any
+
+  /**
+   *  Content for childrenApi
+   *  @docSiteIgnore
+   */
+  children?: React.ReactNode
 
   /** Additional CSS class name(s) to apply.  */
   className?: string
@@ -80,8 +90,8 @@ class Transition extends UIComponent<TransitionProps, any> {
   static displayName = 'Transition'
 
   static propTypes = {
-    ...styledComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.styledComponentPropTypes,
+    children: PropTypes.element,
     animationName: PropTypes.string,
     as: customPropTypes.as,
     className: PropTypes.string,

@@ -10,6 +10,9 @@ import {
   EventStack,
   RenderResultConfig,
   isBrowser,
+  ChildrenComponentProps,
+  ContentShorthandComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import { ComponentEventHandler, Extendable } from '../../../types/utils'
 
@@ -26,14 +29,6 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
-import {
-  ChildrenComponentProps,
-  ContentShorthandComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  contentShorthandComponentPropsTypes,
-  childrenComponentPropTypes,
-} from '../../lib/commonPropTypes'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
@@ -101,8 +96,8 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    ...contentShorthandComponentPropsTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.contentShorthandComponentPropsTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
     className: PropTypes.string,

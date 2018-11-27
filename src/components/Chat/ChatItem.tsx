@@ -1,19 +1,18 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, RenderResultConfig, UIComponent } from '../../lib'
-import Slot from '../Slot/Slot'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  RenderResultConfig,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentShorthandComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentShorthandComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import Slot from '../Slot/Slot'
+import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 
 export interface ChatItemProps
   extends UIComponentProps<any, any>,
@@ -40,9 +39,9 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentShorthandComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentShorthandComponentPropsTypes,
     renderContent: PropTypes.func,
   }
 

@@ -8,14 +8,14 @@ import {
   AutoControlledComponent,
   doesNodeContainClick,
   EventStack,
+  ChildrenComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import { ShorthandValue } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -95,7 +95,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     content: customPropTypes.contentShorthand,
     defaultOpen: PropTypes.bool,
     onMount: PropTypes.func,

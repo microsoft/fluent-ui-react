@@ -8,6 +8,10 @@ import {
   customPropTypes,
   RenderResultConfig,
   UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentShorthandComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import {
   ComponentVariablesInput,
@@ -20,16 +24,6 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentShorthandComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentShorthandComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface ChatMessageProps
   extends UIComponentProps<any, any>,
@@ -101,9 +95,9 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentShorthandComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentShorthandComponentPropsTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,

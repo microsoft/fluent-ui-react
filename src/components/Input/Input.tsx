@@ -8,6 +8,9 @@ import {
   customPropTypes,
   RenderResultConfig,
   partitionHTMLProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import {
   Extendable,
@@ -18,8 +21,6 @@ import {
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface InputProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
@@ -115,8 +116,8 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static displayName = 'Input'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,

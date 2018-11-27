@@ -1,11 +1,17 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { UIComponent, childrenExist, customPropTypes, RenderResultConfig } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  RenderResultConfig,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Extendable, ShorthandValue } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import ReactNode = React.ReactNode
 
 export interface GridProps extends UIComponentProps<any, any>, ChildrenComponentProps {
@@ -36,8 +42,8 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static className = 'ui-grid'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     accessibility: PropTypes.func,
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     content: customPropTypes.every([

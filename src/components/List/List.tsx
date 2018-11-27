@@ -3,15 +3,20 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, childrenExist, UIComponent } from '../../lib'
+import {
+  customPropTypes,
+  childrenExist,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /**
@@ -59,8 +64,8 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   static className = 'ui-list'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,

@@ -1,13 +1,17 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, UIComponent, createShorthandFactory } from '../../lib'
+import {
+  callable,
+  UIComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 export type IconSize =
@@ -58,7 +62,7 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   static displayName = 'Icon'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
     accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,

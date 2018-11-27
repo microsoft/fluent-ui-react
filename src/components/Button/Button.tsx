@@ -2,7 +2,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+  UIComponentProps,
+  ContentShorthandComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
@@ -15,16 +24,6 @@ import {
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import {
-  UIComponentProps,
-  ContentShorthandComponentProps,
-  ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentShorthandComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface ButtonProps
   extends UIComponentProps<any, any>,
@@ -106,9 +105,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentShorthandComponentPropsTypes,
+    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.contentShorthandComponentPropsTypes,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,
