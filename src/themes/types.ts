@@ -115,7 +115,7 @@ export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
-export type Animation =
+export type AnimationProp =
   | {
       name: string
       delay?: string
@@ -191,6 +191,7 @@ export interface ThemeComponentStylesInput {
   [key: string]: ComponentSlotStylesInput | undefined
 
   Accordion?: ComponentSlotStylesInput
+  Animation?: ComponentSlotStylesInput
   Attachment?: ComponentSlotStylesInput
   Avatar?: ComponentSlotStylesInput
   Button?: ComponentSlotStylesInput
@@ -228,6 +229,7 @@ export interface ThemeComponentStylesPrepared {
   [key: string]: ComponentSlotStylesPrepared | undefined
 
   Accordion?: ComponentSlotStylesPrepared
+  Animation?: ComponentSlotStylesPrepared
   Attachment?: ComponentSlotStylesPrepared
   Avatar?: ComponentSlotStylesPrepared
   Button?: ComponentSlotStylesPrepared
@@ -265,6 +267,7 @@ export interface ThemeComponentVariablesInput {
   [key: string]: any
 
   Accordion?: ComponentVariablesInput
+  Animation?: ComponentVariablesInput
   Attachment?: ComponentVariablesInput
   Avatar?: ComponentVariablesInput
   Button?: ComponentVariablesInput
@@ -302,6 +305,7 @@ export interface ThemeComponentVariablesPrepared {
   [key: string]: any
 
   Accordion?: ComponentVariablesPrepared
+  Animation?: ComponentVariablesPrepared
   Attachment?: ComponentVariablesPrepared
   Avatar?: ComponentVariablesPrepared
   Button?: ComponentVariablesPrepared
