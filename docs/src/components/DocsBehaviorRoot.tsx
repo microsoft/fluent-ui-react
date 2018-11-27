@@ -18,7 +18,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
   }
 
   baseName(fileName: string) {
-    const divided = _.startCase(fileName.replace('ts', ''))
+    const divided = _.startCase(fileName.replace(/\.ts$/, ''))
     return _.upperFirst(_.lowerCase(divided))
   }
 
@@ -71,14 +71,24 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                 <div style={{ padding: '1em' }}>
                   <span> Description: </span>
                   <br />
-                  {variation.text.split('\n').map((splittedText, keyValue) => {
-                    return (
-                      <span key={keyValue}>
-                        {splittedText}
-                        <br />
-                      </span>
-                    )
-                  })}
+                  {variation.description &&
+                    variation.description.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
+                  {variation.specification &&
+                    variation.specification.split('\n').map((splittedText, keyValue) => {
+                      return (
+                        <span key={keyValue}>
+                          {splittedText}
+                          <br />
+                        </span>
+                      )
+                    })}
                 </div>
               </Grid.Row>
             ))}

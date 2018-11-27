@@ -119,8 +119,14 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 
 //
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { createComponent } from './lib'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'
