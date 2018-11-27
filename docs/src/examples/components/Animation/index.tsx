@@ -1,10 +1,10 @@
 import * as React from 'react'
 import Types from './Types'
 
-const TransitionExamples = () => (
+const AnimationExamples = () => (
   <div>
     <Types />
   </div>
 )
 
-export default TransitionExamples
+export default AnimationExamples
