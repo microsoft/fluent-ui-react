@@ -11,7 +11,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Custom Title"
-      description="A Tree with components as title."
+      description="A Tree with customized title rendering."
       examplePath="components/Tree/Types/TreeTitleCustomizationExample"
     />
   </ExampleSection>

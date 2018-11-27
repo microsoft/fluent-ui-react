@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import TreeItem from './TreeItem'
-import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
+import { UIComponent, childrenExist } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
@@ -80,7 +80,5 @@ class Tree extends UIComponent<TreeProps> {
     )
   }
 }
-
-Tree.create = createShorthandFactory(Tree, 'content')
 
 export default Tree

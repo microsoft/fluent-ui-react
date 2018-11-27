@@ -115,14 +115,7 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
           overrideProps: this.handleTitleOverrides,
         })}
         {hasSubtree &&
-          open &&
-          Tree.create('', {
-            defaultProps: {
-              items,
-              nested: true,
-              renderItemTitle,
-            },
-          })}
+          open && <Tree items={items} nested={true} renderItemTitle={renderItemTitle} />}
       </>
     )
   }
@@ -138,6 +131,6 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
   }
 }
 
-TreeItem.create = createShorthandFactory(TreeItem, 'content')
+TreeItem.create = createShorthandFactory(TreeItem, 'title')
 
 export default TreeItem
