@@ -47,7 +47,7 @@ class IconViewerExample extends React.Component<any, {}> {
                     {Object.keys(theme.icons)
                       .filter(name => name.indexOf('processedIcons_') !== -1)
                       .map(name => (
-                        <div key={name + '-outline'} style={cellStyles}>
+                        <div key={`${name}-outline`} style={cellStyles}>
                           <Icon name={name} variables={{ outline: true }} />
                           <br />
                           <code>{name.replace('processedIcons_', '')} outline</code>
