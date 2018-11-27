@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ComponentVariablesInput, ComponentSlotStyle, Animation } from '../themes/types'
+import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
 import { ShorthandValue, ReactChildren } from '../../types/utils'
 
 export interface StyledComponentProps<P = any, V = any> {
@@ -12,7 +12,7 @@ export interface StyledComponentProps<P = any, V = any> {
 
 export interface AnimatedComponentProps {
   /** Generic animation property that can be used for applying different theme animations. */
-  animation?: Animation
+  animation?: AnimationProp
 }
 
 export interface UIComponentProps<P = any, V = any>

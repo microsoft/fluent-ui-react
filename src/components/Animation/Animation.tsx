@@ -8,10 +8,10 @@ import {
   StyledComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Animation } from '../../themes/types'
+import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 
-export interface TransitionProps extends StyledComponentProps {
+export interface AnimationProps extends StyledComponentProps {
   /** An element type to render as (string or function). */
   as?: any
 
@@ -25,7 +25,7 @@ export interface TransitionProps extends StyledComponentProps {
   className?: string
 
   /** The name for the animation that should be applied, defined in the theme. */
-  animationName?: string
+  name?: string
 
   /** The delay property specifies a delay for the start of an animation. Negative values are
    * also allowed. If using negative values, the animation will start as if it had already been
@@ -80,19 +80,19 @@ export interface TransitionProps extends StyledComponentProps {
 }
 
 /**
- * A transition is an animation usually used to move content in or out of view.
+ * An animation allows the user to animate their own components.
  */
-class Transition extends UIComponent<TransitionProps, any> {
+class Animation extends UIComponent<AnimationProps, any> {
   static create: Function
 
-  static className = 'ui-transition'
+  static className = 'ui-animation'
 
-  static displayName = 'Transition'
+  static displayName = 'Animation'
 
   static propTypes = {
     ...commonPropTypes.styledComponentPropTypes,
     children: PropTypes.element,
-    animationName: PropTypes.string,
+    name: PropTypes.string,
     as: customPropTypes.as,
     className: PropTypes.string,
     delay: PropTypes.string,
@@ -105,10 +105,10 @@ class Transition extends UIComponent<TransitionProps, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
-    const { children, animationName } = this.props
+    const { children, name } = this.props
 
-    const animation: Animation = {
-      name: animationName,
+    const animation: AnimationProp = {
+      name,
       duration: this.props.duration,
       delay: this.props.delay,
       iterationCount: this.props.iterationCount,
@@ -135,4 +135,4 @@ class Transition extends UIComponent<TransitionProps, any> {
   }
 }
 
-export default Transition
+export default Animation
