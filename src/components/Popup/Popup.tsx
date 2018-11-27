@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import getPopupStateManager from './getPopupStateManager'
-import { withAutoControlledState } from './reactStateManagerConnectors'
+import { connect } from './reactStateManagerConnectors'
 
 import {
   childrenExist,
@@ -135,7 +135,9 @@ class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> 
   private triggerDomElement = null
   private popupDomElement = null
 
-  private stateManager = withAutoControlledState(getPopupStateManager(), this)
+  private stateManager = connect(getPopupStateManager()).toAutoControlled(this, {
+    open: 'onOpenChange',
+  })
 
   private isControlled() {
     return this.props.open !== undefined
