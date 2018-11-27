@@ -18,6 +18,9 @@ interface ChatItem {
 
 interface ChatMessage extends ChatMessageProps, ChatItem {
   tabIndex: number
+  role: string
+  'aria-labelledby': string
+  text: string
 }
 interface Divider extends DividerProps, ChatItem {}
 
@@ -34,18 +37,39 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
 function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
   const { content, mine } = msg
   const msgProps: ChatMessage = {
-    content: msg.withAttachment
-      ? { content: createMessageContentWithAttachments(content) }
-      : content,
+    // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
+    role: undefined,
+    'aria-labelledby': `sender-${msg.id} timestamp-${msg.id} content-${msg.id}`,
+    content: createMessageContent(msg),
     mine,
     tabIndex: 0,
-    timestamp: { content: msg.timestamp, title: msg.timestampLong },
-    author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
+    timestamp: {
+      content: msg.timestamp,
+      title: msg.timestampLong,
+      id: `timestamp-${msg.id}`,
+      // put aria-label as it was not narrating title, where we have already this information.
+      // without aria-label it narrates content of the element, which has date in wrong format.
+      'aria-label': `${msg.timestampLong}`,
+    },
+    author: fromUser && {
+      content: `${fromUser.firstName} ${fromUser.lastName} `,
+      id: `sender-${msg.id}`,
+    },
     avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
     itemType: ChatItemTypes.message,
+    text: content,
   }
 
   return msgProps
+}
+
+function createMessageContent(msg: MessageData) {
+  return {
+    id: `content-${msg.id}`,
+    ...(msg.withAttachment
+      ? { content: createMessageContentWithAttachments(msg.content) }
+      : { content: msg.content }),
+  }
 }
 
 function createMessageContentWithAttachments(content: string) {
