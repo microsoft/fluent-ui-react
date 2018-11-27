@@ -5,6 +5,7 @@ import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
 
 import getPopupStateManager from './getPopupStateManager'
+import { withAutoControlledState } from './reactStateManagerConnectors'
 
 import {
   childrenExist,
@@ -61,49 +62,12 @@ export interface PopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
+class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
 
   public static Content = PopupContent
-
-  // React bindings for autocontrolled component are introduced
-  private stateManager = getPopupStateManager().withBindings({
-    /* derives state from component */
-    getState: () => {
-      // AUTOCONTROLLED state logic
-      // note, sloppy implementation, but just to provide an idea:
-      // - 'state' that is seen by state manager could be composed from different data sources in the way necessary
-      //
-      // edge cases of null/undefined are not covered, but this is pretty easy implementation task
-      return { ...this.state, ...this.props }
-    },
-
-    /*
-    * AUTOCONTROLLED implementation for absolute match of stateManager's and component's state.
-    * - this hook acts like a filter for the state changes that should be applied
-    */
-    // -------------
-    // willSetState: ({ prevState, stateDiff, args, actionName }) => {
-    //   return excludeControlledProps(stateDiff, this.props)
-    // },
-
-    setState: ({ stateDiff, prevState, newState, actionName, userArgs }) => {
-      const { eventArgs } = userArgs
-
-      // although state doesn't precisely reflect autocontrolled 'state',
-      // the state of stateManager is always properly defined
-      this.setState(stateDiff, () => {
-        _.invoke(this.props, 'onOpenChange', eventArgs, newState)
-        this.updateOutsideClickSubscription(newState.open)
-
-        if (!newState.open) {
-          this.popupDomElement = null
-        }
-      })
-    },
-  })
 
   public static propTypes = {
     /** Accessibility behavior if overridden by the user. */
@@ -171,6 +135,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   private triggerDomElement = null
   private popupDomElement = null
 
+  private stateManager = withAutoControlledState(getPopupStateManager(), this)
+
+  private isControlled() {
+    return this.props.open !== undefined
+  }
+
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
       this.stateManager.toggle({ eventArgs: e })
@@ -205,6 +175,15 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     this.updateOutsideClickSubscription(this.stateManager.getState().open)
 
     if (!this.stateManager.getState().open) {
+      this.popupDomElement = null
+    }
+  }
+
+  public componentDidUpdate() {
+    const isOpen = this.stateManager.getState().open
+    this.updateOutsideClickSubscription(isOpen)
+
+    if (!isOpen) {
       this.popupDomElement = null
     }
   }
@@ -246,7 +225,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           Will introduce fix SHORTLY. */}
           {React.cloneElement(triggerElement, {
             onClick: e => {
-              this.stateManager.toggle({ eventArgs: e })
+              if (!this.isControlled()) {
+                this.stateManager.toggle({ eventArgs: e })
+              }
+
               _.invoke(triggerElement, 'props.onClick', e)
             },
             ...accessibility.attributes.trigger,
@@ -300,3 +282,5 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 }
+
+export default Popup

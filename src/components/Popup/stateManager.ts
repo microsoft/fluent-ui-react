@@ -3,7 +3,6 @@ const ensureDefaultValuesProvided = options => {
     let state = {}
 
     return {
-      onStateChange: () => {} /* do nothing */,
       getState: () => state /* empty object as state by default */,
 
       willSetState: ({ stateDiff }) => stateDiff /* one-to-one transform by default */,
@@ -14,6 +13,7 @@ const ensureDefaultValuesProvided = options => {
     }
   }
 
+  options.onStateChange = options.onStateChange || (() => {}) /* do nothing */
   options.bindings = { ...createDefaultBindings(), ...options.bindings }
 
   return options
