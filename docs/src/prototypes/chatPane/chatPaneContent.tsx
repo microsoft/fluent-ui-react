@@ -71,7 +71,9 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   private getMessagePreviewForScreenReader(props) {
     // Show the first 60 characters from the message, as NVDA splits it into 2 lines if more is shown
     const messageText = props.text || ''
-    return `${messageText.slice(0, 60)} ..., by ${props.author}`
+    return `${messageText.slice(0, 60)} ..., by ${
+      typeof props.author === 'object' ? props.author.content : props.author
+    }`
   }
 }
 
