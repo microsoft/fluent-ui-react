@@ -2,55 +2,60 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as cx from 'classnames'
 
-import { createShorthandFactory, customPropTypes, pxToRem, UIComponent } from '../../lib'
-import Layout from '../Layout'
-import {
-  ComponentVariablesInput,
-  IComponentPartClasses,
-  ComponentPartStyle,
-  ICSSInJSStyle,
-} from '../../../types/theme'
+import { createShorthandFactory, pxToRem, UIComponent } from '../../lib'
+import Layout from '../Layout/Layout'
+import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface IItemLayoutProps {
-  as?: any
-  className?: string
+export interface ItemLayoutProps extends UIComponentProps<any, any> {
   contentMedia?: any
+  /** Shorthand for primary content. */
   content?: any
+  /** Toggle debug mode */
   debug?: boolean
   header?: any
   endMedia?: any
   headerMedia?: any
   media?: any
   renderContentArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
   renderHeaderArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
   renderMainArea?: (
-    props: IItemLayoutProps,
+    props: ItemLayoutProps,
     state: any,
-    classes: IComponentPartClasses,
+    classes: ComponentSlotClasses,
   ) => React.ReactNode
+  /** Styled applied to the root element of the rendered component. */
   rootCSS?: ICSSInJSStyle
+  /** Styled applied to the media element of the rendered component. */
   mediaCSS?: ICSSInJSStyle
+  /** Styled applied to the header element of the rendered component. */
   headerCSS?: ICSSInJSStyle
+  /** Styled applied to the header media element of the rendered component. */
   headerMediaCSS?: ICSSInJSStyle
+  /** Styled applied to the content element of the rendered component. */
   contentCSS?: ICSSInJSStyle
+  /** Styled applied to the content element of the rendered component. */
   contentMediaCSS?: ICSSInJSStyle
+  /** Styled applied to the end media element of the rendered component. */
   endMediaCSS?: ICSSInJSStyle
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
-class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
+/**
+ * The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ */
+class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -58,51 +63,26 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
   static className = 'ui-itemlayout'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
+    ...commonUIComponentPropTypes,
     contentMedia: PropTypes.any,
-
-    /** Shorthand for primary content. */
     content: PropTypes.any,
-
-    /** Toggle debug mode */
     debug: PropTypes.bool,
-
     header: PropTypes.any,
     endMedia: PropTypes.any,
     headerMedia: PropTypes.any,
-
     media: PropTypes.any,
     renderContentArea: PropTypes.func,
     renderHeaderArea: PropTypes.func,
     renderMainArea: PropTypes.func,
-
-    /** Styled applied to the root element of the rendered component. */
     rootCSS: PropTypes.object,
-    /** Styled applied to the media element of the rendered component. */
     mediaCSS: PropTypes.object,
-    /** Styled applied to the header element of the rendered component. */
     headerCSS: PropTypes.object,
-    /** Styled applied to the header media element of the rendered component. */
     headerMediaCSS: PropTypes.object,
-    /** Styled applied to the content element of the rendered component. */
     contentCSS: PropTypes.object,
-    /** Styled applied to the content element of the rendered component. */
     contentMediaCSS: PropTypes.object,
-    /** Styled applied to the end media element of the rendered component. */
     endMediaCSS: PropTypes.object,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -182,7 +162,7 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
 
   renderComponent({ ElementType, classes, rest, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as IItemLayoutPropsWithDefaults
+      .props as ItemLayoutPropsWithDefaults
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -222,8 +202,8 @@ class ItemLayout extends UIComponent<Extendable<IItemLayoutProps>, any> {
   }
 }
 
-ItemLayout.create = createShorthandFactory(ItemLayout, main => ({ main }))
+ItemLayout.create = createShorthandFactory(ItemLayout, 'main')
 
 export default ItemLayout
 
-export type IItemLayoutPropsWithDefaults = IItemLayoutProps & typeof ItemLayout.defaultProps
+export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps

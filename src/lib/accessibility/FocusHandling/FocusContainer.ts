@@ -1,92 +1,68 @@
 import * as _ from 'lodash'
-import { IFocusableItemProps, SetStateDelegate } from './FocusableItem'
 
-export interface IFocusContainerProps<T> {
-  items?: T[]
-}
+export class ContainerFocusHandler {
+  private focusedItemIndex = 0
 
-export interface IFocusContainerState {
-  focusItemOnIdx: number
-}
+  constructor(private getItemsCount: () => number, private readonly setFocusAt: (number) => void) {}
 
-export class ContainerFocusHandler<
-  T,
-  P extends IFocusContainerProps<T>,
-  S extends IFocusContainerState
-> {
-  constructor(
-    private getProps: () => P,
-    private setState: SetStateDelegate<P, S>,
-    private initState: (state: IFocusContainerState) => void,
-    private getState: () => S,
-  ) {
-    this.initState({ focusItemOnIdx: 0 } as S)
-  }
+  private noItems = (): boolean => this.getItemsCount() === 0
 
-  public static create<T, P extends IFocusContainerProps<T>, S extends IFocusContainerState>(
-    component: React.Component<P, S>,
-  ): ContainerFocusHandler<T, P, S> {
-    return new this(
-      () => component.props,
-      component.setState.bind(component),
-      (state: S) => {
-        component.state = _.assign(component.state, state)
-      },
-      () => component.state,
-    )
-  }
-
-  public createItemProps(idx: number, itemsLength: number): IFocusableItemProps {
-    return {
-      isFocused: idx === this.getState().focusItemOnIdx && this.getState().focusItemOnIdx !== -1,
-      isFirstElement: idx === 0,
-      isLastElement: idx === itemsLength - 1,
+  private constrainFocusedItemIndex(): void {
+    if (this.focusedItemIndex < 0) {
+      this.focusedItemIndex = 0
     }
+
+    const itemsCount = this.getItemsCount()
+    if (this.focusedItemIndex >= itemsCount) {
+      this.focusedItemIndex = itemsCount - 1
+    }
+  }
+
+  public getFocusedItemIndex(): number {
+    return this.focusedItemIndex
+  }
+
+  public syncFocusedItemIndex(withCurrentIndex: number) {
+    this.focusedItemIndex = withCurrentIndex
   }
 
   public movePrevious(): void {
-    if (this.getState().focusItemOnIdx <= 0) {
+    if (this.noItems()) {
       return
     }
 
-    this.setState(prev => {
-      return { focusItemOnIdx: prev.focusItemOnIdx - 1 }
-    })
+    this.focusedItemIndex -= 1
+    this.constrainFocusedItemIndex()
+
+    this.setFocusAt(this.focusedItemIndex)
   }
 
   public moveNext(): void {
-    if (
-      !this.getProps().items ||
-      this.getState().focusItemOnIdx >= this.getProps().items.length - 1
-    ) {
+    if (this.noItems()) {
       return
     }
 
-    this.setState(prev => {
-      return { focusItemOnIdx: prev.focusItemOnIdx + 1 }
-    })
+    this.focusedItemIndex += 1
+    this.constrainFocusedItemIndex()
+
+    this.setFocusAt(this.focusedItemIndex)
   }
 
   public moveFirst(): void {
-    if (this.getState().focusItemOnIdx === 0) {
+    if (this.noItems()) {
       return
     }
 
-    this.setState({
-      focusItemOnIdx: 0,
-    })
+    this.focusedItemIndex = 0
+    this.setFocusAt(this.focusedItemIndex)
   }
 
   public moveLast(): void {
-    if (
-      !this.getProps().items ||
-      this.getState().focusItemOnIdx === this.getProps().items.length - 1
-    ) {
+    if (this.noItems()) {
       return
     }
 
-    this.setState({
-      focusItemOnIdx: this.getProps().items.length - 1,
-    })
+    this.focusedItemIndex = this.getItemsCount() - 1
+    this.setFocusAt(this.focusedItemIndex)
   }
 }

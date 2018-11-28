@@ -5,6 +5,7 @@ import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+import { pxToRem } from '../../../src/lib'
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -49,8 +50,8 @@ export default () => (
         ` <Provider>`,
         `  <>`,
         `    <Button content="Button" />`,
-        `    <Button type="primary" icon="plus" iconOnly />`,
-        `    <Button type="secondary" icon="at" content="Send email" />`,
+        `    <Button icon="plus" iconOnly primary />`,
+        `    <Button icon="at" content="Send email" secondary />`,
         `    <Icon name="chess rook" size="big" />`,
         `    <Label content="Label with icon" icon="close" />`,
         `    <br/><br/>`,
@@ -62,8 +63,8 @@ export default () => (
       render={() => (
         <>
           <Button content="Button" />
-          <Button type="primary" icon="plus" iconOnly />
-          <Button type="secondary" icon="at" content="Send email" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -96,19 +97,18 @@ export default () => (
         `      }`,
         `const btnExample = () => `,
         `    <Button`,
-        `      type="secondary"`,
         `      content="Send email"`,
         `      icon={{`,
         `        name: "at",`,
         `        styles: { color: "brown" }`,
         `      }}`,
+        `      secondary`,
         `      styles={styles} />`,
         ``,
         `export default btnExample`,
       ].join('\n')}
       render={() => (
         <Button
-          type="secondary"
           content="Send email"
           icon={{ name: 'at', styles: { color: 'brown' } }}
           styles={{
@@ -130,15 +130,14 @@ export default () => (
         ``,
         `const btnExample = () => `,
         `    <Button`,
-        `      type="secondary"`,
         `      icon={{`,
         `        name: "at",`,
         `        variables: { color: "brown" }`,
         `      }}`,
         `      content="Send email"`,
         `      variables={{`,
-        `        typeSecondaryColor: "coral",`,
-        `        typeSecondaryBackgroundColor: "charcoal"`,
+        `        secondaryColor: "coral",`,
+        `        secondaryBackgroundColor: "charcoal"`,
         `        paddingLeftRightValue: 20`,
         `      }}`,
         `    />`,
@@ -147,12 +146,12 @@ export default () => (
       ].join('\n')}
       render={() => (
         <Button
-          type="secondary"
           content="Send email"
           icon={{ name: 'at', variables: { color: 'brown' } }}
+          secondary
           variables={{
-            typeSecondaryColor: 'coral',
-            typeSecondaryBackgroundColor: 'charcoal',
+            secondaryColor: 'coral',
+            secondaryBackgroundColor: 'charcoal',
             paddingLeftRightValue: 20,
           }}
         />
@@ -203,10 +202,10 @@ export default () => (
         `      minWidth: '24px',`,
         `      borderRadius: '8px',`,
         `      color: 'darkred',`,
-        `      typeSecondaryColor: '#ffffff',`,
-        `      typeSecondaryBorderColor: 'transparent',`,
-        `      typeSecondaryBackgroundColor: '#6699CC',`,
-        `      typeSecondaryBackgroundColorHover: '#91A3B0',`,
+        `      secondaryColor: '#ffffff',`,
+        `      secondaryBorderColor: 'transparent',`,
+        `      secondaryBackgroundColor: '#6699CC',`,
+        `      secondaryBackgroundColorHover: '#91A3B0',`,
         `    },`,
         `  },`,
         `  componentStyles: {`,
@@ -222,8 +221,8 @@ export default () => (
         `  <Provider theme={theme}>`,
         `    <div>`,
         `      <Button content="Button" />`,
-        `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button type="secondary" icon="at" content="Send email" />`,
+        `      <Button icon="plus" iconOnly primary />`,
+        `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br /><br />`,
@@ -252,10 +251,10 @@ export default () => (
                   minWidth: '24px',
                   borderRadius: '8px',
                   color: 'darkred',
-                  typeSecondaryColor: '#ffffff',
-                  typeSecondaryBorderColor: 'transparent',
-                  typeSecondaryBackgroundColor: '#6699CC',
-                  typeSecondaryBackgroundColorHover: '#91A3B0',
+                  secondaryColor: '#ffffff',
+                  secondaryBorderColor: 'transparent',
+                  secondaryBackgroundColor: '#6699CC',
+                  secondaryBackgroundColorHover: '#91A3B0',
                 },
               },
               componentStyles: {
@@ -269,8 +268,8 @@ export default () => (
           >
             <div>
               <Button content="Button" />
-              <Button type="primary" icon="plus" iconOnly />
-              <Button type="secondary" icon="at" content="Send email" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -293,7 +292,7 @@ export default () => (
         `<div>`,
         `  /* Default theming */`,
         `  <Header as="h3" content="Default" />`,
-        `  <Button type="primary">Branding</Button>`,
+        `  <Button primary>Branding</Button>`,
         `  <Divider type="primary">Branding</Divider>`,
         ``,
         `  /* First nested theming */`,
@@ -306,8 +305,8 @@ export default () => (
         `      <Header as="h3" content="First nested theming" />`,
         ``,
         `      <Button content="Button" />`,
-        `      <Button type="primary" icon="plus" iconOnly />`,
-        `      <Button type="secondary" icon="at" content="Send email" />`,
+        `      <Button icon="plus" iconOnly primary />`,
+        `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
         `      <br/><br/>`,
@@ -328,8 +327,8 @@ export default () => (
         `          <Header as="h3" content="Second nested theming" />`,
         ``,
         `          <Button content="Button" />`,
-        `          <Button type="primary" icon="plus" iconOnly />`,
-        `          <Button type="secondary" icon="at" content="Send email" />`,
+        `          <Button icon="plus" iconOnly primary />`,
+        `          <Button icon="at" content="Send email" secondary />`,
         `          <Icon name="chess rook" size="big" />`,
         `          <Label content="Label with icon" icon="close" />`,
         `          <br/><br/>`,
@@ -345,8 +344,8 @@ export default () => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button type="primary" icon="plus" iconOnly />
-          <Button type="secondary" icon="at" content="Send email" />
+          <Button icon="plus" iconOnly primary />
+          <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
           <br />
@@ -363,8 +362,8 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button type="primary" icon="plus" iconOnly />
-              <Button type="secondary" icon="at" content="Send email" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
               <br />
@@ -385,8 +384,8 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button type="primary" icon="plus" iconOnly />
-                  <Button type="secondary" icon="at" content="Send email" />
+                  <Button icon="plus" iconOnly primary />
+                  <Button icon="at" content="Send email" secondary />
                   <Icon name="chess rook" size="big" />
                   <Label content="Label with icon" icon="close" />
                   <br />
@@ -406,10 +405,19 @@ export default () => (
     <Button
       as={NavLink}
       content="Theming"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="theming"
+    />
+    <Button
+      as={NavLink}
+      content="Integrate Custom Components"
+      icon="arrow right"
+      iconPosition="after"
+      primary
+      to="integrate-custom-components"
+      variables={{ maxWidth: pxToRem(300) }}
     />
   </DocPage>
 )

@@ -1,13 +1,7 @@
-import { Sizes, Weights } from '../../../../lib/enums'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { truncateStyle } from '../../../../styles/customCSS'
-import { ITextVariables } from './textVariables'
-import { ITextProps } from '../../../../components/Text/Text'
-
-export interface TextStylesParams {
-  props: ITextProps
-  variables: ITextVariables
-}
+import { TextVariables } from './textVariables'
+import { TextProps } from '../../../../components/Text/Text'
 
 export default {
   root: ({
@@ -24,8 +18,9 @@ export default {
       temporary,
     },
     variables: v,
-  }: TextStylesParams): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
+      display: 'inline-block',
       ...(truncated && truncateStyle),
       ...(atMention === true && {
         color: v.atMentionOtherColor,
@@ -49,39 +44,39 @@ export default {
         color: v.importantColor,
       }),
 
-      ...(weight === Weights.Light && {
+      ...(weight === 'light' && {
         fontWeight: v.fontWeightLight,
       }),
-      ...(weight === Weights.Semilight && {
+      ...(weight === 'semilight' && {
         fontWeight: v.fontWeightSemilight,
       }),
-      ...(weight === Weights.Regular && {
+      ...(weight === 'regular' && {
         fontWeight: v.fontWeightRegular,
       }),
-      ...(weight === Weights.Semibold && {
+      ...(weight === 'semibold' && {
         fontWeight: v.fontWeightSemibold,
       }),
-      ...(weight === Weights.Bold && {
+      ...(weight === 'bold' && {
         fontWeight: v.fontWeightBold,
       }),
 
-      ...(size === Sizes.Smaller && {
+      ...(size === 'smaller' && {
         fontSize: v.fontSizeExtraSmall,
         lineHeight: v.fontLineHeightExtraSmall,
       }),
-      ...(size === Sizes.Small && {
+      ...(size === 'small' && {
         fontSize: v.fontSizeSmall,
         lineHeight: v.fontLineHeightSmall,
       }),
-      ...(size === Sizes.Medium && {
+      ...(size === 'medium' && {
         fontSize: v.fontSizeMedium,
         lineHeight: v.fontLineHeightMedium,
       }),
-      ...(size === Sizes.Large && {
+      ...(size === 'large' && {
         fontSize: v.fontSizeLarge,
         lineHeight: v.fontLineHeightLarge,
       }),
-      ...(size === Sizes.Larger && {
+      ...(size === 'larger' && {
         fontSize: v.fontSizeExtraLarge,
         lineHeight: v.fontLineHeightExtraLarge,
       }),

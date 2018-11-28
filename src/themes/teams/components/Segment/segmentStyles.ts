@@ -1,13 +1,26 @@
-import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import { SegmentProps } from 'semantic-ui-react'
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { SegmentVariables } from './segmentVariables'
 
-export default {
-  root: (): ICSSInJSStyle => {
+const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const color = p.color || v.color
     return {
-      padding: '1em',
-      boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)',
-      border: '1px solid rgba(34,36,38,.15)',
-      borderRadius: pxToRem(5),
+      padding: v.padding,
+      background: v.background,
+      borderRadius: v.borderRadius,
+      boxShadow: '0 1px 1px 1px rgba(34,36,38,.15)',
+      ...(color &&
+        (p.inverted
+          ? {
+              background: color,
+              color: '#eee',
+            }
+          : {
+              borderTop: `2px solid ${color}`,
+            })),
     }
   },
 }
+
+export default segmentStyles

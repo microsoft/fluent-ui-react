@@ -2,7 +2,8 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
-import { getTestingRenderedComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from 'test/utils'
+import { ThemeInput } from 'src/themes/types'
 
 describe('Icon', () => {
   isConformant(Icon)
@@ -13,32 +14,36 @@ describe('Icon', () => {
     })
 
     describe('aria-hidden', () => {
-      const themeWithDefinedIcons = {
+      const themeWithDefinedIcons: ThemeInput = {
         icons: {
-          svgIcon: () => (
-            <svg>
-              <p />
-            </svg>
-          ),
-          fontIcon: { fontFamily: 'Icons', content: `'\\f0152'` },
+          svgIcon: {
+            icon: () => (
+              <svg>
+                <p />
+              </svg>
+            ),
+          },
+          fontIcon: {
+            icon: { fontFamily: 'Icons', content: `'\\f0152'` },
+          },
         },
       }
 
       test('font-based - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(
+        const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="fontIcon" />,
-          null,
+          undefined,
           themeWithDefinedIcons,
         )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')
       })
 
       test('svg - set to true by default', () => {
-        const renderedComponent = getTestingRenderedComponent(
+        const renderedComponent = mountWithProviderAndGetComponent(
           Icon,
           <Icon name="svgIcon" />,
-          null,
+          undefined,
           themeWithDefinedIcons,
         )
         expect(getRenderedAttribute(renderedComponent, 'aria-hidden', '')).toBe('true')

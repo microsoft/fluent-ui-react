@@ -8,7 +8,6 @@ Add a feature
 - [Propose feature](#propose-feature)
 - [Prototype](#prototype)
 - [Spec out the API](#spec-out-the-api)
-- [Component anatomy](#component-anatomy)
 - [Create a component](#create-a-component)
   - [How to create a component](#how-to-create-a-component)
   - [Good practice](#good-practice)
@@ -36,10 +35,6 @@ Build a minimal prototype showcasing the proposed feature. Do not worry about te
 Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Stardust consumer. You can reference this [API proposal][2] for the Menu Icons.
 
 Once the component spec is solidified, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
-
-## Component anatomy
-
-Please refer to the [Glossary][7] for more details around the component anatomy.
 
 ## Create a component
 

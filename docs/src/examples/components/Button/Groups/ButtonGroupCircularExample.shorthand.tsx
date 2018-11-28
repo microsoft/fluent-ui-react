@@ -5,9 +5,9 @@ const ButtonGroupCircularExampleShorthand = () => (
   <Button.Group
     circular
     buttons={[
-      { key: 'book', icon: 'book', type: 'primary' },
+      { key: 'book', icon: 'book', primary: true },
       { key: 'coffee', icon: 'coffee' },
-      { key: 'play', icon: 'play', type: 'primary' },
+      { key: 'play', icon: 'play', primary: true },
     ]}
   />
 )

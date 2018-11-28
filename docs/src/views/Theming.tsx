@@ -1,10 +1,23 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Provider, Text } from '@stardust-ui/react'
+import { Button, Divider, Icon, Provider, Text, Animation } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+
+const spinner = {
+  keyframe: {
+    from: {
+      transform: 'rotate(0deg)',
+    },
+    to: {
+      transform: 'rotate(360deg)',
+    },
+  },
+  duration: '5s',
+  iterationCount: 'infinite',
+}
 
 export default () => (
   <DocPage title="Theming">
@@ -40,7 +53,7 @@ export default () => (
       value={[
         `<Provider theme={{ siteVariables: { brand: 'hotpink' } }}>`,
         `  <div>`,
-        `    <Button type="primary">Branding</Button>`,
+        `    <Button primary>Branding</Button>`,
         `    <Divider type="primary">Branding</Divider>`,
         `  </div>`,
         `</Provider>`,
@@ -48,7 +61,7 @@ export default () => (
       render={() => (
         <Provider theme={{ siteVariables: { brand: 'hotpink' }, componentVariables: {} }}>
           <div>
-            <Button type="primary">Branding</Button>
+            <Button primary>Branding</Button>
             <Divider type="primary">Branding</Divider>
           </div>
         </Provider>
@@ -208,23 +221,153 @@ export default () => (
       <NavLink to="components/provider">Provider</NavLink> at the root of your app.
     </p>
 
+    <Header as="h2" content="Animations" />
+    <p>
+      You define animations in Stardust in a very similar way to CSS, by providing keyframes and
+      animation properties.
+    </p>
+
+    <ExampleSnippet
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        ` ... `,
+        `</Provider>`,
+      ].join('\n')}
+    />
+
+    <p>
+      You can define the <code>animations</code> in a part of your render tree using the{' '}
+      <NavLink to="components/provider">Provider</NavLink>.
+    </p>
+    <p>
+      This is done with the Provider's <code>theme</code> prop. The animations are then applied
+      based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
+      component, or the <code>animation</code> property available on all Stardust component. Here's
+      how we can use them in our components.
+    </p>
+    <ExampleSnippet
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <div>`,
+        `    <Animation name="spinner"><Icon name="user" circular /></Animation>`,
+        `    <Icon name="book" animation="spinner" circular/>`,
+        `  </div>`,
+        `</Provider>`,
+      ].join('\n')}
+      render={() => (
+        <Provider theme={{ animations: { spinner } }}>
+          <div>
+            <Animation name="spinner">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon name="book" animation="spinner" circular />
+          </div>
+        </Provider>
+      )}
+    />
+
+    <p>
+      You can also override some of the defined <code>animation</code> properties, by providing
+      additional properties to the <code>Animation</code> component, or the <code>animation</code>{' '}
+      prop.
+    </p>
+
+    <blockquote>
+      <strong>Keyframes are static</strong> - Keyframes cannot be overridden using the properties.
+      If you want to add new keyframes or change some existing, please use the <code>Provider</code>{' '}
+      for this. The API for
+      <i>using</i> the animations doesn't provide any way for changing the keyframes.
+    </blockquote>
+
+    <ExampleSnippet
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    animations: {`,
+        `      spinner: {`,
+        `        keyframe: {`,
+        `          from: {  transform: 'rotate(0deg)' },`,
+        `          to: { transform: 'rotate(360deg)' },`,
+        `        },`,
+        `        duration: '5s',`,
+        `        iterationCount: 'infinite'`,
+        `     },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <Animation name="spinner" delay="2s" duration="1s"><Icon name="user" circular /></Animation>`,
+        `  <Icon name="book" animation={{name: "spinner", delay: "5s", duration: "2s"}} circular/>`,
+        `</Provider>`,
+      ].join('\n')}
+      render={() => (
+        <Provider theme={{ animations: { spinner } }}>
+          <div>
+            <Animation name="spinner" delay="2s" duration="1s">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon
+              name="book"
+              animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
+              circular
+            />
+          </div>
+        </Provider>
+      )}
+    />
+
+    <p>
+      The difference between using the Animation component versus the animation property is that,
+      the Animation component can be safely used for applying animations on{' '}
+      <i>all components (Stardust, custom and third party components)</i>. For the Stardust
+      components, we recommend using the animation property as there will be no wrapper element
+      added just for the purpose of defining the animation. For more details, please see the
+      examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
+      structure of the <code>animation</code> property in any of the Stardust components.
+    </p>
+
     <br />
     <Divider size={1} />
     <br />
     <Button
       as={NavLink}
       content="Accessibility"
-      type="primary"
       icon="arrow left"
       iconPosition="before"
+      primary
       to="/accessibility"
     />
     <Button
       as={NavLink}
       content="Theming Examples"
-      type="primary"
       icon="arrow right"
       iconPosition="after"
+      primary
       to="theming-examples"
     />
   </DocPage>

@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
-export interface IMenuVariables {
+export interface MenuVariables {
   defaultColor: string
   defaultBackgroundColor: string
 
@@ -8,20 +8,20 @@ export interface IMenuVariables {
   defaultActiveBackgroundColor: string
   defaultBorderColor: string
 
-  typePrimaryActiveColor: string
-  typePrimaryActiveBackgroundColor: string
-  typePrimaryActiveBorderColor: string
+  primaryActiveColor: string
+  primaryActiveBackgroundColor: string
+  primaryActiveBorderColor: string
 
-  typePrimaryBorderColor: string
-  typePrimaryHoverBorderColor: string
-  typePrimaryUnderlinedBorderColor: string
+  primaryBorderColor: string
+  primaryHoverBorderColor: string
+  primaryUnderlinedBorderColor: string
 
   iconsMenuItemSize?: string
   circularRadius: string
   lineHeightBase: string
 }
 
-export default (siteVars: any): IMenuVariables => {
+export default (siteVars: any): MenuVariables => {
   return {
     defaultColor: siteVars.gray02,
     defaultBackgroundColor: '#FFF',
@@ -30,13 +30,13 @@ export default (siteVars: any): IMenuVariables => {
     defaultActiveBackgroundColor: siteVars.gray10,
     defaultBorderColor: siteVars.gray08,
 
-    typePrimaryActiveColor: siteVars.white,
-    typePrimaryActiveBackgroundColor: siteVars.brand08,
-    typePrimaryActiveBorderColor: siteVars.brand,
+    primaryActiveColor: siteVars.white,
+    primaryActiveBackgroundColor: siteVars.brand08,
+    primaryActiveBorderColor: siteVars.brand,
 
-    typePrimaryBorderColor: siteVars.brand08,
-    typePrimaryHoverBorderColor: siteVars.gray08,
-    typePrimaryUnderlinedBorderColor: siteVars.gray08,
+    primaryBorderColor: siteVars.brand08,
+    primaryHoverBorderColor: siteVars.gray08,
+    primaryUnderlinedBorderColor: siteVars.gray08,
 
     iconsMenuItemSize: pxToRem(32),
     circularRadius: pxToRem(999),

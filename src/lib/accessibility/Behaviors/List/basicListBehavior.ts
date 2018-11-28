@@ -1,9 +1,11 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 
 /**
  * @description
- * Adds role='list'.
  * The 'list' role is used to identify an element that creates a list.
+ *
+ * @specification
+ * Adds role='list'.
  */
 
 const basicListBehavior: Accessibility = (props: any) => ({

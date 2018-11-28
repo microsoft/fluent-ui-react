@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IMenuProps } from '../../../../components/Menu/Menu'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { MenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
@@ -8,7 +8,7 @@ const solidBorder = (color: string) => ({
 
 export default {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, type, underlined, vertical } = props
+    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',
       ...(vertical && {
@@ -24,13 +24,14 @@ export default {
         !(pointing && vertical) &&
         !underlined && {
           ...solidBorder(variables.defaultBorderColor),
-          ...(type === 'primary' && {
-            ...solidBorder(variables.typePrimaryBorderColor),
+          ...(primary && {
+            ...solidBorder(variables.primaryBorderColor),
           }),
           borderRadius: pxToRem(4),
+          overflow: 'hidden',
         }),
       ...(underlined && {
-        borderBottom: `2px solid ${variables.typePrimaryUnderlinedBorderColor}`,
+        borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
       }),
       minHeight: pxToRem(24),
       margin: 0,
@@ -38,4 +39,4 @@ export default {
       listStyleType: 'none',
     }
   },
-} as IComponentPartStylesInput<IMenuProps, any>
+} as ComponentSlotStylesInput<MenuProps, any>

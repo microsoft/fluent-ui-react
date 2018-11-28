@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import { lorem, random, name, internet } from 'faker'
-import { IMessage, IUser, IChat, UserStatus, getTimestamp, getRandomDates } from '.'
+import { MessageData, UserData, ChatData, UserStatus, getTimestamp, getRandomDates } from '.'
 
 export interface ChatOptions {
   userCount?: number
@@ -16,9 +16,9 @@ class ChatMock {
   private static readonly defaultChatTitle = 'Test Chat'
 
   private userIds: string[] = []
-  private usersMap: Map<string, IUser> = new Map()
-  private chatMessages: IMessage[] = []
-  public chat: IChat
+  private usersMap: Map<string, UserData> = new Map()
+  private chatMessages: MessageData[] = []
+  public chat: ChatData
 
   constructor(
     private options: ChatOptions = {
@@ -35,7 +35,7 @@ class ChatMock {
     this.userIds.forEach(id => {
       const firstName = name.firstName()
       const lastName = name.lastName()
-      const user: IUser = {
+      const user: UserData = {
         id,
         firstName,
         lastName,
@@ -57,8 +57,8 @@ class ChatMock {
       const date = dates[id]
       const timestamp = getTimestamp(date)
 
-      const message: IMessage = {
-        id,
+      const message: MessageData = {
+        id: String(id),
         from,
         mine,
         date,
@@ -66,10 +66,11 @@ class ChatMock {
         timestamp: timestamp.short,
         timestampLong: timestamp.long,
         isImportant: random.boolean(),
+        withAttachment: random.boolean(),
       }
 
       return message
-    }).sort((a, b) => a.date - b.date)
+    }).sort((a, b) => a.date.getTime() - b.date.getTime())
 
     this.chat = {
       id: random.uuid(),
@@ -81,7 +82,7 @@ class ChatMock {
     }
   }
 
-  private getRandomUser(max: number = this.usersMap.size - 1): IUser {
+  private getRandomUser(max: number = this.usersMap.size - 1): UserData {
     return this.usersMap.get(this.userIds[random.number({ max, precision: 1 })])
   }
 }

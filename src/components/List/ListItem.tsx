@@ -1,43 +1,47 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
+import { createShorthandFactory, UIComponent } from '../../lib'
+import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import {
-  FocusableItem,
-  IFocusableItemProps,
-} from '../../lib/accessibility/FocusHandling/FocusableItem'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
+import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface IListItemProps {
+export interface ListItemProps extends UIComponentProps<any, any> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listItemBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  className?: string
   contentMedia?: any
+  /** Shorthand for primary content. */
   content?: any
+  /** Toggle debug mode */
   debug?: boolean
-  focusableItemProps?: IFocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
+
+  /** A list item can appear more important and draw the user's attention. */
   important?: boolean
   media?: any
+
+  /** A list item can indicate that it can be selected. */
   selection?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
-export interface IListItemState {
+export interface ListItemState {
   isHovering: boolean
 }
 
-class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
+/**
+ * A list item contains a single piece of content within a list.
+ */
+class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -45,41 +49,24 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
+    ...commonUIComponentPropTypes,
     contentMedia: PropTypes.any,
-
-    /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Toggle debug mode */
     debug: PropTypes.bool,
 
     header: PropTypes.any,
     endMedia: PropTypes.any,
     headerMedia: PropTypes.any,
 
-    /** A list item can appear more important and draw the user's attention. */
     important: PropTypes.bool,
     media: PropTypes.any,
 
-    /** A list item can indicate that it can be selected. */
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
-    focusableItemProps: PropTypes.object,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -87,7 +74,7 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: IListItemProps) {
+  constructor(props: ListItemProps) {
     super(props, null)
 
     this.state = {
@@ -96,20 +83,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   }
 
   private itemRef = React.createRef<HTMLElement>()
-
-  private focusableItem = FocusableItem.create(this)
-
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
-  }
-
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
-  componentDidUpdate() {
-    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
-  }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
@@ -121,28 +94,9 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -150,21 +104,18 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
         ref={this.itemRef}
         {...accessibility.attributes.root}
         {...rest}
@@ -173,6 +124,6 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   }
 }
 
-ListItem.create = createShorthandFactory(ListItem, main => ({ main }))
+ListItem.create = createShorthandFactory(ListItem, 'main')
 
 export default ListItem

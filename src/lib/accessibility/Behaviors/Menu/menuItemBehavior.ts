@@ -1,9 +1,12 @@
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 
 /**
  * @description
+ * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
+ *
+ * @specification
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'menuitem' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
@@ -11,7 +14,6 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
- * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  */
 
 const menuItemBehavior: Accessibility = (props: any) => ({

@@ -1,9 +1,9 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
 
-const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVariables> = {
+const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
@@ -58,7 +58,7 @@ const attachmentStyles: IComponentPartStylesInput<AttachmentProps, AttachmentVar
     display: 'block',
     bottom: 0,
     left: 0,
-    width: props.progress + '%',
+    width: `${props.progress}%`,
     maxWidth: '100%',
     height: pxToRem(variables.progressHeight),
     background: variables.progressColor,

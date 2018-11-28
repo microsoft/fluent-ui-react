@@ -1,12 +1,13 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatMessageProps } from '../../../../components/Chat/ChatMessage'
-import { IChatMessageVariables } from './chatMessageVariables'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import { ChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../../../lib'
 
 const px10asRem = pxToRem(10)
-const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessageVariables> = {
+
+const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'inline-block',
+    display: 'inline-flex',
     position: 'relative',
     marginTop: '1rem',
     marginBottom: '1rem',
@@ -16,9 +17,16 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     maxWidth: v.messageWidth,
     wordBreak: 'break-word',
     wordWrap: 'break-word',
+    ':focus': {
+      outline: 'none',
+      '& .ui-chat__message__messageBody': {
+        outline: `.2rem solid ${v.messageBody.focusOutlineColor}`,
+      },
+    },
   }),
 
-  avatar: ({ props: p }: { props: IChatMessageProps }): ICSSInJSStyle => ({
+  avatar: ({ props: p }: { props: ChatMessageProps }): ICSSInJSStyle => ({
+    flex: 'none',
     display: p.mine ? 'none' : undefined,
     marginTop: px10asRem,
     marginBottom: px10asRem,
@@ -26,7 +34,7 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
     marginRight: p.mine ? 0 : px10asRem,
   }),
 
-  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  messageBody: ({ props: p, variables: v }): ICSSInJSStyle => ({
     padding: '1rem',
     color: 'rgb(64, 64, 64)',
     backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
@@ -36,6 +44,15 @@ const chatMessageStyles: IComponentPartStylesInput<IChatMessageProps, IChatMessa
   author: ({ props: p }): ICSSInJSStyle => ({
     display: p.mine ? 'none' : undefined,
     marginRight: px10asRem,
+  }),
+
+  content: ({ variables: v }): ICSSInJSStyle => ({
+    display: 'block',
+    '& a:focus': {
+      outline: 'none',
+      color: v.messageBody.focusOutlineColor,
+      textDecoration: 'underline',
+    },
   }),
 }
 

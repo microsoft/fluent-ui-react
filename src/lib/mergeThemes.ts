@@ -2,23 +2,26 @@ import * as _ from 'lodash'
 import {
   ComponentVariablesInput,
   ComponentVariablesPrepared,
-  IComponentPartStylesInput,
-  IComponentPartStylesPrepared,
-  IFontFace,
-  ISiteVariablesInput,
-  ISiteVariablesPrepared,
-  IThemeComponentStylesInput,
-  IThemeComponentStylesPrepared,
-  IThemeComponentVariablesInput,
-  IThemeComponentVariablesPrepared,
-  IThemeInput,
-  IThemePrepared,
+  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
+  FontFace,
+  SiteVariablesInput,
+  SiteVariablesPrepared,
+  ThemeComponentStylesInput,
+  ThemeComponentStylesPrepared,
+  ThemeComponentVariablesInput,
+  ThemeComponentVariablesPrepared,
+  ThemeInput,
+  ThemePrepared,
   StaticStyle,
   ThemeIcons,
-} from '../../types/theme'
+  ComponentSlotStyle,
+  ThemeAnimation,
+} from '../themes/types'
 import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
+import { ObjectOf } from 'types/utils'
 
 // ----------------------------------------
 // Component level merge functions
@@ -28,14 +31,14 @@ import toCompactArray from './toCompactArray'
  * Merges a single component's styles (keyed by component part) with another component's styles.
  */
 export const mergeComponentStyles = (
-  target: IComponentPartStylesInput,
-  ...sources: (IComponentPartStylesInput | null | undefined)[]
-): IComponentPartStylesPrepared => {
-  const initial: IComponentPartStylesPrepared = _.mapValues(target, partStyle => {
+  target: ComponentSlotStylesInput,
+  ...sources: (ComponentSlotStylesInput | null | undefined)[]
+): ComponentSlotStylesPrepared => {
+  const initial: ComponentSlotStylesPrepared = _.mapValues(target, partStyle => {
     return callable(partStyle)
   })
 
-  return sources.reduce<IComponentPartStylesPrepared>((partStylesPrepared, stylesByPart) => {
+  return sources.reduce<ComponentSlotStylesPrepared>((partStylesPrepared, stylesByPart) => {
     _.forEach(stylesByPart, (partStyle, partName) => {
       // Break references to avoid an infinite loop.
       // We are replacing functions with a new ones that calls the originals.
@@ -64,9 +67,9 @@ export const mergeComponentVariables = (
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
+      const mergedVariables: ObjectOf<any> = {}
 
-      const mergedVariables = {}
-      _.mapKeys(computedComponentVariables, (variableToMerge, variableName) => {
+      _.forEach(computedComponentVariables, (variableToMerge, variableName) => {
         const accumulatedVariable = accumulatedVariables[variableName]
 
         mergedVariables[variableName] =
@@ -89,14 +92,14 @@ export const mergeComponentVariables = (
  * They are flat objects and do not depend on render-time values, such as props.
  */
 export const mergeSiteVariables = (
-  target: ISiteVariablesInput,
-  ...sources: (ISiteVariablesInput | null | undefined)[]
-): ISiteVariablesPrepared => {
-  const initial: ISiteVariablesPrepared = {
+  target: SiteVariablesInput,
+  ...sources: (SiteVariablesInput | null | undefined)[]
+): SiteVariablesPrepared => {
+  const initial: SiteVariablesPrepared = {
     ...target,
     fontSizes: (target && target.fontSizes) || {},
   }
-  return sources.reduce<ISiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
+  return sources.reduce<SiteVariablesPrepared>((acc, next) => ({ ...acc, ...next }), initial)
 }
 
 /**
@@ -108,11 +111,11 @@ export const mergeSiteVariables = (
  */
 
 export const mergeThemeVariables = (
-  target: IThemeComponentVariablesInput,
-  ...sources: (IThemeComponentVariablesInput | null | undefined)[]
-): IThemeComponentVariablesPrepared => {
+  target: ThemeComponentVariablesInput,
+  ...sources: (ThemeComponentVariablesInput | null | undefined)[]
+): ThemeComponentVariablesPrepared => {
   const displayNames = _.union(_.keys(target), ..._.map(sources, _.keys))
-  return sources.reduce<IThemeComponentVariablesInput>((acc, next) => {
+  return sources.reduce<ThemeComponentVariablesInput>((acc, next) => {
     return displayNames.reduce((componentVariables, displayName) => {
       if (!next) return acc
 
@@ -139,14 +142,14 @@ export const mergeThemeVariables = (
  *   that they return style objects.
  */
 export const mergeThemeStyles = (
-  target: IThemeComponentStylesInput,
-  ...sources: (IThemeComponentStylesInput | null | undefined)[]
-): IThemeComponentStylesPrepared => {
-  const initial: IThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
+  target: ThemeComponentStylesInput,
+  ...sources: (ThemeComponentStylesInput | null | undefined)[]
+): ThemeComponentStylesPrepared => {
+  const initial: ThemeComponentStylesPrepared = _.mapValues(target, stylesByPart => {
     return _.mapValues(stylesByPart, callable)
   })
 
-  return sources.reduce<IThemeComponentStylesPrepared>((themeComponentStyles, next) => {
+  return sources.reduce<ThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
       themeComponentStyles[displayName] = mergeComponentStyles(
         themeComponentStyles[displayName],
@@ -164,8 +167,8 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
-export const mergeFontFaces = (...sources: IFontFace[]) => {
-  return toCompactArray<IFontFace>(...sources)
+export const mergeFontFaces = (...sources: FontFace[]) => {
+  return toCompactArray<FontFace>(...sources)
 }
 
 export const mergeStaticStyles = (...sources: StaticStyle[]) => {
@@ -176,7 +179,22 @@ export const mergeIcons = (target: ThemeIcons, ...sources: ThemeIcons[]): ThemeI
   return Object.assign(target, ...sources)
 }
 
-const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
+export const mergeAnimations = (
+  target: { [key: string]: ThemeAnimation },
+  ...sources: { [key: string]: ThemeAnimation }[]
+): { [key: string]: ThemeAnimation } => {
+  return Object.assign(target, ...sources)
+}
+
+export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
+  return (...args) => {
+    return sources.reduce((acc, next) => {
+      return _.merge(acc, callable(next)(...args))
+    }, {})
+  }
+}
+
+const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
   const emptyTheme = {
     siteVariables: {},
     componentVariables: {},
@@ -184,9 +202,10 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     fontFaces: [],
     staticStyles: [],
     icons: {},
-  } as IThemePrepared
+    animations: {},
+  } as ThemePrepared
 
-  return themes.reduce<IThemePrepared>((acc: IThemePrepared, next: IThemeInput) => {
+  return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
     if (!next) return acc
 
     acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
@@ -207,6 +226,8 @@ const mergeThemes = (...themes: IThemeInput[]): IThemePrepared => {
     acc.fontFaces = mergeFontFaces(...acc.fontFaces, ...next.fontFaces)
 
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
+
+    acc.animations = mergeAnimations(acc.animations, next.animations)
 
     return acc
   }, emptyTheme)

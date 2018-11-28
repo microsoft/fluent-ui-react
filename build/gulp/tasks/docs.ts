@@ -30,10 +30,6 @@ const handleWatchUnlink = (group, path) => {
 // Clean
 // ----------------------------------------
 
-task('clean:docs:component-info', cb => {
-  rimraf(paths.docsSrc('componentInfo'), cb)
-})
-
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
 })
@@ -53,7 +49,6 @@ task('clean:docs:example-menus', cb => {
 task(
   'clean:docs',
   parallel(
-    'clean:docs:component-info',
     'clean:docs:component-menu',
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
@@ -65,7 +60,7 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Slot.tsx']
 const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const markdownSrc = [
@@ -147,7 +142,7 @@ task('build:docs:webpack', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

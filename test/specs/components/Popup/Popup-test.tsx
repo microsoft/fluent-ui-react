@@ -1,6 +1,5 @@
-import _ from 'lodash'
-import computePopupPlacement from 'src/components/Popup/positioningHelper'
-import { Position, Alignment } from 'src/components/Popup'
+import * as _ from 'lodash'
+import computePopupPlacement, { Position, Alignment } from 'src/components/Popup/positioningHelper'
 import { Placement } from 'popper.js'
 
 type PositionTestInput = {
