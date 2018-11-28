@@ -12,7 +12,6 @@ import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
 const chatMessageBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: undefined,
       [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },

@@ -16,7 +16,6 @@ describe('ChatMessage', () => {
 
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {
-      defaultRootRole: undefined,
       focusZoneDefinition: (chatMessageBehavior as AccessibilityDefinition).focusZone,
     })
   })
