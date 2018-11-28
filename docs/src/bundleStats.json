@@ -7,11 +7,15 @@
       },
       {
         "name": "bundle-stardust-ui-react.js",
-        "size": 565285
+        "size": 565430
       },
       {
         "name": "component-Accordion.js",
         "size": 270753
+      },
+      {
+        "name": "component-Animation.js",
+        "size": 262818
       },
       {
         "name": "component-Attachment.js",
@@ -27,7 +31,7 @@
       },
       {
         "name": "component-Chat.js",
-        "size": 281651
+        "size": 281604
       },
       {
         "name": "component-Divider.js",
@@ -75,7 +79,7 @@
       },
       {
         "name": "component-Menu.js",
-        "size": 278770
+        "size": 278815
       },
       {
         "name": "component-Popup.js",
@@ -114,10 +118,6 @@
         "size": 264539
       },
       {
-        "name": "component-Transition.js",
-        "size": 262844
-      },
-      {
         "name": "theme-default.js",
         "size": 1197
       },
@@ -127,15 +127,15 @@
       },
       {
         "name": "theme-teams-dark.js",
-        "size": 239744
+        "size": 239823
       },
       {
         "name": "theme-teams-high-contrast.js",
-        "size": 240602
+        "size": 240682
       },
       {
         "name": "theme-teams.js",
-        "size": 191891
+        "size": 191970
       }
     ]
   }
