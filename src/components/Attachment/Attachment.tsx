@@ -162,7 +162,6 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
-        data-slot="root"
       >
         {icon && (
           <div className={classes.icon}>
@@ -207,10 +206,8 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
   }
 
   private handleKeyboardClick = e => {
-    if (e.target && e.target.getAttribute('data-slot') === 'root') {
-      e.stopPropagation()
-      this.handleClick(e)
-    }
+    e.stopPropagation()
+    this.handleClick(e)
   }
 
   private handleClick = (e: React.SyntheticEvent) => {

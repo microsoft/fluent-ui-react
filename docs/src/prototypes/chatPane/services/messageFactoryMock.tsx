@@ -71,6 +71,7 @@ function createMessageContentWithAttachments(content: string) {
           circular
           icon="ellipsis horizontal"
           onClick={e => e.stopPropagation()}
+          onKeyDown={e => e.stopPropagation()}
         />
       }
       content={{ content: contextMenu }}
