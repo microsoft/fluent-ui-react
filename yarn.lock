@@ -34,7 +34,7 @@
     core-js "^2.5.7"
     regenerator-runtime "^0.12.0"
 
-"@babel/standalone@7.1.0":
+"@babel/standalone@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.1.0.tgz#d79774a17e8df4a53def891864882f5d81c42001"
   integrity sha512-3yROQ+PlAAi2uf3Crpdl11hhrYDQ6af+uNmrpLn26WTSdGkOubMXvJKKmHMmiSm2MlOUVrqyotudpQS3hL9UBg==

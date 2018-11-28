@@ -13,7 +13,6 @@ export const babelConfig = {
         },
       },
     ],
-    ['stage-1', { decoratorsLegacy: true }],
   ],
 }
 
