@@ -65,7 +65,13 @@ function createMessageContentWithAttachments(content: string) {
     <Popup
       accessibility={popupFocusTrapBehavior}
       trigger={
-        <Button aria-label="More attachment options" iconOnly circular icon="ellipsis horizontal" />
+        <Button
+          aria-label="More attachment options"
+          iconOnly
+          circular
+          icon="ellipsis horizontal"
+          onClick={e => e.stopPropagation()}
+        />
       }
       content={{ content: contextMenu }}
     />
@@ -85,10 +91,8 @@ function createMessageContentWithAttachments(content: string) {
             action={{ icon: 'ellipsis horizontal' }}
             renderAction={() => actionPopup}
             data-is-focusable={true}
+            onClick={() => alert(`Opening ${fileName}`)}
             styles={{
-              '&:focus': {
-                outline: '.2rem solid #6264A7',
-              },
               ...(index === 1 ? { marginLeft: '15px' } : {}),
             }}
           />

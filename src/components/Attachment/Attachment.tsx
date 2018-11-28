@@ -2,7 +2,12 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { UIComponent, customPropTypes, createShorthandFactory } from '../../lib'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import {
+  Extendable,
+  ShorthandRenderFunction,
+  ShorthandValue,
+  ComponentEventHandler,
+} from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
@@ -11,6 +16,7 @@ import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropIn
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
+import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface AttachmentProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   /**
@@ -81,12 +87,30 @@ export interface AttachmentProps extends UIComponentProps<any, any>, ChildrenCom
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderProgress?: ShorthandRenderFunction
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<AttachmentProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<AttachmentProps>
+}
+
+export interface AttachmentState {
+  [isFromKeyboard.propertyName]: boolean
 }
 
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
+class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -114,6 +138,8 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     accessibility: attachmentBehavior as Accessibility,
   }
 
+  public state = isFromKeyboard.initial
+
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
     const {
       header,
@@ -132,9 +158,11 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
+        data-slot="root"
       >
         {icon && (
           <div className={classes.icon}>
@@ -179,8 +207,10 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   }
 
   private handleKeyboardClick = e => {
-    e.preventDefault()
-    this.handleClick(e)
+    if (e.target && e.target.getAttribute('data-slot') === 'root') {
+      e.stopPropagation()
+      this.handleClick(e)
+    }
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
@@ -194,6 +224,12 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
     if (onClick) {
       onClick(e, this.props)
     }
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(isFromKeyboard.state())
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
