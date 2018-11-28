@@ -26,6 +26,7 @@ import {
   toggleButtonBehavior,
   toolbarBehavior,
   toolbarButtonBehavior,
+  treeTitleBehavior,
   gridBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
@@ -55,6 +56,7 @@ testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
+testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
 testHelper.addBehavior('dialogBehavior', dialogBehavior)
 

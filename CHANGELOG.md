@@ -19,6 +19,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add all default size Teams icons processed & ready to be consumed by Stardust as needed @codepretty ([#478](https://github.com/stardust-ui/react/pull/478))
+- Add `Tree` Component @priyankar205 ([#479]
+(https://github.com/stardust-ui/react/pull/479))
 
 <!--------------------------------[ v0.13.0 ]------------------------------- -->
 ## [v0.13.0](https://github.com/stardust-ui/react/tree/v0.13.0) (2018-11-27)

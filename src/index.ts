@@ -95,6 +95,8 @@ export { default as Text, TextProps } from './components/Text/Text'
 
 export { default as Animation, AnimationProps } from './components/Animation/Animation'
 
+export { default as Tree } from './components/Tree'
+
 //
 // Accessibility
 //
