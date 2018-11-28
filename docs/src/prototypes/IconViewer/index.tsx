@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, Grid, Divider, Header, Icon } from '@stardust-ui/react'
-import { processedIconsTheme } from 'src/themes/teams/iconTest'
+import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 
 const cellStyles = {
   margin: '10px 0',
@@ -19,7 +19,7 @@ class IconViewerExample extends React.Component<any, {}> {
             styles: { fontSize: '16px' },
           }}
         />
-        <Provider theme={processedIconsTheme}>
+        <Provider theme={themeWithProcessedIcons}>
           <Provider.Consumer
             render={theme => (
               <div>

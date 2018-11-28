@@ -20,4 +20,6 @@ const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
 }, {})
 
-export const processedIconsTheme: ThemeInput = { icons: processedIcons }
+const theme: ThemeInput = { icons: processedIcons }
+
+export default theme
