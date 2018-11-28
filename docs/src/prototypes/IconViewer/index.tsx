@@ -6,6 +6,8 @@ const cellStyles = {
   margin: '10px 0',
 }
 
+const processedIconsNamePrefix = 'processedIcons_'
+
 class IconViewerExample extends React.Component<any, {}> {
   render() {
     return (
@@ -29,12 +31,13 @@ class IconViewerExample extends React.Component<any, {}> {
                   </Divider>
                   <Grid columns={4} style={{ textAlign: 'center' }}>
                     {Object.keys(theme.icons)
-                      .filter(name => name.indexOf('processedIcons_') !== -1)
+                      .filter(name => name.startsWith(processedIconsNamePrefix))
+                      .sort()
                       .map(name => (
                         <div key={name} style={cellStyles}>
                           <Icon name={name} />
                           <br />
-                          <code>{name.replace('processedIcons_', '')}</code>
+                          <code>{name.replace(processedIconsNamePrefix, '')}</code>
                         </div>
                       ))}
                   </Grid>
@@ -45,12 +48,13 @@ class IconViewerExample extends React.Component<any, {}> {
                   </Divider>
                   <Grid columns={4} style={{ textAlign: 'center' }}>
                     {Object.keys(theme.icons)
-                      .filter(name => name.indexOf('processedIcons_') !== -1)
+                      .filter(name => name.startsWith(processedIconsNamePrefix))
+                      .sort()
                       .map(name => (
                         <div key={`${name}-outline`} style={cellStyles}>
                           <Icon name={name} variables={{ outline: true }} />
                           <br />
-                          <code>{name.replace('processedIcons_', '')} outline</code>
+                          <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
                         </div>
                       ))}
                   </Grid>
