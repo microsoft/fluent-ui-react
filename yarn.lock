@@ -7901,13 +7901,12 @@ react-side-effect@^1.0.2:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-source-render@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-1.2.0.tgz#5ee994fef2b7ce5a5dd591139e2db860339189e5"
-  integrity sha512-OGRNPATQ3ep3UAN3KMVblh+6EJBeGmussOwD6VlIH/XbKU2jTT4c3yjteSrjrtpTTioAFIQZ16WG/F3UisXSrA==
+react-source-render@^2.0.0-beta.0:
+  version "2.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/react-source-render/-/react-source-render-2.0.0-beta.0.tgz#d026f37030f54409e622160620434ae124b8e513"
+  integrity sha512-BczP1+BkAIz60sZ/PU0KJzBrOe7lfEPJGScYOTwDWFY6tqoh+GAwpWWa3y0FzRgTlSYQlmfaaZMbPqegmQJURg==
   dependencies:
     deepmerge "^2.2.1"
-    fast-deep-equal "^2.0.1"
     fast-memoize "^2.5.1"
     prop-types "^15.6.2"
 
