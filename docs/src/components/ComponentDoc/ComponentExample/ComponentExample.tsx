@@ -480,11 +480,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               </Divider>
               <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
                 <Editor
-                  // TODO: using an editor to display HTML is heavy...
-                  // Investigate: https://github.com/ajaxorg/ace/blob/master/demo/static-highlighter/server.js
-                  // 1. just use a div with HTML
-                  // 2. print with prettier
-                  // 3. highlight it
                   mode="html"
                   showGutter={false}
                   showCursor={false}
