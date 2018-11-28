@@ -145,7 +145,7 @@ class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> 
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
-      this.stateManager.toggle({ eventArgs: e })
+      this.stateManager.toggle(e)
     },
     closeAndFocusTrigger: e => {
       this.closeAndFocusTrigger(e)
@@ -153,7 +153,7 @@ class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> 
   }
 
   private closeAndFocusTrigger = e => {
-    this.stateManager.close({ eventArgs: e })
+    this.stateManager.close(e)
     _.invoke(this.triggerDomElement, 'focus')
   }
 
@@ -228,7 +228,7 @@ class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> 
           {React.cloneElement(triggerElement, {
             onClick: e => {
               if (!this.isControlled()) {
-                this.stateManager.toggle({ eventArgs: e })
+                this.stateManager.toggle(e)
               }
 
               _.invoke(triggerElement, 'props.onClick', e)

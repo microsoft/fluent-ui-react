@@ -47,9 +47,7 @@ class ReactConnector {
       // - set state for others
       // -- all side effects should be handled as part of the component's logic
       // -- i.e., componentDidMoount and componentDidUpdate (great candidates to be replaced by useEffect() hook)
-      setState: ({ stateDiff, newState, userArgs }) => {
-        const { eventArgs } = userArgs
-
+      setState: ({ stateDiff, newState, userArgs: eventArgs }) => {
         const componentStateDiff = this.mapStateToComponentState(stateDiff)
 
         const componentStateChanges = {}
