@@ -34,29 +34,6 @@ Object.keys(fontIcons).forEach(iconName => {
   icons[iconName] = declareFontBased(fontIcons[iconName])
 })
 
-const animations = {
-  spinner: {
-    keyframe: {
-      from: {
-        transform: 'rotate(0deg)',
-      },
-      to: {
-        transform: 'rotate(360deg)',
-      },
-    },
-    duration: '5s',
-    iterationCount: 'infinite',
-  },
-  colorChanger: {
-    keyframe: {
-      from: { color: 'red' },
-      to: { color: 'blue' },
-    },
-    duration: '3s',
-    iterationCount: 'infinite',
-  },
-}
-
 export default {
   siteVariables,
   componentVariables,
@@ -64,5 +41,4 @@ export default {
   fontFaces,
   staticStyles,
   icons,
-  animations,
 } as ThemeInput
