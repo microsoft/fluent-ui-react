@@ -21,9 +21,6 @@ export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponent
   /** Shorthand array of props for Tree. */
   items: ShorthandValue[]
 
-  /** Whether the tree is a subtree. */
-  nested?: boolean
-
   /**
    * A custom render function for the title slot.
    *
@@ -49,7 +46,6 @@ class Tree extends UIComponent<TreeProps> {
     ...childrenComponentPropTypes,
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
-    nested: PropTypes.bool,
     renderItemTitle: PropTypes.func,
   }
 
@@ -71,11 +67,7 @@ class Tree extends UIComponent<TreeProps> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
-    const { children, nested } = this.props
-
-    if (nested) {
-      classes.root = `ui-subtree ${classes.root}`
-    }
+    const { children } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>

@@ -109,8 +109,7 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
-        {hasSubtree &&
-          open && <Tree items={items} nested={true} renderItemTitle={renderItemTitle} />}
+        {hasSubtree && open && <Tree items={items} renderItemTitle={renderItemTitle} />}
       </>
     )
   }
