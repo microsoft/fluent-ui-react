@@ -14,11 +14,7 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { ShorthandRenderFunction, ShorthandValue } from 'utils'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 import {
   UIComponentProps,
   ChildrenComponentProps,
@@ -74,7 +70,6 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
   static propTypes = {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     accessibility: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,

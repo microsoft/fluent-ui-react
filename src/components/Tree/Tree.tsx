@@ -71,7 +71,11 @@ class Tree extends UIComponent<TreeProps> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
-    const { children } = this.props
+    const { children, nested } = this.props
+
+    if (nested) {
+      classes.root = `ui-subtree ${classes.root}`
+    }
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>

@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `Tree` Component @priyankar205 ([#479]
+(https://github.com/stardust-ui/react/pull/479))
+
 <!--------------------------------[ v0.13.0 ]------------------------------- -->
 ## [v0.13.0](https://github.com/stardust-ui/react/tree/v0.13.0) (2018-11-27)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.12.1...v0.13.0)
@@ -39,8 +43,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Apply `dir=auto` attribute to string content of `Text` @kuzhelov  ([#5](https://github.com/stardust-ui/react/pull/5))
 - Improve `Menu` accessibility behaviors @sophieH29 ([#523](https://github.com/stardust-ui/react/pull/523))
 - Add ability to style every slot of `Chat.Message` and remove dependency on `Layout` component @Bugaa92 ([#518](https://github.com/stardust-ui/react/pull/518))
-- Add `Tree` Component @priyankar205 ([#479]
-(https://github.com/stardust-ui/react/pull/479))
 
 ### Fixes
 - Fix the behaviour of `AutoControlledComponent` when `undefined` is passed as a prop value @layershifter ([#499](https://github.com/stardust-ui/react/pull/499))
