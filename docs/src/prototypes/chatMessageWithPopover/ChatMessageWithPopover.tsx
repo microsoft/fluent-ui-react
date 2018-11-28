@@ -53,7 +53,7 @@ const ChatWithPopover = () => (
     theme={{
       componentStyles: {
         ChatMessage: {
-          root: {
+          root: ({ theme: { siteVariables } }) => ({
             position: 'relative',
 
             '&.focused .actions': {
@@ -63,7 +63,26 @@ const ChatWithPopover = () => (
               opacity: 1,
             },
             '& a': {
-              color: '#6264A7',
+              color: siteVariables.brand,
+            },
+          }),
+        },
+        ContextMenu: {
+          root: ({ theme: { siteVariables } }) => ({
+            background: siteVariables.white,
+            boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
+            borderRadius: '.3rem',
+            marginTop: '5px',
+          }),
+        },
+        Menu: {
+          root: {
+            '& a:focus': {
+              textDecoration: 'none',
+              color: 'inherit',
+            },
+            '& a': {
+              color: 'inherit',
             },
           },
         },
