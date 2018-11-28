@@ -118,17 +118,18 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
   info.props = _.sortBy(info.props, 'name')
 
   // available behaviors
-  info.behaviors = getAvailableBehaviors(info.props.accessibility)
-
+  info.behaviors = getAvailableBehaviors(_.find(info.props, { name: 'accessibility' }))
   return info
 }
 
-const getAvailableBehaviors: (
-  accessibilityProp: { tags: [] },
-) => BehaviorInfo = accessibilityProp => {
+const getAvailableBehaviors: (accessibilityProp: any) => BehaviorInfo = accessibilityProp => {
   const docTags = accessibilityProp && accessibilityProp.tags
   const availableTag = _.find(docTags, { title: 'available' })
   const availableBehaviorNames = _.get(availableTag, 'description', '')
+
+  if (!availableBehaviorNames) {
+    return undefined
+  }
 
   return availableBehaviorNames
     .replace(/\s/g, '')

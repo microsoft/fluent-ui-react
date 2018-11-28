@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Documentation
+- Display available behaviors for component @jurokapsiar ([#510](https://github.com/stardust-ui/react/pull/510))
+
 <!--------------------------------[ v0.13.0 ]------------------------------- -->
 ## [v0.13.0](https://github.com/stardust-ui/react/tree/v0.13.0) (2018-11-27)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.12.1...v0.13.0)
@@ -46,9 +49,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add `Integrate Custom Components` guide page in the docs @mnajdova ([#517](https://github.com/stardust-ui/react/pull/517))
-
-### Documentation
-- Display available behaviors for component @jurokapsiar ([#510](https://github.com/stardust-ui/react/pull/510))
 
 <!--------------------------------[ v0.12.0 ]------------------------------- -->
 ## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
