@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as Stardust from '@stardust-ui/react'
 
 export const babelConfig = {
-  plugins: [['transform-typescript', { isTSX: true }]],
+  plugins: ['proposal-class-properties', ['transform-typescript', { isTSX: true }]],
   presets: [
     [
       'env',

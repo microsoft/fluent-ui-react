@@ -564,6 +564,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       handleMouseLeave,
       handleMouseMove,
       isHovering,
+      knobs,
       showCode,
       showRtl,
       showTransparent,
@@ -588,8 +589,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             zIndex: 1,
           }),
     }
-
-    const knobs = this.renderKnobs()
 
     return (
       <Visibility
@@ -628,7 +627,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 />
               </div>
             </div>
-            {knobs}
+            {this.renderKnobs()}
           </Grid.Column>
 
           {children && (
@@ -639,6 +638,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
           <SourceRender
             babelConfig={babelConfig}
+            knobs={knobs}
             source={sourceCode}
             renderHtml={showCode}
             resolver={importResolver}
