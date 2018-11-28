@@ -14,10 +14,10 @@ class IconViewerExample extends React.Component<any, {}> {
       <div style={{ margin: '20px' }}>
         <Header
           as="h3"
-          content="Teams Icons viewer"
+          content="Teams Icons"
           description={{
             content:
-              'These icons have been pulled directly from the Angular app and are ready to be added to the Teams theme in Stardust as needed',
+              'These icons have been pulled directly from the Angular app and are ready to be added to the Teams theme in Stardust as needed.',
             styles: { fontSize: '16px' },
           }}
         />
