@@ -4,7 +4,7 @@ general:
     ignore:
       - gh-pages
 jobs:
-  build:
+  builds:
     docker:
       - image: circleci/node:8
     environment:
@@ -72,3 +72,8 @@ jobs:
               npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
               npm publish --tag current
             fi
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - builds
