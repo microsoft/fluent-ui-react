@@ -49,6 +49,9 @@ jobs:
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
+     - run: 
+          name: Vulnerability Tests
+          command: yarn test:vulns
       - run:
           name: Visual Tests
           command: yarn test:visual
@@ -61,9 +64,6 @@ jobs:
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
               yarn danger ci
             fi
-      - run: 
-          name: Vulnerability Tests
-          command: yarn test:vulns
       - run:
           name: Publish npm package
           command: |
