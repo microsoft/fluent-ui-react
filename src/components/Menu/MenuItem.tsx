@@ -240,7 +240,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         },
         render: renderWrapper,
         overrideProps: () => ({
-          children: [menuItemInner, menu ? '>' : undefined, maybeSubmenu],
+          children: [menuItemInner, maybeSubmenu],
         }),
       })
     }
@@ -249,9 +249,9 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
-    openVerticalSubmenu: event => this.openVerticalSubmenu(event),
-    openHorizontalSubmenu: event => this.openHorizontalSubmenu(event),
+    openSubmenu: event => this.openSubmenu(event),
     closeMenu: event => this.closeMenu(event),
+    closeSubmenu: event => this.closeSubmenu(event),
   }
 
   private handleClick = e => {
@@ -282,30 +282,22 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     }
   }
 
-  // private closeSubmenu = e => {
-  //   const { menu } = this.props
-  //   const { submenuOpen } = this.state
-  //   if (menu && submenuOpen) {
-  //     this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
-  //     e.stopPropagation()
-  //   }
-  // }
-
-  private openVerticalSubmenu = e => {
-    const { menu, vertical } = this.props
+  private closeSubmenu = e => {
+    const { menu } = this.props
     const { submenuOpen } = this.state
-    if (menu && vertical && !submenuOpen) {
-      this.handleClick(e)
+    if (menu && submenuOpen) {
+      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
       e.stopPropagation()
     }
   }
 
-  private openHorizontalSubmenu = e => {
-    const { menu, vertical } = this.props
+  private openSubmenu = e => {
+    const { menu } = this.props
     const { submenuOpen } = this.state
-    if (menu && !vertical && !submenuOpen) {
+    if (menu && !submenuOpen) {
       this.handleClick(e)
       e.stopPropagation()
+      e.preventDefault()
     }
   }
 }

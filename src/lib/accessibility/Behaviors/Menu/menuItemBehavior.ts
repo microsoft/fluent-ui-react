@@ -38,26 +38,19 @@ const menuItemBehavior: Accessibility = (props: any) => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      openVerticalSubmenu: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-      },
-      openHorizontalSubmenu: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
+
+      openSubmenu: {
+        keyCombinations: [
+          { keyCode: props.vertical ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
+        ],
       },
     },
     wrapper: {
-      // closeSubmenu: {
-      //   keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }, { keyCode: keyboardKey.ArrowRight }],
-      // },
-      // closeMenu: {
-      //   keyCombinations: [{ keyCode: keyboardKey.Escape }],
-      // },
       closeMenu: {
-        keyCombinations: [
-          { keyCode: keyboardKey.ArrowLeft },
-          { keyCode: keyboardKey.ArrowRight },
-          { keyCode: keyboardKey.Escape },
-        ],
+        keyCombinations: [{ keyCode: keyboardKey.Escape }, { keyCode: keyboardKey.ArrowRight }],
+      },
+      closeSubmenu: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
     },
   },
