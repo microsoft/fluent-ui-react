@@ -45,7 +45,6 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   static displayName = 'Status'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
