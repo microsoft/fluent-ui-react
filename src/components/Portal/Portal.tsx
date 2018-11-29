@@ -9,7 +9,7 @@ import {
   EventStack,
   ChildrenComponentProps,
   commonPropTypes,
-  ContentNodeComponentProps,
+  ContentComponentProps,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -22,7 +22,7 @@ export type TriggerAccessibility = {
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface PortalProps extends ChildrenComponentProps, ContentNodeComponentProps {
+export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
   /** Initial value of open. */
   defaultOpen?: boolean
 

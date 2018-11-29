@@ -2,14 +2,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 
-import { handleRef } from '../../lib'
+import { handleRef, ChildrenComponentProps, commonPropTypes } from '../../lib'
 
-export interface RefProps {
-  /**
-   *  Used to set content when using childrenApi - internal only
-   *  @docSiteIgnore
-   */
-  children?: React.ReactChild
+export interface RefProps extends ChildrenComponentProps<React.ReactChild> {
   /**
    * Called when a child component will be mounted or updated.
    *
@@ -24,7 +19,13 @@ export interface RefProps {
  */
 export default class Ref extends React.Component<RefProps> {
   static propTypes = {
-    children: PropTypes.element,
+    ...commonPropTypes.createCommon({
+      as: false,
+      className: false,
+      styled: false,
+      children: 'element',
+      content: false,
+    }),
     innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }
 

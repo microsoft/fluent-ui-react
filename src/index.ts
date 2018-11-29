@@ -135,6 +135,5 @@ export {
   StyledComponentProps,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
 } from './lib'

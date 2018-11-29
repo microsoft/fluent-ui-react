@@ -7,7 +7,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { Extendable } from '../../../types/utils'
@@ -15,7 +15,7 @@ import { Extendable } from '../../../types/utils'
 export interface DividerProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   /** A divider can be fitted, without any space above or below it.  */
   fitted?: boolean
 

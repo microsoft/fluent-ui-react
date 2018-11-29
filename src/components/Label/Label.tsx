@@ -9,7 +9,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 
@@ -21,7 +21,7 @@ import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../ty
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   accessibility?: Accessibility
 
   /** A label can be circular. */

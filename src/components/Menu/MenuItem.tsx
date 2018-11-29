@@ -10,7 +10,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import Icon from '../Icon/Icon'
@@ -29,7 +29,7 @@ import {
 export interface MenuItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior

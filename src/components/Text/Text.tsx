@@ -6,17 +6,14 @@ import {
   createShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
 
-export interface TextProps
-  extends UIComponentProps,
-    ContentNodeComponentProps,
-    ChildrenComponentProps {
+export interface TextProps extends UIComponentProps, ContentComponentProps, ChildrenComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 

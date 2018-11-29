@@ -6,7 +6,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { Extendable } from '../../../types/utils'
@@ -14,7 +14,7 @@ import { Extendable } from '../../../types/utils'
 export interface HeaderDescriptionProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {}
+    ContentComponentProps {}
 
 /**
  * A header's description provides more detailed information.

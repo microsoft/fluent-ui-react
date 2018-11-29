@@ -7,7 +7,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
@@ -16,7 +16,7 @@ import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../ty
 export interface HeaderProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 

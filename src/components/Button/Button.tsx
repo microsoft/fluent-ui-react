@@ -8,7 +8,7 @@ import {
   customPropTypes,
   createShorthandFactory,
   UIComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
@@ -27,7 +27,7 @@ import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface ButtonProps
   extends UIComponentProps,
-    ContentShorthandComponentProps,
+    ContentComponentProps<ShorthandValue>,
     ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.

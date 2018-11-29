@@ -10,7 +10,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import {
@@ -28,7 +28,7 @@ import Slot from '../Slot/Slot'
 export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentShorthandComponentProps {
+    ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default chatMessageBehavior

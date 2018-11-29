@@ -8,7 +8,7 @@ import {
   customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
@@ -19,7 +19,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 export interface ButtonGroupProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default buttonGroupBehavior

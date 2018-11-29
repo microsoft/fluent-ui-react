@@ -7,7 +7,7 @@ import {
   createShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
@@ -15,7 +15,7 @@ import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
-    ContentNodeComponentProps,
+    ContentComponentProps,
     ChildrenComponentProps {
   /** Whether or not the title is in the open state. */
   active?: boolean

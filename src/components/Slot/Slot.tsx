@@ -3,7 +3,7 @@ import {
   childrenExist,
   createShorthandFactory,
   UIComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
@@ -11,7 +11,7 @@ import createComponent, { CreateComponentReturnType } from '../../lib/createComp
 
 export interface SlotProps
   extends UIComponentProps<SlotProps>,
-    ContentNodeComponentProps,
+    ContentComponentProps,
     ChildrenComponentProps {}
 
 /**

@@ -7,7 +7,7 @@ import {
   RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { Extendable } from '../../../types/utils'
@@ -15,7 +15,7 @@ import { Extendable } from '../../../types/utils'
 export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {}
+    ContentComponentProps {}
 
 /**
  * A PopupContent displays the content of a Popup component

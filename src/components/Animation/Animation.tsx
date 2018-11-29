@@ -1,19 +1,21 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, StyledComponentProps, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  StyledComponentProps,
+  commonPropTypes,
+  ChildrenComponentProps,
+} from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 
-export interface AnimationProps extends StyledComponentProps {
+export interface AnimationProps
+  extends StyledComponentProps,
+    ChildrenComponentProps<React.ReactChild> {
   /** An element type to render as (string or function). */
   as?: any
-
-  /**
-   *  Content for childrenApi
-   *  @docSiteIgnore
-   */
-  children?: React.ReactChild
 
   /** Additional CSS class name(s) to apply.  */
   className?: string

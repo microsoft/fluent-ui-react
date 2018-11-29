@@ -7,7 +7,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentNodeComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
@@ -15,7 +15,7 @@ import { Extendable, ComponentEventHandler } from '../../../types/utils'
 export interface AccordionContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentNodeComponentProps {
+    ContentComponentProps {
   /** Whether or not the content is visible. */
   active?: boolean
 

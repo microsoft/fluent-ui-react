@@ -8,16 +8,16 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
 import Slot from '../Slot/Slot'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface ChatItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentShorthandComponentProps {
+    ContentComponentProps<ShorthandValue> {
   /**
    * A custom render function the content slot.
    *

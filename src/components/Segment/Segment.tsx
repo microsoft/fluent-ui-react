@@ -4,17 +4,17 @@ import {
   UIComponent,
   childrenExist,
   UIComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentShorthandComponentProps {
+    ContentComponentProps<ShorthandValue> {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 

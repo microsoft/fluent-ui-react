@@ -11,10 +11,10 @@ import {
   RenderResultConfig,
   isBrowser,
   ChildrenComponentProps,
-  ContentShorthandComponentProps,
+  ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable } from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -33,7 +33,7 @@ import {
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps extends ChildrenComponentProps, ContentShorthandComponentProps {
+export interface PopupProps extends ChildrenComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior

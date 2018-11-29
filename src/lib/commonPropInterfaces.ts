@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
-import { ShorthandValue, ReactChildren } from '../../types/utils'
+import { ReactChildren } from '../../types/utils'
 
 export interface StyledComponentProps<P = any, V = any> {
   /** Additional CSS styles to apply to the component instance.  */
@@ -25,20 +25,15 @@ export interface UIComponentProps<P = any, V = any>
   className?: string
 }
 
-export interface ContentShorthandComponentProps {
+export interface ContentComponentProps<TContent = React.ReactNode> {
   /** Shorthand for primary content. */
-  content?: ShorthandValue
+  content?: TContent
 }
 
-export interface ContentNodeComponentProps {
-  /** Shorthand for primary content. */
-  content?: React.ReactNode
-}
-
-export interface ChildrenComponentProps {
+export interface ChildrenComponentProps<TChildren = ReactChildren> {
   /**
    *  Content for childrenApi
    *  @docSiteIgnore
    */
-  children?: ReactChildren
+  children?: TChildren
 }
