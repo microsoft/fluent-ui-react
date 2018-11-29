@@ -15,9 +15,15 @@ export interface PopoverProps {
   className?: string
 }
 
-class Popover extends React.Component<PopoverProps> {
+interface PopoverState {
+  focused: boolean
+  popupOpened: boolean
+}
+
+class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
     focused: false,
+    popupOpened: false,
   }
 
   changeFocusState = (isFocused: boolean) => {
@@ -29,8 +35,18 @@ class Popover extends React.Component<PopoverProps> {
   }
 
   handleBlur = e => {
-    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
-    this.changeFocusState(shouldPreserveFocusState)
+    // if e.relatedTarget === null, so the click was outside this container
+    if (!this.state.popupOpened || e.relatedTarget === null) {
+      const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
+      this.changeFocusState(shouldPreserveFocusState)
+    } else {
+      e.stopPropagation()
+    }
+  }
+
+  handleMenuClick = () => {
+    // close popup when other MenuItem clicked, but the event propagation was stopped
+    this.state.popupOpened && this.setState({ popupOpened: false })
   }
 
   menuStyles = ({ theme: { siteVariables } }) => ({
@@ -69,11 +85,52 @@ class Popover extends React.Component<PopoverProps> {
           { key: 'a', icon: 'thumbs up' },
           { key: 'c', icon: 'ellipsis horizontal' },
         ]}
-        renderItem={renderItemOrContextMenu}
+        renderItem={this.renderItemOrContextMenu}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        onClick={this.handleMenuClick}
         accessibility={toolbarBehavior}
         data-is-focusable={true}
+      />
+    )
+  }
+
+  renderItemOrContextMenu = (MenuItem, props) => {
+    if (props.icon !== 'ellipsis horizontal') {
+      return <MenuItem {...props} />
+    }
+
+    return (
+      <Popup
+        key={props.key}
+        position="below"
+        accessibility={popupFocusTrapBehavior}
+        trigger={
+          <MenuItem
+            {...props}
+            onClick={e => {
+              this.setState(prev => ({ popupOpened: !prev.popupOpened }))
+            }}
+          />
+        }
+        open={this.state.popupOpened}
+        onOpenChange={(e, newProps) => {
+          this.setState({ popupOpened: newProps.open })
+        }}
+        content={
+          <ContextMenu>
+            <Menu
+              vertical
+              pills
+              className="actions"
+              items={[
+                { key: 'bookmark', icon: 'folder', content: 'Save this message' },
+                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                { key: 'translate', icon: 'translate', content: 'Translate' },
+              ]}
+            />
+          </ContextMenu>
+        }
       />
     )
   }
@@ -94,33 +151,4 @@ interface ContextMenuProps {
   styles?: ComponentSlotStyle
   variables?: ComponentVariablesInput
   children?: ReactChildren
-}
-
-const renderItemOrContextMenu = (MenuItem, props) => {
-  if (props.icon !== 'ellipsis horizontal') {
-    return <MenuItem {...props} />
-  }
-
-  return (
-    <Popup
-      key={props.key}
-      position="below"
-      accessibility={popupFocusTrapBehavior}
-      trigger={<MenuItem {...props} />}
-      content={
-        <ContextMenu>
-          <Menu
-            vertical
-            pills
-            className="actions"
-            items={[
-              { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-              { key: 'linkify', icon: 'linkify', content: 'Copy link' },
-              { key: 'translate', icon: 'translate', content: 'Translate' },
-            ]}
-          />
-        </ContextMenu>
-      }
-    />
-  )
 }
