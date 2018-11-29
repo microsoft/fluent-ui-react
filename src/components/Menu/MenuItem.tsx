@@ -3,11 +3,16 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  AutoControlledComponent,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
 import Slot from '../Slot/Slot'
-import { menuItemBehavior } from '../../lib/accessibility'
+import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 
@@ -27,6 +32,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
+import { focusAsync } from 'src/lib/accessibility/FocusZone'
 
 export interface MenuItemProps
   extends UIComponentProps<any, any>,
@@ -109,16 +115,20 @@ export interface MenuItemProps
 
   /** Indicates if the submenu is open */
   submenuOpen?: boolean
+
+  /** Default submenu open */
+  defaultSubmenuOpen?: boolean
 }
 
 export interface MenuItemState {
   [IsFromKeyboard.propertyName]: boolean
+  submenuOpen: boolean
 }
 
 /**
  * A menu item is an actionable navigation item within a menu.
  */
-class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
+class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -147,6 +157,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     renderWrapper: PropTypes.func,
     menu: customPropTypes.itemShorthand,
     submenuOpen: PropTypes.bool,
+    defaultSubmenuOpen: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -155,7 +166,14 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     wrapper: { as: 'li' },
   }
 
-  state = IsFromKeyboard.initial
+  static autoControlledProps = ['submenuOpen']
+
+  state = {
+    ...IsFromKeyboard.initial,
+    submenuOpen: false,
+  }
+
+  private itemRef = React.createRef<HTMLElement>()
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const {
@@ -166,10 +184,12 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
       renderWrapper,
       wrapper,
       menu,
-      submenuOpen,
       type,
       vertical,
+      active,
     } = this.props
+
+    const { submenuOpen } = this.state
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -182,6 +202,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
         {...accessibility.attributes.anchor}
         {...accessibility.keyHandlers.anchor}
         {...rest}
+        ref={this.itemRef}
       >
         {icon &&
           Icon.create(this.props.icon, {
@@ -193,10 +214,10 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     )
 
     const maybeSubmenu =
-      menu && submenuOpen
+      menu && active && submenuOpen
         ? Menu.create(menu, {
             overrideProps: {
-              accessibility: null,
+              accessibility: submenuBehavior,
               vertical: true,
               type,
               styles: {
@@ -214,12 +235,12 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
       return Slot.create(wrapper, {
         defaultProps: {
           className: cx('ui-menu__item__wrapper', classes.wrapper),
-          ...accessibility.attributes.root,
-          ...accessibility.keyHandlers.root,
+          ...accessibility.attributes.wrapper,
+          ...accessibility.keyHandlers.wrapper,
         },
         render: renderWrapper,
         overrideProps: () => ({
-          children: [menuItemInner, maybeSubmenu],
+          children: [menuItemInner, menu ? '>' : undefined, maybeSubmenu],
         }),
       })
     }
@@ -228,9 +249,15 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
+    closeMenu: event => this.closeMenu(event),
+    closeSubmenu: event => this.closeSubmenu(event),
   }
 
   private handleClick = e => {
+    const { active, menu } = this.props
+    if (menu) {
+      this.setState({ submenuOpen: active ? !this.state.submenuOpen : true })
+    }
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
@@ -244,6 +271,23 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     this.setState(IsFromKeyboard.state())
 
     _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  private closeMenu = e => {
+    const { menu } = this.props
+    const { submenuOpen } = this.state
+    if (menu && submenuOpen) {
+      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+    }
+  }
+
+  private closeSubmenu = e => {
+    const { menu } = this.props
+    const { submenuOpen } = this.state
+    if (menu && submenuOpen) {
+      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+      e.stopPropagation()
+    }
   }
 }
 

@@ -39,6 +39,14 @@ const menuItemBehavior: Accessibility = (props: any) => ({
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
+    wrapper: {
+      closeSubmenu: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+      },
+      closeMenu: {
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
+      },
+    },
   },
 })
 
