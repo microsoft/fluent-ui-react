@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -14,7 +14,7 @@
     "build": "gulp build",
     "build:docs": "gulp --series dll build:docs",
     "build:dist": "gulp --series dll build:dist",
-    "ci": "yarn lint && yarn prettier && yarn test",
+    "ci": "yarn lint && yarn prettier && yarn test --strict",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
     "lint": "tslint -t stylish -p .",
@@ -34,9 +34,10 @@
     "satisfied": "satisfied --skip-invalid",
     "pretest": "yarn satisfied",
     "test": "gulp test",
+    "test:watch": "gulp test:watch",
+    "test:vulns": "snyk test",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
-    "test:watch": "gulp test:watch",
     "generate:component": "gulp generate:component"
   },
   "lint-staged": {
@@ -56,29 +57,6 @@
     "url": "https://github.com/stardust-ui/react/issues"
   },
   "homepage": "https://github.com/stardust-ui/react#readme",
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "coverageReporters": [
-      "json",
-      "lcov"
-    ],
-    "testRegex": "/test/.*-test\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json"
-    ],
-    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.ts",
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "moduleNameMapper": {
-      "docs/(.*)$": "<rootDir>/docs/$1",
-      "src/(.*)$": "<rootDir>/src/$1",
-      "test/(.*)$": "<rootDir>/test/$1"
-    }
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "fela": "^6.1.7",
@@ -162,6 +140,7 @@
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1",
     "simulant": "^0.2.2",
+    "snyk": "^1.110.2",
     "ta-scripts": "^2.5.2",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
@@ -177,9 +156,6 @@
   "peerDependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
-  },
-  "engines": {
-    "yarn": "^1.10.0"
   },
   "resolutions": {
     "create-react-context": "0.2.2"
