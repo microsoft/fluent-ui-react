@@ -6,19 +6,19 @@ general:
 jobs:
   builds:
     docker:
-      - image: circleci/node:8
+    - image: circleci/node:8
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
-      - run:
-          name: Update yarn
-          command: |
-            # remove default yarn
-            sudo rm -rf $(dirname $(which yarn))/yarn*
-            # download latest
-            rm -rf ~/.yarn
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+    - run:
+        name: Update yarn
+        command: |
+        # remove default yarn
+        sudo rm -rf $(dirname $(which yarn))/yarn*
+        # download latest
+        rm -rf ~/.yarn
+        curl -o- -L https://yarnpkg.com/install.sh | bash
+        echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
       - checkout
       # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
       - run:
@@ -53,9 +53,6 @@ jobs:
           name: Vulnerability Tests
           command: yarn test:vulns
       - run:
-          name: Visual Tests
-          command: yarn test:visual
-      - run:
           name: Project Tests
           command: yarn test:projects:cra-ts
       - run:
@@ -74,6 +71,7 @@ jobs:
             fi
 workflows:
   version: 2
-  workflow:
+  master:
     jobs:
-    - builds
+      - builds
+      - visual
