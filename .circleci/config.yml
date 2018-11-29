@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
-     - run:
+      - run:
           name: Vulnerability Tests
           command: yarn test:vulns
       - run:
