@@ -6,3 +6,4 @@ export { default as Header } from './components/Header/headerVariables'
 export { default as Input } from './components/Input/inputVariables'
 
 export { default as Text } from './components/Text/textVariables'
+export { default as TreeTitle } from './components/Tree/treeTitleVariables'

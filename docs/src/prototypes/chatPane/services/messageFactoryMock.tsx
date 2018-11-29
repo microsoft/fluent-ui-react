@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
 import { DividerProps } from 'src/components/Divider/Divider'
 import { StatusProps } from 'src/components/Status/Status'
-import { Extendable } from 'utils'
+import { Extendable, ShorthandValue } from 'utils'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {
@@ -18,6 +18,8 @@ interface ChatItem {
 
 interface ChatMessage extends ChatMessageProps, ChatItem {
   tabIndex: number
+  'aria-labelledby': string
+  text: string
 }
 interface Divider extends DividerProps, ChatItem {}
 
@@ -31,24 +33,45 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
   ['Offline', { color: 'grey', title: 'Offline' }],
 ] as [UserStatus, StatusPropsExtendable][])
 
-function generateChatMsgProps(msg: MessageData, fromUser: UserData): ChatMessage {
-  const { content, mine } = msg
-  const msgProps: ChatMessage = {
-    content: msg.withAttachment
-      ? { content: createMessageContentWithAttachments(content) }
-      : content,
+function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatMessage {
+  const { content, mine } = message
+  const messageProps: ChatMessage = {
+    // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
+    'aria-labelledby': `sender-${message.id} timestamp-${message.id} content-${message.id}`,
+    content: createMessageContent(message),
     mine,
     tabIndex: 0,
-    timestamp: { content: msg.timestamp, title: msg.timestampLong },
-    author: fromUser && `${fromUser.firstName} ${fromUser.lastName}`,
-    avatar: !msg.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
+    timestamp: {
+      content: message.timestamp,
+      title: message.timestampLong,
+      id: `timestamp-${message.id}`,
+      // put aria-label as it was not narrating title, where we have already this information.
+      // without aria-label it narrates content of the element, which has date in wrong format.
+      'aria-label': `${message.timestampLong}`,
+    },
+    author: fromUser && {
+      content: `${fromUser.firstName} ${fromUser.lastName} `,
+      id: `sender-${message.id}`,
+    },
+    avatar: !message.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
     itemType: ChatItemTypes.message,
+    text: content,
   }
 
-  return msgProps
+  return messageProps
 }
 
-function createMessageContentWithAttachments(content: string) {
+function createMessageContent(message: MessageData): ShorthandValue {
+  const messageId = `content-${message.id}`
+  return {
+    id: message.withAttachment ? undefined : messageId,
+    content: message.withAttachment
+      ? createMessageContentWithAttachments(message.content, messageId)
+      : message.content,
+  }
+}
+
+function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
   const contextMenu = (
     <Menu
       items={[
@@ -73,7 +96,7 @@ function createMessageContentWithAttachments(content: string) {
 
   return (
     <>
-      <span>
+      <span id={messageId}>
         {content} <a href="/"> Some link </a>
       </span>
       <div style={{ marginTop: '20px', display: 'flex' }}>

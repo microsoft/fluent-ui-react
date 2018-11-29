@@ -1,8 +1,18 @@
 import * as React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { Chat, Divider } from '@stardust-ui/react'
-
 import { ChatData, ChatItemTypes, generateChatProps } from './services'
+
+const screenReaderMessageContainerStyles: React.CSSProperties = {
+  border: '0px',
+  clip: 'rect(0px, 0px, 0px, 0px)',
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: '0px',
+  width: '1px',
+  position: 'absolute',
+}
 
 export interface ChatPaneContainerProps {
   chat: ChatData
@@ -10,12 +20,18 @@ export interface ChatPaneContainerProps {
 
 class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   public render() {
-    const items = this.generateChatItems(this.props.chat)
+    const { chat } = this.props
+    const items = this.generateChatItems(chat)
 
     return (
       items.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat items={items} styles={{ padding: '0 32px' }} />
+          <Chat
+            items={items}
+            role="main"
+            aria-label={`${chat.title} chat content.`}
+            styles={{ padding: '0 32px' }}
+          />
         </Scrollbars>
       )
     )
@@ -24,9 +40,21 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   private generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(({ itemType, ...props }, index) => {
       const ElementType = this.getElementType(itemType)
+      const maybeAttributesForDivider =
+        itemType === ChatItemTypes.divider
+          ? {
+              role: 'heading',
+              'aria-level': 3,
+            }
+          : {}
       return (
         <Chat.Item key={`chat-item-${index}`}>
-          <ElementType {...props} />
+          {itemType === ChatItemTypes.message && (
+            <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
+              {this.getMessagePreviewForScreenReader(props)}
+            </div>
+          )}
+          <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
         </Chat.Item>
       )
     })
@@ -45,6 +73,14 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     if (scrollRef) {
       scrollRef.scrollToBottom()
     }
+  }
+
+  private getMessagePreviewForScreenReader(props) {
+    // Show the first 60 characters from the message, as NVDA splits it into 2 lines if more is shown
+    const messageText = props.text || ''
+    return `${messageText.slice(0, 60)} ..., by ${
+      typeof props.author === 'object' ? props.author.content : props.author
+    }`
   }
 }
 
