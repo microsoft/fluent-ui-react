@@ -3,13 +3,28 @@ general:
   branches:
     ignore:
       - gh-pages
+workflows:
+  version: 2
+  master:
+    jobs:
+      - builds
+      - visual
 jobs:
   builds:
     docker:
-    - image: circleci/node:8
+      - image: circleci/node:8
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      - run:
+          name: Update yarn
+          command: |
+            # remove default yarn
+            sudo rm -rf $(dirname $(which yarn))/yarn*
+            # download latest
+            rm -rf ~/.yarn
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
       - checkout
       # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
       - run:
@@ -60,9 +75,39 @@ jobs:
               npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
               npm publish --tag current
             fi
-workflows:
-  version: 2
-  master:
-    jobs:
-      - builds
-      - visual
+  visual:
+    docker:
+      - image: circleci/node:8
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    steps:
+      - run:
+          name: Update yarn
+          command: |
+            # remove default yarn
+            sudo rm -rf $(dirname $(which yarn))/yarn*
+            # download latest
+            rm -rf ~/.yarn
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+      - checkout
+      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
+      - run:
+          name: Add npm bin to PATH
+          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - .yarn-cache
+            - node_modules
+      - run:
+          name: Visual Tests
+          command: yarn test:visual
