@@ -21,12 +21,9 @@ import processedIcons_trianglerightsmall from './icons-triangle-right-small'
 import processedIcons_triangledownsmall from './icons-triangle-down-small'
 import processedIcons_trianglediagonalrightsmall from './icons-triangle-diagonal-right-small'
 import processedIcons_trending from './icons-trending'
-import processedIcons_trashcan from './icons-trash-can'
-import processedIcons_translation from './icons-translation'
 import processedIcons_timezonenight from './icons-time-zone-night'
 import processedIcons_timezoneday from './icons-time-zone-day'
 import processedIcons_tentative from './icons-tentative'
-import processedIcons_teams from './icons-teams'
 import processedIcons_teamdiscover from './icons-team-discover'
 import processedIcons_teamcreate from './icons-team-create'
 import processedIcons_tabledelete from './icons-table-delete'
@@ -44,14 +41,11 @@ import processedIcons_shareobject from './icons-share-object'
 import processedIcons_share from './icons-share'
 import processedIcons_sfbviewbox32 from './icons-sfb-viewbox-32'
 import processedIcons_settings from './icons-settings'
-import processedIcons_send from './icons-send'
 import processedIcons_search from './icons-search'
 import processedIcons_screenzoomout from './icons-screen-zoom-out'
 import processedIcons_screenzoomin from './icons-screen-zoom-in'
 import processedIcons_roster from './icons-roster'
-import processedIcons_retry from './icons-retry'
 import processedIcons_resetzoom from './icons-reset-zoom'
-import processedIcons_reply from './icons-reply'
 import processedIcons_refresh from './icons-refresh'
 import processedIcons_redbang from './icons-redbang'
 import processedIcons_recurrence from './icons-recurrence'
@@ -74,7 +68,6 @@ import processedIcons_pcaudiostop from './icons-pc-audio-stop'
 import processedIcons_pcaudio from './icons-pc-audio'
 import processedIcons_patharrow from './icons-patharrow'
 import processedIcons_paste from './icons-paste'
-import processedIcons_participantremove from './icons-participant-remove'
 import processedIcons_outline from './icons-outline'
 import processedIcons_orgwide from './icons-org-wide'
 import processedIcons_org from './icons-org'
@@ -119,16 +112,11 @@ import processedIcons_msftcanvas from './icons-msft-canvas'
 import processedIcons_move from './icons-move'
 import processedIcons_mov from './icons-mov'
 import processedIcons_more from './icons-more'
-import processedIcons_micoff from './icons-mic-off'
-import processedIcons_mic from './icons-mic'
 import processedIcons_menulight from './icons-menu-light'
-import processedIcons_menu from './icons-menu'
-import processedIcons_mention from './icons-mention'
 import processedIcons_megaphone from './icons-megaphone'
 import processedIcons_meetingnotes from './icons-meeting-notes'
 import processedIcons_meetingnew from './icons-meeting-new'
 import processedIcons_mediaoff from './icons-media-off'
-import processedIcons_markasunread from './icons-mark-as-unread'
 import processedIcons_markasread from './icons-mark-as-read'
 import processedIcons_manageteams from './icons-manage-teams'
 import processedIcons_lock18 from './icons-lock-18'
@@ -138,8 +126,6 @@ import processedIcons_locationoff from './icons-location-off'
 import processedIcons_location from './icons-location'
 import processedIcons_link from './icons-link'
 import processedIcons_liked from './icons-liked'
-import processedIcons_like from './icons-like'
-import processedIcons_leave from './icons-leave'
 import processedIcons_kollective from './icons-kollective'
 import processedIcons_keyboard from './icons-keyboard'
 import processedIcons_italic from './icons-italic'
@@ -194,10 +180,8 @@ import processedIcons_eyeslash from './icons-eye-slash'
 import processedIcons_eyefriendlier from './icons-eye-friendlier'
 import processedIcons_eye from './icons-eye'
 import processedIcons_expand from './icons-expand'
-import processedIcons_error from './icons-error'
 import processedIcons_emoji from './icons-emoji'
 import processedIcons_email from './icons-email'
-import processedIcons_edit from './icons-edit'
 import processedIcons_dropdown from './icons-dropdown'
 import processedIcons_downloaded from './icons-downloaded'
 import processedIcons_download from './icons-download'
@@ -230,7 +214,6 @@ import processedIcons_chat from './icons-chat'
 import processedIcons_channelicon from './icons-channel-icon'
 import processedIcons_changename from './icons-changename'
 import processedIcons_canvasaddpage from './icons-canvas-addpage'
-import processedIcons_callvideolineoff from './icons-call-video-line-off'
 import processedIcons_callvideoline from './icons-call-video-line'
 import processedIcons_callvideofilled from './icons-call-video-filled'
 import processedIcons_callvideo from './icons-call-video'
@@ -252,27 +235,20 @@ import processedIcons_callmissedlinefilled from './icons-call-missed-line-filled
 import processedIcons_callmissedline from './icons-call-missed-line'
 import processedIcons_callmissed from './icons-call-missed'
 import processedIcons_callmicrophoneunmuting from './icons-call-microphone-unmuting'
-import processedIcons_callmicrophoneofffilled from './icons-call-microphone-off-filled'
 import processedIcons_callmeetupline from './icons-call-meetup-line'
 import processedIcons_callmeetupfilled from './icons-call-meetup-filled'
 import processedIcons_callincomingvideo from './icons-call-incoming-video'
 import processedIcons_callhold from './icons-call-hold'
-import processedIcons_callend from './icons-call-end'
 import processedIcons_calldialpad from './icons-call-dialpad'
-import processedIcons_callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
-import processedIcons_callcontrolpresentnew from './icons-call-control-present-new'
 import processedIcons_callblocked from './icons-call-blocked'
 import processedIcons_callaudio from './icons-call-audio'
 import processedIcons_callalert from './icons-call-alert'
 import processedIcons_calladmitall from './icons-call-admit-all'
 import processedIcons_call from './icons-call'
-import processedIcons_calendar from './icons-calendar'
-import processedIcons_bullets from './icons-bullets'
 import processedIcons_broadcastviewright from './icons-broadcast-view-right'
 import processedIcons_broadcastviewleft from './icons-broadcast-view-left'
 import processedIcons_broadcastviewfullscreen from './icons-broadcast-view-fullscreen'
 import processedIcons_bot from './icons-bot'
-import processedIcons_bookmark from './icons-bookmark'
 import processedIcons_bold from './icons-bold'
 import processedIcons_blurbackground from './icons-blur-background'
 import processedIcons_block from './icons-block'
@@ -292,7 +268,6 @@ import processedIcons_arrowdown from './icons-arrow-down'
 import processedIcons_archive from './icons-archive'
 import processedIcons_apps from './icons-apps'
 import processedIcons_analytics from './icons-analytics'
-import processedIcons_addparticipant from './icons-add-participant'
 import processedIcons_add from './icons-add'
 import processedIcons_accept from './icons-accept'
 
@@ -318,12 +293,9 @@ export default {
   processedIcons_triangledownsmall,
   processedIcons_trianglediagonalrightsmall,
   processedIcons_trending,
-  processedIcons_trashcan,
-  processedIcons_translation,
   processedIcons_timezonenight,
   processedIcons_timezoneday,
   processedIcons_tentative,
-  processedIcons_teams,
   processedIcons_teamdiscover,
   processedIcons_teamcreate,
   processedIcons_tabledelete,
@@ -341,14 +313,11 @@ export default {
   processedIcons_share,
   processedIcons_sfbviewbox32,
   processedIcons_settings,
-  processedIcons_send,
   processedIcons_search,
   processedIcons_screenzoomout,
   processedIcons_screenzoomin,
   processedIcons_roster,
-  processedIcons_retry,
   processedIcons_resetzoom,
-  processedIcons_reply,
   processedIcons_refresh,
   processedIcons_redbang,
   processedIcons_recurrence,
@@ -371,7 +340,6 @@ export default {
   processedIcons_pcaudio,
   processedIcons_patharrow,
   processedIcons_paste,
-  processedIcons_participantremove,
   processedIcons_outline,
   processedIcons_orgwide,
   processedIcons_org,
@@ -416,16 +384,11 @@ export default {
   processedIcons_move,
   processedIcons_mov,
   processedIcons_more,
-  processedIcons_micoff,
-  processedIcons_mic,
   processedIcons_menulight,
-  processedIcons_menu,
-  processedIcons_mention,
   processedIcons_megaphone,
   processedIcons_meetingnotes,
   processedIcons_meetingnew,
   processedIcons_mediaoff,
-  processedIcons_markasunread,
   processedIcons_markasread,
   processedIcons_manageteams,
   processedIcons_lock18,
@@ -435,8 +398,6 @@ export default {
   processedIcons_location,
   processedIcons_link,
   processedIcons_liked,
-  processedIcons_like,
-  processedIcons_leave,
   processedIcons_kollective,
   processedIcons_keyboard,
   processedIcons_italic,
@@ -491,10 +452,8 @@ export default {
   processedIcons_eyefriendlier,
   processedIcons_eye,
   processedIcons_expand,
-  processedIcons_error,
   processedIcons_emoji,
   processedIcons_email,
-  processedIcons_edit,
   processedIcons_dropdown,
   processedIcons_downloaded,
   processedIcons_download,
@@ -527,7 +486,6 @@ export default {
   processedIcons_channelicon,
   processedIcons_changename,
   processedIcons_canvasaddpage,
-  processedIcons_callvideolineoff,
   processedIcons_callvideoline,
   processedIcons_callvideofilled,
   processedIcons_callvideo,
@@ -549,27 +507,20 @@ export default {
   processedIcons_callmissedline,
   processedIcons_callmissed,
   processedIcons_callmicrophoneunmuting,
-  processedIcons_callmicrophoneofffilled,
   processedIcons_callmeetupline,
   processedIcons_callmeetupfilled,
   processedIcons_callincomingvideo,
   processedIcons_callhold,
-  processedIcons_callend,
   processedIcons_calldialpad,
-  processedIcons_callcontrolstoppresentingnew,
-  processedIcons_callcontrolpresentnew,
   processedIcons_callblocked,
   processedIcons_callaudio,
   processedIcons_callalert,
   processedIcons_calladmitall,
   processedIcons_call,
-  processedIcons_calendar,
-  processedIcons_bullets,
   processedIcons_broadcastviewright,
   processedIcons_broadcastviewleft,
   processedIcons_broadcastviewfullscreen,
   processedIcons_bot,
-  processedIcons_bookmark,
   processedIcons_bold,
   processedIcons_blurbackground,
   processedIcons_block,
@@ -589,7 +540,6 @@ export default {
   processedIcons_archive,
   processedIcons_apps,
   processedIcons_analytics,
-  processedIcons_addparticipant,
   processedIcons_add,
   processedIcons_accept,
 } as { [iconName: string]: TeamsSvgIconSpec }
