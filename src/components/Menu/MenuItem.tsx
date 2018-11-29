@@ -249,8 +249,9 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
+    openVerticalSubmenu: event => this.openVerticalSubmenu(event),
+    openHorizontalSubmenu: event => this.openHorizontalSubmenu(event),
     closeMenu: event => this.closeMenu(event),
-    closeSubmenu: event => this.closeSubmenu(event),
   }
 
   private handleClick = e => {
@@ -281,11 +282,29 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     }
   }
 
-  private closeSubmenu = e => {
-    const { menu } = this.props
+  // private closeSubmenu = e => {
+  //   const { menu } = this.props
+  //   const { submenuOpen } = this.state
+  //   if (menu && submenuOpen) {
+  //     this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+  //     e.stopPropagation()
+  //   }
+  // }
+
+  private openVerticalSubmenu = e => {
+    const { menu, vertical } = this.props
     const { submenuOpen } = this.state
-    if (menu && submenuOpen) {
-      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+    if (menu && vertical && !submenuOpen) {
+      this.handleClick(e)
+      e.stopPropagation()
+    }
+  }
+
+  private openHorizontalSubmenu = e => {
+    const { menu, vertical } = this.props
+    const { submenuOpen } = this.state
+    if (menu && !vertical && !submenuOpen) {
+      this.handleClick(e)
       e.stopPropagation()
     }
   }
