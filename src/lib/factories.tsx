@@ -6,7 +6,6 @@ import {
   ShorthandValue,
   Props,
   ShorthandRenderCallback,
-  ShorthandRenderTreeFunc,
   ShorthandRenderer,
 } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
@@ -207,24 +206,15 @@ function createShorthandFromRenderCallback(
   renderCallback: ShorthandRenderCallback,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ) {
-  const render: ShorthandRenderer = (shorthandValueOrRenderTree, renderTreeArg) => {
-    const shorthandArgType = {
-      isReactElement: React.isValidElement(shorthandValueOrRenderTree),
-      isRenderTreeFunc: typeof shorthandValueOrRenderTree === 'function',
-    }
-
+  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
     const ShorthandElement = createShorthandFromValue(
       Component,
       mappedProp,
-      shorthandArgType.isRenderTreeFunc ? {} : (shorthandValueOrRenderTree as ShorthandValue),
+      shorthandValue,
       options,
     )
 
-    const renderTree = shorthandArgType.isRenderTreeFunc
-      ? (shorthandValueOrRenderTree as ShorthandRenderTreeFunc)
-      : renderTreeArg
-
-    return shorthandArgType.isReactElement || !renderTree
+    return !renderTree
       ? ShorthandElement
       : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
   }

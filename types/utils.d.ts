@@ -36,7 +36,7 @@ export type ShorthandRenderTreeFunc = (
 ) => React.ReactElement<any>
 
 export type ShorthandRenderer = (
-  value: ShorthandValue | ShorthandRenderTreeFunc,
+  value: ShorthandValue,
   renderTree?: ShorthandRenderTreeFunc,
 ) => React.ReactElement<any>
 
