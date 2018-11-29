@@ -25,9 +25,7 @@ const Slot: CreateComponentReturnType<SlotProps> & {
   className: 'ui-slot',
 
   propTypes: {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon(),
   },
 
   render(config, props) {

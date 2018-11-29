@@ -66,10 +66,8 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
+    ...commonPropTypes.createCommon(),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,

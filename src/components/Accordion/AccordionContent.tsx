@@ -39,9 +39,7 @@ class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, an
   static className = 'ui-accordion__content'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     onClick: PropTypes.func,
   }

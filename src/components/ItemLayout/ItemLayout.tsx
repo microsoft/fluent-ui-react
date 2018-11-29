@@ -67,7 +67,10 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static className = 'ui-itemlayout'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
     content: PropTypes.any,
     debug: PropTypes.bool,

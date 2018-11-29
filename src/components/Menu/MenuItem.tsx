@@ -118,9 +118,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,

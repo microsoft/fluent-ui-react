@@ -27,9 +27,7 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
   static displayName = 'HeaderDescription'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
   }
 
   static defaultProps = {

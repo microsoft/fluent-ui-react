@@ -43,9 +43,7 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   static className = 'ui-accordion__title'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,

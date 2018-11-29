@@ -28,7 +28,12 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  */
 class PortalInner extends Component<PortalInnerProps> {
   public static propTypes = {
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      as: false,
+      className: false,
+      content: false,
+      styled: false,
+    }),
     context: PropTypes.object,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,

@@ -39,9 +39,9 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentShorthandComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     renderContent: PropTypes.func,
   }
 

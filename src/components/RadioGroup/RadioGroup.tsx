@@ -71,8 +71,9 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
   static create: Function
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

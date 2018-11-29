@@ -46,6 +46,10 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     renderIcon: PropTypes.func,

@@ -124,8 +124,9 @@ class RadioGroupItem extends AutoControlledComponent<
   static className = 'ui-radiogroup__item'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,

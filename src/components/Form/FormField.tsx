@@ -79,8 +79,9 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
   static create: Function
 
   public static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     control: customPropTypes.itemShorthand,
     id: PropTypes.string,
     inline: PropTypes.bool,

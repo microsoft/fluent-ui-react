@@ -64,8 +64,9 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   static className = 'ui-list'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,

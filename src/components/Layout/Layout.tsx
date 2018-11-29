@@ -48,7 +48,10 @@ class Layout extends UIComponent<Extendable<LayoutProps>, any> {
   static displayName = 'Layout'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     debug: PropTypes.bool,
 
     renderStartArea: PropTypes.func,

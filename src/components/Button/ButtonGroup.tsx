@@ -52,9 +52,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static className = 'ui-buttons'
 
   public static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,

@@ -29,9 +29,7 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   public static className = 'ui-popup__content'
 
   public static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
   }
 
   public renderComponent({

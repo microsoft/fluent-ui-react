@@ -72,9 +72,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon(),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

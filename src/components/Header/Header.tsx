@@ -49,9 +49,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static displayName = 'Header'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
     renderDescription: PropTypes.func,

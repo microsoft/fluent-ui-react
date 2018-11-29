@@ -56,8 +56,9 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   public static className = 'ui-form'
 
   public static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,

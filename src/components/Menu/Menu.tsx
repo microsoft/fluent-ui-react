@@ -82,8 +82,9 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static create: Function
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

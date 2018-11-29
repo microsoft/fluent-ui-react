@@ -116,8 +116,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static displayName = 'Input'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,

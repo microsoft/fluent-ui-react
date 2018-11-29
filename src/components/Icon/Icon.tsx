@@ -62,7 +62,10 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   static displayName = 'Icon'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,

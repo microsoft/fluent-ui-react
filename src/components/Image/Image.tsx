@@ -42,7 +42,10 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
     avatar: PropTypes.bool,
     circular: PropTypes.bool,

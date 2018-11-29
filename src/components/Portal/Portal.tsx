@@ -90,8 +90,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    ...commonPropTypes.childrenComponentPropTypes,
-    ...commonPropTypes.contentNodeComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      as: false,
+      className: false,
+      styled: false,
+    }),
     defaultOpen: PropTypes.bool,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,

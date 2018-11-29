@@ -47,7 +47,10 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
     content: PropTypes.any,
 

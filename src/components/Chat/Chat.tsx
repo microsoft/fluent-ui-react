@@ -2,14 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -41,8 +40,9 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static displayName = 'Chat'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
     renderItem: PropTypes.func,

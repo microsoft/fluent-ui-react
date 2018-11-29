@@ -42,8 +42,9 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
   public static className = 'ui-grid'
 
   public static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     content: customPropTypes.every([

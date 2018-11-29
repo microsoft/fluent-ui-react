@@ -96,11 +96,13 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    ...commonPropTypes.contentShorthandComponentPropsTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      as: false,
+      content: 'shorthand',
+      styled: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
-    className: PropTypes.string,
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     open: PropTypes.bool,

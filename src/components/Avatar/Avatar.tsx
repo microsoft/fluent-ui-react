@@ -69,7 +69,10 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   static displayName = 'Avatar'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     name: PropTypes.string,
     image: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,

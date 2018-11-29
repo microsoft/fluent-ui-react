@@ -81,8 +81,9 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     activeIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),

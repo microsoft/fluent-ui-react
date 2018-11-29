@@ -91,8 +91,9 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static displayName = 'Attachment'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     action: customPropTypes.itemShorthand,
     actionable: PropTypes.bool,
     description: customPropTypes.itemShorthand,

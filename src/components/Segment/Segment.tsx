@@ -36,9 +36,9 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static displayName = 'Segment'
 
   static propTypes = {
-    ...commonPropTypes.commonUIComponentPropTypes,
-    ...commonPropTypes.contentShorthandComponentPropsTypes,
-    ...commonPropTypes.childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     inverted: PropTypes.bool,
     renderContent: PropTypes.func,
   }

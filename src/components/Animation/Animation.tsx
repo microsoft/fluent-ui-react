@@ -1,13 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import {
-  UIComponent,
-  customPropTypes,
-  childrenExist,
-  StyledComponentProps,
-  commonPropTypes,
-} from '../../lib'
+import { UIComponent, childrenExist, StyledComponentProps, commonPropTypes } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
 
@@ -90,11 +84,12 @@ class Animation extends UIComponent<AnimationProps, any> {
   static displayName = 'Animation'
 
   static propTypes = {
-    ...commonPropTypes.styledComponentPropTypes,
-    children: PropTypes.element,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      content: false,
+      children: 'element',
+    }),
     name: PropTypes.string,
-    as: customPropTypes.as,
-    className: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
     duration: PropTypes.string,
