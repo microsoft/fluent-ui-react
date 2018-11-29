@@ -16,37 +16,25 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       toggleButtonSize,
       width,
     },
-  }): ICSSInJSStyle => {
-    return {
-      display: 'flex',
-      flexWrap: 'wrap',
-      outline: 0,
-      border: 0,
-      backgroundColor,
-      borderRadius: containerDivBorderRadius,
-      borderBottom: containerDivBorderBottom,
-      borderColor: containerDivBorderColor,
-      color: containerDivColor,
-      width: fluid ? '100%' : width,
-      position: 'relative',
-      ...(toggleButton && {
-        paddingRight: toggleButtonSize,
-      }),
-      ...(focused && {
-        borderColor: containerDivFocusBorderColor,
-        borderRadius: containerDivFocusBorderRadius,
-      }),
-    }
-  },
-
-  editTextInput: ({ variables: { backgroundColor } }): ICSSInJSStyle => ({
-    width: '100%',
+  }): ICSSInJSStyle => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    outline: 0,
+    border: 0,
     backgroundColor,
-  }),
-
-  editTextDiv: ({ variables: { editTextFlexBasis } }): ICSSInJSStyle => ({
-    flexBasis: editTextFlexBasis,
-    flexGrow: 1,
+    borderRadius: containerDivBorderRadius,
+    borderBottom: containerDivBorderBottom,
+    borderColor: containerDivBorderColor,
+    color: containerDivColor,
+    width: fluid ? '100%' : width,
+    position: 'relative',
+    ...(toggleButton && {
+      paddingRight: toggleButtonSize,
+    }),
+    ...(focused && {
+      borderColor: containerDivFocusBorderColor,
+      borderRadius: containerDivFocusBorderRadius,
+    }),
   }),
 
   activeListLabel: (): ICSSInJSStyle => ({

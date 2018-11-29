@@ -200,6 +200,7 @@ export interface ThemeComponentStylesInput {
   ChatMessage?: ComponentSlotStylesInput
   Divider?: ComponentSlotStylesInput
   Dropdown?: ComponentSlotStylesInput
+  DropdownSearchInput?: ComponentSlotStylesInput
   Form?: ComponentSlotStylesInput
   FormField?: ComponentSlotStylesInput
   Grid?: ComponentSlotStylesInput
@@ -238,6 +239,7 @@ export interface ThemeComponentStylesPrepared {
   ChatMessage?: ComponentSlotStylesPrepared
   Divider?: ComponentSlotStylesPrepared
   Dropdown?: ComponentSlotStylesPrepared
+  DropdownSearchInput?: ComponentSlotStylesPrepared
   Form?: ComponentSlotStylesPrepared
   FormField?: ComponentSlotStylesPrepared
   Grid?: ComponentSlotStylesPrepared

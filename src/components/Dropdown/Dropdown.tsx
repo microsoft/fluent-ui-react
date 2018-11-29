@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { Extendable, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
@@ -15,7 +15,6 @@ import Downshift, {
   GetItemPropsOptions,
 } from 'downshift'
 import { AutoControlledComponent, RenderResultConfig, customPropTypes } from '../../lib'
-import Input from '../Input/Input'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
 import Text from '../Text/Text'
@@ -25,6 +24,8 @@ import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem from './DropdownItem'
 import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
+import DropdownSearchInput from './DropdownSearchInput'
+import { DropdownSearchInputProps } from 'semantic-ui-react'
 
 // To be replaced when Downshift will add highlightedItem in their interface.
 export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
@@ -80,30 +81,6 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   onDropdownChange?: (value: ShorthandValue | ShorthandValue[]) => any
 
   /**
-   * Called on edit text blur.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onInputBlur?: ComponentEventHandler<DropdownProps>
-
-  /**
-   * Called on edit text focus.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onInputFocus?: ComponentEventHandler<DropdownProps>
-
-  /**
-   * Called on edit text key down.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
-   */
-  onInputKeyDown?: ComponentEventHandler<DropdownProps>
-
-  /**
    * Callback for change in dropdown search query value.
    * @param {string} searchQuery - The new value in the search field.
    */
@@ -112,8 +89,38 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   /** A message to serve as placeholder. */
   placeholder?: string
 
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderLabel?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderSearchInput?: ShorthandRenderFunction
+
   /** A dropdown can have a search field instead of trigger button. */
   search?: boolean
+
+  /** Shorthand for the edit text that has the search query, if dropdown is also a search. */
+  searchInput?: ShorthandValue
 
   /** The value in the edit text, if dropdown is a search. */
   searchQuery?: string
@@ -139,7 +146,7 @@ export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
   DropdownState
 > {
-  private inputRef: HTMLElement
+  private inputNode: HTMLElement
 
   static displayName = 'Dropdown'
 
@@ -161,13 +168,14 @@ export default class Dropdown extends AutoControlledComponent<
     multiple: PropTypes.bool,
     noResultsMessage: PropTypes.string,
     onDropdownChange: PropTypes.func,
-    onInputBlur: PropTypes.func,
-    onInputFocus: PropTypes.func,
-    onInputKeyDown: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
     placeholder: PropTypes.string,
+    renderItem: PropTypes.func,
+    renderLabel: PropTypes.func,
+    renderSearchInput: PropTypes.func,
     search: PropTypes.bool,
     searchQuery: PropTypes.string,
+    searchInput: customPropTypes.itemShorthand,
     toggleButton: PropTypes.bool,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -229,7 +237,6 @@ export default class Dropdown extends AutoControlledComponent<
                 {multiple && this.renderLabels(styles)}
                 {search &&
                   this.renderInput(
-                    styles,
                     getRootProps,
                     getInputProps,
                     highlightedIndex,
@@ -253,7 +260,6 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderInput(
-    styles: ComponentSlotStylesInput,
     getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
     highlightedIndex: number,
@@ -263,35 +269,29 @@ export default class Dropdown extends AutoControlledComponent<
       cb?: () => void,
     ) => void,
   ): JSX.Element {
-    const { multiple, placeholder } = this.props
+    const { searchInput, renderSearchInput, multiple, placeholder, variables } = this.props
     const { searchQuery, value } = this.state
+    const shouldHavePlaceholder =
+      searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
 
-    return (
-      <this.RefProvidingWrapper>
-        <Input
-          inputRef={input => (this.inputRef = input)}
-          onFocus={this.handleInputFocus}
-          onKeyUp={multiple && this.handleBackspaceRemove}
-          wrapper={{
-            styles: styles.editTextDiv,
-            ...getRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
-          }}
-          variables={{ inputFocusBorderBottomColor: 'transparent' }}
-          input={{
-            type: 'text',
-            styles: styles.editTextInput,
-            placeholder:
-              searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
-                ? ''
-                : placeholder,
-            ...getInputProps({
-              onBlur: this.handleInputBlur,
-              onKeyDown: this.handleInputKeyDown.bind(this, highlightedIndex, selectItemAtIndex),
-            }),
-          }}
-        />
-      </this.RefProvidingWrapper>
-    )
+    return DropdownSearchInput.create(searchInput || {}, {
+      defaultProps: {
+        placeholder: shouldHavePlaceholder ? '' : placeholder,
+        inputRef: inputNode => {
+          this.inputNode = inputNode
+        },
+        variables,
+      },
+      overrideProps: predefinedProps =>
+        this.handleSearchInputOverrides(
+          predefinedProps,
+          highlightedIndex,
+          selectItemAtIndex,
+          getRootProps,
+          getInputProps,
+        ),
+      render: renderSearchInput,
+    })
   }
 
   private renderToggleButton(
@@ -375,6 +375,7 @@ export default class Dropdown extends AutoControlledComponent<
 
   private renderLabels(styles: ComponentSlotStylesInput) {
     const value = this.state.value as ShorthandValue[]
+    const { renderLabel } = this.props
 
     if (value.length === 0) {
       return null
@@ -405,6 +406,7 @@ export default class Dropdown extends AutoControlledComponent<
             _.invoke(predefinedProps, 'onClick', e, dropdownLabelProps)
           },
         }),
+        render: renderLabel,
       })
     })
   }
@@ -493,20 +495,74 @@ export default class Dropdown extends AutoControlledComponent<
     statusDiv.textContent = statusMessage
   }
 
-  private handleInputFocus = (e: React.SyntheticEvent) => {
-    this.setState({ focused: true })
+  private handleSearchInputOverrides = (
+    predefinedProps: DropdownSearchInputProps,
+    highlightedIndex: number,
+    selectItemAtIndex: (
+      index: number,
+      otherStateToSet?: Partial<StateChangeOptions<any>>,
+      cb?: () => void,
+    ) => void,
+    getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    getInputProps: (options?: GetInputPropsOptions) => any,
+  ) => ({
+    getAccessibilityRootProps: (
+      options?: GetMenuPropsOptions,
+      otherOptions?: GetPropsCommonOptions,
+    ) => {
+      return {
+        ...getRootProps(options, otherOptions),
+        ..._.invoke(predefinedProps, 'getAccessibilityRootProps', options, otherOptions),
+      }
+    },
+    getAccessibilityInputProps: (options?: GetInputPropsOptions) => {
+      return {
+        ...getInputProps(options),
+        ..._.invoke(predefinedProps, 'getAccessibilityInputProps', options),
+      }
+    },
+    onFocus: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
+      this.setState({ focused: true })
 
-    _.invoke(this.props, 'onInputFocus', e, this.props)
-  }
+      _.invoke(predefinedProps, 'onFocus', e, searchInputProps)
+    },
+    ...(this.props.multiple && {
+      onKeyUp: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
+        if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
+          const { searchQuery, value, backspaceDelete } = this.state
 
-  private handleInputBlur = (e: React.SyntheticEvent) => {
-    this.setState({ focused: false })
+          if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
+            if (!backspaceDelete) {
+              this.setState({ backspaceDelete: true })
+            } else {
+              this.removeFromActiveValues()
+            }
+          }
+        }
 
-    _.invoke(this.props, 'onInputBlur', e, this.props)
-  }
+        _.invoke(predefinedProps, 'onKeyUp', e, searchInputProps)
+      },
+    }),
+    onInputBlur: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
+      this.setState({ focused: false })
+
+      _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
+    },
+    onInputKeyDown: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
+      if (keyboardKey.getCode(e) === keyboardKey.Tab && highlightedIndex !== undefined) {
+        selectItemAtIndex(highlightedIndex)
+      }
+
+      _.invoke(predefinedProps, 'onInputKeyDown', e, {
+        ...searchInputProps,
+        highlightedIndex,
+        selectItemAtIndex,
+      })
+    },
+  })
 
   private handleContainerClick = (isOpen: boolean, e: React.SyntheticEvent) => {
-    !isOpen && this.inputRef.focus()
+    !isOpen && this.inputNode.focus()
   }
 
   private handleChange = (item: ShorthandValue) => {
@@ -526,43 +582,9 @@ export default class Dropdown extends AutoControlledComponent<
     _.invoke(this.props, 'onDropdownChange', newValue)
   }
 
-  private handleInputKeyDown = (
-    highlightedIndex: number,
-    selectItemAtIndex: (
-      index: number,
-      otherStateToSet?: Partial<StateChangeOptions<any>>,
-      cb?: () => void,
-    ) => void,
-    e: React.SyntheticEvent,
-  ) => {
-    if (keyboardKey.getCode(e) === keyboardKey.Tab && highlightedIndex !== undefined) {
-      selectItemAtIndex(highlightedIndex)
-    }
-
-    _.invoke(this.props, 'onInputKeyDown', e, {
-      ...this.props,
-      highlightedIndex,
-      selectItemAtIndex,
-    })
-  }
-
-  private handleBackspaceRemove = (e: React.SyntheticEvent) => {
-    if (keyboardKey.getCode(e) === keyboardKey.Backspace) {
-      const { searchQuery, value, backspaceDelete } = this.state
-
-      if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
-        if (!backspaceDelete) {
-          this.setState({ backspaceDelete: true })
-        } else {
-          this.removeFromActiveValues()
-        }
-      }
-    }
-  }
-
   private handleLabelRemove(e: React.SyntheticEvent, item: ShorthandValue) {
     this.removeFromActiveValues(item)
-    this.inputRef.focus()
+    this.inputNode.focus()
     e.stopPropagation()
   }
 

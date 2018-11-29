@@ -35,6 +35,11 @@ export { default as DropdownItem, DropdownItemProps } from './components/Dropdow
 
 export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
 
+export {
+  default as DropdownSearchInput,
+  DropdownSearchInputProps,
+} from './components/Dropdown/DropdownSearchInput'
+
 export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 

@@ -102,7 +102,7 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
       <Label
         className={classes.root}
         role="presentation"
-        styles={styles.label}
+        styles={styles.root}
         circular
         onClick={this.handleClick}
         content={header}
