@@ -10,15 +10,6 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
-    - run:
-        name: Update yarn
-        command: |
-        # remove default yarn
-        sudo rm -rf $(dirname $(which yarn))/yarn*
-        # download latest
-        rm -rf ~/.yarn
-        curl -o- -L https://yarnpkg.com/install.sh | bash
-        echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
       - checkout
       # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
       - run:
