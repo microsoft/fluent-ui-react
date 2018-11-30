@@ -32,7 +32,7 @@ import {
   childrenComponentPropTypes,
   contentComponentPropsTypes,
 } from '../../lib/commonPropTypes'
-import { focusAsync } from 'src/lib/accessibility/FocusZone'
+import { focusAsync } from '../../lib/accessibility/FocusZone'
 
 export interface MenuItemProps
   extends UIComponentProps<any, any>,
