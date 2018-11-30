@@ -110,7 +110,6 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
-      - *restore_npm_packages
       - run:
           name: Visual Tests
           command: yarn test:visual
