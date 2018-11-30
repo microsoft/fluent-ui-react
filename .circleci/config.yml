@@ -1,33 +1,35 @@
 version: 2
 aliases:
-  - &restore_npm_packages:
-      - run:
-          name: Update yarn
-          command: |
-            # remove default yarn
-            sudo rm -rf $(dirname $(which yarn))/yarn*
-            # download latest
-            rm -rf ~/.yarn
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
-      - checkout
-      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
-      - run:
-          name: Add npm bin to PATH
-          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
-      - run:
-          name: Install Dependencies
-          command: yarn
-      - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - .yarn-cache
-            - node_modules
+  - &update_yarn:
+      run:
+        name: Update yarn
+        command: |
+          # remove default yarn
+          sudo rm -rf $(dirname $(which yarn))/yarn*
+          # download latest
+          rm -rf ~/.yarn
+          curl -o- -L https://yarnpkg.com/install.sh | bash
+          echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+  - &add_npm_bin_to_path:
+      run:
+        name: Add npm bin to PATH
+        command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+  - &restore_cache:
+      restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies
+  - &install_dependencies:
+      run:
+        name: Install Dependencies
+        command: yarn
+  - &save_cache:
+      save_cache:
+        key: v1-dependencies-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.cache/yarn
+          - .yarn-cache
+          - node_modules
 general:
   branches:
     ignore:
