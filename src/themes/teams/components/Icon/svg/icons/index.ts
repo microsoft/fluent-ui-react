@@ -28,16 +28,17 @@ import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import participantRemove from './participantRemove'
+import redbang from './redbang'
 import reply from './reply'
 import retry from './retry'
 import send from './send'
 import teamCreate from './teamCreate'
 import teams from './teams'
+import translation from './translation'
 import trashCan from './trashCan'
 
 export default {
   add,
-  'add-participant': addParticipant,
   bookmark,
   bullets,
   calendar,
@@ -63,11 +64,14 @@ export default {
   mic,
   'mic-off': micOff,
   more,
+  'participant-add': addParticipant,
   'participant-remove': participantRemove,
+  redbang,
   reply,
   retry,
   send,
   teams,
+  translation,
   'trash-can': trashCan,
   'team-create': teamCreate,
 } as { [iconName: string]: TeamsSvgIconSpec }
