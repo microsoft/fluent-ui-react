@@ -81,7 +81,11 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      - request-testing:
+          type: approval
       - run:
+          requires:
+            - request-testing
           name: Update yarn
           command: |
             # remove default yarn
