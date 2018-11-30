@@ -12,7 +12,8 @@ class DropdownExample extends React.Component {
         search
         placeholder="Start typing a name"
         items={this.state.items}
-        onDropdownChange={(value: any[]) => {
+        onChange={(e, props) => {
+          const value = (props as any).value as any[]
           this.setState({
             items: inputItems.filter(item => value.indexOf(item) === -1),
           })

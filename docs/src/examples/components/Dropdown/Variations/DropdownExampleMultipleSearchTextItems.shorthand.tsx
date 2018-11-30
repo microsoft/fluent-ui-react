@@ -12,7 +12,8 @@ class DropdownExample extends React.Component {
         search
         placeholder="Start typing a name"
         items={this.state.items}
-        onDropdownChange={(value: any[]) => {
+        onChange={(e, props) => {
+          const value = (props as any).value as any[]
           this.setState({
             items: inputItems.filter(item => value.indexOf(item) === -1),
           })
@@ -23,33 +24,15 @@ class DropdownExample extends React.Component {
 }
 
 const inputItems = [
-  {
-    header: 'Bruce Wayne',
-  },
-  {
-    header: 'Natasha Romanoff',
-  },
-  {
-    header: 'Steven Strange',
-  },
-  {
-    header: 'Alfred Pennyworth',
-  },
-  {
-    header: `Scarlett O'Hara`,
-  },
-  {
-    header: 'Imperator Furiosa',
-  },
-  {
-    header: 'Bruce Banner',
-  },
-  {
-    header: 'Peter Parker',
-  },
-  {
-    header: 'Selina Kyle',
-  },
+  'Bruce Wayne',
+  'Natasha Romanoff',
+  'Steven Strange',
+  'Alfred Pennyworth',
+  `Scarlett O'Hara`,
+  'Imperator Furiosa',
+  'Bruce Banner',
+  'Peter Parker',
+  'Selina Kyle',
 ]
 
 export default DropdownExample

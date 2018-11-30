@@ -112,20 +112,7 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
             'aria-hidden': false,
             role: 'button',
           },
-          overrideProps: predefinedProps => ({
-            onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
-              e.stopPropagation()
-              _.invoke(this.props, 'onRemove', e, this.props)
-              _.invoke(predefinedProps, 'onClick', e, iconProps)
-            },
-            onKeyDown: (e: React.SyntheticEvent, iconProps: IconProps) => {
-              e.stopPropagation()
-              if (keyboardKey.getCode(e) === keyboardKey.Enter) {
-                _.invoke(this.props, 'onRemove', e, this.props)
-              }
-              _.invoke(predefinedProps, 'onKeyDown', e, iconProps)
-            },
-          }),
+          overrideProps: this.handleIconOverrides,
           render: renderIcon,
         })}
         {...optionalImage}
@@ -133,6 +120,21 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
       />
     )
   }
+
+  private handleIconOverrides = (predefinedProps: DropdownLabelProps) => ({
+    onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
+      e.stopPropagation()
+      _.invoke(this.props, 'onRemove', e, this.props)
+      _.invoke(predefinedProps, 'onClick', e, iconProps)
+    },
+    onKeyDown: (e: React.SyntheticEvent, iconProps: IconProps) => {
+      e.stopPropagation()
+      if (keyboardKey.getCode(e) === keyboardKey.Enter) {
+        _.invoke(this.props, 'onRemove', e, this.props)
+      }
+      _.invoke(predefinedProps, 'onKeyDown', e, iconProps)
+    },
+  })
 }
 
 DropdownLabel.create = createShorthandFactory(DropdownLabel, 'header')

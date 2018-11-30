@@ -57,6 +57,7 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
 
   static propTypes = {
     ...commonUIComponentPropTypes,
+    accessibilityItemProps: PropTypes.object,
     content: PropTypes.string,
     header: PropTypes.string,
     highlighted: PropTypes.bool,
@@ -70,7 +71,7 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   }
 
   public renderComponent({ classes, variables, rest }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, highlighted, image } = this.props
+    const { content, header, highlighted, image, accessibilityItemProps } = this.props
     return (
       <ListItem
         className={classes.root}
@@ -89,6 +90,7 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
           media: image && <Image src={image} avatar />,
           content,
         }}
+        {...accessibilityItemProps}
         {...rest}
       />
     )

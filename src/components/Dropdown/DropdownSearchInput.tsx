@@ -8,18 +8,8 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import Input from '../Input/Input'
 import Ref from '../Ref/Ref'
-import { GetMenuPropsOptions, GetPropsCommonOptions, GetInputPropsOptions } from 'downshift'
 
 export interface DropdownSearchInputProps extends UIComponentProps<any, any> {
-  /** Callback that adds accessibility attributes, listeners and functionality on the combobox root. */
-  getAccessibilityRootProps?: (
-    options?: GetMenuPropsOptions,
-    otherOptions?: GetPropsCommonOptions,
-  ) => any
-
-  /** Callback that adds accessibility attributes, listeners and functionality on the combobox input. */
-  getAccessibilityInputProps?: (options?: GetInputPropsOptions) => any
-
   /**
    * Ref callback with an input DOM node.
    *
@@ -75,13 +65,13 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
 
   static propTypes = {
     ...commonUIComponentPropTypes,
-    getAccessibilityRootProps: PropTypes.func,
-    getAccessibilityInputProps: PropTypes.func,
+    accessibilityInputProps: PropTypes.object,
+    accessibilityWrapperProps: PropTypes.object,
+    inputRef: PropTypes.func,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputKeyDown: PropTypes.func,
     onKeyUp: PropTypes.func,
-    inputRef: PropTypes.func,
     placeholder: PropTypes.string,
   }
 
@@ -110,7 +100,7 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
   }
 
   public renderComponent({ rest, styles }: RenderResultConfig<DropdownSearchInputProps>) {
-    const { getAccessibilityRootProps, getAccessibilityInputProps, placeholder } = this.props
+    const { accessibilityWrapperProps, accessibilityInputProps, placeholder } = this.props
     return (
       <this.RefProvidingWrapper>
         <Input
@@ -119,17 +109,16 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
           onKeyUp={this.handleKeyUp}
           wrapper={{
             styles: styles.wrapper,
-            ...getAccessibilityRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
+            ...accessibilityWrapperProps,
           }}
           variables={{ inputFocusBorderBottomColor: 'transparent' }}
           input={{
             type: 'text',
             styles: styles.input,
             placeholder,
-            ...getAccessibilityInputProps({
-              onBlur: this.handleInputBlur,
-              onKeyDown: this.handleInputKeyDown,
-            }),
+            onBlur: this.handleInputBlur,
+            onKeyDown: this.handleInputKeyDown,
+            ...accessibilityInputProps,
           }}
           {...rest}
         />
