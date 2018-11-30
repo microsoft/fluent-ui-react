@@ -13,7 +13,12 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import {
+  Extendable,
+  ShorthandRenderFunction,
+  ShorthandValue,
+  ComponentEventHandler,
+} from '../../../types/utils'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
@@ -38,6 +43,14 @@ export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponent
 
   /** Shorthand array of props for Menu. */
   items?: ShorthandValue[]
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<MenuProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -163,10 +176,19 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rest}
+        className={classes.root}
+        onClick={this.handleClick}
+      >
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
+  }
+
+  private handleClick = (e: React.SyntheticEvent) => {
+    _.invoke(this.props, 'onClick', e, { ...this.props, ...this.state })
   }
 }
 

@@ -10,7 +10,7 @@ import {
   AutoControlledComponent,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Menu from '../Menu/Menu'
+import Menu, { MenuProps } from '../Menu/Menu'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -223,6 +223,9 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               secondary,
               styles: styles.menu,
             },
+            overrideProps: {
+              onClick: this.handleSubmenuClicked,
+            },
           })
         : null
 
@@ -252,7 +255,8 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   private handleClick = e => {
     const { active, menu } = this.props
     if (menu) {
-      this.setState({ submenuOpen: active ? !this.state.submenuOpen : true })
+      this.trySetState({ submenuOpen: active ? !this.state.submenuOpen : true })
+      e.stopPropagation()
     }
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -294,6 +298,11 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
       e.stopPropagation()
       e.preventDefault()
     }
+  }
+
+  private handleSubmenuClicked = (e: React.SyntheticEvent, props: MenuProps) => {
+    this.trySetState({ submenuOpen: false })
+    _.invoke(props, 'onClick', props)
   }
 }
 
