@@ -27,16 +27,14 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       as: customPropTypes.as,
     }),
     ...(children && {
-      children: children === true || children === 'node' ? PropTypes.node : PropTypes.element,
+      children: children === 'element' ? PropTypes.element : PropTypes.node,
     }),
     ...(className && {
       className: PropTypes.string,
     }),
     ...(content && {
       content:
-        content === true || content === 'node'
-          ? customPropTypes.nodeContent
-          : customPropTypes.itemShorthand,
+        content === 'shorthand' ? customPropTypes.itemShorthand : customPropTypes.nodeContent,
     }),
     ...(styled && {
       styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
