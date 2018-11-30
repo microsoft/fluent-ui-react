@@ -8,7 +8,11 @@ workflows:
   master:
     jobs:
       - builds
+      - hold:
+        type: approval
       - visual
+        requires:
+          - hold
 jobs:
   builds:
     docker:
@@ -81,8 +85,6 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
-      - hold:
-          type: approval
       - run:
           requires:
             - hold
