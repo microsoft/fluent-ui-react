@@ -8,11 +8,7 @@ workflows:
   master:
     jobs:
       - builds
-      - accept-visual-tests:
-          type: approval
-      - visual:
-          requires:
-            - accept-visual-tests
+      - visual
 jobs:
   builds:
     docker:
@@ -86,8 +82,6 @@ jobs:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
       - run:
-          requires:
-            - hold
           name: Update yarn
           command: |
             # remove default yarn
