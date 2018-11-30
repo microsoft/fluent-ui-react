@@ -8,7 +8,7 @@ workflows:
   master:
     jobs:
       - builds
-      - hold:
+      - hold
         type: approval
       - visual
         requires:
