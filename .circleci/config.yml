@@ -8,11 +8,11 @@ workflows:
   master:
     jobs:
       - builds
-      - hold:
+      - accept-visual-tests:
           type: approval
       - visual:
           requires:
-            - hold
+            - accept-visual-tests
 jobs:
   builds:
     docker:
