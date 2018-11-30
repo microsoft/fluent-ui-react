@@ -34,9 +34,10 @@
     "satisfied": "satisfied --skip-invalid",
     "pretest": "yarn satisfied",
     "test": "gulp test",
+    "test:watch": "gulp test:watch",
+    "test:vulns": "snyk test",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
-    "test:watch": "gulp test:watch",
     "generate:component": "gulp generate:component"
   },
   "lint-staged": {
@@ -139,6 +140,7 @@
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.81.1",
     "simulant": "^0.2.2",
+    "snyk": "^1.110.2",
     "ta-scripts": "^2.5.2",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
