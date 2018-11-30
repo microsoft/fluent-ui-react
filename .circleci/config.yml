@@ -112,6 +112,7 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      - *update_yarn
       - run:
           name: Visual Tests
           command: yarn test:visual
