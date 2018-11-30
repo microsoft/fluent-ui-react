@@ -266,8 +266,28 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : !active && underlined && underlinedItem(v.defaultActiveBackgroundColor)),
       },
+
+      '::after': {
+        ...(props.menu && {
+          position: 'relative',
+          float: 'right',
+          left: pxToRem(10),
+          content: v.submenuIndicatorContent,
+          ...(!props.vertical && {
+            transform: `rotate(${v.submenuIndicatorRotationAngle}deg)`,
+          }),
+        }),
+      },
     }
   },
+
+  menu: ({ props: { vertical } }) => ({
+    // background: 'white',
+    // zIndex: '1000',
+    position: 'absolute',
+    top: vertical ? '0' : '100%',
+    left: vertical ? '100%' : '0',
+  }),
 }
 
 export default menuItemStyles

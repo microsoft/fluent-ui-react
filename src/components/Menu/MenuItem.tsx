@@ -175,7 +175,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   private itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const {
       children,
       content,
@@ -184,8 +184,8 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
       renderWrapper,
       wrapper,
       menu,
-      type,
-      vertical,
+      primary,
+      secondary,
       active,
     } = this.props
 
@@ -216,17 +216,12 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const maybeSubmenu =
       menu && active && submenuOpen
         ? Menu.create(menu, {
-            overrideProps: {
+            defaultProps: {
               accessibility: submenuBehavior,
               vertical: true,
-              type,
-              styles: {
-                // background: 'white',
-                // zIndex: '1000',
-                position: 'absolute',
-                top: vertical ? '0' : '100%',
-                left: vertical ? '100%' : '0',
-              },
+              primary,
+              secondary,
+              styles: styles.menu,
             },
           })
         : null
