@@ -3,10 +3,10 @@ import { customPropTypes } from './index'
 
 export interface CreateCommonConfig {
   animated?: boolean
-  children?: boolean | 'element'
+  children?: boolean | 'node' | 'element'
   as?: boolean
   className?: boolean
-  content?: boolean | 'shorthand'
+  content?: boolean | 'node' | 'shorthand'
   styled?: boolean
 }
 
@@ -14,9 +14,9 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
   const {
     animated = true,
     as = true,
-    children = true,
+    children = 'node',
     className = true,
-    content = true,
+    content = 'node',
     styled = true,
   } = config
   return {
@@ -27,13 +27,16 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       as: customPropTypes.as,
     }),
     ...(children && {
-      children: children === true ? PropTypes.node : PropTypes.element,
+      children: children === true || children === 'node' ? PropTypes.node : PropTypes.element,
     }),
     ...(className && {
       className: PropTypes.string,
     }),
     ...(content && {
-      content: content === true ? customPropTypes.contentShorthand : customPropTypes.itemShorthand,
+      content:
+        content === true || content === 'node'
+          ? customPropTypes.nodeContent
+          : customPropTypes.itemShorthand,
     }),
     ...(styled && {
       styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),

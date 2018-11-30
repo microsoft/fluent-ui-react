@@ -135,7 +135,7 @@ class RadioGroupItem extends AutoControlledComponent<
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     isFromKeyboard: PropTypes.bool,
-    label: customPropTypes.contentShorthand,
+    label: customPropTypes.nodeContent,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
