@@ -197,9 +197,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   private handleShowRtlClick = e => {
     e.preventDefault()
 
-    const { showRtl } = this.state
-
-    this.setState({ showRtl: !showRtl })
+    this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
   private handleShowCodeClick = e => {
@@ -463,7 +461,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {({ markup }) => {
           // add new lines between almost all adjacent elements
           // moves inline elements to their own line
-          const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
+          const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span)/g, '>\n<')
 
           const beautifiedHTML = html(preFormattedHTML, {
             indent_size: 2,
