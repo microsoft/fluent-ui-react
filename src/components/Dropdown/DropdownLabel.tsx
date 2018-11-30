@@ -16,10 +16,10 @@ import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
 export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps, any> {
-  /** The main text displayed for the item. */
+  /** The test for the item. */
   header?: string
 
-  /** The item can have an icon when displayed as active in multiple selection.. */
+  /** The item can have an icon when displayed as active in multiple selection. */
   icon?: ShorthandValue
 
   /** The item can have an image avatar. */

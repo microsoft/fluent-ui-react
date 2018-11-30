@@ -18,7 +18,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<any, any> {
   inputRef?: (inputNode: HTMLElement) => void
 
   /**
-   * Called on the focus.
+   * Called on focus for the combobox element.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
@@ -42,7 +42,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<any, any> {
   onInputKeyDown?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
-   * Called on the focus.
+   * Called on the key up for combobox element.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.

@@ -21,7 +21,7 @@ export interface DropdownItemProps extends UIComponentProps<any, any> {
   /** The main text displayed for the item. */
   header?: string
 
-  /** The item is highlighted inside the list. */
+  /** If the item is highlighted inside the list. */
   highlighted?: boolean
 
   /** The item can have an image avatar. */

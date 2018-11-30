@@ -38,45 +38,49 @@ export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessa
 }
 
 export interface DropdownProps extends UIComponentProps<any, any> {
-  /** The default value for the search query. */
+  /** The initial value for the search query, if search. */
   defaultSearchQuery?: string
 
-  /** The default value for the dropdown. */
+  /** The initial value or value array, if multiple. */
   defaultValue?: ShorthandValue | ShorthandValue[]
 
   /** A dropdown can take the full width of its container. */
   fluid?: boolean
 
+  /** Object that contains callbacks for creating aria-live messages needed for multiple selection dropdown. */
+  getA11ySelectionMessage?: {
+    /**
+     * A function that creates custom accessability message a screen reader narrates on item added to selection.
+     * @param {ShorthandValue} item - Dropdown added element.
+     */
+    onAdd?: (item: ShorthandValue) => string
+    /**
+     * A function that creates custom accessability message a screen reader narrates on item removed from selection.
+     * @param {ShorthandValue} item - Dropdown removed element.
+     */
+    onRemove?: (item: ShorthandValue) => string
+  }
+
   /**
-   * A function that creates custom accessability message for dropdown status.
+   * A function that creates custom accessability message for dropdown status, updated on highlighting an item, opening list or navigating
+   * with the screen reader on the dropdown combobox when an item is selected.
    * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
-  /**
-   * A function that creates custom accessability message for dropdown item selection.
-   * @param {DropdownListItem} item - Dropdown selected element.
-   */
-  getA11ySelectedMessage?: (item: ShorthandValue) => string
-
-  /** A function that creates custom accessability message for dropdown item removal.
-   * @param {ShorthandValue} item - Dropdown removed element.
-   */
-  getA11yRemovedMessage?: (item: ShorthandValue) => string
-
-  /** Array of props for generating dropdown items and selected item labels if multiple selection. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if multiple. */
   items?: ShorthandValue[]
 
   /**
-   * Function to be passed to create selected searchQuery from selected item. It will be displayed on selection in the
-   * edit text, for search, or on the button, for non-search. Multiple search will always clear searchQuery on selection.
+   * Function to be passed to create selected searchQuery from selected item. It will be displayed when an item is selected, inside the
+   * edit text, for search, or on the button, for non-search.
    */
   itemToString?: (item: ShorthandValue) => string
 
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
 
-  /** A string to be displayed when dropdown does not have available items to show. */
+  /** A string to be displayed in the list when dropdown has no available items to show. */
   noResultsMessage?: string
 
   /**
@@ -93,11 +97,11 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    */
   onSearchQueryChange?: ComponentEventHandler<DropdownProps>
 
-  /** A message to serve as placeholder. */
+  /** A message to serve as placeholder, on the edit text, if search, or on the button, if not. */
   placeholder?: string
 
   /**
-   * A custom render function the icon slot.
+   * A custom render function the Dropdown.Item slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -106,7 +110,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   renderItem?: ShorthandRenderFunction
 
   /**
-   * A custom render function the icon slot.
+   * A custom render function the Dropdown.Label slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -115,7 +119,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   renderLabel?: ShorthandRenderFunction
 
   /**
-   * A custom render function the icon slot.
+   * A custom render function the Dropdown.SearchInput slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -126,7 +130,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   /** A dropdown can have a search field instead of trigger button. */
   search?: boolean
 
-  /** Shorthand for the edit text that has the search query, if dropdown is also a search. */
+  /** Shorthand for the edit text (Dropdown.SearchInput) that has the search query, if search. */
   searchInput?: ShorthandValue
 
   /** The value in the edit text, if dropdown is a search. */
@@ -286,7 +290,7 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: shouldNotHavePlaceholder ? '' : placeholder,
-        inputRef: inputNode => {
+        inputRef: (inputNode: HTMLElement) => {
           this.inputNode = inputNode
         },
         variables,
