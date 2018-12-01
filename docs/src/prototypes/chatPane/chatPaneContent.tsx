@@ -47,6 +47,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
               'aria-level': 3,
             }
           : {}
+      console.log(props)
       return (
         <Chat.Item key={`chat-item-${index}`}>
           {itemType === ChatItemTypes.message && (

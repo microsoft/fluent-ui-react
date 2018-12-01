@@ -24,6 +24,8 @@ import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
 import getElementType from '../../getElementType'
 
+export { FocusZoneProps } from './FocusZone.types'
+
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
 
