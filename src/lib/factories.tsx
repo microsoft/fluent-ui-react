@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
 import {
-  ShorthandRenderFunction,
   ShorthandValue,
   Props,
   ShorthandRenderCallback,
@@ -14,9 +13,6 @@ type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
-  /** Override the default render implementation. */
-  render?: ShorthandRenderFunction
-
   /** Default props object */
   defaultProps?: Props
 
@@ -102,7 +98,7 @@ function createShorthandFromValue(
   }
   // short circuit noop values
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
-  if (valIsNoop && !options.render) return null
+  if (valIsNoop) return null
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
@@ -185,11 +181,6 @@ function createShorthandFromValue(
   // ----------------------------------------
   // Create Element
   // ----------------------------------------
-  const { render } = options
-
-  if (render) {
-    return render(Component, props, props.children)
-  }
 
   // Clone ReactElements
   if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)

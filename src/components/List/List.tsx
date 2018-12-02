@@ -9,7 +9,7 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
@@ -34,16 +34,6 @@ export interface ListProps extends UIComponentProps<any, any>, ChildrenComponent
 
   /** Truncates header */
   truncateHeader?: boolean
-
-  /**
-   * A custom render iterator for rendering each of the List items.
-   * The default component, props, and children are available for each item.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItem?: ShorthandRenderFunction
 }
 
 export interface ListState {
@@ -67,7 +57,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
-    renderItem: PropTypes.func,
   }
 
   static defaultProps = {
@@ -136,7 +125,7 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   }
 
   renderItems() {
-    const { items, renderItem } = this.props
+    const { items } = this.props
     const { selectedItemIndex } = this.state
 
     this.itemRefs = []
@@ -160,7 +149,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
 
       return ListItem.create(item, {
         defaultProps: itemProps,
-        render: renderItem,
       })
     })
   }

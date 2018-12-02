@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
@@ -24,15 +24,6 @@ export interface HeaderProps
 
   /** Align header content. */
   textAlign?: 'left' | 'center' | 'right' | 'justified'
-
-  /**
-   * A custom render function the description slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderDescription?: ShorthandRenderFunction
 }
 
 /**
@@ -56,7 +47,6 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
     ...contentComponentPropsTypes,
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
-    renderDescription: PropTypes.func,
   }
 
   static defaultProps = {
@@ -66,7 +56,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, variables: v, rest }) {
-    const { children, content, description, renderDescription } = this.props
+    const { children, content, description } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -85,7 +75,6 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
               ...(v.descriptionColor && { color: v.descriptionColor }),
             },
           },
-          render: renderDescription,
         })}
       </ElementType>
     )

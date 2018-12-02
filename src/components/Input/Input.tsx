@@ -9,12 +9,7 @@ import {
   RenderResultConfig,
   partitionHTMLProps,
 } from '../../lib'
-import {
-  Extendable,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  ComponentEventHandler,
-} from '../../../types/utils'
+import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
@@ -50,33 +45,6 @@ export interface InputProps extends UIComponentProps<any, any>, ChildrenComponen
    * @param {object} data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps>
-
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the input slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderInput?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the wrapper slot.
-   *
-   * @param { React.ReactType } Component - The computed component for this slot.
-   * @param { object } props - The computed props for this slot.
-   * @param { ReactNode | ReactNodeArray } children - The computed children for this slot.
-   */
-  renderWrapper?: ShorthandRenderFunction
 
   /** The HTML input type. */
   type?: string
@@ -126,9 +94,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     inputRef: PropTypes.func,
     inline: PropTypes.bool,
     onChange: PropTypes.func,
-    renderIcon: PropTypes.func,
-    renderInput: PropTypes.func,
-    renderWrapper: PropTypes.func,
     type: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     wrapper: customPropTypes.wrapperShorthand,
@@ -149,7 +114,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     styles,
     variables,
   }: RenderResultConfig<InputProps>) {
-    const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
+    const { className, input, type, wrapper } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
@@ -168,7 +133,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                   className: classes.input,
                   onChange: this.handleChange,
                 },
-                render: renderInput,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -177,7 +141,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                 variables: variables.icon,
               },
               overrideProps: this.handleIconOverrides,
-              render: renderIcon,
             })}
           </>
         ),
@@ -187,7 +150,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,
       },
-      render: renderWrapper,
     })
   }
 

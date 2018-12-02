@@ -1,9 +1,8 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
 
 import { childrenExist, createShorthandFactory, RenderResultConfig, UIComponent } from '../../lib'
 import Slot from '../Slot/Slot'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 import {
   UIComponentProps,
   ChildrenComponentProps,
@@ -18,16 +17,7 @@ import {
 export interface ChatItemProps
   extends UIComponentProps<any, any>,
     ChildrenComponentProps,
-    ContentComponentProps {
-  /**
-   * A custom render function the content slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderContent?: ShorthandRenderFunction
-}
+    ContentComponentProps {}
 
 /**
  * A chat item represents a single event in a chat.
@@ -43,7 +33,6 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
     ...commonUIComponentPropTypes,
     ...childrenComponentPropTypes,
     ...contentComponentPropsTypes,
-    renderContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -57,7 +46,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
     variables,
     rest,
   }: RenderResultConfig<ChatItemProps>) {
-    const { children, content, renderContent } = this.props
+    const { children, content } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -66,7 +55,6 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
           : Slot.create(content, {
               styles: styles.content,
               variables: variables.content,
-              render: renderContent,
             })}
       </ElementType>
     )

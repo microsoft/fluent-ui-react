@@ -17,7 +17,6 @@ type GetShorthandArgs = {
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
   value?: ShorthandValue
-  render?: any
 }
 
 /**
@@ -30,13 +29,11 @@ const getShorthand = ({
   overrideProps,
   generateKey,
   value,
-  render,
 }: GetShorthandArgs) =>
   createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
     generateKey,
-    render,
   })
 
 const isValuePrimitive = (value: ShorthandValue) =>
@@ -200,57 +197,6 @@ describe('factories', () => {
       })
     })
 
-    describe('render', () => {
-      const testValue = 'hi'
-
-      test('is called once', () => {
-        const spy = jest.fn()
-
-        getShorthand({ value: testValue, render: spy })
-
-        expect(spy).toHaveBeenCalledTimes(1)
-      })
-
-      test('is called with the computed component, props, and children', () => {
-        const spy = jest.fn(() => <div />)
-
-        getShorthand({
-          value: testValue,
-          Component: 'p',
-          mappedProp: 'children',
-          render: spy,
-        })
-
-        expect(spy).toHaveBeenCalledWith('p', { key: testValue, children: testValue }, testValue)
-      })
-
-      test('receives defaultProps and defaults mappedProp to children in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const defaultProps = { defaults: true }
-
-        getShorthand({ value: testValue, defaultProps, Component: 'p', render: spy })
-
-        expect(spy).toHaveBeenCalledWith(
-          'p',
-          { key: testValue, children: testValue, ...defaultProps },
-          testValue,
-        )
-      })
-
-      test('receives overrideProps and defaults mappedProp to children in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const overrideProps = { overrides: true }
-
-        getShorthand({ value: testValue, overrideProps, Component: 'p', render: spy })
-
-        expect(spy).toHaveBeenCalledWith(
-          'p',
-          { key: testValue, children: testValue, ...overrideProps },
-          testValue,
-        )
-      })
-    })
-
     describe('styles', () => {
       test('deep merges styles prop onto defaultProps styles', () => {
         expect.assertions(1)
@@ -266,15 +212,15 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                color: 'black',
+                ':hover': { color: 'blue' },
+              })
+            }),
           Component: 'p',
           defaultProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              color: 'black',
-              ':hover': { color: 'blue' },
-            })
-          },
         })
       })
 
@@ -301,19 +247,19 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                position: 'keep',
+                color: 'black',
+                ':hover': {
+                  position: 'keep',
+                  color: 'blue',
+                },
+              })
+            }),
           Component: 'p',
           overrideProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              position: 'keep',
-              color: 'black',
-              ':hover': {
-                position: 'keep',
-                color: 'blue',
-              },
-            })
-          },
         })
       })
 
@@ -331,15 +277,15 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                color: 'black',
+                ':hover': { color: 'blue' },
+              })
+            }),
           Component: 'p',
           defaultProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              color: 'black',
-              ':hover': { color: 'blue' },
-            })
-          },
         })
       })
 
@@ -366,19 +312,19 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                position: 'keep',
+                color: 'black',
+                ':hover': {
+                  position: 'keep',
+                  color: 'blue',
+                },
+              })
+            }),
           Component: 'p',
           overrideProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              position: 'keep',
-              color: 'black',
-              ':hover': {
-                position: 'keep',
-                color: 'blue',
-              },
-            })
-          },
         })
       })
     })

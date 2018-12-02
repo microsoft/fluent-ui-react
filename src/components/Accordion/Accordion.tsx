@@ -7,12 +7,7 @@ import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
@@ -39,26 +34,6 @@ export interface AccordionProps extends UIComponentProps<any, any>, ChildrenComp
     content: ShorthandValue
     title: ShorthandValue
   }[]
-
-  /**
-   * A custom render iterator for rendering each Accordion panel content.
-   * The default component, props, and children are available for each panel content.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderContent?: ShorthandRenderFunction
-
-  /**
-   * A custom render iterator for rendering each Accordion panel title.
-   * The default component, props, and children are available for each panel title.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderTitle?: ShorthandRenderFunction
 
   /**
    * Accessibility behavior if overridden by the user.
@@ -98,8 +73,6 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
       ),
     ]),
     accessibility: PropTypes.func,
-    renderTitle: PropTypes.func,
-    renderContent: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -147,7 +120,7 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
 
   renderPanels = () => {
     const children: any[] = []
-    const { panels, renderContent, renderTitle } = this.props
+    const { panels } = this.props
 
     _.each(panels, (panel, index) => {
       const { content, title } = panel
@@ -157,13 +130,11 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
         AccordionTitle.create(title, {
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
-          render: renderTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
           defaultProps: { active },
-          render: renderContent,
         }),
       )
     })

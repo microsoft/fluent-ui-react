@@ -43,10 +43,3 @@ export type ShorthandRenderer = (
 export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
 
 export type ShorthandValue = React.ReactNode | Props
-
-// OBSOLETE
-export type ShorthandRenderFunction = (
-  Component: React.ReactType,
-  props: Props,
-  children: ReactChildren,
-) => React.ReactElement<any>

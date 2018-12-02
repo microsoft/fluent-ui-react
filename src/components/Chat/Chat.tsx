@@ -5,7 +5,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -20,16 +20,6 @@ export interface ChatProps extends UIComponentProps<any, any>, ChildrenComponent
 
   /** Shorthand array of the items inside the chat. */
   items?: ShorthandValue[]
-
-  /**
-   * A custom render iterator for rendering each of the Chat items.
-   * The default component, props, and children are available for each item.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItem?: ShorthandRenderFunction
 }
 
 /**
@@ -45,7 +35,6 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
     ...childrenComponentPropTypes,
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
-    renderItem: PropTypes.func,
   }
 
   static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }
@@ -58,7 +47,7 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, items, renderItem } = this.props
+    const { children, items } = this.props
 
     return (
       <ElementType
@@ -67,9 +56,7 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
         {...accessibility.keyHandlers.root}
         {...rest}
       >
-        {childrenExist(children)
-          ? children
-          : _.map(items, item => ChatItem.create(item, { render: renderItem }))}
+        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>
     )
   }

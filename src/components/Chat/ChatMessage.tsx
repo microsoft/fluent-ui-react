@@ -14,7 +14,7 @@ import {
   ComponentSlotClasses,
   ComponentSlotStylesInput,
 } from '../../themes/types'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -51,42 +51,6 @@ export interface ChatMessageProps
   /** Indicates whether message belongs to the current user. */
   mine?: boolean
 
-  /**
-   * A custom render function the author slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderAuthor?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the avatar slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderAvatar?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the content slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderContent?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the timestamp slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderTimestamp?: ShorthandRenderFunction
-
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
 }
@@ -109,10 +73,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
-    renderAuthor: PropTypes.func,
-    renderAvatar: PropTypes.func,
-    renderContent: PropTypes.func,
-    renderTimestamp: PropTypes.func,
     timestamp: customPropTypes.itemShorthand,
   }
 
@@ -158,24 +118,13 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
   ) => {
-    const {
-      author,
-      avatar,
-      content,
-      mine,
-      renderAuthor,
-      renderAvatar,
-      renderTimestamp,
-      renderContent,
-      timestamp,
-    } = this.props
+    const { author, avatar, content, mine, timestamp } = this.props
 
     const avatarElement = Avatar.create(avatar, {
       defaultProps: {
         styles: styles.avatar,
         variables: variables.avatar,
       },
-      render: renderAvatar,
     })
 
     const authorElement = Text.create(author, {
@@ -184,7 +133,6 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         styles: styles.author,
         variables: variables.author,
       },
-      render: renderAuthor,
     })
 
     const timestampElement = Text.create(timestamp, {
@@ -194,13 +142,11 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         styles: styles.timestamp,
         variables: variables.timestamp,
       },
-      render: renderTimestamp,
     })
 
     const contentElement = Slot.create(content, {
       styles: styles.content,
       variables: variables.content,
-      render: renderContent,
     })
 
     return (
