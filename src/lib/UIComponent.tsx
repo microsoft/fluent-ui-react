@@ -5,7 +5,6 @@ import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
-// NOOP CHANGE
 class UIComponent<P, S = {}> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
