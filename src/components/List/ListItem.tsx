@@ -11,7 +11,7 @@ import {
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -43,7 +43,7 @@ export interface ListItemState {
 /**
  * A list item contains a single piece of content within a list.
  */
-class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'

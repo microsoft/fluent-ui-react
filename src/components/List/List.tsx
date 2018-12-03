@@ -15,7 +15,7 @@ import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -47,7 +47,7 @@ export interface ListState {
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, ListState> {
+class List extends UIComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'

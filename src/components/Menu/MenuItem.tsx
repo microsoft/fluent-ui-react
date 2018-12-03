@@ -18,7 +18,7 @@ import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -87,7 +87,7 @@ export interface MenuItemState {
 /**
  * A menu item is an actionable navigation item within a menu.
  */
-class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
+class MenuItem extends UIComponent<ReactProps<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'

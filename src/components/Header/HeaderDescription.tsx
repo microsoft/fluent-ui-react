@@ -9,7 +9,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
@@ -19,7 +19,7 @@ export interface HeaderDescriptionProps
 /**
  * A header's description provides more detailed information.
  */
-class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, any> {
+class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'
