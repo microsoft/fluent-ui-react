@@ -1,24 +1,23 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, RenderResultConfig, UIComponent } from '../../lib'
-import Slot from '../Slot/Slot'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  RenderResultConfig,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import Slot from '../Slot/Slot'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface ChatItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps<ShorthandValue> {
   /**
    * A custom render function the content slot.
    *
@@ -40,9 +39,9 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     renderContent: PropTypes.func,
   }
 

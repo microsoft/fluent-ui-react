@@ -3,15 +3,19 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import TreeItem from './TreeItem'
-import { UIComponent, childrenExist } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  commonPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+} from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import * as customPropTypes from '../../lib/customPropTypes'
 
-export interface TreeProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -42,8 +46,9 @@ class Tree extends UIComponent<TreeProps> {
   static displayName = 'Tree'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
