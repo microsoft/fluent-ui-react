@@ -2,7 +2,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import {
   ComponentEventHandler,
   Extendable,
@@ -10,21 +17,8 @@ import {
   ShorthandRenderFunction,
 } from '../../../types/utils'
 import FormField from './FormField'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
-export interface FormProps
-  extends UIComponentProps<any, any>,
-    ChildrenComponentProps,
-    ContentComponentProps {
+export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML form action. */
   action?: string
 
@@ -62,9 +56,9 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   public static className = 'ui-form'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,

@@ -1,26 +1,44 @@
 import * as PropTypes from 'prop-types'
 import { customPropTypes } from './index'
 
-export const styledComponentPropTypes = {
-  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+export interface CreateCommonConfig {
+  animated?: boolean
+  children?: boolean | 'node' | 'element'
+  as?: boolean
+  className?: boolean
+  content?: boolean | 'node' | 'shorthand'
+  styled?: boolean
 }
 
-export const animatedComponentPropTypes = {
-  animation: customPropTypes.animation,
-}
-
-export const commonUIComponentPropTypes = {
-  ...styledComponentPropTypes,
-  ...animatedComponentPropTypes,
-  as: customPropTypes.as,
-  className: PropTypes.string,
-}
-
-export const contentComponentPropsTypes = {
-  content: customPropTypes.contentShorthand,
-}
-
-export const childrenComponentPropTypes = {
-  children: PropTypes.node,
+export const createCommon = (config: CreateCommonConfig = {}) => {
+  const {
+    animated = true,
+    as = true,
+    children = 'node',
+    className = true,
+    content = 'node',
+    styled = true,
+  } = config
+  return {
+    ...(animated && {
+      animation: customPropTypes.animation,
+    }),
+    ...(as && {
+      as: customPropTypes.as,
+    }),
+    ...(children && {
+      children: children === 'element' ? PropTypes.element : PropTypes.node,
+    }),
+    ...(className && {
+      className: PropTypes.string,
+    }),
+    ...(content && {
+      content:
+        content === 'shorthand' ? customPropTypes.itemShorthand : customPropTypes.nodeContent,
+    }),
+    ...(styled && {
+      styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+      variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    }),
+  }
 }

@@ -1,15 +1,21 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, childrenExist, createShorthandFactory } from '../../lib'
+import {
+  UIComponent,
+  customPropTypes,
+  childrenExist,
+  createShorthandFactory,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Slot from '../Slot/Slot'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface FormFieldProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /** A control for the form field. */
   control?: ShorthandValue
 
@@ -73,8 +79,9 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
   static create: Function
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     control: customPropTypes.itemShorthand,
     id: PropTypes.string,
     inline: PropTypes.bool,
