@@ -136,8 +136,6 @@ import processedIcons_lock from './icons-lock'
 import processedIcons_locationoff from './icons-location-off'
 import processedIcons_location from './icons-location'
 import processedIcons_link from './icons-link'
-import processedIcons_liked from './icons-liked'
-import processedIcons_like from './icons-like'
 import processedIcons_leave from './icons-leave'
 import processedIcons_kollective from './icons-kollective'
 import processedIcons_keyboard from './icons-keyboard'
@@ -430,8 +428,6 @@ export default {
   processedIcons_locationoff,
   processedIcons_location,
   processedIcons_link,
-  processedIcons_liked,
-  processedIcons_like,
   processedIcons_leave,
   processedIcons_kollective,
   processedIcons_keyboard,

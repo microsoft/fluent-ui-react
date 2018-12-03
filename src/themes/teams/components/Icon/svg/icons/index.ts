@@ -20,7 +20,7 @@ import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
 import leave from './leave'
-import like from './like'
+import thumbsUp from './thumbsUp'
 import markAsUnread from './markAsUnread'
 import mention from './mention'
 import menu from './menu'
@@ -57,7 +57,7 @@ export default {
   giphy,
   highlight,
   leave,
-  like,
+  'thumbs-up': thumbsUp,
   'mark-as-unread': markAsUnread,
   mention,
   menu,
