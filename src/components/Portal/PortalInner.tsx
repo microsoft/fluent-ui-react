@@ -2,9 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { Component } from 'react'
 import { createPortal } from 'react-dom'
-import { isBrowser } from '../../lib'
-import { ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -30,7 +28,13 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  */
 class PortalInner extends Component<PortalInnerProps> {
   public static propTypes = {
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      className: false,
+      content: false,
+      styled: false,
+    }),
     context: PropTypes.object,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,

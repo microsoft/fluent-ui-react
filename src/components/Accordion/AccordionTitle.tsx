@@ -2,21 +2,19 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionTitleProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ContentComponentProps,
     ChildrenComponentProps {
   /** Whether or not the title is in the open state. */
@@ -45,9 +43,7 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   static className = 'ui-accordion__title'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,

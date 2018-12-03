@@ -2,12 +2,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { isForwardRef } from 'react-is'
 
-import { ReactChildren } from '../../../types/utils'
+import { ChildrenComponentProps } from '../../lib'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
 
-export interface RefProps {
-  children: ReactChildren
+export interface RefProps extends ChildrenComponentProps<React.ReactChild> {
   /**
    * Called when a child component will be mounted or updated.
    *

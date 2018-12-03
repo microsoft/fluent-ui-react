@@ -132,3 +132,10 @@ export {
   RenderStardustResultConfig,
   CreateStardustComponentConfig,
 } from './lib/createStardustComponent'
+export {
+  AnimatedComponentProps,
+  StyledComponentProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from './lib'

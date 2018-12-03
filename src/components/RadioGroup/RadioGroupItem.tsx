@@ -3,7 +3,14 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
+import {
+  customPropTypes,
+  AutoControlledComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Label from '../Label/Label'
 import {
   ComponentEventHandler,
@@ -15,10 +22,8 @@ import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface RadioGroupItemProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupItemBehavior
@@ -119,8 +124,9 @@ class RadioGroupItem extends AutoControlledComponent<
   static className = 'ui-radiogroup__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
@@ -129,7 +135,7 @@ class RadioGroupItem extends AutoControlledComponent<
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     isFromKeyboard: PropTypes.bool,
-    label: customPropTypes.contentShorthand,
+    label: customPropTypes.nodeContent,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,

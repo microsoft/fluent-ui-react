@@ -1,21 +1,19 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { Extendable } from '../../../types/utils'
 
 export interface DividerProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /** A divider can be fitted, without any space above or below it.  */
@@ -42,9 +40,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static className = 'ui-divider'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     fitted: PropTypes.bool,
     size: PropTypes.number,
     type: PropTypes.oneOf(['primary', 'secondary']),
