@@ -6,8 +6,8 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
-import callControlPresentNew from './callControlPresentNew'
-import callControlStopPresentingNew from './callControlStopPresentingNew'
+import screenshare from './screenshare'
+import screenshareStop from './screenshareStop'
 import callEnd from './callEnd'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
@@ -46,8 +46,6 @@ export default {
   'call-end': callEnd,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
-  'call-control-present-new': callControlPresentNew,
-  'call-control-stop-presenting-new': callControlStopPresentingNew,
   edit,
   error,
   format,
@@ -69,6 +67,8 @@ export default {
   redbang,
   reply,
   retry,
+  screenshare,
+  'screenshare-stop': screenshareStop,
   send,
   teams,
   translation,
