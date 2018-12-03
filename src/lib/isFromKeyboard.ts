@@ -1,4 +1,4 @@
-import whatInput from 'what-input'
+import * as whatInput from 'what-input'
 import tsUtils from './typescriptUtils'
 export interface State {
   isFromKeyboard: boolean

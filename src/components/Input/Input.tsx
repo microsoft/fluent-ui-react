@@ -144,8 +144,13 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
             })}
           </>
         ),
-        styles: styles.root,
         ...rest,
+
+        // do not pass Stardust 'styles' prop
+        // in case if React Element was used to define 'wrapper'
+        ...(!React.isValidElement(wrapper) && {
+          styles: styles.root,
+        }),
       },
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,

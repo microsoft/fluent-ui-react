@@ -12,6 +12,7 @@ import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
+import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -52,11 +53,27 @@ const Router = () => (
             path="/prototype-search-page"
             component={require('./prototypes/SearchPage/index').default}
           />,
+          <DocsLayout
+            exact
+            path="/prototype-popups"
+            component={require('./prototypes/popups/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/icon-viewer"
+            path="/icon-viewer"
+            component={require('./prototypes/IconViewer/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+        <DocsLayout
+          exact
+          path="/integrate-custom-components"
+          component={IntegrateCustomComponents}
+        />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

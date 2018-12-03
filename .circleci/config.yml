@@ -45,16 +45,25 @@ jobs:
           command: yarn prettier
       - run:
           name: Unit Tests
-          command: yarn test --maxWorkers=4
+          command: yarn test --strict --maxWorkers=4
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
+      - run:
+          name: Vulnerability Tests
+          command: yarn test:vulns
       - run:
           name: Visual Tests
           command: yarn test:visual
       - run:
           name: Project Tests
           command: yarn test:projects:cra-ts
+      - run:
+          name: Danger JS
+          command: |
+            if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+              yarn danger ci
+            fi
       - run:
           name: Publish npm package
           command: |
