@@ -2,16 +2,16 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
+import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import evalTypeScript from 'docs/src/utils/evalTypeScript'
 import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
+import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
@@ -31,14 +31,10 @@ interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
-  exampleElement?: JSX.Element
-  handleMouseLeave?: () => void
-  handleMouseMove?: () => void
+  handleMouseLeave: () => void
+  handleMouseMove: () => void
   sourceCode: string
-  markup: string
-  error?: string
   showCode: boolean
-  showHTML: boolean
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
@@ -67,14 +63,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   private kebabExamplePath: string
   private KnobsComponent: any
 
-  public state: ComponentExampleState = {
+  state = {
     knobs: {},
     themeName: 'teams',
     componentVariables: {},
+    handleMouseLeave: _.noop,
+    handleMouseMove: _.noop,
     sourceCode: '',
-    markup: '',
     showCode: false,
-    showHTML: false,
     showRtl: false,
     showTransparent: false,
     showVariables: false,
@@ -101,16 +97,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const { examplePath } = this.props
     this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
-    const exampleElement = this.renderExampleFromCode(this.sourceCodeMgr.currentCode)
 
     this.setState({
-      exampleElement,
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       showCode: this.isActiveHash(),
-      showHTML: false,
       sourceCode: this.sourceCodeMgr.currentCode,
-      markup: renderToStaticMarkup(exampleElement),
     })
   }
 
@@ -125,23 +117,22 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
     const { themeName } = nextProps
     if (this.state.themeName !== themeName) {
-      this.setState({ themeName }, this.renderSourceCode)
+      this.setState({ themeName })
     }
   }
 
   private clearActiveState = () => {
     this.setState({
       showCode: false,
-      showHTML: false,
       showRtl: false,
       showVariables: false,
     })
   }
 
   private isActiveState = () => {
-    const { showCode, showHTML, showVariables } = this.state
+    const { showCode, showVariables } = this.state
 
-    return showCode || showHTML || showVariables
+    return showCode || showVariables
   }
 
   private isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
@@ -203,26 +194,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
-  handleShowHTML = (shouldShowHTML: boolean) => {
-    if (shouldShowHTML !== this.state.showHTML) {
-      this.setState({ showHTML: shouldShowHTML }, this.updateHash)
-    }
-  }
-
-  handleShowHTMLInactive = (e: Event) => {
-    if (this.clickedOutsideComponent(e)) {
-      this.handleShowHTML(false)
-    }
-  }
-
   private handleShowRtlClick = e => {
     e.preventDefault()
 
-    const { showRtl } = this.state
-
-    this.setState({ showRtl: !showRtl }, () => {
-      this.renderSourceCode()
-    })
+    this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
   private handleShowCodeClick = e => {
@@ -278,13 +253,28 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   private hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  private setErrorDebounced = _.debounce(error => {
-    this.setState({ error })
-  }, 800)
+  private renderExampleFromCode = (): JSX.Element => {
+    const { sourceCode } = this.state
 
-  private renderExampleFromCode = (code: string): JSX.Element => {
-    const Example = code != null ? evalTypeScript(code) : this.renderMissingExample()
-    return _.isFunction(Example) ? this.renderWithProvider(Example) : Example
+    if (sourceCode == null) {
+      return this.renderMissingExample()
+    }
+
+    const { showRtl, componentVariables, themeName } = this.state
+    const theme = themes[themeName]
+
+    const newTheme: ThemeInput = {
+      componentVariables: mergeThemeVariables(theme.componentVariables, {
+        [this.getDisplayName()]: componentVariables,
+      }),
+      rtl: showRtl,
+    }
+
+    return (
+      <Provider theme={newTheme}>
+        <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+      </Provider>
+    )
   }
 
   private renderMissingExample = (): JSX.Element => {
@@ -297,40 +287,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private renderSourceCode = _.debounce(() => {
-    try {
-      const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
-
-      if (!React.isValidElement(exampleElement)) {
-        this.setErrorDebounced(
-          `Default export is not a valid React element. Check the example syntax.`,
-        )
-      } else {
-        // immediately render a null error
-        // but also ensure the last debounced error call is a null error
-        const error = undefined
-        this.setErrorDebounced(error)
-        this.setState({
-          error,
-          exampleElement,
-          markup: renderToStaticMarkup(exampleElement),
-        })
-      }
-    } catch (err) {
-      this.setErrorDebounced(err.message)
-    }
-  }, 250)
-
   private handleKnobChange = knobs => {
-    this.setState(
-      prevState => ({
-        knobs: {
-          ...prevState.knobs,
-          ...knobs,
-        },
-      }),
-      this.renderSourceCode,
-    )
+    this.setState(prevState => ({
+      knobs: {
+        ...prevState.knobs,
+        ...knobs,
+      },
+    }))
   }
 
   private getKnobsComponent = () => {
@@ -357,31 +320,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  private renderWithProvider(ExampleComponent) {
-    const { showRtl, componentVariables, themeName } = this.state
-    const theme = themes[themeName]
-
-    const newTheme: ThemeInput = {
-      componentVariables: mergeThemeVariables(theme.componentVariables, {
-        [this.getDisplayName()]: componentVariables,
-      }),
-      rtl: showRtl,
-    }
-
-    return (
-      <Provider theme={newTheme}>
-        <ExampleComponent knobs={this.getKnobsValue()} />
-      </Provider>
-    )
-  }
-
   private handleChangeCode = (sourceCode: string) => {
     this.sourceCodeMgr.currentCode = sourceCode
     this.updateAndRenderSourceCode()
   }
 
   private updateAndRenderSourceCode = () => {
-    this.setState({ sourceCode: this.sourceCodeMgr.currentCode }, this.renderSourceCode)
+    this.setState({ sourceCode: this.sourceCodeMgr.currentCode })
   }
 
   private setApiCodeType = (codeType: SourceCodeType) => {
@@ -494,51 +439,58 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   private renderError = () => {
-    const { error } = this.state
-
-    if (!error) return null
-
     return (
-      <Segment size="small" color="red" basic inverted padded secondary>
-        <pre>{error}</pre>
-      </Segment>
+      <SourceRender.Consumer>
+        {({ error }) =>
+          error && (
+            <Segment size="small" color="red" basic inverted padded secondary>
+              <pre>{error.toString()}</pre>
+            </Segment>
+          )
+        }
+      </SourceRender.Consumer>
     )
   }
 
   private renderHTML = () => {
-    const { error, showCode, markup } = this.state
-    if (error || !showCode) return null
-
-    // add new lines between almost all adjacent elements
-    // moves inline elements to their own line
-    const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
-
-    const beautifiedHTML = html(preFormattedHTML, {
-      indent_size: 2,
-      indent_char: ' ',
-      wrap_attributes: 'auto',
-      wrap_attributes_indent_size: 2,
-      end_with_newline: false,
-    })
+    const { showCode } = this.state
+    if (!showCode) return null
 
     return (
-      <div>
-        <Divider inverted horizontal>
-          <span style={{ opacity: 0.5 }}>HTML</span>
-        </Divider>
-        <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
-          <Editor
-            mode="html"
-            showGutter={false}
-            showCursor={false}
-            readOnly
-            highlightActiveLine={false}
-            id={`${this.getKebabExamplePath()}-html`}
-            onOutsideClick={this.handleShowHTMLInactive}
-            value={beautifiedHTML}
-          />
-        </div>
-      </div>
+      <SourceRender.Consumer>
+        {({ markup }) => {
+          // add new lines between almost all adjacent elements
+          // moves inline elements to their own line
+          const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span)/g, '>\n<')
+
+          const beautifiedHTML = html(preFormattedHTML, {
+            indent_size: 2,
+            indent_char: ' ',
+            wrap_attributes: 'auto',
+            wrap_attributes_indent_size: 2,
+            end_with_newline: false,
+          })
+
+          return (
+            <div>
+              <Divider inverted horizontal>
+                <span style={{ opacity: 0.5 }}>HTML</span>
+              </Divider>
+              <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
+                <Editor
+                  mode="html"
+                  showGutter={false}
+                  showCursor={false}
+                  readOnly
+                  highlightActiveLine={false}
+                  id={`${this.getKebabExamplePath()}-html`}
+                  value={beautifiedHTML}
+                />
+              </div>
+            </div>
+          )
+        }}
+      </SourceRender.Consumer>
     )
   }
 
@@ -596,15 +548,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   private handleVariableChange = (component, variable) => (e, { value }) => {
-    this.setState(
-      state => ({
-        componentVariables: {
-          ...state.componentVariables,
-          [variable]: value,
-        },
-      }),
-      this.renderSourceCode,
-    )
+    this.setState(state => ({
+      componentVariables: {
+        ...state.componentVariables,
+        [variable]: value,
+      },
+    }))
   }
 
   public render() {
@@ -612,13 +561,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const {
       handleMouseLeave,
       handleMouseMove,
-      exampleElement,
       isHovering,
+      knobs,
       showCode,
-      showHTML,
       showRtl,
       showTransparent,
       showVariables,
+      sourceCode,
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
@@ -638,8 +587,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             zIndex: 1,
           }),
     }
-
-    const knobs = this.renderKnobs()
 
     return (
       <Visibility
@@ -671,7 +618,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   onShowVariables={this.handleShowVariablesClick}
                   onShowTransparent={this.handleShowTransparentClick}
                   showCode={showCode}
-                  showHTML={showHTML}
                   showRtl={showRtl}
                   showTransparent={showTransparent}
                   showVariables={showVariables}
@@ -679,7 +625,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 />
               </div>
             </div>
-            {knobs}
+            {this.renderKnobs()}
           </Grid.Column>
 
           {children && (
@@ -688,35 +634,43 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             </Grid.Column>
           )}
 
-          <Provider.Consumer
-            render={({ siteVariables }) => {
-              return (
-                <Grid.Column
-                  width={16}
-                  dir={showRtl ? 'rtl' : undefined}
-                  className={`rendered-example ${this.getKebabExamplePath()}`}
-                  style={{
-                    padding: '2rem',
-                    color: siteVariables.bodyColor,
-                    backgroundColor: siteVariables.bodyBackground,
-                    ...(showTransparent && {
-                      backgroundImage:
-                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                      backgroundRepeat: 'repeat',
-                    }),
-                  }}
-                >
-                  {exampleElement}
-                </Grid.Column>
-              )
-            }}
-          />
-          <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-            {this.renderJSX()}
-            {this.renderError()}
-            {this.renderHTML()}
-            {this.renderVariables()}
-          </Grid.Column>
+          <SourceRender
+            babelConfig={babelConfig}
+            knobs={knobs}
+            source={sourceCode}
+            renderHtml={showCode}
+            resolver={importResolver}
+          >
+            <Provider.Consumer
+              render={({ siteVariables }) => {
+                return (
+                  <Grid.Column
+                    width={16}
+                    dir={showRtl ? 'rtl' : undefined}
+                    className={`rendered-example ${this.getKebabExamplePath()}`}
+                    style={{
+                      padding: '2rem',
+                      color: siteVariables.bodyColor,
+                      backgroundColor: siteVariables.bodyBackground,
+                      ...(showTransparent && {
+                        backgroundImage:
+                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                        backgroundRepeat: 'repeat',
+                      }),
+                    }}
+                  >
+                    {this.renderExampleFromCode()}
+                  </Grid.Column>
+                )
+              }}
+            />
+            <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
+              {this.renderJSX()}
+              {this.renderError()}
+              {this.renderHTML()}
+              {this.renderVariables()}
+            </Grid.Column>
+          </SourceRender>
         </Grid>
         <Divider section horizontal />
       </Visibility>
