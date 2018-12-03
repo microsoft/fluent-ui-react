@@ -2,22 +2,20 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import { treeTitleBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
-import {
+  UIComponent,
+  childrenExist,
+  createShorthandFactory,
+  commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
+} from '../../lib'
+import { treeTitleBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 
 export interface TreeTitleProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /**
@@ -41,9 +39,7 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
   static displayName = 'TreeTitle'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.func,
     open: PropTypes.bool,
     hasSubtree: PropTypes.bool,
