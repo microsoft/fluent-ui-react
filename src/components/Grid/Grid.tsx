@@ -8,13 +8,17 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ContentComponentProps,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode
 
-export interface GridProps extends UIComponentProps, ChildrenComponentProps {
+export interface GridProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -23,9 +27,6 @@ export interface GridProps extends UIComponentProps, ChildrenComponentProps {
 
   /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   columns?: string | number
-
-  /** Shorthand for primary content. */
-  content?: ShorthandValue | ShorthandValue[]
 
   /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   rows?: string | number
@@ -50,8 +51,8 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
     content: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([
-        PropTypes.arrayOf(customPropTypes.itemShorthand),
-        customPropTypes.itemShorthand,
+        PropTypes.arrayOf(customPropTypes.nodeContent),
+        customPropTypes.nodeContent,
       ]),
     ]),
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

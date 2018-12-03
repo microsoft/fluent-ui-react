@@ -91,6 +91,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon({
+      animated: false,
       as: false,
       className: false,
       styled: false,

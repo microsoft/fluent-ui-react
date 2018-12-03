@@ -20,6 +20,7 @@ export interface RefProps extends ChildrenComponentProps<React.ReactChild> {
 export default class Ref extends React.Component<RefProps> {
   static propTypes = {
     ...commonPropTypes.createCommon({
+      animated: false,
       as: false,
       className: false,
       styled: false,

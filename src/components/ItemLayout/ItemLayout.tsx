@@ -8,15 +8,14 @@ import {
   UIComponent,
   UIComponentProps,
   commonPropTypes,
+  ContentComponentProps,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { Extendable } from '../../../types/utils'
 
-export interface ItemLayoutProps extends UIComponentProps {
+export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
-  /** Shorthand for primary content. */
-  content?: any
   /** Toggle debug mode */
   debug?: boolean
   header?: any

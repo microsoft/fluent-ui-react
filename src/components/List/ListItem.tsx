@@ -1,21 +1,25 @@
 import * as React from 'react'
 
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
 
-export interface ListItemProps extends UIComponentProps {
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
    * */
   accessibility?: Accessibility
   contentMedia?: any
-  /** Shorthand for primary content. */
-  content?: any
   /** Toggle debug mode */
   debug?: boolean
   header?: any
