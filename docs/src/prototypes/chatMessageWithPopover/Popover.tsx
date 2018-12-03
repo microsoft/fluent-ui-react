@@ -6,6 +6,7 @@ import {
   createComponent,
   ComponentSlotStyle,
   ComponentVariablesInput,
+  toolbarButtonBehavior,
 } from '@stardust-ui/react'
 import { ReactChildren } from 'types/utils'
 import * as React from 'react'
@@ -79,9 +80,24 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         iconOnly
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
         items={[
-          { key: 'smile', icon: 'smile', className: 'smile-emoji' },
-          { key: 'smile2', icon: 'smile', className: 'smile-emoji' },
-          { key: 'smile3', icon: 'smile', className: 'smile-emoji' },
+          {
+            key: 'smile',
+            icon: 'smile',
+            className: 'smile-emoji',
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'smile2',
+            icon: 'smile',
+            className: 'smile-emoji',
+            accessibility: toolbarButtonBehavior,
+          },
+          {
+            key: 'smile3',
+            icon: 'smile',
+            className: 'smile-emoji',
+            accessibility: toolbarButtonBehavior,
+          },
           { key: 'a', icon: 'thumbs up' },
           { key: 'c', icon: 'ellipsis horizontal' },
         ]}
