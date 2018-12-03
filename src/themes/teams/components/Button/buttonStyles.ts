@@ -76,7 +76,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       color,
       backgroundColor,
       borderRadius,
-      display: 'inline-flex',
+      display: 'inline',
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
@@ -84,6 +84,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       margin: `0 ${pxToRem(8)} 0 0`,
       verticalAlign: 'middle',
       cursor: 'pointer',
+      ...truncateStyle,
 
       // rectangular button defaults
       ...(!text && {
@@ -279,10 +280,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       }),
     }
   },
-
-  content: () => ({
-    ...truncateStyle,
-  }),
 }
 
 export default buttonStyles
