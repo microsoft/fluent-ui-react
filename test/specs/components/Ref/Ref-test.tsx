@@ -15,7 +15,7 @@ describe('Ref', () => {
       expect(component.contains(child)).toBeTruthy()
     })
 
-    it('renders RefFindNode when component is passed', () => {
+    it('renders RefFindNode when a component is passed', () => {
       const innerRef = React.createRef()
       const wrapper = shallow(
         <Ref innerRef={innerRef}>
@@ -23,10 +23,10 @@ describe('Ref', () => {
         </Ref>,
       )
 
-      expect(wrapper.childAt(0).is(RefFindNode)).toBe(true)
+      expect(wrapper.is(RefFindNode)).toBe(true)
     })
 
-    it('works with "forwardRef" API', () => {
+    it('renders RefForward when a component wrapper with forwardRef() is passed', () => {
       const innerRef = React.createRef()
       const wrapper = shallow(
         <Ref innerRef={innerRef}>
@@ -34,7 +34,7 @@ describe('Ref', () => {
         </Ref>,
       )
 
-      expect(wrapper.childAt(0).is(RefForward)).toBe(true)
+      expect(wrapper.is(RefForward)).toBe(true)
     })
   })
 })
