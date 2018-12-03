@@ -5,6 +5,7 @@ import {
   ShorthandValue,
   Props,
   ShorthandRenderCallback,
+  ShorthandRenderFunction,
   ShorthandRenderer,
 } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
@@ -21,12 +22,16 @@ interface CreateShorthandOptions {
 
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
+
+  /** Override the default render implementation. */
+  render?: ShorthandRenderFunction
 }
 
 const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   defaultProps: {},
   overrideProps: {},
   generateKey: true,
+  render: (Component, props) => <Component {...props} />,
 }
 
 // It's only necessary to map props that don't use 'children' as value ('children' is the default)
@@ -197,13 +202,15 @@ function createShorthandFromRenderCallback(
   renderCallback: ShorthandRenderCallback,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ) {
-  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
+  const render: ShorthandRenderer = (shorthandValue, renderTreeArg) => {
     const ShorthandElement = createShorthandFromValue(
       Component,
       mappedProp,
       shorthandValue,
       options,
     )
+
+    const renderTree = renderTreeArg || options.render
 
     return !renderTree
       ? ShorthandElement
