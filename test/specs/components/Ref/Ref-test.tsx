@@ -1,20 +1,10 @@
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import * as React from 'react'
 
 import Ref from 'src/components/Ref/Ref'
-import { CompositeClass, CompositeFunction, DOMClass, DOMFunction, ForwardedRef } from './fixtures'
-
-const testInnerRef = Component => {
-  const innerRef = jest.fn()
-  const node = mount(
-    <Ref innerRef={innerRef}>
-      <Component />
-    </Ref>,
-  ).getDOMNode()
-
-  expect(innerRef).toHaveBeenCalledTimes(1)
-  expect(innerRef).toHaveBeenCalledWith(node)
-}
+import RefFindNode from 'src/components/Ref/RefFindNode'
+import RefForward from 'src/components/Ref/RefForward'
+import { CompositeClass, ForwardedRef } from './fixtures'
 
 describe('Ref', () => {
   describe('children', () => {
@@ -24,52 +14,27 @@ describe('Ref', () => {
 
       expect(component.contains(child)).toBeTruthy()
     })
-  })
 
-  describe('innerRef', () => {
-    it('returns node from a functional component with DOM node', () => {
-      testInnerRef(DOMFunction)
-    })
-
-    it('returns node from a functional component', () => {
-      testInnerRef(CompositeFunction)
-    })
-
-    it('returns node from a class component with DOM node', () => {
-      testInnerRef(DOMClass)
-    })
-
-    it('returns node from a class component', () => {
-      testInnerRef(CompositeClass)
-    })
-
-    it('returns "null" after unmount', () => {
-      const innerRef = jest.fn()
-      const wrapper = mount(
+    it('renders RefFindNode when component is passed', () => {
+      const innerRef = React.createRef()
+      const wrapper = shallow(
         <Ref innerRef={innerRef}>
           <CompositeClass />
         </Ref>,
       )
 
-      innerRef.mockClear()
-      wrapper.unmount()
-
-      expect(innerRef).toHaveBeenCalledTimes(1)
-      expect(innerRef).toHaveBeenCalledWith(null)
+      expect(wrapper.childAt(0).is(RefFindNode)).toBe(true)
     })
 
     it('works with "forwardRef" API', () => {
-      const forwardedRef = React.createRef<HTMLButtonElement>()
       const innerRef = React.createRef()
-
-      mount(
+      const wrapper = shallow(
         <Ref innerRef={innerRef}>
-          <ForwardedRef ref={forwardedRef} />
+          <ForwardedRef />
         </Ref>,
       )
 
-      expect(forwardedRef.current).toBeInstanceOf(Element)
-      expect(innerRef.current).toBeInstanceOf(Element)
+      expect(wrapper.childAt(0).is(RefForward)).toBe(true)
     })
   })
 })
