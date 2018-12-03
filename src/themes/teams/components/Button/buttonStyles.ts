@@ -76,9 +76,7 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       color,
       backgroundColor,
       borderRadius,
-      display: 'inline',
-      justifyContent: 'center',
-      alignItems: 'center',
+      display: 'inline-block',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
       margin: `0 ${pxToRem(8)} 0 0`,
@@ -280,6 +278,13 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       }),
     }
   },
+  icon: ({ props: { icon, iconPosition, content } }) => ({
+    // added for correct vertical alignment if the icon is used together with the content
+    ...(icon &&
+      content && {
+        float: iconPosition === 'after' ? 'right' : 'left',
+      }),
+  }),
 }
 
 export default buttonStyles
