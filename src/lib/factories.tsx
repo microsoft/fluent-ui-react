@@ -103,7 +103,7 @@ function createShorthandFromValue(
   }
   // short circuit noop values
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
-  if (valIsNoop) return null
+  if (valIsNoop && !options.render) return null
 
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
@@ -186,6 +186,10 @@ function createShorthandFromValue(
   // ----------------------------------------
   // Create Element
   // ----------------------------------------
+  const { render } = options
+  if (render) {
+    return render(Component, props)
+  }
 
   // Clone ReactElements
   if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
@@ -202,19 +206,11 @@ function createShorthandFromRenderCallback(
   renderCallback: ShorthandRenderCallback,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ) {
-  const render: ShorthandRenderer = (shorthandValue, renderTreeArg) => {
-    const ShorthandElement = createShorthandFromValue(
-      Component,
-      mappedProp,
-      shorthandValue,
-      options,
-    )
-
-    const renderTree = renderTreeArg || options.render
-
-    return !renderTree
-      ? ShorthandElement
-      : renderTree(Component, ShorthandElement ? ShorthandElement.props : {})
+  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
+    return createShorthandFromValue(Component, mappedProp, shorthandValue, {
+      ...options,
+      ...(renderTree && { render: renderTree }),
+    })
   }
 
   return renderCallback(render)
