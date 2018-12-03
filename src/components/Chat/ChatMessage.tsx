@@ -8,6 +8,10 @@ import {
   customPropTypes,
   RenderResultConfig,
   UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import {
   ComponentVariablesInput,
@@ -20,17 +24,11 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 export interface ChatMessageProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default chatMessageBehavior
@@ -61,12 +59,12 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
     avatar: customPropTypes.itemShorthand,
-    content: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
   }
@@ -137,7 +135,7 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     })
 
     const contentElement = Slot.create(content, {
-      defaultProps: { styles: styles.content }
+      defaultProps: { styles: styles.content },
     })
 
     return (

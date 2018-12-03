@@ -2,12 +2,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Icon } from '../../'
 
-import { customPropTypes, UIComponent, createShorthandFactory } from '../../lib'
+import {
+  customPropTypes,
+  UIComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import { Extendable, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface StatusProps extends UIComponentProps<any, any> {
+export interface StatusProps extends UIComponentProps {
   /** A custom color. */
   color?: string
 
@@ -32,7 +36,10 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   static displayName = 'Status'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     size: PropTypes.number,

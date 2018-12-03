@@ -1,13 +1,16 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Status } from '../../'
-
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
 import { Extendable, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import {
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
 
-export interface AvatarProps extends UIComponentProps<any, any> {
+export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the image. */
   image?: ShorthandValue
 
@@ -38,7 +41,10 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   static displayName = 'Avatar'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     name: PropTypes.string,
     image: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,

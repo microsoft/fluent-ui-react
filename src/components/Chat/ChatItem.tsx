@@ -1,23 +1,22 @@
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, RenderResultConfig, UIComponent } from '../../lib'
-import Slot from '../Slot/Slot'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  RenderResultConfig,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import Slot from '../Slot/Slot'
 
 export interface ChatItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentComponentProps<ShorthandValue> {}
 
 /**
  * A chat item represents a single event in a chat.
@@ -30,9 +29,9 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
   }
 
   static defaultProps = {

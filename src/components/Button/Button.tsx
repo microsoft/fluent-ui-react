@@ -2,7 +2,16 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
@@ -10,20 +19,10 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import {
-  UIComponentProps,
-  ContentComponentProps,
-  ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface ButtonProps
-  extends UIComponentProps<any, any>,
-    ContentComponentProps,
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue>,
     ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -92,9 +91,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,

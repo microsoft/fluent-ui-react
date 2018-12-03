@@ -1,22 +1,20 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import HeaderDescription from './HeaderDescription'
-import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import HeaderDescription from './HeaderDescription'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface HeaderProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /** Shorthand for Header.Description. */
@@ -42,9 +40,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static displayName = 'Header'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }

@@ -3,27 +3,25 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
-
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface MenuItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /**
@@ -96,9 +94,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
