@@ -1,10 +1,10 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { handleRef } from '../../lib'
+import { ChildrenComponentProps, handleRef } from '../../lib'
 
-export interface RefProps {
-  children: React.ReactElement<any> & { ref: React.Ref<any> }
+export interface RefForwardProps
+  extends ChildrenComponentProps<React.ReactElement<any> & { ref: React.Ref<any> }> {
   /**
    * Called when a child component will be mounted or updated.
    *
@@ -13,7 +13,7 @@ export interface RefProps {
   innerRef?: React.Ref<any>
 }
 
-export default class RefForward extends React.Component<RefProps> {
+export default class RefForward extends React.Component<RefForwardProps> {
   static propTypes = {
     children: PropTypes.element.isRequired,
     innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),

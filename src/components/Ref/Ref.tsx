@@ -6,7 +6,7 @@ import { ChildrenComponentProps } from '../../lib'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
 
-export interface RefProps extends ChildrenComponentProps<React.ReactChild> {
+export interface RefProps extends ChildrenComponentProps<React.ReactElement<any>> {
   /**
    * Called when a child component will be mounted or updated.
    *
