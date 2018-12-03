@@ -25,6 +25,7 @@ const webpackConfig: any = {
   },
   devtool: config.compiler_devtool,
   externals: {
+    '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prop-types': 'PropTypes',
     react: 'React',
