@@ -49,10 +49,8 @@ import processedIcons_search from './icons-search'
 import processedIcons_screenzoomout from './icons-screen-zoom-out'
 import processedIcons_screenzoomin from './icons-screen-zoom-in'
 import processedIcons_roster from './icons-roster'
-import processedIcons_retry from './icons-retry'
 import processedIcons_resetzoom from './icons-reset-zoom'
 import processedIcons_reply from './icons-reply'
-import processedIcons_refresh from './icons-refresh'
 import processedIcons_redbang from './icons-redbang'
 import processedIcons_recurrence from './icons-recurrence'
 import processedIcons_recents from './icons-recents'
@@ -341,10 +339,8 @@ export default {
   processedIcons_screenzoomout,
   processedIcons_screenzoomin,
   processedIcons_roster,
-  processedIcons_retry,
   processedIcons_resetzoom,
   processedIcons_reply,
-  processedIcons_refresh,
   processedIcons_redbang,
   processedIcons_recurrence,
   processedIcons_recents,
