@@ -197,6 +197,30 @@ describe('factories', () => {
       })
     })
 
+    describe('render callback', () => {
+      test('returns the same React element as if shorthand value would be passed directly', () => {
+        const createShorthandElement = valueOrRenderCallback =>
+          getShorthand({
+            value: valueOrRenderCallback,
+            Component: 'div',
+            defaultProps: {
+              baz: 'original',
+            },
+            overrideProps: {
+              baz: 'overriden',
+            },
+          })
+
+        const shorthandValue = { dataFoo: 'bar' }
+
+        const elementFromShorthandValue = createShorthandElement(shorthandValue)
+        const elementFromRenderCallback = createShorthandElement(render => render(shorthandValue))
+
+        expect(elementFromShorthandValue.type).toEqual(elementFromRenderCallback.type)
+        expect(elementFromShorthandValue.props).toEqual(elementFromRenderCallback.props)
+      })
+    })
+
     describe('styles', () => {
       test('deep merges styles prop onto defaultProps styles', () => {
         expect.assertions(1)
