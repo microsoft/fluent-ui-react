@@ -6,8 +6,8 @@ import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
-import screenshare from './screenshare'
-import screenshareStop from './screenshareStop'
+import callControlPresentNew from './callControlPresentNew'
+import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
@@ -20,7 +20,7 @@ import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
 import leave from './leave'
-import thumbsUp from './thumbsUp'
+import like from './like'
 import markAsUnread from './markAsUnread'
 import mention from './mention'
 import menu from './menu'
@@ -46,6 +46,8 @@ export default {
   'call-end': callEnd,
   'call-video': callVideo,
   'call-video-off': callVideoOff,
+  'call-control-present-new': callControlPresentNew,
+  'call-control-stop-presenting-new': callControlStopPresentingNew,
   edit,
   error,
   format,
@@ -55,7 +57,7 @@ export default {
   giphy,
   highlight,
   leave,
-  'thumbs-up': thumbsUp,
+  like,
   'mark-as-unread': markAsUnread,
   mention,
   menu,
@@ -67,8 +69,6 @@ export default {
   redbang,
   reply,
   retry,
-  screenshare,
-  'screenshare-stop': screenshareStop,
   send,
   teams,
   translation,
