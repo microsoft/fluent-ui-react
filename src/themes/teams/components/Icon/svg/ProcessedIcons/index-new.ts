@@ -49,8 +49,10 @@ import processedIcons_search from './icons-search'
 import processedIcons_screenzoomout from './icons-screen-zoom-out'
 import processedIcons_screenzoomin from './icons-screen-zoom-in'
 import processedIcons_roster from './icons-roster'
+import processedIcons_retry from './icons-retry'
 import processedIcons_resetzoom from './icons-reset-zoom'
 import processedIcons_reply from './icons-reply'
+import processedIcons_refresh from './icons-refresh'
 import processedIcons_redbang from './icons-redbang'
 import processedIcons_recurrence from './icons-recurrence'
 import processedIcons_recents from './icons-recents'
@@ -117,6 +119,7 @@ import processedIcons_msftcanvas from './icons-msft-canvas'
 import processedIcons_move from './icons-move'
 import processedIcons_mov from './icons-mov'
 import processedIcons_more from './icons-more'
+import processedIcons_micoff from './icons-mic-off'
 import processedIcons_mic from './icons-mic'
 import processedIcons_menulight from './icons-menu-light'
 import processedIcons_menu from './icons-menu'
@@ -134,6 +137,8 @@ import processedIcons_lock from './icons-lock'
 import processedIcons_locationoff from './icons-location-off'
 import processedIcons_location from './icons-location'
 import processedIcons_link from './icons-link'
+import processedIcons_liked from './icons-liked'
+import processedIcons_like from './icons-like'
 import processedIcons_leave from './icons-leave'
 import processedIcons_kollective from './icons-kollective'
 import processedIcons_keyboard from './icons-keyboard'
@@ -246,12 +251,16 @@ import processedIcons_callparticipantconnected from './icons-call-participant-co
 import processedIcons_callmissedlinefilled from './icons-call-missed-line-filled'
 import processedIcons_callmissedline from './icons-call-missed-line'
 import processedIcons_callmissed from './icons-call-missed'
+import processedIcons_callmicrophoneunmuting from './icons-call-microphone-unmuting'
+import processedIcons_callmicrophoneofffilled from './icons-call-microphone-off-filled'
 import processedIcons_callmeetupline from './icons-call-meetup-line'
 import processedIcons_callmeetupfilled from './icons-call-meetup-filled'
 import processedIcons_callincomingvideo from './icons-call-incoming-video'
 import processedIcons_callhold from './icons-call-hold'
 import processedIcons_callend from './icons-call-end'
 import processedIcons_calldialpad from './icons-call-dialpad'
+import processedIcons_callcontrolstoppresentingnew from './icons-call-control-stop-presenting-new'
+import processedIcons_callcontrolpresentnew from './icons-call-control-present-new'
 import processedIcons_callblocked from './icons-call-blocked'
 import processedIcons_callaudio from './icons-call-audio'
 import processedIcons_callalert from './icons-call-alert'
@@ -337,8 +346,10 @@ export default {
   processedIcons_screenzoomout,
   processedIcons_screenzoomin,
   processedIcons_roster,
+  processedIcons_retry,
   processedIcons_resetzoom,
   processedIcons_reply,
+  processedIcons_refresh,
   processedIcons_redbang,
   processedIcons_recurrence,
   processedIcons_recents,
@@ -405,6 +416,7 @@ export default {
   processedIcons_move,
   processedIcons_mov,
   processedIcons_more,
+  processedIcons_micoff,
   processedIcons_mic,
   processedIcons_menulight,
   processedIcons_menu,
@@ -422,6 +434,8 @@ export default {
   processedIcons_locationoff,
   processedIcons_location,
   processedIcons_link,
+  processedIcons_liked,
+  processedIcons_like,
   processedIcons_leave,
   processedIcons_kollective,
   processedIcons_keyboard,
@@ -534,12 +548,16 @@ export default {
   processedIcons_callmissedlinefilled,
   processedIcons_callmissedline,
   processedIcons_callmissed,
+  processedIcons_callmicrophoneunmuting,
+  processedIcons_callmicrophoneofffilled,
   processedIcons_callmeetupline,
   processedIcons_callmeetupfilled,
   processedIcons_callincomingvideo,
   processedIcons_callhold,
   processedIcons_callend,
   processedIcons_calldialpad,
+  processedIcons_callcontrolstoppresentingnew,
+  processedIcons_callcontrolpresentnew,
   processedIcons_callblocked,
   processedIcons_callaudio,
   processedIcons_callalert,
