@@ -1,12 +1,20 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { UIComponent, childrenExist } from '../../lib'
-import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
-import { UIComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, contentComponentPropsTypes } from '../../lib/commonPropTypes'
+import {
+  UIComponent,
+  childrenExist,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
-export interface SegmentProps extends UIComponentProps<SegmentProps, any>, ContentComponentProps {
+export interface SegmentProps
+  extends UIComponentProps<SegmentProps>,
+    ChildrenComponentProps,
+    ContentComponentProps<ShorthandValue> {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
 
@@ -28,8 +36,9 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static displayName = 'Segment'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     inverted: PropTypes.bool,
     renderContent: PropTypes.func,
   }

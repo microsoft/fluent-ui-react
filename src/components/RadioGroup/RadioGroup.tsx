@@ -4,7 +4,14 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -15,11 +22,8 @@ import {
   ShorthandRenderFunction,
   ComponentEventHandler,
 } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-// TODO check if the checkedValueChanged args are correct
-export interface RadioGroupProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupBehavior
@@ -67,8 +71,9 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

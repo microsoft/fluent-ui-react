@@ -6,25 +6,18 @@ import Tree from './Tree'
 import TreeTitle from './TreeTitle'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-
 import {
   AutoControlledComponent,
   childrenExist,
   customPropTypes,
   createShorthandFactory,
-} from '../../lib'
-import { ShorthandRenderFunction, ShorthandValue } from 'utils'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
-import {
+  commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
+} from '../../lib'
+import { ShorthandRenderFunction, ShorthandValue } from 'utils'
 
-export interface TreeItemProps
-  extends UIComponentProps<any, any>,
-    ChildrenComponentProps,
-    ContentComponentProps {
+export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
@@ -68,8 +61,9 @@ class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
   static autoControlledProps = ['open']
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     defaultOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
