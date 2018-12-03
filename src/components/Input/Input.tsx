@@ -9,6 +9,7 @@ import {
   RenderResultConfig,
   partitionHTMLProps,
   UIComponentProps,
+  ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
 import {
@@ -21,7 +22,7 @@ import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
 
-export interface InputProps extends UIComponentProps {
+export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
 
@@ -117,7 +118,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
-      children: false,
     }),
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
