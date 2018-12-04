@@ -107,7 +107,12 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             accessibility: toolbarButtonBehavior,
             'aria-label': 'thumbs up',
           },
-          { key: 'c', icon: 'ellipsis horizontal', 'aria-label': 'more options' },
+          {
+            key: 'c',
+            icon: 'ellipsis horizontal',
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'more options',
+          },
         ]}
         renderItem={this.renderItemOrContextMenu}
         onFocus={this.handleFocus}
