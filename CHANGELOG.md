@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Add `react-dom` as available import in the editor @mnajdova ([#553](https://github.com/stardust-ui/react/pull/553))
 - Fix incorrect and missing filled or outline versions of Teams SVG icons @codepretty ([#552](https://github.com/stardust-ui/react/pull/552))
+- Fix HTML preview in the editor @layershifter ([#555](https://github.com/stardust-ui/react/pull/555))
 
 ### Features
 - Add `render` callback as an option for shorthand value @kuzhelov ([#519](https://github.com/stardust-ui/react/pull/519))
