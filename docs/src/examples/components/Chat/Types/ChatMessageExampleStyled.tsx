@@ -1,5 +1,5 @@
 import React from 'react'
-import { Chat, Provider } from '@stardust-ui/react'
+import { Avatar, Chat, Provider } from '@stardust-ui/react'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -40,14 +40,16 @@ const ChatMessageExampleStyled = () => (
   <Provider
     theme={{
       componentStyles: {
-        ChatMessage: {
-          root: { ...slotLabelStyles('root'), backgroundColor: '#2E8B57' },
-          avatar: {
-            ...slotLabelStyles('avatar', { bottom: '-11px' }),
+        ChatItem: {
+          root: { ...slotLabelStyles('chat-item-root'), backgroundColor: 'transparent' },
+          gutter: {
+            ...slotLabelStyles('gutter', { bottom: '-11px' }),
             backgroundColor: '#FF00FF',
             padding: 0,
           },
-          messageBody: { ...slotLabelStyles('messageBody'), backgroundColor: '#87CEFA' },
+        },
+        ChatMessage: {
+          root: { ...slotLabelStyles('chat-message-root'), backgroundColor: '#87CEFA' },
           author: { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' },
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
           timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
@@ -55,7 +57,7 @@ const ChatMessageExampleStyled = () => (
       },
       componentVariables: {
         ChatMessage: siteVars => ({
-          messageBody: {
+          content: {
             focusOutlineColor: siteVars.white,
           },
         }),
@@ -63,22 +65,23 @@ const ChatMessageExampleStyled = () => (
     }}
   >
     <Chat>
-      <Chat.Item>
-        <Chat.Message
-          content="Hey, do you know any restaurants with good food?"
-          author="John Doe"
-          timestamp="Yesterday, 10:15 PM"
-          mine
-        />
-      </Chat.Item>
-      <Chat.Item>
-        <Chat.Message
-          content={{ content }}
-          author="Jane Doe"
-          timestamp="Yesterday, 10:15 PM"
-          avatar={janeAvatar}
-        />
-      </Chat.Item>
+      <Chat.Item
+        mine
+        content={
+          <Chat.Message
+            content="Hey, do you know any restaurants with good food?"
+            author="John Doe"
+            timestamp="Yesterday, 10:15 PM"
+            mine
+          />
+        }
+      />
+      <Chat.Item
+        gutter={<Avatar {...janeAvatar} />}
+        content={
+          <Chat.Message content={{ content }} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+        }
+      />
     </Chat>
   </Provider>
 )

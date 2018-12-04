@@ -1,4 +1,11 @@
-import { Attachment, Popup, Button, Menu, popupFocusTrapBehavior } from '@stardust-ui/react'
+import {
+  Attachment,
+  Popup,
+  Button,
+  Menu,
+  popupFocusTrapBehavior,
+  AvatarProps,
+} from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
@@ -12,18 +19,22 @@ export enum ChatItemTypes {
   divider,
 }
 
-interface ChatItem {
+interface ChatItemType {
   itemType: ChatItemTypes
 }
 
-interface ChatMessage extends ChatMessageProps, ChatItem {
+interface ChatMessage extends ChatMessageProps, ChatItemType {
   tabIndex: number
   'aria-labelledby': string
   text: string
 }
-interface Divider extends DividerProps, ChatItem {}
+interface Divider extends DividerProps, ChatItemType {}
 
-type ChatItemContentProps = ChatMessage | Divider
+type ChatItem = {
+  content?: ChatMessage | Divider
+  gutter?: AvatarProps
+  mine?: boolean
+}
 type StatusPropsExtendable = Extendable<StatusProps>
 
 const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
@@ -33,7 +44,7 @@ const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
   ['Offline', { color: 'grey', title: 'Offline' }],
 ] as [UserStatus, StatusPropsExtendable][])
 
-function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatMessage {
+function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatItem {
   const { content, mine } = message
   const messageProps: ChatMessage = {
     // aria-labelledby will need to by generated based on the needs. Currently just hardcoded.
@@ -53,12 +64,15 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatMes
       content: `${fromUser.firstName} ${fromUser.lastName} `,
       id: `sender-${message.id}`,
     },
-    avatar: !message.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
     itemType: ChatItemTypes.message,
     text: content,
   }
 
-  return messageProps
+  return {
+    mine,
+    content: messageProps,
+    gutter: !message.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
+  }
 }
 
 function createMessageContent(message: MessageData): ShorthandValue {
@@ -120,20 +134,20 @@ function createMessageContentWithAttachments(content: string, messageId: string)
   )
 }
 
-function generateDividerProps(props: DividerProps): Divider {
+function generateDividerProps(props: DividerProps): ChatItem {
   const { content, important, color = 'secondary' } = props
   const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, color }
 
-  return dividerProps
+  return { content: dividerProps }
 }
 
-export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
+export function generateChatProps(chat: ChatData): ChatItem[] {
   if (!chat || !chat.members || !chat.messages) {
     return []
   }
 
   const { messages, members } = chat
-  const chatProps: ChatItemContentProps[] = []
+  const chatProps: ChatItem[] = []
 
   // First date divider
   chatProps.push(generateDividerProps({ content: getFriendlyDateString(messages[0].date) }))
@@ -152,7 +166,7 @@ export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
   chatProps.push(generateChatMsgProps(lastMsg, members.get(lastMsg.from)))
 
   // Last read divider
-  const myLastMsgIndex = _.findLastIndex(chatProps, item => (item as ChatMessage).mine)
+  const myLastMsgIndex = _.findLastIndex(chatProps, item => item.mine)
   if (myLastMsgIndex < chatProps.length - 1) {
     chatProps.splice(
       myLastMsgIndex + 1,

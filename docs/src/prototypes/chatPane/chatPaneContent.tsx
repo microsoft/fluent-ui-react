@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { Chat, Divider } from '@stardust-ui/react'
+import { Chat, Divider, Avatar } from '@stardust-ui/react'
 import { ChatData, ChatItemTypes, generateChatProps } from './services'
 
 const screenReaderMessageContainerStyles: React.CSSProperties = {
@@ -38,26 +38,35 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   }
 
   private generateChatItems(chat: ChatData): JSX.Element[] {
-    return generateChatProps(chat).map(({ itemType, ...props }, index) => {
-      const ElementType = this.getElementType(itemType)
-      const maybeAttributesForDivider =
-        itemType === ChatItemTypes.divider
-          ? {
-              role: 'heading',
-              'aria-level': 3,
+    return generateChatProps(chat).map(
+      ({ mine, gutter, content: { itemType, ...props } }, index) => {
+        const ElementType = this.getElementType(itemType)
+        const maybeAttributesForDivider =
+          itemType === ChatItemTypes.divider
+            ? {
+                role: 'heading',
+                'aria-level': 3,
+              }
+            : {}
+        return (
+          <Chat.Item
+            key={`chat-item-${index}`}
+            mine={mine}
+            gutter={<Avatar {...gutter} />}
+            content={
+              <>
+                {itemType === ChatItemTypes.message && (
+                  <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
+                    {this.getMessagePreviewForScreenReader(props)}
+                  </div>
+                )}
+                <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
+              </>
             }
-          : {}
-      return (
-        <Chat.Item key={`chat-item-${index}`}>
-          {itemType === ChatItemTypes.message && (
-            <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
-              {this.getMessagePreviewForScreenReader(props)}
-            </div>
-          )}
-          <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
-        </Chat.Item>
-      )
-    })
+          />
+        )
+      },
+    )
   }
 
   private getElementType = (itemType: ChatItemTypes) => {
