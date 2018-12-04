@@ -85,21 +85,29 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'smile',
             className: 'smile-emoji',
             accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile one',
           },
           {
             key: 'smile2',
             icon: 'smile',
             className: 'smile-emoji',
             accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile two',
           },
           {
             key: 'smile3',
             icon: 'smile',
             className: 'smile-emoji',
             accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile three',
           },
-          { key: 'a', icon: 'thumbs up' },
-          { key: 'c', icon: 'ellipsis horizontal' },
+          {
+            key: 'a',
+            icon: 'thumbs up',
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'thumbs up',
+          },
+          { key: 'c', icon: 'ellipsis horizontal', 'aria-label': 'more options' },
         ]}
         renderItem={this.renderItemOrContextMenu}
         onFocus={this.handleFocus}
