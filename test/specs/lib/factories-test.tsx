@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
 import { createShorthand, createShorthandFactory } from 'src/lib'
-import { Props, ShorthandValue, ObjectOf } from 'types/utils'
+import { Props, ShorthandValue, ObjectOf, ShorthandRenderFunction } from 'types/utils'
 import { consoleUtil } from 'test/utils'
 import callable from '../../../src/lib/callable'
 
@@ -17,6 +17,7 @@ type GetShorthandArgs = {
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
   value?: ShorthandValue
+  render?: ShorthandRenderFunction
 }
 
 /**
@@ -29,11 +30,13 @@ const getShorthand = ({
   overrideProps,
   generateKey,
   value,
+  render,
 }: GetShorthandArgs) =>
   createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
     generateKey,
+    render,
   })
 
 const isValuePrimitive = (value: ShorthandValue) =>
@@ -218,6 +221,40 @@ describe('factories', () => {
 
         expect(elementFromShorthandValue.type).toEqual(elementFromRenderCallback.type)
         expect(elementFromShorthandValue.props).toEqual(elementFromRenderCallback.props)
+      })
+
+      describe('custom tree renderer', () => {
+        test('passes evaluated Component type as the first argument', () => {
+          getShorthand({
+            value: render =>
+              render({}, (Component, props) => {
+                expect(Component).toBe('foo-span')
+              }),
+            Component: 'foo-span',
+          })
+        })
+
+        test('passes evaluated props as the second argument', () => {
+          const shorthandProps = { bar: 'foo' }
+
+          getShorthand({
+            value: render =>
+              render(shorthandProps, (Component, props) => {
+                expect(props.bar).toBe(shorthandProps.bar)
+              }),
+          })
+        })
+
+        test('overrides render prop from shorthand options', () => {
+          const CustomComponent = 'overriden-div' as any
+
+          const shorthandElement = getShorthand({
+            value: render => render({}, (Component, props) => <CustomComponent />),
+            render: (Component, props) => <div>Default</div>,
+          })
+
+          expect(shorthandElement.type).toBe(CustomComponent)
+        })
       })
     })
 
