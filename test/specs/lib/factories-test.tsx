@@ -10,7 +10,7 @@ import callable from '../../../src/lib/callable'
 // Utils
 // ----------------------------------------
 
-type GetShorthandArgs = {
+type ShorthandConfig = {
   Component?: React.ReactType
   defaultProps?: Props
   mappedProp?: string
@@ -31,7 +31,7 @@ const getShorthand = ({
   generateKey,
   value,
   render,
-}: GetShorthandArgs) =>
+}: ShorthandConfig) =>
   createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
@@ -42,7 +42,7 @@ const getShorthand = ({
 const isValuePrimitive = (value: ShorthandValue) =>
   typeof value === 'string' || typeof value === 'number'
 
-const testCreateShorthand = (shorthandArgs: GetShorthandArgs, expectedResult: ObjectOf<any>) =>
+const testCreateShorthand = (shorthandArgs: ShorthandConfig, expectedResult: ObjectOf<any>) =>
   expect(shallow(getShorthand(shorthandArgs)).props()).toEqual(expectedResult)
 
 // ----------------------------------------
@@ -111,7 +111,11 @@ const itMergesClassNames = (
   })
 }
 
-const itAppliesProps = (propsSource, expectedProps, shorthandConfig) => {
+const itAppliesProps = (
+  propsSource: string,
+  expectedProps: Props,
+  shorthandConfig: ShorthandConfig,
+) => {
   test(`applies props from the ${propsSource} props`, () => {
     testCreateShorthand(shorthandConfig, expectedProps)
   })
@@ -536,6 +540,18 @@ describe('factories', () => {
       )
       itOverridesDefaultPropsWithFalseyProps('element', {
         value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
+      })
+
+      test('applies only the element props and returns the element', () => {
+        testCreateShorthand(
+          {
+            Component: 'p',
+            value: <span {...{ common: 'user', user: true } as any} />,
+            defaultProps: { common: 'default', default: true },
+            overrideProps: { common: 'override', override: true },
+          },
+          { common: 'user', user: true },
+        )
       })
     })
 

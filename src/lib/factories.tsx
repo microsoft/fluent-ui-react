@@ -105,9 +105,14 @@ function createShorthandFromValue(
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
   if (valIsNoop && !options.render) return null
 
+  // just return ReactElements
+  const valIsReactElement = React.isValidElement(value)
+  if (valIsReactElement) {
+    return value as React.ReactElement<Props>
+  }
+
   const valIsPrimitive = typeof value === 'string' || typeof value === 'number'
   const valIsPropsObject = _.isPlainObject(value)
-  const valIsReactElement = React.isValidElement(value)
 
   // unhandled type warning
   if (
@@ -190,9 +195,6 @@ function createShorthandFromValue(
   if (render) {
     return render(Component, props)
   }
-
-  // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />

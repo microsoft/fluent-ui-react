@@ -1,5 +1,6 @@
 export * from './assertNodeContains'
 export { default as consoleUtil } from './consoleUtil'
+export { default as createMockComponent } from './createMockComponent'
 export { default as domEvent } from './domEvent'
 export { default as syntheticEvent } from './syntheticEvent'
 export { default as nextFrame } from './nextFrame'
