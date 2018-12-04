@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
-- Fix truncate styles for the `Button`'s `content` prop used as element @mnajdova ([#551](https://github.com/stardust-ui/react/pull/551))
+- Fix truncate styles in Teams team for the `Button`'s `content` prop used as element @mnajdova ([#551](https://github.com/stardust-ui/react/pull/551))
 
 <!--------------------------------[ v0.13.1 ]------------------------------- -->
 ## [v0.13.1](https://github.com/stardust-ui/react/tree/v0.13.1) (2018-12-03)
