@@ -105,7 +105,7 @@ function createShorthandFromValue(
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
   if (valIsNoop && !options.render) return null
 
-  // just return ReactElements
+  // return value as is if it a ReactElement
   if (React.isValidElement(value)) {
     return value as React.ReactElement<Props>
   }

@@ -26,10 +26,6 @@ const implementsWrapperProp = <P extends { wrapper: ShorthandValue }>(
       wrapperTests(mount(<Component />).find(WrapperComponent))
     })
 
-    it('wraps the component with an element of the same type as the wrapper component', () => {
-      wrapperTests(mount(<Component wrapper={<WrapperComponent />} />).find(WrapperComponent))
-    })
-
     it('wraps the component with a custom element using "as" prop', () => {
       wrapperTests(mount(<Component wrapper={{ as: 'p' }} />).find('p'))
     })
