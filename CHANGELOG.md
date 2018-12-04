@@ -18,7 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
-- add `react-dom` as available import in the editor @mnajdova ([#553](https://github.com/stardust-ui/react/pull/553))
+- Add `react-dom` as available import in the editor @mnajdova ([#553](https://github.com/stardust-ui/react/pull/553))
+- Fix incorrect and missing filled or outline versions of Teams SVG icons @codepretty ([#552](https://github.com/stardust-ui/react/pull/552))
 
 <!--------------------------------[ v0.13.1 ]------------------------------- -->
 ## [v0.13.1](https://github.com/stardust-ui/react/tree/v0.13.1) (2018-12-03)
@@ -29,7 +30,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix invalid whatInput import @miroslavstastny ([#541](https://github.com/stardust-ui/react/pull/541))
 - Fix invalid typings and propTypes for the content prop @mnajdova ([#528](https://github.com/stardust-ui/react/pull/528))
 - Fix Teams SVG icons @kuzhelov ([#544](https://github.com/stardust-ui/react/pull/544))
-- Fix incorrect and missing filled or outline versions of Teams SVG icons @codepretty ([#552](https://github.com/stardust-ui/react/pull/552))
 
 ### Features
 - Add all default size Teams icons processed & ready to be consumed by Stardust as needed @codepretty ([#478](https://github.com/stardust-ui/react/pull/478))
