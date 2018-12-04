@@ -11,6 +11,8 @@ import {
   StaticStyle,
   StaticStyleFunction,
   FontFace,
+  ThemeComponentVariablesPrepared,
+  ComponentVariablesPrepared,
 } from '../../themes/types'
 import ProviderConsumer from './ProviderConsumer'
 import { mergeSiteVariables } from '../../lib/mergeThemes'
@@ -20,10 +22,20 @@ export interface ProviderProps {
   children: React.ReactNode
 }
 
+export interface ProviderState {
+  staticStyles?: StaticStyle[]
+  siteVariables?: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+}
+
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<ProviderProps, any> {
+class Provider extends React.Component<ProviderProps, ProviderState> {
+  constructor(props: ProviderProps) {
+    super(props)
+    // this.state = {}
+  }
+
   static propTypes = {
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -54,15 +66,22 @@ class Provider extends React.Component<ProviderProps, any> {
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = () => {
+  renderStaticStyles = (outgoingTheme: ThemePrepared) => {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
-    const { siteVariables, staticStyles } = this.props.theme
+    const { siteVariables } = outgoingTheme
+    const { staticStyles } = this.props.theme
 
     if (!staticStyles) return
+    //
+    // const {staticStyles: stateStaticStyles, siteVariables: stateStaticVariables} = this.state
+    //
+    // if (stateStaticStyles === staticStyles && stateStaticVariables === siteVariables) return
+
+    console.log('Rendering static styles...')
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
@@ -84,6 +103,11 @@ class Provider extends React.Component<ProviderProps, any> {
         )
       }
     })
+    //
+    // this.setState({
+    //   staticStyles,
+    //   siteVariables,
+    // })
   }
 
   renderFontFaces = () => {
@@ -109,7 +133,7 @@ class Provider extends React.Component<ProviderProps, any> {
   }
 
   componentDidMount() {
-    this.renderStaticStyles()
+    // this.renderStaticStyles()
     this.renderFontFaces()
   }
 
@@ -122,7 +146,7 @@ class Provider extends React.Component<ProviderProps, any> {
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
           const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
-
+          this.renderStaticStyles(outgoingTheme)
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
