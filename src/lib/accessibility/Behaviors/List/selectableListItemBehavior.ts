@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
@@ -10,10 +11,14 @@ const selectableListItemBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'option',
-      'aria-selected': !!props['active'],
-      ...(props.focusableItemProps && {
-        tabIndex: props.focusableItemProps.isFocused ? '0' : '-1',
-      }),
+      'aria-selected': !!props['selected'],
+    },
+  },
+  keyActions: {
+    root: {
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
     },
   },
 })

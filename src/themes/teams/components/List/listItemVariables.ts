@@ -14,6 +14,8 @@ export default siteVariables => ({
   contentLineHeight: siteVariables.lineHeightSmall,
 
   // Selection
-  selectionHoverColor: siteVariables.white,
-  selectionHoverBackgroundColor: siteVariables.brand08,
+  selectionFocusHoverColor: siteVariables.white,
+  selectionFocusHoverBackgroundColor: siteVariables.brand08,
+  selectedColor: siteVariables.black,
+  selectedBackgroundColor: siteVariables.gray10,
 })

@@ -1,5 +1,5 @@
 import * as React from 'react'
-
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import {
   createShorthandFactory,
@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
@@ -32,18 +32,16 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
 
   /** A list item can indicate that it can be selected. */
   selection?: boolean
+  /** Indicates if the current list item is selected */
+  selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-}
-
-export interface ListItemState {
-  isHovering: boolean
 }
 
 /**
  * A list item contains a single piece of content within a list.
  */
-class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<Extendable<ListItemProps>> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -68,6 +66,8 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     media: PropTypes.any,
 
     selection: PropTypes.bool,
+    selected: PropTypes.bool,
+
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
@@ -79,17 +79,20 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: ListItemProps) {
-    super(props, null)
-
-    this.state = {
-      isHovering: false,
-    }
-  }
-
   private itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => {
+      this.handleClick(event)
+      event.preventDefault()
+    },
+  }
+
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  renderComponent({ classes, accessibility, rest, styles }) {
     const {
       as,
       debug,
@@ -122,7 +125,9 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
         ref={this.itemRef}
+        onClick={this.handleClick}
         {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
       />
     )

@@ -25,8 +25,6 @@ const items = [
   },
 ]
 
-const selection = knobs => (knobs === undefined ? true : knobs.selection)
-
-const ListExampleSelection = ({ knobs }) => <List selection={selection(knobs)} items={items} />
+const ListExampleSelection = () => <List selection={true} items={items} />
 
 export default ListExampleSelection

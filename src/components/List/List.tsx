@@ -42,6 +42,7 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
 export interface ListState {
   selectedItemIndex: number
+  focusedItemIndex: number
 }
 
 /**
@@ -75,7 +76,8 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
   public state = {
-    selectedItemIndex: 0,
+    focusedItemIndex: 0,
+    selectedItemIndex: -1,
   }
 
   private focusHandler: ContainerFocusHandler = null
@@ -119,7 +121,7 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     this.focusHandler = new ContainerFocusHandler(
       () => this.props.items.length,
       index => {
-        this.setState({ selectedItemIndex: index }, () => {
+        this.setState({ focusedItemIndex: index }, () => {
           const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
           const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
 
@@ -131,7 +133,16 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
 
   renderItems() {
     const { items } = this.props
-    const { selectedItemIndex } = this.state
+    const { focusedItemIndex, selectedItemIndex } = this.state
+
+    const setTabIndex = (idx): number => {
+      // try set tabindex=0 for the selected item
+      if (selectedItemIndex !== -1) {
+        return idx === selectedItemIndex ? 0 : -1
+      }
+
+      return idx === focusedItemIndex ? 0 : -1
+    }
 
     this.itemRefs = []
 
@@ -142,9 +153,11 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
         const ref = React.createRef()
         this.itemRefs[idx] = ref
 
-        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
+        maybeSelectableItemProps.onClick = () => this.setState({ selectedItemIndex: idx })
+        maybeSelectableItemProps.selected = idx === selectedItemIndex
+        maybeSelectableItemProps.tabIndex = setTabIndex(idx)
       }
 
       const itemProps = {
