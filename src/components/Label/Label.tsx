@@ -15,8 +15,7 @@ import {
 
 import { Icon, Image, Layout } from '../..'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -41,24 +40,6 @@ export interface LabelProps
 
   /** An icon label can format an Icon to appear before or after the text in the label */
   imagePosition?: 'start' | 'end'
-
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the image slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderImage?: ShorthandRenderFunction
 }
 
 /**
@@ -79,8 +60,6 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
-    renderIcon: PropTypes.func,
-    renderImage: PropTypes.func,
   }
 
   static defaultProps = {
@@ -99,16 +78,7 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, variables, styles }) {
-    const {
-      children,
-      content,
-      icon,
-      iconPosition,
-      image,
-      imagePosition,
-      renderIcon,
-      renderImage,
-    } = this.props
+    const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     const imageElement =
       image &&
@@ -117,7 +87,6 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
           styles: styles.image,
           variables: variables.image,
         },
-        render: renderImage,
       })
 
     const iconElement =
@@ -128,7 +97,6 @@ class Label extends UIComponent<Extendable<LabelProps>, any> {
           variables: variables.icon,
         },
         overrideProps: this.handleIconOverrides,
-        render: renderIcon,
       })
 
     let start: React.ReactNode = null
