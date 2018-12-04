@@ -1,25 +1,21 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
   RenderResultConfig,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 
-export interface PopupContentProps {
-  as?: any
-  children?: ReactChildren
-  content?: any
-  className?: string
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
-}
+export interface PopupContentProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {}
 
 /**
  * A PopupContent displays the content of a Popup component
@@ -33,28 +29,7 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   public static className = 'ui-popup__content'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /**
-     * Wraped content.
-     */
-    content: PropTypes.any,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonPropTypes.createCommon(),
   }
 
   public renderComponent({
@@ -72,6 +47,6 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
   }
 }
 
-PopupContent.create = createShorthandFactory(PopupContent, content => ({ content }))
+PopupContent.create = createShorthandFactory(PopupContent, 'content')
 
 export default PopupContent

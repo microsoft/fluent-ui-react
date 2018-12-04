@@ -1,26 +1,27 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import HeaderDescription from './HeaderDescription'
 import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+  childrenExist,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import HeaderDescription from './HeaderDescription'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
-export interface HeaderProps {
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: React.ReactNode
+export interface HeaderProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Shorthand for Header.Description. */
   description?: ShorthandValue
+
+  /** Align header content. */
   textAlign?: 'left' | 'center' | 'right' | 'justified'
-  renderDescription?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -39,41 +40,9 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static displayName = 'Header'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Shorthand for Header.Description. */
+    ...commonPropTypes.createCommon(),
     description: customPropTypes.itemShorthand,
-
-    /** Align header content. */
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
-
-    /**
-     * A custom render function the description slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderDescription: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -83,7 +52,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, variables: v, rest }) {
-    const { children, content, description, renderDescription } = this.props
+    const { children, content, description } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -102,7 +71,6 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
               ...(v.descriptionColor && { color: v.descriptionColor }),
             },
           },
-          render: renderDescription,
         })}
       </ElementType>
     )

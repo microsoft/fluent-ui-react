@@ -2,28 +2,35 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Button from './Button'
 import { buttonGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-export interface ButtonGroupProps {
-  as?: any
+export interface ButtonGroupProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default buttonGroupBehavior
+   */
+  accessibility?: Accessibility
+
+  /** The buttons contained inside the ButtonGroup. */
   buttons?: ShorthandValue[]
-  children?: ReactChildren
+
+  /** The buttons inside group can appear circular. */
   circular?: boolean
-  className?: string
-  content?: React.ReactNode
-  renderButton?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -35,45 +42,10 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static className = 'ui-buttons'
 
   public static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** The buttons contained inside the ButtonGroup. */
     buttons: customPropTypes.collectionShorthand,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** The buttons inside group can appear circular. */
     circular: PropTypes.bool,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /**
-     * A custom render iterator for rendering each of the Button.Group buttons.
-     * The default component, props, and children are available for each button.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderButton: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {
@@ -89,7 +61,7 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { children, content, buttons, circular, renderButton } = this.props
+    const { children, content, buttons, circular } = this.props
     if (_.isNil(buttons)) {
       return (
         <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
@@ -106,7 +78,6 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
             },
-            render: renderButton,
           }),
         )}
       </ElementType>

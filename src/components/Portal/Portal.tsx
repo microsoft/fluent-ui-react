@@ -4,12 +4,13 @@ import * as _ from 'lodash'
 
 import {
   childrenExist,
-  customPropTypes,
   AutoControlledComponent,
-  eventStack,
   doesNodeContainClick,
+  EventStack,
+  ChildrenComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
 } from '../../lib'
-import { ShorthandValue, ReactChildren } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
@@ -21,18 +22,55 @@ export type TriggerAccessibility = {
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface PortalProps {
-  children?: ReactChildren
-  content?: ShorthandValue | ShorthandValue[]
+export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
+  /** Initial value of open. */
   defaultOpen?: boolean
+
+  /**
+   * Called when the portal is mounted on the DOM.
+   *
+   * @param {object} data - All props.
+   */
   onMount?: (props: PortalProps) => void
+
+  /**
+   * Called when the portal is unmounted from the DOM.
+   *
+   * @param {object} data - All props.
+   */
   onUnmount?: (props: PortalProps) => void
+
+  /** Controls whether or not the portal is displayed. */
   open?: boolean
+
+  /** Element to be rendered in-place where the portal is defined. */
   trigger?: JSX.Element
+
+  /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value */
   trapFocus?: FocusTrapZoneProps | boolean
+
+  /** Accessibility behavior object to apply on trigger node. */
   triggerAccessibility?: TriggerAccessibility
+
+  /**
+   * Called with a ref to the trigger node.
+   *
+   * @param {JSX.Element} node - Referred node.
+   */
   triggerRef?: (node: HTMLElement) => void
+
+  /**
+   * Called when trigger node was clicked.
+   *
+   * @param {object} data - All props.
+   */
   onTriggerClick?: (e: ReactMouseEvent) => void
+
+  /**
+   * Called when `click` event was invoked outside portal or trigger nodes.
+   *
+   * @param {object} data - All props.
+   */
   onOutsideClick?: (e: ReactMouseEvent) => void
 }
 
@@ -47,66 +85,26 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
+  private clickSubscription = EventStack.noSubscription
+
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Initial value of open. */
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      className: false,
+      styled: false,
+    }),
     defaultOpen: PropTypes.bool,
-
-    /**
-     * Called when the portal is mounted on the DOM.
-     *
-     * @param {object} data - All props.
-     */
     onMount: PropTypes.func,
-
-    /**
-     * Called when the portal is unmounted from the DOM.
-     *
-     * @param {object} data - All props.
-     */
     onUnmount: PropTypes.func,
-
-    /** Controls whether or not the portal is displayed. */
     open: PropTypes.bool,
-
-    /** Element to be rendered in-place where the portal is defined. */
     trigger: PropTypes.node,
-
-    /**
-     * Called with a ref to the trigger node.
-     *
-     * @param {JSX.Element} node - Referred node.
-     */
     triggerRef: PropTypes.func,
-
-    /** Accessibility behavior object to apply on trigger node. */
     triggerAccessibility: PropTypes.object,
-
-    /**
-     * Called when trigger node was clicked.
-     *
-     * @param {object} data - All props.
-     */
     onTriggerClick: PropTypes.func,
-
-    /**
-     * Called when `click` event was invoked outside portal or trigger nodes.
-     *
-     * @param {object} data - All props.
-     */
     onOutsideClick: PropTypes.func,
-
-    /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value */
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
@@ -160,12 +158,13 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     )
   }
   private handleMount = () => {
-    eventStack.sub('click', this.handleDocumentClick)
+    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
+
     _.invoke(this.props, 'onMount', this.props)
   }
 
   private handleUnmount = () => {
-    eventStack.unsub('click', this.handleDocumentClick)
+    this.clickSubscription.unsubscribe()
     _.invoke(this.props, 'onUnmount', this.props)
   }
 

@@ -4,7 +4,8 @@ import renderComponent, { RenderResultConfig } from './renderComponent'
 import { AccessibilityActionHandlers } from './accessibility/types'
 import { FocusZone } from './accessibility/FocusZone'
 
-class UIComponent<P, S> extends React.Component<P, S> {
+// TODO @Bugaa92: deprecated by createComponent.tsx
+class UIComponent<P, S = {}> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
@@ -46,19 +47,17 @@ class UIComponent<P, S> extends React.Component<P, S> {
   }
 
   render() {
-    return renderComponent(
-      {
-        className: this.childClass.className,
-        defaultProps: this.childClass.defaultProps,
-        displayName: this.childClass.displayName,
-        handledProps: this.childClass.handledProps,
-        props: this.props,
-        state: this.state,
-        actionHandlers: this.actionHandlers,
-        focusZoneRef: this.setFocusZoneRef,
-      },
-      this.renderComponent,
-    )
+    return renderComponent({
+      className: this.childClass.className,
+      defaultProps: this.childClass.defaultProps,
+      displayName: this.childClass.displayName,
+      handledProps: this.childClass.handledProps,
+      props: this.props,
+      state: this.state,
+      actionHandlers: this.actionHandlers,
+      focusZoneRef: this.setFocusZoneRef,
+      render: this.renderComponent,
+    })
   }
 
   private setFocusZoneRef = (focusZone: FocusZone): void => {

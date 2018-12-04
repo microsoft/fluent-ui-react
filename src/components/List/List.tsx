@@ -1,96 +1,67 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, childrenExist, UIComponent } from '../../lib'
+import {
+  customPropTypes,
+  childrenExist,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import {
-  ContainerFocusHandler,
-  FocusContainerProps,
-  FocusContainerState,
-} from '../../lib/accessibility/FocusHandling/FocusContainer'
+import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
-
-export interface ListProps extends FocusContainerProps<ShorthandValue> {
+export interface ListProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
-  className?: string
+
+  /** Toggle debug mode */
   debug?: boolean
-  listRef?: (node: HTMLElement) => void
+
+  /** Shorthand array of props for ListItem. */
+  items?: ShorthandValue[]
+
+  /** A selection list formats list items as possible choices. */
   selection?: boolean
+
+  /** Truncates content */
   truncateContent?: boolean
+
+  /** Truncates header */
   truncateHeader?: boolean
-  renderItem?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+}
+
+export interface ListState {
+  selectedItemIndex: number
 }
 
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
+class List extends UIComponent<Extendable<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Toggle debug mode */
-    debug: PropTypes.bool,
-
-    /** Shorthand array of props for ListItem. */
-    items: customPropTypes.collectionShorthand,
-
-    /** A selection list formats list items as possible choices. */
-    selection: PropTypes.bool,
-
-    /** Truncates content */
-    truncateContent: PropTypes.bool,
-
-    /** Truncates header */
-    truncateHeader: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
-
-    /** Ref callback with the list DOM node. */
-    listRef: PropTypes.func,
-
-    /**
-     * A custom render iterator for rendering each of the List items.
-     * The default component, props, and children are available for each item.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderItem: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    debug: PropTypes.bool,
+    items: customPropTypes.collectionShorthand,
+    selection: PropTypes.bool,
+    truncateContent: PropTypes.bool,
+    truncateHeader: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -103,13 +74,30 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
-  private focusContainer = ContainerFocusHandler.create(this)
+  public state = {
+    selectedItemIndex: 0,
+  }
+
+  private focusHandler: ContainerFocusHandler = null
+  private itemRefs = []
 
   actionHandlers: AccessibilityActionHandlers = {
-    moveNext: this.focusContainer.moveNext.bind(this.focusContainer),
-    movePrevious: this.focusContainer.movePrevious.bind(this.focusContainer),
-    moveFirst: this.focusContainer.moveFirst.bind(this.focusContainer),
-    moveLast: this.focusContainer.moveLast.bind(this.focusContainer),
+    moveNext: e => {
+      e.preventDefault()
+      this.focusHandler.moveNext()
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.focusHandler.movePrevious()
+    },
+    moveFirst: e => {
+      e.preventDefault()
+      this.focusHandler.moveFirst()
+    },
+    moveLast: e => {
+      e.preventDefault()
+      this.focusHandler.moveLast()
+    },
   }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
@@ -121,27 +109,51 @@ class List extends UIComponent<Extendable<ListProps>, FocusContainerState> {
         {...accessibility.keyHandlers.root}
         {...rest}
         className={classes.root}
-        ref={this.handleListRef}
       >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
   }
 
-  private handleListRef = (listNode: HTMLElement) => {
-    _.invoke(this.props, 'listRef', listNode)
+  componentDidMount() {
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.items.length,
+      index => {
+        this.setState({ selectedItemIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
   }
 
   renderItems() {
-    const { items, renderItem } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
+    const { items } = this.props
+    const { selectedItemIndex } = this.state
+
+    this.itemRefs = []
 
     return _.map(items, (item, idx) => {
-      itemProps.focusableItemProps = this.focusContainer.createItemProps(idx, items.length)
+      const maybeSelectableItemProps = {} as any
+
+      if (this.props.selection) {
+        const ref = React.createRef()
+        this.itemRefs[idx] = ref
+
+        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
+        maybeSelectableItemProps.ref = ref
+        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
+      }
+
+      const itemProps = {
+        ..._.pick(this.props, List.itemProps),
+        ...maybeSelectableItemProps,
+      }
 
       return ListItem.create(item, {
         defaultProps: itemProps,
-        render: renderItem,
       })
     })
   }

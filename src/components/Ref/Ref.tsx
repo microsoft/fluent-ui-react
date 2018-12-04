@@ -1,39 +1,44 @@
 import * as PropTypes from 'prop-types'
-import * as _ from 'lodash'
-import { Children, Component } from 'react'
+import * as React from 'react'
 import { findDOMNode } from 'react-dom'
-import { ReactChildren } from 'utils'
 
-export interface RefProps {
-  children?: ReactChildren
-  innerRef?: (ref: HTMLElement) => void
+import { handleRef, ChildrenComponentProps, commonPropTypes } from '../../lib'
+
+export interface RefProps extends ChildrenComponentProps<React.ReactChild> {
+  /**
+   * Called when a child component will be mounted or updated.
+   *
+   * @param {HTMLElement} node - Referred node.
+   */
+  innerRef?: React.Ref<any>
 }
 
 /**
  * This component exposes a callback prop that always returns the DOM node of both functional and class component
  * children.
  */
-export default class Ref extends Component<RefProps> {
+export default class Ref extends React.Component<RefProps> {
   static propTypes = {
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.element,
-
-    /**
-     * Called when componentDidMount.
-     *
-     * @param {HTMLElement} node - Referred node.
-     */
-    innerRef: PropTypes.func,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      className: false,
+      styled: false,
+      children: 'element',
+      content: false,
+    }),
+    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   }
 
   componentDidMount() {
-    _.invoke(this.props, 'innerRef', findDOMNode(this))
+    handleRef(this.props.innerRef, findDOMNode(this))
+  }
+
+  componentWillUnmount() {
+    handleRef(this.props.innerRef, null)
   }
 
   render() {
-    return this.props.children && Children.only(this.props.children)
+    return this.props.children && React.Children.only(this.props.children)
   }
 }

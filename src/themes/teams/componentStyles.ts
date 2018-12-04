@@ -41,6 +41,7 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
+export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
@@ -50,3 +51,9 @@ export { default as Segment } from './components/Segment/segmentStyles'
 export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
+
+export { default as Tree } from './components/Tree/treeStyles'
+export { default as TreeItem } from './components/Tree/treeItemStyles'
+export { default as TreeTitle } from './components/Tree/treeTitleStyles'
+
+export { default as Animation } from './components/Animation/animationStyles'

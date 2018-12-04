@@ -1,23 +1,27 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { Extendable } from '../../../types/utils'
 
-export interface ImageProps {
+export interface ImageProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default imageBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
+
+  /** An image may be formatted to appear inline with text as an avatar. */
   avatar?: boolean
-  children?: ReactChildren
+
+  /** An image can appear circular. */
   circular?: boolean
-  className?: string
+
+  /** An image can take up the width of its container. */
   fluid?: boolean
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -38,29 +42,14 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
-
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** An image may be formatted to appear inline with text as an avatar. */
     avatar: PropTypes.bool,
-
-    /** An image can appear circular. */
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -73,6 +62,6 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   }
 }
 
-Image.create = createShorthandFactory(Image, src => ({ src }))
+Image.create = createShorthandFactory(Image, 'src')
 
 export default Image

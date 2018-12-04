@@ -1,72 +1,45 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
 import {
-  customPropTypes,
-  UIComponent,
   childrenExist,
-  RenderResultConfig,
-  createShorthand,
+  createShorthandFactory,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import { Extendable, MapValueToProps, Props } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 
-export interface SlotProps {
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentSlotStyle<SlotProps, any>
-  variables?: ComponentVariablesInput
-}
-
-export const createSlotFactory = (as: any, mapValueToProps: MapValueToProps) => (
-  val,
-  options: Props = {},
-) => {
-  options.defaultProps = { as, ...options.defaultProps }
-  return createShorthand(Slot, mapValueToProps, val, options)
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
  */
-class Slot extends UIComponent<Extendable<SlotProps>, any> {
-  static className = 'ui-slot'
+const Slot: CreateComponentReturnType<SlotProps> & {
+  create?: Function
+} = createComponent<SlotProps>({
+  displayName: 'Slot',
 
-  static displayName = 'Slot'
+  className: 'ui-slot',
 
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
+  propTypes: {
+    ...commonPropTypes.createCommon(),
+  },
 
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  }
-
-  static defaultProps = {
-    as: 'div',
-  }
-
-  static create = createSlotFactory(Slot.defaultProps.as, content => ({ content }))
-  static createHTMLInput = createSlotFactory('input', type => ({ type }))
-
-  renderComponent({ ElementType, classes, rest }: RenderResultConfig<SlotProps>) {
-    const { children, content } = this.props
+  render(config, props) {
+    const { ElementType, classes, rest } = config
+    const { children, content } = props
 
     return (
       <ElementType {...rest} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
-  }
-}
+  },
+})
+
+Slot.create = createShorthandFactory(Slot)
 
 export default Slot

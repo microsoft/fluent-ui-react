@@ -2,16 +2,33 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
-export interface AccordionTitleProps {
-  as?: any
+export interface AccordionTitleProps
+  extends UIComponentProps,
+    ContentComponentProps,
+    ChildrenComponentProps {
+  /** Whether or not the title is in the open state. */
   active?: boolean
-  children?: ReactChildren
-  className?: string
-  content?: React.ReactNode
+
+  /** AccordionTitle index inside Accordion. */
   index?: string | number
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onClick?: ComponentEventHandler<AccordionTitleProps>
 }
 
@@ -26,33 +43,9 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   static className = 'ui-accordion__title'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Whether or not the title is in the open state. */
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** AccordionTitle index inside Accordion. */
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /**
-     * Called on click.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onClick: PropTypes.func,
   }
 
@@ -80,6 +73,6 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   }
 }
 
-AccordionTitle.create = createShorthandFactory(AccordionTitle, content => ({ content }))
+AccordionTitle.create = createShorthandFactory(AccordionTitle, 'content')
 
 export default AccordionTitle

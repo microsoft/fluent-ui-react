@@ -2,37 +2,71 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, customPropTypes, childrenExist } from '../../lib'
+import {
+  AutoControlledComponent,
+  customPropTypes,
+  childrenExist,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
+
 import {
   ComponentEventHandler,
   Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
   ShorthandValue,
+  ShorthandRenderFunction,
 } from '../../../types/utils'
 
-export interface AccordionProps {
-  as?: any
+export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
+  /** Index of the currently active panel. */
   activeIndex?: number[] | number
-  className?: string
-  children?: ReactChildren
+
+  /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
+
+  /** Only allow one panel open at a time. */
   exclusive?: boolean
+
+  /**
+   * Called when a panel title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
   onTitleClick?: ComponentEventHandler<AccordionProps>
+
+  /** Shorthand array of props for Accordion. */
   panels?: {
     content: ShorthandValue
     title: ShorthandValue
   }[]
-  renderContent?: ShorthandRenderFunction
-  renderTitle?: ShorthandRenderFunction
+
+  /**
+   * A custom renderer for each Accordion's panel title.
+   *
+   * @param {React.ReactType} Component - The panel's component type.
+   * @param {object} props - The panel's computed props.
+   */
+  renderPanelTitle?: ShorthandRenderFunction
+
+  /**
+   * A custom renderer for each Accordion's panel content.
+   *
+   * @param {React.ReactType} Component - The panel's component type.
+   * @param {object} props - The panel's computed props.
+   */
+  renderPanelContent?: ShorthandRenderFunction
+
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   * */
   accessibility?: Accessibility
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -44,42 +78,19 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
   static className = 'ui-accordion'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Index of the currently active panel. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     activeIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Initial activeIndex value. */
     defaultActiveIndex: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.number]),
     ]),
-
-    /** Only allow one panel open at a time. */
     exclusive: PropTypes.bool,
-
-    /**
-     * Called when a panel title is clicked.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All item props.
-     */
     onTitleClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
-
-    /** Shorthand array of props for Accordion. */
     panels: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.arrayOf(
@@ -89,35 +100,10 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
         }),
       ),
     ]),
-
-    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
 
-    /**
-     * A custom render iterator for rendering each Accordion panel title.
-     * The default component, props, and children are available for each panel title.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderTitle: PropTypes.func,
-
-    /**
-     * A custom render iterator for rendering each Accordion panel content.
-     * The default component, props, and children are available for each panel content.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderContent: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    renderPanelTitle: PropTypes.func,
+    renderPanelContent: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -165,7 +151,7 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
 
   renderPanels = () => {
     const children: any[] = []
-    const { panels, renderContent, renderTitle } = this.props
+    const { panels, renderPanelContent, renderPanelTitle } = this.props
 
     _.each(panels, (panel, index) => {
       const { content, title } = panel
@@ -175,13 +161,13 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
         AccordionTitle.create(title, {
           defaultProps: { active, index },
           overrideProps: this.handleTitleOverrides,
-          render: renderTitle,
+          render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
           defaultProps: { active },
-          render: renderContent,
+          render: renderPanelContent,
         }),
       )
     })

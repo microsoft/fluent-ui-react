@@ -1,28 +1,48 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
-import { Sizes } from '../../lib/enums'
 
-export interface TextProps {
-  as?: any
+export interface TextProps extends UIComponentProps, ContentComponentProps, ChildrenComponentProps {
+  /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
-  className?: string
-  content?: any
+
+  /** Set as disabled Text component */
   disabled?: boolean
+
+  /** Set as error Text component */
   error?: boolean
+
+  /** The text can appear more important and draw user's attention */
   important?: boolean
-  size?: Sizes
+
+  /** The size for the Text component */
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
+  /** The weight for the Text component */
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
+
+  /** Set as success Text component */
   success?: boolean
+
+  /** The text can signify a temporary state */
   temporary?: boolean
+
+  /** Set as timestamp Text component */
   timestamp?: boolean
+
+  /** Truncates text as needed */
   truncated?: boolean
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -30,6 +50,10 @@ export interface TextProps {
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
+ *
+ * To ensure that RTL mode will be properly handled for provided 'content' value, ensure that either:
+ * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
+ * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
 class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
@@ -39,50 +63,17 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
-    /** Change the default element type of the Text component */
-    as: customPropTypes.as,
-
-    /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+    ...commonPropTypes.createCommon(),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Set as disabled Text component */
     disabled: PropTypes.bool,
-
-    /** Set as error Text component */
     error: PropTypes.bool,
-
-    /** The text can appear more important and draw user's attention */
     important: PropTypes.bool,
-
-    /** The size for the Text component */
     size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
-
-    /** The weight for the Text component */
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
-
-    /** Set as success Text component */
     success: PropTypes.bool,
-
-    /** The text can signify a temporary state */
     temporary: PropTypes.bool,
-
-    /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
-
-    /** Truncates text as needed */
     truncated: PropTypes.bool,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -91,14 +82,19 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
+
+    const hasChildren = childrenExist(children)
+
+    const maybeDirAuto = !hasChildren && typeof content === 'string' ? { dir: 'auto' } : null
+
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+      <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
+        {hasChildren ? children : content}
       </ElementType>
     )
   }
 }
 
-Text.create = createShorthandFactory(Text, content => ({ content }))
+Text.create = createShorthandFactory(Text, 'content')
 
 export default Text

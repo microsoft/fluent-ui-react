@@ -280,9 +280,8 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     }
   },
 
-  content: ({ props }) => ({
-    overflow: 'hidden',
-    ...(typeof props.content === 'string' && truncateStyle),
+  content: () => ({
+    ...truncateStyle,
   }),
 }
 
