@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Image, Label, Status } from '../../'
-
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
   createShorthandFactory,
   customPropTypes,
@@ -9,7 +9,6 @@ import {
   UIComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the image. */
@@ -20,33 +19,6 @@ export interface AvatarProps extends UIComponentProps {
 
   /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string
-
-  /**
-   * A custom render function the image slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderImage?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the label slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderLabel?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the status slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderStatus?: ShorthandRenderFunction
 
   /** Size multiplier. */
   size?: number
@@ -79,9 +51,6 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
     size: PropTypes.number,
     status: customPropTypes.itemShorthand,
     getInitials: PropTypes.func,
-    renderImage: PropTypes.func,
-    renderLabel: PropTypes.func,
-    renderStatus: PropTypes.func,
   }
 
   static defaultProps = {
@@ -110,8 +79,7 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
-      .props as AvatarPropsWithDefaults
+    const { name, status, image, label, getInitials } = this.props as AvatarPropsWithDefaults
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -122,10 +90,8 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
             title: name,
             styles: styles.image,
           },
-          render: renderImage,
         })}
         {!image &&
-          !renderImage &&
           Label.create(label || {}, {
             defaultProps: {
               content: getInitials(name),
@@ -133,7 +99,6 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
               title: name,
               styles: styles.label,
             },
-            render: renderLabel,
           })}
         {Status.create(status, {
           defaultProps: {
@@ -143,7 +108,6 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
               borderWidth: variables.statusBorderWidth,
             },
           },
-          render: renderStatus,
         })}
       </ElementType>
     )

@@ -18,13 +18,7 @@ import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
-
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -72,24 +66,6 @@ export interface MenuItemProps
   /** The menu item can have primary type. */
   primary?: boolean
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the wrapper slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderWrapper?: ShorthandRenderFunction
-
   /** The menu item can have secondary type. */
   secondary?: boolean
 
@@ -132,9 +108,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
-    renderIcon: PropTypes.func,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    renderWrapper: PropTypes.func,
   }
 
   static defaultProps = {
@@ -146,7 +120,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
+    const { children, content, icon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -163,7 +137,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
         {icon &&
           Icon.create(this.props.icon, {
             defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-            render: renderIcon,
           })}
         {content}
       </ElementType>
@@ -176,7 +149,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
           ...accessibility.attributes.root,
           ...accessibility.keyHandlers.root,
         },
-        render: renderWrapper,
         overrideProps: () => ({
           children: menuItemInner,
         }),

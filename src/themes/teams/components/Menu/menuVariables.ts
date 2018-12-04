@@ -16,7 +16,6 @@ export interface MenuVariables {
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
-  iconsMenuItemSize?: string
   circularRadius: string
   lineHeightBase: string
 }
@@ -38,7 +37,6 @@ export default (siteVars: any): MenuVariables => {
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
-    iconsMenuItemSize: pxToRem(32),
     circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
   }

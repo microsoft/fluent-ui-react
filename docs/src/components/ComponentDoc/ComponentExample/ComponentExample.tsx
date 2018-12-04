@@ -260,6 +260,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       return this.renderMissingExample()
     }
 
+    return <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+  }
+
+  private renderElement = (element: React.ReactElement<any>) => {
     const { showRtl, componentVariables, themeName } = this.state
     const theme = themes[themeName]
 
@@ -270,11 +274,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return (
-      <Provider theme={newTheme}>
-        <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-      </Provider>
-    )
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
   private renderMissingExample = (): JSX.Element => {
@@ -638,6 +638,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             babelConfig={babelConfig}
             knobs={knobs}
             source={sourceCode}
+            render={this.renderElement}
             renderHtml={showCode}
             resolver={importResolver}
           >
