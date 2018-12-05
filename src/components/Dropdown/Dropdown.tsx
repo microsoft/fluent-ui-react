@@ -36,7 +36,7 @@ import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
 import DropdownSearchInput from './DropdownSearchInput'
 import { DropdownSearchInputProps } from 'semantic-ui-react'
 
-// To be replaced when Downshift will add highlightedItem in their interface.
+// TODO: To be replaced when Downshift will add highlightedItem in their interface.
 export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
   highlightedItem: Item
 }
@@ -88,18 +88,18 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   noResultsMessage?: string
 
   /**
-   * Callback for change in dropdown active value(s).
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props and the new active value(s).
-   */
-  onChange?: ComponentEventHandler<DropdownProps>
-
-  /**
    * Callback for change in dropdown search query value.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {Object} data - All props and the new search query value in the edit text.
    */
   onSearchQueryChange?: ComponentEventHandler<DropdownProps>
+
+  /**
+   * Callback for change in dropdown active value(s).
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {Object} data - All props and the new active value(s).
+   */
+  onSelectedChange?: ComponentEventHandler<DropdownProps>
 
   /** A message to serve as placeholder, on the edit text, if search, or on the button, if not. */
   placeholder?: string
@@ -185,8 +185,8 @@ export default class Dropdown extends AutoControlledComponent<
     itemToString: PropTypes.func,
     multiple: PropTypes.bool,
     noResultsMessage: PropTypes.string,
-    onChange: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
+    onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
     renderItem: PropTypes.func,
     renderLabel: PropTypes.func,
@@ -230,7 +230,7 @@ export default class Dropdown extends AutoControlledComponent<
     return (
       <ElementType {...rest} className={classes.root}>
         <Downshift
-          onChange={this.handleChange}
+          onChange={this.handleSelectedChange}
           inputValue={searchQuery}
           stateReducer={this.stateReducer}
           getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
@@ -635,7 +635,7 @@ export default class Dropdown extends AutoControlledComponent<
     !isOpen && this.inputNode.focus()
   }
 
-  private handleChange = (item: ShorthandValue) => {
+  private handleSelectedChange = (item: ShorthandValue) => {
     const { multiple, getA11ySelectedMessage } = this.props
     const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
@@ -649,7 +649,7 @@ export default class Dropdown extends AutoControlledComponent<
         : `${typeof item === 'object' ? (item as any).header : item} has been selected.`,
     )
 
-    _.invoke(this.props, 'onChange', {}, { ...this.props, value: newValue })
+    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value: newValue })
   }
 
   private handleLabelRemove(e: React.SyntheticEvent, item: ShorthandValue) {
@@ -680,6 +680,6 @@ export default class Dropdown extends AutoControlledComponent<
           } has been removed.`,
     )
 
-    _.invoke(this.props, 'onChange', {}, { ...this.props, value })
+    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })
   }
 }
