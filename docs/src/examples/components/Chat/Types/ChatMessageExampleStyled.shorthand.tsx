@@ -68,22 +68,30 @@ const ChatMessageExampleStyled = () => (
       items={[
         {
           mine: true,
-          content: (
-            <Chat.Message
-              content="Hey, do you know any restaurants with good food?"
-              author="John Doe"
-              timestamp="Yesterday, 10:15 PM"
-              mine
-            />
-          ),
+          content: {
+            content: (
+              <Chat.Message
+                content="Hey, do you know any restaurants with good food?"
+                author="John Doe"
+                timestamp="Yesterday, 10:15 PM"
+                mine
+              />
+            ),
+          },
           key: 'message-id-1',
         },
         {
           key: 'message-id-2',
-          gutter: <Avatar {...janeAvatar} />,
-          content: (
-            <Chat.Message content={{ content }} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
-          ),
+          gutter: { content: <Avatar {...janeAvatar} /> },
+          content: {
+            content: (
+              <Chat.Message
+                content={{ content }}
+                author="Jane Doe"
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+          },
         },
       ]}
     />
