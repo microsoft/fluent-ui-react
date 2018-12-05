@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.13.3 ]------------------------------- -->
+## [v0.13.3](https://github.com/stardust-ui/react/tree/v0.13.3) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.2...v0.13.3)
+
+### Fixes
+- Revert breaking change: `render` callback as an option for shorthand value introduced in #519 @kuzhelov ([#561](https://github.com/stardust-ui/react/pull/561))
+
 <!--------------------------------[ v0.13.2 ]------------------------------- -->
 ## [v0.13.2](https://github.com/stardust-ui/react/tree/v0.13.2) (2018-12-05)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.13.1...v0.13.2)
@@ -32,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix icon overlapping for `iconOnly` prop in `Menu` component with @Bugaa92 ([#486](https://github.com/stardust-ui/react/pull/486))
 
 ### Features
+- Add `render` callback as an option for shorthand value @kuzhelov ([#519](https://github.com/stardust-ui/react/pull/519))
 - Add `color` prop to `Divider` component @layershifter ([#451](https://github.com/stardust-ui/react/pull/451))
 
 <!--------------------------------[ v0.13.1 ]------------------------------- -->
