@@ -4,7 +4,8 @@ import * as React from 'react'
 import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'
 
 type ComponentPlaygroundSnippetProps = {
-  component: React.FunctionComponent
+  element?: React.ReactElement
+  component?: React.FunctionComponent
 }
 
 /**
@@ -13,13 +14,19 @@ type ComponentPlaygroundSnippetProps = {
 const ComponentPlaygroundSnippet: React.FunctionComponent<
   ComponentPlaygroundSnippetProps
 > = props => {
-  const { component } = props
+  const { element, component } = props
 
-  if (typeof component === 'function' && !!component.prototype.isReactComponent) {
-    throw new Error('We can handle only functional components as root component.')
+  if (process.env.NODE_ENV !== 'production') {
+    if (typeof component === 'function' && !!component.prototype.isReactComponent) {
+      throw new Error('We can handle only functional components as root component.')
+    }
+
+    if (!element && !component) {
+      throw new Error('"element" or "component" should be specified')
+    }
   }
 
-  const jsxElement = component(null)
+  const jsxElement = element || component(null)
   const jsxMarkup = renderElementToJSX(jsxElement)
 
   return <CodeSnippet fitted mode="jsx" value={jsxMarkup} />
