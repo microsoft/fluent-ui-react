@@ -3,7 +3,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps } from '../../../../components/Menu/Menu'
 
 const solidBorder = (color: string) => ({
-  border: `1px solid ${color}`,
+  border: `2px solid ${color}`,
 })
 
 export default {
