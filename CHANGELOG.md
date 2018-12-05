@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.13.2 ]------------------------------- -->
+## [v0.13.2](https://github.com/stardust-ui/react/tree/v0.13.2) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.1...v0.13.2)
+
 ### Documentation
 - Add the concept of the color palette @layershifter ([#451](https://github.com/stardust-ui/react/pull/451))
 
