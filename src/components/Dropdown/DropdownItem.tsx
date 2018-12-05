@@ -51,7 +51,7 @@ export interface DropdownItemProps extends UIComponentProps<any, any> {
 }
 
 /**
- * A DropdownItem is a sub-component if the Dropdown, used to display the items as options inside the list.
+ * A DropdownItem is a sub-component of the Dropdown, used to display the items as options inside the list.
  */
 class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   static displayName = 'DropdownItem'
