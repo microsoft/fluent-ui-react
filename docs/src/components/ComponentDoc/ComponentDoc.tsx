@@ -11,7 +11,7 @@ import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground'
-import { ComponentInfo } from 'docs/src/types'
+import ComponentExplorer from './ComponentExplorer'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -127,12 +127,13 @@ class ComponentDoc extends React.Component<ComponentDocProps, any> {
               <Text styles={{ marginBottom: '1.4rem' }} content={info.docblock.description} />
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
+              <ComponentExplorer info={info} />
               <ComponentProps displayName={info.displayName} props={info.props} />
             </>
           </Flex.Item>
         </Flex>
 
-        <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+        <ComponentPlayground componentName={info.displayName} key={info.displayName} info={info} />
 
         <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
           <div ref={this.handleExamplesRef}>

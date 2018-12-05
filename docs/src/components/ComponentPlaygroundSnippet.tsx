@@ -13,13 +13,13 @@ type ComponentPlaygroundSnippetProps = {
 const ComponentPlaygroundSnippet: React.FunctionComponent<
   ComponentPlaygroundSnippetProps
 > = props => {
-  const { component } = props
+  const { component, ...rest } = props
 
   if (typeof component === 'function' && !!component.prototype.isReactComponent) {
     throw new Error('We can handle only functional components as root component.')
   }
 
-  const jsxElement = component(null)
+  const jsxElement = component(rest)
   const jsxMarkup = renderElementToJSX(jsxElement)
 
   return <CodeSnippet fitted mode="jsx" value={jsxMarkup} />
