@@ -6,7 +6,7 @@ import * as PropTypes from 'prop-types'
 import {
   customPropTypes,
   childrenExist,
-  UIComponent,
+  AutoControlledComponent,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -33,6 +33,12 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** A selection list formats list items as possible choices. */
   selection?: boolean
 
+  /** Index of the currently selected item. */
+  selectedItemIndex?: number
+
+  /** Initial selectedItemIndex value. */
+  defaultSelectedItemIndex?: number
+
   /** Truncates content */
   truncateContent?: boolean
 
@@ -41,14 +47,14 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface ListState {
-  selectedItemIndex: number
   focusedItemIndex: number
+  selectedItemIndex?: number
 }
 
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, ListState> {
+class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -63,6 +69,8 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+    selectedItemIndex: PropTypes.number,
+    defaultSelectedItemIndex: PropTypes.number,
   }
 
   static defaultProps = {
@@ -70,15 +78,15 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     accessibility: listBehavior as Accessibility,
   }
 
+  static autoControlledProps = ['selectedItemIndex']
+  getInitialAutoControlledState() {
+    return { selectedItemIndex: -1, focusedItemIndex: 0 }
+  }
+
   static Item = ListItem
 
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
-
-  public state = {
-    focusedItemIndex: 0,
-    selectedItemIndex: -1,
-  }
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
@@ -155,7 +163,7 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
 
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
-        maybeSelectableItemProps.onClick = () => this.setState({ selectedItemIndex: idx })
+        maybeSelectableItemProps.onClick = () => this.trySetState({ selectedItemIndex: idx })
         maybeSelectableItemProps.selected = idx === selectedItemIndex
         maybeSelectableItemProps.tabIndex = setTabIndex(idx)
       }
