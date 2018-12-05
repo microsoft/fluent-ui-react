@@ -24,12 +24,7 @@ export interface ProviderProps {
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
 class Provider extends React.Component<ProviderProps> {
-  staticStylesRendered: boolean
-
-  constructor(props: ProviderProps) {
-    super(props)
-    this.staticStylesRendered = false
-  }
+  staticStylesRendered: boolean = false
 
   static propTypes = {
     theme: PropTypes.shape({
