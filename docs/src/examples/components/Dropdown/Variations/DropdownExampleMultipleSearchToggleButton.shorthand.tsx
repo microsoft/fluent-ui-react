@@ -13,12 +13,6 @@ class DropdownExample extends React.Component {
         placeholder="Start typing a name"
         toggleButton
         items={this.state.items}
-        onChange={(e, props) => {
-          const value = (props as any).value as any[]
-          this.setState({
-            items: inputItems.filter(item => value.indexOf(item) === -1),
-          })
-        }}
       />
     )
   }

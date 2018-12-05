@@ -127,8 +127,8 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    */
   renderSearchInput?: ShorthandRenderFunction
 
-  /** A dropdown can have a search field instead of trigger button. */
-  search?: boolean
+  /** A dropdown can have a search field instead of trigger button. Can receive a function that will replace the default search. */
+  search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
 
   /** Shorthand for the edit text (Dropdown.SearchInput) that has the search query, if search. */
   searchInput?: ShorthandValue
@@ -184,7 +184,7 @@ export default class Dropdown extends AutoControlledComponent<
     renderItem: PropTypes.func,
     renderLabel: PropTypes.func,
     renderSearchInput: PropTypes.func,
-    search: PropTypes.bool,
+    search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
     toggleButton: PropTypes.bool,
@@ -349,8 +349,9 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     const { items, noResultsMessage, renderItem } = this.props
-    if (items.length > 0) {
-      return items.map((item, index) => {
+    const filteredItems = this.getFilteredItems(items)
+    if (filteredItems.length > 0) {
+      return filteredItems.map((item, index) => {
         let itemAsListItem = item
         if (typeof item === 'object') {
           itemAsListItem = _.pickBy(item, (value, key) =>
@@ -444,6 +445,27 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
+  private getFilteredItems = (items: ShorthandValue[]): ShorthandValue[] => {
+    const { multiple, search } = this.props
+    const { searchQuery } = this.state
+    let filteredItems = items
+    if (multiple) {
+      const value = this.state.value as ShorthandValue[]
+      filteredItems = filteredItems.filter(item => value.indexOf(item) === -1)
+    }
+    const itemToString = this.props.itemToString || this.itemToString
+    filteredItems = filteredItems.filter(
+      item =>
+        search && _.isFunction(search)
+          ? search(filteredItems, searchQuery)
+          : itemToString(item)
+              .toLowerCase()
+              .indexOf(searchQuery.toLowerCase()) !== -1,
+    )
+
+    return filteredItems
+  }
+
   private itemToString = (item: ShorthandValue): string => {
     if (!item) {
       return ''
@@ -458,7 +480,6 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private getA11yStatusMessage = ({
-    highlightedItem,
     isOpen,
     itemToString,
     previousResultCount,
@@ -471,7 +492,7 @@ export default class Dropdown extends AutoControlledComponent<
     if (!resultCount) {
       return 'No results are available.'
     }
-    if (!highlightedItem && resultCount !== previousResultCount) {
+    if (resultCount !== previousResultCount) {
       return `${resultCount} result${
         resultCount === 1 ? 'is' : 's are'
       } available, use up and down arrow keys to navigate. Press Enter key to select.`
@@ -586,7 +607,7 @@ export default class Dropdown extends AutoControlledComponent<
               if (!backspaceDelete) {
                 this.setState({ backspaceDelete: true })
               } else {
-                this.removeFromActiveValues()
+                this.removeFromValues()
               }
             }
           }
@@ -625,12 +646,12 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleLabelRemove(e: React.SyntheticEvent, item: ShorthandValue) {
-    this.removeFromActiveValues(item)
+    this.removeFromValues(item)
     this.inputNode.focus()
     e.stopPropagation()
   }
 
-  private removeFromActiveValues(item?: ShorthandValue) {
+  private removeFromValues(item?: ShorthandValue) {
     const { getA11yRemovedMessage } = this.props
     let value = this.state.value as ShorthandValue[]
     let poppedItem = item

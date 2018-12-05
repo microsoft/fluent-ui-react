@@ -6,20 +6,7 @@ class DropdownExample extends React.Component {
     items: inputItems,
   }
   render() {
-    return (
-      <Dropdown
-        multiple
-        search
-        placeholder="Start typing a name"
-        items={this.state.items}
-        onChange={(e, props) => {
-          const value = (props as any).value as any[]
-          this.setState({
-            items: inputItems.filter(item => value.indexOf(item) === -1),
-          })
-        }}
-      />
-    )
+    return <Dropdown multiple search placeholder="Start typing a name" items={this.state.items} />
   }
 }
 

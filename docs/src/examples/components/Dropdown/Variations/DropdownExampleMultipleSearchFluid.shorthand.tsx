@@ -7,19 +7,7 @@ class DropdownExample extends React.Component {
   }
   render() {
     return (
-      <Dropdown
-        multiple
-        search
-        fluid
-        placeholder="Start typing a name"
-        items={this.state.items}
-        onChange={(e, props) => {
-          const value = (props as any).value as any[]
-          this.setState({
-            items: inputItems.filter(item => value.indexOf(item) === -1),
-          })
-        }}
-      />
+      <Dropdown multiple search fluid placeholder="Start typing a name" items={this.state.items} />
     )
   }
 }
