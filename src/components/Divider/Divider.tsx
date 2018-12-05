@@ -7,6 +7,7 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
+  ColorComponentProps,
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
@@ -15,6 +16,7 @@ import { Extendable } from '../../../types/utils'
 export interface DividerProps
   extends UIComponentProps,
     ChildrenComponentProps,
+    ColorComponentProps,
     ContentComponentProps {
   /** A divider can be fitted, without any space above or below it.  */
   fitted?: boolean
@@ -40,7 +42,7 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static className = 'ui-divider'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     fitted: PropTypes.bool,
     size: PropTypes.number,
     type: PropTypes.oneOf(['primary', 'secondary']),
