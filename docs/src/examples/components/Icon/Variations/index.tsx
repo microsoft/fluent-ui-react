@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Color"
-      description="An icon can have a different color"
+      description="An icon is inheriting the color, but can have a different color if provided by the user."
       examplePath="components/Icon/Variations/IconExampleColor"
     />
     <ComponentExample
