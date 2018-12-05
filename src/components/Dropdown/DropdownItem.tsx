@@ -20,10 +20,10 @@ import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
 export interface DropdownItemProps extends UIComponentProps<any, any> {
-  /** Text content for the item description. */
+  /** Secondary text content to serve as item description. */
   content?: string
 
-  /** The main text displayed for the item. */
+  /** Main text displayed for the item. */
   header?: string
 
   /** If the item is highlighted inside the list. */
@@ -51,7 +51,7 @@ export interface DropdownItemProps extends UIComponentProps<any, any> {
 }
 
 /**
- * A DropdownItem is a sub-component if the Dropdown.
+ * A DropdownItem is a sub-component if the Dropdown, used to display the items as options inside the list.
  */
 class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   static displayName = 'DropdownItem'

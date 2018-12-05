@@ -21,10 +21,10 @@ import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
 export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps, any> {
-  /** The test for the item. */
+  /** The text content for the selected item. */
   header?: string
 
-  /** The item can have an icon when displayed as active in multiple selection. */
+  /** The item can have an icon when displayed as selected in a multiple selection. */
   icon?: ShorthandValue
 
   /** The item can have an image avatar. */
@@ -47,7 +47,7 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps,
   onRemove?: ComponentEventHandler<DropdownLabelProps>
 
   /**
-   * A custom render function the image slot.
+   * A custom render function for the image slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -56,7 +56,7 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps,
   renderImage?: ShorthandRenderFunction
 
   /**
-   * A custom render function the icon slot.
+   * A custom render function for the icon slot.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -66,7 +66,8 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps,
 }
 
 /**
- * A DropdownLabel is a sub-component if the Dropdown.
+ * A DropdownLabel is a sub-component of a multiple selection Dropdown. It is used to display the selected
+ * options, as labels, before the input text (if search) or the button (if not search).
  */
 class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
   displayName = 'DropdownLabel'

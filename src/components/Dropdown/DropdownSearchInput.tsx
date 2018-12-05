@@ -53,7 +53,8 @@ export interface DropdownSearchInputProps extends UIComponentProps<any, any> {
 }
 
 /**
- * A DropdownItem is a sub-component if the Dropdown.
+ * A DropdownSearchInput is a sub-component if the Dropdown, used to display the search input field,
+ * if the Dropdown also has a search function.
  */
 class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
