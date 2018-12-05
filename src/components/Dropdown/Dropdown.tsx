@@ -19,12 +19,16 @@ import Downshift, {
   GetToggleButtonPropsOptions,
   GetItemPropsOptions,
 } from 'downshift'
-import { AutoControlledComponent, RenderResultConfig, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  RenderResultConfig,
+  customPropTypes,
+  commonPropTypes,
+} from '../../lib'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
 import Text from '../Text/Text'
 import Icon from '../Icon/Icon'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
@@ -164,7 +168,10 @@ export default class Dropdown extends AutoControlledComponent<
   static className = 'ui-dropdown'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,

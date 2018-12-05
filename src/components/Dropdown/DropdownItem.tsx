@@ -2,7 +2,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, customPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  customPropTypes,
+  commonPropTypes,
+} from '../../lib'
 import {
   Extendable,
   ShorthandValue,
@@ -10,7 +16,6 @@ import {
   ComponentEventHandler,
 } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
@@ -56,7 +61,10 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   static className = 'ui-dropdown__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibilityItemProps: PropTypes.object,
     content: PropTypes.string,
     header: PropTypes.string,

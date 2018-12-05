@@ -2,10 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory } from '../../lib'
+import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
 import { Extendable, ComponentEventHandler } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import Input from '../Input/Input'
 import Ref from '../Ref/Ref'
 
@@ -64,7 +63,10 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
   static className = 'ui-dropdown__searchinput'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibilityInputProps: PropTypes.object,
     accessibilityWrapperProps: PropTypes.object,
     inputRef: PropTypes.func,

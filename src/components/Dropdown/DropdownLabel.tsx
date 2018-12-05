@@ -9,9 +9,14 @@ import {
   ShorthandRenderFunction,
   Extendable,
 } from '../../../types/utils'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { customPropTypes, createShorthandFactory, UIComponent, RenderResultConfig } from '../../lib'
+import {
+  customPropTypes,
+  createShorthandFactory,
+  UIComponent,
+  RenderResultConfig,
+  commonPropTypes,
+} from '../../lib'
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
@@ -71,7 +76,10 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
   className = 'ui-dropdown__label'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     header: PropTypes.string,
     icon: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthand,
