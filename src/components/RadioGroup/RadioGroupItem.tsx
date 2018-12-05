@@ -12,7 +12,12 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Label from '../Label/Label'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ShorthandRenderFunction,
+  ShorthandValue,
+} from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
@@ -74,6 +79,15 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
    */
   onFocus?: ComponentEventHandler<RadioGroupItemProps>
 
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
+
   /** Whether should focus when checked */
   shouldFocus?: boolean // TODO: RFC #306
 
@@ -127,6 +141,7 @@ class RadioGroupItem extends AutoControlledComponent<
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     checkedChanged: PropTypes.func,
+    renderIcon: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     vertical: PropTypes.bool,
@@ -152,7 +167,7 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon } = this.props
+    const { label, icon, renderIcon } = this.props
 
     return (
       <ElementType
@@ -171,6 +186,7 @@ class RadioGroupItem extends AutoControlledComponent<
               size: 'mini',
               variables: variables.icon,
               styles: styles.icon,
+              render: renderIcon,
             },
           })}
           {label}

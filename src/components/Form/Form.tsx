@@ -10,7 +10,12 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import {
+  ComponentEventHandler,
+  Extendable,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import FormField from './FormField'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
@@ -26,6 +31,16 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} data - All props.
    */
   onSubmit?: ComponentEventHandler<FormProps>
+
+  /**
+   * A custom render iterator for rendering each of the Form fields.
+   * The default component, props, and children are available for each field.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderField?: ShorthandRenderFunction
 }
 
 /**
@@ -47,6 +62,7 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,
+    renderField: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -55,7 +71,14 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    styles,
+    rest,
+  }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType className={classes.root} action={action} onSubmit={this.handleSubmit} {...rest}>
@@ -74,8 +97,12 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   }
 
   private renderFields = () => {
-    const { fields } = this.props
-    return _.map(fields, field => FormField.create(field))
+    const { fields, renderField } = this.props
+    return _.map(fields, field =>
+      FormField.create(field, {
+        render: renderField,
+      }),
+    )
   }
 }
 

@@ -8,7 +8,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
 export interface SegmentProps
@@ -17,6 +17,14 @@ export interface SegmentProps
     ContentComponentProps<ShorthandValue> {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
+
+  /**
+   * A custom render function the content slot.
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderContent?: ShorthandRenderFunction
 }
 
 /**
@@ -32,6 +40,7 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
       content: 'shorthand',
     }),
     inverted: PropTypes.bool,
+    renderContent: PropTypes.func,
   }
 
   static defaultProps = {
@@ -39,11 +48,11 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+    const { children, content, renderContent } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : Slot.create(content)}
+        {childrenExist(children) ? children : Slot.create(content, { render: renderContent })}
       </ElementType>
     )
   }
