@@ -4,8 +4,8 @@
 
 import * as React from 'react'
 
-export type Extendable<T> = T & {
-  [key: string]: any
+export type Extendable<T, V = any> = T & {
+  [key: string]: V
 }
 
 export type Partial<T> = { [Key in keyof T]?: T[Key] }
