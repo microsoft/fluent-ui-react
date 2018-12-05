@@ -6,22 +6,20 @@ const janeAvatar = {
   status: { color: 'green', icon: 'check' },
 }
 
-const averageText = 'some average text'
-const bigText =
-  'some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text some big text '
-
 const items = [
   {
     mine: true,
     content: {
-      content: <Chat.Message content="hi" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />,
+      content: (
+        <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
+      ),
     },
     key: 'message-id-1',
   },
   {
     gutter: { content: <Avatar {...janeAvatar} /> },
     content: {
-      content: <Chat.Message content="hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
+      content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     },
     key: 'message-id-2',
   },
@@ -30,7 +28,7 @@ const items = [
     content: {
       content: (
         <Chat.Message
-          content={averageText}
+          content="Would you like to grab a lunch?"
           author="John Doe"
           timestamp="Yesterday, 10:16 PM"
           mine
@@ -45,7 +43,11 @@ const items = [
     },
     content: {
       content: (
-        <Chat.Message content={averageText} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+        <Chat.Message
+          content="Sure! Let's try the new place downtown"
+          author="Jane Doe"
+          timestamp="Yesterday, 10:15 PM"
+        />
       ),
     },
     key: 'message-id-4',
@@ -58,7 +60,12 @@ const items = [
     mine: true,
     content: {
       content: (
-        <Chat.Message content={bigText} author="John Doe" timestamp="Today, 11:15 PM" mine />
+        <Chat.Message
+          content="Let's have a call"
+          author="John Doe"
+          timestamp="Today, 11:15 PM"
+          mine
+        />
       ),
     },
     key: 'message-id-6',
