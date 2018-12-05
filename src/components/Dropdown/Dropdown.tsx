@@ -42,42 +42,40 @@ export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessa
 }
 
 export interface DropdownProps extends UIComponentProps<any, any> {
-  /** The initial value for the search query, if search. */
+  /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 
-  /** The initial value or value array, if multiple. */
+  /** The initial value or value array, if the array has multiple selection. */
   defaultValue?: ShorthandValue | ShorthandValue[]
 
   /** A dropdown can take the full width of its container. */
   fluid?: boolean
 
-  /** Object that contains callbacks for creating aria-live messages needed for multiple selection dropdown. */
+  /** Object with callbacks for creating announcements on multiple selection add and remove actions. */
   getA11ySelectionMessage?: {
     /**
-     * A function that creates custom accessability message a screen reader narrates on item added to selection.
+     * Callback that creates custom accessability message a screen reader narrates on item added to selection.
      * @param {ShorthandValue} item - Dropdown added element.
      */
     onAdd?: (item: ShorthandValue) => string
     /**
-     * A function that creates custom accessability message a screen reader narrates on item removed from selection.
+     * Callback that creates custom accessability message a screen reader narrates on item removed from selection.
      * @param {ShorthandValue} item - Dropdown removed element.
      */
     onRemove?: (item: ShorthandValue) => string
   }
 
   /**
-   * A function that creates custom accessability message for dropdown status, updated on highlighting an item, opening list or navigating
-   * with the screen reader on the dropdown combobox when an item is selected.
-   * @param {Object} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
+   * Callback that creates custom accessability message for dropdown status change. Involves changes in highlighted item in the list, selection, toggle status.
+   * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
-  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if multiple. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
   /**
-   * Function to be passed to create selected searchQuery from selected item. It will be displayed when an item is selected, inside the
-   * edit text, for search, or on the button, for non-search.
+   * Function to be passed to create string from selected item, if it's a shorthand object. Used when dropdown also has a search function.
    */
   itemToString?: (item: ShorthandValue) => string
 
@@ -101,7 +99,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    */
   onSelectedChange?: ComponentEventHandler<DropdownProps>
 
-  /** A message to serve as placeholder, on the edit text, if search, or on the button, if not. */
+  /** A message to serve as placeholder, on the edit text, if search, or on the button, if non-search. */
   placeholder?: string
 
   /**
@@ -131,19 +129,19 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    */
   renderSearchInput?: ShorthandRenderFunction
 
-  /** A dropdown can have a search field instead of trigger button. Can receive a function that will replace the default search. */
+  /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
 
-  /** Shorthand for the edit text (Dropdown.SearchInput) that has the search query, if search. */
+  /** Shorthand for the edit text (Dropdown.SearchInput) that has the search query, if it's a search dropdown. */
   searchInput?: ShorthandValue
 
-  /** The value in the edit text, if dropdown is a search. */
+  /** The value in the edit text, if dropdown is a search, and component is controlled. */
   searchQuery?: string
 
   /** A dropdown can have a toggle button. */
   toggleButton?: boolean
 
-  /** The value of the dropdown. */
+  /** The value of the dropdown, if the component is controlled. */
   value?: ShorthandValue | ShorthandValue[]
 }
 
@@ -155,7 +153,7 @@ export interface DropdownState {
 }
 
 /**
- * A Dropdown allows a user to select a value or a multitude of values from a number of options.
+ * A Dropdown allows a user to select a value or a multitude of values from a number of options. Can also be created with search capability.
  */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
@@ -178,9 +176,8 @@ export default class Dropdown extends AutoControlledComponent<
       customPropTypes.collectionShorthand,
     ]),
     fluid: PropTypes.bool,
+    getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
-    getA11ySelectedMessage: PropTypes.func,
-    getA11yRemovedMessage: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     multiple: PropTypes.bool,
@@ -224,8 +221,6 @@ export default class Dropdown extends AutoControlledComponent<
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
-    // in multiple dropdown, we hold active values in the array, and default active is null.
-    const optionalDownshiftProps = (multiple && { selectedItem: null }) || {}
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -235,7 +230,8 @@ export default class Dropdown extends AutoControlledComponent<
           stateReducer={this.stateReducer}
           getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
           itemToString={itemToString || this.itemToString}
-          {...optionalDownshiftProps}
+          // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
+          {...(multiple && { selectedItem: null }) || {}}
         >
           {({
             getInputProps,
@@ -443,7 +439,7 @@ export default class Dropdown extends AutoControlledComponent<
         _.invoke(
           this.props,
           'onSearchQueryChange',
-          {},
+          {}, // we don't have event for it, but want to keep the event handling interface, event is empty.
           { ...this.props, searchQuery: changes.inputValue },
         )
         return changes
@@ -587,6 +583,8 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     return {
+      // getInputProps adds Downshift handlers. We also add our own by passing them as params to that function.
+      // user handlers were also added to our handlers previously, at the beginning of this function.
       accessibilityInputProps: {
         ...getInputProps({
           onBlur: e => {
@@ -597,6 +595,7 @@ export default class Dropdown extends AutoControlledComponent<
           },
         }),
       },
+      // same story as above for getRootProps.
       accessibilityWrapperProps: {
         ...getRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
       },
@@ -611,10 +610,10 @@ export default class Dropdown extends AutoControlledComponent<
             const { searchQuery, value, backspaceDelete } = this.state
 
             if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
-              if (!backspaceDelete) {
-                this.setState({ backspaceDelete: true })
-              } else {
+              if (backspaceDelete) {
                 this.removeFromValues()
+              } else {
+                this.setState({ backspaceDelete: true })
               }
             }
           }
@@ -636,7 +635,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleSelectedChange = (item: ShorthandValue) => {
-    const { multiple, getA11ySelectedMessage } = this.props
+    const { multiple, getA11ySelectionMessage, itemToString } = this.props
     const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
     this.trySetState({
@@ -644,11 +643,12 @@ export default class Dropdown extends AutoControlledComponent<
       searchQuery: '',
     })
     this.setA11yStatus(
-      getA11ySelectedMessage
-        ? getA11ySelectedMessage(item)
-        : `${typeof item === 'object' ? (item as any).header : item} has been selected.`,
+      getA11ySelectionMessage && getA11ySelectionMessage.onAdd
+        ? getA11ySelectionMessage.onAdd(item)
+        : `${itemToString ? itemToString(item) : this.itemToString(item)} has been selected.`,
     )
 
+    // we don't have event for it, but want to keep the event handling interface, event is empty.
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value: newValue })
   }
 
@@ -659,7 +659,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private removeFromValues(item?: ShorthandValue) {
-    const { getA11yRemovedMessage } = this.props
+    const { getA11ySelectionMessage, itemToString } = this.props
     let value = this.state.value as ShorthandValue[]
     let poppedItem = item
 
@@ -673,13 +673,12 @@ export default class Dropdown extends AutoControlledComponent<
       value,
     })
     this.setA11yStatus(
-      getA11yRemovedMessage
-        ? getA11yRemovedMessage(item)
-        : `${
-            typeof poppedItem === 'object' ? (poppedItem as any).header : poppedItem
-          } has been removed.`,
+      getA11ySelectionMessage && getA11ySelectionMessage.onRemove
+        ? getA11ySelectionMessage.onRemove(poppedItem)
+        : `${itemToString ? itemToString(item) : this.itemToString(item)} has been removed.`,
     )
 
+    // we don't have event for it, but want to keep the event handling interface, event is empty.
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })
   }
 }

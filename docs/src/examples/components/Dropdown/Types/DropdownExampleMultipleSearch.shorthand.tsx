@@ -48,7 +48,6 @@ const inputItems = [
   },
   {
     header: 'Peter Parker',
-    key: 'Peter Parker',
     image: 'public/images/avatar/small/daniel.jpg',
     content: 'Partner Software Engineer',
   },
