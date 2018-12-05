@@ -9,7 +9,7 @@ import {
   UIComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface StatusProps extends UIComponentProps {
   /** A custom color. */
@@ -17,6 +17,15 @@ export interface StatusProps extends UIComponentProps {
 
   /** Shorthand for the icon, to provide customizing status */
   icon?: ShorthandValue
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
 
   /** Size multiplier */
   size?: number
@@ -42,6 +51,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
     }),
     color: PropTypes.string,
     icon: customPropTypes.itemShorthand,
+    renderIcon: PropTypes.func,
     size: PropTypes.number,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }
@@ -53,7 +63,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, variables, styles }) {
-    const { icon } = this.props as StatusPropsWithDefaults
+    const { icon, renderIcon } = this.props as StatusPropsWithDefaults
     return (
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
@@ -62,6 +72,7 @@ class Status extends UIComponent<Extendable<StatusProps>, any> {
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',
+            render: renderIcon,
           },
         })}
       </ElementType>

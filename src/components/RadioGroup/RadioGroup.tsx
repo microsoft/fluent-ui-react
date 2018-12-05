@@ -15,7 +15,13 @@ import {
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+
+import {
+  Extendable,
+  ShorthandValue,
+  ShorthandRenderFunction,
+  ComponentEventHandler,
+} from '../../../types/utils'
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -40,6 +46,16 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   /** Shorthand array of props for RadioGroup. */
   items?: ShorthandValue[]
 
+  /**
+   * A custom render iterator for rendering each of the RadioGroup items.
+   * The default component, props, and children are available for each item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
+
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
 }
@@ -63,6 +79,7 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: customPropTypes.collectionShorthand,
     checkedValueChanged: PropTypes.func,
+    renderItem: PropTypes.func,
     vertical: PropTypes.bool,
   }
 
@@ -160,12 +177,13 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
   })
 
   private renderItems = (vertical: boolean) => {
-    const { items } = this.props
+    const { items, renderItem } = this.props
 
     return _.map(items, item =>
       RadioGroupItem.create(item, {
         defaultProps: { vertical },
         overrideProps: this.handleItemOverrides,
+        render: renderItem,
       }),
     )
   }
