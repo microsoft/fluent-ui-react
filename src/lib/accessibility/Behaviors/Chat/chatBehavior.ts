@@ -21,6 +21,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,
+      shouldHandleKeyDownCapture: false,
       defaultTabbableElement: getLastTabbableElement, // select last chat message by default
       [CHAT_FOCUSZONE_ATTRIBUTE]: '', // allows querying the default active element
     },

@@ -48,6 +48,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
     shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
+    shouldHandleKeyDownCapture: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -66,6 +67,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   static defaultProps: FocusZoneProps = {
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
+    shouldHandleKeyDownCapture: true,
     as: 'div',
   }
 
@@ -103,6 +105,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   public componentDidMount(): void {
     _allInstances[this._id] = this
 
+    const { shouldHandleKeyDownCapture, defaultTabbableElement, shouldFocusOnMount } = this.props
+
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
       this.windowElement = getWindow(this._root.current)
@@ -117,19 +121,19 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
         parentElement = getParent(parentElement)
       }
 
-      if (!this._isInnerZone) {
+      if (!this._isInnerZone && shouldHandleKeyDownCapture) {
         this.windowElement.addEventListener('keydown', this.onKeyDownCapture, true)
       }
 
       // Assign initial tab indexes so that we can set initial focus as appropriate.
       this.updateTabIndexes()
 
-      if (this.props.defaultTabbableElement) {
-        const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
+      if (defaultTabbableElement) {
+        const initialActiveElement = defaultTabbableElement(this._root.current)
         initialActiveElement && this.setActiveElement(initialActiveElement)
       }
 
-      if (this.props.shouldFocusOnMount) {
+      if (shouldFocusOnMount) {
         this.focus()
       }
     }
@@ -137,7 +141,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   public componentWillUnmount() {
     delete _allInstances[this._id]
-    if (this.windowElement) {
+    if (this.windowElement && this.props.shouldHandleKeyDownCapture) {
       this.windowElement.removeEventListener('keydown', this.onKeyDownCapture, true)
     }
   }
