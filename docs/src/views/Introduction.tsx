@@ -1,42 +1,11 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
+import { Container, Header, Segment } from 'semantic-ui-react'
 
-import Editor from 'docs/src/components/Editor'
-import { Container, Divider, Grid, Header, Icon, Label, Segment } from 'semantic-ui-react'
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')
-
-const Comparison: any = ({ jsx, html }) => (
-  <Segment className="code-example">
-    <Grid columns="equal" centered textAlign="left">
-      <Grid.Column computer="8" largeScreen="7" widescreen="7" width="16">
-        <Label size="tiny" attached="top left">
-          JSX
-        </Label>
-        <Editor id={btoa(jsx)} value={jsx} readOnly />
-      </Grid.Column>
-      <Grid.Column largeScreen="2" only="large screen" textAlign="center">
-        <Divider vertical>
-          <Icon name={'right arrow circle' as any} />
-        </Divider>
-      </Grid.Column>
-      <Grid.Column computer="8" largeScreen="7" widescreen="7" width="16">
-        <Label size="tiny" attached="top right">
-          Rendered HTML
-        </Label>
-        <Editor id={btoa(html)} mode="html" value={html} readOnly />
-      </Grid.Column>
-    </Grid>
-  </Segment>
-)
-
-Comparison.propTypes = {
-  jsx: PropTypes.string,
-  html: PropTypes.string,
-}
 
 const Introduction = () => (
   <Container id="introduction-page" text>
