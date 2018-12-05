@@ -10,7 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Slot from '../Slot/Slot'
@@ -33,33 +33,6 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
 
   /** The HTML input name. */
   name?: string
-
-  /**
-   * A custom render function for the control slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderControl?: ShorthandRenderFunction
-
-  /**
-   * A custom render function for the label slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderLabel?: ShorthandRenderFunction
-
-  /**
-   * A custom render function for the message slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderMessage?: ShorthandRenderFunction
 
   /** A field can show that input is mandatory. */
   required?: boolean
@@ -88,9 +61,6 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     label: customPropTypes.itemShorthand,
     message: customPropTypes.itemShorthand,
     name: PropTypes.string,
-    renderControl: PropTypes.func,
-    renderLabel: PropTypes.func,
-    renderMessage: PropTypes.func,
     required: PropTypes.bool,
     type: PropTypes.string,
   }
@@ -108,19 +78,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const {
-      children,
-      control,
-      id,
-      label,
-      message,
-      name,
-      renderControl,
-      renderLabel,
-      renderMessage,
-      required,
-      type,
-    } = this.props
+    const { children, control, id, label, message, name, required, type } = this.props
 
     const labelElement = Text.create(label, {
       defaultProps: {
@@ -128,19 +86,16 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
         htmlFor: id,
         styles: styles.label,
       },
-      render: renderLabel,
     })
 
     const messageElement = Text.create(message, {
       defaultProps: {
         styles: styles.message,
       },
-      render: renderMessage,
     })
 
     const controlElement = Slot.create(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
-      render: renderControl,
     })
 
     const content = (
