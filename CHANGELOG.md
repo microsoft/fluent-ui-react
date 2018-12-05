@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Remove `type` in `Divider` component @layershifter ([#558](https://github.com/stardust-ui/react/pull/558))
+
 ### Documentation
 - Add the concept of the color palette @layershifter ([#451](https://github.com/stardust-ui/react/pull/451))
 
