@@ -44,7 +44,7 @@ export default () => (
     <ExampleSnippet
       value={[
         `import React from 'react'`,
-        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
+        `import { Button, Icon, Label, Provider } from '@stardust-ui/react'`,
         ``,
         `export default () => `,
         ` <Provider>`,
@@ -54,9 +54,6 @@ export default () => (
         `    <Button icon="at" content="Send email" secondary />`,
         `    <Icon name="chess rook" size="big" />`,
         `    <Label content="Label with icon" icon="close" />`,
-        `    <br/><br/>`,
-        `    <Divider content="Primary Divider" type="primary" />`,
-        `    <Divider content="Secondary Divider" type="secondary" />`,
         `  </>`,
         ` </Provider>`,
       ].join('\n')}
@@ -67,10 +64,6 @@ export default () => (
           <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
-          <br />
-          <br />
-          <Divider content="Primary Divider" type="primary" />
-          <Divider content="Secondary Divider" type="secondary" />
         </>
       )}
     />
@@ -90,20 +83,21 @@ export default () => (
         `import { Button } from '@stardust-ui/react'`,
         ``,
         `const styles = {`,
-        `        color: "coral",`,
-        `        backgroundColor: "coral",`,
-        `        fontSize: "14px",`,
-        `        padding: "0 10px",`,
-        `      }`,
+        `  color: "coral",`,
+        `  backgroundColor: "coral",`,
+        `  fontSize: "14px",`,
+        `  padding: "0 10px",`,
+        `}`,
         `const btnExample = () => `,
-        `    <Button`,
-        `      content="Send email"`,
-        `      icon={{`,
-        `        name: "at",`,
-        `        styles: { color: "brown" }`,
-        `      }}`,
-        `      secondary`,
-        `      styles={styles} />`,
+        `  <Button`,
+        `    content="Send email"`,
+        `    icon={{`,
+        `      name: "at",`,
+        `      styles: { color: "brown" }`,
+        `    }}`,
+        `    secondary`,
+        `    styles={styles} />`,
+        `  />`,
         ``,
         `export default btnExample`,
       ].join('\n')}
@@ -129,18 +123,18 @@ export default () => (
         `import { Button } from '@stardust-ui/react'`,
         ``,
         `const btnExample = () => `,
-        `    <Button`,
-        `      icon={{`,
-        `        name: "at",`,
-        `        variables: { color: "brown" }`,
-        `      }}`,
-        `      content="Send email"`,
-        `      variables={{`,
-        `        secondaryColor: "coral",`,
-        `        secondaryBackgroundColor: "charcoal"`,
-        `        paddingLeftRightValue: 20`,
-        `      }}`,
-        `    />`,
+        `  <Button`,
+        `    icon={{`,
+        `      name: "at",`,
+        `      variables: { color: "brown" }`,
+        `    }}`,
+        `    content="Send email"`,
+        `    variables={{`,
+        `      secondaryColor: "coral",`,
+        `      secondaryBackgroundColor: "charcoal"`,
+        `      paddingLeftRightValue: 20`,
+        `    }}`,
+        `  />`,
         ``,
         `export default btnExample`,
       ].join('\n')}
@@ -186,7 +180,7 @@ export default () => (
     <ExampleSnippet
       value={[
         `import React from 'react'`,
-        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
+        `import { Button, Icon, Label, Provider } from '@stardust-ui/react'`,
         ``,
         `const theme = {`,
         `  siteVariables: {`,
@@ -225,9 +219,6 @@ export default () => (
         `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
-        `      <br /><br />`,
-        `      <Divider type="primary">Branding primary</Divider>`,
-        `      <Divider type="secondary">Branding secondary</Divider>`,
         `    </div>`,
         `  </Provider>`,
         `)`,
@@ -272,10 +263,6 @@ export default () => (
               <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
-              <br />
-              <br />
-              <Divider content="Primary Divider" type="primary" />
-              <Divider content="Secondary Divider" type="secondary" />
             </div>
           </Provider>
         </div>
@@ -293,7 +280,6 @@ export default () => (
         `  /* Default theming */`,
         `  <Header as="h3" content="Default" />`,
         `  <Button primary>Branding</Button>`,
-        `  <Divider type="primary">Branding</Divider>`,
         ``,
         `  /* First nested theming */`,
         `  <Provider`,
@@ -309,9 +295,6 @@ export default () => (
         `      <Button icon="at" content="Send email" secondary />`,
         `      <Icon name="chess rook" size="big" />`,
         `      <Label content="Label with icon" icon="close" />`,
-        `      <br/><br/>`,
-        `      <Divider content="Primary Divider" type="primary" />`,
-        `      <Divider content="Secondary Divider" type="secondary" />`,
         ``,
         `      /* Second nested theming */`,
         `      <Provider`,
@@ -331,9 +314,6 @@ export default () => (
         `          <Button icon="at" content="Send email" secondary />`,
         `          <Icon name="chess rook" size="big" />`,
         `          <Label content="Label with icon" icon="close" />`,
-        `          <br/><br/>`,
-        `          <Divider content="Primary Divider" type="primary" />`,
-        `          <Divider content="Secondary Divider" type="secondary" />`,
         `        </div>`,
         `      </Provider>`,
         `    </div>`,
@@ -348,10 +328,6 @@ export default () => (
           <Button icon="at" content="Send email" secondary />
           <Icon name="chess rook" size="big" />
           <Label content="Label with icon" icon="close" />
-          <br />
-          <br />
-          <Divider content="Primary Divider" type="primary" />
-          <Divider content="Secondary Divider" type="secondary" />
 
           <Provider
             theme={{
@@ -366,10 +342,6 @@ export default () => (
               <Button icon="at" content="Send email" secondary />
               <Icon name="chess rook" size="big" />
               <Label content="Label with icon" icon="close" />
-              <br />
-              <br />
-              <Divider content="Primary Divider" type="primary" />
-              <Divider content="Secondary Divider" type="secondary" />
 
               <Provider
                 theme={{
@@ -388,10 +360,6 @@ export default () => (
                   <Button icon="at" content="Send email" secondary />
                   <Icon name="chess rook" size="big" />
                   <Label content="Label with icon" icon="close" />
-                  <br />
-                  <br />
-                  <Divider content="Primary Divider" type="primary" />
-                  <Divider content="Secondary Divider" type="secondary" />
                 </>
               </Provider>
             </>

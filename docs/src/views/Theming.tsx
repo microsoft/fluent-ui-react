@@ -52,18 +52,12 @@ export default () => (
     <ExampleSnippet
       value={[
         `<Provider theme={{ siteVariables: { brand: 'hotpink' } }}>`,
-        `  <div>`,
-        `    <Button primary>Branding</Button>`,
-        `    <Divider type="primary">Branding</Divider>`,
-        `  </div>`,
+        `  <Button primary>Branding</Button>`,
         `</Provider>`,
       ].join('\n')}
       render={() => (
         <Provider theme={{ siteVariables: { brand: 'hotpink' }, componentVariables: {} }}>
-          <div>
-            <Button primary>Branding</Button>
-            <Divider type="primary">Branding</Divider>
-          </div>
+          <Button primary>Branding</Button>
         </Provider>
       )}
     />
