@@ -10,8 +10,11 @@ import {
   EventStack,
   RenderResultConfig,
   isBrowser,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable } from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
 import computePopupPlacement, { Alignment, Position } from './positioningHelper'
@@ -26,13 +29,11 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
-import { ChildrenComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
-import { contentComponentPropsTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps extends ChildrenComponentProps, ContentComponentProps {
+export interface PopupProps extends ChildrenComponentProps, ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
@@ -95,11 +96,14 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    ...contentComponentPropsTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      content: 'shorthand',
+      styled: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
-    className: PropTypes.string,
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     open: PropTypes.bool,
@@ -128,7 +132,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     toggle: e => {
       this.trySetOpen(!this.state.open, e, true)
     },
-    closeAndFocusTrigger: e => this.closeAndFocusTrigger(e),
+    closeAndFocusTrigger: e => {
+      this.closeAndFocusTrigger(e)
+      e.stopPropagation()
+    },
   }
 
   private closeAndFocusTrigger = e => {
@@ -206,9 +213,9 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           }}
         >
           {React.cloneElement(triggerElement, {
-            onClick: e => {
+            onClick: (e, ...rest) => {
               this.trySetOpen(!this.state.open, e)
-              _.invoke(triggerElement, 'props.onClick', e)
+              _.invoke(triggerElement, 'props.onClick', e, ...rest)
             },
             ...accessibility.attributes.trigger,
             ...accessibility.keyHandlers.trigger,

@@ -1,7 +1,9 @@
 import * as customPropTypes from './customPropTypes'
+import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
+export * from './colorUtils'
 export { default as UIComponent } from './UIComponent'
 export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -33,3 +35,7 @@ export { default as leven } from './leven'
 export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
+export { default as createComponent } from './createStardustComponent'
+
+export * from './commonPropInterfaces'
+export { commonPropTypes }

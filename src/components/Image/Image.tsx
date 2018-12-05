@@ -1,15 +1,13 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface ImageProps extends UIComponentProps<any, any> {
+export interface ImageProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default imageBehavior
@@ -44,7 +42,10 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
     avatar: PropTypes.bool,
     circular: PropTypes.bool,

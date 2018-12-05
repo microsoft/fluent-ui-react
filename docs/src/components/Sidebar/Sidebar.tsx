@@ -225,6 +225,9 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/" activeClassName="active">
                   Introduction
                 </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
+                  Color Palette
+                </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
                   Shorthand Props
                 </Menu.Item>
@@ -244,6 +247,14 @@ class Sidebar extends React.Component<any, any> {
                 </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
                   Theming Examples
+                </Menu.Item>
+                <Menu.Item
+                  as={NavLink}
+                  exact
+                  to="/integrate-custom-components"
+                  activeClassName="active"
+                >
+                  Integrate Custom Components
                 </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
@@ -285,6 +296,12 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Search Page
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/prototype-popups" activeClassName="active">
+                    Popups
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
+                    Processed Icons
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>

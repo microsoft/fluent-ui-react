@@ -3,22 +3,22 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
-import Label from '../Label/Label'
 import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+  customPropTypes,
+  AutoControlledComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import Label from '../Label/Label'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 import isFromKeyboard from '../../lib/isFromKeyboard'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface RadioGroupItemProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupItemBehavior
@@ -74,15 +74,6 @@ export interface RadioGroupItemProps extends UIComponentProps<any, any>, Childre
    */
   onFocus?: ComponentEventHandler<RadioGroupItemProps>
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
   /** Whether should focus when checked */
   shouldFocus?: boolean // TODO: RFC #306
 
@@ -119,8 +110,9 @@ class RadioGroupItem extends AutoControlledComponent<
   static className = 'ui-radiogroup__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
@@ -129,13 +121,12 @@ class RadioGroupItem extends AutoControlledComponent<
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     isFromKeyboard: PropTypes.bool,
-    label: customPropTypes.contentShorthand,
+    label: customPropTypes.nodeContent,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     checkedChanged: PropTypes.func,
-    renderIcon: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     vertical: PropTypes.bool,
@@ -161,7 +152,7 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon, renderIcon } = this.props
+    const { label, icon } = this.props
 
     return (
       <ElementType
@@ -180,7 +171,6 @@ class RadioGroupItem extends AutoControlledComponent<
               size: 'mini',
               variables: variables.icon,
               styles: styles.icon,
-              render: renderIcon,
             },
           })}
           {label}

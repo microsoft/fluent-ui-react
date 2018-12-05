@@ -1,4 +1,5 @@
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
+import { FocusZoneMode, FocusZoneDefinition } from '../../../src/lib/accessibility/types'
 import * as keyboardKey from 'keyboard-key'
 
 const definitions: TestDefinition[] = []
@@ -162,6 +163,48 @@ definitions.push({
   },
 })
 
+// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
+definitions.push({
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' if the component has '([a-zA-Z]+)' property./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyDependingOnFirst,
+      propertyDependingOnSecond,
+    ] = [...parameters.props]
+
+    const property = {}
+
+    property[propertyDependingOnFirst] = attributeExpectedValue
+    property[propertyDependingOnSecond] = true
+    const actualResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResult)).toEqual(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropNegate = {}
+    propertyFirstPropNegate[propertyDependingOnFirst] = !testHelper.convertToBooleanIfApplicable(
+      attributeExpectedValue,
+    )
+    propertyFirstPropNegate[propertyDependingOnSecond] = true
+    const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate).attributes
+      .root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegate)).toEqual(
+      !testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropUndefined = {}
+    propertyFirstPropUndefined[propertyDependingOnFirst] = true
+    propertyFirstPropUndefined[propertyDependingOnSecond] = undefined
+    const actualResultFirstPropertyNegateUndefined = parameters.behavior(propertyFirstPropUndefined)
+      .attributes.root[attributeToBeAdded]
+    expect(
+      testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegateUndefined),
+    ).toEqual(undefined)
+  },
+})
+
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
   regexp: /Adds role='([a-z]+)' if element type is other than '[a-z]+'\.+/g,
@@ -181,22 +224,57 @@ definitions.push({
   },
 })
 
+// Embeds FocusZone into component allowing arrow key navigation through the children of the component.
+definitions.push({
+  regexp: /Embeds FocusZone into component allowing arrow key navigation through the children of the component\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZone = parameters.behavior({}).focusZone
+
+    const expectedFocusZone: FocusZoneDefinition = {
+      mode: FocusZoneMode.Embed,
+      props: {
+        isCircularNavigation: false,
+        preventDefaultWhenHandled: true,
+      },
+    }
+
+    verifyFocusZones(expectedFocusZone, actualFocusZone)
+  },
+})
+
+// [Circular navigation] Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
+definitions.push({
+  regexp: /Embeds FocusZone into component allowing circular arrow key navigation through the children of the component\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const actualFocusZone = parameters.behavior({}).focusZone
+
+    const expectedFocusZone: FocusZoneDefinition = {
+      mode: FocusZoneMode.Embed,
+      props: {
+        isCircularNavigation: true,
+        preventDefaultWhenHandled: true,
+      },
+    }
+
+    verifyFocusZones(expectedFocusZone, actualFocusZone)
+  },
+})
+
 // Wraps component in FocusZone allowing arrow key navigation through the children of the component.
 definitions.push({
   regexp: /Wraps component in FocusZone allowing arrow key navigation through the children of the component\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const property = {
-      isCircularNavigation: undefined,
-      preventDefaultWhenHandled: undefined,
-    }
-    const expectedMode = parameters.behavior(property).focusZone.mode
-    const expectedIsCircularNav = parameters.behavior(property).focusZone.props.isCircularNavigation
-    const expectedPreventDefault = parameters.behavior(property).focusZone.props
-      .preventDefaultWhenHandled
+    const actualFocusZone = parameters.behavior({}).focusZone
 
-    expect(expectedMode).toBe(1)
-    expect(expectedIsCircularNav).toBe(false)
-    expect(expectedPreventDefault).toBe(true)
+    const expectedFocusZone: FocusZoneDefinition = {
+      mode: FocusZoneMode.Wrap,
+      props: {
+        isCircularNavigation: false,
+        preventDefaultWhenHandled: true,
+      },
+    }
+
+    verifyFocusZones(expectedFocusZone, actualFocusZone)
   },
 })
 
@@ -204,20 +282,32 @@ definitions.push({
 definitions.push({
   regexp: /Wraps component in FocusZone allowing circular arrow key navigation through the children of the component\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const property = {
-      isCircularNavigation: undefined,
-      preventDefaultWhenHandled: undefined,
-    }
-    const expectedMode = parameters.behavior(property).focusZone.mode
-    const expectedIsCircularNav = parameters.behavior(property).focusZone.props.isCircularNavigation
-    const expectedPreventDefault = parameters.behavior(property).focusZone.props
-      .preventDefaultWhenHandled
+    const actualFocusZone = parameters.behavior({}).focusZone
 
-    expect(expectedMode).toBe(1)
-    expect(expectedIsCircularNav).toBe(true)
-    expect(expectedPreventDefault).toBe(true)
+    const expectedFocusZone: FocusZoneDefinition = {
+      mode: FocusZoneMode.Wrap,
+      props: {
+        isCircularNavigation: true,
+        preventDefaultWhenHandled: true,
+      },
+    }
+
+    verifyFocusZones(expectedFocusZone, actualFocusZone)
   },
 })
+
+function verifyFocusZones(
+  expectedFocusZone: FocusZoneDefinition,
+  actualFocusZone: FocusZoneDefinition,
+) {
+  expect(expectedFocusZone.mode).toBe(actualFocusZone.mode)
+  expect(expectedFocusZone.props.isCircularNavigation).toBe(
+    actualFocusZone.props.isCircularNavigation,
+  )
+  expect(expectedFocusZone.props.preventDefaultWhenHandled).toBe(
+    actualFocusZone.props.preventDefaultWhenHandled,
+  )
+}
 
 // [FocusTrapZone] Traps focus inside component
 definitions.push({
