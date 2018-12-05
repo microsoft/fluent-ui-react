@@ -36,7 +36,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   handleBlur = e => {
-    // if e.relatedTarget === null, so the click was outside this container
+    // if e.relatedTarget === null it means the click was outside this container
     if (!this.state.popupOpened || e.relatedTarget === null) {
       const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
       this.changeFocusState(shouldPreserveFocusState)
@@ -50,7 +50,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     this.state.popupOpened && this.setState({ popupOpened: false })
   }
 
-  menuStyles = ({ theme: { siteVariables } }) => ({
+  popoverStyles = ({ theme: { siteVariables } }) => ({
     transition: 'opacity 0.2s',
     position: 'absolute',
     top: '-20px',
@@ -76,7 +76,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   render() {
     return (
       <Menu
-        styles={this.menuStyles}
+        styles={this.popoverStyles}
         iconOnly
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
         items={[
@@ -113,8 +113,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             accessibility: toolbarButtonBehavior,
             'aria-label': 'more options',
           },
-        ]}
-        renderItem={this.renderItemOrContextMenu}
+        ].map(itemShorthandValue => render =>
+          render(itemShorthandValue, this.renderItemOrContextMenu),
+        )}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.handleMenuClick}

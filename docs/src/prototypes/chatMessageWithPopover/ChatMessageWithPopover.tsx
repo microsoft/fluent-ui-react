@@ -1,6 +1,7 @@
-import { Chat, Provider } from '@stardust-ui/react'
+import { ChatMessage } from '@stardust-ui/react'
 
 import * as React from 'react'
+import * as cx from 'classnames'
 import Popover from './Popover'
 
 const janeAvatar = {
@@ -8,7 +9,18 @@ const janeAvatar = {
   status: { color: 'green', icon: 'check' },
 }
 
-class ChatMessageWithPopover extends React.Component {
+interface ChatMessageWithPopoverProps {
+  className?: string
+}
+
+interface ChatMessageWithPopoverState {
+  focused: boolean
+}
+
+class ChatMessageWithPopover extends React.Component<
+  ChatMessageWithPopoverProps,
+  ChatMessageWithPopoverState
+> {
   state = {
     focused: false,
   }
@@ -28,7 +40,7 @@ class ChatMessageWithPopover extends React.Component {
 
   render() {
     return (
-      <Chat.Message
+      <ChatMessage
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
         content={{
@@ -42,61 +54,10 @@ class ChatMessageWithPopover extends React.Component {
         avatar={janeAvatar}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        className={this.state.focused ? 'focused' : undefined}
+        className={cx(this.props.className, this.state.focused ? 'focused' : '')}
       />
     )
   }
 }
 
-const ChatWithPopover = () => (
-  <Provider
-    theme={{
-      componentStyles: {
-        ChatMessage: {
-          root: ({ theme: { siteVariables } }) => ({
-            position: 'relative',
-
-            '&.focused .actions': {
-              opacity: 1,
-            },
-            ':hover .actions': {
-              opacity: 1,
-            },
-            '& a': {
-              color: siteVariables.brand,
-            },
-          }),
-        },
-        ContextMenu: {
-          root: ({ theme: { siteVariables } }) => ({
-            background: siteVariables.white,
-            boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
-            borderRadius: '.3rem',
-            marginTop: '5px',
-          }),
-        },
-        Menu: {
-          root: {
-            '& a:focus': {
-              textDecoration: 'none',
-              color: 'inherit',
-            },
-            '& a': {
-              color: 'inherit',
-            },
-          },
-        },
-      },
-    }}
-  >
-    <Chat
-      items={[
-        { key: 'a', content: <ChatMessageWithPopover /> },
-        { key: 'b', content: <ChatMessageWithPopover /> },
-        { key: 'c', content: <ChatMessageWithPopover /> },
-      ]}
-    />
-  </Provider>
-)
-
-export default ChatWithPopover
+export default ChatMessageWithPopover
