@@ -17,10 +17,7 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overriden by the user.
-   * @default iconBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */

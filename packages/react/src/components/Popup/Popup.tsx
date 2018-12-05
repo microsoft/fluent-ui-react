@@ -54,9 +54,8 @@ export interface PopupProps
     PositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default popupBehavior
    * @available dialogBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** Additional CSS class name(s) to apply.  */

@@ -34,7 +34,7 @@ export interface ToolbarRadioGroupProps
   accessibility?: Accessibility
 
   /** Shorthand array of props for ToolbarRadioGroup. */
-  items?: ShorthandCollection<ToolbarRadioGroupItemShorthandKinds>
+  items?: ShorthandCollection<ToolbarItemProps, ToolbarRadioGroupItemShorthandKinds>
 }
 
 class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> {

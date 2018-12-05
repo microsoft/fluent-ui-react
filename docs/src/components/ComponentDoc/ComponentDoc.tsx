@@ -1,10 +1,7 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
 
-import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
@@ -14,6 +11,7 @@ import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground'
+import { ComponentInfo } from 'docs/src/types'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -21,12 +19,11 @@ const exampleEndStyle: React.CSSProperties = {
   paddingTop: '75vh',
 }
 
-class ComponentDoc extends React.Component<any, any> {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-    info: componentInfoShape.isRequired,
-  }
+type ComponentDocProps = {
+  info: ComponentInfo
+} & RouteComponentProps<{}>
 
+class ComponentDoc extends React.Component<ComponentDocProps, any> {
   state: any = {}
 
   componentWillMount() {
@@ -127,10 +124,7 @@ class ComponentDoc extends React.Component<any, any> {
                   />
                 </Flex.Item>
               </Flex>
-              <Text
-                styles={{ marginBottom: '1.4rem' }}
-                content={_.join(info.docblock.description, ' ')}
-              />
+              <Text styles={{ marginBottom: '1.4rem' }} content={info.docblock.description} />
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
               <ComponentProps displayName={info.displayName} props={info.props} />

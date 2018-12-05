@@ -34,9 +34,8 @@ export interface MenuSlotClassNames {
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuBehavior
    * @available menuAsToolbarBehavior, tabListBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** Index of the currently active item. */

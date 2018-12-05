@@ -33,10 +33,7 @@ export interface ToolbarProps
     ContentComponentProps,
     ChildrenComponentProps,
     ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default toolbarBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Shorthand array of props for Toolbar. */

@@ -45,9 +45,8 @@ export interface MenuItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuItemBehavior
    * @available menuItemAsToolbarButtonBehavior, tabBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** A menu item can be active. */

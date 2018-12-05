@@ -99,7 +99,10 @@ type Extended<TFirst, TSecond> = { [K in keyof (TFirst & TSecond)]: ValueOf<TFir
  * TODO: restrict type further once TS compiler issue that leads to
  * 'JS Heap Out Of Memory' exception will be fixed
  */
-type AsComponent<C, TProps> = { as: C } & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
+type AsComponent<C, TProps> = {
+  /** An element type to render as (string or component). */
+  as: C
+} & TProps & { [K: string]: any } // & PropsOf<InstanceOf<C>>
 
 type HoistedStaticPropsOf<T> =
   | Exclude<keyof T, keyof React.ComponentType | 'prototype'>

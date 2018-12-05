@@ -8,10 +8,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default imageBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** An image may be formatted to appear inline with text as an avatar. */
