@@ -1,16 +1,14 @@
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
-import { ChatItemProps } from 'src/components/Chat/ChatItem'
-import { ChatMessageVariables } from './chatMessageVariables'
-import { pxToRem } from 'src/lib'
+import { ChatItemProps } from '../../../../components/Chat/ChatItem'
+import { pxToRem } from '../../../../lib'
 
 const _10pxAsRem_ = pxToRem(10)
 const _14pxAsRem_ = pxToRem(14)
 
-const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatMessageVariables> = {
+const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, any> = {
   root: ({ props: p }): ICSSInJSStyle => ({
-    ...(p.gutter && { display: 'flex' }),
+    ...(p.gutter && { display: 'flex', justifyContent: p.mine ? 'flex-end' : 'flex-start' }),
     position: 'relative',
-    justifyContent: p.mine ? 'flex-end' : 'flex-start',
     marginTop: _14pxAsRem_,
     marginBottom: _14pxAsRem_,
   }),
@@ -22,10 +20,6 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatMessageVariabl
     marginBottom: _10pxAsRem_,
     marginLeft: p.mine ? _10pxAsRem_ : 0,
     marginRight: p.mine ? 0 : _10pxAsRem_,
-  }),
-
-  content: ({ props: p }): ICSSInJSStyle => ({
-    ...(p.mine && { float: 'right' }),
   }),
 }
 

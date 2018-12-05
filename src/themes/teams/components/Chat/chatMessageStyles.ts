@@ -3,18 +3,17 @@ import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { pxToRem } from '../../utils'
 
-const px10asRem = pxToRem(10)
-
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
-    padding: pxToRem(14),
-    borderRadius: '0.3rem',
-    color: 'rgb(64, 64, 64)',
-    backgroundColor: p.mine ? v.messageColorMine : v.messageColor,
-    maxWidth: v.messageWidth,
+    padding: v.message.padding,
+    borderRadius: v.message.borderRadius,
+    color: v.message.color,
+    backgroundColor: p.mine ? v.message.backgroundColorMine : v.message.backgroundColor,
+    maxWidth: v.message.width,
     wordBreak: 'break-word',
     wordWrap: 'break-word',
+    ...(p.mine && { float: 'right' }),
     ':focus': {
       outline: `.2rem solid ${v.content.focusOutlineColor}`,
     },
@@ -22,7 +21,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
 
   author: ({ props: p }): ICSSInJSStyle => ({
     display: p.mine ? 'none' : undefined,
-    marginRight: px10asRem,
+    marginRight: pxToRem(10),
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({
