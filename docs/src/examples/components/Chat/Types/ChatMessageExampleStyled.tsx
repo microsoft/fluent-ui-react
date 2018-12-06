@@ -42,10 +42,13 @@ const ChatMessageExampleStyled = () => (
       componentStyles: {
         ChatItem: {
           root: { ...slotLabelStyles('chat-item-root'), backgroundColor: 'transparent' },
-          gutter: {
+        },
+        ChatItemGutter: {
+          root: {
             ...slotLabelStyles('gutter', { bottom: '-11px' }),
             backgroundColor: '#FF00FF',
             padding: 0,
+            position: 'absolute',
           },
         },
         ChatMessage: {
@@ -66,6 +69,7 @@ const ChatMessageExampleStyled = () => (
   >
     <Chat>
       <Chat.Item
+        mine
         content={
           <Chat.Message
             content="Hey, do you know any restaurants with good food?"

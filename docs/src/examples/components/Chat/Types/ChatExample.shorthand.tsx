@@ -8,6 +8,7 @@ const janeAvatar = {
 
 const items = [
   {
+    mine: true,
     content: (
       <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
     ),
@@ -23,6 +24,7 @@ const items = [
     key: 'message-id-3',
   },
   {
+    mine: true,
     content: (
       <Chat.Message
         content="Would you like to grab a lunch?"
@@ -49,6 +51,7 @@ const items = [
     key: 'message-id-6',
   },
   {
+    mine: true,
     content: (
       <Chat.Message
         content="Let's have a call"

@@ -8,7 +8,6 @@ export interface ChatMessageVariables {
     borderRadius: string
     color: string
     padding: string
-    margin: string
   }
   author: { margin: string }
   content: { focusOutlineColor: string }
@@ -22,7 +21,6 @@ export default (siteVars): ChatMessageVariables => ({
     borderRadius: '0.3rem',
     color: 'rgb(64, 64, 64)',
     padding: pxToRem(14),
-    margin: pxToRem(40),
   },
   author: { margin: pxToRem(10) },
   content: { focusOutlineColor: siteVars.brand },
