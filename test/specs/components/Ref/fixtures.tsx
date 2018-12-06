@@ -16,3 +16,9 @@ export class CompositeClass extends Component {
     return <DOMClass {...this.props} />
   }
 }
+
+export const ForwardedRef = React.forwardRef<HTMLButtonElement>((props, ref) => (
+  <div>
+    <button ref={ref} />
+  </div>
+))

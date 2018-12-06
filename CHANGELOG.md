@@ -17,8 +17,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- `type` prop is replaced with `color` in `Divider` component @layershifter ([#558](https://github.com/stardust-ui/react/pull/558))
+
 ### Fixes
+- Fix `Provider` is not executing staticStyles with the merged siteVariables @mnajdova ([#559](https://github.com/stardust-ui/react/pull/559))
 - The border color of the Icon is inherited if no value is provided for the `color` and `borderColor` variables @mnajdova ([#569](https://github.com/stardust-ui/react/pull/569))
+
+### Features
+- `Ref` components uses `forwardRef` API by default @layershifter ([#491](https://github.com/stardust-ui/react/pull/491))
+
+### Documentation
+- Add `prettier` support throughout the docs @levithomason  ([#568](https://github.com/stardust-ui/react/pull/568))
+
+<!--------------------------------[ v0.14.0 ]------------------------------- -->
+## [v0.14.0](https://github.com/stardust-ui/react/tree/v0.14.0) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.3...v0.14.0)
+
+### BREAKING CHANGES
+- Add `render` callback as an option for shorthand value @kuzhelov ([#562](https://github.com/stardust-ui/react/pull/562))
+- Rename `renderContent` and `renderTitle` to `renderPanelContent` and `renderPanelTitle` for `Accordion` @kuzhelov ([#562](https://github.com/stardust-ui/react/pull/562))
 
 <!--------------------------------[ v0.13.3 ]------------------------------- -->
 ## [v0.13.3](https://github.com/stardust-ui/react/tree/v0.13.3) (2018-12-05)

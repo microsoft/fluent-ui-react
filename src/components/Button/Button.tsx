@@ -16,12 +16,7 @@ import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 import isFromKeyboard from '../../lib/isFromKeyboard'
 
@@ -70,15 +65,6 @@ export interface ButtonProps
   /** A button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
   /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean
 
@@ -120,7 +106,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
-    renderIcon: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -163,7 +148,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   public renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content, renderIcon } = this.props
+    const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
@@ -171,7 +156,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },
-      render: renderIcon,
     })
   }
 
