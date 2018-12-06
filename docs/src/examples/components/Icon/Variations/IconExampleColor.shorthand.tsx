@@ -9,7 +9,7 @@ const IconExampleColor = () => (
       <Icon name="call" bordered />
       <Icon name="call-video" bordered />
     </div>
-    <Text content="INHERITED COLOR FOR OUTLINE ICONS:" weight="bold" />
+    <Text content="INHERITED COLOR FOR OUTLINED ICONS:" weight="bold" />
     <div style={{ color: 'yellowgreen' }}>
       <Icon name="calendar" bordered variables={{ outline: true }} />
       <Icon name="call" bordered variables={{ outline: true }} />
