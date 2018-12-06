@@ -6,7 +6,7 @@ const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
       title="Tinted Example"
-      description="A button used in cards is a &quot;tinted&quot; version of a default button."
+      description='A button used in cards is a "tinted" version of a default button.'
       examplePath="components/Button/Usage/ButtonUsageExample"
     />
   </ExampleSection>

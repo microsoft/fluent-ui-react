@@ -25,6 +25,23 @@ export interface UIComponentProps<P = any, V = any>
   className?: string
 }
 
+export interface ColorComponentProps {
+  /** A component can have a color. */
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'blue'
+    | 'green'
+    | 'grey'
+    | 'orange'
+    | 'pink'
+    | 'purple'
+    | 'teal'
+    | 'red'
+    | 'yellow'
+    | string
+}
+
 export interface ContentComponentProps<TContent = React.ReactNode> {
   /** Shorthand for primary content. */
   content?: TContent

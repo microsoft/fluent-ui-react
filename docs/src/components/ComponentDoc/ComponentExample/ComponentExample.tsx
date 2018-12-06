@@ -2,14 +2,13 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
-import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
+import { callable, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ComponentControls from '../ComponentControls'
@@ -19,6 +18,8 @@ import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
+import CodeSnippet from '../../CodeSnippet'
+import formatCode from '../../../utils/formatCode'
 
 export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   title: React.ReactNode
@@ -52,16 +53,17 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
   shorthand: 'Shorthand API',
 }
 
+const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
+
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
 class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
-  private componentRef: React.Component
-  private sourceCodeMgr: SourceCodeManager
-  private anchorName: string
-  private kebabExamplePath: string
-  private KnobsComponent: any
+  sourceCodeMgr: SourceCodeManager
+  anchorName: string
+  kebabExamplePath: string
+  KnobsComponent: any
 
   state = {
     knobs: {},
@@ -78,11 +80,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     copiedCode: false,
   }
 
-  public static contextTypes = {
+  static contextTypes = {
     onPassed: PropTypes.func,
   }
 
-  public static propTypes = {
+  static propTypes = {
     children: PropTypes.node,
     description: PropTypes.node,
     examplePath: PropTypes.string.isRequired,
@@ -93,7 +95,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     themeName: PropTypes.string,
   }
 
-  public componentWillMount() {
+  componentWillMount() {
     const { examplePath } = this.props
     this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
@@ -106,7 +108,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     })
   }
 
-  public componentWillReceiveProps(nextProps: ComponentExampleProps) {
+  componentWillReceiveProps(nextProps: ComponentExampleProps) {
     // deactivate examples when switching from one to the next
     if (
       this.isActiveHash() &&
@@ -121,7 +123,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
   }
 
-  private clearActiveState = () => {
+  clearActiveState = () => {
     this.setState({
       showCode: false,
       showRtl: false,
@@ -129,31 +131,27 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     })
   }
 
-  private isActiveState = () => {
+  isActiveState = () => {
     const { showCode, showVariables } = this.state
 
     return showCode || showVariables
   }
 
-  private isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
+  isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
 
-  private clickedOutsideComponent = (e: Event): boolean => {
-    return !doesNodeContainClick((this.componentRef as any).ref, e)
-  }
-
-  private updateHash = () => {
+  updateHash = () => {
     if (this.isActiveState()) this.setHashAndScroll()
     else if (this.isActiveHash()) this.removeHash()
   }
 
-  private setHashAndScroll = () => {
+  setHashAndScroll = () => {
     const { history, location } = this.props
 
     history.replace(`${location.pathname}#${this.anchorName}`)
     scrollToAnchor()
   }
 
-  private removeHash = () => {
+  removeHash = () => {
     const { history, location } = this.props
 
     history.replace(location.pathname)
@@ -161,12 +159,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.clearActiveState()
   }
 
-  private handleDirectLinkClick = () => {
+  handleDirectLinkClick = () => {
     this.setHashAndScroll()
     copyToClipboard(window.location.href)
   }
 
-  private handleMouseLeave = () => {
+  handleMouseLeave = () => {
     this.setState({
       isHovering: false,
       handleMouseLeave: undefined,
@@ -174,7 +172,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     })
   }
 
-  private handleMouseMove = () => {
+  handleMouseMove = () => {
     this.setState({
       isHovering: true,
       handleMouseLeave: this.handleMouseLeave,
@@ -182,25 +180,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     })
   }
 
-  handleShowCode = (shouldShowCode: boolean) => {
-    if (shouldShowCode !== this.state.showCode) {
-      this.setState({ showCode: shouldShowCode }, this.updateHash)
-    }
-  }
-
-  handleShowCodeInactive = (e: Event) => {
-    if (this.clickedOutsideComponent(e)) {
-      this.handleShowCode(false)
-    }
-  }
-
-  private handleShowRtlClick = e => {
+  handleShowRtlClick = e => {
     e.preventDefault()
 
     this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
-  private handleShowCodeClick = e => {
+  handleShowCodeClick = e => {
     e.preventDefault()
 
     const { showCode } = this.state
@@ -208,7 +194,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
-  private handleShowVariablesClick = e => {
+  handleShowVariablesClick = e => {
     e.preventDefault()
 
     const { showVariables } = this.state
@@ -216,7 +202,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showVariables: !showVariables }, this.updateHash)
   }
 
-  private handleShowTransparentClick = e => {
+  handleShowTransparentClick = e => {
     e.preventDefault()
 
     const { showTransparent } = this.state
@@ -224,42 +210,46 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ showTransparent: !showTransparent })
   }
 
-  private handlePass = () => {
+  handlePass = () => {
     const { title } = this.props
 
     if (title) _.invoke(this.context, 'onPassed', null, this.props)
   }
 
-  private copyJSX = () => {
+  copyJSX = () => {
     copyToClipboard(this.state.sourceCode)
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
-  private resetJSX = () => {
+  resetJSX = () => {
     if (this.sourceCodeMgr.originalCodeHasChanged && confirm('Lose your changes?')) {
       this.sourceCodeMgr.resetToOriginalCode()
       this.updateAndRenderSourceCode()
     }
   }
 
-  private getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
+  getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
 
-  private getKebabExamplePath = () => {
+  getKebabExamplePath = () => {
     if (!this.kebabExamplePath) this.kebabExamplePath = _.kebabCase(this.props.examplePath)
 
     return this.kebabExamplePath
   }
 
-  private hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
+  hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  private renderExampleFromCode = (): JSX.Element => {
+  renderExampleFromCode = (): JSX.Element => {
     const { sourceCode } = this.state
 
     if (sourceCode == null) {
       return this.renderMissingExample()
     }
 
+    return <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+  }
+
+  renderElement = (element: React.ReactElement<any>) => {
     const { showRtl, componentVariables, themeName } = this.state
     const theme = themes[themeName]
 
@@ -270,14 +260,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return (
-      <Provider theme={newTheme}>
-        <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-      </Provider>
-    )
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
-  private renderMissingExample = (): JSX.Element => {
+  renderMissingExample = (): JSX.Element => {
     const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
     return (
       <ContributionPrompt>
@@ -287,7 +273,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private handleKnobChange = knobs => {
+  handleKnobChange = knobs => {
     this.setState(prevState => ({
       knobs: {
         ...prevState.knobs,
@@ -296,7 +282,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }))
   }
 
-  private getKnobsComponent = () => {
+  getKnobsComponent = () => {
     if (typeof this.KnobsComponent !== 'undefined') {
       return this.KnobsComponent
     }
@@ -306,35 +292,35 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     return this.KnobsComponent
   }
 
-  private getKnobsValue = () => {
+  getKnobsValue = () => {
     const Knobs = this.getKnobsComponent()
 
     return Knobs ? { ...Knobs.defaultProps, ...this.state.knobs } : null
   }
 
-  private renderKnobs = () => {
+  renderKnobs = () => {
     const Knobs = this.getKnobsComponent()
 
     return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
   }
 
-  private getDisplayName = () => this.props.examplePath.split('/')[1]
+  getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  private handleChangeCode = (sourceCode: string) => {
+  handleChangeCode = (sourceCode: string) => {
     this.sourceCodeMgr.currentCode = sourceCode
     this.updateAndRenderSourceCode()
   }
 
-  private updateAndRenderSourceCode = () => {
+  updateAndRenderSourceCode = () => {
     this.setState({ sourceCode: this.sourceCodeMgr.currentCode })
   }
 
-  private setApiCodeType = (codeType: SourceCodeType) => {
+  setApiCodeType = (codeType: SourceCodeType) => {
     this.sourceCodeMgr.codeType = codeType
     this.updateAndRenderSourceCode()
   }
 
-  private renderApiCodeMenu = (): JSX.Element => {
+  renderApiCodeMenu = (): JSX.Element => {
     const { sourceCode } = this.state
     const lineCount = sourceCode && sourceCode.match(/^/gm)!.length
 
@@ -370,7 +356,23 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private renderCodeEditorMenu = (): JSX.Element => {
+  canBePrettified = () => {
+    const { sourceCode } = this.state
+
+    try {
+      return sourceCode !== formatCode(sourceCode)
+    } catch (err) {
+      return false
+    }
+  }
+
+  handleFormat = () => {
+    const { sourceCode } = this.state
+
+    this.handleChangeCode(formatCode(sourceCode))
+  }
+
+  renderCodeEditorMenu = (): JSX.Element => {
     const { copiedCode } = this.state
     const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
     const codeEditorStyle: React.CSSProperties = {
@@ -392,8 +394,20 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <Menu size="small" secondary inverted text style={codeEditorStyle}>
+        <SourceRender.Consumer>
+          {({ error }) => (
+            <Menu.Item
+              icon={(error && 'bug') || (this.canBePrettified() ? 'magic' : 'check')}
+              color={error ? 'red' : undefined}
+              active={error}
+              content="Prettier"
+              onClick={this.handleFormat}
+              style={!this.canBePrettified() ? disabledStyle : undefined}
+            />
+          )}
+        </SourceRender.Consumer>
         <Menu.Item
-          style={!originalCodeHasChanged ? { opacity: 0.5, pointerEvents: 'none' } : undefined}
+          style={!originalCodeHasChanged ? disabledStyle : undefined}
           icon="refresh"
           content="Reset"
           onClick={this.resetJSX}
@@ -415,7 +429,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private renderJSX = () => {
+  renderJSX = () => {
     const { showCode, sourceCode } = this.state
 
     if (!showCode) return null
@@ -426,19 +440,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
         <div>
           {this.renderCodeEditorMenu()}
-          <Editor
-            setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
-            id={`${this.getKebabExamplePath()}-jsx`}
-            value={sourceCode}
-            onChange={this.handleChangeCode}
-            onOutsideClick={this.handleShowCodeInactive}
-          />
+          <Editor value={sourceCode} onChange={this.handleChangeCode} />
         </div>
       </div>
     )
   }
 
-  private renderError = () => {
+  renderError = () => {
     return (
       <SourceRender.Consumer>
         {({ error }) =>
@@ -452,49 +460,23 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private renderHTML = () => {
+  renderHTML = () => {
     const { showCode } = this.state
     if (!showCode) return null
 
     return (
       <SourceRender.Consumer>
-        {({ markup }) => {
-          // add new lines between almost all adjacent elements
-          // moves inline elements to their own line
-          const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span)/g, '>\n<')
-
-          const beautifiedHTML = html(preFormattedHTML, {
-            indent_size: 2,
-            indent_char: ' ',
-            wrap_attributes: 'auto',
-            wrap_attributes_indent_size: 2,
-            end_with_newline: false,
-          })
-
-          return (
-            <div>
-              <Divider inverted horizontal>
-                <span style={{ opacity: 0.5 }}>HTML</span>
-              </Divider>
-              <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
-                <Editor
-                  mode="html"
-                  showGutter={false}
-                  showCursor={false}
-                  readOnly
-                  highlightActiveLine={false}
-                  id={`${this.getKebabExamplePath()}-html`}
-                  value={beautifiedHTML}
-                />
-              </div>
-            </div>
-          )
-        }}
+        {({ markup }) => (
+          <div>
+            <Divider inverted fitted />
+            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+          </div>
+        )}
       </SourceRender.Consumer>
     )
   }
 
-  private renderVariables = () => {
+  renderVariables = () => {
     const { showVariables } = this.state
     if (!showVariables) return undefined
 
@@ -547,7 +529,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  private handleVariableChange = (component, variable) => (e, { value }) => {
+  handleVariableChange = (component, variable) => (e, { value }) => {
     this.setState(state => ({
       componentVariables: {
         ...state.componentVariables,
@@ -556,7 +538,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }))
   }
 
-  public render() {
+  render() {
     const { children, description, title } = this.props
     const {
       handleMouseLeave,
@@ -589,12 +571,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
 
     return (
-      <Visibility
-        once={false}
-        onTopPassed={this.handlePass}
-        onTopPassedReverse={this.handlePass}
-        ref={c => (this.componentRef = c!)}
-      >
+      <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
         <Grid
@@ -638,6 +615,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             babelConfig={babelConfig}
             knobs={knobs}
             source={sourceCode}
+            render={this.renderElement}
             renderHtml={showCode}
             resolver={importResolver}
           >

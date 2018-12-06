@@ -1,6 +1,8 @@
 import { pxToRem } from '../../utils'
+import { EmphasisColors, NaturalColors } from '../../../types'
 
 export interface DividerVariables {
+  colors: EmphasisColors & NaturalColors
   dividerColor: string
   textColor: string
   textFontSize: string
@@ -12,6 +14,7 @@ export interface DividerVariables {
 
 export default (siteVars: any): DividerVariables => {
   return {
+    colors: { ...siteVars.emphasisColors, ...siteVars.naturalColors },
     dividerColor: siteVars.gray09,
     textColor: siteVars.gray03,
     textFontSize: siteVars.fontSizeSmall,

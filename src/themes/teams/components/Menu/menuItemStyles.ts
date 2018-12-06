@@ -26,14 +26,14 @@ const getActionStyles = ({
         background: v.defaultBackgroundColor,
       }
     : primary
-      ? {
-          color: v.primaryActiveColor,
-          background: v.primaryActiveBackgroundColor,
-        }
-      : {
-          color,
-          background: v.defaultActiveBackgroundColor,
-        }
+    ? {
+        color: v.primaryActiveColor,
+        background: v.primaryActiveBackgroundColor,
+      }
+    : {
+        color,
+        background: v.defaultActiveBackgroundColor,
+      }
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
@@ -121,7 +121,16 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const { active, isFromKeyboard, pills, pointing, secondary, underlined, vertical } = props
+    const {
+      active,
+      iconOnly,
+      isFromKeyboard,
+      pills,
+      pointing,
+      secondary,
+      underlined,
+      vertical,
+    } = props
 
     return {
       color: v.defaultColor,
@@ -155,7 +164,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       ...(pointing &&
         vertical && {
-          border: '1px solid transparent',
           borderTopLeftRadius: `${pxToRem(3)}`,
           borderTopRightRadius: `${pxToRem(3)}`,
           ...(pointing === 'end'
@@ -163,6 +171,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             : { borderLeft: `${pxToRem(3)} solid transparent` }),
           marginBottom: `${pxToRem(12)}`,
         }),
+
+      ...(iconOnly && {
+        display: 'flex',
+      }),
 
       ...itemSeparator({ props, variables: v, theme }),
 
@@ -194,16 +206,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       display: 'block',
       cursor: 'pointer',
 
+      ...(((pointing && vertical) || iconOnly) && { border: '1px solid transparent' }),
+
       ...(underlined
         ? { padding: `${pxToRem(4)} 0` }
         : pointing && vertical
-          ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
-          : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+        ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
+        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
 
       ...(iconOnly && {
-        width: v.iconsMenuItemSize,
-        height: v.iconsMenuItemSize || '100%',
-        padding: 0,
+        padding: pxToRem(8),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

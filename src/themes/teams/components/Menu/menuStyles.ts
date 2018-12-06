@@ -11,6 +11,7 @@ export default {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',
+      ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
         ...(!fluid && { width: pxToRem(200) }),

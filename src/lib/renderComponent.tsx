@@ -140,7 +140,13 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         }
 
         const {
-          siteVariables = { fontSizes: {} },
+          siteVariables = {
+            colors: {},
+            contextualColors: {},
+            emphasisColors: {},
+            naturalColors: {},
+            fontSizes: {},
+          },
           componentVariables = {},
           componentStyles = {},
           rtl = false,
