@@ -76,13 +76,10 @@ export default () => (
       to the screen reader user only can be added to the label:
     </p>
     <CodeSnippet
-      value={`
-        <>
-          <Button icon='envelope' />
-          <Button icon='envelope' aria-label='Send message' />
-          <Radio aria-label='Include history from the past day. Press TAB to change the number of days.' />
-        </>
-      `}
+      value={[
+        "<Button icon='envelope'> -> <Button icon='envelope' aria-label='Send message'>",
+        "<Radio ... aria-label='Include history from the past day. Press TAB to change the number of days.'>",
+      ].join('\n')}
     />
     <p>
       Most typical examples are {code('aria-label')}, {code('aria-labelledby')} and {code('title')}{' '}
@@ -100,12 +97,12 @@ export default () => (
       what the function is on every part of the page. For example,{' '}
     </p>
     <CodeSnippet
-      value={`
-        <Button size='small' color='green'>
-          <Icon name='download' />
-          Download
-        </Button>
-      `}
+      value={[
+        "<Button size='small' color='green'>",
+        "  <Icon name='download' >",
+        '  Download',
+        '</Button>',
+      ].join('\n')}
     />
 
     <p>
@@ -114,13 +111,11 @@ export default () => (
       {code('aria-*')} attributes:
     </p>
     <CodeSnippet
-      mode="html"
-      value={`
-        <button class='ui-button' color='green' aria-label='Download'>
-          <i class='ui-icon' aria-hidden='true'></i>
-          Download
-        </button>
-      `}
+      value={[
+        "<button class='ui-button' color='green' aria-label='Download'>",
+        "  <i class='ui-icon' aria-hidden='true'></i>Download",
+        '</button>',
+      ].join('\n')}
     />
 
     <p>Basic rules for semantically correct HTML:</p>
@@ -161,6 +156,7 @@ export default () => (
     </p>
     <p>Similarly, the controls</p>
     <p>
+      {' '}
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKsAAAA7CAIAAACL7O0NAAAAAXNSR0IArs4c6QAAAAlwSFlzAAASdAAAEnQB3mYfeAAABEBJREFUeF7tWz1s2lAQDhULjGUNY9OxZoQpLRmTFdRMsDDQAaRmaIZmCEM6gESGUoklTKlgpWNQMrGGlTVEajvQqq1ExvYjT7Vcfmzz/I7YfffkgTjnz3fffXfvhyT06+ePDR4aM/BI49g59CkDrADddcAKYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMPYAXozoDu8XMP0F0Bof/g/wUO3xyOv42tmYxGovXTuvfcHh9Xbm9HwInH44aRSKdfRKNR77C+QlCvgO79sA9y735QEDEajRrvGxBEs9mUwDfFJDQ0Ho9jsRhwAHtx0RsMBtlsJpVKSSA7PmLVcSaT3dlJOz6ixEC9AgqFQr1et6mVyWRSLpflMmQfs0h/8VWxUqlI4/f7/Xa7c3c3mUcAfrVa8yKCmfKIPY6dvDuxBnV21oLOkH6iCpknkGQdYN8qiRqpmX50bOnigDo77c7BweuFCEDGr6APmMm9AgpAeUBbYsynH7Brq34RAokCBDSawcxwnB3kaBVdWlS/l/QDp9frPTMMgKA6l4nAMAyYSbu6rABQ/cDM53PSyHIPEirAVLr5ga6zgT7v6QeD19fTDowPM9VpJRcGMJOje9lT1vRDYRhy+FeXV7iszzreIVSAXAxyTx0dvbVWfy4nWUlY+Tt2ERiIDYKqMVP9wHf0YeGrkezzj+e4TBG4uUOoAOsUoIosLNPcQBEt1928elUbEdH6m7/pJ6ECrLPAqrwss2+1ppOlGJj7sV9XhSxwNjfjgLXHhAHMVL0XYrWmH3tCaeTt59v7L/dx4YMAcXOHRAHSS2X3wYuln/LSSSQM7Pvt3YABzNy7upLlzNHWSs+KlJvpN0Vgf0e9AjAHY9NcLpVr1RpKttv9JK5G4wM2WquGtNBe1cp/HjydTmM7btMG8CsYwExJIH4AUa8AtDWsy3Cgtru3m0wmt7aebGz8xoUj1ZvRjfcNIV36kQ9s1XDgAwUvFAFuQtZoPERHGg8iCPUKMMN4+neIM2D8VCwW0UKHw6GXUJXs+20cEBMzRIAGZuoAH/AjbubyOemtmnipzRS5htlzPnD1p8L22UX6MR3A5lTqm5tSqYzzWusrMOlQrPyRDBz7YN8vNn5Y+mHuR/P3WP2OX5rQfWOyLC/rVgD8wDwaiUTQErx0An5WFQMPoABVrjOOEgYI1wFK/GMQagZYAdQM+x2fFeD3DFH7xwqgZtjv+KwAv2eI2j9WADXDfsdnBfg9Q9T+hb5++Uz9Dsb3IQPm4Wbo+79/ae9DX9klCgbC4bCA5VmAgt4gYfKpcJCyReEr9wAKVoOEyQoIUrYofGUFULAaJExWQJCyReErK4CC1SBhsgKClC0KX1kBFKwGCZMVEKRsUfj6B3lYy//lH+0fAAAAAElFTkSuQmCC" />
     </p>
     <p>
@@ -215,9 +211,8 @@ export default () => (
       {link(
         'Focus Zone from Office UI Fabric',
         'https://developer.microsoft.com/en-us/fabric#/components/focuszone',
-      )}
-      . This component allows to wrap any focusable component/element and adds arrow key navigation
-      functionality.
+      )}. This component allows to wrap any focusable component/element and adds arrow key
+      navigation functionality.
     </p>
     <p>There are two basic use cases for Focus Zone:</p>
     <ul>
@@ -233,11 +228,9 @@ export default () => (
     </ul>
     <CodeSnippet
       label="App.jsx"
-      value={`
-        const App = () => (
-          <FocusZone><Accordion panels={[{}]} /></FocusZone>
-        )
-      `}
+      value={[`render() {`, ` return <FocusZone><Accordion panels={...} ></FocusZone>`, `}`].join(
+        '\n',
+      )}
     />
     <p>{code('FocusZone')} operates based on DOM structure to:</p>
     <ul>
@@ -315,38 +308,40 @@ export default () => (
     </p>
     <Header as="h3">Example: Menu component</Header>
     <CodeSnippet
-      value={`
-        const items = [
-         {key: "editorials", content: "Editorials"} ,
-         {key: "review", content: "Reviews" },
-         {key: "events", content: "Upcoming Events" },
-        ]
-
-       const menu = <Menu items={items} />
-      `}
+      value={[
+        'const items = [',
+        ' {key: "editorials", content: "Editorials"} ,',
+        ' {key: "review", content: "Reviews" },',
+        ' {key: "events", content: "Upcoming Events" },',
+        ']',
+        '',
+        'render() {',
+        ' return <Menu items={items} >',
+        '}',
+      ].join('\n')}
     />
     <p>
-      Default accessibility behaviour for {code('Menu')} component is {code('MenuBehavior')} (
-      {code('MenuItemBehavior')} for the menu items). These behaviours add appropriate ARIA roles by
-      default:
+      Default accessibility behaviour for {code('Menu')} component is {code('MenuBehavior')} ({code(
+        'MenuItemBehavior',
+      )}{' '}
+      for the menu items). These behaviours add appropriate ARIA roles by default:
     </p>
     <p>Rendered HTML:</p>
     <CodeSnippet
-      mode="html"
       label="App.jsx"
-      value={`
-        <ul role="menu" class="ui-menu ">
-          <li class="ui-menu__item " role="presentation">
-            <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Editorials</a>
-          </li>
-          <li class="ui-menu__item " role="presentation">
-            <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Reviews</a>
-          </li>
-          <li class="ui-menu__item " role="presentation">
-            <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Upcoming Events</a>
-          </li>
-        </ul>
-      `}
+      value={[
+        '<ul role="menu" class="ui-menu ">',
+        '  <li class="ui-menu__item " role="presentation">',
+        '    <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Editorials</a>',
+        '  </li>',
+        '  <li class="ui-menu__item " role="presentation">',
+        '    <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Reviews</a>',
+        '  </li>',
+        '  <li class="ui-menu__item " role="presentation">',
+        '    <a class="ui-menu__item__anchor " role="menuitem" tabindex="0">Upcoming Events</a>',
+        '  </li>',
+        '</ul>',
+      ].join('\n')}
     />
 
     <Message warning>
@@ -358,19 +353,17 @@ export default () => (
         following example:
       </p>
       <CodeSnippet
-        value={`
-          <Menu>
-            <Menu.Item>Editorials</Menu.Item>
-          </Menu>
-        `}
+        value={['return (', ' <Menu>', ' <Menu.Item>Editorials</Menu.Item>', ' </Menu>', ' )'].join(
+          '\n',
+        )}
       />
       <p>Rendered HTML:</p>
       <CodeSnippet
-        value={`
-          <ul role="menu" class="ui-menu">
-            <li class="ui-menu__item" role="presentation">Editorials</li>
-          </ul>
-        `}
+        value={[
+          '<ul role="menu" class="ui-menu">',
+          ' <li class="ui-menu__item" role="presentation">Editorials</li>',
+          '</ul>',
+        ].join('\n')}
       />
       <p>
         Notice that Stardust only applies role only on the {code('<li>')} element which it rendered.
@@ -381,49 +374,51 @@ export default () => (
       <p>Proper accessible menu implementation in this case would be:</p>
       <CodeSnippet
         label="App.jsx"
-        value={`
-          <Menu>
-            <Menu.Item content="Editorials" />
-          </Menu>
-        `}
+        value={[
+          'return (',
+          '  <Menu>',
+          '    <Menu.Item content="Editorials" />',
+          '  </Menu>',
+          ')',
+        ].join('\n')}
       />
       <p>
         This way, Stardust will generate a child component based on the provided content string and
         will apply the role to it:
       </p>
       <CodeSnippet
-        value={`
-          import React from 'react'
-          import { Menu } from '@stardust-ui/react'
-
-          const items = [
-            { key: 'editorials', content: 'Editorials' },
-            { key: 'review', content: 'Reviews' },
-            { key: 'events', content: 'Upcoming Events' },
-          ]
-
-          const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} primary />
-
-          export default MenuExamplePrimary
-        `}
+        value={[
+          "import React from 'react'",
+          "import { Menu } from '@stardust-ui/react",
+          '',
+          'const items = [',
+          "  { key: 'editorials', content: 'Editorials' },",
+          "  { key: 'review', content: 'Reviews' },",
+          "  { key: 'events', content: 'Upcoming Events' },",
+          ']',
+          '',
+          'const MenuExamplePrimary = () => <Menu defaultActiveIndex={0} items={items} primary />',
+          '',
+          'export default MenuExamplePrimary',
+        ].join('\n')}
       />
 
       <p>And this is the HTML that will be rendered:</p>
       <CodeSnippet
         label="html"
-        value={`
-          <ul role="menu" class="ui-menu a ab c d e f g">
-            <li class="ui-menu__item ..." role="presentation">
-              <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Editorials</a>
-            </li>
-            <li class="ui-menu__item ..." role="presentation">
-              <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Reviews</a>
-            </li>
-            <li class="ui-menu__item ..." role="presentation">
-              <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Upcoming Events</a>
-            </li>
-          </ul>
-        `}
+        value={[
+          '<ul role="menu" class="ui-menu a ab c d e f g">',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Editorials</a>',
+          '  </li>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Reviews</a>',
+          '  </li>',
+          '  <li class="ui-menu__item ..." role="presentation">',
+          '    <a class="ui-menu__item__anchor ..." role="menuitem" tabindex="0">Upcoming Events</a>',
+          '  </li>',
+          '</ul>',
+        ].join('\n')}
       />
     </Message>
 
@@ -434,13 +429,15 @@ export default () => (
     </p>
     <CodeSnippet
       label="App.jsx"
-      value={`
-        <Menu accessibility={TabListBehavior}>
-          <Menu.Item role="tab">
-            Conversation
-          </Menu.Item>
-        </Menu>
-      `}
+      value={[
+        'return (',
+        '  <Menu accessibility={TabListBehavior}>',
+        '    <Menu.Item role="tab">',
+        '      Conversation',
+        '    </Menu.Item>',
+        '  </Menu>',
+        ')',
+      ].join('\n')}
     />
     <Header as="h4" content="Available Behaviors" />
     <p>
@@ -488,18 +485,17 @@ export default () => (
     </p>
     <p>Example:</p>
     <CodeSnippet
-      value={`
-        <Button icon="book" aria-label="Confirm booking" primary />
-      `}
+      value={['return (', ' <Button icon="book" aria-label="Confirm booking" primary />', ')'].join(
+        '\n',
+      )}
     />
     <p>Rendered HTML:</p>
     <CodeSnippet
-      mode="html"
-      value={`
-        <button class="ui-button" aria-label="Confirm booking">
-          <span class="ui-icon" color="white"></span>
-        </button>
-      `}
+      value={[
+        '<button class="ui-button" aria-label="Confirm booking">',
+        '  <span class="ui-icon" color="white"></span>',
+        '</button>',
+      ].join('\n')}
     />
 
     <Header as="h3" content="Set Size and position for virtual list" />

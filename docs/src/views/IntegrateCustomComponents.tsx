@@ -44,17 +44,17 @@ export default () => (
       for adapting your custom component to the Stardust's styling and theming mechanisms.
     </p>
     <ExampleSnippet
-      value={`
-        import { createComponent } from '@stardust-ui/react'
-
-        const StyledButton = createComponent({
-          displayName: 'StyledButton',
-          render: ({stardust, className, children}) => {
-            const { classes } = stardust
-            return <button className={cx(className, classes.root)}>{children}</button>
-          }
-        })
-      `}
+      value={[
+        `import { createComponent } from '@stardust-ui/react'`,
+        ``,
+        `const StyledButton = createComponent({`,
+        `  displayName: 'StyledButton',`,
+        `  render: ({stardust, className, children}) => {`,
+        `    const { classes } = stardust`,
+        `    return <button className={cx(className, classes.root)}>{children}</button>`,
+        `  }`,
+        `})`,
+      ].join('\n')}
     />
     <p>
       Let's go step by step throughout all bits of the <code>createComponent</code> method.
@@ -66,7 +66,28 @@ export default () => (
       component.
     </p>
     <ExampleSnippet
-      value={`
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    componentVariables: {`,
+        `      StyledButton: {`,
+        `        color: '#F2F2F2',`,
+        `      },`,
+        `    },`,
+        `    componentStyles: {`,
+        `      StyledButton: {`,
+        `        root: ({ props, variables, theme: {siteVariables} }) => ({`,
+        `          backgroundColor: siteVariables.brand,`,
+        `          color: variables.color,`,
+        `        }),`,
+        `      },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <StyledButton> Provider styled button </StyledButton>`,
+        '</Provider>',
+      ].join('\n')}
+      render={() => (
         <Provider
           theme={{
             componentVariables: {
@@ -78,7 +99,7 @@ export default () => (
               StyledButton: {
                 root: ({ props, variables, theme: { siteVariables } }) => ({
                   backgroundColor: siteVariables.brand,
-                  color: variables.color,
+                  color: (variables as any).color,
                 }),
               },
             },
@@ -86,7 +107,7 @@ export default () => (
         >
           <StyledButton>Provider styled button</StyledButton>
         </Provider>
-      `}
+      )}
     />
     <p>
       The second argument of the <code>createComponent</code> config param is the{' '}
@@ -96,8 +117,9 @@ export default () => (
     </p>
     <ul>
       <li>
-        <code>stardust</code> - the object containing the evaluated theming props (
-        <code>classes</code>
+        <code>stardust</code> - the object containing the evaluated theming props (<code>
+          classes
+        </code>
         and <code>rtl</code>).
       </li>
       <li>
@@ -120,6 +142,11 @@ export default () => (
       }
     />
     <ExampleSnippet
+      value={[
+        `<StyledButton styles={{':hover': {backgroundColor: "yellow"}}>`,
+        `  Inline styled button`,
+        `</StyledButton>`,
+      ].join('\n')}
       render={() => (
         <StyledButton styles={{ ':hover': { backgroundColor: 'yellow' } }}>
           Inline styled button
@@ -129,22 +156,24 @@ export default () => (
     The same can be achieved with adding styles in the <code>componentStyles</code> part of the{' '}
     <code>theme</code> in the <code>Provider</code>.
     <ExampleSnippet
-      render={() => (
-        <Provider
-          theme={{
-            // component's displayName arg is used as a selector
-            componentStyles: {
-              StyledButton: {
-                root: {
-                  ':hover': { backgroundColor: 'yellow' },
-                },
-              },
-            },
-          }}
-        >
-          <StyledButton>Inline styled button</StyledButton>
-        </Provider>
-      )}
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    // component's displayName arg is used as a selector`,
+        `    componentStyles: {`,
+        `      StyledButton: {`,
+        `        root: () => ({`,
+        `          ':hover': {`,
+        `            backgroundColor: "yellow"`,
+        `          }`,
+        `        }),`,
+        `      },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  <StyledButton>Inline styled button</StyledButton>`,
+        '</Provider>',
+      ].join('\n')}
     />
     <p>
       For more advanced theming scenarios, please take a look in the <b>Styles</b> section on the{' '}
@@ -160,31 +189,31 @@ export default () => (
     />
     Let's consider that the following <code>theme</code> was passed to the <code>Provider</code>.
     <ExampleSnippet
-      value={`
-        <Provider
-          theme={{
-            // other theme parts
-            componentStyles: {
-              StyledButton: {
-                root: ({ variables }) => ({
-                  color: variables.color
-                }),
-              },
-            },
-          }}
-        >
-          ...
-        </Provider>
-      `}
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    // other theme parts`,
+        `    componentStyles: {`,
+        `      StyledButton: {`,
+        `        root: ({ variables }) => ({`,
+        `          color: variables.color,`,
+        `        }),`,
+        `      },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  ...`,
+        '</Provider>',
+      ].join('\n')}
     />
     Then we can use the <code>variables</code> prop for changing the color inside the{' '}
     <code>StyledButton</code>.
     <ExampleSnippet
-      value={`
-        <StyledButton variables={{color: "red" }}>
-          Inline styled button
-        </StyledButton>
-      `}
+      value={[
+        `<StyledButton variables={{color: "red" }}>`,
+        `  Inline styled button`,
+        `</StyledButton>`,
+      ].join('\n')}
       render={() => (
         <Provider
           theme={{
@@ -204,27 +233,27 @@ export default () => (
     The alternative approach with defining <code>componentVariables</code> inside the{' '}
     <code>theme</code> would like like this:
     <ExampleSnippet
-      value={`
-        <Provider
-          theme={{
-            // component's displayName arg is used as a selector
-            componentVariables: {
-              StyledButton: {
-                color: "red"
-              },
-            },
-            componentStyles: {
-              StyledButton: {
-                root: ({ variables }) => ({
-                  color: variables.color
-                }),
-              },
-            },
-          }}
-        >
-          ...
-        </Provider>
-      `}
+      value={[
+        `<Provider`,
+        `  theme={{`,
+        `    // component's displayName arg is used as a selector`,
+        `    componentVariables: {`,
+        `      StyledButton: {`,
+        `        color: "red"`,
+        `      },`,
+        `    }`,
+        `    componentStyles: {`,
+        `      StyledButton: {`,
+        `        root: ({ variables }) => ({`,
+        `          color: variables.color,`,
+        `        }),`,
+        `      },`,
+        `    },`,
+        `  }}`,
+        `>`,
+        `  ...`,
+        '</Provider>',
+      ].join('\n')}
     />
     <p>
       For more advanced theming scenarios, please take a look in the <b>Variables</b> section on the{' '}

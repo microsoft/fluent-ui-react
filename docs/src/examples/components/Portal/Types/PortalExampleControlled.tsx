@@ -30,11 +30,7 @@ class PortalExampleControlled extends React.Component {
           <span>
             Event Log <Label circular>{logCount}</Label>
           </span>
-          <pre>
-            {log.map((e, i) => (
-              <div key={i}>{e}</div>
-            ))}
-          </pre>
+          <pre>{log.map((e, i) => <div key={i}>{e}</div>)}</pre>
         </div>
         <Portal open={open}>
           <div

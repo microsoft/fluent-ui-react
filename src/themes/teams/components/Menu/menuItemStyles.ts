@@ -26,14 +26,14 @@ const getActionStyles = ({
         background: v.defaultBackgroundColor,
       }
     : primary
-    ? {
-        color: v.primaryActiveColor,
-        background: v.primaryActiveBackgroundColor,
-      }
-    : {
-        color,
-        background: v.defaultActiveBackgroundColor,
-      }
+      ? {
+          color: v.primaryActiveColor,
+          background: v.primaryActiveBackgroundColor,
+        }
+      : {
+          color,
+          background: v.defaultActiveBackgroundColor,
+        }
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
@@ -211,8 +211,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(underlined
         ? { padding: `${pxToRem(4)} 0` }
         : pointing && vertical
-        ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
-        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+          ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
+          : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
 
       ...(iconOnly && {
         padding: pxToRem(8),

@@ -12,9 +12,7 @@ const PopupWithButton = props => {
       content={{
         content: (
           <p>
-            The popup is rendered {position} the trigger
-            <br />
-            aligned to the {align}.
+            The popup is rendered {position} the trigger<br />aligned to the {align}.
           </p>
         ),
       }}

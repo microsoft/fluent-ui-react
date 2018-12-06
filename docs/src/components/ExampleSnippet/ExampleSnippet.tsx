@@ -1,56 +1,24 @@
 import * as React from 'react'
-import reactElementToJSXString from 'react-element-to-jsx-string'
-import CodeSnippet from '../CodeSnippet'
+import CodeSnippet, { CodeSnippetProps } from '../CodeSnippet'
 
-export type ExampleSnippetProps = {
-  value?: string
+const ExampleSnippet = ({
+  render,
+  style,
+  ...rest
+}: CodeSnippetProps & {
   render?: () => React.ReactNode
-}
-
-const rootStyle = {
-  background: 'white',
-  marginBottom: '2rem',
-  boxShadow: '0 0 2px rgba(0, 0, 0, 0.2)',
-}
-
-const renderedStyle = {
-  padding: '1rem',
-}
-
-const ExampleSnippet = ({ render = () => null, value }: ExampleSnippetProps) => {
-  let renderHasFunction
-
-  const element = render()
-  const string =
-    value ||
-    reactElementToJSXString(element, {
-      showDefaultProps: false,
-      showFunctions: true,
-      functionValue: fn => (renderHasFunction = true),
-    })
-
-  if (process.env.NODE_ENV !== 'production') {
-    if (renderHasFunction && !value) {
-      throw new Error(
-        [
-          "This ExampleSnippet's render prop output includes function.",
-          ' A helpful JSX string cannot be generated for functions.',
-          ' Please define a `value` string prop that displays readable code to the user.',
-          '\n\n',
-          'RENDERED:',
-          '\n\n',
-          string,
-        ].join(''),
-      )
-    }
-  }
-
-  return (
-    <div style={rootStyle}>
-      <CodeSnippet value={string} fitted />
-      {element && <div style={renderedStyle}>{element}</div>}
-    </div>
-  )
-}
+}) => (
+  <div
+    style={{
+      background: 'white',
+      marginBottom: '2rem',
+      boxShadow: '0 0 2px rgba(0, 0, 0, 0.2)',
+      ...style,
+    }}
+  >
+    <CodeSnippet {...rest} style={{ marginBottom: 0 }} />
+    {render && <div style={{ padding: '1rem' }}>{render()}</div>}
+  </div>
+)
 
 export default ExampleSnippet
