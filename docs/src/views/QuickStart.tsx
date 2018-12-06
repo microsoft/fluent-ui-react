@@ -28,33 +28,31 @@ export default () => (
     </p>
     <CodeSnippet
       label="index.jsx"
-      value={[
-        `import React from 'react'`,
-        `import ReactDOM from 'react-dom'`,
-        `import { Provider, themes } from '@stardust-ui/react'`,
-        ``,
-        `import App from './App'`,
-        ``,
-        `ReactDOM.render(`,
-        `  <Provider theme={themes.teams}>`,
-        `    <App />`,
-        `  </Provider>,`,
-        `  document.getElementById('root'),`,
-        `)`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import ReactDOM from 'react-dom'
+        import { Provider, themes } from '@stardust-ui/react'
+
+        import App from './App'
+
+        ReactDOM.render(
+          <Provider theme={themes.teams}>
+            <App />
+          </Provider>,
+          document.getElementById('root'),
+        )
+      `}
     />
     <Header as="h2">Usage</Header>
     <p>That's it. You can now use Stardust UI components in your app.</p>
     <CodeSnippet
       label="App.jsx"
-      value={[
-        `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
-        ``,
-        `export default () => (`,
-        `  <Button content="Theming" icon="arrow right" iconPosition="after" primary />`,
-        `)`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import { Button } from '@stardust-ui/react'
+
+        export default () => <Button content="Theming" icon="arrow right" iconPosition="after" primary />
+      `}
     />
 
     <Divider />

@@ -36,7 +36,7 @@ const ChatExample = () => (
       />
     </Chat.Item>
     <Chat.Item>
-      <Divider content="Today" type="primary" important />
+      <Divider content="Today" color="primary" important />
     </Chat.Item>
     <Chat.Item>
       <Chat.Message

@@ -27,6 +27,7 @@ const webpackConfig: any = {
   externals: {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
+    'prettier/standalone': 'prettier',
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -81,8 +82,8 @@ const webpackConfig: any = {
         collapseWhitespace: true,
       },
       versions: {
-        jsBeautify: require('js-beautify/package.json').version,
         lodash: require('lodash/package.json').version,
+        prettier: require('prettier/package.json').version,
         propTypes: require('prop-types/package.json').version,
         react: require('react/package.json').version,
         reactDOM: require('react-dom/package.json').version,
