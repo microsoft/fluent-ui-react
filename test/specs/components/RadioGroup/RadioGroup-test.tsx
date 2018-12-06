@@ -60,13 +60,7 @@ describe('RadioGroup', () => {
     })
   })
 
-  const itemsTest = ({
-    getItems,
-    isChildrenApiTest = false,
-  }: {
-    getItems: Function
-    isChildrenApiTest?: boolean
-  }) => {
+  const itemsTest = (getItems: Function, isShorthandApiTest: boolean = true) => {
     it('renders children', () => {
       const items = mountWithProvider(<RadioGroup items={getItems()} />).find('RadioGroupItem')
 
@@ -107,8 +101,8 @@ describe('RadioGroup', () => {
       })
     })
 
-    describe('click event handler', () => {
-      !isChildrenApiTest &&
+    if (isShorthandApiTest) {
+      describe('click event handler', () => {
         it('should set the value when item is clicked', () => {
           const checkedValueChanged = jest.fn()
           const wrapper = mountWithProvider(
@@ -132,7 +126,8 @@ describe('RadioGroup', () => {
             expect.objectContaining({ value: 'test-value2' }),
           )
         })
-    })
+      })
+    }
 
     it('should not call checkedValueChanged when index did not change', () => {
       const checkedValueChanged = jest.fn()
@@ -154,7 +149,7 @@ describe('RadioGroup', () => {
       expect(checkedValueChanged).not.toHaveBeenCalled()
     })
 
-    !isChildrenApiTest &&
+    if (isShorthandApiTest) {
       it('should not set the value when disabled item is clicked', () => {
         const wrapper = mountWithProvider(<RadioGroup items={getItems({ disabledItem: 1 })} />)
         const radioGroupItems = wrapper.find('RadioGroupItem')
@@ -170,6 +165,7 @@ describe('RadioGroup', () => {
         expect(updatedItems.at(0).props().checked).toBe(false)
         expect(updatedItems.at(1).props().checked).toBe(false)
       })
+    }
 
     describe('keyDown event handler', () => {
       const testKeyDown = (testName, items, initialValue, keyCode, expectedValue) => {
@@ -242,7 +238,7 @@ describe('RadioGroup', () => {
   }
 
   describe('shorthand API for items', () => {
-    itemsTest({ getItems: getShorthandItems })
+    itemsTest(getShorthandItems)
   })
 
   describe('children API for items', () => {
@@ -252,6 +248,6 @@ describe('RadioGroup', () => {
       })
     }
 
-    itemsTest({ getItems: getChildrenItems, isChildrenApiTest: true })
+    itemsTest(getChildrenItems, false)
   })
 })
