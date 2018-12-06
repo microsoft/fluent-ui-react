@@ -3,12 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import {
-  ComponentEventHandler,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  Extendable,
-} from '../../../types/utils'
+import { ComponentEventHandler, ShorthandValue, Extendable } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import {
   customPropTypes,
@@ -45,24 +40,6 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps,
    * @param {object} data - All props and proposed value.
    */
   onRemove?: ComponentEventHandler<DropdownLabelProps>
-
-  /**
-   * A custom render function for the image slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderImage?: ShorthandRenderFunction
-
-  /**
-   * A custom render function for the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
 }
 
 /**
@@ -86,8 +63,6 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     onRemove: PropTypes.func,
-    renderImage: PropTypes.func,
-    renderIcon: PropTypes.func,
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
@@ -95,7 +70,7 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
   }
 
   public renderComponent({ classes, styles, rest }: RenderResultConfig<DropdownLabelProps>) {
-    const { header, icon, image, renderIcon, renderImage } = this.props
+    const { header, icon, image } = this.props
     const optionalImage = !image
       ? {}
       : {
@@ -103,7 +78,6 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
             defaultProps: {
               avatar: true,
             },
-            render: renderImage,
           }),
         }
 
@@ -122,7 +96,6 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
             role: 'button',
           },
           overrideProps: this.handleIconOverrides,
-          render: renderIcon,
         })}
         {...optionalImage}
         {...rest}

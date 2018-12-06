@@ -9,12 +9,7 @@ import {
   customPropTypes,
   commonPropTypes,
 } from '../../lib'
-import {
-  Extendable,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  ComponentEventHandler,
-} from '../../../types/utils'
+import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
@@ -39,15 +34,6 @@ export interface DropdownItemProps extends UIComponentProps<any, any> {
    * @param {object} data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
-
-  /**
-   * A custom render function the image slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderImage?: ShorthandRenderFunction
 }
 
 /**
@@ -71,7 +57,6 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
     header: PropTypes.string,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
-    renderImage: PropTypes.func,
   }
 
   private handleClick = e => {

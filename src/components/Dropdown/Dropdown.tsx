@@ -2,12 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import {
-  Extendable,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  ComponentEventHandler,
-} from '../../../types/utils'
+import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
@@ -54,12 +49,12 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   /** Object with callbacks for creating announcements on multiple selection add and remove actions. */
   getA11ySelectionMessage?: {
     /**
-     * Callback that creates custom accessability message a screen reader narrates on item added to selection.
+     * Callback that creates custom accessibility message a screen reader narrates on item added to selection.
      * @param {ShorthandValue} item - Dropdown added element.
      */
     onAdd?: (item: ShorthandValue) => string
     /**
-     * Callback that creates custom accessability message a screen reader narrates on item removed from selection.
+     * Callback that creates custom accessibility message a screen reader narrates on item removed from selection.
      * @param {ShorthandValue} item - Dropdown removed element.
      */
     onRemove?: (item: ShorthandValue) => string
@@ -101,33 +96,6 @@ export interface DropdownProps extends UIComponentProps<any, any> {
 
   /** A message to serve as placeholder, on the edit text, if search, or on the button, if non-search. */
   placeholder?: string
-
-  /**
-   * A custom render function the Dropdown.Item slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItem?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the Dropdown.Label slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderLabel?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the Dropdown.SearchInput slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderSearchInput?: ShorthandRenderFunction
 
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
@@ -185,9 +153,6 @@ export default class Dropdown extends AutoControlledComponent<
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
-    renderItem: PropTypes.func,
-    renderLabel: PropTypes.func,
-    renderSearchInput: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
@@ -289,7 +254,7 @@ export default class Dropdown extends AutoControlledComponent<
       cb?: () => void,
     ) => void,
   ): JSX.Element {
-    const { searchInput, renderSearchInput, multiple, placeholder } = this.props
+    const { searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
     const shouldNotHavePlaceholder =
       searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
@@ -310,7 +275,6 @@ export default class Dropdown extends AutoControlledComponent<
           getRootProps,
           getInputProps,
         ),
-      render: renderSearchInput,
     })
   }
 
@@ -355,7 +319,7 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { items, noResultsMessage, renderItem } = this.props
+    const { items, noResultsMessage } = this.props
     const filteredItems = this.getFilteredItems(items)
     if (filteredItems.length > 0) {
       return filteredItems.map((item, index) => {
@@ -376,7 +340,6 @@ export default class Dropdown extends AutoControlledComponent<
           },
           overrideProps: (predefinedProps: DropdownItemProps) =>
             this.handleItemOverrides(item, index, getItemProps),
-          render: renderItem,
         })
       })
     }
@@ -396,7 +359,6 @@ export default class Dropdown extends AutoControlledComponent<
 
   private renderLabels(styles: ComponentSlotStylesInput) {
     const value = this.state.value as ShorthandValue[]
-    const { renderLabel } = this.props
 
     if (value.length === 0) {
       return null
@@ -419,7 +381,6 @@ export default class Dropdown extends AutoControlledComponent<
         },
         overrideProps: (predefinedProps: DropdownLabelProps) =>
           this.handleLabelOverrides(predefinedProps, item),
-        render: renderLabel,
       })
     })
   }
