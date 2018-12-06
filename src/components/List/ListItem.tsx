@@ -112,7 +112,11 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         contentMedia={contentMedia}
         debug={debug}
         endMedia={endMedia}
-        header={<div role="button">{header}</div>}
+        header={
+          <div role="button" tabIndex={0}>
+            {header}
+          </div>
+        }
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}

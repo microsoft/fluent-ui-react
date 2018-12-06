@@ -120,7 +120,7 @@
     "inquirer": "^6.0.0",
     "jest": "^23.6.0",
     "jest-axe": "^3.1.0",
-    "js-beautify": "^1.6.14",
+    "js-beautify": "1.8.8",
     "leven": "^2.1.0",
     "lint-staged": "^7.0.2",
     "merge2": "^1.2.2",
