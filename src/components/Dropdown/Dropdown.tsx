@@ -153,7 +153,7 @@ export interface DropdownState {
 }
 
 /**
- * A Dropdown allows a user to select a value or a multitude of values from a number of options. Can also be created with search capability.
+ * Dropdown allows a user to select one or more values from a number of options. Can also be created with search capability.
  */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
