@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Chat, Menu, Popup } from '@stardust-ui/react'
+import { Chat, Menu, Popup, Avatar } from '@stardust-ui/react'
 
 /**
  * This example shows how to create custom Chat Messages.
@@ -105,34 +105,34 @@ class CustomChatMessage extends React.Component {
   }
 }
 
-const renderGutter = renderAvatar => (
+const gutterContent = (
   <AsyncData
     data="public/images/avatar/small/ade.jpg"
-    render={data =>
-      renderAvatar({
-        image: data,
-        status: renderStatus => (
+    render={data => (
+      <Avatar
+        image={data}
+        status={renderStatus => (
           <AsyncData
             data="available"
-            render={data =>
+            render={statusData =>
               renderStatus({
-                color: data === 'available' ? 'green' : undefined,
-                icon: data === 'available' ? 'check' : undefined,
+                color: statusData === 'available' ? 'green' : undefined,
+                icon: statusData === 'available' ? 'check' : undefined,
               })
             }
           />
-        ),
-      })
-    }
+        )}
+      />
+    )}
   />
 )
 
 const AsyncShorthand = () => (
   <Chat
     items={[
-      { key: 'a', gutter: { content: renderGutter }, content: { content: <CustomChatMessage /> } },
-      { key: 'b', gutter: { content: renderGutter }, content: { content: <CustomChatMessage /> } },
-      { key: 'c', gutter: { content: renderGutter }, content: { content: <CustomChatMessage /> } },
+      { key: 'a', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
+      { key: 'b', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
+      { key: 'c', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
     ]}
   />
 )
