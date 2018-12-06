@@ -14,11 +14,11 @@ const IconExampleColor = () => (
       <Icon name="call-video" bordered variables={{ outline: true }} />
     </div>
     <div style={{ color: 'cornflowerblue', padding: '1rem', display: 'inline-block' }}>
-      <Icon name="calendar" bordered variables={{ borderColor: 'black' }} />
-      <Icon name="call" bordered variables={{ borderColor: 'black' }} />
-      <Icon name="call-video" bordered variables={{ borderColor: 'black' }} />
+      <Icon name="calendar" bordered variables={{ borderColor: 'violet' }} />
+      <Icon name="call" bordered variables={{ borderColor: 'yellowgreen' }} />
+      <Icon name="call-video" bordered variables={{ borderColor: 'orangered' }} />
     </div>
-    <div style={{ color: 'orangered', padding: '1rem', display: 'inline-block' }}>
+    <div style={{ padding: '1rem', display: 'inline-block' }}>
       <Icon name="calendar" bordered variables={{ color: 'violet' }} />
       <Icon name="call" bordered variables={{ color: 'yellowgreen' }} />
       <Icon name="call-video" bordered variables={{ color: 'cornflowerblue' }} />
