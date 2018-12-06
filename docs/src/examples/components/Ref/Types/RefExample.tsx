@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Grid, Ref, Segment } from '@stardust-ui/react'
 
-class RefExampleRef extends React.Component {
+class RefExample extends React.Component {
   state = { isMounted: false }
 
   createdRef = React.createRef<HTMLButtonElement>()
@@ -60,4 +60,4 @@ class RefExampleRef extends React.Component {
   }
 }
 
-export default RefExampleRef
+export default RefExample
