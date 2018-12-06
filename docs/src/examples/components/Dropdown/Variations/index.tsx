@@ -5,9 +5,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Multiple Search Text Items"
-      description="A Dropdown with multi selection and search, items have only text."
-      examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchTextItems.shorthand"
+      title="Multiple Search Image and Content"
+      description="A Dropdown with multi selection and search, items have header, content and image."
+      examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchImageAndContent.shorthand"
     />
     <ComponentExample
       title="Multiple Search Fluid"
