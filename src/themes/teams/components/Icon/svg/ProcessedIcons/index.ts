@@ -1,5 +1,4 @@
 import { TeamsSvgIconSpec } from '../types'
-
 // IMPORTS
 import processedIcons_zoomout from './icons-zoom-out'
 import processedIcons_zoomin from './icons-zoom-in'
