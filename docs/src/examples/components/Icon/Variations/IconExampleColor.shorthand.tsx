@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon, Grid, Text } from '@stardust-ui/react'
 
 const IconExampleColor = () => (
-  <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }}>
+  <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }} variables={{ gridGap: '10px' }}>
     <Text content="INHERITED COLOR:" weight="bold" />
     <div style={{ color: 'violet' }}>
       <Icon name="calendar" bordered />
