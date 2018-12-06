@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownVariables } from './dropdownVariables'
-import { DropdownItemProps } from 'src/components/Dropdown/DropdownItem'
-import ListItem from 'src/components/List/ListItem'
+import { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
+import ListItem from '../../../../components/List/ListItem'
 
 const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVariables> = {
   root: ({ variables: v, props: { active } }): ICSSInJSStyle => ({
