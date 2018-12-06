@@ -202,7 +202,7 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-is@^16.5.0":
+"@types/react-is@16.5.0":
   version "16.5.0"
   resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-16.5.0.tgz#6b0dd43e60fa7c82b48faf7b487543079a61015a"
   integrity sha512-yUYPioB2Sh5d4csgpW/vJwxWM0RG1/QbGiwYap2m/bEAQKRwbagYRc5C7oK2AM9QC2vr2ZViCgpm0DpDpFQ6XA==
@@ -2431,6 +2431,11 @@ deepmerge@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
   integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
+
+deepmerge@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.0.0.tgz#ca7903b34bfa1f8c2eab6779280775a411bfc6ba"
+  integrity sha512-a8z8bkgHsAML+uHLqmMS83HHlpy3PvZOOuiTQqaa3wu8ZVg3h0hqHk6aCsGdOnZV2XMM/FRimNGjUh0KCcmHBw==
 
 default-compare@^1.0.0:
   version "1.0.0"

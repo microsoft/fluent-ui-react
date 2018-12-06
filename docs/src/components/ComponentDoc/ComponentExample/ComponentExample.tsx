@@ -20,6 +20,9 @@ import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 
+import transformSource from './renderFromSource/transformSource'
+import memoize from 'fast-memoize'
+
 export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   title: React.ReactNode
   description?: React.ReactNode
@@ -260,7 +263,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       return this.renderMissingExample()
     }
 
-    return <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+    return testCode(sourceCode, babelConfig)
+
+    // return <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
   }
 
   private renderElement = (element: React.ReactElement<any>) => {
@@ -634,6 +639,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             </Grid.Column>
           )}
 
+          {console.warn('source code', sourceCode)}
+
           <SourceRender
             babelConfig={babelConfig}
             knobs={knobs}
@@ -684,5 +691,33 @@ const ComponentExampleWithTheme = props => (
     {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
   </ThemeContext.Consumer>
 )
+
+const __resolverFn__ = name => {
+  return importResolver(name)
+}
+console.warn(__resolverFn__)
+
+const transpile = (sourceCode, babelConfig) => {
+  const transformed = transformSource(babelConfig, sourceCode)
+  console.warn('transformed source', transformed)
+
+  const f = `(${new Function(transformed).toString()})()`
+  console.warn('function', f)
+
+  return f
+}
+
+const evaluateToElement = transpiledCode => {
+  const Res = eval(transpiledCode)
+  console.warn('result is', Res)
+  return <Res />
+}
+
+const testCodeInner = (sourceCode, babelConfig) => {
+  const transpiledCode = transpile(sourceCode, babelConfig)
+  return evaluateToElement(transpiledCode)
+}
+
+const testCode = memoize(testCodeInner)
 
 export default withRouter(ComponentExampleWithTheme)

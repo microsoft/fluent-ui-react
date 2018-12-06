@@ -1,6 +1,9 @@
 {
   "extends": "tslint-config-airbnb",
   "rules": {
+    "no-eval": [false],
+    "no-function-constructor-with-string-args": [false],
+
     "arrow-parens": false,
     "align": [false],
     "import-name": [false],
