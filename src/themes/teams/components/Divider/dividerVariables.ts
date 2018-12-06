@@ -14,8 +14,10 @@ export interface DividerVariables {
 }
 
 export default (siteVars: any): DividerVariables => {
+  const colorVariant = '500'
+
   return {
-    colors: _.mapValues({ ...siteVars.emphasisColors, ...siteVars.naturalColors }, '500'),
+    colors: _.mapValues({ ...siteVars.emphasisColors, ...siteVars.naturalColors }, colorVariant),
     dividerColor: siteVars.gray09,
     textColor: siteVars.gray03,
     textFontSize: siteVars.fontSizeSmall,
