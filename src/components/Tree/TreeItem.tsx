@@ -15,7 +15,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
 } from '../../lib'
-import { ShorthandRenderFunction, ShorthandValue } from 'utils'
+import { ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**

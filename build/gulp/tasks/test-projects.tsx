@@ -15,12 +15,13 @@ const log = msg => {
   console.log('='.repeat(80))
 }
 
-const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+export const createPackageFilename = () => tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
 
-const buildAndPackStardust = async (): Promise<string> => {
+export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+
+export const buildAndPackStardust = async (packageFilename: string) => {
   await sh('yarn build:dist')
-
-  return (await sh(`npm pack`, true)).trim()
+  await sh(`yarn pack --filename ${packageFilename}`)
 }
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
@@ -90,8 +91,10 @@ export default App;
   //////// PREPARE STARDUST PACKAGE ///////
   log('STEP 0. Preparing Stardust package..')
 
-  const stardustPackageFilename = await buildAndPackStardust()
-  log(`Stardust package is published: ${paths.base(stardustPackageFilename)}`)
+  const packageFilename = createPackageFilename()
+
+  await buildAndPackStardust(packageFilename)
+  log(`Stardust package is published: ${packageFilename}`)
 
   try {
     //////// CREATE TEST REACT APP ///////
@@ -107,7 +110,7 @@ export default App;
     //////// ADD STARDUST AS A DEPENDENCY ///////
     log('STEP 2. Add Stardust dependency to test project..')
 
-    await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
+    await runInTestApp(`yarn add ${packageFilename}`)
     log("Stardust is successfully added as test project's dependency.")
 
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
@@ -120,6 +123,6 @@ export default App;
 
     log('Test project is built successfully!')
   } finally {
-    fs.unlinkSync(stardustPackageFilename)
+    fs.unlinkSync(packageFilename)
   }
 })

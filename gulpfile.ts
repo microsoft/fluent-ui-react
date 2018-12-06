@@ -14,6 +14,7 @@ require('./build/gulp/tasks/screener')
 require('./build/gulp/tasks/git')
 require('./build/gulp/tasks/test-unit')
 require('./build/gulp/tasks/test-projects')
+require('./build/gulp/tasks/test-bundlers')
 
 // global tasks
 task('build', series('dll', parallel('dist', 'build:docs')))
