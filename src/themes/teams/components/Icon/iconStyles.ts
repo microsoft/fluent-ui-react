@@ -4,7 +4,7 @@ import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
-import { pxToRem } from './../../../../lib'
+import { pxToRem } from '../../utils'
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
