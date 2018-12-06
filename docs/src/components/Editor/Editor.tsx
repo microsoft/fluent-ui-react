@@ -8,7 +8,6 @@ import 'brace/mode/html'
 import 'brace/mode/jsx'
 import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
-import { doesNodeContainClick, EventStack } from 'src/lib'
 
 const parentComponents = []
 
@@ -46,35 +45,28 @@ const semanticUIReactCompleter = {
 languageTools.addCompleter(semanticUIReactCompleter)
 
 export interface EditorProps extends AceEditorProps {
-  id: string
-  value?: string
-  mode?: 'html' | 'jsx' | 'sh'
-  onClick?: () => void
-  onOutsideClick?: (e: Event) => void
   active?: boolean
-  showCursor?: boolean
   highlightGutterLine?: boolean
+  mode?: 'html' | 'jsx' | 'sh'
+  value?: string
+  showCursor?: boolean
 }
 
 export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
 export const EDITOR_GUTTER_COLOR = '#26282d'
 
 class Editor extends React.Component<EditorProps> {
-  private static readonly refName = 'aceEditor'
-  private clickSubscription = EventStack.noSubscription
+  editorRef: any
+  name = `docs-editor-${_.uniqueId()}`
 
-  public static propTypes = {
-    id: PropTypes.string.isRequired,
+  static propTypes = {
     value: PropTypes.string.isRequired,
     mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
-    onClick: PropTypes.func,
-    onOutsideClick: PropTypes.func,
     active: PropTypes.bool,
     showCursor: PropTypes.bool,
   }
 
-  public static defaultProps = {
-    id: '',
+  static defaultProps = {
     value: '',
     mode: 'jsx',
     theme: 'tomorrow_night',
@@ -84,6 +76,7 @@ class Editor extends React.Component<EditorProps> {
     enableBasicAutocompletion: true,
     enableLiveAutocompletion: true,
     editorProps: { $blockScrolling: Infinity },
+    setOptions: { fixedWidthGutter: true, showFoldWidgets: false },
     showPrintMargin: false,
     tabSize: 2,
     maxLines: Infinity,
@@ -93,7 +86,12 @@ class Editor extends React.Component<EditorProps> {
     showCursor: true,
   }
 
-  public componentWillReceiveProps(nextProps: EditorPropsWithDefaults) {
+  componentDidMount() {
+    const { showCursor } = this.props
+    this.setCursorVisibility(showCursor)
+  }
+
+  componentWillReceiveProps(nextProps) {
     const previousPros = this.props
     const { active, showCursor } = nextProps
 
@@ -101,90 +99,21 @@ class Editor extends React.Component<EditorProps> {
       this.setCursorVisibility(showCursor)
     }
 
-    if (active !== previousPros.active) {
-      if (active) {
-        this.editor.focus() // focus editor when editor is active
-        this.addDocumentListener()
-      } else {
-        this.removeDocumentListener()
-      }
+    // focus editor when editor it becomes active
+    if (active !== previousPros.active && active) {
+      this.editorRef.editor.focus()
     }
   }
 
-  public componentDidMount() {
-    const { active, showCursor } = this.props as EditorPropsWithDefaults
+  setCursorVisibility = visible => {
+    const cursor = this.editorRef.editor.renderer.$cursorLayer.element
 
-    this.setCursorVisibility(showCursor)
-
-    if (active) {
-      this.addDocumentListener()
-    }
+    cursor.style.display = visible ? '' : 'none'
   }
 
-  public componentWillUnmount() {
-    this.removeDocumentListener()
-  }
-
-  public render() {
-    const { id, onClick, ...rest } = this.props
-
-    return (
-      <div onClick={onClick}>
-        <AceEditor name={id} ref={Editor.refName} {...rest} />
-      </div>
-    )
-  }
-
-  private handleDocumentClick = (e: Event) => {
-    const { onOutsideClick } = this.props
-    if (!doesNodeContainClick(this.container, e) && onOutsideClick) {
-      onOutsideClick(e)
-    }
-  }
-
-  private addDocumentListener() {
-    this.clickSubscription.unsubscribe()
-    this.clickSubscription = EventStack.subscribe('click', this.handleDocumentClick)
-  }
-
-  private removeDocumentListener() {
-    this.clickSubscription.unsubscribe()
-  }
-
-  private get editor() {
-    return this.safeCall(() => (this.refs[Editor.refName] as any).editor)
-  }
-
-  private get renderer() {
-    return this.safeCall(() => this.editor.renderer)
-  }
-
-  private get cursor(): HTMLElement {
-    return this.safeCall(() => this.renderer.$cursorLayer.element)
-  }
-
-  private get container(): HTMLElement {
-    return this.safeCall(() => this.renderer.container)
-  }
-
-  private setCursorVisibility(visible: boolean): void {
-    this.safeCall(() => {
-      this.cursor.style.display = visible ? '' : 'none'
-    })
-  }
-
-  private safeCall<T>(cb: () => T, logError?: boolean): T | undefined {
-    try {
-      return cb()
-    } catch (error) {
-      if (logError) {
-        console.error(`Editor.tsx:safeCall error: ${error}`)
-      }
-      return undefined
-    }
+  render() {
+    return <AceEditor {...this.props} name={this.name} ref={c => (this.editorRef = c)} />
   }
 }
 
 export default Editor
-
-export type EditorPropsWithDefaults = EditorProps & (typeof Editor.defaultProps)
