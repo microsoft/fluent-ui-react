@@ -384,9 +384,10 @@ export default class Dropdown extends AutoControlledComponent<
     })
   }
 
-  RefProvidingWrapper = ({ children }) => (
-    <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
-  )
+  RefProvidingWrapper = ({ children }) =>
+    React.Children.only(children) && (
+      <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
+    )
 
   private stateReducer = (
     state: DownshiftState<ShorthandValue>,
