@@ -130,9 +130,9 @@ const gutterContent = (
 const AsyncShorthand = () => (
   <Chat
     items={[
-      { key: 'a', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
-      { key: 'b', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
-      { key: 'c', gutter: { content: gutterContent }, content: { content: <CustomChatMessage /> } },
+      { key: 'a', gutter: { content: gutterContent }, content: <CustomChatMessage /> },
+      { key: 'b', gutter: { content: gutterContent }, content: <CustomChatMessage /> },
+      { key: 'c', gutter: { content: gutterContent }, content: <CustomChatMessage /> },
     ]}
   />
 )

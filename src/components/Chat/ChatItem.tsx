@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
 
 import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
@@ -14,7 +13,7 @@ import {
   customPropTypes,
 } from '../../lib'
 import Slot from '../Slot/Slot'
-import { ComponentSlotStylesPrepared } from 'src/themes/types'
+import ChatItemGutter from './ChatItemGutter'
 
 export interface ChatItemProps
   extends UIComponentProps,
@@ -22,9 +21,6 @@ export interface ChatItemProps
     ContentComponentProps<ShorthandValue> {
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
-
-  /** Indicates whether message belongs to the current user. */
-  mine?: boolean
 }
 
 /**
@@ -32,17 +28,15 @@ export interface ChatItemProps
  */
 class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static className = 'ui-chat__item'
-
   static create: Function
-
   static displayName = 'ChatItem'
+  static Gutter = ChatItemGutter
 
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
     }),
     gutter: customPropTypes.itemShorthand,
-    mine: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -50,25 +44,19 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, styles }: RenderResultConfig<ChatItemProps>) {
-    const { children } = this.props
+    const { children, content, gutter } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderChatItem(styles)}
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <>
+            {ChatItemGutter.create(gutter)}
+            {Slot.create(content)}
+          </>
+        )}
       </ElementType>
-    )
-  }
-
-  private renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { content, gutter, mine } = this.props
-    const gutterElement = Slot.create(gutter, { defaultProps: { styles: styles.gutter } })
-
-    return (
-      <>
-        {!mine && gutterElement}
-        {Slot.create(content, { defaultProps: { styles: styles.content } })}
-        {mine && gutterElement}
-      </>
     )
   }
 }
