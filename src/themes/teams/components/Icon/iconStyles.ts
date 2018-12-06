@@ -105,7 +105,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor || v.color || theme.siteVariables.bodyColor)),
+        getBorderedStyles(circular, v.borderColor || getIconColor(v.color))),
     }
   },
 

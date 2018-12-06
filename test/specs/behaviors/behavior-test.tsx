@@ -31,6 +31,7 @@ import {
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
+
 const behaviorMenuItems = require('docs/src/behaviorMenu')
 
 const testHelper = new TestHelper()
