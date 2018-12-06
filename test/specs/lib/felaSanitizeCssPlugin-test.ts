@@ -62,4 +62,13 @@ describe('felaSanitizeCssPlugin', () => {
 
     assertCssPropertyValue(`url('../../lib')`, true)
   })
+
+  describe('should pass arrays', () => {
+    const style = {
+      color: ['red', 'blue'],
+      display: 'block',
+    }
+
+    expect(sanitize(style)).toEqual(style)
+  })
 })

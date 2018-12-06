@@ -39,7 +39,7 @@ export default (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
   const sanitizeCssStyleObject = styles => {
-    const processedStyles = {}
+    const processedStyles = Array.isArray(styles) ? [] : {}
 
     Object.keys(styles).forEach(cssPropertyName => {
       const cssPropertyValue = styles[cssPropertyName]
