@@ -77,10 +77,6 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
     placeholder: PropTypes.string,
   }
 
-  RefProvidingWrapper = ({ children }) => (
-    <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
-  )
-
   private handleInputRef = (inputNode: HTMLElement) => {
     _.invoke(this.props, 'inputRef', inputNode)
   }
@@ -103,15 +99,16 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
 
   public renderComponent({ rest, styles }: RenderResultConfig<DropdownSearchInputProps>) {
     const { accessibilityWrapperProps, accessibilityInputProps, placeholder } = this.props
+    const { innerRef, ...accessibilityWrapperPropsRest } = accessibilityWrapperProps
     return (
-      <this.RefProvidingWrapper>
+      <Ref innerRef={innerRef}>
         <Input
           inputRef={this.handleInputRef}
           onFocus={this.handleFocus}
           onKeyUp={this.handleKeyUp}
           wrapper={{
             styles: styles.wrapper,
-            ...accessibilityWrapperProps,
+            ...accessibilityWrapperPropsRest,
           }}
           input={{
             type: 'text',
@@ -123,7 +120,7 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
           }}
           {...rest}
         />
-      </this.RefProvidingWrapper>
+      </Ref>
     )
   }
 }

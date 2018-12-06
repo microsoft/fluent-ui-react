@@ -8,19 +8,11 @@ import {
   commonPropTypes,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
-import * as PropTypes from 'prop-types'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps>,
     ContentComponentProps,
-    ChildrenComponentProps {
-  /**
-   * Ref callback with the input wrapper DOM node.
-   *
-   * @param {JSX.Element} node - input wrapper DOM node.
-   */
-  innerRef?: (node: HTMLElement) => void
-}
+    ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
@@ -34,7 +26,6 @@ const Slot: CreateComponentReturnType<SlotProps> & {
 
   propTypes: {
     ...commonPropTypes.createCommon(),
-    innerRef: PropTypes.func,
   },
 
   render(config, props) {

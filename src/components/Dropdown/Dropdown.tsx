@@ -301,15 +301,17 @@ export default class Dropdown extends AutoControlledComponent<
     isOpen: boolean,
     highlightedIndex: number,
   ) {
+    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' })
+    const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
     return (
-      <this.RefProvidingWrapper>
+      <Ref innerRef={innerRef}>
         <List
-          {...getMenuProps({ refKey: 'innerRef' })}
+          {...accessibilityMenuPropsRest}
           styles={styles.list}
           aria-hidden={!isOpen}
           items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
         />
-      </this.RefProvidingWrapper>
+      </Ref>
     )
   }
 
@@ -383,11 +385,6 @@ export default class Dropdown extends AutoControlledComponent<
       })
     })
   }
-
-  RefProvidingWrapper = ({ children }) =>
-    React.Children.only(children) && (
-      <Ref innerRef={domNode => _.invoke(children.props, 'innerRef', domNode)}>{children}</Ref>
-    )
 
   private stateReducer = (
     state: DownshiftState<ShorthandValue>,

@@ -27,13 +27,6 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Toggle debug mode */
   debug?: boolean
 
-  /**
-   * Ref callback with the list DOM node.
-   *
-   * @param {JSX.Element} node - list DOM node.
-   */
-  innerRef?: (node: HTMLElement) => void
-
   /** Shorthand array of props for ListItem. */
   items?: ShorthandValue[]
 
@@ -66,7 +59,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
-    innerRef: PropTypes.func,
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
