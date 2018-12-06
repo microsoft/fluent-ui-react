@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../teams/utils'
 
 export default (siteVars: any) => {
   return {
