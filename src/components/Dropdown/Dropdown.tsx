@@ -367,7 +367,7 @@ export default class Dropdown extends AutoControlledComponent<
         }
         return DropdownItem.create(itemAsListItem, {
           defaultProps: {
-            highlighted: highlightedIndex === index,
+            active: highlightedIndex === index,
             variables,
             ...(typeof item === 'object' &&
               !item.hasOwnProperty('key') && {

@@ -20,14 +20,14 @@ import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
 export interface DropdownItemProps extends UIComponentProps<any, any> {
+  /** If the item is highlighted inside the list. */
+  active?: boolean
+
   /** Secondary text content to serve as item description. */
   content?: string
 
   /** Main text displayed for the item. */
   header?: string
-
-  /** If the item is highlighted inside the list. */
-  highlighted?: boolean
 
   /** The item can have an image avatar. */
   image?: ShorthandValue
@@ -66,9 +66,9 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
       content: false,
     }),
     accessibilityItemProps: PropTypes.object,
+    active: PropTypes.bool,
     content: PropTypes.string,
     header: PropTypes.string,
-    highlighted: PropTypes.bool,
     image: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     renderImage: PropTypes.func,
@@ -79,23 +79,27 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   }
 
   public renderComponent({ classes, variables, rest }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, highlighted, image, accessibilityItemProps } = this.props
+    const { content, header, active, image, accessibilityItemProps } = this.props
     return (
       <ListItem
         className={classes.root}
         header={header}
         onClick={this.handleClick}
         variables={{
-          backgroundColor: highlighted
+          backgroundColor: active
             ? variables.listItemHighlightedBackgroundColor
             : variables.listItemBackgroundColor,
-          ...(highlighted && {
+          ...(active && {
             headerColor: variables.listItemTextColor,
             contentColor: variables.listItemTextColor,
           }),
         }}
         {...{
-          media: image && <Image src={image} avatar />,
+          media: Image.create(image, {
+            defaultProps: {
+              avatar: true,
+            },
+          }),
           content,
         }}
         {...accessibilityItemProps}
