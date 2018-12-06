@@ -26,6 +26,12 @@ const Router = () => (
         {process.env.NODE_ENV !== 'production' && [
           <DocsLayout
             exact
+            key="/prototype-user-list-in-header"
+            path="/prototype-user-list-in-header"
+            component={require('./prototypes/userListInHeader/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-chat-pane"
             path="/prototype-chat-pane"
             component={require('./prototypes/chatPane/index').default}
