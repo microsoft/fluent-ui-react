@@ -39,10 +39,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Provider theme={{ siteVariables: { brand: 'hotpink' } }}>
-          <div>
-            <Button primary>Branding</Button>
-            <Divider type="primary">Branding</Divider>
-          </div>
+          <Button primary>Branding</Button>
         </Provider>
       )}
     />
