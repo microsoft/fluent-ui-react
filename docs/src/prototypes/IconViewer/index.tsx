@@ -8,6 +8,17 @@ const cellStyles = {
 
 const processedIconsNamePrefix = 'processedIcons_'
 
+const renderStardustIconName = (icon, isOutline = false) => {
+  const maybeExportedAs = (icon as any).exportedAs
+  return (
+    maybeExportedAs && (
+      <code style={{ color: 'red' }}>
+        => {maybeExportedAs} {isOutline && 'outline'}
+      </code>
+    )
+  )
+}
+
 class IconViewerExample extends React.Component<any, {}> {
   render() {
     return (
@@ -38,6 +49,8 @@ class IconViewerExample extends React.Component<any, {}> {
                           <Icon name={name} />
                           <br />
                           <code>{name.replace(processedIconsNamePrefix, '')}</code>
+                          <br />
+                          {renderStardustIconName(theme.icons[name])}
                         </div>
                       ))}
                   </Grid>
@@ -55,6 +68,8 @@ class IconViewerExample extends React.Component<any, {}> {
                           <Icon name={name} variables={{ outline: true }} />
                           <br />
                           <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
+                          <br />
+                          {renderStardustIconName(theme.icons[name], /* isOutline */ true)}
                         </div>
                       ))}
                   </Grid>
