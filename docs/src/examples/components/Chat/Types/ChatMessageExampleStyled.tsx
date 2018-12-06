@@ -8,9 +8,11 @@ const janeAvatar = {
 
 const content = (
   <div>
-    Sure! Try one of these places:<br />
+    Sure! Try one of these places:
+    <br />
     <a href="#">www.goodFood1.com</a>,<br />
-    <a href="#">www.goodFood2.com</a> or<br />
+    <a href="#">www.goodFood2.com</a> or
+    <br />
     <a href="#">www.goodFood3.com</a>
   </div>
 )
