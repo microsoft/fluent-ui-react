@@ -44,7 +44,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
 
         export default () =>
          <Provider>
@@ -181,7 +181,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
 
         const theme = {
           siteVariables: {
@@ -281,7 +281,6 @@ export default () => (
           /* Default theming */
           <Header as="h3" content="Default" />
           <Button primary>Branding</Button>
-          <Divider type="primary">Branding</Divider>
 
           /* First nested theming */
           <Provider
