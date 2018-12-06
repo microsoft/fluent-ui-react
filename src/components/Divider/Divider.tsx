@@ -24,9 +24,6 @@ export interface DividerProps
   /** Size multiplier (default 0) * */
   size?: number
 
-  /** A Divider can be formatted to show different levels of emphasis. */
-  type?: 'primary' | 'secondary'
-
   /** A divider can appear more important and draw the user's attention. */
   important?: boolean
 }
@@ -45,7 +42,6 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
     ...commonPropTypes.createCommon({ color: true }),
     fitted: PropTypes.bool,
     size: PropTypes.number,
-    type: PropTypes.oneOf(['primary', 'secondary']),
     important: PropTypes.bool,
   }
 
