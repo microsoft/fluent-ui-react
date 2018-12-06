@@ -113,7 +113,6 @@ class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProp
             styles: styles.wrapper,
             ...accessibilityWrapperProps,
           }}
-          variables={{ inputFocusBorderBottomColor: 'transparent' }}
           input={{
             type: 'text',
             styles: styles.input,

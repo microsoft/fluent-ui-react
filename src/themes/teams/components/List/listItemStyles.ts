@@ -20,9 +20,6 @@ const hoverStyle = variables => ({
 
 const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
   root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
-    ...(variables.backgroundColor && {
-      backgroundColor: variables.backgroundColor,
-    }),
     ...(selection && {
       position: 'relative',
 
@@ -52,9 +49,6 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     }
   },
   header: ({ variables }): ICSSInJSStyle => ({
-    ...(variables.headerColor && {
-      color: variables.headerColor,
-    }),
     fontSize: variables.headerFontSize,
     lineHeight: variables.headerLineHeight,
   }),
@@ -63,9 +57,6 @@ const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
     lineHeight: variables.headerMediaLineHeight,
   }),
   content: ({ variables }) => ({
-    ...(variables.contentColor && {
-      color: variables.contentColor,
-    }),
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),

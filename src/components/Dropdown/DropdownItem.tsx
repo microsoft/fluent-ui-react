@@ -63,22 +63,13 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ classes, variables, rest }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, active, image, accessibilityItemProps } = this.props
+  public renderComponent({ classes, rest }: RenderResultConfig<DropdownItemProps>) {
+    const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
         className={classes.root}
         header={header}
         onClick={this.handleClick}
-        variables={{
-          backgroundColor: active
-            ? variables.listItemHighlightedBackgroundColor
-            : variables.listItemBackgroundColor,
-          ...(active && {
-            headerColor: variables.listItemTextColor,
-            contentColor: variables.listItemTextColor,
-          }),
-        }}
         {...{
           media: Image.create(image, {
             defaultProps: {

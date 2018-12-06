@@ -9,6 +9,10 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
   input: ({ variables: { backgroundColor } }): ICSSInJSStyle => ({
     width: '100%',
     backgroundColor,
+
+    ':focus': {
+      borderBottomColor: 'transparent',
+    },
   }),
 
   wrapper: ({ variables: { editTextFlexBasis } }): ICSSInJSStyle => ({

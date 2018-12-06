@@ -265,7 +265,6 @@ export default class Dropdown extends AutoControlledComponent<
         inputRef: (inputNode: HTMLElement) => {
           this.inputNode = inputNode
         },
-        variables,
       },
       overrideProps: (predefinedProps: DropdownSearchInputProps) =>
         this.handleSearchInputOverrides(
