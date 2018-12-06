@@ -6,7 +6,7 @@ const Types = () => (
   <ExampleSection title="Types">
     <ComponentExample
       title="Multiple Search"
-      description="A Dropdown with multi selection and search."
+      description="A dropdown with multiple selection and search."
       examplePath="components/Dropdown/Types/DropdownExampleMultipleSearch.shorthand"
     />
   </ExampleSection>

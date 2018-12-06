@@ -6,17 +6,17 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Multiple Search Image and Content"
-      description="A Dropdown with multi selection and search, items have header, content and image."
+      description="A multiple search dropdown whose items have header, content and image."
       examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchImageAndContent.shorthand"
     />
     <ComponentExample
       title="Multiple Search Fluid"
-      description="A Fluid Dropdown with multi selection and search."
+      description="A multiple search dropdown that takes the width of container."
       examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchFluid.shorthand"
     />
     <ComponentExample
       title="Multiple Search Toggle Button"
-      description="A Dropdown with multi selection, search and toggle button."
+      description="A multiple search dropdown can have a toggle button."
       examplePath="components/Dropdown/Variations/DropdownExampleMultipleSearchToggleButton.shorthand"
     />
   </ExampleSection>

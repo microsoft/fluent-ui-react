@@ -190,6 +190,10 @@ export default class Dropdown extends AutoControlledComponent<
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
+    const optionalDownshiftProps = {
+      selectedItem: multiple ? null : undefined,
+      getA11yStatusMessage,
+    }
 
     return (
       <ElementType {...rest} className={classes.root}>
@@ -197,10 +201,9 @@ export default class Dropdown extends AutoControlledComponent<
           onChange={this.handleSelectedChange}
           inputValue={searchQuery}
           stateReducer={this.stateReducer}
-          getA11yStatusMessage={getA11yStatusMessage || this.getA11yStatusMessage}
           itemToString={itemToString || this.itemToString}
           // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
-          {...(multiple && { selectedItem: null }) || {}}
+          {...optionalDownshiftProps}
         >
           {({
             getInputProps,
@@ -444,27 +447,6 @@ export default class Dropdown extends AutoControlledComponent<
     return ''
   }
 
-  private getA11yStatusMessage = ({
-    isOpen,
-    itemToString,
-    previousResultCount,
-    resultCount,
-    selectedItem,
-  }: DownshiftA11yStatusMessageOptions<ShorthandValue>) => {
-    if (!isOpen) {
-      return selectedItem ? itemToString(selectedItem) : ''
-    }
-    if (!resultCount) {
-      return 'No results are available.'
-    }
-    if (resultCount !== previousResultCount) {
-      return `${resultCount} result${
-        resultCount === 1 ? 'is' : 's are'
-      } available, use up and down arrow keys to navigate. Press Enter key to select.`
-    }
-    return ''
-  }
-
   private setA11yStatus = (statusMessage: string) => {
     const elementId = 'stardust-dropdown-a11y-status'
     let statusDiv = document.getElementById(elementId)
@@ -597,18 +579,16 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleSelectedChange = (item: ShorthandValue) => {
-    const { multiple, getA11ySelectionMessage, itemToString } = this.props
+    const { multiple, getA11ySelectionMessage } = this.props
     const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
     this.trySetState({
       value: newValue,
       searchQuery: '',
     })
-    this.setA11yStatus(
-      getA11ySelectionMessage && getA11ySelectionMessage.onAdd
-        ? getA11ySelectionMessage.onAdd(item)
-        : `${itemToString ? itemToString(item) : this.itemToString(item)} has been selected.`,
-    )
+    if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
+      this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
+    }
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value: newValue })
@@ -621,7 +601,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private removeFromValues(item?: ShorthandValue) {
-    const { getA11ySelectionMessage, itemToString } = this.props
+    const { getA11ySelectionMessage } = this.props
     let value = this.state.value as ShorthandValue[]
     let poppedItem = item
 
@@ -634,11 +614,9 @@ export default class Dropdown extends AutoControlledComponent<
     this.trySetState({
       value,
     })
-    this.setA11yStatus(
-      getA11ySelectionMessage && getA11ySelectionMessage.onRemove
-        ? getA11ySelectionMessage.onRemove(poppedItem)
-        : `${itemToString ? itemToString(item) : this.itemToString(item)} has been removed.`,
-    )
+    if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
+      this.setA11yStatus(getA11ySelectionMessage.onRemove(item))
+    }
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value })

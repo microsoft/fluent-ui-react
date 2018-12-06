@@ -91,7 +91,7 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
         content={header}
         icon={Icon.create(icon || 'close', {
           defaultProps: {
-            'aria-label': `Remove ${header} from selection.`,
+            'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
             'aria-hidden': false,
             role: 'button',
           },
