@@ -56,7 +56,7 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
 const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
 const getComponentExampleElementKey = (examplePath, isRtl) => {
-  return `${examplePathToHash(examplePath)}${isRtl ? '-rtl' : ''}`
+  return `${examplePath}${isRtl ? '-rtl' : ''}`
 }
 
 /**
