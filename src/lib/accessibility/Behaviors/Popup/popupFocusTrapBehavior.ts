@@ -1,6 +1,5 @@
 import { Accessibility } from '../../types'
 import popupBehavior from './popupBehavior'
-import * as _ from 'lodash'
 
 /**
  * @description

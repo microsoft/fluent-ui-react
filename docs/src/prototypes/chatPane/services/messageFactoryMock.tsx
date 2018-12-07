@@ -125,8 +125,8 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 }
 
 function generateDividerProps(props: DividerProps): Divider {
-  const { content, important, type = 'secondary' } = props
-  const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, type }
+  const { content, important, color = 'secondary' } = props
+  const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, color }
 
   return dividerProps
 }
@@ -161,7 +161,7 @@ export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', type: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', color: 'primary', important: true }),
     )
   }
 
