@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
+import { pxToRem } from '../../utils'
 
 import { EmphasisColors, NaturalColors } from '../../../types'
-import { pxToRem } from '../../../../lib'
 
 export interface DividerVariables {
   colors: Record<keyof (EmphasisColors & NaturalColors), string>

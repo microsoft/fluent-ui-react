@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 import { ICSSInJSStyle } from '../../../types'
 
 export default {
