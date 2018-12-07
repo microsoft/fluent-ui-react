@@ -1,33 +1,23 @@
-import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Header, Label } from '@stardust-ui/react'
+import { Header } from '@stardust-ui/react'
 
 const titleStyle = {
   margin: 0,
 }
 
-export default class ComponentExampleTitle extends React.PureComponent<any, any> {
-  static propTypes = {
-    description: PropTypes.node,
-    title: PropTypes.node,
-    suiVersion: PropTypes.string,
-  }
+interface ComponentExampleTitleProps {
+  description?: React.ReactNode
+  title: React.ReactNode
+}
 
+export default class ComponentExampleTitle extends React.PureComponent<ComponentExampleTitleProps> {
   render() {
-    const { description, title, suiVersion } = this.props
+    const { description, title } = this.props
     return (
       <div>
         {title && (
           <Header as="h3" className="no-anchor" style={titleStyle}>
             {title}
-            {suiVersion && (
-              <Label
-                as="a"
-                content={suiVersion}
-                styles={{ color: 'teal', fontSize: 'x-small' }}
-                children={`Available from Semantic UI ${suiVersion}`}
-              />
-            )}
           </Header>
         )}
         {description && <p>{description}</p>}

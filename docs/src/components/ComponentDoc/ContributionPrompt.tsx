@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { repoURL } from 'docs/src/utils'
 import { Message } from 'semantic-ui-react'
 import { Icon } from '@stardust-ui/react'
+import { constants } from 'src/lib'
 
 const wrapStyle = { wordBreak: 'break-word' }
 
@@ -14,11 +14,11 @@ const ContributionPrompt: any = ({ children }) => (
       {children && <div>{children}</div>}
       <p>
         If there's no{' '}
-        <a href={`${repoURL}/pulls`}>
+        <a href={`${constants.repoURL}/pulls`}>
           pull request <Icon fitted size="small" name="external" />
         </a>{' '}
         open for this, you should{' '}
-        <a href={`${repoURL}/blob/master/.github/CONTRIBUTING.md`}>
+        <a href={`${constants.repoURL}/blob/master/.github/CONTRIBUTING.md`}>
           contribute <Icon fitted size="small" name="external" />
         </a>{' '}
         one!

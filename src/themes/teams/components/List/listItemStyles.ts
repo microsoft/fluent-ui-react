@@ -1,28 +1,39 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IListItemProps } from '../../../../components/List/ListItem'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ListItemProps } from '../../../../components/List/ListItem'
 
-const listItemStyles: IComponentPartStylesInput = {
-  root: ({
-    props: { selection, important },
-  }: {
-    props: IListItemProps
-    variables: any
-  }): ICSSInJSStyle => ({
+const hoverStyle = variables => ({
+  background: variables.selectionHoverBackgroundColor,
+  color: variables.selectionHoverColor,
+  cursor: 'pointer',
+
+  '& .ui-item-layout__header': { color: 'inherit' },
+  '& .ui-item-layout__content': { color: 'inherit' },
+
+  // hide the header media and content media on hover
+  '& .ui-item-layout__headerMedia': { display: 'none', color: 'inherit' },
+  '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
+
+  // show the end media on hover
+  '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
+})
+
+const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
+  root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
     ...(selection && {
       position: 'relative',
 
-      ':hover': {
-        background: 'rgba(98, 100, 167, .8)',
-        color: '#fff',
-        cursor: 'pointer',
-      },
+      // hide the end media by default
+      '& .ui-item-layout__endMedia': { display: 'none' },
+
+      '&:hover': hoverStyle(variables),
+      '&:focus': hoverStyle(variables),
     }),
     ...(important && {
       fontWeight: 'bold',
     }),
   }),
-  media: ({ props }: { props: IListItemProps; variables: any }): ICSSInJSStyle => {
+  media: ({ props }): ICSSInJSStyle => {
     const { important } = props
     return {
       ...(important && {
@@ -42,12 +53,10 @@ const listItemStyles: IComponentPartStylesInput = {
     lineHeight: variables.headerLineHeight,
   }),
   headerMedia: ({ variables }): ICSSInJSStyle => ({
-    color: variables.headerMediaColor,
     fontSize: variables.headerMediaFontSize,
     lineHeight: variables.headerMediaLineHeight,
   }),
   content: ({ variables }) => ({
-    color: variables.contentColor,
     fontSize: variables.contentFontSize,
     lineHeight: variables.contentLineHeight,
   }),

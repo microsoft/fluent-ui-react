@@ -2,15 +2,21 @@ export { default as Accordion } from './components/Accordion/accordionStyles'
 export { default as AccordionContent } from './components/Accordion/accordionContentStyles'
 export { default as AccordionTitle } from './components/Accordion/accordionTitleStyles'
 
+export { default as Attachment } from './components/Attachment/attachmentStyles'
+
 export { default as Avatar } from './components/Avatar/avatarStyles'
 
 export { default as Button } from './components/Button/buttonStyles'
 export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
+export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
+
+export { default as Form } from './components/Form/formStyles'
+export { default as FormField } from './components/Form/formFieldStyles'
 
 export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
@@ -35,9 +41,10 @@ export { default as ListItem } from './components/List/listItemStyles'
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
 
+export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
-export { default as Radio } from './components/Radio/radioStyles'
+export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 
 export { default as Segment } from './components/Segment/segmentStyles'
 

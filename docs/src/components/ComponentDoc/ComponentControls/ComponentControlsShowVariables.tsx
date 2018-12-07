@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from '@stardust-ui/react'
+import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 

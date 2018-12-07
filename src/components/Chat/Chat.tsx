@@ -3,56 +3,73 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, customPropTypes, UIComponent } from '../../lib'
+import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { chatBehavior } from '../../lib/accessibility'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface IChatProps {
-  as?: any
-  className?: string
-  children?: ReactChildren
-  messages?: ItemShorthand[]
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+export interface ChatProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatBehavior
+   * */
+  accessibility?: Accessibility
+
+  /** Shorthand array of the items inside the chat. */
+  items?: ShorthandValue[]
+
+  /**
+   * A custom render iterator for rendering each of the Chat items.
+   * The default component, props, and children are available for each item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
 }
 
-class Chat extends UIComponent<Extendable<IChatProps>, any> {
+/**
+ * A Chat displays messages between users.
+ */
+class Chat extends UIComponent<Extendable<ChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    children: PropTypes.node,
-
-    /** Shorthand array of messages. */
-    messages: PropTypes.arrayOf(PropTypes.any),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    items: PropTypes.arrayOf(customPropTypes.itemShorthand),
+    renderItem: PropTypes.func,
   }
 
-  static handledProps = ['as', 'children', 'className', 'messages', 'styles', 'variables']
+  static defaultProps = { accessibility: chatBehavior as Accessibility, as: 'ul' }
 
-  static defaultProps = { as: 'ul' }
-
+  static Item = ChatItem
   static Message = ChatMessage
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, messages } = this.props
+  actionHandlers: AccessibilityActionHandlers = {
+    focus: event => this.focusZone && this.focusZone.focus(),
+  }
+
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    const { children, items, renderItem } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+      >
         {childrenExist(children)
           ? children
-          : _.map(messages, message => ChatMessage.create(message))}
+          : _.map(items, item => ChatItem.create(item, { render: renderItem }))}
       </ElementType>
     )
   }

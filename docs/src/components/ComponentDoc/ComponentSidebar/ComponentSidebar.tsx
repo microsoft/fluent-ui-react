@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Accordion, Menu } from '@stardust-ui/react'
+import { Menu } from '@stardust-ui/react'
 import { Sticky } from 'semantic-ui-react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'

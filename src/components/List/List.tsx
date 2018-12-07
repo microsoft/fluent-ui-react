@@ -1,106 +1,177 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
+import { customPropTypes, childrenExist, UIComponent } from '../../lib'
 import ListItem from './ListItem'
-import { ListBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { listBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface IListProps {
+export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
-  className?: string
+
+  /** Toggle debug mode */
   debug?: boolean
-  items?: ItemShorthand[]
+
+  /** Shorthand array of props for ListItem. */
+  items?: ShorthandValue[]
+
+  /** Ref callback with the list DOM node. */
+  listRef?: (node: HTMLElement) => void
+
+  /** A selection list formats list items as possible choices. */
   selection?: boolean
+
+  /** Truncates content */
   truncateContent?: boolean
+
+  /** Truncates header */
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /**
+   * A custom render iterator for rendering each of the List items.
+   * The default component, props, and children are available for each item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
 }
 
-class List extends UIComponent<Extendable<IListProps>, any> {
+export interface ListState {
+  selectedItemIndex: number
+}
+
+/**
+ * A list displays a group of related content.
+ */
+class List extends UIComponent<Extendable<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Toggle debug mode */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    accessibility: PropTypes.func,
     debug: PropTypes.bool,
-
-    /** Shorthand array of props for ListItem. */
     items: customPropTypes.collectionShorthand,
-
-    /** A selection list formats list items as possible choices. */
     selection: PropTypes.bool,
-
-    /** Truncates content */
     truncateContent: PropTypes.bool,
-
-    /** Truncates header */
     truncateHeader: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    listRef: PropTypes.func,
+    renderItem: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'ul',
-    accessibility: ListBehavior as Accessibility,
+    accessibility: listBehavior as Accessibility,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'className',
-    'debug',
-    'items',
-    'selection',
-    'styles',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
 
   static Item = ListItem
 
   // List props that are passed to each individual Item props
   static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
 
+  public state = {
+    selectedItemIndex: 0,
+  }
+
+  private focusHandler: ContainerFocusHandler = null
+  private itemRefs = []
+
+  private handleListRef = (listNode: HTMLElement) => {
+    _.invoke(this.props, 'listRef', listNode)
+  }
+
+  actionHandlers: AccessibilityActionHandlers = {
+    moveNext: e => {
+      e.preventDefault()
+      this.focusHandler.moveNext()
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.focusHandler.movePrevious()
+    },
+    moveFirst: e => {
+      e.preventDefault()
+      this.focusHandler.moveFirst()
+    },
+    moveLast: e => {
+      e.preventDefault()
+      this.focusHandler.moveLast()
+    },
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...rest}
+        className={classes.root}
+        ref={this.handleListRef}
+      >
         {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
   }
 
-  renderItems() {
-    const { items } = this.props
-    const itemProps = _.pick(this.props, List.itemProps)
+  componentDidMount() {
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.items.length,
+      index => {
+        this.setState({ selectedItemIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
 
-    return _.map(items, item => ListItem.create(item, { defaultProps: itemProps }))
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
+  }
+
+  renderItems() {
+    const { items, renderItem } = this.props
+    const { selectedItemIndex } = this.state
+
+    this.itemRefs = []
+
+    return _.map(items, (item, idx) => {
+      const maybeSelectableItemProps = {} as any
+
+      if (this.props.selection) {
+        const ref = React.createRef()
+        this.itemRefs[idx] = ref
+
+        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
+        maybeSelectableItemProps.ref = ref
+        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
+      }
+
+      const itemProps = {
+        ..._.pick(this.props, List.itemProps),
+        ...maybeSelectableItemProps,
+      }
+
+      return ListItem.create(item, {
+        defaultProps: itemProps,
+        render: renderItem,
+      })
+    })
   }
 }
 

@@ -1,3 +1,4 @@
+export { Placement } from 'popper.js'
 import { Placement } from 'popper.js'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
@@ -65,8 +66,11 @@ export default ({
   rtl: boolean
 }): Placement => {
   const alignment: Alignment = shouldAlignToCenter(position, align) ? 'center' : align
+
   const computedPosition = positionMap.get(position)(rtl)
   const computedAlignmnent = alignmentMap.get(alignment)(rtl)
 
-  return `${computedPosition}${computedAlignmnent && '-' + computedAlignmnent}` as Placement
+  const stringifiedAlignment = computedAlignmnent && `-${computedAlignmnent}`
+
+  return `${computedPosition}${stringifiedAlignment}` as Placement
 }

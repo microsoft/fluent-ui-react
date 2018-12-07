@@ -4,41 +4,114 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import Icon from '../Icon'
-import { MenuItemBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/interfaces'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
+import { menuItemBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import IsFromKeyboard from '../../lib/isFromKeyboard'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
 import {
   ComponentEventHandler,
   Extendable,
-  ItemShorthand,
-  ReactChildren,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface IMenuItemProps {
+export interface MenuItemProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default menuItemBehavior
+   * */
   accessibility?: Accessibility
+
+  /** A menu item can be active. */
   active?: boolean
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: any
+
+  /** A menu item can show it is currently unable to be interacted with. */
   disabled?: boolean
-  href?: string
-  icon?: ItemShorthand
+
+  /** Name or shorthand for Menu Item Icon */
+  icon?: ShorthandValue
+
+  /** A menu may have just icons. */
   iconOnly?: boolean
+
+  /** MenuItem index inside Menu. */
   index?: number
-  onClick?: ComponentEventHandler<IMenuItemProps>
+
+  /**
+   * Called on click. When passed, the component will render as an `a`
+   * tag by default instead of a `div`.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<MenuItemProps>
+
+  /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
+
+  /**
+   * A menu can point to show its relationship to nearby content.
+   * For vertical menu, it can point to the start of the item or to the end.
+   */
   pointing?: boolean | 'start' | 'end'
-  type?: 'primary' | 'secondary'
+
+  /** The menu item can have primary type. */
+  primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the wrapper slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderWrapper?: ShorthandRenderFunction
+
+  /** The menu item can have secondary type. */
+  secondary?: boolean
+
+  /** Menu items can by highlighted using underline. */
   underlined?: boolean
+
+  /** A vertical menu displays elements vertically. */
   vertical?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /** Shorthand for the wrapper component. */
+  wrapper?: ShorthandValue
 }
 
-class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
+export interface MenuItemState {
+  [IsFromKeyboard.propertyName]: boolean
+}
+
+/**
+ * A menu item is an actionable navigation item within a menu.
+ */
+class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'
@@ -46,154 +119,96 @@ class MenuItem extends UIComponent<Extendable<IMenuItemProps>, any> {
   static create: Function
 
   static propTypes = {
-    /** A menu item can be active. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
+    accessibility: PropTypes.func,
     active: PropTypes.bool,
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** A menu item can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
-
-    /** Clickable link target */
-    href: PropTypes.string,
-
-    /** Name or shorthand for Menu Item Icon */
     icon: customPropTypes.itemShorthand,
-
-    /** A menu may have just icons. */
     iconOnly: PropTypes.bool,
-
-    /** MenuItem index inside Menu. */
     index: PropTypes.number,
-
-    /**
-     * Called on click. When passed, the component will render as an `a`
-     * tag by default instead of a `div`.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onClick: PropTypes.func,
-
-    /** A menu can adjust its appearance to de-emphasize its contents. */
     pills: PropTypes.bool,
-
-    /**
-     * A menu can point to show its relationship to nearby content.
-     * For vertical menu, it can point to the start of the item or to the end.
-     */
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
-
-    /**
-     * Rel element for href
-     */
-    rel: PropTypes.string,
-
-    /**
-     * Target for href
-     */
-    target: PropTypes.string,
-
-    /** The menu can have primary or secondary type */
-    type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** Menu items can by highlighted using underline. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
-
-    /** A vertical menu displays elements vertically. */
     vertical: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    renderIcon: PropTypes.func,
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+    renderWrapper: PropTypes.func,
   }
 
   static defaultProps = {
-    as: 'li',
-    accessibility: MenuItemBehavior as Accessibility,
+    as: 'a',
+    accessibility: menuItemBehavior as Accessibility,
+    wrapper: { as: 'li' },
   }
 
-  static handledProps = [
-    'accessibility',
-    'active',
-    'as',
-    'children',
-    'className',
-    'content',
-    'disabled',
-    'href',
-    'icon',
-    'iconOnly',
-    'index',
-    'onClick',
-    'pills',
-    'pointing',
-    'rel',
-    'styles',
-    'target',
-    'type',
-    'underlined',
-    'variables',
-    'vertical',
-  ]
+  state = IsFromKeyboard.initial
 
-  actionHandlers: AccessibilityActionHandlers = {
+  renderComponent({ ElementType, classes, accessibility, rest }) {
+    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
+
+    const menuItemInner = childrenExist(children) ? (
+      children
+    ) : (
+      <ElementType
+        className={classes.root}
+        onClick={this.handleClick}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.anchor}
+        {...accessibility.keyHandlers.anchor}
+        {...rest}
+      >
+        {icon &&
+          Icon.create(this.props.icon, {
+            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            render: renderIcon,
+          })}
+        {content}
+      </ElementType>
+    )
+
+    if (wrapper) {
+      return Slot.create(wrapper, {
+        defaultProps: {
+          className: cx('ui-menu__item__wrapper', classes.wrapper),
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
+        },
+        render: renderWrapper,
+        overrideProps: () => ({
+          children: menuItemInner,
+        }),
+      })
+    }
+    return menuItemInner
+  }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
-  handleClick = e => {
+  private handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, href, target, rel } = this.props
+  private handleBlur = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.initial)
 
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...rest}
-      >
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <a
-            className={cx('ui-menu__item__anchor', classes.anchor)}
-            onClick={this.handleClick}
-            href={href}
-            target={target}
-            rel={rel}
-            {...accessibility.attributes.anchor}
-            {...accessibility.keyHandlers.anchor}
-          >
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-              })}
-            {content}
-          </a>
-        )}
-      </ElementType>
-    )
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState(IsFromKeyboard.state())
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
-MenuItem.create = createShorthandFactory(MenuItem, content => ({ content }))
+MenuItem.create = createShorthandFactory(MenuItem, 'content')
 
 export default MenuItem

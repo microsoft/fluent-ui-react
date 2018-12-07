@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from '@stardust-ui/react'
+import { Menu } from '@stardust-ui/react'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
@@ -26,7 +26,6 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
   }
 
   public render() {
-    const { anchorName } = this.props
     const { active } = this.state
 
     return (

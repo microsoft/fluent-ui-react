@@ -3,68 +3,69 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ItemShorthand, ReactChildren } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import Button from './Button'
+import { buttonGroupBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface IButtonGroupProps {
-  as?: any
-  children?: ReactChildren
+export interface ButtonGroupProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default buttonGroupBehavior
+   */
+  accessibility?: Accessibility
+
+  /** The buttons contained inside the ButtonGroup. */
+  buttons?: ShorthandValue[]
+
+  /** The buttons inside group can appear circular. */
   circular?: boolean
-  className?: string
-  content?: React.ReactNode
-  buttons?: ItemShorthand[]
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /**
+   * A custom render iterator for rendering each of the Button.Group buttons.
+   * The default component, props, and children are available for each button.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderButton?: ShorthandRenderFunction
 }
 
 /**
- * A button group.
+ * A button group presents multiple related actions.
  */
-class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
+class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** The buttons contained inside the ButtonGroup. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
+    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     buttons: customPropTypes.collectionShorthand,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** The buttons inside group can appear circular. */
     circular: PropTypes.bool,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    renderButton: PropTypes.func,
   }
-
-  static handledProps = [
-    'as',
-    'buttons',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'styles',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'div',
+    accessibility: buttonGroupBehavior as Accessibility,
   }
 
   public renderComponent({
@@ -75,10 +76,10 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const { children, content, buttons, circular } = this.props
+    const { children, content, buttons, circular, renderButton } = this.props
     if (_.isNil(buttons)) {
       return (
-        <ElementType {...rest} className={classes.root}>
+        <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
           {childrenExist(children) ? children : content}
         </ElementType>
       )
@@ -92,6 +93,7 @@ class ButtonGroup extends UIComponent<Extendable<IButtonGroupProps>, any> {
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
             },
+            render: renderButton,
           }),
         )}
       </ElementType>

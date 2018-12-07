@@ -1,49 +1,104 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import whatInput from 'what-input'
 import * as _ from 'lodash'
 
 import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
-import Icon from '../Icon'
-import { ButtonBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import Icon from '../Icon/Icon'
+import Slot from '../Slot/Slot'
+import { buttonBehavior } from '../../lib/accessibility'
+import { Accessibility } from '../../lib/accessibility/types'
 import {
-  Extendable,
-  ItemShorthand,
-  ReactChildren,
   ComponentEventHandler,
+  Extendable,
+  ShorthandRenderFunction,
+  ShorthandValue,
 } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import isFromKeyboard from '../../lib/isFromKeyboard'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface IButtonProps {
-  as?: any
-  children?: ReactChildren
-  circular?: boolean
-  className?: string
-  disabled?: boolean
-  content?: React.ReactNode
-  fluid?: boolean
-  icon?: ItemShorthand
-  iconOnly?: boolean
-  iconPosition?: 'before' | 'after'
-  onClick?: ComponentEventHandler<IButtonProps>
-  onFocus?: ComponentEventHandler<IButtonProps>
-  text?: boolean
-  type?: 'primary' | 'secondary'
+export interface ButtonProps
+  extends UIComponentProps<any, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default buttonBehavior
+   */
   accessibility?: Accessibility
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /** A button can appear circular. */
+  circular?: boolean
+
+  /** A button can show it is currently unable to be interacted with. */
+  disabled?: boolean
+
+  /** A button can take the width of its container. */
+  fluid?: boolean
+
+  /** Button can have an icon. */
+  icon?: ShorthandValue
+
+  /** A button may indicate that it has only icon. */
+  iconOnly?: boolean
+
+  /** An icon button can format an Icon to appear before or after the button */
+  iconPosition?: 'before' | 'after'
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<ButtonProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<ButtonProps>
+
+  /** A button can be formatted to show different levels of emphasis. */
+  primary?: boolean
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
+
+  /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+  text?: boolean
+
+  /** A button can be formatted to show different levels of emphasis. */
+  secondary?: boolean
+}
+
+export interface ButtonState {
+  [isFromKeyboard.propertyName]: boolean
 }
 
 /**
- * A button.
+ * A button indicates a possible user action.
  * @accessibility
  * Other considerations:
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<IButtonProps>, any> {
+class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -51,96 +106,32 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** A button can appear circular. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     circular: PropTypes.bool,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** A button can show it is currently unable to be interacted with. */
     disabled: PropTypes.bool,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** A button can take the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Button can have an icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** A button may indicate that it has only icon. */
     iconOnly: PropTypes.bool,
-
-    /** An icon button can format an Icon to appear before or after the button */
     iconPosition: PropTypes.oneOf(['before', 'after']),
-
-    /**
-     * Called after user's click.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onClick: PropTypes.func,
-
-    /**
-     * Called after user's focus.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onFocus: PropTypes.func,
-
-    /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     text: PropTypes.bool,
-
-    /** A button can be formatted to show different levels of emphasis. */
-    type: PropTypes.oneOf(['primary', 'secondary']),
-
-    /** Accessibility behavior if overridden by the user. */
-    accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    accessibility: PropTypes.func,
+    renderIcon: PropTypes.func,
   }
-
-  static handledProps = [
-    'accessibility',
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'disabled',
-    'fluid',
-    'icon',
-    'iconOnly',
-    'iconPosition',
-    'onClick',
-    'onFocus',
-    'styles',
-    'text',
-    'type',
-    'variables',
-  ]
 
   public static defaultProps = {
     as: 'button',
-    accessibility: ButtonBehavior as Accessibility,
+    accessibility: buttonBehavior as Accessibility,
   }
 
   static Group = ButtonGroup
 
-  public state = {
-    isFromKeyboard: false,
-  }
+  public state = isFromKeyboard.initial
 
   public renderComponent({
     ElementType,
@@ -164,14 +155,16 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {!hasChildren && content && <span className={classes.content}>{content}</span>}
+        {Slot.create(!hasChildren && content, {
+          defaultProps: { as: 'span', className: classes.content },
+        })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )
   }
 
   public renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content } = this.props
+    const { icon, iconPosition, content, renderIcon } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
@@ -179,31 +172,28 @@ class Button extends UIComponent<Extendable<IButtonProps>, any> {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },
+      render: renderIcon,
     })
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    const isFromKeyboard = whatInput.ask() === 'keyboard'
-
-    this.setState({ isFromKeyboard })
+    this.setState(isFromKeyboard.state())
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
 
-Button.create = createShorthandFactory(Button, content => ({ content }))
+Button.create = createShorthandFactory(Button, 'content')
 
 export default Button

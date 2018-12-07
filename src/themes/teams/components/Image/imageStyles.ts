@@ -1,9 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IImageProps } from '../../../../components/Image/Image'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ImageProps } from '../../../../components/Image/Image'
 
 export default {
-  root: ({ props, variables }: { props: IImageProps; variables: any }): ICSSInJSStyle => ({
+  root: ({ props, variables }): ICSSInJSStyle => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     width: (props.fluid && '100%') || variables.width,
@@ -14,4 +14,4 @@ export default {
       borderRadius: variables.avatarRadius,
     }),
   }),
-}
+} as ComponentSlotStylesInput<ImageProps, any>

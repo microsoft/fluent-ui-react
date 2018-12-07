@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Accordion, Icon, Menu } from '@stardust-ui/react'
+import { Accordion, Menu } from '@stardust-ui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -52,10 +52,11 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
     }) !== -1
 
   render() {
-    const { activePath, examples, sectionName } = this.props
-    const { isActiveByProps, isActiveByUser } = this.state
+    const { activePath, examples } = this.props
+    //    const { activePath, examples, sectionName } = this.props
+    //    const { isActiveByProps, isActiveByUser } = this.state
 
-    const active = isActiveByUser || isActiveByProps
+    //    const active = isActiveByUser || isActiveByProps
 
     return (
       <Menu.Item>
@@ -63,9 +64,12 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
           onTitleClick={this.handleTitleClick}
           panels={_.map(examples, ({ title, examplePath }) => ({
             key: examplePath,
-            active: activePath === examplePathToHash(examplePath),
-            content: title,
-            onClick: this.handleItemClick(examplePath),
+            content: {
+              title,
+              onClick: this.handleItemClick(examplePath),
+              active: activePath === examplePathToHash(examplePath),
+            },
+            title: { title },
           }))}
         />
       </Menu.Item>

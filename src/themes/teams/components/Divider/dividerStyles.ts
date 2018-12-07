@@ -1,10 +1,6 @@
 import { childrenExist, pxToRem } from '../../../../lib'
-import {
-  IComponentPartStylesInput,
-  ICSSInJSStyle,
-  ICSSPseudoElementStyle,
-} from '../../../../../types/theme'
-import { IDividerPropsWithDefaults } from '../../../../components/Divider/Divider'
+import { ComponentSlotStylesInput, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../types'
+import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 
 const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
   height: `${size + 1}px`,
@@ -14,62 +10,47 @@ const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
 const beforeAndAfter = (size, type, variables): ICSSPseudoElementStyle => ({
   content: '""',
   flex: 1,
-  ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
+  ...dividerBorderStyle(size, variables.dividerColor),
   ...(type === 'primary' && {
-    ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
-  }),
-  ...(type === 'secondary' && {
-    ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
+    ...dividerBorderStyle(size, variables.primaryColor),
   }),
 })
 
-const dividerStyles: IComponentPartStylesInput = {
-  root: ({
-    props,
-    variables,
-  }: {
-    props: IDividerPropsWithDefaults
-    variables: any
-  }): ICSSInJSStyle => {
-    const { children, size, type, important, content } = props
+const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
+  root: ({ props, variables }): ICSSInJSStyle => {
+    const { children, fitted, size, type, important, content } = props
     return {
-      marginTop: pxToRem(5 + size * 7.5),
-      marginBottom: pxToRem(5 + size * 7.5),
-      fontWeight: 400,
+      color: variables.textColor,
+      display: 'flex',
+      alignItems: 'center',
+      ...(!fitted && {
+        paddingTop: variables.dividerPadding,
+        paddingBottom: variables.dividerPadding,
+      }),
+      ...(type === 'primary' && {
+        color: variables.primaryColor,
+      }),
       ...(important && {
-        fontWeight: 700,
+        fontWeight: variables.importantFontWeight,
       }),
       ...(childrenExist(children) || content
         ? {
-            display: 'flex',
-            alignItems: 'center',
             textAlign: 'center',
-            lineHeight: 1.25,
             fontSize: pxToRem(12 + size),
+            lineHeight: variables.textLineHeight,
             '::before': {
               ...beforeAndAfter(size, type, variables),
-              marginRight: pxToRem(22 + size * 2),
+              marginRight: pxToRem(20),
             },
             '::after': {
               ...beforeAndAfter(size, type, variables),
-              marginLeft: pxToRem(22 + size * 2),
+              marginLeft: pxToRem(20),
             },
-            color: variables.color, // the default color
-            ...(type === 'primary' && {
-              color: variables.typePrimaryColor,
-            }),
-            ...(type === 'secondary' && {
-              color: variables.typeSecondaryColor,
-            }),
           }
         : {
-            ...dividerBorderStyle(size, variables.backgroundColor), // the default border style
-            ...(type === 'primary' && {
-              ...dividerBorderStyle(size, variables.typePrimaryBackgroundColor),
-            }),
-            ...(type === 'secondary' && {
-              ...dividerBorderStyle(size, variables.typeSecondaryBackgroundColor),
-            }),
+            '::before': {
+              ...beforeAndAfter(size, type, variables),
+            },
           }),
     }
   },

@@ -7,11 +7,11 @@ import { Grid, List } from '@stardust-ui/react'
 import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 
-interface IComponentExamples {
+interface ComponentExamplesProps {
   displayName: string
 }
 
-export default class ComponentExamples extends React.Component<IComponentExamples, any> {
+export default class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
   public static propTypes = {
     displayName: PropTypes.string.isRequired,
   }

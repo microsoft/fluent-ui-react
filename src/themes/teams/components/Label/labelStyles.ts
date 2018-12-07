@@ -1,15 +1,9 @@
 import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { ILabelProps } from '../../../../components/Label/Label'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { LabelProps } from '../../../../components/Label/Label'
 
-const labelStyles = {
-  root: ({
-    props: { image, imagePosition, circular },
-    variables,
-  }: {
-    props: ILabelProps
-    variables: any
-  }): ICSSInJSStyle => ({
+const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
+  root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
     padding: variables.padding,
     ...(image &&
       imagePosition === 'start' && {
@@ -36,7 +30,7 @@ const labelStyles = {
     height: variables.height,
     width: variables.height,
   }),
-  icon: ({ props }: { props: ILabelProps }): ICSSInJSStyle => ({
+  icon: ({ props }): ICSSInJSStyle => ({
     ...(props.icon &&
       typeof props.icon === 'object' &&
       (props.icon as any).onClick && {

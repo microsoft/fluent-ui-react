@@ -16,6 +16,13 @@ describe('mergeSiteVariables', () => {
     expect(mergeSiteVariables(null, {})).toMatchObject({})
   })
 
+  test('always adds fontSizes', () => {
+    const target = {}
+    const source = {}
+
+    expect(mergeSiteVariables(target, source)).toMatchObject({ fontSizes: {} })
+  })
+
   test('gracefully handles null and undefined', () => {
     expect(() => mergeSiteVariables({ color: 'black' }, null)).not.toThrow()
     expect(() => mergeSiteVariables({ color: 'black' }, { color: null })).not.toThrow()

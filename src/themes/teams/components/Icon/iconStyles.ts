@@ -1,59 +1,46 @@
 import fontAwesomeIcons from './fontAwesomeIconStyles'
-import { disabledStyle, fittedStyle } from '../../../../styles/customCSS'
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IconXSpacing } from '../../../../components/Icon/Icon'
+import { callable } from '../../../../lib'
+import { fittedStyle } from '../../../../styles/customCSS'
+import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
+import { ResultOf } from '../../../../../types/utils'
+import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
+import { pxToRem } from './../../../../lib'
+import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 0.3],
-  ['mini', 0.4],
-  ['tiny', 0.5],
-  ['small', 0.75],
-  ['normal', 1],
-  ['large', 1.5],
-  ['big', 2],
-  ['huge', 4],
-  ['massive', 8],
+  ['micro', 7],
+  ['mini', 10],
+  ['tiny', 12],
+  ['small', 14],
+  ['normal', 16],
+  ['large', 20],
+  ['big', 32],
+  ['huge', 40],
+  ['massive', 64],
 ])
 
-const getFontIcon = (font, name) => {
-  let content = ''
-  let fontFamily = 'Icons'
-
-  switch (font) {
-    case 'FontAwesome':
-    default: {
-      fontFamily = name && name.includes('outline') ? 'outline-icons' : 'Icons'
-      content = (name && `'\\${fontAwesomeIcons(name)}'`) || '?'
-      break
-    }
-  }
-
-  return { content, fontFamily }
+const getDefaultFontIcon = (iconName: string) => {
+  return callable(fontAwesomeIcons(iconName).icon)()
 }
 
-const getSize = size => `${sizes.get(size)}em`
-
-const getFontStyles = (font, name, size): ICSSInJSStyle => {
-  const { fontFamily, content } = getFontIcon(font, name)
+const getFontStyles = (
+  size: string,
+  iconName: string,
+  themeIcon?: ResultOf<FontIconSpec>,
+): ICSSInJSStyle => {
+  const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
-    width: '1.18em',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    textDecoration: 'inherit',
-    textAlign: 'center',
-
-    '-webkit-font-smoothing': 'antialiased',
-    '-moz-osx-font-smoothing': 'grayscale',
-    backfaceVisibility: 'hidden',
-
+    fontSize: getSize(size),
     lineHeight: 1,
+    textAlign: 'center',
 
     '::before': {
       content,
-      boxSizing: 'inherit',
-      background: '0 0',
+      display: 'block',
+      width: getSize(size),
+      height: getSize(size),
     },
   }
 }
@@ -71,61 +58,95 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (isFontBased, circular, borderColor, color): ICSSInJSStyle => {
+const getBorderedStyles = (circular, boxShadowColor): ICSSInJSStyle => {
   return {
-    ...getPaddedStyle(isFontBased),
+    ...getPaddedStyle(),
 
-    // TODO: "black" here should actually match the Icon's fill or text color
-    boxShadow: `0 0 0 0.05em ${borderColor || color || 'black'} inset`,
+    boxShadow: `0 0 0 .05rem ${boxShadowColor} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
 
-const getPaddedStyle = (isFontBased): ICSSInJSStyle => ({
-  padding: `0.5em ${isFontBased ? 0 : '0.5em'}`,
-  width: '2em',
-  height: '2em',
+const getPaddedStyle = (): ICSSInJSStyle => ({
+  padding: pxToRem(4),
 })
 
-const iconStyles = {
+const getSize = size => pxToRem(sizes.get(size))
+
+const getIconColor = color => color || 'currentColor'
+
+const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   root: ({
-    props: { disabled, font, svg, name, size, bordered, circular, xSpacing },
+    props: { disabled, name, size, bordered, circular, xSpacing },
     variables: v,
+    theme,
   }): ICSSInJSStyle => {
-    const isFontBased = !svg
+    const iconSpec = theme.icons[name]
+    const isFontBased = !iconSpec || !iconSpec.isSvg
 
     return {
-      display: 'inline-block',
-      fontSize: getSize(size),
-
-      width: '1em',
-      height: '1em',
-
-      ...(isFontBased ? getFontStyles(font, name, size) : {}),
-
-      ...(isFontBased && { color: v.color }),
       backgroundColor: v.backgroundColor,
-
-      opacity: 1,
+      display: 'inline-block',
       margin: v.margin,
-
       speak: 'none',
-
       verticalAlign: 'middle',
-      overflow: 'hidden',
+
+      ...(isFontBased &&
+        getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
+
+      ...(isFontBased && {
+        color: getIconColor(v.color),
+
+        ...(disabled && {
+          color: v.disabledColor,
+        }),
+      }),
 
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(isFontBased, circular, v.borderColor, v.color)),
-
-      ...(disabled && disabledStyle),
+        getBorderedStyles(circular, v.borderColor || v.color || theme.siteVariables.bodyColor)),
     }
   },
 
-  svg: ({ variables: v }): ICSSInJSStyle => ({
-    fill: v.color,
-  }),
+  outlinePart: ({ variables: v }): ICSSInJSStyle => {
+    return {
+      display: 'none',
+
+      ...(v.outline && {
+        display: 'block',
+      }),
+    }
+  },
+
+  filledPart: ({ variables: v }): ICSSInJSStyle => {
+    return {
+      ...(v.outline && {
+        display: 'none',
+      }),
+    }
+  },
+
+  svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
+    return {
+      display: 'block',
+      width: getSize(size),
+      height: getSize(size),
+      fill: getIconColor(v.color),
+
+      ...(disabled && {
+        fill: v.disabledColor,
+      }),
+
+      ...getSvgStyle('svg'),
+    }
+  },
+
+  g: getSvgStyle('g'),
+
+  path: getSvgStyle('path'),
+
+  secondaryPath: getSvgStyle('secondaryPath'),
 }
 
 export default iconStyles

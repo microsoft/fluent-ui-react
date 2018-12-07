@@ -1,5 +1,5 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonGroupProps } from '../../../../components/Button/ButtonGroup'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
 
 const commonButtonsStyles = (circular: boolean) => ({
   ...(!circular && {
@@ -8,19 +8,19 @@ const commonButtonsStyles = (circular: boolean) => ({
   }),
 })
 
-const buttonGroupStyles: IComponentPartStylesInput = {
+const buttonGroupStyles: ComponentSlotStylesInput<ButtonGroupProps, any> = {
   root: (): ICSSInJSStyle => ({}),
-  middleButton: ({ props: p }: { props: IButtonGroupProps; variables: any }) => ({
+  middleButton: ({ props: p }) => ({
     ...commonButtonsStyles(p.circular),
   }),
-  firstButton: ({ props: p, variables: v }: { props: IButtonGroupProps; variables: any }) => ({
+  firstButton: ({ props: p, variables: v }) => ({
     ...commonButtonsStyles(p.circular),
     ...(!p.circular && {
       borderTopLeftRadius: v.borderRadius,
       borderBottomLeftRadius: v.borderRadius,
     }),
   }),
-  lastButton: ({ props: p, variables: v }: { props: IButtonGroupProps; variables: any }) => ({
+  lastButton: ({ props: p, variables: v }) => ({
     ...commonButtonsStyles(p.circular),
     ...(!p.circular && {
       borderTopRightRadius: v.borderRadius,

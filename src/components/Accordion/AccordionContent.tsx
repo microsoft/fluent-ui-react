@@ -1,22 +1,39 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { Extendable, ReactChildren, ComponentEventHandler } from '../../../types/utils'
+import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import {
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface IAccordionContentProps {
-  as?: any
+export interface AccordionContentProps
+  extends UIComponentProps<any, any>,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /** Whether or not the content is visible. */
   active?: boolean
-  children?: ReactChildren
-  className?: string
-  content?: React.ReactNode
-  onClick?: ComponentEventHandler<IAccordionContentProps>
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<AccordionContentProps>
 }
 
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, any> {
+class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function
@@ -24,31 +41,12 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
   static className = 'ui-accordion__content'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Whether or not the content is visible. */
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     active: PropTypes.bool,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /**
-     * Called on click.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onClick: PropTypes.func,
   }
-
-  static handledProps = ['as', 'active', 'children', 'className', 'content', 'onClick']
 
   renderComponent({ ElementType, classes, rest }) {
     const { children, content } = this.props
@@ -61,6 +59,6 @@ class AccordionContent extends UIComponent<Extendable<IAccordionContentProps>, a
   }
 }
 
-AccordionContent.create = createShorthandFactory(AccordionContent, content => ({ content }))
+AccordionContent.create = createShorthandFactory(AccordionContent, 'content')
 
 export default AccordionContent

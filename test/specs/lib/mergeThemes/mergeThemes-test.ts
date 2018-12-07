@@ -1,5 +1,6 @@
-import mergeThemes from '../../../../src/lib/mergeThemes'
-import { felaRenderer, felaRtlRenderer } from '../../../../src/lib'
+import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
+import { felaRenderer, felaRtlRenderer } from 'src/lib'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -120,7 +121,7 @@ describe('mergeThemes', () => {
 
       const merged = mergeThemes(target, source)
 
-      const siteVariables = { one: 'one', two: 'two' }
+      const siteVariables = { one: 'one', two: 'two', fontSizes: {} }
 
       expect(merged.componentVariables.Button(siteVariables)).toMatchObject({
         one: 'one',
@@ -221,10 +222,10 @@ describe('mergeThemes', () => {
 
       const merged = mergeThemes(target, source)
 
-      const styleParam = {
+      const styleParam: ComponentStyleFunctionParam = {
         variables: { iconSize: 'large' },
         props: { primary: true },
-      }
+      } as any
 
       expect(merged.componentStyles.Button.root(styleParam)).toMatchObject({
         source: true,
@@ -345,6 +346,62 @@ describe('mergeThemes', () => {
       expect(mergeThemes({ rtl: false })).toHaveProperty('renderer', felaRenderer)
       expect(mergeThemes({ rtl: null })).toHaveProperty('renderer', felaRenderer)
       expect(mergeThemes({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
+    })
+  })
+
+  describe('styles', () => {
+    test('merges styles object and function', () => {
+      const stylesAsObject: ICSSInJSStyle = {
+        margin: '0px',
+        color: 'override',
+        ':hover': {
+          margin: '0px',
+          color: 'override',
+        },
+      }
+
+      const stylesAsFunction = () => ({
+        color: 'black',
+        ':hover': {
+          color: 'blue',
+        },
+      })
+
+      expect(mergeStyles(stylesAsObject, stylesAsFunction)()).toMatchObject({
+        margin: '0px',
+        color: 'black',
+        ':hover': {
+          margin: '0px',
+          color: 'blue',
+        },
+      })
+    })
+
+    test('merges styles function and object', () => {
+      const stylesAsFunction = () => ({
+        margin: '0px',
+        color: 'override',
+        ':hover': {
+          margin: '0px',
+          color: 'override',
+        },
+      })
+
+      const stylesAsObject = {
+        color: 'black',
+        ':hover': {
+          color: 'blue',
+        },
+      }
+
+      expect(mergeStyles(stylesAsFunction, stylesAsObject)()).toMatchObject({
+        margin: '0px',
+        color: 'black',
+        ':hover': {
+          margin: '0px',
+          color: 'blue',
+        },
+      })
     })
   })
 })

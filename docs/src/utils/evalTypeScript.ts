@@ -18,7 +18,7 @@ export const convertImportStatementToExpression = (node: ts.ImportDeclaration) =
     // import * as React from 'react' => const React = REACT
     [
       ts.isNamespaceImport,
-      namedBindings => {
+      (namedBindings: ts.NamespaceImport) => {
         return `\nconst ${namedBindings.name.escapedText} = ${MODULE};\n`
       },
     ],
@@ -26,7 +26,7 @@ export const convertImportStatementToExpression = (node: ts.ImportDeclaration) =
     // import { Component1, Component2 } from "module"; => const {Component1, Component2} = MODULE;
     [
       ts.isNamedImports,
-      namedBindings => {
+      (namedBindings: ts.NamedImports) => {
         const imports = namedBindings.elements.map(item => item.name.escapedText)
         return `const {${imports.join()}} = ${MODULE};\n`
       },
@@ -77,7 +77,7 @@ const transpileTypeScript = (sourceCode): string => {
   })
 }
 
-interface IExecutionSandboxGlobals {
+interface ExecutionSandboxGlobals {
   REACT: any
   REACT_DOM: any
   STARDUST_UI_REACT: any
@@ -89,7 +89,7 @@ interface IExecutionSandboxGlobals {
  */
 const execute = (
   code,
-  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH }: IExecutionSandboxGlobals,
+  { REACT, REACT_DOM, STARDUST_UI_REACT, LODASH }: ExecutionSandboxGlobals,
 ) => {
   return eval(code) // tslint:disable-line
 }

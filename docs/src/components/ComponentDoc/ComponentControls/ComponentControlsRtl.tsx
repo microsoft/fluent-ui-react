@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from '@stardust-ui/react'
+import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 
@@ -9,7 +9,7 @@ const ComponentControlsShowRtl: React.SFC = ({ active, onClick }: any) => (
     active={active}
     onClick={onClick}
     icon={{
-      styles: { marginBottom: '10px' },
+      styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
       size: 'large',
       name: 'align right',
       xspacing: 'both',
@@ -17,7 +17,7 @@ const ComponentControlsShowRtl: React.SFC = ({ active, onClick }: any) => (
     content="RTL"
     styles={{
       display: 'grid',
-      paddingTop: '0px',
+      textAlign: 'center',
     }}
   />
 )

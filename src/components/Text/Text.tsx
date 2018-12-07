@@ -1,36 +1,62 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+} from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  childrenComponentPropTypes,
+  contentComponentPropsTypes,
+} from '../../lib/commonPropTypes'
 
-export interface ITextProps {
-  as?: any
-  atMention?: boolean
-  className?: string
-  content?: any
+export interface TextProps
+  extends UIComponentProps<any, any>,
+    ContentComponentProps,
+    ChildrenComponentProps {
+  /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
+  atMention?: boolean | 'me'
+
+  /** Set as disabled Text component */
   disabled?: boolean
+
+  /** Set as error Text component */
   error?: boolean
+
+  /** The text can appear more important and draw user's attention */
   important?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2x' | '3x' | '4x'
+
+  /** The size for the Text component */
+  size?: 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
+  /** The weight for the Text component */
   weight?: 'light' | 'semilight' | 'regular' | 'semibold' | 'bold'
+
+  /** Set as success Text component */
   success?: boolean
+
+  /** The text can signify a temporary state */
   temporary?: boolean
+
+  /** Set as timestamp Text component */
   timestamp?: boolean
+
+  /** Truncates text as needed */
   truncated?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
- * A component containing text
+ * A Text component formats occurrences of text consistently.
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
  */
-class Text extends UIComponent<Extendable<ITextProps>, any> {
+class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'
@@ -38,73 +64,24 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
-    /** Change the default element type of the Text component */
-    as: customPropTypes.as,
-
-    /** Set as @mention Text component */
-    atMention: PropTypes.bool,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Set as disabled Text component */
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
+    ...commonUIComponentPropTypes,
+    ...childrenComponentPropTypes,
+    ...contentComponentPropsTypes,
     disabled: PropTypes.bool,
-
-    /** Set as error Text component */
     error: PropTypes.bool,
-
-    /** The text can appear more important and draw user's attention */
     important: PropTypes.bool,
-
-    /** The size for the Text component */
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', '2x', '3x', '4x']),
-
-    /** The weight for the Text component */
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
-
-    /** Set as success Text component */
     success: PropTypes.bool,
-
-    /** The text can signify a temporary state */
     temporary: PropTypes.bool,
-
-    /** Set as timestamp Text component */
     timestamp: PropTypes.bool,
-
-    /** Truncates text as needed */
     truncated: PropTypes.bool,
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
     as: 'span',
   }
-
-  static handledProps = [
-    'as',
-    'atMention',
-    'className',
-    'content',
-    'disabled',
-    'error',
-    'important',
-    'size',
-    'styles',
-    'success',
-    'temporary',
-    'timestamp',
-    'truncated',
-    'variables',
-    'weight',
-  ]
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
@@ -116,6 +93,6 @@ class Text extends UIComponent<Extendable<ITextProps>, any> {
   }
 }
 
-Text.create = createShorthandFactory(Text, content => ({ content }))
+Text.create = createShorthandFactory(Text, 'content')
 
 export default Text

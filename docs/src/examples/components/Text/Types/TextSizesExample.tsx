@@ -1,23 +1,16 @@
 import React from 'react'
-import { Text } from '@stardust-ui/react'
+import * as _ from 'lodash'
+import { Provider, Text } from '@stardust-ui/react'
 
 const TextSizesExample = () => (
-  <div>
-    <Text size="xs">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="sm">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="md">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="lg">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="xl">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="2x">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="3x">Dicta voluptatum dolorem.</Text>
-    <br />
-    <Text size="4x">Dicta voluptatum dolorem.</Text>
-  </div>
+  <Provider.Consumer
+    render={({ siteVariables }) => {
+      return _.map(siteVariables.fontSizes, (value, key) => (
+        <div key={key}>
+          <Text size={key as any}>This is size="{key}" size font.</Text>
+        </div>
+      ))
+    }}
+  />
 )
 export default TextSizesExample

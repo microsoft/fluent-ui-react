@@ -10,31 +10,63 @@ import {
 } from '../../lib'
 
 import { Icon, Image, Layout } from '../..'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren, ItemShorthand } from '../../../types/utils'
+import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import {
+  commonUIComponentPropTypes,
+  contentComponentPropsTypes,
+  childrenComponentPropTypes,
+} from '../../lib/commonPropTypes'
 
-export interface ILabelProps {
+export interface LabelProps extends UIComponentProps<any, any>, ChildrenComponentProps {
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
+
+  /** A label can be circular. */
   circular?: boolean
-  className?: string
+
+  /** Shorthand for primary content. */
   content?: React.ReactNode
+
+  /** A Label can take the width of its container. */
   fluid?: boolean
-  icon?: ItemShorthand
+
+  /** Label can have an icon. */
+  icon?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
   iconPosition?: 'start' | 'end'
-  image?: ItemShorthand
+
+  /** Label can have an icon. */
+  image?: ShorthandValue
+
+  /** An icon label can format an Icon to appear before or after the text in the label */
   imagePosition?: 'start' | 'end'
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /**
+   * A custom render function the icon slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderIcon?: ShorthandRenderFunction
+
+  /**
+   * A custom render function the image slot.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderImage?: ShorthandRenderFunction
 }
 
 /**
- * A label displays content classification
+ * A label is used to classify content.
  */
-class Label extends UIComponent<Extendable<ILabelProps>, any> {
+class Label extends UIComponent<Extendable<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function
@@ -42,53 +74,19 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Primary content. */
-    children: PropTypes.node,
-
-    /** A label can be circular. */
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    ...childrenComponentPropTypes,
     circular: PropTypes.bool,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
     content: customPropTypes.contentShorthand,
-
-    /** Label can have an icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Label can have an icon. */
     image: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    fluid: PropTypes.bool,
+    renderIcon: PropTypes.func,
+    renderImage: PropTypes.func,
   }
-
-  static handledProps = [
-    'as',
-    'children',
-    'circular',
-    'className',
-    'content',
-    'icon',
-    'iconPosition',
-    'image',
-    'imagePosition',
-    'styles',
-    'variables',
-  ]
 
   static defaultProps = {
     as: 'span',
@@ -106,7 +104,16 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest, variables, styles }) {
-    const { children, content, icon, iconPosition, image, imagePosition } = this.props
+    const {
+      children,
+      content,
+      icon,
+      iconPosition,
+      image,
+      imagePosition,
+      renderIcon,
+      renderImage,
+    } = this.props
 
     const imageElement =
       image &&
@@ -115,6 +122,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
           styles: styles.image,
           variables: variables.image,
         },
+        render: renderImage,
       })
 
     const iconElement =
@@ -125,6 +133,7 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
           variables: variables.icon,
         },
         overrideProps: this.handleIconOverrides,
+        render: renderIcon,
       })
 
     let start: React.ReactNode = null
@@ -176,6 +185,6 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory(Label, content => ({ content }))
+Label.create = createShorthandFactory(Label, 'content')
 
 export default Label

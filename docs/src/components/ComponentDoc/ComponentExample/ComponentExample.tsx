@@ -1,39 +1,36 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
-import {
-  examplePathToHash,
-  getFormattedHash,
-  knobsContext,
-  repoURL,
-  scrollToAnchor,
-} from 'docs/src/utils'
+import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, doesNodeContainClick, pxToRem } from 'src/lib'
+import { callable, doesNodeContainClick, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
-import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { IThemeInput, IThemePrepared } from 'types/theme'
+import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
+import { ThemeInput, ThemePrepared } from 'src/themes/types'
+import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
+import { ThemeContext } from '../../../context/theme-context'
 
-export interface IComponentExampleProps extends RouteComponentProps<any, any> {
-  title: string
-  description: string
+export interface ComponentExampleProps extends RouteComponentProps<any, any> {
+  title: React.ReactNode
+  description?: React.ReactNode
   examplePath: string
-  suiVersion?: string
+  themeName?: string
 }
 
-interface IComponentExampleState {
+interface ComponentExampleState {
   knobs: Object
-  theme: IThemeInput
+  themeName: string
+  componentVariables: Object
   exampleElement?: JSX.Element
   handleMouseLeave?: () => void
   handleMouseMove?: () => void
@@ -43,6 +40,7 @@ interface IComponentExampleState {
   showCode: boolean
   showHTML: boolean
   showRtl: boolean
+  showTransparent: boolean
   showVariables: boolean
   isHovering: boolean
   copiedCode: boolean
@@ -62,21 +60,23 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-class ComponentExample extends React.PureComponent<IComponentExampleProps, IComponentExampleState> {
+class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
   private componentRef: React.Component
-  private sourceCodeMgr: ISourceCodeManager
+  private sourceCodeMgr: SourceCodeManager
   private anchorName: string
   private kebabExamplePath: string
   private KnobsComponent: any
 
-  public state: IComponentExampleState = {
+  public state: ComponentExampleState = {
     knobs: {},
-    theme: themes.teams,
+    themeName: 'teams',
+    componentVariables: {},
     sourceCode: '',
     markup: '',
     showCode: false,
     showHTML: false,
     showRtl: false,
+    showTransparent: false,
     showVariables: false,
     isHovering: false,
     copiedCode: false,
@@ -93,13 +93,13 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    suiVersion: PropTypes.string,
     title: PropTypes.node,
+    themeName: PropTypes.string,
   }
 
   public componentWillMount() {
     const { examplePath } = this.props
-    this.sourceCodeMgr = getSourceCodeManager(examplePath)
+    this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
     const exampleElement = this.renderExampleFromCode(this.sourceCodeMgr.currentCode)
 
@@ -114,7 +114,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     })
   }
 
-  public componentWillReceiveProps(nextProps: IComponentExampleProps) {
+  public componentWillReceiveProps(nextProps: ComponentExampleProps) {
     // deactivate examples when switching from one to the next
     if (
       this.isActiveHash() &&
@@ -122,6 +122,10 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       this.props.location.hash !== nextProps.location.hash
     ) {
       this.clearActiveState()
+    }
+    const { themeName } = nextProps
+    if (this.state.themeName !== themeName) {
+      this.setState({ themeName }, this.renderSourceCode)
     }
   }
 
@@ -232,7 +236,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private handleMaximize = (e: Event, data: any) => {
     e.preventDefault()
 
-    window.open('/maximize/' + _.kebabCase(data.examplePath.split('/').slice(-1)))
+    window.open('/maximize/${_.kebabCase(data.examplePath.split("/").slice(-1))}')
   }
 
   private handleShowVariablesClick = e => {
@@ -241,6 +245,14 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const { showVariables } = this.state
 
     this.setState({ showVariables: !showVariables }, this.updateHash)
+  }
+
+  private handleShowTransparentClick = e => {
+    e.preventDefault()
+
+    const { showTransparent } = this.state
+
+    this.setState({ showTransparent: !showTransparent })
   }
 
   private handlePass = () => {
@@ -352,10 +364,13 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private getDisplayName = () => this.props.examplePath.split('/')[1]
 
   private renderWithProvider(ExampleComponent) {
-    const { showRtl, theme } = this.state
+    const { showRtl, componentVariables, themeName } = this.state
+    const theme = themes[themeName]
 
-    const newTheme: IThemeInput = {
-      componentVariables: theme.componentVariables,
+    const newTheme: ThemeInput = {
+      componentVariables: mergeThemeVariables(theme.componentVariables, {
+        [this.getDisplayName()]: componentVariables,
+      }),
       rtl: showRtl,
     }
 
@@ -395,7 +410,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
         content: codeTypeApiButtonLabels[codeType],
-        className: disabled && 'crossout',
+        ...(disabled && { className: 'crossout' }),
       }
     })
 
@@ -432,7 +447,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
     const filename = pathParts[pathParts.length - 1]
 
     const ghEditHref = [
-      `${repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
       `?message=docs(${filename}): your description`,
     ].join('')
 
@@ -545,8 +560,11 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables, componentVariables }: IThemePrepared) => {
-            const variables = componentVariables[displayName]
+          render={({ siteVariables, componentVariables }: ThemePrepared) => {
+            const mergedVariables = mergeThemeVariables(componentVariables, {
+              [displayName]: this.state.componentVariables,
+            })
+            const variables = mergedVariables[displayName]
 
             if (!variables) {
               return (
@@ -586,15 +604,9 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   private handleVariableChange = (component, variable) => (e, { value }) => {
     this.setState(
       state => ({
-        theme: {
-          ...state.theme,
-          componentVariables: {
-            ...state.theme.componentVariables,
-            [component]: {
-              ...(state.theme.componentVariables && state.theme.componentVariables[component]),
-              [variable]: value,
-            },
-          },
+        componentVariables: {
+          ...state.componentVariables,
+          [variable]: value,
         },
       }),
       this.renderSourceCode,
@@ -602,7 +614,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 
   public render() {
-    const { children, description, suiVersion, title } = this.props
+    const { children, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -611,6 +623,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
       showCode,
       showHTML,
       showRtl,
+      showTransparent,
       showVariables,
     } = this.state
 
@@ -652,11 +665,7 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
           <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: '1' }}>
-                <ComponentExampleTitle
-                  description={description}
-                  title={title}
-                  suiVersion={suiVersion}
-                />
+                <ComponentExampleTitle description={description} title={title} />
               </div>
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
@@ -667,9 +676,11 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
                   onShowRtl={this.handleShowRtlClick}
                   onShowVariables={this.handleShowVariablesClick}
                   onMaximize={this.handleMaximize}
+                  onShowTransparent={this.handleShowTransparentClick}
                   showCode={showCode}
                   showHTML={showHTML}
                   showRtl={showRtl}
+                  showTransparent={showTransparent}
                   showVariables={showVariables}
                   visible
                 />
@@ -684,13 +695,29 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
             </Grid.Column>
           )}
 
-          <Grid.Column
-            width={16}
-            className={`rendered-example ${this.getKebabExamplePath()}`}
-            style={{ padding: '2rem' }}
-          >
-            <div dir={showRtl ? 'rtl' : undefined}>{exampleElement}</div>
-          </Grid.Column>
+          <Provider.Consumer
+            render={({ siteVariables }) => {
+              return (
+                <Grid.Column
+                  width={16}
+                  dir={showRtl ? 'rtl' : undefined}
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  style={{
+                    padding: '2rem',
+                    color: siteVariables.bodyColor,
+                    backgroundColor: siteVariables.bodyBackground,
+                    ...(showTransparent && {
+                      backgroundImage:
+                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                      backgroundRepeat: 'repeat',
+                    }),
+                  }}
+                >
+                  {exampleElement}
+                </Grid.Column>
+              )
+            }}
+          />
           <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
             {this.renderJSX()}
             {this.renderError()}
@@ -704,4 +731,10 @@ class ComponentExample extends React.PureComponent<IComponentExampleProps, IComp
   }
 }
 
-export default withRouter(ComponentExample)
+const ComponentExampleWithTheme = props => (
+  <ThemeContext.Consumer>
+    {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
+  </ThemeContext.Consumer>
+)
+
+export default withRouter(ComponentExampleWithTheme)

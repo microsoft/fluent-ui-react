@@ -1,13 +1,22 @@
 import * as React from 'react'
-import { mount } from './isConformant'
+import { mountWithProvider as mount } from 'test/utils'
 import * as _ from 'lodash'
-import { DefaultShorthandTestOptions, ShorthandTestOptions } from './implementsShorthandProp'
+
+export type CollectionShorthandTestOptions = {
+  mapsValueToProp?: string
+  skipArrayOfStrings?: boolean
+}
+
+export const DefaultCollectionShorthandTestOptions: CollectionShorthandTestOptions = {
+  mapsValueToProp: 'content',
+  skipArrayOfStrings: false,
+}
 
 export default Component => {
   return function implementsCollectionShorthandProp(
     shorthandPropertyName: string,
     ShorthandComponent: React.ComponentType,
-    options: ShorthandTestOptions = DefaultShorthandTestOptions,
+    options: CollectionShorthandTestOptions = DefaultCollectionShorthandTestOptions,
   ) {
     const { mapsValueToProp } = options
 
@@ -16,18 +25,20 @@ export default Component => {
         expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
       })
 
-      test(`array of string values is spread as ${
-        ShorthandComponent.displayName
-      }s' ${mapsValueToProp}`, () => {
-        const shorthandValue = ['some value', 'some other value']
-        const props = { [shorthandPropertyName]: shorthandValue }
-        const wrapper = mount(<Component {...props} />)
+      if (!options.skipArrayOfStrings) {
+        test(`array of string values is spread as ${
+          ShorthandComponent.displayName
+        }s' ${mapsValueToProp}`, () => {
+          const shorthandValue = ['some value', 'some other value']
+          const props = { [shorthandPropertyName]: shorthandValue }
+          const wrapper = mount(<Component {...props} />)
 
-        const shorthandComponents = wrapper.find(ShorthandComponent.displayName)
+          const shorthandComponents = wrapper.find(ShorthandComponent.displayName)
 
-        expect(shorthandComponents.first().prop(mapsValueToProp)).toEqual(_.first(shorthandValue))
-        expect(shorthandComponents.last().prop(mapsValueToProp)).toEqual(_.last(shorthandValue))
-      })
+          expect(shorthandComponents.first().prop(mapsValueToProp)).toEqual(_.first(shorthandValue))
+          expect(shorthandComponents.last().prop(mapsValueToProp)).toEqual(_.last(shorthandValue))
+        })
+      }
 
       test(`object value is spread as ${ShorthandComponent.displayName}'s props`, () => {
         const shorthandValue = [

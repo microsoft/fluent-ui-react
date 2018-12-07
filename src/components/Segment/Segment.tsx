@@ -1,51 +1,49 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist } from '../../lib'
-import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import { UIComponent, childrenExist } from '../../lib'
+import { Extendable, ShorthandRenderFunction } from '../../../types/utils'
+import { UIComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
+import { commonUIComponentPropTypes, contentComponentPropsTypes } from '../../lib/commonPropTypes'
+import Slot from '../Slot/Slot'
 
-export interface ISegmentProps {
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+export interface SegmentProps extends UIComponentProps<SegmentProps, any>, ContentComponentProps {
+  /** A segment can have its colors inverted for contrast. */
+  inverted?: boolean
+
+  /**
+   * A custom render function the content slot.
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderContent?: ShorthandRenderFunction
 }
 
-class Segment extends UIComponent<Extendable<ISegmentProps>, any> {
+/**
+ * A segment is used to create a grouping of related content.
+ */
+class Segment extends UIComponent<Extendable<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional classes. */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Custom styles to be applied for component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied for component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    ...commonUIComponentPropTypes,
+    ...contentComponentPropsTypes,
+    inverted: PropTypes.bool,
+    renderContent: PropTypes.func,
   }
-
-  static handledProps = ['as', 'className', 'content', 'styles', 'variables']
 
   static defaultProps = {
     as: 'div',
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+    const { children, content, renderContent } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? children : Slot.create(content, { render: renderContent })}
       </ElementType>
     )
   }
