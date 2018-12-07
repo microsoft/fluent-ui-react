@@ -70,14 +70,12 @@ class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
         className={classes.root}
         header={header}
         onClick={this.handleClick}
-        {...{
-          media: Image.create(image, {
-            defaultProps: {
-              avatar: true,
-            },
-          }),
-          content,
-        }}
+        media={Image.create(image, {
+          defaultProps: {
+            avatar: true,
+          },
+        })}
+        content={content}
         {...accessibilityItemProps}
         {...rest}
       />

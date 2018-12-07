@@ -71,15 +71,6 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
 
   public renderComponent({ classes, styles, rest }: RenderResultConfig<DropdownLabelProps>) {
     const { header, icon, image } = this.props
-    const optionalImage = !image
-      ? {}
-      : {
-          image: Image.create(image, {
-            defaultProps: {
-              avatar: true,
-            },
-          }),
-        }
 
     return (
       <Label
@@ -97,7 +88,11 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
           },
           overrideProps: this.handleIconOverrides,
         })}
-        {...optionalImage}
+        image={Image.create(image, {
+          defaultProps: {
+            avatar: true,
+          },
+        })}
         {...rest}
       />
     )

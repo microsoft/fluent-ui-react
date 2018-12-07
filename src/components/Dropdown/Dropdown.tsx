@@ -171,7 +171,7 @@ export default class Dropdown extends AutoControlledComponent<
 
   static Item = DropdownItem
   static Label = DropdownLabel
-  static SearchInput = DropdownLabel
+  static SearchInput = DropdownSearchInput
 
   state: DropdownState = {
     // prevent deletion of last character + last selected value at the same time on backspace.
