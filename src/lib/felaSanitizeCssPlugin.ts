@@ -41,19 +41,19 @@ export default (config?: { skip?: string[] }) => {
   const sanitizeCssStyleObject = styles => {
     const processedStyles = Array.isArray(styles) ? [] : {}
 
-    Object.keys(styles).forEach(cssPropertyName => {
-      const cssPropertyValue = styles[cssPropertyName]
+    Object.keys(styles).forEach(cssPropertyNameOrIndex => {
+      const cssPropertyValue = styles[cssPropertyNameOrIndex]
 
       if (typeof cssPropertyValue === 'object') {
-        processedStyles[cssPropertyName] = sanitizeCssStyleObject(cssPropertyValue)
+        processedStyles[cssPropertyNameOrIndex] = sanitizeCssStyleObject(cssPropertyValue)
         return
       }
 
       const isPropertyToSkip = cssPropertiesToSkip.some(
-        propToExclude => propToExclude === cssPropertyName,
+        propToExclude => propToExclude === cssPropertyNameOrIndex,
       )
       if (isPropertyToSkip || isValidCssValue(cssPropertyValue)) {
-        processedStyles[cssPropertyName] = cssPropertyValue
+        processedStyles[cssPropertyNameOrIndex] = cssPropertyValue
       }
     })
 

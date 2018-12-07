@@ -63,12 +63,26 @@ describe('felaSanitizeCssPlugin', () => {
     assertCssPropertyValue(`url('../../lib')`, true)
   })
 
-  describe('should pass arrays', () => {
-    const style = {
-      color: ['red', 'blue'],
-      display: 'block',
-    }
+  describe('if array is passed', () => {
+    test('should process the array without conversion to an object', () => {
+      const style = {
+        color: ['red', 'blue'],
+        ':hover': { color: 'red' },
+        display: 'block',
+      }
 
-    expect(sanitize(style)).toEqual(style)
+      expect(sanitize(style)).toEqual(style)
+    })
+
+    test('should sanitize its items and remove invalid ones', () => {
+      const style = {
+        color: ['red', 'blue', 'rgba('],
+        display: 'block',
+      }
+      expect(sanitize(style)).toEqual({
+        color: ['red', 'blue'],
+        display: 'block',
+      })
+    })
   })
 })
