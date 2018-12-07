@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -12,6 +13,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  EventStack,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu, { MenuProps } from '../Menu/Menu'
@@ -21,6 +23,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
+import { Ref } from '@stardust-ui/react'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -139,7 +142,22 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     submenuOpen: false,
   }
 
+  private outsideClickSubscription = EventStack.noSubscription
+
+  private submenuDomElement = null
   private itemRef = React.createRef<HTMLElement>()
+
+  public componentDidMount() {
+    this.updateOutsideClickSubscription()
+  }
+
+  public componentDidUpdate() {
+    this.updateOutsideClickSubscription()
+  }
+
+  public componentWillUnmount() {
+    this.outsideClickSubscription.unsubscribe()
+  }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
     const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
@@ -179,9 +197,20 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
             },
             overrideProps: {
               onClick: this.handleSubmenuClicked,
+              onKeyDown: this.handleSubmenuKeyDown,
             },
           })
         : null
+
+    const maybeSubmenuWithRef = maybeSubmenu ? (
+      <Ref
+        innerRef={domElement => {
+          this.submenuDomElement = domElement
+        }}
+      >
+        {maybeSubmenu}
+      </Ref>
+    ) : null
 
     if (wrapper) {
       return Slot.create(wrapper, {
@@ -191,7 +220,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
           ...accessibility.keyHandlers.wrapper,
         },
         overrideProps: () => ({
-          children: [menuItemInner, maybeSubmenu],
+          children: [menuItemInner, maybeSubmenuWithRef],
         }),
       })
     }
@@ -203,6 +232,24 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     openSubmenu: event => this.openSubmenu(event),
     closeMenu: event => this.closeMenu(event),
     closeSubmenu: event => this.closeSubmenu(event),
+  }
+
+  private updateOutsideClickSubscription() {
+    this.outsideClickSubscription.unsubscribe()
+
+    if (this.props.menu && this.state.submenuOpen) {
+      setTimeout(() => {
+        this.outsideClickSubscription = EventStack.subscribe('click', e => {
+          if (
+            this.itemRef &&
+            (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
+            (!this.submenuDomElement || !this.submenuDomElement.contains(e.target))
+          ) {
+            this.state.submenuOpen && this.trySetState({ submenuOpen: false })
+          }
+        })
+      })
+    }
   }
 
   private handleClick = e => {
@@ -256,6 +303,16 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   private handleSubmenuClicked = (e: React.SyntheticEvent, props: MenuProps) => {
     this.trySetState({ submenuOpen: false })
     _.invoke(props, 'onClick', props)
+  }
+
+  private handleSubmenuKeyDown = (e: React.SyntheticEvent, props: MenuProps) => {
+    if (
+      keyboardKey.getCode(e) === keyboardKey.Enter ||
+      keyboardKey.getCode(e) === keyboardKey.Spacebar
+    ) {
+      this.trySetState({ submenuOpen: false })
+    }
+    _.invoke(props, 'onKeyDown', props)
   }
 }
 
