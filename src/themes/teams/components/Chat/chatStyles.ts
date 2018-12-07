@@ -1,6 +1,6 @@
 import { ICSSInJSStyle } from '../../../types'
 import { ChatVariables } from './chatVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 const chatStyles = {
   root: ({ variables: v }: { variables: ChatVariables }): ICSSInJSStyle => ({

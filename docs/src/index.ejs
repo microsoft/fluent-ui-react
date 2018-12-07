@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="font-size: 14px;">
 <head>
   <base href='<%= __BASENAME__ %>'>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/x-icon" href='<%= __BASENAME__ + 'logo.png' %>'/>
   <link rel="stylesheet"
-        href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/<%= htmlWebpackPlugin.options.versions.sui %>/semantic.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/<%= htmlWebpackPlugin.options.versions.sui %>/semantic.min.css">
   <title>Stardust</title>
   <script>
     // Redirect to HTTPs
@@ -26,27 +26,27 @@
   </script>
 </head>
 <body>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/anchor-js/3.2.1/anchor.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/3.2.1/anchor.min.js"></script>
   <script
-    crossOrigin="true"
-    src="//unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/standalone.js"
+    crossOrigin="anonymous"
+    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/standalone.js"
   ></script>
   <script
-    crossOrigin="true"
-    src="//unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-babylon.js"
+    crossOrigin="anonymous"
+    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-babylon.js"
   ></script>
   <script
-    crossOrigin="true"
-    src="//unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-html.js"
+    crossOrigin="anonymous"
+    src="https://unpkg.com/prettier@<%= htmlWebpackPlugin.options.versions.prettier %>/parser-html.js"
   ></script>
   <!-- Use unminified React when not in production so we get errors and warnings -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/prop-types/<%= htmlWebpackPlugin.options.versions.propTypes %>/prop-types<%= __PROD__ ? '.min' : '' %>.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/react/<%= htmlWebpackPlugin.options.versions.react %>/umd/react<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/<%= htmlWebpackPlugin.options.versions.reactDOM %>/umd/react-dom<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/react-dom/<%= htmlWebpackPlugin.options.versions.reactDOM %>/umd/react-dom-server.browser<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/<%= htmlWebpackPlugin.options.versions.propTypes %>/prop-types<%= __PROD__ ? '.min' : '' %>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/<%= htmlWebpackPlugin.options.versions.react %>/umd/react<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/<%= htmlWebpackPlugin.options.versions.reactDOM %>/umd/react-dom<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/<%= htmlWebpackPlugin.options.versions.reactDOM %>/umd/react-dom-server.browser<%= __PROD__ ? '.production.min' : '.development' %>.js"></script>
 
-  <script src="//cdn.jsdelivr.net/npm/@babel/standalone@7/babel.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/@babel/preset-env-standalone@7/babel-preset-env.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7/babel.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/preset-env-standalone@7/babel-preset-env.js"></script>
 
   <style>
     html, body {
