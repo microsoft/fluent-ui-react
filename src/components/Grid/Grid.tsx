@@ -22,6 +22,7 @@ export interface GridProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default defaultBehavior
+   * @available gridBehavior
    * */
   accessibility?: Accessibility
 
