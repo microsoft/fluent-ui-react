@@ -1,24 +1,19 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
 
-export interface TextProps
-  extends UIComponentProps<any, any>,
-    ContentComponentProps,
-    ChildrenComponentProps {
+import { Extendable } from '../../../types/utils'
+
+export interface TextProps extends UIComponentProps, ContentComponentProps, ChildrenComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 
@@ -55,6 +50,10 @@ export interface TextProps
  * @accessibility
  * Text is how people read the content on your website.
  * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
+ *
+ * To ensure that RTL mode will be properly handled for provided 'content' value, ensure that either:
+ * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
+ * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
 class Text extends UIComponent<Extendable<TextProps>, any> {
   static create: Function
@@ -64,10 +63,8 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
+    ...commonPropTypes.createCommon(),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,
@@ -85,9 +82,14 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
 
   renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { children, content } = this.props
+
+    const hasChildren = childrenExist(children)
+
+    const maybeDirAuto = !hasChildren && typeof content === 'string' ? { dir: 'auto' } : null
+
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : content}
+      <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
+        {hasChildren ? children : content}
       </ElementType>
     )
   }

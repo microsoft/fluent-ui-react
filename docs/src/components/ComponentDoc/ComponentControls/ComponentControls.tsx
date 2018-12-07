@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
+import ComponentButton from './ComponentButton'
 import ComponentControlsShowCode from './ComponentControlsShowCode'
 import ComponentControlsCopyLink from './ComponentControlsCopyLink'
 import ComponentControlsShowVariables from './ComponentControlsShowVariables'
@@ -61,4 +62,4 @@ export default updateForKeys([
   'showTransparent',
   'showVariables',
   'visible',
-])(ComponentControls)
+])(ComponentControls, ComponentButton)

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Provider, Text } from '@stardust-ui/react'
+import { Button, Divider, Icon, Provider, Text, Animation } from '@stardust-ui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -37,20 +37,9 @@ export default () => (
     </p>
 
     <ExampleSnippet
-      value={[
-        `<Provider theme={{ siteVariables: { brand: 'hotpink' } }}>`,
-        `  <div>`,
-        `    <Button primary>Branding</Button>`,
-        `    <Divider type="primary">Branding</Divider>`,
-        `  </div>`,
-        `</Provider>`,
-      ].join('\n')}
       render={() => (
-        <Provider theme={{ siteVariables: { brand: 'hotpink' }, componentVariables: {} }}>
-          <div>
-            <Button primary>Branding</Button>
-            <Divider type="primary">Branding</Divider>
-          </div>
+        <Provider theme={{ siteVariables: { brand: 'hotpink' } }}>
+          <Button primary>Branding</Button>
         </Provider>
       )}
     />
@@ -63,15 +52,11 @@ export default () => (
 
     <p>You can define component variables on a single instance of a component.</p>
     <ExampleSnippet
-      value={[
-        `<Icon name="user" circular />`,
-        `<Icon name="user" circular variables={{ color: 'cornflowerblue' }} />`,
-      ].join('\n')}
       render={() => (
-        <div>
+        <>
           <Icon name="user" circular />
           <Icon name="user" circular variables={{ color: 'cornflowerblue' }} />
-        </div>
+        </>
       )}
     />
 
@@ -80,19 +65,8 @@ export default () => (
       the <NavLink to="components/provider">Provider</NavLink>.
     </p>
     <ExampleSnippet
-      value={[
-        `<Icon name="user" circular />`,
-        `<Icon name="user" circular />`,
-        '',
-        `<Provider theme={{ componentVariables: { Icon: { color: 'cornflowerblue' } } }}>`,
-        `  <span>`,
-        `    <Icon name="user" circular />`,
-        `    <Icon name="user" circular />`,
-        `  </span>`,
-        `</Provider>`,
-      ].join('\n')}
       render={() => (
-        <div>
+        <>
           <Icon name="user" circular />
           <Icon name="user" circular />
 
@@ -102,7 +76,7 @@ export default () => (
               <Icon name="user" circular />
             </span>
           </Provider>
-        </div>
+        </>
       )}
     />
     <p>
@@ -128,21 +102,12 @@ export default () => (
     <p>
       You can define <code>styles</code> on a single component instance.
     </p>
-    <ExampleSnippet
-      value={`<Text styles={{ color: 'green' }}>This is green text</Text>`}
-      render={() => <Text styles={{ color: 'green' }}>This is green text</Text>}
-    />
+    <ExampleSnippet render={() => <Text styles={{ color: 'green' }}>This is green text</Text>} />
     <p>
       Every slot (named part) of every component also accepts <code>styles</code> that are applied
       to the root element of the slot.
     </p>
     <ExampleSnippet
-      value={[
-        `<Button`,
-        `  icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }}`,
-        `  content="Profile"`,
-        `/>`,
-      ].join('\n')}
       render={() => (
         <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
       )}
@@ -158,29 +123,8 @@ export default () => (
       <code>icon</code> slot.
     </p>
     <ExampleSnippet
-      value={[
-        `<Button icon="user" content="Profile" />`,
-        `<Button icon="user" content="Profile" />`,
-        ``,
-        `<Provider`,
-        `  theme={{`,
-        `    componentStyles: {`,
-        `      Button: {`,
-        `        root: { boxShadow: '0 0 0 2px blue' },`,
-        `        icon: { boxShadow: '0 0 0 2px red' },`,
-        `        content: { boxShadow: '0 0 0 2px green' },`,
-        `      },`,
-        `    },`,
-        `  }}`,
-        `>`,
-        `  <span>`,
-        `    <Button icon="user" content="Profile" />`,
-        `    <Button icon="user" content="Profile" />`,
-        `  </span>`,
-        `</Provider>`,
-      ].join('\n')}
       render={() => (
-        <div>
+        <>
           <Button icon="user" content="Profile" />
           <Button icon="user" content="Profile" />
 
@@ -200,12 +144,128 @@ export default () => (
               <Button icon="user" content="Profile" />
             </span>
           </Provider>
-        </div>
+        </>
       )}
     />
     <p>
       You can style all components in your app by defining component styles on a{' '}
       <NavLink to="components/provider">Provider</NavLink> at the root of your app.
+    </p>
+
+    <Header as="h2" content="Animations" />
+    <p>
+      You define animations in Stardust in a very similar way to CSS, by providing keyframes and
+      animation properties.
+    </p>
+
+    <ExampleSnippet
+      value={`
+        <Provider
+          theme={{
+            animations: {
+              spinner: {
+                keyframe: {
+                  from: { transform: 'rotate(0deg)' },
+                  to: { transform: 'rotate(360deg)' },
+                },
+                duration: '5s',
+                iterationCount: 'infinite',
+              },
+            },
+          }}
+        >
+          ...
+        </Provider>
+      `}
+    />
+
+    <p>
+      You can define the <code>animations</code> in a part of your render tree using the{' '}
+      <NavLink to="components/provider">Provider</NavLink>.
+    </p>
+    <p>
+      This is done with the Provider's <code>theme</code> prop. The animations are then applied
+      based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
+      component, or the <code>animation</code> property available on all Stardust component. Here's
+      how we can use them in our components.
+    </p>
+    <ExampleSnippet
+      render={() => (
+        <Provider
+          theme={{
+            animations: {
+              spinner: {
+                keyframe: {
+                  from: { transform: 'rotate(0deg)' },
+                  to: { transform: 'rotate(360deg)' },
+                },
+                duration: '5s',
+                iterationCount: 'infinite',
+              },
+            },
+          }}
+        >
+          <div>
+            <Animation name="spinner">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon name="book" animation="spinner" circular />
+          </div>
+        </Provider>
+      )}
+    />
+
+    <p>
+      You can also override some of the defined <code>animation</code> properties, by providing
+      additional properties to the <code>Animation</code> component, or the <code>animation</code>{' '}
+      prop.
+    </p>
+
+    <blockquote>
+      <strong>Keyframes are static</strong> - Keyframes cannot be overridden using the properties.
+      If you want to add new keyframes or change some existing, please use the <code>Provider</code>{' '}
+      for this. The API for
+      <i>using</i> the animations doesn't provide any way for changing the keyframes.
+    </blockquote>
+
+    <ExampleSnippet
+      render={() => (
+        <Provider
+          theme={{
+            animations: {
+              spinner: {
+                keyframe: {
+                  from: { transform: 'rotate(0deg)' },
+                  to: { transform: 'rotate(360deg)' },
+                },
+                duration: '5s',
+                iterationCount: 'infinite',
+              },
+            },
+          }}
+        >
+          <div>
+            <Animation name="spinner" delay="2s" duration="1s">
+              <Icon name="user" circular />
+            </Animation>
+            <Icon
+              name="book"
+              animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
+              circular
+            />
+          </div>
+        </Provider>
+      )}
+    />
+
+    <p>
+      The difference between using the Animation component versus the animation property is that,
+      the Animation component can be safely used for applying animations on{' '}
+      <i>all components (Stardust, custom and third party components)</i>. For the Stardust
+      components, we recommend using the animation property as there will be no wrapper element
+      added just for the purpose of defining the animation. For more details, please see the
+      examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
+      structure of the <code>animation</code> property in any of the Stardust components.
     </p>
 
     <br />

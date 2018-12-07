@@ -4,6 +4,7 @@ import { Menu } from '@stardust-ui/react'
 import { NavLink } from 'react-router-dom'
 
 import { updateForKeys } from 'docs/src/hoc'
+import LabelledButton from './ComponentButton'
 
 const ComponentControlsMaximize: any = ({ examplePath, onClick }) => (
   <Menu.Item
@@ -11,6 +12,7 @@ const ComponentControlsMaximize: any = ({ examplePath, onClick }) => (
     to={`/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`}
     target="_blank"
     rel="noopener noreferrer"
+    content={<LabelledButton iconName="external alternate" label="Popout" active={false} />}
   />
 )
 

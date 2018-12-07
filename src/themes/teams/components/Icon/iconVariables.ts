@@ -1,7 +1,10 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 export interface IconVariables {
   [key: string]: string | number | boolean | undefined
+
+  redColor?: string
+  brandColor?: string
 
   outline?: boolean
   color?: string
@@ -22,4 +25,7 @@ export default (siteVars): IconVariables => ({
   margin: `0 ${pxToRem(8)} 0 0`,
   secondaryColor: siteVars.white,
   disabledColor: siteVars.gray06,
+
+  redColor: siteVars.red,
+  brandColor: siteVars.brandColor,
 })

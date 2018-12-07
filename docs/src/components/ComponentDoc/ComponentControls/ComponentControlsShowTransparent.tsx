@@ -1,22 +1,14 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from '@stardust-ui/react'
+import { Menu } from '@stardust-ui/react'
 import { updateForKeys } from 'docs/src/hoc'
+import LabelledButton from './ComponentButton'
 
 const ComponentControlsShowTransparent: React.SFC = ({ active, onClick }: any) => (
   <Menu.Item
     active={active}
     onClick={onClick}
-    styles={{
-      display: 'grid',
-      textAlign: 'center',
-    }}
-    icon={{
-      size: 'large',
-      name: 'adjust',
-      styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
-    }}
-    content="Transparent"
+    content={<LabelledButton iconName="adjust" label="Transparent" active={active} />}
   />
 )
 

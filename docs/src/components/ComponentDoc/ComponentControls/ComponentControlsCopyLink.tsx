@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Menu } from '@stardust-ui/react'
+import LabelledButton from './ComponentButton'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
@@ -31,17 +32,13 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
     return (
       <Menu.Item
         onClick={this.handleClick}
-        styles={{
-          display: 'grid',
-          textAlign: 'center',
-        }}
-        icon={{
-          styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
-          size: 'large',
-          name: 'linkify',
-          xspacing: 'both',
-        }}
-        content={active ? 'Copied!' : this.btnLabel}
+        content={
+          <LabelledButton
+            iconName="linkify"
+            label={active ? 'Copied!' : this.btnLabel}
+            active={active}
+          />
+        }
       />
     )
   }

@@ -93,6 +93,10 @@ export { default as Status, StatusPropsWithDefaults, StatusProps } from './compo
 
 export { default as Text, TextProps } from './components/Text/Text'
 
+export { default as Animation, AnimationProps } from './components/Animation/Animation'
+
+export { default as Tree } from './components/Tree'
+
 //
 // Accessibility
 //
@@ -117,8 +121,21 @@ export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/grid
 export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 
 //
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { createComponent } from './lib'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'
+export {
+  AnimatedComponentProps,
+  StyledComponentProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from './lib'

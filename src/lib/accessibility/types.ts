@@ -1,4 +1,4 @@
-import { FocusTrapZoneProps, FocusZoneProps } from './FocusZone'
+import { FocusTrapZoneProps, FocusZoneProps, IS_FOCUSABLE_ATTRIBUTE } from './FocusZone'
 
 export type AriaWidgetRole =
   | 'button'
@@ -90,6 +90,7 @@ export interface AriaWidgetAttributes {
   'aria-invalid'?: string
   'aria-label'?: string
   'aria-level'?: string
+  'aria-modal'?: boolean
   'aria-multiline'?: string
   'aria-multiselectable'?: string
   'aria-orientation'?: string
@@ -125,6 +126,7 @@ export interface AriaRelationshipAttributes {
 export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
   role?: AriaRole
   tabIndex?: string
+  [IS_FOCUSABLE_ATTRIBUTE]?: boolean
 }
 
 export type AccessibilityAttributesBySlot = { [partName: string]: AccessibilityAttributes }

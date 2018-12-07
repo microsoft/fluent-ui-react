@@ -16,6 +16,7 @@ import {
   menuItemBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
+  dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
@@ -25,10 +26,12 @@ import {
   toggleButtonBehavior,
   toolbarBehavior,
   toolbarButtonBehavior,
+  treeTitleBehavior,
   gridBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
+
 const behaviorMenuItems = require('docs/src/behaviorMenu')
 
 const testHelper = new TestHelper()
@@ -54,6 +57,8 @@ testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
 testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
+testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
 testHelper.addBehavior('gridBehavior', gridBehavior)
+testHelper.addBehavior('dialogBehavior', dialogBehavior)
 
 testHelper.run(behaviorMenuItems)

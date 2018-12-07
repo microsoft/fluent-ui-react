@@ -1,7 +1,8 @@
-import { ComponentVariablesInput, ComponentSlotStyle } from '../themes/types'
-import { ShorthandValue, ReactChildren } from '../../types/utils'
+import * as React from 'react'
+import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
+import { ReactChildren } from '../../types/utils'
 
-export interface StyledComponentProps<P, V> {
+export interface StyledComponentProps<P = any, V = any> {
   /** Additional CSS styles to apply to the component instance.  */
   styles?: ComponentSlotStyle<P, V>
 
@@ -9,7 +10,14 @@ export interface StyledComponentProps<P, V> {
   variables?: ComponentVariablesInput
 }
 
-export interface UIComponentProps<P, V> extends StyledComponentProps<P, V> {
+export interface AnimatedComponentProps {
+  /** Generic animation property that can be used for applying different theme animations. */
+  animation?: AnimationProp
+}
+
+export interface UIComponentProps<P = any, V = any>
+  extends StyledComponentProps<P, V>,
+    AnimatedComponentProps {
   /** An element type to render as (string or function). */
   as?: any
 
@@ -17,15 +25,32 @@ export interface UIComponentProps<P, V> extends StyledComponentProps<P, V> {
   className?: string
 }
 
-export interface ContentComponentProps {
-  /** Shorthand for primary content. */
-  content?: ShorthandValue
+export interface ColorComponentProps {
+  /** A component can have a color. */
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'blue'
+    | 'green'
+    | 'grey'
+    | 'orange'
+    | 'pink'
+    | 'purple'
+    | 'teal'
+    | 'red'
+    | 'yellow'
+    | string
 }
 
-export interface ChildrenComponentProps {
+export interface ContentComponentProps<TContent = React.ReactNode> {
+  /** Shorthand for primary content. */
+  content?: TContent
+}
+
+export interface ChildrenComponentProps<TChildren = ReactChildren> {
   /**
    *  Content for childrenApi
    *  @docSiteIgnore
    */
-  children?: ReactChildren
+  children?: TChildren
 }

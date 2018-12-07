@@ -23,7 +23,9 @@ export interface ProviderProps {
 /**
  * The Provider passes the CSS in JS renderer and theme to your components.
  */
-class Provider extends React.Component<ProviderProps, any> {
+class Provider extends React.Component<ProviderProps> {
+  staticStylesRendered: boolean = false
+
   static propTypes = {
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -47,19 +49,21 @@ class Provider extends React.Component<ProviderProps, any> {
       staticStyles: PropTypes.arrayOf(
         PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.func]),
       ),
+      animations: PropTypes.object,
     }),
     children: PropTypes.element.isRequired,
   }
 
   static Consumer = ProviderConsumer
 
-  renderStaticStyles = () => {
+  renderStaticStyles = (mergedTheme: ThemePrepared) => {
     // RTL WARNING
     // This function sets static styles which are global and renderer agnostic
     // With current implementation, static styles cannot differ between LTR and RTL
     // @see http://fela.js.org/docs/advanced/StaticStyle.html for details
 
-    const { siteVariables, staticStyles } = this.props.theme
+    const { siteVariables } = mergedTheme
+    const { staticStyles } = this.props.theme
 
     if (!staticStyles) return
 
@@ -108,7 +112,6 @@ class Provider extends React.Component<ProviderProps, any> {
   }
 
   componentDidMount() {
-    this.renderStaticStyles()
     this.renderFontFaces()
   }
 
@@ -121,7 +124,7 @@ class Provider extends React.Component<ProviderProps, any> {
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
           const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
-
+          this.renderStaticStylesOnce(outgoingTheme)
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>
@@ -130,6 +133,14 @@ class Provider extends React.Component<ProviderProps, any> {
         }}
       />
     )
+  }
+
+  renderStaticStylesOnce = (mergedTheme: ThemePrepared) => {
+    const { staticStyles } = this.props.theme
+    if (!this.staticStylesRendered && staticStyles) {
+      this.renderStaticStyles(mergedTheme)
+      this.staticStylesRendered = true
+    }
   }
 }
 

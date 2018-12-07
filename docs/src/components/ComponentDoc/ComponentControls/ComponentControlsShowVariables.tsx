@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Menu } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
+import LabelledButton from './ComponentButton'
 
 const ComponentControlsShowVariables: any = ({ active, onClick }) => {
   const btnLabel = 'Theme it'
@@ -11,17 +12,7 @@ const ComponentControlsShowVariables: any = ({ active, onClick }) => {
     <Menu.Item
       active={active}
       onClick={onClick}
-      styles={{
-        display: 'grid',
-        textAlign: 'center',
-      }}
-      icon={{
-        styles: { color: active ? 'green' : 'grey', marginBottom: '10px' },
-        size: 'large',
-        name: 'paint brush',
-        xspacing: 'both',
-      }}
-      content={btnLabel}
+      content={<LabelledButton iconName="paint brush" label={btnLabel} active={active} />}
     />
   )
 }

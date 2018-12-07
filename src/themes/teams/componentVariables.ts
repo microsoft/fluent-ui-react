@@ -46,3 +46,7 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
+
+export { default as TreeTitle } from './components/Tree/treeTitleVariables'
+
+export { default as Animation } from './components/Animation/animationVariables'

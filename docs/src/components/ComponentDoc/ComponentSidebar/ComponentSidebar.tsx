@@ -48,11 +48,11 @@ class ComponentSidebar extends React.Component<any, any> {
           fluid
           styles={{ ...sidebarStyle }}
           vertical
-          content={_.map(sections, ({ examples, sectionName }) => (
+          content={_.map(sections, ({ examples, sectionName, index }) => (
             <ComponentSidebarSection
               activePath={activePath}
               examples={examples}
-              key={sectionName}
+              key={`${sectionName}-${index}`}
               sectionName={sectionName}
               onItemClick={onItemClick}
             />
