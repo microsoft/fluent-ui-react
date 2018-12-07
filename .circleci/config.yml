@@ -59,6 +59,9 @@ jobs:
 #          name: Project Tests
 #          command: yarn test:projects:cra-ts
       - run:
+          name: Bundler Tests
+          command: yarn test:bundlers:rollup
+      - run:
           name: Danger JS
           command: |
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then

@@ -38,6 +38,7 @@
     "test:vulns": "snyk test",
     "test:visual": "gulp screener",
     "test:projects:cra-ts": "gulp test:projects:cra-ts",
+    "test:bundlers:rollup": "gulp test:bundlers:rollup",
     "generate:component": "gulp generate:component"
   },
   "lint-staged": {
