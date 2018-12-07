@@ -3,7 +3,7 @@ import { Provider, Grid, Divider, Header, Icon } from '@stardust-ui/react'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Segment } from 'semantic-ui-react'
 
 const cellStyles = {
   margin: '10px 0',
@@ -40,7 +40,7 @@ class IconViewerExample extends React.Component<any, {}> {
 
   render() {
     return (
-      <div style={{ margin: '20px' }}>
+      <Segment styles={{ padding: '30px' }}>
         <Header
           as="h3"
           content="Teams Icons"
@@ -51,10 +51,11 @@ class IconViewerExample extends React.Component<any, {}> {
           }}
         />
 
-        <div>
-          <Menu pointing tabular>
+        <div style={{ marginTop: '15px' }}>
+          <Menu tabular style={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
+                key={filterName}
                 name={filterName}
                 active={this.state.filter === filterName}
                 onClick={() => this.setState({ filter: filterName })}
@@ -67,9 +68,7 @@ class IconViewerExample extends React.Component<any, {}> {
               render={theme => (
                 <div>
                   <div>
-                    <Divider>
-                      <Header as="h3" content="Regular" />
-                    </Divider>
+                    <Header as="h3" content="Regular" textAlign="center" />
                     <Grid columns={4} style={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
@@ -88,7 +87,7 @@ class IconViewerExample extends React.Component<any, {}> {
                   </div>
                   <div>
                     <Divider>
-                      <Header as="h3" content="Outline" />
+                      <Header as="h3" content="Outline" textAlign="center" />
                     </Divider>
                     <Grid columns={4} style={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
@@ -111,7 +110,7 @@ class IconViewerExample extends React.Component<any, {}> {
             />
           </Provider>
         </div>
-      </div>
+      </Segment>
     )
   }
 }
