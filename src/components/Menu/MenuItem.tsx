@@ -4,10 +4,14 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
+  AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
   customPropTypes,
-  AutoControlledComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu, { MenuProps } from '../Menu/Menu'
@@ -15,27 +19,11 @@ import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
-
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 
 export interface MenuItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /**
@@ -80,24 +68,6 @@ export interface MenuItemProps
   /** The menu item can have primary type. */
   primary?: boolean
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the wrapper slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderWrapper?: ShorthandRenderFunction
-
   /** The menu item can have secondary type. */
   secondary?: boolean
 
@@ -136,9 +106,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -152,9 +120,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
-    renderIcon: PropTypes.func,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    renderWrapper: PropTypes.func,
     menu: customPropTypes.itemShorthand,
     submenuOpen: PropTypes.bool,
     defaultSubmenuOpen: PropTypes.bool,
@@ -176,18 +142,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   private itemRef = React.createRef<HTMLElement>()
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
-    const {
-      children,
-      content,
-      icon,
-      renderIcon,
-      renderWrapper,
-      wrapper,
-      menu,
-      primary,
-      secondary,
-      active,
-    } = this.props
+    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { submenuOpen } = this.state
 
@@ -207,7 +162,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         {icon &&
           Icon.create(this.props.icon, {
             defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-            render: renderIcon,
           })}
         {content}
       </ElementType>
@@ -236,7 +190,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
           ...accessibility.attributes.wrapper,
           ...accessibility.keyHandlers.wrapper,
         },
-        render: renderWrapper,
         overrideProps: () => ({
           children: [menuItemInner, maybeSubmenu],
         }),

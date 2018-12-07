@@ -2,29 +2,18 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
 import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
-import FormField from './FormField'
-import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import FormField from './FormField'
 
-export interface FormProps
-  extends UIComponentProps<any, any>,
-    ChildrenComponentProps,
-    ContentComponentProps {
+export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML form action. */
   action?: string
 
@@ -37,16 +26,6 @@ export interface FormProps
    * @param {object} data - All props.
    */
   onSubmit?: ComponentEventHandler<FormProps>
-
-  /**
-   * A custom render iterator for rendering each of the Form fields.
-   * The default component, props, and children are available for each field.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderField?: ShorthandRenderFunction
 }
 
 /**
@@ -62,13 +41,12 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   public static className = 'ui-form'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,
-    renderField: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -77,14 +55,7 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    variables,
-    styles,
-    rest,
-  }): React.ReactNode {
+  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType className={classes.root} action={action} onSubmit={this.handleSubmit} {...rest}>
@@ -103,12 +74,8 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   }
 
   private renderFields = () => {
-    const { fields, renderField } = this.props
-    return _.map(fields, field =>
-      FormField.create(field, {
-        render: renderField,
-      }),
-    )
+    const { fields } = this.props
+    return _.map(fields, field => FormField.create(field))
   }
 }
 
