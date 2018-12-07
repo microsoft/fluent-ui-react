@@ -55,10 +55,6 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
 
 const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
-const getComponentExampleElementKey = (examplePath, isRtl) => {
-  return `${examplePath}${isRtl ? '-rtl' : ''}`
-}
-
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
@@ -254,7 +250,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderElement = (element: React.ReactElement<any>) => {
+    const { examplePath } = this.props
     const { showRtl, componentVariables, themeName } = this.state
+
     const theme = themes[themeName]
 
     const newTheme: ThemeInput = {
@@ -265,10 +263,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
 
     return (
-      <Provider
-        key={getComponentExampleElementKey(this.props.examplePath, this.state.showRtl)}
-        theme={newTheme}
-      >
+      <Provider key={`${examplePath}${showRtl ? '-rtl' : ''}`} theme={newTheme}>
         {element}
       </Provider>
     )
