@@ -17,13 +17,13 @@ import {
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu, { MenuProps } from '../Menu/Menu'
+import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
-import { Ref } from '@stardust-ui/react'
 
 export interface MenuItemProps
   extends UIComponentProps,
