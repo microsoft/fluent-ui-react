@@ -55,10 +55,9 @@ const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
 
 const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
-const generateRandomKey = () =>
-  Math.random()
-    .toString(36)
-    .substring(7)
+const getComponentExampleElementKey = (examplePath, isRtl) => {
+  return `${examplePathToHash(examplePath)}${isRtl ? '-rtl' : ''}`
+}
 
 /**
  * Renders a `component` and the raw `code` that produced it.
@@ -266,7 +265,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
 
     return (
-      <Provider key={generateRandomKey()} theme={newTheme}>
+      <Provider
+        key={getComponentExampleElementKey(this.props.examplePath, this.state.showRtl)}
+        theme={newTheme}
+      >
         {element}
       </Provider>
     )
