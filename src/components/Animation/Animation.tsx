@@ -1,13 +1,19 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, childrenExist } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  StyledComponentProps,
+  commonPropTypes,
+  ChildrenComponentProps,
+} from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ChildrenComponentProps, StyledComponentProps } from '../../lib/commonPropInterfaces'
-import { styledComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface AnimationProps extends StyledComponentProps<any, any>, ChildrenComponentProps {
+export interface AnimationProps
+  extends StyledComponentProps,
+    ChildrenComponentProps<React.ReactChild> {
   /** An element type to render as (string or function). */
   as?: any
 
@@ -80,11 +86,12 @@ class Animation extends UIComponent<AnimationProps, any> {
   static displayName = 'Animation'
 
   static propTypes = {
-    ...styledComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      content: false,
+      children: 'element',
+    }),
     name: PropTypes.string,
-    as: customPropTypes.as,
-    className: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
     duration: PropTypes.string,

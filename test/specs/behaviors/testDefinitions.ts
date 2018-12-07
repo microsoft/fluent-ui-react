@@ -163,6 +163,48 @@ definitions.push({
   },
 })
 
+// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
+definitions.push({
+  regexp: /Adds attribute '([\w\-\w \s*]+)=([a-z]+)' based on the property '([a-z]+)' if the component has '([a-zA-Z]+)' property./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyDependingOnFirst,
+      propertyDependingOnSecond,
+    ] = [...parameters.props]
+
+    const property = {}
+
+    property[propertyDependingOnFirst] = attributeExpectedValue
+    property[propertyDependingOnSecond] = true
+    const actualResult = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResult)).toEqual(
+      testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropNegate = {}
+    propertyFirstPropNegate[propertyDependingOnFirst] = !testHelper.convertToBooleanIfApplicable(
+      attributeExpectedValue,
+    )
+    propertyFirstPropNegate[propertyDependingOnSecond] = true
+    const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate).attributes
+      .root[attributeToBeAdded]
+    expect(testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegate)).toEqual(
+      !testHelper.convertToBooleanIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropUndefined = {}
+    propertyFirstPropUndefined[propertyDependingOnFirst] = true
+    propertyFirstPropUndefined[propertyDependingOnSecond] = undefined
+    const actualResultFirstPropertyNegateUndefined = parameters.behavior(propertyFirstPropUndefined)
+      .attributes.root[attributeToBeAdded]
+    expect(
+      testHelper.convertToBooleanIfApplicable(actualResultFirstPropertyNegateUndefined),
+    ).toEqual(undefined)
+  },
+})
+
 // Example: Adds role='button' if element type is other than 'button'.
 definitions.push({
   regexp: /Adds role='([a-z]+)' if element type is other than '[a-z]+'\.+/g,

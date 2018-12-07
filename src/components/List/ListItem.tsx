@@ -1,23 +1,25 @@
 import * as React from 'react'
 
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, UIComponent } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface ListItemProps extends UIComponentProps<any, any> {
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
    * */
   accessibility?: Accessibility
   contentMedia?: any
-  /** Shorthand for primary content. */
-  content?: any
   /** Toggle debug mode */
   debug?: boolean
   header?: any
@@ -49,7 +51,10 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
     content: PropTypes.any,
 

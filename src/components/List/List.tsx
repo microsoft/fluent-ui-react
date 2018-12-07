@@ -3,17 +3,21 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
-import { customPropTypes, childrenExist, UIComponent } from '../../lib'
+import {
+  customPropTypes,
+  childrenExist,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
-
-export interface ListProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listBehavior
@@ -34,16 +38,6 @@ export interface ListProps extends UIComponentProps<any, any>, ChildrenComponent
 
   /** Truncates header */
   truncateHeader?: boolean
-
-  /**
-   * A custom render iterator for rendering each of the List items.
-   * The default component, props, and children are available for each item.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItem?: ShorthandRenderFunction
 }
 
 export interface ListState {
@@ -59,15 +53,15 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   static className = 'ui-list'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     selection: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
-    renderItem: PropTypes.func,
   }
 
   static defaultProps = {
@@ -136,7 +130,7 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
   }
 
   renderItems() {
-    const { items, renderItem } = this.props
+    const { items } = this.props
     const { selectedItemIndex } = this.state
 
     this.itemRefs = []
@@ -160,7 +154,6 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
 
       return ListItem.create(item, {
         defaultProps: itemProps,
-        render: renderItem,
       })
     })
   }

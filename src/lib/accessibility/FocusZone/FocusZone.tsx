@@ -149,7 +149,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
     return (
       <ElementType
-        role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
         data-focuszone-id={this._id}
