@@ -1,5 +1,4 @@
-// @ts-ignore
-import Color from 'color'
+import * as Color from 'color'
 import { ColorVariants } from '../themes/types'
 
 export const setColorLightness = (base: string, value: number) =>
