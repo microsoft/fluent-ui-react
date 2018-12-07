@@ -50,9 +50,6 @@ const inputItems = [
 ]
 
 class DropdownExample extends React.Component {
-  state = {
-    items: inputItems,
-  }
   render() {
     return (
       <Dropdown
@@ -61,7 +58,7 @@ class DropdownExample extends React.Component {
         search
         getA11ySelectionMessage={getA11ySelectionMessage}
         placeholder="Start typing a name"
-        items={this.state.items}
+        items={inputItems}
       />
     )
   }
