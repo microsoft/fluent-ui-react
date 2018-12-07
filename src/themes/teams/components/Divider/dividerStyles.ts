@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 
-import { childrenExist, pxToRem } from '../../../../lib'
+import { childrenExist } from '../../../../lib'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 
@@ -14,10 +15,7 @@ const beforeAndAfter = (color, size, type, variables): ICSSPseudoElementStyle =>
   flex: 1,
   ...dividerBorderStyle(size, variables.dividerColor),
   ...(color && {
-    ...dividerBorderStyle(size, _.get(variables.colors, [color, 500])),
-  }),
-  ...(type === 'primary' && {
-    ...dividerBorderStyle(size, variables.primaryColor),
+    ...dividerBorderStyle(size, _.get(variables.colors, color)),
   }),
 })
 
@@ -33,10 +31,7 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
         paddingBottom: variables.dividerPadding,
       }),
       ...(color && {
-        color: _.get(variables.colors, [color, 500]),
-      }),
-      ...(type === 'primary' && {
-        color: variables.primaryColor,
+        color: _.get(variables.colors, color),
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,

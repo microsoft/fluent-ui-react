@@ -47,7 +47,7 @@ const items = [
     key: 'message-id-4',
   },
   {
-    content: <Divider content="Today" type="primary" important />,
+    content: <Divider content="Today" color="primary" important />,
     key: 'message-id-5',
   },
   {
