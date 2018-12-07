@@ -1,4 +1,4 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from './utils'
 import { colors } from './colors'
 
 //
@@ -94,7 +94,6 @@ export const bodyPadding = 0
 export const bodyMargin = 0
 export const bodyFontFamily =
   '"Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif'
-export const bodyFontSize = '1.4rem'
 export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
