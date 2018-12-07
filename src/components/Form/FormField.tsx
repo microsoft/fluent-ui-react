@@ -1,15 +1,21 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { UIComponent, customPropTypes, childrenExist, createShorthandFactory } from '../../lib'
-import { Extendable, ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import {
+  UIComponent,
+  customPropTypes,
+  childrenExist,
+  createShorthandFactory,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Slot from '../Slot/Slot'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface FormFieldProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /** A control for the form field. */
   control?: ShorthandValue
 
@@ -27,33 +33,6 @@ export interface FormFieldProps extends UIComponentProps<any, any>, ChildrenComp
 
   /** The HTML input name. */
   name?: string
-
-  /**
-   * A custom render function for the control slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderControl?: ShorthandRenderFunction
-
-  /**
-   * A custom render function for the label slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderLabel?: ShorthandRenderFunction
-
-  /**
-   * A custom render function for the message slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderMessage?: ShorthandRenderFunction
 
   /** A field can show that input is mandatory. */
   required?: boolean
@@ -73,17 +52,15 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
   static create: Function
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     control: customPropTypes.itemShorthand,
     id: PropTypes.string,
     inline: PropTypes.bool,
     label: customPropTypes.itemShorthand,
     message: customPropTypes.itemShorthand,
     name: PropTypes.string,
-    renderControl: PropTypes.func,
-    renderLabel: PropTypes.func,
-    renderMessage: PropTypes.func,
     required: PropTypes.bool,
     type: PropTypes.string,
   }
@@ -101,19 +78,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     styles,
     rest,
   }): React.ReactNode {
-    const {
-      children,
-      control,
-      id,
-      label,
-      message,
-      name,
-      renderControl,
-      renderLabel,
-      renderMessage,
-      required,
-      type,
-    } = this.props
+    const { children, control, id, label, message, name, required, type } = this.props
 
     const labelElement = Text.create(label, {
       defaultProps: {
@@ -121,19 +86,16 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
         htmlFor: id,
         styles: styles.label,
       },
-      render: renderLabel,
     })
 
     const messageElement = Text.create(message, {
       defaultProps: {
         styles: styles.message,
       },
-      render: renderMessage,
     })
 
     const controlElement = Slot.create(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
-      render: renderControl,
     })
 
     const content = (
