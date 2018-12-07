@@ -1,5 +1,5 @@
 import * as React from 'react'
-import cx from 'classnames'
+import * as cx from 'classnames'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
 import {
