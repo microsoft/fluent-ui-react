@@ -86,7 +86,7 @@ task('build:dist:umd', cb => {
   })
 })
 
-task('build:dist', parallel('build:dist:es'))
+task('build:dist', parallel('build:dist:commonjs', 'build:dist:es', 'build:dist:umd'))
 
 // ----------------------------------------
 // Default
