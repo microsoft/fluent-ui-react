@@ -32,7 +32,7 @@ export { default as typescriptUtils } from './typescriptUtils'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 export { default as leven } from './leven'
 
-export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
+export { pxToRem } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'

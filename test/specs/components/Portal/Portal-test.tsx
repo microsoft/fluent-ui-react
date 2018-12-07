@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { mount } from 'enzyme'
 import { domEvent, nextFrame, withProvider } from 'test/utils'
 

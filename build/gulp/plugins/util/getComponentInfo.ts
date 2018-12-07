@@ -6,6 +6,12 @@ import parseDocblock from './parseDocblock'
 import parseType from './parseType'
 import * as reactDocgenTypescript from 'react-docgen-typescript'
 
+interface BehaviorInfo {
+  name: string
+  displayName: string
+  category: string
+}
+
 const getComponentInfo = (filepath: string, checksum?: string) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
@@ -111,7 +117,28 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
   // sort props
   info.props = _.sortBy(info.props, 'name')
 
+  // available behaviors
+  info.behaviors = getAvailableBehaviors(_.find(info.props, { name: 'accessibility' }))
   return info
+}
+
+const getAvailableBehaviors: (accessibilityProp: any) => BehaviorInfo = accessibilityProp => {
+  const docTags = accessibilityProp && accessibilityProp.tags
+  const availableTag = _.find(docTags, { title: 'available' })
+  const availableBehaviorNames = _.get(availableTag, 'description', '')
+
+  if (!availableBehaviorNames) {
+    return undefined
+  }
+
+  return availableBehaviorNames
+    .replace(/\s/g, '')
+    .split(',')
+    .map(name => ({
+      name,
+      displayName: _.upperFirst(name.replace('Behavior', '')),
+      category: _.upperFirst(name.split(/(?=[A-Z])/)[0]),
+    }))
 }
 
 export default getComponentInfo
