@@ -20,6 +20,7 @@ import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 import CodeSnippet from '../../CodeSnippet'
 import formatCode from '../../../utils/formatCode'
+import { freemem } from 'os'
 
 export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   title: React.ReactNode
@@ -334,8 +335,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         disabled,
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
-        content: codeTypeApiButtonLabels[codeType],
-        ...(disabled && { className: 'crossout' }),
+        content: (
+          <span>
+            {codeTypeApiButtonLabels[codeType]}
+            {disabled && <em> (not supported)</em>}
+          </span>
+        ),
       }
     })
 
