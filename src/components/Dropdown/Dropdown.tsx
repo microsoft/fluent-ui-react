@@ -223,7 +223,6 @@ export default class Dropdown extends AutoControlledComponent<
                 {multiple && this.renderLabels(styles)}
                 {search &&
                   this.renderInput(
-                    variables,
                     getRootProps,
                     getInputProps,
                     highlightedIndex,
@@ -247,7 +246,6 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderInput(
-    variables: ComponentVariablesInput,
     getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
     highlightedIndex: number,
@@ -376,7 +374,7 @@ export default class Dropdown extends AutoControlledComponent<
       }
       return DropdownLabel.create(itemAsLabel, {
         defaultProps: {
-          styles: styles.activeListLabel,
+          styles: styles.label,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
