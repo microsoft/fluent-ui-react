@@ -340,8 +340,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         disabled,
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
-        content: codeTypeApiButtonLabels[codeType],
-        ...(disabled && { className: 'crossout' }),
+        content: (
+          <span>
+            {codeTypeApiButtonLabels[codeType]}
+            {disabled && <em> (not supported)</em>}
+          </span>
+        ),
       }
     })
 
