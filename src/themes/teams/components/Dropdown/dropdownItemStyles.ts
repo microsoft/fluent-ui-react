@@ -10,7 +10,7 @@ const dropdownItemStyles: ComponentSlotStylesInput<DropdownItemProps, DropdownVa
     ...(active && {
       [`&.${ListItem.className}`]: {
         backgroundColor: v.listItemHighlightedBackgroundColor,
-        color: v.listItemTextColor,
+        color: v.listItemHighlightedTextColor,
       },
     }),
   }),

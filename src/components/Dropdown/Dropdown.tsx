@@ -312,13 +312,14 @@ export default class Dropdown extends AutoControlledComponent<
           {...accessibilityMenuPropsRest}
           styles={styles.list}
           aria-hidden={!isOpen}
-          items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
+          items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
     )
   }
 
   private renderItems(
+    styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
@@ -349,15 +350,13 @@ export default class Dropdown extends AutoControlledComponent<
     }
     // render no match message.
     return [
-      {
-        key: 'people-picker-no-results-item',
-        content: (
-          <Text weight="bold" content={noResultsMessage || `We couldn't find any matches.`} />
-        ),
-        variables: {
-          backgroundColor: variables.listItemBackgroundColor,
-        },
-      },
+      noResultsMessage
+        ? {
+            key: 'dropdown-no-results',
+            content: <Text weight="bold" content={noResultsMessage} />,
+            styles: styles.emptyListItem,
+          }
+        : null,
     ]
   }
 

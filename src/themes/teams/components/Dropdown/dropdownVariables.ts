@@ -10,7 +10,7 @@ export interface DropdownVariables {
   editTextFlexBasis: string
   listItemBackgroundColor: string
   listItemHighlightedBackgroundColor: string
-  listItemTextColor: string
+  listItemHighlightedTextColor: string
   listMaxHeight: string
   toggleButtonSize: string
   width: string
@@ -27,12 +27,11 @@ export default (siteVars): DropdownVariables => ({
   containerDivColor: siteVars.bodyColor,
   containerDivFocusBorderColor: siteVars.brand,
   containerDivFocusBorderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
-
   editTextFlexBasis: '100px',
 
-  listItemTextColor: siteVars.white,
   listItemBackgroundColor: siteVars.white,
   listItemHighlightedBackgroundColor: siteVars.brand,
+  listItemHighlightedTextColor: siteVars.white,
   listMaxHeight: '20rem',
 
   toggleButtonSize: pxToRem(30),

@@ -37,7 +37,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     }),
   }),
 
-  activeListLabel: (): ICSSInJSStyle => ({
+  label: (): ICSSInJSStyle => ({
     margin: '.4rem 0 0 .4rem',
   }),
 
@@ -48,6 +48,10 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     overflowY: 'auto',
     width: fluid ? '100%' : width,
     top: 'calc(100% + 2px)', // leave room for container + its border
+  }),
+
+  emptyListItem: ({ variables: { listItemBackgroundColor } }) => ({
+    backgroundColor: listItemBackgroundColor,
   }),
 
   toggleButton: ({ variables: { toggleButtonSize, width }, props: { fluid } }): ICSSInJSStyle => ({
