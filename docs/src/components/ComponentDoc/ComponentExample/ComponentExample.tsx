@@ -20,7 +20,6 @@ import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 import CodeSnippet from '../../CodeSnippet'
 import formatCode from '../../../utils/formatCode'
-import { freemem } from 'os'
 
 export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   title: React.ReactNode
