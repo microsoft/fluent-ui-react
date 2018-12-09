@@ -56,7 +56,6 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       children: false,
-      content: false,
     }),
     header: PropTypes.string,
     icon: customPropTypes.itemShorthand,
@@ -65,22 +64,25 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
     onRemove: PropTypes.func,
   }
 
+  static defaultProps = {
+    icon: 'close',
+  }
+
   private handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ classes, styles, rest }: RenderResultConfig<DropdownLabelProps>) {
+  public renderComponent({ classes, rest }: RenderResultConfig<DropdownLabelProps>) {
     const { header, icon, image } = this.props
 
     return (
       <Label
         className={classes.root}
         role="presentation"
-        styles={styles.root}
         circular
         onClick={this.handleClick}
         content={header}
-        icon={Icon.create(icon || 'close', {
+        icon={Icon.create(icon, {
           defaultProps: {
             'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
             'aria-hidden': false,
