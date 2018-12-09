@@ -72,12 +72,12 @@ class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ classes, rest }: RenderResultConfig<DropdownLabelProps>) {
+  public renderComponent({ rest, styles }: RenderResultConfig<DropdownLabelProps>) {
     const { header, icon, image } = this.props
 
     return (
       <Label
-        className={classes.root}
+        styles={styles.root}
         role="presentation"
         circular
         onClick={this.handleClick}
