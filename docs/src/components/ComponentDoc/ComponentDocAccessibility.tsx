@@ -33,6 +33,19 @@ const ComponentDocAccessibility = ({ info }) => {
         </p>
       )}
 
+      {info.behaviors && (
+        <p>
+          Available behaviors:{' '}
+          {info.behaviors.map(behavior => (
+            <>
+              <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
+                {behavior.displayName}
+              </a>{' '}
+            </>
+          ))}
+        </p>
+      )}
+
       {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
     </>
   )

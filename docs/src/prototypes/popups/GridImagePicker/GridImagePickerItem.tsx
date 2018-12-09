@@ -1,7 +1,6 @@
 import { Image, Button } from '@stardust-ui/react'
 
 import * as React from 'react'
-import * as _ from 'lodash'
 
 export interface GridPickerItemProps {
   as?: keyof React.ReactHTML

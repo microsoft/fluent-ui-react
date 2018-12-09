@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { TeamsSvgIconSpec } from '../types'
+
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>

@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 const px10asRem = pxToRem(10)
 
