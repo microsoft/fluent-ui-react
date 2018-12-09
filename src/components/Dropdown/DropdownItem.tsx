@@ -15,20 +15,20 @@ import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
 export interface DropdownItemProps extends UIComponentProps<any, any> {
-  /** If the item is highlighted inside the list. */
+  /** A dropdown item can be active. */
   active?: boolean
 
-  /** Secondary text content to serve as item description. */
+  /** Item's content. */
   content?: string
 
-  /** Main text displayed for the item. */
+  /** Item's header. */
   header?: string
 
-  /** The item can have an image avatar. */
+  /** Item's image. */
   image?: ShorthandValue
 
   /**
-   * Called when clicking on the dropdown item in the list.
+   * Called on dropdown item click.
    *
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
@@ -37,7 +37,8 @@ export interface DropdownItemProps extends UIComponentProps<any, any> {
 }
 
 /**
- * A DropdownItem is a sub-component of the Dropdown, used to display the items as options inside the list.
+ * A DropdownItem is a sub-component of the Dropdown,
+ * used to display items of the dropdown list.
  */
 class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
   static displayName = 'DropdownItem'

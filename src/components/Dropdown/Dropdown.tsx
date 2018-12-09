@@ -43,7 +43,7 @@ export interface DropdownProps extends UIComponentProps<any, any> {
   /** The initial value or value array, if the array has multiple selection. */
   defaultValue?: ShorthandValue | ShorthandValue[]
 
-  /** A dropdown can take the full width of its container. */
+  /** A dropdown can take the width of its container. */
   fluid?: boolean
 
   /** Object with callbacks for creating announcements on multiple selection add and remove actions. */
@@ -94,22 +94,22 @@ export interface DropdownProps extends UIComponentProps<any, any> {
    */
   onSelectedChange?: ComponentEventHandler<DropdownProps>
 
-  /** A message to serve as placeholder, on the edit text, if search, or on the button, if non-search. */
+  /** A placeholder message for the input field. */
   placeholder?: string
 
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
 
-  /** Shorthand for the edit text (Dropdown.SearchInput) that has the search query, if it's a search dropdown. */
+  /** Component for the search input query. */
   searchInput?: ShorthandValue
 
-  /** The value in the edit text, if dropdown is a search, and component is controlled. */
+  /** Sets search query value (controlled mode). */
   searchQuery?: string
 
-  /** A dropdown can have a toggle button. */
+  /** Whether toggle button (that shows/hides items list) should be rendered. */
   toggleButton?: boolean
 
-  /** The value of the dropdown, if the component is controlled. */
+  /** Sets currently selected value(s) (controlled mode). */
   value?: ShorthandValue | ShorthandValue[]
 }
 
@@ -121,7 +121,8 @@ export interface DropdownState {
 }
 
 /**
- * Dropdown allows a user to select one or more values from a number of options. Can also be created with search capability.
+ * Dropdown allows user to select one or more values from a list of items.
+ * Can also be created with search capability.
  */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
