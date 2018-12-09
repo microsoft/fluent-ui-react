@@ -36,7 +36,7 @@ export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessa
   highlightedItem: Item
 }
 
-export interface DropdownProps extends UIComponentProps<any, any> {
+export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 

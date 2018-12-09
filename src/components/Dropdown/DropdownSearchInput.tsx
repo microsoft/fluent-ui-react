@@ -8,7 +8,7 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 import Ref from '../Ref/Ref'
 
-export interface DropdownSearchInputProps extends UIComponentProps<any, any> {
+export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
   /**
    * Ref callback with an input DOM node.
    *

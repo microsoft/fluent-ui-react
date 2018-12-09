@@ -15,7 +15,7 @@ import {
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
-export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps, any> {
+export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps> {
   /** Header of the selected item. */
   header?: string
 

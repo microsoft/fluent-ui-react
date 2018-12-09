@@ -14,7 +14,7 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
 
-export interface DropdownItemProps extends UIComponentProps<any, any> {
+export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A dropdown item can be active. */
   active?: boolean
 
