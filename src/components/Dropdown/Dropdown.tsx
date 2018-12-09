@@ -166,6 +166,18 @@ export default class Dropdown extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
+    itemToString: item => {
+      if (!item || React.isValidElement(item)) {
+        return ''
+      }
+
+      // targets DropdownItem shorthand objects
+      if ((item as any).header) {
+        return (item as any).header
+      }
+
+      return `${item}`
+    },
   }
 
   static autoControlledProps = ['searchQuery', 'value']
@@ -191,20 +203,17 @@ export default class Dropdown extends AutoControlledComponent<
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
-    const optionalDownshiftProps = {
-      selectedItem: multiple ? null : undefined,
-      getA11yStatusMessage,
-    }
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType className={classes.root} {...rest}>
         <Downshift
           onChange={this.handleSelectedChange}
           inputValue={searchQuery}
-          stateReducer={this.stateReducer}
-          itemToString={itemToString || this.itemToString}
+          stateReducer={this.handleDownshiftStateChanges}
+          itemToString={itemToString}
           // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
-          {...optionalDownshiftProps}
+          selectedItem={multiple ? null : undefined}
+          getA11yStatusMessage={getA11yStatusMessage}
         >
           {({
             getInputProps,
@@ -221,16 +230,16 @@ export default class Dropdown extends AutoControlledComponent<
                 className={classes.containerDiv}
                 onClick={this.handleContainerClick.bind(this, isOpen)}
               >
-                {multiple && this.renderLabels(styles)}
+                {multiple && this.renderSelectedItems(styles)}
                 {search &&
-                  this.renderInput(
+                  this.renderSearchInput(
                     getRootProps,
                     getInputProps,
                     highlightedIndex,
                     selectItemAtIndex,
                   )}
                 {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
-                {this.renderList(
+                {this.renderItemsList(
                   styles,
                   variables,
                   getMenuProps,
@@ -246,7 +255,7 @@ export default class Dropdown extends AutoControlledComponent<
     )
   }
 
-  private renderInput(
+  private renderSearchInput(
     getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
     highlightedIndex: number,
@@ -258,12 +267,13 @@ export default class Dropdown extends AutoControlledComponent<
   ): JSX.Element {
     const { searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
-    const shouldNotHavePlaceholder =
+
+    const noPlaceholder =
       searchQuery.length > 0 || (multiple && (value as ShorthandValue[]).length > 0)
 
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
-        placeholder: shouldNotHavePlaceholder ? '' : placeholder,
+        placeholder: noPlaceholder ? '' : placeholder,
         inputRef: (inputNode: HTMLElement) => {
           this.inputNode = inputNode
         },
@@ -295,7 +305,7 @@ export default class Dropdown extends AutoControlledComponent<
     )
   }
 
-  private renderList(
+  private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
@@ -305,6 +315,7 @@ export default class Dropdown extends AutoControlledComponent<
   ) {
     const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' })
     const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
+
     return (
       <Ref innerRef={innerRef}>
         <List
@@ -324,7 +335,8 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     const { items, noResultsMessage } = this.props
-    const filteredItems = this.getFilteredItems(items)
+    const filteredItems = this.getItemsFilteredBySearchQuery(items)
+
     if (filteredItems.length > 0) {
       return filteredItems.map((item, index) => {
         let itemAsListItem = item
@@ -359,21 +371,15 @@ export default class Dropdown extends AutoControlledComponent<
     ]
   }
 
-  private renderLabels(styles: ComponentSlotStylesInput) {
+  private renderSelectedItems(styles: ComponentSlotStylesInput) {
     const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
       return null
     }
 
-    return value.map(item => {
-      let itemAsLabel = item
-      if (typeof item === 'object') {
-        itemAsLabel = _.pickBy(item, (value, key) =>
-          _.includes(['key', ...DropdownLabel.handledProps], key),
-        )
-      }
-      return DropdownLabel.create(itemAsLabel, {
+    return value.map(item =>
+      DropdownLabel.create(item, {
         defaultProps: {
           styles: styles.label,
           ...(typeof item === 'object' &&
@@ -382,12 +388,12 @@ export default class Dropdown extends AutoControlledComponent<
             }),
         },
         overrideProps: (predefinedProps: DropdownLabelProps) =>
-          this.handleLabelOverrides(predefinedProps, item),
-      })
-    })
+          this.handleSelectedItemOverrides(predefinedProps, item),
+      }),
+    )
   }
 
-  private stateReducer = (
+  private handleDownshiftStateChanges = (
     state: DownshiftState<ShorthandValue>,
     changes: StateChangeOptions<ShorthandValue>,
   ) => {
@@ -411,38 +417,26 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  private getFilteredItems = (items: ShorthandValue[]): ShorthandValue[] => {
-    const { multiple, search } = this.props
-    const { searchQuery } = this.state
-    let filteredItems = items
-    if (multiple) {
-      const value = this.state.value as ShorthandValue[]
-      filteredItems = filteredItems.filter(item => value.indexOf(item) === -1)
-    }
-    const itemToString = this.props.itemToString || this.itemToString
-    filteredItems = filteredItems.filter(
-      item =>
-        search && _.isFunction(search)
-          ? search(filteredItems, searchQuery)
-          : itemToString(item)
-              .toLowerCase()
-              .indexOf(searchQuery.toLowerCase()) !== -1,
+  private getItemsFilteredBySearchQuery = (items: ShorthandValue[]): ShorthandValue[] => {
+    const { itemToString, multiple, search } = this.props
+    const { searchQuery, value } = this.state
+
+    const nonSelectedItems = items.filter(
+      item => (multiple ? (value as ShorthandValue[]).indexOf(item) === -1 : true),
     )
 
-    return filteredItems
-  }
+    const itemsMatchSearchQuery = nonSelectedItems.filter(
+      item =>
+        search
+          ? _.isFunction(search)
+            ? search(itemsMatchSearchQuery, searchQuery)
+            : itemToString(item)
+                .toLowerCase()
+                .indexOf(searchQuery.toLowerCase()) !== -1
+          : true,
+    )
 
-  private itemToString = (item: ShorthandValue): string => {
-    if (!item) {
-      return ''
-    }
-    if (typeof item === 'object') {
-      return (item as any).header || ''
-    }
-    if (typeof item === 'string') {
-      return item
-    }
-    return ''
+    return itemsMatchSearchQuery
   }
 
   private setA11yStatus = (statusMessage: string) => {
@@ -479,9 +473,12 @@ export default class Dropdown extends AutoControlledComponent<
     accessibilityItemProps: getItemProps({ item, index }),
   })
 
-  private handleLabelOverrides = (predefinedProps: DropdownLabelProps, item: ShorthandValue) => ({
+  private handleSelectedItemOverrides = (
+    predefinedProps: DropdownLabelProps,
+    item: ShorthandValue,
+  ) => ({
     onRemove: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
-      this.handleLabelRemove(e, item)
+      this.handleSelectedItemRemove(e, item)
       _.invoke(predefinedProps, 'onRemove', e, dropdownLabelProps)
     },
     onClick: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
@@ -553,7 +550,7 @@ export default class Dropdown extends AutoControlledComponent<
 
             if (searchQuery === '' && (value as ShorthandValue[]).length > 0) {
               if (backspaceDelete) {
-                this.removeFromValues()
+                this.removeItemFromValue()
               } else {
                 this.setState({ backspaceDelete: true })
               }
@@ -572,7 +569,7 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  private handleContainerClick = (isOpen: boolean, e: React.SyntheticEvent) => {
+  private handleContainerClick = (isOpen: boolean) => {
     !isOpen && this.inputNode.focus()
   }
 
@@ -592,13 +589,13 @@ export default class Dropdown extends AutoControlledComponent<
     _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value: newValue })
   }
 
-  private handleLabelRemove(e: React.SyntheticEvent, item: ShorthandValue) {
-    this.removeFromValues(item)
+  private handleSelectedItemRemove(e: React.SyntheticEvent, item: ShorthandValue) {
+    this.removeItemFromValue(item)
     this.inputNode.focus()
     e.stopPropagation()
   }
 
-  private removeFromValues(item?: ShorthandValue) {
+  private removeItemFromValue(item?: ShorthandValue) {
     const { getA11ySelectionMessage } = this.props
     let value = this.state.value as ShorthandValue[]
     let poppedItem = item
