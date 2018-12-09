@@ -32,7 +32,7 @@ export {
 export {
   default as Dropdown,
   DropdownProps,
-  DownshiftA11yStatusMessageOptions,
+  A11yStatusMessageOptions,
 } from './components/Dropdown/Dropdown'
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'

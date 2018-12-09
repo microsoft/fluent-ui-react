@@ -7,7 +7,7 @@ import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/
 import Downshift, {
   DownshiftState,
   StateChangeOptions,
-  A11yStatusMessageOptions,
+  A11yStatusMessageOptions as DownshiftA11yStatusMessageOptions,
   GetMenuPropsOptions,
   GetPropsCommonOptions,
   GetInputPropsOptions,
@@ -32,7 +32,7 @@ import DropdownSearchInput from './DropdownSearchInput'
 import { DropdownSearchInputProps } from 'semantic-ui-react'
 
 // TODO: To be replaced when Downshift will add highlightedItem in their interface.
-export interface DownshiftA11yStatusMessageOptions<Item> extends A11yStatusMessageOptions<Item> {
+export interface A11yStatusMessageOptions<Item> extends DownshiftA11yStatusMessageOptions<Item> {
   highlightedItem: Item
 }
 
@@ -62,9 +62,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /**
    * Callback that creates custom accessability message for dropdown status change. Involves changes in highlighted item in the list, selection, toggle status.
-   * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
+   * @param {A11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
-  getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
+  getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if it's a multiple selection. */
   items?: ShorthandValue[]
