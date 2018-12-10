@@ -55,12 +55,9 @@ jobs:
       - run:
           name: Visual Tests
           command: yarn test:visual
-#      - run:
-#          name: Project Tests
-#          command: yarn test:projects:cra-ts
       - run:
-          name: Bundler Tests
-          command: yarn test:bundlers:rollup
+          name: Project Tests
+          command: yarn test:projects
       - run:
           name: Danger JS
           command: |

@@ -1,5 +1,7 @@
+import * as debug from 'debug'
 import * as fs from 'fs'
-import { task } from 'gulp'
+import { series, task } from 'gulp'
+import * as path from 'path'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
 
@@ -126,3 +128,51 @@ export default App;
     fs.unlinkSync(packageFilename)
   }
 })
+
+task('test:projects:rollup', async () => {
+  const logger = debug('bundle:rollup')
+  logger.enabled = true
+
+  const packageFilename = createPackageFilename()
+
+  await buildAndPackStardust(packageFilename)
+  logger(`✔️Stardust UI package was prepared: ${packageFilename}`)
+
+  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = [
+    'rollup',
+    'rollup-plugin-replace',
+    'rollup-plugin-commonjs',
+    'rollup-plugin-node-resolve',
+    'react',
+    'react-dom',
+  ].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  await runIn(tmpDirectory)(`yarn add ${packageFilename}`)
+  logger(`✔️Stardust UI was added to dependencies`)
+
+  fs.copyFileSync(
+    path.resolve(__dirname, '..', 'scaffold', 'app.js'),
+    path.resolve(tmpDirectory, 'app.js'),
+  )
+  fs.copyFileSync(
+    path.resolve(__dirname, '..', 'scaffold', 'rollup.config.js'),
+    path.resolve(tmpDirectory, 'rollup.config.js'),
+  )
+  logger(`✔️Source and bundler's config were created`)
+
+  await runIn(tmpDirectory)(`yarn rollup -c`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+})
+
+task(
+  'test:projects',
+  series(
+    // 'test:projects:cra-ts', Temporary disabled
+    'test:projects:rollup',
+  ),
+)

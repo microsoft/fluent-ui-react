@@ -2,55 +2,41 @@ import replace from 'rollup-plugin-replace'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 
-const lodashExports = [
-  'compact',
-  'difference',
-  'each',
-  'findIndex',
-  'flow',
-  'forEach',
-  'get',
-  'has',
-  'filter',
-  'first',
-  'includes',
-  'intersection',
-  'invoke',
-  'isArray',
-  'isEmpty',
-  'isFunction',
-  'isNil',
-  'isObject',
-  'isPlainObject',
-  'inRange',
-  'isUndefined',
-  'keys',
-  'last',
-  'map',
-  'mapValues',
-  'merge',
-  'memoize',
-  'min',
-  'pick',
-  'round',
-  'set',
-  'some',
-  'sortBy',
-  'startsWith',
-  'sum',
-  'take',
-  'trim',
-  'without',
-  'union',
-  'uniq',
-  'uniqueId',
+const warningWhitelist = [
+  'THIS_IS_UNDEFINED', // comes from TS transforms
+  'CIRCULAR_DEPENDENCY', // we should fix all other circular imports
+  'UNUSED_EXTERNAL_IMPORT', // to avoid throw on unused externals
 ]
 
 export default {
+  external: [
+    'lodash',
+    'lodash/fp',
+    'prop-types',
+    'react',
+    'react-dom',
+    'react-is',
+  ],
   input: 'app.js',
+  onwarn: (warning, warn) => {
+    if (warningWhitelist.includes(warning.code)) {
+      warn(warning)
+      return
+    }
+
+    throw warning
+  },
   output: {
     file: 'bundle.js',
     format: 'iife',
+    globals: {
+      lodash: '_',
+      'lodash/fp': 'fp',
+      'prop-types': 'PropTypes',
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      'react-is': 'ReactIs',
+    },
     sourcemap: true,
   },
   plugins: [
@@ -74,35 +60,6 @@ export default {
           'Spacebar',
           'Tab',
         ],
-        'node_modules/lodash/fp.js': lodashExports,
-        'node_modules/lodash/lodash.js': lodashExports,
-        'node_modules/prop-types/index.js': [
-          'any',
-          'arrayOf',
-          'bool',
-          'element',
-          'func',
-          'node',
-          'number',
-          'object',
-          'oneOf',
-          'oneOfType',
-          'shape',
-          'string',
-          'symbol',
-        ],
-        'node_modules/react/index.js': [
-          'Component',
-          'cloneElement',
-          'createRef',
-          'PureComponent',
-          'Fragment',
-          'Children',
-          'createElement',
-          'isValidElement',
-        ],
-        'node_modules/react-dom/index.js': ['createPortal', 'findDOMNode'],
-        'node_modules/react-is/index.js': ['isForwardRef'],
         'node_modules/what-input/dist/what-input.js': ['ask'],
       },
     }),
