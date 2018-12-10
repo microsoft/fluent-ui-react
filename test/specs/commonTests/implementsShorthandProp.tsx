@@ -1,23 +1,35 @@
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider } from 'test/utils'
-import { Props } from '../../../types/utils'
+import { Props, PropsOf } from '../../../types/utils'
 
-export type ShorthandTestOptions = {
-  mapsValueToProp?: string
+export type ShorthandTestOptions<TProps = any> = {
+  mapsValueToProp?: keyof TProps
 }
 
 export const DefaultShorthandTestOptions: ShorthandTestOptions = {
   mapsValueToProp: 'content',
 }
 
-export default Component => {
+export type ShorthandPropTestsRunner<TComponent> = <
+  TShorthandComponent extends React.ComponentType
+>(
+  shorthandProp: keyof PropsOf<TComponent>,
+  ShorthandComponent: TShorthandComponent,
+  options?: ShorthandTestOptions<PropsOf<TShorthandComponent>>,
+) => any
+
+export type ShorthandPropTestsFactory = <TComponent extends React.ComponentType>(
+  Component: TComponent,
+) => ShorthandPropTestsRunner<TComponent>
+
+export default ((Component: React.ComponentType) => {
   return function implementsShorthandProp(
     shorthandProp: string,
     ShorthandComponent: React.ComponentType,
     options: ShorthandTestOptions = DefaultShorthandTestOptions,
   ) {
-    const { mapsValueToProp } = options
+    const mapsValueToProp = options.mapsValueToProp as string
     const { displayName } = ShorthandComponent
 
     const checkPropsMatch = (props: Props, matchedProps: Props) =>
@@ -55,4 +67,4 @@ export default Component => {
       })
     })
   }
-}
+}) as ShorthandPropTestsFactory

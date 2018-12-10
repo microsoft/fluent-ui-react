@@ -153,7 +153,7 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, '')
+      const goodUsage = () => createShorthandFactory(() => <div />, 'children')
 
       expect(goodUsage).not.toThrowError()
     })

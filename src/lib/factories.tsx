@@ -4,6 +4,7 @@ import * as React from 'react'
 import {
   ShorthandValue,
   Props,
+  PropsOf,
   ShorthandRenderCallback,
   ShorthandRenderFunction,
   ShorthandRenderer,
@@ -74,18 +75,20 @@ export function createShorthand(
 // ============================================================
 // Factory Creators
 // ============================================================
-
 /**
  * @param {React.ReactType} Component A ReactClass or string
  * @param {string} mappedProp A function that maps a primitive value to the Component props
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
-export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
+export function createShorthandFactory<T extends React.ReactType>(
+  Component: T,
+  mappedProp?: keyof PropsOf<T>,
+) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
-  return (val, options) => createShorthand(Component, mappedProp, val, options)
+  return (val, options) => createShorthand(Component, mappedProp as string, val, options)
 }
 
 // ============================================================
