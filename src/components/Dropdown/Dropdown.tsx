@@ -421,19 +421,18 @@ export default class Dropdown extends AutoControlledComponent<
     const { itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
 
-    const nonSelectedItems = items.filter(
-      item => (multiple ? (value as ShorthandValue[]).indexOf(item) === -1 : true),
+    const nonSelectedItems = items.filter(item =>
+      multiple ? (value as ShorthandValue[]).indexOf(item) === -1 : true,
     )
 
-    const itemsMatchSearchQuery = nonSelectedItems.filter(
-      item =>
-        search
-          ? _.isFunction(search)
-            ? search(itemsMatchSearchQuery, searchQuery)
-            : itemToString(item)
-                .toLowerCase()
-                .indexOf(searchQuery.toLowerCase()) !== -1
-          : true,
+    const itemsMatchSearchQuery = nonSelectedItems.filter(item =>
+      search
+        ? _.isFunction(search)
+          ? search(itemsMatchSearchQuery, searchQuery)
+          : itemToString(item)
+              .toLowerCase()
+              .indexOf(searchQuery.toLowerCase()) !== -1
+        : true,
     )
 
     return itemsMatchSearchQuery
