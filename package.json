@@ -76,7 +76,6 @@
   },
   "devDependencies": {
     "@babel/standalone": "^7.1.0",
-    "@types/classnames": "^2.2.6",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
     "@types/faker": "^4.1.3",

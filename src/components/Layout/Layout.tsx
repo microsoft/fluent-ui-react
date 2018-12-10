@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { Extendable } from '../../../types/utils'
