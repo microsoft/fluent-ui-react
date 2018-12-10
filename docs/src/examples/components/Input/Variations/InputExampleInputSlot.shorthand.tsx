@@ -36,13 +36,6 @@ const InputExampleInputSlot = () => (
         />
       }
     />
-
-    <Text content="Wrapped Input with custom element:" />
-    <Input
-      placeholder="Search..."
-      role="presentation"
-      input={<input placeholder="Placeholder Override..." role="checkbox" style={inputStyles} />}
-    />
   </Grid>
 )
 

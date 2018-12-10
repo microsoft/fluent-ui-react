@@ -27,6 +27,7 @@ export interface MenuItemProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
+   * @available toolbarButtonBehavior, tabBehavior
    * */
   accessibility?: Accessibility
 

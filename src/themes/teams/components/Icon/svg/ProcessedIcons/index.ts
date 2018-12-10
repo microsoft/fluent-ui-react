@@ -1,4 +1,5 @@
-import { TeamsSvgIconSpec } from '../types'
+import { TeamsProcessedSvgIconSpec } from '../types'
+
 // IMPORTS
 import processedIcons_zoomout from './icons-zoom-out'
 import processedIcons_zoomin from './icons-zoom-in'
@@ -591,4 +592,4 @@ export default {
   processedIcons_addparticipant,
   processedIcons_add,
   processedIcons_accept,
-} as { [iconName: string]: TeamsSvgIconSpec }
+} as { [iconName: string]: TeamsProcessedSvgIconSpec }
