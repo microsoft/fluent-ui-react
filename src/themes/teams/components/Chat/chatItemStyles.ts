@@ -12,7 +12,7 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     [`& .${Chat.Gutter.className}`]: {
       position: 'absolute',
       marginTop: v.gutter.margin,
-      [p.mine ? 'right' : 'left']: 0,
+      [p.gutterPosition === 'end' ? 'right' : 'left']: 0,
     },
 
     [`& .${Chat.Message.className}`]: {

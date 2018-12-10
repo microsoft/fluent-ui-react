@@ -24,7 +24,7 @@ export interface ChatItemProps
   gutter?: ShorthandValue
 
   /** Indicates whether message belongs to the current user. */
-  mine?: boolean
+  gutterPosition?: 'start' | 'end'
 }
 
 /**
@@ -40,11 +40,12 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
       content: 'shorthand',
     }),
     gutter: customPropTypes.itemShorthand,
-    mine: PropTypes.bool,
+    gutterPosition: PropTypes.oneOf(['start', 'end']),
   }
 
   static defaultProps = {
     as: 'li',
+    gutterPosition: 'end',
   }
 
   renderComponent({ ElementType, classes, rest, styles }: RenderResultConfig<ChatItemProps>) {
@@ -58,14 +59,14 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   }
 
   private renderChatItem() {
-    const { content, gutter, mine } = this.props
-    const gutterElement = ChatGutter.create(gutter, { defaultProps: { mine } })
+    const { content, gutter, gutterPosition } = this.props
+    const gutterElement = ChatGutter.create(gutter)
 
     return (
       <>
-        {!mine && gutterElement}
+        {gutterPosition === 'start' && gutterElement}
         {Slot.create(content)}
-        {mine && gutterElement}
+        {gutterPosition === 'end' && gutterElement}
       </>
     )
   }

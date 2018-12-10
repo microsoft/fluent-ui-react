@@ -9,12 +9,12 @@ const janeAvatar = {
 const ChatExample = () => (
   <Chat>
     <Chat.Item
-      mine
       content={
         <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
       }
     />
     <Chat.Item
+      gutterPosition="start"
       gutter={
         <Chat.Gutter>
           <Avatar {...janeAvatar} />
@@ -24,7 +24,7 @@ const ChatExample = () => (
     />
     <Chat.Item content={<Chat.Message content="What's up?" />} />
     <Chat.Item
-      mine
+      gutterPosition="start"
       content={
         <Chat.Message
           content="Would you like to grab a lunch?"
@@ -35,6 +35,7 @@ const ChatExample = () => (
       }
     />
     <Chat.Item
+      gutterPosition="start"
       gutter={
         <Chat.Gutter>
           <Avatar {...janeAvatar} />
@@ -52,7 +53,6 @@ const ChatExample = () => (
       <Divider content="Today" color="primary" important />
     </Chat.Item>
     <Chat.Item
-      mine
       content={
         <Chat.Message
           content="Let's have a call"
