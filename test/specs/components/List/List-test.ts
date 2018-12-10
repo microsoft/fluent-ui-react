@@ -7,7 +7,7 @@ import ListItem from 'src/components/List/ListItem'
 const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(List)
 
 describe('List', () => {
-  isConformant(List)
+  isConformant(List, 'List')
   handlesAccessibility(List, { defaultRootRole: 'list' })
   listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'main' })
 })

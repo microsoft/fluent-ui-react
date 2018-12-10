@@ -1,7 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
-import * as ReactDOMServer from 'react-dom/server'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -28,6 +27,7 @@ export interface Conformant {
 /**
  * Assert Component conforms to guidelines that are applicable to all components.
  * @param {React.Component|Function} Component A component that should conform.
+ * @param {String} componentName A name of a component that should conform.
  * @param {Object} [options={}]
  * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
  * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
@@ -35,7 +35,7 @@ export interface Conformant {
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
  * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
  */
-export default (Component, options: Conformant = {}) => {
+export default (Component, componentName: string, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
@@ -77,24 +77,13 @@ export default (Component, options: Conformant = {}) => {
     throwError(`Components should export a class or function, got: ${componentType}.`)
   }
 
-  // tests depend on Component constructor names, enforce them
-  const constructorName = Component.prototype.constructor.name
-  if (!constructorName) {
-    throwError(
-      [
-        'Component is not a named function. This should help identify it:\n\n',
-        `${ReactDOMServer.renderToStaticMarkup(<Component />)}`,
-      ].join(''),
-    )
-  }
-
   // ----------------------------------------
   // Component info
   // ----------------------------------------
   // This is pretty ugly because:
   // - jest doesn't support custom error messages
   // - jest will run all test
-  const infoJSONPath = `docs/src/componentInfo/${constructorName}.info.json`
+  const infoJSONPath = `docs/src/componentInfo/${componentName}.info.json`
 
   let info
 
@@ -137,16 +126,16 @@ export default (Component, options: Conformant = {}) => {
   }
 
   // ----------------------------------------
-  // Class and file name
+  // Component and file name
   // ----------------------------------------
-  test(`constructor name matches filename "${constructorName}"`, () => {
-    expect(constructorName).toEqual(info.filenameWithoutExt)
+  test(`component name matches filename "${componentName}"`, () => {
+    expect(componentName).toEqual(info.filenameWithoutExt)
   })
 
   // find the apiPath in the stardust object
   const foundAsSubcomponent = _.isFunction(_.get(stardust, info.apiPath))
 
-  exportedAtTopLevel && isExportedAtTopLevel(constructorName, info.displayName)
+  exportedAtTopLevel && isExportedAtTopLevel(componentName, info.displayName)
   if (info.isChild) {
     test('is a static component on its parent', () => {
       const message =
@@ -489,7 +478,7 @@ export default (Component, options: Conformant = {}) => {
   // ----------------------------------------
   describe('static displayName (common)', () => {
     test('matches constructor name', () => {
-      expect(Component.displayName).toEqual(info.constructorName)
+      expect(Component.displayName).toEqual(componentName)
     })
   })
 

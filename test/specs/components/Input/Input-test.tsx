@@ -30,7 +30,7 @@ const setUserInputValue = (inputComp: ReactWrapper, value: string) => {
 
 describe('Input', () => {
   describe('conformance', () => {
-    isConformant(Input, {
+    isConformant(Input, 'Input', {
       eventTargets: { onChange: 'input' },
     })
   })

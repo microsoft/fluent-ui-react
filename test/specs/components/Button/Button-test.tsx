@@ -16,7 +16,7 @@ import Icon from 'src/components/Icon/Icon'
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
-  isConformant(Button)
+  isConformant(Button, 'Button')
   buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('accessibility', () => {

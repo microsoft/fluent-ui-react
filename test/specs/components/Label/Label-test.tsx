@@ -10,7 +10,7 @@ import { implementsShorthandProp } from '../../commonTests'
 const labelImplementsShorthandProp = implementsShorthandProp(Label)
 
 describe('Label', () => {
-  isConformant(Label)
+  isConformant(Label, 'Label')
   labelImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
   labelImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 

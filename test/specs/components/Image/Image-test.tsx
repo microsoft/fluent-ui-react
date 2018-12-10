@@ -5,7 +5,7 @@ import Image from 'src/components/Image/Image'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Image', () => {
-  isConformant(Image)
+  isConformant(Image, 'Image')
 
   describe('accessibility', () => {
     handlesAccessibility(Image, {

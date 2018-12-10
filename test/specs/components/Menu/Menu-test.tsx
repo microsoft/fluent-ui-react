@@ -12,7 +12,7 @@ import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
 describe('Menu', () => {
-  isConformant(Menu)
+  isConformant(Menu, 'Menu')
   menuImplementsCollectionShorthandProp('items', MenuItem)
 
   const getItems = () => [

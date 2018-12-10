@@ -8,7 +8,7 @@ import Button from 'src/components/Button/Button'
 const attachmentImplementsShorthandProp = implementsShorthandProp(Attachment)
 
 describe('Attachment', () => {
-  isConformant(Attachment)
+  isConformant(Attachment, 'Attachment')
   attachmentImplementsShorthandProp('header', Text)
   attachmentImplementsShorthandProp('description', Text)
   attachmentImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })

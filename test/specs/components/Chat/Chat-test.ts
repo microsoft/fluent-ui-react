@@ -9,7 +9,7 @@ import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Chat)
 
 describe('Chat', () => {
-  isConformant(Chat)
+  isConformant(Chat, 'Chat')
   chatImplementsCollectionShorthandProp('items', ChatItem)
 
   describe('accessibility', () => {

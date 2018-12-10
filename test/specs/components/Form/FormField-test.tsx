@@ -12,7 +12,7 @@ const getFormField = (control: ComponentClass<any> | string) =>
   mountWithProvider(<FormField control={{ as: control }} name="firstName" />).find('FormField')
 
 describe('FormField', () => {
-  isConformant(FormField)
+  isConformant(FormField, 'FormField')
   formFieldImplementsShorthandProp('label', Text)
   formFieldImplementsShorthandProp('message', Text)
   formFieldImplementsShorthandProp('control', Slot, { mapsValueToProp: 'children' })

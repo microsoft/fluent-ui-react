@@ -6,7 +6,7 @@ import { mountWithProviderAndGetComponent } from 'test/utils'
 import { ThemeInput } from 'src/themes/types'
 
 describe('Icon', () => {
-  isConformant(Icon)
+  isConformant(Icon, 'Icon')
 
   describe('accessibility', () => {
     handlesAccessibility(Icon, {

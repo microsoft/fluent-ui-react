@@ -7,7 +7,7 @@ import Image from 'src/components/Image/Image'
 const avatarImplementsShorthandProp = implementsShorthandProp(Avatar)
 
 describe('Avatar', () => {
-  isConformant(Avatar)
+  isConformant(Avatar, 'Avatar')
   avatarImplementsShorthandProp('label', Label)
   avatarImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 

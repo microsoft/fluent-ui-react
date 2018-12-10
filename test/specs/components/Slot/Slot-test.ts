@@ -8,7 +8,7 @@ describe('Slot', () => {
     mount(factoryFn(val, options)).find(Slot)
 
   xdescribe('is conformant', () => {
-    isConformant(Slot, { exportedAtTopLevel: false })
+    isConformant(Slot, 'Slot', { exportedAtTopLevel: false })
   })
 
   describe(`create`, () => {

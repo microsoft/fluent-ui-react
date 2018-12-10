@@ -6,7 +6,7 @@ import { mountWithProvider } from 'test/utils'
 import Text from 'src/components/Text/Text'
 
 describe('Text', () => {
-  isConformant(Text)
+  isConformant(Text, 'Text')
 
   test('renders children', () => {
     expect(mountWithProvider(<Text>children</Text>).text()).toEqual('children')

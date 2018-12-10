@@ -46,10 +46,6 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
   // add checksum
   info.checksum = checksum
 
-  // add exported Component info
-  const Component = require(absPath).default
-  info.constructorName = _.get(Component, 'prototype.constructor.name', null)
-
   // add component type
   info.type = componentType
 

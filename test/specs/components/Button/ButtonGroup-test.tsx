@@ -8,7 +8,7 @@ import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 const buttonGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
 
 describe('ButtonGroup', () => {
-  isConformant(ButtonGroup)
+  isConformant(ButtonGroup, 'ButtonGroup')
   buttonGroupImplementsCollectionShorthandProp('buttons', Button)
 
   describe('accessibility', () => {

@@ -5,8 +5,8 @@ import * as stardust from 'src/'
 // Is exported or private
 // ----------------------------------------
 // detect components like: stardust.H1
-export default (constructorName: string, displayName: string) => {
-  const isTopLevelAPIProp = _.has(stardust, constructorName)
+export default (componentName: string, displayName: string) => {
+  const isTopLevelAPIProp = _.has(stardust, componentName)
 
   // require all components to be exported at the top level
   test('is exported at the top level', () => {

@@ -9,7 +9,7 @@ import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 import Text from 'src/components/Text/Text'
 
 describe('ChatMessage', () => {
-  isConformant(ChatMessage)
+  isConformant(ChatMessage, 'ChatMessage')
   implementsShorthandProp(ChatMessage)('avatar', Avatar, { mapsValueToProp: 'name' })
   implementsShorthandProp(ChatMessage)('author', Text)
   implementsShorthandProp(ChatMessage)('timestamp', Text)
