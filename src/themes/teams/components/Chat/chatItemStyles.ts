@@ -1,6 +1,7 @@
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
+import Chat from '../../../../components/Chat/Chat'
 
 const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -8,13 +9,13 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     marginTop: v.margin,
     marginBottom: v.margin,
 
-    '& .ui-chat__item__gutter': {
+    [`& .${Chat.Gutter.className}`]: {
       position: 'absolute',
       marginTop: v.gutter.margin,
       [p.mine ? 'right' : 'left']: 0,
     },
 
-    '& .ui-chat__message': {
+    [`& .${Chat.Message.className}`]: {
       position: 'relative',
       marginLeft: v.content.margin,
       marginRight: v.content.margin,
