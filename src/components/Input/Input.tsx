@@ -132,7 +132,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                   as: 'input',
                   type,
                   value,
-                  className: classes.input,
+                  styles: styles.input,
                   onChange: this.handleChange,
                 },
               })}
