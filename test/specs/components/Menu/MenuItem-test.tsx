@@ -6,7 +6,7 @@ import MenuItem from 'src/components/Menu/MenuItem'
 import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
 
 describe('MenuItem', () => {
-  isConformant(MenuItem, {
+  isConformant(MenuItem, 'MenuItem', {
     eventTargets: {
       onClick: 'a',
     },
