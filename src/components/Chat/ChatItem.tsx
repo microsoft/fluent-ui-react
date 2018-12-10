@@ -13,9 +13,8 @@ import {
   commonPropTypes,
   customPropTypes,
 } from '../../lib'
-import { ComponentSlotStylesPrepared } from 'src/themes/types'
 import Slot from '../Slot/Slot'
-import ChatItemGutter from './ChatItemGutter'
+import ChatGutter from './ChatGutter'
 
 export interface ChatItemProps
   extends UIComponentProps,
@@ -35,7 +34,6 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: Function
   static displayName = 'ChatItem'
-  static Gutter = ChatItemGutter
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -54,14 +52,14 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderChatItem(styles)}
+        {childrenExist(children) ? children : this.renderChatItem()}
       </ElementType>
     )
   }
 
-  private renderChatItem(styles: ComponentSlotStylesPrepared) {
+  private renderChatItem() {
     const { content, gutter, mine } = this.props
-    const gutterElement = ChatItemGutter.create(gutter, { defaultProps: { mine } })
+    const gutterElement = ChatGutter.create(gutter, { defaultProps: { mine } })
 
     return (
       <>

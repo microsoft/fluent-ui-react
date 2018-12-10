@@ -5,6 +5,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
+import ChatGutter from './ChatGutter'
 import { Extendable, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
@@ -39,6 +40,7 @@ class Chat extends UIComponent<Extendable<ChatProps>, any> {
 
   static defaultProps = { accessibility: chatBehavior, as: 'ul' }
 
+  static Gutter = ChatGutter
   static Item = ChatItem
   static Message = ChatMessage
 

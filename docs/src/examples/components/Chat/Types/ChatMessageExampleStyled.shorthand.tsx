@@ -43,7 +43,7 @@ const ChatMessageExampleStyled = () => (
         ChatItem: {
           root: { ...slotLabelStyles('chat-item-root'), backgroundColor: 'transparent' },
         },
-        ChatItemGutter: {
+        ChatGutter: {
           root: {
             ...slotLabelStyles('gutter', { bottom: '-11px' }),
             backgroundColor: '#FF00FF',

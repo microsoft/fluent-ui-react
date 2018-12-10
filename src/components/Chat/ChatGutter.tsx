@@ -10,10 +10,9 @@ import {
   createShorthandFactory,
 } from '../../lib'
 import { Extendable, ShorthandValue } from '../../../types/utils'
-import Slot from '../Slot/Slot'
 
-export interface ChatItemGutterProps
-  extends UIComponentProps<ChatItemGutterProps>,
+export interface ChatGutterProps
+  extends UIComponentProps<ChatGutterProps>,
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue> {
   /** Indicates whether message belongs to the current user. */
@@ -22,10 +21,10 @@ export interface ChatItemGutterProps
 /**
  * A gutter is used to create the auxiliary area of a chat item
  */
-class ChatItemGutter extends UIComponent<Extendable<ChatItemGutterProps>, any> {
-  static className = 'ui-chat__item__gutter'
+class ChatGutter extends UIComponent<Extendable<ChatGutterProps>, any> {
+  static className = 'ui-chat__gutter'
   static create: Function
-  static displayName = 'ChatItemGutter'
+  static displayName = 'ChatGutter'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -41,13 +40,13 @@ class ChatItemGutter extends UIComponent<Extendable<ChatItemGutterProps>, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : Slot.create(content)}
+      <ElementType className={classes.root} {...rest}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-ChatItemGutter.create = createShorthandFactory(ChatItemGutter, 'content')
+ChatGutter.create = createShorthandFactory(ChatGutter, 'content')
 
-export default ChatItemGutter
+export default ChatGutter

@@ -16,9 +16,9 @@ const ChatExample = () => (
     />
     <Chat.Item
       gutter={
-        <Chat.Item.Gutter>
+        <Chat.Gutter>
           <Avatar {...janeAvatar} />
-        </Chat.Item.Gutter>
+        </Chat.Gutter>
       }
       content={<Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />}
     />
@@ -36,9 +36,9 @@ const ChatExample = () => (
     />
     <Chat.Item
       gutter={
-        <Chat.Item.Gutter>
+        <Chat.Gutter>
           <Avatar {...janeAvatar} />
-        </Chat.Item.Gutter>
+        </Chat.Gutter>
       }
       content={
         <Chat.Message
