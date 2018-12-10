@@ -4,7 +4,6 @@ import * as rimraf from 'rimraf'
 import * as webpack from 'webpack'
 
 import config from '../../../config'
-import importsTransformer from '../../ts/transformer-namespace-imports'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
@@ -39,16 +38,7 @@ task('build:dist:commonjs', () => {
 task('build:dist:es', () => {
   const tsConfig = paths.base('build/tsconfig.es.json')
   const settings = { declaration: true }
-  const typescript = g.typescript.createProject(tsConfig, {
-    ...settings,
-    getCustomTransformers: () => ({
-      before: [
-        importsTransformer({
-          moduleNames: ['classnames', 'color'],
-        }),
-      ],
-    }),
-  })
+  const typescript = g.typescript.createProject(tsConfig, settings)
 
   const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
   const types = src(paths.base('types/**'))
