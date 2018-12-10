@@ -9,9 +9,9 @@ const AvatarExampleImageCustomizationShorthand = () => (
     />
     &emsp;
     <Avatar
-      renderImage={(Image, props, children) => (
+      image={
         <Icon name="user" circular variables={{ color: 'blue' }} styles={{ padding: '8px' }} />
-      )}
+      }
       status={{ color: 'green', icon: 'check', title: 'Available' }}
     />
   </>

@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'
@@ -280,9 +280,8 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     }
   },
 
-  content: ({ props }) => ({
-    overflow: 'hidden',
-    ...(typeof props.content === 'string' && truncateStyle),
+  content: () => ({
+    ...truncateStyle,
   }),
 }
 

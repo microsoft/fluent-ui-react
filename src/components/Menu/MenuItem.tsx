@@ -3,37 +3,31 @@ import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import {
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import IsFromKeyboard from '../../lib/isFromKeyboard'
-
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
-import {
-  UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface MenuItemProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
+   * @available toolbarButtonBehavior, tabBehavior
    * */
   accessibility?: Accessibility
 
@@ -73,24 +67,6 @@ export interface MenuItemProps
   /** The menu item can have primary type. */
   primary?: boolean
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the wrapper slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderWrapper?: ShorthandRenderFunction
-
   /** The menu item can have secondary type. */
   secondary?: boolean
 
@@ -119,9 +95,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -135,9 +109,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
-    renderIcon: PropTypes.func,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-    renderWrapper: PropTypes.func,
   }
 
   static defaultProps = {
@@ -149,7 +121,7 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   state = IsFromKeyboard.initial
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
-    const { children, content, icon, renderIcon, renderWrapper, wrapper } = this.props
+    const { children, content, icon, wrapper } = this.props
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -166,7 +138,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
         {icon &&
           Icon.create(this.props.icon, {
             defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-            render: renderIcon,
           })}
         {content}
       </ElementType>
@@ -179,7 +150,6 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
           ...accessibility.attributes.root,
           ...accessibility.keyHandlers.root,
         },
-        render: renderWrapper,
         overrideProps: () => ({
           children: menuItemInner,
         }),

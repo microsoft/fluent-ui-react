@@ -1,16 +1,19 @@
 import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as React from 'react'
-import { ShorthandRenderFunction, ShorthandValue, Props } from '../../types/utils'
+import {
+  ShorthandValue,
+  Props,
+  ShorthandRenderCallback,
+  ShorthandRenderFunction,
+  ShorthandRenderer,
+} from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions {
-  /** Override the default render implementation. */
-  render?: ShorthandRenderFunction
-
   /** Default props object */
   defaultProps?: Props
 
@@ -19,12 +22,16 @@ interface CreateShorthandOptions {
 
   /** Whether or not automatic key generation is allowed */
   generateKey?: boolean
+
+  /** Override the default render implementation. */
+  render?: ShorthandRenderFunction
 }
 
 const CREATE_SHORTHAND_DEFAULT_OPTIONS: CreateShorthandOptions = {
   defaultProps: {},
   overrideProps: {},
   generateKey: true,
+  render: (Component, props) => <Component {...props} />,
 }
 
 // It's only necessary to map props that don't use 'children' as value ('children' is the default)
@@ -42,9 +49,55 @@ const mappedProps: { [key in HTMLTag]: ShorthandProp } = {
 export function createShorthand(
   Component: React.ReactType,
   mappedProp: string,
-  value?: ShorthandValue,
+  valueOrRenderCallback?: ShorthandValue | ShorthandRenderCallback,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ): React.ReactElement<Props> | null | undefined {
+  const valIsRenderFunction =
+    typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
+  if (valIsRenderFunction) {
+    return createShorthandFromRenderCallback(
+      Component,
+      mappedProp,
+      valueOrRenderCallback as ShorthandRenderCallback,
+      options,
+    )
+  }
+
+  return createShorthandFromValue(
+    Component,
+    mappedProp,
+    valueOrRenderCallback as ShorthandValue,
+    options,
+  )
+}
+
+// ============================================================
+// Factory Creators
+// ============================================================
+
+/**
+ * @param {React.ReactType} Component A ReactClass or string
+ * @param {string} mappedProp A function that maps a primitive value to the Component props
+ * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
+ */
+export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
+  if (typeof Component !== 'function' && typeof Component !== 'string') {
+    throw new Error('createShorthandFactory() Component must be a string or function.')
+  }
+
+  return (val, options) => createShorthand(Component, mappedProp, val, options)
+}
+
+// ============================================================
+// Private Utils
+// ============================================================
+
+function createShorthandFromValue(
+  Component: React.ReactType,
+  mappedProp: string,
+  value?: ShorthandValue,
+  options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
@@ -73,16 +126,18 @@ export function createShorthand(
     )
   }
 
+  // return value 'as is' if it a ReactElement
+  if (valIsReactElement) {
+    return value as React.ReactElement<Props>
+  }
+
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
   const { defaultProps = {} } = options
 
   // User's props
-  const usersProps =
-    (valIsReactElement && (value as React.ReactElement<Props>).props) ||
-    (valIsPropsObject && (value as Props)) ||
-    {}
+  const usersProps = valIsPropsObject ? (value as Props) : {}
 
   // Override props
   let { overrideProps } = options
@@ -134,13 +189,9 @@ export function createShorthand(
   // Create Element
   // ----------------------------------------
   const { render } = options
-
   if (render) {
-    return render(Component, props, props.children)
+    return render(Component, props)
   }
-
-  // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />
@@ -148,19 +199,18 @@ export function createShorthand(
   return null
 }
 
-// ============================================================
-// Factory Creators
-// ============================================================
-
-/**
- * @param {React.ReactType} Component A ReactClass or string
- * @param {string} mappedProp A function that maps a primitive value to the Component props
- * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
- */
-export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
-  if (typeof Component !== 'function' && typeof Component !== 'string') {
-    throw new Error('createShorthandFactory() Component must be a string or function.')
+function createShorthandFromRenderCallback(
+  Component: React.ReactType,
+  mappedProp: string,
+  renderCallback: ShorthandRenderCallback,
+  options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
+) {
+  const render: ShorthandRenderer = (shorthandValue, renderTree) => {
+    return createShorthandFromValue(Component, mappedProp, shorthandValue, {
+      ...options,
+      ...(renderTree && { render: renderTree }),
+    })
   }
 
-  return (val, options) => createShorthand(Component, mappedProp, val, options)
+  return renderCallback(render)
 }

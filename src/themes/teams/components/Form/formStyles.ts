@@ -1,6 +1,6 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 const formStyles: ComponentSlotStylesInput<FormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({

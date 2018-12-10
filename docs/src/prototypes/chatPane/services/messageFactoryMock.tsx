@@ -105,8 +105,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
-            action={{ icon: 'ellipsis horizontal' }}
-            renderAction={() => actionPopup}
+            action={render => render(actionPopup)}
             data-is-focusable={true}
             styles={{
               '&:focus': {
@@ -122,8 +121,8 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 }
 
 function generateDividerProps(props: DividerProps): Divider {
-  const { content, important, type = 'secondary' } = props
-  const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, type }
+  const { content, important, color = 'secondary' } = props
+  const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, color }
 
   return dividerProps
 }
@@ -158,7 +157,7 @@ export function generateChatProps(chat: ChatData): ChatItemContentProps[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', type: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', color: 'primary', important: true }),
     )
   }
 

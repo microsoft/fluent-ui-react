@@ -29,6 +29,21 @@ export {
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
 
+export {
+  default as Dropdown,
+  DropdownProps,
+  A11yStatusMessageOptions,
+} from './components/Dropdown/Dropdown'
+
+export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
+
+export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
+
+export {
+  default as DropdownSearchInput,
+  DropdownSearchInputProps,
+} from './components/Dropdown/DropdownSearchInput'
+
 export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 
@@ -95,6 +110,8 @@ export { default as Text, TextProps } from './components/Text/Text'
 
 export { default as Animation, AnimationProps } from './components/Animation/Animation'
 
+export { default as Tree } from './components/Tree'
+
 //
 // Accessibility
 //
@@ -130,3 +147,10 @@ export {
   RenderStardustResultConfig,
   CreateStardustComponentConfig,
 } from './lib/createStardustComponent'
+export {
+  AnimatedComponentProps,
+  StyledComponentProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from './lib'

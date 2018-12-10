@@ -2,9 +2,33 @@ import React from 'react'
 import { Divider, RadioGroup } from '@stardust-ui/react'
 
 class RadioGroupColorPickerExample extends React.Component {
-  createIcon = value => {
+  state = { selectedValue: '' }
+
+  render() {
+    const { selectedValue } = this.state
+    return (
+      <div>
+        The selected value is: {selectedValue}
+        <Divider />
+        <RadioGroup
+          defaultCheckedValue="pink"
+          items={['pink', 'blue', 'green', 'red', 'orange'].map(color => ({
+            key: color,
+            value: color,
+            name: color,
+            'aria-label': color,
+            icon: this.createIcon(color),
+          }))}
+          checkedValueChanged={(e, props) => this.setState({ selectedValue: props.value })}
+        />
+      </div>
+    )
+  }
+
+  createIcon(value) {
     const { selectedValue } = this.state
     const isSelected = selectedValue === value
+
     return {
       variables: {
         backgroundColor: value,
@@ -22,37 +46,6 @@ class RadioGroupColorPickerExample extends React.Component {
       },
     }
   }
-
-  items = () => {
-    const colors = ['pink', 'blue', 'green', 'red', 'orange']
-    return colors.map(color => (
-      <RadioGroup.Item
-        value={color}
-        icon={this.createIcon(color)}
-        name={color}
-        key={color}
-        aria-label={color}
-      />
-    ))
-  }
-
-  state = { selectedValue: '' }
-  handleChange = (e, props) => {
-    this.setState({ selectedValue: props.value })
-  }
-  render() {
-    const { selectedValue } = this.state
-    return (
-      <div>
-        The selected value is: {selectedValue}
-        <Divider />
-        <RadioGroup
-          defaultCheckedValue="pink"
-          items={this.items()}
-          checkedValueChanged={this.handleChange}
-        />
-      </div>
-    )
-  }
 }
+
 export default RadioGroupColorPickerExample

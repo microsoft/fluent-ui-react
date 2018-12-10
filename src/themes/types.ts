@@ -11,6 +11,82 @@ import { Extendable, ObjectOf, ObjectOrFunc } from '../../types/utils'
 // We use these terms in typings to indicate which phase the typings apply to.
 
 // ========================================================
+// Colors
+// ========================================================
+
+/**
+ * A type for a palette for a single color.
+ */
+export type ColorVariants = {
+  50: string
+  100: string
+  200: string
+  300: string
+  400: string
+  500: string
+  600: string
+  700: string
+  800: string
+  900: string
+}
+
+/**
+ * A type for a predefined natural colors.
+ */
+type NaturalColorsStrict = Partial<{
+  blue: ColorVariants
+  green: ColorVariants
+  grey: ColorVariants
+  orange: ColorVariants
+  pink: ColorVariants
+  purple: ColorVariants
+  teal: ColorVariants
+  red: ColorVariants
+  yellow: ColorVariants
+}>
+
+export type NaturalColors = Extendable<NaturalColorsStrict, ColorVariants>
+
+/**
+ * A type for a predefined state colors.
+ */
+export type ContextualColorsStrict = Partial<{
+  text: ColorVariants
+
+  danger: ColorVariants
+  info: ColorVariants
+  success: ColorVariants
+  warning: ColorVariants
+}>
+
+export type ContextualColors = Extendable<ContextualColorsStrict, ColorVariants>
+
+/**
+ * A type for a predefined emphasis colors.
+ */
+type EmphasisColorsStrict = Partial<{
+  primary: ColorVariants
+  secondary: ColorVariants
+}>
+
+export type EmphasisColors = Extendable<EmphasisColorsStrict, ColorVariants>
+
+/**
+ * A type for a base colors.
+ */
+export type PrimitiveColors = Partial<{
+  black: string
+  white: string
+}>
+
+type ExtendablePalette<T> = T &
+  { [K in keyof T]?: K extends keyof PrimitiveColors ? string : ColorVariants }
+
+export type ColorPalette = ExtendablePalette<
+  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
+>
+
+// ========================================================
 // Props
 // ========================================================
 
@@ -30,11 +106,19 @@ export type State = ObjectOf<any>
 // ========================================================
 
 export interface SiteVariablesInput extends ObjectOf<any> {
+  colors?: ColorPalette
+  contextualColors?: ContextualColors
+  emphasisColors?: EmphasisColors
+  naturalColors?: NaturalColorsStrict
   brand?: string
   htmlFontSize?: string
 }
 
 export interface SiteVariablesPrepared extends ObjectOf<any> {
+  colors?: ColorPalette
+  contextualColors?: ContextualColors
+  emphasisColors?: EmphasisColors
+  naturalColors?: NaturalColorsStrict
   brand?: string
   htmlFontSize?: string
   fontSizes: ObjectOf<string>
@@ -200,6 +284,9 @@ export interface ThemeComponentStylesInput {
   ChatItem?: ComponentSlotStylesInput
   ChatMessage?: ComponentSlotStylesInput
   Divider?: ComponentSlotStylesInput
+  Dropdown?: ComponentSlotStylesInput
+  DropdownItem?: ComponentSlotStylesInput
+  DropdownSearchInput?: ComponentSlotStylesInput
   Form?: ComponentSlotStylesInput
   FormField?: ComponentSlotStylesInput
   Grid?: ComponentSlotStylesInput
@@ -238,6 +325,9 @@ export interface ThemeComponentStylesPrepared {
   ChatItem?: ComponentSlotStylesPrepared
   ChatMessage?: ComponentSlotStylesPrepared
   Divider?: ComponentSlotStylesPrepared
+  Dropdown?: ComponentSlotStylesPrepared
+  DropdownItem?: ComponentSlotStylesPrepared
+  DropdownSearchInput?: ComponentSlotStylesPrepared
   Form?: ComponentSlotStylesPrepared
   FormField?: ComponentSlotStylesPrepared
   Grid?: ComponentSlotStylesPrepared
@@ -276,6 +366,7 @@ export interface ThemeComponentVariablesInput {
   ChatItem?: ComponentVariablesInput
   ChatMessage?: ComponentVariablesInput
   Divider?: ComponentVariablesInput
+  Dropdown?: ComponentVariablesInput
   Form?: ComponentVariablesInput
   FormField?: ComponentVariablesInput
   Grid?: ComponentVariablesInput
@@ -314,6 +405,7 @@ export interface ThemeComponentVariablesPrepared {
   ChatItem?: ComponentVariablesPrepared
   ChatMessage?: ComponentVariablesPrepared
   Divider?: ComponentVariablesPrepared
+  Dropdown?: ComponentVariablesPrepared
   Form?: ComponentVariablesPrepared
   FormField?: ComponentVariablesPrepared
   Grid?: ComponentVariablesPrepared

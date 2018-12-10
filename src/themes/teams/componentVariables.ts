@@ -15,6 +15,8 @@ export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Divider } from './components/Divider/dividerVariables'
 
+export { default as Dropdown } from './components/Dropdown/dropdownVariables'
+
 export { default as Grid } from './components/Grid/gridVariables'
 
 export { default as Header } from './components/Header/headerVariables'
@@ -46,5 +48,7 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
+
+export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
 export { default as Animation } from './components/Animation/animationVariables'
