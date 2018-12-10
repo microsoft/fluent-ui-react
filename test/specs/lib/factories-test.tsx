@@ -164,6 +164,12 @@ describe('factories', () => {
       expect(goodUsage).not.toThrowError()
     })
 
+    test('does not throw if passed a Component is wrapped with forwardRef()', () => {
+      const goodUsage = () => createShorthandFactory(React.forwardRef(() => <div />), '')
+
+      expect(goodUsage).not.toThrowError()
+    })
+
     test('throw if passed Component that is not a string nor function', () => {
       consoleUtil.disableOnce()
       const badComponents: any = [undefined, null, true, false, [], {}, 123]
@@ -179,29 +185,6 @@ describe('factories', () => {
   describe('createShorthand', () => {
     test('is a function', () => {
       expect(typeof createShorthand).toBe('function')
-    })
-
-    test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthand(() => <div />, '')
-
-      expect(goodUsage).not.toThrowError()
-    })
-
-    test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthand('div', '')
-
-      expect(goodUsage).not.toThrowError()
-    })
-
-    test('throw if passed Component that is not a string nor function', () => {
-      consoleUtil.disableOnce()
-      const badComponents: any[] = [undefined, null, true, false, [], {}, 123]
-
-      _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthand(badComponent, '')
-
-        expect(badUsage).toThrowError()
-      })
     })
 
     describe('render callback', () => {

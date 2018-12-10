@@ -9,6 +9,7 @@ import {
   ShorthandRenderer,
 } from '../../types/utils'
 import { mergeStyles } from './mergeThemes'
+import { isForwardRefComponent } from './forwardRefFactory/componentUtils'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -81,12 +82,17 @@ export function createShorthand(
  * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
  */
 export function createShorthandFactory(Component: React.ReactType, mappedProp?: string) {
-  // TODO: Add assert
-  // if (typeof Component !== 'function' && typeof Component !== 'string') {
-  //   throw new Error('createShorthandFactory() Component must be a string or function.')
-  // }
+  if (
+    typeof Component === 'function' ||
+    typeof Component === 'string' ||
+    isForwardRefComponent(Component)
+  ) {
+    return (val, options) => createShorthand(Component, mappedProp, val, options)
+  }
 
-  return (val, options) => createShorthand(Component, mappedProp, val, options)
+  throw new Error(
+    'createShorthandFactory() Component must be a string, a function or to be wrapped with forwardRef().',
+  )
 }
 
 // ============================================================
@@ -99,10 +105,6 @@ function createShorthandFromValue(
   value?: ShorthandValue,
   options: CreateShorthandOptions = CREATE_SHORTHAND_DEFAULT_OPTIONS,
 ) {
-  // TODO: Add assert
-  // if (typeof Component !== 'function' && typeof Component !== 'string') {
-  //   throw new Error('createShorthand() Component must be a string or function.')
-  // }
   // short circuit noop values
   const valIsNoop = _.isNil(value) || typeof value === 'boolean'
   if (valIsNoop && !options.render) return null
