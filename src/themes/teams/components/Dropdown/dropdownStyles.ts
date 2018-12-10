@@ -37,6 +37,22 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     }),
   }),
 
+  button: (): ICSSInJSStyle => {
+    const transparentColorStyle = {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+    }
+    return {
+      boxShadow: '0 0 0 0',
+      margin: '0',
+      justifyContent: 'left',
+      ...transparentColorStyle,
+      ':hover': transparentColorStyle,
+      ':focus': transparentColorStyle,
+      ':active': transparentColorStyle,
+    }
+  },
+
   label: (): ICSSInJSStyle => ({
     margin: '.4rem 0 0 .4rem',
   }),

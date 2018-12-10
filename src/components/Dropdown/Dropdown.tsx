@@ -30,6 +30,7 @@ import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
 import DropdownSearchInput from './DropdownSearchInput'
 import { DropdownSearchInputProps } from 'semantic-ui-react'
+import Button from '../Button/Button'
 
 // TODO: To be replaced when Downshift will add highlightedItem in their interface.
 export interface A11yStatusMessageOptions<Item> extends DownshiftA11yStatusMessageOptions<Item> {
@@ -210,11 +211,11 @@ export default class Dropdown extends AutoControlledComponent<
       <ElementType className={classes.root} {...rest}>
         <Downshift
           onChange={this.handleSelectedChange}
-          inputValue={searchQuery}
+          inputValue={search ? searchQuery : undefined}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
           // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
-          selectedItem={multiple ? null : undefined}
+          selectedItem={search && !multiple ? undefined : null}
           getA11yStatusMessage={getA11yStatusMessage}
         >
           {({
@@ -233,13 +234,14 @@ export default class Dropdown extends AutoControlledComponent<
                 onClick={this.handleContainerClick.bind(this, isOpen)}
               >
                 {multiple && this.renderSelectedItems(styles)}
-                {search &&
-                  this.renderSearchInput(
-                    getRootProps,
-                    getInputProps,
-                    highlightedIndex,
-                    selectItemAtIndex,
-                  )}
+                {search
+                  ? this.renderSearchInput(
+                      getRootProps,
+                      getInputProps,
+                      highlightedIndex,
+                      selectItemAtIndex,
+                    )
+                  : this.renderTriggerButton(getToggleButtonProps, styles)}
                 {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
                 {this.renderItemsList(
                   styles,
@@ -254,6 +256,32 @@ export default class Dropdown extends AutoControlledComponent<
           }}
         </Downshift>
       </ElementType>
+    )
+  }
+
+  private renderTriggerButton(
+    getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
+    styles: ComponentSlotStylesInput,
+  ): JSX.Element {
+    const { placeholder, itemToString } = this.props
+    const { value } = this.state
+    return (
+      <Button
+        content={value ? itemToString(value) : placeholder}
+        fluid
+        styles={styles.button}
+        {...getToggleButtonProps({
+          onFocus: () => {
+            this.setState({ focused: true })
+          },
+          onBlur: () => {
+            this.setState({ focused: false })
+          },
+          onClick: e => {
+            e.stopPropagation()
+          },
+        })}
+      />
     )
   }
 
@@ -611,7 +639,7 @@ export default class Dropdown extends AutoControlledComponent<
       value,
     })
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
-      this.setA11yStatus(getA11ySelectionMessage.onRemove(item))
+      this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
     }
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
