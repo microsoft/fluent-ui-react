@@ -103,7 +103,7 @@ describe('RadioGroup', () => {
 
     if (isShorthandApiTest) {
       describe('click event handler', () => {
-        it('should set the value when item is clicked', () => {
+        it('should set "checked" when item is clicked', () => {
           const checkedValueChanged = jest.fn()
           const wrapper = mountWithProvider(
             <RadioGroup items={getItems()} checkedValueChanged={checkedValueChanged} />,
@@ -150,7 +150,7 @@ describe('RadioGroup', () => {
     })
 
     if (isShorthandApiTest) {
-      it('should not set the value when disabled item is clicked', () => {
+      it('should not set "checked" when disabled item is clicked', () => {
         const wrapper = mountWithProvider(<RadioGroup items={getItems({ disabledItem: 1 })} />)
         const radioGroupItems = wrapper.find('RadioGroupItem')
 

@@ -525,11 +525,13 @@ describe('factories', () => {
         testCreateShorthand(
           {
             Component: 'p',
-            value: <span {...{ common: 'user', user: true } as any} />,
-            defaultProps: { common: 'default', default: true },
-            overrideProps: { common: 'override', override: true },
+            value: (
+              <span {...{ commonProp: 'originalElement', originalElementProp: true } as any} />
+            ),
+            defaultProps: { commonProp: 'default', defaultProp: true },
+            overrideProps: { commonProp: 'override', overrideProp: true },
           },
-          { common: 'user', user: true },
+          { commonProp: 'originalElement', originalElementProp: true },
         )
       })
     })
