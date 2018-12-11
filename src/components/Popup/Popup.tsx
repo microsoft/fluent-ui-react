@@ -279,10 +279,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const popupContentAttributes = accessibility.focusTrap ? {} : popupWrapperAttributes
 
     const popupContent = React.isValidElement(content)
-      ? React.cloneElement(content, {
-React.cloneElement(content, popupContentAttributes)
-          ...popupContentAttributes,
-        })
+      ? React.cloneElement(content, popupContentAttributes)
       : Popup.Content.create(content, {
           defaultProps: popupContentAttributes,
         })
