@@ -1,5 +1,5 @@
 import { ThemePrepared, AnimationProp } from '../themes/types'
-import { callable } from './index'
+import callable from './callable'
 
 const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
   let animationCSSProp = {}
