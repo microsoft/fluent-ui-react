@@ -54,6 +54,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
         ':after': {
           borderColor: 'transparent',
         },
+        ':active': transparentColorStyle,
       },
       ':active': transparentColorStyle,
     }
