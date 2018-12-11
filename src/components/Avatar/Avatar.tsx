@@ -1,6 +1,8 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Image, Label, Status } from '../../'
+import Image from '../Image/Image'
+import Label from '../Label/Label'
+import Status from '../Status/Status'
 import { Extendable, ShorthandValue } from '../../../types/utils'
 import {
   createShorthandFactory,

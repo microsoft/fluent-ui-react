@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types'
-import { customPropTypes } from './index'
+import * as customPropTypes from './customPropTypes'
 
 export interface CreateCommonConfig {
   animated?: boolean
