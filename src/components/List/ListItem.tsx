@@ -11,7 +11,7 @@ import {
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { Extendable } from '../../../types/utils'
+import { Extendable, ComponentEventHandler } from '../../../types/utils'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -20,7 +20,7 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
    * */
   accessibility?: Accessibility
   contentMedia?: any
-  /** Toggle debug mode */
+  /** Toggle debug mode. */
   debug?: boolean
   header?: any
   endMedia?: any
@@ -32,10 +32,17 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
 
   /** A list item can indicate that it can be selected. */
   selection?: boolean
-  /** Indicates if the current list item is selected */
+  /** Indicates if the current list item is selected. */
   selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<ListItemProps>
 }
 
 /**
@@ -72,6 +79,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>> {
     truncateHeader: PropTypes.bool,
 
     accessibility: PropTypes.func,
+    onClick: PropTypes.func,
   }
 
   static defaultProps = {
