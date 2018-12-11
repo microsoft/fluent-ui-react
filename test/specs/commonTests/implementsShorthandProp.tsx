@@ -4,7 +4,7 @@ import { mountWithProvider } from 'test/utils'
 import { Props, PropsOf } from '../../../types/utils'
 
 export type ShorthandTestOptions<TProps = any> = {
-  mapsValueToProp?: keyof TProps
+  mapsValueToProp?: keyof (TProps & React.HTMLProps<HTMLElement>)
 }
 
 export const DefaultShorthandTestOptions: ShorthandTestOptions = {

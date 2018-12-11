@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import { PropsOf } from 'types/utils'
 
 export type CollectionShorthandTestOptions<TProps = any> = {
-  mapsValueToProp?: keyof TProps
+  mapsValueToProp?: keyof (TProps & React.HTMLProps<HTMLElement>)
   skipArrayOfStrings?: boolean
 }
 
