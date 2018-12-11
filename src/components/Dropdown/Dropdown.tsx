@@ -269,11 +269,12 @@ export default class Dropdown extends AutoControlledComponent<
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
     styles: ComponentSlotStylesInput,
   ): JSX.Element {
-    const { placeholder, itemToString } = this.props
+    const { placeholder, itemToString, multiple } = this.props
     const { value } = this.state
+    const content = multiple ? placeholder : value ? itemToString(value) : placeholder
     return (
       <Button
-        content={value ? itemToString(value) : placeholder}
+        content={content}
         fluid
         styles={styles.button}
         {...getToggleButtonProps({
@@ -286,6 +287,7 @@ export default class Dropdown extends AutoControlledComponent<
           onClick: e => {
             e.stopPropagation()
           },
+          'aria-label': content, // TODO: add this to behaviour
         })}
       />
     )
