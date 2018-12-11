@@ -5,12 +5,10 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Input as SemanticUIInput } from 'semantic-ui-react'
-import { Menu, Icon } from '@stardust-ui/react'
+import { Menu, Icon, Text, Segment, Input } from '@stardust-ui/react'
 
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
-import { white, black } from 'src/themes/teams/siteVariables'
 import { constants } from 'src/lib'
 
 type ComponentMenuItem = { displayName: string; type: string }
@@ -20,8 +18,8 @@ const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
-const flexDislayStyle: any = { color: white, display: 'flex' }
-const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
+const flexDislayStyle: any = { width: '100%' }
+// const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -66,7 +64,7 @@ class Sidebar extends React.Component<any, any> {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
-    if (document.activeElement === this._searchInput) this._searchInput.blur()
+    //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
   private handleSearchChange = e =>
@@ -113,8 +111,6 @@ class Sidebar extends React.Component<any, any> {
           onClick={this.handleItemClick}
           as={NavLink}
           to={getComponentPathname(info)}
-          activeClassName="active"
-          styles={{ color: '#979593', background: black, padding: '0px' }}
         />
       )),
     )([...componentMenu, ...behaviorMenu])
@@ -125,7 +121,7 @@ class Sidebar extends React.Component<any, any> {
         content={
           <div>
             {_.capitalize(nextType)}s
-            <Menu vertical items={items} styles={{ color: white, background: black }} pills />
+            <Menu vertical items={items} pills />
           </div>
         }
       />
@@ -162,100 +158,113 @@ class Sidebar extends React.Component<any, any> {
           content={info.displayName}
           onClick={this.handleItemClick}
           active={isSelected}
+          as={NavLink}
           to={getComponentPathname(info)}
-          styles={{ padding: '0px' }}
-        >
-          {info.displayName}
-          {isSelected && selectedItemLabel}
-        </Menu.Item>
+        />
       )
     }, this.filteredMenu)
 
-    return <Menu vertical styles={{ color: white, background: black }} pills items={menuItems} />
+    return <Menu vertical pills items={menuItems} />
   }
 
   render() {
     const { style } = this.props
     const { query } = this.state
+    const changeLogUrl = '${constants.repoURL}/blob/master/CHANGELOG.md'
+
     return (
-      <Menu
-        vertical
-        styles={{
-          color: white,
-          background: black,
-          ...style,
-        }}
-        pills
-      >
-        <Menu.Item>
-          <Logo spaced="right" width="48px" />
-          <strong>
-            Stardust UI React &nbsp;
-            <small>
-              <em>{pkg.version}</em>
-            </small>
-          </strong>
+      <Segment
+        content={
           <Menu
             vertical
+            styles={{
+              ...style,
+            }}
             pills
-            styles={{ color: white, background: black }}
-            items={[
-              {
-                key: 'github',
-                content: (
-                  <div style={flexDislayStyle}>
-                    GitHub<Icon name="chess rook" styles={{ textAlign: 'right', width: '100%' }} />
-                  </div>
-                ),
-                href: constants.repoURL,
-                target: '_blank',
-                rel: 'noopener noreferrer',
-              },
-              {
-                key: 'change',
-                content: (
-                  <div style={flexDislayStyle}>
-                    CHANGELOG<Icon
-                      name="file alternate outline"
-                      styles={{ textAlign: 'right', width: '100%' }}
-                    />
-                  </div>
-                ),
-                href: '${constants.repoURL}/blob/master/CHANGELOG.md',
-                target: '_blank',
-                rel: 'noopener noreferrer',
-              },
-            ]}
-          />
-        </Menu.Item>
-        <Menu.Item as="NavLink" exact to="/" activeClassName="active" content="Introduction" />
-        <Menu.Item>
-          Guides
-          <Menu
-            vertical
-            styles={{ color: white, background: black }}
-            pills
-            items={[
-              { key: 'quickstart', content: <NavLink to="/quick-start">QuickStart</NavLink> },
-              {
-                key: 'accessiblity',
-                content: <NavLink to="/accessibility">Accessibility</NavLink>,
-              },
-            ]}
-          />
-        </Menu.Item>
-        <Menu.Item active>
-          <SemanticUIInput
-            className="transparent inverted icon"
-            icon="search"
-            placeholder="Search components..."
-            value={query}
-            onChange={this.handleSearchChange}
-            onKeyDown={this.handleSearchKeyDown}
-          />
-        </Menu.Item>
-        {query ? this.renderSearchItems() : this.menuItemsByType}
-      </Menu>
+          >
+            <Menu.Item>
+              <Logo spaced="right" width="48px" />
+              <Text content="Stardust UI React &nbsp;" />
+              <Text content={pkg.version} size="small" weight="bold" />
+
+              <Menu
+                vertical
+                pills
+                items={[
+                  {
+                    key: 'github',
+                    content: (
+                      <div style={flexDislayStyle}>
+                        GitHub
+                        <Icon name="chess rook" styles={{ float: 'right' }} />
+                      </div>
+                    ),
+                    href: constants.repoURL,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                  },
+                  {
+                    key: 'change',
+                    content: (
+                      <div style={flexDislayStyle}>
+                        CHANGELOG
+                        <Icon name="file alternate outline" styles={{ float: 'right' }} />
+                      </div>
+                    ),
+                    href: changeLogUrl,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                  },
+                ]}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              Concepts
+              <Menu
+                vertical
+                pills
+                items={[
+                  { key: 'intro', content: 'Introduction', as: NavLink, to: '/' },
+                  { key: 'color', content: 'Color Palette', as: NavLink, to: '/color-palette' },
+                  {
+                    key: 'shorthand',
+                    content: 'Shorthand Props',
+                    as: NavLink,
+                    to: '/shorthand-props',
+                  },
+                ]}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              Guides
+              <Menu
+                vertical
+                pills
+                items={[
+                  { key: 'quickstart', content: 'QuickStart', as: NavLink, to: '/quick-start' },
+                  {
+                    key: 'accessiblity',
+                    content: 'Accessibility',
+                    as: NavLink,
+                    to: '/accessibility',
+                  },
+                ]}
+              />
+            </Menu.Item>
+            <Menu.Item active>
+              <Input
+                className="transparent inverted icon"
+                icon="search"
+                placeholder="Search components..."
+                value={query}
+                onChange={this.handleSearchChange}
+                onKeyDown={this.handleSearchKeyDown}
+              />
+            </Menu.Item>
+            {query ? this.renderSearchItems() : this.menuItemsByType}
+          </Menu>
+        }
+      />
     )
   }
 

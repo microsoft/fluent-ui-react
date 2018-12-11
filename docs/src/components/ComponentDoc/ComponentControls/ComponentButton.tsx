@@ -1,4 +1,4 @@
-import { createComponent, Icon, Text } from '@stardust-ui/react'
+import { createComponent, Icon, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import * as React from 'react'
 
 interface LabelledButtonProps {
@@ -7,7 +7,7 @@ interface LabelledButtonProps {
   active: boolean
 }
 
-const centered = {
+const centered: ICSSInJSStyle = {
   textAlign: 'center',
 }
 

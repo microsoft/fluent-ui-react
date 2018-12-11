@@ -8,6 +8,7 @@ import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import style from 'docs/src/Style'
 import { scrollToAnchor } from 'docs/src/utils'
 import { getUnhandledProps } from 'src/lib'
+import { Provider, themes } from '@stardust-ui/react'
 
 const anchors = new AnchorJS({
   icon: '#',
@@ -64,7 +65,9 @@ class DocsLayout extends React.Component<any, any> {
     if (render) return render()
     return (
       <div style={style.container}>
-        <Sidebar style={style.menu} />
+        <Provider theme={themes.teamsDark}>
+          <Sidebar style={style.menu} />
+        </Provider>
         <div style={mainStyle}>
           <Children {...props} />
         </div>

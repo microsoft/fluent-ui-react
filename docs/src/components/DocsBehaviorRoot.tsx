@@ -26,7 +26,6 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
-      background: '#fff',
       boxShadow: '0 1px 2px #ccc',
       margin: '1em 1em 1em 2em',
     }
