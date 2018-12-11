@@ -7,6 +7,7 @@ import {
   customPropTypes,
   AutoControlledComponent,
   createShorthandFactory,
+  isFromKeyboard,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -16,7 +17,6 @@ import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../type
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
-import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -81,7 +81,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   value?: string | number
 
   /** Whether focus came from the keyboard (autocontrolled). */
-  [isFromKeyboard.propertyName]?: boolean
+  isFromKeyboard?: boolean
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
@@ -89,7 +89,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
 export interface RadioGroupItemState {
   checked: boolean
-  [isFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -137,7 +137,7 @@ class RadioGroupItem extends AutoControlledComponent<
     accessibility: radioGroupItemBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked', isFromKeyboard.propertyName]
+  static autoControlledProps = ['checked', 'isFromKeyboard']
 
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
@@ -180,12 +180,12 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.initial)
+    this.setState({ isFromKeyboard: false })
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 

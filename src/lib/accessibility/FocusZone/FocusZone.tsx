@@ -23,7 +23,6 @@ import {
 import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
 import getElementType from '../../getElementType'
-import whatInput from '../../whatInput'
 
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
@@ -360,8 +359,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
    */
   private _onKeyDown = (ev: React.KeyboardEvent<HTMLElement>): boolean | undefined => {
     const { direction, disabled, shouldEnterInnerZone } = this.props
-
-    whatInput.setInput(ev)
 
     if (disabled) {
       return undefined
