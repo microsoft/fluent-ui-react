@@ -16,26 +16,16 @@ let currentElement = null
 // last used input type
 let currentInput = 'initial'
 
-// last used input intent
-let currentIntent = currentInput
-
 // check for sessionStorage support
 // then check for session variables and use if available
 try {
   if (window.sessionStorage.getItem('what-input')) {
     currentInput = window.sessionStorage.getItem('what-input')
   }
-
-  if (window.sessionStorage.getItem('what-intent')) {
-    currentIntent = window.sessionStorage.getItem('what-intent')
-  }
 } catch (e) {}
 
 // event buffer timer
 let eventTimer = null
-
-// form input types
-const formInputs = ['input', 'select', 'textarea']
 
 // list of modifier keys commonly used with the mouse and
 // can be safely ignored to prevent false keyboard detection
@@ -62,15 +52,6 @@ const inputMap = {
 
 // boolean: true if touch buffer is active
 let isBuffering = false
-
-// boolean: true if the page is being scrolled
-let isScrolling = false
-
-// store current mouse position
-const mousePos = {
-  x: null,
-  y: null,
-}
 
 // map of IE 10 pointer events
 const pointerMap = {
@@ -101,8 +82,7 @@ const setUp = () => {
   inputMap[detectWheel()] = 'mouse'
 
   addListeners()
-  doUpdate('input')
-  doUpdate('intent')
+  doUpdate()
 }
 
 /*
@@ -119,15 +99,12 @@ const addListeners = () => {
   // @ts-ignore
   if (window.PointerEvent) {
     window.addEventListener('pointerdown', setInput)
-    window.addEventListener('pointermove', setIntent)
     // @ts-ignore
   } else if (window.MSPointerEvent) {
     window.addEventListener('MSPointerDown', setInput)
-    window.addEventListener('MSPointerMove', setIntent)
   } else {
     // mouse events
     window.addEventListener('mousedown', setInput, true)
-    window.addEventListener('mousemove', setIntent, true)
 
     // touch events
     if ('ontouchstart' in window) {
@@ -135,9 +112,6 @@ const addListeners = () => {
       window.addEventListener('touchend', setInput, true)
     }
   }
-
-  // mouse wheel
-  window.addEventListener(detectWheel(), setIntent, options)
 
   // keyboard events
   window.addEventListener('keydown', eventBuffer, true)
@@ -170,58 +144,14 @@ const setInput = event => {
         window.sessionStorage.setItem('what-input', currentInput)
       } catch (e) {}
 
-      doUpdate('input')
-    }
-
-    if (currentIntent !== value && shouldUpdate) {
-      // preserve intent for keyboard typing in form fields
-      const activeElem = document.activeElement
-      const notFormInput =
-        activeElem &&
-        activeElem.nodeName &&
-        formInputs.indexOf(activeElem.nodeName.toLowerCase()) === -1
-
-      if (notFormInput) {
-        currentIntent = value
-
-        try {
-          window.sessionStorage.setItem('what-intent', currentIntent)
-        } catch (e) {}
-
-        doUpdate('intent')
-      }
+      doUpdate()
     }
   }
 }
 
 // updates the doc and `inputTypes` array with new input
-const doUpdate = which => {
-  docElem.setAttribute(`data-what${which}`, which === 'input' ? currentInput : currentIntent)
-}
-
-// updates input intent for `mousemove` and `pointermove`
-const setIntent = event => {
-  // test to see if `mousemove` happened relative to the screen to detect scrolling versus mousemove
-  detectScrolling(event)
-
-  // only execute if the event buffer timer isn't running
-  // or scrolling isn't happening
-  if (!isBuffering && !isScrolling) {
-    let value = inputMap[event.type]
-    if (value === 'pointer') {
-      value = pointerType(event)
-    }
-
-    if (currentIntent !== value) {
-      currentIntent = value
-
-      try {
-        window.sessionStorage.setItem('what-intent', currentIntent)
-      } catch (e) {}
-
-      doUpdate('intent')
-    }
-  }
+const doUpdate = () => {
+  docElem.setAttribute(`data-whatinput`, currentInput)
 }
 
 const setElement = event => {
@@ -297,17 +227,6 @@ const detectWheel = () => {
   return wheelType
 }
 
-const detectScrolling = event => {
-  if (mousePos['x'] !== event.screenX || mousePos['y'] !== event.screenY) {
-    isScrolling = false
-
-    mousePos['x'] = event.screenX
-    mousePos['y'] = event.screenY
-  } else {
-    isScrolling = true
-  }
-}
-
 // don't start script unless browser cuts the mustard
 // (also passes if polyfills are used)
 if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
@@ -315,11 +234,7 @@ if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
 }
 
 // returns string: the current input type
-// opt: 'intent'|'input'
-// 'input' (default): returns the same value as the `data-whatinput` attribute
-// 'intent': includes `data-whatintent` value if it's different than `data-whatinput`
-export const ask = (opt?: 'intent' | 'input'): string => {
-  return opt === 'intent' ? currentIntent : currentInput
-}
+// returns the same value as the `data-whatinput` attribute
+export const ask = (): string => currentInput
 
 export const isFromKeyboard = (): boolean => ask() === 'keyboard'
