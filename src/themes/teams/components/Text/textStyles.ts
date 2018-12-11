@@ -1,3 +1,5 @@
+import * as _ from 'lodash'
+
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { truncateStyle } from '../../../../styles/customCSS'
 import { TextVariables } from './textVariables'
@@ -7,6 +9,7 @@ export default {
   root: ({
     props: {
       atMention,
+      color,
       disabled,
       error,
       size,
@@ -21,6 +24,7 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
+      ...(color && { color: _.get(v.colors, color) }),
       ...(truncated && truncateStyle),
       ...(atMention === true && {
         color: v.atMentionOtherColor,
