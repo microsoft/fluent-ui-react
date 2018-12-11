@@ -337,7 +337,7 @@ export default class Dropdown extends AutoControlledComponent<
       <Icon
         name={`chevron ${isOpen ? 'up' : 'down'}`}
         as="button"
-        tabIndex="-1"
+        tabIndex="0"
         styles={styles.toggleButton}
         {...getToggleButtonProps()}
       />
