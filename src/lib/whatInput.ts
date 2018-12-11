@@ -1,3 +1,5 @@
+import isBrowser from './isBrowser'
+
 // Taken from https://github.com/ten1seven/what-input/blob/master/src/scripts/what-input.js
 
 /*
@@ -5,7 +7,8 @@
  */
 
 // cache document.documentElement
-const docElem = document.documentElement
+
+const docElem = isBrowser() ? document.documentElement : null
 
 // currently focused dom element
 let currentElement = null
@@ -307,7 +310,7 @@ const detectScrolling = event => {
 
 // don't start script unless browser cuts the mustard
 // (also passes if polyfills are used)
-if ('addEventListener' in window && Array.prototype.indexOf) {
+if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
 }
 
