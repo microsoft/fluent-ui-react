@@ -172,7 +172,7 @@ const ContextMenu = createComponent<ContextMenuProps>({
   displayName: 'ContextMenu',
   render: ({ stardust, className, children }) => {
     const { classes } = stardust
-    return <div className={cx(className, classes.root)}>{children}</div>
+    return <div className={classes.root}>{children}</div>
   },
 })
 
