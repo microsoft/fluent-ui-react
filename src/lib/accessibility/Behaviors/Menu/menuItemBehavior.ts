@@ -34,23 +34,21 @@ const menuItemBehavior: Accessibility = (props: any) => ({
   handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby'],
 
   keyActions: {
-    anchor: {
+    anchor: {},
+    wrapper: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-
-      openSubmenu: {
-        keyCombinations: [
-          { keyCode: props.vertical ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
-        ],
-      },
-    },
-    wrapper: {
       closeMenu: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }, { keyCode: keyboardKey.ArrowRight }],
       },
       closeSubmenu: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+      },
+      openSubmenu: {
+        keyCombinations: [
+          { keyCode: props.vertical ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
+        ],
       },
     },
   },

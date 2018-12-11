@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 import * as cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -16,7 +15,7 @@ import {
   EventStack,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Menu, { MenuProps } from '../Menu/Menu'
+import Menu from '../Menu/Menu'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
@@ -58,6 +57,14 @@ export interface MenuItemProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<MenuItemProps>
+
+  /**
+   * Called on key down pressed.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onKeyDown?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -169,12 +176,12 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     ) : (
       <ElementType
         className={classes.root}
-        onClick={this.handleClick}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         {...accessibility.attributes.anchor}
         {...accessibility.keyHandlers.anchor}
         {...rest}
+        {...!wrapper && { onClick: this.handleClick }}
         ref={this.itemRef}
       >
         {icon &&
@@ -184,7 +191,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         {content}
       </ElementType>
     )
-
     const maybeSubmenu =
       menu && active && submenuOpen
         ? Menu.create(menu, {
@@ -194,10 +200,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               primary,
               secondary,
               styles: styles.menu,
-            },
-            overrideProps: {
-              onClick: this.handleSubmenuClicked,
-              onKeyDown: this.handleSubmenuKeyDown,
             },
           })
         : null
@@ -221,6 +223,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         },
         overrideProps: () => ({
           children: [menuItemInner, maybeSubmenuWithRef],
+          onClick: this.handleClick,
         }),
       })
     }
@@ -228,7 +231,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleClick(event),
+    performClick: event => this.performClick(event),
     openSubmenu: event => this.openSubmenu(event),
     closeMenu: event => this.closeMenu(event),
     closeSubmenu: event => this.closeSubmenu(event),
@@ -252,12 +255,22 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     }
   }
 
-  private handleClick = e => {
+  private performClick = e => {
     const { active, menu } = this.props
     if (menu) {
-      this.trySetState({ submenuOpen: active ? !this.state.submenuOpen : true })
-      e.stopPropagation()
+      if (this.submenuDomElement && this.submenuDomElement.contains(e.target)) {
+        // submenu was clicked, so we just close it and propagate
+        this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+      } else {
+        // the menuItem element was clicked, so just toggle the open/close and stop propagation
+        this.trySetState({ submenuOpen: active ? !this.state.submenuOpen : true })
+        e.stopPropagation()
+      }
     }
+  }
+
+  private handleClick = e => {
+    this.performClick(e)
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
@@ -294,25 +307,10 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { menu } = this.props
     const { submenuOpen } = this.state
     if (menu && !submenuOpen) {
-      this.handleClick(e)
+      this.setState({ submenuOpen: true })
       e.stopPropagation()
       e.preventDefault()
     }
-  }
-
-  private handleSubmenuClicked = (e: React.SyntheticEvent, props: MenuProps) => {
-    this.trySetState({ submenuOpen: false })
-    _.invoke(props, 'onClick', props)
-  }
-
-  private handleSubmenuKeyDown = (e: React.SyntheticEvent, props: MenuProps) => {
-    if (
-      keyboardKey.getCode(e) === keyboardKey.Enter ||
-      keyboardKey.getCode(e) === keyboardKey.Spacebar
-    ) {
-      this.trySetState({ submenuOpen: false })
-    }
-    _.invoke(props, 'onKeyDown', props)
   }
 }
 

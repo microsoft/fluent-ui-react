@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -16,7 +17,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -39,14 +40,6 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Shorthand array of props for Menu. */
   items?: ShorthandValue[]
-
-  /**
-   * Called on click.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onClick?: ComponentEventHandler<MenuProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -113,11 +106,22 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
-      const { index } = itemProps
+      const { index } = predefinedProps
 
       this.trySetState({ activeIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
+    },
+    onKeyDown: (e, itemProps) => {
+      if (
+        keyboardKey.getCode(e) === keyboardKey.Enter ||
+        keyboardKey.getCode(e) === keyboardKey.Spacebar
+      ) {
+        // TODO check why itemProps is undefined (should be fixed by the changes added in getKeyDownHandler.ts
+        const { index } = predefinedProps
+        this.trySetState({ activeIndex: index })
+      }
+      _.invoke(predefinedProps, 'onKeyDown', predefinedProps)
     },
   })
 
@@ -160,19 +164,10 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
     const { children } = this.props
     return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...rest}
-        className={classes.root}
-        onClick={this.handleClick}
-      >
+      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
-  }
-
-  private handleClick = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onClick', e, { ...this.props, ...this.state })
   }
 }
 
