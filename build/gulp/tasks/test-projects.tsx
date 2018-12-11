@@ -1,5 +1,7 @@
+import * as debug from 'debug'
 import * as fs from 'fs'
-import { task } from 'gulp'
+import { series, task } from 'gulp'
+import * as path from 'path'
 import sh from '../sh'
 import * as rimraf from 'rimraf'
 
@@ -15,12 +17,13 @@ const log = msg => {
   console.log('='.repeat(80))
 }
 
-const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+export const createPackageFilename = () => tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
 
-const buildAndPackStardust = async (): Promise<string> => {
+export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
+
+export const buildAndPackStardust = async (packageFilename: string) => {
   await sh('yarn build:dist')
-
-  return (await sh(`npm pack`, true)).trim()
+  await sh(`yarn pack --filename ${packageFilename}`)
 }
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
@@ -90,8 +93,10 @@ export default App;
   //////// PREPARE STARDUST PACKAGE ///////
   log('STEP 0. Preparing Stardust package..')
 
-  const stardustPackageFilename = await buildAndPackStardust()
-  log(`Stardust package is published: ${paths.base(stardustPackageFilename)}`)
+  const packageFilename = createPackageFilename()
+
+  await buildAndPackStardust(packageFilename)
+  log(`Stardust package is published: ${packageFilename}`)
 
   try {
     //////// CREATE TEST REACT APP ///////
@@ -107,7 +112,7 @@ export default App;
     //////// ADD STARDUST AS A DEPENDENCY ///////
     log('STEP 2. Add Stardust dependency to test project..')
 
-    await runInTestApp(`yarn add ${paths.base(stardustPackageFilename)}`)
+    await runInTestApp(`yarn add ${packageFilename}`)
     log("Stardust is successfully added as test project's dependency.")
 
     //////// REFERENCE STARDUST COMPONENTS IN TEST APP's MAIN FILE ///////
@@ -120,6 +125,49 @@ export default App;
 
     log('Test project is built successfully!')
   } finally {
-    fs.unlinkSync(stardustPackageFilename)
+    fs.unlinkSync(packageFilename)
   }
 })
+
+task('test:projects:rollup', async () => {
+  const logger = debug('bundle:rollup')
+  logger.enabled = true
+
+  const packageFilename = createPackageFilename()
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/rollup')
+
+  await buildAndPackStardust(packageFilename)
+  logger(`✔️Stardust UI package was prepared: ${packageFilename}`)
+
+  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = [
+    'rollup',
+    'rollup-plugin-replace',
+    'rollup-plugin-commonjs',
+    'rollup-plugin-node-resolve',
+    'react',
+    'react-dom',
+  ].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  await runIn(tmpDirectory)(`yarn add ${packageFilename}`)
+  logger(`✔️Stardust UI was added to dependencies`)
+
+  fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
+  fs.copyFileSync(scaffoldPath('rollup.config.js'), path.resolve(tmpDirectory, 'rollup.config.js'))
+  logger(`✔️Source and bundler's config were created`)
+
+  await runIn(tmpDirectory)(`yarn rollup -c`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+})
+
+task(
+  'test:projects',
+  series(
+    // 'test:projects:cra-ts', Temporary disabled
+    'test:projects:rollup',
+  ),
+)

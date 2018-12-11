@@ -22,27 +22,6 @@ const InputExampleInputSlot = () => (
         styles: inputStyles,
       }}
     />
-
-    <Text content="Wrapped Input with existing component:" />
-    <Input
-      placeholder="Search..."
-      role="presentation"
-      input={
-        <Text
-          as="input"
-          placeholder="Placeholder Override..."
-          role="checkbox"
-          styles={inputStyles}
-        />
-      }
-    />
-
-    <Text content="Wrapped Input with custom element:" />
-    <Input
-      placeholder="Search..."
-      role="presentation"
-      input={<input placeholder="Placeholder Override..." role="checkbox" style={inputStyles} />}
-    />
   </Grid>
 )
 

@@ -250,7 +250,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderElement = (element: React.ReactElement<any>) => {
+    const { examplePath } = this.props
     const { showRtl, componentVariables, themeName } = this.state
+
     const theme = themes[themeName]
 
     const newTheme: ThemeInput = {
@@ -260,7 +262,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return <Provider theme={newTheme}>{element}</Provider>
+    return (
+      <Provider key={`${examplePath}${showRtl ? '-rtl' : ''}`} theme={newTheme}>
+        {element}
+      </Provider>
+    )
   }
 
   renderMissingExample = (): JSX.Element => {
@@ -334,8 +340,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         disabled,
         key: codeType,
         onClick: this.setApiCodeType.bind(this, codeType),
-        content: codeTypeApiButtonLabels[codeType],
-        ...(disabled && { className: 'crossout' }),
+        content: (
+          <span>
+            {codeTypeApiButtonLabels[codeType]}
+            {disabled && <em> (not supported)</em>}
+          </span>
+        ),
       }
     })
 

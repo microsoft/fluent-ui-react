@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createPortal } from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
@@ -196,7 +196,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          createPortal(popupContent, document.body)}
+          ReactDOM.createPortal(popupContent, document.body)}
       </>
     )
   }
