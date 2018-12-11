@@ -134,6 +134,7 @@ task('test:projects:rollup', async () => {
   logger.enabled = true
 
   const packageFilename = createPackageFilename()
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/rollup')
 
   await buildAndPackStardust(packageFilename)
   logger(`✔️Stardust UI package was prepared: ${packageFilename}`)
@@ -155,14 +156,8 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn add ${packageFilename}`)
   logger(`✔️Stardust UI was added to dependencies`)
 
-  fs.copyFileSync(
-    path.resolve(__dirname, '..', 'scaffold', 'app.js'),
-    path.resolve(tmpDirectory, 'app.js'),
-  )
-  fs.copyFileSync(
-    path.resolve(__dirname, '..', 'scaffold', 'rollup.config.js'),
-    path.resolve(tmpDirectory, 'rollup.config.js'),
-  )
+  fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
+  fs.copyFileSync(scaffoldPath('rollup.config.js'), path.resolve(tmpDirectory, 'rollup.config.js'))
   logger(`✔️Source and bundler's config were created`)
 
   await runIn(tmpDirectory)(`yarn rollup -c`)
