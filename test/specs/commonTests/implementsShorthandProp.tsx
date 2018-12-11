@@ -4,7 +4,7 @@ import { mountWithProvider } from 'test/utils'
 import { Props, PropsOf } from '../../../types/utils'
 
 export type ShorthandTestOptions<TProps = any> = {
-  mapsValueToProp?: keyof (TProps & React.HTMLProps<HTMLElement>)
+  mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false
 }
 
 export const DefaultShorthandTestOptions: ShorthandTestOptions = {
@@ -58,9 +58,11 @@ export default ((Component: React.ComponentType) => {
         expect(Component.propTypes[shorthandProp]).toBeTruthy()
       })
 
-      test(`string value is handled as ${displayName}'s ${mapsValueToProp}`, () => {
-        expectShorthandPropsAreHandled('shorthand prop value')
-      })
+      if (options.mapsValueToProp) {
+        test(`string value is handled as ${displayName}'s ${mapsValueToProp}`, () => {
+          expectShorthandPropsAreHandled('shorthand prop value')
+        })
+      }
 
       test(`object value is spread as ${displayName}'s props`, () => {
         expectShorthandPropsAreHandled({ foo: 'foo value', bar: 'bar value' })

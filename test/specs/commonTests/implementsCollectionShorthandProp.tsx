@@ -4,13 +4,11 @@ import * as _ from 'lodash'
 import { PropsOf } from 'types/utils'
 
 export type CollectionShorthandTestOptions<TProps = any> = {
-  mapsValueToProp?: keyof (TProps & React.HTMLProps<HTMLElement>)
-  skipArrayOfStrings?: boolean
+  mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false
 }
 
 export const DefaultCollectionShorthandTestOptions: CollectionShorthandTestOptions = {
   mapsValueToProp: 'content',
-  skipArrayOfStrings: false,
 }
 
 export type CollectionShorthandPropTestsRunner<TComponent> = <
@@ -38,7 +36,7 @@ export default ((Component: React.ComponentType) => {
         expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
       })
 
-      if (!options.skipArrayOfStrings) {
+      if (options.mapsValueToProp) {
         test(`array of string values is spread as ${
           ShorthandComponent.displayName
         }s' ${mapsValueToProp}`, () => {
