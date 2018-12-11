@@ -208,38 +208,46 @@ export default class Dropdown extends AutoControlledComponent<
     const { searchQuery } = this.state
 
     return (
-      <ElementType className={classes.root} {...rest}>
-        <Downshift
-          onChange={this.handleSelectedChange}
-          inputValue={search ? searchQuery : undefined}
-          stateReducer={this.handleDownshiftStateChanges}
-          itemToString={itemToString}
-          // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
-          selectedItem={search && !multiple ? undefined : null}
-          getA11yStatusMessage={getA11yStatusMessage}
-        >
-          {({
-            getInputProps,
-            getItemProps,
-            getMenuProps,
-            getRootProps,
-            getToggleButtonProps,
-            isOpen,
-            highlightedIndex,
-            selectItemAtIndex,
-          }) => {
-            return (
-              <div
-                className={classes.containerDiv}
-                onClick={this.handleContainerClick.bind(this, isOpen)}
+      <Downshift
+        onChange={this.handleSelectedChange}
+        inputValue={search ? searchQuery : undefined}
+        stateReducer={this.handleDownshiftStateChanges}
+        itemToString={itemToString}
+        // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
+        selectedItem={search && !multiple ? undefined : null}
+        getA11yStatusMessage={getA11yStatusMessage}
+      >
+        {({
+          getInputProps,
+          getItemProps,
+          getMenuProps,
+          getRootProps,
+          getToggleButtonProps,
+          isOpen,
+          highlightedIndex,
+          selectItemAtIndex,
+        }) => {
+          const accessibilityRootProps = getRootProps(
+            { refKey: 'innerRef' },
+            { suppressRefError: true },
+          )
+          // const getExpandedRootProps = () => rootAccessibilityProps
+          const { innerRef, ...accessibilityRootPropsRest } = accessibilityRootProps
+          return (
+            <Ref innerRef={innerRef}>
+              <ElementType
+                className={classes.root}
+                onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
+                {...rest}
               >
                 {multiple && this.renderSelectedItems(styles)}
                 {search
                   ? this.renderSearchInput(
-                      getRootProps,
+                      accessibilityRootPropsRest,
                       getInputProps,
                       highlightedIndex,
                       selectItemAtIndex,
+                      variables,
                     )
                   : this.renderTriggerButton(getToggleButtonProps, styles)}
                 {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
@@ -251,11 +259,11 @@ export default class Dropdown extends AutoControlledComponent<
                   isOpen,
                   highlightedIndex,
                 )}
-              </div>
-            )
-          }}
-        </Downshift>
-      </ElementType>
+              </ElementType>
+            </Ref>
+          )
+        }}
+      </Downshift>
     )
   }
 
@@ -286,7 +294,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderSearchInput(
-    getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
     highlightedIndex: number,
     selectItemAtIndex: (
@@ -294,6 +302,7 @@ export default class Dropdown extends AutoControlledComponent<
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
+    variables,
   ): JSX.Element {
     const { searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
@@ -304,6 +313,7 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
+        variables,
         inputRef: (inputNode: HTMLElement) => {
           this.inputNode = inputNode
         },
@@ -313,7 +323,7 @@ export default class Dropdown extends AutoControlledComponent<
           predefinedProps,
           highlightedIndex,
           selectItemAtIndex,
-          getRootProps,
+          accessibilityComboboxProps,
           getInputProps,
         ),
     })
@@ -524,7 +534,7 @@ export default class Dropdown extends AutoControlledComponent<
       otherStateToSet?: Partial<StateChangeOptions<any>>,
       cb?: () => void,
     ) => void,
-    getRootProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    accessibilityComboboxProps: Object,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) => {
     const handleInputBlur = (
@@ -564,9 +574,7 @@ export default class Dropdown extends AutoControlledComponent<
         }),
       },
       // same story as above for getRootProps.
-      accessibilityWrapperProps: {
-        ...getRootProps({ refKey: 'innerRef' }, { suppressRefError: true }),
-      },
+      accessibilityComboboxProps,
       onFocus: (e: React.SyntheticEvent, searchInputProps: DropdownSearchInputProps) => {
         this.setState({ focused: true })
 

@@ -3,16 +3,16 @@ import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
-  containerDiv: ({
+  root: ({
     props: { focused, toggleButton, fluid },
     variables: {
       backgroundColor,
-      containerDivBorderBottom,
-      containerDivBorderRadius,
-      containerDivBorderColor,
-      containerDivFocusBorderColor,
-      containerDivFocusBorderRadius,
-      containerDivColor,
+      borderBottom,
+      borderRadius,
+      borderColor,
+      borderColorFocus,
+      borderRadiusFocus,
+      color,
       toggleButtonSize,
       width,
     },
@@ -22,33 +22,39 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     outline: 0,
     border: 0,
     backgroundColor,
-    borderRadius: containerDivBorderRadius,
-    borderBottom: containerDivBorderBottom,
-    borderColor: containerDivBorderColor,
-    color: containerDivColor,
+    borderBottom,
+    borderColor,
+    borderRadius,
+    color,
     width: fluid ? '100%' : width,
     position: 'relative',
     ...(toggleButton && {
       paddingRight: toggleButtonSize,
     }),
     ...(focused && {
-      borderColor: containerDivFocusBorderColor,
-      borderRadius: containerDivFocusBorderRadius,
+      borderColor: borderColorFocus,
+      borderRadius: borderRadiusFocus,
     }),
   }),
 
-  button: (): ICSSInJSStyle => {
+  button: ({ variables: { comboboxPaddingButton } }): ICSSInJSStyle => {
     const transparentColorStyle = {
       backgroundColor: 'transparent',
       borderColor: 'transparent',
     }
     return {
-      boxShadow: '0 0 0 0',
+      boxShadow: 'none',
       margin: '0',
       justifyContent: 'left',
+      padding: comboboxPaddingButton,
       ...transparentColorStyle,
       ':hover': transparentColorStyle,
-      ':focus': transparentColorStyle,
+      ':focus': {
+        ...transparentColorStyle,
+        ':after': {
+          borderColor: 'transparent',
+        },
+      },
       ':active': transparentColorStyle,
     }
   },
