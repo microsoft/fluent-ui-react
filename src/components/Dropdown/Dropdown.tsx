@@ -28,8 +28,7 @@ import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
-import DropdownSearchInput from './DropdownSearchInput'
-import { DropdownSearchInputProps } from 'semantic-ui-react'
+import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
 
 // TODO: To be replaced when Downshift will add highlightedItem in their interface.
@@ -352,7 +351,7 @@ export default class Dropdown extends AutoControlledComponent<
     isOpen: boolean,
     highlightedIndex: number,
   ) {
-    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' })
+    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true })
     const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
 
     return (
