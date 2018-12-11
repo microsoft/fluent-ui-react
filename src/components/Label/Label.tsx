@@ -13,7 +13,9 @@ import {
   commonPropTypes,
 } from '../../lib'
 
-import { Icon, Image, Layout } from '../..'
+import Icon from '../Icon/Icon'
+import Image from '../Image/Image'
+import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable, ShorthandValue } from '../../../types/utils'
 
