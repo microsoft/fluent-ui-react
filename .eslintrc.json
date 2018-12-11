@@ -1,0 +1,13 @@
+{
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "parser": "typescript-eslint-parser",
+  "plugins": ["import", "prettier"],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off",
+    "prettier/prettier": "error",
+    "semi": ["error", "never"]
+  }
+}

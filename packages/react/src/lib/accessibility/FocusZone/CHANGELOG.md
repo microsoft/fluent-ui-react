@@ -22,6 +22,10 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
 - Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563)) 
 
+### chore: replace ts-lint with eslint [#600](https://github.com/stardust-ui/react/pull/600)
+- Reorder functions in the file to fix no-use-before-define
+- Refactor "a && a.b()" to an "if" statement to fix no-unused-expressions
+
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
 - Moved `IS_FOCUSABLE_ATTRIBUTE` and others to `focusUtilities.ts`.

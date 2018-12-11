@@ -19,8 +19,8 @@
     "clean:cache": "gulp clean:cache",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
-    "lint": "tslint -t stylish -p .",
-    "lint:fix": "yarn lint --fix",
+    "lint": "eslint .",
+    "lint:fix": "yarn eslint --fix",
     "perf": "cross-env PERF=true gulp perf --times=50",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
@@ -45,7 +45,7 @@
   "lint-staged": {
     "**/*.{ts,tsx}": [
       "prettier --write",
-      "tslint -t stylish --fix",
+      "eslint --fix",
       "git add"
     ],
     "**/*.{js,json}": [
@@ -109,6 +109,14 @@
     "doctrine": "^2.0.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-typescript": "^0.14.0",
     "express": "^4.15.4",
     "extract-comments": "^1.0.0",
     "faker": "^4.1.0",
@@ -161,9 +169,8 @@
     "ts-loader": "^5.3.0",
     "ts-node": "^6.1.0",
     "tsconfig-paths": "^3.7.0",
-    "tslint": "^5.11.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "~3.2.2",
+    "typescript": "^3.2.2",
+    "typescript-eslint-parser": "^21.0.2",
     "webpack": "^4.25.1",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.18.2"
