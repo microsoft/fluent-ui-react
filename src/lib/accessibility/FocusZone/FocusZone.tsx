@@ -8,7 +8,7 @@ import {
   FocusZoneProps,
 } from './FocusZone.types'
 import * as keyboardKey from 'keyboard-key'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 import {
   getNextElement,
