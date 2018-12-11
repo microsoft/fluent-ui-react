@@ -5,13 +5,10 @@ import {
   handlesAccessibility,
   htmlIsAccessibilityCompliant,
 } from 'test/specs/commonTests'
-import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import { mountWithProvider } from 'test/utils'
 
 import RadioGroup from 'src/components/RadioGroup/RadioGroup'
 import RadioGroupItem from 'src/components/RadioGroup/RadioGroupItem'
-
-const radioGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(RadioGroup)
 
 const getShorthandItems = (props?: { disabledItem?: number }) => [
   {
@@ -51,13 +48,6 @@ describe('RadioGroup', () => {
 
     test('compliance', async () =>
       await htmlIsAccessibilityCompliant(<RadioGroup items={getShorthandItems()} />))
-  })
-
-  describe('implementsCollectionShorthandProp', () => {
-    radioGroupImplementsCollectionShorthandProp('items', RadioGroupItem, {
-      mapsValueToProp: 'content',
-      skipArrayOfStrings: true,
-    })
   })
 
   const itemsTest = (getItems: Function, isShorthandApiTest: boolean = true) => {
