@@ -10,7 +10,7 @@ import {
 } from '@stardust-ui/react'
 import { ReactChildren } from 'types/utils'
 import * as React from 'react'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string

@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { Component } from 'react'
-import { createPortal } from 'react-dom'
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
@@ -26,7 +26,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
 /**
  * An inner component that allows you to render children outside their parent.
  */
-class PortalInner extends Component<PortalInnerProps> {
+class PortalInner extends React.Component<PortalInnerProps> {
   public static propTypes = {
     ...commonPropTypes.createCommon({
       animated: false,
@@ -55,7 +55,7 @@ class PortalInner extends Component<PortalInnerProps> {
   public render() {
     const { children, context } = this.props
 
-    return context && createPortal(children, context)
+    return context && ReactDOM.createPortal(children, context)
   }
 }
 
