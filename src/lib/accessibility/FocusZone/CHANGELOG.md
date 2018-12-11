@@ -17,7 +17,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
         - Changed not to call `this.focus()` on component mount (this was causing issues e.g., in docsite, where every change in source code would refocus the mounted component). Instead, you can now use a new property `shouldFocusOnMount`.
 
 - Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
-
+- Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563)) 
 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.
