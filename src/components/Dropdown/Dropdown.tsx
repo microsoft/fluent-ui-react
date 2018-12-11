@@ -231,7 +231,6 @@ export default class Dropdown extends AutoControlledComponent<
             { refKey: 'innerRef' },
             { suppressRefError: true },
           )
-          // const getExpandedRootProps = () => rootAccessibilityProps
           const { innerRef, ...accessibilityRootPropsRest } = accessibilityRootProps
           return (
             <Ref innerRef={innerRef}>
@@ -374,8 +373,8 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { items, noResultsMessage } = this.props
-    const filteredItems = this.getItemsFilteredBySearchQuery(items)
+    const { noResultsMessage } = this.props
+    const filteredItems = this.getFilteredItems()
 
     if (filteredItems.length > 0) {
       return filteredItems.map((item, index) => {
@@ -457,25 +456,30 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  private getItemsFilteredBySearchQuery = (items: ShorthandValue[]): ShorthandValue[] => {
-    const { itemToString, multiple, search } = this.props
+  private getFilteredItems = (): ShorthandValue[] => {
+    const { items, itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
+    let filteredItems = items
 
-    const nonSelectedItems = items.filter(item =>
-      multiple ? (value as ShorthandValue[]).indexOf(item) === -1 : true,
-    )
+    if (!multiple && !search) {
+      return items.filter(item => item !== (value as ShorthandValue))
+    }
+    if (multiple) {
+      filteredItems = filteredItems.filter(item => (value as ShorthandValue[]).indexOf(item) === -1)
+    }
+    if (search) {
+      if (_.isFunction(search)) {
+        return search(filteredItems, searchQuery)
+      }
+      return filteredItems.filter(
+        item =>
+          itemToString(item)
+            .toLowerCase()
+            .indexOf(searchQuery.toLowerCase()) !== -1,
+      )
+    }
 
-    const itemsMatchSearchQuery = nonSelectedItems.filter(item =>
-      search
-        ? _.isFunction(search)
-          ? search(itemsMatchSearchQuery, searchQuery)
-          : itemToString(item)
-              .toLowerCase()
-              .indexOf(searchQuery.toLowerCase()) !== -1
-        : true,
-    )
-
-    return itemsMatchSearchQuery
+    return filteredItems
   }
 
   private setA11yStatus = (statusMessage: string) => {
