@@ -23,8 +23,7 @@ import {
 import getUnhandledProps from '../../getUnhandledProps'
 import * as customPropTypes from '../../customPropTypes'
 import getElementType from '../../getElementType'
-// @ts-ignore
-import * as whatInput from '../../whatInput'
+import whatInput from '../../whatInput'
 
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999

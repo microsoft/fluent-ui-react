@@ -1,7 +1,7 @@
 // Taken from https://github.com/ten1seven/what-input/blob/master/src/scripts/what-input.js
 // Will be removed after https://github.com/ten1seven/what-input/issues/80
 
-module.exports = (() => {
+const module = () => {
   /*
    * bail out if there is no document or window
    * (i.e. in a node/non-DOM environment)
@@ -11,7 +11,7 @@ module.exports = (() => {
   if (typeof document === 'undefined' || typeof window === 'undefined') {
     return {
       // always return "initial" because no interaction will ever be detected
-      ask: () => 'initial',
+      ask: (): string => 'initial',
 
       // always return null
       element: () => null,
@@ -387,7 +387,7 @@ module.exports = (() => {
     // opt: 'intent'|'input'
     // 'input' (default): returns the same value as the `data-whatinput` attribute
     // 'intent': includes `data-whatintent` value if it's different than `data-whatinput`
-    ask: opt => {
+    ask: (opt: string | undefined): string => {
       return opt === 'intent' ? currentIntent : currentInput
     },
 
@@ -424,4 +424,11 @@ module.exports = (() => {
       }
     },
   }
-})()
+}
+
+const { ask, setInput } = module()
+
+export default {
+  ask,
+  setInput,
+}
