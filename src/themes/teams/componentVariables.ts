@@ -15,6 +15,8 @@ export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Divider } from './components/Divider/dividerVariables'
 
+export { default as Dropdown } from './components/Dropdown/dropdownVariables'
+
 export { default as Grid } from './components/Grid/gridVariables'
 
 export { default as Header } from './components/Header/headerVariables'
