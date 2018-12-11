@@ -45,6 +45,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Add `prettier` support throughout the docs @levithomason  ([#568](https://github.com/stardust-ui/react/pull/568))
 - Display available behaviors for component @jurokapsiar ([#510](https://github.com/stardust-ui/react/pull/510))
+- Fix `createComponent()` instructions for `className` @levithomason  ([#599](https://github.com/stardust-ui/react/pull/599))
 
 <!--------------------------------[ v0.14.0 ]------------------------------- -->
 ## [v0.14.0](https://github.com/stardust-ui/react/tree/v0.14.0) (2018-12-05)
