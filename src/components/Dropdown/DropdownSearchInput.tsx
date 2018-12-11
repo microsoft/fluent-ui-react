@@ -6,7 +6,6 @@ import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropType
 import { ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
-import Ref from '../Ref/Ref'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
   /**
@@ -68,7 +67,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
       content: false,
     }),
     accessibilityInputProps: PropTypes.object,
-    accessibilityWrapperProps: PropTypes.object,
+    accessibilityComboboxProps: PropTypes.object,
     inputRef: PropTypes.func,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
@@ -98,29 +97,26 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
   }
 
   public renderComponent({ rest, styles }: RenderResultConfig<DropdownSearchInputProps>) {
-    const { accessibilityWrapperProps, accessibilityInputProps, placeholder } = this.props
-    const { innerRef, ...accessibilityWrapperPropsRest } = accessibilityWrapperProps
+    const { accessibilityComboboxProps, accessibilityInputProps, placeholder } = this.props
     return (
-      <Ref innerRef={innerRef}>
-        <Input
-          inputRef={this.handleInputRef}
-          onFocus={this.handleFocus}
-          onKeyUp={this.handleKeyUp}
-          wrapper={{
-            styles: styles.wrapper,
-            ...accessibilityWrapperPropsRest,
-          }}
-          input={{
-            type: 'text',
-            styles: styles.input,
-            placeholder,
-            onBlur: this.handleInputBlur,
-            onKeyDown: this.handleInputKeyDown,
-            ...accessibilityInputProps,
-          }}
-          {...rest}
-        />
-      </Ref>
+      <Input
+        inputRef={this.handleInputRef}
+        onFocus={this.handleFocus}
+        onKeyUp={this.handleKeyUp}
+        wrapper={{
+          styles: styles.combobox,
+          ...accessibilityComboboxProps,
+        }}
+        input={{
+          type: 'text',
+          styles: styles.input,
+          placeholder,
+          onBlur: this.handleInputBlur,
+          onKeyDown: this.handleInputKeyDown,
+          ...accessibilityInputProps,
+        }}
+        {...rest}
+      />
     )
   }
 }

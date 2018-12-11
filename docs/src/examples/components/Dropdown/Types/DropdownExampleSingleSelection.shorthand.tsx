@@ -18,8 +18,7 @@ class DropdownExample extends React.Component {
     return (
       <Dropdown
         getA11yStatusMessage={getA11yStatusMessage}
-        noResultsMessage="We couldn't find any matches."
-        placeholder="Start typing a name"
+        placeholder="Select your hero"
         items={inputItems}
       />
     )
