@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { Provider, Grid, Divider, Header, Icon } from '@stardust-ui/react'
+import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
-
-import { Menu, Segment } from 'semantic-ui-react'
 
 const cellStyles = {
   margin: '10px 0',

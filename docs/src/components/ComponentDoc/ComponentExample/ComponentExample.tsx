@@ -4,8 +4,8 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
-import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
-import { Provider, themes } from '@stardust-ui/react'
+import { Form, Visibility } from 'semantic-ui-react'
+import { Divider, Menu, Segment, Provider, themes } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import { callable, pxToRem, constants } from 'src/lib'
@@ -45,6 +45,7 @@ interface ComponentExampleState {
 
 const childrenStyle: React.CSSProperties = {
   paddingTop: 0,
+  paddingBottom: '10px',
   maxWidth: pxToRem(500),
 }
 
@@ -584,82 +585,76 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
-        <Grid
-          className="docs-example"
-          onMouseLeave={handleMouseLeave}
-          onMouseMove={handleMouseMove}
-          style={exampleStyle}
-        >
-          <Grid.Column width={16} style={{ borderBottom: '1px solid #ddd' }}>
-            <div style={{ display: 'flex' }}>
-              <div style={{ flex: '1' }}>
-                <ComponentExampleTitle description={description} title={title} />
-              </div>
-              <div style={{ flex: '0 0 auto' }}>
-                <ComponentControls
-                  anchorName={this.anchorName}
-                  examplePath={currentExamplePath}
-                  onShowCode={this.handleShowCodeClick}
-                  onCopyLink={this.handleDirectLinkClick}
-                  onShowRtl={this.handleShowRtlClick}
-                  onShowVariables={this.handleShowVariablesClick}
-                  onShowTransparent={this.handleShowTransparentClick}
-                  showCode={showCode}
-                  showRtl={showRtl}
-                  showTransparent={showTransparent}
-                  showVariables={showVariables}
-                  visible
-                />
-              </div>
+
+        <Segment width={19} style={{ borderBottom: '1px solid #ddd' }}>
+          <div style={{ display: 'flex' }}>
+            <div style={{ flex: '1' }}>
+              <ComponentExampleTitle description={description} title={title} />
             </div>
-            {this.renderKnobs()}
-          </Grid.Column>
+            <div style={{ flex: '0 0 auto' }}>
+              <ComponentControls
+                anchorName={this.anchorName}
+                examplePath={currentExamplePath}
+                onShowCode={this.handleShowCodeClick}
+                onCopyLink={this.handleDirectLinkClick}
+                onShowRtl={this.handleShowRtlClick}
+                onShowVariables={this.handleShowVariablesClick}
+                onShowTransparent={this.handleShowTransparentClick}
+                showCode={showCode}
+                showRtl={showRtl}
+                showTransparent={showTransparent}
+                showVariables={showVariables}
+                visible
+              />
+            </div>
+          </div>
+          {this.renderKnobs()}
+        </Segment>
 
-          {children && (
-            <Grid.Column width={16} style={childrenStyle}>
-              {children}
-            </Grid.Column>
-          )}
+        {children && (
+          <Segment width={16} style={childrenStyle}>
+            {children}
+          </Segment>
+        )}
 
-          <SourceRender
-            babelConfig={babelConfig}
-            knobs={knobs}
-            source={sourceCode}
-            render={this.renderElement}
-            renderHtml={showCode}
-            resolver={importResolver}
-          >
-            <Provider.Consumer
-              render={({ siteVariables }) => {
-                return (
-                  <Grid.Column
-                    width={16}
-                    dir={showRtl ? 'rtl' : undefined}
-                    className={`rendered-example ${this.getKebabExamplePath()}`}
-                    style={{
-                      padding: '2rem',
-                      color: siteVariables.bodyColor,
-                      backgroundColor: siteVariables.bodyBackground,
-                      ...(showTransparent && {
-                        backgroundImage:
-                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                        backgroundRepeat: 'repeat',
-                      }),
-                    }}
-                  >
-                    {this.renderExampleFromCode()}
-                  </Grid.Column>
-                )
-              }}
-            />
-            <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-              {this.renderJSX()}
-              {this.renderError()}
-              {this.renderHTML()}
-              {this.renderVariables()}
-            </Grid.Column>
-          </SourceRender>
-        </Grid>
+        <SourceRender
+          babelConfig={babelConfig}
+          knobs={knobs}
+          source={sourceCode}
+          render={this.renderElement}
+          renderHtml={showCode}
+          resolver={importResolver}
+        >
+          <Provider.Consumer
+            render={({ siteVariables }) => {
+              return (
+                <Segment
+                  dir={showRtl ? 'rtl' : undefined}
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  style={{
+                    padding: '2rem',
+                    color: siteVariables.bodyColor,
+                    backgroundColor: siteVariables.bodyBackground,
+                    ...(showTransparent && {
+                      backgroundImage:
+                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                      backgroundRepeat: 'repeat',
+                    }),
+                  }}
+                >
+                  {this.renderExampleFromCode()}
+                </Segment>
+              )
+            }}
+          />
+          <Segment style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
+            {this.renderJSX()}
+            {this.renderError()}
+            {this.renderHTML()}
+            {this.renderVariables()}
+          </Segment>
+          <div style={{ paddingBottom: '10px' }} />
+        </SourceRender>
         <Divider section horizontal />
       </Visibility>
     )

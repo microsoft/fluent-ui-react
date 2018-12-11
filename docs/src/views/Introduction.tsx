@@ -1,19 +1,19 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Container, Header, Segment } from 'semantic-ui-react'
+import { Header, Segment } from '@stardust-ui/react'
 
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')
 
 const Introduction = () => (
-  <Container id="introduction-page" text>
+  <div>
     <Segment basic textAlign="center">
       <Logo centered size="small" />
       <Header as="h1" textAlign="center">
         {_.capitalize(pkg.name)}
-        <Header.Subheader>{pkg.description}</Header.Subheader>
+        <Header.Description>{pkg.description}</Header.Description>
       </Header>
     </Segment>
     <p>
@@ -37,7 +37,7 @@ const Introduction = () => (
       If you want to get going right away, see the <NavLink to="quick-start">Quick Start</NavLink>{' '}
       guide.
     </p>
-  </Container>
+  </div>
 )
 
 export default Introduction

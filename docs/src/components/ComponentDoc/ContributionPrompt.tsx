@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Message } from 'semantic-ui-react'
-import { Icon } from '@stardust-ui/react'
+import { Icon, Segment, Text } from '@stardust-ui/react'
 import { constants } from 'src/lib'
 
 const wrapStyle = { wordBreak: 'break-word' }
 
 const ContributionPrompt: any = ({ children }) => (
-  <Message info icon style={wrapStyle}>
+  <Segment inverted style={wrapStyle}>
     <Icon name="bullhorn" />
-    <Message.Content>
+    <Text>
       {children && <div>{children}</div>}
       <p>
         If there's no{' '}
@@ -23,8 +22,8 @@ const ContributionPrompt: any = ({ children }) => (
         </a>{' '}
         one!
       </p>
-    </Message.Content>
-  </Message>
+    </Text>
+  </Segment>
 )
 
 ContributionPrompt.propTypes = {

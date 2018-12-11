@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Grid, Header } from 'semantic-ui-react'
+import { Header, Segment } from '@stardust-ui/react'
 import DocumentTitle from 'react-document-title'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 
@@ -34,39 +34,27 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     const pageTitle = `${_.capitalize(match.params.name)} behaviors`
     return (
       <DocumentTitle title={pageTitle}>
-        <Grid>
-          <Grid.Row style={{ margin: '1em' }}>
-            <Grid.Column>
-              <Header
-                as="h1"
-                content={pageTitle}
-                subheader={`Keyboard and Screenreader options for ${match.params.name}s.`}
-              />
-            </Grid.Column>
-          </Grid.Row>
+        <Segment>
+          <Header
+            as="h1"
+            content={pageTitle}
+            description={`Keyboard and Screenreader options for ${match.params.name}s.`}
+          />
+
           {behaviorMenuItems
             .find(behavior => behavior.displayName === _.capitalize(match.params.name))
             .variations.map((variation, keyValue) => (
-              <Grid.Row
+              <Segment
                 key={keyValue}
                 className="docs-example"
                 id={_.kebabCase(variation.name)}
                 style={exampleStyle}
               >
-                <Grid.Column
-                  width={16}
-                  style={{ borderBottom: '1px solid #ddd', padding: '0 0 0 1em' }}
-                >
-                  <div style={{ display: 'flex' }}>
-                    <div style={{ flex: '1', marginBottom: '1em' }}>
-                      <ComponentExampleTitle
-                        title={this.baseName(variation.name)}
-                        description={`Name: ${variation.name.replace('.ts', '')}`}
-                      />
-                    </div>
-                    <div style={{ flex: '0 0 auto' }} />
-                  </div>
-                </Grid.Column>
+                <ComponentExampleTitle
+                  title={this.baseName(variation.name)}
+                  description={`Name: ${variation.name.replace('.ts', '')}`}
+                />
+
                 <div style={{ padding: '1em' }}>
                   <span> Description: </span>
                   <br />
@@ -89,9 +77,9 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                       )
                     })}
                 </div>
-              </Grid.Row>
+              </Segment>
             ))}
-        </Grid>
+        </Segment>
       </DocumentTitle>
     )
   }

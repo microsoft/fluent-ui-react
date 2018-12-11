@@ -32,6 +32,7 @@ const getFontStyles = (
 
   return {
     fontFamily,
+    fontWeight: 900,
     fontSize: getSize(size),
     lineHeight: 1,
     textAlign: 'center',

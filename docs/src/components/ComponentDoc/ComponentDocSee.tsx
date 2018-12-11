@@ -2,8 +2,7 @@ import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { List } from 'semantic-ui-react'
-import { Header } from '@stardust-ui/react'
+import { List, Header } from '@stardust-ui/react'
 
 import { getComponentPathname, getInfoForSeeTags } from 'docs/src/utils'
 

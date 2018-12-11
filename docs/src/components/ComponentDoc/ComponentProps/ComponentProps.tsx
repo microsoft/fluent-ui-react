@@ -1,12 +1,12 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Checkbox } from 'semantic-ui-react'
 
 import { getComponentGroup } from 'docs/src/utils'
 import ComponentTable from '../ComponentTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
+import { RadioGroup } from '@stardust-ui/react'
 
 const propsContainerStyle: any = { overflowX: 'auto' }
 
@@ -53,7 +53,16 @@ export default class ComponentProps extends React.Component<any, any> {
 
     return (
       <div>
-        <Checkbox slider checked={!!activeDisplayName} label="Props" onClick={this.handleToggle} />
+        <RadioGroup
+          items={[
+            <RadioGroup.Item
+              key="1"
+              checked={!!activeDisplayName}
+              label="Props"
+              onClick={this.handleToggle}
+            />,
+          ]}
+        />
         <ComponentPropsComponents
           activeDisplayName={activeDisplayName}
           displayNames={displayNames}

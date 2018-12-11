@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Grid, Header } from 'semantic-ui-react'
+import { Grid, Header } from '@stardust-ui/react'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -15,13 +15,13 @@ const sectionStyle: React.CSSProperties = {
 }
 
 const ExampleSection: any = ({ title, children, ...rest }) => (
-  <Grid padded style={sectionStyle} {...rest}>
-    <Grid.Column>
+  <Grid columns="1" padded style={sectionStyle} {...rest}>
+    <div>
       <Header as="h2" style={headerStyle} className="no-anchor">
         {title}
       </Header>
       {children}
-    </Grid.Column>
+    </div>
   </Grid>
 )
 

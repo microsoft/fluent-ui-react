@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { exampleContext } from 'docs/src/utils'
-import { Grid, List } from '@stardust-ui/react'
+import { Text, Grid, List } from '@stardust-ui/react'
 import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 
@@ -76,7 +76,8 @@ export default class ComponentExamples extends React.Component<ComponentExamples
   }
 
   private renderElementWrappedInGrid = (Element: JSX.Element) => (
-    <Grid columns="1" content={Element} />
+    <Text content="Here" />
+    //  <Grid columns="1" content={Element} />
   )
 
   private testExamplesStructure(displayName: string, allPaths: string[]): string[] {

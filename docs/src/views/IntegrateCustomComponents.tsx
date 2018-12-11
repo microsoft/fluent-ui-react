@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as cx from 'classnames'
 import { NavLink } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
 import {
   Button,
   Divider,
+  Header,
   Provider,
   createComponent,
   ComponentSlotStyle,
