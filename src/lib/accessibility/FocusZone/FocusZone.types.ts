@@ -59,7 +59,7 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   shouldFocusFirstElementWhenReceivedFocus?: boolean
 
   /**
-   * If global onKeyDownCapture should be handled and updating tab indexes
+   * If global onKeyDownCapture should be handled and updating tab indexes.
    */
   shouldHandleKeyDownCapture?: boolean
 
