@@ -1,5 +1,5 @@
 export function initKeyboardFocusMock() {
-  jest.mock('what-input', () => {
+  jest.mock('./whatInput', () => {
     return {
       ask: jest.fn(),
     }

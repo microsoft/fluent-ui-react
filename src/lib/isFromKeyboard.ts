@@ -1,4 +1,5 @@
-import * as whatInput from 'what-input'
+// @ts-ignore
+import * as whatInput from './whatInput'
 import tsUtils from './typescriptUtils'
 
 export interface State {
