@@ -280,7 +280,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     const popupContent = React.isValidElement(content)
       ? React.cloneElement(content, {
-          ...content.props,
+React.cloneElement(content, popupContentAttributes)
           ...popupContentAttributes,
         })
       : Popup.Content.create(content, {
