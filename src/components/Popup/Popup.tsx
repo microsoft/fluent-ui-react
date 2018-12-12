@@ -154,11 +154,22 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     if (this.state.open) {
       setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', e => {
-          if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
-            this.state.open && this.trySetOpen(false, e, true)
-          }
-        })
+        this.outsideClickSubscription = EventStack.subscribe(
+          'click',
+          e => {
+            const isOutsidePopupElement =
+              this.popupDomElement && !this.popupDomElement.contains(e.target)
+            const isOutsideTriggerElement =
+              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+
+            if (isOutsidePopupElement && isOutsideTriggerElement) {
+              this.state.open && this.trySetOpen(false, e, true)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
       })
     }
   }
