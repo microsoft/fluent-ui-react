@@ -48,7 +48,7 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
     gutterPosition: 'start',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }: RenderResultConfig<ChatItemProps>) {
+  renderComponent({ ElementType, classes, rest }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
