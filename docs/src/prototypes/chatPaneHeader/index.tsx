@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Layout, Avatar, Icon, Divider, Status } from '@stardust-ui/react'
+import { Button, Avatar, Icon, Divider, Status } from '@stardust-ui/react'
 import ChatTitle from './chatTitle'
 import Tabs from './tabs'
 import CallingButtons from './callingButtons'
@@ -42,6 +42,12 @@ const itemsList = [
     header: 'Michelangelo Lodovico',
     styles: listItemStyle,
   },
+  {
+    key: ' FarrokhBulsara',
+    media: <Status color="red" icon="minus" title="Busy" />,
+    header: ' Farrokh Bulsara',
+    styles: listItemStyle,
+  },
 ]
 
 export default () => (
@@ -50,92 +56,42 @@ export default () => (
       <button>Set focus here </button>
     </div>
     <br />
-    <Layout
-      start={<Avatar image="public/images/avatar/small/matt.jpg" />}
-      main={
-        <div>
-          <ChatTitle listItems={itemsList.slice(0, 3)} />
-          <Tabs />
-        </div>
-      }
-      end={
-        <div>
-          <CallingButtons />
-          <Button
-            aria-label="add people"
-            circular
-            key="userPlus"
-            title="add people"
-            icon={
-              <Icon
-                key="userPlus"
-                name="user plus"
-                size="large"
-                variables={siteVars => ({ color: siteVars.gray04 })}
-              />
-            }
-          />
-          <Button
-            aria-label="more options"
-            circular
-            key="moreOptions"
-            title="more option"
-            icon={
-              <Icon
-                key="userPlus"
-                name="ellipsis horizontal"
-                size="large"
-                variables={siteVars => ({ color: siteVars.gray04 })}
-              />
-            }
-          />
-        </div>
-      }
-    />
-    <Divider />
-    <br />
-    <Layout
-      start={<Avatar image="public/images/avatar/small/matt.jpg" />}
-      main={
-        <div>
-          <ChatTitle listItems={itemsList.slice(0, 4)} />
-          <Tabs />
-        </div>
-      }
-      end={
-        <div>
-          <CallingButtons />
-          <Button
-            aria-label="add people"
-            circular
-            key="addPeople"
-            title="add people"
-            icon={
-              <Icon
-                key=""
-                name="user plus"
-                size="large"
-                variables={siteVars => ({ color: siteVars.gray04 })}
-              />
-            }
-          />
-          <Button
-            aria-label="more options"
-            circular
-            key="moreOptions"
-            title="more options"
-            icon={
-              <Icon
-                key="userPlus"
-                name="ellipsis horizontal"
-                size="large"
-                variables={siteVars => ({ color: siteVars.gray04 })}
-              />
-            }
-          />
-        </div>
-      }
-    />
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Avatar image="public/images/avatar/small/matt.jpg" />
+      <ChatTitle listItems={itemsList.slice(0, 5)} />
+      <Tabs />
+      <CallingButtons />
+      <div style={{ flexGrow: 0.2 }}>
+        <Button
+          aria-label="add people"
+          circular
+          key="userPlus"
+          title="add people"
+          icon={
+            <Icon
+              key="userPlus"
+              name="user plus"
+              size="large"
+              variables={siteVars => ({ color: siteVars.gray04 })}
+            />
+          }
+        />
+        <Button
+          aria-label="more options"
+          circular
+          key="moreOptions"
+          title="more option"
+          icon={
+            <Icon
+              key="userPlus"
+              name="ellipsis horizontal"
+              size="large"
+              variables={siteVars => ({ color: siteVars.gray04 })}
+            />
+          }
+        />
+      </div>
+    </div>
     <Divider />
     <br />
   </div>

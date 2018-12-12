@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layout, Menu, Button, tabListBehavior, tabBehavior, Icon } from '@stardust-ui/react'
+import { Menu, Button, tabListBehavior, tabBehavior, Icon } from '@stardust-ui/react'
 
 const menuStyle = {
   marginLeft: '3rem',
@@ -14,36 +14,32 @@ const menuItems = [
 class Tabs extends React.Component {
   public render() {
     return (
-      <Layout
-        start={
-          <Menu
-            accessibility={tabListBehavior}
-            styles={menuStyle}
-            aria-label="tab list"
-            defaultActiveIndex={0}
-            items={menuItems}
-            underlined
-            primary
-          />
-        }
-        main={
-          <Button
-            key="addTab"
-            name="addTab"
-            title="Add tab"
-            icon={
-              <Icon
-                key=""
-                name="add"
-                size="large"
-                variables={siteVars => ({ color: siteVars.gray04 })}
-              />
-            }
-            iconOnly
-            primary
-          />
-        }
-      />
+      <div style={{ flexGrow: 0.6 }}>
+        <Menu
+          accessibility={tabListBehavior}
+          styles={menuStyle}
+          aria-label="tab list"
+          defaultActiveIndex={0}
+          items={menuItems}
+          underlined
+          primary
+        />
+        <Button
+          key="addTab"
+          name="addTab"
+          title="Add tab"
+          icon={
+            <Icon
+              key=""
+              name="add"
+              size="large"
+              variables={siteVars => ({ color: siteVars.gray04 })}
+            />
+          }
+          iconOnly
+          primary
+        />
+      </div>
     )
   }
 }

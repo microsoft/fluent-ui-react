@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Icon, Button } from '@stardust-ui/react'
+import { List, Button } from '@stardust-ui/react'
 
 const listStyle = {
   marginLeft: '1rem',
@@ -11,22 +11,9 @@ class ChatTitle extends React.Component<any> {
     return listItems.length < 4 ? (
       <List styles={listStyle} aria-label="chat participants" items={listItems} />
     ) : (
-      <div>
+      <div style={{ flexGrow: 0.2 }}>
         <List styles={listStyle} aria-label="chat participants" items={listItems.slice(0, 3)} />
-        <Button
-          aria-label="more participants"
-          circular
-          key="moreOptions"
-          title="more options"
-          icon={
-            <Icon
-              key="userPlus"
-              name="ellipsis horizontal"
-              size="large"
-              variables={siteVars => ({ color: siteVars.gray04 })}
-            />
-          }
-        />
+        <Button circular content={`+ ${listItems.length - 3}`} />
       </div>
     )
   }
