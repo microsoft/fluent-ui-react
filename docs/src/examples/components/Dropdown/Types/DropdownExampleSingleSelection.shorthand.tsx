@@ -18,6 +18,9 @@ class DropdownExample extends React.Component {
     return (
       <Dropdown
         getA11yStatusMessage={getA11yStatusMessage}
+        getA11ySelectionMessage={{
+          onAdd: item => `${item} has been selected.`,
+        }}
         placeholder="Select your hero"
         items={inputItems}
       />
