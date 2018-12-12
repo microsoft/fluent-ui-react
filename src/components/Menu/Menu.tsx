@@ -61,7 +61,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /** A vertical menu displays elements vertically. */
   vertical?: boolean
 
-  parentRef: React.RefObject<HTMLElement>
+  parentRef?: React.RefObject<HTMLElement>
 }
 
 /**

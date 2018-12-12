@@ -99,7 +99,7 @@ export interface MenuItemProps
   /** Default submenu open */
   defaultSubmenuOpen?: boolean
 
-  parentRef: React.RefObject<HTMLElement>
+  parentRef?: React.RefObject<HTMLElement>
 }
 
 export interface MenuItemState {
@@ -303,11 +303,18 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private closeSubmenu = e => {
-    const { menu } = this.props
+    const { menu, parentRef } = this.props
     const { submenuOpen } = this.state
+    const shouldStopPropagation = parentRef || this.props.vertical
     if (menu && submenuOpen) {
-      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
-      e.stopPropagation()
+      this.setState({ submenuOpen: false }, () => {
+        if (shouldStopPropagation) {
+          focusAsync(this.itemRef.current)
+        }
+      })
+      if (shouldStopPropagation) {
+        e.stopPropagation()
+      }
     }
   }
 
