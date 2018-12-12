@@ -14,9 +14,7 @@ import { Extendable, ShorthandValue } from '../../../types/utils'
 export interface ChatGutterProps
   extends UIComponentProps<ChatGutterProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
-  /** Indicates whether message belongs to the current user. */
-}
+    ContentComponentProps<ShorthandValue> {}
 
 /**
  * A gutter is used to create the auxiliary area of a chat item

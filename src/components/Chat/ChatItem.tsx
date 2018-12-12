@@ -23,7 +23,7 @@ export interface ChatItemProps
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
 
-  /** Indicates whether message belongs to the current user. */
+  /** Indicates whether the gutter is positioned at the start or the end. */
   gutterPosition?: 'start' | 'end'
 }
 
