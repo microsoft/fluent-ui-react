@@ -1,14 +1,13 @@
+import { Icon, Input, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import Logo from 'docs/src/components/Logo/Logo'
+import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash/fp'
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
-import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { Menu, Icon, Text, Segment, Input } from '@stardust-ui/react'
-
-import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname } from 'docs/src/utils'
+import { NavLink } from 'react-router-dom'
 import { constants } from 'src/lib'
 
 type ComponentMenuItem = { displayName: string; type: string }
@@ -170,18 +169,25 @@ class Sidebar extends React.Component<any, any> {
   render() {
     const { style } = this.props
     const { query } = this.state
+
+    // Should be applied by provider
+    const sidebarStyles: ICSSInJSStyle = {
+      color: 'white',
+      background: 'black',
+      width: '230px',
+      position: 'fixed',
+      overflowY: 'scroll',
+      top: '0px',
+      bottom: '0px',
+    }
+
     const changeLogUrl = '${constants.repoURL}/blob/master/CHANGELOG.md'
 
     return (
       <Segment
+        styles={sidebarStyles}
         content={
-          <Menu
-            vertical
-            styles={{
-              ...style,
-            }}
-            pills
-          >
+          <Menu vertical pills>
             <Menu.Item>
               <Logo spaced="right" width="48px" />
               <Text content="Stardust UI React &nbsp;" />

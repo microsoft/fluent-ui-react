@@ -1,4 +1,4 @@
-import { createComponent, Icon, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { createComponent, Icon, Button, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import * as React from 'react'
 
 interface LabelledButtonProps {
@@ -17,7 +17,11 @@ const LabelledButton: React.SFC<LabelledButtonProps> = createComponent<LabelledB
     const { iconName, label, active } = props
     return (
       <div style={centered}>
-        <Icon name={iconName} styles={{ color: active ? 'green' : 'grey', marginBottom: '10px' }} />
+        <Button
+          iconOnly
+          icon={iconName}
+          styles={{ color: active ? 'green' : 'grey', marginBottom: '10px', border: 0 }}
+        />
         <br />
         <Text content={label} styles={{ color: active ? 'green' : 'grey' }} />
       </div>
