@@ -14,7 +14,6 @@ const items = [
     key: 'message-id-1',
   },
   {
-    gutterPosition: 'start',
     gutter: { content: <Avatar {...janeAvatar} /> },
     content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     key: 'message-id-2',
@@ -35,7 +34,6 @@ const items = [
     key: 'message-id-4',
   },
   {
-    gutterPosition: 'start',
     gutter: { content: <Avatar {...janeAvatar} /> },
     content: (
       <Chat.Message

@@ -82,7 +82,6 @@ const ChatMessageExampleStyled = () => (
         },
         {
           key: 'message-id-2',
-          gutterPosition: 'start',
           gutter: { content: <Avatar {...janeAvatar} /> },
           content: (
             <Chat.Message content={{ content }} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
