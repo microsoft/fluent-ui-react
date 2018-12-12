@@ -3,7 +3,7 @@ import { SiteVariablesInput, ColorVariants, ColorValues } from '../themes/types'
 
 export const mapColorsToScheme = <T>(
   siteVars: SiteVariablesInput,
-  mapper: string | number | keyof ColorVariants | ((color: ColorVariants) => T),
+  mapper: keyof ColorVariants | ((color: ColorVariants) => T),
 ): ColorValues<T> =>
   _.mapValues(
     { ...siteVars.emphasisColors, ...siteVars.naturalColors },

@@ -24,7 +24,7 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
-      ...(color && { color: _.get(v.colors, color) }),
+      color: _.get(v.colors, color),
       ...(truncated && truncateStyle),
       ...(atMention === true && {
         color: v.atMentionOtherColor,

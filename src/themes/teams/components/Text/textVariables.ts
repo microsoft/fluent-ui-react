@@ -33,7 +33,7 @@ export interface TextVariables {
 }
 
 export default (siteVariables): TextVariables => {
-  const colorVariant = '500'
+  const colorVariant = 500
 
   return {
     colors: mapColorsToScheme(siteVariables, colorVariant),

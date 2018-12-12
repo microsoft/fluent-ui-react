@@ -16,7 +16,7 @@ export interface DividerVariables {
 }
 
 export default (siteVars: any): DividerVariables => {
-  const colorVariant = '500'
+  const colorVariant = 500
 
   return {
     colors: mapColorsToScheme(siteVars, colorVariant),
