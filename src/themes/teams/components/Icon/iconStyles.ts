@@ -24,24 +24,24 @@ const getDefaultFontIcon = (iconName: string) => {
 }
 
 const getFontStyles = (
-  size: string,
+  size: number,
   iconName: string,
   themeIcon?: ResultOf<FontIconSpec>,
-  sizeModifier?: string,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
+  const sizeInRems = pxToRem(size)
 
   return {
     fontFamily,
-    fontSize: getSize(size, sizeModifier),
+    fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
 
     '::before': {
       content,
       display: 'block',
-      width: getSize(size, sizeModifier),
-      height: getSize(size, sizeModifier),
+      width: sizeInRems,
+      height: sizeInRems,
     },
   }
 }
@@ -72,9 +72,9 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getSize = (size, sizeModifier) => {
+const getIconSize = (size, sizeModifier): number => {
   if (!sizeModifier) {
-    return pxToRem(sizes.get(size))
+    return sizes.get(size)
   }
   const modifiedSizes = {
     large: {
@@ -82,8 +82,8 @@ const getSize = (size, sizeModifier) => {
       xx: 28,
     },
   }
-  const modifiedSize = modifiedSizes[size] && modifiedSizes[size][sizeModifier]
-  return modifiedSize && pxToRem(modifiedSize)
+
+  return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
 }
 
 const getIconColor = color => color || 'currentColor'
@@ -104,12 +104,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(isFontBased &&
-        getFontStyles(
-          size,
-          name,
-          callable(iconSpec && (iconSpec.icon as FontIconSpec), v.sizeModifier)(),
-        )),
+      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
       ...(isFontBased && {
         color: getIconColor(v.color),
@@ -145,10 +140,12 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   },
 
   svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
+    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
+
     return {
       display: 'block',
-      width: getSize(size, v.sizeModifier),
-      height: getSize(size, v.sizeModifier),
+      width: iconSizeInRems,
+      height: iconSizeInRems,
       fill: getIconColor(v.color),
 
       ...(disabled && {
