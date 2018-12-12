@@ -1,7 +1,6 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -112,16 +111,8 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
-    onKeyDown: (e, itemProps) => {
-      if (
-        keyboardKey.getCode(e) === keyboardKey.Enter ||
-        keyboardKey.getCode(e) === keyboardKey.Spacebar
-      ) {
-        // TODO check why itemProps is undefined (should be fixed by the changes added in getKeyDownHandler.ts
-        const { index } = predefinedProps
-        this.trySetState({ activeIndex: index })
-      }
-      _.invoke(predefinedProps, 'onKeyDown', predefinedProps)
+    setActiveIndex: index => {
+      this.trySetState({ activeIndex: index })
     },
   })
 

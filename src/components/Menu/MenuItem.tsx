@@ -179,7 +179,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         {...accessibility.attributes.anchor}
-        {...accessibility.keyHandlers.anchor}
         {...rest}
         {...!wrapper && { onClick: this.handleClick }}
         ref={this.itemRef}
@@ -231,7 +230,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.performClick(event),
+    performClick: event => this.handleClick(event),
     openSubmenu: event => this.openSubmenu(event),
     closeMenu: event => this.closeMenu(event),
     closeSubmenu: event => this.closeSubmenu(event),
@@ -308,6 +307,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { submenuOpen } = this.state
     if (menu && !submenuOpen) {
       this.setState({ submenuOpen: true })
+      _.invoke(this.props, 'setActiveIndex', this.props.index) // or call onClick from the client... => Menu.onClick will change the active index
       e.stopPropagation()
       e.preventDefault()
     }
