@@ -131,6 +131,8 @@ export default class Dropdown extends AutoControlledComponent<
   DropdownState
 > {
   private inputNode: HTMLElement
+  private listNode: HTMLElement
+  private buttonNode: HTMLElement
 
   static displayName = 'Dropdown'
 
@@ -215,6 +217,11 @@ export default class Dropdown extends AutoControlledComponent<
         // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
         selectedItem={search && !multiple ? undefined : null}
         getA11yStatusMessage={getA11yStatusMessage}
+        onStateChange={changes => {
+          if (changes.isOpen && !search) {
+            this.listNode.focus()
+          }
+        }}
       >
         {({
           getInputProps,
@@ -223,6 +230,7 @@ export default class Dropdown extends AutoControlledComponent<
           getRootProps,
           getToggleButtonProps,
           isOpen,
+          toggleMenu,
           highlightedIndex,
           selectItemAtIndex,
         }) => {
@@ -247,15 +255,18 @@ export default class Dropdown extends AutoControlledComponent<
                       selectItemAtIndex,
                       variables,
                     )
-                  : this.renderTriggerButton(getToggleButtonProps, styles)}
+                  : this.renderTriggerButton(styles, getToggleButtonProps)}
                 {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
                 {this.renderItemsList(
                   styles,
                   variables,
-                  getMenuProps,
-                  getItemProps,
                   isOpen,
                   highlightedIndex,
+                  toggleMenu,
+                  selectItemAtIndex,
+                  getMenuProps,
+                  getItemProps,
+                  getInputProps,
                 )}
               </ElementType>
             </Ref>
@@ -266,30 +277,33 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderTriggerButton(
-    getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
     styles: ComponentSlotStylesInput,
+    getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
     const { placeholder, itemToString, multiple } = this.props
     const { value } = this.state
     const content = multiple ? placeholder : value ? itemToString(value) : placeholder
     return (
-      <Button
-        content={content}
-        fluid
-        styles={styles.button}
-        {...getToggleButtonProps({
-          onFocus: () => {
-            this.setState({ focused: true })
-          },
-          onBlur: () => {
-            this.setState({ focused: false })
-          },
-          onClick: e => {
-            e.stopPropagation()
-          },
-          'aria-label': content, // TODO: add this to behaviour
-        })}
-      />
+      <Ref
+        innerRef={buttonNode => {
+          this.buttonNode = buttonNode
+        }}
+      >
+        <Button
+          content={content}
+          fluid
+          styles={styles.button}
+          {...getToggleButtonProps({
+            onFocus: () => {
+              this.setState({ focused: true })
+            },
+            onBlur: () => {
+              this.setState({ focused: false })
+            },
+            'aria-label': content, // TODO: add this to behaviour
+          })}
+        />
+      </Ref>
     )
   }
 
@@ -348,19 +362,44 @@ export default class Dropdown extends AutoControlledComponent<
   private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
-    getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
-    getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     isOpen: boolean,
     highlightedIndex: number,
+    toggleMenu: () => void,
+    selectItemAtIndex: (index: number) => void,
+    getMenuProps: (options?: GetMenuPropsOptions, otherOptions?: GetPropsCommonOptions) => any,
+    getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
+    getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
-    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true })
+    const accessibilityMenuProps = {
+      ...getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true }),
+    }
+    if (!this.props.search) {
+      const accessibilityInputProps = getInputProps()
+      accessibilityMenuProps['aria-activedescendant'] =
+        accessibilityInputProps['aria-activedescendant']
+      accessibilityMenuProps['onKeyDown'] = e => {
+        this.handleListKeyDown(
+          e,
+          highlightedIndex,
+          accessibilityInputProps['onKeyDown'],
+          toggleMenu,
+          selectItemAtIndex,
+        )
+      }
+    }
     const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
 
     return (
-      <Ref innerRef={innerRef}>
+      <Ref
+        innerRef={(listNode: HTMLElement) => {
+          this.listNode = listNode
+          innerRef(listNode)
+        }}
+      >
         <List
           {...accessibilityMenuPropsRest}
           styles={styles.list}
+          tabIndex={-1}
           aria-hidden={!isOpen}
           items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
@@ -452,6 +491,12 @@ export default class Dropdown extends AutoControlledComponent<
           { ...this.props, searchQuery: changes.inputValue },
         )
         return changes
+      case Downshift.stateChangeTypes.blurButton:
+        // Focus the list, by button click/enter/up/down/space. Downshift, by default, closes the list
+        // on trigger blur, but in this case it's custom behaviour, where we want to keep it open.
+        if (state.isOpen) {
+          return {}
+        }
       default:
         return changes
     }
@@ -613,6 +658,32 @@ export default class Dropdown extends AutoControlledComponent<
 
   private handleContainerClick = (isOpen: boolean) => {
     !isOpen && this.inputNode.focus()
+  }
+
+  private handleListKeyDown = (
+    e: React.SyntheticEvent,
+    highlightedIndex: number,
+    accessibilityInputPropsKeyDown: (e) => any,
+    toggleMenu: () => void,
+    selectItemAtIndex: (index: number) => void,
+  ) => {
+    switch (keyboardKey.getCode(e)) {
+      case keyboardKey.Tab:
+        if (_.isNil(highlightedIndex)) {
+          toggleMenu()
+        } else {
+          selectItemAtIndex(highlightedIndex)
+        }
+        return
+      case keyboardKey.Enter:
+      case keyboardKey.Escape:
+        accessibilityInputPropsKeyDown(e)
+        this.buttonNode.focus()
+        return
+      default:
+        accessibilityInputPropsKeyDown(e)
+        return
+    }
   }
 
   private handleSelectedChange = (item: ShorthandValue) => {
