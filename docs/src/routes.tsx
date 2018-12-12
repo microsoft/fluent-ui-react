@@ -71,6 +71,12 @@ const Router = () => (
             path="/icon-viewer"
             component={require('./prototypes/IconViewer/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-chat-pane-header"
+            path="/prototype-chat-pane-header"
+            component={require('./prototypes/chatPaneHeader/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />

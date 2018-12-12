@@ -311,6 +311,14 @@ class Sidebar extends React.Component<any, any> {
                   <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
                     Processed Icons
                   </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-chat-pane-header"
+                    activeClassName="active"
+                  >
+                    Chat pane header
+                  </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>
             )}
