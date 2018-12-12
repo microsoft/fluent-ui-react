@@ -14,12 +14,12 @@ const sizes = new Map([
   ['small', 14],
   ['normal', 16],
   ['large', 20],
-  ['x-large', 24],
-  ['xx-large', 28],
   ['big', 32],
   ['huge', 40],
   ['massive', 64],
 ])
+
+const modifiedSizes = new Map([['x-large', 24], ['xx-large', 28]])
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
@@ -29,20 +29,21 @@ const getFontStyles = (
   size: string,
   iconName: string,
   themeIcon?: ResultOf<FontIconSpec>,
+  sizeModifier?: string,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
 
   return {
     fontFamily,
-    fontSize: getSize(size),
+    fontSize: getSize(size, sizeModifier),
     lineHeight: 1,
     textAlign: 'center',
 
     '::before': {
       content,
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
+      width: getSize(size, sizeModifier),
+      height: getSize(size, sizeModifier),
     },
   }
 }
@@ -73,7 +74,12 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getSize = size => pxToRem(sizes.get(size))
+const getSize = (size, sizeModifier) => {
+  if (sizeModifier && size === 'large') {
+    return pxToRem(modifiedSizes.get(`${sizeModifier}-${size}`))
+  }
+  return pxToRem(sizes.get(size))
+}
 
 const getIconColor = color => color || 'currentColor'
 
@@ -94,7 +100,11 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       verticalAlign: 'middle',
 
       ...(isFontBased &&
-        getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
+        getFontStyles(
+          size,
+          name,
+          callable(iconSpec && (iconSpec.icon as FontIconSpec), v.sizeModifier)(),
+        )),
 
       ...(isFontBased && {
         color: getIconColor(v.color),
@@ -132,8 +142,8 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
     return {
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
+      width: getSize(size, v.sizeModifier),
+      height: getSize(size, v.sizeModifier),
       fill: getIconColor(v.color),
 
       ...(disabled && {
