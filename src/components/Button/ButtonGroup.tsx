@@ -13,7 +13,6 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Button from './Button'
-import { buttonGroupBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 export interface ButtonGroupProps
@@ -22,7 +21,6 @@ export interface ButtonGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default buttonGroupBehavior
    */
   accessibility?: Accessibility
 
@@ -50,7 +48,6 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
 
   public static defaultProps = {
     as: 'div',
-    accessibility: buttonGroupBehavior as Accessibility,
   }
 
   public renderComponent({
