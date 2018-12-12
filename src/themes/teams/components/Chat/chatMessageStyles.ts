@@ -5,29 +5,29 @@ import { ChatMessageVariables } from './chatMessageVariables'
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',
-    padding: v.message.padding,
-    borderRadius: v.message.borderRadius,
-    color: v.message.color,
-    backgroundColor: p.mine ? v.message.backgroundColorMine : v.message.backgroundColor,
-    maxWidth: v.message.width,
+    padding: v.padding,
+    borderRadius: v.borderRadius,
+    color: v.color,
+    backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
+    maxWidth: v.width,
     wordBreak: 'break-word',
     wordWrap: 'break-word',
     ...(p.mine && { float: 'right' }),
     ':focus': {
-      outline: `.2rem solid ${v.content.focusOutlineColor}`,
+      outline: `.2rem solid ${v.contentFocusOutlineColor}`,
     },
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: p.mine ? 'none' : undefined,
-    marginRight: v.author.margin,
+    marginRight: v.authorMargin,
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     '& a:focus': {
       outline: 'none',
-      color: v.content.focusOutlineColor,
+      color: v.contentFocusOutlineColor,
       textDecoration: 'underline',
     },
   }),

@@ -39,7 +39,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
 
   private generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(
-      ({ mine, gutter, content: { itemType, ...props } }, index) => {
+      ({ mine, gutter, message: { itemType, ...props } }, index) => {
         const ElementType = this.getElementType(itemType)
         const maybeAttributesForDivider =
           itemType === ChatItemTypes.divider
@@ -53,16 +53,18 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
             key={`chat-item-${index}`}
             gutterPosition={mine ? 'end' : 'start'}
             gutter={gutter && { content: <Avatar {...gutter} /> }}
-            content={
-              <>
-                {itemType === ChatItemTypes.message && (
-                  <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
-                    {this.getMessagePreviewForScreenReader(props)}
-                  </div>
-                )}
-                <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
-              </>
-            }
+            message={{
+              content: (
+                <>
+                  {itemType === ChatItemTypes.message && (
+                    <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
+                      {this.getMessagePreviewForScreenReader(props)}
+                    </div>
+                  )}
+                  <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
+                </>
+              ),
+            }}
           />
         )
       },

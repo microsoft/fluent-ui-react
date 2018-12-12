@@ -42,9 +42,7 @@ const ChatMessageExampleStyled = () => (
       componentStyles: {
         ChatItem: {
           root: { ...slotLabelStyles('chat-item-root'), backgroundColor: 'transparent' },
-        },
-        ChatGutter: {
-          root: {
+          gutter: {
             ...slotLabelStyles('gutter', { bottom: '-11px' }),
             backgroundColor: '#FF00FF',
             padding: 0,
@@ -70,22 +68,30 @@ const ChatMessageExampleStyled = () => (
     <Chat
       items={[
         {
-          content: (
-            <Chat.Message
-              content="Hey, do you know any restaurants with good food?"
-              author="John Doe"
-              timestamp="Yesterday, 10:15 PM"
-              mine
-            />
-          ),
+          message: {
+            content: (
+              <Chat.Message
+                content="Hey, do you know any restaurants with good food?"
+                author="John Doe"
+                timestamp="Yesterday, 10:15 PM"
+                mine
+              />
+            ),
+          },
           key: 'message-id-1',
         },
         {
           key: 'message-id-2',
           gutter: { content: <Avatar {...janeAvatar} /> },
-          content: (
-            <Chat.Message content={{ content }} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
-          ),
+          message: {
+            content: (
+              <Chat.Message
+                content={{ content }}
+                author="Jane Doe"
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+          },
         },
       ]}
     />

@@ -13,13 +13,17 @@ const items = [
   {
     gutterPosition: 'start',
     gutter: { content: <Avatar {...johnAvatar} /> },
-    content: <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" />,
+    message: {
+      content: <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" />,
+    },
     key: 'message-id-1',
   },
   {
     gutterPosition: 'end',
     gutter: { content: <Avatar {...janeAvatar} /> },
-    content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" mine />,
+    message: {
+      content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" mine />,
+    },
     key: 'message-id-2',
   },
 ]

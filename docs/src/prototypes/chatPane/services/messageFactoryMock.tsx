@@ -31,7 +31,7 @@ interface ChatMessage extends ChatMessageProps, ChatItemType {
 interface Divider extends DividerProps, ChatItemType {}
 
 type ChatItem = {
-  content?: ChatMessage | Divider
+  message?: ChatMessage | Divider
   gutter?: AvatarProps
   mine?: boolean
 }
@@ -70,7 +70,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
 
   return {
     mine,
-    content: messageProps,
+    message: messageProps,
     gutter: !message.mine && { image: fromUser.avatar, status: statusMap.get(fromUser.status) },
   }
 }
@@ -138,7 +138,7 @@ function generateDividerProps(props: DividerProps): ChatItem {
   const { content, important, color = 'secondary' } = props
   const dividerProps: Divider = { itemType: ChatItemTypes.divider, content, important, color }
 
-  return { content: dividerProps }
+  return { message: dividerProps }
 }
 
 export function generateChatProps(chat: ChatData): ChatItem[] {

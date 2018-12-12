@@ -9,22 +9,21 @@ import {
   UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
-  ContentComponentProps,
   commonPropTypes,
   customPropTypes,
 } from '../../lib'
 import Slot from '../Slot/Slot'
-import ChatGutter from './ChatGutter'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
-export interface ChatItemProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
 
   /** Indicates whether the gutter is positioned at the start or the end. */
   gutterPosition?: 'start' | 'end'
+
+  /** Chat items can have a message. */
+  message?: ShorthandValue
 }
 
 /**
@@ -36,11 +35,10 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
   static displayName = 'ChatItem'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: 'shorthand',
-    }),
+    ...commonPropTypes.createCommon(),
     gutter: customPropTypes.itemShorthand,
     gutterPosition: PropTypes.oneOf(['start', 'end']),
+    message: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -48,30 +46,30 @@ class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
     gutterPosition: 'start',
   }
 
-  renderComponent({ ElementType, classes, rest }: RenderResultConfig<ChatItemProps>) {
+  renderComponent({ ElementType, classes, rest, styles }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : this.renderChatItem()}
+        {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>
     )
   }
 
-  private renderChatItem() {
-    const { content, gutter, gutterPosition } = this.props
-    const gutterElement = gutter && ChatGutter.create(gutter)
+  private renderChatItem(styles: ComponentSlotStylesPrepared) {
+    const { message, gutter, gutterPosition } = this.props
+    const gutterElement = gutter && Slot.create(gutter, { defaultProps: { styles: styles.gutter } })
 
     return (
       <>
         {gutterPosition === 'start' && gutterElement}
-        {Slot.create(content)}
+        {Slot.create(message, { defaultProps: { styles: styles.message } })}
         {gutterPosition === 'end' && gutterElement}
       </>
     )
   }
 }
 
-ChatItem.create = createShorthandFactory(ChatItem, 'content')
+ChatItem.create = createShorthandFactory(ChatItem, 'message')
 
 export default ChatItem
