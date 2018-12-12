@@ -54,6 +54,15 @@ export interface PopupProps
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
+  /** Offset value to apply to rendered popup. Accepts the following units:
+   * - px or unit-less, interpreted as pixels
+   * - % or %r, percentage relative to the length of the trigger element
+   * - %p, percentage relative to the length of the popup element
+   * - vw, CSS viewport width unit
+   * - vh, CSS viewport height unit
+   */
+  offset?: string
+
   /** Defines whether popup is displayed. */
   open?: boolean
 
@@ -245,10 +254,15 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position } = this.props
+    const { align, position, offset } = this.props
     const { target } = this.state
 
     const placement = computePopupPlacement({ align, position, rtl })
+
+    const popperModifiers = {
+      // https://popper.js.org/popper-documentation.html#modifiers..offset
+      ...(offset && { offset: { offset: this.applyRtlToOffset(offset, rtl, position) } }),
+    }
 
     return (
       target && (
@@ -256,6 +270,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           placement={placement}
           referenceElement={target}
           children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+          modifiers={popperModifiers}
         />
       )
     )
@@ -315,5 +330,15 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     if (this.trySetState({ open: newValue }) || forceChangeEvent) {
       _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
     }
+  }
+
+  private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {
+    if (rtl && (position === 'above' || position === 'below')) {
+      return offset.trimLeft().startsWith('-')
+        ? offset.trimLeft().replace(/^-\s*/, '')
+        : `-${offset}`
+    }
+
+    return offset
   }
 }
