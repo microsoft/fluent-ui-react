@@ -12,12 +12,12 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  isFromKeyboard,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import IsFromKeyboard from '../../lib/isFromKeyboard'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 export interface MenuItemProps
@@ -81,7 +81,7 @@ export interface MenuItemProps
 }
 
 export interface MenuItemState {
-  [IsFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -118,7 +118,9 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
     wrapper: { as: 'li' },
   }
 
-  state = IsFromKeyboard.initial
+  state = {
+    isFromKeyboard: false,
+  }
 
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children, content, icon, wrapper } = this.props
@@ -167,13 +169,13 @@ class MenuItem extends UIComponent<Extendable<MenuItemProps>, MenuItemState> {
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.initial)
+    this.setState({ isFromKeyboard: false })
 
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
