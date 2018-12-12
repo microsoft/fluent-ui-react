@@ -19,8 +19,6 @@ const sizes = new Map([
   ['massive', 64],
 ])
 
-const modifiedSizes = new Map([['x-large', 24], ['xx-large', 28]])
-
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
 }
@@ -75,10 +73,17 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 })
 
 const getSize = (size, sizeModifier) => {
-  if (sizeModifier && size === 'large') {
-    return pxToRem(modifiedSizes.get(`${sizeModifier}-${size}`))
+  if (!sizeModifier) {
+    return pxToRem(sizes.get(size))
   }
-  return pxToRem(sizes.get(size))
+  const modifiedSizes = {
+    large: {
+      x: 24,
+      xx: 28,
+    },
+  }
+  const modifiedSize = modifiedSizes[size] && modifiedSizes[size][sizeModifier]
+  return modifiedSize && pxToRem(modifiedSize)
 }
 
 const getIconColor = color => color || 'currentColor'
