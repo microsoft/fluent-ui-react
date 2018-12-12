@@ -1,9 +1,10 @@
 import * as gutil from 'gulp-util'
+import * as fs from 'fs'
 import * as path from 'path'
 import * as through2 from 'through2'
 import * as Vinyl from 'vinyl'
 
-import getComponentInfo from './util/getComponentInfo'
+import config from '../../../config'
 
 const pluginName = 'gulp-component-menu'
 
@@ -27,12 +28,15 @@ export default () => {
     }
 
     try {
-      const info = getComponentInfo(file.path)
+      const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
 
-      if (info.isParent) {
+      const jsonInfo = fs.readFileSync(config.paths.docsSrc('componentInfo', infoFilename))
+      const componentInfo = JSON.parse(jsonInfo.toString())
+
+      if (componentInfo.isParent) {
         result.push({
-          displayName: info.displayName,
-          type: info.type,
+          displayName: componentInfo.displayName,
+          type: componentInfo.type,
         })
       }
       cb()
