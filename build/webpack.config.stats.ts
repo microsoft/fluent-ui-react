@@ -1,12 +1,3 @@
-/**
- * GOALS
- * Generate data from our last X number of releases/commits, if possible
- * For Consumers:
- * - Size of whole package, core only, each component, each theme, per release
- * - Probably store size info per release on GitHub
- * For Developers:
- * - Same goals but per master commit
- */
 import * as CleanWebpackPlugin from 'clean-webpack-plugin'
 import * as fs from 'fs'
 import * as path from 'path'
