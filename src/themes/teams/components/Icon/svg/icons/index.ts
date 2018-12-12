@@ -1,7 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
 import add from './add'
-import addPage from './addPage'
 import addParticipant from './addParticipant'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -13,6 +12,7 @@ import callEnd from './callEnd'
 import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
+import canvasAddPage from './canvasAddPage'
 import edit from './edit'
 import error from './error'
 import fontColor from './fontColor'
@@ -41,7 +41,6 @@ import trashCan from './trashCan'
 
 export default {
   add,
-  'add-page': addPage,
   bookmark,
   bullets,
   calendar,
@@ -52,6 +51,7 @@ export default {
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-recording': callRecording,
+  'canvas-add-page': canvasAddPage,
   edit,
   error,
   format,
