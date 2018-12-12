@@ -14,6 +14,8 @@ const sizes = new Map([
   ['small', 14],
   ['normal', 16],
   ['large', 20],
+  ['x-large', 24],
+  ['xx-large', 28],
   ['big', 32],
   ['huge', 40],
   ['massive', 64],

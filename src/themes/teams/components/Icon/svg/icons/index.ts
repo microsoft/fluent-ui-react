@@ -1,6 +1,7 @@
 import { TeamsSvgIconSpec } from '../types'
 
 import add from './add'
+import addPage from './addPage'
 import addParticipant from './addParticipant'
 import bookmark from './bookmark'
 import bullets from './bullets'
@@ -40,6 +41,7 @@ import trashCan from './trashCan'
 
 export default {
   add,
+  'add-page': addPage,
   bookmark,
   bullets,
   calendar,
