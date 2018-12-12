@@ -59,7 +59,7 @@
   "homepage": "https://github.com/stardust-ui/react#readme",
   "dependencies": {
     "classnames": "^2.2.5",
-    "downshift": "^3.0.0",
+    "downshift": "3.1.5",
     "fela": "^6.1.7",
     "fela-plugin-fallback-value": "^5.0.17",
     "fela-plugin-placeholder-prefixer": "^5.0.18",
@@ -142,8 +142,6 @@
     "rimraf": "^2.6.1",
     "satisfied": "^1.1.1",
     "screener-runner": "^0.10.7",
-    "semantic-ui-css": "^2.3.1",
-    "semantic-ui-react": "^0.81.1",
     "simulant": "^0.2.2",
     "snyk": "^1.110.2",
     "ta-scripts": "^2.5.2",
