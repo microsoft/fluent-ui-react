@@ -41,9 +41,6 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   /** Initial checked value. */
   defaultChecked?: boolean
 
-  /** Default value for isFromKeyboard (autocontrolled). */
-  defaultIsFromKeyboard?: boolean
-
   /** A radio item can appear disabled and be unable to change states. */
   disabled?: boolean
 
@@ -80,9 +77,6 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   /** The HTML input value. */
   value?: string | number
 
-  /** Whether focus came from the keyboard (autocontrolled). */
-  isFromKeyboard?: boolean
-
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
 }
@@ -116,11 +110,8 @@ class RadioGroupItem extends AutoControlledComponent<
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    /** Default value for isFromKeyboard (autocontrolled). */
-    defaultIsFromKeyboard: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
-    isFromKeyboard: PropTypes.bool,
     label: customPropTypes.nodeContent,
     name: PropTypes.string,
     onBlur: PropTypes.func,
@@ -137,7 +128,7 @@ class RadioGroupItem extends AutoControlledComponent<
     accessibility: radioGroupItemBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked', 'isFromKeyboard']
+  static autoControlledProps = ['checked']
 
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
