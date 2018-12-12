@@ -17,7 +17,7 @@ const pkg = require('../../../../package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
-const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
+// const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const flexDislayStyle: any = { width: '100%' }
 // const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
 

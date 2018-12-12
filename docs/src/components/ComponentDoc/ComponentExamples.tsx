@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { exampleContext } from 'docs/src/utils'
-import { Text, Grid, List } from '@stardust-ui/react'
+import { Text, List } from '@stardust-ui/react'
 import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 

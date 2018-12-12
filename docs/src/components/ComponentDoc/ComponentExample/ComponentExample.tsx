@@ -551,9 +551,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   render() {
     const { children, description, title } = this.props
     const {
-      handleMouseLeave,
-      handleMouseMove,
-      isHovering,
+      //    handleMouseLeave,
+      //    handleMouseMove,
+      //    isHovering,
       knobs,
       showCode,
       showRtl,
@@ -562,23 +562,23 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       sourceCode,
     } = this.state
 
-    const isActive = this.isActiveHash() || this.isActiveState()
+    // const isActive = this.isActiveHash() || this.isActiveState()
     const currentExamplePath = this.sourceCodeMgr.currentPath
 
-    const exampleStyle: React.CSSProperties = {
-      position: 'relative',
-      transition: 'box-shadow 200ms, background 200ms',
-      background: '#fff',
-      boxShadow: '0 1px 2px #ccc',
-      ...(isActive
-        ? {
-            boxShadow: '0 8px 32px #aaa',
-          }
-        : isHovering && {
-            boxShadow: '0 2px 8px #bbb',
-            zIndex: 1,
-          }),
-    }
+    // const exampleStyle: React.CSSProperties = {
+    //   position: 'relative',
+    //   transition: 'box-shadow 200ms, background 200ms',
+    //   background: '#fff',
+    //   boxShadow: '0 1px 2px #ccc',
+    //   ...(isActive
+    //     ? {
+    //         boxShadow: '0 8px 32px #aaa',
+    //       }
+    //     : isHovering && {
+    //         boxShadow: '0 2px 8px #bbb',
+    //         zIndex: 1,
+    //       }),
+    // }
 
     return (
       <Segment>
