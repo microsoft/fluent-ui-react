@@ -1,8 +1,7 @@
 import * as _ from 'lodash'
 import PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
-import { Sticky } from 'semantic-ui-react'
+import { Menu, Segment } from '@stardust-ui/react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'
 
@@ -42,7 +41,7 @@ class ComponentSidebar extends React.Component<any, any> {
     const { sections } = this.state
 
     return (
-      <Sticky context={examplesRef} offset={15}>
+      <Segment context={examplesRef} offset={15}>
         <Menu
           fluid
           styles={{ ...sidebarStyle }}
@@ -57,7 +56,7 @@ class ComponentSidebar extends React.Component<any, any> {
             />
           ))}
         />
-      </Sticky>
+      </Segment>
     )
   }
 }

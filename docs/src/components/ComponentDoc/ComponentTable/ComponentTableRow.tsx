@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Table } from 'semantic-ui-react'
 
 import ComponentPropDefaultValue from '../ComponentProp/ComponentPropDefaultValue'
 import ComponentPropDescription from '../ComponentProp/ComponentPropDescription'
@@ -27,26 +26,18 @@ export default class ComponentTableRow extends React.Component<any, any> {
     const hideRow = this.docSiteHidden(tags)
 
     return (
-      <Table.Row key={name} className={hideRow ? 'hidden' : ''}>
-        <Table.Cell collapsing>
+      <tr className={hideRow ? 'hidden' : ''}>
+        <td>
           <ComponentPropName name={name} required={required} />
-        </Table.Cell>
-        <Table.Cell collapsing>
+        </td>
+        <td>
           <ComponentPropDefaultValue value={defaultValue} />
-        </Table.Cell>
-        <Table.Cell collapsing>{`{${type}}`}</Table.Cell>
-        <Table.Cell>
+        </td>
+        <td>{`{${type}}`}</td>
+        <td>
           <ComponentPropDescription description={description} />
-          {/* TODO change these according to the react-docgen-typescript generated json */}
-          {/*<ComponentPropFunctionSignature name={name} tags={tags} />*/}
-          {/*<ComponentPropEnum*/}
-          {/*showAll={showEnums}*/}
-          {/*toggle={this.toggleEnums}*/}
-          {/*type={type}*/}
-          {/*values={value}*/}
-          {/*/>*/}
-        </Table.Cell>
-      </Table.Row>
+        </td>
+      </tr>
     )
   }
 

@@ -1,17 +1,16 @@
 import * as React from 'react'
-import { Table } from 'semantic-ui-react'
 
 import { neverUpdate } from 'docs/src/hoc'
 
 const ComponentTableHeader = () => (
-  <Table.Header>
-    <Table.Row>
-      <Table.HeaderCell>Name</Table.HeaderCell>
-      <Table.HeaderCell>Default</Table.HeaderCell>
-      <Table.HeaderCell>Type</Table.HeaderCell>
-      <Table.HeaderCell>Description</Table.HeaderCell>
-    </Table.Row>
-  </Table.Header>
+  <th>
+    <tr>
+      <td>Name</td>
+      <td>Default</td>
+      <td>Type</td>
+      <td>Description</td>
+    </tr>
+  </th>
 )
 
 export default neverUpdate(ComponentTableHeader)

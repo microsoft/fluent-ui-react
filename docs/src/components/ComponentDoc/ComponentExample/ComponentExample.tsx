@@ -4,8 +4,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
-import { Form, Visibility } from 'semantic-ui-react'
-import { Divider, Menu, Segment, Provider, themes } from '@stardust-ui/react'
+import { Divider, Form, Menu, Segment, Provider, themes } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import { callable, pxToRem, constants } from 'src/lib'
@@ -519,9 +518,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <Form inverted widths="equal" style={{ padding: '1rem' }}>
                 {_.chunk(_.toPairs(variablesObject), 2).map(fields => {
                   return (
-                    <Form.Group widths="equal" key={fields.map(([key]) => key).join('-')}>
+                    <Segment>
                       {fields.map(([key, val]) => (
-                        <Form.Input
+                        <Form.Field
                           fluid
                           key={key}
                           label={key}
@@ -529,7 +528,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                           onChange={this.handleVariableChange(displayName, key)}
                         />
                       ))}
-                    </Form.Group>
+                    </Segment>
                   )
                 })}
               </Form>
@@ -582,7 +581,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     }
 
     return (
-      <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
+      <Segment>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
@@ -656,7 +655,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <div style={{ paddingBottom: '10px' }} />
         </SourceRender>
         <Divider section horizontal />
-      </Visibility>
+      </Segment>
     )
   }
 }
