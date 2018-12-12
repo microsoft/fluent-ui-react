@@ -79,7 +79,6 @@ const ChatMessageExampleStyled = () => (
         }
       />
       <Chat.Item
-        gutterPosition="start"
         gutter={{ content: <Avatar {...janeAvatar} /> }}
         content={
           <Chat.Message content={{ content }} author="Jane Doe" timestamp="Yesterday, 10:15 PM" />

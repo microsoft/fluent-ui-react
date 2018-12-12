@@ -14,7 +14,6 @@ const ChatExample = () => (
       }
     />
     <Chat.Item
-      gutterPosition="start"
       gutter={
         <Chat.Gutter>
           <Avatar {...janeAvatar} />
@@ -24,7 +23,6 @@ const ChatExample = () => (
     />
     <Chat.Item content={<Chat.Message content="What's up?" />} />
     <Chat.Item
-      gutterPosition="start"
       content={
         <Chat.Message
           content="Would you like to grab a lunch?"
@@ -35,7 +33,6 @@ const ChatExample = () => (
       }
     />
     <Chat.Item
-      gutterPosition="start"
       gutter={
         <Chat.Gutter>
           <Avatar {...janeAvatar} />
