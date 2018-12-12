@@ -10,7 +10,7 @@ import {
 } from '@stardust-ui/react'
 import { ReactChildren } from 'types/utils'
 import * as React from 'react'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 export interface PopoverProps {
   className?: string
@@ -172,7 +172,7 @@ const ContextMenu = createComponent<ContextMenuProps>({
   displayName: 'ContextMenu',
   render: ({ stardust, className, children }) => {
     const { classes } = stardust
-    return <div className={cx(className, classes.root)}>{children}</div>
+    return <div className={classes.root}>{children}</div>
   },
 })
 

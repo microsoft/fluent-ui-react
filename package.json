@@ -13,7 +13,7 @@
   "scripts": {
     "build": "gulp build",
     "build:docs": "gulp --series dll build:docs",
-    "build:dist": "gulp --series dll build:dist",
+    "build:dist": "gulp --series build:dist",
     "ci": "yarn lint && yarn prettier && yarn test --strict",
     "predeploy:docs": "cross-env NODE_ENV=production yarn build:docs",
     "deploy:docs": "gulp deploy:docs",
@@ -37,7 +37,7 @@
     "test:watch": "gulp test:watch",
     "test:vulns": "snyk test",
     "test:visual": "gulp screener",
-    "test:projects:cra-ts": "gulp test:projects:cra-ts",
+    "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
   },
   "lint-staged": {
@@ -75,7 +75,6 @@
   },
   "devDependencies": {
     "@babel/standalone": "^7.1.0",
-    "@types/classnames": "^2.2.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
     "@types/faker": "^4.1.3",
@@ -114,7 +113,7 @@
     "gulp-rename": "^1.3.0",
     "gulp-replace": "^1.0.0",
     "gulp-transform": "^3.0.5",
-    "gulp-typescript": "^5.0.0-alpha.1",
+    "gulp-typescript": "^5.0.0",
     "gulp-util": "^3.0.8",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^0.14.3",

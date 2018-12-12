@@ -1,7 +1,7 @@
 import { ChatMessage } from '@stardust-ui/react'
 
 import * as React from 'react'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import Popover from './Popover'
 
 const janeAvatar = {
