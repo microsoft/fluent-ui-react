@@ -98,6 +98,8 @@ export interface MenuItemProps
 
   /** Default submenu open */
   defaultSubmenuOpen?: boolean
+
+  parentRef: React.RefObject<HTMLElement>
 }
 
 export interface MenuItemState {
@@ -134,6 +136,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     menu: customPropTypes.itemShorthand,
     submenuOpen: PropTypes.bool,
     defaultSubmenuOpen: PropTypes.bool,
+    parentRef: PropTypes.any,
   }
 
   static defaultProps = {
@@ -199,6 +202,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               primary,
               secondary,
               styles: styles.menu,
+              parentRef: this.itemRef,
             },
           })
         : null
@@ -286,10 +290,15 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private closeMenu = e => {
-    const { menu } = this.props
+    const { menu, parentRef } = this.props
     const { submenuOpen } = this.state
     if (menu && submenuOpen) {
-      this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
+      this.setState({ submenuOpen: false }, () => {
+        // I this is the first MenuItem and it is vertical
+        if (!parentRef && this.props.vertical) {
+          focusAsync(this.itemRef.current)
+        }
+      })
     }
   }
 
