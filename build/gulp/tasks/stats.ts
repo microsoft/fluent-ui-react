@@ -62,6 +62,46 @@ const semverCmp = (a, b) => {
   return 0
 }
 
+function webpackAsync(config): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const compiler = webpack(config)
+    compiler.run((err, stats) => {
+      const statsJson = stats.toJson()
+      const { errors, warnings } = statsJson
+
+      if (err) {
+        log('Webpack compiler encountered a fatal error.')
+        reject(new PluginError('webpack', err.toString()))
+      }
+      if (errors.length > 0) {
+        log('Webpack compiler encountered errors.')
+        reject(new PluginError('webpack', errors.toString()))
+      }
+      if (warnings.length > 0) {
+        reject(new PluginError('webpack', warnings.toString()))
+      }
+
+      resolve(statsJson)
+    })
+  })
+}
+
+async function compileOneByOne(allConfigs) {
+  let assets = []
+  for (const config of allConfigs) {
+    console.log('>', config.output.filename)
+    try {
+      const result = await webpackAsync(config)
+      assets = [...assets, ...result.assets]
+      console.log('<', result.assets[0].name)
+    } catch (err) {
+      console.log('E', config.output.filename, err)
+      throw err
+    }
+  }
+  return assets
+}
+
 function updateStatsFile(filePath: string, currentBundleStats: any) {
   let stats = {}
   if (fs.existsSync(filePath)) {
@@ -81,37 +121,17 @@ function updateStatsFile(filePath: string, currentBundleStats: any) {
   )
 }
 
-task('build:stats:bundle', cb => {
+task('build:stats:bundle', async () => {
   process.env.NODE_ENV = 'build'
   const webpackStatsConfig = require('../../webpack.config.stats').default
-  const compiler = webpack(webpackStatsConfig)
 
-  compiler.run((err, stats) => {
-    const statsJson = stats.toJson()
-    const { errors, warnings } = statsJson
+  const assets = await compileOneByOne(webpackStatsConfig)
+  const results = _(assets)
+    .map(({ name, size }) => ({ name, size }))
+    .sortBy('name')
+    .value()
 
-    if (err) {
-      log('Webpack compiler encountered a fatal error.')
-      throw new PluginError('webpack', err.toString())
-    }
-    if (errors.length > 0) {
-      log('Webpack compiler encountered errors.')
-      throw new PluginError('webpack', errors.toString())
-    }
-    if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
-    }
-
-    const results = _(statsJson.children)
-      .flatMap('assets')
-      .map(({ name, size }) => ({ name, size }))
-      .sortBy('name')
-      .value()
-
-    updateStatsFile(paths.docsSrc('bundleStats.json'), results)
-
-    cb(err)
-  })
+  updateStatsFile(paths.docsSrc('bundleStats.json'), results)
 })
 
 task('build:stats:without-imports', cb => {
