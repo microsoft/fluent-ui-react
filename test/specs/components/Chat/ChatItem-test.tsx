@@ -7,6 +7,6 @@ const chatItemImplementsShorthandProp = implementsShorthandProp(ChatItem)
 describe('ChatItem', () => {
   isConformant(ChatItem)
 
-  chatItemImplementsShorthandProp('content', Slot, { mapsValueToProp: 'children' })
   chatItemImplementsShorthandProp('gutter', Slot, { mapsValueToProp: 'children' })
+  chatItemImplementsShorthandProp('message', Slot, { mapsValueToProp: 'children' })
 })
