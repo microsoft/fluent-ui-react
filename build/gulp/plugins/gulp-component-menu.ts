@@ -5,6 +5,7 @@ import * as through2 from 'through2'
 import * as Vinyl from 'vinyl'
 
 import config from '../../../config'
+import getComponentInfo from './util/getComponentInfo'
 
 const pluginName = 'gulp-component-menu'
 
@@ -29,9 +30,17 @@ export default () => {
 
     try {
       const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
+      const infoFilePath = config.paths.docsSrc('componentInfo', infoFilename)
 
-      const jsonInfo = fs.readFileSync(config.paths.docsSrc('componentInfo', infoFilename))
-      const componentInfo = JSON.parse(jsonInfo.toString())
+      let componentInfo
+
+      // We will reuse an info file if it exists.
+      if (fs.existsSync(infoFilePath)) {
+        const jsonInfo = fs.readFileSync(infoFilePath)
+        componentInfo = JSON.parse(jsonInfo.toString())
+      } else {
+        componentInfo = getComponentInfo(file.path)
+      }
 
       if (componentInfo.isParent) {
         result.push({
