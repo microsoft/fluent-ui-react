@@ -56,7 +56,7 @@ export interface PopupProps
 
   /** Offset value to apply to rendered popup. Accepts the following units:
    * - px or unit-less, interpreted as pixels
-   * - % or %r, percentage relative to the length of the trigger element
+   * - %, percentage relative to the length of the trigger element
    * - %p, percentage relative to the length of the popup element
    * - vw, CSS viewport width unit
    * - vh, CSS viewport height unit
