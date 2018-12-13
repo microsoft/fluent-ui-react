@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
+import * as ReactDOM from 'react-dom'
 
 import { ChildrenComponentProps, handleRef } from '../../lib'
 
@@ -20,7 +20,7 @@ export default class RefFindNode extends React.Component<RefFindNodeProps> {
   }
 
   componentDidMount() {
-    handleRef(this.props.innerRef, findDOMNode(this))
+    handleRef(this.props.innerRef, ReactDOM.findDOMNode(this))
   }
 
   componentWillUnmount() {

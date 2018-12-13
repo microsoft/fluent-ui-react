@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -146,13 +146,8 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
             })}
           </>
         ),
+        styles: styles.root,
         ...rest,
-
-        // do not pass Stardust 'styles' prop
-        // in case if React Element was used to define 'wrapper'
-        ...(!React.isValidElement(wrapper) && {
-          styles: styles.root,
-        }),
       },
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,

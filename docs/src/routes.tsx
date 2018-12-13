@@ -62,6 +62,7 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-popups"
             path="/prototype-popups"
             component={require('./prototypes/popups/index').default}
           />,
