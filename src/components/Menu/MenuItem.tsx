@@ -22,6 +22,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import IsFromKeyboard from '../../lib/isFromKeyboard'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
+import Ref from '../Ref/Ref'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -154,24 +155,20 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private outsideClickSubscription = EventStack.noSubscription
-  private outsideFocusSubscription = EventStack.noSubscription
 
   private submenuDomElement = null
   private itemRef = React.createRef<HTMLElement>()
 
   public componentDidMount() {
     this.updateOutsideClickSubscription()
-    this.updateOutsideFocusSubscription()
   }
 
   public componentDidUpdate() {
     this.updateOutsideClickSubscription()
-    this.updateOutsideFocusSubscription()
   }
 
   public componentWillUnmount() {
     this.outsideClickSubscription.unsubscribe()
-    this.outsideFocusSubscription.unsubscribe()
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -191,11 +188,15 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         {...!wrapper && { onClick: this.handleClick }}
         ref={this.itemRef}
       >
-        {icon &&
-          Icon.create(this.props.icon, {
-            defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-          })}
-        {content}
+        <Ref innerRef={this.itemRef}>
+          <span>
+            {icon &&
+              Icon.create(this.props.icon, {
+                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              })}
+            {content}
+          </span>
+        </Ref>
       </ElementType>
     )
     const maybeSubmenu =
@@ -213,13 +214,13 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         : null
 
     const maybeSubmenuWithRef = maybeSubmenu ? (
-      <div
-        ref={domElement => {
+      <Ref
+        innerRef={domElement => {
           this.submenuDomElement = domElement
         }}
       >
         {maybeSubmenu}
-      </div>
+      </Ref>
     ) : null
 
     if (wrapper) {
@@ -250,28 +251,12 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
     if (this.props.menu && this.state.submenuOpen) {
       setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe(
-          'click',
-          this.outsideClickOrFocusHandler,
-        )
+        this.outsideClickSubscription = EventStack.subscribe('click', this.outsideClickHandler)
       })
     }
   }
 
-  private updateOutsideFocusSubscription() {
-    this.outsideFocusSubscription.unsubscribe()
-
-    if (this.props.menu && this.state.submenuOpen) {
-      setTimeout(() => {
-        this.outsideFocusSubscription = EventStack.subscribe(
-          'focus',
-          this.outsideClickOrFocusHandler,
-        )
-      })
-    }
-  }
-
-  private outsideClickOrFocusHandler = e => {
+  private outsideClickHandler = e => {
     if (
       this.itemRef &&
       (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
