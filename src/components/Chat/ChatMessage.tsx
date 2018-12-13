@@ -13,15 +13,10 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import {
-  ComponentVariablesInput,
-  ComponentSlotClasses,
-  ComponentSlotStylesInput,
-} from '../../themes/types'
 import { Extendable, ShorthandValue } from '../../../types/utils'
-import Avatar from '../Avatar/Avatar'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
@@ -37,9 +32,6 @@ export interface ChatMessageProps
 
   /** Author of the message. */
   author?: ShorthandValue
-
-  /** Chat messages can have an avatar. */
-  avatar?: ShorthandValue
 
   /** Indicates whether message belongs to the current user. */
   mine?: boolean
@@ -59,12 +51,9 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: 'shorthand',
-    }),
+    ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     author: customPropTypes.itemShorthand,
-    avatar: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
   }
@@ -87,9 +76,8 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     accessibility,
     rest,
     styles,
-    variables,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { children } = this.props
+    const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -100,54 +88,19 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
+        {childrenPropExists ? (
+          children
+        ) : (
+          <>
+            {!mine &&
+              Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
+            {Text.create(timestamp, {
+              defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
+            })}
+            {Slot.create(content, { defaultProps: { styles: styles.content } })}
+          </>
+        )}
       </ElementType>
-    )
-  }
-
-  private renderContent = (
-    classes: ComponentSlotClasses,
-    styles: ComponentSlotStylesInput,
-    variables: ComponentVariablesInput,
-  ) => {
-    const { author, avatar, content, mine, timestamp } = this.props
-
-    const avatarElement = Avatar.create(avatar, {
-      defaultProps: {
-        styles: styles.avatar,
-        variables: variables.avatar,
-      },
-    })
-
-    const authorElement = Text.create(author, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.author,
-      },
-    })
-
-    const timestampElement = Text.create(timestamp, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.timestamp,
-        timestamp: true,
-      },
-    })
-
-    const contentElement = Slot.create(content, {
-      defaultProps: { styles: styles.content },
-    })
-
-    return (
-      <>
-        {!mine && avatarElement}
-        <Slot className={cx('ui-chat__message__messageBody', classes.messageBody)}>
-          {!mine && authorElement}
-          {timestampElement}
-          {contentElement}
-        </Slot>
-        {mine && avatarElement}
-      </>
     )
   }
 }
