@@ -180,24 +180,22 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const menuItemInner = childrenExist(children) ? (
       children
     ) : (
-      <ElementType
-        className={classes.root}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        {...accessibility.attributes.anchor}
-        {...rest}
-        {...!wrapper && { onClick: this.handleClick }}
-      >
-        <Ref innerRef={this.itemRef}>
-          <span>
-            {icon &&
-              Icon.create(this.props.icon, {
-                defaultProps: { xSpacing: !!content ? 'after' : 'none' },
-              })}
-            {content}
-          </span>
-        </Ref>
-      </ElementType>
+      <Ref innerRef={this.itemRef}>
+        <ElementType
+          className={classes.root}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          {...accessibility.attributes.anchor}
+          {...rest}
+          {...!wrapper && { onClick: this.handleClick }}
+        >
+          {icon &&
+            Icon.create(this.props.icon, {
+              defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+            })}
+          {content}
+        </ElementType>
+      </Ref>
     )
     const maybeSubmenu =
       menu && active && submenuOpen
