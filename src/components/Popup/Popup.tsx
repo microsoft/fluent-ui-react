@@ -338,13 +338,13 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {
     if (rtl && (position === 'above' || position === 'below')) {
       const [horizontal, vertical] = offset.split(',')
-      return [this.applyRtlToHorizontalOffset(horizontal), vertical].join(', ')
+      return [this.flipPlusMinusSigns(horizontal), vertical].join(', ')
     }
 
     return offset
   }
 
-  private applyRtlToHorizontalOffset(offset: string): string {
+  private flipPlusMinusSigns(offset: string): string {
     return offset
       .replace(/\-/g, '<plus>')
       .replace(/^(\s*)(?=\d)/, '<minus>')
