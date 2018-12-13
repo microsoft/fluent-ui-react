@@ -7,9 +7,6 @@ import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessib
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {
-    eventTargets: {
-      onClick: 'a',
-    },
     usesWrapperSlot: true,
   })
 

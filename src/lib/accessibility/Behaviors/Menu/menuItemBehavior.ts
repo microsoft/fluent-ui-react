@@ -34,7 +34,7 @@ const menuItemBehavior: Accessibility = (props: any) => ({
   handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby'],
 
   keyActions: {
-    wrapper: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

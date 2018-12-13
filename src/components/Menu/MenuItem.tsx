@@ -173,7 +173,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+    const { children, content, icon, wrapper, menu, primary, secondary, active, key } = this.props
 
     const { submenuOpen } = this.state
 
@@ -226,9 +226,10 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     if (wrapper) {
       return Slot.create(wrapper, {
         defaultProps: {
+          key,
           className: cx('ui-menu__item__wrapper', classes.wrapper),
-          ...accessibility.attributes.wrapper,
-          ...accessibility.keyHandlers.wrapper,
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
         },
         overrideProps: () => ({
           children: [menuItemInner, maybeSubmenuWithRef],
