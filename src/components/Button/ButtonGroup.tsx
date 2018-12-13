@@ -13,19 +13,11 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Button from './Button'
-import { buttonGroupBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default buttonGroupBehavior
-   */
-  accessibility?: Accessibility
-
   /** The buttons contained inside the ButtonGroup. */
   buttons?: ShorthandValue[]
 
@@ -50,17 +42,9 @@ class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
 
   public static defaultProps = {
     as: 'div',
-    accessibility: buttonGroupBehavior as Accessibility,
   }
 
-  public renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    variables,
-    styles,
-    rest,
-  }): React.ReactNode {
+  public renderComponent({ ElementType, classes, accessibility, styles, rest }): React.ReactNode {
     const { children, content, buttons, circular } = this.props
     if (_.isNil(buttons)) {
       return (

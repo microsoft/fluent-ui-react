@@ -101,8 +101,7 @@ task('build:docs:example-menu', () =>
 task(
   'build:docs:json',
   parallel(
-    'build:docs:component-info',
-    'build:docs:component-menu',
+    series('build:docs:component-info', 'build:docs:component-menu'),
     'build:docs:component-menu-behaviors',
     'build:docs:example-menu',
   ),
