@@ -29,7 +29,6 @@ export default {
             ...solidBorder(variables.primaryBorderColor),
           }),
           borderRadius: pxToRem(4),
-          overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,

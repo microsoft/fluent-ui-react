@@ -7,8 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExamplePointingStart = () => (
-  <Menu defaultActiveIndex={0} items={items} pointing="start" />
-)
+const MenuExample = () => <Menu defaultActiveIndex={0} items={items} />
 
-export default MenuExamplePointingStart
+export default MenuExample
