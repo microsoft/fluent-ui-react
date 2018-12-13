@@ -2,20 +2,26 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import { Extendable, ShorthandValue } from '../../../types/utils'
 
-export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
+   * @available toolbarBehavior, tabListBehavior
    * */
   accessibility?: Accessibility
 
@@ -46,16 +52,6 @@ export interface MenuProps extends UIComponentProps<any, any>, ChildrenComponent
   /** The menu can have primary type. */
   primary?: boolean
 
-  /**
-   * A custom render iterator for rendering each of the Menu items.
-   * The default component, props, and children are available for each item.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItem?: ShorthandRenderFunction
-
   /** The menu can have secondary type. */
   secondary?: boolean
 
@@ -77,8 +73,9 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static create: Function
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -88,7 +85,6 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
-    renderItem: PropTypes.func,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
@@ -120,7 +116,6 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
       pills,
       pointing,
       primary,
-      renderItem,
       secondary,
       underlined,
       vertical,
@@ -142,7 +137,6 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           active: parseInt(activeIndex, 10) === index,
         },
         overrideProps: this.handleItemOverrides,
-        render: renderItem,
       }),
     )
   }

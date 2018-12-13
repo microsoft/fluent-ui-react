@@ -1,4 +1,4 @@
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { FelaTheme } from 'react-fela'
@@ -140,7 +140,13 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         }
 
         const {
-          siteVariables = { fontSizes: {} },
+          siteVariables = {
+            colors: {},
+            contextualColors: {},
+            emphasisColors: {},
+            naturalColors: {},
+            fontSizes: {},
+          },
           componentVariables = {},
           componentStyles = {},
           rtl = false,

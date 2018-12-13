@@ -6,6 +6,7 @@ import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
+import ColorPalette from './views/ColorPalette'
 import ShorthandProps from './views/ShorthandProps'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
@@ -28,6 +29,12 @@ const Router = () => (
             key="/prototype-chat-pane"
             path="/prototype-chat-pane"
             component={require('./prototypes/chatPane/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-chat-message-with-popover"
+            path="/prototype-chat-message-with-popover"
+            component={require('./prototypes/chatMessageWithPopover/index').default}
           />,
           <DocsLayout
             exact
@@ -55,6 +62,7 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-popups"
             path="/prototype-popups"
             component={require('./prototypes/popups/index').default}
           />,
@@ -74,6 +82,7 @@ const Router = () => (
           path="/integrate-custom-components"
           component={IntegrateCustomComponents}
         />
+        <DocsLayout exact path="/color-palette" component={ColorPalette} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

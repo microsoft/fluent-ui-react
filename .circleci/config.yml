@@ -57,7 +57,7 @@ jobs:
           command: yarn test:visual
       - run:
           name: Project Tests
-          command: yarn test:projects:cra-ts
+          command: yarn test:projects
       - run:
           name: Danger JS
           command: |

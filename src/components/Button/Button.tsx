@@ -2,33 +2,27 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes, createShorthandFactory } from '../../lib'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  createShorthandFactory,
+  isFromKeyboard,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
-import isFromKeyboard from '../../lib/isFromKeyboard'
-import {
-  UIComponentProps,
-  ContentComponentProps,
-  ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
 
 export interface ButtonProps
-  extends UIComponentProps<any, any>,
-    ContentComponentProps,
+  extends UIComponentProps,
+    ContentComponentProps<ShorthandValue>,
     ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
@@ -71,15 +65,6 @@ export interface ButtonProps
   /** A button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
   /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean
 
@@ -88,7 +73,7 @@ export interface ButtonProps
 }
 
 export interface ButtonState {
-  [isFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -106,9 +91,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   public static className = 'ui-button'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({
+      content: 'shorthand',
+    }),
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     fluid: PropTypes.bool,
@@ -121,7 +106,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
-    renderIcon: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -131,7 +115,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
 
   static Group = ButtonGroup
 
-  public state = isFromKeyboard.initial
+  public state = {
+    isFromKeyboard: false,
+  }
 
   public renderComponent({
     ElementType,
@@ -164,7 +150,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   public renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content, renderIcon } = this.props
+    const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
       defaultProps: {
@@ -172,7 +158,6 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
       },
-      render: renderIcon,
     })
   }
 
@@ -188,7 +173,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

@@ -4,8 +4,8 @@
 
 import * as React from 'react'
 
-export type Extendable<T> = T & {
-  [key: string]: any
+export type Extendable<T, V = any> = T & {
+  [key: string]: V
 }
 
 export type Partial<T> = { [Key in keyof T]?: T[Key] }
@@ -30,9 +30,16 @@ export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: 
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandValue = React.ReactNode | Props
 export type ShorthandRenderFunction = (
   Component: React.ReactType,
   props: Props,
-  children: ReactChildren,
 ) => React.ReactElement<any>
+
+export type ShorthandRenderer = (
+  value: ShorthandValue,
+  renderTree?: ShorthandRenderFunction,
+) => React.ReactElement<any>
+
+export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
+
+export type ShorthandValue = React.ReactNode | Props
