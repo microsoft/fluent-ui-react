@@ -16,7 +16,6 @@ import {
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
-import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
@@ -99,6 +98,7 @@ export interface MenuItemProps
   /** Default submenu open */
   defaultSubmenuOpen?: boolean
 
+  setActiveIndex?: (idx: string | number) => void
   parentRef?: React.RefObject<HTMLElement>
 }
 
@@ -136,6 +136,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     menu: customPropTypes.itemShorthand,
     submenuOpen: PropTypes.bool,
     defaultSubmenuOpen: PropTypes.bool,
+    setActiveIndex: PropTypes.func,
     parentRef: PropTypes.any,
   }
 
@@ -153,20 +154,24 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private outsideClickSubscription = EventStack.noSubscription
+  private outsideFocusSubscription = EventStack.noSubscription
 
   private submenuDomElement = null
   private itemRef = React.createRef<HTMLElement>()
 
   public componentDidMount() {
     this.updateOutsideClickSubscription()
+    this.updateOutsideFocusSubscription()
   }
 
   public componentDidUpdate() {
     this.updateOutsideClickSubscription()
+    this.updateOutsideFocusSubscription()
   }
 
   public componentWillUnmount() {
     this.outsideClickSubscription.unsubscribe()
+    this.outsideFocusSubscription.unsubscribe()
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
@@ -208,13 +213,13 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         : null
 
     const maybeSubmenuWithRef = maybeSubmenu ? (
-      <Ref
-        innerRef={domElement => {
+      <div
+        ref={domElement => {
           this.submenuDomElement = domElement
         }}
       >
         {maybeSubmenu}
-      </Ref>
+      </div>
     ) : null
 
     if (wrapper) {
@@ -245,16 +250,34 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
     if (this.props.menu && this.state.submenuOpen) {
       setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', e => {
-          if (
-            this.itemRef &&
-            (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
-            (!this.submenuDomElement || !this.submenuDomElement.contains(e.target))
-          ) {
-            this.state.submenuOpen && this.trySetState({ submenuOpen: false })
-          }
-        })
+        this.outsideClickSubscription = EventStack.subscribe(
+          'click',
+          this.outsideClickOrFocusHandler,
+        )
       })
+    }
+  }
+
+  private updateOutsideFocusSubscription() {
+    this.outsideFocusSubscription.unsubscribe()
+
+    if (this.props.menu && this.state.submenuOpen) {
+      setTimeout(() => {
+        this.outsideFocusSubscription = EventStack.subscribe(
+          'focus',
+          this.outsideClickOrFocusHandler,
+        )
+      })
+    }
+  }
+
+  private outsideClickOrFocusHandler = e => {
+    if (
+      this.itemRef &&
+      (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
+      (!this.submenuDomElement || !this.submenuDomElement.contains(e.target))
+    ) {
+      this.state.submenuOpen && this.trySetState({ submenuOpen: false })
     }
   }
 
