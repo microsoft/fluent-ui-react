@@ -414,7 +414,7 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     const { noResultsMessage } = this.props
-    const filteredItems = this.getFilteredItems()
+    const filteredItems = this.getItemsFilteredBySearchQuery()
 
     if (filteredItems.length > 0) {
       return filteredItems.map((item, index) => {
@@ -502,14 +502,11 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
-  private getFilteredItems = (): ShorthandValue[] => {
+  private getItemsFilteredBySearchQuery = (): ShorthandValue[] => {
     const { items, itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
     let filteredItems = items
 
-    if (!multiple && !search) {
-      return items.filter(item => item !== (value as ShorthandValue))
-    }
     if (multiple) {
       filteredItems = filteredItems.filter(item => (value as ShorthandValue[]).indexOf(item) === -1)
     }
