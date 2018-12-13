@@ -1,15 +1,19 @@
-import { ThemeInput, ThemeIconSpec, ThemeIcons, SvgIconSpec } from '../types'
+import { ThemeInput, ThemeIcons, ThemeIconSpec, SvgIconSpec } from '../types'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg/ProcessedIcons'
-import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
+import { TeamsProcessedSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
 
-const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
+type ThemeProcessedIconSpec = ThemeIconSpec &
+  { [K in keyof TeamsProcessedSvgIconSpec]?: TeamsProcessedSvgIconSpec[K] }
+
+const declareSvg = (svgIcon: SvgIconSpec, exportedAs?: string): ThemeProcessedIconSpec => ({
   isSvg: true,
   icon: svgIcon,
+  exportedAs,
 })
 
 const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
-  [iconName: string]: TeamsSvgIconSpec
+  [iconName: string]: TeamsProcessedSvgIconSpec
 }).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
@@ -17,7 +21,10 @@ const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
     ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
     : (iconAndMaybeStyles as SvgIconSpec)
 
-  return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
+  return {
+    ...accIcons,
+    ...{ [iconName]: declareSvg(icon, (iconAndMaybeStyles as any).exportedAs) },
+  }
 }, {})
 
 const theme: ThemeInput = { icons: processedIcons }

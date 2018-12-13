@@ -9,8 +9,10 @@ import call from './call'
 import callControlPresentNew from './callControlPresentNew'
 import callControlStopPresentingNew from './callControlStopPresentingNew'
 import callEnd from './callEnd'
+import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
+import canvasAddPage from './canvasAddPage'
 import edit from './edit'
 import error from './error'
 import fontColor from './fontColor'
@@ -48,6 +50,8 @@ export default {
   'call-video-off': callVideoOff,
   'call-control-present-new': callControlPresentNew,
   'call-control-stop-presenting-new': callControlStopPresentingNew,
+  'call-recording': callRecording,
+  'canvas-add-page': canvasAddPage,
   edit,
   error,
   format,

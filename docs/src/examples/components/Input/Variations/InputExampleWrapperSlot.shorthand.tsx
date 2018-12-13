@@ -23,22 +23,6 @@ const InputExampleWrapperSlot = () => (
         styles: { padding: '5px', backgroundColor: 'red' },
       }}
     />
-
-    <Text content="Wrapped Input with existing component:" />
-    <Input
-      placeholder="Search..."
-      tabIndex={-1}
-      styles={{ color: 'blue', backgroundColor: 'yellow' }}
-      wrapper={<Text tabIndex={0} styles={{ padding: '5px', backgroundColor: 'red' }} />}
-    />
-
-    <Text content="Wrapped Input with custom element:" />
-    <Input
-      placeholder="Search..."
-      tabIndex={-1}
-      styles={{ color: 'blue', backgroundColor: 'yellow' }}
-      wrapper={<span tabIndex={0} style={{ padding: '5px', backgroundColor: 'red' }} />}
-    />
   </Grid>
 )
 

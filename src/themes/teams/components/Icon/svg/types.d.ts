@@ -8,3 +8,9 @@ type SvgIconSpecWithStyles = {
 }
 
 export type TeamsSvgIconSpec = SvgIconSpec | SvgIconSpecWithStyles
+
+// TEMPORARY, till the moment when all necessary Teams icons will be moved
+// to this Stardust theme
+export type TeamsProcessedSvgIconSpec = SvgIconSpecWithStyles & {
+  exportedAs?: string
+}

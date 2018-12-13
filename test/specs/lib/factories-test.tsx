@@ -10,7 +10,7 @@ import callable from '../../../src/lib/callable'
 // Utils
 // ----------------------------------------
 
-type GetShorthandArgs = {
+type ShorthandConfig = {
   Component?: React.ReactType
   defaultProps?: Props
   mappedProp?: string
@@ -31,7 +31,7 @@ const getShorthand = ({
   generateKey,
   value,
   render,
-}: GetShorthandArgs) =>
+}: ShorthandConfig) =>
   createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
@@ -42,7 +42,7 @@ const getShorthand = ({
 const isValuePrimitive = (value: ShorthandValue) =>
   typeof value === 'string' || typeof value === 'number'
 
-const testCreateShorthand = (shorthandArgs: GetShorthandArgs, expectedResult: ObjectOf<any>) =>
+const testCreateShorthand = (shorthandArgs: ShorthandConfig, expectedResult: ObjectOf<any>) =>
   expect(shallow(getShorthand(shorthandArgs)).props()).toEqual(expectedResult)
 
 // ----------------------------------------
@@ -111,7 +111,11 @@ const itMergesClassNames = (
   })
 }
 
-const itAppliesProps = (propsSource, expectedProps, shorthandConfig) => {
+const itAppliesProps = (
+  propsSource: string,
+  expectedProps: Props,
+  shorthandConfig: ShorthandConfig,
+) => {
   test(`applies props from the ${propsSource} props`, () => {
     testCreateShorthand(shorthandConfig, expectedProps)
   })
@@ -482,16 +486,6 @@ describe('factories', () => {
         testCreateShorthand({ overrideProps, value: testValue }, overrideProps())
       })
 
-      test("is called with the user's element's and default props", () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const userProps = { 'data-user': 'props' }
-        const value = <div {...userProps} />
-
-        shallow(getShorthand({ defaultProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
-      })
-
       test("is called with the user's props object", () => {
         const defaultProps = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
@@ -524,18 +518,21 @@ describe('factories', () => {
 
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
-      itAppliesDefaultProps(<div />)
       itDoesNotIncludePropsFromMappedProp(<div />)
-      itMergesClassNames('element', 'user', { value: <div className="user" /> })
       itAppliesProps('element', { foo: 'foo' }, { value: <div {...{ foo: 'foo' } as any} /> })
-      itOverridesDefaultProps(
-        'element',
-        { some: 'defaults', overridden: false },
-        { some: 'defaults', overridden: true },
-        { value: <div {...{ overridden: true } as any} /> },
-      )
-      itOverridesDefaultPropsWithFalseyProps('element', {
-        value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
+
+      test('forwards original element "as is"', () => {
+        testCreateShorthand(
+          {
+            Component: 'p',
+            value: (
+              <span {...{ commonProp: 'originalElement', originalElementProp: true } as any} />
+            ),
+            defaultProps: { commonProp: 'default', defaultProp: true },
+            overrideProps: { commonProp: 'override', overrideProp: true },
+          },
+          { commonProp: 'originalElement', originalElementProp: true },
+        )
       })
     })
 

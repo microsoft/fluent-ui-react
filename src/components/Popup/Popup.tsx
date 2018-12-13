@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createPortal } from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
@@ -12,6 +12,7 @@ import {
   isBrowser,
   ChildrenComponentProps,
   ContentComponentProps,
+  StyledComponentProps,
   commonPropTypes,
 } from '../../lib'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
@@ -33,10 +34,14 @@ import {
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps extends ChildrenComponentProps, ContentComponentProps<ShorthandValue> {
+export interface PopupProps
+  extends StyledComponentProps<PopupProps>,
+    ChildrenComponentProps,
+    ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
+   * @available popupFocusTrapBehavior, dialogBehavior
    * */
   accessibility?: Accessibility
 
@@ -100,7 +105,6 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       animated: false,
       as: false,
       content: 'shorthand',
-      styled: false,
     }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
@@ -150,11 +154,22 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     if (this.state.open) {
       setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', e => {
-          if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
-            this.state.open && this.trySetOpen(false, e, true)
-          }
-        })
+        this.outsideClickSubscription = EventStack.subscribe(
+          'click',
+          e => {
+            const isOutsidePopupElement =
+              this.popupDomElement && !this.popupDomElement.contains(e.target)
+            const isOutsideTriggerElement =
+              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+
+            if (isOutsidePopupElement && isOutsideTriggerElement) {
+              this.state.open && this.trySetOpen(false, e, true)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
       })
     }
   }
@@ -195,7 +210,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          createPortal(popupContent, document.body)}
+          ReactDOM.createPortal(popupContent, document.body)}
       </>
     )
   }
@@ -254,7 +269,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   ) => {
     const { content } = this.props
 
-    const popupContentAttributes = {
+    const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
@@ -265,16 +280,20 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
-      ...popupContentAttributes,
+      ...popupWrapperAttributes,
     } as FocusTrapZoneProps
 
-    const popupContent = Popup.Content.create(content, {
-      /**
-       * if there is no focus trap wrapper, we should apply
-       * HTML attributes and positioning to popup content directly
-       */
-      defaultProps: accessibility.focusTrap ? {} : popupContentAttributes,
-    })
+    /**
+     * if there is no focus trap wrapper, we should apply
+     * HTML attributes and positioning to popup content directly
+     */
+    const popupContentAttributes = accessibility.focusTrap ? {} : popupWrapperAttributes
+
+    const popupContent = React.isValidElement(content)
+      ? React.cloneElement(content, popupContentAttributes)
+      : Popup.Content.create(content, {
+          defaultProps: popupContentAttributes,
+        })
 
     return (
       <Ref

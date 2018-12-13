@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as cx from 'classnames'
 import { NavLink } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
 import {
@@ -24,9 +23,9 @@ interface StyledButtonProps {
 
 const StyledButton: React.SFC<StyledButtonProps> = createComponent<StyledButtonProps>({
   displayName: 'StyledButton',
-  render({ stardust, className, children }) {
+  render({ stardust, children }) {
     const { classes } = stardust
-    return <button className={cx(className, classes.root)}>{children}</button>
+    return <button className={classes.root}>{children}</button>
   },
 })
 
@@ -51,7 +50,7 @@ export default () => (
           displayName: 'StyledButton',
           render: ({stardust, className, children}) => {
             const { classes } = stardust
-            return <button className={cx(className, classes.root)}>{children}</button>
+            return <button className={classes.root}>{children}</button>
           }
         })
       `}

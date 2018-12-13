@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TeamsSvgIconSpec } from '../types'
+import { TeamsProcessedSvgIconSpec } from '../types'
 
 export default {
   icon: ({ classes }) => (
@@ -17,4 +17,5 @@ export default {
     </svg>
   ),
   styles: {},
-} as TeamsSvgIconSpec
+  exportedAs: 'mention',
+} as TeamsProcessedSvgIconSpec

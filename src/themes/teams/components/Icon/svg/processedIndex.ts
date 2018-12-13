@@ -1,4 +1,4 @@
 import svgIconsAndStyles from './ProcessedIcons'
-import { TeamsSvgIconSpec } from './types'
+import { TeamsProcessedSvgIconSpec } from './types'
 
-export default svgIconsAndStyles as { [iconName: string]: TeamsSvgIconSpec }
+export default svgIconsAndStyles as { [iconName: string]: TeamsProcessedSvgIconSpec }
