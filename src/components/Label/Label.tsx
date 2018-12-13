@@ -13,7 +13,9 @@ import {
   commonPropTypes,
 } from '../../lib'
 
-import { Icon, Image, Layout } from '../..'
+import Icon from '../Icon/Icon'
+import Image from '../Image/Image'
+import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { Extendable, ShorthandValue } from '../../../types/utils'
 
@@ -35,7 +37,7 @@ export interface LabelProps
   /** An icon label can format an Icon to appear before or after the text in the label */
   iconPosition?: 'start' | 'end'
 
-  /** Label can have an icon. */
+  /** Label can have an image. */
   image?: ShorthandValue
 
   /** An icon label can format an Icon to appear before or after the text in the label */

@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as React from 'react'
 import {
   ShorthandValue,
@@ -126,16 +126,18 @@ function createShorthandFromValue(
     )
   }
 
+  // return value 'as is' if it a ReactElement
+  if (valIsReactElement) {
+    return value as React.ReactElement<Props>
+  }
+
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
   const { defaultProps = {} } = options
 
   // User's props
-  const usersProps =
-    (valIsReactElement && (value as React.ReactElement<Props>).props) ||
-    (valIsPropsObject && (value as Props)) ||
-    {}
+  const usersProps = valIsPropsObject ? (value as Props) : {}
 
   // Override props
   let { overrideProps } = options
@@ -190,9 +192,6 @@ function createShorthandFromValue(
   if (render) {
     return render(Component, props)
   }
-
-  // Clone ReactElements
-  if (valIsReactElement) return React.cloneElement(value as React.ReactElement<Props>, props)
 
   // Create ReactElements from built up props
   if (valIsPrimitive || valIsPropsObject) return <Component {...props} />

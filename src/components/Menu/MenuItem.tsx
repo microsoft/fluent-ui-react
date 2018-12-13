@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -12,6 +12,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  isFromKeyboard,
   EventStack,
 } from '../../lib'
 import Icon from '../Icon/Icon'
@@ -19,7 +20,6 @@ import Menu from '../Menu/Menu'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import IsFromKeyboard from '../../lib/isFromKeyboard'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
@@ -31,6 +31,7 @@ export interface MenuItemProps
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
+   * @available toolbarButtonBehavior, tabBehavior
    * */
   accessibility?: Accessibility
 
@@ -104,7 +105,7 @@ export interface MenuItemProps
 }
 
 export interface MenuItemState {
-  [IsFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
   submenuOpen: boolean
 }
 
@@ -150,7 +151,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   static autoControlledProps = ['submenuOpen']
 
   state = {
-    ...IsFromKeyboard.initial,
+    isFromKeyboard: false,
     submenuOpen: false,
   }
 
@@ -186,7 +187,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         {...accessibility.attributes.anchor}
         {...rest}
         {...!wrapper && { onClick: this.handleClick }}
-        ref={this.itemRef}
       >
         <Ref innerRef={this.itemRef}>
           <span>
@@ -286,13 +286,13 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.initial)
+    this.setState({ isFromKeyboard: false })
 
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(IsFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }

@@ -1,6 +1,5 @@
 export { default as defaultBehavior } from './Behaviors/defaultBehavior'
 export { default as buttonBehavior } from './Behaviors/Button/buttonBehavior'
-export { default as buttonGroupBehavior } from './Behaviors/Button/buttonGroupBehavior'
 export { default as toggleButtonBehavior } from './Behaviors/Button/toggleButtonBehavior'
 export { default as imageBehavior } from './Behaviors/Image/imageBehavior'
 export { default as menuBehavior } from './Behaviors/Menu/menuBehavior'

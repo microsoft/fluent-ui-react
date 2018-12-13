@@ -41,6 +41,7 @@ const getKeyDownHandlers = (
 
           eventHandler && eventHandler(event)
         })
+
         _.invoke(props, 'onKeyDown', event, props)
       },
     }
