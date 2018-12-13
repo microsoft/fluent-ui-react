@@ -72,12 +72,32 @@ function createMessageContent(message: MessageData): ShorthandValue {
 }
 
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
+  const menuClickHandler = content => e => {
+    alert(`${content} clicked`)
+    e.stopPropagation()
+  }
+
   const contextMenu = (
     <Menu
       items={[
-        { key: 'download', content: 'Download', icon: 'download' },
-        { key: 'linkify', content: 'Get link', icon: 'linkify' },
-        { key: 'tab', content: 'Make this a tab', icon: 'folder open' },
+        {
+          key: 'download',
+          content: 'Download',
+          icon: 'download',
+          onClick: menuClickHandler('Download'),
+        },
+        {
+          key: 'linkify',
+          content: 'Get link',
+          icon: 'linkify',
+          onClick: menuClickHandler('Get link'),
+        },
+        {
+          key: 'tab',
+          content: 'Make this a tab',
+          icon: 'folder open',
+          onClick: menuClickHandler('Make tab'),
+        },
       ]}
       vertical
       pills
@@ -117,6 +137,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             styles={{
               ...(index === 1 ? { marginLeft: '15px' } : {}),
             }}
+            onClick={() => alert(`Opening ${fileName}`)}
           />
         ))}
       </div>

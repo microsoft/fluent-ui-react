@@ -17,7 +17,7 @@ export type AttachmentVariables = {
   descriptionFontWeight: number
   descriptionLineHeight: number
 
-  borderColorFocus: string
+  focusOutlineColor: string
 }
 
 export default siteVariables => ({
@@ -39,5 +39,5 @@ export default siteVariables => ({
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
 
-  borderColorFocus: siteVariables.brand,
+  focusOutlineColor: siteVariables.brand,
 })

@@ -2,7 +2,13 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { UIComponent, customPropTypes, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  customPropTypes,
+  createShorthandFactory,
+  commonPropTypes,
+  isFromKeyboard,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
@@ -10,7 +16,6 @@ import Slot from '../Slot/Slot'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
-import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -53,7 +58,7 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
 }
 
 export interface AttachmentState {
-  [isFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -83,7 +88,9 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
     accessibility: attachmentBehavior as Accessibility,
   }
 
-  public state = isFromKeyboard.initial
+  public state = {
+    isFromKeyboard: false,
+  }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
     const { header, description, icon, action, progress } = this.props
@@ -153,7 +160,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
