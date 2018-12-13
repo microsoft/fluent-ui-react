@@ -337,11 +337,21 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {
     if (rtl && (position === 'above' || position === 'below')) {
-      return offset.trimLeft().startsWith('-')
-        ? offset.trimLeft().replace(/^-\s*/, '')
-        : `-${offset}`
+      const [horizontal, vertical] = offset.split(',')
+      return [this.applyRtlToHorizontalOffset(horizontal), vertical].join(', ')
     }
 
     return offset
+  }
+
+  private applyRtlToHorizontalOffset(offset: string): string {
+    return offset
+      .replace(/\-/g, '<plus>')
+      .replace(/^(\s*)(?=\d)/, '<minus>')
+      .replace(/\+/g, '<minus>')
+      .replace(/<plus>/g, '+')
+      .replace(/<minus>/g, '-')
+      .trimLeft()
+      .replace(/^\+/, '')
   }
 }
