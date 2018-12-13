@@ -25,8 +25,6 @@ const items = [
   },
 ]
 
-const ListExampleSelection = () => (
-  <List selection defaultSelectedItemIndex={0} items={items} />
-)
+const ListExampleSelection = () => <List selection defaultSelectedIndex={0} items={items} />
 
 export default ListExampleSelection
