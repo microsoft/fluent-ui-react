@@ -79,7 +79,7 @@ jobs:
             git config user.email "miroslav.stastny+dusty@gmail.com"
             git config user.name "DustyTheBot"
             git add $statsFile
-            git commit -m "update $statsFile"
+            git commit -m "update $statsFile [ci skip]"
             git push --set-upstream origin ${CIRCLE_BRANCH}
 
       - run:
