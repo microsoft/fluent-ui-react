@@ -3,8 +3,8 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps } from '../../../../components/List/ListItem'
 
 const hoverFocusStyle = variables => ({
-  background: variables.selectionFocusHoverBackgroundColor,
-  color: variables.selectionFocusHoverColor,
+  background: variables.selectableFocusHoverBackgroundColor,
+  color: variables.selectableFocusHoverColor,
   cursor: 'pointer',
 
   '& .ui-item-layout__header': { color: 'inherit' },
@@ -24,8 +24,8 @@ const selectedStyle = variables => ({
 })
 
 const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
-  root: ({ props: { selection, selected, important }, variables }): ICSSInJSStyle => ({
-    ...(selection && {
+  root: ({ props: { selectable, selected, important }, variables }): ICSSInJSStyle => ({
+    ...(selectable && {
       position: 'relative',
 
       // hide the end media by default

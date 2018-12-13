@@ -31,7 +31,7 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
   media?: any
 
   /** A list item can indicate that it can be selected. */
-  selection?: boolean
+  selectable?: boolean
   /** Indicates if the current list item is selected. */
   selected?: boolean
   truncateContent?: boolean
@@ -72,7 +72,7 @@ class ListItem extends UIComponent<Extendable<ListItemProps>> {
     important: PropTypes.bool,
     media: PropTypes.any,
 
-    selection: PropTypes.bool,
+    selectable: PropTypes.bool,
     selected: PropTypes.bool,
 
     truncateContent: PropTypes.bool,

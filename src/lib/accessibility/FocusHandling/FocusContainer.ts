@@ -18,11 +18,11 @@ export class ContainerFocusHandler {
     }
   }
 
-  public getfocusedIndex(): number {
+  public getFocusedIndex(): number {
     return this.focusedIndex
   }
 
-  public syncfocusedIndex(withCurrentIndex: number) {
+  public syncFocusedIndex(withCurrentIndex: number) {
     this.focusedIndex = withCurrentIndex
   }
 

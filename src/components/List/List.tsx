@@ -30,8 +30,8 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for ListItem. */
   items?: ShorthandValue[]
 
-  /** A selection list formats list items as possible choices. */
-  selection?: boolean
+  /** A selectable list formats list items as possible choices. */
+  selectable?: boolean
 
   /** Index of the currently selected item. */
   selectedIndex?: number
@@ -66,7 +66,7 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
-    selection: PropTypes.bool,
+    selectable: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
     selectedIndex: PropTypes.number,
@@ -86,7 +86,7 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
   static Item = ListItem
 
   // List props that are passed to each individual Item props
-  static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
+  static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
@@ -157,12 +157,12 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     return _.map(items, (item, idx) => {
       const maybeSelectableItemProps = {} as any
 
-      if (this.props.selection) {
+      if (this.props.selectable) {
         const ref = React.createRef()
         this.itemRefs[idx] = ref
 
         maybeSelectableItemProps.ref = ref
-        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncfocusedIndex(idx)
+        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedIndex(idx)
         maybeSelectableItemProps.onClick = () => this.trySetState({ selectedIndex: idx })
         maybeSelectableItemProps.selected = idx === selectedIndex
         maybeSelectableItemProps.tabIndex = getTabIndex(idx)
