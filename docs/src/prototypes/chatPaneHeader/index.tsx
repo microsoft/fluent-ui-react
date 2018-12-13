@@ -48,6 +48,12 @@ const itemsList = [
     header: ' Farrokh Bulsara',
     styles: listItemStyle,
   },
+  {
+    key: ' WelvetChocolateSweetyBurms',
+    media: <Status color="red" icon="minus" title="Busy" />,
+    header: 'Welvet Chocolate Sweety Burms',
+    styles: listItemStyle,
+  },
 ]
 
 export default () => (
@@ -58,7 +64,7 @@ export default () => (
     <br />
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Avatar image="public/images/avatar/small/matt.jpg" />
-      <ChatTitle listItems={itemsList.slice(0, 5)} />
+      <ChatTitle listItems={itemsList} />
       <Tabs />
       <CallingButtons />
       <div style={{ flexGrow: 0.2 }}>

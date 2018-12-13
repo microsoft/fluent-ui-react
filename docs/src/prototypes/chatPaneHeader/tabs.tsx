@@ -14,7 +14,7 @@ const menuItems = [
 class Tabs extends React.Component {
   public render() {
     return (
-      <div style={{ flexGrow: 0.6 }}>
+      <div style={{ flexGrow: 0.6, display: 'flex' }}>
         <Menu
           accessibility={tabListBehavior}
           styles={menuStyle}
