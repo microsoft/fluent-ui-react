@@ -3,7 +3,9 @@ import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
-  root: ({
+  root: (): ICSSInJSStyle => ({}),
+
+  container: ({
     props: { focused, toggleButton, fluid },
     variables: {
       backgroundColor,
