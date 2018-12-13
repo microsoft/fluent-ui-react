@@ -138,10 +138,10 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    performClick: event => this.handleKeyboardClick(event),
+    performClick: event => this.performClick(event),
   }
 
-  private handleKeyboardClick = e => {
+  private performClick = e => {
     e.stopPropagation()
     this.handleClick(e)
   }
