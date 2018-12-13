@@ -2,6 +2,7 @@ import { TeamsSvgIconSpec } from '../types'
 
 import add from './add'
 import addParticipant from './addParticipant'
+import bold from './bold'
 import bookmark from './bookmark'
 import bullets from './bullets'
 import calendar from './calendar'
@@ -13,7 +14,9 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import codeSnippet from './codeSnippet'
 import edit from './edit'
+import emoji from './emoji'
 import error from './error'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
@@ -21,26 +24,35 @@ import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
+import italic from './italic'
 import leave from './leave'
 import like from './like'
+import link from './link'
 import markAsUnread from './markAsUnread'
+import meetingNew from './meetingNew'
 import mention from './mention'
 import menu from './menu'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import numberList from './numberList'
 import participantRemove from './participantRemove'
+import quote from './quote'
 import redbang from './redbang'
 import reply from './reply'
 import retry from './retry'
 import send from './send'
+import sticker from './sticker'
+import table from './table'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
 import trashCan from './trashCan'
+import underline from './underline'
 
 export default {
   add,
+  bold,
   bookmark,
   bullets,
   calendar,
@@ -52,7 +64,9 @@ export default {
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
+  'code-snippet': codeSnippet,
   edit,
+  emoji,
   error,
   format,
   'font-color': fontColor,
@@ -60,22 +74,30 @@ export default {
   gallery,
   giphy,
   highlight,
+  italic,
   leave,
   like,
+  link,
   'mark-as-unread': markAsUnread,
+  'meeting-new': meetingNew,
   mention,
   menu,
   mic,
   'mic-off': micOff,
   more,
+  'number-list': numberList,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
+  quote,
   redbang,
   reply,
   retry,
   send,
+  sticker,
+  table,
   teams,
   translation,
   'trash-can': trashCan,
   'team-create': teamCreate,
+  underline,
 } as { [iconName: string]: TeamsSvgIconSpec }
