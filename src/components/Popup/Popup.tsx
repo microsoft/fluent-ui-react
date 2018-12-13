@@ -261,7 +261,10 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     const popperModifiers = {
       // https://popper.js.org/popper-documentation.html#modifiers..offset
-      ...(offset && { offset: { offset: this.applyRtlToOffset(offset, rtl, position) } }),
+      ...(offset && {
+        offset: { offset: this.applyRtlToOffset(offset, rtl, position) },
+        keepTogether: { enabled: false },
+      }),
     }
 
     return (
