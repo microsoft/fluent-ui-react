@@ -254,6 +254,24 @@ class Sidebar extends React.Component<any, any> {
                     as: NavLink,
                     to: '/accessibility',
                   },
+                  {
+                    key: 'theming',
+                    content: 'Theming',
+                    as: NavLink,
+                    to: '/theming',
+                  },
+                  {
+                    key: 'theming-examples',
+                    content: 'Theming Examples',
+                    as: NavLink,
+                    to: '/theming-examples',
+                  },
+                  {
+                    key: 'integrate-custom',
+                    content: 'Integrate Custom Components',
+                    as: NavLink,
+                    to: '/integrate-custom-components',
+                  },
                 ]}
               />
             </Menu.Item>
