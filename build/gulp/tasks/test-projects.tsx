@@ -1,4 +1,3 @@
-import * as debug from 'debug'
 import * as fs from 'fs'
 import { parallel, series, task } from 'gulp'
 import * as path from 'path'
@@ -10,6 +9,13 @@ import * as tmp from 'tmp'
 
 const { paths } = config
 let packageFilename
+
+const log = (context: string) => (message: string) => {
+  console.log()
+  console.log('='.repeat(80))
+  console.log(context, ':', message)
+  console.log('='.repeat(80))
+}
 
 export const createPackageFilename = () => tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
 
@@ -43,13 +49,10 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
 }
 
 task('test:projects:pack', async () => {
-  const logger = debug('bundle:pack')
-  logger.enabled = true
-
   packageFilename = createPackageFilename()
   await sh(`yarn pack --filename ${packageFilename}`)
 
-  logger(`Stardust package is published: ${packageFilename}`)
+  log('test:projects:pack')(`Stardust package is published: ${packageFilename}`)
 })
 
 // Tests the following scenario
@@ -58,9 +61,7 @@ task('test:projects:pack', async () => {
 //  - Update the App.tsx to include some stardust imports
 //  - Try and run a build
 task('test:projects:cra-ts', async () => {
-  const logger = debug('bundle:cra')
-  logger.enabled = true
-
+  const logger = log('test:projects:cra-ts')
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/cra')
 
   //////// CREATE TEST REACT APP ///////
@@ -91,8 +92,7 @@ task('test:projects:cra-ts', async () => {
 })
 
 task('test:projects:rollup', async () => {
-  const logger = debug('bundle:rollup')
-  logger.enabled = true
+  const logger = log('test:projects:rollup')
 
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/rollup')
   const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
