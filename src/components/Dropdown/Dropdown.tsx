@@ -415,13 +415,7 @@ export default class Dropdown extends AutoControlledComponent<
 
     if (filteredItems.length > 0) {
       return filteredItems.map((item, index) => {
-        let itemAsListItem = item
-        if (typeof item === 'object') {
-          itemAsListItem = _.pickBy(item, (value, key) =>
-            _.includes(['key', ...DropdownItem.handledProps], key),
-          )
-        }
-        return DropdownItem.create(itemAsListItem, {
+        return DropdownItem.create(item, {
           defaultProps: {
             active: highlightedIndex === index,
             variables,
