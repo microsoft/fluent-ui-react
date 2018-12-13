@@ -8,16 +8,20 @@ import config from '../../../config'
 import * as tmp from 'tmp'
 
 const { paths } = config
-let packageFilename
 
 const log = (context: string) => (message: string) => {
   console.log()
   console.log('='.repeat(80))
-  console.log(context, ':', message)
+  console.log(`${context} : ${message}`)
   console.log('='.repeat(80))
 }
 
-export const createPackageFilename = () => tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
+export const publishPackage = async () => {
+  const filename = tmp.tmpNameSync({ prefix: 'stardust-', postfix: '.tgz' })
+  await sh(`yarn pack --filename ${filename}`)
+
+  return filename
+}
 
 export const runIn = path => cmd => sh(`cd ${path} && ${cmd}`)
 
@@ -48,13 +52,6 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
   return appProjectPath
 }
 
-task('test:projects:pack', async () => {
-  packageFilename = createPackageFilename()
-  await sh(`yarn pack --filename ${packageFilename}`)
-
-  log('test:projects:pack')(`Stardust package is published: ${packageFilename}`)
-})
-
 // Tests the following scenario
 //  - Create a new react test app
 //  - Add Stardust as a app's dependency
@@ -63,6 +60,9 @@ task('test:projects:pack', async () => {
 task('test:projects:cra-ts', async () => {
   const logger = log('test:projects:cra-ts')
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/cra')
+
+  const packageFilename = await publishPackage()
+  logger(`✔️Package was published: ${packageFilename}`)
 
   //////// CREATE TEST REACT APP ///////
   logger('STEP 1. Create test React project with TSX scripts..')
@@ -99,6 +99,9 @@ task('test:projects:rollup', async () => {
 
   logger(`✔️Temporary directory was created: ${tmpDirectory}`)
 
+  const packageFilename = await publishPackage()
+  logger(`✔️Package was published: ${packageFilename}`)
+
   const dependencies = [
     'rollup',
     'rollup-plugin-replace',
@@ -123,8 +126,5 @@ task('test:projects:rollup', async () => {
 
 task(
   'test:projects',
-  series(
-    series('build:dist', 'test:projects:pack'),
-    parallel('test:projects:cra-ts', 'test:projects:rollup'),
-  ),
+  series('build:dist', parallel('test:projects:cra-ts', 'test:projects:rollup')),
 )
