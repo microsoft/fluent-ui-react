@@ -143,15 +143,6 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     const { items } = this.props
     const { focusedIndex, selectedIndex } = this.state
 
-    const getTabIndex = (idx): number => {
-      // return tabindex=0 if the item was selected
-      if (selectedIndex !== -1) {
-        return idx === selectedIndex ? 0 : -1
-      }
-
-      return idx === focusedIndex ? 0 : -1
-    }
-
     this.itemRefs = []
 
     return _.map(items, (item, idx) => {
@@ -163,9 +154,12 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
 
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedIndex(idx)
-        maybeSelectableItemProps.onClick = () => this.trySetState({ selectedIndex: idx })
+        maybeSelectableItemProps.onClick = () => {
+          this.trySetState({ selectedIndex: idx })
+          this.setState({ focusedIndex: idx })
+        }
         maybeSelectableItemProps.selected = idx === selectedIndex
-        maybeSelectableItemProps.tabIndex = getTabIndex(idx)
+        maybeSelectableItemProps.tabIndex = idx === focusedIndex ? 0 : -1
       }
 
       const itemProps = {
