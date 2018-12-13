@@ -209,70 +209,71 @@ export default class Dropdown extends AutoControlledComponent<
     const { searchQuery } = this.state
 
     return (
-      <Downshift
-        onChange={this.handleSelectedChange}
-        inputValue={search ? searchQuery : undefined}
-        stateReducer={this.handleDownshiftStateChanges}
-        itemToString={itemToString}
-        // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
-        selectedItem={search && !multiple ? undefined : null}
-        getA11yStatusMessage={getA11yStatusMessage}
-        onStateChange={changes => {
-          if (changes.isOpen && !search) {
-            this.listNode.focus()
-          }
-        }}
-      >
-        {({
-          getInputProps,
-          getItemProps,
-          getMenuProps,
-          getRootProps,
-          getToggleButtonProps,
-          isOpen,
-          toggleMenu,
-          highlightedIndex,
-          selectItemAtIndex,
-        }) => {
-          const accessibilityRootProps = getRootProps(
-            { refKey: 'innerRef' },
-            { suppressRefError: true },
-          )
-          const { innerRef, ...accessibilityRootPropsRest } = accessibilityRootProps
-          return (
-            <Ref innerRef={innerRef}>
-              <ElementType
-                className={classes.root}
-                onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
-                {...rest}
-              >
-                {multiple && this.renderSelectedItems(styles)}
-                {search
-                  ? this.renderSearchInput(
-                      accessibilityRootPropsRest,
-                      getInputProps,
-                      highlightedIndex,
-                      selectItemAtIndex,
-                      variables,
-                    )
-                  : this.renderTriggerButton(styles, getToggleButtonProps)}
-                {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
-                {this.renderItemsList(
-                  styles,
-                  variables,
-                  isOpen,
-                  highlightedIndex,
-                  toggleMenu,
-                  selectItemAtIndex,
-                  getMenuProps,
-                  getItemProps,
-                  getInputProps,
-                )}
-              </ElementType>
-            </Ref>
-          )
-        }}
-      </Downshift>
+      <ElementType className={classes.root} {...rest}>
+        <Downshift
+          onChange={this.handleSelectedChange}
+          inputValue={search ? searchQuery : undefined}
+          stateReducer={this.handleDownshiftStateChanges}
+          itemToString={itemToString}
+          // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
+          selectedItem={search && !multiple ? undefined : null}
+          getA11yStatusMessage={getA11yStatusMessage}
+          onStateChange={changes => {
+            if (changes.isOpen && !search) {
+              this.listNode.focus()
+            }
+          }}
+        >
+          {({
+            getInputProps,
+            getItemProps,
+            getMenuProps,
+            getRootProps,
+            getToggleButtonProps,
+            isOpen,
+            toggleMenu,
+            highlightedIndex,
+            selectItemAtIndex,
+          }) => {
+            const accessibilityRootProps = getRootProps(
+              { refKey: 'innerRef' },
+              { suppressRefError: true },
+            )
+            const { innerRef, ...accessibilityRootPropsRest } = accessibilityRootProps
+            return (
+              <Ref innerRef={innerRef}>
+                <div
+                  className={classes.container}
+                  onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
+                >
+                  {multiple && this.renderSelectedItems(styles)}
+                  {search
+                    ? this.renderSearchInput(
+                        accessibilityRootPropsRest,
+                        getInputProps,
+                        highlightedIndex,
+                        selectItemAtIndex,
+                        variables,
+                      )
+                    : this.renderTriggerButton(styles, getToggleButtonProps)}
+                  {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
+                  {this.renderItemsList(
+                    styles,
+                    variables,
+                    isOpen,
+                    highlightedIndex,
+                    toggleMenu,
+                    selectItemAtIndex,
+                    getMenuProps,
+                    getItemProps,
+                    getInputProps,
+                  )}
+                </div>
+              </Ref>
+            )
+          }}
+        </Downshift>
+      </ElementType>
     )
   }
 
