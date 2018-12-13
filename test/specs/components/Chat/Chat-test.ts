@@ -10,7 +10,7 @@ const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(
 
 describe('Chat', () => {
   isConformant(Chat)
-  chatImplementsCollectionShorthandProp('items', ChatItem)
+  chatImplementsCollectionShorthandProp('items', ChatItem, { mapsValueToProp: 'message' })
 
   describe('accessibility', () => {
     handlesAccessibility(Chat, {
