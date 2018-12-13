@@ -29,7 +29,6 @@ const semverCmp = (a, b) => {
   const leftMatch = left.match(SEMVER_MATCHER)
   const rightMatch = right.match(SEMVER_MATCHER)
   if (leftMatch && rightMatch) {
-    console.log(leftMatch, rightMatch)
     for (let i = 1; i <= 3; i++) {
       const partOfLeft = Number(leftMatch[i])
       const partOfRight = Number(rightMatch[i])
@@ -61,6 +60,7 @@ function webpackAsync(config): Promise<any> {
         reject(new PluginError('webpack', errors.toString()))
       }
       if (warnings.length > 0) {
+        log('Webpack compiler encountered warnings.')
         reject(new PluginError('webpack', warnings.toString()))
       }
 
@@ -72,13 +72,13 @@ function webpackAsync(config): Promise<any> {
 async function compileOneByOne(allConfigs) {
   let assets = []
   for (const config of allConfigs) {
-    console.log('>', config.output.filename)
+    log('Compiling', config.output.filename)
     try {
       const result = await webpackAsync(config)
       assets = [...assets, ...result.assets]
-      console.log('<', result.assets[0].name)
+      log('Done', result.assets[0].name)
     } catch (err) {
-      console.log('E', config.output.filename, err)
+      log('Error', config.output.filename)
       throw err
     }
   }
