@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, Avatar, Icon, Divider, Status } from '@stardust-ui/react'
+import { Avatar, Divider, Status } from '@stardust-ui/react'
 import ChatTitle from './chatTitle'
 import Tabs from './tabs'
 import CallingButtons from './callingButtons'
+import RightTopButtons from './rightTopButtons'
+import { Button } from 'semantic-ui-react'
 
 const listItemStyle = {
   float: 'left',
@@ -59,46 +61,42 @@ const itemsList = [
 export default () => (
   <div>
     <div>
-      <button>Set focus here </button>
+      <Button style={{ margin: '2rem' }}>
+        {' '}
+        Chat header when there is equal or less than 3 users in group chat{' '}
+      </Button>
     </div>
-    <br />
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Avatar image="public/images/avatar/small/matt.jpg" />
+      <ChatTitle listItems={itemsList.slice(0, 3)} />
+      <Tabs />
+      <CallingButtons />
+      <RightTopButtons />
+    </div>
+    <Divider />
+    <div>
+      <Button style={{ margin: '2rem' }}>
+        Chat header when there are more as 3 user in group chat{' '}
+      </Button>
+    </div>
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <Avatar image="public/images/avatar/small/matt.jpg" />
       <ChatTitle listItems={itemsList} />
       <Tabs />
       <CallingButtons />
-      <div style={{ flexGrow: 0.2 }}>
-        <Button
-          aria-label="add people"
-          circular
-          key="userPlus"
-          title="add people"
-          icon={
-            <Icon
-              key="userPlus"
-              name="user plus"
-              size="large"
-              variables={siteVars => ({ color: siteVars.gray04 })}
-            />
-          }
-        />
-        <Button
-          aria-label="more options"
-          circular
-          key="moreOptions"
-          title="more option"
-          icon={
-            <Icon
-              key="userPlus"
-              name="ellipsis horizontal"
-              size="large"
-              variables={siteVars => ({ color: siteVars.gray04 })}
-            />
-          }
-        />
-      </div>
+      <RightTopButtons />
     </div>
     <Divider />
-    <br />
+    <div>
+      <Button style={{ margin: '2rem' }}>Chat header when there is group chat name set </Button>
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Avatar image="public/images/avatar/small/matt.jpg" />
+      <ChatTitle listItems={itemsList} groupChatName="Accessbility issue 9875612" />
+      <Tabs />
+      <CallingButtons />
+      <RightTopButtons />
+    </div>
+    <Divider />
   </div>
 )

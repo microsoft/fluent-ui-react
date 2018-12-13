@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Menu, Button, tabListBehavior, tabBehavior, Icon } from '@stardust-ui/react'
 
 const menuStyle = {
-  marginLeft: '3rem',
+  marginLeft: '1rem',
 }
 
 const menuItems = [
