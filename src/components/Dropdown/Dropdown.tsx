@@ -492,10 +492,10 @@ export default class Dropdown extends AutoControlledComponent<
         )
         return changes
       case Downshift.stateChangeTypes.blurButton:
-        // Focus the list, by button click/enter/up/down/space. Downshift, by default, closes the list
-        // on trigger blur, but in this case it's custom behaviour, where we want to keep it open.
-        if (state.isOpen) {
-          return {}
+        // Downshift closes the list by default on trigger blur. It does not support the case when dropdown is
+        // single selection and focuses list on trigger click/up/down/space/enter. Treating that here.
+        if (state.isOpen && document.activeElement === this.listNode) {
+          return {} // won't change state in this case.
         }
       default:
         return changes
@@ -599,7 +599,7 @@ export default class Dropdown extends AutoControlledComponent<
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
     ) => {
-      if (keyboardKey.getCode(e) === keyboardKey.Tab && highlightedIndex !== undefined) {
+      if (keyboardKey.getCode(e) === keyboardKey.Tab && _.isNil(highlightedIndex)) {
         selectItemAtIndex(highlightedIndex)
       }
 
