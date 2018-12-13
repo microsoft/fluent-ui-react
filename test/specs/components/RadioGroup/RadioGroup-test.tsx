@@ -55,8 +55,7 @@ describe('RadioGroup', () => {
 
   describe('implementsCollectionShorthandProp', () => {
     radioGroupImplementsCollectionShorthandProp('items', RadioGroupItem, {
-      mapsValueToProp: 'content',
-      skipArrayOfStrings: true,
+      mapsValueToProp: false,
     })
   })
 
