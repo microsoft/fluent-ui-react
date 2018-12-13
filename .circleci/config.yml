@@ -62,27 +62,6 @@ jobs:
           name: Bundle Statistics
           command: yarn build:stats
       - run:
-          name: Store bundle statistics
-          command: |
-            statsFile=docs/src/bundleStats.json
-
-            if [ -z "$CIRCLE_PULL_REQUEST" ]; then
-              echo "Not a pull request, skipping step"
-              exit 0
-            fi
-            if [ -z "$(git status --porcelain $statsFile)" ]; then
-              echo "$statsFile has not changed, exiting"
-              exit 0
-            fi
-
-            echo "Going to push updated $statsFile"
-            git config user.email "miroslav.stastny+dusty@gmail.com"
-            git config user.name "DustyTheBot"
-            git add $statsFile
-            git commit -m "update $statsFile [ci skip]"
-            git push --set-upstream origin ${CIRCLE_BRANCH}
-
-      - run:
           name: Danger JS
           command: |
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
