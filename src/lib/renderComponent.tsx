@@ -33,6 +33,8 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtiliti
 import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
+  // TODO: Switch back to React.ReactType after issue will be resolved
+  // https://github.com/Microsoft/TypeScript/issues/28768
   ElementType: React.ComponentType<P> | string
   classes: ComponentSlotClasses
   rest: Props
