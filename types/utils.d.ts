@@ -26,6 +26,17 @@ export type Props = ObjectOf<any>
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
 export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: TProps) => void
 
+type ChildrenProps = { children: any }
+export type PropsOf<T> = T extends React.ComponentClass<Extendable<infer TProps>>
+  ? (ChildrenProps & TProps)
+  : T extends React.ComponentClass<infer TProps>
+  ? (ChildrenProps & TProps)
+  : T extends React.StatelessComponent<Extendable<infer TProps>>
+  ? (ChildrenProps & TProps)
+  : T extends React.StatelessComponent<infer TProps>
+  ? (ChildrenProps & TProps)
+  : any
+
 // ========================================================
 // Shorthand Factories
 // ========================================================
