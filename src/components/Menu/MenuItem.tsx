@@ -276,10 +276,10 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { active, menu } = this.props
     if (menu) {
       if (this.submenuDomElement && this.submenuDomElement.contains(e.target)) {
-        // submenu was clicked, so we just close it and propagate
+        // submenu was clicked => close it and propagate
         this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
       } else {
-        // the menuItem element was clicked, so just toggle the open/close and stop propagation
+        // the menuItem element was clicked => toggle the open/close and stop propagation
         this.trySetState({ submenuOpen: active ? !this.state.submenuOpen : true })
         e.stopPropagation()
       }
@@ -308,7 +308,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { submenuOpen } = this.state
     if (menu && submenuOpen) {
       this.setState({ submenuOpen: false }, () => {
-        // I this is the first MenuItem and it is vertical
+        // this is the first MenuItem and it is vertical
         if (!parentRef && this.props.vertical) {
           focusAsync(this.itemRef.current)
         }
@@ -337,7 +337,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { submenuOpen } = this.state
     if (menu && !submenuOpen) {
       this.setState({ submenuOpen: true })
-      _.invoke(this.props, 'setActiveIndex', this.props.index) // or call onClick from the client... => Menu.onClick will change the active index
+      _.invoke(this.props, 'setActiveIndex', this.props.index)
       e.stopPropagation()
       e.preventDefault()
     }
