@@ -283,7 +283,14 @@ export default class Dropdown extends AutoControlledComponent<
   ): JSX.Element {
     const { placeholder, itemToString, multiple } = this.props
     const { value } = this.state
-    const content = multiple ? placeholder : value ? itemToString(value) : placeholder
+    let content
+
+    if (multiple) {
+      content = placeholder
+    } else {
+      content = value ? itemToString(value) : placeholder
+    }
+
     return (
       <Ref innerRef={this.buttonRef}>
         <Button
