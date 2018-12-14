@@ -161,7 +161,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   private outsideClickSubscription = EventStack.noSubscription
 
-  private submenuDomElement = null
+  private submenuRef = React.createRef<HTMLElement>()
   private itemRef = React.createRef<HTMLElement>()
 
   public componentDidMount() {
@@ -203,11 +203,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     )
     const maybeSubmenu =
       menu && active && submenuOpen ? (
-        <Ref
-          innerRef={domElement => {
-            this.submenuDomElement = domElement
-          }}
-        >
+        <Ref innerRef={this.submenuRef}>
           {Menu.create(menu, {
             defaultProps: {
               accessibility: submenuBehavior,
@@ -270,7 +266,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     if (
       this.itemRef &&
       (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
-      (!this.submenuDomElement || !this.submenuDomElement.contains(e.target))
+      (!this.submenuRef.current || !this.submenuRef.current.contains(e.target))
     ) {
       this.state.submenuOpen && this.trySetState({ submenuOpen: false })
     }
@@ -279,7 +275,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   private performClick = e => {
     const { active, menu } = this.props
     if (menu) {
-      if (this.submenuDomElement && this.submenuDomElement.contains(e.target)) {
+      if (this.submenuRef.current && this.submenuRef.current.contains(e.target)) {
         // submenu was clicked => close it and propagate
         this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
       } else {

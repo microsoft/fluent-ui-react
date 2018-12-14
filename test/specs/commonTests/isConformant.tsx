@@ -54,13 +54,17 @@ export default (Component, options: Conformant = {}) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
 
-    // TODO: Describe magic numbers
+    /**
+     * The wrapper is mounted with Provider, so in total there are three HOC components
+     * that we want to get rid of: ThemeProvider, the actual Component and FelaTheme,
+     * in order to be able to get to the actual rendered result of the component we are testing
+     */
     _.times(nestingLevel + 3, () => {
       component = component.childAt(0)
     })
 
     if (component.type() === FocusZone) {
-      // `component` is <FocusZone>
+      // another HOC component is added: FocuZone
       component = component.childAt(0) // skip through <FocusZone>
       if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
@@ -68,6 +72,11 @@ export default (Component, options: Conformant = {}) => {
     }
 
     if (usesWrapperSlot) {
+      /**
+       * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
+       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
+       * rendered result of the component we are testing
+       */
       _.times(3, () => {
         component = component.childAt(0)
       })
@@ -216,8 +225,7 @@ export default (Component, options: Conformant = {}) => {
 
         const wrapper = mount(<Component {...requiredProps} as={MyComponent} />)
         const component = getComponent(wrapper)
-        // console.log(wrapper.debug())
-        //         console.log(component.type())
+
         try {
           expect(component.type()).toEqual(MyComponent)
         } catch (err) {
