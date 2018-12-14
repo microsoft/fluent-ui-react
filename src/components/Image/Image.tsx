@@ -22,6 +22,9 @@ export interface ImageProps extends UIComponentProps {
 
   /** An image can take up the width of its container. */
   fluid?: boolean
+
+  /** Image source URL. */
+  src?: string
 }
 
 /**
