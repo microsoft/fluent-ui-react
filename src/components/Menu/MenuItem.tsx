@@ -232,10 +232,17 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
         overrideProps: () => ({
           children: [menuItemInner, maybeSubmenuWithRef],
           onClick: this.handleClick,
+          onBlur: this.handleWrapperBlur,
         }),
       })
     }
     return menuItemInner
+  }
+
+  private handleWrapperBlur = e => {
+    if (!this.props.parentRef && !e.currentTarget.contains(e.relatedTarget)) {
+      this.setState({ submenuOpen: false })
+    }
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
