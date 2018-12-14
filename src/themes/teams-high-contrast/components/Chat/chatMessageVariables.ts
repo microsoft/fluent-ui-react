@@ -3,11 +3,10 @@ import { Partial } from 'types/utils'
 
 export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {
-    messageColor: siteVars.black,
-    messageColorMine: siteVars.black,
-    avatar: {
-      statusBorderColor: siteVars.black,
-    },
-    messageBody: { focusOutlineColor: siteVars.brand },
+    backgroundColor: siteVars.black,
+    backgroundColorMine: siteVars.black,
+    color: siteVars.white,
+    contentFocusOutlineColor: siteVars.yellow,
+    border: `1px solid ${siteVars.white}`,
   }
 }
