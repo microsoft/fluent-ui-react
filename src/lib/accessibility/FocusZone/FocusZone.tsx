@@ -840,6 +840,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   private updateTabIndexes(onElement?: HTMLElement) {
     let element = onElement
+    // same what is done in componentDidMount, but here we can be sure that items already rendered
+    if (!this._activeElement && this.props.defaultTabbableElement) {
+      const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
+      this._activeElement = initialActiveElement
+    }
+
     if (!element && this._root.current) {
       this._defaultFocusElement = null
       element = this._root.current

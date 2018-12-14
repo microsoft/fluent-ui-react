@@ -35,9 +35,14 @@ const ChatBehavior: Accessibility = (props: any) => ({
 })
 
 const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
-  const chatItemsElements = root.querySelectorAll(
-    `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [${IS_FOCUSABLE_ATTRIBUTE}]`,
+  let chatItemsElements = root.querySelectorAll(
+    `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [data-last-visible="true"]`,
   )
+  if (chatItemsElements.length === 0) {
+    chatItemsElements = root.querySelectorAll(
+      `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [${IS_FOCUSABLE_ATTRIBUTE}]`,
+    )
+  }
   return chatItemsElements.length > 0
     ? (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)
     : null
