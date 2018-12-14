@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Chat, Menu, Popup } from '@stardust-ui/react'
+import { Chat, Menu, Popup, Avatar } from '@stardust-ui/react'
 
 /**
  * This example shows how to create custom Chat Messages.
@@ -29,30 +29,6 @@ class CustomChatMessage extends React.Component {
 
   togglePopup = () => this.setState({ open: !this.state.open })
 
-  renderAvatar = (Avatar, props) => (
-    <AsyncData
-      data="public/images/avatar/small/ade.jpg"
-      render={data => (
-        <Avatar
-          {...props}
-          image={data}
-          renderStatus={(Status, props) => (
-            <AsyncData
-              data="available"
-              render={data => (
-                <Status
-                  {...props}
-                  color={data === 'available' ? 'green' : undefined}
-                  icon={data === 'available' ? 'check' : undefined}
-                />
-              )}
-            />
-          )}
-        />
-      )}
-    />
-  )
-
   renderMenuItem = (MenuItem, props) => {
     if (props.icon !== 'thumbs up') {
       return <MenuItem {...props} />
@@ -63,7 +39,6 @@ class CustomChatMessage extends React.Component {
         key={props.key}
         position="below"
         open={this.state.open}
-        // <Popup.Content content="" />
         content={{
           content: (
             <AsyncData
@@ -108,7 +83,6 @@ class CustomChatMessage extends React.Component {
         }}
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
-        renderAvatar={this.renderAvatar}
         content={
           <div>
             Hover me to see the actions and async like count.
@@ -130,12 +104,35 @@ class CustomChatMessage extends React.Component {
     )
   }
 }
+
+const gutterContent = (
+  <AsyncData
+    data="public/images/avatar/small/ade.jpg"
+    render={data => (
+      <Avatar
+        image={data}
+        status={renderStatus => (
+          <AsyncData
+            data="available"
+            render={statusData =>
+              renderStatus({
+                color: statusData === 'available' ? 'green' : undefined,
+                icon: statusData === 'available' ? 'check' : undefined,
+              })
+            }
+          />
+        )}
+      />
+    )}
+  />
+)
+
 const AsyncShorthand = () => (
   <Chat
     items={[
-      { key: 'a', content: <CustomChatMessage /> },
-      { key: 'b', content: <CustomChatMessage /> },
-      { key: 'c', content: <CustomChatMessage /> },
+      { key: 'a', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
+      { key: 'b', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
+      { key: 'c', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
     ]}
   />
 )
