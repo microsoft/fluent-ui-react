@@ -203,8 +203,13 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
       </Ref>
     )
     const maybeSubmenu =
-      menu && active && submenuOpen
-        ? Menu.create(menu, {
+      menu && active && submenuOpen ? (
+        <Ref
+          innerRef={domElement => {
+            this.submenuDomElement = domElement
+          }}
+        >
+          {Menu.create(menu, {
             defaultProps: {
               accessibility: submenuBehavior,
               vertical: true,
@@ -213,18 +218,9 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               styles: styles.menu,
               inSubmenu: true,
             },
-          })
-        : null
-
-    const maybeSubmenuWithRef = maybeSubmenu ? (
-      <Ref
-        innerRef={domElement => {
-          this.submenuDomElement = domElement
-        }}
-      >
-        {maybeSubmenu}
-      </Ref>
-    ) : null
+          })}
+        </Ref>
+      ) : null
 
     if (wrapper) {
       return Slot.create(wrapper, {
@@ -237,7 +233,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
           children: (
             <>
               {menuItemInner}
-              {maybeSubmenuWithRef}
+              {maybeSubmenu}
             </>
           ),
           onClick: this.handleClick,
