@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
@@ -100,8 +101,11 @@ export interface MenuItemProps
   /** Default submenu open */
   defaultSubmenuOpen?: boolean
 
-  setActiveIndex?: (idx: string | number) => void
-  parentRef?: React.RefObject<HTMLElement>
+  /** Callback for setting the current menu item as active element in the menu. */
+  setActiveIndex?: (idx: number) => void
+
+  /** Indicates whether the menu item is part of submenu. */
+  inSubmenu?: boolean
 }
 
 export interface MenuItemState {
@@ -139,7 +143,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     submenuOpen: PropTypes.bool,
     defaultSubmenuOpen: PropTypes.bool,
     setActiveIndex: PropTypes.func,
-    parentRef: PropTypes.any,
+    inSubmenu: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -173,7 +177,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, rest, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active, key } = this.props
+    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { submenuOpen } = this.state
 
@@ -206,7 +210,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               primary,
               secondary,
               styles: styles.menu,
-              parentRef: this.itemRef,
+              inSubmenu: true,
             },
           })
         : null
@@ -224,13 +228,17 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     if (wrapper) {
       return Slot.create(wrapper, {
         defaultProps: {
-          key,
           className: cx('ui-menu__item__wrapper', classes.wrapper),
           ...accessibility.attributes.root,
           ...accessibility.keyHandlers.root,
         },
         overrideProps: () => ({
-          children: [menuItemInner, maybeSubmenuWithRef],
+          children: (
+            <>
+              {menuItemInner}
+              {maybeSubmenuWithRef}
+            </>
+          ),
           onClick: this.handleClick,
           onBlur: this.handleWrapperBlur,
         }),
@@ -240,7 +248,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private handleWrapperBlur = e => {
-    if (!this.props.parentRef && !e.currentTarget.contains(e.relatedTarget)) {
+    if (!this.props.inSubmenu && !e.currentTarget.contains(e.relatedTarget)) {
       this.setState({ submenuOpen: false })
     }
   }
@@ -304,22 +312,20 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private closeMenu = e => {
-    const { menu, parentRef } = this.props
+    const { menu, inSubmenu } = this.props
     const { submenuOpen } = this.state
     if (menu && submenuOpen) {
-      this.setState({ submenuOpen: false }, () => {
-        // this is the first MenuItem and it is vertical
-        if (!parentRef && this.props.vertical) {
-          focusAsync(this.itemRef.current)
-        }
-      })
+      this.setState({ submenuOpen: false })
+      if (!inSubmenu && (keyboardKey.getCode(e) === keyboardKey.Escape || this.props.vertical)) {
+        focusAsync(this.itemRef.current)
+      }
     }
   }
 
   private closeSubmenu = e => {
-    const { menu, parentRef } = this.props
+    const { menu, inSubmenu } = this.props
     const { submenuOpen } = this.state
-    const shouldStopPropagation = parentRef || this.props.vertical
+    const shouldStopPropagation = inSubmenu || this.props.vertical
     if (menu && submenuOpen) {
       this.setState({ submenuOpen: false }, () => {
         if (shouldStopPropagation) {

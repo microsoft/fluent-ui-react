@@ -62,7 +62,8 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /** A vertical menu displays elements vertically. */
   vertical?: boolean
 
-  parentRef?: React.RefObject<HTMLElement>
+  /** Indicates whether the element is part of submenu. */
+  inSubmenu?: boolean
 }
 
 /**
@@ -91,7 +92,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
-    parentRef: PropTypes.any,
+    inSubmenu: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -130,7 +131,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
       secondary,
       underlined,
       vertical,
-      parentRef,
+      inSubmenu,
     } = this.props
     const { activeIndex } = this.state
 
@@ -151,7 +152,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           ...(active && {
             styles: { position: 'relative' },
           }),
-          parentRef,
+          inSubmenu,
         },
         overrideProps: this.handleItemOverrides,
       })
