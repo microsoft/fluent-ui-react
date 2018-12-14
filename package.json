@@ -70,7 +70,8 @@
     "prop-types": "^15.6.1",
     "react-fela": "^7.2.0",
     "react-is": "^16.6.3",
-    "react-popper": "^1.0.2"
+    "react-popper": "^1.0.2",
+    "uniqid": "^5.0.3"
   },
   "devDependencies": {
     "@babel/standalone": "^7.1.0",
