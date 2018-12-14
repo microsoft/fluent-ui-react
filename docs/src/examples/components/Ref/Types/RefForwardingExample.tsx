@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Ref, Segment } from '@stardust-ui/react'
 
-const ExampleButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
+const ExampleButton = React.forwardRef<HTMLButtonElement, { children: string }>((props, ref) => (
   <div>
     <button {...props} ref={ref} />
   </div>
