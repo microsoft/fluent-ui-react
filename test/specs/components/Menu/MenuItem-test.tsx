@@ -7,6 +7,10 @@ import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessib
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {
+    eventTargets: {
+      onClick: '.ui-menu__item__wrapper',
+    },
+    nestingLevel: 2,
     usesWrapperSlot: true,
   })
 
@@ -16,7 +20,13 @@ describe('MenuItem', () => {
       .hostNodes()
 
     expect(menuItem.is('li')).toBe(true)
-    expect(menuItem.childAt(0).is('a')).toBe(true)
+    expect(
+      menuItem
+        .childAt(0)
+        .childAt(0)
+        .childAt(0)
+        .is('a'),
+    ).toBe(true)
     expect(menuItem.text()).toBe('Home')
   })
 

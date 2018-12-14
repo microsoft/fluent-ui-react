@@ -3,7 +3,6 @@ import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
-import * as uniqid from 'uniqid'
 
 import {
   AutoControlledComponent,
@@ -150,7 +149,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   static defaultProps = {
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
-    wrapper: { as: 'li', key: uniqid() },
+    wrapper: { as: 'li' },
   }
 
   static autoControlledProps = ['submenuOpen']

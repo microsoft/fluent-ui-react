@@ -19,6 +19,7 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusU
 
 export interface Conformant {
   eventTargets?: object
+  nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
@@ -39,6 +40,7 @@ export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
+    nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
     usesWrapperSlot = false,
@@ -51,9 +53,12 @@ export default (Component, options: Conformant = {}) => {
   const getComponent = (wrapper: ReactWrapper) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
-      .childAt(0)
-      .childAt(0)
-      .childAt(0)
+
+    // TODO: Describe magic numbers
+    _.times(nestingLevel + 3, () => {
+      component = component.childAt(0)
+    })
+
     if (component.type() === FocusZone) {
       // `component` is <FocusZone>
       component = component.childAt(0) // skip through <FocusZone>
@@ -63,10 +68,9 @@ export default (Component, options: Conformant = {}) => {
     }
 
     if (usesWrapperSlot) {
-      component = component
-        .childAt(0)
-        .childAt(0)
-        .childAt(0)
+      _.times(3, () => {
+        component = component.childAt(0)
+      })
     }
 
     return component
@@ -212,7 +216,8 @@ export default (Component, options: Conformant = {}) => {
 
         const wrapper = mount(<Component {...requiredProps} as={MyComponent} />)
         const component = getComponent(wrapper)
-
+        // console.log(wrapper.debug())
+        //         console.log(component.type())
         try {
           expect(component.type()).toEqual(MyComponent)
         } catch (err) {
