@@ -1,6 +1,7 @@
 import { Attachment, Popup, Button, Menu, popupFocusTrapBehavior } from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
 import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
 import { DividerProps } from 'src/components/Divider/Divider'
 import { StatusProps } from 'src/components/Status/Status'
@@ -74,7 +75,7 @@ function createMessageContent(message: MessageData): ShorthandValue {
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
   const menuClickHandler = content => e => {
     alert(`${content} clicked`)
-    e.stopPropagation()
+    stopEnterSpacePropagation(e)
   }
 
   const contextMenu = (
@@ -104,6 +105,13 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     />
   )
 
+  const stopEnterSpacePropagation = (e: Event) => {
+    const code = keyboardKey.getCode(e)
+    if (code === keyboardKey.Enter || code === keyboardKey.Spacbar) {
+      e.stopPropagation()
+    }
+  }
+
   const actionPopup = (
     <Popup
       accessibility={popupFocusTrapBehavior}
@@ -114,7 +122,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
           circular
           icon="ellipsis horizontal"
           onClick={e => e.stopPropagation()}
-          onKeyDown={e => e.stopPropagation()}
+          onKeyDown={stopEnterSpacePropagation}
         />
       }
       content={{ content: contextMenu }}
