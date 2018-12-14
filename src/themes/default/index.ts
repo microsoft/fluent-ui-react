@@ -1,6 +1,8 @@
-import { ThemeInput } from '../types'
 import * as siteVariables from './siteVariables'
 
-export default {
+import mergeThemes from '../../lib/mergeThemes'
+import base from '../base'
+
+export default mergeThemes(base, {
   siteVariables,
-} as ThemeInput
+})

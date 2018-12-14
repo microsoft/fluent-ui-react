@@ -1,17 +1,45 @@
-import { TextVariables } from '../../../base/components/Text/textVariables'
+import { Partial } from 'types/utils'
 
-export default (siteVariables): TextVariables => {
+export interface TextVariables {
+  atMentionMeColor: string
+  atMentionMeFontWeight: number
+  atMentionOtherColor: string
+  disabledColor: string
+  errorColor: string
+  importantColor: string
+  importantWeight: number
+  successColor: string
+  timestampColor: string
+  timestampHoverColor: string
+
+  fontSizeExtraSmall: string
+  fontLineHeightExtraSmall: number
+  fontSizeSmall: string
+  fontLineHeightSmall: number
+  fontSizeMedium: string
+  fontLineHeightMedium: number
+  fontSizeLarge: string
+  fontLineHeightLarge: number
+  fontSizeExtraLarge: string
+  fontLineHeightExtraLarge: number
+
+  fontWeightLight: number
+  fontWeightSemilight: number
+  fontWeightRegular: number
+  fontWeightSemibold: number
+  fontWeightBold: number
+}
+
+export default (siteVariables): Partial<TextVariables> => {
   return {
-    atMentionOtherColor: siteVariables.brand06,
-    atMentionMeColor: siteVariables.orange04,
+    atMentionOtherColor: siteVariables.blue,
+    atMentionMeColor: siteVariables.red,
     atMentionMeFontWeight: siteVariables.fontWeightBold,
-    disabledColor: siteVariables.gray06,
+    disabledColor: siteVariables.grey,
     errorColor: siteVariables.red,
     importantWeight: siteVariables.fontWeightBold,
     importantColor: siteVariables.red,
-    successColor: siteVariables.green04,
-    timestampColor: siteVariables.gray04,
-    timestampHoverColor: siteVariables.gray02,
+    successColor: siteVariables.green,
 
     fontSizeExtraSmall: siteVariables.fontSizes.smaller,
     fontLineHeightExtraSmall: siteVariables.lineHeightExtraSmall,

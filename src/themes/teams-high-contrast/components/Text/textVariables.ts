@@ -1,4 +1,4 @@
-import { TextVariables } from '../../../teams/components/Text/textVariables'
+import { TextVariables } from '../../../base/components/Text/textVariables'
 import { Partial } from 'types/utils'
 
 export default (siteVariables): Partial<TextVariables> => ({
