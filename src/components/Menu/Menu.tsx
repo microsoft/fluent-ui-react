@@ -104,13 +104,9 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
   static Item = MenuItem
 
-  state = {
-    activeIndex: '',
-  }
-
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
-      const { index } = predefinedProps
+      const { index } = itemProps
 
       this.trySetState({ activeIndex: index })
 
@@ -149,9 +145,6 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           vertical,
           index,
           active,
-          ...(active && {
-            styles: { position: 'relative' },
-          }),
           inSubmenu: submenu,
         },
         overrideProps: this.handleItemOverrides,
