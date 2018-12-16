@@ -24,12 +24,11 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          ...solidBorder(variables.defaultBorderColor),
+          ...solidBorder(variables.borderColor),
           ...(primary && {
             ...solidBorder(variables.primaryBorderColor),
           }),
           borderRadius: pxToRem(4),
-          // overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,

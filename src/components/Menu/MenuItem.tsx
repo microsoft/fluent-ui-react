@@ -102,7 +102,7 @@ export interface MenuItemProps
   defaultSubmenuOpen?: boolean
 
   /** Callback for setting the current menu item as active element in the menu. */
-  setActiveIndex?: (idx: number) => void
+  setActiveIndex?: (idx: number | string) => void
 
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean

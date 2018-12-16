@@ -1,12 +1,12 @@
 import { pxToRem } from '../../utils'
 
 export interface MenuVariables {
-  defaultColor: string
-  defaultBackgroundColor: string
+  color: string
+  backgroundColor: string
 
-  defaultActiveColor: string
-  defaultActiveBackgroundColor: string
-  defaultBorderColor: string
+  activeColor: string
+  activeBackgroundColor: string
+  borderColor: string
 
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
@@ -25,12 +25,12 @@ export interface MenuVariables {
 
 export default (siteVars: any): MenuVariables => {
   return {
-    defaultColor: siteVars.gray02,
-    defaultBackgroundColor: '#FFF',
+    color: siteVars.gray02,
+    backgroundColor: siteVars.white,
 
-    defaultActiveColor: siteVars.black,
-    defaultActiveBackgroundColor: siteVars.gray10,
-    defaultBorderColor: siteVars.gray08,
+    activeColor: siteVars.black,
+    activeBackgroundColor: siteVars.gray10,
+    borderColor: siteVars.gray08,
 
     primaryActiveColor: siteVars.white,
     primaryActiveBackgroundColor: siteVars.brand08,

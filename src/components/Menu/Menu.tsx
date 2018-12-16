@@ -66,10 +66,14 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   submenu?: boolean
 }
 
+export interface MenuState {
+  activeIndex?: number | string
+}
+
 /**
  * A menu displays grouped navigation actions.
  */
-class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
+class Menu extends AutoControlledComponent<Extendable<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -132,7 +136,8 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     const { activeIndex } = this.state
 
     return _.map(items, (item, index) => {
-      const active = parseInt(activeIndex, 10) === index
+      const active =
+        typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex === index
       return MenuItem.create(item, {
         defaultProps: {
           iconOnly,

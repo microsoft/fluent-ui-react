@@ -23,7 +23,7 @@ const getActionStyles = ({
   (underlined && !isFromKeyboard) || iconOnly
     ? {
         color,
-        background: v.defaultBackgroundColor,
+        background: v.backgroundColor,
       }
     : primary
     ? {
@@ -32,7 +32,7 @@ const getActionStyles = ({
       }
     : {
         color,
-        background: v.defaultActiveBackgroundColor,
+        background: v.activeBackgroundColor,
       }
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
@@ -52,7 +52,7 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         top: 0,
         right: 0,
         ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
-        ...(primary ? { background: v.primaryBorderColor } : { background: v.defaultBorderColor }),
+        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
 
       ...(vertical && {
@@ -81,8 +81,8 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
     backgroundColor = v.primaryActiveBackgroundColor
     borderColor = v.primaryBorderColor
   } else {
-    backgroundColor = v.defaultActiveBackgroundColor
-    borderColor = v.defaultBorderColor
+    backgroundColor = v.activeBackgroundColor
+    borderColor = v.borderColor
   }
 
   if (pointing === 'start') {
@@ -133,8 +133,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     } = props
 
     return {
-      color: v.defaultColor,
-      background: v.defaultBackgroundColor,
+      color: v.color,
+      background: v.backgroundColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
@@ -180,7 +180,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active && {
-        ...getActionStyles({ props, variables: v, color: v.defaultColor }),
+        ...getActionStyles({ props, variables: v, color: v.color }),
 
         ...(pointing &&
           (vertical
@@ -191,10 +191,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // focus styles
-      ...(isFromKeyboard && getActionStyles({ props, variables: v, color: v.defaultActiveColor })),
+      ...(isFromKeyboard && getActionStyles({ props, variables: v, color: v.activeColor })),
 
       // hover styles
-      ':hover': getActionStyles({ props, variables: v, color: v.defaultActiveColor }),
+      ':hover': getActionStyles({ props, variables: v, color: v.activeColor }),
     }
   },
 
@@ -234,7 +234,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : underlined && {
               fontWeight: 700,
-              ...underlinedItem(v.defaultActiveColor),
+              ...underlinedItem(v.activeColor),
             })),
 
       // focus styles
@@ -253,13 +253,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : {
               ...(iconOnly && {
-                border: `1px solid ${v.defaultActiveColor}`,
+                border: `1px solid ${v.activeColor}`,
                 borderRadius: v.circularRadius,
               }),
 
               ...(underlined && { fontWeight: 700 }),
 
-              ...(underlined && active && underlinedItem(v.defaultActiveColor)),
+              ...(underlined && active && underlinedItem(v.activeColor)),
             }),
       }),
 
@@ -276,7 +276,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(iconOnly && { color: v.primaryActiveBorderColor }),
               ...(!active && underlined && underlinedItem(v.primaryHoverBorderColor as string)),
             }
-          : !active && underlined && underlinedItem(v.defaultActiveBackgroundColor)),
+          : !active && underlined && underlinedItem(v.activeBackgroundColor)),
       },
 
       '::after': {
