@@ -211,7 +211,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
               primary,
               secondary,
               styles: styles.menu,
-              inSubmenu: true,
+              submenu: true,
             },
           })}
         </Ref>
