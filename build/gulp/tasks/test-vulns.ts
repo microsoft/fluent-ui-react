@@ -22,7 +22,8 @@ const ensureDirExists = path => {
 
 const getTodayScanFilePath = () => {
   const now = new Date()
-  const fileName = `snyk-${now.getUTCFullYear()}-${now.getUTCMonth() + 1}-${now.getUTCDate()}`
+  const fileName = `snyk-scanned-${now.getUTCFullYear()}-${now.getUTCMonth() +
+    1}-${now.getUTCDate()}`
 
   return path.resolve(SCAN_RESULTS_DIR, fileName)
 }
