@@ -154,11 +154,6 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   static autoControlledProps = ['submenuOpen']
 
-  state = {
-    isFromKeyboard: false,
-    submenuOpen: false,
-  }
-
   private outsideClickSubscription = EventStack.noSubscription
 
   private submenuRef = React.createRef<HTMLElement>()
