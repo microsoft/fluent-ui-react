@@ -244,6 +244,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     performClick: event => this.handleClick(event),
     openSubmenu: event => this.openSubmenu(event),
     closeMenu: event => this.closeMenu(event),
+    closeMenuAndFocusNextParentItem: event => this.closeMenuAndFocusNextParentItem(event),
     closeSubmenu: event => this.closeSubmenu(event),
   }
 
@@ -303,7 +304,18 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     const { submenuOpen } = this.state
     if (menu && submenuOpen) {
       this.setState({ submenuOpen: false })
-      if (!inSubmenu && (keyboardKey.getCode(e) === keyboardKey.Escape || this.props.vertical)) {
+      if (!inSubmenu) {
+        focusAsync(this.itemRef.current)
+      }
+    }
+  }
+
+  private closeMenuAndFocusNextParentItem = e => {
+    const { menu, inSubmenu } = this.props
+    const { submenuOpen } = this.state
+    if (menu && submenuOpen) {
+      this.setState({ submenuOpen: false })
+      if (!inSubmenu && this.props.vertical) {
         focusAsync(this.itemRef.current)
       }
     }
