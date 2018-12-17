@@ -37,18 +37,6 @@ jobs:
             - ~/.cache/yarn
             - .yarn-cache
             - node_modules
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Prettier
-          command: yarn prettier
-      - run:
-          name: Unit Tests
-          command: yarn test --strict --maxWorkers=4
-      - run:
-          name: Report coverage
-          command: bash <(curl -s https://codecov.io/bash)
 
       - restore_cache:
           key: v1-vuln-scans-{{ checksum "yarn.lock" }}
