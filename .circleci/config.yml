@@ -21,22 +21,6 @@ jobs:
             echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
       - checkout
       # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
-      - run:
-          name: Add npm bin to PATH
-          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
-      - run:
-          name: Install Dependencies
-          command: yarn
-      - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - .yarn-cache
-            - node_modules
 
       - restore_cache:
           key: v1-vuln-scans-{{ checksum "yarn.lock" }}
