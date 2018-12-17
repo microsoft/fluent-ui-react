@@ -45,6 +45,7 @@ const getTodayScanFilePath = () => {
 
 const recentlyChecked = () => {
   const recentCheckFilePath = getTodayScanFilePath()
+  console.warn('recent check file path is', recentCheckFilePath)
   return fs.existsSync(recentCheckFilePath)
 }
 
