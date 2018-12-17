@@ -51,14 +51,14 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
 
       - restore_cache:
-          key: v1-vuln-tests
+          key: v1-vuln-scans
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
       - save_cache:
-          key: v1-vuln-tests
+          key: v1-vuln-scans
           paths:
-            - .vuln-tests
+            - .vuln-scans
 
       - run:
           name: Visual Tests
