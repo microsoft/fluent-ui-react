@@ -18,7 +18,7 @@ import {
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
-import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
@@ -257,12 +257,12 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const { align, position, offset } = this.props
     const { target } = this.state
 
-    const placement = computePopupPlacement({ align, position, rtl })
+    const placement = getPopupPlacement({ align, position, rtl })
 
     const popperModifiers = {
       // https://popper.js.org/popper-documentation.html#modifiers..offset
       ...(offset && {
-        offset: { offset: this.applyRtlToOffset(offset, rtl, position) },
+        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
         keepTogether: { enabled: false },
       }),
     }
@@ -333,25 +333,5 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     if (this.trySetState({ open: newValue }) || forceChangeEvent) {
       _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
     }
-  }
-
-  private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {
-    if (rtl && (position === 'above' || position === 'below')) {
-      const [horizontal, vertical] = offset.split(',')
-      return [this.flipPlusMinusSigns(horizontal), vertical].join(', ')
-    }
-
-    return offset
-  }
-
-  private flipPlusMinusSigns(offset: string): string {
-    return offset
-      .replace(/\-/g, '<plus>')
-      .replace(/^(\s*)(?=\d)/, '<minus>')
-      .replace(/\+/g, '<minus>')
-      .replace(/<plus>/g, '+')
-      .replace(/<minus>/g, '-')
-      .trimLeft()
-      .replace(/^\+/, '')
   }
 }
