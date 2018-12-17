@@ -59,6 +59,14 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     this.state.popupOpened && this.setState({ popupOpened: false })
   }
 
+  handleEmojiClick = (e, props) => {
+    if (props && props.index) {
+      this.setState({
+        selectedEmojiIndex: this.state.selectedEmojiIndex === props.index ? -1 : props.index,
+      })
+    }
+  }
+
   popoverStyles = ({ theme: { siteVariables } }) => ({
     transition: 'opacity 0.2s',
     position: 'absolute',
@@ -71,6 +79,15 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
 
     '& .smile-emoji': {
       display: 'none',
+    },
+    '& [aria-pressed="true"]': {
+      color: 'red',
+    },
+    '& [aria-pressed="true"]:focus': {
+      color: 'red',
+    },
+    '& [aria-pressed="true"]:hover': {
+      color: 'red',
     },
 
     '&.focused .smile-emoji': {
@@ -90,16 +107,63 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}
         items={[
           {
-            key: 'group',
+            key: 'smile',
+            icon: 'smile',
+            className: cx('smile-emoji'),
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile one',
+            'aria-pressed': this.state.selectedEmojiIndex === 0,
+            onClick: this.handleEmojiClick,
+            'aria-posinset': '1',
+            'aria-setsize': '5',
+          },
+          {
+            key: 'smile2',
+            icon: 'smile',
+            className: cx('smile-emoji'),
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile two',
+            'aria-pressed': this.state.selectedEmojiIndex === 1,
+            onClick: this.handleEmojiClick,
+            'aria-posinset': '2',
+            'aria-setsize': '5',
+          },
+          {
+            key: 'smile3',
+            icon: 'smile',
+            className: cx('smile-emoji'),
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'smile three',
+            'aria-pressed': this.state.selectedEmojiIndex === 2,
+            onClick: this.handleEmojiClick,
+            'aria-posinset': '3',
+            'aria-setsize': '5',
+          },
+          {
+            key: 'a',
+            icon: 'thumbs up',
+            accessibility: toolbarButtonBehavior,
+            'aria-label': 'thumbs up',
+            'aria-pressed': this.state.selectedEmojiIndex === 3,
+            onClick: this.handleEmojiClick,
+            'aria-posinset': '4',
+            'aria-setsize': '5',
           },
           {
             key: 'separator',
+            as: 'div',
+            accessibility: toolbarButtonBehavior,
+            content: '|',
+            role: 'separator',
           },
           {
             key: 'context-menu',
             icon: 'ellipsis horizontal',
-            accessibility: toolbarButtonBehavior,
+            role: 'menubutton',
+            'aria-haspopup': true,
             'aria-label': 'more options',
+            'aria-posinset': '5',
+            'aria-setsize': '5',
           },
         ].map(itemShorthandValue => render =>
           render(itemShorthandValue, this.renderItemOrContextMenu),
@@ -114,78 +178,8 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   renderItemOrContextMenu = (MenuItem, props) => {
-    if (props.key === 'group') {
-      const handleEmojiClick = (e, props) => {
-        if (props && props.index) {
-          this.setState({
-            selectedEmojiIndex: this.state.selectedEmojiIndex === props.index ? -1 : props.index,
-          })
-        }
-      }
-
-      return (
-        <MenuItem>
-          <Menu
-            styles={{
-              '& .selected': {
-                color: 'red',
-              },
-              '& .selected:focus': {
-                color: 'red',
-              },
-            }}
-            role="group"
-            iconOnly
-            accessibility={defaultBehavior}
-            items={[
-              {
-                key: 'smile',
-                icon: 'smile',
-                className: cx('smile-emoji', this.state.selectedEmojiIndex === 0 ? 'selected' : ''),
-                accessibility: toolbarButtonBehavior,
-                'aria-label': 'smile one',
-                role: 'menuitemradio',
-                'aria-checked': this.state.selectedEmojiIndex === 0,
-                onClick: handleEmojiClick,
-              },
-              {
-                key: 'smile2',
-                icon: 'smile',
-                className: cx('smile-emoji', this.state.selectedEmojiIndex === 1 ? 'selected' : ''),
-                accessibility: toolbarButtonBehavior,
-                'aria-label': 'smile two',
-                role: 'menuitemradio',
-                'aria-checked': this.state.selectedEmojiIndex === 1,
-                onClick: handleEmojiClick,
-              },
-              {
-                key: 'smile3',
-                icon: 'smile',
-                className: cx('smile-emoji', this.state.selectedEmojiIndex === 2 ? 'selected' : ''),
-                accessibility: toolbarButtonBehavior,
-                'aria-label': 'smile three',
-                role: 'menuitemradio',
-                'aria-checked': this.state.selectedEmojiIndex === 2,
-                onClick: handleEmojiClick,
-              },
-              {
-                key: 'a',
-                icon: 'thumbs up',
-                className: cx(this.state.selectedEmojiIndex === 3 ? 'selected' : ''),
-                accessibility: toolbarButtonBehavior,
-                'aria-label': 'thumbs up',
-                role: 'menuitemradio',
-                'aria-checked': this.state.selectedEmojiIndex === 3,
-                onClick: handleEmojiClick,
-              },
-            ]}
-          />
-        </MenuItem>
-      )
-    }
-
-    if (props.key === 'separator') {
-      return <MenuItem role="separator" content={'|'} accessibility={defaultBehavior} as={'div'} />
+    if (props.key !== 'context-menu') {
+      return <MenuItem {...props} />
     }
 
     return (
@@ -221,8 +215,16 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
                   onClick: () =>
                     this.setState({ isMessageBookmarked: !this.state.isMessageBookmarked }),
                   role: 'menuitemcheckbox',
+                  'aria-posinset': '1',
+                  'aria-setsize': '3',
                 },
-                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                {
+                  key: 'linkify',
+                  icon: 'linkify',
+                  content: 'Copy link',
+                  'aria-posinset': '2',
+                  'aria-setsize': '3',
+                },
                 {
                   key: 'translate',
                   icon: 'translate',
@@ -232,6 +234,8 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
                   onClick: () =>
                     this.setState({ isMessageTranslated: !this.state.isMessageTranslated }),
                   role: 'menuitemcheckbox',
+                  'aria-posinset': '3',
+                  'aria-setsize': '3',
                 },
               ]}
             />
