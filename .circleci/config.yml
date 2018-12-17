@@ -55,10 +55,6 @@ jobs:
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
-      - save_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
-          paths:
-            - .vuln-scans
 
       - run:
           name: Visual Tests
