@@ -1,26 +1,26 @@
 import * as fs from 'fs'
 import { task } from 'gulp'
 import * as path from 'path'
-import sh from '../sh'
-
 import * as crypto from 'crypto'
-
 import debug from 'debug'
 
+const memoize = require('fast-memoize')
+
 import config from '../../../config'
+import sh from '../sh'
 
 const { paths } = config
 
-const SCAN_RESULTS_DIR = paths.base('.vuln-scans')
+const SCAN_RESULTS_DIR_PREFIX = '.vuln-scans'
 
 const log = message => debug.log(message)
 log.success = message => debug.log(`✔ ${message}`)
 
 const computeHash = filePath => {
-  const md5 = crypto.createHash('md5')
-  md5.update(fs.readFileSync(paths.base('yarn.lock')))
+  const sha256 = crypto.createHash('sha256')
+  sha256.update(fs.readFileSync(filePath))
 
-  return md5.digest('hex')
+  return sha256.digest('base64')
 }
 
 const ensureDirExists = path => {
@@ -29,14 +29,18 @@ const ensureDirExists = path => {
   }
 }
 
-const getTodayScanFilePath = () => {
+const getScanResultsDirPath = memoize(() => {
   const yarnLockHash = computeHash(paths.base('yarn.lock'))
+  return paths.base(`${SCAN_RESULTS_DIR_PREFIX}-${yarnLockHash}`)
+})
+
+const getTodayScanFilePath = () => {
   const now = new Date()
 
   const fileName = `snyk-scanned-${now.getUTCFullYear()}-${now.getUTCMonth() +
-    1}-${now.getUTCDate()}-${yarnLockHash.slice(0, 8)}`
+    1}-${now.getUTCDate()}`
 
-  return path.resolve(SCAN_RESULTS_DIR, fileName)
+  return path.resolve(getScanResultsDirPath(), fileName)
 }
 
 const recentlyChecked = () => {
@@ -45,7 +49,7 @@ const recentlyChecked = () => {
 }
 
 const registerRecentSucessfulScan = async () => {
-  ensureDirExists(SCAN_RESULTS_DIR)
+  ensureDirExists(getScanResultsDirPath())
 
   const recentScanFilePath = getTodayScanFilePath()
   await sh(`touch ${recentScanFilePath}`)

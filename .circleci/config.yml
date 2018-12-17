@@ -51,12 +51,12 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash)
 
       - restore_cache:
-          key: v1-vuln-scans
+          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
       - save_cache:
-          key: v1-vuln-scans
+          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
           paths:
             - .vuln-scans
 
