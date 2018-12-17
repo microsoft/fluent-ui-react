@@ -54,6 +54,9 @@ export interface PopupProps
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
+  /** Delay in ms for the mouse leave event, before the popup will be closed. */
+  mouseLeaveDelay?: number
+
   /** Offset value to apply to rendered popup. Accepts the following units:
    * - px or unit-less, interpreted as pixels
    * - %, percentage relative to the length of the trigger element
@@ -62,6 +65,9 @@ export interface PopupProps
    * - vh, CSS viewport height unit
    */
   offset?: string
+
+  /** Events triggering the popup. */
+  on?: 'click' | 'hover'
 
   /** Defines whether popup is displayed. */
   open?: boolean
@@ -119,6 +125,8 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
+    mouseLeaveDelay: PropTypes.number,
+    on: PropTypes.oneOf(['hover', 'click']),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     position: PropTypes.oneOf(POSITIONS),
@@ -130,12 +138,36 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     accessibility: popupBehavior,
     align: 'start',
     position: 'above',
+    on: 'click',
+    mouseLeaveDelay: 500,
   }
 
   public static autoControlledProps = ['open', 'target']
 
   private static isBrowserContext = isBrowser()
 
+  private isPopupClosing = false
+
+  setPopupOpen(newOpen, e) {
+    if (!newOpen) {
+      this.schedulePopupClose(e)
+    } else {
+      this.isPopupClosing = false
+      this.trySetOpen(true, e)
+    }
+  }
+
+  schedulePopupClose = e => {
+    const { mouseLeaveDelay } = this.props
+    this.isPopupClosing = true
+    setTimeout(() => {
+      if (this.isPopupClosing) {
+        this.trySetOpen(false, e)
+      }
+
+      this.isPopupClosing = false
+    }, mouseLeaveDelay)
+  }
   private outsideClickSubscription = EventStack.noSubscription
 
   private triggerDomElement = null
@@ -224,10 +256,54 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 
+  getTriggerProps(triggerElement) {
+    const triggerProps: any = {}
+
+    const { on } = this.props
+
+    if (on === 'click') {
+      triggerProps.onClick = (e, ...rest) => {
+        this.trySetOpen(!this.state.open, e)
+        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+      }
+    }
+    if (on === 'hover') {
+      triggerProps.onMouseEnter = (e, ...rest) => {
+        this.setPopupOpen(true, e)
+        _.invoke(triggerElement, 'props.onMouseEnter', e, ...rest)
+      }
+      triggerProps.onMouseLeave = (e, ...rest) => {
+        this.setPopupOpen(false, e)
+        _.invoke(triggerElement, 'props.onMouseLeave', e, ...rest)
+      }
+    }
+
+    return triggerProps
+  }
+
+  handleContentOverrides = predefinedProps => {
+    const contentProps: any = {}
+
+    const { on } = this.props
+
+    if (on === 'hover') {
+      contentProps.onMouseEnter = (e, contentProps) => {
+        this.setPopupOpen(true, e)
+        _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
+      }
+      contentProps.onMouseLeave = (e, contentProps) => {
+        this.setPopupOpen(false, e)
+        _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
+      }
+    }
+
+    return contentProps
+  }
+
   private renderTrigger(accessibility) {
     const { children, trigger } = this.props
     const triggerElement = childrenExist(children) ? children : (trigger as any)
-
+    const triggerProps = this.getTriggerProps(triggerElement)
     return (
       triggerElement && (
         <Ref
@@ -237,10 +313,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           }}
         >
           {React.cloneElement(triggerElement, {
-            onClick: (e, ...rest) => {
-              this.trySetOpen(!this.state.open, e)
-              _.invoke(triggerElement, 'props.onClick', e, ...rest)
-            },
+            ...triggerProps,
             ...accessibility.attributes.trigger,
             ...accessibility.keyHandlers.trigger,
           })}
@@ -308,6 +381,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       ? React.cloneElement(content, popupContentAttributes)
       : Popup.Content.create(content, {
           defaultProps: popupContentAttributes,
+          overrideProps: this.handleContentOverrides,
         })
 
     return (
