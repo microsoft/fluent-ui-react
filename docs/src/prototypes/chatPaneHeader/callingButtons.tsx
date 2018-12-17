@@ -9,7 +9,7 @@ class CallingButtons extends React.Component {
           circular
           buttons={['call-video', 'call'].map((name, index) => ({
             key: `${index}-${name}`,
-            title: name,
+            title: name === 'call-video' ? 'Video call' : 'Audio call',
             icon: {
               name,
               size: 'large',

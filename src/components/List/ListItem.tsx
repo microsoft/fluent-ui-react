@@ -113,7 +113,8 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         debug={debug}
         endMedia={endMedia}
         header={
-          <div role="button" tabIndex={0}>
+          // we need to get on the element either onclick, which will invoke user card on enter/space key
+          <div role="button" tabIndex={0} aria-haspopup="dialog">
             {header}
           </div>
         }

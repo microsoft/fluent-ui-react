@@ -18,7 +18,7 @@ const listStyle = {
   '& > li:last-of-type': {
     paddingRight: '0.6rem',
   },
-  marginLeft: '0.5rem',
+  marginLeft: '-1rem',
 }
 
 const headingStyle = {
@@ -38,7 +38,14 @@ class ChatTitle extends React.Component<any> {
       <Popup
         position="below"
         accessibility={popupFocusTrapBehavior}
-        trigger={<Button circular content={`+ ${listItems.length - 3}`} />}
+        trigger={
+          <Button
+            circular
+            content={`+ ${listItems.length - 3}`}
+            aria-label={`${listItems.length - 3} more participants`}
+            aria-haspopup="true"
+          />
+        }
         content={
           <Menu
             styles={menuStyles}
@@ -57,7 +64,15 @@ class ChatTitle extends React.Component<any> {
       <Popup
         position="below"
         accessibility={popupFocusTrapBehavior}
-        trigger={<Button circular content={`${listItems.length}`} icon="teams" />}
+        trigger={
+          <Button
+            circular
+            content={`${listItems.length}`}
+            aria-label={`${listItems.length} participants`}
+            icon="teams"
+            aria-haspopup="true"
+          />
+        }
         content={
           <Menu
             styles={menuStyles}
@@ -75,13 +90,14 @@ class ChatTitle extends React.Component<any> {
     const newMenuItems = []
     listItems.map(listItem => {
       newMenuItems.push({
+        onClick: e => window.alert('user info card will be here'),
+        'aria-haspopup': 'dialog',
         key: listItem.key,
         content: listItem.header,
         icon: (
           <Avatar
             image={{
               src: 'public/images/avatar/small/matt.jpg',
-              alt: `Profile picture of ${listItem.header}`,
             }}
             status={{ color: 'green', icon: 'check', title: 'Available' }}
           />
@@ -89,6 +105,7 @@ class ChatTitle extends React.Component<any> {
       })
     })
     const leaveChat = {
+      onClick: e => window.alert('leave chat popup will be here'),
       key: 'leaveChat',
       content: 'Leave chat',
       icon: <Icon name="leave" />,

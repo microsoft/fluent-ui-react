@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Menu, Button, tabListBehavior, tabBehavior, Icon } from '@stardust-ui/react'
 
 const menuStyle = {
-  marginLeft: '1rem',
+  marginLeft: '-1rem',
 }
 
 const menuItems = [
@@ -11,8 +11,9 @@ const menuItems = [
   { key: 'wiki ', content: 'Wiki', accessibility: tabBehavior },
 ]
 
-class Tabs extends React.Component {
+class Tabs extends React.Component<any> {
   public render() {
+    const { isMeeting } = this.props
     return (
       <div style={{ flexGrow: 0.6, display: 'flex' }}>
         <Menu
@@ -24,21 +25,27 @@ class Tabs extends React.Component {
           underlined
           primary
         />
-        <Button
-          key="addTab"
-          name="addTab"
-          title="Add tab"
-          icon={
-            <Icon
-              key=""
-              name="add"
-              size="large"
-              variables={siteVars => ({ color: siteVars.gray04 })}
-            />
-          }
-          iconOnly
-          primary
-        />
+        {isMeeting ? (
+          ''
+        ) : (
+          <Button
+            onClick={e => window.alert('add tab dialog will appear here')}
+            aria-haspopup="dialog"
+            key="addTab"
+            name="addTab"
+            title="Add tab"
+            icon={
+              <Icon
+                key=""
+                name="add"
+                size="large"
+                variables={siteVars => ({ color: siteVars.gray04 })}
+              />
+            }
+            iconOnly
+            primary
+          />
+        )}
       </div>
     )
   }
