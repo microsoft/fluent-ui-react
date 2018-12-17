@@ -15,7 +15,7 @@ import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -38,6 +38,13 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Initial selectedIndex value. */
   defaultSelectedIndex?: number
+
+  /**
+   * Event for request to change 'selectedIndex' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onSelectedIndexChange?: ComponentEventHandler<ListProps>
 
   /** Truncates content */
   truncateContent?: boolean
@@ -71,6 +78,7 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     truncateHeader: PropTypes.bool,
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
+    onSelectedIndexChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -154,8 +162,12 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
 
         maybeSelectableItemProps.ref = ref
         maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedIndex(idx)
-        maybeSelectableItemProps.onClick = () => {
+        maybeSelectableItemProps.onClick = e => {
           this.trySetState({ selectedIndex: idx })
+          _.invoke(this.props, 'onSelectedIndexChange', e, {
+            ...this.props,
+            ...{ selectedIndex: idx },
+          })
           this.setState({ focusedIndex: idx })
         }
         maybeSelectableItemProps.selected = idx === selectedIndex

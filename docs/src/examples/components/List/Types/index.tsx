@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -13,6 +13,11 @@ const Types = () => (
       title="Selectable list"
       description="A list can be formatted to indicate that its items can be selected."
       examplePath="components/List/Types/ListExampleSelectable"
+    />
+    <ComponentExample
+      title="Controlled selectable list"
+      description="A list's 'selectedIndex' state can be controlled by handling 'onSelectedIndexChange' event and passing 'selectedIndex' prop"
+      examplePath="components/List/Types/ListExampleSelectableControlled"
     />
   </ExampleSection>
 )
