@@ -34,15 +34,14 @@ const getTodayScanFilePath = () => {
 
 const recentlyChecked = () => {
   const recentCheckFilePath = getTodayScanFilePath()
-  console.warn('checking of file exists:', recentCheckFilePath)
   return fs.existsSync(recentCheckFilePath)
 }
 
 const registerRecentSucessfulScan = async () => {
   ensureDirExists(getScanResultsDirPath())
 
-  // const recentScanFilePath = getTodayScanFilePath()
-  await sh(`touch aha`) // ${recentScanFilePath}`)
+  const recentScanFilePath = getTodayScanFilePath()
+  await sh(`touch ${recentScanFilePath}`)
 }
 
 /**
