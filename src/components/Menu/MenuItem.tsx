@@ -2,13 +2,13 @@ import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as keyboardKey from 'keyboard-key'
 
 import {
   AutoControlledComponent,
   childrenExist,
   createShorthandFactory,
   customPropTypes,
+  doesNodeContainClick,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
@@ -260,9 +260,8 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
 
   private outsideClickHandler = e => {
     if (
-      this.itemRef &&
-      (!this.itemRef.current || !this.itemRef.current.contains(e.target)) &&
-      (!this.submenuRef.current || !this.submenuRef.current.contains(e.target))
+      !doesNodeContainClick(this.itemRef.current, e) &&
+      !doesNodeContainClick(this.submenuRef.current, e)
     ) {
       this.state.submenuOpen && this.trySetState({ submenuOpen: false })
     }
@@ -271,7 +270,7 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   private performClick = e => {
     const { active, menu } = this.props
     if (menu) {
-      if (this.submenuRef.current && this.submenuRef.current.contains(e.target)) {
+      if (doesNodeContainClick(this.submenuRef.current, e)) {
         // submenu was clicked => close it and propagate
         this.setState({ submenuOpen: false }, () => focusAsync(this.itemRef.current))
       } else {
