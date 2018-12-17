@@ -15,7 +15,12 @@ const createDefaultImportDeclaration = (
     t.stringLiteral(declaration.source.value),
   )
 
-const startImportToDefault: BabelPlugin = ({ types: t }) => ({
+/**
+ * A plugin for Babel that performs AST transform:
+ * - from: import * as _ from 'lodash'
+ * - to: import _ from 'lodash'
+ */
+const starImportToDefault: BabelPlugin = ({ types: t }) => ({
   visitor: {
     ImportDeclaration: path => {
       const { specifiers } = path.node
@@ -28,4 +33,4 @@ const startImportToDefault: BabelPlugin = ({ types: t }) => ({
   },
 })
 
-export default startImportToDefault
+export default starImportToDefault
