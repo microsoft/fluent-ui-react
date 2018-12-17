@@ -3,6 +3,8 @@ import { task } from 'gulp'
 import * as path from 'path'
 import sh from '../sh'
 
+import * as crypto from 'crypto'
+
 import debug from 'debug'
 
 import config from '../../../config'
@@ -14,6 +16,13 @@ const SCAN_RESULTS_DIR = paths.base('.vuln-scans')
 const log = message => debug.log(message)
 log.success = message => debug.log(`✔ ${message}`)
 
+const computeHash = filePath => {
+  const md5 = crypto.createHash('md5')
+  md5.update(fs.readFileSync(paths.base('yarn.lock')))
+
+  return md5.digest('hex')
+}
+
 const ensureDirExists = path => {
   if (!fs.existsSync(path)) {
     sh(`mkdir -p ${path}`)
@@ -21,9 +30,11 @@ const ensureDirExists = path => {
 }
 
 const getTodayScanFilePath = () => {
+  const yarnLockHash = computeHash(paths.base('yarn.lock'))
   const now = new Date()
+
   const fileName = `snyk-scanned-${now.getUTCFullYear()}-${now.getUTCMonth() +
-    1}-${now.getUTCDate()}`
+    1}-${now.getUTCDate()}-${yarnLockHash.slice(0, 8)}`
 
   return path.resolve(SCAN_RESULTS_DIR, fileName)
 }
