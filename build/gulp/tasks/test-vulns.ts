@@ -1,27 +1,17 @@
 import * as fs from 'fs'
 import { task } from 'gulp'
 import * as path from 'path'
-import * as crypto from 'crypto'
 import debug from 'debug'
-
-const memoize = require('fast-memoize')
 
 import config from '../../../config'
 import sh from '../sh'
 
 const { paths } = config
 
-const SCAN_RESULTS_DIR_PREFIX = '.vuln-scans'
+const SCAN_RESULTS_DIR_NAME = '.vuln-scans'
 
 const log = message => debug.log(message)
 log.success = message => debug.log(`✔ ${message}`)
-
-const computeHash = filePath => {
-  const sha256 = crypto.createHash('sha256')
-  sha256.update(fs.readFileSync(filePath))
-
-  return sha256.digest('base64')
-}
 
 const ensureDirExists = path => {
   if (!fs.existsSync(path)) {
@@ -29,10 +19,9 @@ const ensureDirExists = path => {
   }
 }
 
-const getScanResultsDirPath = memoize(() => {
-  const yarnLockHash = computeHash(paths.base('yarn.lock'))
-  return paths.base(`${SCAN_RESULTS_DIR_PREFIX}-${yarnLockHash}`)
-})
+const getScanResultsDirPath = () => {
+  return paths.base(SCAN_RESULTS_DIR_NAME)
+}
 
 const getTodayScanFilePath = () => {
   const now = new Date()
@@ -45,7 +34,6 @@ const getTodayScanFilePath = () => {
 
 const recentlyChecked = () => {
   const recentCheckFilePath = getTodayScanFilePath()
-  console.warn('recent check file path is', recentCheckFilePath)
   return fs.existsSync(recentCheckFilePath)
 }
 
