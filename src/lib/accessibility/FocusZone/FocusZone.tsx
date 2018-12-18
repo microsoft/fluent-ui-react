@@ -48,7 +48,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
     shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
-    shouldHandleKeyDownCapture: PropTypes.bool,
+    shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
