@@ -13,7 +13,7 @@ const sizes = new Map([
   ['small', 12],
   ['medium', 16],
   ['large', 20],
-  ['larger', 20],
+  ['larger', 32],
   ['largest', 40],
 ])
 
