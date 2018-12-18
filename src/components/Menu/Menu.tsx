@@ -143,7 +143,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, MenuState> {
 
     return _.map(items, (item, index) => {
       const active =
-        typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex === index
+        (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
       return MenuItem.create(item, {
         defaultProps: {
           iconOnly,
