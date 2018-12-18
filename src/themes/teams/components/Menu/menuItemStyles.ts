@@ -45,7 +45,7 @@ const getFocusedStyles = ({
   color: string
 }): ICSSInJSStyle => {
   const { primary, underlined, iconOnly, isFromKeyboard, active } = props
-  if (active) return {}
+  if (active && !underlined) return {}
   return {
     ...((underlined && !isFromKeyboard) || iconOnly
       ? {
