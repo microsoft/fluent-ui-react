@@ -36,7 +36,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
 })
 
 const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
-  const lastVisibleMessage = root.querySelector('[data-last-visible]="true"') as HTMLElement
+  const lastVisibleMessage = root.querySelector('[data-last-visible="true"]') as HTMLElement
   if (lastVisibleMessage) return lastVisibleMessage
 
   const chatItemsElements = root.querySelectorAll(
