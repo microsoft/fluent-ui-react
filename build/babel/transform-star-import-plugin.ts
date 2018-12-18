@@ -20,7 +20,7 @@ const createDefaultImportDeclaration = (
  * - from: import * as _ from 'lodash'
  * - to: import _ from 'lodash'
  */
-const starImportToDefault: BabelPlugin = ({ types: t }) => ({
+const starImportToDefaultPlugin: BabelPlugin = ({ types: t }) => ({
   visitor: {
     ImportDeclaration: path => {
       const { specifiers } = path.node
@@ -33,4 +33,4 @@ const starImportToDefault: BabelPlugin = ({ types: t }) => ({
   },
 })
 
-export default starImportToDefault
+export default starImportToDefaultPlugin
