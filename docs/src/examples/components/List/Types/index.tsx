@@ -16,7 +16,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Controlled selectable list"
-      description="A list's 'selectedIndex' state can be controlled by handling 'onSelectedIndexChange' event and passing 'selectedIndex' prop"
+      description="List can handle selected index in controlled mode."
       examplePath="components/List/Types/ListExampleSelectableControlled"
     />
   </ExampleSection>

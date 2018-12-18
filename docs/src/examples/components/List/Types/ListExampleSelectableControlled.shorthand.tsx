@@ -2,7 +2,7 @@ import * as React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
 class SelectableListControlledExample extends React.Component<any, any> {
-  state = { selectedItemIndex: -1 }
+  state = { selectedIndex: -1 }
 
   items = [
     {
@@ -32,12 +32,12 @@ class SelectableListControlledExample extends React.Component<any, any> {
     return (
       <List
         selectable
-        selectedIndex={this.state.selectedItemIndex}
+        selectedIndex={this.state.selectedIndex}
         onSelectedIndexChange={(e, newProps) => {
           alert(
             `List is requested to change its selectedIndex state to "${newProps.selectedIndex}"`,
           )
-          this.setState({ selectedItemIndex: newProps.selectedIndex })
+          this.setState({ selectedIndex: newProps.selectedIndex })
         }}
         items={this.items}
       />

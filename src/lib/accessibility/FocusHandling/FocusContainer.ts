@@ -7,7 +7,7 @@ export class ContainerFocusHandler {
 
   private noItems = (): boolean => this.getItemsCount() === 0
 
-  private constrainfocusedIndex(): void {
+  private constrainFocusedIndex(): void {
     if (this.focusedIndex < 0) {
       this.focusedIndex = 0
     }
@@ -32,7 +32,7 @@ export class ContainerFocusHandler {
     }
 
     this.focusedIndex -= 1
-    this.constrainfocusedIndex()
+    this.constrainFocusedIndex()
 
     this.setFocusAt(this.focusedIndex)
   }
@@ -43,7 +43,7 @@ export class ContainerFocusHandler {
     }
 
     this.focusedIndex += 1
-    this.constrainfocusedIndex()
+    this.constrainFocusedIndex()
 
     this.setFocusAt(this.focusedIndex)
   }
