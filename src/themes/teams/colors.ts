@@ -88,7 +88,6 @@ export const naturalColors: NaturalColors = {
     800: '#F9D844',
     900: '#F8D22A',
   },
-
   darkOrange: {
     50: '#F9ECEA',
     100: '#ECBCB3',

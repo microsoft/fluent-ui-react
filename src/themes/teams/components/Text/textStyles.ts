@@ -24,7 +24,6 @@ export default {
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
-      color: _.get(v.colors, color),
       ...(truncated && truncateStyle),
       ...(atMention === true && {
         color: v.atMentionOtherColor,
@@ -47,6 +46,7 @@ export default {
         fontWeight: v.importantWeight,
         color: v.importantColor,
       }),
+      ...(color && { color: _.get(v.colors, color) }),
 
       ...(weight === 'light' && {
         fontWeight: v.fontWeightLight,
