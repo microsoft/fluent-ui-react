@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -22,7 +23,8 @@ import { ReactProps, ShorthandValue } from '../../../types/utils'
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps {
   accessibility?: Accessibility
 
   /** A label can be circular. */
@@ -55,7 +57,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),

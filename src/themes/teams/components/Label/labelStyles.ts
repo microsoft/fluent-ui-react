@@ -1,42 +1,42 @@
+import * as _ from 'lodash'
+
 import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
+import { LabelVariables } from './labelVariables'
 
-const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
-  root: ({ props: { image, imagePosition, circular }, variables }): ICSSInJSStyle => ({
-    padding: variables.padding,
-    ...(image &&
-      imagePosition === 'start' && {
-        paddingLeft: variables.startPaddingLeft,
-      }),
-    ...(image &&
-      imagePosition === 'end' && {
-        paddingRight: variables.endPaddingRight,
-      }),
+const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-flex',
     alignItems: 'center',
-    height: variables.height,
-    fontSize: pxToRem(14),
-    lineHeight: variables.height,
-    backgroundColor: variables.backgroundColor,
-    color: variables.color,
-    borderRadius: pxToRem(3),
-    ...(circular && {
-      borderRadius: variables.circularRadius,
-    }),
     overflow: 'hidden',
+    height: v.height,
+    lineHeight: v.height,
+    color: v.color,
+    backgroundColor: _.get(v.colors, p.color, v.backgroundColor),
+    fontSize: pxToRem(14),
+    borderRadius: pxToRem(3),
+    padding: v.padding,
+    ...(p.image &&
+      (p.imagePosition === 'start'
+        ? { paddingLeft: v.startPaddingLeft }
+        : { paddingRight: v.endPaddingRight })),
+    ...(p.circular && {
+      borderRadius: v.circularRadius,
+    }),
   }),
-  image: ({ variables }): ICSSInJSStyle => ({
-    height: variables.height,
-    width: variables.height,
+
+  image: ({ variables: v }): ICSSInJSStyle => ({
+    height: v.height,
+    width: v.height,
   }),
-  icon: ({ props }): ICSSInJSStyle => ({
-    ...(props.icon &&
-      typeof props.icon === 'object' &&
-      (props.icon as any).onClick && {
-        cursor: 'pointer',
-      }),
-  }),
+
+  icon: ({ props: p }): ICSSInJSStyle =>
+    p.icon &&
+    typeof p.icon === 'object' &&
+    (p.icon as any).onClick && {
+      cursor: 'pointer',
+    },
 }
 
 export default labelStyles
