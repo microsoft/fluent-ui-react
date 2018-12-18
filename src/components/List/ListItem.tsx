@@ -32,6 +32,7 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
 
   /** A list item can indicate that it can be selected. */
   selectable?: boolean
+
   /** Indicates if the current list item is selected. */
   selected?: boolean
   truncateContent?: boolean
@@ -87,8 +88,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  private itemRef = React.createRef<HTMLElement>()
-
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => {
       this.handleClick(event)
@@ -132,7 +131,6 @@ class ListItem extends UIComponent<Extendable<ListItemProps>> {
         headerCSS={styles.header}
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
-        ref={this.itemRef}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
