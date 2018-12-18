@@ -9,5 +9,5 @@ const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(
 describe('List', () => {
   isConformant(List)
   handlesAccessibility(List, { defaultRootRole: 'list' })
-  listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'main' })
+  listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'content' })
 })

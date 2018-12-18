@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -35,7 +35,7 @@
     "pretest": "yarn satisfied",
     "test": "gulp test",
     "test:watch": "gulp test:watch",
-    "test:vulns": "snyk test",
+    "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
