@@ -9,11 +9,16 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 
 import { Extendable } from '../../../types/utils'
 
-export interface TextProps extends UIComponentProps, ContentComponentProps, ChildrenComponentProps {
+export interface TextProps
+  extends UIComponentProps,
+    ContentComponentProps,
+    ChildrenComponentProps,
+    ColorComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 
@@ -63,7 +68,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
     disabled: PropTypes.bool,
     error: PropTypes.bool,
