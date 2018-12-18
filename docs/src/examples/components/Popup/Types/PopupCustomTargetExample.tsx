@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Popup, Button, Divider, Text, Grid } from '@stardust-ui/react'
 import { findDOMNode } from 'react-dom'
 

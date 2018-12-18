@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Grid, Ref, Segment } from '@stardust-ui/react'
 
 class RefExample extends React.Component {
