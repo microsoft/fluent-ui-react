@@ -1,0 +1,22 @@
+import React from 'react'
+import _ from 'lodash'
+import { Header, ProviderConsumer } from '@stardust-ui/react'
+
+const HeaderExampleColor = () => (
+  <ProviderConsumer
+    render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+      _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
+        <Header
+          key={color}
+          as="h4"
+          color={color}
+          description={{ content: `Description of ${color} color`, color }}
+        >
+          {_.startCase(color)}
+        </Header>
+      ))
+    }
+  />
+)
+
+export default HeaderExampleColor
