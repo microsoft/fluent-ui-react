@@ -55,6 +55,7 @@ jobs:
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
+      # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
       - save_cache:
           key: v1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
           paths:
