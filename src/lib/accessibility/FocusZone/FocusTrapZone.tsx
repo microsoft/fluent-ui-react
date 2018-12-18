@@ -45,6 +45,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
     firstFocusableSelector: PropTypes.string,
     disableFirstFocus: PropTypes.bool,
     focusPreviouslyFocusedInnerElement: PropTypes.bool,
+    focusTriggerOnOutsideClick: PropTypes.bool,
   }
 
   static defaultProps: FocusTrapZoneProps = {
@@ -220,11 +221,29 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   private _handleOutsideClick = (ev: MouseEvent): void => {
     const clickedElement = ev.target as HTMLElement
-    clickedElement && this._forceFocusInTrap(ev, clickedElement)
+    const { isClickableOutsideFocusTrap, focusTriggerOnOutsideClick } = this.props
+
+    if (!isClickableOutsideFocusTrap) {
+      clickedElement && this._forceFocusInTrap(ev, clickedElement)
+    } else if (!focusTriggerOnOutsideClick) {
+      const isOutsideFocusTrapZone =
+        this._root.current && !this._root.current.contains(clickedElement)
+      const isOutsideTriggerElement =
+        this._previouslyFocusedElementOutsideTrapZone &&
+        !this._previouslyFocusedElementOutsideTrapZone.contains(clickedElement)
+      if (isOutsideFocusTrapZone && isOutsideTriggerElement) {
+        // set it to NULL, so the trigger will not be focused on componentWillUnmount
+        this._previouslyFocusedElementOutsideTrapZone = null
+      }
+    }
   }
 
   private _subscribeToEvents = () => {
-    const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
+    const {
+      forceFocusInsideTrap,
+      isClickableOutsideFocusTrap,
+      focusTriggerOnOutsideClick,
+    } = this.props
     if (forceFocusInsideTrap) {
       this._focusSubscription.unsubscribe()
       this._focusSubscription = EventStack.subscribe('focus', this._handleOutsideFocus, {
@@ -233,7 +252,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
       })
     }
 
-    if (!isClickableOutsideFocusTrap) {
+    if (!isClickableOutsideFocusTrap || !focusTriggerOnOutsideClick) {
       this._clickSubscription.unsubscribe()
       this._clickSubscription = EventStack.subscribe('click', this._handleOutsideClick, {
         target: this.windowElement,
@@ -243,12 +262,16 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
   }
 
   private _unsubscribeFromEvents = () => {
-    const { forceFocusInsideTrap, isClickableOutsideFocusTrap } = this.props
+    const {
+      forceFocusInsideTrap,
+      isClickableOutsideFocusTrap,
+      focusTriggerOnOutsideClick,
+    } = this.props
     if (forceFocusInsideTrap) {
       this._focusSubscription.unsubscribe()
     }
 
-    if (!isClickableOutsideFocusTrap) {
+    if (!isClickableOutsideFocusTrap || !focusTriggerOnOutsideClick) {
       this._clickSubscription.unsubscribe()
     }
   }
