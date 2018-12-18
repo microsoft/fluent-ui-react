@@ -84,14 +84,9 @@ class SourceCodeManager {
 
   private safeRequire = (path: string): string | undefined => {
     try {
-      const filename = path
-        .split('/')
-        .slice(-3)
-        .join('.')
-        .replace(/\.tsx$/, '')
-        .toLowerCase()
+      const filename = `${path.replace(/^components\//, '')}.source.json`
 
-      return require(`!docs/src/exampleSources/${filename}.source.json`).js
+      return require(`!docs/src/exampleSources/${filename}`).js
     } catch (e) {
       return undefined
     }

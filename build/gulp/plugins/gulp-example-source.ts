@@ -5,10 +5,12 @@ import * as prettier from 'prettier'
 import * as through from 'through2'
 import * as Vinyl from 'vinyl'
 
+import config from '../../../config'
 import * as prettierConfig from '../../../.prettierrc.json'
 import { ExampleSource } from '../../../docs/src/types'
 import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
 
+const examplesPath = config.paths.docsSrc('examples', 'components')
 const pluginName = 'gulp-example-source'
 
 const createExampleSourceCode = (file: Vinyl): ExampleSource => {
@@ -42,19 +44,15 @@ export default () =>
       return
     }
 
-    // create a base name: accordion.types.accordion.example.shorthand
-    const basename = file.path
-      .split(path.sep)
-      .slice(-3)
-      .join('.')
-      .replace(/\.tsx$/, '')
-      .toLowerCase()
+    const relativePath = path.relative(examplesPath, file.path)
+    const sourcePath = `${relativePath.replace(/\.tsx$/, '')}.source.json`
+
     const source = createExampleSourceCode(file)
 
     cb(
       null,
       new Vinyl({
-        path: `./${basename}.source.json`,
+        path: sourcePath,
         contents: Buffer.from(JSON.stringify(source, null, 2)),
       }),
     )
