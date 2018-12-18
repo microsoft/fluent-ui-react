@@ -7,7 +7,7 @@ import * as Vinyl from 'vinyl'
 
 import * as prettierConfig from '../../../.prettierrc.json'
 import { ExampleSource } from '../../../docs/src/types'
-import transformStartImport from '../../babel/transform-star-import'
+import transformStarImport from '../../babel/transform-star-import'
 
 const pluginName = 'gulp-example-source'
 
@@ -15,7 +15,7 @@ const createExample = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
   const transformResult = Babel.transform(tsSource, {
-    plugins: [transformStartImport],
+    plugins: [transformStarImport],
     presets: [['@babel/preset-typescript', { allExtensions: true, isTSX: true }]],
     sourceType: 'module',
   })
