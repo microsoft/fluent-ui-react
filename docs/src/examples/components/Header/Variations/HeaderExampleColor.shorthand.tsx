@@ -11,7 +11,7 @@ const HeaderExampleColor = () => (
           as="h4"
           color={color}
           content={_.startCase(color)}
-          description={{ content: `Description of ${color} color`, color }}
+          description={{ content: `Description of ${_.lowerCase(color)} color`, color }}
         />
       ))
     }
