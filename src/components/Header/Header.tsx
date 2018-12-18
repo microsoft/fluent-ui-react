@@ -9,6 +9,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { Extendable, ShorthandValue } from '../../../types/utils'
@@ -16,7 +17,8 @@ import { Extendable, ShorthandValue } from '../../../types/utils'
 export interface HeaderProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps {
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 
@@ -40,7 +42,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static displayName = 'Header'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
   }

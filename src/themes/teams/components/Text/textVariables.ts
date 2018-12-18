@@ -1,7 +1,11 @@
+import { mapColorsToScheme } from '../../../../lib'
 import { TextVariables } from '../../../base/components/Text/textVariables'
 
 export default (siteVariables): TextVariables => {
+  const colorVariant = 500
+
   return {
+    colors: mapColorsToScheme(siteVariables, colorVariant),
     atMentionOtherColor: siteVariables.brand06,
     atMentionMeColor: siteVariables.orange04,
     atMentionMeFontWeight: siteVariables.fontWeightBold,

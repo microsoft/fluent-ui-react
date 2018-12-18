@@ -1,6 +1,8 @@
 import { Partial } from 'types/utils'
+import { ColorValues } from '../../../types'
 
 export interface TextVariables {
+  colors: ColorValues<string>
   atMentionMeColor: string
   atMentionMeFontWeight: number
   atMentionOtherColor: string
