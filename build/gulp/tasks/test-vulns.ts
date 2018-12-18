@@ -9,6 +9,7 @@ import sh from '../sh'
 const { paths } = config
 
 const SCAN_RESULTS_DIR_NAME = '.vuln-scans'
+const SCAN_RESULTS_DIR_PATH = paths.base(SCAN_RESULTS_DIR_NAME)
 
 const log = message => debug.log(message)
 log.success = message => debug.log(`✔ ${message}`)
@@ -19,17 +20,13 @@ const ensureDirExists = path => {
   }
 }
 
-const getScanResultsDirPath = () => {
-  return paths.base(SCAN_RESULTS_DIR_NAME)
-}
-
 const getTodayScanFilePath = () => {
   const now = new Date()
 
   const fileName = `snyk-scanned-${now.getUTCFullYear()}-${now.getUTCMonth() +
     1}-${now.getUTCDate()}`
 
-  return path.resolve(getScanResultsDirPath(), fileName)
+  return path.resolve(SCAN_RESULTS_DIR_PATH, fileName)
 }
 
 const recentlyChecked = () => {
@@ -38,7 +35,7 @@ const recentlyChecked = () => {
 }
 
 const registerRecentSucessfulScan = async () => {
-  ensureDirExists(getScanResultsDirPath())
+  ensureDirExists(SCAN_RESULTS_DIR_PATH)
 
   const recentScanFilePath = getTodayScanFilePath()
   await sh(`touch ${recentScanFilePath}`)
