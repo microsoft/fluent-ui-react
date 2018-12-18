@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { truncateStyle } from '../../../../styles/customCSS'
-import { TextVariables } from '../../../base/components/Text/textVariables'
+import { TeamsTextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
 
 export default {
@@ -21,7 +21,7 @@ export default {
       temporary,
     },
     variables: v,
-  }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
       ...(truncated && truncateStyle),

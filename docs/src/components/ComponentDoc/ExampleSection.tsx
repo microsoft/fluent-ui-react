@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { Grid, Header } from 'semantic-ui-react'
+import { childrenExist } from 'src/lib'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -14,16 +15,18 @@ const sectionStyle: React.CSSProperties = {
   paddingBottom: '5em',
 }
 
-const ExampleSection: any = ({ title, children, ...rest }) => (
-  <Grid padded style={sectionStyle} {...rest}>
-    <Grid.Column>
-      <Header as="h2" style={headerStyle} className="no-anchor">
-        {title}
-      </Header>
-      {children}
-    </Grid.Column>
-  </Grid>
-)
+const ExampleSection: any = ({ title, children, ...rest }) => {
+  if (childrenExist(children)) {
+     <Grid padded style={sectionStyle} {...rest}>
+      <Grid.Column>
+        <Header as="h2" style={headerStyle} className="no-anchor">
+          {title}
+        </Header>
+        {children}
+      </Grid.Column>
+    </Grid>
+  }
+}
 
 ExampleSection.propTypes = {
   children: PropTypes.node,

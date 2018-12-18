@@ -1,28 +1,23 @@
-import { Partial } from 'types/utils'
 import { ColorValues } from '../../../types'
+import { mapColorsToScheme } from '../../../../lib'
 
 export interface TextVariables {
   colors: ColorValues<string>
-  atMentionMeColor: string
-  atMentionMeFontWeight: number
-  atMentionOtherColor: string
+
   disabledColor: string
   errorColor: string
-  importantColor: string
-  importantWeight: number
   successColor: string
-  timestampColor: string
-  timestampHoverColor: string
 
   fontSizeExtraSmall: string
-  fontLineHeightExtraSmall: number
   fontSizeSmall: string
-  fontLineHeightSmall: number
   fontSizeMedium: string
-  fontLineHeightMedium: number
   fontSizeLarge: string
-  fontLineHeightLarge: number
   fontSizeExtraLarge: string
+
+  fontLineHeightExtraSmall: number
+  fontLineHeightSmall: number
+  fontLineHeightMedium: number
+  fontLineHeightLarge: number
   fontLineHeightExtraLarge: number
 
   fontWeightLight: number
@@ -32,6 +27,35 @@ export interface TextVariables {
   fontWeightBold: number
 }
 
-export default (siteVariables): Partial<TextVariables> => {
-  return {}
+export default (siteVariables): TextVariables => {
+  const colorVariant = 500
+
+  return {
+    colors: mapColorsToScheme(siteVariables, colorVariant),
+
+    disabledColor: siteVariables.colors.grey[500],
+    errorColor: siteVariables.colors.red[500],
+    successColor: siteVariables.colors.green[500],
+
+    fontSizeExtraSmall: siteVariables.fontSizes.smaller,
+    fontLineHeightExtraSmall: siteVariables.lineHeightExtraSmall,
+
+    fontSizeSmall: siteVariables.fontSizes.small,
+    fontLineHeightSmall: siteVariables.lineHeightSmall,
+
+    fontSizeMedium: siteVariables.fontSizes.medium,
+    fontLineHeightMedium: siteVariables.lineHeightBase,
+
+    fontSizeLarge: siteVariables.fontSizes.large,
+    fontLineHeightLarge: siteVariables.lineHeightSmall,
+
+    fontSizeExtraLarge: siteVariables.fontSizes.larger,
+    fontLineHeightExtraLarge: siteVariables.lineHeightSmall,
+
+    fontWeightLight: siteVariables.fontWeightLight,
+    fontWeightSemilight: siteVariables.fontWeightSemilight,
+    fontWeightRegular: siteVariables.fontWeightRegular,
+    fontWeightSemibold: siteVariables.fontWeightSemibold,
+    fontWeightBold: siteVariables.fontWeightBold,
+  }
 }

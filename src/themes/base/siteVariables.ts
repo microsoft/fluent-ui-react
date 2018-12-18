@@ -1,16 +1,8 @@
-import { colors } from './colors'
-
 //
 // COLORS
 //
 
 export { colors, contextualColors, emphasisColors, naturalColors } from './colors'
-
-export const red = colors.red[500]
-export const yellow = colors.yellow[500]
-export const green = colors.green[500]
-export const grey = colors.grey[500]
-export const blue = colors.blue[500]
 
 //
 // FONT SIZES

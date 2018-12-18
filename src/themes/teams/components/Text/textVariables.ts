@@ -1,7 +1,17 @@
 import { mapColorsToScheme } from '../../../../lib'
 import { TextVariables } from '../../../base/components/Text/textVariables'
 
-export default (siteVariables): TextVariables => {
+export interface TeamsTextVariables extends TextVariables {
+  atMentionMeColor: string
+  atMentionMeFontWeight: number
+  atMentionOtherColor: string
+  importantColor: string
+  importantWeight: number
+  timestampColor: string
+  timestampHoverColor: string
+}
+
+export default (siteVariables): TeamsTextVariables => {
   const colorVariant = 500
 
   return {
