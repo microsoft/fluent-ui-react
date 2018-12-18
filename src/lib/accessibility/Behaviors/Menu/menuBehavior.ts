@@ -20,7 +20,7 @@ const menuBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
+      shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
 })

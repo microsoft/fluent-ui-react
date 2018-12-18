@@ -1122,7 +1122,7 @@ describe('FocusZone', () => {
           <FocusZone
             direction={FocusZoneDirection.horizontal}
             id="b"
-            shouldFocusFirstElementWhenReceivedFocus={true}
+            shouldFocusInnerElementWhenReceivedFocus={true}
             {...isFocusableProperty}
           >
             <button id="bsub">bsub</button>

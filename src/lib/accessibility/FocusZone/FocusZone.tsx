@@ -47,7 +47,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     direction: PropTypes.number,
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
-    shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
+    shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     shouldHandleKeyDownCapture: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
@@ -257,7 +257,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const { onActiveElementChanged, stopFocusPropagation } = this.props
+    const {
+      onActiveElementChanged,
+      stopFocusPropagation,
+      shouldFocusInnerElementWhenReceivedFocus,
+      defaultTabbableElement,
+    } = this.props
 
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement
@@ -278,9 +283,18 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
-    // If a first focusable element should be force focused when FocusZone container receives focus
-    if (this.props.shouldFocusFirstElementWhenReceivedFocus && ev.target === this._root.current) {
-      this.focus(true)
+    // If an inner focusable element should be focused when FocusZone container receives focus
+    if (shouldFocusInnerElementWhenReceivedFocus && ev.target === this._root.current) {
+      const maybeElementToFocus =
+        defaultTabbableElement && defaultTabbableElement(this._root.current)
+
+      // try to focus defaultTabbable element
+      if (maybeElementToFocus && isElementTabbable(maybeElementToFocus)) {
+        maybeElementToFocus.focus()
+      } else {
+        // force focus on first focusable element
+        this.focus(true)
+      }
     }
 
     if (stopFocusPropagation) {
