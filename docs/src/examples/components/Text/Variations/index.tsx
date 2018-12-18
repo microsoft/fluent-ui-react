@@ -5,6 +5,11 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
+      title="Color"
+      description="A Text component can have different colors."
+      examplePath="components/Text/Variations/TextExampleColor"
+    />
+    <ComponentExample
       title="@ mention"
       description="A Text component for @ mentions."
       examplePath="components/Text/Variations/TextExampleAtMention"
