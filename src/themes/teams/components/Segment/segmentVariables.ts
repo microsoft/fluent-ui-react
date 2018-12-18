@@ -1,17 +1,22 @@
-import { ComponentVariablesPrepared } from '@stardust-ui/react'
+import { ColorValues } from '../../../types'
+import { mapColorsToScheme } from '../../../../lib'
 
 export interface SegmentVariables {
-  padding: string
-  background: string
-  borderRadius: string
+  colors: ColorValues<string>
   color: string
+  background: string
+  padding: string
+  borderRadius: string | number
 }
 
-const segmentVariables: ComponentVariablesPrepared = siteVariables => ({
-  padding: '1em',
-  background: siteVariables.bodyBackground,
-  borderRadius: 0,
-  color: undefined,
-})
+export default (siteVariables): SegmentVariables => {
+  const colorVariant = 500
 
-export default segmentVariables
+  return {
+    colors: mapColorsToScheme(siteVariables, colorVariant),
+    color: undefined,
+    background: siteVariables.bodyBackground,
+    padding: '1em',
+    borderRadius: 0,
+  }
+}

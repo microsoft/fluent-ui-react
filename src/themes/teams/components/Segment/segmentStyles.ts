@@ -1,10 +1,13 @@
+import * as _ from 'lodash'
+
 import { SegmentProps } from '../../../../components/Segment/Segment'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { SegmentVariables } from './segmentVariables'
 
 const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const color = p.color || v.color
+    const color = _.get(v.colors, p.color, v.color)
+
     return {
       padding: v.padding,
       background: v.background,
@@ -14,7 +17,7 @@ const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = 
         (p.inverted
           ? {
               background: color,
-              color: '#eee',
+              color: '#eee', // TODO: fix this color once we fix #629
             }
           : {
               borderTop: `2px solid ${color}`,
