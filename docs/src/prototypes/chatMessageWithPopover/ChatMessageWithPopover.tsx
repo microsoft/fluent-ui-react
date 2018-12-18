@@ -14,7 +14,7 @@ interface ChatMessageWithPopoverProps {
 }
 
 interface ChatMessageWithPopoverState {
-  focused: boolean
+  popoverShown: boolean
 }
 
 class ChatMessageWithPopover extends React.Component<
@@ -22,20 +22,20 @@ class ChatMessageWithPopover extends React.Component<
   ChatMessageWithPopoverState
 > {
   state = {
-    focused: false,
+    popoverShown: false,
   }
 
-  changeFocusState = (isFocused: boolean) => {
-    this.state.focused !== isFocused && this.setState({ focused: isFocused })
+  changePopoverState = (value: boolean) => {
+    this.state.popoverShown !== value && this.setState({ popoverShown: value })
   }
 
-  handleFocus = () => {
-    this.changeFocusState(true)
+  showPopover = () => {
+    this.changePopoverState(true)
   }
 
   handleBlur = e => {
     const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
-    this.changeFocusState(shouldPreserveFocusState)
+    this.changePopoverState(shouldPreserveFocusState)
   }
 
   render() {
@@ -52,9 +52,11 @@ class ChatMessageWithPopover extends React.Component<
           ),
         }}
         avatar={janeAvatar}
-        onFocus={this.handleFocus}
+        onFocus={this.showPopover}
         onBlur={this.handleBlur}
-        className={cx(this.props.className, this.state.focused ? 'focused' : '')}
+        onMouseEnter={this.showPopover}
+        onMouseLeave={this.handleBlur}
+        className={cx(this.props.className, this.state.popoverShown ? 'popover-shown' : '')}
       />
     )
   }

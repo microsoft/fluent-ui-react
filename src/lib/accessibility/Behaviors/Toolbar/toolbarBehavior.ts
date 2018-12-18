@@ -17,8 +17,13 @@ const toolbarBehavior: Accessibility = (props: any) => ({
       isCircularNavigation: false,
       preventDefaultWhenHandled: true,
       shouldFocusFirstElementWhenReceivedFocus: true,
+      defaultTabbableElement: getLastTabbableElement,
     },
   },
 })
+
+const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
+  return root.querySelector('[aria-label="thumbs up"]')
+}
 
 export default toolbarBehavior

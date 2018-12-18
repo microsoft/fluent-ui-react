@@ -10,10 +10,7 @@ const ChatWithPopover = () => (
           root: ({ theme: { siteVariables } }) => ({
             position: 'relative',
 
-            '&.focused .actions': {
-              opacity: 1,
-            },
-            ':hover .actions': {
+            '&.popover-shown .actions': {
               opacity: 1,
             },
             '& a': {

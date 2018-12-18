@@ -12,7 +12,6 @@ import { ReactChildren } from 'types/utils'
 import * as React from 'react'
 import cx from 'classnames'
 
-// import { AsyncData } from '../AsyncShorthand/AsyncShorthand'
 import { defaultBehavior } from 'src/lib/accessibility'
 
 export interface PopoverProps {
@@ -20,7 +19,7 @@ export interface PopoverProps {
 }
 
 interface PopoverState {
-  focused: boolean
+  shown: boolean
   popupOpened: boolean
   isMessageBookmarked: boolean
   isMessageTranslated: boolean
@@ -29,26 +28,26 @@ interface PopoverState {
 
 class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
-    focused: false,
+    shown: false,
     popupOpened: false,
     isMessageBookmarked: false,
     isMessageTranslated: false,
     selectedEmojiIndex: -1,
   }
 
-  changeFocusState = (isFocused: boolean) => {
-    this.state.focused !== isFocused && this.setState({ focused: isFocused })
+  changeShownState = (value: boolean) => {
+    this.state.shown !== value && this.setState({ shown: value })
   }
 
-  handleFocus = () => {
-    this.changeFocusState(true)
+  showRestEmojis = () => {
+    this.changeShownState(true)
   }
 
-  handleBlur = e => {
+  hideEmojis = e => {
     // if e.relatedTarget === null it means the click was outside this container
     if (!this.state.popupOpened || e.relatedTarget === null) {
       const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget)
-      this.changeFocusState(shouldPreserveFocusState)
+      this.changeShownState(shouldPreserveFocusState)
     } else {
       e.stopPropagation()
     }
@@ -78,7 +77,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     opacity: 0,
 
     '& .smile-emoji': {
-      display: 'none',
+      visibility: 'hidden',
+      position: 'absolute',
+      // opacity: 0,
     },
     '& [aria-pressed="true"]': {
       color: 'red',
@@ -90,12 +91,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       color: 'red',
     },
 
-    '&.focused .smile-emoji': {
-      display: 'flex',
-    },
-
-    '&:hover .smile-emoji': {
-      display: 'flex',
+    '&.shown .smile-emoji': {
+      visibility: 'visible',
+      position: 'inherit',
+      // opacity: 1,
     },
   })
 
@@ -104,7 +103,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       <Menu
         styles={this.popoverStyles}
         iconOnly
-        className={cx(this.props.className, this.state.focused ? 'focused' : '')}
+        className={cx(this.props.className, this.state.shown ? 'shown' : '')}
         items={[
           {
             key: 'smile',
@@ -152,14 +151,17 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
           {
             key: 'separator',
             as: 'div',
-            accessibility: toolbarButtonBehavior,
+            accessibility: defaultBehavior,
             content: '|',
             role: 'separator',
+            wrapper: {
+              role: 'presentation',
+            },
           },
           {
             key: 'context-menu',
             icon: 'ellipsis horizontal',
-            role: 'menubutton',
+            accessibility: toolbarButtonBehavior,
             'aria-haspopup': true,
             'aria-label': 'more options',
             'aria-posinset': '5',
@@ -168,8 +170,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         ].map(itemShorthandValue => render =>
           render(itemShorthandValue, this.renderItemOrContextMenu),
         )}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
+        onFocus={this.showRestEmojis}
+        onBlur={this.hideEmojis}
+        onMouseEnter={this.showRestEmojis}
+        onMouseLeave={this.hideEmojis}
         onClick={this.handleMenuClick}
         accessibility={toolbarBehavior}
         data-is-focusable={true}
