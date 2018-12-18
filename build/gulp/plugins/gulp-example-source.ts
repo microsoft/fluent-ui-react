@@ -11,7 +11,7 @@ import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
 
 const pluginName = 'gulp-example-source'
 
-const createExample = (file: Vinyl): ExampleSource => {
+const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
   const transformResult = Babel.transform(tsSource, {
@@ -49,7 +49,7 @@ export default () =>
       .join('.')
       .replace(/\.tsx$/, '')
       .toLowerCase()
-    const source = createExample(file)
+    const source = createExampleSourceCode(file)
 
     cb(
       null,
