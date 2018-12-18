@@ -2,6 +2,7 @@ import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
 import * as remember from 'gulp-remember'
+import * as fs from 'fs'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
 import * as through2 from 'through2'
@@ -236,7 +237,19 @@ task('watch:docs', cb => {
     .on('change', handleWatchChange)
     .on('unlink', path => handleWatchUnlink('example-menu', path))
 
-  watch(examplesSrc, series('build:docs:example-sources')).on('change', handleWatchChange)
+  watch(examplesSrc, series('build:docs:example-sources'))
+    .on('change', handleWatchChange)
+    .on('unlink', filePath => {
+      log(`File ${filePath} was deleted, running tasks...`)
+
+      const examplesPath = config.paths.docsSrc('examples', 'components')
+      const relativePath = path.relative(examplesPath, filePath)
+
+      const sourceFilename = `${relativePath.replace(/\.tsx$/, '')}.source.json`
+      const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
+
+      fs.unlinkSync(sourcePath)
+    })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
     .on('change', handleWatchChange)
