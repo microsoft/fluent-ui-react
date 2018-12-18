@@ -116,8 +116,14 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, MenuState> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
-    setActiveIndex: index => {
-      this.trySetState({ activeIndex: index })
+    onActiveChanged: (e, props) => {
+      const { index, active } = props
+      if (active) {
+        this.trySetState({ activeIndex: index })
+      } else if (this.state.activeIndex === index) {
+        this.trySetState({ activeIndex: null })
+      }
+      _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
   })
 

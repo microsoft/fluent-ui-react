@@ -6,11 +6,15 @@ export interface MenuVariables {
 
   activeColor: string
   activeBackgroundColor: string
+  focusedBackgroundColor: string
   borderColor: string
 
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
+
+  primaryFocusedColor: string
+  primaryFocusedBackgroundColor: string
 
   primaryBorderColor: string
   primaryHoverBorderColor: string
@@ -30,11 +34,15 @@ export default (siteVars: any): MenuVariables => {
 
     activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
+    focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,
 
     primaryActiveColor: siteVars.white,
     primaryActiveBackgroundColor: siteVars.brand08,
     primaryActiveBorderColor: siteVars.brand,
+
+    primaryFocusedColor: siteVars.white,
+    primaryFocusedBackgroundColor: siteVars.brand12,
 
     primaryBorderColor: siteVars.brand08,
     primaryHoverBorderColor: siteVars.gray08,

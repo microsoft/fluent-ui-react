@@ -20,7 +20,7 @@ const getActionStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle =>
-  (underlined && !isFromKeyboard) || iconOnly
+  underlined || iconOnly
     ? {
         color,
         background: v.backgroundColor,
@@ -34,6 +34,35 @@ const getActionStyles = ({
         color,
         background: v.activeBackgroundColor,
       }
+
+const getFocusedStyles = ({
+  props,
+  variables: v,
+  color,
+}: {
+  props: MenuItemPropsAndState
+  variables: MenuVariables
+  color: string
+}): ICSSInJSStyle => {
+  const { primary, underlined, iconOnly, isFromKeyboard, active } = props
+  if (active) return {}
+  return {
+    ...((underlined && !isFromKeyboard) || iconOnly
+      ? {
+          color,
+          background: v.backgroundColor,
+        }
+      : primary
+      ? {
+          color: v.primaryFocusedColor,
+          background: v.primaryFocusedBackgroundColor,
+        }
+      : {
+          color,
+          background: v.focusedBackgroundColor,
+        }),
+  }
+}
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
@@ -191,10 +220,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // focus styles
-      ...(isFromKeyboard && getActionStyles({ props, variables: v, color: v.activeColor })),
+      ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
 
       // hover styles
-      ':hover': getActionStyles({ props, variables: v, color: v.activeColor }),
+      ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
     }
   },
 
@@ -294,8 +323,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   menu: ({ props: { vertical } }) => ({
-    // background: 'white',
-    // zIndex: '1000',
+    zIndex: '1000',
     position: 'absolute',
     top: vertical ? '0' : '100%',
     left: vertical ? '100%' : '0',
