@@ -12,7 +12,7 @@ const renderButton = rotateArrowUp => (
 )
 
 const PopupExamplePosition = () => (
-  <Grid columns="repeat(1, 80px)" variables={{ padding: '30px', gridGap: '30px' }}>
+  <Grid columns="1, 80px" variables={{ padding: '30px' }}>
     <Popup
       align="start"
       position="above"
