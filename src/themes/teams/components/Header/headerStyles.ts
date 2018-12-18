@@ -1,10 +1,17 @@
-import { ICSSInJSStyle } from '../../../types'
+import * as _ from 'lodash'
+import { TextAlignProperty } from 'csstype'
 
-export default {
-  root: ({ props, variables: v }): ICSSInJSStyle => ({
-    color: v.color,
-    textAlign: props.textAlign,
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { HeaderProps } from '../../../../components/Header/Header'
+import { HeaderVariables } from './headerVariables'
+
+const headerStyles: ComponentSlotStylesInput<HeaderProps, HeaderVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
-    ...(props.description && { marginBottom: 0 }),
+    color: _.get(v.colors, p.color, v.color),
+    textAlign: p.textAlign as TextAlignProperty,
+    ...(p.description && { marginBottom: 0 }),
   }),
 }
+
+export default headerStyles
