@@ -1,16 +1,14 @@
 import * as Babel from '@babel/core'
 import * as gutil from 'gulp-util'
-import * as path from 'path'
 import * as prettier from 'prettier'
 import * as through from 'through2'
 import * as Vinyl from 'vinyl'
 
-import config from '../../../config'
 import * as prettierConfig from '../../../.prettierrc.json'
 import { ExampleSource } from '../../../docs/src/types'
 import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
+import { getRelativePathToSourceFile } from './util'
 
-const examplesPath = config.paths.docsSrc('examples', 'components')
 const pluginName = 'gulp-example-source'
 
 const createExampleSourceCode = (file: Vinyl): ExampleSource => {
@@ -44,9 +42,7 @@ export default () =>
       return
     }
 
-    const relativePath = path.relative(examplesPath, file.path)
-    const sourcePath = `${relativePath.replace(/\.tsx$/, '')}.source.json`
-
+    const sourcePath = getRelativePathToSourceFile(file.path)
     const source = createExampleSourceCode(file)
 
     cb(

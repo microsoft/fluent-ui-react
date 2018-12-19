@@ -17,6 +17,7 @@ import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
+import { getRelativePathToSourceFile } from '../plugins/util'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
@@ -242,10 +243,7 @@ task('watch:docs', cb => {
     .on('unlink', filePath => {
       log(`File ${filePath} was deleted, running tasks...`)
 
-      const examplesPath = config.paths.docsSrc('examples', 'components')
-      const relativePath = path.relative(examplesPath, filePath)
-
-      const sourceFilename = `${relativePath.replace(/\.tsx$/, '')}.source.json`
+      const sourceFilename = getRelativePathToSourceFile(filePath)
       const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
 
       fs.unlinkSync(sourcePath)
