@@ -19,7 +19,7 @@ export interface PopoverProps {
 }
 
 interface PopoverState {
-  shown: boolean
+  smilesShown: boolean
   popupOpened: boolean
   isMessageBookmarked: boolean
   isMessageTranslated: boolean
@@ -28,7 +28,7 @@ interface PopoverState {
 
 class Popover extends React.Component<PopoverProps, PopoverState> {
   state = {
-    shown: false,
+    smilesShown: false,
     popupOpened: false,
     isMessageBookmarked: false,
     isMessageTranslated: false,
@@ -36,10 +36,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   changeShownState = (value: boolean) => {
-    this.state.shown !== value && this.setState({ shown: value })
+    this.state.smilesShown !== value && this.setState({ smilesShown: value })
   }
 
-  showRestEmojis = () => {
+  showRestEmojis = e => {
     this.changeShownState(true)
   }
 
@@ -77,9 +77,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     opacity: 0,
 
     '& .smile-emoji': {
-      visibility: 'hidden',
       position: 'absolute',
-      // opacity: 0,
+      opacity: 0,
+      zIndex: -1,
     },
     '& [aria-pressed="true"]': {
       color: 'red',
@@ -91,10 +91,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       color: 'red',
     },
 
-    '&.shown .smile-emoji': {
-      visibility: 'visible',
-      position: 'inherit',
-      // opacity: 1,
+    '&.smiles-shown .smile-emoji': {
+      position: 'initial',
+      zIndex: 'initial',
+      opacity: 1,
     },
   })
 
@@ -103,7 +103,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       <Menu
         styles={this.popoverStyles}
         iconOnly
-        className={cx(this.props.className, this.state.shown ? 'shown' : '')}
+        className={cx(this.props.className, this.state.smilesShown ? 'smiles-shown' : '')}
         items={[
           {
             key: 'smile',
@@ -217,7 +217,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
                   'aria-label': 'Save this message',
                   'aria-checked': this.state.isMessageBookmarked,
                   onClick: () =>
-                    this.setState({ isMessageBookmarked: !this.state.isMessageBookmarked }),
+                    this.setState({
+                      isMessageBookmarked: !this.state.isMessageBookmarked,
+                      popupOpened: false,
+                    }),
                   role: 'menuitemcheckbox',
                   'aria-posinset': '1',
                   'aria-setsize': '3',
@@ -228,6 +231,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
                   content: 'Copy link',
                   'aria-posinset': '2',
                   'aria-setsize': '3',
+                  onClick: () => this.setState({ popupOpened: false }),
                 },
                 {
                   key: 'translate',
@@ -236,7 +240,10 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
                   'aria-label': 'Translate',
                   'aria-checked': this.state.isMessageTranslated,
                   onClick: () =>
-                    this.setState({ isMessageTranslated: !this.state.isMessageTranslated }),
+                    this.setState({
+                      isMessageTranslated: !this.state.isMessageTranslated,
+                      popupOpened: false,
+                    }),
                   role: 'menuitemcheckbox',
                   'aria-posinset': '3',
                   'aria-setsize': '3',
