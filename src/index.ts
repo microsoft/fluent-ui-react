@@ -72,7 +72,7 @@ export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
-export { default as ListItem, ListItemState, ListItemProps } from './components/List/ListItem'
+export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
 export { default as Menu, MenuProps, MenuState } from './components/Menu/Menu'
 export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
