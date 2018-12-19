@@ -67,7 +67,7 @@ export interface PopupProps
   offset?: string
 
   /** Events triggering the popup. */
-  on?: 'click' | 'hover'
+  on?: 'click' | 'hover' | 'focus' | ['focus' | 'click'] | ['focus' | 'hover']
 
   /** Defines whether popup is displayed. */
   open?: boolean
@@ -126,7 +126,11 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     mouseLeaveDelay: PropTypes.number,
-    on: PropTypes.oneOf(['hover', 'click']),
+    on: PropTypes.oneOfType([
+      PropTypes.oneOf(['hover', 'click', 'focus']),
+      PropTypes.arrayOf(PropTypes.oneOf(['click', 'focus'])),
+      PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus'])),
+    ]),
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     position: PropTypes.oneOf(POSITIONS),
@@ -260,14 +264,31 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const triggerProps: any = {}
 
     const { on } = this.props
+    const normalizedOn = _.isArray(on) ? on : [on]
 
-    if (on === 'click') {
+    if (_.includes(normalizedOn, 'click')) {
       triggerProps.onClick = (e, ...rest) => {
         this.trySetOpen(!this.state.open, e)
         _.invoke(triggerElement, 'props.onClick', e, ...rest)
       }
     }
-    if (on === 'hover') {
+    if (_.includes(normalizedOn, 'focus')) {
+      triggerProps.onFocus = (e, ...rest) => {
+        console.log('Calledn trigger on focus')
+        this.trySetOpen(true, e)
+        _.invoke(triggerElement, 'props.onFocus', e, ...rest)
+      }
+      triggerProps.onBlur = (e, ...rest) => {
+        if (
+          !e.currentTarget.contains(e.relatedTarget) &&
+          !this.popupDomElement.contains(e.relatedTarget)
+        ) {
+          this.trySetOpen(false, e)
+        }
+        _.invoke(triggerElement, 'props.onBlur', e, ...rest)
+      }
+    }
+    if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...rest) => {
         this.setPopupOpen(true, e)
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...rest)
@@ -285,8 +306,9 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const contentProps: any = {}
 
     const { on } = this.props
+    const normalizedOn = _.isArray(on) ? on : [on]
 
-    if (on === 'hover') {
+    if (_.includes(normalizedOn, 'hover')) {
       contentProps.onMouseEnter = (e, contentProps) => {
         this.setPopupOpen(true, e)
         _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
@@ -294,6 +316,21 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       contentProps.onMouseLeave = (e, contentProps) => {
         this.setPopupOpen(false, e)
         _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
+      }
+    }
+    if (_.includes(normalizedOn, 'focus')) {
+      contentProps.onFocus = (e, ...rest) => {
+        !this.state.open && this.trySetOpen(true, e)
+        _.invoke(predefinedProps, 'props.onFocus', e, ...rest)
+      }
+      contentProps.onBlur = (e, ...rest) => {
+        if (
+          !e.currentTarget.contains(e.relatedTarget) &&
+          !this.popupDomElement.contains(e.relatedTarget)
+        ) {
+          this.trySetOpen(false, e)
+        }
+        _.invoke(predefinedProps, 'props.onBlur', e, ...rest)
       }
     }
 
@@ -357,6 +394,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   ) => {
     const { content } = this.props
 
+    // TODO: add here the handlers (onFocus, onBlur etc..)
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
