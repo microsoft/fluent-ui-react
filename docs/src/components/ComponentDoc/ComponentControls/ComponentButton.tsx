@@ -1,4 +1,4 @@
-import { createComponent, Icon, Button, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { createComponent, Button, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import * as React from 'react'
 
 interface LabelledButtonProps {

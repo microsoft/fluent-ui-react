@@ -24,24 +24,25 @@ const getDefaultFontIcon = (iconName: string) => {
 }
 
 const getFontStyles = (
-  size: string,
+  size: number,
   iconName: string,
   themeIcon?: ResultOf<FontIconSpec>,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
+  const sizeInRems = pxToRem(size)
 
   return {
     fontFamily,
     fontWeight: 900,
-    fontSize: getSize(size),
+    fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
 
     '::before': {
       content,
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
+      width: sizeInRems,
+      height: sizeInRems,
     },
   }
 }
@@ -72,7 +73,19 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getSize = size => pxToRem(sizes.get(size))
+const getIconSize = (size, sizeModifier): number => {
+  if (!sizeModifier) {
+    return sizes.get(size)
+  }
+  const modifiedSizes = {
+    large: {
+      x: 24,
+      xx: 28,
+    },
+  }
+
+  return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
+}
 
 const getIconColor = color => color || 'currentColor'
 
@@ -92,8 +105,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(isFontBased &&
-        getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
+      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
       ...(isFontBased && {
         color: getIconColor(v.color),
@@ -129,10 +141,12 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
   },
 
   svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
+    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
+
     return {
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
+      width: iconSizeInRems,
+      height: iconSizeInRems,
       fill: getIconColor(v.color),
 
       ...(disabled && {

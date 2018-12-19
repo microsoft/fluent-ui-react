@@ -60,7 +60,6 @@ export default {
           'Spacebar',
           'Tab',
         ],
-        'node_modules/what-input/dist/what-input.js': ['ask'],
       },
     }),
   ],

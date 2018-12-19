@@ -1,4 +1,6 @@
 import { Icon, Input, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { ShorthandValue } from '../../../../types/utils'
+import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
@@ -9,6 +11,7 @@ import { findDOMNode } from 'react-dom'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { constants } from 'src/lib'
+import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -99,75 +102,63 @@ class Sidebar extends React.Component<any, any> {
       this.setState({ selectedItemIndex: next })
     }
   }
-
   private menuItemsByType = _.map(nextType => {
     const items = _.flow(
       _.filter<ComponentMenuItem>(({ type }) => type === nextType),
-      _.map(info => (
-        <Menu.Item
-          key={info.displayName}
-          content={info.displayName}
-          onClick={this.handleItemClick}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        />
-      )),
+      _.map(info => ({
+        key: info.displayName.concat(nextType),
+        content: info.displayName,
+        onClick: this.handleItemClick,
+        as: NavLink,
+        to: getComponentPathname(info),
+        accessibility: listItemBehavior,
+      })),
     )([...componentMenu, ...behaviorMenu])
 
-    return (
-      <Menu.Item
-        key={nextType}
-        content={
-          <div>
-            {_.capitalize(nextType)}s
-            <Menu vertical items={items} pills />
-          </div>
-        }
-      />
-    )
+    return { items }
   }, constants.typeOrder)
 
-  private renderSearchItems = () => {
-    const { selectedItemIndex, query } = this.state
-    if (!query) return undefined
+  // private renderSearchItems = () => {
+  //   const { selectedItemIndex, query } = this.state
+  //   if (!query) return undefined
 
-    let itemIndex = -1
-    const startsWithMatches: ComponentMenuItem[] = []
-    const containsMatches: ComponentMenuItem[] = []
-    const escapedQuery = _.escapeRegExp(query)
+  //   let itemIndex = -1
+  //   const startsWithMatches: ComponentMenuItem[] = []
+  //   const containsMatches: ComponentMenuItem[] = []
+  //   const escapedQuery = _.escapeRegExp(query)
 
-    _.each(info => {
-      if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-        startsWithMatches.push(info)
-      } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-        containsMatches.push(info)
-      }
-    }, componentMenu)
+  //   _.each(info => {
+  //     if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
+  //       startsWithMatches.push(info)
+  //     } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
+  //       containsMatches.push(info)
+  //     }
+  //   }, componentMenu)
 
-    this.filteredMenu = [...startsWithMatches, ...containsMatches]
-    const menuItems = _.map(info => {
-      itemIndex += 1
-      const isSelected = itemIndex === selectedItemIndex
+  //   this.filteredMenu = [...startsWithMatches, ...containsMatches]
+  //   const menuItems = _.map(info => {
+  //     itemIndex += 1
+  //     const isSelected = itemIndex === selectedItemIndex
 
-      if (isSelected) this.selectedRoute = getComponentPathname(info)
+  //     if (isSelected) this.selectedRoute = getComponentPathname(info)
 
-      return (
-        <Menu.Item
-          key={info.displayName}
-          content={info.displayName}
-          onClick={this.handleItemClick}
-          active={isSelected}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        />
-      )
-    }, this.filteredMenu)
+  //     return (
+  //       <Menu.Item
+  //         key={info.displayName}
+  //         content={info.displayName}
+  //         onClick={this.handleItemClick}
+  //         active={isSelected}
+  //         as={NavLink}
+  //         to={getComponentPathname(info)}
+  //       />
+  //     )
+  //   }, this.filteredMenu)
 
-    return <Menu vertical pills items={menuItems} />
-  }
+  //   return <Menu vertical pills items={menuItems} />
+  // }
 
   render() {
-    const { style } = this.props
+    //  const { style } = this.props
     const { query } = this.state
 
     // Should be applied by provider
@@ -181,112 +172,162 @@ class Sidebar extends React.Component<any, any> {
       bottom: '0px',
     }
 
+    const menuSectionStyles: ICSSInJSStyle = {
+      marginLeft: '0px',
+      paddingLeft: '0px',
+      fontWeight: fontWeightBold,
+    }
+    const navBarStyles: ICSSInJSStyle = {
+      padding: '0px',
+    }
+
     const changeLogUrl = '${constants.repoURL}/blob/master/CHANGELOG.md'
 
+    const menuItems: ShorthandValue[] = [
+      {
+        key: 'github',
+        content: (
+          <div style={flexDislayStyle}>
+            GitHub
+            <Icon name="chess rook" styles={{ float: 'right' }} />
+          </div>
+        ),
+        href: constants.repoURL,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'change',
+        content: (
+          <div style={flexDislayStyle}>
+            CHANGELOG
+            <Icon name="file alternate outline" styles={{ float: 'right' }} />
+          </div>
+        ),
+        href: changeLogUrl,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'concepts',
+        content: 'Concepts',
+        styles: menuSectionStyles,
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'intro',
+        content: 'Introduction',
+        as: NavLink,
+        to: '/',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'color',
+        content: 'Color Palette',
+        as: NavLink,
+        to: '/color-palette',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'shorthand',
+        content: 'Shorthand Props',
+        as: NavLink,
+        to: '/shorthand-props',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'guides',
+        content: 'Guides',
+        styles: menuSectionStyles,
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'quickstart',
+        content: 'QuickStart',
+        as: NavLink,
+        to: '/quick-start',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'accessiblity',
+        content: 'Accessibility',
+        as: NavLink,
+        to: '/accessibility',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'theming',
+        content: 'Theming',
+        as: NavLink,
+        to: '/theming',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'theming-examples',
+        content: 'Theming Examples',
+        as: NavLink,
+        to: '/theming-examples',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'integrate-custom',
+        content: 'Integrate Custom Components',
+        as: NavLink,
+        to: '/integrate-custom-components',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'search',
+        content: (
+          <Input
+            className="transparent inverted icon"
+            icon="search"
+            placeholder="Search components..."
+            value={query}
+            onChange={this.handleSearchChange}
+            onKeyDown={this.handleSearchKeyDown}
+          />
+        ),
+      },
+    ]
+    const componentMenuItem = {
+      key: 'components',
+      content: 'Components',
+      styles: menuSectionStyles,
+      accessibility: listItemBehavior,
+    }
+    const behaviorMenuItem = {
+      key: 'behaviour',
+      content: 'Behaviors',
+      styles: menuSectionStyles,
+      accessibility: listItemBehavior,
+    }
+
+    const withComponents = menuItems.concat(componentMenuItem).concat(this.menuItemsByType[0].items)
+    const allItems = withComponents.concat(behaviorMenuItem).concat(this.menuItemsByType[1].items)
+
+    // {query ? this.renderSearchItems() : this.menuItemsByType},
     return (
       <Segment
         styles={sidebarStyles}
         content={
-          <Menu vertical pills>
-            <Menu.Item>
+          <div>
+            <div>
               <Logo spaced="right" width="48px" />
               <Text content="Stardust UI React &nbsp;" />
               <Text content={pkg.version} size="small" weight="bold" />
-
-              <Menu
-                vertical
-                pills
-                items={[
-                  {
-                    key: 'github',
-                    content: (
-                      <div style={flexDislayStyle}>
-                        GitHub
-                        <Icon name="chess rook" styles={{ float: 'right' }} />
-                      </div>
-                    ),
-                    href: constants.repoURL,
-                    target: '_blank',
-                    rel: 'noopener noreferrer',
-                  },
-                  {
-                    key: 'change',
-                    content: (
-                      <div style={flexDislayStyle}>
-                        CHANGELOG
-                        <Icon name="file alternate outline" styles={{ float: 'right' }} />
-                      </div>
-                    ),
-                    href: changeLogUrl,
-                    target: '_blank',
-                    rel: 'noopener noreferrer',
-                  },
-                ]}
-              />
-            </Menu.Item>
-            <Menu.Item>
-              Concepts
-              <Menu
-                vertical
-                pills
-                items={[
-                  { key: 'intro', content: 'Introduction', as: NavLink, to: '/' },
-                  { key: 'color', content: 'Color Palette', as: NavLink, to: '/color-palette' },
-                  {
-                    key: 'shorthand',
-                    content: 'Shorthand Props',
-                    as: NavLink,
-                    to: '/shorthand-props',
-                  },
-                ]}
-              />
-            </Menu.Item>
-            <Menu.Item>
-              Guides
-              <Menu
-                vertical
-                pills
-                items={[
-                  { key: 'quickstart', content: 'QuickStart', as: NavLink, to: '/quick-start' },
-                  {
-                    key: 'accessiblity',
-                    content: 'Accessibility',
-                    as: NavLink,
-                    to: '/accessibility',
-                  },
-                  {
-                    key: 'theming',
-                    content: 'Theming',
-                    as: NavLink,
-                    to: '/theming',
-                  },
-                  {
-                    key: 'theming-examples',
-                    content: 'Theming Examples',
-                    as: NavLink,
-                    to: '/theming-examples',
-                  },
-                  {
-                    key: 'integrate-custom',
-                    content: 'Integrate Custom Components',
-                    as: NavLink,
-                    to: '/integrate-custom-components',
-                  },
-                ]}
-              />
-            </Menu.Item>
-            <Menu.Item active>
-              <Input
-                className="transparent inverted icon"
-                icon="search"
-                placeholder="Search components..."
-                value={query}
-                onChange={this.handleSearchChange}
-                onKeyDown={this.handleSearchKeyDown}
-              />
-            </Menu.Item>
-            {query ? this.renderSearchItems() : this.menuItemsByType}
-          </Menu>
+            </div>
+            <Menu
+              vertical
+              fluid
+              pills
+              accessibility={listBehavior}
+              styles={navBarStyles}
+              items={allItems}
+            />
+          </div>
         }
       />
     )

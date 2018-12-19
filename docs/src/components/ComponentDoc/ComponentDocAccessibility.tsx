@@ -37,11 +37,11 @@ const ComponentDocAccessibility = ({ info }) => {
         <p>
           Available behaviors:{' '}
           {info.behaviors.map(behavior => (
-            <>
+            <React.Fragment key={`${behavior.category}-${behavior.name}`}>
               <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
                 {behavior.displayName}
               </a>{' '}
-            </>
+            </React.Fragment>
           ))}
         </p>
       )}

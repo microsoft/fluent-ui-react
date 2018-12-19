@@ -7,6 +7,7 @@ import {
   childrenExist,
   customPropTypes,
   createShorthandFactory,
+  isFromKeyboard,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -18,7 +19,6 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
-import isFromKeyboard from '../../lib/isFromKeyboard'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -73,7 +73,7 @@ export interface ButtonProps
 }
 
 export interface ButtonState {
-  [isFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -115,7 +115,9 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
 
   static Group = ButtonGroup
 
-  public state = isFromKeyboard.initial
+  public state = {
+    isFromKeyboard: false,
+  }
 
   public renderComponent({
     ElementType,
@@ -171,7 +173,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
