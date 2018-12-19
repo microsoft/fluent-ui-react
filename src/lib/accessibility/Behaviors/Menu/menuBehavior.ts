@@ -1,4 +1,5 @@
 import { Accessibility, FocusZoneMode } from '../../types'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
@@ -21,6 +22,7 @@ const menuBehavior: Accessibility = (props: any) => ({
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
       shouldFocusFirstElementWhenReceivedFocus: true,
+      direction: props.vertical ? FocusZoneDirection.vertical : FocusZoneDirection.horizontal,
     },
   },
 })

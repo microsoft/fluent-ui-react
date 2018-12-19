@@ -11,22 +11,22 @@ describe('Focus Container', () => {
     const focusContainer = createFocusContainer()
 
     expect(focusContainer).toBeDefined()
-    expect(focusContainer.getFocusedItemIndex()).toBe(0)
+    expect(focusContainer.getFocusedIndex()).toBe(0)
   })
 
   describe('sync item index', () => {
     test('should set focus item index', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(4)
+      focusContainer.syncFocusedIndex(4)
 
-      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+      expect(focusContainer.getFocusedIndex()).toBe(4)
     })
 
     test('should not set focus index function', () => {
       const setFocusAt = jest.fn()
       const focusContainer = createFocusContainer({ itemsCount: 5, setFocusAtFn: setFocusAt })
 
-      focusContainer.syncFocusedItemIndex(4)
+      focusContainer.syncFocusedIndex(4)
       expect(setFocusAt).not.toBeCalled()
     })
   })
@@ -34,10 +34,10 @@ describe('Focus Container', () => {
   describe('move previous', () => {
     test('should decrement index of focused item', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(4)
+      focusContainer.syncFocusedIndex(4)
 
       focusContainer.movePrevious()
-      expect(focusContainer.getFocusedItemIndex()).toBe(3)
+      expect(focusContainer.getFocusedIndex()).toBe(3)
     })
 
     test('should call set focus index function if there are any items', () => {
@@ -58,21 +58,21 @@ describe('Focus Container', () => {
 
     test('focused item index should not ever become less than 0', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(0)
+      focusContainer.syncFocusedIndex(0)
 
       focusContainer.movePrevious()
 
-      expect(focusContainer.getFocusedItemIndex()).toBe(0)
+      expect(focusContainer.getFocusedIndex()).toBe(0)
     })
   })
 
   describe('move next', () => {
     test('should increment index of focused item', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(3)
+      focusContainer.syncFocusedIndex(3)
 
       focusContainer.moveNext()
-      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+      expect(focusContainer.getFocusedIndex()).toBe(4)
     })
 
     test('should call set focus index function if there are any items', () => {
@@ -93,21 +93,21 @@ describe('Focus Container', () => {
 
     test('focused item index should not exceed range of valid indexes', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(4)
+      focusContainer.syncFocusedIndex(4)
 
       focusContainer.moveNext()
 
-      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+      expect(focusContainer.getFocusedIndex()).toBe(4)
     })
   })
 
   describe('move first', () => {
     test('should set focused item index to 0', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(3)
+      focusContainer.syncFocusedIndex(3)
 
       focusContainer.moveFirst()
-      expect(focusContainer.getFocusedItemIndex()).toBe(0)
+      expect(focusContainer.getFocusedIndex()).toBe(0)
     })
 
     test('should call set focus index function if there are any items', () => {
@@ -130,10 +130,10 @@ describe('Focus Container', () => {
   describe('move last', () => {
     test('should set focused item index to last index of valid range', () => {
       const focusContainer = createFocusContainer({ itemsCount: 5 })
-      focusContainer.syncFocusedItemIndex(2)
+      focusContainer.syncFocusedIndex(2)
 
       focusContainer.moveLast()
-      expect(focusContainer.getFocusedItemIndex()).toBe(4)
+      expect(focusContainer.getFocusedIndex()).toBe(4)
     })
 
     test('should call set focus index function if there are any items', () => {

@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import React from 'react'
+import * as _ from 'lodash'
+import * as React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
 const statusProps = { icon: 'check', color: 'green', title: 'Available' }

@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import { Grid, Image, Button, gridBehavior } from '@stardust-ui/react'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 const imageNames = [
   'ade',
