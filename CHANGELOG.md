@@ -61,8 +61,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `canvas-add-page` SVG icon @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
 - Add `sizeModifier` variable (with `x` and `xx` values) to `Icon`'s Teams theme styles @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
 - Add `offset` prop to `Popup` to extend set of popup positioning options @kuzhelov ([#606](https://github.com/stardust-ui/react/pull/606))
-- Export `table-add` SVG icon @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
-- Export `table-delete` SVG icon @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
+- Export `table-add` and `table-delete` SVG icon @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
 
 ### Documentation
 - Add `prettier` support throughout the docs @levithomason  ([#568](https://github.com/stardust-ui/react/pull/568))
