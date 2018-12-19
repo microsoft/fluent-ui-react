@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Provider } from '@stardust-ui/react'
 
 const theme = { siteVariables: { brand: 'cornflowerblue' } }

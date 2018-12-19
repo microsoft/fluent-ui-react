@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Icon, Label } from '@stardust-ui/react'
 
 const IconExampleSpace = () => (

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Header, Portal } from '@stardust-ui/react'
 
 class PortalExampleFocusTrapped extends React.Component {
