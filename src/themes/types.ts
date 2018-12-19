@@ -96,6 +96,13 @@ export type ColorPalette = ExtendablePalette<
   EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
 >
 
+/**
+ * A type for the generic color scheme of a component based on CSS property names
+ */
+export type ColorScheme = Required<
+  Pick<React.CSSProperties, 'color' | 'backgroundColor' | 'borderColor'> & { shadowColor: string }
+>
+
 // ========================================================
 // Props
 // ========================================================
