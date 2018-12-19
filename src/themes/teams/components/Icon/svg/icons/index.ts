@@ -24,6 +24,8 @@ import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
+import horizontalRule from './horizontalRule'
+import indent from './indent'
 import italic from './italic'
 import leave from './leave'
 import like from './like'
@@ -36,19 +38,24 @@ import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import numberList from './numberList'
+import outdent from './outdent'
 import participantRemove from './participantRemove'
 import quote from './quote'
 import redbang from './redbang'
+import redo from './redo'
+import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
 import send from './send'
 import sticker from './sticker'
+import strike from './strike'
 import table from './table'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
 import trashCan from './trashCan'
 import underline from './underline'
+import undo from './undo'
 
 export default {
   add,
@@ -74,6 +81,8 @@ export default {
   gallery,
   giphy,
   highlight,
+  'horizontal-rule': horizontalRule,
+  indent,
   italic,
   leave,
   like,
@@ -86,18 +95,23 @@ export default {
   'mic-off': micOff,
   more,
   'number-list': numberList,
+  outdent,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
   quote,
   redbang,
+  redo,
+  'remove-format': removeFormat,
   reply,
   retry,
   send,
   sticker,
+  strike,
   table,
   teams,
   translation,
   'trash-can': trashCan,
   'team-create': teamCreate,
   underline,
+  undo,
 } as { [iconName: string]: TeamsSvgIconSpec }

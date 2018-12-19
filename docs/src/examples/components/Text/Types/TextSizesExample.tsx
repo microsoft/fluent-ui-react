@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import * as _ from 'lodash'
 import { Provider, Text } from '@stardust-ui/react'
 
