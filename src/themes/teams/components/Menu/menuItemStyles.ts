@@ -83,14 +83,6 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
         ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
-
-      ...(vertical && {
-        ':first-child': {
-          '::before': {
-            display: 'none',
-          },
-        },
-      }),
     }
   )
 }
@@ -224,6 +216,37 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // hover styles
       ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+
+      ':first-child': {
+        ...(!pills &&
+          !iconOnly &&
+          !(pointing && vertical) &&
+          !underlined && {
+            ...(vertical && {
+              borderTopRightRadius: pxToRem(3),
+              borderTopLeftRadius: pxToRem(3),
+              '::before': {
+                display: 'none',
+              },
+            }),
+            ...(!vertical && {
+              borderBottomLeftRadius: pxToRem(3),
+              borderTopLeftRadius: pxToRem(3),
+            }),
+          }),
+      },
+
+      ':last-child': {
+        ...(!pills &&
+          !iconOnly &&
+          !(pointing && vertical) &&
+          !underlined && {
+            ...(vertical && {
+              borderBottomRightRadius: pxToRem(3),
+              borderBottomLeftRadius: pxToRem(3),
+            }),
+          }),
+      },
     }
   },
 
