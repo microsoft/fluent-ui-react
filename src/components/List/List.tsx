@@ -118,6 +118,22 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     },
   }
 
+  constructor(props, context) {
+    super(props, context)
+
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.items.length,
+      index => {
+        this.setState({ focusedIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
@@ -133,24 +149,11 @@ class List extends AutoControlledComponent<Extendable<ListProps>, ListState> {
     )
   }
 
-  componentDidMount() {
-    this.focusHandler = new ContainerFocusHandler(
-      () => this.props.items.length,
-      index => {
-        this.setState({ focusedIndex: index }, () => {
-          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
-
-          targetDomNode && targetDomNode.focus()
-        })
-      },
-    )
-  }
-
   renderItems() {
     const { items } = this.props
     const { focusedIndex, selectedIndex } = this.state
-    this.focusHandler && this.focusHandler.syncFocusedIndex(focusedIndex)
+
+    this.focusHandler.syncFocusedIndex(focusedIndex)
 
     this.itemRefs = []
 
