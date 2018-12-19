@@ -19,6 +19,11 @@ const Variations = () => (
       description="Headers may be aligned to the left, right, center or be justified."
       examplePath="components/Header/Variations/HeaderExampleTextAlign"
     />
+    <ComponentExample
+      title="Color"
+      description="Headers and descriptions can have colors."
+      examplePath="components/Header/Variations/HeaderExampleColor"
+    />
   </ExampleSection>
 )
 
