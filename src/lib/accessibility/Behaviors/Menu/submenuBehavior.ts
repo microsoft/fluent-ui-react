@@ -10,7 +10,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
  */
 
-const menuBehavior: Accessibility = (props: any) => ({
+const submenuBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'menu',
@@ -22,9 +22,10 @@ const menuBehavior: Accessibility = (props: any) => ({
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
       shouldFocusFirstElementWhenReceivedFocus: true,
-      direction: props.vertical ? FocusZoneDirection.vertical : FocusZoneDirection.horizontal,
+      shouldFocusOnMount: true,
+      direction: FocusZoneDirection.vertical,
     },
   },
 })
 
-export default menuBehavior
+export default submenuBehavior
