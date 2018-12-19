@@ -41,6 +41,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix multiple React's warnings about keys in docs @layershifter ([#602](https://github.com/stardust-ui/react/pull/602))
 - Fix incorrect handling of `isFromKeyboard` in `Menu` @layershifter ([#596](https://github.com/stardust-ui/react/pull/596))
 - Fix property names used in shorthand factories @kuzhelov ([#591](https://github.com/stardust-ui/react/pull/591))
+- Call `Popup` `onOpenChange` on all user initiated events @levithomason ([#619](https://github.com/stardust-ui/react/pull/619))
 
 ### Features
 - `Ref` components uses `forwardRef` API by default @layershifter ([#491](https://github.com/stardust-ui/react/pull/491))

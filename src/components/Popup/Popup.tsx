@@ -143,7 +143,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   protected actionHandlers: AccessibilityActionHandlers = {
     toggle: e => {
-      this.trySetOpen(!this.state.open, e, true)
+      this.trySetOpen(!this.state.open, e)
     },
     closeAndFocusTrigger: e => {
       this.closeAndFocusTrigger(e)
@@ -153,7 +153,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
   private closeAndFocusTrigger = e => {
     if (this.state.open) {
-      this.trySetOpen(false, e, true)
+      this.trySetOpen(false, e)
       _.invoke(this.triggerDomElement, 'focus')
     }
   }
@@ -172,7 +172,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
               this.triggerDomElement && !this.triggerDomElement.contains(e.target)
 
             if (isOutsidePopupElement && isOutsideTriggerElement) {
-              this.state.open && this.trySetOpen(false, e, true)
+              this.state.open && this.trySetOpen(false, e)
             }
           },
           {
@@ -326,10 +326,9 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     )
   }
 
-  private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
-    if (this.trySetState({ open: newValue }) || forceChangeEvent) {
-      _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
-    }
+  private trySetOpen(newValue: boolean, eventArgs: any) {
+    this.trySetState({ open: newValue })
+    _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
   private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {

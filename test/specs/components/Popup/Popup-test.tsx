@@ -1,5 +1,9 @@
-import computePopupPlacement, { Position, Alignment } from 'src/components/Popup/positioningHelper'
+import * as React from 'react'
 import { Placement } from 'popper.js'
+
+import Popup from 'src/components/Popup/Popup'
+import computePopupPlacement, { Position, Alignment } from 'src/components/Popup/positioningHelper'
+import { mountWithProvider } from '../../../utils'
 
 type PositionTestInput = {
   align: Alignment
@@ -55,5 +59,30 @@ describe('Popup', () => {
     testPopupPositionInRtl({ position: 'after', align: 'top', expectedPlacement: 'left-start' })
     testPopupPositionInRtl({ position: 'after', align: 'center', expectedPlacement: 'left' })
     testPopupPositionInRtl({ position: 'after', align: 'bottom', expectedPlacement: 'left-end' })
+  })
+
+  describe('onOpenChange', () => {
+    test('is called on click', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(<Popup trigger={<button />} content="Hi" onOpenChange={spy} />)
+        .find('button')
+        .simulate('click')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+
+    // https://github.com/stardust-ui/react/pull/619
+    test('is called on click when controlled', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(<Popup open={false} trigger={<button />} content="Hi" onOpenChange={spy} />)
+        .find('button')
+        .simulate('click')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
   })
 })
