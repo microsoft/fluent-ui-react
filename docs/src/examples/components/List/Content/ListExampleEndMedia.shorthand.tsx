@@ -21,6 +21,6 @@ const items = [
   },
 ]
 
-const ListExample = () => <List items={items} selection />
+const ListExample = () => <List items={items} selectable />
 
 export default ListExample

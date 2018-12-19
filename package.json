@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -35,7 +35,7 @@
     "pretest": "yarn satisfied",
     "test": "gulp test",
     "test:watch": "gulp test:watch",
-    "test:vulns": "snyk test",
+    "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
@@ -73,7 +73,10 @@
     "react-popper": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/standalone": "^7.1.0",
+    "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
     "@types/faker": "^4.1.3",
@@ -124,7 +127,6 @@
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "prettier": "^1.15.3",
-    "raw-loader": "^0.5.1",
     "react": "^16.0.0",
     "react-ace": "^5.1.2",
     "react-custom-scrollbars": "^4.2.1",

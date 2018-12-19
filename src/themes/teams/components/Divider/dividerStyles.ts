@@ -2,36 +2,31 @@ import * as _ from 'lodash'
 
 import { childrenExist } from '../../../../lib'
 import { pxToRem } from '../../utils'
-import { ComponentSlotStylesInput, ICSSInJSStyle, ICSSPseudoElementStyle } from '../../../types'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
+import { DividerVariables } from './dividerVariables'
 
-const dividerBorderStyle = (size, color): ICSSInJSStyle => ({
-  height: `${size + 1}px`,
-  background: color,
-})
-
-const beforeAndAfter = (color, size, type, variables): ICSSPseudoElementStyle => ({
+const beforeAndAfter = (
+  color: string,
+  size: number,
+  variables: DividerVariables,
+): ICSSInJSStyle => ({
   content: '""',
   flex: 1,
-  ...dividerBorderStyle(size, variables.dividerColor),
-  ...(color && {
-    ...dividerBorderStyle(size, _.get(variables.colors, color)),
-  }),
+  height: `${size + 1}px`,
+  background: _.get(variables.colors, color, variables.dividerColor),
 })
 
-const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
+const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { children, color, fitted, size, type, important, content } = props
+    const { children, color, fitted, size, important, content } = props
     return {
-      color: variables.textColor,
+      color: _.get(variables.colors, color, variables.textColor),
       display: 'flex',
       alignItems: 'center',
       ...(!fitted && {
         paddingTop: variables.dividerPadding,
         paddingBottom: variables.dividerPadding,
-      }),
-      ...(color && {
-        color: _.get(variables.colors, color),
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,
@@ -42,17 +37,17 @@ const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, any> = {
             fontSize: pxToRem(12 + size),
             lineHeight: variables.textLineHeight,
             '::before': {
-              ...beforeAndAfter(color, size, type, variables),
+              ...beforeAndAfter(color, size, variables),
               marginRight: pxToRem(20),
             },
             '::after': {
-              ...beforeAndAfter(color, size, type, variables),
+              ...beforeAndAfter(color, size, variables),
               marginLeft: pxToRem(20),
             },
           }
         : {
             '::before': {
-              ...beforeAndAfter(color, size, type, variables),
+              ...beforeAndAfter(color, size, variables),
             },
           }),
     }
