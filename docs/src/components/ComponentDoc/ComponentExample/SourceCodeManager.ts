@@ -1,98 +1,130 @@
+import * as React from 'react'
 import { exampleSourcesContext } from '../../../utils'
+import { ExampleSource } from '../../../types'
+import { safeFormatCode } from '../../../utils/formatCode'
 
-interface SourceCodeData {
-  path: string
-  code: string
-  originalCode: string
+type SourceManagerCodeAPI = {
+  name: string
+  fileSuffix: string
+
+  active?: boolean
+  enabled?: boolean
 }
 
-export enum SourceCodeType {
-  normal = 'normal',
-  shorthand = 'shorthand',
+type SourceManagerCodeAPIs = {
+  children: SourceManagerCodeAPI
+  shorthand: SourceManagerCodeAPI
 }
 
-export const examplePathPatterns: { [key in SourceCodeType]: string } = {
-  normal: '',
-  shorthand: '.shorthand',
+export type SourceManagerRenderProps = SourceManagerState & {
+  handleCodeAPIChange: (newApi: keyof SourceManagerCodeAPIs) => void
+  handleCodeChange: (newCode: string) => void
+  handleCodeFormat: () => void
+  handleCodeLanguageChange: (newLanguage: SourceManagerLanguage) => void
+  handleCodeReset: () => void
 }
 
-class SourceCodeManager {
-  private readonly data: { [key in SourceCodeType]: SourceCodeData } = {
-    normal: {} as SourceCodeData,
-    shorthand: {} as SourceCodeData,
+export type SourceManagerLanguage = 'js' | 'ts'
+
+export type SourceManagerProps = {
+  examplePath: string
+  children: (renderProps: SourceManagerRenderProps) => React.ReactNode
+}
+
+export type SourceManagerState = {
+  currentLanguage: SourceManagerLanguage
+  currentAPI: keyof SourceManagerCodeAPIs
+
+  codeAPIs: SourceManagerCodeAPIs
+  currentCode?: string
+  formattedCode?: string
+  originalCode?: string
+
+  canBeFormatted: boolean
+  wasChanged: boolean
+}
+
+export const codeAPIs: SourceManagerCodeAPIs = {
+  children: { name: 'Children API', fileSuffix: '' },
+  shorthand: { name: 'Shorthand API', fileSuffix: '.shorthand' },
+}
+
+export class SourceManager extends React.Component<SourceManagerProps, SourceManagerState> {
+  state = {
+    currentLanguage: 'js' as SourceManagerLanguage,
+    currentAPI: 'children' as keyof SourceManagerCodeAPIs,
+
+    codeAPIs,
+
+    canBeFormatted: false,
+    wasChanged: false,
   }
 
-  public codeType: SourceCodeType
+  static getDerivedStateFromProps(
+    props: SourceManagerProps,
+    state: SourceManagerState,
+  ): Partial<SourceManagerState> {
+    const { examplePath } = props
+    const { currentAPI, currentLanguage, currentCode } = state
 
-  constructor(private sourceCodePath: string) {
-    const prioritizedCodeTypes = [SourceCodeType.shorthand, SourceCodeType.normal] // order is relevant
-    prioritizedCodeTypes.forEach(sourceCodeType => {
-      this.setDataForCodeType(sourceCodeType)
+    const sourcePath = `${examplePath.replace(/^components/, '.')}${
+      codeAPIs[currentAPI].fileSuffix
+    }.source.json`
+    const sourceCode: ExampleSource = exampleSourcesContext(sourcePath)
+
+    const originalCode = sourceCode[currentLanguage]
+    const currentCode1 = currentCode || originalCode
+    const formattedCode = safeFormatCode(
+      currentCode1,
+      currentLanguage === 'ts' ? 'typescript' : 'babylon',
+    )
+
+    return {
+      originalCode,
+      currentCode: currentCode1,
+      formattedCode,
+
+      canBeFormatted: !!formattedCode ? currentCode1 !== formattedCode : false,
+      wasChanged: originalCode !== currentCode1,
+    }
+  }
+
+  handleCodeAPIChange = (newAPI: keyof SourceManagerCodeAPIs): void => {
+    this.setState({
+      currentAPI: newAPI,
+      currentCode: undefined,
     })
-
-    this.codeType =
-      prioritizedCodeTypes.find(codeType => this.isCodeValidForType(codeType)) ||
-      SourceCodeType.shorthand
   }
 
-  public set currentCode(currentCode: string) {
-    this.currentCodeData.code = currentCode
+  handleCodeChange = (newCode: string): void => {
+    this.setState({ currentCode: newCode })
   }
 
-  public get currentCode(): string {
-    return this.currentCodeData.code
+  handleCodeFormat = (): void => {
+    this.setState(prevState => ({ currentCode: prevState.formattedCode }))
   }
 
-  public get currentPath(): string {
-    return this.currentCodeData.path
+  handleCodeReset = (): void => {
+    this.setState({ currentCode: undefined })
   }
 
-  public get originalCodeHasChanged(): boolean {
-    return this.currentCodeData.code !== this.currentCodeData.originalCode
+  handleLanguageChange = (newLanguage: SourceManagerLanguage): void => {
+    this.setState({
+      currentLanguage: newLanguage,
+      currentCode: undefined,
+    })
   }
 
-  public isCodeValidForType(codeType: SourceCodeType): boolean {
-    return this.data[codeType].code != null
-  }
-
-  public resetToOriginalCode(): void {
-    this.currentCodeData.code = this.currentCodeData.originalCode
-  }
-
-  private get currentCodeData(): SourceCodeData {
-    return this.data[this.codeType]
-  }
-
-  private set currentCodeData(codeData: SourceCodeData) {
-    this.data[this.codeType] = codeData
-  }
-
-  private setDataForCodeType(sourceCodeType: SourceCodeType): void {
-    const path = this.sourceCodePath + examplePathPatterns[sourceCodeType]
-    const code = this.safeRequire(path)
-
-    if (!code) {
-      // Returning as there are no examples provided for this type
-      // - e.g. there is no children API example for component
-      return
-    }
-
-    this.data[sourceCodeType] = {
-      path,
-      code,
-      originalCode: code,
-    }
-  }
-
-  private safeRequire = (path: string): string | undefined => {
-    try {
-      const filename = `${path.replace(/^components\//, './')}.source.json`
-
-      return exampleSourcesContext(filename).js
-    } catch (e) {
-      return undefined
-    }
+  render() {
+    return this.props.children({
+      ...this.state,
+      handleCodeAPIChange: this.handleCodeAPIChange,
+      handleCodeChange: this.handleCodeChange,
+      handleCodeFormat: this.handleCodeFormat,
+      handleCodeReset: this.handleCodeReset,
+      handleCodeLanguageChange: this.handleLanguageChange,
+    })
   }
 }
 
-export default SourceCodeManager
+export default SourceManager

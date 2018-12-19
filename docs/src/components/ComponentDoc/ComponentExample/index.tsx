@@ -1,2 +1,2 @@
-export { examplePathPatterns } from './SourceCodeManager'
+export { codeAPIs } from './SourceCodeManager'
 export { default, ComponentExampleProps } from './ComponentExample'

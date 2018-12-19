@@ -4,7 +4,7 @@ import * as React from 'react'
 
 import { exampleGroupsContext, exampleSourcesContext } from 'docs/src/utils'
 import { Grid, List } from 'semantic-ui-react'
-import { examplePathPatterns } from './ComponentExample'
+import { codeAPIs } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 
 interface ComponentExamplesProps {
@@ -83,9 +83,9 @@ export default class ComponentExamples extends React.Component<ComponentExamples
   private testExamplesStructure(displayName: string, allPaths: string[]): string[] {
     const examplesPattern = `\.\/${displayName}[\\w\/]*\/\\w+Example`
 
-    const [normalExtension, shorthandExtension] = [
-      examplePathPatterns.normal,
-      examplePathPatterns.shorthand,
+    const [shorthandExtension, normalExtension] = [
+      codeAPIs.shorthand.fileSuffix,
+      codeAPIs.children.fileSuffix,
     ].map(pattern => `${pattern}.source.json`)
 
     const [normalRegExp, shorthandRegExp] = [normalExtension, shorthandExtension].map(

@@ -8,7 +8,7 @@ delete prettierConfig.overrides
 // Please use this function directly and don't reexport it in utils.
 // https://github.com/prettier/prettier/issues/4959
 
-const formatCode = (code, parser = 'babylon') => {
+const formatCode = (code: string, parser = 'babylon') => {
   if (!code) return ''
 
   const formatted = prettier.format(code, {
@@ -19,6 +19,14 @@ const formatCode = (code, parser = 'babylon') => {
   })
 
   return formatted.replace(/^;</, '<') // remove beginning semi in JSX/HTML
+}
+
+export const safeFormatCode = (code: string, parser?): string | undefined => {
+  try {
+    return formatCode(code, parser)
+  } catch (e) {}
+
+  return undefined
 }
 
 export default formatCode
