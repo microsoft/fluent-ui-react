@@ -50,6 +50,8 @@ import send from './send'
 import sticker from './sticker'
 import strike from './strike'
 import table from './table'
+import tableAdd from './tableAdd'
+import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
@@ -108,6 +110,8 @@ export default {
   sticker,
   strike,
   table,
+  'table-add': tableAdd,
+  'table-delete': tableDelete,
   teams,
   translation,
   'trash-can': trashCan,
