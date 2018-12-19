@@ -22,7 +22,6 @@ const menuBehavior: Accessibility = (props: any) => ({
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
       shouldFocusFirstElementWhenReceivedFocus: true,
-      // TODO: check if this should be applied to other behaviors as well
       direction: props.vertical ? FocusZoneDirection.vertical : FocusZoneDirection.horizontal,
     },
   },
