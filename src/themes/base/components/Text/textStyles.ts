@@ -25,7 +25,6 @@ export default {
       display: 'inline-block',
       ...(atMention === true && {
         color: v.colors.pink,
-        fontWeight: v.fontWeightBold,
       }),
       ...(atMention === 'me' && {
         color: v.colors.teal,
