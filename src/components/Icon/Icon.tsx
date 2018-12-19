@@ -6,6 +6,7 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -17,7 +18,7 @@ export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export type IconSize = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
-export interface IconProps extends UIComponentProps {
+export interface IconProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overriden by the user.
    * @default iconBehavior
@@ -57,6 +58,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
+      color: true,
     }),
     accessibility: PropTypes.func,
     bordered: PropTypes.bool,

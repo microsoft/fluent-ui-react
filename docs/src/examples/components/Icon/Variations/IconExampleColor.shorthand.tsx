@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Icon, Grid, Text } from '@stardust-ui/react'
+import * as _ from 'lodash'
+import { Icon, Grid, Text, ProviderConsumer } from '@stardust-ui/react'
 
 const IconExampleColor = () => (
   <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }} variables={{ gridGap: '10px' }}>
@@ -51,6 +52,23 @@ const IconExampleColor = () => (
         name="call-video"
         bordered
         variables={{ color: 'cornflowerblue', borderColor: 'orangered' }}
+      />
+    </div>
+    <Text
+      content={
+        <span>
+          USING THE <code>color</code> PROP:
+        </span>
+      }
+      weight="bold"
+    />
+    <div>
+      <ProviderConsumer
+        render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+          _.take(_.keys({ ...emphasisColors, ...naturalColors }), 3).map(color => (
+            <Icon key={color} name="call" bordered color={color} />
+          ))
+        }
       />
     </div>
   </Grid>
