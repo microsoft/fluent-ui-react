@@ -34,6 +34,8 @@ import redbang from './redbang'
 import reply from './reply'
 import retry from './retry'
 import send from './send'
+import tableAdd from './tableAdd'
+import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
@@ -74,6 +76,8 @@ export default {
   reply,
   retry,
   send,
+  'table-add': tableAdd,
+  'table-delete': tableDelete,
   teams,
   translation,
   'trash-can': trashCan,
