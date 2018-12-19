@@ -1,17 +1,20 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Segment } from '@stardust-ui/react'
+import { Header, Segment, ICSSInJSStyle } from '@stardust-ui/react'
 
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')
+const centerAligned: ICSSInJSStyle = {
+  textAlign: 'center',
+}
 
 const Introduction = () => (
   <div>
-    <Segment basic textAlign="center">
-      <Logo centered size="small" />
-      <Header as="h1" textAlign="center">
+    <Segment styles={centerAligned}>
+      <Logo width="48px" />
+      <Header as="h1">
         {_.capitalize(pkg.name)}
         <Header.Description>{pkg.description}</Header.Description>
       </Header>

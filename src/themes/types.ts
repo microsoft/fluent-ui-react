@@ -72,6 +72,16 @@ type EmphasisColorsStrict = Partial<{
 export type EmphasisColors = Extendable<EmphasisColorsStrict, ColorVariants>
 
 /**
+ * A type for extracting the color names.
+ */
+type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
+
+/**
+ * A type for an extendable set of ColorNames properties of type T
+ */
+export type ColorValues<T> = Extendable<Partial<Record<ColorNames, T>>, T>
+
+/**
  * A type for a base colors.
  */
 export type PrimitiveColors = Partial<{

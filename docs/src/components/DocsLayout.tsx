@@ -73,6 +73,7 @@ class DocsLayout extends React.Component<any, any> {
                 root: {
                   paddingTop: '1px',
                   paddingBottom: '1px',
+                  textDecoration: 'none',
                 },
               },
             },

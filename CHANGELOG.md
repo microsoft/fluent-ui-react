@@ -17,10 +17,23 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Ensure `Popup` properly flips values of `offset` prop in RTL @kuzhelov ([#612](https://github.com/stardust-ui/react/pull/612))
+- Fix `List` - items should be selectable @sophieH29 ([#566](https://github.com/stardust-ui/react/pull/566))
+
+### Features
+- Add `color` prop to `Text` component @Bugaa92 ([#597](https://github.com/stardust-ui/react/pull/597))
+- Add `color` prop to `Header` and `HeaderDescription` components @Bugaa92 ([#628](https://github.com/stardust-ui/react/pull/628))
+
+<!--------------------------------[ v0.15.0 ]------------------------------- -->
+## [v0.15.0](https://github.com/stardust-ui/react/tree/v0.15.0) (2018-12-17)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.14.0...v0.15.0)
+
 ### BREAKING CHANGES
 - `type` prop is replaced with `color` in `Divider` component @layershifter ([#558](https://github.com/stardust-ui/react/pull/558))
 - Remove `createColorVariants` and `setColorLightness` utils @layershifter ([#583](https://github.com/stardust-ui/react/pull/583))
 - Remove `accessibility` prop (and corresponding behavior) from `ButtonGroup` @kolaps33 ([#605](https://github.com/stardust-ui/react/pull/605))
+- Add `gutter` prop to `Chat.Item`, removed `avatar` from `Chat.Message`, renamed `content` slot to `message` for `Chat.Item`, deprecated Children API for `Chat` components @Bugaa92 ([#556](https://github.com/stardust-ui/react/pull/556))
 
 ### Fixes
 - Fix `Provider` is not executing staticStyles with the merged siteVariables @mnajdova ([#559](https://github.com/stardust-ui/react/pull/559))
@@ -39,6 +52,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `Popup` not closing on outside click @kuzhelov ([#598](https://github.com/stardust-ui/react/pull/598))
 - Fix multiple React's warnings about keys in docs @layershifter ([#602](https://github.com/stardust-ui/react/pull/602))
 - Fix incorrect handling of `isFromKeyboard` in `Menu` @layershifter ([#596](https://github.com/stardust-ui/react/pull/596))
+- Fix property names used in shorthand factories @kuzhelov ([#591](https://github.com/stardust-ui/react/pull/591))
 
 ### Features
 - `Ref` components uses `forwardRef` API by default @layershifter ([#491](https://github.com/stardust-ui/react/pull/491))
@@ -47,6 +61,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `call-recording` SVG icon @Bugaa92 ([#585](https://github.com/stardust-ui/react/pull/585))
 - Export `canvas-add-page` SVG icon @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
 - Add `sizeModifier` variable (with `x` and `xx` values) to `Icon`'s Teams theme styles @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
+- Add `offset` prop to `Popup` to extend set of popup positioning options @kuzhelov ([#606](https://github.com/stardust-ui/react/pull/606))
 
 ### Documentation
 - Add `prettier` support throughout the docs @levithomason  ([#568](https://github.com/stardust-ui/react/pull/568))

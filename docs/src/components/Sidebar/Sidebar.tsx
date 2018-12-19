@@ -170,17 +170,25 @@ class Sidebar extends React.Component<any, any> {
       overflowY: 'scroll',
       top: '0px',
       bottom: '0px',
+      paddingLeft: '1em',
+      paddingRight: '0em',
+      paddingTop: '0em',
+      paddingBottom: '0em',
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
       marginLeft: '0px',
       paddingLeft: '0px',
+      paddingTop: '3px',
       fontWeight: fontWeightBold,
     }
     const navBarStyles: ICSSInJSStyle = {
       padding: '0px',
     }
 
+    const logoStyles: ICSSInJSStyle = {
+      padding: '5px',
+    }
     const changeLogUrl = '${constants.repoURL}/blob/master/CHANGELOG.md'
 
     const menuItems: ShorthandValue[] = [
@@ -315,7 +323,7 @@ class Sidebar extends React.Component<any, any> {
         content={
           <div>
             <div>
-              <Logo spaced="right" width="48px" />
+              <Logo width="32px" styles={logoStyles} />
               <Text content="Stardust UI React &nbsp;" />
               <Text content={pkg.version} size="small" weight="bold" />
             </div>

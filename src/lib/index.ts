@@ -3,6 +3,7 @@ import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
+export { mapColorsToScheme } from './colorUtils'
 export { default as UIComponent } from './UIComponent'
 export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
