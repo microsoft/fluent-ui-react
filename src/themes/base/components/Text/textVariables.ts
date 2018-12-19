@@ -33,7 +33,7 @@ export default (siteVariables): TextVariables => {
   return {
     colors: mapColorsToScheme(siteVariables, colorVariant),
 
-    disabledColor: siteVariables.colors.grey[500],
+    disabledColor: siteVariables.colors.grey[300],
     errorColor: siteVariables.colors.red[500],
     successColor: siteVariables.colors.green[500],
 

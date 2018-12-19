@@ -13,7 +13,6 @@ const Variations = () => (
       title="@ mention"
       description="A Text component for @ mentions."
       examplePath="components/Text/Variations/TextExampleAtMention"
-      excludedThemes={['base']}
     />
     <ComponentExample
       title="Timestamp"
@@ -24,7 +23,6 @@ const Variations = () => (
       title="Important"
       description="A text can appear more important and draw user's attention."
       examplePath="components/Text/Variations/TextExampleImportant"
-      themeName="teams"
     />
   </ExampleSection>
 )

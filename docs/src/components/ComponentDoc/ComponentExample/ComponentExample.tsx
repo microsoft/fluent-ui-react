@@ -26,7 +26,6 @@ export interface ComponentExampleProps extends RouteComponentProps<any, any> {
   description?: React.ReactNode
   examplePath: string
   themeName?: string
-  excludedThemes?: PropTypes.array
 }
 
 interface ComponentExampleState {
@@ -79,7 +78,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     showVariables: false,
     isHovering: false,
     copiedCode: false,
-    excludedThemes: [],
   }
 
   static contextTypes = {
@@ -95,7 +93,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     match: PropTypes.object.isRequired,
     title: PropTypes.node,
     themeName: PropTypes.string,
-    excludedThemes: PropTypes.array,
   }
 
   componentWillMount() {
@@ -552,7 +549,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const { children, description, title, excludedThemes } = this.props
+    const { children, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -563,7 +560,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showTransparent,
       showVariables,
       sourceCode,
-      themeName,
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
@@ -584,7 +580,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           }),
     }
 
-    const componentExample = (
+    return (
       <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
@@ -667,11 +663,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         <Divider section horizontal />
       </Visibility>
     )
-
-    if (excludedThemes && excludedThemes.indexOf(themeName) > -1) {
-      return ''
-    }
-    return componentExample
   }
 }
 

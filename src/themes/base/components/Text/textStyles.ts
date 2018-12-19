@@ -6,16 +6,43 @@ import { TextProps } from '../../../../components/Text/Text'
 
 export default {
   root: ({
-    props: { color, disabled, error, size, weight, success, truncated },
+    props: {
+      atMention,
+      color,
+      disabled,
+      error,
+      important,
+      size,
+      temporary,
+      timestamp,
+      weight,
+      success,
+      truncated,
+    },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
+      ...(atMention === true && {
+        color: v.colors.pink,
+        fontWeight: v.fontWeightBold,
+      }),
+      ...(atMention === 'me' && {
+        color: v.colors.teal,
+        fontWeight: v.fontWeightBold,
+      }),
       ...(truncated && truncateStyle),
       ...(color && { color: _.get(v.colors, color) }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
       ...(success && { color: v.successColor }),
+      ...(important && {
+        color: v.colors.red,
+      }),
+      ...(temporary && { fontStyle: 'italic' }),
+      ...(timestamp && {
+        color: v.colors.grey,
+      }),
 
       ...(weight === 'light' && {
         fontWeight: v.fontWeightLight,
