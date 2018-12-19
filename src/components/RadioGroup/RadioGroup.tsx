@@ -46,6 +46,8 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
 
 /**
  * A radio group allows a user to select a value from a small set of options.
+ * @accessibility
+ * Implements ARIA Radio Group design pattern.
  */
 class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'

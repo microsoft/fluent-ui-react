@@ -64,6 +64,8 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
 /**
  * A menu displays grouped navigation actions.
+ * @accessibility
+ * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
  */
 class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static displayName = 'Menu'

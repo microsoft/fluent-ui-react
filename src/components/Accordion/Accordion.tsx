@@ -71,6 +71,9 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
 /**
  * An accordion allows users to toggle the display of sections of content.
+ * @accessibility
+ * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
+ * Consider using Tree if you intend to wrap Lists in an Accordion.
  */
 class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any> {
   static displayName = 'Accordion'

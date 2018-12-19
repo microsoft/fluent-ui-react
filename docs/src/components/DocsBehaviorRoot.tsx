@@ -69,8 +69,11 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                   </div>
                 </Grid.Column>
                 <div style={{ padding: '1em' }}>
-                  <span> Description: </span>
-                  <br />
+                  {variation.description && (
+                    <>
+                      <strong>Description:</strong> <br />
+                    </>
+                  )}
                   {variation.description &&
                     variation.description.split('\n').map((splittedText, keyValue) => {
                       return (
@@ -80,6 +83,13 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                         </span>
                       )
                     })}
+                  {variation.specification && (
+                    <>
+                      {variation.description && <br />}
+                      <strong>Specification:</strong>
+                      <br />
+                    </>
+                  )}
                   {variation.specification &&
                     variation.specification.split('\n').map((splittedText, keyValue) => {
                       return (
