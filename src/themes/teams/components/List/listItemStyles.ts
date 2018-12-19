@@ -2,9 +2,9 @@ import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps } from '../../../../components/List/ListItem'
 
-const hoverStyle = variables => ({
-  background: variables.selectionHoverBackgroundColor,
-  color: variables.selectionHoverColor,
+const hoverFocusStyle = variables => ({
+  background: variables.selectableFocusHoverBackgroundColor,
+  color: variables.selectableFocusHoverColor,
   cursor: 'pointer',
 
   '& .ui-item-layout__header': { color: 'inherit' },
@@ -18,16 +18,22 @@ const hoverStyle = variables => ({
   '& .ui-item-layout__endMedia': { display: 'block', color: 'inherit' },
 })
 
+const selectedStyle = variables => ({
+  background: variables.selectedBackgroundColor,
+  color: variables.selectedColor,
+})
+
 const listItemStyles: ComponentSlotStylesInput<ListItemProps, any> = {
-  root: ({ props: { selection, important }, variables }): ICSSInJSStyle => ({
-    ...(selection && {
+  root: ({ props: { selectable, selected, important }, variables }): ICSSInJSStyle => ({
+    ...(selectable && {
       position: 'relative',
 
       // hide the end media by default
       '& .ui-item-layout__endMedia': { display: 'none' },
 
-      '&:hover': hoverStyle(variables),
-      '&:focus': hoverStyle(variables),
+      '&:hover': hoverFocusStyle(variables),
+      '&:focus': hoverFocusStyle(variables),
+      ...(selected && selectedStyle(variables)),
     }),
     ...(important && {
       fontWeight: 'bold',

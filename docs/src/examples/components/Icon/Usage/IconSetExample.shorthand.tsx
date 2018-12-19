@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Grid, Divider, Header, Icon, Provider } from '@stardust-ui/react'
 
 const cellStyles = {
