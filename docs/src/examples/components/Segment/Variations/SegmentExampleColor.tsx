@@ -6,12 +6,9 @@ const SegmentExampleColor = () => (
   <ProviderConsumer
     render={({ siteVariables: { emphasisColors, naturalColors } }) =>
       _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-        <>
-          <Segment key={color} color={color} inverted>
-            {_.startCase(color)}
-          </Segment>
-          <br />
-        </>
+        <Segment key={color} color={color} inverted>
+          {_.startCase(color)}
+        </Segment>
       ))
     }
   />
