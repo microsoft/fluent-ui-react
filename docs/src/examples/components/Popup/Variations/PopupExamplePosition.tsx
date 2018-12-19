@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
 const PopupArrowExample = props => {

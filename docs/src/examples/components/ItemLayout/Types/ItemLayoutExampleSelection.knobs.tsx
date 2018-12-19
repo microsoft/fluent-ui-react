@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import * as React from 'react'
 import Knobs from 'docs/src/components/Knobs/Knobs'
 
 const ItemLayoutExampleSelectionKnobs: any = props => {
