@@ -8,6 +8,8 @@ class ComposeMessage extends React.Component {
   public render() {
     return (
       <Layout
+        role="region"
+        aria-label="compose box"
         vertical
         start={this.renderInput()}
         main={this.renderToolbar()}

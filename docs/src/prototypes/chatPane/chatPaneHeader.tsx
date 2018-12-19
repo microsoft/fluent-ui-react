@@ -22,13 +22,6 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
   private renderBanner(): React.ReactNode {
     return (
       <Segment
-        content={
-          <Icon
-            size="big"
-            name="team-create"
-            variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
-          />
-        }
         styles={({ variables: v }) => ({
           backgroundColor: v.backgroundColor,
           borderRadius: 0,

@@ -12,6 +12,8 @@ export interface ChatPaneLayoutProps {
 
 const ChatPaneLayout: React.SFC<ChatPaneLayoutProps> = ({ chat }: ChatPaneLayoutProps) => (
   <Layout
+    aria-label="Chat pane"
+    role="main"
     vertical
     start={<ChatPaneHeader chat={chat} />}
     main={<ChatPaneContainer chat={chat} />}

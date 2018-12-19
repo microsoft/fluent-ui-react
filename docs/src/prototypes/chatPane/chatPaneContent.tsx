@@ -28,8 +28,10 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
         <Scrollbars ref={this.handleScrollRef}>
           <Chat
             items={items}
-            role="main"
-            aria-label={`${chat.title} chat content.`}
+            role="region"
+            aria-label={`Conversation with ${
+              chat.title
+            }  Press Enter to explore message content, then use Escape to shift focus back to the message`}
             styles={{ padding: '0 32px' }}
           />
         </Scrollbars>
@@ -87,9 +89,11 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
   }
 
   private getMessagePreviewForScreenReader(props) {
-    // Show the first 60 characters from the message, as NVDA splits it into 2 lines if more is shown
+    /*  Show the first 44 characters from the message, reasons:
+          - as NVDA splits it into 2 lines if more is shown
+          - for announcements feature, messaging team went with 44 characters but that was not based on loc issues but some UI real estate issue.  */
     const messageText = props.text || ''
-    return `${messageText.slice(0, 60)} ..., by ${
+    return `${messageText.slice(0, 44)} ..., by ${
       typeof props.author === 'object' ? props.author.content : props.author
     }`
   }
