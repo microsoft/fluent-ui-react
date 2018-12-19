@@ -1,13 +1,17 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Grid, Ref, Segment } from '@stardust-ui/react'
 
-class RefExample extends React.Component {
+type RefExampleState = {
+  isMounted: boolean
+}
+
+class RefExample extends React.Component<{}, RefExampleState> {
   state = { isMounted: false }
 
   createdRef = React.createRef<HTMLButtonElement>()
   functionalRef = null
 
-  handleRef = node => (this.functionalRef = node)
+  handleRef = (node: HTMLButtonElement) => (this.functionalRef = node)
 
   componentDidMount() {
     this.setState({ isMounted: true })

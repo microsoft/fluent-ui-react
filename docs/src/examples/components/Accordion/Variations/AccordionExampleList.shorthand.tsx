@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Accordion, Button } from '@stardust-ui/react'
 
 class AccordionExampleList extends React.Component {

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Divider, RadioGroup } from '@stardust-ui/react'
 
 class RadioGroupColorPickerExample extends React.Component {
