@@ -243,8 +243,8 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   protected actionHandlers: AccessibilityActionHandlers = {
     performClick: event => this.handleClick(event),
     openMenu: event => this.openMenu(event),
-    closeAllMenus: event => this.closeAllMenus(event),
-    closeMenuAndFocusNextParentItem: event => this.closeMenuAndFocusNextParentItem(event),
+    closeAllMenus: event => this.closeAllMenus(event, false),
+    closeAllMenusAndFocusNextParentItem: event => this.closeAllMenus(event, true),
     closeMenu: event => this.closeMenu(event),
   }
 
@@ -259,11 +259,12 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
   }
 
   private outsideClickHandler = e => {
+    if (!this.state.menuOpen) return
     if (
       !doesNodeContainClick(this.itemRef.current, e) &&
       !doesNodeContainClick(this.menuRef.current, e)
     ) {
-      this.state.menuOpen && this.trySetState({ menuOpen: false })
+      this.trySetState({ menuOpen: false })
     }
   }
 
@@ -298,25 +299,15 @@ class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuIt
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private closeAllMenus = e => {
+  private closeAllMenus = (e, focusNextParent: boolean) => {
     const { menu, inSubmenu } = this.props
     const { menuOpen } = this.state
     if (menu && menuOpen) {
-      this.setState({ menuOpen: false })
-      if (!inSubmenu) {
-        focusAsync(this.itemRef.current)
-      }
-    }
-  }
-
-  private closeMenuAndFocusNextParentItem = e => {
-    const { menu, inSubmenu } = this.props
-    const { menuOpen } = this.state
-    if (menu && menuOpen) {
-      this.setState({ menuOpen: false })
-      if (!inSubmenu && this.props.vertical) {
-        focusAsync(this.itemRef.current)
-      }
+      this.setState({ menuOpen: false }, () => {
+        if (!inSubmenu && (!focusNextParent || this.props.vertical)) {
+          focusAsync(this.itemRef.current)
+        }
+      })
     }
   }
 
