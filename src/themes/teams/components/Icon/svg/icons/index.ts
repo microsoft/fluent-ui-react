@@ -21,7 +21,6 @@ import format from './format'
 import gallery from './gallery'
 import giphy from './giphy'
 import highlight from './highlight'
-
 import horizontalRule from './horizontalRule'
 import indent from './indent'
 import leave from './leave'
