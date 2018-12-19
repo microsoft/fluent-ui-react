@@ -35,7 +35,19 @@ class Flex extends UIComponent<any> {
   static Gap: any
 
   renderComponent({ rest: props }) {
-    const { children, center, row, column, justify, align, space, inline, items, ...rest } = props
+    const {
+      children,
+      center,
+      row,
+      column,
+      justify,
+      align,
+      space,
+      inline,
+      wrap,
+      items,
+      ...rest
+    } = props
 
     const stylesFromProps = {
       ...(inline && { display: 'inline-flex' }),
@@ -52,6 +64,8 @@ class Flex extends UIComponent<any> {
       ...(space && { justifyContent: `space-${space}` }),
 
       ...(align && { alignItems: align }),
+
+      ...(wrap && { flexWrap: 'wrap' }),
 
       ...rest,
     }
@@ -73,14 +87,16 @@ class FlexItem extends UIComponent<any> {
   static create: Function
 
   renderComponent({ rest: props, getClasses }) {
-    const { children, align, fillRest, shrink } = props
+    const { children, align, grow, shrink, fixed, noShrink, basis } = props
 
     const flexItemStyles = {
+      ...((fixed || noShrink) && { flexShrink: 0 }),
       ...(align && { alignSelf: `flex-${align}` }),
 
-      ...(shrink != null && { flexShrink: shrink ? 1 : 0 }),
+      ...(grow && { flexGrow: '1' }),
+      ...(basis && { flexBasis: basis }),
 
-      ...(fillRest && { flex: '1' }),
+      ...(shrink != null && { flexShrink: shrink ? 1 : 0 }),
     }
 
     console.warn(children)
