@@ -1,20 +1,15 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
+import { PopupContentVariables } from './popupContentVariables'
 
-const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, any> = {
+const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupContentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { backgroundColor, borderColor, padding, zIndex } = variables
+    const { backgroundColor, borderColor, padding } = variables
 
     return {
-      backgroundColor,
-      zIndex,
       display: 'block',
-      position: 'absolute',
-      top: 'auto',
-      bottom: 'auto',
-      left: 'auto',
-      right: 'auto',
+      backgroundColor,
       padding,
       border: `1px solid ${borderColor}`,
       borderRadius: pxToRem(3),

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 
@@ -9,23 +10,21 @@ describe('ListItem', () => {
   isConformant(ListItem)
   handlesAccessibility(ListItem, { defaultRootRole: 'listitem' })
 
-  describe('selectable list handleClick', () => {
-    test('is executed when Enter is pressed', () => {
-      const onClick = jest.fn()
-      const listItem = mountWithProvider(
-        <ListItem accessibility={selectableListItemBehavior} onClick={onClick} />,
-      ).find('ListItem')
-      listItem.simulate('keydown', { keyCode: 13 })
-      expect(onClick).toHaveBeenCalled()
-    })
+  test('handleClick is executed when Enter is pressed for selectable list', () => {
+    const onClick = jest.fn()
+    const listItem = mountWithProvider(
+      <ListItem accessibility={selectableListItemBehavior} onClick={onClick} />,
+    ).find('ListItem')
+    listItem.simulate('keydown', { keyCode: keyboardKey.Enter })
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
 
-    test('is executed when Spacebar is pressed', () => {
-      const onClick = jest.fn()
-      const listItem = mountWithProvider(
-        <ListItem accessibility={selectableListItemBehavior} onClick={onClick} />,
-      ).find('ListItem')
-      listItem.simulate('keydown', { keyCode: 32 })
-      expect(onClick).toHaveBeenCalled()
-    })
+  test('handleClick is executed when Spacebar is pressed for selectable list', () => {
+    const onClick = jest.fn()
+    const listItem = mountWithProvider(
+      <ListItem accessibility={selectableListItemBehavior} onClick={onClick} />,
+    ).find('ListItem')
+    listItem.simulate('keydown', { keyCode: keyboardKey.Spacebar })
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 })

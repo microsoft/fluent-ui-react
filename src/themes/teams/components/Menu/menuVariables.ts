@@ -1,45 +1,57 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 export interface MenuVariables {
-  defaultColor: string
-  defaultBackgroundColor: string
+  color: string
+  backgroundColor: string
 
-  defaultActiveColor: string
-  defaultActiveBackgroundColor: string
-  defaultBorderColor: string
+  activeColor: string
+  activeBackgroundColor: string
+  focusedBackgroundColor: string
+  borderColor: string
 
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
 
+  primaryFocusedColor: string
+  primaryFocusedBackgroundColor: string
+
   primaryBorderColor: string
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
-  iconsMenuItemSize?: string
   circularRadius: string
   lineHeightBase: string
+
+  submenuIndicatorContent: string
+  submenuIndicatorRotationAngle: number
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
-    defaultColor: siteVars.gray02,
-    defaultBackgroundColor: 'transparent',
+    color: siteVars.gray02,
+    backgroundColor: siteVars.white,
 
-    defaultActiveColor: siteVars.black,
-    defaultActiveBackgroundColor: siteVars.gray10,
-    defaultBorderColor: siteVars.gray08,
+    activeColor: siteVars.black,
+    activeBackgroundColor: siteVars.gray10,
+    focusedBackgroundColor: siteVars.gray14,
+    borderColor: siteVars.gray08,
 
     primaryActiveColor: siteVars.white,
     primaryActiveBackgroundColor: siteVars.brand08,
     primaryActiveBorderColor: siteVars.brand,
 
+    primaryFocusedColor: siteVars.white,
+    primaryFocusedBackgroundColor: siteVars.brand12,
+
     primaryBorderColor: siteVars.brand08,
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
-    iconsMenuItemSize: pxToRem(32),
     circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
+
+    submenuIndicatorContent: '">"',
+    submenuIndicatorRotationAngle: 90,
   }
 }

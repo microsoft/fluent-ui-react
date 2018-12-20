@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -8,39 +8,59 @@ import {
   customPropTypes,
   RenderResultConfig,
   partitionHTMLProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  ComponentEventHandler,
-} from '../../../types/utils'
-import { ComponentSlotStyle, ComponentVariablesInput } from '../../themes/types'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
 import Ref from '../Ref/Ref'
+import Slot from '../Slot/Slot'
 
-export interface InputProps {
-  as?: any
-  children?: ReactChildren
-  className?: string
+export interface InputProps extends UIComponentProps, ChildrenComponentProps {
+  /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
+
+  /** The default value of the input. */
   defaultValue?: React.ReactText
+
+  /** An input can take the width of its container. */
   fluid?: boolean
+
+  /** Optional Icon to display inside the Input. */
   icon?: ShorthandValue
+
+  /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
+
+  /** An input can be used inline with text. */
   inline?: boolean
+
+  /** Shorthand for the input component. */
   input?: ShorthandValue
+
+  /**
+   * Called on change.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onChange?: ComponentEventHandler<InputProps>
-  renderIcon?: ShorthandRenderFunction
-  renderInput?: ShorthandRenderFunction
-  renderWrapper?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle<InputProps, any>
+
+  /** The HTML input type. */
   type?: string
+
+  /**
+   * Ref callback with an input DOM node.
+   *
+   * @param {JSX.Element} node - input DOM node.
+   */
   inputRef?: (node: HTMLElement) => void
+
+  /** The value of the input. */
   value?: React.ReactText
-  variables?: ComponentVariablesInput
+
+  /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue
 }
 
@@ -56,7 +76,7 @@ export interface InputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> {
+class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
   private inputDomElement: HTMLInputElement
 
   static className = 'ui-input'
@@ -64,101 +84,26 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static displayName = 'Input'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply. */
-    className: PropTypes.string,
-
-    /** A property that will change the icon on the input and clear the input on click on Cancel. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     clearable: PropTypes.bool,
-
-    /** The default value of the input. */
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** An input can take the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Optional Icon to display inside the Input. */
     icon: customPropTypes.itemShorthand,
-
-    /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
     iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Shorthand for the input component. */
     input: customPropTypes.itemShorthand,
-
-    /**
-     * Ref callback with an input DOM node.
-     *
-     * @param {JSX.Element} node - input DOM node.
-     */
     inputRef: PropTypes.func,
-
-    /** An input can be used inline with text. */
     inline: PropTypes.bool,
-
-    /**
-     * Called on change.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
     onChange: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderIcon: PropTypes.func,
-
-    /**
-     * A custom render function the input slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderInput: PropTypes.func,
-
-    /**
-     * A custom render function the wrapper slot.
-     *
-     * @param { React.ReactType } Component - The computed component for this slot.
-     * @param { object } props - The computed props for this slot.
-     * @param { ReactNode | ReactNodeArray } children - The computed children for this slot.
-     */
-    renderWrapper: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** The HTML input type. */
     type: PropTypes.string,
-
-    /** The value of the input. */
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Shorthand for the wrapper component. */
     wrapper: customPropTypes.wrapperShorthand,
   }
 
   static defaultProps = {
-    as: 'div',
     type: 'text',
-    wrapper: 'div',
+    wrapper: {},
     iconPosition: 'end',
   }
 
@@ -171,26 +116,25 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     styles,
     variables,
   }: RenderResultConfig<InputProps>) {
-    const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
+    const { className, input, type, wrapper } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
     return Slot.create(wrapper, {
       defaultProps: {
-        as: ElementType,
         className: cx(Input.className, className),
         children: (
           <>
             <Ref innerRef={this.handleInputRef}>
-              {Slot.createHTMLInput(input || type, {
+              {Slot.create(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
+                  as: 'input',
                   type,
                   value,
-                  className: classes.input,
+                  styles: styles.input,
                   onChange: this.handleChange,
                 },
-                render: renderInput,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -199,14 +143,15 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                 variables: variables.icon,
               },
               overrideProps: this.handleIconOverrides,
-              render: renderIcon,
             })}
           </>
         ),
         styles: styles.root,
         ...rest,
       },
-      render: renderWrapper,
+      overrideProps: {
+        as: (wrapper && (wrapper as any).as) || ElementType,
+      },
     })
   }
 

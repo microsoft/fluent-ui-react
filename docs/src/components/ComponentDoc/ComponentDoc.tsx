@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
@@ -80,7 +80,7 @@ class ComponentDoc extends React.Component<any, any> {
         <Grid>
           <Grid.Row style={topRowStyle}>
             <Grid.Column>
-              <Header as="h1" content={info.displayName} />
+              <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
               <p>{_.join(info.docblock.description, ' ')}</p>
               <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />

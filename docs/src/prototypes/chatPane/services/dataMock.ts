@@ -13,7 +13,6 @@ class ChatMock {
   private static readonly minUserCount = 2
   private static readonly defaultCount = 10
   private static readonly daysAgo = 40
-  private static readonly defaultChatTitle = 'Test Chat'
 
   private userIds: string[] = []
   private usersMap: Map<string, UserData> = new Map()
@@ -58,7 +57,7 @@ class ChatMock {
       const timestamp = getTimestamp(date)
 
       const message: MessageData = {
-        id,
+        id: String(id),
         from,
         mine,
         date,
@@ -66,10 +65,11 @@ class ChatMock {
         timestamp: timestamp.short,
         timestampLong: timestamp.long,
         isImportant: random.boolean(),
+        withAttachment: random.boolean(),
       }
 
       return message
-    }).sort((a, b) => a.date - b.date)
+    }).sort((a, b) => a.date.getTime() - b.date.getTime())
 
     this.chat = {
       id: random.uuid(),
@@ -77,7 +77,7 @@ class ChatMock {
       isOneOnOne: this.usersMap.size === ChatMock.minUserCount,
       messages: this.chatMessages,
       members: this.usersMap,
-      title: ChatMock.defaultChatTitle,
+      title: `${currentUser.firstName} ${currentUser.lastName}`,
     }
   }
 

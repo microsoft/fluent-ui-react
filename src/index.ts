@@ -29,6 +29,21 @@ export {
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
 
+export {
+  default as Dropdown,
+  DropdownProps,
+  A11yStatusMessageOptions,
+} from './components/Dropdown/Dropdown'
+
+export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
+
+export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
+
+export {
+  default as DropdownSearchInput,
+  DropdownSearchInputProps,
+} from './components/Dropdown/DropdownSearchInput'
+
 export { default as Form, FormProps } from './components/Form/Form'
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 
@@ -57,9 +72,9 @@ export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
-export { default as ListItem, ListItemState, ListItemProps } from './components/List/ListItem'
+export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
-export { default as Menu, MenuProps } from './components/Menu/Menu'
+export { default as Menu, MenuProps, MenuState } from './components/Menu/Menu'
 export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
 
 export { default as Popup, PopupState, PopupProps } from './components/Popup/Popup'
@@ -86,11 +101,16 @@ export {
   RadioGroupItemProps,
 } from './components/RadioGroup/RadioGroupItem'
 
+export { default as Ref, RefProps } from './components/Ref/Ref'
 export { default as Segment, SegmentProps } from './components/Segment/Segment'
 
 export { default as Status, StatusPropsWithDefaults, StatusProps } from './components/Status/Status'
 
 export { default as Text, TextProps } from './components/Text/Text'
+
+export { default as Animation, AnimationProps } from './components/Animation/Animation'
+
+export { default as Tree } from './components/Tree'
 
 //
 // Accessibility
@@ -113,8 +133,24 @@ export {
   default as chatMessageBehavior,
 } from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
 export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
+export {
+  default as popupFocusTrapBehavior,
+} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
+export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
 
 //
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
+export { createComponent } from './lib'
+export {
+  RenderStardustResultConfig,
+  CreateStardustComponentConfig,
+} from './lib/createStardustComponent'
+export {
+  AnimatedComponentProps,
+  StyledComponentProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+} from './lib'

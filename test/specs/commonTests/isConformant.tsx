@@ -19,9 +19,11 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusU
 
 export interface Conformant {
   eventTargets?: object
+  nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
+  usesWrapperSlot?: boolean
 }
 
 /**
@@ -32,13 +34,16 @@ export interface Conformant {
  * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
+ * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
  */
 export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
+    nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
+    usesWrapperSlot = false,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -48,16 +53,35 @@ export default (Component, options: Conformant = {}) => {
   const getComponent = (wrapper: ReactWrapper) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
-      .childAt(0)
-      .childAt(0)
-      .childAt(0)
+
+    /**
+     * The wrapper is mounted with Provider, so in total there are three HOC components
+     * that we want to get rid of: ThemeProvider, the actual Component and FelaTheme,
+     * in order to be able to get to the actual rendered result of the component we are testing
+     */
+    _.times(nestingLevel + 3, () => {
+      component = component.childAt(0)
+    })
+
     if (component.type() === FocusZone) {
-      // `component` is <FocusZone>
+      // another HOC component is added: FocuZone
       component = component.childAt(0) // skip through <FocusZone>
       if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
+
+    if (usesWrapperSlot) {
+      /**
+       * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
+       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
+       * rendered result of the component we are testing
+       */
+      _.times(3, () => {
+        component = component.childAt(0)
+      })
+    }
+
     return component
   }
 
@@ -324,7 +348,7 @@ export default (Component, options: Conformant = {}) => {
               'forgot to use `getUnhandledProps` util to spread the `rest` props.',
           )
         }
-        const customHandler = eventTarget.prop(listenerName)
+        const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
           customHandler(eventShape)
@@ -353,9 +377,11 @@ export default (Component, options: Conformant = {}) => {
           expect(handlerSpy).toHaveBeenCalled()
         } catch (err) {
           throw new Error(
-            `<${info.displayName} ${listenerName}={${handlerName}} />\n` +
-              `${leftPad} ^ was not called once on "${eventName}".` +
+            [
+              `<${info.displayName} ${listenerName}={${handlerName}} />\n`,
+              `${leftPad} ^ was not called once on "${eventName}".`,
               'You may need to hoist your event handlers up to the root element.\n',
+            ].join(''),
           )
         }
 
@@ -364,10 +390,11 @@ export default (Component, options: Conformant = {}) => {
 
         if (_.has(Component.propTypes, listenerName)) {
           expectedArgs = [eventShape, expect.objectContaining(component.props())]
-          errorMessage =
-            'was not called with (event, data).\n' +
-            `Ensure that 'props' object is passed to '${listenerName}'\n` +
-            `event handler of <${Component.displayName} />.`
+          errorMessage = [
+            'was not called with (event, data).\n',
+            `Ensure that 'props' object is passed to '${listenerName}'\n`,
+            `event handler of <${Component.displayName} />.`,
+          ].join('')
         }
 
         // Components should return the event first, then any data
@@ -396,7 +423,7 @@ export default (Component, options: Conformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .first()
+        .at(usesWrapperSlot ? 1 : 0)
         .prop('className')
       return classes
     }

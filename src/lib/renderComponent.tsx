@@ -1,4 +1,4 @@
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { FelaTheme } from 'react-fela'
@@ -24,15 +24,19 @@ import {
   AccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
+  FocusZoneDefinition,
 } from './accessibility/types'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
+import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
-  ElementType: React.ReactType<P>
+  // TODO: Switch back to React.ReactType after issue will be resolved
+  // https://github.com/Microsoft/TypeScript/issues/28768
+  ElementType: React.ComponentType<P> | string
   classes: ComponentSlotClasses
   rest: Props
   variables: ComponentVariablesObject
@@ -44,7 +48,7 @@ export interface RenderResultConfig<P> {
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
-export interface RenderConfig {
+export interface RenderConfig<P> {
   className?: string
   defaultProps?: { [key: string]: any }
   displayName: string
@@ -53,6 +57,7 @@ export interface RenderConfig {
   state: State
   actionHandlers: AccessibilityActionHandlers
   focusZoneRef: (focusZone: FocusZone) => void
+  render: RenderComponentCallback<P>
 }
 
 const getAccessibility = (
@@ -98,11 +103,19 @@ function wrapInGenericFocusZone<
   )
 }
 
-const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+const renderWithFocusZone = <P extends {}>(
+  render: RenderComponentCallback<P>,
+  focusZoneDefinition: FocusZoneDefinition,
+  config: RenderResultConfig<P>,
+  focusZoneRef: (focusZone: FocusZone) => void,
+): any => {
   if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     return wrapInGenericFocusZone(
       FabricFocusZone,
-      focusZoneDefinition.props,
+      {
+        ...focusZoneDefinition.props,
+        isRtl: config.rtl,
+      },
       render(config),
       focusZoneRef,
     )
@@ -113,14 +126,12 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
     config.rest = { ...config.rest, ...focusZoneDefinition.props }
     config.rest.as = originalElementType
     config.rest.ref = focusZoneRef
+    config.rest.isRtl = config.rtl
   }
   return render(config)
 }
 
-const renderComponent = <P extends {}>(
-  config: RenderConfig,
-  render: RenderComponentCallback<P>,
-): React.ReactNode => {
+const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
   const {
     className,
     defaultProps,
@@ -130,6 +141,7 @@ const renderComponent = <P extends {}>(
     state,
     actionHandlers,
     focusZoneRef,
+    render,
   } = config
 
   return (
@@ -140,13 +152,19 @@ const renderComponent = <P extends {}>(
         }
 
         const {
-          siteVariables = { fontSizes: {} },
+          siteVariables = {
+            colors: {},
+            contextualColors: {},
+            emphasisColors: {},
+            naturalColors: {},
+            fontSizes: {},
+          },
           componentVariables = {},
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
         } = theme
-        const ElementType = getElementType({ defaultProps }, props)
+        const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
         const stateAndProps = { ...state, ...props }
 
@@ -155,6 +173,10 @@ const renderComponent = <P extends {}>(
           componentVariables[displayName],
           props.variables,
         )(siteVariables, stateAndProps)
+
+        const animationCSSProp = props.animation
+          ? createAnimationStyles(props.animation, theme)
+          : {}
 
         // Resolve styles using resolved variables, merge results, allow props.styles to override
         const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
@@ -173,6 +195,12 @@ const renderComponent = <P extends {}>(
           variables: resolvedVariables,
           theme,
         }
+
+        mergedStyles.root = {
+          ...callable(mergedStyles.root)(styleParam),
+          ...animationCSSProp,
+        }
+
         const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
           (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
           {},
@@ -195,6 +223,7 @@ const renderComponent = <P extends {}>(
         if (accessibility.focusZone) {
           return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
         }
+
         return render(config)
       }}
     />

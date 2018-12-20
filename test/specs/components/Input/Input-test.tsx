@@ -39,7 +39,7 @@ describe('Input', () => {
   implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('wrapper', () => {
-    implementsShorthandProp(Input)('wrapper', Slot, { mapsValueToProp: 'content' })
+    implementsShorthandProp(Input)('wrapper', Slot, { mapsValueToProp: 'children' })
     implementsWrapperProp(Input, { wrapppedComponentSelector: 'input' })
   })
 

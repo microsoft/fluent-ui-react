@@ -6,12 +6,14 @@ import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 
 import Accessibility from './views/Accessibility'
+import ColorPalette from './views/ColorPalette'
 import ShorthandProps from './views/ShorthandProps'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
 import Theming from './views/Theming'
 import ThemingExamples from './views/ThemingExamples'
+import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -27,6 +29,12 @@ const Router = () => (
             key="/prototype-chat-pane"
             path="/prototype-chat-pane"
             component={require('./prototypes/chatPane/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/prototype-chat-message-with-popover"
+            path="/prototype-chat-message-with-popover"
+            component={require('./prototypes/chatMessageWithPopover/index').default}
           />,
           <DocsLayout
             exact
@@ -52,11 +60,29 @@ const Router = () => (
             path="/prototype-search-page"
             component={require('./prototypes/SearchPage/index').default}
           />,
+          <DocsLayout
+            exact
+            key="/prototype-popups"
+            path="/prototype-popups"
+            component={require('./prototypes/popups/index').default}
+          />,
+          <DocsLayout
+            exact
+            key="/icon-viewer"
+            path="/icon-viewer"
+            component={require('./prototypes/IconViewer/index').default}
+          />,
         ]}
         <DocsLayout exact path="/accessibility" component={Accessibility} />
         <DocsLayout exact path="/theming" component={Theming} />
         <DocsLayout exact path="/theming-examples" component={ThemingExamples} />
         <DocsLayout exact path="/shorthand-props" component={ShorthandProps} />
+        <DocsLayout
+          exact
+          path="/integrate-custom-components"
+          component={IntegrateCustomComponents}
+        />
+        <DocsLayout exact path="/color-palette" component={ColorPalette} />
         <DocsLayout exact path="/*" component={PageNotFound} />
       </Switch>
     </Switch>

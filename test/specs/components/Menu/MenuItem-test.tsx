@@ -8,29 +8,42 @@ import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessib
 describe('MenuItem', () => {
   isConformant(MenuItem, {
     eventTargets: {
-      onClick: 'a',
+      onClick: '.ui-menu__item__wrapper',
     },
+    // The ElementType is wrapped with Ref, which is adding two HOC in total
+    nestingLevel: 2,
+    usesWrapperSlot: true,
   })
 
   it('content renders as `li > a`', () => {
-    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem content="Home" />).find(
-      '.ui-menu__item',
-    )
+    const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem content="Home" />)
+      .find('.ui-menu__item__wrapper')
+      .hostNodes()
 
     expect(menuItem.is('li')).toBe(true)
-    expect(menuItem.childAt(0).is('a')).toBe(true)
+    // The ElementType is wrapped with Ref, which is adding two HOC in total, that's why we need the three childAt(0) usages
+    expect(
+      menuItem
+        .childAt(0)
+        .childAt(0)
+        .childAt(0)
+        .is('a'),
+    ).toBe(true)
     expect(menuItem.text()).toBe('Home')
   })
 
   it('children render directly inside `li`', () => {
     const menuItem = mountWithProviderAndGetComponent(MenuItem, <MenuItem>Home</MenuItem>)
+      .find('.ui-menu__item__wrapper')
+      .hostNodes()
 
-    expect(menuItem.find('.ui-menu__item').is('li')).toBe(true)
+    expect(menuItem.is('li')).toBe(true)
+    expect(menuItem.childAt(0).exists()).toBe(false)
     expect(menuItem.text()).toBe('Home')
   })
 
   describe('accessibility', () => {
-    handlesAccessibility(MenuItem, { defaultRootRole: 'presentation' })
+    handlesAccessibility(MenuItem, { defaultRootRole: 'presentation', usesWrapperSlot: true })
     handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 
     describe('as a default MenuItem', () => {
@@ -120,7 +133,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            '' + disabledValue,
+            `${disabledValue}`,
           )
         })
       })
@@ -138,7 +151,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            '' + disabledValue,
+            `${disabledValue}`,
           )
         })
       })
@@ -195,7 +208,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            '' + activeValue,
+            `${activeValue}`,
           )
         })
       })
@@ -213,7 +226,7 @@ describe('MenuItem', () => {
 
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
           expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            '' + activeValue,
+            `${activeValue}`,
           )
         })
       })

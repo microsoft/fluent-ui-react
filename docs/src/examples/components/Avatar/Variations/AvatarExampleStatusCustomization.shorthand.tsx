@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Avatar, Grid, Status, Text } from '@stardust-ui/react'
 
 const defaultAvatar = (

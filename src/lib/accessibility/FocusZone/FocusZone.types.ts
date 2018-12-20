@@ -54,6 +54,17 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
   shouldFocusOnMount?: boolean
 
   /**
+   * If true, focus will go either to defaultTabbableElement if set or first focusable element inside FocusZone,
+   * when FocusZone container receives focus.
+   */
+  shouldFocusInnerElementWhenReceivedFocus?: boolean
+
+  /**
+   * If true and handleTab is false, resets current activeElement to null value.
+   */
+  shouldResetActiveElementWhenTabFromZone?: boolean
+
+  /**
    * If set, the FocusZone will not be tabbable and keyboard navigation will be disabled.
    * This does not affect disabled attribute of any child.
    */

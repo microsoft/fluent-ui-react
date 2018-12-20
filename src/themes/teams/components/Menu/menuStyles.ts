@@ -1,6 +1,9 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { MenuProps } from '../../../../components/Menu/Menu'
+import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
+import { MenuVariables } from './menuVariables'
+
+type MenuPropsAndState = MenuProps & MenuState
 
 const solidBorder = (color: string) => ({
   border: `1px solid ${color}`,
@@ -11,6 +14,7 @@ export default {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',
+      ...(iconOnly && { alignItems: 'center' }),
       ...(vertical && {
         flexDirection: 'column',
         ...(!fluid && { width: pxToRem(200) }),
@@ -23,12 +27,11 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          ...solidBorder(variables.defaultBorderColor),
+          ...solidBorder(variables.borderColor),
           ...(primary && {
             ...solidBorder(variables.primaryBorderColor),
           }),
           borderRadius: pxToRem(4),
-          overflow: 'hidden',
         }),
       ...(underlined && {
         borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
@@ -39,4 +42,4 @@ export default {
       listStyleType: 'none',
     }
   },
-} as ComponentSlotStylesInput<MenuProps, any>
+} as ComponentSlotStylesInput<MenuPropsAndState, MenuVariables>

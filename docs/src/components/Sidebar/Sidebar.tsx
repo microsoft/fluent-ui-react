@@ -1,6 +1,6 @@
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash/fp'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'
@@ -13,13 +13,14 @@ import { themes } from '@stardust-ui/react'
 import { ThemeContext } from '../../context/theme-context'
 import { constants } from 'src/lib'
 
+type ComponentMenuItem = { displayName: string; type: string }
+
 const pkg = require('../../../../package.json')
-const componentMenu = require('docs/src/componentMenu')
-const behaviorMenu = require('docs/src/behaviorMenu')
+const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
+const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
 const selectedItemLabelStyle: any = { color: '#35bdb2', float: 'right' }
 const selectedItemLabel = <span style={selectedItemLabelStyle}>Press Enter</span>
-type ComponentMenuItem = { displayName: string; type: string }
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -51,7 +52,7 @@ class Sidebar extends React.Component<any, any> {
     this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
   }
 
-  handleDocumentKeyDown = e => {
+  private handleDocumentKeyDown = e => {
     const code = keyboardKey.getCode(e)
     const isAZ = code >= 65 && code <= 90
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
@@ -60,20 +61,20 @@ class Sidebar extends React.Component<any, any> {
     if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
   }
 
-  handleItemClick = () => {
+  private handleItemClick = () => {
     const { query } = this.state
 
     if (query) this.setState({ query: '' })
     if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  handleSearchChange = e =>
+  private handleSearchChange = e =>
     this.setState({
       selectedItemIndex: 0,
       query: e.target.value,
     })
 
-  handleSearchKeyDown = e => {
+  private handleSearchKeyDown = e => {
     const { history } = this.props
     const { selectedItemIndex } = this.state
     const code = keyboardKey.getCode(e)
@@ -101,9 +102,9 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  menuItemsByType = _.map(nextType => {
+  private menuItemsByType = _.map(nextType => {
     const items = _.flow(
-      _.filter(({ type }) => type === nextType),
+      _.filter<ComponentMenuItem>(({ type }) => type === nextType),
       _.map(info => (
         <Menu.Item
           key={info.displayName}
@@ -124,7 +125,7 @@ class Sidebar extends React.Component<any, any> {
     )
   }, constants.typeOrder)
 
-  renderSearchItems = () => {
+  private renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
     if (!query) return undefined
 
@@ -224,6 +225,9 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/" activeClassName="active">
                   Introduction
                 </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
+                  Color Palette
+                </Menu.Item>
                 <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
                   Shorthand Props
                 </Menu.Item>
@@ -244,6 +248,14 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
                   Theming Examples
                 </Menu.Item>
+                <Menu.Item
+                  as={NavLink}
+                  exact
+                  to="/integrate-custom-components"
+                  activeClassName="active"
+                >
+                  Integrate Custom Components
+                </Menu.Item>
               </Menu.Menu>
             </Menu.Item>
             {process.env.NODE_ENV !== 'production' && (
@@ -252,6 +264,14 @@ class Sidebar extends React.Component<any, any> {
                 <Menu.Menu>
                   <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
                     Chat Pane
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-chat-message-with-popover"
+                    activeClassName="active"
+                  >
+                    Chat message with popover
                   </Menu.Item>
                   <Menu.Item
                     as={NavLink}
@@ -284,6 +304,12 @@ class Sidebar extends React.Component<any, any> {
                     activeClassName="active"
                   >
                     Search Page
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/prototype-popups" activeClassName="active">
+                    Popups
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
+                    Processed Icons
                   </Menu.Item>
                 </Menu.Menu>
               </Menu.Item>

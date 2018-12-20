@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
 const PopupArrowExample = props => {
@@ -13,7 +13,9 @@ const PopupArrowExample = props => {
       content={{
         content: (
           <p>
-            The popup is rendered {position} the trigger<br />aligned to the {align}.
+            The popup is rendered {position} the trigger
+            <br />
+            aligned to the {align}.
           </p>
         ),
       }}

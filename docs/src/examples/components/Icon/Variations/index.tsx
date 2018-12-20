@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -11,7 +11,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Color"
-      description="An icon can have a different color"
+      description="An icon is inheriting color by default, but can have a different color if provided by the user."
       examplePath="components/Icon/Variations/IconExampleColor"
     />
     <ComponentExample

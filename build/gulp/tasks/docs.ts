@@ -2,6 +2,7 @@ import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
 import * as remember from 'gulp-remember'
+import * as fs from 'fs'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
 import * as through2 from 'through2'
@@ -14,7 +15,9 @@ import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
+import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
+import { getRelativePathToSourceFile } from '../plugins/util'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
@@ -29,10 +32,6 @@ const handleWatchUnlink = (group, path) => {
 // ----------------------------------------
 // Clean
 // ----------------------------------------
-
-task('clean:docs:component-info', cb => {
-  rimraf(paths.docsSrc('componentInfo'), cb)
-})
 
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
@@ -50,14 +49,18 @@ task('clean:docs:example-menus', cb => {
   rimraf(paths.docsSrc('exampleMenus'), cb)
 })
 
+task('clean:docs:example-sources', cb => {
+  rimraf(paths.docsSrc('exampleSources'), cb)
+})
+
 task(
   'clean:docs',
   parallel(
-    'clean:docs:component-info',
     'clean:docs:component-menu',
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
     'clean:docs:example-menus',
+    'clean:docs:example-sources',
   ),
 )
 
@@ -65,9 +68,10 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`]
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Slot.tsx']
 const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
-const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
+const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
+const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
   '.github/CONTRIBUTING.md',
   '.github/setup-local-development.md',
@@ -97,19 +101,25 @@ task('build:docs:component-menu-behaviors', () =>
 )
 
 task('build:docs:example-menu', () =>
-  src(examplesSrc, { since: lastRun('build:docs:example-menu') })
+  src(examplesIndexSrc, { since: lastRun('build:docs:example-menu') })
     .pipe(remember('example-menu')) // FIXME: with watch this unnecessarily processes index files for all examples
     .pipe(gulpExampleMenu())
     .pipe(dest(paths.docsSrc('exampleMenus'))),
 )
 
+task('build:docs:example-sources', () =>
+  src(examplesSrc, { since: lastRun('build:docs:example-sources') })
+    .pipe(gulpExampleSource())
+    .pipe(dest(paths.docsSrc('exampleSources'))),
+)
+
 task(
   'build:docs:json',
   parallel(
-    'build:docs:docgen',
-    'build:docs:component-menu',
+    series('build:docs:docgen', 'build:docs:component-menu'),
     'build:docs:component-menu-behaviors',
     'build:docs:example-menu',
+    'build:docs:example-sources',
   ),
 )
 
@@ -224,9 +234,20 @@ task('watch:docs', cb => {
   watch(componentsSrc, series('build:docs:docgen')).on('change', handleWatchChange)
 
   // rebuild example menus
-  watch(examplesSrc, series('build:docs:example-menu'))
+  watch(examplesIndexSrc, series('build:docs:example-menu'))
     .on('change', handleWatchChange)
     .on('unlink', path => handleWatchUnlink('example-menu', path))
+
+  watch(examplesSrc, series('build:docs:example-sources'))
+    .on('change', handleWatchChange)
+    .on('unlink', filePath => {
+      log(`File ${filePath} was deleted, running tasks...`)
+
+      const sourceFilename = getRelativePathToSourceFile(filePath)
+      const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
+
+      fs.unlinkSync(sourcePath)
+    })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
     .on('change', handleWatchChange)

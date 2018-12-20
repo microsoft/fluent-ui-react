@@ -17,6 +17,154 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- renamed Teams theme menu variables the contains props names as prefixes @mnajdova ([#539](https://github.com/stardust-ui/react/pull/539))
+
+### Fixes
+- Ensure `Popup` properly flips values of `offset` prop in RTL @kuzhelov ([#612](https://github.com/stardust-ui/react/pull/612))
+- Fix `List` - items should be selectable @sophieH29 ([#566](https://github.com/stardust-ui/react/pull/566))
+- Respect `defaultTabbable` element when `FocusZone` container gets focus @sophieH29 ([#637](https://github.com/stardust-ui/react/pull/637))
+- Fix `FocusZone` - fix last breaking changes and make improvements for `Chat` usage @sophieH29 ([#614](https://github.com/stardust-ui/react/pull/614))
+
+### Features
+- Add `color` prop to `Text` component @Bugaa92 ([#597](https://github.com/stardust-ui/react/pull/597))
+- Add `color` prop to `Header` and `HeaderDescription` components @Bugaa92 ([#628](https://github.com/stardust-ui/react/pull/628))
+- Export initial set of compose icons in Teams theme @joheredi ([#638](https://github.com/stardust-ui/react/pull/638))
+- Add and export compose icons in Teams theme @joheredi ([#639](https://github.com/stardust-ui/react/pull/639))
+- Add `menu` prop to `MenuItem` @mnajdova ([#539](https://github.com/stardust-ui/react/pull/539))
+- Enable RTL for `FocusZone` @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
+
+<!--------------------------------[ v0.15.0 ]------------------------------- -->
+## [v0.15.0](https://github.com/stardust-ui/react/tree/v0.15.0) (2018-12-17)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.14.0...v0.15.0)
+
+### BREAKING CHANGES
+- `type` prop is replaced with `color` in `Divider` component @layershifter ([#558](https://github.com/stardust-ui/react/pull/558))
+- Remove `createColorVariants` and `setColorLightness` utils @layershifter ([#583](https://github.com/stardust-ui/react/pull/583))
+- Remove `accessibility` prop (and corresponding behavior) from `ButtonGroup` @kolaps33 ([#605](https://github.com/stardust-ui/react/pull/605))
+- Add `gutter` prop to `Chat.Item`, removed `avatar` from `Chat.Message`, renamed `content` slot to `message` for `Chat.Item`, deprecated Children API for `Chat` components @Bugaa92 ([#556](https://github.com/stardust-ui/react/pull/556))
+
+### Fixes
+- Fix `Provider` is not executing staticStyles with the merged siteVariables @mnajdova ([#559](https://github.com/stardust-ui/react/pull/559))
+- Decouple `pxToRem` from HTML page's font size @kuzhelov ([#371](https://github.com/stardust-ui/react/pull/371))
+- The border color of the Icon is inherited if no value is provided for the `color` and `borderColor` variables @mnajdova ([#569](https://github.com/stardust-ui/react/pull/569))
+- Do not focus `Popup`'s trigger on outside click @sophieH29 ([#578](https://github.com/stardust-ui/react/pull/578))
+- Add `https` protocol to all urls used in the scripts and stylesheets in index.ejs @mnajdova ([#571](https://github.com/stardust-ui/react/pull/571))
+- Fix support for fallback values in styles (`color: ['#ccc', 'rgba(0, 0, 0, 0.5)']`) @miroslavstastny ([#573](https://github.com/stardust-ui/react/pull/573))
+- Fix styles for RTL mode of doc site component examples @kuzhelov ([#579](https://github.com/stardust-ui/react/pull/579))
+- Prevent blind props forwarding for `createShorthand` calls if the value is a React element and remove manual check for `Input` `wrapper` @Bugaa92 ([#496](https://github.com/stardust-ui/react/pull/496))
+- Fix issue with bundling package with Rollup and Parcel @layershifter ([#570](https://github.com/stardust-ui/react/pull/570))
+- Fix `pxToRem` referenced for `Dropdown` component styles @kuzhelov ([#590](https://github.com/stardust-ui/react/pull/590))
+- Fix `Popup` logic of handling `content` value provided as React element @kuzhelov ([#592](https://github.com/stardust-ui/react/pull/592))
+- Do not handle `FocusZone`'s keyDownCapture in `chatBehavior` @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563))
+- Fix `getKeyDownHandler` to pass props for client's onKeyDown handler @sophieH29 ([#595](https://github.com/stardust-ui/react/pull/595))
+- Fix `Popup` not closing on outside click @kuzhelov ([#598](https://github.com/stardust-ui/react/pull/598))
+- Fix multiple React's warnings about keys in docs @layershifter ([#602](https://github.com/stardust-ui/react/pull/602))
+- Fix incorrect handling of `isFromKeyboard` in `Menu` @layershifter ([#596](https://github.com/stardust-ui/react/pull/596))
+- Fix property names used in shorthand factories @kuzhelov ([#591](https://github.com/stardust-ui/react/pull/591))
+- Fix compatibility with TypeScript 3.2 and handle `null` as a valid value in all optional props @layershifter ([#550](https://github.com/stardust-ui/react/pull/550))
+
+### Features
+- `Ref` components uses `forwardRef` API by default @layershifter ([#491](https://github.com/stardust-ui/react/pull/491))
+- Label Processed Teams icons moved to Stardust theme @kuzhelov ([#574](https://github.com/stardust-ui/react/pull/574))
+- Add `Dropdown` component @silviuavram ([#422](https://github.com/stardust-ui/react/pull/422))
+- Export `call-recording` SVG icon @Bugaa92 ([#585](https://github.com/stardust-ui/react/pull/585))
+- Export `canvas-add-page` SVG icon @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
+- Add `sizeModifier` variable (with `x` and `xx` values) to `Icon`'s Teams theme styles @priyankar205 ([#601](https://github.com/stardust-ui/react/pull/601))
+- Add `offset` prop to `Popup` to extend set of popup positioning options @kuzhelov ([#606](https://github.com/stardust-ui/react/pull/606))
+- Export `table-add` and `table-delete` SVG icon @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
+
+### Documentation
+- Add `prettier` support throughout the docs @levithomason  ([#568](https://github.com/stardust-ui/react/pull/568))
+- Display available behaviors for component @jurokapsiar ([#510](https://github.com/stardust-ui/react/pull/510))
+- Fix `createComponent()` instructions for `className` @levithomason  ([#599](https://github.com/stardust-ui/react/pull/599))
+
+<!--------------------------------[ v0.14.0 ]------------------------------- -->
+## [v0.14.0](https://github.com/stardust-ui/react/tree/v0.14.0) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.3...v0.14.0)
+
+### BREAKING CHANGES
+- Add `render` callback as an option for shorthand value @kuzhelov ([#562](https://github.com/stardust-ui/react/pull/562))
+- Rename `renderContent` and `renderTitle` to `renderPanelContent` and `renderPanelTitle` for `Accordion` @kuzhelov ([#562](https://github.com/stardust-ui/react/pull/562))
+
+<!--------------------------------[ v0.13.3 ]------------------------------- -->
+## [v0.13.3](https://github.com/stardust-ui/react/tree/v0.13.3) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.2...v0.13.3)
+
+### Fixes
+- Revert breaking change: `render` callback as an option for shorthand value introduced in #519 @kuzhelov ([#561](https://github.com/stardust-ui/react/pull/561))
+
+<!--------------------------------[ v0.13.2 ]------------------------------- -->
+## [v0.13.2](https://github.com/stardust-ui/react/tree/v0.13.2) (2018-12-05)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.1...v0.13.2)
+
+### Documentation
+- Add the concept of the color palette @layershifter ([#451](https://github.com/stardust-ui/react/pull/451))
+
+### Fixes
+- Add `react-dom` as available import in the editor @mnajdova ([#553](https://github.com/stardust-ui/react/pull/553))
+- Fix incorrect and missing filled or outline versions of Teams SVG icons @codepretty ([#552](https://github.com/stardust-ui/react/pull/552))
+- Fix truncate styles in Teams team for the `Button`'s `content` prop used as element @mnajdova ([#551](https://github.com/stardust-ui/react/pull/551))
+- Fix HTML preview in the editor @layershifter ([#555](https://github.com/stardust-ui/react/pull/555))
+- Fix icon overlapping for `iconOnly` prop in `Menu` component with @Bugaa92 ([#486](https://github.com/stardust-ui/react/pull/486))
+
+### Features
+- Add `render` callback as an option for shorthand value @kuzhelov ([#519](https://github.com/stardust-ui/react/pull/519))
+- Add `color` prop to `Divider` component @layershifter ([#451](https://github.com/stardust-ui/react/pull/451))
+
+<!--------------------------------[ v0.13.1 ]------------------------------- -->
+## [v0.13.1](https://github.com/stardust-ui/react/tree/v0.13.1) (2018-12-03)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.13.0...v0.13.1)
+
+### Fixes
+- Prevent blind props forwarding if `Input`'s wrapper is defined as React element @kuzhelov ([#453](https://github.com/stardust-ui/react/pull/453))
+- Fix invalid whatInput import @miroslavstastny ([#541](https://github.com/stardust-ui/react/pull/541))
+- Fix invalid typings and propTypes for the content prop @mnajdova ([#528](https://github.com/stardust-ui/react/pull/528))
+- Fix Teams SVG icons @kuzhelov ([#544](https://github.com/stardust-ui/react/pull/544))
+
+### Features
+- Add all default size Teams icons processed & ready to be consumed by Stardust as needed @codepretty ([#478](https://github.com/stardust-ui/react/pull/478))
+- Add `Tree` Component @priyankar205 ([#479](https://github.com/stardust-ui/react/pull/479))
+- Add several Teams SVG icons @kuzhelov ([#544](https://github.com/stardust-ui/react/pull/544))
+
+<!--------------------------------[ v0.13.0 ]------------------------------- -->
+## [v0.13.0](https://github.com/stardust-ui/react/tree/v0.13.0) (2018-11-27)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.12.1...v0.13.0)
+
+### BREAKING CHANGES
+- Rename `Transition` component to `Animation`, and `animationName` property to `name` @mnajdova ([#505](https://github.com/stardust-ui/react/pull/505))
+
+### Fixes
+- Do not enforce yarn 1.10 via engines @Bugaa92 ([#531](https://github.com/stardust-ui/react/pull/531))
+
+### Documentation
+- Add `Animations` guide as part of the `Theming` docs page @mnajdova ([#505](https://github.com/stardust-ui/react/pull/505))
+
+<!--------------------------------[ v0.12.1 ]------------------------------- -->
+## [v0.12.1](https://github.com/stardust-ui/react/tree/v0.12.1) (2018-11-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.12.0...v0.12.1)
+
+### Features
+- Add `createComponent` function in the public API @mnajdova ([#503](https://github.com/stardust-ui/react/pull/503))
+- Apply `dir=auto` attribute to string content of `Text` @kuzhelov  ([#5](https://github.com/stardust-ui/react/pull/5))
+- Improve `Menu` accessibility behaviors @sophieH29 ([#523](https://github.com/stardust-ui/react/pull/523))
+- Add ability to style every slot of `Chat.Message` and remove dependency on `Layout` component @Bugaa92 ([#518](https://github.com/stardust-ui/react/pull/518))
+
+### Fixes
+- Fix the behaviour of `AutoControlledComponent` when `undefined` is passed as a prop value @layershifter ([#499](https://github.com/stardust-ui/react/pull/499))
+- Stop event propagation when press Escape on the popup @sophieH29 ([#515](https://github.com/stardust-ui/react/pull/515))
+- Remove role="presentation" from `chatMessageBehavior` and `FocusZone` @sophieH29 ([#530](https://github.com/stardust-ui/react/pull/530))
+
+### Documentation
+- Add `Integrate Custom Components` guide page in the docs @mnajdova ([#517](https://github.com/stardust-ui/react/pull/517))
+
+<!--------------------------------[ v0.12.0 ]------------------------------- -->
+## [v0.12.0](https://github.com/stardust-ui/react/tree/v0.12.0) (2018-11-19)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.11.0...v0.12.0)
+
+### Documentation
+- Replace react-docgen with react-docgen-typescript for generating the props from the TS props interfaces @mnajdova ([#460](https://github.com/stardust-ui/react/pull/460))
+
 ### BREAKING
 - Replace the `type` prop with `secondary` and `primary` for `Button` @layershifter ([#419](https://github.com/stardust-ui/react/pull/419))
 - Replace the `type` prop with `secondary` and `primary` for `Menu` @layershifter ([#429](https://github.com/stardust-ui/react/pull/429))
@@ -26,14 +174,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix focus behavior for `List` @kuzhelov ([#413](https://github.com/stardust-ui/react/pull/413))
 - Remove `Sizes` and `Weights` enums, use typed string in `Text` instead @jurokapsiar ([#446](https://github.com/stardust-ui/react/pull/446))
 - Fix React's version in `peerDependencies` @layershifter ([#452](https://github.com/stardust-ui/react/pull/452))
+- Added Dark and Contrast theme variables for `Header` @bcalvery ([#427](https://github.com/stardust-ui/react/pull/427))
+- Fix Teams Icons styles to match spec @codepretty ([#441](https://github.com/stardust-ui/react/pull/441))
+- Fix styles as functions in shorthands are not applied @mnajdova ([#470](https://github.com/stardust-ui/react/pull/470))
+- Add `lodash` typings and fix compilation errors @Bugaa92 ([#438](https://github.com/stardust-ui/react/pull/438))
+- Remove unsafe `listRef` from `List` API @kuzhelov ([#489](https://github.com/stardust-ui/react/pull/489))
+- Fix Popup trigger's props are not passed in onClick handler @sophieH29 ([#521](https://github.com/stardust-ui/react/pull/521))
 
 ### Features
 - Make `Grid` keyboard navigable by implementing `gridBehavior` @sophieH29 ([#398](https://github.com/stardust-ui/react/pull/398))
 - Set the ref of the `FocusZone` in `Embed` mode @sophieH29 ([#435](https://github.com/stardust-ui/react/pull/435))
 - Close `Popup` on outside click @kuzhelov ([#410](https://github.com/stardust-ui/react/pull/410))
 - Set default `chatBehavior` which uses Enter/Esc keys @sophieH29 ([#443](https://github.com/stardust-ui/react/pull/443))
-- Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442)) 
-- Handle `Enter` and `Spacebar` keys for selectable `ListItem` @jurokapsiar ([#279](https://github.com/stardust-ui/react/pull/279)) 
+- Add `iconPosition` property to `Input` component @mnajdova ([#442](https://github.com/stardust-ui/react/pull/442))
+- Add `color`, `inverted` and `renderContent` props and `content` slot to `Segment` component @Bugaa92 ([#389](https://github.com/stardust-ui/react/pull/389))
+- Add focus trap behavior to `Popup` @kuzhelov ([#457](https://github.com/stardust-ui/react/pull/457))
+- Export `Ref` component and add `handleRef` util @layershifter ([#459](https://github.com/stardust-ui/react/pull/459))
+- Add `wrapper` slot to `MenuItem` @miroslavstastny ([#323](https://github.com/stardust-ui/react/pull/323))
+- Add `Transition` component @mnajdova ([#414](https://github.com/stardust-ui/react/pull/414))
+- Add generic `animation` property to the UIComponents @mnajdova ([#414](https://github.com/stardust-ui/react/pull/414))
+- Add accessibility behavior `dialogBehavior` @sophieH29 ([#490](https://github.com/stardust-ui/react/pull/490))
 
 ### Documentation
 - Add all missing component descriptions and improve those existing @levithomason ([#400](https://github.com/stardust-ui/react/pull/400))

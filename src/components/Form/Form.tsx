@@ -2,28 +2,30 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, childrenExist, customPropTypes } from '../../lib'
-import { ComponentVariablesInput, ComponentSlotStyle } from '../../themes/types'
 import {
-  ComponentEventHandler,
-  Extendable,
-  ReactChildren,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../../types/utils'
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
 
-export interface FormProps {
+export interface FormProps extends UIComponentProps, ChildrenComponentProps {
+  /** The HTML form action. */
   action?: string
-  as?: any
-  children?: ReactChildren
-  className?: string
-  content?: ShorthandValue
+
+  /** Shorthand array of props for the Form.Fields inside the Form. */
   fields?: ShorthandValue[]
+
+  /**
+   * The HTML form submit handler.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onSubmit?: ComponentEventHandler<FormProps>
-  renderField?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
@@ -31,7 +33,7 @@ export interface FormProps {
  * @accessibility
  * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
-class Form extends UIComponent<Extendable<FormProps>, any> {
+class Form extends UIComponent<ReactProps<FormProps>, any> {
   static create: Function
 
   public static displayName = 'Form'
@@ -39,49 +41,12 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   public static className = 'ui-form'
 
   public static propTypes = {
-    /** The HTML form action. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     action: PropTypes.string,
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Form content for childrenApi.
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Shorthand array of props for the Form.Fields inside the Form. */
     fields: customPropTypes.collectionShorthand,
-
-    /**
-     * The HTML form submit handler.
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props.
-     */
     onSubmit: PropTypes.func,
-
-    /**
-     * A custom render iterator for rendering each of the Form fields.
-     * The default component, props, and children are available for each field.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderField: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   public static defaultProps = {
@@ -90,14 +55,7 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    variables,
-    styles,
-    rest,
-  }): React.ReactNode {
+  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType className={classes.root} action={action} onSubmit={this.handleSubmit} {...rest}>
@@ -116,12 +74,8 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
   }
 
   private renderFields = () => {
-    const { fields, renderField } = this.props
-    return _.map(fields, field =>
-      FormField.create(field, {
-        render: renderField,
-      }),
-    )
+    const { fields } = this.props
+    return _.map(fields, field => FormField.create(field))
   }
 }
 

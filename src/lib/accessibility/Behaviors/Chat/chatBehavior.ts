@@ -21,6 +21,7 @@ const ChatBehavior: Accessibility = (props: any) => ({
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,
+      shouldResetActiveElementWhenTabFromZone: true,
       defaultTabbableElement: getLastTabbableElement, // select last chat message by default
       [CHAT_FOCUSZONE_ATTRIBUTE]: '', // allows querying the default active element
     },
@@ -35,8 +36,11 @@ const ChatBehavior: Accessibility = (props: any) => ({
 })
 
 const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
+  const lastVisibleMessage = root.querySelector('[data-last-visible="true"]') as HTMLElement
+  if (lastVisibleMessage) return lastVisibleMessage
+
   const chatItemsElements = root.querySelectorAll(
-    `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__item > [${IS_FOCUSABLE_ATTRIBUTE}]`,
+    `[${CHAT_FOCUSZONE_ATTRIBUTE}] .ui-chat__message[${IS_FOCUSABLE_ATTRIBUTE}="true"]`,
   )
   return chatItemsElements.length > 0
     ? (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)

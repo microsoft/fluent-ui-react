@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
 import {
   childrenExist,
@@ -8,48 +8,42 @@ import {
   customPropTypes,
   RenderResultConfig,
   UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import {
-  ComponentSlotStyle,
-  ComponentVariablesInput,
-  ComponentSlotClasses,
-  ComponentSlotStylesInput,
-} from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
-import Avatar from '../Avatar/Avatar'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import Layout from '../Layout/Layout'
+
 import Text from '../Text/Text'
 import Slot from '../Slot/Slot'
 
-export interface ChatMessageProps {
+export interface ChatMessageProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps<ShorthandValue> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default chatMessageBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
+
+  /** Author of the message. */
   author?: ShorthandValue
-  avatar?: ShorthandValue
-  children?: ReactChildren
-  className?: string
-  content?: any
+
+  /** Indicates whether message belongs to the current user. */
   mine?: boolean
-  renderAuthor?: ShorthandRenderFunction
-  renderAvatar?: ShorthandRenderFunction
-  renderContent?: ShorthandRenderFunction
-  renderTimestamp?: ShorthandRenderFunction
-  styles?: ComponentSlotStyle
+
+  /** Timestamp of the message. */
   timestamp?: ShorthandValue
-  variables?: ComponentVariablesInput
 }
 
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
+class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -57,85 +51,19 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
   static displayName = 'ChatMessage'
 
   static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Author of the message. */
     author: customPropTypes.itemShorthand,
-
-    /** Chat messages can have an avatar. */
-    avatar: customPropTypes.itemShorthand,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for the primary content. */
-    content: PropTypes.any,
-
-    /** Indicates whether message belongs to the current user. */
     mine: PropTypes.bool,
-
-    /**
-     * A custom render function the author slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderAuthor: PropTypes.func,
-
-    /**
-     * A custom render function the avatar slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderAvatar: PropTypes.func,
-
-    /**
-     * A custom render function the content slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderContent: PropTypes.func,
-
-    /**
-     * A custom render function the timestamp slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderTimestamp: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Timestamp of the message. */
     timestamp: customPropTypes.itemShorthand,
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
-    accessibility: chatMessageBehavior as Accessibility,
+    accessibility: chatMessageBehavior,
     as: 'div',
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  protected actionHandlers: AccessibilityActionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys as navigation (only Tab key should work)
     preventDefault: event => {
       event.preventDefault()
@@ -148,10 +76,8 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
     accessibility,
     rest,
     styles,
-    variables,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { children } = this.props
-
+    const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -162,83 +88,23 @@ class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
         {...rest}
         className={className}
       >
-        {childrenPropExists ? children : this.renderContent(classes, styles, variables)}
+        {childrenPropExists ? (
+          children
+        ) : (
+          <>
+            {!mine &&
+              Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
+            {Text.create(timestamp, {
+              defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
+            })}
+            {Slot.create(content, { defaultProps: { styles: styles.content } })}
+          </>
+        )}
       </ElementType>
-    )
-  }
-
-  renderContent = (
-    classes: ComponentSlotClasses,
-    styles: ComponentSlotStylesInput,
-    variables: ComponentVariablesInput,
-  ) => {
-    const {
-      author,
-      avatar,
-      content,
-      mine,
-      renderAuthor,
-      renderAvatar,
-      renderTimestamp,
-      renderContent,
-      timestamp,
-    } = this.props
-
-    const avatarElement = Avatar.create(avatar, {
-      defaultProps: {
-        styles: styles.avatar,
-        variables: variables.avatar,
-      },
-      render: renderAvatar,
-    })
-
-    const authorElement = Text.create(author, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.author,
-        variables: variables.author,
-      },
-      render: renderAuthor,
-    })
-
-    const timestampElement = Text.create(timestamp, {
-      defaultProps: {
-        size: 'small',
-        timestamp: true,
-        styles: styles.timestamp,
-        variables: variables.timestamp,
-      },
-      render: renderTimestamp,
-    })
-
-    const contentElement = Slot.create(content, {
-      styles: styles.content,
-      variables: variables.content,
-      render: renderContent,
-    })
-
-    return (
-      <Layout
-        start={!mine && avatarElement}
-        main={
-          <Layout
-            className={classes.content}
-            vertical
-            start={
-              <>
-                {!mine && authorElement}
-                {timestampElement}
-              </>
-            }
-            main={contentElement}
-          />
-        }
-        end={mine && avatarElement}
-      />
     )
   }
 }
 
-ChatMessage.create = createShorthandFactory(ChatMessage, content => ({ content }))
+ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 
 export default ChatMessage

@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
 /**
- * @description
+ * @specification
  *  Adds role='radiogroup'. This allows screen readers to handle the component as a radio group.
  *  Performs 'nextItem' action on ArrowDown, ArrowRight.
  *  Performs 'prevItem' action on ArrowUp, ArrowLeft.

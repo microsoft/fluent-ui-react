@@ -2,48 +2,78 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { AutoControlledComponent, childrenExist, customPropTypes } from '../../lib'
+import {
+  AutoControlledComponent,
+  childrenExist,
+  createShorthandFactory,
+  customPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import {
-  ComponentVariablesInput,
-  ComponentVariablesObject,
-  ComponentSlotStyle,
-} from '../../themes/types'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+import { ComponentVariablesObject } from '../../themes/types'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
-export interface MenuProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default menuBehavior
+   * @available toolbarBehavior, tabListBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
+
+  /** Index of the currently active item. */
   activeIndex?: number | string
-  children?: ReactChildren
-  className?: string
+
+  /** Initial activeIndex value. */
   defaultActiveIndex?: number | string
+
+  /** A vertical menu may take the size of its container. */
   fluid?: boolean
+
+  /** A menu may have just icons. */
   iconOnly?: boolean
+
+  /** Shorthand array of props for Menu. */
   items?: ShorthandValue[]
+
+  /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
+
+  /**
+   * A menu can point to show its relationship to nearby content.
+   * For vertical menu, it can point to the start of the item or to the end.
+   */
   pointing?: boolean | 'start' | 'end'
+
+  /** The menu can have primary type. */
   primary?: boolean
-  renderItem?: ShorthandRenderFunction
+
+  /** The menu can have secondary type. */
   secondary?: boolean
+
+  /** Menu items can by highlighted using underline. */
   underlined?: boolean
+
+  /** A vertical menu displays elements vertically. */
   vertical?: boolean
-  styles?: ComponentSlotStyle
-  variables?: ComponentVariablesInput
+
+  /** Indicates whether the menu is submenu. */
+  submenu?: boolean
+}
+
+export interface MenuState {
+  activeIndex?: number | string
 }
 
 /**
  * A menu displays grouped navigation actions.
  */
-class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
+class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -51,72 +81,22 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static create: Function
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Index of the currently active item. */
-    activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Initial activeIndex value. */
-    defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-
-    /** A vertical menu may take the size of its container. */
-    fluid: PropTypes.bool,
-
-    /** A menu may have just icons. */
-    iconOnly: PropTypes.bool,
-
-    /** Shorthand array of props for Menu. */
-    items: customPropTypes.collectionShorthand,
-
-    /** A menu can adjust its appearance to de-emphasize its contents. */
-    pills: PropTypes.bool,
-
-    /**
-     * A menu can point to show its relationship to nearby content.
-     * For vertical menu, it can point to the start of the item or to the end.
-     */
-    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
-
-    /** The menu can have primary type. */
-    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
-
-    /**
-     * A custom render iterator for rendering each of the Menu items.
-     * The default component, props, and children are available for each item.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderItem: PropTypes.func,
-
-    /** The menu can have secondary type. */
-    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-
-    /** Menu items can by highlighted using underline. */
-    underlined: PropTypes.bool,
-
-    /** A vertical menu displays elements vertically. */
-    vertical: PropTypes.bool,
-
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    fluid: PropTypes.bool,
+    iconOnly: PropTypes.bool,
+    items: customPropTypes.collectionShorthand,
+    pills: PropTypes.bool,
+    pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    underlined: PropTypes.bool,
+    vertical: PropTypes.bool,
+    submenu: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -136,6 +116,15 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
+    onActiveChanged: (e, props) => {
+      const { index, active } = props
+      if (active) {
+        this.trySetState({ activeIndex: index })
+      } else if (this.state.activeIndex === index) {
+        this.trySetState({ activeIndex: null })
+      }
+      _.invoke(predefinedProps, 'onActiveChanged', e, props)
+    },
   })
 
   renderItems = (variables: ComponentVariablesObject) => {
@@ -145,15 +134,17 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
       pills,
       pointing,
       primary,
-      renderItem,
       secondary,
       underlined,
       vertical,
+      submenu,
     } = this.props
     const { activeIndex } = this.state
 
-    return _.map(items, (item, index) =>
-      MenuItem.create(item, {
+    return _.map(items, (item, index) => {
+      const active =
+        (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
+      return MenuItem.create(item, {
         defaultProps: {
           iconOnly,
           pills,
@@ -164,12 +155,12 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           variables,
           vertical,
           index,
-          active: parseInt(activeIndex, 10) === index,
+          active,
+          inSubmenu: submenu,
         },
         overrideProps: this.handleItemOverrides,
-        render: renderItem,
-      }),
-    )
+      })
+    })
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, rest }) {
@@ -181,5 +172,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     )
   }
 }
+
+Menu.create = createShorthandFactory(Menu, 'items')
 
 export default Menu
