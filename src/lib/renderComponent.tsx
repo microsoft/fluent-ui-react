@@ -24,6 +24,7 @@ import {
   AccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
+  FocusZoneDefinition,
 } from './accessibility/types'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
@@ -102,11 +103,19 @@ function wrapInGenericFocusZone<
   )
 }
 
-const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+const renderWithFocusZone = <P extends {}>(
+  render: RenderComponentCallback<P>,
+  focusZoneDefinition: FocusZoneDefinition,
+  config: RenderResultConfig<P>,
+  focusZoneRef: (focusZone: FocusZone) => void,
+): any => {
   if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     return wrapInGenericFocusZone(
       FabricFocusZone,
-      focusZoneDefinition.props,
+      {
+        ...focusZoneDefinition.props,
+        isRtl: config.rtl,
+      },
       render(config),
       focusZoneRef,
     )
@@ -117,6 +126,7 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
     config.rest = { ...config.rest, ...focusZoneDefinition.props }
     config.rest.as = originalElementType
     config.rest.ref = focusZoneRef
+    config.rest.isRtl = config.rtl
   }
   return render(config)
 }
