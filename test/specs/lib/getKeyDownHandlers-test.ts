@@ -108,7 +108,12 @@ describe('getKeyDownHandlers', () => {
         actionsDefinition[partElementName].actionOnRightArrow = {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         }
-        const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props, /** isRtl */ true)
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
 
         keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowRight))
         expect(actions.actionOnLeftArrow).toHaveBeenCalled()
@@ -127,7 +132,12 @@ describe('getKeyDownHandlers', () => {
         actionsDefinition[partElementName].actionOnRightArrow = {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         }
-        const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props, /** isRtl */ true)
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
 
         keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
         expect(actions.actionOnLeftArrow).not.toHaveBeenCalled()

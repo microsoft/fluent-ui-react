@@ -19,13 +19,13 @@ const rtlKeyMap = {
  * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
  * @param {State & PropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
- * @param {boolean} isRtl Indicates if Left and Right arrow keys should be swapped in RTL mode.
+ * @param {boolean} isRtlEnabled Indicates if Left and Right arrow keys should be swapped in RTL mode.
  */
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
   props: State & PropsWithVarsAndStyles,
-  isRtl?: boolean,
+  isRtlEnabled?: boolean,
 ): ActionsKeyHandler => {
   const keyHandlers = {}
 
@@ -44,10 +44,11 @@ const getKeyDownHandlers = (
         handledActions.forEach(actionName => {
           let keyCombinations = componentPartKeyAction[actionName].keyCombinations
 
-          if (isRtl) {
+          if (isRtlEnabled) {
             keyCombinations = keyCombinations.map(keyCombination => {
-              if (rtlKeyMap[keyCombination.keyCode]) {
-                keyCombination.keyCode = rtlKeyMap[keyCombination.keyCode]
+              const keyToRtlKey = rtlKeyMap[keyCombination.keyCode]
+              if (keyToRtlKey) {
+                keyCombination.keyCode = keyToRtlKey
               }
               return keyCombination
             })
