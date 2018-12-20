@@ -12,6 +12,7 @@ import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 // import ComponentSidebar from './ComponentSidebar'
+import ComponentAccessibility from './ComponentDocAccessibility'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -80,6 +81,7 @@ class ComponentDoc extends React.Component<any, any> {
               content={info.displayName}
               description={_.join(info.docblock.description, ' ')}
             />
+            <ComponentAccessibility info={info} />
             <ComponentDocSee displayName={info.displayName} />
             <ComponentDocLinks
               displayName={info.displayName}
