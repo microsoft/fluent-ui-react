@@ -182,15 +182,19 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       this.trySetOpen(!this.state.open, e, true)
     },
     closeAndFocusTrigger: e => {
-      this.closeAndFocusTrigger(e)
+      this.closeAndFocusTrigger(e, true)
+      e.stopPropagation()
+    },
+    close: e => {
+      this.closeAndFocusTrigger(e, false)
       e.stopPropagation()
     },
   }
 
-  private closeAndFocusTrigger = e => {
+  private closeAndFocusTrigger = (e, focusTrigger) => {
     if (this.state.open) {
       this.trySetOpen(false, e, true)
-      _.invoke(this.triggerDomElement, 'focus')
+      focusTrigger && _.invoke(this.triggerDomElement, 'focus')
     }
   }
 
@@ -218,8 +222,6 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
       })
     }
   }
-
-  public state = { target: undefined, open: false }
 
   public componentDidMount() {
     this.updateOutsideClickSubscription()
@@ -272,7 +274,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         _.invoke(triggerElement, 'props.onClick', e, ...rest)
       }
     }
-    if (_.includes(normalizedOn, 'focus')) {
+    if (_.includes(normalizedOn, 'focus') || _.includes(normalizedOn, 'hover')) {
       triggerProps.onFocus = (e, ...rest) => {
         this.trySetOpen(true, e)
         _.invoke(triggerElement, 'props.onFocus', e, ...rest)
@@ -317,7 +319,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         predefinedProps && _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
       }
     }
-    if (_.includes(normalizedOn, 'focus')) {
+    if (_.includes(normalizedOn, 'focus') || _.includes(normalizedOn, 'hover')) {
       contentProps.onFocus = (e, contentProps) => {
         !this.state.open && this.trySetOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
