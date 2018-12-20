@@ -10,15 +10,15 @@ import { pxToRem } from '../../utils'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
-const sizes = new Map([
-  ['smallest', 7],
-  ['smaller', 10],
-  ['small', 12],
-  ['medium', 16],
-  ['large', 20],
-  ['larger', 32],
-  ['largest', 40],
-])
+const sizes: { [key in IconSize]: number } = {
+  smallest: 7,
+  smaller: 10,
+  small: 12,
+  medium: 16,
+  large: 20,
+  larger: 32,
+  largest: 40,
+}
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
@@ -75,8 +75,9 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
 
 const getIconSize = (size: IconSize, sizeModifier: IconSizeModifier): number => {
   if (!sizeModifier) {
-    return sizes.get(size)
+    return sizes[size]
   }
+
   const modifiedSizes = {
     large: {
       x: 24,

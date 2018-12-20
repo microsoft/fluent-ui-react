@@ -14,10 +14,10 @@ export interface IconVariables {
   redColor?: string
   disabledColor: string
 
-  outline?: boolean
   horizontalSpace: string
   margin: string
-  sizeModifier: IconSizeModifier
+  outline?: boolean
+  sizeModifier?: IconSizeModifier
 }
 
 const colorVariant = 500
@@ -32,8 +32,7 @@ export default (siteVars): IconVariables => ({
   redColor: siteVars.red,
   disabledColor: siteVars.gray06,
 
-  outline: undefined,
   horizontalSpace: pxToRem(10),
   margin: `0 ${pxToRem(8)} 0 0`,
-  sizeModifier: undefined,
+  outline: undefined,
 })

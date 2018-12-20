@@ -16,27 +16,17 @@ const IconExampleColor = () => (
       <Icon name="call" bordered variables={{ outline: true }} />
       <Icon name="call-video" bordered variables={{ outline: true }} />
     </div>
-    <Text
-      content={
-        <span>
-          USING THE <code>color</code> VARIABLE:
-        </span>
-      }
-      weight="bold"
-    />
+    <Text weight="bold">
+      USING THE <code>color</code> VARIABLE:
+    </Text>
     <div>
       <Icon name="calendar" bordered variables={{ color: 'violet' }} />
       <Icon name="call" bordered variables={{ color: 'yellowgreen' }} />
       <Icon name="call-video" bordered variables={{ color: 'cornflowerblue' }} />
     </div>
-    <Text
-      content={
-        <span>
-          USING THE <code>borderColor</code> VARIABLE:
-        </span>
-      }
-      weight="bold"
-    />
+    <Text weight="bold">
+      USING THE <code>borderColor</code> VARIABLE:
+    </Text>
     <div>
       <Icon
         name="calendar"
@@ -54,14 +44,9 @@ const IconExampleColor = () => (
         variables={{ color: 'cornflowerblue', borderColor: 'orangered' }}
       />
     </div>
-    <Text
-      content={
-        <span>
-          USING THE <code>color</code> PROP:
-        </span>
-      }
-      weight="bold"
-    />
+    <Text weight="bold">
+      USING THE <code>color</code> PROP:
+    </Text>
     <div>
       <ProviderConsumer
         render={({ siteVariables: { emphasisColors, naturalColors } }) =>
