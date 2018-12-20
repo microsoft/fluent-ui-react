@@ -6,7 +6,7 @@ const SegmentExampleInvertedShorthand = () => (
     <Segment color="red">Colored segment.</Segment>
     <br />
     <Segment inverted color="red">
-      Colored inverted segment
+      Colored inverted segment.
     </Segment>
   </div>
 )
