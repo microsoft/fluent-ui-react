@@ -4,7 +4,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
-import { Divider, Form, Menu, Segment, Provider, themes } from '@stardust-ui/react'
+import { Divider, Form, Input, Menu, Segment, Provider, themes, Grid } from '@stardust-ui/react'
 
 import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
 import { callable, pxToRem, constants } from 'src/lib'
@@ -493,8 +493,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const displayName = this.getDisplayName()
 
     return (
-      <div>
-        <Divider inverted horizontal>
+      <div style={{ background: 'white' } as React.CSSProperties}>
+        <Divider>
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
@@ -514,23 +514,24 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
             const variablesObject = callable(variables)(siteVariables)
 
+            const items: any[] = []
+
             return (
-              <Form inverted widths="equal" style={{ padding: '1rem' }}>
-                {_.chunk(_.toPairs(variablesObject), 2).map(fields => {
-                  return (
-                    <Segment>
-                      {fields.map(([key, val]) => (
-                        <Form.Field
-                          fluid
-                          key={key}
-                          label={key}
-                          defaultValue={val}
-                          onChange={this.handleVariableChange(displayName, key)}
-                        />
-                      ))}
-                    </Segment>
+              <Form style={{ padding: '1rem' }}>
+                {_.toPairs(variablesObject).forEach((pair, key) => {
+                  items.push(
+                    <Form.Field
+                      key={pair[0]}
+                      label={pair[0]}
+                      control={{
+                        as: Input,
+                        defaultValue: pair[1],
+                        onChange: this.handleVariableChange(displayName, pair[0]),
+                      }}
+                    />,
                   )
                 })}
+                <Grid columns="4" content={items} />
               </Form>
             )
           }}

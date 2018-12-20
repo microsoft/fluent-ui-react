@@ -1,4 +1,4 @@
-import { Icon, Input, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../types/utils'
 import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -69,39 +69,6 @@ class Sidebar extends React.Component<any, any> {
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
-  private handleSearchChange = e =>
-    this.setState({
-      selectedItemIndex: 0,
-      query: e.target.value,
-    })
-
-  private handleSearchKeyDown = e => {
-    const { history } = this.props
-    const { selectedItemIndex } = this.state
-    const code = keyboardKey.getCode(e)
-
-    if (code === keyboardKey.Enter && this.selectedRoute) {
-      e.preventDefault()
-      history.push(this.selectedRoute)
-      this.selectedRoute = null
-      this._searchInput.blur()
-      this.setState({ query: '' })
-    }
-
-    if (code === keyboardKey.ArrowDown) {
-      e.preventDefault()
-      const next = _.min([selectedItemIndex + 1, this.filteredMenu.length - 1])
-      this.selectedRoute = getComponentPathname(this.filteredMenu[next])
-      this.setState({ selectedItemIndex: next })
-    }
-
-    if (code === keyboardKey.ArrowUp) {
-      e.preventDefault()
-      const next = _.max([selectedItemIndex - 1, 0])
-      this.selectedRoute = getComponentPathname(this.filteredMenu[next])
-      this.setState({ selectedItemIndex: next })
-    }
-  }
   private menuItemsByType = _.map(nextType => {
     const items = _.flow(
       _.filter<ComponentMenuItem>(({ type }) => type === nextType),
@@ -158,9 +125,6 @@ class Sidebar extends React.Component<any, any> {
   // }
 
   render() {
-    //  const { style } = this.props
-    const { query } = this.state
-
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
       color: 'white',
@@ -189,7 +153,7 @@ class Sidebar extends React.Component<any, any> {
     const logoStyles: ICSSInJSStyle = {
       padding: '5px',
     }
-    const changeLogUrl = '${constants.repoURL}/blob/master/CHANGELOG.md'
+    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
     const menuItems: ShorthandValue[] = [
       {
@@ -286,19 +250,19 @@ class Sidebar extends React.Component<any, any> {
         to: '/integrate-custom-components',
         accessibility: listItemBehavior,
       },
-      {
-        key: 'search',
-        content: (
-          <Input
-            className="transparent inverted icon"
-            icon="search"
-            placeholder="Search components..."
-            value={query}
-            onChange={this.handleSearchChange}
-            onKeyDown={this.handleSearchKeyDown}
-          />
-        ),
-      },
+      // {
+      //   key: 'search',
+      //   content: (
+      //     <Input
+      //       className="transparent inverted icon"
+      //       icon="search"
+      //       placeholder="Search components..."
+      //       value={query}
+      //       onChange={this.handleSearchChange}
+      //       onKeyDown={this.handleSearchKeyDown}
+      //     />
+      //   ),
+      // },
     ]
     const componentMenuItem = {
       key: 'components',
