@@ -13,6 +13,7 @@ import processedIcons_videooff from './icons-video-off'
 import processedIcons_video from './icons-video'
 import processedIcons_urgent from './icons-urgent'
 import processedIcons_unfollowchannel from './icons-unfollow-channel'
+import processedIcons_undo from './icons-undo'
 import processedIcons_underline from './icons-underline'
 import processedIcons_txt from './icons-txt'
 import processedIcons_triangleupsmall from './icons-triangle-up-small'
@@ -32,6 +33,7 @@ import processedIcons_tabledelete from './icons-table-delete'
 import processedIcons_tableadd from './icons-table-add'
 import processedIcons_table from './icons-table'
 import processedIcons_tabbadge from './icons-tab-badge'
+import processedIcons_strike from './icons-strike'
 import processedIcons_sticker from './icons-sticker'
 import processedIcons_statusyo from './icons-status-yo'
 import processedIcons_starred from './icons-starred'
@@ -51,7 +53,9 @@ import processedIcons_roster from './icons-roster'
 import processedIcons_retry from './icons-retry'
 import processedIcons_resetzoom from './icons-reset-zoom'
 import processedIcons_reply from './icons-reply'
+import processedIcons_removeFormat from './icons-remove-format'
 import processedIcons_refresh from './icons-refresh'
+import processedIcons_redo from './icons-redo'
 import processedIcons_redbang from './icons-redbang'
 import processedIcons_recurrence from './icons-recurrence'
 import processedIcons_recents from './icons-recents'
@@ -75,6 +79,7 @@ import processedIcons_patharrow from './icons-patharrow'
 import processedIcons_paste from './icons-paste'
 import processedIcons_participantremove from './icons-participant-remove'
 import processedIcons_outline from './icons-outline'
+import processedIcons_outdent from './icons-outdent'
 import processedIcons_orgwide from './icons-org-wide'
 import processedIcons_org from './icons-org'
 import processedIcons_openoutside from './icons-open-outside'
@@ -153,7 +158,9 @@ import processedIcons_inputinvalid from './icons-input-invalid'
 import processedIcons_info from './icons-info'
 import processedIcons_inferred from './icons-inferred'
 import processedIcons_indicator from './icons-indicator'
+import processedIcons_indent from './icons-indent'
 import processedIcons_image from './icons-image'
+import processedIcons_horizontalrule from './icons-horizontal-rule'
 import processedIcons_home from './icons-home'
 import processedIcons_hive from './icons-hive'
 import processedIcons_highlight from './icons-highlight'
@@ -310,6 +317,7 @@ export default {
   processedIcons_video,
   processedIcons_urgent,
   processedIcons_unfollowchannel,
+  processedIcons_undo,
   processedIcons_underline,
   processedIcons_txt,
   processedIcons_triangleupsmall,
@@ -329,6 +337,7 @@ export default {
   processedIcons_tableadd,
   processedIcons_table,
   processedIcons_tabbadge,
+  processedIcons_strike,
   processedIcons_sticker,
   processedIcons_statusyo,
   processedIcons_starred,
@@ -348,7 +357,9 @@ export default {
   processedIcons_retry,
   processedIcons_resetzoom,
   processedIcons_reply,
+  processedIcons_removeFormat,
   processedIcons_refresh,
+  processedIcons_redo,
   processedIcons_redbang,
   processedIcons_recurrence,
   processedIcons_recents,
@@ -372,6 +383,7 @@ export default {
   processedIcons_paste,
   processedIcons_participantremove,
   processedIcons_outline,
+  processedIcons_outdent,
   processedIcons_orgwide,
   processedIcons_org,
   processedIcons_openoutside,
@@ -450,7 +462,9 @@ export default {
   processedIcons_info,
   processedIcons_inferred,
   processedIcons_indicator,
+  processedIcons_indent,
   processedIcons_image,
+  processedIcons_horizontalrule,
   processedIcons_home,
   processedIcons_hive,
   processedIcons_highlight,

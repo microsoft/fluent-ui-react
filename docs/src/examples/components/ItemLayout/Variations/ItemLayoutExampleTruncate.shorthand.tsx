@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { ItemLayout, Image } from '@stardust-ui/react'
 
 const ellipsis = <span>&hellip;</span>
