@@ -17,4 +17,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'italic',
 } as TeamsProcessedSvgIconSpec

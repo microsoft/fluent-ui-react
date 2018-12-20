@@ -119,7 +119,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
-            action={render => render(actionPopup)}
+            action={actionPopup}
             data-is-focusable={true}
             styles={{
               '&:focus': {

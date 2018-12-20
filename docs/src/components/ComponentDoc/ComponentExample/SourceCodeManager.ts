@@ -84,7 +84,9 @@ class SourceCodeManager {
 
   private safeRequire = (path: string): string | undefined => {
     try {
-      return require(`!raw-loader!../../../examples/${path}`)
+      const filename = `${path.replace(/^components\//, '')}.source.json`
+
+      return require(`!docs/src/exampleSources/${filename}`).js
     } catch (e) {
       return undefined
     }

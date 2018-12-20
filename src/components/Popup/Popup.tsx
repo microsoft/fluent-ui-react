@@ -15,10 +15,10 @@ import {
   StyledComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
-import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
@@ -108,7 +108,7 @@ export interface PopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
+export default class Popup extends AutoControlledComponent<ReactProps<PopupProps>, PopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -368,11 +368,14 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     const { align, position, offset } = this.props
     const { target } = this.state
 
-    const placement = computePopupPlacement({ align, position, rtl })
+    const placement = getPopupPlacement({ align, position, rtl })
 
     const popperModifiers = {
       // https://popper.js.org/popper-documentation.html#modifiers..offset
-      ...(offset && { offset: { offset: this.applyRtlToOffset(offset, rtl, position) } }),
+      ...(offset && {
+        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+        keepTogether: { enabled: false },
+      }),
     }
 
     return (
@@ -444,15 +447,5 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     if (this.trySetState({ open: newValue }) || forceChangeEvent) {
       _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
     }
-  }
-
-  private applyRtlToOffset(offset: string, rtl: boolean, position: Position): string {
-    if (rtl && (position === 'above' || position === 'below')) {
-      return offset.trimLeft().startsWith('-')
-        ? offset.trimLeft().replace(/^-\s*/, '')
-        : `-${offset}`
-    }
-
-    return offset
   }
 }

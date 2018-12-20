@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import {
   childrenExist,
   createShorthandFactory,
@@ -29,7 +29,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 /**
  * A chat item represents a single event in a chat.
  */
-class ChatItem extends UIComponent<Extendable<ChatItemProps>, any> {
+class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: Function
   static displayName = 'ChatItem'

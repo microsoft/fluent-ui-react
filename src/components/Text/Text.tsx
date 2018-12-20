@@ -9,11 +9,16 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
-export interface TextProps extends UIComponentProps, ContentComponentProps, ChildrenComponentProps {
+export interface TextProps
+  extends UIComponentProps,
+    ContentComponentProps,
+    ChildrenComponentProps,
+    ColorComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 
@@ -55,7 +60,7 @@ export interface TextProps extends UIComponentProps, ContentComponentProps, Chil
  * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
  * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
-class Text extends UIComponent<Extendable<TextProps>, any> {
+class Text extends UIComponent<ReactProps<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'
@@ -63,7 +68,7 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
     disabled: PropTypes.bool,
     error: PropTypes.bool,
