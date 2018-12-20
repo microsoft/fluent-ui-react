@@ -15,6 +15,7 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
     - Renamed `defaultActiveElement` to `defaultTabbableElement` and changed behavior:
         - Changed to query only descendants of the focus zone instead of the whole document, which enables to write simpler selectors. Note that we do not lose any functionality by this, because selecting elements outside of focus zone had no effect.
         - Changed not to call `this.focus()` on component mount (this was causing issues e.g., in docsite, where every change in source code would refocus the mounted component). Instead, you can now use a new property `shouldFocusOnMount`.
+- Enable RTL @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
 
 - Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
 - Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563)) 
