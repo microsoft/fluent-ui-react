@@ -11,7 +11,7 @@ import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
@@ -46,7 +46,7 @@ export interface IconProps extends UIComponentProps {
 /**
  * An icon is a glyph used to represent something else.
  */
-class Icon extends UIComponent<Extendable<IconProps>, any> {
+class Icon extends UIComponent<ReactProps<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'

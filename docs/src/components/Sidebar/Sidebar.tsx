@@ -1,6 +1,6 @@
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash/fp'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { NavLink } from 'react-router-dom'

@@ -17,7 +17,7 @@ import Icon from '../Icon/Icon'
 import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -47,7 +47,7 @@ export interface LabelProps
 /**
  * A label is used to classify content.
  */
-class Label extends UIComponent<Extendable<LabelProps>, any> {
+class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function

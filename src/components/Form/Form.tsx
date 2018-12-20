@@ -10,7 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
@@ -33,7 +33,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
  * @accessibility
  * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
-class Form extends UIComponent<Extendable<FormProps>, any> {
+class Form extends UIComponent<ReactProps<FormProps>, any> {
   static create: Function
 
   public static displayName = 'Form'
