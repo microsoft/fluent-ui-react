@@ -6,20 +6,14 @@ import { TextProps } from '../../../../components/Text/Text'
 
 export default {
   root: ({
-    props: { atMention, color, disabled, error, important, success, timestamp },
+    props: { atMention, color, important, timestamp },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
     return {
-      ...(atMention === true && {
-        color: v.atMentionOtherColor,
-      }),
       ...(atMention === 'me' && {
         color: v.atMentionMeColor,
         fontWeight: v.atMentionMeFontWeight,
       }),
-      ...(disabled && { color: v.disabledColor }),
-      ...(error && { color: v.errorColor }),
-      ...(success && { color: v.successColor }),
       ...(timestamp && {
         color: v.timestampColor,
         ':hover': {

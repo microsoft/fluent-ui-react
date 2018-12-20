@@ -2,12 +2,8 @@ import { mapColorsToScheme } from '../../../../lib'
 import { TextVariables } from '../../../base/components/Text/textVariables'
 
 export interface TeamsTextVariables extends TextVariables {
-  atMentionMeColor: string
   atMentionMeFontWeight: number
-  atMentionOtherColor: string
-  importantColor: string
   importantWeight: number
-  timestampColor: string
   timestampHoverColor: string
 }
 

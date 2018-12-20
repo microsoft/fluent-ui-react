@@ -13,35 +13,30 @@ export default {
       error,
       important,
       size,
+      success,
       temporary,
       timestamp,
-      weight,
-      success,
       truncated,
+      weight,
     },
     variables: v,
   }: ComponentStyleFunctionParam<TextProps, TextVariables>): ICSSInJSStyle => {
     return {
       display: 'inline-block',
       ...(atMention === true && {
-        color: v.colors.pink,
+        color: v.atMentionOtherColor,
       }),
       ...(atMention === 'me' && {
-        color: v.colors.teal,
-        fontWeight: v.fontWeightBold,
+        color: v.atMentionMeColor,
       }),
       ...(truncated && truncateStyle),
       ...(color && { color: _.get(v.colors, color) }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
       ...(success && { color: v.successColor }),
-      ...(important && {
-        color: v.colors.red,
-      }),
+      ...(important && { color: v.importantColor }),
       ...(temporary && { fontStyle: 'italic' }),
-      ...(timestamp && {
-        color: v.colors.grey,
-      }),
+      ...(timestamp && { color: v.timestampColor }),
 
       ...(weight === 'light' && {
         fontWeight: v.fontWeightLight,
