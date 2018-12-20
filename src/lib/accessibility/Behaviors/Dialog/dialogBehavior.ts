@@ -3,6 +3,7 @@ import popupFocusTrapBehavior from '../Popup/popupFocusTrapBehavior'
 
 /**
  * @description
+ * Implements ARIA Dialog (Modal) design pattern.
  * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
