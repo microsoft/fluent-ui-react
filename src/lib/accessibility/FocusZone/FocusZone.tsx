@@ -789,13 +789,13 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
           let topBottomComparison
 
           if (this.props.isRtl) {
-            // When in RTL, this comparison should be the same as the one in _moveFocusLeft for LTR.
+            // When in RTL, this comparison should be the same as the one in moveFocusLeft for LTR.
             // Going right at a rightmost rectangle will go up a line instead of down a line like in LTR.
             // This is important, because we want to be comparing the bottom of the target rect
             // with the top of the active rect.
-            topBottomComparison = targetRect.top.toFixed(3) > activeRect.bottom.toFixed(3)
+            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3)
           } else {
-            topBottomComparison = targetRect.bottom.toFixed(3) < activeRect.top.toFixed(3)
+            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3)
           }
 
           if (
