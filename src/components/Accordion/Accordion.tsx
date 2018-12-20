@@ -17,7 +17,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
-  Extendable,
+  ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
@@ -72,7 +72,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 /**
  * An accordion allows users to toggle the display of sections of content.
  */
-class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any> {
+class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'

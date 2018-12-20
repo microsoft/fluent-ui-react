@@ -14,9 +14,9 @@ const MenuExampleIconOnlyPrimaryInverted = () => (
     items={items}
     primary
     variables={siteVars => ({
-      defaultColor: siteVars.gray06,
-      defaultBackgroundColor: siteVars.brand,
-      typePrimaryActiveBorderColor: siteVars.white,
+      color: siteVars.gray06,
+      backgroundColor: siteVars.brand,
+      primaryActiveBorderColor: siteVars.white,
     })}
   />
 )

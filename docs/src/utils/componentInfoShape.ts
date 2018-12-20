@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 
 const componentInfoShape = PropTypes.shape({
   displayName: PropTypes.string.isRequired,
