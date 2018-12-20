@@ -13,7 +13,9 @@ import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/c
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
-import SourceManager, { SourceManagerRenderProps } from './SourceCodeManager'
+import SourceManager, {
+  SourceManagerRenderProps,
+} from '../ComponentSourceManager/ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
@@ -287,20 +289,29 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   handleCodeLanguageChange = language => () => {
-    this.props.handleCodeLanguageChange(language)
+    const { handleCodeLanguageChange, wasCodeChanged } = this.props
+
+    if (wasCodeChanged) {
+      if (confirm('Lose your changes?')) {
+        handleCodeLanguageChange(language)
+      }
+    } else {
+      handleCodeLanguageChange(language)
+    }
   }
 
   renderAPIsMenu = (): JSX.Element => {
-    const menuItems = _.map(this.props.codeAPIs, ({ active, enabled, name }, type) => (
+    const { componentAPIs, currentCodeAPI } = this.props
+    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => (
       <Menu.Item
-        active={active}
+        active={currentCodeAPI === type}
         content={
           <span>
             {name}
-            {enabled && <em> (not supported)</em>}
+            {!supported && <em> (not supported)</em>}
           </span>
         }
-        disabled={!enabled}
+        disabled={!supported}
         key={type}
         onClick={this.handleCodeApiChange(type)}
       />
@@ -310,17 +321,17 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderLanguagesMenu = (): JSX.Element => {
-    const { currentLanguage } = this.props
+    const { currentCodeLanguage } = this.props
 
     return (
       <Menu.Menu position="right">
         <Menu.Item
-          active={currentLanguage === 'js'}
+          active={currentCodeLanguage === 'js'}
           content="JavaScript"
           onClick={this.handleCodeLanguageChange('js')}
         />
         <Menu.Item
-          active={currentLanguage === 'ts'}
+          active={currentCodeLanguage === 'ts'}
           content="TypeScript"
           onClick={this.handleCodeLanguageChange('ts')}
         />
@@ -329,7 +340,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderCodeEditorMenu = (): JSX.Element => {
-    const { canBeFormatted, handleCodeFormat, wasChanged } = this.props
+    const { canCodeBeFormatted, handleCodeFormat, wasCodeChanged } = this.props
     const { copiedCode } = this.state
 
     // TODO: !!!!
@@ -350,17 +361,17 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         <SourceRender.Consumer>
           {({ error }) => (
             <Menu.Item
-              icon={(error && 'bug') || (canBeFormatted ? 'magic' : 'check')}
+              icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
               color={error ? 'red' : undefined}
               active={error}
               content="Prettier"
               onClick={handleCodeFormat}
-              style={!canBeFormatted ? disabledStyle : undefined}
+              style={!canCodeBeFormatted ? disabledStyle : undefined}
             />
           )}
         </SourceRender.Consumer>
         <Menu.Item
-          style={!wasChanged ? disabledStyle : undefined}
+          style={!wasCodeChanged ? disabledStyle : undefined}
           icon="refresh"
           content="Reset"
           onClick={this.resetSourceCode}

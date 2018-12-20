@@ -1,23 +1,13 @@
+import * as _ from 'lodash'
 import * as React from 'react'
-import { exampleSourcesContext } from '../../../utils'
+
 import { ExampleSource } from '../../../types'
 import { safeFormatCode } from '../../../utils/formatCode'
-
-type SourceManagerCodeAPI = {
-  name: string
-  fileSuffix: string
-
-  active?: boolean
-  enabled?: boolean
-}
-
-type SourceManagerCodeAPIs = {
-  children: SourceManagerCodeAPI
-  shorthand: SourceManagerCodeAPI
-}
+import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
+import getExampleSource from './getExampeSource'
 
 export type SourceManagerRenderProps = SourceManagerState & {
-  handleCodeAPIChange: (newApi: keyof SourceManagerCodeAPIs) => void
+  handleCodeAPIChange: (newApi: keyof ComponentAPIs) => void
   handleCodeChange: (newCode: string) => void
   handleCodeFormat: () => void
   handleCodeLanguageChange: (newLanguage: SourceManagerLanguage) => void
@@ -31,67 +21,76 @@ export type SourceManagerProps = {
   children: (renderProps: SourceManagerRenderProps) => React.ReactNode
 }
 
-export type SourceManagerState = {
-  currentLanguage: SourceManagerLanguage
-  currentAPI: keyof SourceManagerCodeAPIs
+type StateManagerComponentAPIs = ComponentAPIs<{
+  sourceCode: ExampleSource | undefined
+  supported: boolean
+}>
 
-  codeAPIs: SourceManagerCodeAPIs
+export type SourceManagerState = {
+  currentCodeLanguage: SourceManagerLanguage
+  currentCodeAPI: keyof ComponentAPIs
+
+  componentAPIs: StateManagerComponentAPIs
   currentCode?: string
   formattedCode?: string
   originalCode?: string
 
-  canBeFormatted: boolean
-  wasChanged: boolean
-}
-
-export const codeAPIs: SourceManagerCodeAPIs = {
-  children: { name: 'Children API', fileSuffix: '' },
-  shorthand: { name: 'Shorthand API', fileSuffix: '.shorthand' },
+  canCodeBeFormatted: boolean
+  wasCodeChanged: boolean
 }
 
 export class SourceManager extends React.Component<SourceManagerProps, SourceManagerState> {
-  state = {
-    currentLanguage: 'js' as SourceManagerLanguage,
-    currentAPI: 'children' as keyof SourceManagerCodeAPIs,
+  constructor(props: SourceManagerProps) {
+    super(props)
 
-    codeAPIs,
+    const componentAPIs = _.mapValues(APIdefinitions, (definition, name: keyof ComponentAPIs) => {
+      const sourceCode = getExampleSource(props.examplePath, name)
 
-    canBeFormatted: false,
-    wasChanged: false,
+      return {
+        ...definition,
+        sourceCode,
+        supported: !!sourceCode,
+      }
+    }) as StateManagerComponentAPIs
+
+    this.state = {
+      currentCodeLanguage: 'js' as SourceManagerLanguage,
+      currentCodeAPI: _.findKey(componentAPIs, { supported: true }) as keyof ComponentAPIs,
+
+      componentAPIs,
+      canCodeBeFormatted: false,
+      wasCodeChanged: false,
+    }
   }
 
   static getDerivedStateFromProps(
     props: SourceManagerProps,
     state: SourceManagerState,
   ): Partial<SourceManagerState> {
-    const { examplePath } = props
-    const { currentAPI, currentLanguage, currentCode } = state
+    const { componentAPIs, currentCodeAPI, currentCodeLanguage, currentCode: storedCode } = state
 
-    const sourcePath = `${examplePath.replace(/^components/, '.')}${
-      codeAPIs[currentAPI].fileSuffix
-    }.source.json`
-    const sourceCode: ExampleSource = exampleSourcesContext(sourcePath)
+    const sourceCodes = componentAPIs[currentCodeAPI].sourceCode
+    const originalCode = sourceCodes[currentCodeLanguage]
 
-    const originalCode = sourceCode[currentLanguage]
-    const currentCode1 = currentCode || originalCode
+    const currentCode = storedCode || originalCode
     const formattedCode = safeFormatCode(
-      currentCode1,
-      currentLanguage === 'ts' ? 'typescript' : 'babylon',
+      currentCode,
+      currentCodeLanguage === 'ts' ? 'typescript' : 'babylon',
     )
 
     return {
       originalCode,
-      currentCode: currentCode1,
+      currentCode,
       formattedCode,
 
-      canBeFormatted: !!formattedCode ? currentCode1 !== formattedCode : false,
-      wasChanged: originalCode !== currentCode1,
+      canCodeBeFormatted: !!formattedCode ? currentCode !== formattedCode : false,
+      wasCodeChanged: originalCode !== currentCode,
     }
   }
 
-  handleCodeAPIChange = (newAPI: keyof SourceManagerCodeAPIs): void => {
+  handleCodeAPIChange = (newAPI: keyof ComponentAPIs): void => {
     this.setState({
-      currentAPI: newAPI,
+      currentCodeAPI: newAPI,
       currentCode: undefined,
     })
   }
@@ -110,7 +109,7 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
 
   handleLanguageChange = (newLanguage: SourceManagerLanguage): void => {
     this.setState({
-      currentLanguage: newLanguage,
+      currentCodeLanguage: newLanguage,
       currentCode: undefined,
     })
   }
