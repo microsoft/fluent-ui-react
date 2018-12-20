@@ -18,5 +18,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'meeting-new',
 } as TeamsProcessedSvgIconSpec

@@ -21,5 +21,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'table-add',
 } as TeamsProcessedSvgIconSpec
