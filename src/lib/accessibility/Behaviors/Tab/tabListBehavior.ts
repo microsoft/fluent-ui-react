@@ -16,7 +16,7 @@ const tabListBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: false,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
+      shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
 })
