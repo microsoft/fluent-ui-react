@@ -74,7 +74,7 @@ export type EmphasisColors = Extendable<EmphasisColorsStrict, ColorVariants>
 /**
  * A type for extracting the color names.
  */
-type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
+export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
 
 /**
  * A type for an extendable set of ColorNames properties of type T
@@ -99,9 +99,14 @@ export type ColorPalette = ExtendablePalette<
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = Required<
-  Pick<React.CSSProperties, 'color' | 'backgroundColor' | 'borderColor'> & { shadowColor: string }
->
+export type ColorScheme = {
+  foreground: string
+  background: string
+  border: string
+  shadow: string
+}
+
+export type ColorSchemeMapping = ColorValues<ColorScheme>
 
 // ========================================================
 // Props
@@ -124,6 +129,7 @@ export type State = ObjectOf<any>
 
 export interface SiteVariablesInput extends ObjectOf<any> {
   colors?: ColorPalette
+  colorScheme?: ColorSchemeMapping
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
@@ -131,13 +137,7 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   htmlFontSize?: string
 }
 
-export interface SiteVariablesPrepared extends ObjectOf<any> {
-  colors?: ColorPalette
-  contextualColors?: ContextualColors
-  emphasisColors?: EmphasisColors
-  naturalColors?: NaturalColorsStrict
-  brand?: string
-  htmlFontSize?: string
+export interface SiteVariablesPrepared extends SiteVariablesInput {
   fontSizes: ObjectOf<string>
 }
 

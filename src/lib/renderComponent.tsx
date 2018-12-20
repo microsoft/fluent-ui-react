@@ -159,6 +159,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
 
         const {
           siteVariables = {
+            colorScheme: {},
             colors: {},
             contextualColors: {},
             emphasisColors: {},

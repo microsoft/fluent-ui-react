@@ -1,11 +1,10 @@
-import { ColorValues, ColorScheme } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
+import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
 import { pxToRem } from '../../utils'
 
-type LabelColorScheme = Pick<ColorScheme, 'color' | 'backgroundColor'>
+type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
 
 export interface LabelVariables {
-  colors: ColorValues<LabelColorScheme>
+  colorScheme: ColorValues<LabelColorScheme>
   circularRadius: string
   padding: string
   color: string
@@ -16,14 +15,12 @@ export interface LabelVariables {
   iconColor: string
 }
 
-export default (siteVars: any): LabelVariables => {
+export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
+  const colorScheme = siteVars.colorScheme
 
   return {
-    colors: mapColorsToScheme(siteVars, colorVariants => ({
-      color: colorVariants[50],
-      backgroundColor: colorVariants[500],
-    })),
+    colorScheme,
     color,
     backgroundColor: 'rgb(232, 232, 232)',
     circularRadius: pxToRem(9999),

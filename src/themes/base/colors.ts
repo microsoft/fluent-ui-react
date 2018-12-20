@@ -1,4 +1,12 @@
-import { ColorPalette, ContextualColors, EmphasisColors, NaturalColors } from '../types'
+import * as _ from 'lodash'
+
+import {
+  ColorPalette,
+  ContextualColors,
+  EmphasisColors,
+  NaturalColors,
+  ColorSchemeMapping,
+} from '../types'
 
 export const naturalColors: NaturalColors = {
   blue: {
@@ -135,11 +143,32 @@ export const contextualColors: ContextualColors = {
   warning: naturalColors.yellow,
 }
 
-export const colors: ColorPalette = {
-  ...contextualColors,
+const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...emphasisColors,
   ...naturalColors,
+}
+
+const lightBackgroundColors = ['orange', 'yellow', 'postOrange']
+const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
+
+export const colors: ColorPalette = {
+  ...emphasisAndNaturalColors,
+  ...contextualColors,
 
   black: '#000',
   white: '#fff',
 }
+
+export const colorScheme: ColorSchemeMapping = _.mapValues(
+  emphasisAndNaturalColors,
+  (colorVariants, colorName) => {
+    const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
+
+    return {
+      foreground,
+      background: colorVariants[500],
+      border: foreground,
+      shadow: foreground,
+    }
+  },
+)

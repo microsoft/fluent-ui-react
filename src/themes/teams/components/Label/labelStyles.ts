@@ -6,24 +6,32 @@ import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 
 const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'inline-flex',
-    alignItems: 'center',
-    overflow: 'hidden',
-    height: v.height,
-    lineHeight: v.height,
-    ..._.get(v.colors, p.color, { color: v.color, backgroundColor: v.backgroundColor }),
-    fontSize: pxToRem(14),
-    borderRadius: pxToRem(3),
-    padding: v.padding,
-    ...(p.image &&
-      (p.imagePosition === 'start'
-        ? { paddingLeft: v.startPaddingLeft }
-        : { paddingRight: v.endPaddingRight })),
-    ...(p.circular && {
-      borderRadius: v.circularRadius,
-    }),
-  }),
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const colors = _.get(v.colorScheme, p.color, {
+      foreground: v.color,
+      background: v.backgroundColor,
+    })
+
+    return {
+      display: 'inline-flex',
+      alignItems: 'center',
+      overflow: 'hidden',
+      height: v.height,
+      lineHeight: v.height,
+      color: colors.foreground,
+      backgroundColor: colors.background,
+      fontSize: pxToRem(14),
+      borderRadius: pxToRem(3),
+      padding: v.padding,
+      ...(p.image &&
+        (p.imagePosition === 'start'
+          ? { paddingLeft: v.startPaddingLeft }
+          : { paddingRight: v.endPaddingRight })),
+      ...(p.circular && {
+        borderRadius: v.circularRadius,
+      }),
+    }
+  },
 
   image: ({ variables: v }): ICSSInJSStyle => ({
     height: v.height,
