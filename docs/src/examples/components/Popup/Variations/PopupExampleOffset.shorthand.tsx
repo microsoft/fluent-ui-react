@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Grid, Popup, Alignment, Position } from '@stardust-ui/react'
+import * as React from 'react'
+import { Button, Grid, Popup } from '@stardust-ui/react'
 
 const renderButton = rotateArrowUp => (
   <Button
@@ -11,33 +11,24 @@ const renderButton = rotateArrowUp => (
   />
 )
 
-const triggers = [
-  { position: 'above', align: 'start', offset: '-100%p', rotateArrowUp: '-45deg' },
-  { position: 'above', align: 'end', offset: '100%p', rotateArrowUp: '45deg' },
-  { position: 'below', align: 'start', offset: '-100%p', rotateArrowUp: '-135deg' },
-  { position: 'below', align: 'end', offset: '100%p', rotateArrowUp: '135deg' },
-]
-
 const PopupExamplePosition = () => (
-  <Grid columns="repeat(2, 80px)" variables={{ padding: '30px', gridGap: '30px' }}>
-    {triggers.map(({ position, align, offset, rotateArrowUp }) => (
-      <Popup
-        align={align as Alignment}
-        position={position as Position}
-        offset={offset}
-        trigger={renderButton(rotateArrowUp)}
-        content={{
-          content: (
-            <p>
-              The popup is rendered at {position}-{align}
-              <br />
-              corner of the trigger.
-            </p>
-          ),
-        }}
-        key={`${position}-${align}`}
-      />
-    ))}
+  <Grid columns="1, 80px" variables={{ padding: '30px' }}>
+    <Popup
+      align="start"
+      position="above"
+      offset="-100%p"
+      trigger={renderButton('-45deg')}
+      content={{
+        content: (
+          <p>
+            The popup is rendered at above-start
+            <br />
+            corner of the trigger.
+          </p>
+        ),
+      }}
+      key="above-start"
+    />
   </Grid>
 )
 

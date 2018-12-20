@@ -1,13 +1,19 @@
-import React from 'react'
+import * as React from 'react'
 import { Grid, Ref, Segment } from '@stardust-ui/react'
 
-const ExampleButton = React.forwardRef<HTMLButtonElement>((props, ref) => (
-  <div>
-    <button {...props} ref={ref} />
-  </div>
-))
+type RefForwardingExampleState = {
+  isMounted: boolean
+}
 
-class RefForwardingExample extends React.Component {
+const ExampleButton = React.forwardRef<HTMLButtonElement, { children: React.ReactNode }>(
+  (props, ref) => (
+    <div>
+      <button {...props} ref={ref} />
+    </div>
+  ),
+)
+
+class RefForwardingExample extends React.Component<{}, RefForwardingExampleState> {
   forwardedRef = React.createRef<HTMLButtonElement>()
   state = { isMounted: false }
 
