@@ -12,7 +12,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
@@ -76,7 +76,7 @@ export interface InputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> {
+class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
   private inputDomElement: HTMLInputElement
 
   static className = 'ui-input'

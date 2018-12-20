@@ -23,6 +23,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Ensure `Popup` properly flips values of `offset` prop in RTL @kuzhelov ([#612](https://github.com/stardust-ui/react/pull/612))
 - Fix `List` - items should be selectable @sophieH29 ([#566](https://github.com/stardust-ui/react/pull/566))
+- Respect `defaultTabbable` element when `FocusZone` container gets focus @sophieH29 ([#637](https://github.com/stardust-ui/react/pull/637))
+- Fix `FocusZone` - fix last breaking changes and make improvements for `Chat` usage @sophieH29 ([#614](https://github.com/stardust-ui/react/pull/614))
 - Fix `Chat` - added themes values for dark and contrast @bcalvery ([#652](https://github.com/stardust-ui/react/pull/652))
 
 ### Features
@@ -31,6 +33,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export initial set of compose icons in Teams theme @joheredi ([#638](https://github.com/stardust-ui/react/pull/638))
 - Add and export compose icons in Teams theme @joheredi ([#639](https://github.com/stardust-ui/react/pull/639))
 - Add `menu` prop to `MenuItem` @mnajdova ([#539](https://github.com/stardust-ui/react/pull/539))
+- Enable RTL for `FocusZone` @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
+
+### Documentation
+- Add more accessibility descriptions to components and behaviors @jurokapsiar  ([#648](https://github.com/stardust-ui/react/pull/648))
 
 <!--------------------------------[ v0.15.0 ]------------------------------- -->
 ## [v0.15.0](https://github.com/stardust-ui/react/tree/v0.15.0) (2018-12-17)
@@ -60,6 +66,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix multiple React's warnings about keys in docs @layershifter ([#602](https://github.com/stardust-ui/react/pull/602))
 - Fix incorrect handling of `isFromKeyboard` in `Menu` @layershifter ([#596](https://github.com/stardust-ui/react/pull/596))
 - Fix property names used in shorthand factories @kuzhelov ([#591](https://github.com/stardust-ui/react/pull/591))
+- Fix compatibility with TypeScript 3.2 and handle `null` as a valid value in all optional props @layershifter ([#550](https://github.com/stardust-ui/react/pull/550))
 
 ### Features
 - `Ref` components uses `forwardRef` API by default @layershifter ([#491](https://github.com/stardust-ui/react/pull/491))

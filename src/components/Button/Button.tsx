@@ -17,7 +17,7 @@ import Icon from '../Icon/Icon'
 import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -83,7 +83,7 @@ export interface ButtonState {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
+class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'

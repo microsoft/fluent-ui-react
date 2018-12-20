@@ -1,6 +1,9 @@
 import { Accessibility, FocusZoneMode } from '../../types'
 
 /**
+ * @description
+ * Implements ARIA Tabs design pattern.
+ * Child item components need to have tabBehavior assigned.
  * @specification
  * Adds role 'tablist' to 'root' component's part.
  * Embeds FocusZone into component allowing arrow key navigation through the children of the component.
@@ -16,7 +19,7 @@ const tabListBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: false,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
+      shouldFocusInnerElementWhenReceivedFocus: true,
     },
   },
 })
