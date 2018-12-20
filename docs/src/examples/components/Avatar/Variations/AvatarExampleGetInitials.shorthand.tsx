@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
 const getInitials = name => name.split(' ').map(word => `${word[0]}.`)

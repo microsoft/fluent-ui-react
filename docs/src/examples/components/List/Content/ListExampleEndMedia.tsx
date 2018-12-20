@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { List } from '@stardust-ui/react'
 
 const ellipsis = <span>&hellip;</span>
@@ -8,17 +8,17 @@ const ListExample = () => (
     <List.Item
       content="Program the sensor to the SAS alarm through the haptic SQL card!"
       endMedia={ellipsis}
-      selection
+      selectable
     />
     <List.Item
       content="Use the online FTP application to input the multi-byte application!"
       endMedia={ellipsis}
-      selection
+      selectable
     />
     <List.Item
       content="The GB pixel is down, navigate the virtual interface!"
       endMedia={ellipsis}
-      selection
+      selectable
     />
   </List>
 )

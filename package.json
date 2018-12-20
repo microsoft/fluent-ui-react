@@ -35,7 +35,7 @@
     "pretest": "yarn satisfied",
     "test": "gulp test",
     "test:watch": "gulp test:watch",
-    "test:vulns": "snyk test",
+    "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
@@ -73,7 +73,10 @@
     "react-popper": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/standalone": "^7.1.0",
+    "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
     "@types/faker": "^4.1.3",
@@ -82,9 +85,9 @@
     "@types/jest-axe": "^2.2.2",
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.3.2",
-    "@types/react": "^16.3.17",
+    "@types/react": "^16.7.17",
     "@types/react-custom-scrollbars": "^4.0.5",
-    "@types/react-dom": "^16.0.6",
+    "@types/react-dom": "^16.0.11",
     "@types/react-is": "^16.5.0",
     "@types/react-router": "^4.0.27",
     "awesome-typescript-loader": "^5.2.1",
@@ -124,7 +127,6 @@
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "prettier": "^1.15.3",
-    "raw-loader": "^0.5.1",
     "react": "^16.0.0",
     "react-ace": "^5.1.2",
     "react-custom-scrollbars": "^4.2.1",
@@ -151,7 +153,7 @@
     "ts-node": "^6.1.0",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typescript": "~3.1.0",
+    "typescript": "~3.2.2",
     "webpack": "^4.25.1",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.18.2"

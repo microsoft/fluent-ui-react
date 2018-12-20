@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -31,7 +31,7 @@ export interface DividerProps
 /**
  * A divider visually segments content into groups.
  */
-class Divider extends UIComponent<Extendable<DividerProps>, any> {
+class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function

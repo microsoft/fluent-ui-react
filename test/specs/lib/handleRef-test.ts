@@ -6,7 +6,8 @@ describe('handleRef', () => {
     const node = document.createElement('div')
 
     expect(() => {
-      handleRef('ref', node)
+      // handleRef() does not accept string, but in this test we want ensure that this case will be handled
+      handleRef('ref' as any, node)
     }).toThrowError()
   })
 
