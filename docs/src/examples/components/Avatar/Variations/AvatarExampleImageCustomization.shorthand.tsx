@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Avatar, Icon } from '@stardust-ui/react'
 
 const AvatarExampleImageCustomizationShorthand = () => (
