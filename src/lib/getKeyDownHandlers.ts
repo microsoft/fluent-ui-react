@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
 import keyboardHandlerFilter from './keyboardHandlerFilter'
 import {
   AccessibilityActionHandlers,
@@ -14,10 +15,17 @@ import { State, PropsWithVarsAndStyles } from '../themes/types'
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
  * @param {State & PropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
  */
+
+const rtlKeyMap = {
+  [keyboardKey.ArrowRight]: keyboardKey.ArrowLeft,
+  [keyboardKey.ArrowLeft]: keyboardKey.ArrowRight,
+}
+
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
   props: State & PropsWithVarsAndStyles,
+  isRtl?: boolean,
 ): ActionsKeyHandler => {
   const keyHandlers = {}
 
@@ -34,9 +42,20 @@ const getKeyDownHandlers = (
     keyHandlers[componentPart] = {
       onKeyDown: (event: KeyboardEvent) => {
         handledActions.forEach(actionName => {
+          let keyCombinations = componentPartKeyAction[actionName].keyCombinations
+
+          if (isRtl) {
+            keyCombinations = keyCombinations.map(keyCombination => {
+              if (rtlKeyMap[keyCombination.keyCode]) {
+                keyCombination.keyCode = rtlKeyMap[keyCombination.keyCode]
+              }
+              return keyCombination
+            })
+          }
+
           const eventHandler = keyboardHandlerFilter(
             componentActionHandlers[actionName],
-            componentPartKeyAction[actionName].keyCombinations,
+            keyCombinations,
           )
 
           eventHandler && eventHandler(event)
