@@ -13,8 +13,8 @@ import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/c
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
-import SourceManager, {
-  SourceManagerRenderProps,
+import ComponentSourceManager, {
+  ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager/ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
@@ -23,7 +23,7 @@ import CodeSnippet from '../../CodeSnippet'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
-    SourceManagerRenderProps {
+    ComponentSourceManagerRenderProps {
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
@@ -340,19 +340,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderCodeEditorMenu = (): JSX.Element => {
-    const { canCodeBeFormatted, handleCodeFormat, wasCodeChanged } = this.props
+    const { currentCodePath, canCodeBeFormatted, handleCodeFormat, wasCodeChanged } = this.props
     const { copiedCode } = this.state
-
-    // TODO: !!!!
-    const currentPath = ''
 
     // get component name from file path:
     // elements/Button/Types/ButtonButtonExample
-    const pathParts = currentPath.split(__PATH_SEP__)
+    const pathParts = currentCodePath.split(__PATH_SEP__)
     const filename = pathParts[pathParts.length - 1]
 
     const ghEditHref = [
-      `${constants.repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentCodePath}.tsx`,
       `?message=docs(${filename}): your description`,
     ].join('')
 
@@ -363,7 +360,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             <Menu.Item
               icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
               color={error ? 'red' : undefined}
-              active={error}
+              active={!!error}
               content="Prettier"
               onClick={handleCodeFormat}
               style={!canCodeBeFormatted ? disabledStyle : undefined}
@@ -516,7 +513,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const { children, currentCode, description, title } = this.props
+    const { children, currentCode, currentCodePath, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -529,9 +526,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
-    // TODO: !!!!!!!!!!
-    const currentExamplePath = ''
-
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
@@ -565,7 +559,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={currentExamplePath}
+                  examplePath={currentCodePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
@@ -636,9 +630,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 const ComponentExampleWithTheme = props => (
   <ThemeContext.Consumer>
     {({ themeName }) => (
-      <SourceManager examplePath={props.examplePath}>
+      <ComponentSourceManager examplePath={props.examplePath}>
         {codeProps => <ComponentExample {...props} {...codeProps} themeName={themeName} />}
-      </SourceManager>
+      </ComponentSourceManager>
     )}
   </ThemeContext.Consumer>
 )

@@ -6,31 +6,32 @@ import { safeFormatCode } from '../../../utils/formatCode'
 import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
 import getExampleSource from './getExampeSource'
 
-export type SourceManagerRenderProps = SourceManagerState & {
+export type ComponentSourceManagerRenderProps = ComponentSourceManagerState & {
   handleCodeAPIChange: (newApi: keyof ComponentAPIs) => void
   handleCodeChange: (newCode: string) => void
   handleCodeFormat: () => void
-  handleCodeLanguageChange: (newLanguage: SourceManagerLanguage) => void
+  handleCodeLanguageChange: (newLanguage: ComponentSourceManagerLanguage) => void
   handleCodeReset: () => void
 }
 
-export type SourceManagerLanguage = 'js' | 'ts'
+export type ComponentSourceManagerLanguage = 'js' | 'ts'
 
-export type SourceManagerProps = {
+export type ComponentSourceManagerProps = {
   examplePath: string
-  children: (renderProps: SourceManagerRenderProps) => React.ReactNode
+  children: (renderProps: ComponentSourceManagerRenderProps) => React.ReactNode
 }
 
-type StateManagerComponentAPIs = ComponentAPIs<{
+type ComponentSourceManagerAPIs = ComponentAPIs<{
   sourceCode: ExampleSource | undefined
   supported: boolean
 }>
 
-export type SourceManagerState = {
-  currentCodeLanguage: SourceManagerLanguage
+export type ComponentSourceManagerState = {
+  currentCodeLanguage: ComponentSourceManagerLanguage
   currentCodeAPI: keyof ComponentAPIs
+  currentCodePath: string
 
-  componentAPIs: StateManagerComponentAPIs
+  componentAPIs: ComponentSourceManagerAPIs
   currentCode?: string
   formattedCode?: string
   originalCode?: string
@@ -39,8 +40,11 @@ export type SourceManagerState = {
   wasCodeChanged: boolean
 }
 
-export class SourceManager extends React.Component<SourceManagerProps, SourceManagerState> {
-  constructor(props: SourceManagerProps) {
+export class ComponentSourceManager extends React.Component<
+  ComponentSourceManagerProps,
+  ComponentSourceManagerState
+> {
+  constructor(props: ComponentSourceManagerProps) {
     super(props)
 
     const componentAPIs = _.mapValues(APIdefinitions, (definition, name: keyof ComponentAPIs) => {
@@ -51,11 +55,12 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
         sourceCode,
         supported: !!sourceCode,
       }
-    }) as StateManagerComponentAPIs
+    }) as ComponentSourceManagerAPIs
 
     this.state = {
-      currentCodeLanguage: 'js' as SourceManagerLanguage,
+      currentCodeLanguage: 'js' as ComponentSourceManagerLanguage,
       currentCodeAPI: _.findKey(componentAPIs, { supported: true }) as keyof ComponentAPIs,
+      currentCodePath: '',
 
       componentAPIs,
       canCodeBeFormatted: false,
@@ -64,9 +69,10 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
   }
 
   static getDerivedStateFromProps(
-    props: SourceManagerProps,
-    state: SourceManagerState,
-  ): Partial<SourceManagerState> {
+    props: ComponentSourceManagerProps,
+    state: ComponentSourceManagerState,
+  ): Partial<ComponentSourceManagerState> {
+    const { examplePath } = props
     const { componentAPIs, currentCodeAPI, currentCodeLanguage, currentCode: storedCode } = state
 
     const sourceCodes = componentAPIs[currentCodeAPI].sourceCode
@@ -78,10 +84,13 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
       currentCodeLanguage === 'ts' ? 'typescript' : 'babylon',
     )
 
+    const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
+
     return {
-      originalCode,
       currentCode,
+      currentCodePath,
       formattedCode,
+      originalCode,
 
       canCodeBeFormatted: !!formattedCode ? currentCode !== formattedCode : false,
       wasCodeChanged: originalCode !== currentCode,
@@ -107,7 +116,7 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
     this.setState({ currentCode: undefined })
   }
 
-  handleLanguageChange = (newLanguage: SourceManagerLanguage): void => {
+  handleLanguageChange = (newLanguage: ComponentSourceManagerLanguage): void => {
     this.setState({
       currentCodeLanguage: newLanguage,
       currentCode: undefined,
@@ -126,4 +135,4 @@ export class SourceManager extends React.Component<SourceManagerProps, SourceMan
   }
 }
 
-export default SourceManager
+export default ComponentSourceManager
