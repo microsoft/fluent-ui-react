@@ -26,6 +26,8 @@ const ComponentDocAccessibility = ({ info }) => {
         variables={{ color: 'black' }}
       />
 
+      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
+
       {behaviorName && (
         <p>
           Default behavior:{' '}
@@ -45,8 +47,6 @@ const ComponentDocAccessibility = ({ info }) => {
           ))}
         </p>
       )}
-
-      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
     </>
   )
 }

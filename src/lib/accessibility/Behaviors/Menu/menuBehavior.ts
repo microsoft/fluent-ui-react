@@ -3,6 +3,7 @@ import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
+ * Implements ARIA Menu design pattern.
  * The 'menu' role is used to identify an element that creates a list of common actions or functions that a user can invoke.
  *
  * @specification
