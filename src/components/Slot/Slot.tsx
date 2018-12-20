@@ -8,6 +8,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
+import { ReactProps } from '../../../types/utils'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps>,
@@ -17,7 +18,7 @@ export interface SlotProps
 /**
  * A Slot is a basic component (no default styles)
  */
-const Slot: CreateComponentReturnType<SlotProps> & {
+const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   create?: Function
 } = createComponent<SlotProps>({
   displayName: 'Slot',

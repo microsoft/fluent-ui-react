@@ -1,5 +1,5 @@
 import AnchorJS from 'anchor-js'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import { Route } from 'react-router-dom'

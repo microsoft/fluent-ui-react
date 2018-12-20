@@ -12,7 +12,7 @@ import {
   ColorComponentProps,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface HeaderProps
   extends UIComponentProps,
@@ -36,7 +36,7 @@ export interface HeaderProps
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<Extendable<HeaderProps>, any> {
+class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'
