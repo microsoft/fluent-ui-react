@@ -127,8 +127,6 @@ class Sidebar extends React.Component<any, any> {
   render() {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
-      color: 'white',
-      background: 'black',
       width: '230px',
       position: 'fixed',
       overflowY: 'scroll',
@@ -152,6 +150,7 @@ class Sidebar extends React.Component<any, any> {
 
     const logoStyles: ICSSInJSStyle = {
       padding: '5px',
+      color: 'white',
     }
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
@@ -286,11 +285,16 @@ class Sidebar extends React.Component<any, any> {
         styles={sidebarStyles}
         content={
           <div>
-            <div>
-              <Logo width="32px" styles={logoStyles} />
-              <Text content="Stardust UI React &nbsp;" />
-              <Text content={pkg.version} size="small" weight="bold" />
-            </div>
+            <Logo width="32px" styles={logoStyles} />
+            <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
+            <Text
+              color="white"
+              content={pkg.version}
+              size="small"
+              weight="bold"
+              styles={logoStyles}
+            />
+
             <Menu
               vertical
               fluid

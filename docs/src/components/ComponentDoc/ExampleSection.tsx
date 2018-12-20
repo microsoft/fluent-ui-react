@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Grid, Header } from '@stardust-ui/react'
+import { Segment, Header } from '@stardust-ui/react'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -10,19 +10,13 @@ const headerStyle: React.CSSProperties = {
   textTransform: 'uppercase',
 }
 
-const sectionStyle: React.CSSProperties = {
-  paddingBottom: '5em',
-}
-
 const ExampleSection: any = ({ title, children, ...rest }) => (
-  <Grid columns="1" style={sectionStyle} {...rest}>
-    <div>
-      <Header as="h2" style={headerStyle} className="no-anchor">
-        {title}
-      </Header>
-      {children}
-    </div>
-  </Grid>
+  <Segment>
+    <Header as="h2" style={headerStyle} className="no-anchor">
+      {title}
+    </Header>
+    {children}
+  </Segment>
 )
 
 ExampleSection.propTypes = {
