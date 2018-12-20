@@ -16,7 +16,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -73,7 +73,7 @@ export interface MenuState {
 /**
  * A menu displays grouped navigation actions.
  */
-class Menu extends AutoControlledComponent<Extendable<MenuProps>, MenuState> {
+class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
