@@ -461,7 +461,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <SourceRender.Consumer>
         {({ error }) =>
           error && (
-            <Segment size="small" color="red" basic inverted padded secondary>
+            <Segment inverted>
               <pre>{error.toString()}</pre>
             </Segment>
           )
@@ -506,7 +506,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
             if (!variables) {
               return (
-                <Segment size="small" inverted padded basic>
+                <Segment size="small" inverted>
                   {displayName} has no variables to edit.
                 </Segment>
               )

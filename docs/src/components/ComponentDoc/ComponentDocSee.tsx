@@ -12,7 +12,7 @@ const ComponentDocSee: any = ({ displayName }) => {
   const items = getInfoForSeeTags(displayName)
 
   return (
-    <List horizontal link size="small" style={listStyle}>
+    <List style={listStyle}>
       {/* Heads up! Still render empty lists to reserve the whitespace */}
       <List.Item>
         <Header color="grey" content={items.length > 0 ? 'See:' : ' '} size="tiny" />

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Grid, Segment, Header, Icon } from '@stardust-ui/react'
 
 const PageNotFound = () => (
-  <Grid padded textAlign="center" stretched>
+  <Grid>
     <div>
       <Header as="h1" icon textAlign="center">
         <Icon name="game" />

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Header } from '@stardust-ui/react'
+import { Header, Segment } from '@stardust-ui/react'
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
@@ -18,15 +18,13 @@ const ComponentDocAccessibility = ({ info }) => {
   if (!behaviorName && !description) return null
 
   return (
-    <>
+    <Segment>
       <Header
         as="h2"
         className="no-anchor"
         content="Accessibility"
         variables={{ color: 'black' }}
       />
-
-      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
 
       {behaviorName && (
         <p>
@@ -47,7 +45,9 @@ const ComponentDocAccessibility = ({ info }) => {
           ))}
         </p>
       )}
-    </>
+
+      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
+    </Segment>
   )
 }
 

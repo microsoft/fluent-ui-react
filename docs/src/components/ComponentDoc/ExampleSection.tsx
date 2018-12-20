@@ -15,7 +15,7 @@ const sectionStyle: React.CSSProperties = {
 }
 
 const ExampleSection: any = ({ title, children, ...rest }) => (
-  <Grid columns="1" padded style={sectionStyle} {...rest}>
+  <Grid columns="1" style={sectionStyle} {...rest}>
     <div>
       <Header as="h2" style={headerStyle} className="no-anchor">
         {title}
