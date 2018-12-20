@@ -274,7 +274,6 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     }
     if (_.includes(normalizedOn, 'focus')) {
       triggerProps.onFocus = (e, ...rest) => {
-        console.log('Calledn trigger on focus')
         this.trySetOpen(true, e)
         _.invoke(triggerElement, 'props.onFocus', e, ...rest)
       }
@@ -302,7 +301,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     return triggerProps
   }
 
-  handleContentOverrides = predefinedProps => {
+  handleContentOverrides = (predefinedProps?) => {
     const contentProps: any = {}
 
     const { on } = this.props
@@ -311,26 +310,26 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     if (_.includes(normalizedOn, 'hover')) {
       contentProps.onMouseEnter = (e, contentProps) => {
         this.setPopupOpen(true, e)
-        _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
+        predefinedProps && _.invoke(predefinedProps, 'onMouseEnter', e, contentProps)
       }
       contentProps.onMouseLeave = (e, contentProps) => {
         this.setPopupOpen(false, e)
-        _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
+        predefinedProps && _.invoke(predefinedProps, 'onMouseLeave', e, contentProps)
       }
     }
     if (_.includes(normalizedOn, 'focus')) {
-      contentProps.onFocus = (e, ...rest) => {
+      contentProps.onFocus = (e, contentProps) => {
         !this.state.open && this.trySetOpen(true, e)
-        _.invoke(predefinedProps, 'props.onFocus', e, ...rest)
+        predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
       }
-      contentProps.onBlur = (e, ...rest) => {
+      contentProps.onBlur = (e, contentProps) => {
         if (
           !e.currentTarget.contains(e.relatedTarget) &&
           !this.popupDomElement.contains(e.relatedTarget)
         ) {
           this.trySetOpen(false, e)
         }
-        _.invoke(predefinedProps, 'props.onBlur', e, ...rest)
+        predefinedProps && _.invoke(predefinedProps, 'onBlur', e, contentProps)
       }
     }
 
@@ -402,6 +401,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
       className: popupPositionClasses,
       style: popupPlacementStyles,
+      ...this.handleContentOverrides(),
     }
 
     const focusTrapProps = {
