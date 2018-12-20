@@ -47,8 +47,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     direction: PropTypes.number,
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
-    shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
-    shouldHandleKeyDownCapture: PropTypes.bool,
+    shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
+    shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -67,7 +67,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   static defaultProps: FocusZoneProps = {
     isCircularNavigation: false,
     direction: FocusZoneDirection.bidirectional,
-    shouldHandleKeyDownCapture: true,
     as: 'div',
   }
 
@@ -105,8 +104,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   public componentDidMount(): void {
     _allInstances[this._id] = this
 
-    const { shouldHandleKeyDownCapture, defaultTabbableElement, shouldFocusOnMount } = this.props
-
     this.setRef(this) // called here to support functional components, we only need HTMLElement ref anyway
     if (this._root.current) {
       this.windowElement = getWindow(this._root.current)
@@ -121,19 +118,14 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
         parentElement = getParent(parentElement)
       }
 
-      if (!this._isInnerZone && shouldHandleKeyDownCapture) {
+      if (!this._isInnerZone) {
         this.windowElement.addEventListener('keydown', this.onKeyDownCapture, true)
       }
 
       // Assign initial tab indexes so that we can set initial focus as appropriate.
       this.updateTabIndexes()
 
-      if (defaultTabbableElement) {
-        const initialActiveElement = defaultTabbableElement(this._root.current)
-        initialActiveElement && this.setActiveElement(initialActiveElement)
-      }
-
-      if (shouldFocusOnMount) {
+      if (this.props.shouldFocusOnMount) {
         this.focus()
       }
     }
@@ -141,7 +133,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   public componentWillUnmount() {
     delete _allInstances[this._id]
-    if (this.windowElement && this.props.shouldHandleKeyDownCapture) {
+    if (this.windowElement) {
       this.windowElement.removeEventListener('keydown', this.onKeyDownCapture, true)
     }
   }
@@ -262,7 +254,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const { onActiveElementChanged, stopFocusPropagation } = this.props
+    const {
+      onActiveElementChanged,
+      stopFocusPropagation,
+      shouldFocusInnerElementWhenReceivedFocus,
+      defaultTabbableElement,
+    } = this.props
 
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement
@@ -283,9 +280,18 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
-    // If a first focusable element should be force focused when FocusZone container receives focus
-    if (this.props.shouldFocusFirstElementWhenReceivedFocus && ev.target === this._root.current) {
-      this.focus(true)
+    // If an inner focusable element should be focused when FocusZone container receives focus
+    if (shouldFocusInnerElementWhenReceivedFocus && ev.target === this._root.current) {
+      const maybeElementToFocus =
+        defaultTabbableElement && defaultTabbableElement(this._root.current)
+
+      // try to focus defaultTabbable element
+      if (maybeElementToFocus && isElementTabbable(maybeElementToFocus)) {
+        maybeElementToFocus.focus()
+      } else {
+        // force focus on first focusable element
+        this.focus(true)
+      }
     }
 
     if (stopFocusPropagation) {
@@ -476,6 +482,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
             if (focusChanged) {
               break
             }
+          } else if (this.props.shouldResetActiveElementWhenTabFromZone) {
+            this._activeElement = null
           }
           return undefined
 
@@ -871,6 +879,11 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   private updateTabIndexes(onElement?: HTMLElement) {
     let element = onElement
+
+    if (!this._activeElement && this.props.defaultTabbableElement) {
+      this._activeElement = this.props.defaultTabbableElement(this._root.current)
+    }
+
     if (!element && this._root.current) {
       this._defaultFocusElement = null
       element = this._root.current

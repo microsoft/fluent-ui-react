@@ -72,6 +72,8 @@ export interface MenuState {
 
 /**
  * A menu displays grouped navigation actions.
+ * @accessibility
+ * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
  */
 class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
