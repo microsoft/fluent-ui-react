@@ -13,7 +13,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
@@ -43,7 +43,7 @@ export interface ChatMessageProps
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<Extendable<ChatMessageProps>, any> {
+class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
   static className = 'ui-chat__message'
 
   static create: Function

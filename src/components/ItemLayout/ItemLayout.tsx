@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
@@ -58,7 +58,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 /**
  * The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
-class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'

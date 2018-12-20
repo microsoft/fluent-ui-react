@@ -8,7 +8,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
 export interface SegmentProps
@@ -22,7 +22,7 @@ export interface SegmentProps
 /**
  * A segment is used to create a grouping of related content.
  */
-class Segment extends UIComponent<Extendable<SegmentProps>, any> {
+class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Table } from 'semantic-ui-react'

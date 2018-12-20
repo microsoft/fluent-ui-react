@@ -10,7 +10,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -31,7 +31,7 @@ export interface AccordionContentProps
 /**
  * A standard AccordionContent.
  */
-class AccordionContent extends UIComponent<Extendable<AccordionContentProps>, any> {
+class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
   static create: Function
