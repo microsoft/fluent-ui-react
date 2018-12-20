@@ -1,6 +1,11 @@
-import { Chat, Provider } from '@stardust-ui/react'
+import { Chat, Provider, Avatar } from '@stardust-ui/react'
 import * as React from 'react'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
+
+const janeAvatar = {
+  image: 'public/images/avatar/small/ade.jpg',
+  status: { color: 'green', icon: 'check' },
+}
 
 const ChatWithPopover = () => (
   <Provider
@@ -45,9 +50,21 @@ const ChatWithPopover = () => (
   >
     <Chat
       items={[
-        { key: 'a', content: <ChatMessageWithPopover /> },
-        { key: 'b', content: <ChatMessageWithPopover /> },
-        { key: 'c', content: <ChatMessageWithPopover /> },
+        {
+          key: 'a',
+          message: { content: <ChatMessageWithPopover /> },
+          gutter: { content: <Avatar {...janeAvatar} /> },
+        },
+        {
+          key: 'b',
+          message: { content: <ChatMessageWithPopover /> },
+          gutter: { content: <Avatar {...janeAvatar} /> },
+        },
+        {
+          key: 'c',
+          message: { content: <ChatMessageWithPopover /> },
+          gutter: { content: <Avatar {...janeAvatar} /> },
+        },
       ]}
     />
   </Provider>

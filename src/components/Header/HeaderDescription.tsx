@@ -8,13 +8,15 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentComponentProps,
+    ColorComponentProps {}
 
 /**
  * A header's description provides more detailed information.
@@ -27,7 +29,7 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   static displayName = 'HeaderDescription'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
   }
 
   static defaultProps = {
