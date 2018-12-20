@@ -9,7 +9,7 @@ import {
   UIComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface StatusProps extends UIComponentProps {
   /** A custom color. */
@@ -28,7 +28,7 @@ export interface StatusProps extends UIComponentProps {
 /**
  * A status graphically represents someone's or something's state.
  */
-class Status extends UIComponent<Extendable<StatusProps>, any> {
+class Status extends UIComponent<ReactProps<StatusProps>, any> {
   static create: Function
 
   static className = 'ui-status'

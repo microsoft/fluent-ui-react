@@ -148,7 +148,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   render() {
     const { className } = this.props
-    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
+    // TODO: Remove `as` there after the issue will be resolved:
+    // https://github.com/Microsoft/TypeScript/issues/28768
+    const ElementType = getElementType(
+      { defaultProps: FocusZone.defaultProps },
+      this.props,
+    ) as React.ComponentClass<FocusZoneProps>
     const rest = getUnhandledProps({ handledProps: [..._.keys(FocusZone.propTypes)] }, this.props)
 
     return (
