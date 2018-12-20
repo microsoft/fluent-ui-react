@@ -8,19 +8,19 @@ import {
 } from 'src/lib/accessibility/types'
 import { State, PropsWithVarsAndStyles } from '../themes/types'
 
+const rtlKeyMap = {
+  [keyboardKey.ArrowRight]: keyboardKey.ArrowLeft,
+  [keyboardKey.ArrowLeft]: keyboardKey.ArrowRight,
+}
+
 /**
  * Assigns onKeyDown handler to the Component's part element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
  * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
  * @param {State & PropsWithVarsAndStyles} props The props which are used to invoke onKeyDown handler passed from top.
+ * @param {boolean} isRtl Indicates if Left and Right arrow keys should be swapped in RTL mode.
  */
-
-const rtlKeyMap = {
-  [keyboardKey.ArrowRight]: keyboardKey.ArrowLeft,
-  [keyboardKey.ArrowLeft]: keyboardKey.ArrowRight,
-}
-
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
