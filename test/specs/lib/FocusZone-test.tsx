@@ -1107,7 +1107,7 @@ describe('FocusZone', () => {
     expect(buttonB.tabIndex).toBe(0)
   })
 
-  it('should force focus to first focusable element when FocusZone container receives focus and shouldFocusFirstElementWhenReceivedFocus is set to "true"', () => {
+  it('should force focus to first focusable element when FocusZone container receives focus and shouldFocusInnerElementWhenReceivedFocus is set to "true"', () => {
     const isInnerZoneKeystroke = (e: React.KeyboardEvent<HTMLElement>): boolean =>
       keyboardKey.getCode(e) === keyboardKey.Enter
     const isFocusableProperty = { [IS_FOCUSABLE_ATTRIBUTE]: true }
@@ -1122,7 +1122,7 @@ describe('FocusZone', () => {
           <FocusZone
             direction={FocusZoneDirection.horizontal}
             id="b"
-            shouldFocusFirstElementWhenReceivedFocus={true}
+            shouldFocusInnerElementWhenReceivedFocus={true}
             {...isFocusableProperty}
           >
             <button id="bsub">bsub</button>
