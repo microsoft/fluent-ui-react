@@ -21,7 +21,7 @@ const submenuBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
+      shouldFocusInnerElementWhenReceivedFocus: true,
       shouldFocusOnMount: true,
       direction: FocusZoneDirection.vertical,
     },
