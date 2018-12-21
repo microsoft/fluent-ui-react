@@ -39,26 +39,31 @@ const ComponentControls: any = props => {
       accessibility={toolbarBehavior}
       items={[
         {
+          key: 'show-code',
           content: <ComponentControlsShowCode active={showCode} />,
           onClick: onShowCode,
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'show-variables',
           content: <ComponentControlsShowVariables active={showVariables} />,
           onClick: onShowVariables,
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'show-transparent',
           content: <ComponentControlsShowTransparent active={showTransparent} />,
           onClick: onShowTransparent,
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'show-rtl',
           content: <ComponentControlsRtl active={showRtl} />,
           onClick: onShowRtl,
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'maximize',
           content: <ComponentControlsMaximize />,
           onClick: onMaximize,
           as: NavLink,
@@ -68,6 +73,7 @@ const ComponentControls: any = props => {
           accessibility: toolbarButtonBehavior,
         },
         {
+          key: 'copy-link',
           content: <ComponentControlsCopyLink anchorName={anchorName} />,
           onClick: onCopyLink,
           accessibility: toolbarButtonBehavior,

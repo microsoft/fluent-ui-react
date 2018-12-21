@@ -1,5 +1,6 @@
 import * as React from 'react'
 import LabelledButton from './ComponentButton'
+import * as _ from 'lodash'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
