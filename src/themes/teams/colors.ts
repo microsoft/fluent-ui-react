@@ -155,7 +155,7 @@ const emphasisAndNaturalColors: EmphasisColors & NaturalColors = {
   ...naturalColors,
 }
 
-const lightBackgroundColors = ['orange', 'yellow', 'postOrange']
+const lightBackgroundColors = ['orange', 'yellow', 'lightGreen', 'postOrange']
 const isLightBackground = (colorName: string) => _.includes(lightBackgroundColors, colorName)
 
 export const colors: ColorPalette = {
