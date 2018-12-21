@@ -1,6 +1,6 @@
 import { TeamsSvgIconSpec } from '../types'
 
-import add from './add'
+import plus from './plus'
 import addParticipant from './addParticipant'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -60,7 +60,7 @@ import underline from './underline'
 import undo from './undo'
 
 export default {
-  add,
+  plus,
   bold,
   bookmark,
   bullets,

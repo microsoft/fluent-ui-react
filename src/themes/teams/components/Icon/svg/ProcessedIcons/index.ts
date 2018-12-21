@@ -301,7 +301,7 @@ import processedIcons_apps from './icons-apps'
 import processedIcons_analytics from './icons-analytics'
 import processedIcons_addparticipant from './icons-add-participant'
 import processedIcons_add from './icons-add'
-import processedIcons_accept from './icons-accept'
+import processedIcons_check from './icons-check'
 
 export default {
   // EXPORTS
@@ -605,5 +605,5 @@ export default {
   processedIcons_analytics,
   processedIcons_addparticipant,
   processedIcons_add,
-  processedIcons_accept,
+  processedIcons_check,
 } as { [iconName: string]: TeamsProcessedSvgIconSpec }
