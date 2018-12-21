@@ -42,6 +42,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add handling of `Enter` and `Spacebar` in List component @	jurokapsiar ([#279](https://github.com/stardust-ui/react/pull/279))
 - Enable RTL for keyboard handlers @sophieH29 ([#656](https://github.com/stardust-ui/react/pull/656))
 - Add `color` prop to `Icon` component @Bugaa92 ([#651](https://github.com/stardust-ui/react/pull/651))
+- Create a `base` theme with Text component example @almedint ([#618](https://github.com/stardust-ui/react/pull/618))
 
 ### Documentation
 - Add more accessibility descriptions to components and behaviors @jurokapsiar  ([#648](https://github.com/stardust-ui/react/pull/648))
