@@ -1,11 +1,9 @@
 import * as CleanWebpackPlugin from 'clean-webpack-plugin'
 import * as fs from 'fs'
 import * as path from 'path'
-// import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import config from '../config'
 
-// const pkg = require('../package.json')
 const { paths } = config
 
 // Interfaces no longer exist after transpiling, causing webpack to throw errors about them.

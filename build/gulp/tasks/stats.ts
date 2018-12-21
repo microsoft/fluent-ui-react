@@ -76,7 +76,7 @@ async function compileOneByOne(allConfigs) {
     try {
       const result = await webpackAsync(config)
       assets = [...assets, ...result.assets]
-      log('Done', result.assets[0].name)
+      log('Done', result.assets[0].name) // All builds should produce just single asset
     } catch (err) {
       log('Error', config.output.filename)
       throw err
@@ -86,10 +86,7 @@ async function compileOneByOne(allConfigs) {
 }
 
 function updateStatsFile(filePath: string, currentBundleStats: any) {
-  let stats = {}
-  if (fs.existsSync(filePath)) {
-    stats = require(filePath)
-  }
+  const stats = fs.existsSync(filePath) ? require(filePath) : {}
 
   stats[UNRELEASED_VERSION_STRING] = {
     bundles: currentBundleStats,
