@@ -8,15 +8,13 @@ import { pxToRem } from '../../utils'
 import { getStyle as getSvgStyle } from './svg'
 
 const sizes = new Map([
-  ['micro', 7],
-  ['mini', 10],
-  ['tiny', 12],
-  ['small', 14],
-  ['normal', 16],
+  ['smallest', 7],
+  ['smaller', 10],
+  ['small', 12],
+  ['medium', 16],
   ['large', 20],
-  ['big', 32],
-  ['huge', 40],
-  ['massive', 64],
+  ['larger', 32],
+  ['largest', 40],
 ])
 
 const getDefaultFontIcon = (iconName: string) => {

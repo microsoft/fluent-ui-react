@@ -14,16 +14,8 @@ import { SvgIconSpec } from '../../themes/types'
 import { ReactProps } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-export type IconSize =
-  | 'micro'
-  | 'mini'
-  | 'tiny'
-  | 'small'
-  | 'normal'
-  | 'large'
-  | 'big'
-  | 'huge'
-  | 'massive'
+
+export type IconSize = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
 export interface IconProps extends UIComponentProps {
   /**
@@ -71,23 +63,13 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     name: PropTypes.string,
-    size: PropTypes.oneOf([
-      'micro',
-      'mini',
-      'tiny',
-      'small',
-      'normal',
-      'large',
-      'big',
-      'huge',
-      'massive',
-    ]),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
 
   static defaultProps = {
     as: 'span',
-    size: 'normal',
+    size: 'medium',
     accessibility: iconBehavior,
   }
 
