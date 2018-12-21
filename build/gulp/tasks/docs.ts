@@ -1,6 +1,7 @@
 import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import * as cache from 'gulp-cache'
 import * as remember from 'gulp-remember'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -83,7 +84,11 @@ const markdownSrc = [
 
 task('build:docs:docgen', () =>
   src(componentsSrc, { since: lastRun('build:docs:docgen') })
-    .pipe(gulpReactDocgen())
+    .pipe(
+      cache(gulpReactDocgen(), {
+        name: 'componentInfo',
+      }),
+    )
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
 
@@ -109,7 +114,11 @@ task('build:docs:example-menu', () =>
 
 task('build:docs:example-sources', () =>
   src(examplesSrc, { since: lastRun('build:docs:example-sources') })
-    .pipe(gulpExampleSource())
+    .pipe(
+      cache(gulpExampleSource(), {
+        name: 'exampleSources',
+      }),
+    )
     .pipe(dest(paths.docsSrc('exampleSources'))),
 )
 
