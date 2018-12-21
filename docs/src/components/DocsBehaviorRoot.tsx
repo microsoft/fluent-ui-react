@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Grid, Header } from 'semantic-ui-react'
 import DocumentTitle from 'react-document-title'
@@ -69,26 +69,31 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                   </div>
                 </Grid.Column>
                 <div style={{ padding: '1em' }}>
-                  <span> Description: </span>
-                  <br />
-                  {variation.description &&
-                    variation.description.split('\n').map((splittedText, keyValue) => {
-                      return (
+                  {variation.description && (
+                    <>
+                      <strong>Description:</strong>
+                      <br />
+                      {variation.description.split('\n').map((splittedText, keyValue) => (
                         <span key={keyValue}>
                           {splittedText}
                           <br />
                         </span>
-                      )
-                    })}
-                  {variation.specification &&
-                    variation.specification.split('\n').map((splittedText, keyValue) => {
-                      return (
+                      ))}
+                    </>
+                  )}
+                  {variation.specification && (
+                    <>
+                      {variation.description && <br />}
+                      <strong>Specification:</strong>
+                      <br />
+                      {variation.specification.split('\n').map((splittedText, keyValue) => (
                         <span key={keyValue}>
                           {splittedText}
                           <br />
                         </span>
-                      )
-                    })}
+                      ))}
+                    </>
+                  )}
                 </div>
               </Grid.Row>
             ))}

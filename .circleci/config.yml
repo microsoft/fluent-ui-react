@@ -68,6 +68,9 @@ jobs:
           name: Project Tests
           command: yarn test:projects
       - run:
+          name: Bundle Statistics
+          command: yarn build:stats
+      - run:
           name: Danger JS
           command: |
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then

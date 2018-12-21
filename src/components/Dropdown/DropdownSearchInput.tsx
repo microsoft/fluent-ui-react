@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 import Ref from '../Ref/Ref'
@@ -55,7 +55,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 /**
  * A DropdownSearchInput is a sub-component of a Dropdown that also has a search function, used to display the search input field.
  */
-class DropdownSearchInput extends UIComponent<Extendable<DropdownSearchInputProps>, any> {
+class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
 
   static create: Function

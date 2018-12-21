@@ -1,5 +1,6 @@
-import React from 'react'
-import { Icon, Grid, Text } from '@stardust-ui/react'
+import * as React from 'react'
+import * as _ from 'lodash'
+import { Icon, Grid, Text, ProviderConsumer } from '@stardust-ui/react'
 
 const IconExampleColor = () => (
   <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }} variables={{ gridGap: '10px' }}>
@@ -15,27 +16,17 @@ const IconExampleColor = () => (
       <Icon name="call" bordered variables={{ outline: true }} />
       <Icon name="call-video" bordered variables={{ outline: true }} />
     </div>
-    <Text
-      content={
-        <span>
-          USING THE <code>color</code> VARIABLE:
-        </span>
-      }
-      weight="bold"
-    />
+    <Text weight="bold">
+      USING THE <code>color</code> VARIABLE:
+    </Text>
     <div>
       <Icon name="calendar" bordered variables={{ color: 'violet' }} />
       <Icon name="call" bordered variables={{ color: 'yellowgreen' }} />
       <Icon name="call-video" bordered variables={{ color: 'cornflowerblue' }} />
     </div>
-    <Text
-      content={
-        <span>
-          USING THE <code>borderColor</code> VARIABLE:
-        </span>
-      }
-      weight="bold"
-    />
+    <Text weight="bold">
+      USING THE <code>borderColor</code> VARIABLE:
+    </Text>
     <div>
       <Icon
         name="calendar"
@@ -51,6 +42,18 @@ const IconExampleColor = () => (
         name="call-video"
         bordered
         variables={{ color: 'cornflowerblue', borderColor: 'orangered' }}
+      />
+    </div>
+    <Text weight="bold">
+      USING THE <code>color</code> PROP:
+    </Text>
+    <div>
+      <ProviderConsumer
+        render={({ siteVariables: { emphasisColors, naturalColors } }) =>
+          _.take(_.keys({ ...emphasisColors, ...naturalColors }), 3).map(color => (
+            <Icon key={color} name="call" bordered color={color} />
+          ))
+        }
       />
     </div>
   </Grid>

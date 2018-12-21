@@ -18,4 +18,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'emoji',
 } as TeamsProcessedSvgIconSpec

@@ -6,7 +6,6 @@ import { ShorthandValue } from '../../../../../types/utils'
 import GridImagePickerItem, { GridPickerItemProps } from './GridImagePickerItem'
 
 export interface GridPickerProps {
-  as?: keyof React.ReactHTML
   items: GridPickerItemProps[]
   gridColumns?: string | number
   inputIcon?: ShorthandValue
@@ -27,7 +26,6 @@ const inputStyles = {
 
 class GridImagePicker extends React.Component<GridPickerProps> {
   static defaultProps = {
-    as: 'ul',
     gridColumns: 5,
     inputIcon: 'search',
     inputPlaceholder: 'Search...',
@@ -41,7 +39,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
   }
 
   render() {
-    const { as: ElementType, gridColumns, inputIcon, inputPlaceholder } = this.props
+    const { gridColumns, inputIcon, inputPlaceholder } = this.props
 
     return (
       <>
@@ -53,7 +51,7 @@ class GridImagePicker extends React.Component<GridPickerProps> {
           inputRef={this.setInputNode}
         />
         <Grid
-          as={ElementType}
+          as="ul"
           accessibility={gridBehavior}
           columns={gridColumns}
           style={gridStyles}
