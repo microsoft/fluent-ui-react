@@ -8,8 +8,10 @@ import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessib
 describe('MenuItem', () => {
   isConformant(MenuItem, {
     eventTargets: {
-      onClick: 'a',
+      onClick: '.ui-menu__item__wrapper',
     },
+    // The ElementType is wrapped with Ref, which is adding two HOC in total
+    nestingLevel: 2,
     usesWrapperSlot: true,
   })
 
@@ -19,7 +21,14 @@ describe('MenuItem', () => {
       .hostNodes()
 
     expect(menuItem.is('li')).toBe(true)
-    expect(menuItem.childAt(0).is('a')).toBe(true)
+    // The ElementType is wrapped with Ref, which is adding two HOC in total, that's why we need the three childAt(0) usages
+    expect(
+      menuItem
+        .childAt(0)
+        .childAt(0)
+        .childAt(0)
+        .is('a'),
+    ).toBe(true)
     expect(menuItem.text()).toBe('Home')
   })
 

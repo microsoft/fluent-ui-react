@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { ItemLayout, Image } from '@stardust-ui/react'
 
 const selection = knobs => (knobs === undefined ? true : knobs.selection)
