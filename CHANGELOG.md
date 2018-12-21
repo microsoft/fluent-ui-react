@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Change available `size` prop values in `Icon` component @codepretty ([#640](https://github.com/stardust-ui/react/pull/640))
 - renamed Teams theme menu variables the contains props names as prefixes @mnajdova ([#539](https://github.com/stardust-ui/react/pull/539))
 
 ### Fixes
