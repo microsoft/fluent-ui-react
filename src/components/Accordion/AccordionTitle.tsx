@@ -11,7 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -35,7 +35,7 @@ export interface AccordionTitleProps
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
+class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function

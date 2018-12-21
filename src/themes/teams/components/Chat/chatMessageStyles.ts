@@ -7,6 +7,7 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     display: 'inline-block',
     padding: v.padding,
     borderRadius: v.borderRadius,
+    border: v.border,
     color: v.color,
     backgroundColor: p.mine ? v.backgroundColorMine : v.backgroundColor,
     maxWidth: v.width,

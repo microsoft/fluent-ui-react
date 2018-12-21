@@ -13,19 +13,31 @@ const { log, PluginError } = g.util
 // Clean
 // ----------------------------------------
 
-task('clean:dist', cb => {
-  rimraf(`${config.paths.dist()}/*`, cb)
+task('clean:dist:es', cb => {
+  rimraf(`${config.paths.dist()}/es/*`, cb)
 })
+
+task('clean:dist:commonjs', cb => {
+  rimraf(`${config.paths.dist()}/commonjs/*`, cb)
+})
+
+task('clean:dist:umd', cb => {
+  rimraf(`${config.paths.dist()}/umd/*`, cb)
+})
+
+task('clean:dist', parallel('clean:dist:es', 'clean:dist:commonjs', 'clean:dist:umd'))
 
 // ----------------------------------------
 // Build
 // ----------------------------------------
+const componentsSrc = [paths.src('**/*.{ts,tsx}'), `!${paths.src('**/umd.ts')}`]
+
 task('build:dist:commonjs', () => {
   const tsConfig = paths.base('build/tsconfig.commonjs.json')
   const settings = { declaration: true }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
-  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
   const types = src(paths.base('types/**'))
 
   return merge2([
@@ -40,7 +52,7 @@ task('build:dist:es', () => {
   const settings = { declaration: true }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
-  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
   const types = src(paths.base('types/**'))
 
   return merge2([

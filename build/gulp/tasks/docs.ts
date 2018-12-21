@@ -81,8 +81,8 @@ const markdownSrc = [
   'specifications/*.md',
 ]
 
-task('build:docs:docgen', () =>
-  src(componentsSrc, { since: lastRun('build:docs:docgen') })
+task('build:docs:component-info', () =>
+  src(componentsSrc, { since: lastRun('build:docs:component-info') })
     .pipe(gulpReactDocgen())
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
@@ -116,7 +116,7 @@ task('build:docs:example-sources', () =>
 task(
   'build:docs:json',
   parallel(
-    series('build:docs:docgen', 'build:docs:component-menu'),
+    series('build:docs:component-info', 'build:docs:component-menu'),
     'build:docs:component-menu-behaviors',
     'build:docs:example-menu',
     'build:docs:example-sources',
@@ -231,7 +231,7 @@ task('serve:docs', cb => {
 
 task('watch:docs', cb => {
   // rebuild component info
-  watch(componentsSrc, series('build:docs:docgen')).on('change', handleWatchChange)
+  watch(componentsSrc, series('build:docs:component-info')).on('change', handleWatchChange)
 
   // rebuild example menus
   watch(examplesIndexSrc, series('build:docs:example-menu'))

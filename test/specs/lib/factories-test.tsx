@@ -232,9 +232,9 @@ describe('factories', () => {
           getShorthand({
             value: render =>
               render({}, (Component, props) => {
-                expect(Component).toBe('foo-span')
+                expect(Component).toBe('span')
               }),
-            Component: 'foo-span',
+            Component: 'span',
           })
         })
 
