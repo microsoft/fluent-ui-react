@@ -74,7 +74,7 @@ export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './compo
 export { default as List, ListProps } from './components/List/List'
 export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
-export { default as Menu, MenuProps } from './components/Menu/Menu'
+export { default as Menu, MenuProps, MenuState } from './components/Menu/Menu'
 export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
 
 export { default as Popup, PopupState, PopupProps } from './components/Popup/Popup'

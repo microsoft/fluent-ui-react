@@ -1,5 +1,5 @@
 import * as _ from 'lodash/fp'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import SourceRender from 'react-source-render'
 
