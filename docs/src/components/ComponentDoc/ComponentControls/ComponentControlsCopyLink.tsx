@@ -1,16 +1,9 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
 import LabelledButton from './ComponentButton'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   private mounted: boolean
   private readonly btnLabel = 'Permalink'
-
-  public static propTypes = {
-    anchorName: PropTypes.string,
-    onClick: PropTypes.func,
-  }
 
   public state: any = {}
 
@@ -30,24 +23,18 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
     const { active } = this.state
 
     return (
-      <Menu.Item
+      <LabelledButton
+        iconName="linkify"
+        label={active ? 'Copied!' : this.btnLabel}
+        active={active}
         onClick={this.handleClick}
-        content={
-          <LabelledButton
-            iconName="linkify"
-            label={active ? 'Copied!' : this.btnLabel}
-            active={active}
-          />
-        }
       />
     )
   }
 
   private handleClick = e => {
-    const { onClick } = this.props
-
     e.preventDefault()
-    onClick()
+    _.invoke(this.props, 'onClick', e, this.props)
 
     this.setState({ active: true })
     setTimeout(this.resetActive, 3000)
