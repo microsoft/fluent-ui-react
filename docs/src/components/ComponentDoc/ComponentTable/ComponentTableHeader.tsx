@@ -3,14 +3,12 @@ import * as React from 'react'
 import { neverUpdate } from 'docs/src/hoc'
 
 const ComponentTableHeader = () => (
-  <th>
-    <tr>
-      <td>Name</td>
-      <td>Default</td>
-      <td>Type</td>
-      <td>Description</td>
-    </tr>
-  </th>
+  <tr>
+    <th>Name</th>
+    <th>Default</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
 )
 
 export default neverUpdate(ComponentTableHeader)

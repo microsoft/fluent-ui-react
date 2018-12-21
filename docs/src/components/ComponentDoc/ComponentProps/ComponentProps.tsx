@@ -6,9 +6,9 @@ import { getComponentGroup } from 'docs/src/utils'
 import ComponentTable from '../ComponentTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { RadioGroup } from '@stardust-ui/react'
+import { RadioGroup, ICSSInJSStyle } from '@stardust-ui/react'
 
-const propsContainerStyle: any = { overflowX: 'auto' }
+const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
 export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {

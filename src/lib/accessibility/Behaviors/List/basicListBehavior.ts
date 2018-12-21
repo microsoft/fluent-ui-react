@@ -30,7 +30,6 @@ const basicListBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
     },
   },
 })

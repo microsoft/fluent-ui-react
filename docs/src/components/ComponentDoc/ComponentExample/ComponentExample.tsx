@@ -360,7 +360,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             } as React.CSSProperties
           }
         >
-          <Menu size="small" inverted secondary pointing items={menuItems} />
+          <Menu size="small" secondary pointing items={menuItems} />
         </div>
       </div>
     )
@@ -476,10 +476,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return (
       <SourceRender.Consumer>
-        {({ markup }) => (
-          <div>
-            <Divider inverted fitted />
-            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+        {a => (
+          <div {...a}>
+            <Divider fitted />
+            <CodeSnippet fitted label="Rendered HTML" mode="html" value={a.markup} />
           </div>
         )}
       </SourceRender.Consumer>
@@ -622,7 +622,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           knobs={knobs}
           source={sourceCode}
           render={this.renderElement}
-          renderHtml={showCode}
+          //          renderHtml={showCode}
+          renderHtml
           resolver={importResolver}
         >
           <Provider.Consumer
@@ -655,7 +656,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           </Segment>
           <div style={{ paddingBottom: '10px' }} />
         </SourceRender>
-        <Divider section horizontal />
+        <Divider section />
       </Segment>
     )
   }
