@@ -183,8 +183,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }
   }
 
-  public state = { target: undefined, open: false }
-
   public componentDidMount() {
     this.updateOutsideClickSubscription()
 
