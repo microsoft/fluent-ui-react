@@ -17,10 +17,9 @@ export interface LabelVariables {
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
-  const colorScheme = siteVars.colorScheme
 
   return {
-    colorScheme,
+    colorScheme: siteVars.colorScheme,
     color,
     backgroundColor: 'rgb(232, 232, 232)',
     circularRadius: pxToRem(9999),
