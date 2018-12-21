@@ -1,19 +1,21 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Label, ProviderConsumer } from '@stardust-ui/react'
+import { Label, ProviderConsumer, Grid } from '@stardust-ui/react'
 
 const LabelExampleColor = () => (
-  <ProviderConsumer
-    render={({ siteVariables: { colorScheme } }) =>
-      _.keys(colorScheme).map(color => (
-        <>
+  <Grid
+    columns="auto"
+    styles={{ justifyContent: 'left', justifyItems: 'left' }}
+    variables={{ gridGap: '10px' }}
+  >
+    <ProviderConsumer
+      render={({ siteVariables: { colorScheme } }) =>
+        _.keys(colorScheme).map(color => (
           <Label key={color} color={color} content={_.startCase(color)} />
-          <br />
-          <br />
-        </>
-      ))
-    }
-  />
+        ))
+      }
+    />
+  </Grid>
 )
 
 export default LabelExampleColor
