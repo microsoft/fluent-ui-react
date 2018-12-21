@@ -5,6 +5,8 @@ import { pxToRem } from '../../utils'
 export type IconSizeModifier = 'x' | 'xx'
 
 export interface IconVariables {
+  [key: string]: object | string | number | boolean | undefined
+
   colors: ColorValues<string>
   color?: string
   backgroundColor?: string
