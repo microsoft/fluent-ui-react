@@ -15,6 +15,11 @@ const Usage = () => (
       description="A popup can be triggered on click."
       examplePath="components/Popup/Usage/PopupExampleClick"
     />
+    <ComponentExample
+      title="Focus"
+      description="A popup can be triggered on focus."
+      examplePath="components/Popup/Usage/PopupExampleFocus"
+    />
   </ExampleSection>
 )
 
