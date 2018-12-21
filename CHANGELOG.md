@@ -38,7 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `menu` prop to `MenuItem` @mnajdova ([#539](https://github.com/stardust-ui/react/pull/539))
 - Enable RTL for `FocusZone` @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
 - Add `color` prop to `Segment` component @Bugaa92 ([#632](https://github.com/stardust-ui/react/pull/632))
-- Export `table-add` and `table-delete` SVG icon @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
+- Export `table-add` and `table-delete` SVG icon in Teams theme @VyshnaviDasari ([#643](https://github.com/stardust-ui/react/pull/643))
 - Add handling of `Enter` and `Spacebar` in List component @	jurokapsiar ([#279](https://github.com/stardust-ui/react/pull/279))
 - Enable RTL for keyboard handlers @sophieH29 ([#656](https://github.com/stardust-ui/react/pull/656))
 
