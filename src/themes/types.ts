@@ -104,6 +104,7 @@ export type ColorScheme = {
   background: string
   border: string
   shadow: string
+  hover: string
 }
 
 export type ColorSchemeMapping = ColorValues<ColorScheme>

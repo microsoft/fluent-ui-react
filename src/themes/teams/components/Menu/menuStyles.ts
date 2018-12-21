@@ -1,7 +1,10 @@
+import * as _ from 'lodash'
+
+import { getColorSchemeFn } from '../../../../lib'
 import { pxToRem } from '../../utils'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
-import { MenuVariables } from './menuVariables'
+import { MenuVariables, MenuColorScheme } from './menuVariables'
 
 type MenuPropsAndState = MenuProps & MenuState
 
@@ -10,8 +13,10 @@ const solidBorder = (color: string) => ({
 })
 
 export default {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
+  root: ({ props, variables: v }): ICSSInJSStyle => {
+    const { color, iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
+    const getColor = getColorSchemeFn<MenuColorScheme>(color, v.colorScheme)
+
     return {
       display: 'flex',
       ...(iconOnly && { alignItems: 'center' }),
@@ -27,14 +32,11 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          ...solidBorder(variables.borderColor),
-          ...(primary && {
-            ...solidBorder(variables.primaryBorderColor),
-          }),
+          ...solidBorder(getColor('background', primary ? v.primaryBorderColor : v.borderColor)),
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {
-        borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
+        borderBottom: `2px solid ${getColor('background', v.primaryUnderlinedBorderColor)}`,
       }),
       minHeight: pxToRem(24),
       margin: 0,

@@ -166,9 +166,10 @@ export const colorScheme: ColorSchemeMapping = _.mapValues(
 
     return {
       foreground,
-      background: colorVariants[500],
       border: foreground,
       shadow: foreground,
+      background: colorVariants[500],
+      hover: colorVariants[300],
     }
   },
 )

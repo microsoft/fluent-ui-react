@@ -10,6 +10,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -18,7 +19,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 
-export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
+export interface MenuProps extends UIComponentProps, ChildrenComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
@@ -85,6 +86,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
+      color: true,
     }),
     accessibility: PropTypes.func,
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -131,6 +133,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
   renderItems = (variables: ComponentVariablesObject) => {
     const {
+      color,
       iconOnly,
       items,
       pills,
@@ -148,6 +151,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
       return MenuItem.create(item, {
         defaultProps: {
+          color,
           iconOnly,
           pills,
           pointing,
