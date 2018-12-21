@@ -1,23 +1,25 @@
 import * as _ from 'lodash'
-import { pxToRem } from '../../utils'
+import { FontWeightProperty } from 'csstype'
 
-import { EmphasisColors, NaturalColors } from '../../../types'
+import { pxToRem } from '../../utils'
+import { ColorValues } from '../../../types'
+import { mapColorsToScheme } from '../../../../lib'
 
 export interface DividerVariables {
-  colors: Record<keyof (EmphasisColors & NaturalColors), string>
+  colors: ColorValues<string>
   dividerColor: string
   textColor: string
   textFontSize: string
   textLineHeight: string
-  importantFontWeight: string
+  importantFontWeight: FontWeightProperty
   dividerPadding: string
 }
 
 export default (siteVars: any): DividerVariables => {
-  const colorVariant = '500'
+  const colorVariant = 500
 
   return {
-    colors: _.mapValues({ ...siteVars.emphasisColors, ...siteVars.naturalColors }, colorVariant),
+    colors: mapColorsToScheme(siteVars, colorVariant),
     dividerColor: siteVars.gray09,
     textColor: siteVars.gray03,
     textFontSize: siteVars.fontSizeSmall,

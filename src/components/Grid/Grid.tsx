@@ -10,7 +10,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode
@@ -38,7 +38,7 @@ export interface GridProps
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<GridProps>, any> {
+class Grid extends UIComponent<ReactProps<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'

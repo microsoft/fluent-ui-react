@@ -123,6 +123,8 @@ export interface DropdownState {
 /**
  * Dropdown allows user to select one or more values from a list of items.
  * Can also be created with search capability.
+ * @accessibility
+ * Implements ARIA collapsible Listbox design pattern, uses aria-live to announce state changes.
  */
 export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,

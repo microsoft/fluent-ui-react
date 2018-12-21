@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutProps extends UIComponentProps {
@@ -42,7 +42,7 @@ export interface LayoutProps extends UIComponentProps {
 /**
  * A layout is a utility for arranging the content of a component.
  */
-class Layout extends UIComponent<Extendable<LayoutProps>, any> {
+class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
