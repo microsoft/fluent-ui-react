@@ -1,6 +1,8 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import { NavLink } from 'react-router-dom'
+import * as _ from 'lodash'
 
 import { updateForKeys } from 'docs/src/hoc'
 import ComponentButton from './ComponentButton'
@@ -28,14 +30,56 @@ const ComponentControls: any = props => {
   } = props
 
   return (
-    <Menu fluid color="green" icon="labeled" size="tiny" pills>
-      <ComponentControlsShowCode active={showCode} onClick={onShowCode} />
-      <ComponentControlsShowVariables active={showVariables} onClick={onShowVariables} />
-      <ComponentControlsShowTransparent active={showTransparent} onClick={onShowTransparent} />
-      <ComponentControlsRtl active={showRtl} onClick={onShowRtl} />
-      <ComponentControlsMaximize examplePath={examplePath} onClick={onMaximize} />
-      <ComponentControlsCopyLink anchorName={anchorName} onClick={onCopyLink} />
-    </Menu>
+    <Menu
+      fluid
+      color="green"
+      icon="labeled"
+      size="tiny"
+      pills
+      accessibility={toolbarBehavior}
+      items={[
+        {
+          key: 'show-code',
+          content: <ComponentControlsShowCode active={showCode} />,
+          onClick: onShowCode,
+          accessibility: toolbarButtonBehavior,
+        },
+        {
+          key: 'show-variables',
+          content: <ComponentControlsShowVariables active={showVariables} />,
+          onClick: onShowVariables,
+          accessibility: toolbarButtonBehavior,
+        },
+        {
+          key: 'show-transparent',
+          content: <ComponentControlsShowTransparent active={showTransparent} />,
+          onClick: onShowTransparent,
+          accessibility: toolbarButtonBehavior,
+        },
+        {
+          key: 'show-rtl',
+          content: <ComponentControlsRtl active={showRtl} />,
+          onClick: onShowRtl,
+          accessibility: toolbarButtonBehavior,
+        },
+        {
+          key: 'maximize',
+          content: <ComponentControlsMaximize />,
+          onClick: onMaximize,
+          as: NavLink,
+          to: `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          accessibility: toolbarButtonBehavior,
+        },
+        {
+          key: 'copy-link',
+          content: <ComponentControlsCopyLink anchorName={anchorName} />,
+          onClick: onCopyLink,
+          accessibility: toolbarButtonBehavior,
+        },
+      ]}
+    />
   )
 }
 
