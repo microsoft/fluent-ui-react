@@ -51,7 +51,7 @@ export default () => (
             <Button content="Button" />
             <Button icon="plus" iconOnly primary />
             <Button icon="at" content="Send email" secondary />
-            <Icon name="chess rook" size="big" />
+            <Icon name="chess rook" size="larger" />
             <Label content="Label with icon" icon="close" />
           </>
          </Provider>
@@ -61,7 +61,7 @@ export default () => (
           <Button content="Button" />
           <Button icon="plus" iconOnly primary />
           <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="big" />
+          <Icon name="chess rook" size="larger" />
           <Label content="Label with icon" icon="close" />
         </>
       )}
@@ -217,7 +217,7 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -261,7 +261,7 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -293,7 +293,7 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
 
               /* Second nested theming */
@@ -312,7 +312,7 @@ export default () => (
                   <Button content="Button" />
                   <Button icon="plus" iconOnly primary />
                   <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="big" />
+                  <Icon name="chess rook" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </div>
               </Provider>
@@ -326,7 +326,7 @@ export default () => (
           <Button content="Button" />
           <Button icon="plus" iconOnly primary />
           <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="big" />
+          <Icon name="chess rook" size="larger" />
           <Label content="Label with icon" icon="close" />
 
           <Provider
@@ -340,7 +340,7 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
 
               <Provider
@@ -358,7 +358,7 @@ export default () => (
                   <Button content="Button" />
                   <Button icon="plus" iconOnly primary />
                   <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="big" />
+                  <Icon name="chess rook" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </>
               </Provider>

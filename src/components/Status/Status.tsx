@@ -58,7 +58,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       <ElementType {...rest} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
-            size: 'micro',
+            size: 'smallest',
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',

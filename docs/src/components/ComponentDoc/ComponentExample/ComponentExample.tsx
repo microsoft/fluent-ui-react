@@ -256,6 +256,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const theme = themes[themeName]
 
     const newTheme: ThemeInput = {
+      siteVariables: theme.siteVariables,
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),

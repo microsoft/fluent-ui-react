@@ -63,13 +63,19 @@ export interface RenderConfig<P> {
 const getAccessibility = (
   props: State & PropsWithVarsAndStyles,
   actionHandlers: AccessibilityActionHandlers,
+  isRtlEnabled: boolean,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
   const accessibility: AccessibilityDefinition = (customAccessibility ||
     defaultAccessibility ||
     defaultBehavior)(props)
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
+  const keyHandlers = getKeyDownHandlers(
+    actionHandlers,
+    accessibility.keyActions,
+    props,
+    isRtlEnabled,
+  )
   return {
     ...accessibility,
     keyHandlers,
@@ -185,7 +191,13 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
             root: props.styles,
           },
         )
-        const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers)
+
+        const accessibility: AccessibilityBehavior = getAccessibility(
+          stateAndProps,
+          actionHandlers,
+          rtl,
+        )
+
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
