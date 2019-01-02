@@ -16,4 +16,5 @@ docs/src/exampleSources
 docs/dist/
 dll/
 node_modules/
+stats/
 .vscode/

@@ -1,17 +1,18 @@
 import getKeyDownHandlers from 'src/lib/getKeyDownHandlers'
+import * as keyboardKey from 'keyboard-key'
 
-const testKeyCode = 27
+const testKeyCode = keyboardKey.ArrowRight
 const props = {}
 const partElementName = 'anchor'
 let actionsDefinition
 
-const eventArg: any = {
-  keyCode: testKeyCode,
+const eventArg = (keyCodeValue: number): any => ({
+  keyCode: keyCodeValue,
   altKey: false,
   ctrlKey: false,
   metaKey: false,
   shiftKey: false,
-}
+})
 
 describe('getKeyDownHandlers', () => {
   beforeEach(() => {
@@ -87,10 +88,61 @@ describe('getKeyDownHandlers', () => {
 
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props)
 
-      keyHandlers[partElementName] && keyHandlers[partElementName]['onKeyDown'](eventArg)
+      keyHandlers[partElementName] &&
+        keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.otherAction).toHaveBeenCalled()
       expect(actions.anotherTestAction).not.toHaveBeenCalled()
+    })
+
+    describe('with respect of RTL', () => {
+      test('swap Right key to Left key', () => {
+        const actions = {
+          actionOnLeftArrow: jest.fn(),
+          actionOnRightArrow: jest.fn(),
+        }
+
+        actionsDefinition[partElementName].actionOnLeftArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        }
+        actionsDefinition[partElementName].actionOnRightArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        }
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
+
+        keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowRight))
+        expect(actions.actionOnLeftArrow).toHaveBeenCalled()
+        expect(actions.actionOnRightArrow).not.toHaveBeenCalled()
+      })
+
+      test('swap Left key to Right key', () => {
+        const actions = {
+          actionOnLeftArrow: jest.fn(),
+          actionOnRightArrow: jest.fn(),
+        }
+
+        actionsDefinition[partElementName].actionOnLeftArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        }
+        actionsDefinition[partElementName].actionOnRightArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        }
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
+
+        keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
+        expect(actions.actionOnLeftArrow).not.toHaveBeenCalled()
+        expect(actions.actionOnRightArrow).toHaveBeenCalled()
+      })
     })
   })
 
