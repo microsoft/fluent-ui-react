@@ -1,2 +1,2 @@
 export * from './componentAPIs'
-export * from './ComponentSourceManager'
+export { default, ComponentSourceManagerRenderProps } from './ComponentSourceManager'

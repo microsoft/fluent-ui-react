@@ -1,8 +1,8 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import { ExampleSource } from '../../../types'
-import { safeFormatCode } from '../../../utils/formatCode'
+import { ExampleSource } from 'docs/src/types'
+import formatCode from 'docs/src/utils/formatCode'
 import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
 import getExampleSource from './getExampeSource'
 
@@ -40,7 +40,7 @@ export type ComponentSourceManagerState = {
   wasCodeChanged: boolean
 }
 
-export class ComponentSourceManager extends React.Component<
+export default class ComponentSourceManager extends React.Component<
   ComponentSourceManagerProps,
   ComponentSourceManagerState
 > {
@@ -79,12 +79,14 @@ export class ComponentSourceManager extends React.Component<
     const originalCode = sourceCodes[currentCodeLanguage]
 
     const currentCode = storedCode || originalCode
-    const formattedCode = safeFormatCode(
-      currentCode,
-      currentCodeLanguage === 'ts' ? 'typescript' : 'babylon',
-    )
-
     const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
+
+    const codeParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
+    let formattedCode
+
+    try {
+      formattedCode = formatCode(currentCode, codeParser)
+    } catch (e) {}
 
     return {
       currentCode,
@@ -134,5 +136,3 @@ export class ComponentSourceManager extends React.Component<
     })
   }
 }
-
-export default ComponentSourceManager

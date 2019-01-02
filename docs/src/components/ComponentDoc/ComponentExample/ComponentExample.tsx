@@ -15,7 +15,7 @@ import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
-} from '../ComponentSourceManager/ComponentSourceManager'
+} from '../ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'

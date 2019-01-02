@@ -21,12 +21,4 @@ const formatCode = (code: string, parser = 'babylon') => {
   return formatted.replace(/^;</, '<') // remove beginning semi in JSX/HTML
 }
 
-export const safeFormatCode = (code: string, parser?): string | undefined => {
-  try {
-    return formatCode(code, parser)
-  } catch (e) {}
-
-  return undefined
-}
-
 export default formatCode
