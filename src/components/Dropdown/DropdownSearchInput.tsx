@@ -8,6 +8,8 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** Informs the search input about an existing toggle button. */
+  hasToggleButton?: boolean
   /**
    * Ref callback with an input DOM node.
    *
@@ -68,6 +70,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     }),
     accessibilityInputProps: PropTypes.object,
     accessibilityComboboxProps: PropTypes.object,
+    hasToggleButton: PropTypes.bool,
     inputRef: PropTypes.func,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
