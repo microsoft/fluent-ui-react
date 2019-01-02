@@ -30,8 +30,7 @@ class ComposeMessage extends React.Component {
                 id="chat-compose-reader-text"
                 style={screenReaderMessageContainerStyles}
               >
-                {' '}
-                Compose{' '}
+                Compose
               </div>
               {this.renderInput()}
             </div>

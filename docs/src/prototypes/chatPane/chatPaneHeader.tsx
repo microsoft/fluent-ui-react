@@ -67,8 +67,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             aria-labelledby="chat-header-reader-text chat-header-title"
           >
             <div id="chat-header-reader-text" style={screenReaderMessageContainerStyles}>
-              {' '}
-              Chat header{' '}
+              Chat header
             </div>
             <Text
               id="chat-header-title"
