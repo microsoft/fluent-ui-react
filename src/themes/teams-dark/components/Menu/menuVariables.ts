@@ -32,7 +32,7 @@ export default (siteVars: any): MenuVariables => {
     color: siteVars.gray02,
     backgroundColor: siteVars.black,
 
-    activeColor: siteVars.black,
+    activeColor: siteVars.white,
     activeBackgroundColor: siteVars.gray02,
     focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray02,
