@@ -3,22 +3,22 @@ import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { customPropTypes, AutoControlledComponent, createShorthandFactory } from '../../lib'
-import Label from '../Label/Label'
 import {
-  ComponentEventHandler,
-  Extendable,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
+  customPropTypes,
+  AutoControlledComponent,
+  createShorthandFactory,
+  isFromKeyboard,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import Label from '../Label/Label'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
-import isFromKeyboard from '../../lib/isFromKeyboard'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface RadioGroupItemProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default radioGroupItemBehavior
@@ -40,9 +40,6 @@ export interface RadioGroupItemProps extends UIComponentProps<any, any>, Childre
 
   /** Initial checked value. */
   defaultChecked?: boolean
-
-  /** Default value for isFromKeyboard (autocontrolled). */
-  defaultIsFromKeyboard?: boolean
 
   /** A radio item can appear disabled and be unable to change states. */
   disabled?: boolean
@@ -74,23 +71,11 @@ export interface RadioGroupItemProps extends UIComponentProps<any, any>, Childre
    */
   onFocus?: ComponentEventHandler<RadioGroupItemProps>
 
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
   /** Whether should focus when checked */
   shouldFocus?: boolean // TODO: RFC #306
 
   /** The HTML input value. */
   value?: string | number
-
-  /** Whether focus came from the keyboard (autocontrolled). */
-  [isFromKeyboard.propertyName]?: boolean
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
@@ -98,7 +83,7 @@ export interface RadioGroupItemProps extends UIComponentProps<any, any>, Childre
 
 export interface RadioGroupItemState {
   checked: boolean
-  [isFromKeyboard.propertyName]: boolean
+  isFromKeyboard: boolean
 }
 
 /**
@@ -107,7 +92,7 @@ export interface RadioGroupItemState {
  * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
  */
 class RadioGroupItem extends AutoControlledComponent<
-  Extendable<RadioGroupItemProps>,
+  ReactProps<RadioGroupItemProps>,
   RadioGroupItemState
 > {
   private elementRef: HTMLElement
@@ -119,23 +104,20 @@ class RadioGroupItem extends AutoControlledComponent<
   static className = 'ui-radiogroup__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
-    /** Default value for isFromKeyboard (autocontrolled). */
-    defaultIsFromKeyboard: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
-    isFromKeyboard: PropTypes.bool,
-    label: customPropTypes.contentShorthand,
+    label: customPropTypes.nodeContent,
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     checkedChanged: PropTypes.func,
-    renderIcon: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     vertical: PropTypes.bool,
@@ -146,7 +128,7 @@ class RadioGroupItem extends AutoControlledComponent<
     accessibility: radioGroupItemBehavior as Accessibility,
   }
 
-  static autoControlledProps = ['checked', isFromKeyboard.propertyName]
+  static autoControlledProps = ['checked']
 
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
@@ -161,7 +143,7 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
-    const { label, icon, renderIcon } = this.props
+    const { label, icon } = this.props
 
     return (
       <ElementType
@@ -177,10 +159,9 @@ class RadioGroupItem extends AutoControlledComponent<
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
-              size: 'mini',
+              size: 'smaller',
               variables: variables.icon,
               styles: styles.icon,
-              render: renderIcon,
             },
           })}
           {label}
@@ -190,12 +171,12 @@ class RadioGroupItem extends AutoControlledComponent<
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.state())
+    this.setState({ isFromKeyboard: isFromKeyboard() })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   private handleBlur = (e: React.SyntheticEvent) => {
-    this.setState(isFromKeyboard.initial)
+    this.setState({ isFromKeyboard: false })
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 

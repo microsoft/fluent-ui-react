@@ -15,6 +15,10 @@ export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
 
+export { default as Dropdown } from './components/Dropdown/dropdownStyles'
+export { default as DropdownSearchInput } from './components/Dropdown/dropdownSearchInputStyles'
+export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
+
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 
@@ -52,4 +56,8 @@ export { default as Status } from './components/Status/statusStyles'
 
 export { default as Text } from './components/Text/textStyles'
 
-export { default as Transition } from './components/Transition/transitionStyles'
+export { default as Tree } from './components/Tree/treeStyles'
+export { default as TreeItem } from './components/Tree/treeItemStyles'
+export { default as TreeTitle } from './components/Tree/treeTitleStyles'
+
+export { default as Animation } from './components/Animation/animationStyles'

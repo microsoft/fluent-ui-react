@@ -8,12 +8,12 @@ export { default as Button } from './components/Button/buttonVariables'
 export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as Chat } from './components/Chat/chatVariables'
-
 export { default as ChatItem } from './components/Chat/chatItemVariables'
-
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Divider } from './components/Divider/dividerVariables'
+
+export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 
 export { default as Grid } from './components/Grid/gridVariables'
 
@@ -47,4 +47,6 @@ export { default as Status } from './components/Status/statusVariables'
 
 export { default as Text } from './components/Text/textVariables'
 
-export { default as Transition } from './components/Transition/transitionVariables'
+export { default as TreeTitle } from './components/Tree/treeTitleVariables'
+
+export { default as Animation } from './components/Animation/animationVariables'

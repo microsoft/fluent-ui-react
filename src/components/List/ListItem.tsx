@@ -1,24 +1,26 @@
 import * as React from 'react'
-
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, UIComponent } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
-import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
-export interface ListItemProps extends UIComponentProps<any, any> {
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
    * */
   accessibility?: Accessibility
   contentMedia?: any
-  /** Shorthand for primary content. */
-  content?: any
-  /** Toggle debug mode */
+  /** Toggle debug mode. */
   debug?: boolean
   header?: any
   endMedia?: any
@@ -29,19 +31,25 @@ export interface ListItemProps extends UIComponentProps<any, any> {
   media?: any
 
   /** A list item can indicate that it can be selected. */
-  selection?: boolean
+  selectable?: boolean
+
+  /** Indicates if the current list item is selected. */
+  selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-}
-
-export interface ListItemState {
-  isHovering: boolean
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<ListItemProps>
 }
 
 /**
  * A list item contains a single piece of content within a list.
  */
-class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
+class ListItem extends UIComponent<ReactProps<ListItemProps>> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -49,7 +57,10 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
     content: PropTypes.any,
 
@@ -62,11 +73,14 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     important: PropTypes.bool,
     media: PropTypes.any,
 
-    selection: PropTypes.bool,
+    selectable: PropTypes.bool,
+    selected: PropTypes.bool,
+
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
     accessibility: PropTypes.func,
+    onClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -74,17 +88,18 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: ListItemProps) {
-    super(props, null)
-
-    this.state = {
-      isHovering: false,
-    }
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => {
+      this.handleClick(event)
+      event.preventDefault()
+    },
   }
 
-  private itemRef = React.createRef<HTMLElement>()
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
+  renderComponent({ classes, accessibility, rest, styles }) {
     const {
       as,
       debug,
@@ -116,14 +131,15 @@ class ListItem extends UIComponent<Extendable<ListItemProps>, ListItemState> {
         headerCSS={styles.header}
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
-        ref={this.itemRef}
+        onClick={this.handleClick}
         {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
         {...rest}
       />
     )
   }
 }
 
-ListItem.create = createShorthandFactory(ListItem, 'main')
+ListItem.create = createShorthandFactory(ListItem, 'content')
 
 export default ListItem

@@ -19,6 +19,7 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusU
 
 export interface Conformant {
   eventTargets?: object
+  nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
@@ -39,6 +40,7 @@ export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
+    nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
     usesWrapperSlot = false,
@@ -51,11 +53,18 @@ export default (Component, options: Conformant = {}) => {
   const getComponent = (wrapper: ReactWrapper) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
-      .childAt(0)
-      .childAt(0)
-      .childAt(0)
+
+    /**
+     * The wrapper is mounted with Provider, so in total there are three HOC components
+     * that we want to get rid of: ThemeProvider, the actual Component and FelaTheme,
+     * in order to be able to get to the actual rendered result of the component we are testing
+     */
+    _.times(nestingLevel + 3, () => {
+      component = component.childAt(0)
+    })
+
     if (component.type() === FocusZone) {
-      // `component` is <FocusZone>
+      // another HOC component is added: FocuZone
       component = component.childAt(0) // skip through <FocusZone>
       if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
@@ -63,10 +72,14 @@ export default (Component, options: Conformant = {}) => {
     }
 
     if (usesWrapperSlot) {
-      component = component
-        .childAt(0)
-        .childAt(0)
-        .childAt(0)
+      /**
+       * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
+       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
+       * rendered result of the component we are testing
+       */
+      _.times(3, () => {
+        component = component.childAt(0)
+      })
     }
 
     return component

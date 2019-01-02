@@ -1,15 +1,13 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import { ReactProps } from '../../../types/utils'
 
-export interface ImageProps extends UIComponentProps<any, any> {
+export interface ImageProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * @default imageBehavior
@@ -24,6 +22,9 @@ export interface ImageProps extends UIComponentProps<any, any> {
 
   /** An image can take up the width of its container. */
   fluid?: boolean
+
+  /** Image source URL. */
+  src?: string
 }
 
 /**
@@ -36,7 +37,7 @@ export interface ImageProps extends UIComponentProps<any, any> {
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-class Image extends UIComponent<Extendable<ImageProps>, any> {
+class Image extends UIComponent<ReactProps<ImageProps>, any> {
   static create: Function
 
   static className = 'ui-image'
@@ -44,7 +45,10 @@ class Image extends UIComponent<Extendable<ImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
     avatar: PropTypes.bool,
     circular: PropTypes.bool,

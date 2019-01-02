@@ -1,35 +1,17 @@
-export interface TextVariables {
-  atMentionMeColor: string
+import { mapColorsToScheme } from '../../../../lib'
+import { TextVariables } from '../../../base/components/Text/textVariables'
+
+export interface TeamsTextVariables extends TextVariables {
   atMentionMeFontWeight: number
-  atMentionOtherColor: string
-  disabledColor: string
-  errorColor: string
-  importantColor: string
   importantWeight: number
-  successColor: string
-  timestampColor: string
   timestampHoverColor: string
-
-  fontSizeExtraSmall: string
-  fontLineHeightExtraSmall: number
-  fontSizeSmall: string
-  fontLineHeightSmall: number
-  fontSizeMedium: string
-  fontLineHeightMedium: number
-  fontSizeLarge: string
-  fontLineHeightLarge: number
-  fontSizeExtraLarge: string
-  fontLineHeightExtraLarge: number
-
-  fontWeightLight: number
-  fontWeightSemilight: number
-  fontWeightRegular: number
-  fontWeightSemibold: number
-  fontWeightBold: number
 }
 
-export default (siteVariables): TextVariables => {
+export default (siteVariables): TeamsTextVariables => {
+  const colorVariant = 500
+
   return {
+    colors: mapColorsToScheme(siteVariables, colorVariant),
     atMentionOtherColor: siteVariables.brand06,
     atMentionMeColor: siteVariables.orange04,
     atMentionMeFontWeight: siteVariables.fontWeightBold,

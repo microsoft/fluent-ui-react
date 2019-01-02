@@ -17,9 +17,9 @@ export default () => (
       some parameterizable standard themes or you can create your own.
     </p>
     <p>
-      Startdust theme is constructed around CSS-like style objects (<NavLink to="theming#styles">
-        styles
-      </NavLink>) and <NavLink to="theming#variables">variables</NavLink>.
+      Startdust theme is constructed around CSS-like style objects (
+      <NavLink to="theming#styles">styles</NavLink>) and{' '}
+      <NavLink to="theming#variables">variables</NavLink>.
     </p>
     <p>Stardust supports four levels of theming:</p>
     <ol>
@@ -42,35 +42,28 @@ export default () => (
     <Header as="h3" content="Default" />
     <p>If you do not need any custom theming, just import some components and start using them.</p>
     <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
-        ``,
-        `export default () => `,
-        ` <Provider>`,
-        `  <>`,
-        `    <Button content="Button" />`,
-        `    <Button icon="plus" iconOnly primary />`,
-        `    <Button icon="at" content="Send email" secondary />`,
-        `    <Icon name="chess rook" size="big" />`,
-        `    <Label content="Label with icon" icon="close" />`,
-        `    <br/><br/>`,
-        `    <Divider content="Primary Divider" type="primary" />`,
-        `    <Divider content="Secondary Divider" type="secondary" />`,
-        `  </>`,
-        ` </Provider>`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+
+        export default () =>
+         <Provider>
+          <>
+            <Button content="Button" />
+            <Button icon="plus" iconOnly primary />
+            <Button icon="at" content="Send email" secondary />
+            <Icon name="chess rook" size="larger" />
+            <Label content="Label with icon" icon="close" />
+          </>
+         </Provider>
+      `}
       render={() => (
         <>
           <Button content="Button" />
           <Button icon="plus" iconOnly primary />
           <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="big" />
+          <Icon name="chess rook" size="larger" />
           <Label content="Label with icon" icon="close" />
-          <br />
-          <br />
-          <Divider content="Primary Divider" type="primary" />
-          <Divider content="Secondary Divider" type="secondary" />
         </>
       )}
     />
@@ -85,28 +78,29 @@ export default () => (
     <Header as="h4" content="Changing component styles" />
 
     <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
-        ``,
-        `const styles = {`,
-        `        color: "coral",`,
-        `        backgroundColor: "coral",`,
-        `        fontSize: "14px",`,
-        `        padding: "0 10px",`,
-        `      }`,
-        `const btnExample = () => `,
-        `    <Button`,
-        `      content="Send email"`,
-        `      icon={{`,
-        `        name: "at",`,
-        `        styles: { color: "brown" }`,
-        `      }}`,
-        `      secondary`,
-        `      styles={styles} />`,
-        ``,
-        `export default btnExample`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import { Button } from '@stardust-ui/react'
+
+        const styles = {
+          color: "coral",
+          backgroundColor: "coral",
+          fontSize: "14px",
+          padding: "0 10px",
+        }
+        const btnExample = () =>
+          <Button
+            content="Send email"
+            icon={{
+              name: "at",
+              styles: { color: "brown" },
+            }}
+            secondary
+            styles={styles}
+          />
+
+        export default btnExample
+      `}
       render={() => (
         <Button
           content="Send email"
@@ -124,26 +118,27 @@ export default () => (
     <Header as="h4" content="Changing component variables" />
 
     <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button } from '@stardust-ui/react'`,
-        ``,
-        `const btnExample = () => `,
-        `    <Button`,
-        `      icon={{`,
-        `        name: "at",`,
-        `        variables: { color: "brown" }`,
-        `      }}`,
-        `      content="Send email"`,
-        `      variables={{`,
-        `        secondaryColor: "coral",`,
-        `        secondaryBackgroundColor: "charcoal"`,
-        `        paddingLeftRightValue: 20`,
-        `      }}`,
-        `    />`,
-        ``,
-        `export default btnExample`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import { Button } from '@stardust-ui/react'
+
+        const btnExample = () => (
+          <Button
+            icon={{
+              name: "at",
+              variables: { color: "brown" }
+            }}
+            content="Send email"
+            variables={{
+              secondaryColor: "coral",
+              secondaryBackgroundColor: "charcoal",
+              paddingLeftRightValue: 20,
+            }}
+          />
+        )
+
+        export default btnExample
+      `}
       render={() => (
         <Button
           content="Send email"
@@ -184,56 +179,53 @@ export default () => (
     </ul>
 
     <ExampleSnippet
-      value={[
-        `import React from 'react'`,
-        `import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'`,
-        ``,
-        `const theme = {`,
-        `  siteVariables: {`,
-        `    brand: 'darkred',`,
-        `    brand04: '#8F5873',`,
-        `    gray08: '#A8516E8C',`,
-        `    gray06: '#f4c2c2',`,
-        `    gray03: '#757575',`,
-        `  },`,
-        `  componentVariables: {`,
-        `    Button: {`,
-        `      height: '24px',`,
-        `      minWidth: '24px',`,
-        `      borderRadius: '8px',`,
-        `      color: 'darkred',`,
-        `      secondaryColor: '#ffffff',`,
-        `      secondaryBorderColor: 'transparent',`,
-        `      secondaryBackgroundColor: '#6699CC',`,
-        `      secondaryBackgroundColorHover: '#91A3B0',`,
-        `    },`,
-        `  },`,
-        `  componentStyles: {`,
-        `    Button: {`,
-        `      icon: {`,
-        `        fontSize: '12px',`,
-        `      },`,
-        `    },`,
-        `  },`,
-        `}`,
-        ``,
-        `const provider = () => (`,
-        `  <Provider theme={theme}>`,
-        `    <div>`,
-        `      <Button content="Button" />`,
-        `      <Button icon="plus" iconOnly primary />`,
-        `      <Button icon="at" content="Send email" secondary />`,
-        `      <Icon name="chess rook" size="big" />`,
-        `      <Label content="Label with icon" icon="close" />`,
-        `      <br /><br />`,
-        `      <Divider type="primary">Branding primary</Divider>`,
-        `      <Divider type="secondary">Branding secondary</Divider>`,
-        `    </div>`,
-        `  </Provider>`,
-        `)`,
-        ``,
-        `export default provider`,
-      ].join('\n')}
+      value={`
+        import React from 'react'
+        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+
+        const theme = {
+          siteVariables: {
+            brand: 'darkred',
+            brand04: '#8F5873',
+            gray08: '#A8516E8C',
+            gray06: '#f4c2c2',
+            gray03: '#757575',
+          },
+          componentVariables: {
+            Button: {
+              height: '24px',
+              minWidth: '24px',
+              borderRadius: '8px',
+              color: 'darkred',
+              secondaryColor: '#ffffff',
+              secondaryBorderColor: 'transparent',
+              secondaryBackgroundColor: '#6699CC',
+              secondaryBackgroundColorHover: '#91A3B0',
+            },
+          },
+          componentStyles: {
+            Button: {
+              icon: {
+                fontSize: '12px',
+              },
+            },
+          },
+        }
+
+        const provider = () => (
+          <Provider theme={theme}>
+            <div>
+              <Button content="Button" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
+              <Icon name="chess rook" size="larger" />
+              <Label content="Label with icon" icon="close" />
+            </div>
+          </Provider>
+        )
+
+        export default provider
+      `}
       render={() => (
         <div>
           <Provider
@@ -270,12 +262,8 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
-              <br />
-              <br />
-              <Divider content="Primary Divider" type="primary" />
-              <Divider content="Secondary Divider" type="secondary" />
             </div>
           </Provider>
         </div>
@@ -288,70 +276,59 @@ export default () => (
       using nested providers and overwrite the needed styles.
     </p>
     <ExampleSnippet
-      value={[
-        `<div>`,
-        `  /* Default theming */`,
-        `  <Header as="h3" content="Default" />`,
-        `  <Button primary>Branding</Button>`,
-        `  <Divider type="primary">Branding</Divider>`,
-        ``,
-        `  /* First nested theming */`,
-        `  <Provider`,
-        `    theme={{`,
-        `      siteVariables: { brand: 'darkred' },`,
-        `    }}`,
-        `  >`,
-        `    <div>`,
-        `      <Header as="h3" content="First nested theming" />`,
-        ``,
-        `      <Button content="Button" />`,
-        `      <Button icon="plus" iconOnly primary />`,
-        `      <Button icon="at" content="Send email" secondary />`,
-        `      <Icon name="chess rook" size="big" />`,
-        `      <Label content="Label with icon" icon="close" />`,
-        `      <br/><br/>`,
-        `      <Divider content="Primary Divider" type="primary" />`,
-        `      <Divider content="Secondary Divider" type="secondary" />`,
-        ``,
-        `      /* Second nested theming */`,
-        `      <Provider`,
-        `        theme={{`,
-        `          componentStyles: {`,
-        `            Button: {`,
-        `              root: { color: 'goldenrod' },`,
-        `            },`,
-        `          },`,
-        `        }}`,
-        `      >`,
-        `        <div>`,
-        `          <Header as="h3" content="Second nested theming" />`,
-        ``,
-        `          <Button content="Button" />`,
-        `          <Button icon="plus" iconOnly primary />`,
-        `          <Button icon="at" content="Send email" secondary />`,
-        `          <Icon name="chess rook" size="big" />`,
-        `          <Label content="Label with icon" icon="close" />`,
-        `          <br/><br/>`,
-        `          <Divider content="Primary Divider" type="primary" />`,
-        `          <Divider content="Secondary Divider" type="secondary" />`,
-        `        </div>`,
-        `      </Provider>`,
-        `    </div>`,
-        `  </Provider>`,
-        `</div>`,
-      ].join('\n')}
+      value={`
+        <div>
+          /* Default theming */
+          <Header as="h3" content="Default" />
+          <Button primary>Branding</Button>
+
+          /* First nested theming */
+          <Provider
+            theme={{
+              siteVariables: { brand: 'darkred' },
+            }}
+          >
+            <div>
+              <Header as="h3" content="First nested theming" />
+
+              <Button content="Button" />
+              <Button icon="plus" iconOnly primary />
+              <Button icon="at" content="Send email" secondary />
+              <Icon name="chess rook" size="larger" />
+              <Label content="Label with icon" icon="close" />
+
+              /* Second nested theming */
+              <Provider
+                theme={{
+                  componentStyles: {
+                    Button: {
+                      root: { color: 'goldenrod' },
+                    },
+                  },
+                }}
+              >
+                <div>
+                  <Header as="h3" content="Second nested theming" />
+
+                  <Button content="Button" />
+                  <Button icon="plus" iconOnly primary />
+                  <Button icon="at" content="Send email" secondary />
+                  <Icon name="chess rook" size="larger" />
+                  <Label content="Label with icon" icon="close" />
+                </div>
+              </Provider>
+            </div>
+          </Provider>
+        </div>
+      `}
       render={() => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
           <Button icon="plus" iconOnly primary />
           <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="big" />
+          <Icon name="chess rook" size="larger" />
           <Label content="Label with icon" icon="close" />
-          <br />
-          <br />
-          <Divider content="Primary Divider" type="primary" />
-          <Divider content="Secondary Divider" type="secondary" />
 
           <Provider
             theme={{
@@ -364,12 +341,8 @@ export default () => (
               <Button content="Button" />
               <Button icon="plus" iconOnly primary />
               <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="big" />
+              <Icon name="chess rook" size="larger" />
               <Label content="Label with icon" icon="close" />
-              <br />
-              <br />
-              <Divider content="Primary Divider" type="primary" />
-              <Divider content="Secondary Divider" type="secondary" />
 
               <Provider
                 theme={{
@@ -386,12 +359,8 @@ export default () => (
                   <Button content="Button" />
                   <Button icon="plus" iconOnly primary />
                   <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="big" />
+                  <Icon name="chess rook" size="larger" />
                   <Label content="Label with icon" icon="close" />
-                  <br />
-                  <br />
-                  <Divider content="Primary Divider" type="primary" />
-                  <Divider content="Secondary Divider" type="secondary" />
                 </>
               </Provider>
             </>

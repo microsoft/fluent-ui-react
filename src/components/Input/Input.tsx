@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 
 import {
@@ -8,20 +8,16 @@ import {
   customPropTypes,
   RenderResultConfig,
   partitionHTMLProps,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import {
-  Extendable,
-  ShorthandValue,
-  ShorthandRenderFunction,
-  ComponentEventHandler,
-} from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface InputProps extends UIComponentProps<any, any>, ChildrenComponentProps {
+export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
   clearable?: boolean
 
@@ -50,33 +46,6 @@ export interface InputProps extends UIComponentProps<any, any>, ChildrenComponen
    * @param {object} data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps>
-
-  /**
-   * A custom render function the icon slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderIcon?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the input slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderInput?: ShorthandRenderFunction
-
-  /**
-   * A custom render function the wrapper slot.
-   *
-   * @param { React.ReactType } Component - The computed component for this slot.
-   * @param { object } props - The computed props for this slot.
-   * @param { ReactNode | ReactNodeArray } children - The computed children for this slot.
-   */
-  renderWrapper?: ShorthandRenderFunction
 
   /** The HTML input type. */
   type?: string
@@ -107,7 +76,7 @@ export interface InputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> {
+class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
   private inputDomElement: HTMLInputElement
 
   static className = 'ui-input'
@@ -115,8 +84,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
   static displayName = 'Input'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
@@ -126,9 +96,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     inputRef: PropTypes.func,
     inline: PropTypes.bool,
     onChange: PropTypes.func,
-    renderIcon: PropTypes.func,
-    renderInput: PropTypes.func,
-    renderWrapper: PropTypes.func,
     type: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     wrapper: customPropTypes.wrapperShorthand,
@@ -149,7 +116,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     styles,
     variables,
   }: RenderResultConfig<InputProps>) {
-    const { className, input, renderIcon, renderInput, renderWrapper, type, wrapper } = this.props
+    const { className, input, type, wrapper } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
@@ -165,10 +132,9 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                   as: 'input',
                   type,
                   value,
-                  className: classes.input,
+                  styles: styles.input,
                   onChange: this.handleChange,
                 },
-                render: renderInput,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -177,7 +143,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
                 variables: variables.icon,
               },
               overrideProps: this.handleIconOverrides,
-              render: renderIcon,
             })}
           </>
         ),
@@ -187,7 +152,6 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,
       },
-      render: renderWrapper,
     })
   }
 

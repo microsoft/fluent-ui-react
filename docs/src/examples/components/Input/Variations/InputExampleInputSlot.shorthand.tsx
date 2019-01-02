@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Grid, Input, Text } from '@stardust-ui/react'
 
 const inputStyles = { color: 'blue', background: 'yellow' }
@@ -21,27 +21,6 @@ const InputExampleInputSlot = () => (
         // will set custom styles for input DOM element
         styles: inputStyles,
       }}
-    />
-
-    <Text content="Wrapped Input with existing component:" />
-    <Input
-      placeholder="Search..."
-      role="presentation"
-      input={
-        <Text
-          as="input"
-          placeholder="Placeholder Override..."
-          role="checkbox"
-          styles={inputStyles}
-        />
-      }
-    />
-
-    <Text content="Wrapped Input with custom element:" />
-    <Input
-      placeholder="Search..."
-      role="presentation"
-      input={<input placeholder="Placeholder Override..." role="checkbox" style={inputStyles} />}
     />
   </Grid>
 )

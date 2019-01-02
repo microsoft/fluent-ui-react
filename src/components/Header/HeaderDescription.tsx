@@ -1,27 +1,27 @@
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+  ColorComponentProps,
+} from '../../lib'
+import { ReactProps } from '../../../types/utils'
 
 export interface HeaderDescriptionProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentComponentProps,
+    ColorComponentProps {}
 
 /**
  * A header's description provides more detailed information.
  */
-class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, any> {
+class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'
@@ -29,9 +29,7 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
   static displayName = 'HeaderDescription'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({ color: true }),
   }
 
   static defaultProps = {

@@ -76,8 +76,8 @@ class FormValidationOnSubmit extends React.Component<{}, FormValidationOnSubmitS
         control: {
           as: RadioGroup,
           items: [
-            <RadioGroup.Item key="1" label="Male" value="1" />,
-            <RadioGroup.Item key="2" label="Female" value="2" />,
+            { key: '1', label: 'Male', value: '1' },
+            { key: '2', label: 'Female', value: '2' },
           ],
         },
         // TODO: this currently doesn't work

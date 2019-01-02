@@ -1,24 +1,24 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+  ColorComponentProps,
+} from '../../lib'
+
+import { ReactProps } from '../../../types/utils'
 
 export interface TextProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ContentComponentProps,
-    ChildrenComponentProps {
+    ChildrenComponentProps,
+    ColorComponentProps {
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
 
@@ -60,7 +60,7 @@ export interface TextProps
  * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
  * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
  */
-class Text extends UIComponent<Extendable<TextProps>, any> {
+class Text extends UIComponent<ReactProps<TextProps>, any> {
   static create: Function
 
   static className = 'ui-text'
@@ -68,10 +68,8 @@ class Text extends UIComponent<Extendable<TextProps>, any> {
   static displayName = 'Text'
 
   static propTypes = {
+    ...commonPropTypes.createCommon({ color: true }),
     atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
     disabled: PropTypes.bool,
     error: PropTypes.bool,
     important: PropTypes.bool,

@@ -4,18 +4,18 @@ import * as _ from 'lodash'
 
 import {
   childrenExist,
-  customPropTypes,
   AutoControlledComponent,
   doesNodeContainClick,
   EventStack,
+  ChildrenComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
 } from '../../lib'
-import { ShorthandValue } from '../../../types/utils'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { childrenComponentPropTypes } from '../../lib/commonPropTypes'
+import { ReactPropsStrict } from '../../../types/utils'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -23,10 +23,7 @@ export type TriggerAccessibility = {
   keyHandlers?: OnKeyDownHandler
 }
 
-export interface PortalProps extends ChildrenComponentProps {
-  /** Shorthand for primary content. */
-  content?: ShorthandValue | ShorthandValue[]
-
+export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
   /** Initial value of open. */
   defaultOpen?: boolean
 
@@ -85,7 +82,7 @@ export interface PortalState {
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<PortalProps, PortalState> {
+class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -94,8 +91,12 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   public static autoControlledProps = ['open']
 
   public static propTypes = {
-    ...childrenComponentPropTypes,
-    content: customPropTypes.contentShorthand,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      className: false,
+      styled: false,
+    }),
     defaultOpen: PropTypes.bool,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,

@@ -1,7 +1,9 @@
 import { Accessibility, FocusZoneMode } from '../../types'
+import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
+ * Implements ARIA Menu design pattern.
  * The 'menu' role is used to identify an element that creates a list of common actions or functions that a user can invoke.
  *
  * @specification
@@ -20,7 +22,8 @@ const menuBehavior: Accessibility = (props: any) => ({
     props: {
       isCircularNavigation: true,
       preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
+      shouldFocusInnerElementWhenReceivedFocus: true,
+      direction: props.vertical ? FocusZoneDirection.vertical : FocusZoneDirection.horizontal,
     },
   },
 })

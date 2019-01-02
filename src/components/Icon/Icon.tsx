@@ -1,27 +1,24 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { callable, UIComponent, createShorthandFactory } from '../../lib'
+import {
+  callable,
+  UIComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  commonPropTypes,
+  ColorComponentProps,
+} from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import { ReactProps } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-export type IconSize =
-  | 'micro'
-  | 'mini'
-  | 'tiny'
-  | 'small'
-  | 'normal'
-  | 'large'
-  | 'big'
-  | 'huge'
-  | 'massive'
 
-export interface IconProps extends UIComponentProps<any, any> {
+export type IconSize = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
+export interface IconProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overriden by the user.
    * @default iconBehavior
@@ -50,7 +47,7 @@ export interface IconProps extends UIComponentProps<any, any> {
 /**
  * An icon is a glyph used to represent something else.
  */
-class Icon extends UIComponent<Extendable<IconProps>, any> {
+class Icon extends UIComponent<ReactProps<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -58,29 +55,23 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
   static displayName = 'Icon'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+      color: true,
+    }),
     accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     name: PropTypes.string,
-    size: PropTypes.oneOf([
-      'micro',
-      'mini',
-      'tiny',
-      'small',
-      'normal',
-      'large',
-      'big',
-      'huge',
-      'massive',
-    ]),
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
 
   static defaultProps = {
     as: 'span',
-    size: 'normal',
+    size: 'medium',
     accessibility: iconBehavior,
   }
 

@@ -2,6 +2,8 @@ import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
 /**
+ * @description
+ * Implements ARIA Radio Group design pattern.
  * @specification
  *  Adds role='radiogroup'. This allows screen readers to handle the component as a radio group.
  *  Performs 'nextItem' action on ArrowDown, ArrowRight.

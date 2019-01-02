@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
 import { createShorthand, createShorthandFactory } from 'src/lib'
-import { Props, ShorthandValue, ObjectOf } from 'types/utils'
+import { Props, ShorthandValue, ObjectOf, ShorthandRenderFunction } from 'types/utils'
 import { consoleUtil } from 'test/utils'
 import callable from '../../../src/lib/callable'
 
@@ -10,14 +10,14 @@ import callable from '../../../src/lib/callable'
 // Utils
 // ----------------------------------------
 
-type GetShorthandArgs = {
+type ShorthandConfig = {
   Component?: React.ReactType
   defaultProps?: Props
   mappedProp?: string
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
   value?: ShorthandValue
-  render?: any
+  render?: ShorthandRenderFunction
 }
 
 /**
@@ -31,7 +31,7 @@ const getShorthand = ({
   generateKey,
   value,
   render,
-}: GetShorthandArgs) =>
+}: ShorthandConfig) =>
   createShorthand(Component, mappedProp, value, {
     defaultProps,
     overrideProps,
@@ -42,7 +42,7 @@ const getShorthand = ({
 const isValuePrimitive = (value: ShorthandValue) =>
   typeof value === 'string' || typeof value === 'number'
 
-const testCreateShorthand = (shorthandArgs: GetShorthandArgs, expectedResult: ObjectOf<any>) =>
+const testCreateShorthand = (shorthandArgs: ShorthandConfig, expectedResult: ObjectOf<any>) =>
   expect(shallow(getShorthand(shorthandArgs)).props()).toEqual(expectedResult)
 
 // ----------------------------------------
@@ -111,7 +111,11 @@ const itMergesClassNames = (
   })
 }
 
-const itAppliesProps = (propsSource, expectedProps, shorthandConfig) => {
+const itAppliesProps = (
+  propsSource: string,
+  expectedProps: Props,
+  shorthandConfig: ShorthandConfig,
+) => {
   test(`applies props from the ${propsSource} props`, () => {
     testCreateShorthand(shorthandConfig, expectedProps)
   })
@@ -149,7 +153,7 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, '')
+      const goodUsage = () => createShorthandFactory(() => <div />, 'children')
 
       expect(goodUsage).not.toThrowError()
     })
@@ -200,54 +204,61 @@ describe('factories', () => {
       })
     })
 
-    describe('render', () => {
-      const testValue = 'hi'
+    describe('render callback', () => {
+      test('returns the same React element as if shorthand value would be passed directly', () => {
+        const createShorthandElement = valueOrRenderCallback =>
+          getShorthand({
+            value: valueOrRenderCallback,
+            Component: 'div',
+            defaultProps: {
+              baz: 'original',
+            },
+            overrideProps: {
+              baz: 'overriden',
+            },
+          })
 
-      test('is called once', () => {
-        const spy = jest.fn()
+        const shorthandValue = { dataFoo: 'bar' }
 
-        getShorthand({ value: testValue, render: spy })
+        const elementFromShorthandValue = createShorthandElement(shorthandValue)
+        const elementFromRenderCallback = createShorthandElement(render => render(shorthandValue))
 
-        expect(spy).toHaveBeenCalledTimes(1)
+        expect(elementFromShorthandValue.type).toEqual(elementFromRenderCallback.type)
+        expect(elementFromShorthandValue.props).toEqual(elementFromRenderCallback.props)
       })
 
-      test('is called with the computed component, props, and children', () => {
-        const spy = jest.fn(() => <div />)
-
-        getShorthand({
-          value: testValue,
-          Component: 'p',
-          mappedProp: 'children',
-          render: spy,
+      describe('custom tree renderer', () => {
+        test('passes evaluated Component type as the first argument', () => {
+          getShorthand({
+            value: render =>
+              render({}, (Component, props) => {
+                expect(Component).toBe('span')
+              }),
+            Component: 'span',
+          })
         })
 
-        expect(spy).toHaveBeenCalledWith('p', { key: testValue, children: testValue }, testValue)
-      })
+        test('passes evaluated props as the second argument', () => {
+          const shorthandProps = { bar: 'foo' }
 
-      test('receives defaultProps and defaults mappedProp to children in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const defaultProps = { defaults: true }
+          getShorthand({
+            value: render =>
+              render(shorthandProps, (Component, props) => {
+                expect(props.bar).toBe(shorthandProps.bar)
+              }),
+          })
+        })
 
-        getShorthand({ value: testValue, defaultProps, Component: 'p', render: spy })
+        test('overrides render prop from shorthand options', () => {
+          const CustomComponent = 'overriden-div' as any
 
-        expect(spy).toHaveBeenCalledWith(
-          'p',
-          { key: testValue, children: testValue, ...defaultProps },
-          testValue,
-        )
-      })
+          const shorthandElement = getShorthand({
+            value: render => render({}, (Component, props) => <CustomComponent />),
+            render: (Component, props) => <div>Default</div>,
+          })
 
-      test('receives overrideProps and defaults mappedProp to children in its props argument', () => {
-        const spy = jest.fn(() => <div />)
-        const overrideProps = { overrides: true }
-
-        getShorthand({ value: testValue, overrideProps, Component: 'p', render: spy })
-
-        expect(spy).toHaveBeenCalledWith(
-          'p',
-          { key: testValue, children: testValue, ...overrideProps },
-          testValue,
-        )
+          expect(shorthandElement.type).toBe(CustomComponent)
+        })
       })
     })
 
@@ -266,15 +277,15 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                color: 'black',
+                ':hover': { color: 'blue' },
+              })
+            }),
           Component: 'p',
           defaultProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              color: 'black',
-              ':hover': { color: 'blue' },
-            })
-          },
         })
       })
 
@@ -301,19 +312,19 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                position: 'keep',
+                color: 'black',
+                ':hover': {
+                  position: 'keep',
+                  color: 'blue',
+                },
+              })
+            }),
           Component: 'p',
           overrideProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              position: 'keep',
-              color: 'black',
-              ':hover': {
-                position: 'keep',
-                color: 'blue',
-              },
-            })
-          },
         })
       })
 
@@ -331,15 +342,15 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                color: 'black',
+                ':hover': { color: 'blue' },
+              })
+            }),
           Component: 'p',
           defaultProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              color: 'black',
-              ':hover': { color: 'blue' },
-            })
-          },
         })
       })
 
@@ -366,19 +377,19 @@ describe('factories', () => {
         }
 
         getShorthand({
-          value: props,
+          value: render =>
+            render(props, (Component, props) => {
+              expect(callable(props.styles)()).toMatchObject({
+                position: 'keep',
+                color: 'black',
+                ':hover': {
+                  position: 'keep',
+                  color: 'blue',
+                },
+              })
+            }),
           Component: 'p',
           overrideProps,
-          render(Component, props) {
-            expect(callable(props.styles)()).toMatchObject({
-              position: 'keep',
-              color: 'black',
-              ':hover': {
-                position: 'keep',
-                color: 'blue',
-              },
-            })
-          },
         })
       })
     })
@@ -475,16 +486,6 @@ describe('factories', () => {
         testCreateShorthand({ overrideProps, value: testValue }, overrideProps())
       })
 
-      test("is called with the user's element's and default props", () => {
-        const defaultProps = { 'data-some': 'defaults' }
-        const overrideProps = jest.fn(() => ({}))
-        const userProps = { 'data-user': 'props' }
-        const value = <div {...userProps} />
-
-        shallow(getShorthand({ defaultProps, overrideProps, value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
-      })
-
       test("is called with the user's props object", () => {
         const defaultProps = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
@@ -517,18 +518,21 @@ describe('factories', () => {
 
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
-      itAppliesDefaultProps(<div />)
       itDoesNotIncludePropsFromMappedProp(<div />)
-      itMergesClassNames('element', 'user', { value: <div className="user" /> })
       itAppliesProps('element', { foo: 'foo' }, { value: <div {...{ foo: 'foo' } as any} /> })
-      itOverridesDefaultProps(
-        'element',
-        { some: 'defaults', overridden: false },
-        { some: 'defaults', overridden: true },
-        { value: <div {...{ overridden: true } as any} /> },
-      )
-      itOverridesDefaultPropsWithFalseyProps('element', {
-        value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
+
+      test('forwards original element "as is"', () => {
+        testCreateShorthand(
+          {
+            Component: 'p',
+            value: (
+              <span {...{ commonProp: 'originalElement', originalElementProp: true } as any} />
+            ),
+            defaultProps: { commonProp: 'default', defaultProp: true },
+            overrideProps: { commonProp: 'override', overrideProp: true },
+          },
+          { commonProp: 'originalElement', originalElementProp: true },
+        )
       })
     })
 

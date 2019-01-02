@@ -115,9 +115,12 @@ export class TestHelper {
     return importedBehavior
   }
 
-  public convertToBooleanIfApplicable(stringToConvert: string) {
-    if (stringToConvert === 'true' || stringToConvert === 'false') {
-      return Boolean(stringToConvert)
+  public convertToBooleanIfApplicable(stringToConvert: any) {
+    if (stringToConvert === 'true') {
+      return true
+    }
+    if (stringToConvert === 'false') {
+      return false
     }
     return stringToConvert
   }

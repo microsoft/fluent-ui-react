@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createPortal } from 'react-dom'
+import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { Popper, PopperChildrenProps } from 'react-popper'
@@ -10,11 +10,15 @@ import {
   EventStack,
   RenderResultConfig,
   isBrowser,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  StyledComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
-import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
@@ -26,16 +30,18 @@ import {
   AccessibilityActionHandlers,
   AccessibilityBehavior,
 } from '../../lib/accessibility/types'
-import { ChildrenComponentProps, ContentComponentProps } from '../../lib/commonPropInterfaces'
-import { contentComponentPropsTypes, childrenComponentPropTypes } from '../../lib/commonPropTypes'
 
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
-export interface PopupProps extends ChildrenComponentProps, ContentComponentProps {
+export interface PopupProps
+  extends StyledComponentProps<PopupProps>,
+    ChildrenComponentProps,
+    ContentComponentProps<ShorthandValue> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default popupBehavior
+   * @available popupFocusTrapBehavior, dialogBehavior
    * */
   accessibility?: Accessibility
 
@@ -47,6 +53,15 @@ export interface PopupProps extends ChildrenComponentProps, ContentComponentProp
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
+
+  /** Offset value to apply to rendered popup. Accepts the following units:
+   * - px or unit-less, interpreted as pixels
+   * - %, percentage relative to the length of the trigger element
+   * - %p, percentage relative to the length of the popup element
+   * - vw, CSS viewport width unit
+   * - vh, CSS viewport height unit
+   */
+  offset?: string
 
   /** Defines whether popup is displayed. */
   open?: boolean
@@ -87,7 +102,7 @@ export interface PopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
+export default class Popup extends AutoControlledComponent<ReactProps<PopupProps>, PopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -95,11 +110,13 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   public static Content = PopupContent
 
   public static propTypes = {
-    ...contentComponentPropsTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      animated: false,
+      as: false,
+      content: 'shorthand',
+    }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     align: PropTypes.oneOf(ALIGNMENTS),
-    className: PropTypes.string,
     defaultOpen: PropTypes.bool,
     defaultTarget: PropTypes.any,
     open: PropTypes.bool,
@@ -146,16 +163,25 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     if (this.state.open) {
       setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe('click', e => {
-          if (!this.popupDomElement || !this.popupDomElement.contains(e.target)) {
-            this.closeAndFocusTrigger(e)
-          }
-        })
+        this.outsideClickSubscription = EventStack.subscribe(
+          'click',
+          e => {
+            const isOutsidePopupElement =
+              this.popupDomElement && !this.popupDomElement.contains(e.target)
+            const isOutsideTriggerElement =
+              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+
+            if (isOutsidePopupElement && isOutsideTriggerElement) {
+              this.state.open && this.trySetOpen(false, e, true)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
       })
     }
   }
-
-  public state = { target: undefined, open: false }
 
   public componentDidMount() {
     this.updateOutsideClickSubscription()
@@ -191,7 +217,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
         {this.state.open &&
           Popup.isBrowserContext &&
           popupContent &&
-          createPortal(popupContent, document.body)}
+          ReactDOM.createPortal(popupContent, document.body)}
       </>
     )
   }
@@ -226,10 +252,18 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position } = this.props
+    const { align, position, offset } = this.props
     const { target } = this.state
 
-    const placement = computePopupPlacement({ align, position, rtl })
+    const placement = getPopupPlacement({ align, position, rtl })
+
+    const popperModifiers = {
+      // https://popper.js.org/popper-documentation.html#modifiers..offset
+      ...(offset && {
+        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+        keepTogether: { enabled: false },
+      }),
+    }
 
     return (
       target && (
@@ -237,6 +271,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           placement={placement}
           referenceElement={target}
           children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+          modifiers={popperModifiers}
         />
       )
     )
@@ -250,7 +285,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
   ) => {
     const { content } = this.props
 
-    const popupContentAttributes = {
+    const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.popup,
       ...accessibility.keyHandlers.popup,
@@ -261,16 +296,20 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
 
     const focusTrapProps = {
       ...(typeof accessibility.focusTrap === 'boolean' ? {} : accessibility.focusTrap),
-      ...popupContentAttributes,
+      ...popupWrapperAttributes,
     } as FocusTrapZoneProps
 
-    const popupContent = Popup.Content.create(content, {
-      /**
-       * if there is no focus trap wrapper, we should apply
-       * HTML attributes and positioning to popup content directly
-       */
-      defaultProps: accessibility.focusTrap ? {} : popupContentAttributes,
-    })
+    /**
+     * if there is no focus trap wrapper, we should apply
+     * HTML attributes and positioning to popup content directly
+     */
+    const popupContentAttributes = accessibility.focusTrap ? {} : popupWrapperAttributes
+
+    const popupContent = React.isValidElement(content)
+      ? React.cloneElement(content, popupContentAttributes)
+      : Popup.Content.create(content, {
+          defaultProps: popupContentAttributes,
+        })
 
     return (
       <Ref

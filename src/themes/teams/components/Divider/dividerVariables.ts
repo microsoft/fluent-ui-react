@@ -1,22 +1,29 @@
-import { pxToRem } from '../../../../lib'
+import * as _ from 'lodash'
+import { FontWeightProperty } from 'csstype'
+
+import { pxToRem } from '../../utils'
+import { ColorValues } from '../../../types'
+import { mapColorsToScheme } from '../../../../lib'
 
 export interface DividerVariables {
+  colors: ColorValues<string>
   dividerColor: string
   textColor: string
   textFontSize: string
   textLineHeight: string
-  primaryColor: string
-  importantFontWeight: string
+  importantFontWeight: FontWeightProperty
   dividerPadding: string
 }
 
 export default (siteVars: any): DividerVariables => {
+  const colorVariant = 500
+
   return {
+    colors: mapColorsToScheme(siteVars, colorVariant),
     dividerColor: siteVars.gray09,
     textColor: siteVars.gray03,
     textFontSize: siteVars.fontSizeSmall,
     textLineHeight: siteVars.lineHeightSmall,
-    primaryColor: siteVars.brand,
     importantFontWeight: siteVars.fontWeightBold,
     dividerPadding: pxToRem(4),
   }

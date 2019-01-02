@@ -9,10 +9,12 @@ import sh from '../sh'
 const jest = ({ watch = false } = {}) => cb => {
   process.env.NODE_ENV = 'test'
 
+  const jestConfigFileName = `jest.config.${argv.strict ? 'strict' : 'common'}.js`
+
   // in watch mode jest never exits
   // let the gulp task complete to prevent blocking subsequent tasks
   const command = [
-    'jest --coverage',
+    `jest --config ./test/${jestConfigFileName} --coverage`,
     watch && '--watchAll',
     argv.runInBand && '--runInBand',
     argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,
@@ -27,7 +29,10 @@ task('test:jest:pre', () => sh('yarn satisfied'))
 
 task(
   'test:jest:setup',
-  series('test:jest:pre', parallel('build:docs:docgen', 'build:docs:component-menu-behaviors')),
+  series(
+    'test:jest:pre',
+    parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
+  ),
 )
 
 task('test:jest', jest())

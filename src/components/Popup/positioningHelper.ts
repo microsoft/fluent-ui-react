@@ -56,7 +56,7 @@ const shouldAlignToCenter = (p: Position, a: Alignment) => {
  * | after    | center    |  right          |  left
  * | after    | bottom    |  right-end      |  left-end
  */
-export default ({
+export const getPopupPlacement = ({
   align,
   position,
   rtl,
@@ -73,4 +73,31 @@ export default ({
   const stringifiedAlignment = computedAlignmnent && `-${computedAlignmnent}`
 
   return `${computedPosition}${stringifiedAlignment}` as Placement
+}
+
+/////////////////////////////////
+// OFFSET VALUES ADJUSTMENT
+/////////////////////////////////
+
+const flipPlusMinusSigns = (offset: string): string => {
+  return offset
+    .replace(/\-/g, '<plus>')
+    .replace(/^(\s*)(?=\d)/, '<minus>')
+    .replace(/\+/g, '<minus>')
+    .replace(/<plus>/g, '+')
+    .replace(/<minus>/g, '-')
+    .trimLeft()
+    .replace(/^\+/, '')
+}
+
+export const applyRtlToOffset = (offset: string, position: Position): string => {
+  if (position === 'above' || position === 'below') {
+    const [horizontal, vertical] = offset.split(',')
+    return [flipPlusMinusSigns(horizontal), vertical]
+      .join(', ')
+      .replace(/, $/, '')
+      .trim()
+  }
+
+  return offset
 }

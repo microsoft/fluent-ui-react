@@ -26,6 +26,8 @@ const ComponentDocAccessibility = ({ info }) => {
         variables={{ color: 'black' }}
       />
 
+      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
+
       {behaviorName && (
         <p>
           Default behavior:{' '}
@@ -33,7 +35,18 @@ const ComponentDocAccessibility = ({ info }) => {
         </p>
       )}
 
-      {description && <p style={{ whiteSpace: 'pre-line' }}>{description}</p>}
+      {info.behaviors && (
+        <p>
+          Available behaviors:{' '}
+          {info.behaviors.map(behavior => (
+            <React.Fragment key={`${behavior.category}-${behavior.name}`}>
+              <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
+                {behavior.displayName}
+              </a>{' '}
+            </React.Fragment>
+          ))}
+        </p>
+      )}
     </>
   )
 }

@@ -364,7 +364,7 @@ export const multipleProp = (possible: string[]) => (
 /**
  * Ensure a component can render as a node passed as a prop value in place of children.
  */
-export const contentShorthand = every([disallow(['children']), PropTypes.node])
+export const nodeContent = every([disallow(['children']), PropTypes.node])
 
 export const wrapperShorthand = PropTypes.oneOfType([
   PropTypes.node,
@@ -378,11 +378,7 @@ export const wrapperShorthand = PropTypes.oneOfType([
  */
 export const itemShorthand = every([
   disallow(['children']),
-  PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.object,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.node, PropTypes.object])),
-  ]),
+  PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
 ])
 
 /**
@@ -438,6 +434,7 @@ export const deprecate = (help: string, validator: Function) => (
 }
 
 export const animation = PropTypes.oneOfType([
+  // Validator is broken in the latest @react/types
   PropTypes.shape({
     name: PropTypes.string.isRequired,
     delay: PropTypes.string,
@@ -447,6 +444,6 @@ export const animation = PropTypes.oneOfType([
     iterationCount: PropTypes.string,
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
-  }),
+  }) as any,
   PropTypes.string,
 ])

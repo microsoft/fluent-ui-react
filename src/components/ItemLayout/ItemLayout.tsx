@@ -1,18 +1,21 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
-import { createShorthandFactory, pxToRem, UIComponent } from '../../lib'
+import {
+  createShorthandFactory,
+  pxToRem,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
+import { ReactProps } from '../../../types/utils'
 
-export interface ItemLayoutProps extends UIComponentProps<any, any> {
+export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
-  /** Shorthand for primary content. */
-  content?: any
   /** Toggle debug mode */
   debug?: boolean
   header?: any
@@ -55,7 +58,7 @@ export interface ItemLayoutProps extends UIComponentProps<any, any> {
 /**
  * The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
-class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -63,7 +66,10 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   static className = 'ui-itemlayout'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
     content: PropTypes.any,
     debug: PropTypes.bool,
@@ -202,7 +208,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
   }
 }
 
-ItemLayout.create = createShorthandFactory(ItemLayout, 'main')
+ItemLayout.create = createShorthandFactory(ItemLayout, 'content')
 
 export default ItemLayout
 

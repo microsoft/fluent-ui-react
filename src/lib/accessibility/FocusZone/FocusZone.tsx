@@ -8,7 +8,7 @@ import {
   FocusZoneProps,
 } from './FocusZone.types'
 import * as keyboardKey from 'keyboard-key'
-import * as cx from 'classnames'
+import cx from 'classnames'
 import * as _ from 'lodash'
 import {
   getNextElement,
@@ -47,7 +47,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     direction: PropTypes.number,
     defaultTabbableElement: PropTypes.func,
     shouldFocusOnMount: PropTypes.bool,
-    shouldFocusFirstElementWhenReceivedFocus: PropTypes.bool,
+    shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
+    shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     as: customPropTypes.as,
     isCircularNavigation: PropTypes.bool,
@@ -124,11 +125,6 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       // Assign initial tab indexes so that we can set initial focus as appropriate.
       this.updateTabIndexes()
 
-      if (this.props.defaultTabbableElement) {
-        const initialActiveElement = this.props.defaultTabbableElement(this._root.current)
-        initialActiveElement && this.setActiveElement(initialActiveElement)
-      }
-
       if (this.props.shouldFocusOnMount) {
         this.focus()
       }
@@ -144,12 +140,16 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   render() {
     const { className } = this.props
-    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
+    // TODO: Remove `as` there after the issue will be resolved:
+    // https://github.com/Microsoft/TypeScript/issues/28768
+    const ElementType = getElementType(
+      { defaultProps: FocusZone.defaultProps },
+      this.props,
+    ) as React.ComponentClass<FocusZoneProps>
     const rest = getUnhandledProps({ handledProps: [..._.keys(FocusZone.propTypes)] }, this.props)
 
     return (
       <ElementType
-        role="presentation"
         {...rest}
         className={cx(FocusZone.className, className)}
         data-focuszone-id={this._id}
@@ -254,7 +254,12 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   }
 
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
-    const { onActiveElementChanged, stopFocusPropagation } = this.props
+    const {
+      onActiveElementChanged,
+      stopFocusPropagation,
+      shouldFocusInnerElementWhenReceivedFocus,
+      defaultTabbableElement,
+    } = this.props
 
     if (this.isImmediateDescendantOfZone(ev.target as HTMLElement)) {
       this._activeElement = ev.target as HTMLElement
@@ -275,9 +280,18 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       onActiveElementChanged(this._activeElement as HTMLElement, ev)
     }
 
-    // If a first focusable element should be force focused when FocusZone container receives focus
-    if (this.props.shouldFocusFirstElementWhenReceivedFocus && ev.target === this._root.current) {
-      this.focus(true)
+    // If an inner focusable element should be focused when FocusZone container receives focus
+    if (shouldFocusInnerElementWhenReceivedFocus && ev.target === this._root.current) {
+      const maybeElementToFocus =
+        defaultTabbableElement && defaultTabbableElement(this._root.current)
+
+      // try to focus defaultTabbable element
+      if (maybeElementToFocus && isElementTabbable(maybeElementToFocus)) {
+        maybeElementToFocus.focus()
+      } else {
+        // force focus on first focusable element
+        this.focus(true)
+      }
     }
 
     if (stopFocusPropagation) {
@@ -468,6 +482,8 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
             if (focusChanged) {
               break
             }
+          } else if (this.props.shouldResetActiveElementWhenTabFromZone) {
+            this._activeElement = null
           }
           return undefined
 
@@ -744,9 +760,20 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
         this.props.isRtl,
         (activeRect: ClientRect, targetRect: ClientRect) => {
           let distance = -1
+          let topBottomComparison
+
+          if (this.props.isRtl) {
+            // When in RTL, this comparison should be the same as the one in moveFocusRight for LTR.
+            // Going left at a leftmost rectangle will go down a line instead of up a line like in LTR.
+            // This is important, because we want to be comparing the top of the target rect
+            // with the bottom of the active rect.
+            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3)
+          } else {
+            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3)
+          }
 
           if (
-            targetRect.bottom > activeRect.top &&
+            topBottomComparison &&
             targetRect.right <= activeRect.right &&
             this.props.direction !== FocusZoneDirection.vertical
           ) {
@@ -772,9 +799,20 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
         !this.props.isRtl,
         (activeRect: ClientRect, targetRect: ClientRect) => {
           let distance = -1
+          let topBottomComparison
+
+          if (this.props.isRtl) {
+            // When in RTL, this comparison should be the same as the one in moveFocusLeft for LTR.
+            // Going right at a rightmost rectangle will go up a line instead of down a line like in LTR.
+            // This is important, because we want to be comparing the bottom of the target rect
+            // with the top of the active rect.
+            topBottomComparison = targetRect.bottom.toFixed(3) > activeRect.top.toFixed(3)
+          } else {
+            topBottomComparison = targetRect.top.toFixed(3) < activeRect.bottom.toFixed(3)
+          }
 
           if (
-            targetRect.top < activeRect.bottom &&
+            topBottomComparison &&
             targetRect.left >= activeRect.left &&
             this.props.direction !== FocusZoneDirection.vertical
           ) {
@@ -841,6 +879,11 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
   private updateTabIndexes(onElement?: HTMLElement) {
     let element = onElement
+
+    if (!this._activeElement && this.props.defaultTabbableElement) {
+      this._activeElement = this.props.defaultTabbableElement(this._root.current)
+    }
+
     if (!element && this._root.current) {
       this._defaultFocusElement = null
       element = this._root.current

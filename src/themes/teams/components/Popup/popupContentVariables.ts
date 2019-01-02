@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../utils'
 
 export interface PopupContentVariables {
   [key: string]: string | number

@@ -6,6 +6,9 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
 - With `defaultTabbableElement` prop set tab indexes are not updated accordingly ([#342](https://github.com/stardust-ui/react/pull/342))
 - Remove unused prop `componentRef` ([#397](https://github.com/stardust-ui/react/pull/397))
 - Fix `defaultTabbableElement` prop to be as a function ([#450](https://github.com/stardust-ui/react/pull/450))
+- Remove role="presentation" @sophieH29 ([#530](https://github.com/stardust-ui/react/pull/530))
+- Respect `defaultTabbable` element when FocusZone container receives focus @sophieH29 ([#637](https://github.com/stardust-ui/react/pull/637))
+- Fix `FocusZone` - add `shouldResetActiveElementWhenTabFromZone` prop @sophieH29 ([#614](https://github.com/stardust-ui/react/pull/614))
 
 ### Features
 - Add embed mode for FocusZone and new Chat behavior ([#233](https://github.com/stardust-ui/react/pull/233))
@@ -14,9 +17,10 @@ This is a list of changes made to this Stardust copy of FocusZone in comparison 
     - Renamed `defaultActiveElement` to `defaultTabbableElement` and changed behavior:
         - Changed to query only descendants of the focus zone instead of the whole document, which enables to write simpler selectors. Note that we do not lose any functionality by this, because selecting elements outside of focus zone had no effect.
         - Changed not to call `this.focus()` on component mount (this was causing issues e.g., in docsite, where every change in source code would refocus the mounted component). Instead, you can now use a new property `shouldFocusOnMount`.
+- Enable RTL @sophieH29 ([#646](https://github.com/stardust-ui/react/pull/646))
 
 - Add `shouldFocusFirstElementWhenReceivedFocus` prop, which forces focus to first element when container receives focus @sophieH29 ([#469](https://github.com/stardust-ui/react/pull/469))
-
+- Handle keyDownCapture based on `shouldHandleKeyDownCapture` prop @sophieH29 ([#563](https://github.com/stardust-ui/react/pull/563)) 
 
 ### feat(FocusZone): Implement FocusZone into renderComponent [#116](https://github.com/stardust-ui/react/pull/116)
 - Prettier and linting fixes, e.g., removing semicolons, removing underscores from private methods.

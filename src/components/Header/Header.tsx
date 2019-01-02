@@ -1,38 +1,29 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent } from '../../lib'
-import HeaderDescription from './HeaderDescription'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+  ColorComponentProps,
+} from '../../lib'
+import HeaderDescription from './HeaderDescription'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface HeaderProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps {
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 
   /** Align header content. */
   textAlign?: 'left' | 'center' | 'right' | 'justified'
-
-  /**
-   * A custom render function the description slot.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderDescription?: ShorthandRenderFunction
 }
 
 /**
@@ -45,18 +36,15 @@ export interface HeaderProps
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<Extendable<HeaderProps>, any> {
+class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
-    renderDescription: PropTypes.func,
   }
 
   static defaultProps = {
@@ -66,7 +54,7 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
   static Description = HeaderDescription
 
   renderComponent({ ElementType, classes, variables: v, rest }) {
-    const { children, content, description, renderDescription } = this.props
+    const { children, content, description } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -85,7 +73,6 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
               ...(v.descriptionColor && { color: v.descriptionColor }),
             },
           },
-          render: renderDescription,
         })}
       </ElementType>
     )

@@ -1,31 +1,28 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
-import { childrenExist, createShorthandFactory, UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
+  ColorComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { ReactProps } from '../../../types/utils'
 
 export interface DividerProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
+    ColorComponentProps,
     ContentComponentProps {
   /** A divider can be fitted, without any space above or below it.  */
   fitted?: boolean
 
   /** Size multiplier (default 0) * */
   size?: number
-
-  /** A Divider can be formatted to show different levels of emphasis. */
-  type?: 'primary' | 'secondary'
 
   /** A divider can appear more important and draw the user's attention. */
   important?: boolean
@@ -34,7 +31,7 @@ export interface DividerProps
 /**
  * A divider visually segments content into groups.
  */
-class Divider extends UIComponent<Extendable<DividerProps>, any> {
+class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
@@ -42,12 +39,9 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
   static className = 'ui-divider'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon({ color: true }),
     fitted: PropTypes.bool,
     size: PropTypes.number,
-    type: PropTypes.oneOf(['primary', 'secondary']),
     important: PropTypes.bool,
   }
 

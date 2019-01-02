@@ -1,20 +1,19 @@
 import * as React from 'react'
 
-import { childrenExist, createShorthandFactory, UIComponent, RenderResultConfig } from '../../lib'
-import { Extendable } from '../../../types/utils'
 import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponent,
+  RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  childrenComponentPropTypes,
-  contentComponentPropsTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
+import { ReactProps } from '../../../types/utils'
 
 export interface PopupContentProps
-  extends UIComponentProps<any, any>,
+  extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {}
 
@@ -23,16 +22,14 @@ export interface PopupContentProps
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
+class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'
   public static className = 'ui-popup__content'
 
   public static propTypes = {
-    ...commonUIComponentPropTypes,
-    ...childrenComponentPropTypes,
-    ...contentComponentPropsTypes,
+    ...commonPropTypes.createCommon(),
   }
 
   public renderComponent({

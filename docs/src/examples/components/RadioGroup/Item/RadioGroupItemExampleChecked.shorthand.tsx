@@ -1,10 +1,13 @@
-import React from 'react'
+import * as React from 'react'
 import { RadioGroup } from '@stardust-ui/react'
 
 const RadioGroupItemExampleCheckedShorthand = () => (
   <RadioGroup
     defaultCheckedValue="1"
-    items={[<RadioGroup.Item key="1" label="This radio comes pre-checked" value="1" />]}
+    items={[
+      { key: '1', label: 'This radio comes pre-checked', value: '1' },
+      { key: '2', label: 'This radio is not pre-checked', value: '2' },
+    ]}
   />
 )
 

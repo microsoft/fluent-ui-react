@@ -1,14 +1,12 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as cx from 'classnames'
+import cx from 'classnames'
 
-import { UIComponent } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import { commonUIComponentPropTypes } from '../../lib/commonPropTypes'
 
-export interface LayoutProps extends UIComponentProps<any, any> {
+export interface LayoutProps extends UIComponentProps {
   debug?: boolean
   renderStartArea?: (params: object) => React.ReactNode
   renderMainArea?: (params: object) => React.ReactNode
@@ -44,13 +42,16 @@ export interface LayoutProps extends UIComponentProps<any, any> {
 /**
  * A layout is a utility for arranging the content of a component.
  */
-class Layout extends UIComponent<Extendable<LayoutProps>, any> {
+class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
 
   static propTypes = {
-    ...commonUIComponentPropTypes,
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     debug: PropTypes.bool,
 
     renderStartArea: PropTypes.func,

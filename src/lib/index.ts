@@ -1,7 +1,9 @@
 import * as customPropTypes from './customPropTypes'
+import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
+export { mapColorsToScheme } from './colorUtils'
 export { default as UIComponent } from './UIComponent'
 export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -26,11 +28,14 @@ export {
 } from './htmlPropsUtils'
 
 export { default as isBrowser } from './isBrowser'
-export { default as typescriptUtils } from './typescriptUtils'
 export { default as doesNodeContainClick } from './doesNodeContainClick'
 export { default as leven } from './leven'
 
-export { pxToRem, setHTMLFontSize } from './fontSizeUtility'
+export { pxToRem } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'
+export * from './whatInput'
+
+export * from './commonPropInterfaces'
+export { commonPropTypes }

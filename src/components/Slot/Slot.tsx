@@ -1,26 +1,24 @@
 import * as React from 'react'
-import { childrenExist, createShorthandFactory } from '../../lib'
 import {
+  childrenExist,
+  createShorthandFactory,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
-} from '../../lib/commonPropInterfaces'
-import {
-  commonUIComponentPropTypes,
-  contentComponentPropsTypes,
-  childrenComponentPropTypes,
-} from '../../lib/commonPropTypes'
+  commonPropTypes,
+} from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
+import { ReactProps } from '../../../types/utils'
 
 export interface SlotProps
-  extends UIComponentProps<SlotProps, any>,
+  extends UIComponentProps<SlotProps>,
     ContentComponentProps,
     ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
  */
-const Slot: CreateComponentReturnType<SlotProps> & {
+const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   create?: Function
 } = createComponent<SlotProps>({
   displayName: 'Slot',
@@ -28,9 +26,7 @@ const Slot: CreateComponentReturnType<SlotProps> & {
   className: 'ui-slot',
 
   propTypes: {
-    ...commonUIComponentPropTypes,
-    ...contentComponentPropsTypes,
-    ...childrenComponentPropTypes,
+    ...commonPropTypes.createCommon(),
   },
 
   render(config, props) {
