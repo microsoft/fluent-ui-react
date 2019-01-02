@@ -3,9 +3,9 @@ import { Segment } from '@stardust-ui/react'
 
 const SegmentExampleInvertedShorthand = () => (
   <div>
-    <Segment content="Colored segment." color="purple" />
+    <Segment content="Colored segment." color="red" />
     <br />
-    <Segment inverted content="Colored inverted segment" color="purple" />
+    <Segment inverted content="Colored inverted segment." color="red" />
   </div>
 )
 

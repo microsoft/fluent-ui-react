@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
 const items = [
@@ -25,6 +25,6 @@ const items = [
   },
 ]
 
-const ListExampleSelection = ({ knobs }) => <List debug={knobs.debug} items={items} />
+const ListExampleSelectable = ({ knobs }) => <List debug={knobs.debug} items={items} />
 
-export default ListExampleSelection
+export default ListExampleSelectable

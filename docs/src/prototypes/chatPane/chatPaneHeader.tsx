@@ -22,6 +22,12 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
   private renderBanner(): React.ReactNode {
     return (
       <Segment
+        content={
+          <Icon
+            name="team-create"
+            variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
+          />
+        }
         styles={({ variables: v }) => ({
           backgroundColor: v.backgroundColor,
           borderRadius: 0,
@@ -63,14 +69,13 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             key: `${index}-${name}`,
             icon: {
               name,
-              size: 'big',
               variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
             },
             primary: true,
           }))}
           styles={{ marginRight: '20px' }}
         />
-        {['user plus', 'ellipsis horizontal'].map((name, index) => (
+        {['team-create', 'more'].map((name, index) => (
           <Icon
             key={`${index}-${name}`}
             name={name}
@@ -80,7 +85,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04 })}
+            variables={siteVars => ({ color: siteVars.gray04, outline: true })}
           />
         ))}
       </div>

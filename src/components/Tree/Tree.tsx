@@ -10,7 +10,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
@@ -38,7 +38,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends UIComponent<TreeProps> {
+class Tree extends UIComponent<ReactProps<TreeProps>> {
   static create: Function
 
   static className = 'ui-tree'

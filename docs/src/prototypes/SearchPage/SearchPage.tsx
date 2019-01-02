@@ -97,7 +97,7 @@ class SearchPage extends React.Component<SearchPageState, any> {
                 Results <strong>{results.length}</strong> of <strong>{DATA_RECORDS.length}</strong>
               </small>
             </p>
-            <List selection items={results.map(dataRecordToListItem)} />
+            <List selectable items={results.map(dataRecordToListItem)} />
           </div>
         )}
       </Segment>

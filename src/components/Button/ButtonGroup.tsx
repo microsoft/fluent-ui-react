@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import {
   UIComponent,
   childrenExist,
@@ -28,7 +28,7 @@ export interface ButtonGroupProps
 /**
  * A button group presents multiple related actions.
  */
-class ButtonGroup extends UIComponent<Extendable<ButtonGroupProps>, any> {
+class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
   public static displayName = 'ButtonGroup'
 
   public static className = 'ui-buttons'
