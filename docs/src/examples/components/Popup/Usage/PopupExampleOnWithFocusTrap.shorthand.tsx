@@ -12,9 +12,9 @@ const contentWithButtons = {
 
 const PopupExampleOnWithFocusTrap = () => (
   <Grid columns={3} variables={{ gridGap: '10px' }}>
-    <Text content={'Click'} weight="bold" />
-    <Text content={'Hover'} weight="bold" />
-    <Text content={'Focus'} weight="bold" />
+    <Text content="Click" weight="bold" />
+    <Text content="Hover" weight="bold" />
+    <Text content="Focus" weight="bold" />
     <Popup
       trigger={<Button icon="expand" />}
       content={contentWithButtons}
