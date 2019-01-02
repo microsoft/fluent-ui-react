@@ -1,6 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
+import { pxToRem } from '../../utils'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   root: (): ICSSInJSStyle => ({}),
@@ -50,6 +51,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       justifyContent: 'left',
       padding: comboboxPaddingButton,
       ...transparentColorStyle,
+      height: pxToRem(30),
       ':hover': transparentColorStyle,
       ':focus': {
         ...transparentColorStyle,
