@@ -7,7 +7,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
   root: (): ICSSInJSStyle => ({}),
 
   container: ({
-    props: { focused, toggleButton, fluid },
+    props: { focused, fluid },
     variables: {
       backgroundColor,
       borderBottom,
@@ -16,7 +16,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       borderColorFocus,
       borderRadiusFocus,
       color,
-      toggleButtonSize,
       width,
     },
   }): ICSSInJSStyle => ({
@@ -31,9 +30,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     color,
     width: fluid ? '100%' : width,
     position: 'relative',
-    ...(toggleButton && {
-      paddingRight: toggleButtonSize,
-    }),
     ...(focused && {
       borderColor: borderColorFocus,
       borderRadius: borderRadiusFocus,
@@ -85,9 +81,12 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     position: 'absolute',
     height: toggleButtonSize,
     width: toggleButtonSize,
-    border: 0,
+    cursor: 'pointer',
     backgroundColor: 'transparent',
     margin: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
   }),
 }

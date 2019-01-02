@@ -16,9 +16,15 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
     },
   }),
 
-  combobox: ({ variables: { comboboxFlexBasis } }): ICSSInJSStyle => ({
+  combobox: ({
+    variables: { comboboxFlexBasis, toggleButtonSize },
+    props: { hasToggleButton },
+  }): ICSSInJSStyle => ({
     flexBasis: comboboxFlexBasis,
     flexGrow: 1,
+    ...(hasToggleButton && {
+      paddingRight: toggleButtonSize,
+    }),
   }),
 }
 

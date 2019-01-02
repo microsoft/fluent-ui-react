@@ -304,7 +304,6 @@ export default class Dropdown extends AutoControlledComponent<
             onBlur: () => {
               this.setState({ focused: false })
             },
-            'aria-label': content, // TODO: add this to behaviour
           })}
         />
       </Ref>
@@ -322,7 +321,7 @@ export default class Dropdown extends AutoControlledComponent<
     ) => void,
     variables,
   ): JSX.Element {
-    const { searchInput, multiple, placeholder } = this.props
+    const { searchInput, multiple, placeholder, toggleButton } = this.props
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
@@ -331,6 +330,7 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
+        hasToggleButton: !!toggleButton,
         variables,
         inputRef: (inputNode: HTMLElement) => {
           this.inputNode = inputNode
@@ -352,13 +352,15 @@ export default class Dropdown extends AutoControlledComponent<
     styles: ComponentSlotStylesInput,
     isOpen: boolean,
   ) {
+    const { onClick, onBlur, onKeyDown, onKeyUp } = getToggleButtonProps()
     return (
       <Icon
         name={`chevron ${isOpen ? 'up' : 'down'}`}
-        as="button"
-        tabIndex="0"
         styles={styles.toggleButton}
-        {...getToggleButtonProps()}
+        onClick={onClick}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
       />
     )
   }
@@ -594,7 +596,7 @@ export default class Dropdown extends AutoControlledComponent<
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
     ) => {
-      if (keyboardKey.getCode(e) === keyboardKey.Tab && _.isNil(highlightedIndex)) {
+      if (keyboardKey.getCode(e) === keyboardKey.Tab && !_.isNil(highlightedIndex)) {
         selectItemAtIndex(highlightedIndex)
       }
 
