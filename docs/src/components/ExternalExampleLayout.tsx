@@ -4,7 +4,11 @@ import * as React from 'react'
 import SourceRender from 'react-source-render'
 
 import { ExampleSource } from 'docs/src/types'
-import { exampleSourcesContext, exampleKebabNameToFilename, parseExamplePath } from 'docs/src/utils'
+import {
+  exampleSourcesContext,
+  exampleKebabNameToSourceFilename,
+  parseExamplePath,
+} from 'docs/src/utils'
 import PageNotFound from '../views/PageNotFound'
 import { babelConfig, importResolver } from './Playground/renderConfig'
 
@@ -12,7 +16,7 @@ const examplePaths = exampleSourcesContext.keys()
 
 const ExternalExampleLayout: any = props => {
   const { exampleName } = props.match.params
-  const exampleFilename = exampleKebabNameToFilename(exampleName)
+  const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
 
   const examplePath = _.find(path => {
     const { exampleName } = parseExamplePath(path)
