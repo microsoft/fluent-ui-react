@@ -379,7 +379,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   private shouldBlurClose = e => {
     return (
-      !e.currentTarget.contains(e.relatedTarget) && !this.popupDomElement.contains(e.relatedTarget)
+      !e.currentTarget ||
+      !this.popupDomElement ||
+      (!e.currentTarget.contains(e.relatedTarget) &&
+        !this.popupDomElement.contains(e.relatedTarget))
     )
   }
 

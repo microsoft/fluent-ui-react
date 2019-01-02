@@ -11,6 +11,11 @@ const Usage = () => (
       examplePath="components/Popup/Usage/PopupExampleOn"
     />
     <ComponentExample
+      title="Using the focus trap behavior"
+      description="Combining the triggers with popup focus trap behavior, will focus the first focusable element inside the content of the popup."
+      examplePath="components/Popup/Usage/PopupExampleOnWithFocusTrap"
+    />
+    <ComponentExample
       title="Combined triggering actions"
       description="The triggering actions can be combined."
       examplePath="components/Popup/Usage/PopupExampleOnMultiple"
