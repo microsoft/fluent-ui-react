@@ -4,7 +4,7 @@ import { Button, Popup, Grid, Text, popupFocusTrapBehavior } from '@stardust-ui/
 const contentWithButtons = {
   content: (
     <>
-      <Button onClick={() => alert('1')}>First</Button>
+      <Button>First</Button>
       <Button primary>Second</Button>
     </>
   ),
