@@ -168,14 +168,22 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   schedulePopupClose = e => {
     const { mouseLeaveDelay } = this.props
     this.isPopupClosing = true
-    setTimeout(() => {
-      if (this.isPopupClosing) {
-        this.trySetOpen(false, e)
-      }
-
-      this.isPopupClosing = false
-    }, mouseLeaveDelay)
+    if (mouseLeaveDelay > 0) {
+      setTimeout(() => {
+        this.handlePopupClose(e)
+      }, mouseLeaveDelay)
+    } else {
+      this.handlePopupClose(e)
+    }
   }
+
+  handlePopupClose = e => {
+    if (this.isPopupClosing) {
+      this.trySetOpen(false, e)
+      this.isPopupClosing = false
+    }
+  }
+
   private outsideClickSubscription = EventStack.noSubscription
 
   private triggerDomElement = null
