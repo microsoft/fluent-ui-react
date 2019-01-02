@@ -6,19 +6,14 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
-      title="Hover"
-      description="A popup can be triggered on hover."
-      examplePath="components/Popup/Usage/PopupExampleHover"
+      title="Triggering popup on different actions"
+      description="A popup can be triggered on click, hover or focus."
+      examplePath="components/Popup/Usage/PopupExampleOn"
     />
     <ComponentExample
-      title="Click"
-      description="A popup can be triggered on click."
-      examplePath="components/Popup/Usage/PopupExampleClick"
-    />
-    <ComponentExample
-      title="Focus"
-      description="A popup can be triggered on focus."
-      examplePath="components/Popup/Usage/PopupExampleFocus"
+      title="Combined triggering actions"
+      description="The triggering actions can be combined."
+      examplePath="components/Popup/Usage/PopupExampleOnMultiple"
     />
   </ExampleSection>
 )

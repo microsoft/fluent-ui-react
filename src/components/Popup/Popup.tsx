@@ -34,6 +34,10 @@ import {
 const POSITIONS: Position[] = ['above', 'below', 'before', 'after']
 const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 
+export type PopupEvents = 'click' | 'hover' | 'focus'
+export type RestrictedClickEvents = 'click' | 'focus'
+export type RestrictedHoverEvents = 'hover' | 'focus'
+
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
     ChildrenComponentProps,
@@ -67,7 +71,7 @@ export interface PopupProps
   offset?: string
 
   /** Events triggering the popup. */
-  on?: 'click' | 'hover' | 'focus' | ['focus' | 'click'] | ['focus' | 'hover']
+  on?: PopupEvents | RestrictedClickEvents[] | RestrictedHoverEvents[]
 
   /** Defines whether popup is displayed. */
   open?: boolean
@@ -178,23 +182,20 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   private popupDomElement = null
 
   protected actionHandlers: AccessibilityActionHandlers = {
-    toggle: e => {
-      this.trySetOpen(!this.state.open, e, true)
-    },
     closeAndFocusTrigger: e => {
-      this.closeAndFocusTrigger(e, true)
+      this.close(e, () => _.invoke(this.triggerDomElement, 'focus'))
       e.stopPropagation()
     },
     close: e => {
-      this.closeAndFocusTrigger(e, false)
+      this.close(e)
       e.stopPropagation()
     },
   }
 
-  private closeAndFocusTrigger = (e, focusTrigger) => {
+  private close = (e, onClose?: Function) => {
     if (this.state.open) {
       this.trySetOpen(false, e, true)
-      focusTrigger && _.invoke(this.triggerDomElement, 'focus')
+      onClose && onClose()
     }
   }
 
@@ -268,12 +269,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const { on } = this.props
     const normalizedOn = _.isArray(on) ? on : [on]
 
-    if (_.includes(normalizedOn, 'click')) {
-      triggerProps.onClick = (e, ...rest) => {
-        this.trySetOpen(!this.state.open, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...rest)
-      }
-    }
     if (_.includes(normalizedOn, 'focus')) {
       triggerProps.onFocus = (e, ...rest) => {
         this.trySetOpen(true, e)
@@ -288,7 +283,19 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         }
         _.invoke(triggerElement, 'props.onBlur', e, ...rest)
       }
+      triggerProps.onClick = (e, ...rest) => {
+        this.setPopupOpen(true, e)
+        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+      }
     }
+
+    if (_.includes(normalizedOn, 'click')) {
+      triggerProps.onClick = (e, ...rest) => {
+        this.trySetOpen(!this.state.open, e)
+        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+      }
+    }
+
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...rest) => {
         this.setPopupOpen(true, e)
@@ -302,12 +309,21 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         this.setPopupOpen(true, e)
         _.invoke(triggerElement, 'props.onClick', e, ...rest)
       }
+      triggerProps.onBlur = (e, ...rest) => {
+        if (
+          !e.currentTarget.contains(e.relatedTarget) &&
+          !this.popupDomElement.contains(e.relatedTarget)
+        ) {
+          this.trySetOpen(false, e)
+        }
+        _.invoke(triggerElement, 'props.onBlur', e, ...rest)
+      }
     }
 
     return triggerProps
   }
 
-  handleContentOverrides = (predefinedProps?) => {
+  getContentProps = (predefinedProps?) => {
     const contentProps: any = {}
 
     const { on } = this.props
@@ -315,7 +331,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
     if (_.includes(normalizedOn, 'focus')) {
       contentProps.onFocus = (e, contentProps) => {
-        !this.state.open && this.trySetOpen(true, e)
+        this.trySetOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
       }
       contentProps.onBlur = (e, contentProps) => {
@@ -328,6 +344,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         predefinedProps && _.invoke(predefinedProps, 'onBlur', e, contentProps)
       }
     }
+
     if (_.includes(normalizedOn, 'hover')) {
       contentProps.onMouseEnter = (e, contentProps) => {
         this.setPopupOpen(true, e)
@@ -413,7 +430,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
       className: popupPositionClasses,
       style: popupPlacementStyles,
-      ...this.handleContentOverrides(),
+      ...this.getContentProps(),
     }
 
     const focusTrapProps = {
@@ -431,7 +448,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       ? React.cloneElement(content, popupContentAttributes)
       : Popup.Content.create(content, {
           defaultProps: popupContentAttributes,
-          overrideProps: this.handleContentOverrides,
+          overrideProps: this.getContentProps,
         })
 
     return (
