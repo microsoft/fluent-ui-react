@@ -6,12 +6,12 @@ const PopupExampleOnMultiple = () => (
     <Text content="Click + Focus" weight="bold" />
     <Text content="Hover + Focus" weight="bold" />
     <Popup
-      trigger={<Button icon="expand" />}
+      trigger={<Button icon="expand" aria-label="Click or focus button" />}
       content="Hello from popup on click!"
       on={['click', 'focus']}
     />
     <Popup
-      trigger={<Button icon="expand" />}
+      trigger={<Button icon="expand" aria-label="Hover or focus button" />}
       content="Hello from popup on hover!"
       on={['hover', 'focus']}
     />

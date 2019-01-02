@@ -16,19 +16,19 @@ const PopupExampleOnWithFocusTrap = () => (
     <Text content="Hover" weight="bold" />
     <Text content="Focus" weight="bold" />
     <Popup
-      trigger={<Button icon="expand" />}
+      trigger={<Button icon="expand" aria-label="Click button" />}
       content={contentWithButtons}
       accessibility={popupFocusTrapBehavior}
       on="click"
     />
     <Popup
-      trigger={<Button icon="expand" />}
+      trigger={<Button icon="expand" aria-label="Hover button" />}
       content={contentWithButtons}
       accessibility={popupFocusTrapBehavior}
       on="hover"
     />
     <Popup
-      trigger={<Button icon="expand" />}
+      trigger={<Button icon="expand" aria-label="Focus button" />}
       content={contentWithButtons}
       accessibility={popupFocusTrapBehavior}
       on="focus"
