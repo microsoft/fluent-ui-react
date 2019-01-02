@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
@@ -238,6 +238,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const theme = themes[themeName]
 
     const newTheme: ThemeInput = {
+      siteVariables: theme.siteVariables,
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),

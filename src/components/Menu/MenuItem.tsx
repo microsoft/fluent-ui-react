@@ -21,7 +21,7 @@ import Menu from '../Menu/Menu'
 import Slot from '../Slot/Slot'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
 
@@ -116,7 +116,7 @@ export interface MenuItemState {
 /**
  * A menu item is an actionable navigation item within a menu.
  */
-class MenuItem extends AutoControlledComponent<Extendable<MenuItemProps>, MenuItemState> {
+class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuItemState> {
   static displayName = 'MenuItem'
 
   static className = 'ui-menu__item'

@@ -10,7 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
 import Slot from '../Slot/Slot'
@@ -44,7 +44,7 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
 /**
  * A field is a form element containing a label and an input.
  */
-class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
+class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'
