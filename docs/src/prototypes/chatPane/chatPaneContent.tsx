@@ -36,7 +36,6 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
               role="heading"
               aria-level={2}
             >
-              {' '}
               Message list.
             </div>
             <Chat items={items} styles={{ padding: '0 32px' }} />
