@@ -3,18 +3,43 @@ import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@st
 import { MenuItemProps } from 'src/components/Menu/MenuItem'
 
 type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
+const screenReaderMessageContainerStyles: React.CSSProperties = {
+  border: '0px',
+  clip: 'rect(0px, 0px, 0px, 0px)',
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: '0px',
+  width: '1px',
+  position: 'absolute',
+}
 
 class ComposeMessage extends React.Component {
   public render() {
     return (
-      <Layout
-        role="region"
-        aria-label="compose box"
-        vertical
-        start={this.renderInput()}
-        main={this.renderToolbar()}
-        styles={{ padding: '16px 32px' }}
-      />
+      <div>
+        <Layout
+          role="region"
+          aria-labelledby="chat-compose-reader-text"
+          vertical
+          start={
+            <div>
+              <div
+                role="heading"
+                aria-level={2}
+                id="chat-compose-reader-text"
+                style={screenReaderMessageContainerStyles}
+              >
+                {' '}
+                Compose{' '}
+              </div>
+              {this.renderInput()}
+            </div>
+          }
+          main={this.renderToolbar()}
+          styles={{ padding: '16px 32px' }}
+        />
+      </div>
     )
   }
 

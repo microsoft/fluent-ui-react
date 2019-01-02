@@ -26,14 +26,21 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     return (
       items.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat
-            items={items}
-            role="region"
-            aria-label={`Conversation with ${
-              chat.title
-            }  Press Enter to explore message content, then use Escape to shift focus back to the message`}
-            styles={{ padding: '0 32px' }}
-          />
+          <div
+            role="main"
+            aria-label="Message list. In forms mode: press Enter to explore message content, then use Escape to shift focus back to the message"
+          >
+            <div
+              id="chat-pane-reader-text"
+              style={screenReaderMessageContainerStyles}
+              role="heading"
+              aria-level={2}
+            >
+              {' '}
+              Message list.{' '}
+            </div>
+            <Chat items={items} styles={{ padding: '0 32px' }} />
+          </div>
         </Scrollbars>
       )
     )
