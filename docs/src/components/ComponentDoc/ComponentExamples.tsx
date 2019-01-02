@@ -81,15 +81,14 @@ export default class ComponentExamples extends React.Component<ComponentExamples
   )
 
   private getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
-    const examplesPattern = `\.\/${displayName}[\\w\/]*\/\\w+Example`
-
+    const examplesPattern = `\./${displayName}/[\\w/]+Example`
     const [normalExtension, shorthandExtension] = [
       examplePathPatterns.normal,
       examplePathPatterns.shorthand,
     ].map(pattern => `${pattern}.source.json`)
 
     const [normalRegExp, shorthandRegExp] = [normalExtension, shorthandExtension].map(
-      extension => new RegExp(`${examplesPattern}\\w*${extension}$`),
+      extension => new RegExp(`${examplesPattern}${extension}$`),
     )
 
     const expectedShorthandExamples = allPaths
