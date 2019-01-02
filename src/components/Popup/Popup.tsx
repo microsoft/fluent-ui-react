@@ -37,6 +37,7 @@ const ALIGNMENTS: Alignment[] = ['top', 'bottom', 'start', 'end', 'center']
 export type PopupEvents = 'click' | 'hover' | 'focus'
 export type RestrictedClickEvents = 'click' | 'focus'
 export type RestrictedHoverEvents = 'hover' | 'focus'
+export type PopupEventsArray = RestrictedClickEvents[] | RestrictedHoverEvents[]
 
 export interface PopupProps
   extends StyledComponentProps<PopupProps>,
@@ -71,7 +72,7 @@ export interface PopupProps
   offset?: string
 
   /** Events triggering the popup. */
-  on?: PopupEvents | RestrictedClickEvents[] | RestrictedHoverEvents[]
+  on?: PopupEvents | PopupEventsArray
 
   /** Defines whether popup is displayed. */
   open?: boolean
