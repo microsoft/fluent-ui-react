@@ -165,7 +165,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }
   }
 
-  schedulePopupClose = e => {
+  private schedulePopupClose = e => {
     const { mouseLeaveDelay } = this.props
     this.isPopupClosing = true
     if (mouseLeaveDelay > 0) {
@@ -177,7 +177,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }
   }
 
-  handlePopupClose = e => {
+  private handlePopupClose = e => {
     if (this.isPopupClosing) {
       this.trySetOpen(false, e)
       this.isPopupClosing = false
@@ -277,16 +277,16 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const { on } = this.props
     const normalizedOn = _.isArray(on) ? on : [on]
 
+    /**
+     * The focus is adding the focus, blur and click event (always opening on click)
+     */
     if (_.includes(normalizedOn, 'focus')) {
       triggerProps.onFocus = (e, ...rest) => {
         this.trySetOpen(true, e)
         _.invoke(triggerElement, 'props.onFocus', e, ...rest)
       }
       triggerProps.onBlur = (e, ...rest) => {
-        if (
-          !e.currentTarget.contains(e.relatedTarget) &&
-          !this.popupDomElement.contains(e.relatedTarget)
-        ) {
+        if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
         _.invoke(triggerElement, 'props.onBlur', e, ...rest)
@@ -297,6 +297,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       }
     }
 
+    /**
+     * The click is toggling the open state of the popup
+     */
     if (_.includes(normalizedOn, 'click')) {
       triggerProps.onClick = (e, ...rest) => {
         this.trySetOpen(!this.state.open, e)
@@ -304,6 +307,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       }
     }
 
+    /**
+     * The hover is adding the mouseEnter, mouseLeave, blur and click event (always opening on click)
+     */
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...rest) => {
         this.setPopupOpen(true, e)
@@ -318,10 +324,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
         _.invoke(triggerElement, 'props.onClick', e, ...rest)
       }
       triggerProps.onBlur = (e, ...rest) => {
-        if (
-          !e.currentTarget.contains(e.relatedTarget) &&
-          !this.popupDomElement.contains(e.relatedTarget)
-        ) {
+        if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
         _.invoke(triggerElement, 'props.onBlur', e, ...rest)
@@ -337,22 +340,25 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     const { on } = this.props
     const normalizedOn = _.isArray(on) ? on : [on]
 
+    /**
+     * The focus is adding the focus and blur events on the content
+     */
     if (_.includes(normalizedOn, 'focus')) {
       contentProps.onFocus = (e, contentProps) => {
         this.trySetOpen(true, e)
         predefinedProps && _.invoke(predefinedProps, 'onFocus', e, contentProps)
       }
       contentProps.onBlur = (e, contentProps) => {
-        if (
-          !e.currentTarget.contains(e.relatedTarget) &&
-          !this.popupDomElement.contains(e.relatedTarget)
-        ) {
+        if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
         predefinedProps && _.invoke(predefinedProps, 'onBlur', e, contentProps)
       }
     }
 
+    /**
+     * The hover is adding the mouseEnter, mouseLeave and click event (always opening on click)
+     */
     if (_.includes(normalizedOn, 'hover')) {
       contentProps.onMouseEnter = (e, contentProps) => {
         this.setPopupOpen(true, e)
@@ -369,6 +375,12 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     }
 
     return contentProps
+  }
+
+  private shouldBlurClose = e => {
+    return (
+      !e.currentTarget.contains(e.relatedTarget) && !this.popupDomElement.contains(e.relatedTarget)
+    )
   }
 
   private renderTrigger(accessibility) {
