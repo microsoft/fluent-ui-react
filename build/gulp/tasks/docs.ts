@@ -34,6 +34,8 @@ const handleWatchUnlink = (group, path) => {
 // Clean
 // ----------------------------------------
 
+task('clean:cache', () => cache.clearAll())
+
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
 })
