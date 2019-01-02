@@ -66,7 +66,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-        {active ? <span>&#9660;</span> : <span>&#9654;</span>}
+        {active ? <span>&#x25BE;</span> : <span>&#x25B8;</span>}
         {content}
       </ElementType>
     )

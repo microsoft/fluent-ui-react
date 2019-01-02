@@ -336,10 +336,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           position: 'relative',
           float: 'right',
           left: pxToRem(10),
-          content: v.submenuIndicatorContent,
-          ...(!props.vertical && {
-            transform: `rotate(${v.submenuIndicatorRotationAngle}deg)`,
-          }),
+          content: props.vertical ? '"\u25B8"' : '"\u25BE"',
         }),
       },
     }
