@@ -23,7 +23,7 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
     flexBasis: comboboxFlexBasis,
     flexGrow: 1,
     ...(hasToggleButton && {
-      paddingRight: toggleButtonSize,
+      marginRight: toggleButtonSize,
     }),
   }),
 }
