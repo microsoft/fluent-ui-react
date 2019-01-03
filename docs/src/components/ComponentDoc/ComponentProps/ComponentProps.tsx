@@ -6,7 +6,7 @@ import { getComponentGroup } from 'docs/src/utils'
 import ComponentTable from '../ComponentTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { RadioGroup, ICSSInJSStyle } from '@stardust-ui/react'
+import { ICSSInJSStyle, Input, Text } from '@stardust-ui/react'
 
 const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
@@ -53,16 +53,10 @@ export default class ComponentProps extends React.Component<any, any> {
 
     return (
       <div>
-        <RadioGroup
-          items={[
-            <RadioGroup.Item
-              key="1"
-              checked={!!activeDisplayName}
-              label="Props"
-              onClick={this.handleToggle}
-            />,
-          ]}
-        />
+        {/* Should be toggle component - need to associate text with checkbox.   */}
+        <Input type="checkbox" checked={!!activeDisplayName} onClick={this.handleToggle} inline />
+        <Text content="Props" />
+
         <ComponentPropsComponents
           activeDisplayName={activeDisplayName}
           displayNames={displayNames}
