@@ -61,12 +61,11 @@ export interface MenuItemProps
   onClick?: ComponentEventHandler<MenuItemProps>
 
   /**
-   * Called on key down pressed.
-   *
+   * Called after user's focus.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onKeyDown?: ComponentEventHandler<MenuItemProps>
+  onFocus?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -132,6 +131,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     onClick: PropTypes.func,
+    onFocus: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
