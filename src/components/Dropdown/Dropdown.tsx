@@ -218,7 +218,8 @@ export default class Dropdown extends AutoControlledComponent<
           inputValue={search ? searchQuery : undefined}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
-          // Downshift does not support multiple selection. We will handle everything and pass it selected as null in this case.
+          // If it's single search, don't pass anything. Pass a null otherwise, as Downshift does
+          // not handle selection by default for single/multiple selection and multiple search.
           selectedItem={search && !multiple ? undefined : null}
           getA11yStatusMessage={getA11yStatusMessage}
           onStateChange={changes => {
@@ -286,13 +287,7 @@ export default class Dropdown extends AutoControlledComponent<
   ): JSX.Element {
     const { placeholder, itemToString, multiple } = this.props
     const { value } = this.state
-    let content
-
-    if (multiple) {
-      content = placeholder
-    } else {
-      content = value ? itemToString(value) : placeholder
-    }
+    const content = value && !multiple ? itemToString(value) : placeholder
 
     return (
       <Ref innerRef={this.buttonRef}>
