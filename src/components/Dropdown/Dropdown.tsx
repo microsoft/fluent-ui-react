@@ -301,6 +301,7 @@ export default class Dropdown extends AutoControlledComponent<
             onBlur: () => {
               this.setState({ focused: false })
             },
+            'aria-label': content,
           })}
         />
       </Ref>
