@@ -89,7 +89,7 @@ function createMessageContent(message: MessageData): ShorthandValue {
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
   const menuClickHandler = content => e => {
     alert(`${content} clicked`)
-    stopEnterSpacePropagation(e)
+    e.stopPropagation()
   }
 
   const contextMenu = (
@@ -120,7 +120,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
   )
 
   const stopPropagationOnKeys = (keys: number[]) => (e: Event) => {
-    if (_.includes(keys, keyboardKey.getCode(e))) {
+    if (keys.indexOf(keyboardKey.getCode(e)) > -1) {
       e.stopPropagation()
     }
   }
@@ -135,7 +135,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
           circular
           icon="ellipsis horizontal"
           onClick={e => e.stopPropagation()}
-          onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.SpaceBar])}
+          onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
         />
       }
       content={{ content: contextMenu }}

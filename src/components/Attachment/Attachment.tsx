@@ -147,16 +147,14 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
   }
 
   private handleClick = (e: React.SyntheticEvent) => {
-    const { onClick, disabled } = this.props
+    const { disabled } = this.props
 
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    if (onClick) {
-      onClick(e, this.props)
-    }
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {

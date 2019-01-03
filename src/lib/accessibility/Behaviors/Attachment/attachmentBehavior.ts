@@ -6,7 +6,6 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'tabIndex=0' to 'root' component's part.
  * Performs click action with 'Enter' and 'Spacebar' on 'root'.
  */
-
 const attachmentBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
