@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Types from './Types'
 import Content from './Content'
 import Variations from './Variations'

@@ -14,6 +14,7 @@ import {
   inputBehavior,
   menuBehavior,
   menuItemBehavior,
+  submenuBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
   dialogBehavior,
@@ -46,6 +47,7 @@ testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
+testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)

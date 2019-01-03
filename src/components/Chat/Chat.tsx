@@ -5,7 +5,7 @@ import * as React from 'react'
 import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
@@ -24,7 +24,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * A Chat displays messages between users.
  */
-class Chat extends UIComponent<Extendable<ChatProps>, any> {
+class Chat extends UIComponent<ReactProps<ChatProps>, any> {
   static className = 'ui-chat'
 
   static displayName = 'Chat'

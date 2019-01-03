@@ -1,4 +1,7 @@
-import { ThemeInput, ThemeIconSpec, ThemeIcons, FontIconSpec, SvgIconSpec } from '../types'
+import { ThemeIconSpec, ThemeIcons, FontIconSpec, SvgIconSpec } from '../types'
+
+import mergeThemes from '../../lib/mergeThemes'
+import base from '../base'
 
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
@@ -34,11 +37,11 @@ Object.keys(fontIcons).forEach(iconName => {
   icons[iconName] = declareFontBased(fontIcons[iconName])
 })
 
-export default {
+export default mergeThemes(base, {
   siteVariables,
   componentVariables,
   componentStyles,
   fontFaces,
   staticStyles,
   icons,
-} as ThemeInput
+})

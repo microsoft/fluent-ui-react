@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Menu, tabBehavior, tabListBehavior } from '@stardust-ui/react'
 
 const items = [

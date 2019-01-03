@@ -4,11 +4,6 @@ import * as React from 'react'
 import cx from 'classnames'
 import Popover from './Popover'
 
-const janeAvatar = {
-  image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
-}
-
 interface ChatMessageWithPopoverProps {
   className?: string
 }
@@ -51,7 +46,6 @@ class ChatMessageWithPopover extends React.Component<
             </div>
           ),
         }}
-        avatar={janeAvatar}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         className={cx(this.props.className, this.state.focused ? 'focused' : '')}

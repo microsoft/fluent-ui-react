@@ -15,10 +15,10 @@ import {
   StyledComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 
 import Ref from '../Ref/Ref'
-import computePopupPlacement, { Alignment, Position } from './positioningHelper'
+import { getPopupPlacement, applyRtlToOffset, Alignment, Position } from './positioningHelper'
 
 import PopupContent from './PopupContent'
 
@@ -53,6 +53,15 @@ export interface PopupProps
 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
+
+  /** Offset value to apply to rendered popup. Accepts the following units:
+   * - px or unit-less, interpreted as pixels
+   * - %, percentage relative to the length of the trigger element
+   * - %p, percentage relative to the length of the popup element
+   * - vw, CSS viewport width unit
+   * - vh, CSS viewport height unit
+   */
+  offset?: string
 
   /** Defines whether popup is displayed. */
   open?: boolean
@@ -93,7 +102,7 @@ export interface PopupState {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-export default class Popup extends AutoControlledComponent<Extendable<PopupProps>, PopupState> {
+export default class Popup extends AutoControlledComponent<ReactProps<PopupProps>, PopupState> {
   public static displayName = 'Popup'
 
   public static className = 'ui-popup'
@@ -174,8 +183,6 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     }
   }
 
-  public state = { target: undefined, open: false }
-
   public componentDidMount() {
     this.updateOutsideClickSubscription()
 
@@ -245,10 +252,18 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
     rtl: boolean,
     accessibility: AccessibilityBehavior,
   ): JSX.Element {
-    const { align, position } = this.props
+    const { align, position, offset } = this.props
     const { target } = this.state
 
-    const placement = computePopupPlacement({ align, position, rtl })
+    const placement = getPopupPlacement({ align, position, rtl })
+
+    const popperModifiers = {
+      // https://popper.js.org/popper-documentation.html#modifiers..offset
+      ...(offset && {
+        offset: { offset: rtl ? applyRtlToOffset(offset, position) : offset },
+        keepTogether: { enabled: false },
+      }),
+    }
 
     return (
       target && (
@@ -256,6 +271,7 @@ export default class Popup extends AutoControlledComponent<Extendable<PopupProps
           placement={placement}
           referenceElement={target}
           children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+          modifiers={popperModifiers}
         />
       )
     )

@@ -29,7 +29,10 @@ task('test:jest:pre', () => sh('yarn satisfied'))
 
 task(
   'test:jest:setup',
-  series('test:jest:pre', parallel('build:docs:docgen', 'build:docs:component-menu-behaviors')),
+  series(
+    'test:jest:pre',
+    parallel('build:docs:component-info', 'build:docs:component-menu-behaviors'),
+  ),
 )
 
 task('test:jest', jest())

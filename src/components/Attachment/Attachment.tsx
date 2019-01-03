@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import {
   UIComponent,
   customPropTypes,
@@ -64,7 +64,7 @@ export interface AttachmentState {
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentState> {
+class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -107,7 +107,7 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, AttachmentStat
         {icon && (
           <div className={classes.icon}>
             {Icon.create(icon, {
-              defaultProps: { size: 'big' },
+              defaultProps: { size: 'larger' },
             })}
           </div>
         )}

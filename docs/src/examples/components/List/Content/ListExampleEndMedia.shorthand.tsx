@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { List } from '@stardust-ui/react'
 
 const ellipsis = <span>&hellip;</span>
@@ -21,6 +21,6 @@ const items = [
   },
 ]
 
-const ListExample = () => <List items={items} selection />
+const ListExample = () => <List items={items} selectable />
 
 export default ListExample

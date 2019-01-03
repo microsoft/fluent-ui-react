@@ -15,7 +15,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
 } from '../../lib'
-import { ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -51,7 +51,7 @@ export interface TreeItemState {
   open?: boolean
 }
 
-class TreeItem extends AutoControlledComponent<TreeItemProps, TreeItemState> {
+class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeItemState> {
   static create: Function
 
   static className = 'ui-tree__item'

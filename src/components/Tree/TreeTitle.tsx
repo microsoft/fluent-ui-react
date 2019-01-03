@@ -13,6 +13,7 @@ import {
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
+import { ReactProps } from '../../../types/utils'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -31,7 +32,7 @@ export interface TreeTitleProps
   hasSubtree?: boolean
 }
 
-class TreeTitle extends UIComponent<TreeTitleProps> {
+class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   static create: Function
 
   static className = 'ui-tree__title'

@@ -434,6 +434,7 @@ export const deprecate = (help: string, validator: Function) => (
 }
 
 export const animation = PropTypes.oneOfType([
+  // Validator is broken in the latest @react/types
   PropTypes.shape({
     name: PropTypes.string.isRequired,
     delay: PropTypes.string,
@@ -443,6 +444,6 @@ export const animation = PropTypes.oneOfType([
     iterationCount: PropTypes.string,
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
-  }),
+  }) as any,
   PropTypes.string,
 ])

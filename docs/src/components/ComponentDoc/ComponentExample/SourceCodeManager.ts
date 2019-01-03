@@ -1,3 +1,5 @@
+import { exampleSourcesContext } from '../../../utils'
+
 interface SourceCodeData {
   path: string
   code: string
@@ -84,7 +86,9 @@ class SourceCodeManager {
 
   private safeRequire = (path: string): string | undefined => {
     try {
-      return require(`!raw-loader!../../../examples/${path}`)
+      const filename = `${path.replace(/^components\//, './')}.source.json`
+
+      return exampleSourcesContext(filename).js
     } catch (e) {
       return undefined
     }

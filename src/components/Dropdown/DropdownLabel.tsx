@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, Extendable } from '../../../types/utils'
+import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import {
   customPropTypes,
@@ -46,7 +46,7 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
  * A DropdownLabel is a sub-component of a multiple selection Dropdown.
  * It is used to display selected item.
  */
-class DropdownLabel extends UIComponent<Extendable<DropdownLabelProps>, any> {
+class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
   displayName = 'DropdownLabel'
 
   static create: Function

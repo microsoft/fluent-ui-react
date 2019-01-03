@@ -153,7 +153,7 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, '')
+      const goodUsage = () => createShorthandFactory(() => <div />, 'children')
 
       expect(goodUsage).not.toThrowError()
     })
@@ -232,9 +232,9 @@ describe('factories', () => {
           getShorthand({
             value: render =>
               render({}, (Component, props) => {
-                expect(Component).toBe('foo-span')
+                expect(Component).toBe('span')
               }),
-            Component: 'foo-span',
+            Component: 'span',
           })
         })
 
