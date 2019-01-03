@@ -29,7 +29,7 @@ import List from '../List/List'
 import Text from '../Text/Text'
 import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
-import DropdownItem, { DropdownItemProps } from './DropdownItem'
+import DropdownItem from './DropdownItem'
 import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
@@ -239,11 +239,10 @@ export default class Dropdown extends AutoControlledComponent<
             highlightedIndex,
             selectItemAtIndex,
           }) => {
-            const accessibilityRootProps = getRootProps(
+            const { innerRef, ...accessibilityRootPropsRest } = getRootProps(
               { refKey: 'innerRef' },
               { suppressRefError: true },
             )
-            const { innerRef, ...accessibilityRootPropsRest } = accessibilityRootProps
             return (
               <Ref innerRef={innerRef}>
                 <div
@@ -369,9 +368,8 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
-    const accessibilityMenuProps = {
-      ...getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true }),
-    }
+    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true })
+    // If it's just a selection, some attributes and listeners from Downshift input need to go on the menu list.
     if (!this.props.search) {
       const accessibilityInputProps = getInputProps()
       accessibilityMenuProps['aria-activedescendant'] =
@@ -387,7 +385,6 @@ export default class Dropdown extends AutoControlledComponent<
       }
     }
     const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
-
     return (
       <Ref
         innerRef={(listNode: HTMLElement) => {
@@ -426,8 +423,7 @@ export default class Dropdown extends AutoControlledComponent<
                 key: (item as any).header,
               }),
           },
-          overrideProps: (predefinedProps: DropdownItemProps) =>
-            this.handleItemOverrides(item, index, getItemProps),
+          overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
         })
       })
     }
