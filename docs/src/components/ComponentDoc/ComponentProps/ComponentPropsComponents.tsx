@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu, tabListBehavior } from '@stardust-ui/react'
 
 import { updateForKeys } from 'docs/src/hoc'
 
@@ -11,24 +11,21 @@ const ComponentPropsComponents: any = ({
   onItemClick,
   parentDisplayName,
 }) => {
-  if (displayNames.length === 1) return null
+  if (displayNames.length < 2) return null
+
+  const items: Object[] = _.map(displayNames, displayName => ({
+    key: displayName,
+    active: activeDisplayName === displayName,
+    content:
+      displayName === parentDisplayName
+        ? displayName
+        : displayName.replace(parentDisplayName, `${parentDisplayName}.`),
+    name: displayName,
+    onClick: onItemClick,
+  }))
 
   return (
-    <Menu styles={{ color: 'green' }} type="secondary" pills>
-      {_.map(displayNames, displayName => (
-        <Menu.Item
-          key={displayName}
-          active={activeDisplayName === displayName}
-          content={
-            displayName === parentDisplayName
-              ? displayName
-              : displayName.replace(parentDisplayName, `${parentDisplayName}.`)
-          }
-          name={displayName}
-          onClick={onItemClick}
-        />
-      ))}
-    </Menu>
+    <Menu styles={{ color: 'green' }} primary pills accessibility={tabListBehavior} items={items} />
   )
 }
 

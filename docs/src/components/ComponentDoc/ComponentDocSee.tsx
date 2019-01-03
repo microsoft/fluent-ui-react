@@ -10,6 +10,7 @@ const listStyle = { display: 'block' }
 
 const ComponentDocSee: any = ({ displayName }) => {
   const items = getInfoForSeeTags(displayName)
+  if (items.length === 0) return null
 
   return (
     <List style={listStyle}>

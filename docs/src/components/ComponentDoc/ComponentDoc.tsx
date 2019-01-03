@@ -83,12 +83,12 @@ class ComponentDoc extends React.Component<any, any> {
             />
             <ComponentAccessibility info={info} />
             <ComponentDocSee displayName={info.displayName} />
-            <ComponentDocLinks
+            {/* <ComponentDocLinks
               displayName={info.displayName}
               parentDisplayName={info.parentDisplayName}
               repoPath={info.repoPath}
               type={info.type}
-            />
+            /> */}
             <ComponentProps displayName={info.displayName} props={info.props} />
 
             <div ref={this.handleExamplesRef}>

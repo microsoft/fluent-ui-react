@@ -16,7 +16,7 @@ const labelStyles: ComponentSlotStylesInput<LabelProps, any> = {
     display: 'inline-flex',
     alignItems: 'center',
     height: variables.height,
-    fontSize: pxToRem(14),
+    //    fontSize: pxToRem(14),
     lineHeight: variables.height,
     backgroundColor: variables.backgroundColor,
     color: variables.color,

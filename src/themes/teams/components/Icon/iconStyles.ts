@@ -71,7 +71,7 @@ const getBorderedStyles = (circular: boolean, boxShadowColor: string): ICSSInJSS
 }
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
-  padding: pxToRem(4),
+  padding: pxToRem(10),
 })
 
 const getIconSize = (size: IconSize, sizeModifier: IconSizeModifier): number => {

@@ -24,9 +24,14 @@ export default class ComponentTableRow extends React.Component<any, any> {
   render() {
     const { defaultValue, description, name, required, tags, type } = this.props
     const hideRow = this.docSiteHidden(tags)
+    const rowStyle: React.CSSProperties = {
+      borderTopWidth: '1px',
+      borderTopStyle: 'solid',
+      borderTopColor: 'grey',
+    }
 
     return (
-      <tr className={hideRow ? 'hidden' : ''}>
+      <tr className={hideRow ? 'hidden' : ''} style={rowStyle}>
         <td>
           <ComponentPropName name={name} required={required} />
         </td>

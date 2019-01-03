@@ -159,7 +159,7 @@ class RadioGroupItem extends AutoControlledComponent<
           {Icon.create(icon || '', {
             defaultProps: {
               circular: true,
-              size: 'smaller',
+              size: 'small',
               variables: variables.icon,
               styles: styles.icon,
             },

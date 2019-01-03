@@ -5,15 +5,21 @@ import * as React from 'react'
 import ComponentTableHeader from './ComponentTableHeader'
 import ComponentTableRow from './ComponentTableRow'
 
+const tableStyles: React.CSSProperties = {
+  textAlign: 'left',
+  borderCollapse: 'collapse',
+}
 /**
  * Displays a table of a Component's PropTypes.
  */
 const ComponentTable: any = ({ props }) => (
-  <table>
+  <table style={tableStyles}>
     <ComponentTableHeader />
-    {_.map(props, propDef => (
-      <ComponentTableRow {...propDef} key={propDef.name} />
-    ))}
+    <tbody>
+      {_.map(props, propDef => (
+        <ComponentTableRow {...propDef} key={propDef.name} />
+      ))}
+    </tbody>
   </table>
 )
 

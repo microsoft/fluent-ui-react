@@ -34,7 +34,7 @@ export default (siteVars: any): MenuVariables => {
 
     activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
-    focusedBackgroundColor: siteVars.gray14,
+    focusedBackgroundColor: siteVars.gray10,
     borderColor: siteVars.gray08,
 
     primaryActiveColor: siteVars.white,
