@@ -498,7 +498,7 @@ export default class Dropdown extends AutoControlledComponent<
     let filteredItems = items
 
     if (multiple) {
-      filteredItems = filteredItems.filter(item => (value as ShorthandValue[]).indexOf(item) === -1)
+      filteredItems = _.difference(filteredItems, value as ShorthandValue[])
     }
     if (search) {
       if (_.isFunction(search)) {
