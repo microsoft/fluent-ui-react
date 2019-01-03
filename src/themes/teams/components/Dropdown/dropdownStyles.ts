@@ -87,6 +87,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    userSelect: 'none',
     ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
   }),
 }
