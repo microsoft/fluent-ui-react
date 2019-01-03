@@ -3,7 +3,11 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
+import {
+  ComponentSlotStylesInput,
+  ComponentVariablesInput,
+  ComponentSlotClasses,
+} from '../../themes/types'
 import Downshift, {
   DownshiftState,
   StateChangeOptions,
@@ -23,7 +27,6 @@ import {
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
 import Text from '../Text/Text'
-import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
@@ -256,7 +259,7 @@ export default class Dropdown extends AutoControlledComponent<
                         variables,
                       )
                     : this.renderTriggerButton(styles, getToggleButtonProps)}
-                  {toggleButton && this.renderToggleButton(getToggleButtonProps, styles, isOpen)}
+                  {toggleButton && this.renderToggleButton(getToggleButtonProps, classes, isOpen)}
                   {this.renderItemsList(
                     styles,
                     variables,
@@ -349,19 +352,14 @@ export default class Dropdown extends AutoControlledComponent<
 
   private renderToggleButton(
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
-    styles: ComponentSlotStylesInput,
+    classes: ComponentSlotClasses,
     isOpen: boolean,
   ) {
-    const { onClick, onBlur, onKeyDown, onKeyUp } = getToggleButtonProps()
+    const { onClick } = getToggleButtonProps()
     return (
-      <Icon
-        name={`chevron ${isOpen ? 'up' : 'down'}`}
-        styles={styles.toggleButton}
-        onClick={onClick}
-        onBlur={onBlur}
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-      />
+      <span className={classes.toggleButton} onClick={onClick}>
+        {isOpen ? String.fromCharCode(9650) : String.fromCharCode(9660)}
+      </span>
     )
   }
 
