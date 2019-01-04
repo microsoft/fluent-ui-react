@@ -374,8 +374,9 @@ export default class Dropdown extends AutoControlledComponent<
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
     const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true })
+    const { search } = this.props
     // If it's just a selection, some attributes and listeners from Downshift input need to go on the menu list.
-    if (!this.props.search) {
+    if (!search) {
       const accessibilityInputProps = getInputProps()
       accessibilityMenuProps['aria-activedescendant'] =
         accessibilityInputProps['aria-activedescendant']
@@ -400,7 +401,7 @@ export default class Dropdown extends AutoControlledComponent<
         <List
           {...accessibilityMenuPropsRest}
           styles={styles.list}
-          tabIndex={-1}
+          tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!isOpen}
           items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
