@@ -54,7 +54,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { active, children, content } = this.props
+    const { children, content } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -66,7 +66,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-        {active ? <span>&#x25BE;</span> : <span>&#x25B8;</span>}
+        <span className={classes.arrow} />
         {content}
       </ElementType>
     )

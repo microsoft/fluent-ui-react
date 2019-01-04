@@ -2,6 +2,7 @@ import { pxToRem } from '../../utils'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
+import constants from '../../constants'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
@@ -252,6 +253,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
   root: ({ props, variables: v }): ICSSInJSStyle => {
     const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
+    const { arrowDown, arrowRight } = constants.unicodeCharacters
 
     return {
       color: 'inherit',
@@ -336,7 +338,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           position: 'relative',
           float: 'right',
           left: pxToRem(10),
-          content: props.vertical ? '"\u25B8"' : '"\u25BE"',
+          userSelect: 'none',
+          content: props.vertical ? `"${arrowRight}"` : `"${arrowDown}"`,
         }),
       },
     }
