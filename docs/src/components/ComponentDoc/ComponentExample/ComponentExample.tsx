@@ -404,7 +404,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     ].join('')
 
     return (
-      <Menu size="small" secondary inverted text styles={codeEditorStyle}>
+      <Menu size="small" secondary styles={codeEditorStyle}>
         <SourceRender.Consumer>
           {({ error }) => (
             <Menu.Item

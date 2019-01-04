@@ -14,11 +14,11 @@ const ContributionPrompt: any = ({ children }) => (
       <p>
         If there's no{' '}
         <a href={`${constants.repoURL}/pulls`}>
-          pull request <Icon fitted size="small" name="external" />
+          pull request <Icon size="small" name="external" />
         </a>{' '}
         open for this, you should{' '}
         <a href={`${constants.repoURL}/blob/master/.github/CONTRIBUTING.md`}>
-          contribute <Icon fitted size="small" name="external" />
+          contribute <Icon size="small" name="external" />
         </a>{' '}
         one!
       </p>
