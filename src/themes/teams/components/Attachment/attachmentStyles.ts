@@ -16,6 +16,14 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     background: variables.backgroundColor,
     color: variables.textColor,
 
+    outline: 0,
+
+    ...(props.isFromKeyboard && {
+      ':focus': {
+        outline: `.2rem solid ${variables.focusOutlineColor}`,
+      },
+    }),
+
     ...((props.actionable || props.onClick) && {
       cursor: 'pointer',
 
