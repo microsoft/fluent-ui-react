@@ -155,25 +155,22 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   private static isBrowserContext = isBrowser()
 
-  private isPopupClosing = false
+  private closeTimeoutId
 
   setPopupOpen(newOpen, e) {
+    clearTimeout(this.closeTimeoutId)
     if (!newOpen) {
       this.schedulePopupClose(e)
     } else {
-      this.isPopupClosing = false
       this.trySetOpen(true, e)
     }
   }
 
   private schedulePopupClose = e => {
     const { mouseLeaveDelay } = this.props
-    this.isPopupClosing = true
-    setTimeout(() => {
-      if (this.isPopupClosing) {
-        this.trySetOpen(false, e)
-        this.isPopupClosing = false
-      }
+
+    this.closeTimeoutId = setTimeout(() => {
+      this.trySetOpen(false, e)
     }, mouseLeaveDelay)
   }
 
