@@ -225,8 +225,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v }): ICSSInJSStyle => {
+  root: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
+    const { arrowDown, arrowRight } = theme.siteVariables
 
     return {
       color: 'inherit',
@@ -311,10 +312,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           position: 'relative',
           float: 'right',
           left: pxToRem(10),
-          content: v.submenuIndicatorContent,
-          ...(!props.vertical && {
-            transform: `rotate(${v.submenuIndicatorRotationAngle}deg)`,
-          }),
+          userSelect: 'none',
+          content: props.vertical ? `"${arrowRight}"` : `"${arrowDown}"`,
         }),
       },
     }
