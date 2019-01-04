@@ -133,9 +133,9 @@ export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
   DropdownState
 > {
-  private buttonNode: HTMLElement
   private inputNode: HTMLElement
   private listNode: HTMLElement
+  private buttonRef = React.createRef<HTMLElement>()
 
   static displayName = 'Dropdown'
 
@@ -289,11 +289,7 @@ export default class Dropdown extends AutoControlledComponent<
     const content = value && !multiple ? itemToString(value) : placeholder
 
     return (
-      <Ref
-        innerRef={(buttonNode: HTMLElement) => {
-          this.buttonNode = buttonNode
-        }}
-      >
+      <Ref innerRef={this.buttonRef}>
         <Button
           content={content}
           fluid
@@ -669,7 +665,7 @@ export default class Dropdown extends AutoControlledComponent<
         return
       case keyboardKey.Escape:
         accessibilityInputPropsKeyDown(e)
-        this.buttonNode.focus()
+        this.buttonRef.current.focus()
         return
       default:
         accessibilityInputPropsKeyDown(e)
@@ -689,7 +685,7 @@ export default class Dropdown extends AutoControlledComponent<
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
     if (!search) {
-      this.buttonNode.focus()
+      this.buttonRef.current.focus()
     }
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
