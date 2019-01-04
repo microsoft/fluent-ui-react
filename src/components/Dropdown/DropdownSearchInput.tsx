@@ -10,12 +10,9 @@ import Input from '../Input/Input'
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
   /** Informs the search input about an existing toggle button. */
   hasToggleButton?: boolean
-  /**
-   * Ref callback with an input DOM node.
-   *
-   * @param {JSX.Element} node - input DOM node.
-   */
-  inputRef?: (inputNode: HTMLElement) => void
+
+  /** Ref for input DOM node. */
+  inputRef?: React.Ref<HTMLElement>
 
   /**
    * Called on input element focus.
@@ -71,16 +68,12 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     accessibilityInputProps: PropTypes.object,
     accessibilityComboboxProps: PropTypes.object,
     hasToggleButton: PropTypes.bool,
-    inputRef: PropTypes.func,
+    inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputKeyDown: PropTypes.func,
     onKeyUp: PropTypes.func,
     placeholder: PropTypes.string,
-  }
-
-  private handleInputRef = (inputNode: HTMLElement) => {
-    _.invoke(this.props, 'inputRef', inputNode)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
@@ -100,10 +93,15 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
   }
 
   public renderComponent({ rest, styles }: RenderResultConfig<DropdownSearchInputProps>) {
-    const { accessibilityComboboxProps, accessibilityInputProps, placeholder } = this.props
+    const {
+      accessibilityComboboxProps,
+      accessibilityInputProps,
+      inputRef,
+      placeholder,
+    } = this.props
     return (
       <Input
-        inputRef={this.handleInputRef}
+        inputRef={inputRef}
         onFocus={this.handleFocus}
         onKeyUp={this.handleKeyUp}
         wrapper={{

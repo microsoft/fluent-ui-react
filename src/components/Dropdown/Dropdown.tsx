@@ -23,6 +23,7 @@ import {
   RenderResultConfig,
   customPropTypes,
   commonPropTypes,
+  handleRef,
 } from '../../lib'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
@@ -133,9 +134,9 @@ export default class Dropdown extends AutoControlledComponent<
   Extendable<DropdownProps>,
   DropdownState
 > {
-  private inputNode: HTMLElement
-  private listNode: HTMLElement
   private buttonRef = React.createRef<HTMLElement>()
+  private inputRef = React.createRef<HTMLElement>()
+  private listRef = React.createRef<HTMLElement>()
 
   static displayName = 'Dropdown'
 
@@ -224,7 +225,7 @@ export default class Dropdown extends AutoControlledComponent<
           getA11yStatusMessage={getA11yStatusMessage}
           onStateChange={changes => {
             if (changes.isOpen && !search) {
-              this.listNode.focus()
+              this.listRef.current.focus()
             }
           }}
         >
@@ -330,9 +331,7 @@ export default class Dropdown extends AutoControlledComponent<
         placeholder: noPlaceholder ? '' : placeholder,
         hasToggleButton: !!toggleButton,
         variables,
-        inputRef: (inputNode: HTMLElement) => {
-          this.inputNode = inputNode
-        },
+        inputRef: this.inputRef,
       },
       overrideProps: (predefinedProps: DropdownSearchInputProps) =>
         this.handleSearchInputOverrides(
@@ -389,9 +388,9 @@ export default class Dropdown extends AutoControlledComponent<
     const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
     return (
       <Ref
-        innerRef={(listNode: HTMLElement) => {
-          this.listNode = listNode
-          innerRef(listNode)
+        innerRef={(listElement: HTMLElement) => {
+          handleRef(this.listRef, listElement)
+          handleRef(innerRef, listElement)
         }}
       >
         <List
@@ -485,7 +484,7 @@ export default class Dropdown extends AutoControlledComponent<
       case Downshift.stateChangeTypes.blurButton:
         // Downshift closes the list by default on trigger blur. It does not support the case when dropdown is
         // single selection and focuses list on trigger click/up/down/space/enter. Treating that here.
-        if (state.isOpen && document.activeElement === this.listNode) {
+        if (state.isOpen && document.activeElement === this.listRef.current) {
           return {} // won't change state in this case.
         }
       default:
@@ -645,7 +644,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleContainerClick = (isOpen: boolean) => {
-    !isOpen && this.inputNode.focus()
+    !isOpen && this.inputRef.current.focus()
   }
 
   private handleListKeyDown = (
@@ -694,7 +693,7 @@ export default class Dropdown extends AutoControlledComponent<
 
   private handleSelectedItemRemove(e: React.SyntheticEvent, item: ShorthandValue) {
     this.removeItemFromValue(item)
-    this.inputNode.focus()
+    this.inputRef.current.focus()
     e.stopPropagation()
   }
 
