@@ -50,7 +50,7 @@ class IconViewerExample extends React.Component<any, {}> {
         />
 
         <div style={{ marginTop: '15px' }}>
-          <Menu tabular style={{ margin: '15px 0' }}>
+          <Menu tabular styles={{ margin: '15px 0' }}>
             {Object.keys(this.iconFilters).map(filterName => (
               <Menu.Item
                 key={filterName}
@@ -67,7 +67,7 @@ class IconViewerExample extends React.Component<any, {}> {
                 <div>
                   <div>
                     <Header as="h3" content="Regular" textAlign="center" />
-                    <Grid columns={4} style={{ textAlign: 'center' }}>
+                    <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))
@@ -87,7 +87,7 @@ class IconViewerExample extends React.Component<any, {}> {
                     <Divider>
                       <Header as="h3" content="Outline" textAlign="center" />
                     </Divider>
-                    <Grid columns={4} style={{ textAlign: 'center' }}>
+                    <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
                         .filter(name => this.applyCurrentFilter(theme.icons[name]))

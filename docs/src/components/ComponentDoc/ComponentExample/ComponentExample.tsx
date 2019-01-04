@@ -14,7 +14,7 @@ import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ContributionPrompt from '../ContributionPrompt'
 import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
-import { ThemeInput, ThemePrepared } from 'src/themes/types'
+import { ThemeInput, ThemePrepared, ICSSInJSStyle } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 import CodeSnippet from '../../CodeSnippet'
@@ -404,7 +404,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     ].join('')
 
     return (
-      <Menu size="small" secondary inverted text style={codeEditorStyle}>
+      <Menu size="small" secondary inverted text styles={codeEditorStyle}>
         <SourceRender.Consumer>
           {({ error }) => (
             <Menu.Item
@@ -413,12 +413,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               active={error}
               content="Prettier"
               onClick={this.handleFormat}
-              style={!this.canBePrettified() ? disabledStyle : undefined}
+              styles={(!this.canBePrettified() ? disabledStyle : undefined) as ICSSInJSStyle}
             />
           )}
         </SourceRender.Consumer>
         <Menu.Item
-          style={!originalCodeHasChanged ? disabledStyle : undefined}
+          styles={(!originalCodeHasChanged ? disabledStyle : undefined) as ICSSInJSStyle}
           icon="refresh"
           content="Reset"
           onClick={this.resetJSX}
@@ -430,7 +430,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           onClick={this.copyJSX}
         />
         <Menu.Item
-          style={{ border: 'none' }}
+          styles={{ border: 'none' }}
           icon="github"
           content="Edit"
           href={ghEditHref}
@@ -506,11 +506,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             const variables = mergedVariables[displayName]
 
             if (!variables) {
-              return (
-                <Segment size="small" inverted>
-                  {displayName} has no variables to edit.
-                </Segment>
-              )
+              return <Segment inverted>{displayName} has no variables to edit.</Segment>
             }
 
             const variablesObject = callable(variables)(siteVariables)
@@ -587,7 +583,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-        <Segment width={19} style={{ borderBottom: '1px solid #ddd' }}>
+        <Segment width={19} styles={{ borderBottom: '1px solid #ddd' }}>
           <div style={{ display: 'flex' }}>
             <div style={{ flex: '1' }}>
               <ComponentExampleTitle description={description} title={title} />
@@ -613,7 +609,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         </Segment>
 
         {children && (
-          <Segment width={16} style={childrenStyle}>
+          <Segment width={16} styles={childrenStyle}>
             {children}
           </Segment>
         )}
@@ -633,7 +629,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 <Segment
                   dir={showRtl ? 'rtl' : undefined}
                   className={`rendered-example ${this.getKebabExamplePath()}`}
-                  style={{
+                  styles={{
                     padding: '2rem',
                     color: siteVariables.bodyColor,
                     backgroundColor: siteVariables.bodyBackground,
@@ -649,7 +645,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               )
             }}
           />
-          <Segment style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
+          <Segment styles={{ padding: 0 }}>
             {this.renderJSX()}
             {this.renderError()}
             {this.renderHTML()}
@@ -657,7 +653,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           </Segment>
           <div style={{ paddingBottom: '10px' }} />
         </SourceRender>
-        <Divider section />
+        <Divider />
       </Segment>
     )
   }

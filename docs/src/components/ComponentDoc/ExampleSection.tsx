@@ -12,7 +12,7 @@ const headerStyle: React.CSSProperties = {
 
 const ExampleSection: any = ({ title, children, ...rest }) => (
   <Segment>
-    <Header as="h2" style={headerStyle} className="no-anchor">
+    <Header as="h2" styles={headerStyle} className="no-anchor">
       {title}
     </Header>
     {children}

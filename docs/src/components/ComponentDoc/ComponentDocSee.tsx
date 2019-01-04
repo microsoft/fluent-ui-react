@@ -13,7 +13,7 @@ const ComponentDocSee: any = ({ displayName }) => {
   if (items.length === 0) return null
 
   return (
-    <List style={listStyle}>
+    <List styles={listStyle}>
       {/* Heads up! Still render empty lists to reserve the whitespace */}
       <List.Item>
         <Header color="grey" content={items.length > 0 ? 'See:' : ' '} size="tiny" />

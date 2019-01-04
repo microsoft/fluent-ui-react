@@ -48,7 +48,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
                 key={keyValue}
                 className="docs-example"
                 id={_.kebabCase(variation.name)}
-                style={exampleStyle}
+                styles={exampleStyle}
               >
                 <ComponentExampleTitle
                   title={this.baseName(variation.name)}

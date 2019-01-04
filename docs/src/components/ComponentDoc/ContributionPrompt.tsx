@@ -1,13 +1,13 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Icon, Segment, Text } from '@stardust-ui/react'
+import { Icon, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { constants } from 'src/lib'
 
-const wrapStyle = { wordBreak: 'break-word' }
+const wrapStyle: ICSSInJSStyle = { wordBreak: 'break-word' }
 
 const ContributionPrompt: any = ({ children }) => (
-  <Segment inverted style={wrapStyle}>
+  <Segment inverted styles={wrapStyle}>
     <Icon name="bullhorn" />
     <Text>
       {children && <div>{children}</div>}
