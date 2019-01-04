@@ -155,29 +155,12 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   private static isBrowserContext = isBrowser()
 
-  private closeTimeoutId
-
-  setPopupOpen(newOpen, e) {
-    clearTimeout(this.closeTimeoutId)
-    if (!newOpen) {
-      this.schedulePopupClose(e)
-    } else {
-      this.trySetOpen(true, e)
-    }
-  }
-
-  private schedulePopupClose = e => {
-    const { mouseLeaveDelay } = this.props
-
-    this.closeTimeoutId = setTimeout(() => {
-      this.trySetOpen(false, e)
-    }, mouseLeaveDelay)
-  }
-
   private outsideClickSubscription = EventStack.noSubscription
 
   private triggerDomElement = null
   private popupDomElement = null
+
+  private closeTimeoutId
 
   protected actionHandlers: AccessibilityActionHandlers = {
     closeAndFocusTrigger: e => {
@@ -188,38 +171,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       this.close(e)
       e.stopPropagation()
     },
-  }
-
-  private close = (e, onClose?: Function) => {
-    if (this.state.open) {
-      this.trySetOpen(false, e, true)
-      onClose && onClose()
-    }
-  }
-
-  private updateOutsideClickSubscription() {
-    this.outsideClickSubscription.unsubscribe()
-
-    if (this.state.open) {
-      setTimeout(() => {
-        this.outsideClickSubscription = EventStack.subscribe(
-          'click',
-          e => {
-            const isOutsidePopupElement =
-              this.popupDomElement && !this.popupDomElement.contains(e.target)
-            const isOutsideTriggerElement =
-              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
-
-            if (isOutsidePopupElement && isOutsideTriggerElement) {
-              this.state.open && this.trySetOpen(false, e, true)
-            }
-          },
-          {
-            useCapture: true,
-          },
-        )
-      })
-    }
   }
 
   public componentDidMount() {
@@ -261,7 +212,32 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  getTriggerProps(triggerElement) {
+  private updateOutsideClickSubscription() {
+    this.outsideClickSubscription.unsubscribe()
+
+    if (this.state.open) {
+      setTimeout(() => {
+        this.outsideClickSubscription = EventStack.subscribe(
+          'click',
+          e => {
+            const isOutsidePopupElement =
+              this.popupDomElement && !this.popupDomElement.contains(e.target)
+            const isOutsideTriggerElement =
+              this.triggerDomElement && !this.triggerDomElement.contains(e.target)
+
+            if (isOutsidePopupElement && isOutsideTriggerElement) {
+              this.state.open && this.trySetOpen(false, e, true)
+            }
+          },
+          {
+            useCapture: true,
+          },
+        )
+      })
+    }
+  }
+
+  private getTriggerProps(triggerElement) {
     const triggerProps: any = {}
 
     const { on } = this.props
@@ -324,7 +300,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     return triggerProps
   }
 
-  getContentProps = (predefinedProps?) => {
+  private getContentProps = (predefinedProps?) => {
     const contentProps: any = {}
 
     const { on } = this.props
@@ -483,6 +459,26 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
     if (this.trySetState({ open: newValue }) || forceChangeEvent) {
       _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
+    }
+  }
+
+  private setPopupOpen(newOpen, e) {
+    clearTimeout(this.closeTimeoutId)
+    newOpen ? this.trySetOpen(true, e) : this.schedulePopupClose(e)
+  }
+
+  private schedulePopupClose = e => {
+    const { mouseLeaveDelay } = this.props
+
+    this.closeTimeoutId = setTimeout(() => {
+      this.trySetOpen(false, e)
+    }, mouseLeaveDelay)
+  }
+
+  private close = (e, onClose?: Function) => {
+    if (this.state.open) {
+      this.trySetOpen(false, e, true)
+      onClose && onClose()
     }
   }
 }
