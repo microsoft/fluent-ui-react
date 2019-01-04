@@ -64,29 +64,6 @@ const getFocusedStyles = ({
   }
 }
 
-const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
-  props,
-  variables: v,
-}): ICSSInJSStyle => {
-  const { iconOnly, pointing, pills, primary, underlined, vertical } = props
-
-  return (
-    !pills &&
-    !underlined &&
-    !(pointing && vertical) &&
-    !iconOnly && {
-      '::before': {
-        position: 'absolute',
-        content: '""',
-        top: 0,
-        right: 0,
-        ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
-        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
-      },
-    }
-  )
-}
-
 const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
@@ -196,8 +173,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(iconOnly && {
         display: 'flex',
       }),
-
-      ...itemSeparator({ props, variables: v, theme }),
 
       // active styles
       ...(active && {
