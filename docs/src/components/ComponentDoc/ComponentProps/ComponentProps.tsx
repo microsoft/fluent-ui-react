@@ -6,7 +6,7 @@ import { getComponentGroup } from 'docs/src/utils'
 import ComponentTable from '../ComponentTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { ICSSInJSStyle, Input, Text } from '@stardust-ui/react'
+import { ICSSInJSStyle, Input, Text, Segment } from '@stardust-ui/react'
 
 const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
@@ -53,17 +53,18 @@ export default class ComponentProps extends React.Component<any, any> {
 
     return (
       <div>
-        {/* Should be toggle component - need to associate text with checkbox.   */}
-        <Input type="checkbox" checked={!!activeDisplayName} onClick={this.handleToggle} inline />
-        <Text content="Props" />
+        <Segment>
+          {/* Should be toggle component - need to associate text with checkbox.   */}
+          <Input type="checkbox" checked={!!activeDisplayName} onClick={this.handleToggle} inline />
+          <Text content="Props" />
 
-        <ComponentPropsComponents
-          activeDisplayName={activeDisplayName}
-          displayNames={displayNames}
-          onItemClick={this.handleComponentClick}
-          parentDisplayName={displayName}
-        />
-
+          <ComponentPropsComponents
+            activeDisplayName={activeDisplayName}
+            displayNames={displayNames}
+            onItemClick={this.handleComponentClick}
+            parentDisplayName={displayName}
+          />
+        </Segment>
         {activeDisplayName && (
           <div style={propsContainerStyle}>
             <ComponentPropsDescription description={_.join(description, ' ')} />
