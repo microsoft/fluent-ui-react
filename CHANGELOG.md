@@ -46,6 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `color` prop to `Icon` component @Bugaa92 ([#651](https://github.com/stardust-ui/react/pull/651))
 - Create a `base` theme with Text component example @almedint ([#618](https://github.com/stardust-ui/react/pull/618))
 - Adding attachment behavior to handle space/enter key @kolaps33 ([#375](https://github.com/stardust-ui/react/pull/375))
+- Add `MenuSeparator` component and `kind` prop to the `items` inside of the `Menu` for creating different components @mnajdova ([#682](https://github.com/stardust-ui/react/pull/682))
 
 ### Documentation
 - Add more accessibility descriptions to components and behaviors @jurokapsiar  ([#648](https://github.com/stardust-ui/react/pull/648))
