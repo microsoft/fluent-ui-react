@@ -17,7 +17,6 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
           boxShadow: '0 0 1em 0.5em #f7f7f7',
           margin: '0.5em',
           padding: '0.5em',
-          position: 'absolute',
           right: '0',
           top: '0',
         }}

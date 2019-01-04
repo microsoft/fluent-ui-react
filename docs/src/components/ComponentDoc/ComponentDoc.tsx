@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Segment, Header, Icon } from '@stardust-ui/react'
+import { Grid, Header, Icon, ICSSInJSStyle } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -73,32 +73,35 @@ class ComponentDoc extends React.Component<any, any> {
     const { info } = this.props
     //   const { activePath, examplesRef } = this.state
 
+    const topPart = [
+      <Header content={info.displayName} description={_.join(info.docblock.description, ' ')} />,
+      <ComponentDocLinks
+        displayName={info.displayName}
+        parentDisplayName={info.parentDisplayName}
+        repoPath={info.repoPath}
+        type={info.type}
+      />,
+    ]
+
+    const gridStyle: ICSSInJSStyle = {
+      justifyContent: 'space-between',
+    }
+
     return (
       <DocumentTitle title={`${info.displayName} | Stardust`}>
         <div>
-          <Segment>
-            <Header
-              content={info.displayName}
-              description={_.join(info.docblock.description, ' ')}
-            />
-            <ComponentAccessibility info={info} />
-            <ComponentDocSee displayName={info.displayName} />
-            {/* <ComponentDocLinks
-              displayName={info.displayName}
-              parentDisplayName={info.parentDisplayName}
-              repoPath={info.repoPath}
-              type={info.type}
-            /> */}
-            <ComponentProps displayName={info.displayName} props={info.props} />
+          <Grid rows="1" content={topPart} styles={gridStyle} />
+          <ComponentAccessibility info={info} />
+          <ComponentDocSee displayName={info.displayName} />
+          <ComponentProps displayName={info.displayName} props={info.props} />
 
-            <div ref={this.handleExamplesRef}>
-              <ComponentExamples displayName={info.displayName} />
-            </div>
+          <div ref={this.handleExamplesRef}>
+            <ComponentExamples displayName={info.displayName} />
+          </div>
 
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
-            </div>
-          </Segment>
+          <div style={exampleEndStyle}>
+            This is the bottom <Icon name="pointing down" />
+          </div>
           {/* <ComponentSidebar
             activePath={activePath}
             displayName={info.displayName}

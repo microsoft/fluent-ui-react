@@ -1,21 +1,12 @@
-export default siteVariables => ({
-  // Header
-  // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
-  headerLineHeight: siteVariables.lineHeightSmall,
-  headerFontSize: siteVariables.fontSizes.medium,
+import { ListItemVariables } from '../../../teams/components/List/listItemVariables'
+import { Partial } from 'types/utils'
 
-  // Header Media
-  headerMediaFontSize: siteVariables.fontSizes.small,
-  // TODO: prod app uses 17.5px here, it should be 16px per the design guide!
-  headerMediaLineHeight: siteVariables.lineHeightSmall,
-
-  // Content
-  contentFontSize: siteVariables.fontSizes.small,
-  contentLineHeight: siteVariables.lineHeightSmall,
-
-  // Selectable
-  selectableFocusHoverColor: siteVariables.black,
-  selectableFocusHoverBackgroundColor: siteVariables.brand02,
-  selectedColor: siteVariables.white,
-  selectedBackgroundColor: siteVariables.gray02,
-})
+export default (siteVariables: any): Partial<ListItemVariables> => {
+  return {
+    // Selectable
+    selectableFocusHoverColor: siteVariables.black,
+    selectableFocusHoverBackgroundColor: siteVariables.brand02,
+    selectedColor: siteVariables.white,
+    selectedBackgroundColor: siteVariables.gray02,
+  }
+}
