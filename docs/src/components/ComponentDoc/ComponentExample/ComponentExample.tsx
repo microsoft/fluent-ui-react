@@ -514,7 +514,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             const items: any[] = []
 
             return (
-              <Form style={{ padding: '1rem' }}>
+              <Form styles={{ padding: '1rem' }}>
                 {_.toPairs(variablesObject).forEach((pair, key) => {
                   items.push(
                     <Form.Field

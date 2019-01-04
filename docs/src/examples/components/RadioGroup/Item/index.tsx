@@ -15,7 +15,7 @@ const States = () => (
       description="A radio can come pre-checked."
       examplePath="components/RadioGroup/Item/RadioGroupItemExampleChecked"
     >
-      <Segment style={{ marginTop: '10px' }}>
+      <Segment styles={{ marginTop: '10px' }}>
         Use <code>defaultCheckedValue</code> to set the default value.
       </Segment>
     </ComponentExample>
