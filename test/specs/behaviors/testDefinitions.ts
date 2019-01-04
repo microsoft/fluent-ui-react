@@ -71,6 +71,43 @@ definitions.push({
   },
 })
 
+// Example: Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' component's part.
+definitions.push({
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' based on the property '([a-z A-Z -]+)' if the component has '([a-z -]+)' property to '([a-z -]+)' component's part\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyBasedOn,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = [...parameters.props]
+    const property = {}
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = true
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
+    expect(expectedResult).toEqual(testHelper.convertToBooleanIfApplicable(attributeExpectedValue))
+
+    // when property depending on is undefined, then there should not be 'aria' attribute added
+    const propertyDependingOnValue = undefined
+    property[propertyDependingOn] = propertyDependingOnValue
+    const expectedResultDependingPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultDependingPropertyUndefined).toEqual(propertyDependingOnValue)
+
+    // when property based on is undefined, then there should 'aria' attribute get false value
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = undefined
+    const expectedResultBasedOnPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultBasedOnPropertyUndefined).toEqual(false)
+  },
+})
+
 // Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
   regexp: /Adds attribute '([a-z -]+)' based on the property '([a-z -]+)' to '([a-z -]+)' component's part\./g,

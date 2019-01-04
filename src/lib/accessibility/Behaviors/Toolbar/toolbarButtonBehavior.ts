@@ -16,6 +16,11 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+ * Close menu with "Escape" key.
+ * Open menu with "Arrow Down" key, when menu is horizontal.
+ * Open menu with "Arrow Right" key, when menu is vertical.
+ * Performs 'closeMenu' action on Escape.
+ * Performs 'openMenu' action on ArrowRight, ArrowDown.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -41,6 +46,14 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     anchor: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+      closeMenu: {
+        keyCombinations: [{ keyCode: keyboardKey.Escape }],
+      },
+      openMenu: {
+        keyCombinations: [
+          { keyCode: props.vertical ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
+        ],
       },
     },
   },
