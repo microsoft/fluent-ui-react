@@ -128,7 +128,10 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
           const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
           const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
 
-          targetDomNode && targetDomNode.focus()
+          if (targetDomNode) {
+            const itemElements = targetDomNode.getElementsByClassName('ui-list__item')
+            if (itemElements.length > 0) itemElements.item(0).focus()
+          }
         })
       },
     )

@@ -12,6 +12,8 @@ import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import Slot from '../Slot/Slot'
+import cx from 'classnames'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -81,10 +83,13 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
 
     accessibility: PropTypes.func,
     onClick: PropTypes.func,
+
+    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'div',
+    wrapper: { as: 'li' },
     accessibility: listItemBehavior as Accessibility,
   }
 
@@ -111,9 +116,10 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
       headerMedia,
       truncateContent,
       truncateHeader,
+      wrapper,
     } = this.props
 
-    return (
+    const itemLayout = (
       <ItemLayout
         as={as}
         className={classes.root}
@@ -132,11 +138,28 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
         onClick={this.handleClick}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
+        {...accessibility.attributes.item}
+        {...accessibility.keyHandlers.item}
         {...rest}
+        {...!wrapper && { onClick: this.handleClick }}
       />
     )
+
+    if (wrapper) {
+      return Slot.create(wrapper, {
+        defaultProps: {
+          className: cx('ui-list__item__wrapper', classes.wrapper),
+          ...accessibility.attributes.root,
+          ...accessibility.keyHandlers.root,
+        },
+        overrideProps: () => ({
+          children: itemLayout,
+          onClick: this.handleClick,
+        }),
+      })
+    }
+
+    return itemLayout
   }
 }
 
