@@ -49,15 +49,27 @@ jobs:
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
+
+      - restore_cache:
+          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
           name: Vulnerability Tests
           command: yarn test:vulns
+      # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
+      - save_cache:
+          key: v1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
+          paths:
+            - .vuln-scans
+
       - run:
           name: Visual Tests
           command: yarn test:visual
       - run:
           name: Project Tests
           command: yarn test:projects
+      - run:
+          name: Bundle Statistics
+          command: yarn build:stats
       - run:
           name: Danger JS
           command: |

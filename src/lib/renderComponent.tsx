@@ -24,6 +24,7 @@ import {
   AccessibilityDefinition,
   AccessibilityActionHandlers,
   FocusZoneMode,
+  FocusZoneDefinition,
 } from './accessibility/types'
 import { defaultBehavior } from './accessibility'
 import getKeyDownHandlers from './getKeyDownHandlers'
@@ -33,7 +34,9 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtiliti
 import createAnimationStyles from './createAnimationStyles'
 
 export interface RenderResultConfig<P> {
-  ElementType: React.ReactType<P>
+  // TODO: Switch back to React.ReactType after issue will be resolved
+  // https://github.com/Microsoft/TypeScript/issues/28768
+  ElementType: React.ComponentType<P> | string
   classes: ComponentSlotClasses
   rest: Props
   variables: ComponentVariablesObject
@@ -60,13 +63,19 @@ export interface RenderConfig<P> {
 const getAccessibility = (
   props: State & PropsWithVarsAndStyles,
   actionHandlers: AccessibilityActionHandlers,
+  isRtlEnabled: boolean,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
   const accessibility: AccessibilityDefinition = (customAccessibility ||
     defaultAccessibility ||
     defaultBehavior)(props)
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
+  const keyHandlers = getKeyDownHandlers(
+    actionHandlers,
+    accessibility.keyActions,
+    props,
+    isRtlEnabled,
+  )
   return {
     ...accessibility,
     keyHandlers,
@@ -100,11 +109,19 @@ function wrapInGenericFocusZone<
   )
 }
 
-const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef): any => {
+const renderWithFocusZone = <P extends {}>(
+  render: RenderComponentCallback<P>,
+  focusZoneDefinition: FocusZoneDefinition,
+  config: RenderResultConfig<P>,
+  focusZoneRef: (focusZone: FocusZone) => void,
+): any => {
   if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     return wrapInGenericFocusZone(
       FabricFocusZone,
-      focusZoneDefinition.props,
+      {
+        ...focusZoneDefinition.props,
+        isRtl: config.rtl,
+      },
       render(config),
       focusZoneRef,
     )
@@ -115,6 +132,7 @@ const renderWithFocusZone = (render, focusZoneDefinition, config, focusZoneRef):
     config.rest = { ...config.rest, ...focusZoneDefinition.props }
     config.rest.as = originalElementType
     config.rest.ref = focusZoneRef
+    config.rest.isRtl = config.rtl
   }
   return render(config)
 }
@@ -152,7 +170,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           rtl = false,
           renderer = felaRenderer,
         } = theme
-        const ElementType = getElementType({ defaultProps }, props)
+        const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
 
         const stateAndProps = { ...state, ...props }
 
@@ -173,7 +191,13 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
             root: props.styles,
           },
         )
-        const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers)
+
+        const accessibility: AccessibilityBehavior = getAccessibility(
+          stateAndProps,
+          actionHandlers,
+          rtl,
+        )
+
         const rest = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,

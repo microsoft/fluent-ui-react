@@ -8,7 +8,6 @@ import { Accessibility } from '../../types'
  * @specification
  * Adds role='listbox'.
  */
-
 const selectableListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {

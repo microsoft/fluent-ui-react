@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "build": "gulp build",
+    "build:stats": "gulp stats",
     "build:docs": "gulp --series dll build:docs",
     "build:dist": "gulp --series build:dist",
     "ci": "yarn lint && yarn prettier && yarn test --strict",
@@ -35,7 +36,7 @@
     "pretest": "yarn satisfied",
     "test": "gulp test",
     "test:watch": "gulp test:watch",
-    "test:vulns": "snyk test",
+    "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
@@ -44,6 +45,10 @@
     "**/*.{ts,tsx}": [
       "prettier --write",
       "tslint -t stylish --fix",
+      "git add"
+    ],
+    "**/*.{js,json}": [
+      "prettier --write",
       "git add"
     ]
   },
@@ -70,11 +75,13 @@
     "prop-types": "^15.6.1",
     "react-fela": "^7.2.0",
     "react-is": "^16.6.3",
-    "react-popper": "^1.0.2",
-    "what-input": "^5.1.2"
+    "react-popper": "^1.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/standalone": "^7.1.0",
+    "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.1.14",
     "@types/faker": "^4.1.3",
@@ -83,12 +90,13 @@
     "@types/jest-axe": "^2.2.2",
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.3.2",
-    "@types/react": "^16.3.17",
+    "@types/react": "^16.7.17",
     "@types/react-custom-scrollbars": "^4.0.5",
-    "@types/react-dom": "^16.0.6",
+    "@types/react-dom": "^16.0.11",
     "@types/react-is": "^16.5.0",
     "@types/react-router": "^4.0.27",
     "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^0.1.19",
     "color": "^3.1.0",
     "connect-history-api-fallback": "^1.3.0",
     "copy-to-clipboard": "^3.0.8",
@@ -120,16 +128,16 @@
     "inquirer": "^6.0.0",
     "jest": "^23.6.0",
     "jest-axe": "^3.1.0",
+    "json-stable-stringify-without-jsonify": "^1.0.1",
     "leven": "^2.1.0",
     "lint-staged": "^7.0.2",
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "prettier": "^1.15.3",
-    "raw-loader": "^0.5.1",
     "react": "^16.0.0",
     "react-ace": "^5.1.2",
     "react-custom-scrollbars": "^4.2.1",
-    "react-docgen-typescript": "^1.12.0",
+    "react-docgen-typescript": "^1.12.2",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.0.0",
     "react-element-to-jsx-string": "^14.0.2",
@@ -149,10 +157,11 @@
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
     "ts-jest": "^23.10.4",
+    "ts-loader": "^5.3.0",
     "ts-node": "^6.1.0",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typescript": "~3.1.0",
+    "typescript": "~3.2.2",
     "webpack": "^4.25.1",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.18.2"

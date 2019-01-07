@@ -11,7 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -35,7 +35,7 @@ export interface AccordionTitleProps
 /**
  * A standard AccordionTitle.
  */
-class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
+class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
   static create: Function
@@ -54,7 +54,7 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, rest }) {
-    const { active, children, content } = this.props
+    const { children, content } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -66,7 +66,6 @@ class AccordionTitle extends UIComponent<Extendable<AccordionTitleProps>, any> {
 
     return (
       <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-        {active ? <span>&#9660;</span> : <span>&#9654;</span>}
         {content}
       </ElementType>
     )

@@ -1,7 +1,7 @@
-import React from 'react'
+import * as React from 'react'
 import { List, Image } from '@stardust-ui/react'
 
-const ListExampleSelection = ({ knobs }) => (
+const ListExampleSelectable = ({ knobs }) => (
   <List debug={knobs.debug}>
     <List.Item
       media={<Image src="public/images/avatar/small/matt.jpg" avatar />}
@@ -24,4 +24,4 @@ const ListExampleSelection = ({ knobs }) => (
   </List>
 )
 
-export default ListExampleSelection
+export default ListExampleSelectable

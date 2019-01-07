@@ -1,12 +1,7 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true
+    "module": "esnext"
   },
-  "include": [
-    "../src",
-    "../docs/src",
-    "../types"
-  ]
+  "include": ["../src", "../docs/src", "../types"]
 }

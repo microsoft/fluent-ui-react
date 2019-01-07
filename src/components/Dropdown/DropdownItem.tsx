@@ -9,7 +9,7 @@ import {
   customPropTypes,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ShorthandValue, ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Image from '../Image/Image'
@@ -40,7 +40,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
  * A DropdownItem is a sub-component of the Dropdown,
  * used to display items of the dropdown list.
  */
-class DropdownItem extends UIComponent<Extendable<DropdownItemProps>, any> {
+class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
   static displayName = 'DropdownItem'
 
   static create: Function

@@ -1,46 +1,48 @@
+import * as _ from 'lodash'
+
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
 import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
-import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
+import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
 import { pxToRem } from '../../utils'
 import { getStyle as getSvgStyle } from './svg'
+import { IconVariables, IconSizeModifier } from './iconVariables'
 
-const sizes = new Map([
-  ['micro', 7],
-  ['mini', 10],
-  ['tiny', 12],
-  ['small', 14],
-  ['normal', 16],
-  ['large', 20],
-  ['big', 32],
-  ['huge', 40],
-  ['massive', 64],
-])
+const sizes: { [key in IconSize]: number } = {
+  smallest: 7,
+  smaller: 10,
+  small: 12,
+  medium: 16,
+  large: 20,
+  larger: 32,
+  largest: 40,
+}
 
 const getDefaultFontIcon = (iconName: string) => {
   return callable(fontAwesomeIcons(iconName).icon)()
 }
 
 const getFontStyles = (
-  size: string,
+  size: number,
   iconName: string,
   themeIcon?: ResultOf<FontIconSpec>,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
+  const sizeInRems = pxToRem(size)
 
   return {
     fontFamily,
-    fontSize: getSize(size),
+    fontSize: sizeInRems,
     lineHeight: 1,
     textAlign: 'center',
 
     '::before': {
       content,
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
+      width: sizeInRems,
+      height: sizeInRems,
     },
   }
 }
@@ -58,7 +60,7 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (circular, boxShadowColor): ICSSInJSStyle => {
+const getBorderedStyles = (circular: boolean, boxShadowColor: string): ICSSInJSStyle => {
   return {
     ...getPaddedStyle(),
 
@@ -71,13 +73,27 @@ const getPaddedStyle = (): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
-const getSize = size => pxToRem(sizes.get(size))
+const getIconSize = (size: IconSize, sizeModifier: IconSizeModifier): number => {
+  if (!sizeModifier) {
+    return sizes[size]
+  }
 
-const getIconColor = color => color || 'currentColor'
+  const modifiedSizes = {
+    large: {
+      x: 24,
+      xx: 28,
+    },
+  }
 
-const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
+  return modifiedSizes[size] && modifiedSizes[size][sizeModifier]
+}
+
+const getIconColor = (colorProp: string, variables: IconVariables) =>
+  _.get(variables.colors, colorProp, variables.color || 'currentColor')
+
+const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
-    props: { disabled, name, size, bordered, circular, xSpacing },
+    props: { disabled, name, size, bordered, circular, color, xSpacing },
     variables: v,
     theme,
   }): ICSSInJSStyle => {
@@ -91,11 +107,10 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(isFontBased &&
-        getFontStyles(size, name, callable(iconSpec && (iconSpec.icon as FontIconSpec))())),
+      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
 
       ...(isFontBased && {
-        color: getIconColor(v.color),
+        color: getIconColor(color, v),
 
         ...(disabled && {
           color: v.disabledColor,
@@ -105,7 +120,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor || getIconColor(v.color))),
+        getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
     }
   },
 
@@ -127,12 +142,14 @@ const iconStyles: ComponentSlotStylesInput<IconProps, any> = {
     }
   },
 
-  svg: ({ props: { size, disabled }, variables: v }): ICSSInJSStyle => {
+  svg: ({ props: { size, color, disabled }, variables: v }): ICSSInJSStyle => {
+    const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
+
     return {
       display: 'block',
-      width: getSize(size),
-      height: getSize(size),
-      fill: getIconColor(v.color),
+      width: iconSizeInRems,
+      height: iconSizeInRems,
+      fill: getIconColor(color, v),
 
       ...(disabled && {
         fill: v.disabledColor,
