@@ -17,6 +17,12 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' component's part.
  * Adds attribute 'aria-haspopup=true' to 'anchor' component's part based on the property 'menu'.
+ * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Performs 'closeAllMenus' action with 'Escape' on 'root'.
+ * Performs 'closeAllMenusAndFocusNextParentItem' action with 'ArrowRight' on 'root'.
+ * Performs 'closeMenu' action with 'ArrowLeft' on 'root'.
+ * Performs 'openMenu' action with 'ArrowDown' on 'root', when orientation is horizontal.
+ * Performs 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
  */
 
 const menuItemBehavior: Accessibility = (props: any) => ({

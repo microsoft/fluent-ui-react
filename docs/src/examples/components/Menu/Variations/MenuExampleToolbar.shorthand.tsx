@@ -33,14 +33,14 @@ const items = [
     'aria-label': 'Book Tool',
   },
   {
-    key: 'book',
+    key: 'menuButton',
     icon: {
-      name: 'book',
+      name: 'more',
       circular: true,
       size: 'small',
     },
     accessibility: toolbarButtonBehavior,
-    'aria-label': 'Book Tool',
+    'aria-label': 'More options',
     menu: {
       items: [
         { key: '1', content: 'item1' },

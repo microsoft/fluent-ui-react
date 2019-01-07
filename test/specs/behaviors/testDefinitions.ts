@@ -363,33 +363,59 @@ definitions.push({
   },
 })
 
-// Example: Performs 'nextItem' action on ArrowDown, ArrowRight.
+// Performs 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action on ([a-z A-Z]+), ([a-z A-Z]+)\.+/g,
+  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' or '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [action, firstArrow, secondArrow] = [...parameters.props]
+    const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[0].keyCode
-    const expectedSecondArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[1].keyCode
-    expect(expectedFirstArrowKeyNumber).toBe(keyboardKey[firstArrow])
-    expect(expectedSecondArrowKeyNumber).toBe(keyboardKey[secondArrow])
+    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[1].keyCode
+    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
+    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
   },
 })
 
-// Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+// Performs 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Performs click action with '([a-z A-Z]+)' and '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
+  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [firstKey, secondKey, elementToPerformAction] = [...parameters.props]
+    const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[0].keyCode
-    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[1].keyCode
-    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
-    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Performs 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is horizontal\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Performs 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is vertical\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyVertical = { vertical: true }
+    const expectedKeyNumberVertical = parameters.behavior(propertyVertical).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
   },
 })
 

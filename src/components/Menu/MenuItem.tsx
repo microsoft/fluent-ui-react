@@ -278,6 +278,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         // the menuItem element was clicked => toggle the open/close and stop propagation
         this.trySetState({ menuOpen: active ? !this.state.menuOpen : true })
         e.stopPropagation()
+        e.preventDefault()
       }
     }
   }

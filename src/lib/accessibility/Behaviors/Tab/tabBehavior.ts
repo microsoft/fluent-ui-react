@@ -13,7 +13,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'anchor' component's part.
- * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+ * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
 const tabBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -41,7 +41,7 @@ const tabBehavior: Accessibility = (props: any) => ({
     'aria-selected',
   ],
   keyActions: {
-    anchor: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

@@ -15,12 +15,10 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
- * Close menu with "Escape" key.
- * Open menu with "Arrow Down" key, when menu is horizontal.
- * Open menu with "Arrow Right" key, when menu is vertical.
- * Performs 'closeMenu' action on Escape.
- * Performs 'openMenu' action on ArrowRight, ArrowDown.
+ * Adds attribute 'aria-haspopup=true' to 'anchor' component's part based on the property 'menu'.
+ * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Performs 'closeAllMenus' action with 'Escape' on 'root'.
+ * Performs 'openMenu' action with 'ArrowDown' on 'root', when orientation is horizontal.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -30,6 +28,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'button',
       tabIndex: '0',
+      'aria-haspopup': props.menu ? 'true' : 'false',
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
         : !!props['disabled'],
@@ -40,20 +39,25 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     },
   },
 
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
+  handledProps: [
+    'aria-label',
+    'aria-labelledby',
+    'aria-describedby',
+    'aria-disabled',
+    'aria-expanded',
+    'aria-haspopup',
+  ],
 
   keyActions: {
-    anchor: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      closeMenu: {
+      closeAllMenus: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
       openMenu: {
-        keyCombinations: [
-          { keyCode: props.vertical ? keyboardKey.ArrowRight : keyboardKey.ArrowDown },
-        ],
+        keyCombinations: [{ keyCode: props.vertical ? undefined : keyboardKey.ArrowDown }],
       },
     },
   },
