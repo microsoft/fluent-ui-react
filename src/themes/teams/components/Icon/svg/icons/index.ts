@@ -18,6 +18,7 @@ import codeSnippet from './codeSnippet'
 import edit from './edit'
 import emoji from './emoji'
 import error from './error'
+import filesLink from './filesLink'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -77,6 +78,7 @@ export default {
   edit,
   emoji,
   error,
+  filesLink,
   format,
   'font-color': fontColor,
   'font-size': fontSize,
