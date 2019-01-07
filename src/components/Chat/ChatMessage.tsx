@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -12,8 +13,9 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  isFromKeyboard,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
@@ -38,12 +40,18 @@ export interface ChatMessageProps
 
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
+
+  onFocus?: ComponentEventHandler<ChatMessageProps>
+}
+
+export interface MessageState {
+  isFromKeyboard: boolean
 }
 
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
+class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, MessageState> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -61,6 +69,16 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
+  }
+
+  public state = {
+    isFromKeyboard: false,
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -86,6 +104,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
         {...rest}
+        onFocus={this.handleFocus}
         className={className}
       >
         {childrenPropExists ? (

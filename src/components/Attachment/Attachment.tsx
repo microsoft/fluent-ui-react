@@ -64,7 +64,7 @@ export interface AttachmentState {
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
+class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
