@@ -104,3 +104,68 @@ yarn test:watch
 ```
 
 [1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
+
+## Behaviours tets
+
+Behavior unit tests are generated from the specification written in each behavior file.
+Each line under the "@specification" tag is taken and trying to match the regex experesion written in "testDefinitions.ts" file. 
+
+**Adding test(s)**
+
+What I need to do if I am adding ?:
+
+- New behavior file. In the file behavior-test.tsx add:
+  - your new added behavior into object: import {}
+  - to testHelper like: testHelper.addBehavior('yourNewBehaviorName', yourNewBehaviorImportedObject)
+  - add into testDefinitions.ts regex which will match your line written under @specification tag
+
+- Editing existing behavior
+  - add into testDefinitions.ts regex which will match your line written under @specification tag
+
+**Running test(s)**
+
+Run test and watch: yarn jest --watch behavior-test
+
+
+**Troubleshooting**
+
+- I am not sure if my line under @specification was process correctly? <br>
+Go into docs\src\behaviorMenu.json file and verify if you can find your line. If not then:
+  - run command "gulp build:docs:component-menu-behaviors", this will build the file again
+  - verify formatting the file (if some tag is not missing, etc...) and run command again
+
+- I am not sure if my line was executed? </br> 
+Rename all test files title containing "behavior-test" string. 
+For example, like (goal of the renaming is reach that these tests will not run):
+  - listBehaviorrrrrrrrrrr-test.tsx
+  - listItemBehaviorrrrrrr-test.tsx
+
+Run the tests again and you should see in console:
+```
+ PASS  test/specs/behaviors/behavior-test.tsx
+  buttonBehavior.ts
+    √ Adds role='button' if element type is other than 'button'. (11ms)
+    √ Adds attribute 'aria-disabled=true' based on the property 'disabled'. (8ms)
+    √ Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+  buttonGroupBehavior.ts
+    √ Adds role 'presentation' to 'root' component's part (2ms)
+    √ Wraps component in FocusZone allowing arrow key navigation through the children of the component.  
+  dialogBehavior.ts
+    √ Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
+    √ Adds attribute 'aria-modal=true' to 'popup' component's part.
+    √ Adds attribute 'role=dialog' to 'popup' component's part.
+    √ Traps focus inside component
+  gridBehavior.ts
+    √ Wraps component in FocusZone allowing circular arrow key navigation through the children of the component.  
+```
+
+- I want to add any description which should not be consider as unit test. <br>
+Add description under the @description tag. Like:
+```
+/**
+ * @description
+ * Image is usually only visual representation and therefore is hidden from screen readers.
+```
+
+- I want to create unit tests in separate file not through the regex. <br>
+Add your spec file into the array of files "skipSpecChecksForFiles" in testHelper.tsx. And put description in behavior file under '@description" tag.
