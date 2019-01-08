@@ -28,7 +28,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     anchor: {
       role: 'button',
       tabIndex: '0',
-      'aria-haspopup': props.menu ? 'true' : 'false',
+      'aria-haspopup': props.menu ? 'true' : undefined,
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
         : !!props['disabled'],
@@ -56,8 +56,8 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
       closeAllMenus: {
         keyCombinations: [{ keyCode: keyboardKey.Escape }],
       },
-      openMenu: {
-        keyCombinations: [{ keyCode: props.vertical ? undefined : keyboardKey.ArrowDown }],
+      openMenu: !props.vertical && {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowDown }],
       },
     },
   },
