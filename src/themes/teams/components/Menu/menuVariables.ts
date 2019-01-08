@@ -22,9 +22,6 @@ export interface MenuVariables {
 
   circularRadius: string
   lineHeightBase: string
-
-  submenuIndicatorContent: string
-  submenuIndicatorRotationAngle: number
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -50,8 +47,5 @@ export default (siteVars: any): MenuVariables => {
 
     circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
-
-    submenuIndicatorContent: '">"',
-    submenuIndicatorRotationAngle: 90,
   }
 }
