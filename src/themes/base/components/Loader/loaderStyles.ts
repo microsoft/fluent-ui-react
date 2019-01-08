@@ -1,9 +1,10 @@
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
-import { LoaderVariables } from './loaderVariables'
-import { LoaderProps } from '../../../../components/Loader/Loader'
-import { pxToRem } from '../../../../lib'
 import { FlexDirectionProperty } from 'csstype'
+
+import { pxToRem } from '../../../../lib'
+import { LoaderProps } from '../../../../components/Loader/Loader'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { ObjectOf } from '../../../../../types/utils'
+import { LoaderVariables } from './loaderVariables'
 
 const rootFlexDirections: ObjectOf<FlexDirectionProperty> = {
   above: 'column-reverse',
@@ -21,7 +22,6 @@ export default {
     justifyContent: 'center',
     flexDirection: rootFlexDirections[p.labelPosition],
   }),
-  // TODO: use animation there
   indicator: ({
     props: p,
     theme: t,

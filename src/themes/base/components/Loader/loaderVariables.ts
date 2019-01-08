@@ -1,5 +1,5 @@
-import { LoaderSize } from '../../../../components/Loader/Loader'
 import { pxToRem } from '../../../../lib'
+import { LoaderSize } from '../../../../components/Loader/Loader'
 
 export interface LoaderVariables {
   foregroundColor: string

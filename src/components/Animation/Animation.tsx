@@ -124,7 +124,6 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
           style: { ...animationStyle, ...(child.props && child.props.style) },
         })
       : ''
-    console.log(animationStyle)
 
     return (
       <ElementType className={classes.root} {...rest}>
