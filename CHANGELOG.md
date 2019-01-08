@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `on` and `mouseLeaveDelay` props to `Popup` component @mnajdova ([#622](https://github.com/stardust-ui/react/pull/622))
+- Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
 
 <!--------------------------------[ v0.16.0 ]------------------------------- -->
 ## [v0.16.0](https://github.com/stardust-ui/react/tree/v0.16.0) (2019-01-07)
