@@ -10,6 +10,7 @@ export interface DropdownVariables {
   comboboxPaddingButton: string
   comboboxPaddingInput: string
   comboboxFlexBasis: string
+  listBackgroundColor: string
   listItemBackgroundColor: string
   listItemBackgroundColorActive: string
   listItemColorActive: string
@@ -31,6 +32,7 @@ export default (siteVars): DropdownVariables => ({
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxPaddingInput: `${_6px_asRem} ${_12px_asRem}`,
   comboboxFlexBasis: '50px',
+  listBackgroundColor: siteVars.white,
   listItemBackgroundColor: siteVars.white,
   listItemBackgroundColorActive: siteVars.brand,
   listItemColorActive: siteVars.white,

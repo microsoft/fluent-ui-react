@@ -64,13 +64,17 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     margin: '.4rem 0 0 .4rem',
   }),
 
-  list: ({ variables: { listMaxHeight, width }, props: { fluid } }): ICSSInJSStyle => ({
+  list: ({
+    variables: { listMaxHeight, width, listBackgroundColor },
+    props: { fluid },
+  }): ICSSInJSStyle => ({
     position: 'absolute',
     zIndex: 1000,
     maxHeight: listMaxHeight,
     overflowY: 'auto',
     width: fluid ? '100%' : width,
     top: 'calc(100% + 2px)', // leave room for container + its border
+    background: listBackgroundColor,
   }),
 
   emptyListItem: ({ variables: { listItemBackgroundColor } }) => ({
