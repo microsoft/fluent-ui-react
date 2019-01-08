@@ -27,11 +27,13 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
       tabIndex: '0',
       'aria-disabled': !_.isNil(props['aria-disabled'])
         ? props['aria-disabled']
-        : !!props['disabled'],
+        : !!props['disabled']
+        ? true
+        : undefined,
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
+      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
     },
   },
 

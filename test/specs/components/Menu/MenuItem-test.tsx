@@ -123,21 +123,27 @@ describe('MenuItem', () => {
         )
       })
 
-      const disabledFlags = [true, false]
-      disabledFlags.forEach(disabledValue => {
-        test(`aria-disabled should be ${disabledValue} if menuitem disabled prop is ${disabledValue}`, () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
-            MenuItem,
-            <MenuItem disabled={disabledValue} accessibility={toolbarButtonBehavior} />,
-          )
+      test('aria-disabled should be true if menuitem disabled prop is set', () => {
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          MenuItem,
+          <MenuItem disabled accessibility={toolbarButtonBehavior} />,
+        )
 
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            `${disabledValue}`,
-          )
-        })
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe('true')
       })
 
+      test('aria-disabled should NOT be set if menuitem disabled prop is not set', () => {
+        const menuItemComponent = mountWithProviderAndGetComponent(
+          MenuItem,
+          <MenuItem accessibility={toolbarButtonBehavior} />,
+        )
+
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(undefined)
+      })
+
+      const disabledFlags = [true, false]
       disabledFlags.forEach(disabledValue => {
         test(`aria-disabled should be ${disabledValue} if menuitem also has the disabled prop and aria-disabled is ${disabledValue}`, () => {
           const menuItemComponent = mountWithProviderAndGetComponent(

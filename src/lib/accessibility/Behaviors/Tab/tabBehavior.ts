@@ -13,6 +13,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'anchor' component's part.
+ * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
  * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
  */
 const tabBehavior: Accessibility = (props: any) => ({
@@ -30,7 +31,12 @@ const tabBehavior: Accessibility = (props: any) => ({
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
       'aria-controls': props['aria-controls'],
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : !!props['disabled']
+        ? true
+        : undefined,
+      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
     },
   },
   handledProps: [
@@ -39,6 +45,7 @@ const tabBehavior: Accessibility = (props: any) => ({
     'aria-describedby',
     'aria-controls',
     'aria-selected',
+    'aria-disabled',
   ],
   keyActions: {
     anchor: {

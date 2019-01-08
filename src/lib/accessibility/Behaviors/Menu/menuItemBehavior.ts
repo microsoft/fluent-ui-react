@@ -1,6 +1,7 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
 
 /**
  * @description
@@ -14,6 +15,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
+ * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
  */
 
 const menuItemBehavior: Accessibility = (props: any) => ({
@@ -27,11 +29,16 @@ const menuItemBehavior: Accessibility = (props: any) => ({
       'aria-label': props['aria-label'],
       'aria-labelledby': props['aria-labelledby'],
       'aria-describedby': props['aria-describedby'],
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
+      'aria-disabled': !_.isNil(props['aria-disabled'])
+        ? props['aria-disabled']
+        : !!props['disabled']
+        ? true
+        : undefined,
+      [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
     },
   },
 
-  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby'],
+  handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
 
   keyActions: {
     root: {
