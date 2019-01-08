@@ -7,10 +7,11 @@ import {
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  customPropTypes,
 } from '../../lib'
 import { defaultBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ReactProps } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
@@ -29,7 +30,14 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
    * @default defaultBehavior
    */
   accessibility?: Accessibility
+
+  /** A loader can contain a label. */
+  label?: ShorthandValue
+
+  /** A label in the loader can have different positions. */
   labelPosition?: LoaderPosition
+
+  /** A size of the loader. */
   size?: LoaderSize
 }
 
@@ -48,6 +56,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
       color: true,
     }),
     accessibility: PropTypes.func,
+    label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),
     size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
   }

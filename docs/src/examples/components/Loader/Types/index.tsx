@@ -12,7 +12,7 @@ const LoaderTypesExamples = () => (
     />
     <ComponentExample
       title="Label"
-      description="A loader can contain label."
+      description="A loader can contain a label."
       examplePath="components/Loader/Types/LoaderExampleLabel"
     />
   </ExampleSection>
