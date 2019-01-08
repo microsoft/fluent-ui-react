@@ -10,26 +10,26 @@ import {
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 
-export interface MenuSeparatorProps extends UIComponentProps, ColorComponentProps {
+export interface MenuDividerProps extends UIComponentProps, ColorComponentProps {
   vertical?: boolean
   primary?: boolean
   secondary?: boolean
-  kind?: string
+  kind?: 'divider'
 }
 
 /**
- * A menu separator visually segments menu items inside menu.
+ * A menu divider visually segments menu items inside menu.
  */
-class MenuSeparator extends UIComponent<ReactProps<MenuSeparatorProps>, any> {
-  static displayName = 'MenuSeparator'
+class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
+  static displayName = 'MenuDivider'
 
   static create: Function
 
-  static className = 'ui-menu__separator'
+  static className = 'ui-menu__divider'
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false, children: false, color: true }),
-    kind: PropTypes.string,
+    kind: PropTypes.oneOf(['divider']),
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,
@@ -40,6 +40,6 @@ class MenuSeparator extends UIComponent<ReactProps<MenuSeparatorProps>, any> {
   }
 }
 
-MenuSeparator.create = createShorthandFactory(MenuSeparator, 'color')
+MenuDivider.create = createShorthandFactory(MenuDivider, 'color')
 
-export default MenuSeparator
+export default MenuDivider

@@ -76,6 +76,7 @@ export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
 export { default as Menu, MenuProps, MenuState } from './components/Menu/Menu'
 export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
+export { default as MenuDivider, MenuDividerProps } from './components/Menu/MenuDivider'
 
 export {
   default as Popup,

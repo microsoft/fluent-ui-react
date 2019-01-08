@@ -17,7 +17,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import MenuSeparator from './MenuSeparator'
+import MenuDivider from './MenuDivider'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -110,7 +110,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem
-  static Separator = MenuSeparator
+  static Divider = MenuDivider
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
@@ -148,10 +148,10 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     return _.map(items, (item, index) => {
       const active =
         (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
-      const kind = typeof item !== 'object' ? 'MenuItem' : (item as any).kind
+      const kind = typeof item !== 'object' ? 'item' : (item as any).kind
 
-      if (kind === 'MenuSeparator') {
-        return MenuSeparator.create(item, {
+      if (kind === 'divider') {
+        return MenuDivider.create(item, {
           defaultProps: {
             primary,
             secondary,

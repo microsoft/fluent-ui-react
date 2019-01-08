@@ -4,7 +4,7 @@ import { Menu } from '@stardust-ui/react'
 const items = [
   { key: 'editorials', content: 'Editorials' },
   { key: 'review', content: 'Reviews' },
-  { key: 'separator', kind: 'MenuSeparator' },
+  { key: 'divider', kind: 'divider' },
   { key: 'events', content: 'Upcoming Events' },
 ]
 
