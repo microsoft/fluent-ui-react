@@ -14,6 +14,7 @@ import {
   ContentComponentProps,
   StyledComponentProps,
   commonPropTypes,
+  isFromKeyboard,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 
@@ -248,7 +249,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      */
     if (_.includes(normalizedOn, 'focus')) {
       triggerProps.onFocus = (e, ...rest) => {
-        this.trySetOpen(true, e)
+        if (isFromKeyboard()) {
+          this.trySetOpen(true, e)
+        }
         _.invoke(triggerElement, 'props.onFocus', e, ...rest)
       }
       triggerProps.onBlur = (e, ...rest) => {
