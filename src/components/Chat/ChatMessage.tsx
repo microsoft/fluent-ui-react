@@ -64,6 +64,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, MessageState
     author: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
+    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
