@@ -341,7 +341,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   renderCodeEditorMenu = (): JSX.Element => {
-    const { currentCodePath, canCodeBeFormatted, handleCodeFormat, wasCodeChanged } = this.props
+    const {
+      currentCodeLanguage,
+      currentCodePath,
+      canCodeBeFormatted,
+      handleCodeFormat,
+      wasCodeChanged,
+    } = this.props
     const { copiedCode } = this.state
 
     // get component name from file path:
@@ -380,13 +386,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           content="Copy"
           onClick={this.copySourceCode}
         />
-        <Menu.Item
-          style={{ border: 'none' }}
-          icon="github"
-          content="Edit"
-          href={ghEditHref}
-          target="_blank"
-        />
+        {currentCodeLanguage === 'ts' && (
+          <Menu.Item
+            style={{ border: 'none' }}
+            icon="github"
+            content="Edit"
+            href={ghEditHref}
+            target="_blank"
+          />
+        )}
       </Menu>
     )
   }
