@@ -411,7 +411,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
-    { ref, style: popupPlacementStyles }: PopperChildrenProps,
+    { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
     const { content } = this.props
 
@@ -442,6 +442,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           defaultProps: popupContentAttributes,
           overrideProps: this.getContentProps,
         })
+
+    // Schedules a position update after each render.
+    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
+    scheduleUpdate()
 
     return (
       <Ref
