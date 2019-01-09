@@ -59,7 +59,7 @@ export default class ComponentSourceManager extends React.Component<
 
     this.state = {
       currentCodeLanguage: 'js' as ComponentSourceManagerLanguage,
-      currentCodeAPI: _.findKey(componentAPIs, { supported: true }) as keyof ComponentAPIs,
+      currentCodeAPI: _.findLastKey(componentAPIs, { supported: true }) as keyof ComponentAPIs,
       currentCodePath: '',
 
       componentAPIs,
