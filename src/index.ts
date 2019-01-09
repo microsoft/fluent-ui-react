@@ -1,5 +1,4 @@
 import * as themes from './themes'
-import { MenuItemKindOptions } from './components/Menu/Menu'
 
 //
 // Theme
