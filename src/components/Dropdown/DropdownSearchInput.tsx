@@ -6,15 +6,13 @@ import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropType
 import { ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
-import Ref from '../Ref/Ref'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
-  /**
-   * Ref callback with an input DOM node.
-   *
-   * @param {JSX.Element} node - input DOM node.
-   */
-  inputRef?: (inputNode: HTMLElement) => void
+  /** Informs the search input about an existing toggle button. */
+  hasToggleButton?: boolean
+
+  /** Ref for input DOM node. */
+  inputRef?: React.Ref<HTMLElement>
 
   /**
    * Called on input element focus.
@@ -68,17 +66,14 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
       content: false,
     }),
     accessibilityInputProps: PropTypes.object,
-    accessibilityWrapperProps: PropTypes.object,
-    inputRef: PropTypes.func,
+    accessibilityComboboxProps: PropTypes.object,
+    hasToggleButton: PropTypes.bool,
+    inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputKeyDown: PropTypes.func,
     onKeyUp: PropTypes.func,
     placeholder: PropTypes.string,
-  }
-
-  private handleInputRef = (inputNode: HTMLElement) => {
-    _.invoke(this.props, 'inputRef', inputNode)
   }
 
   private handleFocus = (e: React.SyntheticEvent) => {
@@ -98,29 +93,31 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
   }
 
   public renderComponent({ rest, styles }: RenderResultConfig<DropdownSearchInputProps>) {
-    const { accessibilityWrapperProps, accessibilityInputProps, placeholder } = this.props
-    const { innerRef, ...accessibilityWrapperPropsRest } = accessibilityWrapperProps
+    const {
+      accessibilityComboboxProps,
+      accessibilityInputProps,
+      inputRef,
+      placeholder,
+    } = this.props
     return (
-      <Ref innerRef={innerRef}>
-        <Input
-          inputRef={this.handleInputRef}
-          onFocus={this.handleFocus}
-          onKeyUp={this.handleKeyUp}
-          wrapper={{
-            styles: styles.wrapper,
-            ...accessibilityWrapperPropsRest,
-          }}
-          input={{
-            type: 'text',
-            styles: styles.input,
-            placeholder,
-            onBlur: this.handleInputBlur,
-            onKeyDown: this.handleInputKeyDown,
-            ...accessibilityInputProps,
-          }}
-          {...rest}
-        />
-      </Ref>
+      <Input
+        inputRef={inputRef}
+        onFocus={this.handleFocus}
+        onKeyUp={this.handleKeyUp}
+        wrapper={{
+          styles: styles.combobox,
+          ...accessibilityComboboxProps,
+        }}
+        input={{
+          type: 'text',
+          styles: styles.input,
+          placeholder,
+          onBlur: this.handleInputBlur,
+          onKeyDown: this.handleInputKeyDown,
+          ...accessibilityInputProps,
+        }}
+        {...rest}
+      />
     )
   }
 }

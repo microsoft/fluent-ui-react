@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem, getSideArrow } from '../../utils'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
@@ -252,7 +252,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
-    const { arrowDown, arrowRight } = theme.siteVariables
+    const { arrowDown } = theme.siteVariables
+    const sideArrow = getSideArrow(theme)
 
     return {
       color: 'inherit',
@@ -338,7 +339,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           float: 'right',
           left: pxToRem(10),
           userSelect: 'none',
-          content: props.vertical ? `"${arrowRight}"` : `"${arrowDown}"`,
+          content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
         }),
       },
     }

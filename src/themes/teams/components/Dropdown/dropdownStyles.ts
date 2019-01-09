@@ -1,19 +1,21 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
+import { pxToRem } from '../../utils'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
-  containerDiv: ({
-    props: { focused, toggleButton, fluid },
+  root: (): ICSSInJSStyle => ({}),
+
+  container: ({
+    props: { focused, fluid },
     variables: {
       backgroundColor,
-      containerDivBorderBottom,
-      containerDivBorderRadius,
-      containerDivBorderColor,
-      containerDivFocusBorderColor,
-      containerDivFocusBorderRadius,
-      containerDivColor,
-      toggleButtonSize,
+      borderBottom,
+      borderRadius,
+      borderColor,
+      borderColorFocus,
+      borderRadiusFocus,
+      color,
       width,
     },
   }): ICSSInJSStyle => ({
@@ -22,32 +24,57 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     outline: 0,
     border: 0,
     backgroundColor,
-    borderRadius: containerDivBorderRadius,
-    borderBottom: containerDivBorderBottom,
-    borderColor: containerDivBorderColor,
-    color: containerDivColor,
+    borderBottom,
+    borderColor,
+    borderRadius,
+    color,
     width: fluid ? '100%' : width,
     position: 'relative',
-    ...(toggleButton && {
-      paddingRight: toggleButtonSize,
-    }),
     ...(focused && {
-      borderColor: containerDivFocusBorderColor,
-      borderRadius: containerDivFocusBorderRadius,
+      borderColor: borderColorFocus,
+      borderRadius: borderRadiusFocus,
     }),
   }),
+
+  button: ({ variables: { comboboxPaddingButton } }): ICSSInJSStyle => {
+    const transparentColorStyle = {
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+    }
+    return {
+      boxShadow: 'none',
+      margin: '0',
+      justifyContent: 'left',
+      padding: comboboxPaddingButton,
+      ...transparentColorStyle,
+      height: pxToRem(30),
+      ':hover': transparentColorStyle,
+      ':focus': {
+        ...transparentColorStyle,
+        ':after': {
+          borderColor: 'transparent',
+        },
+        ':active': transparentColorStyle,
+      },
+      ':active': transparentColorStyle,
+    }
+  },
 
   label: (): ICSSInJSStyle => ({
     margin: '.4rem 0 0 .4rem',
   }),
 
-  list: ({ variables: { listMaxHeight, width }, props: { fluid } }): ICSSInJSStyle => ({
+  list: ({
+    variables: { listMaxHeight, width, listBackgroundColor },
+    props: { fluid },
+  }): ICSSInJSStyle => ({
     position: 'absolute',
     zIndex: 1000,
     maxHeight: listMaxHeight,
     overflowY: 'auto',
     width: fluid ? '100%' : width,
     top: 'calc(100% + 2px)', // leave room for container + its border
+    background: listBackgroundColor,
   }),
 
   emptyListItem: ({ variables: { listItemBackgroundColor } }) => ({
@@ -58,9 +85,13 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     position: 'absolute',
     height: toggleButtonSize,
     width: toggleButtonSize,
-    border: 0,
+    cursor: 'pointer',
     backgroundColor: 'transparent',
     margin: 0,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    userSelect: 'none',
     ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
   }),
 }
