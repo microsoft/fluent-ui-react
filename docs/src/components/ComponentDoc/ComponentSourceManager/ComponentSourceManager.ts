@@ -81,11 +81,11 @@ export default class ComponentSourceManager extends React.Component<
     const currentCode = storedCode || originalCode
     const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
 
-    const codeParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
+    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
     let formattedCode
 
     try {
-      formattedCode = formatCode(currentCode, codeParser)
+      formattedCode = formatCode(currentCode, prettierParser)
     } catch (e) {}
 
     return {
