@@ -1,10 +1,10 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { exampleContext } from 'docs/src/utils'
+import { exampleIndexContext, exampleSourcesContext } from 'docs/src/utils'
 import { Grid, List } from 'semantic-ui-react'
-import { examplePathPatterns } from './ComponentExample'
+import { componentAPIs } from './ComponentSourceManager'
 import ContributionPrompt from './ContributionPrompt'
 
 interface ComponentExamplesProps {
@@ -30,23 +30,22 @@ export default class ComponentExamples extends React.Component<ComponentExamples
    */
   private renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
-    const allPaths = exampleContext.keys()
 
     // rule #1
-    const indexPath = _.find(allPaths, path =>
+    const indexPath = _.find(exampleIndexContext.keys(), path =>
       new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
     )
     if (!indexPath) {
       return null
     }
 
-    const ExamplesElement = React.createElement(exampleContext(indexPath).default) as any
+    const ExamplesElement = React.createElement(exampleIndexContext(indexPath).default) as any
     if (!ExamplesElement) {
       return null
     }
 
     // rules #2 and #3
-    const missingPaths = this.testExamplesStructure(displayName, allPaths)
+    const missingPaths = this.getMissingExamplePaths(displayName, exampleSourcesContext.keys())
     return missingPaths && missingPaths.length ? (
       <div>
         {this.renderMissingShorthandExamples(missingPaths)} {ExamplesElement}
@@ -81,24 +80,24 @@ export default class ComponentExamples extends React.Component<ComponentExamples
     </Grid>
   )
 
-  private testExamplesStructure(displayName: string, allPaths: string[]): string[] {
-    const examplesPattern = `\.\/\\w*\/${displayName}[\\w\/]*\/\\w+Example`
-    const allExamplesRegExp = new RegExp(`${examplesPattern}[\\w\.]*\.tsx$`)
-
+  private getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
+    const examplesPattern = `\./${displayName}/[\\w/]+Example`
     const [normalExtension, shorthandExtension] = [
-      examplePathPatterns.normal,
-      examplePathPatterns.shorthand,
-    ].map(pattern => `${pattern}.tsx`)
+      componentAPIs.children.fileSuffix,
+      componentAPIs.shorthand.fileSuffix,
+    ].map(pattern => `${pattern}.source.json`)
+
     const [normalRegExp, shorthandRegExp] = [normalExtension, shorthandExtension].map(
-      extension => new RegExp(`${examplesPattern}\\w*${extension}$`),
+      extension => new RegExp(`${examplesPattern}${extension}$`),
     )
 
-    const allExamplesPaths = allPaths.filter(path => allExamplesRegExp.test(path))
-    const expectedShorthandExamples = allExamplesPaths
+    const expectedShorthandExamples = allPaths
       .filter(path => normalRegExp.test(path))
       .map(path => path.replace(normalExtension, shorthandExtension))
-    const actualShorthandExamples = allExamplesPaths.filter(path => shorthandRegExp.test(path))
+    const actualShorthandExamples = allPaths.filter(path => shorthandRegExp.test(path))
 
-    return _.difference(expectedShorthandExamples, actualShorthandExamples)
+    return _.difference(expectedShorthandExamples, actualShorthandExamples).map(exampleFile =>
+      exampleFile.replace(/\.source\.json$/, '.tsx'),
+    )
   }
 }

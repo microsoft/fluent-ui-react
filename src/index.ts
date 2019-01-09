@@ -72,12 +72,21 @@ export { default as Label, LabelProps } from './components/Label/Label'
 export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
 
 export { default as List, ListProps } from './components/List/List'
-export { default as ListItem, ListItemState, ListItemProps } from './components/List/ListItem'
+export { default as ListItem, ListItemProps } from './components/List/ListItem'
 
-export { default as Menu, MenuProps } from './components/Menu/Menu'
+export { default as Menu, MenuProps, MenuState, MenuShorthandKinds } from './components/Menu/Menu'
 export { default as MenuItem, MenuItemState, MenuItemProps } from './components/Menu/MenuItem'
+export { default as MenuDivider, MenuDividerProps } from './components/Menu/MenuDivider'
 
-export { default as Popup, PopupState, PopupProps } from './components/Popup/Popup'
+export {
+  default as Popup,
+  PopupState,
+  PopupProps,
+  PopupEvents,
+  RestrictedHoverEvents,
+  RestrictedClickEvents,
+  PopupEventsArray,
+} from './components/Popup/Popup'
 export { default as PopupContent, PopupContentProps } from './components/Popup/PopupContent'
 export { Placement, Alignment, Position } from './components/Popup/positioningHelper'
 

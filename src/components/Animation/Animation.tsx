@@ -10,6 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
+import { ReactPropsStrict } from '../../../types/utils'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -78,7 +79,7 @@ export interface AnimationProps
 /**
  * An animation allows the user to animate their own components.
  */
-class Animation extends UIComponent<AnimationProps, any> {
+class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
   static create: Function
 
   static className = 'ui-animation'

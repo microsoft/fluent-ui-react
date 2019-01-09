@@ -8,6 +8,7 @@ import {
 } from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
 import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
 import { DividerProps } from 'src/components/Divider/Divider'
 import { StatusProps } from 'src/components/Status/Status'
@@ -86,23 +87,56 @@ function createMessageContent(message: MessageData): ShorthandValue {
 }
 
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
+  const menuClickHandler = content => e => {
+    alert(`${content} clicked`)
+    e.stopPropagation()
+  }
+
   const contextMenu = (
     <Menu
       items={[
-        { key: 'download', content: 'Download', icon: 'download' },
-        { key: 'linkify', content: 'Get link', icon: 'linkify' },
-        { key: 'tab', content: 'Make this a tab', icon: 'folder open' },
+        {
+          key: 'download',
+          content: 'Download',
+          icon: 'download',
+          onClick: menuClickHandler('Download'),
+        },
+        {
+          key: 'linkify',
+          content: 'Get link',
+          icon: 'linkify',
+          onClick: menuClickHandler('Get link'),
+        },
+        {
+          key: 'tab',
+          content: 'Make this a tab',
+          icon: 'folder open',
+          onClick: menuClickHandler('Make tab'),
+        },
       ]}
       vertical
       pills
     />
   )
 
+  const stopPropagationOnKeys = (keys: number[]) => (e: Event) => {
+    if (keys.indexOf(keyboardKey.getCode(e)) > -1) {
+      e.stopPropagation()
+    }
+  }
+
   const actionPopup = (
     <Popup
       accessibility={popupFocusTrapBehavior}
       trigger={
-        <Button aria-label="More attachment options" iconOnly circular icon="ellipsis horizontal" />
+        <Button
+          aria-label="More attachment options"
+          iconOnly
+          circular
+          icon="ellipsis horizontal"
+          onClick={e => e.stopPropagation()}
+          onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
+        />
       }
       content={{ content: contextMenu }}
     />
@@ -119,14 +153,12 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
-            action={render => render(actionPopup)}
+            action={actionPopup}
             data-is-focusable={true}
             styles={{
-              '&:focus': {
-                outline: '.2rem solid #6264A7',
-              },
               ...(index === 1 ? { marginLeft: '15px' } : {}),
             }}
+            onClick={() => alert(`Opening ${fileName}`)}
           />
         ))}
       </div>

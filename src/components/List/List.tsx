@@ -6,7 +6,7 @@ import * as PropTypes from 'prop-types'
 import {
   customPropTypes,
   childrenExist,
-  UIComponent,
+  AutoControlledComponent,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
@@ -15,7 +15,7 @@ import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -30,8 +30,21 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for ListItem. */
   items?: ShorthandValue[]
 
-  /** A selection list formats list items as possible choices. */
-  selection?: boolean
+  /** A selectable list formats list items as possible choices. */
+  selectable?: boolean
+
+  /** Index of the currently selected item. */
+  selectedIndex?: number
+
+  /** Initial selectedIndex value. */
+  defaultSelectedIndex?: number
+
+  /**
+   * Event for request to change 'selectedIndex' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onSelectedIndexChange?: ComponentEventHandler<ListProps>
 
   /** Truncates content */
   truncateContent?: boolean
@@ -41,13 +54,14 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 }
 
 export interface ListState {
-  selectedItemIndex: number
+  focusedIndex: number
+  selectedIndex?: number
 }
 
 /**
  * A list displays a group of related content.
  */
-class List extends UIComponent<Extendable<ListProps>, ListState> {
+class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static displayName = 'List'
 
   static className = 'ui-list'
@@ -59,9 +73,12 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     accessibility: PropTypes.func,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
-    selection: PropTypes.bool,
+    selectable: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+    selectedIndex: PropTypes.number,
+    defaultSelectedIndex: PropTypes.number,
+    onSelectedIndexChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -69,14 +86,15 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     accessibility: listBehavior as Accessibility,
   }
 
+  static autoControlledProps = ['selectedIndex']
+  getInitialAutoControlledState() {
+    return { selectedIndex: -1, focusedIndex: 0 }
+  }
+
   static Item = ListItem
 
   // List props that are passed to each individual Item props
-  static itemProps = ['debug', 'selection', 'truncateContent', 'truncateHeader', 'variables']
-
-  public state = {
-    selectedItemIndex: 0,
-  }
+  static itemProps = ['debug', 'selectable', 'truncateContent', 'truncateHeader', 'variables']
 
   private focusHandler: ContainerFocusHandler = null
   private itemRefs = []
@@ -100,6 +118,22 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     },
   }
 
+  constructor(props, context) {
+    super(props, context)
+
+    this.focusHandler = new ContainerFocusHandler(
+      () => this.props.items.length,
+      index => {
+        this.setState({ focusedIndex: index }, () => {
+          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
+          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
+
+          targetDomNode && targetDomNode.focus()
+        })
+      },
+    )
+  }
+
   renderComponent({ ElementType, classes, accessibility, rest }) {
     const { children } = this.props
 
@@ -115,36 +149,32 @@ class List extends UIComponent<Extendable<ListProps>, ListState> {
     )
   }
 
-  componentDidMount() {
-    this.focusHandler = new ContainerFocusHandler(
-      () => this.props.items.length,
-      index => {
-        this.setState({ selectedItemIndex: index }, () => {
-          const targetComponent = this.itemRefs[index] && this.itemRefs[index].current
-          const targetDomNode = ReactDOM.findDOMNode(targetComponent) as any
-
-          targetDomNode && targetDomNode.focus()
-        })
-      },
-    )
-  }
-
   renderItems() {
     const { items } = this.props
-    const { selectedItemIndex } = this.state
+    const { focusedIndex, selectedIndex } = this.state
+
+    this.focusHandler.syncFocusedIndex(focusedIndex)
 
     this.itemRefs = []
 
     return _.map(items, (item, idx) => {
       const maybeSelectableItemProps = {} as any
 
-      if (this.props.selection) {
+      if (this.props.selectable) {
         const ref = React.createRef()
         this.itemRefs[idx] = ref
 
-        maybeSelectableItemProps.tabIndex = idx === selectedItemIndex ? 0 : -1
         maybeSelectableItemProps.ref = ref
-        maybeSelectableItemProps.onFocus = () => this.focusHandler.syncFocusedItemIndex(idx)
+        maybeSelectableItemProps.onFocus = () => this.setState({ focusedIndex: idx })
+        maybeSelectableItemProps.onClick = e => {
+          this.trySetState({ selectedIndex: idx })
+          _.invoke(this.props, 'onSelectedIndexChange', e, {
+            ...this.props,
+            ...{ selectedIndex: idx },
+          })
+        }
+        maybeSelectableItemProps.selected = idx === selectedIndex
+        maybeSelectableItemProps.tabIndex = idx === focusedIndex ? 0 : -1
       }
 
       const itemProps = {

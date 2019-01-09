@@ -3,6 +3,7 @@ import * as commonPropTypes from './commonPropTypes'
 
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
+export { mapColorsToScheme } from './colorUtils'
 export { default as UIComponent } from './UIComponent'
 export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
@@ -34,6 +35,7 @@ export { pxToRem } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'
+export { getKindProp } from './getKindProp'
 export * from './whatInput'
 
 export * from './commonPropInterfaces'

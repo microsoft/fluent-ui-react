@@ -1,4 +1,6 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -10,19 +12,33 @@ import {
   ContentComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
 export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentComponentProps {
+  /**
+   * Called after user's mouse enter.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseEnter?: ComponentEventHandler<PopupContentProps>
+
+  /**
+   * Called after user's mouse leave.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseLeave?: ComponentEventHandler<PopupContentProps>
+}
 
 /**
  * A PopupContent displays the content of a Popup component
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
+class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'
@@ -30,6 +46,16 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
 
   public static propTypes = {
     ...commonPropTypes.createCommon(),
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+  }
+
+  private handleMouseEnter = e => {
+    _.invoke(this.props, 'onMouseEnter', e, this.props)
+  }
+
+  private handleMouseLeave = e => {
+    _.invoke(this.props, 'onMouseLeave', e, this.props)
   }
 
   public renderComponent({
@@ -40,7 +66,12 @@ class PopupContent extends UIComponent<Extendable<PopupContentProps>, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...rest}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

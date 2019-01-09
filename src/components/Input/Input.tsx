@@ -11,8 +11,9 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  handleRef,
 } from '../../lib'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
 import Slot from '../Slot/Slot'
@@ -50,12 +51,8 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML input type. */
   type?: string
 
-  /**
-   * Ref callback with an input DOM node.
-   *
-   * @param {JSX.Element} node - input DOM node.
-   */
-  inputRef?: (node: HTMLElement) => void
+  /** Ref for input DOM node. */
+  inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
   value?: React.ReactText
@@ -76,8 +73,8 @@ export interface InputState {
  * Other considerations:
  *  - if input is search, then use "role='search'"
  */
-class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> {
-  private inputDomElement: HTMLInputElement
+class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
+  private inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'
 
@@ -93,7 +90,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
-    inputRef: PropTypes.func,
+    inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     inline: PropTypes.bool,
     onChange: PropTypes.func,
     type: PropTypes.string,
@@ -116,7 +113,7 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     styles,
     variables,
   }: RenderResultConfig<InputProps>) {
-    const { className, input, type, wrapper } = this.props
+    const { className, input, inputRef, type, wrapper } = this.props
     const { value = '' } = this.state
     const [htmlInputProps, rest] = partitionHTMLProps(restProps)
 
@@ -125,7 +122,12 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
         className: cx(Input.className, className),
         children: (
           <>
-            <Ref innerRef={this.handleInputRef}>
+            <Ref
+              innerRef={(inputElement: HTMLElement) => {
+                handleRef(this.inputRef, inputElement)
+                handleRef(inputRef, inputElement)
+              }}
+            >
               {Slot.create(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
@@ -155,16 +157,10 @@ class Input extends AutoControlledComponent<Extendable<InputProps>, InputState> 
     })
   }
 
-  private handleInputRef = (inputNode: HTMLElement) => {
-    this.inputDomElement = inputNode as HTMLInputElement
-
-    _.invoke(this.props, 'inputRef', inputNode)
-  }
-
   private handleIconOverrides = predefinedProps => ({
     onClick: (e: React.SyntheticEvent) => {
       this.handleOnClear()
-      this.inputDomElement.focus()
+      this.inputRef.current.focus()
       _.invoke(predefinedProps, 'onClick', e, this.props)
     },
     ...(predefinedProps.onClick && { tabIndex: '0' }),

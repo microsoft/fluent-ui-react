@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Icon, Button, Animation, Provider } from '@stardust-ui/react'
 
 const spinner = {

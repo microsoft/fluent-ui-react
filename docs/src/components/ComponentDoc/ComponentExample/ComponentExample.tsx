@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
@@ -13,15 +13,17 @@ import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/c
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
-import ContributionPrompt from '../ContributionPrompt'
-import SourceCodeManager, { SourceCodeType } from './SourceCodeManager'
+import ComponentSourceManager, {
+  ComponentSourceManagerRenderProps,
+} from '../ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
 import { ThemeContext } from '../../../context/theme-context'
 import CodeSnippet from '../../CodeSnippet'
-import formatCode from '../../../utils/formatCode'
 
-export interface ComponentExampleProps extends RouteComponentProps<any, any> {
+export interface ComponentExampleProps
+  extends RouteComponentProps<any, any>,
+    ComponentSourceManagerRenderProps {
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
@@ -34,7 +36,6 @@ interface ComponentExampleState {
   componentVariables: Object
   handleMouseLeave: () => void
   handleMouseMove: () => void
-  sourceCode: string
   showCode: boolean
   showRtl: boolean
   showTransparent: boolean
@@ -48,11 +49,6 @@ const childrenStyle: React.CSSProperties = {
   maxWidth: pxToRem(500),
 }
 
-const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
-  normal: 'Children API',
-  shorthand: 'Shorthand API',
-}
-
 const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
 /**
@@ -60,7 +56,6 @@ const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
  * Allows toggling the the raw `code` code block.
  */
 class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
-  sourceCodeMgr: SourceCodeManager
   anchorName: string
   kebabExamplePath: string
   KnobsComponent: any
@@ -71,7 +66,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     componentVariables: {},
     handleMouseLeave: _.noop,
     handleMouseMove: _.noop,
-    sourceCode: '',
     showCode: false,
     showRtl: false,
     showTransparent: false,
@@ -97,14 +91,12 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   componentWillMount() {
     const { examplePath } = this.props
-    this.sourceCodeMgr = new SourceCodeManager(examplePath)
     this.anchorName = examplePathToHash(examplePath)
 
     this.setState({
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
       showCode: this.isActiveHash(),
-      sourceCode: this.sourceCodeMgr.currentCode,
     })
   }
 
@@ -216,16 +208,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     if (title) _.invoke(this.context, 'onPassed', null, this.props)
   }
 
-  copyJSX = () => {
-    copyToClipboard(this.state.sourceCode)
+  copySourceCode = () => {
+    copyToClipboard(this.props.currentCode)
+
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
-  resetJSX = () => {
-    if (this.sourceCodeMgr.originalCodeHasChanged && confirm('Lose your changes?')) {
-      this.sourceCodeMgr.resetToOriginalCode()
-      this.updateAndRenderSourceCode()
+  resetSourceCode = () => {
+    if (confirm('Lose your changes?')) {
+      this.props.handleCodeReset()
     }
   }
 
@@ -239,16 +231,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  renderExampleFromCode = (): JSX.Element => {
-    const { sourceCode } = this.state
-
-    if (sourceCode == null) {
-      return this.renderMissingExample()
-    }
-
-    return <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
-  }
-
   renderElement = (element: React.ReactElement<any>) => {
     const { examplePath } = this.props
     const { showRtl, componentVariables, themeName } = this.state
@@ -256,6 +238,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const theme = themes[themeName]
 
     const newTheme: ThemeInput = {
+      siteVariables: theme.siteVariables,
       componentVariables: mergeThemeVariables(theme.componentVariables, {
         [this.getDisplayName()]: componentVariables,
       }),
@@ -266,16 +249,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       <Provider key={`${examplePath}${showRtl ? '-rtl' : ''}`} theme={newTheme}>
         {element}
       </Provider>
-    )
-  }
-
-  renderMissingExample = (): JSX.Element => {
-    const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
-    return (
-      <ContributionPrompt>
-        Looks like we're need an example file at:
-        <p>{missingExamplePath}</p>
-      </ContributionPrompt>
     )
   }
 
@@ -312,148 +285,148 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  handleChangeCode = (sourceCode: string) => {
-    this.sourceCodeMgr.currentCode = sourceCode
-    this.updateAndRenderSourceCode()
+  handleCodeApiChange = apiType => () => {
+    this.props.handleCodeAPIChange(apiType)
   }
 
-  updateAndRenderSourceCode = () => {
-    this.setState({ sourceCode: this.sourceCodeMgr.currentCode })
-  }
+  handleCodeLanguageChange = language => () => {
+    const { handleCodeLanguageChange, wasCodeChanged } = this.props
 
-  setApiCodeType = (codeType: SourceCodeType) => {
-    this.sourceCodeMgr.codeType = codeType
-    this.updateAndRenderSourceCode()
-  }
-
-  renderApiCodeMenu = (): JSX.Element => {
-    const { sourceCode } = this.state
-    const lineCount = sourceCode && sourceCode.match(/^/gm)!.length
-
-    const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
-      // we disable the menu button for Children API in case we don't have the example for it
-      const disabled =
-        codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
-
-      return {
-        active: this.sourceCodeMgr.codeType === codeType,
-        disabled,
-        key: codeType,
-        onClick: this.setApiCodeType.bind(this, codeType),
-        content: (
-          <span>
-            {codeTypeApiButtonLabels[codeType]}
-            {disabled && <em> (not supported)</em>}
-          </span>
-        ),
+    if (wasCodeChanged) {
+      if (confirm('Lose your changes?')) {
+        handleCodeLanguageChange(language)
       }
-    })
+    } else {
+      handleCodeLanguageChange(language)
+    }
+  }
+
+  renderAPIsMenu = (): JSX.Element => {
+    const { componentAPIs, currentCodeAPI } = this.props
+    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => (
+      <Menu.Item
+        active={currentCodeAPI === type}
+        content={
+          <span>
+            {name}
+            {!supported && <em> (not supported)</em>}
+          </span>
+        }
+        disabled={!supported}
+        key={type}
+        onClick={this.handleCodeApiChange(type)}
+      />
+    ))
+
+    return <Menu.Menu>{menuItems}</Menu.Menu>
+  }
+
+  renderLanguagesMenu = (): JSX.Element => {
+    const { currentCodeLanguage } = this.props
 
     return (
+      <Menu.Menu position="right">
+        <Menu.Item
+          active={currentCodeLanguage === 'js'}
+          content="JavaScript"
+          onClick={this.handleCodeLanguageChange('js')}
+        />
+        <Menu.Item
+          active={currentCodeLanguage === 'ts'}
+          content="TypeScript"
+          onClick={this.handleCodeLanguageChange('ts')}
+        />
+      </Menu.Menu>
+    )
+  }
+
+  renderCodeEditorMenu = (): JSX.Element => {
+    const {
+      currentCodeLanguage,
+      currentCodePath,
+      canCodeBeFormatted,
+      handleCodeFormat,
+      wasCodeChanged,
+    } = this.props
+    const { copiedCode } = this.state
+
+    // get component name from file path:
+    // elements/Button/Types/ButtonButtonExample
+    const pathParts = currentCodePath.split(__PATH_SEP__)
+    const filename = pathParts[pathParts.length - 1]
+
+    const ghEditHref = [
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentCodePath}.tsx`,
+      `?message=docs(${filename}): your description`,
+    ].join('')
+
+    return (
+      <Menu size="small" secondary inverted floated="right" text>
+        <SourceRender.Consumer>
+          {({ error }) => (
+            <Menu.Item
+              icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
+              color={error ? 'red' : undefined}
+              active={!!error}
+              content="Prettier"
+              onClick={handleCodeFormat}
+              style={!canCodeBeFormatted ? disabledStyle : undefined}
+            />
+          )}
+        </SourceRender.Consumer>
+        <Menu.Item
+          style={!wasCodeChanged ? disabledStyle : undefined}
+          icon="refresh"
+          content="Reset"
+          onClick={this.resetSourceCode}
+        />
+        <Menu.Item
+          active={copiedCode} // to show the color
+          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
+          content="Copy"
+          onClick={this.copySourceCode}
+        />
+        {currentCodeLanguage === 'ts' && (
+          <Menu.Item
+            style={{ border: 'none' }}
+            icon="github"
+            content="Edit"
+            href={ghEditHref}
+            target="_blank"
+          />
+        )}
+      </Menu>
+    )
+  }
+
+  renderSourceCode = () => {
+    const { currentCode = '', handleCodeChange } = this.props
+    const { showCode } = this.state
+
+    const lineCount = currentCode.match(/^/gm)!.length
+
+    return showCode ? (
       // match code editor background and gutter size and colors
       <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
           style={
             {
               borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
-              paddingBottom: '1rem',
+              paddingBottom: '2.6rem',
             } as React.CSSProperties
           }
         >
-          <Menu size="small" inverted secondary pointing items={menuItems} />
-        </div>
-      </div>
-    )
-  }
+          <Menu attached="top" size="small" inverted secondary pointing>
+            {this.renderAPIsMenu()}
+            {this.renderLanguagesMenu()}
+          </Menu>
 
-  canBePrettified = () => {
-    const { sourceCode } = this.state
-
-    try {
-      return sourceCode !== formatCode(sourceCode)
-    } catch (err) {
-      return false
-    }
-  }
-
-  handleFormat = () => {
-    const { sourceCode } = this.state
-
-    this.handleChangeCode(formatCode(sourceCode))
-  }
-
-  renderCodeEditorMenu = (): JSX.Element => {
-    const { copiedCode } = this.state
-    const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
-    const codeEditorStyle: React.CSSProperties = {
-      position: 'absolute',
-      margin: 0,
-      top: '2px',
-      right: '0.5rem',
-    }
-
-    // get component name from file path:
-    // elements/Button/Types/ButtonButtonExample
-    const pathParts = currentPath.split(__PATH_SEP__)
-    const filename = pathParts[pathParts.length - 1]
-
-    const ghEditHref = [
-      `${constants.repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
-      `?message=docs(${filename}): your description`,
-    ].join('')
-
-    return (
-      <Menu size="small" secondary inverted text style={codeEditorStyle}>
-        <SourceRender.Consumer>
-          {({ error }) => (
-            <Menu.Item
-              icon={(error && 'bug') || (this.canBePrettified() ? 'magic' : 'check')}
-              color={error ? 'red' : undefined}
-              active={error}
-              content="Prettier"
-              onClick={this.handleFormat}
-              style={!this.canBePrettified() ? disabledStyle : undefined}
-            />
-          )}
-        </SourceRender.Consumer>
-        <Menu.Item
-          style={!originalCodeHasChanged ? disabledStyle : undefined}
-          icon="refresh"
-          content="Reset"
-          onClick={this.resetJSX}
-        />
-        <Menu.Item
-          active={copiedCode} // to show the color
-          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
-          content="Copy"
-          onClick={this.copyJSX}
-        />
-        <Menu.Item
-          style={{ border: 'none' }}
-          icon="github"
-          content="Edit"
-          href={ghEditHref}
-          target="_blank"
-        />
-      </Menu>
-    )
-  }
-
-  renderJSX = () => {
-    const { showCode, sourceCode } = this.state
-
-    if (!showCode) return null
-
-    return (
-      <div>
-        {this.renderApiCodeMenu()}
-
-        <div>
           {this.renderCodeEditorMenu()}
-          <Editor value={sourceCode} onChange={this.handleChangeCode} />
         </div>
+
+        <Editor value={currentCode} onChange={handleCodeChange} />
       </div>
-    )
+    ) : null
   }
 
   renderError = () => {
@@ -549,7 +522,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const { children, description, title } = this.props
+    const { children, currentCode, currentCodePath, description, title } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -559,12 +532,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl,
       showTransparent,
       showVariables,
-      sourceCode,
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
-    const currentExamplePath = this.sourceCodeMgr.currentPath
-
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
@@ -598,7 +568,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={currentExamplePath}
+                  examplePath={currentCodePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
@@ -624,7 +594,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           <SourceRender
             babelConfig={babelConfig}
             knobs={knobs}
-            source={sourceCode}
+            source={currentCode}
             render={this.renderElement}
             renderHtml={showCode}
             resolver={importResolver}
@@ -647,13 +617,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       }),
                     }}
                   >
-                    {this.renderExampleFromCode()}
+                    <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
                   </Grid.Column>
                 )
               }}
             />
             <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-              {this.renderJSX()}
+              {this.renderSourceCode()}
               {this.renderError()}
               {this.renderHTML()}
               {this.renderVariables()}
@@ -668,7 +638,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
 const ComponentExampleWithTheme = props => (
   <ThemeContext.Consumer>
-    {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
+    {({ themeName }) => (
+      <ComponentSourceManager examplePath={props.examplePath}>
+        {codeProps => <ComponentExample {...props} {...codeProps} themeName={themeName} />}
+      </ComponentSourceManager>
+    )}
   </ThemeContext.Consumer>
 )
 
