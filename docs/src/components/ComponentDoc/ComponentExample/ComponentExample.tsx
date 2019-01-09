@@ -399,7 +399,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     )
   }
 
-  renderJSX = () => {
+  renderSourceCode = () => {
     const { currentCode = '', handleCodeChange } = this.props
     const { showCode } = this.state
 
@@ -623,7 +623,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               }}
             />
             <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-              {this.renderJSX()}
+              {this.renderSourceCode()}
               {this.renderError()}
               {this.renderHTML()}
               {this.renderVariables()}
