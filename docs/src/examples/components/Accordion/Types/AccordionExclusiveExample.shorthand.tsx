@@ -19,8 +19,6 @@ const panels = [
   },
 ]
 
-const AccordionExclusiveExample = () => (
-  <Accordion defaultActiveIndex={0} panels={panels} exclusive />
-)
+const AccordionExclusiveExample = () => <Accordion panels={panels} exclusive />
 
 export default AccordionExclusiveExample
