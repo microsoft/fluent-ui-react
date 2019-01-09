@@ -14,7 +14,6 @@ export interface MenuDividerProps extends UIComponentProps, ColorComponentProps 
   vertical?: boolean
   primary?: boolean
   secondary?: boolean
-  kind?: 'divider'
 }
 
 /**
@@ -29,7 +28,6 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false, children: false, color: true }),
-    kind: PropTypes.oneOf(['divider']),
     primary: PropTypes.bool,
     secondary: PropTypes.bool,
     vertical: PropTypes.bool,

@@ -105,8 +105,6 @@ export interface MenuItemProps
 
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean
-
-  kind?: 'item'
 }
 
 export interface MenuItemState {
@@ -146,7 +144,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
-    kind: PropTypes.oneOf(['item']),
   }
 
   static defaultProps = {

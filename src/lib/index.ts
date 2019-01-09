@@ -35,6 +35,7 @@ export { pxToRem } from './fontSizeUtility'
 export { customPropTypes }
 export { default as createAnimationStyles } from './createAnimationStyles'
 export { default as createComponent } from './createStardustComponent'
+export { getKindProp } from './getKindProp'
 export * from './whatInput'
 
 export * from './commonPropInterfaces'
