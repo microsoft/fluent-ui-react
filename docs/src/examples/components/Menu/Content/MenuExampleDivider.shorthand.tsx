@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Menu, MenuItemKindOptions } from '@stardust-ui/react'
+import { Menu, MenuShorthandKinds } from '@stardust-ui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },
   { key: 'review', content: 'Reviews' },
-  { key: 'divider', kind: 'divider' as MenuItemKindOptions },
+  { key: 'divider', kind: 'divider' as MenuShorthandKinds },
   { key: 'events', content: 'Upcoming Events' },
 ]
 

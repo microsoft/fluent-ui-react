@@ -20,7 +20,7 @@ import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandCollection } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
 
-export type MenuItemKindOptions = 'divider' | 'item'
+export type MenuShorthandKinds = 'divider' | 'item'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -43,7 +43,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandCollection<MenuItemKindOptions>
+  items?: ShorthandCollection<MenuShorthandKinds>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
