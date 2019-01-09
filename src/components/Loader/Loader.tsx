@@ -31,6 +31,9 @@ export interface LoaderProps extends UIComponentProps, ColorComponentProps {
    */
   accessibility?: Accessibility
 
+  /** A loader can contain an indicator. */
+  indicator?: ShorthandValue
+
   /** A loader can contain a label. */
   label?: ShorthandValue
 
@@ -56,6 +59,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
       color: true,
     }),
     accessibility: PropTypes.func,
+    indicator: customPropTypes.itemShorthand,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['above', 'below', 'start', 'end']),
     size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
@@ -63,16 +67,17 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
 
   static defaultProps = {
     accessibility: defaultBehavior,
+    indicator: '',
     labelPosition: 'below',
     size: 'medium',
   }
 
   renderComponent({ ElementType, classes, accessibility, variables, styles, rest }) {
-    const { label } = this.props
+    const { indicator, label } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
-        {Slot.create('', { defaultProps: { styles: styles.indicator } })}
+        {Slot.create(indicator, { defaultProps: { styles: styles.indicator } })}
         {Slot.create(label, { defaultProps: { styles: styles.label } })}
       </ElementType>
     )
