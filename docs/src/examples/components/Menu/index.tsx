@@ -6,8 +6,8 @@ import Content from './Content'
 const MenuExamples = () => (
   <div>
     <Types />
-    <Variations />
     <Content />
+    <Variations />
   </div>
 )
 
