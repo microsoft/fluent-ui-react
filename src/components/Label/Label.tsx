@@ -103,21 +103,34 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
       },
       overrideProps: this.handleIconOverrides,
     })
+
+    const startImage = imagePosition === 'start' && imageElement
+    const startIcon = iconPosition === 'start' && iconElement
+    const endIcon = iconPosition === 'end' && iconElement
+    const endImage = imagePosition === 'end' && imageElement
+
+    const hasStartElement = startImage || startIcon
+    const hasEndElement = endIcon || endImage
+
     return (
       <ElementType {...rest} className={classes.root}>
         <Layout
           start={
-            <>
-              {imagePosition === 'start' && imageElement}
-              {iconPosition === 'start' && iconElement}
-            </>
+            hasStartElement && (
+              <>
+                {startImage}
+                {startIcon}
+              </>
+            )
           }
           main={content}
           end={
-            <>
-              {iconPosition === 'end' && iconElement}
-              {imagePosition === 'end' && imageElement}
-            </>
+            hasEndElement && (
+              <>
+                {endIcon}
+                {endImage}
+              </>
+            )
           }
           gap={pxToRem(3)}
         />
