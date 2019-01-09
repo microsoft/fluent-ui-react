@@ -90,7 +90,7 @@ definitions.push({
 
 // Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '[a-z]+'\. This can be overriden by providing '([a-z -]+)' property directly to the component\./g,
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part based on the property '[a-z]+'\. This can be overriden by providing '([a-z-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, component, overridingProperty] = [
       ...parameters.props,
@@ -124,20 +124,68 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
+function testMethodConditionallyAddAttribute(
+  parameters,
+  attributeToBeAdded,
+  valueOfAttributeToBeAddedIfTrue,
+  component,
+  propertyDependsOn,
+  valueOfAttributeToBeAddedOtherwise,
+) {
+  const propertyWithAriaSelected = {}
+  const expectedResultAttributeNotDefined = parameters.behavior(propertyWithAriaSelected)
+    .attributes[component][attributeToBeAdded]
+  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeNotDefined)).toEqual(
+    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedOtherwise),
+  )
+
+  propertyWithAriaSelected[propertyDependsOn] = true
+  const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
+    component
+  ][attributeToBeAdded]
+  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
+    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedIfTrue),
+  )
+}
+
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '([a-z -]+)'\./g,
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, component, propertyDependsOn] = [
       ...parameters.props,
     ]
-    const propertyWithAriaSelected = {}
-    propertyWithAriaSelected[propertyDependsOn] = true
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
-      component
-    ][attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      propertyDependsOn,
+      undefined,
+    )
+  },
+})
+
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Sets the attribute to 'false' otherwise.
+definitions.push({
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is true\. Sets the attribute to '([a-z0-9]+)' otherwise\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      valueOfAttributeToBeAddedOtherwise,
+    ] = [...parameters.props]
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      valueOfAttributeToBeAddedOtherwise,
     )
   },
 })

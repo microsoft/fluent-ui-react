@@ -11,6 +11,7 @@ import * as _ from 'lodash'
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'button' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
+ * Adds attribute 'data-is-focusable=false' to 'anchor' component's part if 'disabled' property is true. Sets the attribute to 'true' otherwise.
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.

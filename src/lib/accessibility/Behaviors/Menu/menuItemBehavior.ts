@@ -11,11 +11,11 @@ import * as _ from 'lodash'
  * Adds role 'presentation' to 'root' component's part.
  * Adds role 'menuitem' to 'anchor' component's part.
  * Adds attribute 'tabIndex=0' to 'anchor' component's part.
- * Adds attribute 'data-is-focusable=true' to 'anchor' component's part.
+ * Adds attribute 'data-is-focusable=false' to 'anchor' component's part if 'disabled' property is true. Sets the attribute to 'true' otherwise.
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
- * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by directly providing 'aria-disabled' property to the component.
+ * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  */
 
 const menuItemBehavior: Accessibility = (props: any) => ({
