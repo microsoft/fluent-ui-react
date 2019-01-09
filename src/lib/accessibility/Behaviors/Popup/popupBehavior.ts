@@ -10,24 +10,31 @@ import * as _ from 'lodash'
  * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
  */
-const popupBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    trigger: {
-      role: getAriaAttributeFromProps('role', props, 'button'),
-      tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
-      'aria-disabled': !_.isNil(props['aria-disabled'])
-        ? props['aria-disabled']
-        : !!props['disabled'],
-    },
-  },
-  keyActions: {
-    popup: {
-      closeAndFocusTrigger: {
-        keyCombinations: [{ keyCode: keyboardKey.Escape }],
+const popupBehavior: Accessibility = (props: any) => {
+  return {
+    attributes: {
+      trigger: {
+        role: getAriaAttributeFromProps('role', props, 'button'),
+        tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
+        'aria-disabled': !_.isNil(props['aria-disabled'])
+          ? props['aria-disabled']
+          : !!props['disabled'],
       },
     },
-  },
-})
+    keyActions: {
+      popup: {
+        closeAndFocusTrigger: {
+          keyCombinations: [{ keyCode: keyboardKey.Escape }],
+        },
+      },
+      trigger: {
+        close: {
+          keyCombinations: [{ keyCode: keyboardKey.Escape }],
+        },
+      },
+    },
+  }
+}
 
 const isFocusable = propsData => {
   try {
