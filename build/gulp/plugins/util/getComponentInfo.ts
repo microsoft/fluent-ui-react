@@ -12,7 +12,7 @@ interface BehaviorInfo {
   category: string
 }
 
-const getComponentInfo = (filepath: string, checksum?: string) => {
+const getComponentInfo = (filepath: string) => {
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)
@@ -42,9 +42,6 @@ const getComponentInfo = (filepath: string, checksum?: string) => {
 
   // remove keys we don't use
   delete info.methods
-
-  // add checksum
-  info.checksum = checksum
 
   // add exported Component info
   const Component = require(absPath).default
