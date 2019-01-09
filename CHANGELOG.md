@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix unicode arrow characters to be RTL aware ([#690](https://github.com/stardust-ui/react/pull/690))
+- Fix positioning of `Popup` with changable content @layershifter ([#678](https://github.com/stardust-ui/react/pull/678))
 
 <!--------------------------------[ v0.16.0 ]------------------------------- -->
 ## [v0.16.0](https://github.com/stardust-ui/react/tree/v0.16.0) (2019-01-07)
