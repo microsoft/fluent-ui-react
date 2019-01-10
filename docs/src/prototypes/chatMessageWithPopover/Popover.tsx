@@ -59,7 +59,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   handleEmojiClick = (e, props) => {
-    if (props && props.index) {
+    if (props) {
       this.setState({
         selectedEmojiIndex: this.state.selectedEmojiIndex === props.index ? -1 : props.index,
       })
