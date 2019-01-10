@@ -623,28 +623,30 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           renderHtml
           resolver={importResolver}
         >
-          <Provider.Consumer
-            render={({ siteVariables }) => {
-              return (
-                <Segment
-                  dir={showRtl ? 'rtl' : undefined}
-                  className={`rendered-example ${this.getKebabExamplePath()}`}
-                  styles={{
-                    padding: '2rem',
-                    color: siteVariables.bodyColor,
-                    backgroundColor: siteVariables.bodyBackground,
-                    ...(showTransparent && {
-                      backgroundImage:
-                        'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                      backgroundRepeat: 'repeat',
-                    }),
-                  }}
-                >
-                  {this.renderExampleFromCode()}
-                </Segment>
-              )
-            }}
-          />
+          <Provider theme={themes.teamsDark}>
+            <Provider.Consumer
+              render={({ siteVariables }) => {
+                return (
+                  <Segment
+                    dir={showRtl ? 'rtl' : undefined}
+                    className={`rendered-example ${this.getKebabExamplePath()}`}
+                    styles={{
+                      padding: '2rem',
+                      color: siteVariables.bodyColor,
+                      backgroundColor: siteVariables.bodyBackground,
+                      ...(showTransparent && {
+                        backgroundImage:
+                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                        backgroundRepeat: 'repeat',
+                      }),
+                    }}
+                  >
+                    {this.renderExampleFromCode()}
+                  </Segment>
+                )
+              }}
+            />
+          </Provider>
           <Segment styles={{ padding: 0 }}>
             {this.renderJSX()}
             {this.renderError()}

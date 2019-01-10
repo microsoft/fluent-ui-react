@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Header, Icon, ICSSInJSStyle } from '@stardust-ui/react'
+import { Grid, Header, Icon, ICSSInJSStyle, Dropdown, themes } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -70,11 +70,46 @@ class ComponentDoc extends React.Component<any, any> {
   }
 
   render() {
+    const getA11ySelectionMessage = {
+      onAdd: item => `${item} has been selected.`,
+      onRemove: item => `${item} has been removed.`,
+    }
+
+    const getA11yStatusMessage = ({
+      isOpen,
+      itemToString,
+      previousResultCount,
+      resultCount,
+      selectedItem,
+    }) => {
+      if (!isOpen) {
+        return selectedItem ? itemToString(selectedItem) : ''
+      }
+      if (!resultCount) {
+        return 'No results are available.'
+      }
+      if (resultCount !== previousResultCount) {
+        return `${resultCount} result${
+          resultCount === 1 ? ' is' : 's are'
+        } available, use up and down arrow keys to navigate. Press Enter key to select.`
+      }
+      return ''
+    }
+
     const { info } = this.props
     //   const { activePath, examplesRef } = this.state
 
     const topPart = [
       <Header content={info.displayName} description={_.join(info.docblock.description, ' ')} />,
+      <Dropdown
+        getA11yStatusMessage={getA11yStatusMessage}
+        getA11ySelectionMessage={getA11ySelectionMessage}
+        noResultsMessage="We couldn't find any matches."
+        search
+        placeholder="Start typing a name"
+        toggleButton
+        items={this.getThemeOptions().map(o => o.text)}
+      />,
       <ComponentDocLinks
         displayName={info.displayName}
         parentDisplayName={info.parentDisplayName}
@@ -111,6 +146,12 @@ class ComponentDoc extends React.Component<any, any> {
         </div>
       </DocumentTitle>
     )
+  }
+  private getThemeOptions = () => {
+    return Object.keys(themes).map(key => ({
+      text: _.startCase(key),
+      value: key,
+    }))
   }
 }
 
