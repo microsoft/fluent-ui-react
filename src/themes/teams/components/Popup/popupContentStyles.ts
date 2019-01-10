@@ -1,5 +1,5 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
 

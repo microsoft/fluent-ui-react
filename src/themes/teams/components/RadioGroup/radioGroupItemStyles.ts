@@ -3,7 +3,7 @@ import {
   RadioGroupItemProps,
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 const radioStyles: ComponentSlotStylesInput<RadioGroupItemProps & RadioGroupItemState, any> = {
   root: ({ props }): ICSSInJSStyle => ({

@@ -1,4 +1,5 @@
-import { pxToRem, getSideArrow } from '../../utils'
+import { getSideArrow } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'

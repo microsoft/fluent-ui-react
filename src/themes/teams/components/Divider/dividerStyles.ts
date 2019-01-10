@@ -1,7 +1,6 @@
 import * as _ from 'lodash'
 
-import { childrenExist } from '../../../../lib'
-import { pxToRem } from '../../utils'
+import { childrenExist, pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 import { DividerVariables } from './dividerVariables'
