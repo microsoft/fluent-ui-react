@@ -4,8 +4,8 @@ import * as React from 'react'
 
 import { exampleIndexContext, exampleSourcesContext } from 'docs/src/utils'
 import { List, Segment } from '@stardust-ui/react'
+import { componentAPIs } from './ComponentSourceManager'
 
-import { examplePathPatterns } from './ComponentExample'
 import ContributionPrompt from './ContributionPrompt'
 
 interface ComponentExamplesProps {
@@ -80,8 +80,8 @@ export default class ComponentExamples extends React.Component<ComponentExamples
   private getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
     const examplesPattern = `\./${displayName}/[\\w/]+Example`
     const [normalExtension, shorthandExtension] = [
-      examplePathPatterns.normal,
-      examplePathPatterns.shorthand,
+      componentAPIs.children.fileSuffix,
+      componentAPIs.shorthand.fileSuffix,
     ].map(pattern => `${pattern}.source.json`)
 
     const [normalRegExp, shorthandRegExp] = [normalExtension, shorthandExtension].map(
