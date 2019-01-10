@@ -374,7 +374,7 @@ export const wrapperShorthand = PropTypes.oneOfType([
 
 /**
  * Item shorthand is a description of a component that can be a literal,
- * a props object, an element or render function.
+ * a props object, an element or a render function.
  */
 export const itemShorthand = every([
   disallow(['children']),
