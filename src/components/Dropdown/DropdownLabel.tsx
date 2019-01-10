@@ -72,7 +72,7 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ rest, styles }: RenderResultConfig<DropdownLabelProps>) {
+  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownLabelProps>) {
     const { header, icon, image } = this.props
 
     return (
@@ -95,7 +95,7 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
             avatar: true,
           },
         })}
-        {...rest}
+        {...unhandledProps}
       />
     )
   }
