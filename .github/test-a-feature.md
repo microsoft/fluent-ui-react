@@ -105,22 +105,20 @@ yarn test:watch
 
 [1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
 
-## Behaviours tets
+## Behaviors tets
 
 Behavior unit tests are generated from the specification written in each behavior file.
-Each line under the "@specification" tag is taken and trying to match the regex experesion written in "testDefinitions.ts" file. 
+Each line under the "@specification" tag is taken and matched against the regex experesion written in "testDefinitions.ts" file. 
 
 **Adding test(s)**
 
-What I need to do if I am adding ?:
+- For a new behavior. In the file 'behavior-test.tsx' do following changes:
+  - import the new behavior into the test file
+  - add the new behavior to the testHelper object like: testHelper.addBehavior('yourNewBehaviorName', yourNewBehaviorImportedObject)
+  - add regex expression into 'testDefinitions.ts' which will match your line written under @specification tag
 
-- New behavior file. In the file behavior-test.tsx add:
-  - your new added behavior into object: import {}
-  - to testHelper like: testHelper.addBehavior('yourNewBehaviorName', yourNewBehaviorImportedObject)
-  - add into testDefinitions.ts regex which will match your line written under @specification tag
-
-- Editing existing behavior
-  - add into testDefinitions.ts regex which will match your line written under @specification tag
+- For an existing behavior:
+  - add regex expression into 'testDefinitions.ts' which will match your line written under @specification tag
 
 **Running test(s)**
 
@@ -129,12 +127,12 @@ Run test and watch: yarn jest --watch behavior-test
 
 **Troubleshooting**
 
-- I am not sure if my line under @specification was process correctly? <br>
+- I am not sure if my line under @specification was process correctly. <br>
 Go into docs\src\behaviorMenu.json file and verify if you can find your line. If not then:
   - run command "gulp build:docs:component-menu-behaviors", this will build the file again
   - verify formatting the file (if some tag is not missing, etc...) and run command again
 
-- I am not sure if my line was executed? </br> 
+- I am not sure if my line was executed. </br> 
 Rename all test files title containing "behavior-test" string. 
 For example, like (goal of the renaming is reach that these tests will not run):
   - listBehaviorrrrrrrrrrr-test.tsx
