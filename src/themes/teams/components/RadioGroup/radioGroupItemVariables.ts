@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { RadioGroupItemProps } from '../../../../components/RadioGroup/RadioGroupItem'
 
 export default (siteVars: any, props: RadioGroupItemProps) => {
