@@ -3,31 +3,64 @@ import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react
 
 const items = [
   {
-    key: 'cloud',
+    key: 'format',
     icon: {
-      name: 'cloud',
-      circular: true,
-      size: 'small',
+      name: 'format',
+      variables: { outline: true },
     },
     accessibility: toolbarButtonBehavior,
-    'aria-label': 'Cloud Tool',
+    'aria-label': 'Format Tool',
   },
   {
-    key: 'clock',
+    key: 'paperclip',
     icon: {
-      name: 'clock',
-      circular: true,
-      size: 'small',
+      name: 'paperclip',
+      variables: { outline: true },
     },
     accessibility: toolbarButtonBehavior,
-    'aria-label': 'Clock Tool',
+    'aria-label': 'Paperclip Tool',
+  },
+  {
+    key: 'emoji',
+    icon: {
+      name: 'emoji',
+      variables: { outline: true },
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'Emoji Tool',
+  },
+  {
+    key: 'giphy',
+    icon: {
+      name: 'giphy',
+      variables: { outline: true },
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'Giphy tool',
+  },
+  {
+    key: 'sticker',
+    icon: {
+      name: 'sticker',
+      variables: { outline: true },
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'Sticker Tool',
+  },
+  {
+    key: 'meetup',
+    icon: {
+      name: 'video-camera-emphasis',
+      variables: { outline: true },
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'Meetup Tool',
   },
   {
     key: 'book',
     icon: {
       name: 'book',
-      circular: true,
-      size: 'small',
+      variables: { outline: true },
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
