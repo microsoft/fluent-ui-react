@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.16.1 ]------------------------------- -->
+## [v0.16.1](https://github.com/stardust-ui/react/tree/v0.16.1) (2019-01-10)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.0...v0.16.1)
+
 ### Features
 - Add `on` and `mouseLeaveDelay` props to `Popup` component @mnajdova ([#622](https://github.com/stardust-ui/react/pull/622))
 - Add Dropdown Single Selection variant @silviuavram ([#584](https://github.com/stardust-ui/react/pull/584))
