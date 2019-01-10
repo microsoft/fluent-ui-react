@@ -38,7 +38,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
   handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
 
   keyActions: {
-    anchor: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

@@ -41,7 +41,7 @@ const tabBehavior: Accessibility = (props: any) => ({
     'aria-selected',
   ],
   keyActions: {
-    anchor: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
