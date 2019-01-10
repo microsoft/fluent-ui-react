@@ -194,12 +194,14 @@ export default class Dropdown extends AutoControlledComponent<
   static Label = DropdownLabel
   static SearchInput = DropdownSearchInput
 
-  state: DropdownState = {
-    // prevent deletion of last character + last selected value at the same time on backspace.
-    backspaceDelete: this.props.multiple,
-    focused: false,
-    searchQuery: this.props.search ? '' : undefined,
-    value: this.props.multiple ? [] : null,
+  getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
+    return {
+      // prevent deletion of last character + last selected value at the same time on backspace.
+      backspaceDelete: multiple,
+      focused: false,
+      searchQuery: search ? '' : undefined,
+      value: multiple ? [] : null,
+    }
   }
 
   public renderComponent({
