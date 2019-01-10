@@ -5,14 +5,12 @@ import States from './States'
 import Variations from './Variations'
 
 import Usages from './Usages'
-import Content from './Content'
 
 const MenuExamples = () => (
   <div>
     <Types />
     <Slots />
     <States />
-    <Content />
     <Variations />
     <Usages />
   </div>

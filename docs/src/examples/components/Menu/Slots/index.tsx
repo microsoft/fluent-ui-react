@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -18,6 +18,11 @@ const Slots = () => (
       title="Icon &amp; content"
       description="A menu can have menu items that are content only, icon only, or content + icon."
       examplePath="components/Menu/Slots/MenuExampleWithIcons"
+    />
+    <ComponentExample
+      title="Divider"
+      description="A menu can have divider between some items."
+      examplePath="components/Menu/Slots/MenuExampleDivider"
     />
   </ExampleSection>
 )

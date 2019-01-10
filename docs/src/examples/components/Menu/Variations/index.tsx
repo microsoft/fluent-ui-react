@@ -19,11 +19,6 @@ const Variations = () => (
       description="A vertical menu can be fluid which takes up the full space of its container. A horizontal menu does this by default."
       examplePath="components/Menu/Variations/MenuExampleFluid"
     />
-    <ComponentExample
-      title="Compact"
-      description="A menu can be compact which only takes up the amount of space it needs to show its contents."
-      examplePath="components/Menu/Variations/MenuExampleCompact"
-    />
   </ExampleSection>
 )
 

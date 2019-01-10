@@ -19,12 +19,6 @@ const Types = () => (
       description="A menu can underline the active element."
       examplePath="components/Menu/Types/MenuExampleUnderlined"
     />
-    <ComponentExample
-      title="Menu with submenus"
-      description="A menu can have submenus."
-      examplePath="components/Menu/Types/MenuExampleWithSubmenu"
-    />
-    <ComponentExample examplePath="components/Menu/Types/MenuExampleVerticalWithSubmenu" />
   </ExampleSection>
 )
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -13,6 +13,11 @@ const Usages = () => (
       title="Menu as a Tab List"
       description="A menu with TabList accessibility behavior."
       examplePath="components/Menu/Usages/MenuExampleTabList"
+    />
+    <ComponentExample
+      title="Menu with submenus"
+      description="A menu can have submenus."
+      examplePath="components/Menu/Usages/MenuExampleWithSubmenu"
     />
   </ExampleSection>
 )
