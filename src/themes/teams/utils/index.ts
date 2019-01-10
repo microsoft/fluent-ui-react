@@ -1,7 +1,7 @@
 import { pxToRem as basePxToRem } from '../../../lib'
 import { ThemeInput } from '../../types'
 
-const themeFontSizeInPx = 14
+const themeFontSizeInPx = 10
 
 export const pxToRem = (sizeInPx: number) => basePxToRem(sizeInPx, themeFontSizeInPx)
 
