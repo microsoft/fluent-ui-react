@@ -9,7 +9,7 @@ import {
   ColorComponentProps,
   customPropTypes,
 } from '../../lib'
-import { defaultBehavior } from '../../lib/accessibility'
+import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
@@ -66,7 +66,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: loaderBehavior,
     indicator: '',
     labelPosition: 'below',
     size: 'medium',
