@@ -25,27 +25,27 @@ export interface LabelProps
     ContentComponentProps {
   accessibility?: Accessibility
 
-  /** A label can be circular. */
+  /** A Label can be circular. */
   circular?: boolean
 
-  /** A Label can take the width of its container. */
+  /** A Label can take up the width of its container. */
   fluid?: boolean
 
-  /** Label can have an icon. */
+  /** A Label can have an icon. */
   icon?: ShorthandValue
 
-  /** An icon label can format an Icon to appear before or after the text in the label */
+  /** A Label can position its Icon at the start or end of the layout. */
   iconPosition?: 'start' | 'end'
 
-  /** Label can have an image. */
+  /** A Label can contain an image. */
   image?: ShorthandValue
 
-  /** An icon label can format an Icon to appear before or after the text in the label */
+  /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
 }
 
 /**
- * A label is used to classify content.
+ * A Label is used to classify content.
  */
 class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static displayName = 'Label'
@@ -82,69 +82,58 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   renderComponent({ ElementType, classes, rest, variables, styles }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
-    const imageElement =
-      image &&
-      Image.create(image, {
-        defaultProps: {
-          styles: styles.image,
-          variables: variables.image,
-        },
-      })
-
-    const iconElement =
-      icon &&
-      Icon.create(icon, {
-        defaultProps: {
-          styles: styles.icon,
-          variables: variables.icon,
-        },
-        overrideProps: this.handleIconOverrides,
-      })
-
-    let start: React.ReactNode = null
-    let end: React.ReactNode = null
-
-    // Default positioning of the image and icon
-    if (image && imagePosition === 'start') {
-      start = imageElement
-    }
-    if (icon && iconPosition === 'end') {
-      end = iconElement
+    if (childrenExist(children)) {
+      return (
+        <ElementType {...rest} className={classes.root}>
+          {children}
+        </ElementType>
+      )
     }
 
-    // Custom positioning of the icon and image
-    if (icon && iconPosition === 'start') {
-      if (image && imagePosition === 'start') {
-        start = (
-          <React.Fragment>
-            {imageElement}
-            {iconElement}
-          </React.Fragment>
-        )
-      } else {
-        start = iconElement
-      }
-    }
-    if (image && imagePosition === 'end') {
-      if (icon && iconPosition === 'end') {
-        end = (
-          <React.Fragment>
-            {iconElement}
-            {imageElement}
-          </React.Fragment>
-        )
-      } else {
-        end = imageElement
-      }
-    }
+    const imageElement = Image.create(image, {
+      defaultProps: {
+        styles: styles.image,
+        variables: variables.image,
+      },
+    })
+    const iconElement = Icon.create(icon, {
+      defaultProps: {
+        styles: styles.icon,
+        variables: variables.icon,
+      },
+      overrideProps: this.handleIconOverrides,
+    })
+
+    const startImage = imagePosition === 'start' && imageElement
+    const startIcon = iconPosition === 'start' && iconElement
+    const endIcon = iconPosition === 'end' && iconElement
+    const endImage = imagePosition === 'end' && imageElement
+
+    const hasStartElement = startImage || startIcon
+    const hasEndElement = endIcon || endImage
 
     return (
       <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
-        )}
+        <Layout
+          start={
+            hasStartElement && (
+              <>
+                {startImage}
+                {startIcon}
+              </>
+            )
+          }
+          main={content}
+          end={
+            hasEndElement && (
+              <>
+                {endIcon}
+                {endImage}
+              </>
+            )
+          }
+          gap={pxToRem(3)}
+        />
       </ElementType>
     )
   }
