@@ -1,11 +1,6 @@
-import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
 import { pxToRem } from '../../utils'
 
-export type MenuColorScheme = Pick<ColorScheme, 'foreground' | 'background' | 'border' | 'hover'>
-
 export interface MenuVariables {
-  colorScheme: ColorValues<MenuColorScheme>
-
   color: string
   backgroundColor: string
 
@@ -29,10 +24,8 @@ export interface MenuVariables {
   lineHeightBase: string
 }
 
-export default (siteVars: SiteVariablesPrepared): MenuVariables => {
+export default (siteVars: any): MenuVariables => {
   return {
-    colorScheme: siteVars.colorScheme,
-
     color: siteVars.gray02,
     backgroundColor: siteVars.white,
 
