@@ -15,7 +15,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
  * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+ * Performs click action with 'Enter' and 'Spacebar' on 'root'.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
@@ -38,7 +38,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
   handledProps: ['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-disabled'],
 
   keyActions: {
-    anchor: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
