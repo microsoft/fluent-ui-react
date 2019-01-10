@@ -114,11 +114,6 @@ const Variations = () => (
       description="A menu with Toolbar accessibility behavior."
       examplePath="components/Menu/Variations/MenuExampleToolbar"
     />
-    <ComponentExample
-      title="Colored Menu"
-      description="A Menu can have different colors."
-      examplePath="components/Menu/Variations/MenuExampleColor"
-    />
   </ExampleSection>
 )
 

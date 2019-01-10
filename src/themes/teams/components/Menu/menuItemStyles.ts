@@ -1,13 +1,9 @@
-import * as _ from 'lodash'
-
-import { getColorSchemeFn } from '../../../../lib'
 import { pxToRem, getSideArrow } from '../../utils'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { MenuVariables, MenuColorScheme } from './menuVariables'
+import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
-type GetColorFn = (area: keyof MenuColorScheme, defaultColor: string) => string
 
 const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
@@ -16,47 +12,44 @@ const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly },
+  props: { primary, underlined, iconOnly, isFromKeyboard },
   variables: v,
-  colorVariable,
-  getColor,
+  color,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colorVariable: string
-  getColor: GetColorFn
+  color: string
 }): ICSSInJSStyle =>
   underlined || iconOnly
     ? {
-        color: colorVariable,
+        color,
         background: v.backgroundColor,
       }
+    : primary
+    ? {
+        color: v.primaryActiveColor,
+        background: v.primaryActiveBackgroundColor,
+      }
     : {
-        color: getColor('foreground', primary ? v.primaryActiveColor : colorVariable),
-        background: getColor(
-          'background',
-          primary ? v.primaryActiveBackgroundColor : v.activeBackgroundColor,
-        ),
+        color,
+        background: v.activeBackgroundColor,
       }
 
 const getFocusedStyles = ({
   props,
   variables: v,
-  colorVariable,
-  getColor,
+  color,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  colorVariable: string
-  getColor: GetColorFn
+  color: string
 }): ICSSInJSStyle => {
   const { primary, underlined, iconOnly, isFromKeyboard, active } = props
   if (active && !underlined) return {}
-
-  const { color, background } =
-    (underlined && !isFromKeyboard) || iconOnly
+  return {
+    ...((underlined && !isFromKeyboard) || iconOnly
       ? {
-          color: colorVariable,
+          color,
           background: v.backgroundColor,
         }
       : primary
@@ -65,19 +58,17 @@ const getFocusedStyles = ({
           background: v.primaryFocusedBackgroundColor,
         }
       : {
-          color: colorVariable,
+          color,
           background: v.focusedBackgroundColor,
-        }
-
-  return { color: getColor('foreground', color), background: getColor('hover', background) }
+        }),
+  }
 }
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
 }): ICSSInJSStyle => {
-  const { color, iconOnly, pointing, pills, primary, underlined, vertical } = props
-  const getColor = getColorSchemeFn<MenuColorScheme>(color, v.colorScheme)
+  const { iconOnly, pointing, pills, primary, underlined, vertical } = props
 
   return (
     !pills &&
@@ -89,8 +80,8 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         content: '""',
         top: 0,
         right: 0,
-        backgroundColor: getColor('background', primary ? v.primaryBorderColor : v.borderColor),
         ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
+        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
     }
   )
@@ -100,33 +91,34 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
   props,
   variables: v,
 }): ICSSInJSStyle => {
-  const { color, pointing, primary } = props
-  const getColor = getColorSchemeFn<MenuColorScheme>(color, v.colorScheme)
-  const backgroundColor = getColor(
-    'background',
-    primary ? v.primaryActiveBackgroundColor : v.activeBackgroundColor,
-  )
-  const borderValue = `1px solid ${getColor(
-    'background',
-    primary ? v.primaryBorderColor : v.borderColor,
-  )}`
+  const { pointing, primary } = props
 
-  const { top, borders }: { top: string; borders: ICSSInJSStyle } =
-    pointing === 'start'
-      ? {
-          top: '-1px', // 1px for the border
-          borders: {
-            borderTop: borderValue,
-            borderLeft: borderValue,
-          },
-        }
-      : {
-          top: '100%',
-          borders: {
-            borderBottom: borderValue,
-            borderRight: borderValue,
-          },
-        }
+  let backgroundColor: string
+  let borderColor: string
+  let top: string
+  let borders: ICSSInJSStyle
+
+  if (primary) {
+    backgroundColor = v.primaryActiveBackgroundColor
+    borderColor = v.primaryBorderColor
+  } else {
+    backgroundColor = v.activeBackgroundColor
+    borderColor = v.borderColor
+  }
+
+  if (pointing === 'start') {
+    borders = {
+      borderTop: `1px solid ${borderColor}`,
+      borderLeft: `1px solid ${borderColor}`,
+    }
+    top = '-1px' // 1px for the border
+  } else {
+    borders = {
+      borderBottom: `1px solid ${borderColor}`,
+      borderRight: `1px solid ${borderColor}`,
+    }
+    top = '100%'
+  }
 
   return {
     '::after': {
@@ -152,7 +144,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
-      color,
       iconOnly,
       isFromKeyboard,
       pills,
@@ -161,8 +152,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
     } = props
-
-    const getColor = getColorSchemeFn<MenuColorScheme>(color, v.colorScheme)
 
     return {
       color: v.color,
@@ -212,32 +201,21 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active && {
-        ...getActionStyles({ props, variables: v, colorVariable: v.color, getColor }),
+        ...getActionStyles({ props, variables: v, color: v.color }),
 
         ...(pointing &&
           (vertical
             ? pointing === 'end'
-              ? {
-                  borderRight: `${pxToRem(3)} solid ${getColor(
-                    'background',
-                    v.primaryActiveBorderColor,
-                  )}`,
-                }
-              : {
-                  borderLeft: `${pxToRem(3)} solid ${getColor(
-                    'background',
-                    v.primaryActiveBorderColor,
-                  )}`,
-                }
+              ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
+              : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
             : pointingBeak({ props, variables: v, theme }))),
       }),
 
       // focus styles
-      ...(isFromKeyboard &&
-        getFocusedStyles({ props, variables: v, colorVariable: v.activeColor, getColor })),
+      ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
 
       // hover styles
-      ':hover': getFocusedStyles({ props, variables: v, colorVariable: v.activeColor, getColor }),
+      ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
 
       ':first-child': {
         ...(!pills &&
@@ -273,17 +251,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const {
-      active,
-      color,
-      iconOnly,
-      isFromKeyboard,
-      pointing,
-      primary,
-      underlined,
-      vertical,
-    } = props
-    const getColor = getColorSchemeFn<MenuColorScheme>(color, v.colorScheme)
+    const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
     const { arrowDown } = theme.siteVariables
     const sideArrow = getSideArrow(theme)
 
@@ -311,16 +279,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(active &&
         (primary
           ? {
-              ...(iconOnly && { color: getColor('foreground', v.primaryActiveBorderColor) }),
+              ...(iconOnly && { color: v.primaryActiveBorderColor }),
 
               ...(underlined && {
-                color: getColor('foreground', v.primaryActiveBorderColor),
-                ...underlinedItem(getColor('border', v.primaryActiveBorderColor)),
+                color: v.primaryActiveBorderColor,
+                ...underlinedItem(v.primaryActiveBorderColor),
               }),
             }
           : underlined && {
               fontWeight: 700,
-              ...underlinedItem(getColor('border', v.activeColor)),
+              ...underlinedItem(v.activeColor),
             })),
 
       // focus styles
@@ -328,24 +296,24 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...(primary
           ? {
               ...(iconOnly && {
-                color: getColor('foreground', v.primaryActiveBorderColor),
-                border: `1px solid ${getColor('border', v.primaryActiveBorderColor)}`,
+                color: v.primaryActiveBorderColor,
+                border: `1px solid ${v.primaryActiveBorderColor}`,
                 borderRadius: v.circularRadius,
               }),
 
-              ...(underlined && { color: getColor('foreground', v.primaryActiveColor) }),
+              ...(underlined && { color: v.primaryActiveColor }),
 
-              ...(underlined && active && underlinedItem(getColor('border', v.primaryActiveColor))),
+              ...(underlined && active && underlinedItem(v.primaryActiveColor)),
             }
           : {
               ...(iconOnly && {
-                border: `1px solid ${getColor('border', v.activeColor)}`,
+                border: `1px solid ${v.activeColor}`,
                 borderRadius: v.circularRadius,
               }),
 
               ...(underlined && { fontWeight: 700 }),
 
-              ...(underlined && active && underlinedItem(getColor('border', v.activeColor))),
+              ...(underlined && active && underlinedItem(v.activeColor)),
             }),
       }),
 
