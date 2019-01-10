@@ -11,7 +11,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  ColorComponentProps,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -19,12 +18,13 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComplexColorComponentProps } from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps {
+    ComplexColorComponentProps {
   accessibility?: Accessibility
 
   /** A Label can be circular. */
@@ -57,13 +57,15 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: true }),
+    ...commonPropTypes.createCommon(),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
+    // TODO: type this one correctly
+    color: PropTypes.any,
   }
 
   static defaultProps = {

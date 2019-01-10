@@ -7,8 +7,8 @@ export interface LabelVariables {
   colorScheme: ColorValues<LabelColorScheme>
   circularRadius: string
   padding: string
-  color: string
-  backgroundColor: string
+  foreground: string
+  background: string
   startPaddingLeft: string
   endPaddingRight: string
   height: string
@@ -20,8 +20,9 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
 
   return {
     colorScheme: siteVars.colorScheme,
-    color,
-    backgroundColor: 'rgb(232, 232, 232)',
+    // TODO: see if we can get rid of this, or define them in different why
+    foreground: color,
+    background: 'rgb(232, 232, 232)',
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',

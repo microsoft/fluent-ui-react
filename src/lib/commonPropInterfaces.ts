@@ -25,21 +25,36 @@ export interface UIComponentProps<P = any, V = any>
   className?: string
 }
 
+export type ColorValue =
+  | 'primary'
+  | 'secondary'
+  | 'blue'
+  | 'green'
+  | 'grey'
+  | 'orange'
+  | 'pink'
+  | 'purple'
+  | 'teal'
+  | 'red'
+  | 'yellow'
+  | string
+
 export interface ColorComponentProps {
   /** A component can have a color. */
+  color?: ColorValue
+}
+
+export interface ComplexColorComponentProps {
+  /** A component can have color defined for different parts. */
   color?:
-    | 'primary'
-    | 'secondary'
-    | 'blue'
-    | 'green'
-    | 'grey'
-    | 'orange'
-    | 'pink'
-    | 'purple'
-    | 'teal'
-    | 'red'
-    | 'yellow'
-    | string
+    | {
+        foreground?: ColorValue
+        background?: ColorValue
+        border?: ColorValue
+        shadow?: ColorValue
+        hover?: ColorValue
+      }
+    | ColorValue
 }
 
 export interface ContentComponentProps<TContent = React.ReactNode> {

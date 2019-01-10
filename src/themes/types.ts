@@ -107,7 +107,7 @@ export type ColorScheme = {
   hover: string
 }
 
-export type ColorSchemeMapping = ColorValues<ColorScheme>
+export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
 
 // ========================================================
 // Props
