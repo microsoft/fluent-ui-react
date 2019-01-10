@@ -114,7 +114,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const {
       reducing,
       disappearing,
@@ -132,7 +132,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     const endArea = renderEndArea({ ...this.props, classes })
 
     if (!startArea && !mainArea && !endArea) {
-      return <ElementType {...rest} className={classes.root} />
+      return <ElementType {...unhandledProps} className={classes.root} />
     }
 
     const activeAreas = [startArea, mainArea, endArea].filter(Boolean)
@@ -151,14 +151,14 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
         endArea && 'ui-layout--reduced__end',
       )
       return (
-        <ElementType {...rest} className={composedClasses}>
+        <ElementType {...unhandledProps} className={composedClasses}>
           {start || main || end}
         </ElementType>
       )
     }
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {startArea}
         {startArea && mainArea && renderGap({ ...this.props, classes })}
         {mainArea}

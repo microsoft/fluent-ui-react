@@ -146,11 +146,14 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
       { defaultProps: FocusZone.defaultProps },
       this.props,
     ) as React.ComponentClass<FocusZoneProps>
-    const rest = getUnhandledProps({ handledProps: [..._.keys(FocusZone.propTypes)] }, this.props)
+    const unhandledProps = getUnhandledProps(
+      { handledProps: [..._.keys(FocusZone.propTypes)] },
+      this.props,
+    )
 
     return (
       <ElementType
-        {...rest}
+        {...unhandledProps}
         className={cx(FocusZone.className, className)}
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}
