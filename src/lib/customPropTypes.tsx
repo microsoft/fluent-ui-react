@@ -380,11 +380,28 @@ export const itemShorthand = every([
   disallow(['children']),
   PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
 ])
+export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
+  return every([
+    disallow(['children']),
+    PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.shape({
+        kind: PropTypes.oneOf(kindPropValues),
+      }),
+    ]),
+  ])
+}
 
 /**
  * Collection shorthand ensures a prop is an array of item shorthand.
  */
 export const collectionShorthand = every([disallow(['children']), PropTypes.arrayOf(itemShorthand)])
+export const collectionShorthandWithKindProp = (kindPropValues: string[]) => {
+  return every([
+    disallow(['children']),
+    PropTypes.arrayOf(itemShorthandWithKindProp(kindPropValues)),
+  ])
+}
 
 /**
  * Show a deprecated warning for component props with a help message and optional validator.

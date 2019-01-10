@@ -98,3 +98,10 @@ export const bodyFontSize = '1.4rem'
 export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
+
+//
+// UNICODE CHARACTERS
+//
+export const arrowRight = '\u25B8'
+export const arrowDown = '\u25BE'
+export const arrowLeft = '\u25C2'

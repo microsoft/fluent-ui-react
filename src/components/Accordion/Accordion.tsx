@@ -118,8 +118,6 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static Title = AccordionTitle
   static Content = AccordionContent
 
-  state: any = { activeIndex: [0] }
-
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
   }
