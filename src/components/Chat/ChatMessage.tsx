@@ -41,17 +41,22 @@ export interface ChatMessageProps
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
 
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 }
 
-export interface MessageState {
+export interface ChatMessageState {
   isFromKeyboard: boolean
 }
 
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, MessageState> {
+class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
   static create: Function
