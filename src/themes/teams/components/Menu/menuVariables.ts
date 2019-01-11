@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface MenuVariables {
   color: string
   backgroundColor: string
@@ -20,7 +18,6 @@ export interface MenuVariables {
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
-  circularRadius: string
   lineHeightBase: string
 }
 
@@ -45,7 +42,6 @@ export default (siteVars: any): MenuVariables => {
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
-    circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
   }
 }

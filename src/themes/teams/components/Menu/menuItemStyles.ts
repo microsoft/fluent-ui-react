@@ -267,7 +267,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         }),
 
       ...(iconOnly && {
-        border: '2px solid transparent',
+        border: `${pxToRem(2)} solid transparent`,
       }),
 
       ...(underlined
