@@ -45,7 +45,6 @@ export type ComplexColorPropType =
       background?: ColorValue
       border?: ColorValue
       shadow?: ColorValue
-      hover?: ColorValue
     }
   | ColorValue
 

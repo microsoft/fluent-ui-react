@@ -33,7 +33,6 @@ export const complexColorPropType = PropTypes.oneOfType([
     foreground: colorPropType,
     background: colorPropType,
     border: colorPropType,
-    hover: colorPropType,
     shadow: colorPropType,
   }),
   colorPropType,
