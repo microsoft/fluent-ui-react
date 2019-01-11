@@ -72,11 +72,11 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
     size: 'medium',
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, styles, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, styles, unhandledProps }) {
     const { indicator, label } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Slot.create(indicator, { defaultProps: { styles: styles.indicator } })}
         {Slot.create(label, { defaultProps: { styles: styles.label } })}
       </ElementType>
