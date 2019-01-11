@@ -51,6 +51,9 @@ export const generateColorScheme = (
   colorProp: ComplexColorPropType,
   colorScheme: ColorValues<Partial<ColorScheme>>,
 ): Partial<ColorScheme> => {
+  if (!colorProp) {
+    return colorScheme && colorScheme.default ? colorScheme.default : {}
+  }
   return typeof colorProp === 'string'
     ? _.get(colorScheme, colorProp as string, colorScheme.default)
     : { ...colorScheme.default, ...getColorSchemeFromObject(colorScheme, colorProp) }

@@ -197,6 +197,7 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
+  colors: Partial<ColorScheme>
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

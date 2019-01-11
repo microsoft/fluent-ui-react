@@ -32,6 +32,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import { generateColorScheme } from './index'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -203,10 +204,14 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
         )
+
+        const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
+
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
           theme,
+          colors,
         }
 
         mergedStyles.root = {
