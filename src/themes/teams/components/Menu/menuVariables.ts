@@ -27,9 +27,9 @@ export interface MenuVariables {
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
-    backgroundColor: siteVars.white,
+    backgroundColor: 'inherit',
 
-    activeColor: siteVars.black,
+    activeColor: siteVars.brand06,
     activeBackgroundColor: siteVars.gray10,
     focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,

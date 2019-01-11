@@ -261,7 +261,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       display: 'block',
       cursor: 'pointer',
 
-      ...(((pointing && vertical) || iconOnly) && { border: '1px solid transparent' }),
+      ...(pointing &&
+        vertical && {
+          border: '1px solid transparent',
+        }),
+
+      ...(iconOnly && {
+        border: '2px solid transparent',
+      }),
 
       ...(underlined
         ? { padding: `${pxToRem(4)} 0` }
@@ -270,7 +277,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
 
       ...(iconOnly && {
-        padding: pxToRem(8),
+        padding: pxToRem(6),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -298,7 +305,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           ? {
               ...(iconOnly && {
                 color: v.primaryActiveBorderColor,
-                border: `1px solid ${v.primaryActiveBorderColor}`,
+                borderColor: v.primaryActiveBorderColor,
                 borderRadius: v.circularRadius,
               }),
 
@@ -308,7 +315,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : {
               ...(iconOnly && {
-                border: `1px solid ${v.activeColor}`,
+                borderColor: v.activeColor,
                 borderRadius: v.circularRadius,
               }),
 
