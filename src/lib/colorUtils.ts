@@ -23,7 +23,10 @@ export const getColorSchemeFn = <T>(colorProp: string, colorScheme: ColorValues<
   return (area: keyof T, defaultColor: string) => (colors ? colors[area] : defaultColor)
 }
 
-export const getColorSchemeFromObject = (colorScheme, colors) =>
+export const getColorSchemeFromObject = (
+  colorScheme: ColorValues<Partial<ColorScheme>>,
+  colors: ComplexColorPropType,
+): Partial<ColorScheme> =>
   _.mapValues(colors, (color, colorName) => {
     // if the color scheme contains the color, then get the value from it, otherwise return the color provided
     const colorSchemeValue = _.get(colorScheme, color, colorScheme.default[color])
