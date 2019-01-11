@@ -29,7 +29,7 @@ export interface FocusTrapZoneProps extends React.HTMLAttributes<HTMLDivElement>
   isClickableOutsideFocusTrap?: boolean
 
   /**
-   * Indicates if the element that triggered FTZ should be focused on outside click.
+   * Indicates if the previously focused element outside FocusTrapZone should be focused on outside click.
    * Note: trigger will be focused when exiting FTZ using keyboard.
    * If isClickableOutsideFocusTrap === 'false', focusTriggerOnOutsideClick will not be taken into account.
    * @default false
