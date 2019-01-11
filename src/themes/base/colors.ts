@@ -169,11 +169,13 @@ export const colorScheme: ColorSchemeMapping = _.mapValues(
       border: foreground,
       shadow: foreground,
       background: colorVariants[500],
+      lighterBackground: colorVariants[300],
       default: {
         foreground: colors.grey[600],
         border: colors.grey[600],
         shadow: colors.grey[600],
         background: colors.grey[100],
+        lighterBackground: colors.grey[300],
       },
     }
   },

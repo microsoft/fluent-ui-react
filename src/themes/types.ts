@@ -99,12 +99,10 @@ export type ColorPalette = ExtendablePalette<
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = {
-  foreground: string
-  background: string
-  border: string
-  shadow: string
-}
+export type ColorScheme = Record<
+  'foreground' | 'background' | 'border' | 'shadow' | 'lighterBackground',
+  string
+>
 
 export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
 

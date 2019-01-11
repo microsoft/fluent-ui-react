@@ -8,7 +8,7 @@ const items = [
 ]
 
 const MenuExampleVerticalPointing = () => (
-  <Menu defaultActiveIndex={0} items={items} vertical pointing />
+  <Menu defaultActiveIndex={0} items={items} vertical pointing primary />
 )
 
 export default MenuExampleVerticalPointing

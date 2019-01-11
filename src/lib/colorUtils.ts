@@ -18,10 +18,11 @@ export const mapColorsToScheme = <T>(
     typeof mapper === 'number' ? String(mapper) : (mapper as any),
   ) as ColorValues<T>
 
-export const getColorSchemeFn = <T>(colorProp: string, colorScheme: ColorValues<T>) => {
-  const colors = _.get(colorScheme, colorProp)
-  return (area: keyof T, defaultColor: string) => (colors ? colors[area] : defaultColor)
-}
+export const getColorFromScheme = <T extends {}>(
+  colorScheme: T,
+  area: keyof T,
+  defaultColor: string,
+) => _.get(colorScheme, area, defaultColor)
 
 export const getColorSchemeFromObject = (
   colorScheme: ColorValues<Partial<ColorScheme>>,
@@ -61,7 +62,7 @@ export const generateColorScheme = (
   // if the color prop is not defined, but the the color scheme is defined, then we are returning
   // the defaults from the color scheme if they exists
   if (colorScheme) {
-    return colorScheme && colorScheme.default ? colorScheme.default : {}
+    return colorScheme.default || {}
   }
 
   // if the color scheme is not defined, then if the color prop is a scheme object we are

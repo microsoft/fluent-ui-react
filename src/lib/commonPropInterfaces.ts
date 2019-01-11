@@ -40,13 +40,10 @@ export type ColorValue =
   | string
 
 export type ComplexColorPropType =
-  | {
-      foreground?: ColorValue
-      background?: ColorValue
-      border?: ColorValue
-      shadow?: ColorValue
-    }
   | ColorValue
+  | Partial<
+      Record<'foreground' | 'background' | 'border' | 'shadow' | 'lighterBackground', ColorValue>
+    >
 
 export interface ColorComponentProps<TColor = ColorValue> {
   /** A component can have a color. */

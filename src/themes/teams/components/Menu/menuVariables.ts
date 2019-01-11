@@ -1,6 +1,14 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem, getColorSchemeWithCustomDefaults } from '../../../../lib'
+import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
+
+export type MenuColorScheme = Pick<
+  ColorScheme,
+  'foreground' | 'background' | 'border' | 'lighterBackground'
+>
 
 export interface MenuVariables {
+  colorScheme: ColorValues<MenuColorScheme>
+
   color: string
   backgroundColor: string
 
@@ -24,8 +32,14 @@ export interface MenuVariables {
   lineHeightBase: string
 }
 
-export default (siteVars: any): MenuVariables => {
+export default (siteVars: SiteVariablesPrepared): MenuVariables => {
   return {
+    colorScheme: getColorSchemeWithCustomDefaults(siteVars.colorScheme, {
+      foreground: undefined,
+      background: undefined,
+      border: undefined,
+    }),
+
     color: siteVars.gray02,
     backgroundColor: siteVars.white,
 

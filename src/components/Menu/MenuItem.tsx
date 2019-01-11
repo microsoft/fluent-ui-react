@@ -15,6 +15,8 @@ import {
   commonPropTypes,
   isFromKeyboard,
   EventStack,
+  ColorComponentProps,
+  ComplexColorPropType,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
@@ -28,7 +30,8 @@ import Ref from '../Ref/Ref'
 export interface MenuItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps<ComplexColorPropType> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuItemBehavior
@@ -123,7 +126,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   static create: Function
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: 'complex' }),
     accessibility: PropTypes.func,
     active: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -172,7 +175,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+    const { children, color, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { menuOpen } = this.state
 
@@ -202,6 +205,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           {Menu.create(menu, {
             defaultProps: {
               accessibility: submenuBehavior,
+              color,
               vertical: true,
               primary,
               secondary,
