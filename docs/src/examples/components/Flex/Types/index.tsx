@@ -14,6 +14,11 @@ const Types = () => (
       description="A layout can display its areas vertically."
       examplePath="components/Flex/Types/LayoutExampleVertical"
     />
+    <ComponentExample
+      title="Flex model"
+      description="A flex model."
+      examplePath="components/Flex/Types/LayoutExampleModel"
+    />
   </ExampleSection>
 )
 
