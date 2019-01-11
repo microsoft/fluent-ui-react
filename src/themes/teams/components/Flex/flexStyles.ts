@@ -2,13 +2,13 @@ import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { FlexProps } from '../../../../components/Flex/Flex'
 
 const alignmentStyles = props =>
-  props.vertical
+  props.vertical && !props.gap
     ? {
         alignItems: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
-        justifyContent: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
+        justifyContent: props.bottom ? 'flex-end' : props.center ? 'center' : 'flex-start',
       }
     : {
-        justifyContent: props.bottom ? 'flex-end' : props.center ? 'center' : 'flex-start',
+        justifyContent: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
         alignItems: props.bottom
           ? 'flex-end'
           : props.center
