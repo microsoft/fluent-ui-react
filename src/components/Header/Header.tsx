@@ -13,6 +13,7 @@ import {
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface HeaderProps
   extends UIComponentProps,
@@ -66,8 +67,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        generateContentElement
-        {content}
+        {generateContentElement(content)}
         {HeaderDescription.create(description, {
           defaultProps: {
             variables: {
