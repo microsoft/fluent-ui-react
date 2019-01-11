@@ -301,6 +301,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // focus styles
       ...(isFromKeyboard && {
+        '& .ui-icon__filled': {
+          display: 'block',
+        },
+
+        '& .ui-icon__outline': {
+          display: 'none',
+        },
+
         ...(primary
           ? {
               ...(iconOnly && {
@@ -332,6 +340,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       // hover styles
       ':hover': {
         color: 'inherit',
+
+        '& .ui-icon__filled': {
+          display: 'block',
+        },
+
+        '& .ui-icon__outline': {
+          display: 'none',
+        },
 
         ...(primary
           ? {
