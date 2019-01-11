@@ -12,6 +12,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -54,7 +55,7 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? children : generateContentElement(content)}
       </ElementType>
     )
   }

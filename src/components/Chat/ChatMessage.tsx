@@ -18,7 +18,7 @@ import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import { generateContentSlot } from '../../lib/generateContent'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -97,7 +97,9 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
             {Text.create(timestamp, {
               defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
             })}
-            {Slot.create(content, { defaultProps: { styles: styles.content } })}
+            {generateContentSlot(content, {
+              defaultProps: { styles: styles.content },
+            })}
           </>
         )}
       </ElementType>

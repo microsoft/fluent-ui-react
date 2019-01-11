@@ -13,6 +13,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Button from './Button'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -59,7 +60,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
           {...unhandledProps}
           className={classes.root}
         >
-          {childrenExist(children) ? children : content}
+          {childrenExist(children) ? children : generateContentElement(content)}
         </ElementType>
       )
     }

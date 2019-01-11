@@ -12,6 +12,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -66,7 +67,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
     return (
       <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-        {content}
+        {generateContentElement(content)}
       </ElementType>
     )
   }
