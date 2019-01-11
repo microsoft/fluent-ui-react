@@ -1,5 +1,4 @@
 import { ChatMessageVariables } from '../../../teams/components/Chat/chatMessageVariables'
-import { Partial } from 'types/utils'
 
 export default (siteVars: any): Partial<ChatMessageVariables> => {
   return {

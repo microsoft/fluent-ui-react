@@ -1,5 +1,12 @@
+import * as _ from 'lodash'
+
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import {
+  ComponentSlotStyleFunction,
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  ColorScheme,
+} from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
@@ -12,61 +19,65 @@ const underlinedItem = (color: string): ICSSInJSStyle => ({
 })
 
 const getActionStyles = ({
-  props: { primary, underlined, iconOnly, isFromKeyboard },
+  props: { underlined, iconOnly, pointing, vertical },
   variables: v,
-  color,
+  colors,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  color: string
-}): ICSSInJSStyle =>
-  underlined || iconOnly
-    ? {
-        color,
-      }
-    : primary
-    ? {
-        color: v.primaryActiveColor,
-        background: v.primaryActiveBackgroundColor,
-      }
-    : {
-        color,
-        background: v.activeBackgroundColor,
-      }
+  colors: ColorScheme
+}): ICSSInJSStyle => {
+  if (underlined || iconOnly) {
+    return { color: v.color }
+  }
+
+  if (pointing && vertical) {
+    return { background: v.activeBackgroundColor }
+  }
+
+  return {
+    color: colors.foreground.active,
+    background: colors.background.active,
+  }
+}
 
 const getFocusedStyles = ({
   props,
   variables: v,
-  color,
+  colors,
 }: {
   props: MenuItemPropsAndState
   variables: MenuVariables
-  color: string
+  colors: ColorScheme
 }): ICSSInJSStyle => {
-  const { primary, underlined, isFromKeyboard, active } = props
+  const { iconOnly, underlined, isFromKeyboard, active, pointing, vertical } = props
+
+  if (iconOnly) {
+    return { color: colors.border.focused }
+  }
+
   if (active && !underlined) return {}
+
+  if (underlined && !isFromKeyboard) {
+    return { color: v.focusedColor }
+  }
+
+  if (pointing && vertical) {
+    return { background: v.focusedBackgroundColor }
+  }
+
   return {
-    ...(underlined && !isFromKeyboard
-      ? {
-          color,
-        }
-      : primary
-      ? {
-          color: v.primaryFocusedColor,
-          background: v.primaryFocusedBackgroundColor,
-        }
-      : {
-          color,
-          background: v.focusedBackgroundColor,
-        }),
+    color: colors.foreground.focused,
+    background: colors.background.focused,
   }
 }
 
 const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
+  colors,
 }): ICSSInJSStyle => {
-  const { iconOnly, pointing, pills, primary, underlined, vertical } = props
+  const { iconOnly, pointing, pills, underlined, vertical } = props
 
   return (
     !pills &&
@@ -78,8 +89,8 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
         content: '""',
         top: 0,
         right: 0,
+        background: colors.border.initial,
         ...(vertical ? { width: '100%', height: '1px' } : { width: '1px', height: '100%' }),
-        ...(primary ? { background: v.primaryBorderColor } : { background: v.borderColor }),
       },
     }
   )
@@ -88,40 +99,32 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
 const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
+  colors,
 }): ICSSInJSStyle => {
-  const { pointing, primary } = props
+  const { pointing } = props
+  const borderValue = `1px solid ${colors.border.initial}`
 
-  let backgroundColor: string
-  let borderColor: string
-  let top: string
-  let borders: ICSSInJSStyle
-
-  if (primary) {
-    backgroundColor = v.primaryActiveBackgroundColor
-    borderColor = v.primaryBorderColor
-  } else {
-    backgroundColor = v.activeBackgroundColor
-    borderColor = v.borderColor
-  }
-
-  if (pointing === 'start') {
-    borders = {
-      borderTop: `1px solid ${borderColor}`,
-      borderLeft: `1px solid ${borderColor}`,
-    }
-    top = '-1px' // 1px for the border
-  } else {
-    borders = {
-      borderBottom: `1px solid ${borderColor}`,
-      borderRight: `1px solid ${borderColor}`,
-    }
-    top = '100%'
-  }
+  const { top, borders }: { top: string; borders: ICSSInJSStyle } =
+    pointing === 'start'
+      ? {
+          top: '-1px', // 1px for the border
+          borders: {
+            borderTop: borderValue,
+            borderLeft: borderValue,
+          },
+        }
+      : {
+          top: '100%',
+          borders: {
+            borderBottom: borderValue,
+            borderRight: borderValue,
+          },
+        }
 
   return {
     '::after': {
       visibility: 'visible',
-      background: backgroundColor,
+      background: colors.background.active,
       position: 'absolute',
       content: '""',
       top,
@@ -154,6 +157,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
     return {
       color: v.color,
+      background: v.backgroundColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
@@ -195,37 +199,23 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // active styles
       ...(active && {
-        ...getActionStyles({ props, variables: v, color: v.color }),
+        ...getActionStyles({ props, variables: v, colors }),
 
         ...(pointing &&
           (vertical
-            ? pointing === 'end'
-              ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-              : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
+            ? {
+                [pointing === 'end' ? 'borderRight' : 'borderLeft']: `${pxToRem(3)} solid ${
+                  colors.border.active
+                }`,
+              }
             : pointingBeak({ props, variables: v, theme, colors }))),
       }),
 
-      ...(iconOnly && {
-        display: 'flex',
+      // focus styles
+      ...(isFromKeyboard && getFocusedStyles({ props, variables: v, colors })),
 
-        // focus styles
-        ...(isFromKeyboard && {
-          color: v.iconOnlyActiveColor,
-        }),
-
-        // hover styles
-        ':hover': {
-          color: v.iconOnlyActiveColor,
-        },
-      }),
-
-      ...(!iconOnly && {
-        // focus styles
-        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
-
-        // hover styles
-        ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
-      }),
+      // hover styles
+      ':hover': getFocusedStyles({ props, variables: v, colors }),
 
       ':first-child': {
         ...(!pills &&
@@ -267,17 +257,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const {
-      active,
-      iconOnly,
-      isFromKeyboard,
-      pointing,
-      primary,
-      underlined,
-      vertical,
-      disabled,
-    } = props
+  root: ({ props, variables: v, colors }): ICSSInJSStyle => {
+    const { active, iconOnly, isFromKeyboard, pointing, underlined, vertical, disabled } = props
 
     return {
       color: 'inherit',
@@ -308,27 +289,19 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // active styles
-      ...(active &&
-        (primary
-          ? {
-              ...(iconOnly && { color: v.primaryActiveBorderColor }),
-
-              ...(underlined && {
-                color: v.primaryActiveBorderColor,
-                ...underlinedItem(v.primaryActiveBorderColor),
-              }),
-            }
-          : underlined && {
-              fontWeight: 700,
-              ...underlinedItem(v.activeColor),
-            })),
+      ...(active && {
+        ...(iconOnly && { color: colors.border.active }),
+        ...(underlined && {
+          color: colors.border.active,
+          ...underlinedItem(colors.border.active),
+        }),
+      }),
 
       // focus styles
       ...(isFromKeyboard && {
         ...(iconOnly && {
+          borderColor: colors.border.focused,
           borderRadius: '50%',
-          borderColor: v.iconOnlyActiveColor,
-
           '& .ui-icon__filled': {
             display: 'block',
           },
@@ -338,22 +311,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           },
         }),
 
-        ...(primary
-          ? {
-              ...(iconOnly && {
-                color: v.primaryActiveBorderColor,
-                borderColor: v.primaryActiveBorderColor,
-              }),
-
-              ...(underlined && { color: v.primaryActiveColor }),
-
-              ...(underlined && active && underlinedItem(v.primaryActiveColor)),
-            }
-          : {
-              ...(underlined && { fontWeight: 700 }),
-
-              ...(underlined && active && underlinedItem(v.activeColor)),
-            }),
+        ...(underlined && {
+          color: colors.foreground.active,
+          ...(active && underlinedItem(colors.foreground.active)),
+        }),
       }),
 
       ':focus': {
@@ -365,6 +326,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         color: 'inherit',
 
         ...(iconOnly && {
+          color: colors.border.active,
+
           '& .ui-icon__filled': {
             display: 'block',
           },
@@ -374,12 +337,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           },
         }),
 
-        ...(primary
-          ? {
-              ...(iconOnly && { color: v.primaryActiveBorderColor }),
-              ...(!active && underlined && underlinedItem(v.primaryHoverBorderColor as string)),
-            }
-          : !active && underlined && underlinedItem(v.activeBackgroundColor)),
+        ...(!active && underlined && underlinedItem(v.borderColor as string)),
       },
 
       ...(disabled && {

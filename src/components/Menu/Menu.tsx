@@ -12,6 +12,8 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
+  ColorComponentProps,
+  ComplexColorPropType,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -23,7 +25,10 @@ import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
-export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
+export interface MenuProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ColorComponentProps<ComplexColorPropType> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default menuBehavior
@@ -93,6 +98,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
+      color: 'complex',
     }),
     accessibility: PropTypes.func,
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -141,6 +147,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
   renderItems = (variables: ComponentVariablesObject) => {
     const {
+      color,
       iconOnly,
       items,
       pills,
@@ -172,6 +179,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
 
       return MenuItem.create(item, {
         defaultProps: {
+          color,
           iconOnly,
           pills,
           pointing,

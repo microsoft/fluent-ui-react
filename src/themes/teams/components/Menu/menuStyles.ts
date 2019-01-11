@@ -1,3 +1,5 @@
+import * as _ from 'lodash'
+
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
@@ -10,8 +12,9 @@ const solidBorder = (color: string) => ({
 })
 
 export default {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
+  root: ({ props, variables: v, colors }): ICSSInJSStyle => {
+    const { iconOnly, fluid, pointing, pills, underlined, vertical } = props
+
     return {
       display: 'flex',
       ...(iconOnly && { alignItems: 'center' }),
@@ -27,14 +30,11 @@ export default {
         !iconOnly &&
         !(pointing && vertical) &&
         !underlined && {
-          ...solidBorder(variables.borderColor),
-          ...(primary && {
-            ...solidBorder(variables.primaryBorderColor),
-          }),
+          ...solidBorder(colors.border.initial),
           borderRadius: pxToRem(4),
         }),
       ...(underlined && {
-        borderBottom: `2px solid ${variables.primaryUnderlinedBorderColor}`,
+        borderBottom: `2px solid ${v.borderColor}`,
       }),
       minHeight: pxToRem(24),
       margin: 0,

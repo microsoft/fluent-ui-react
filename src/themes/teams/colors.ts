@@ -13,11 +13,11 @@ export const emphasisColors: EmphasisColors = {
     50: '#F4F4FC',
     100: '#E2E2F6',
     200: '#BDBDE6',
-    300: '#8F90C1',
+    300: '#8B8CC7',
     400: '#6E70AE',
     500: '#6264A7',
     600: '#55578D',
-    700: '#4A4C78',
+    700: '#464775',
     800: '#414265',
     900: '#33344A',
   },
@@ -38,14 +38,14 @@ export const naturalColors: NaturalColors = {
   },
   grey: {
     50: '#FFFFFF',
-    100: '#E6E6E6',
-    200: '#CDCCCC',
-    300: '#B8B8B8',
-    400: '#A2A2A2',
-    500: '#8C8C8C',
-    600: '#747373',
-    700: '#5F5E5E',
-    800: '#404040',
+    100: '#FAF9F8',
+    200: '#F3F2F1',
+    300: '#EDEBE9',
+    400: '#E1DFDD',
+    500: '#C8C6C4',
+    600: '#979593',
+    700: '#605E5C',
+    800: '#484644',
     900: '#252424',
   },
   orange: {
@@ -167,22 +167,70 @@ export const colors: ColorPalette = {
   white: naturalColors.grey[50],
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
-    const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
+const defaultGrey = colors.grey[600]
+export const colorScheme: ColorSchemeMapping = {
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
+    const foreground = isLightBackground(colorName) ? colors.black : colors.white
 
     return {
-      foreground,
-      border: foreground,
-      shadow: foreground,
-      background: colorVariants[500],
-      default: {
-        foreground: colors.grey[600],
-        border: colors.grey[600],
-        shadow: colors.grey[600],
-        background: colors.grey[100],
+      foreground: {
+        initial: foreground,
+        active: foreground,
+        disabled: foreground,
+        focused: foreground,
+        hovered: foreground,
+      },
+      background: {
+        initial: colorVariants[500],
+        active: colorVariants[500],
+        disabled: colorVariants[100],
+        focused: colorVariants[200],
+        hovered: colorVariants[200],
+      },
+      border: {
+        initial: colorVariants[500],
+        active: colorVariants[500],
+        disabled: colorVariants[100],
+        focused: colorVariants[200],
+        hovered: colorVariants[200],
+      },
+      shadow: {
+        initial: foreground,
+        active: foreground,
+        disabled: foreground,
+        focused: foreground,
+        hovered: foreground,
       },
     }
+  }),
+  default: {
+    foreground: {
+      initial: defaultGrey,
+      active: defaultGrey,
+      hovered: defaultGrey,
+      focused: defaultGrey,
+      disabled: defaultGrey,
+    },
+    background: {
+      initial: colors.grey[100],
+      active: colors.grey[100],
+      focused: colors.grey[300],
+      hovered: colors.grey[300],
+      disabled: colors.grey[300],
+    },
+    border: {
+      initial: colors.grey[100],
+      active: colors.grey[100],
+      focused: colors.grey[300],
+      hovered: colors.grey[300],
+      disabled: colors.grey[300],
+    },
+    shadow: {
+      initial: defaultGrey,
+      active: defaultGrey,
+      hovered: defaultGrey,
+      focused: defaultGrey,
+      disabled: defaultGrey,
+    },
   },
-)
+}

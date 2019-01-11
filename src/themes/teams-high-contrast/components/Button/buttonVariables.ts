@@ -1,5 +1,4 @@
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
-import { Partial } from 'types/utils'
 
 export default (siteVars: any): Partial<ButtonVariables> => {
   return {

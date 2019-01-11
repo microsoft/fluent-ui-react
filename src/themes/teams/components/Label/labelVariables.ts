@@ -18,8 +18,8 @@ export default (siteVars: SiteVariablesPrepared): LabelVariables => {
 
   return {
     colorScheme: getColorSchemeWithCustomDefaults(siteVars.colorScheme, {
-      foreground: color,
-      background: 'rgb(232, 232, 232)',
+      foreground: { initial: color },
+      background: { initial: 'rgb(232, 232, 232)' },
     }),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,

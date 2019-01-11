@@ -96,15 +96,16 @@ export type ColorPalette = ExtendablePalette<
   EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
 >
 
+export type ColorSchemeStates = Partial<
+  Record<'initial' | 'active' | 'hovered' | 'focused' | 'disabled', string>
+>
+
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = {
-  foreground: string
-  background: string
-  border: string
-  shadow: string
-}
+export type ColorScheme = Partial<
+  Record<'foreground' | 'background' | 'border' | 'shadow', ColorSchemeStates>
+>
 
 export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
 
@@ -197,7 +198,7 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
-  colors: Partial<ColorScheme>
+  colors: ColorScheme
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

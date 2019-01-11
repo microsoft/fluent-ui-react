@@ -159,22 +159,70 @@ export const colors: ColorPalette = {
   white: '#fff',
 }
 
-export const colorScheme: ColorSchemeMapping = _.mapValues(
-  emphasisAndNaturalColors,
-  (colorVariants, colorName) => {
-    const foreground = isLightBackground(colorName) ? colors.black : colorVariants[50]
+const defaultGrey = colors.grey[600]
+export const colorScheme: ColorSchemeMapping = {
+  ..._.mapValues(emphasisAndNaturalColors, (colorVariants, colorName) => {
+    const foreground = isLightBackground(colorName) ? colors.black : colors.white
 
     return {
-      foreground,
-      border: foreground,
-      shadow: foreground,
-      background: colorVariants[500],
-      default: {
-        foreground: colors.grey[600],
-        border: colors.grey[600],
-        shadow: colors.grey[600],
-        background: colors.grey[100],
+      foreground: {
+        initial: foreground,
+        active: foreground,
+        disabled: foreground,
+        focused: foreground,
+        hovered: foreground,
+      },
+      background: {
+        initial: colorVariants[500],
+        active: colorVariants[500],
+        disabled: colorVariants[100],
+        focused: colorVariants[200],
+        hovered: colorVariants[200],
+      },
+      border: {
+        initial: colorVariants[500],
+        active: colorVariants[500],
+        disabled: colorVariants[100],
+        focused: colorVariants[200],
+        hovered: colorVariants[200],
+      },
+      shadow: {
+        initial: foreground,
+        active: foreground,
+        disabled: foreground,
+        focused: foreground,
+        hovered: foreground,
       },
     }
+  }),
+  default: {
+    foreground: {
+      initial: defaultGrey,
+      active: defaultGrey,
+      hovered: defaultGrey,
+      focused: defaultGrey,
+      disabled: defaultGrey,
+    },
+    background: {
+      initial: colors.grey[100],
+      active: colors.grey[100],
+      focused: colors.grey[300],
+      hovered: colors.grey[300],
+      disabled: colors.grey[300],
+    },
+    border: {
+      initial: colors.grey[100],
+      active: colors.grey[100],
+      focused: colors.grey[300],
+      hovered: colors.grey[300],
+      disabled: colors.grey[300],
+    },
+    shadow: {
+      initial: defaultGrey,
+      active: defaultGrey,
+      hovered: defaultGrey,
+      focused: defaultGrey,
+      disabled: defaultGrey,
+    },
   },
-)
+}
