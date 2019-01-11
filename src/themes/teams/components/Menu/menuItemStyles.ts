@@ -277,7 +277,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
 
       ...(iconOnly && {
-        padding: pxToRem(6),
+        margin: pxToRem(1),
+        padding: pxToRem(5), // padding works this way to get the border to only be 30x30px on focus which is the current design
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -301,20 +302,23 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // focus styles
       ...(isFromKeyboard && {
-        '& .ui-icon__filled': {
-          display: 'block',
-        },
+        ...(iconOnly && {
+          borderRadius: '50%',
 
-        '& .ui-icon__outline': {
-          display: 'none',
-        },
+          '& .ui-icon__filled': {
+            display: 'block',
+          },
+
+          '& .ui-icon__outline': {
+            display: 'none',
+          },
+        }),
 
         ...(primary
           ? {
               ...(iconOnly && {
                 color: v.primaryActiveBorderColor,
                 borderColor: v.primaryActiveBorderColor,
-                borderRadius: v.circularRadius,
               }),
 
               ...(underlined && { color: v.primaryActiveColor }),
@@ -324,7 +328,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : {
               ...(iconOnly && {
                 borderColor: v.activeColor,
-                borderRadius: v.circularRadius,
               }),
 
               ...(underlined && { fontWeight: 700 }),
@@ -341,13 +344,15 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ':hover': {
         color: 'inherit',
 
-        '& .ui-icon__filled': {
-          display: 'block',
-        },
+        ...(iconOnly && {
+          '& .ui-icon__filled': {
+            display: 'block',
+          },
 
-        '& .ui-icon__outline': {
-          display: 'none',
-        },
+          '& .ui-icon__outline': {
+            display: 'none',
+          },
+        }),
 
         ...(primary
           ? {

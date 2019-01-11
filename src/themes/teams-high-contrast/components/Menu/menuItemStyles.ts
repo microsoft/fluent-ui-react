@@ -12,24 +12,33 @@ const getIconOnlyFocusedAndHoverStyles = ({
   return {
     color: variables.activeColor,
     background: variables.activeBackgroundColor,
-    borderRadius: 'unset', // override from Teams default theme
   }
 }
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  root: ({ props, variables, theme }): ICSSInJSStyle => {
+  wrapper: ({ props, variables }): ICSSInJSStyle => {
     const { iconOnly, isFromKeyboard } = props
 
     return {
       // focus styles
-      ...(isFromKeyboard && {
-        ...(iconOnly && getIconOnlyFocusedAndHoverStyles({ variables })),
-      }),
+      ...(isFromKeyboard && iconOnly && getIconOnlyFocusedAndHoverStyles({ variables })),
 
       // hover styles
       ':hover': {
         ...(iconOnly && getIconOnlyFocusedAndHoverStyles({ variables })),
       },
+    }
+  },
+
+  root: ({ props }): ICSSInJSStyle => {
+    const { iconOnly, isFromKeyboard } = props
+
+    return {
+      // focus styles
+      ...(isFromKeyboard &&
+        iconOnly && {
+          borderColor: 'transparent',
+        }),
     }
   },
 }
