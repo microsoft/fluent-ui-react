@@ -9,6 +9,11 @@ const Variations = () => (
       description="A list can truncate the header and content of items items."
       examplePath="components/List/Variations/ListExampleTruncate"
     />
+    <ComponentExample
+      title="Actionable"
+      description="A list which has actionable elements inside. In this variant list item has role=button"
+      examplePath="components/List/Variations/ListExampleActionable"
+    />
   </ExampleSection>
 )
 

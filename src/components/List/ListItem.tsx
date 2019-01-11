@@ -12,6 +12,8 @@ import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import Slot from '../Slot/Slot'
+import cx from 'classnames'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -81,10 +83,13 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
 
     accessibility: PropTypes.func,
     onClick: PropTypes.func,
+
+    itemWrapper: PropTypes.oneOfType([PropTypes.object]),
   }
 
   static defaultProps = {
     as: 'li',
+    itemWrapper: null,
     accessibility: listItemBehavior as Accessibility,
   }
 
@@ -111,11 +116,18 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
       headerMedia,
       truncateContent,
       truncateHeader,
+      itemWrapper,
     } = this.props
 
-    return (
+    // const itemLayourRest = !wrapper && rest
+    const itemLayoutUnhandledProps = itemWrapper ? itemWrapper : unhandledProps
+
+    // itemWrapper
+    const itemLayoutAccesibilitySlot = itemWrapper ? 'item' : 'root'
+
+    const itemLayout = (
       <ItemLayout
-        as={as}
+        as={itemWrapper ? 'div' : as}
         className={classes.root}
         rootCSS={styles.root}
         content={content}
@@ -132,11 +144,32 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
         onClick={this.handleClick}
-        {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
-        {...unhandledProps}
+        {...accessibility.attributes[itemLayoutAccesibilitySlot]}
+        {...accessibility.keyHandlers[itemLayoutAccesibilitySlot]}
+        {...itemLayoutUnhandledProps}
       />
     )
+
+    if (itemWrapper) {
+      return Slot.create(
+        {},
+        {
+          defaultProps: {
+            className: cx('ui-list__item__wrapper', classes.itemWrapper),
+            ...accessibility.attributes.root,
+            ...accessibility.keyHandlers.root,
+          },
+          overrideProps: () => ({
+            as,
+            children: itemLayout,
+            onClick: this.handleClick,
+            ...unhandledProps,
+          }),
+        },
+      )
+    }
+
+    return itemLayout
   }
 }
 
