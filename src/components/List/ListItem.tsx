@@ -99,7 +99,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ classes, accessibility, rest, styles }) {
+  renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const {
       as,
       debug,
@@ -134,7 +134,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
       />
     )
   }

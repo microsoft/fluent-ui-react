@@ -61,14 +61,14 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   public renderComponent({
     ElementType,
     classes,
-    rest,
+    unhandledProps,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
     return (
       <ElementType
         className={classes.root}
-        {...rest}
+        {...unhandledProps}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >

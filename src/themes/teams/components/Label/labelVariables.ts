@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 export default () => {
   const color = 'rgba(0, 0, 0, 0.6)'
