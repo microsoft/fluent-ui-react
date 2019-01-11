@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'

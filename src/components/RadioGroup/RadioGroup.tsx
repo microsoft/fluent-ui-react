@@ -77,13 +77,13 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
   static Item = RadioGroupItem
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, vertical } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems(vertical)}

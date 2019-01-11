@@ -37,9 +37,9 @@ export default ((Component: React.ComponentType) => {
 
     const expectContainsSingleShorthandElement = (wrapper: ReactWrapper, withProps: Props) =>
       expect(
-        wrapper.findWhere(
-          node => node.type() === ShorthandComponent && checkPropsMatch(node.props(), withProps),
-        ).length,
+        wrapper
+          .find(ShorthandComponent)
+          .filterWhere(node => checkPropsMatch(node.props(), withProps)).length,
       ).toEqual(1)
 
     const expectShorthandPropsAreHandled = (withProps: Props | string) => {

@@ -46,11 +46,16 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     gutterPosition: 'start',
   }
 
-  renderComponent({ ElementType, classes, rest, styles }: RenderResultConfig<ChatItemProps>) {
+  renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+    styles,
+  }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>
     )

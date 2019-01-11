@@ -75,32 +75,44 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     accessibility: iconBehavior,
   }
 
-  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
+  private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {
+    return (
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      />
+    )
   }
 
   private renderSvgIcon(
     ElementType,
     svgIconDescriptor: SvgIconSpec,
     classes,
-    rest,
+    unhandledProps,
     accessibility,
   ): React.ReactNode {
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
       </ElementType>
     )
   }
 
-  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme }) {
     const { icons = {} } = theme
 
     const maybeIcon = icons[this.props.name]
 
     return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
-      : this.renderFontIcon(ElementType, classes, rest, accessibility)
+      ? this.renderSvgIcon(
+          ElementType,
+          maybeIcon.icon as SvgIconSpec,
+          classes,
+          unhandledProps,
+          accessibility,
+        )
+      : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
   }
 }
 

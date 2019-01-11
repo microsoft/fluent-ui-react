@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 import { truncateStyle } from '../../../../styles/customCSS'

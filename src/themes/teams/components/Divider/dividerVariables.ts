@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
 import { FontWeightProperty } from 'csstype'
 
-import { pxToRem } from '../../utils'
 import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
+import { pxToRem, mapColorsToScheme } from '../../../../lib'
 
 export interface DividerVariables {
   colors: ColorValues<string>
