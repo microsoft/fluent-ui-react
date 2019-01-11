@@ -14,7 +14,6 @@ import {
 } from '../../lib'
 import Slot from '../Slot/Slot'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import { generateContentSlot } from '../../lib/generateContent'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Chat items can have a gutter. */
@@ -69,7 +68,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     return (
       <>
         {gutterPosition === 'start' && gutterElement}
-        {generateContentSlot(message, { defaultProps: { styles: styles.message } })}}
+        {Slot.create(message, { defaultProps: { styles: styles.message } })}
         {gutterPosition === 'end' && gutterElement}
       </>
     )
