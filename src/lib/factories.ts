@@ -14,7 +14,7 @@ import { mergeStyles } from './mergeThemes'
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
 
-interface CreateShorthandOptions {
+export interface CreateShorthandOptions {
   /** Default props object */
   defaultProps?: Props
 

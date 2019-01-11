@@ -14,11 +14,11 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import { generateContentSlot } from '../../lib/generateContent'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -141,9 +141,10 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
-          defaultProps: { as: 'span', className: classes.content },
-        })}
+        {!hasChildren &&
+          generateContentSlot(content, {
+            defaultProps: { as: 'span', className: classes.content },
+          })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
     )

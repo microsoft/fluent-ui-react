@@ -66,6 +66,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
+        generateContentElement
         {content}
         {HeaderDescription.create(description, {
           defaultProps: {
