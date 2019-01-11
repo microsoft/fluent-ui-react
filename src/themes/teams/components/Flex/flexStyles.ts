@@ -5,10 +5,10 @@ const alignmentStyles = props =>
   props.vertical
     ? {
         alignItems: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
-        justifyContent: props.bottom ? 'flex-end' : props.center ? 'center' : 'flex-start',
+        justifyContent: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
       }
     : {
-        justifyContent: props.right ? 'flex-end' : props.center ? 'center' : 'flex-start',
+        justifyContent: props.bottom ? 'flex-end' : props.center ? 'center' : 'flex-start',
         alignItems: props.bottom
           ? 'flex-end'
           : props.center
