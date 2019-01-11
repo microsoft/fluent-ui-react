@@ -1,5 +1,6 @@
+import { pxToRem } from '../../../../lib'
 import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
-import { pxToRem, getColorSchemeWithCustomDefaults } from '../../utils'
+import { getColorSchemeWithCustomDefaults } from '../../utils'
 
 type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
 
