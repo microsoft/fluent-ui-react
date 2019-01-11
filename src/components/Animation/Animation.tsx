@@ -102,7 +102,7 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
     timingFunction: PropTypes.string,
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, theme }) {
     const { children, name } = this.props
 
     const animation: AnimationProp = {
@@ -126,7 +126,7 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
       : ''
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {result}
       </ElementType>
     )

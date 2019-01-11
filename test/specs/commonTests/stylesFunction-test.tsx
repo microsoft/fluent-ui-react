@@ -37,8 +37,8 @@ const testStylesForComponent = ({
 
     public state = state
 
-    public renderComponent({ ElementType, classes, rest }): React.ReactNode {
-      return <ElementType {...rest} className={classes.root} />
+    public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+      return <ElementType {...unhandledProps} className={classes.root} />
     }
   }
 

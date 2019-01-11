@@ -27,13 +27,13 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
       email,
       avatar,
       phone,
-      ...rest
+      ...restProps
     } = this.props
     return (
       <Grid
         columns="80% 20%"
         styles={{ width: '320px', padding: '10px 20px 10px 10px', background: 'white' }}
-        {...rest}
+        {...restProps}
       >
         <div>
           <Text size={'medium'} weight={'bold'} as="div">

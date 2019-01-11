@@ -68,6 +68,7 @@ export {
 } from './components/ItemLayout/ItemLayout'
 
 export { default as Label, LabelProps } from './components/Label/Label'
+export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
 export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
 
