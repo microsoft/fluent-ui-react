@@ -6,7 +6,7 @@ export interface CreateCommonConfig {
   children?: boolean | 'node' | 'element'
   as?: boolean
   className?: boolean
-  color?: boolean | 'single' | 'complex'
+  color?: boolean | 'simple' | 'complex'
   content?: boolean | 'node' | 'shorthand'
   styled?: boolean
 }
@@ -63,7 +63,7 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
       className: PropTypes.string,
     }),
     ...(color && {
-      color: color === true || color === 'single' ? colorPropType : complexColorPropType,
+      color: color === true || color === 'simple' ? colorPropType : complexColorPropType,
     }),
     ...(content && {
       content:

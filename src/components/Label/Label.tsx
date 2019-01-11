@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -18,13 +19,13 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import { ComplexColorComponentProps } from '../../lib/commonPropInterfaces'
+import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ComplexColorComponentProps {
+    ColorComponentProps<ComplexColorPropType> {
   accessibility?: Accessibility
 
   /** A Label can be circular. */

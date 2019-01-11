@@ -39,22 +39,19 @@ export type ColorValue =
   | 'yellow'
   | string
 
-export interface ColorComponentProps {
-  /** A component can have a color. */
-  color?: ColorValue
-}
+export type ComplexColorPropType =
+  | {
+      foreground?: ColorValue
+      background?: ColorValue
+      border?: ColorValue
+      shadow?: ColorValue
+      hover?: ColorValue
+    }
+  | ColorValue
 
-export interface ComplexColorComponentProps {
-  /** A component can have color defined for different parts. */
-  color?:
-    | {
-        foreground?: ColorValue
-        background?: ColorValue
-        border?: ColorValue
-        shadow?: ColorValue
-        hover?: ColorValue
-      }
-    | ColorValue
+export interface ColorComponentProps<TColor = ColorValue> {
+  /** A component can have a color. */
+  color?: TColor
 }
 
 export interface ContentComponentProps<TContent = React.ReactNode> {

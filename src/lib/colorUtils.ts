@@ -1,5 +1,13 @@
 import * as _ from 'lodash'
-import { SiteVariablesInput, ColorVariants, ColorValues } from '../themes/types'
+import {
+  SiteVariablesInput,
+  ColorVariants,
+  ColorValues,
+  ColorSchemeMapping,
+  ColorScheme,
+} from '../themes/types'
+import { Partial } from '../../types/utils'
+import { ComplexColorPropType } from './commonPropInterfaces'
 
 export const mapColorsToScheme = <T>(
   siteVars: SiteVariablesInput,
@@ -13,4 +21,36 @@ export const mapColorsToScheme = <T>(
 export const getColorSchemeFn = <T>(colorProp: string, colorScheme: ColorValues<T>) => {
   const colors = _.get(colorScheme, colorProp)
   return (area: keyof T, defaultColor: string) => (colors ? colors[area] : defaultColor)
+}
+
+export const getColorSchemeFromObject = (colorScheme, colors) =>
+  _.mapValues(colors, (color, colorName) => {
+    // if the color scheme contains the color, then get the value from it, otherwise return the color provided
+    const colorSchemeValue = _.get(colorScheme, color, colorScheme.default[color])
+    return colorSchemeValue ? colorSchemeValue[colorName] : colors[colorName]
+  })
+
+export const getColorSchemeWithCustomDefaults = (
+  colorScheme: ColorSchemeMapping,
+  customDefaultValues: Partial<ColorScheme>,
+) => {
+  const mergedDefaultValues = {
+    ...colorScheme.default,
+    ...customDefaultValues,
+  }
+  return {
+    ...colorScheme,
+    default: mergedDefaultValues,
+  }
+}
+
+export const generateColorScheme = (
+  colorProp: ComplexColorPropType,
+  colorScheme: ColorValues<Partial<ColorScheme>>,
+): Partial<ColorScheme> => {
+  return _.isObject(colorProp)
+    ? { ...colorScheme.default, ...getColorSchemeFromObject(colorScheme, colorProp) }
+    : _.get(colorScheme, colorProp as string, {
+        ...colorScheme.default,
+      })
 }
