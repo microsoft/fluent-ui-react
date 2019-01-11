@@ -232,11 +232,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { examplePath } = this.props
     const { showRtl, componentVariables, themeName } = this.state
 
     const theme = themes[themeName]
-
     const newTheme: ThemeInput = {
       siteVariables: theme.siteVariables,
       componentVariables: mergeThemeVariables(theme.componentVariables, {
@@ -245,11 +243,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return (
-      <Provider key={`${examplePath}${showRtl ? '-rtl' : ''}`} theme={newTheme}>
-        {element}
-      </Provider>
-    )
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
   handleKnobChange = knobs => {
