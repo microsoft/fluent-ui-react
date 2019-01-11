@@ -20,6 +20,7 @@ const alignmentStyles = props =>
 
 const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: 'flex',
     ...(p.vertical && { flexDirection: 'column' }),
     ...(p.fluid && { flex: 1 }),
     ...(p.wrap && { flexWrap: 'wrap' }),
