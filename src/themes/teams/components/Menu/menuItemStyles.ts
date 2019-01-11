@@ -142,7 +142,7 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 }
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
     const {
       active,
       iconOnly,
@@ -198,7 +198,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         display: 'flex',
       }),
 
-      ...itemSeparator({ props, variables: v, theme }),
+      ...itemSeparator({ props, variables: v, theme, colors }),
 
       // active styles
       ...(active && {
@@ -209,7 +209,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             ? pointing === 'end'
               ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
               : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-            : pointingBeak({ props, variables: v, theme }))),
+            : pointingBeak({ props, variables: v, theme, colors }))),
       }),
 
       // focus styles
