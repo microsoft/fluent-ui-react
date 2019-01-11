@@ -1,4 +1,4 @@
-import { pxToRem } from './utils'
+import { pxToRem } from '../../lib'
 import { colors } from './colors'
 
 //
@@ -104,3 +104,4 @@ export const bodyLineHeight = lineHeightBase
 //
 export const arrowRight = '\u25B8'
 export const arrowDown = '\u25BE'
+export const arrowLeft = '\u25C2'

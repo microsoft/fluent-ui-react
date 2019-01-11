@@ -64,7 +64,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ classes, rest }: RenderResultConfig<DropdownItemProps>) {
+  public renderComponent({ classes, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
     const { content, header, image, accessibilityItemProps } = this.props
     return (
       <ListItem
@@ -78,7 +78,7 @@ class DropdownItem extends UIComponent<ReactProps<DropdownItemProps>, any> {
         })}
         content={content}
         {...accessibilityItemProps}
-        {...rest}
+        {...unhandledProps}
       />
     )
   }

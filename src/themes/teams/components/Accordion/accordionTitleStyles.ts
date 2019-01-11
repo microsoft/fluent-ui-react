@@ -1,9 +1,11 @@
 import { ICSSInJSStyle } from '../../../types'
+import { getSideArrow } from '../../utils'
 
 const accordionTitleStyles = {
   root: ({ props, theme }): ICSSInJSStyle => {
     const { active } = props
-    const { arrowDown, arrowRight } = theme.siteVariables
+    const { arrowDown } = theme.siteVariables
+    const sideArrow = getSideArrow(theme)
     return {
       display: 'inline-block',
       verticalAlign: 'middle',
@@ -11,7 +13,7 @@ const accordionTitleStyles = {
       cursor: 'pointer',
       '::before': {
         userSelect: 'none',
-        content: active ? `"${arrowDown}"` : `"${arrowRight}"`,
+        content: active ? `"${arrowDown}"` : `"${sideArrow}"`,
       },
     }
   },

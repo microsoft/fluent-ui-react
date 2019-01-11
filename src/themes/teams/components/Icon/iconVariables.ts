@@ -1,6 +1,5 @@
 import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
-import { pxToRem } from '../../utils'
+import { mapColorsToScheme, pxToRem } from '../../../../lib'
 
 export type IconSizeModifier = 'x' | 'xx'
 

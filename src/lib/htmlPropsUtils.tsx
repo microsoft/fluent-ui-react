@@ -81,7 +81,7 @@ export const htmlInputEvents = [
 export const htmlInputProps = [...htmlInputAttrs, ...htmlInputEvents]
 
 /**
- * Returns an array of objects consisting of: props of html input element and rest.
+ * Returns an array of objects consisting of: props of html input element and restProps.
  * @param {object} props A ReactElement props object
  * @param {Object} [options={}]
  * @param {Array} [options.htmlProps] An array of html input props
@@ -91,13 +91,13 @@ export const htmlInputProps = [...htmlInputAttrs, ...htmlInputEvents]
 export const partitionHTMLProps = (props, options: any = {}) => {
   const { htmlProps = htmlInputProps, includeAria = true } = options
   const inputProps = {}
-  const rest = {}
+  const restProps = {}
 
   _.forEach(props, (val, prop) => {
     const possibleAria = includeAria && (/^aria-.*$/.test(prop) || prop === 'role')
-    const target = _.includes(htmlProps, prop) || possibleAria ? inputProps : rest
+    const target = _.includes(htmlProps, prop) || possibleAria ? inputProps : restProps
     target[prop] = val
   })
 
-  return [inputProps, rest]
+  return [inputProps, restProps]
 }

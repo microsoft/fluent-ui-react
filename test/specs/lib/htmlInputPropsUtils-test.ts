@@ -13,28 +13,28 @@ describe('partitionHTMLProps', () => {
   })
 
   test('should split props by definition', () => {
-    const [htmlProps, rest] = partitionHTMLProps(props)
+    const [htmlProps, restProps] = partitionHTMLProps(props)
 
     expect(htmlProps).toEqual({
       autoFocus: false,
       placeholder: 'baz',
       required: true,
     })
-    expect(rest).toEqual({ className: 'foo' })
+    expect(restProps).toEqual({ className: 'foo' })
   })
 
   test('should split props by own definition', () => {
-    const [htmlProps, rest] = partitionHTMLProps(props, {
+    const [htmlProps, restProps] = partitionHTMLProps(props, {
       htmlProps: ['placeholder', 'required'],
     })
 
     expect(htmlProps).toEqual({ placeholder: 'baz', required: true })
-    expect(rest).toEqual({ autoFocus: false, className: 'foo' })
+    expect(restProps).toEqual({ autoFocus: false, className: 'foo' })
   })
 
   describe('aria', () => {
     test('split aria props by default to htmlProps', () => {
-      const [htmlProps, rest] = partitionHTMLProps({
+      const [htmlProps, restProps] = partitionHTMLProps({
         'aria-atomic': false,
         'aria-busy': true,
         className: 'foo',
@@ -46,11 +46,11 @@ describe('partitionHTMLProps', () => {
         'aria-busy': true,
         role: 'bar',
       })
-      expect(rest).toEqual({ className: 'foo' })
+      expect(restProps).toEqual({ className: 'foo' })
     })
 
-    test('split aria props by default to rest when disabled', () => {
-      const [htmlProps, rest] = partitionHTMLProps(
+    test('split aria props by default to restProps when disabled', () => {
+      const [htmlProps, restProps] = partitionHTMLProps(
         {
           'aria-atomic': false,
           'aria-busy': true,
@@ -61,7 +61,7 @@ describe('partitionHTMLProps', () => {
       )
 
       expect(htmlProps).toEqual({})
-      expect(rest).toEqual({
+      expect(restProps).toEqual({
         'aria-atomic': false,
         'aria-busy': true,
         className: 'foo',

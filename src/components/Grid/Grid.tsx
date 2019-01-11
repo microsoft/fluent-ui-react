@@ -64,11 +64,15 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     accessibility: defaultBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+  }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

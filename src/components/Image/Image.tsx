@@ -60,8 +60,14 @@ class Image extends UIComponent<ReactProps<ImageProps>, any> {
     accessibility: imageBehavior as Accessibility,
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
-    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      />
+    )
   }
 }
 

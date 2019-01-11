@@ -76,7 +76,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     accessibility,
     variables,
     styles,
-    rest,
+    unhandledProps,
   }): React.ReactNode {
     const { children, control, id, label, message, name, required, type } = this.props
 
@@ -108,7 +108,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     )
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

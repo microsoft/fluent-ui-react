@@ -159,7 +159,7 @@ export const every = (validators: Function[]) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any[]
+  ...args: any[]
 ) => {
   if (!Array.isArray(validators)) {
     throw new Error(
@@ -177,7 +177,7 @@ export const every = (validators: Function[]) => (
           `every() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
-      return validator(props, propName, componentName, ...rest)
+      return validator(props, propName, componentName, ...args)
     }),
     _.compact,
   )(validators)
@@ -194,7 +194,7 @@ export const some = (validators: Function[]) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any[]
+  ...args: any[]
 ) => {
   if (!Array.isArray(validators)) {
     throw new Error(
@@ -212,7 +212,7 @@ export const some = (validators: Function[]) => (
           `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
-      return validator(props, propName, componentName, ...rest)
+      return validator(props, propName, componentName, ...args)
     }, validators),
   )
 
@@ -235,7 +235,7 @@ export const givenProps = (propsShape: object, validator: Function) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any
+  ...args: any
 ) => {
   if (!_.isPlainObject(propsShape)) {
     throw new Error(
@@ -259,13 +259,13 @@ export const givenProps = (propsShape: object, validator: Function) => (
     const val = propsShape[key]
     // require propShape validators to pass or prop values to match
     return typeof val === 'function'
-      ? !val(props, key, componentName, ...rest)
+      ? !val(props, key, componentName, ...args)
       : val === props[propName]
   })
 
   if (!shouldValidate) return undefined
 
-  const error = validator(props, propName, componentName, ...rest)
+  const error = validator(props, propName, componentName, ...args)
 
   if (error) {
     // poor mans shallow pretty print, prevents JSON circular reference errors
@@ -374,17 +374,35 @@ export const wrapperShorthand = PropTypes.oneOfType([
 
 /**
  * Item shorthand is a description of a component that can be a literal,
- * a props object, or an element.
+ * a props object, an element or a render function.
  */
 export const itemShorthand = every([
   disallow(['children']),
-  PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+  PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func]),
 ])
+export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
+  return every([
+    disallow(['children']),
+    PropTypes.oneOfType([
+      PropTypes.node,
+      PropTypes.shape({
+        kind: PropTypes.oneOf(kindPropValues),
+      }),
+      PropTypes.func,
+    ]),
+  ])
+}
 
 /**
  * Collection shorthand ensures a prop is an array of item shorthand.
  */
 export const collectionShorthand = every([disallow(['children']), PropTypes.arrayOf(itemShorthand)])
+export const collectionShorthandWithKindProp = (kindPropValues: string[]) => {
+  return every([
+    disallow(['children']),
+    PropTypes.arrayOf(itemShorthandWithKindProp(kindPropValues)),
+  ])
+}
 
 /**
  * Show a deprecated warning for component props with a help message and optional validator.

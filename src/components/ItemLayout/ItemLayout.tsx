@@ -166,7 +166,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
       .props as ItemLayoutPropsWithDefaults
 
@@ -202,7 +202,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
             </span>
           )
         }
-        {...rest}
+        {...unhandledProps}
       />
     )
   }

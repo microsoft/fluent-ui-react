@@ -72,7 +72,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
   public render(): JSX.Element {
     const { className, ariaLabelledBy } = this.props
-    const rest = getUnhandledProps(
+    const unhandledProps = getUnhandledProps(
       { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
       this.props,
     )
@@ -85,7 +85,7 @@ export class FocusTrapZone extends React.Component<FocusTrapZoneProps, {}> {
 
     return (
       <ElementType
-        {...rest}
+        {...unhandledProps}
         className={className}
         ref={this.createRef}
         aria-labelledby={ariaLabelledBy}
