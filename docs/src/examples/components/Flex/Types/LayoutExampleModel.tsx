@@ -4,13 +4,13 @@ import { Avatar, Flex, Icon, Segment, Text } from '@stardust-ui/react'
 const LayoutExampleModel = () => (
   <Flex center>
     <Icon name="home" size="larger" />
-    <Flex>
+    <Flex gap="1rem">
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
     </Flex>
     <Text content="Center" />
-    <Flex right>
+    <Flex gap="0.5rem" right>
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />

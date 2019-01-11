@@ -20,10 +20,17 @@ const alignmentStyles = props =>
 
 const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: 'flex',
+    ...(p.gap
+      ? {
+          display: 'grid',
+          ...(p.vertical
+            ? { gridAutoFlow: 'row', gridRowGap: p.gap }
+            : { gridAutoFlow: 'column', gridColumnGap: p.gap }),
+        }
+      : { display: 'flex' }),
     flex: '1 1 auto',
     ...(p.debug && { border: '1px dashed cornflowerblue' }),
-    ...(p.vertical && { flexDirection: 'column' }),
+    ...(p.vertical && !p.gap && { flexDirection: 'column' }),
     ...(p.fluid && { flex: 1 }),
     ...(p.wrap && { flexWrap: 'wrap' }),
     ...(p.flexSize && { flexBasis: p.flexSize }),
