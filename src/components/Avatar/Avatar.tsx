@@ -80,11 +80,11 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables }) {
     const { name, status, image, label, getInitials } = this.props as AvatarPropsWithDefaults
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {Image.create(image, {
           defaultProps: {
             fluid: true,

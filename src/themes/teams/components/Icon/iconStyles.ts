@@ -6,7 +6,7 @@ import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
-import { pxToRem } from '../../utils'
+import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 

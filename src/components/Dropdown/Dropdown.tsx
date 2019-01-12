@@ -209,13 +209,13 @@ export default class Dropdown extends AutoControlledComponent<
     classes,
     styles,
     variables,
-    rest,
+    unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
           onChange={this.handleSelectedChange}
           inputValue={search ? searchQuery : undefined}
