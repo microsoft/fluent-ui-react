@@ -4,29 +4,24 @@ import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuIt
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
-const getIconOnlyFocusedAndHoverStyles = ({
-  variables,
-}: {
-  variables: MenuVariables
-}): ICSSInJSStyle => {
-  return {
-    color: variables.activeColor,
-    background: variables.activeBackgroundColor,
-  }
-}
-
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables }): ICSSInJSStyle => {
     const { iconOnly, isFromKeyboard } = props
 
     return {
-      // focus styles
-      ...(isFromKeyboard && iconOnly && getIconOnlyFocusedAndHoverStyles({ variables })),
+      ...(iconOnly && {
+        // focus styles
+        ...(isFromKeyboard && {
+          color: variables.activeColor,
+          background: variables.activeBackgroundColor,
+        }),
 
-      // hover styles
-      ':hover': {
-        ...(iconOnly && getIconOnlyFocusedAndHoverStyles({ variables })),
-      },
+        // hover styles
+        ':hover': {
+          color: variables.activeColor,
+          background: variables.activeBackgroundColor,
+        },
+      }),
     }
   },
 
