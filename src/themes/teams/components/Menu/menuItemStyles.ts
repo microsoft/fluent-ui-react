@@ -191,20 +191,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: `${pxToRem(12)}`,
         }),
 
-      ...(iconOnly && {
-        display: 'flex',
-
-        // focus styles
-        ...(isFromKeyboard && {
-          color: v.iconOnlyActiveColor,
-        }),
-
-        // hover styles
-        ':hover': {
-          color: v.iconOnlyActiveColor,
-        },
-      }),
-
       ...itemSeparator({ props, variables: v, theme }),
 
       // active styles
@@ -217,6 +203,20 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
               : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
             : pointingBeak({ props, variables: v, theme }))),
+      }),
+
+      ...(iconOnly && {
+        display: 'flex',
+
+        // focus styles
+        ...(isFromKeyboard && {
+          color: v.iconOnlyActiveColor,
+        }),
+
+        // hover styles
+        ':hover': {
+          color: v.iconOnlyActiveColor,
+        },
       }),
 
       ...(!iconOnly && {
@@ -313,6 +313,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ...(isFromKeyboard && {
         ...(iconOnly && {
           borderRadius: '50%',
+          borderColor: v.iconOnlyActiveColor,
 
           '& .ui-icon__filled': {
             display: 'block',
@@ -335,10 +336,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(underlined && active && underlinedItem(v.primaryActiveColor)),
             }
           : {
-              ...(iconOnly && {
-                borderColor: v.activeColor,
-              }),
-
               ...(underlined && { fontWeight: 700 }),
 
               ...(underlined && active && underlinedItem(v.activeColor)),
