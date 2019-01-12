@@ -1,6 +1,5 @@
 import * as _ from 'lodash'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
-import { truncateStyle } from '../../customCSS'
 import { TextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
 
@@ -29,7 +28,7 @@ export default {
       ...(atMention === 'me' && {
         color: v.atMentionMeColor,
       }),
-      ...(truncated && truncateStyle),
+      ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
       ...(color && { color: _.get(v.colors, color) }),
       ...(disabled && { color: v.disabledColor }),
       ...(error && { color: v.errorColor }),
