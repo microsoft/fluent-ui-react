@@ -59,7 +59,7 @@ import translation from './translation'
 import trashCan from './trashCan'
 import underline from './underline'
 import undo from './undo'
-import videoCameraEmphasis from './video-camera-emphasis'
+import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
   add,
