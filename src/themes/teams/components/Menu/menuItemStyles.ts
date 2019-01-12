@@ -24,7 +24,6 @@ const getActionStyles = ({
   underlined || iconOnly
     ? {
         color,
-        background: v.backgroundColor,
       }
     : primary
     ? {
@@ -45,13 +44,12 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, iconOnly, isFromKeyboard, active } = props
+  const { primary, underlined, isFromKeyboard, active } = props
   if (active && !underlined) return {}
   return {
-    ...((underlined && !isFromKeyboard) || iconOnly
+    ...(underlined && !isFromKeyboard
       ? {
           color,
-          background: v.backgroundColor,
         }
       : primary
       ? {
@@ -156,7 +154,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
     return {
       color: v.color,
-      background: v.backgroundColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
@@ -196,6 +193,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       ...(iconOnly && {
         display: 'flex',
+
+        // focus styles
+        ...(isFromKeyboard && {
+          color: v.iconOnlyActiveColor,
+        }),
+
+        // hover styles
+        ':hover': {
+          color: v.iconOnlyActiveColor,
+        },
       }),
 
       ...itemSeparator({ props, variables: v, theme }),
@@ -212,11 +219,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             : pointingBeak({ props, variables: v, theme }))),
       }),
 
-      // focus styles
-      ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
+      ...(!iconOnly && {
+        // focus styles
+        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
 
-      // hover styles
-      ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+        // hover styles
+        ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+      }),
 
       ':first-child': {
         ...(!pills &&

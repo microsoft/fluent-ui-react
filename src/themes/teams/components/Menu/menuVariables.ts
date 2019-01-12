@@ -1,12 +1,12 @@
 export interface MenuVariables {
   color: string
-  backgroundColor: string
 
   activeColor: string
   activeBackgroundColor: string
   focusedBackgroundColor: string
   borderColor: string
 
+  iconOnlyActiveColor: string
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
@@ -24,9 +24,10 @@ export interface MenuVariables {
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
-    backgroundColor: 'inherit',
 
-    activeColor: siteVars.brand06,
+    iconOnlyActiveColor: siteVars.brand06,
+
+    activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
     focusedBackgroundColor: siteVars.gray14,
     borderColor: siteVars.gray08,
