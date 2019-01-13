@@ -11,7 +11,7 @@ jobs:
       - deploy:
           name: conditionally run a CI job
           command: |
-            if (false); then
+            if (true); then
               curl --user ${CIRCLE_API_USER_TOKEN} \
                 --data build_parameters[CIRCLE_JOB]=ci \
                 --data revision=$CIRCLE_SHA1 \
