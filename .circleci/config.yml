@@ -5,6 +5,8 @@ general:
       - gh-pages
 jobs:
   build:
+    docker:
+      - image: circleci/node:8
     steps:
       - run_ci:
           name: conditionally run a CI job
