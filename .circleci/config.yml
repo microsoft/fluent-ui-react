@@ -12,10 +12,10 @@ jobs:
           name: conditionally run a CI job
           command: |
             if [[ true ]]; then
-              curl --user ${CIRCLE_API_USER_TOKEN} \
+              echo "--user ${CIRCLE_API_USER_TOKEN} \
                 --data build_parameters[CIRCLE_JOB]=ci \
                 --data revision=$CIRCLE_SHA1 \
-                https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
+                https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH" > temp
             fi
 
   ci:
