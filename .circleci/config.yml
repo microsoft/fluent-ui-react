@@ -9,16 +9,25 @@ jobs:
       - image: circleci/node:8
     steps:
       - deploy:
-          name: conditionally run a CI job
+          name: Build
           command: |
             if (true); then
               curl --user ${CIRCLE_API_USER_TOKEN} \
-                --data build_parameters[CIRCLE_JOB]=ci \
+                --data build_parameters[CIRCLE_JOB]=build_and_test \
+                --data revision=$CIRCLE_SHA1 \
+                https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
+            fi
+      - deploy:
+          name: Visual Tests
+          command: |
+            if (true); then
+              curl --user ${CIRCLE_API_USER_TOKEN} \
+                --data build_parameters[CIRCLE_JOB]=visual \
                 --data revision=$CIRCLE_SHA1 \
                 https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
             fi
 
-  ci:
+  build_and_test:
     docker:
       - image: circleci/node:8
     environment:
@@ -90,11 +99,41 @@ jobs:
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
               yarn danger ci
             fi
+
+  visual:
+    docker:
+      - image: circleci/node:8
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+    steps:
       - run:
-          name: Publish npm package
+          name: Update yarn
           command: |
-            if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
-              echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
-              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
-              npm publish --tag current
-            fi
+            # remove default yarn
+            sudo rm -rf $(dirname $(which yarn))/yarn*
+            # download latest
+            rm -rf ~/.yarn
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+      - checkout
+      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
+      - run:
+          name: Add npm bin to PATH
+          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - .yarn-cache
+            - node_modules
+
+      - run:
+          name: Visual Tests
+          command: yarn test:visual
