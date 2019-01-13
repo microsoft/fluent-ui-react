@@ -85,9 +85,6 @@ jobs:
             - .vuln-scans
 
       - run:
-          name: Visual Tests
-          command: yarn test:visual
-      - run:
           name: Project Tests
           command: yarn test:projects
       - run:
