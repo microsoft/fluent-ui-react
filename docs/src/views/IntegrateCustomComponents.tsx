@@ -266,7 +266,7 @@ export default () => (
           },
           render: ({stardust, className, children}) => {
             const { classes, accessibility } = stardust
-            return <button {...accessibility.root} className={classes.root}>{children}</button>
+            return <button {...accessibility.attributes.root} className={classes.root}>{children}</button>
           }
         })
       `}
