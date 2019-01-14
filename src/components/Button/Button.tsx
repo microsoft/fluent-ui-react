@@ -126,6 +126,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     variables,
     styles,
     unhandledProps,
+    rtlProps,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -138,6 +139,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
+        {...rtlProps}
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
