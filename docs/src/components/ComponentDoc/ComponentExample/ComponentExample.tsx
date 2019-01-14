@@ -68,7 +68,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.state = {
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
-      knobs: this.getKnobsValue(),
+      knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
       themeName: 'teams',
       componentVariables: {},
@@ -245,16 +245,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     return this.KnobsComponent
   }
 
-  getKnobsValue = () => {
+  getDefaultKnobsValue = (overrides = {}) => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? { ...Knobs.defaultProps, ...this.state.knobs } : null
+    return Knobs ? { ...Knobs.defaultProps, overrides } : null
   }
 
   renderKnobs = () => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
+    return Knobs ? (
+      <Knobs
+        {...this.getDefaultKnobsValue(this.state.knobs)}
+        onKnobChange={this.handleKnobChange}
+      />
+    ) : null
   }
 
   getDisplayName = () => this.props.examplePath.split('/')[1]
