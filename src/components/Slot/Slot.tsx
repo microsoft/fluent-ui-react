@@ -36,7 +36,7 @@ const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : generateContentElement(content)}
+        {generateContentElement(childrenExist(children) ? children : content)}
       </ElementType>
     )
   },
