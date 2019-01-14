@@ -8,24 +8,24 @@ import * as _ from 'lodash'
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
  *
  * @specification
- * Adds role 'presentation' to 'root' component's part.
- * Adds role 'button' to 'anchor' component's part.
- * Adds attribute 'tabIndex=0' to 'anchor' component's part.
- * Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
- * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'anchor' component's part.
- * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'anchor' component's part.
- * Adds attribute 'aria-disabled=true' to 'anchor' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Adds attribute 'aria-haspopup=true' to 'anchor' component's part based on the property 'menu'.
- * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Performs 'closeAllMenus' action with 'Escape' on 'root'.
- * Performs 'openMenu' action with 'ArrowDown' on 'root', when orientation is horizontal.
+ * Adds role 'presentation' to 'wrapper' component's part.
+ * Adds role 'button' to 'root' component's part.
+ * Adds attribute 'tabIndex=0' to 'root' component's part.
+ * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' component's part.
+ * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
+ * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
+ * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+ * Adds attribute 'aria-haspopup=true' to 'root' component's part based on the property 'menu'.
+ * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
+ * Performs 'closeAllMenus' action with 'Escape' on 'wrapper'.
+ * Performs 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
  */
 const toolbarButtonBehavior: Accessibility = (props: any) => ({
   attributes: {
-    root: {
+    wrapper: {
       role: 'presentation',
     },
-    anchor: {
+    root: {
       role: 'button',
       tabIndex: '0',
       'aria-haspopup': props.menu ? 'true' : undefined,
@@ -49,7 +49,7 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
   ],
 
   keyActions: {
-    root: {
+    wrapper: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
