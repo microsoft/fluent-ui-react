@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
 - Add `color` prop to `Label` component @Bugaa92 ([#647](https://github.com/stardust-ui/react/pull/647))
+- Add `color` prop to `Menu` component @Bugaa92 ([#712](https://github.com/stardust-ui/react/pull/712))
 
 ### Fixes
 - Fix focus outline visible only during keyboard navigation @kolaps33 ([#689] https://github.com/stardust-ui/react/pull/689)
