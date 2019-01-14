@@ -18,6 +18,7 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -123,7 +124,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={content}
+          main={generateContentElement(content)}
           end={
             hasEndElement && (
               <>

@@ -16,6 +16,7 @@ import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 import { ReactPropsStrict } from '../../../types/utils'
+import { generateContentElement } from '../../lib/generateContent'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -125,7 +126,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
   private renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
-    const contentToRender = childrenExist(children) ? children : content
+    const contentToRender = childrenExist(children) ? children : generateContentElement(content)
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (
@@ -149,7 +150,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
-          {React.cloneElement(trigger, {
+          {React.cloneElement(generateContentElement(trigger), {
             onClick: this.handleTriggerClick,
             ...triggerAccessibility.attributes,
             ...triggerAccessibility.keyHandlers,

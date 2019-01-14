@@ -24,6 +24,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
+import { generateContentElement } from '../../lib/generateContent'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -192,7 +193,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             Icon.create(this.props.icon, {
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
-          {content}
+          {generateContentElement(content)}
         </ElementType>
       </Ref>
     )
