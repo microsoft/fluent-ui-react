@@ -13,7 +13,6 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Button from './Button'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -51,6 +50,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     accessibility,
     styles,
     unhandledProps,
+    rtlProps,
   }): React.ReactNode {
     const { children, content, buttons, circular } = this.props
     if (_.isNil(buttons)) {
@@ -58,15 +58,16 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
         <ElementType
           {...accessibility.attributes.root}
           {...unhandledProps}
+          {...rtlProps}
           className={classes.root}
         >
-          {generateContentElement(childrenExist(children) ? children : content)}
+          {childrenExist(children) ? children : content}
         </ElementType>
       )
     }
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
             defaultProps: {

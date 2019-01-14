@@ -18,7 +18,6 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -80,13 +79,13 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles, rtlProps }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...unhandledProps} className={classes.root}>
-          {generateContentElement(children)}
+        <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+          {children}
         </ElementType>
       )
     }
@@ -114,7 +113,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     const hasEndElement = endIcon || endImage
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
         <Layout
           start={
             hasStartElement && (
@@ -124,7 +123,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={generateContentElement(content)}
+          main={content}
           end={
             hasEndElement && (
               <>

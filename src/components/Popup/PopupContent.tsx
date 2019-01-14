@@ -13,7 +13,6 @@ import {
   commonPropTypes,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface PopupContentProps
   extends UIComponentProps,
@@ -63,6 +62,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     ElementType,
     classes,
     unhandledProps,
+    rtlProps,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
@@ -72,8 +72,9 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
         {...unhandledProps}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        {...rtlProps}
       >
-        {generateContentElement(childrenExist(children) ? children : content)}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

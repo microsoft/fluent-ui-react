@@ -13,7 +13,6 @@ import {
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface HeaderProps
   extends UIComponentProps,
@@ -54,14 +53,14 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
+  renderComponent({ ElementType, classes, variables: v, unhandledProps, rtlProps }) {
     const { children, content, description } = this.props
 
     const hasChildren = childrenExist(children)
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {generateContentElement(hasChildren ? children : content)}
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+        {hasChildren ? children : content}
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {

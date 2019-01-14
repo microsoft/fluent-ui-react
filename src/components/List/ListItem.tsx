@@ -12,7 +12,6 @@ import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
   /**
@@ -119,13 +118,13 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
         as={as}
         className={classes.root}
         rootCSS={styles.root}
-        content={generateContentElement(content)}
-        contentMedia={generateContentElement(contentMedia)}
+        content={content}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={generateContentElement(endMedia)}
-        header={generateContentElement(header)}
-        headerMedia={generateContentElement(headerMedia)}
-        media={generateContentElement(media)}
+        endMedia={endMedia}
+        header={header}
+        headerMedia={headerMedia}
+        media={media}
         mediaCSS={styles.media}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}

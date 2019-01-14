@@ -11,7 +11,6 @@ import {
   ColorComponentProps,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
@@ -37,11 +36,11 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlProps }) {
     const { children, content } = this.props
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {generateContentElement(childrenExist(children) ? children : content)}
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

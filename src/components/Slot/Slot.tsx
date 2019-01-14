@@ -9,7 +9,6 @@ import {
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface SlotProps
   extends UIComponentProps<SlotProps>,
@@ -31,12 +30,12 @@ const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   },
 
   render(config, props) {
-    const { ElementType, classes, unhandledProps } = config
+    const { ElementType, classes, unhandledProps, rtlProps } = config
     const { children, content } = props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {generateContentElement(childrenExist(children) ? children : content)}
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   },

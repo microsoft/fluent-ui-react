@@ -11,7 +11,6 @@ import {
   commonPropTypes,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -45,12 +44,12 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     onClick: PropTypes.func,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {generateContentElement(childrenExist(children) ? children : content)}
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

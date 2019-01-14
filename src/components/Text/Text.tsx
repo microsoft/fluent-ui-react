@@ -85,18 +85,12 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({ ElementType, classes, unhandledProps, rtlProps }): React.ReactNode {
     const { children, content } = this.props
-
     const hasChildren = childrenExist(children)
 
-    const maybeDirAuto =
-      (!hasChildren && typeof content === 'string') || typeof children === 'string'
-        ? { dir: 'auto' }
-        : null
-
     return (
-      <ElementType className={classes.root} {...maybeDirAuto} {...unhandledProps}>
+      <ElementType className={classes.root} {...rtlProps} {...unhandledProps}>
         {hasChildren ? children : content}
       </ElementType>
     )

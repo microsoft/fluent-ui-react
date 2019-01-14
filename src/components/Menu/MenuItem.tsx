@@ -24,7 +24,6 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -172,7 +171,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     this.outsideClickSubscription.unsubscribe()
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtlProps }) {
     const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { menuOpen } = this.state
@@ -188,12 +187,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           {...accessibility.attributes.anchor}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
+          {...rtlProps}
         >
           {icon &&
             Icon.create(this.props.icon, {
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
-          {generateContentElement(content)}
+          {content}
         </ElementType>
       </Ref>
     )

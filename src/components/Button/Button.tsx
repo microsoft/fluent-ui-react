@@ -142,7 +142,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Slot.create(!hasChildren && content, {
-          defaultProps: { as: 'span', className: classes.content },
+          defaultProps: { as: 'span', styles: styles.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>

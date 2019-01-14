@@ -14,7 +14,6 @@ import {
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -57,7 +56,15 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    variables,
+    rtlProps,
+  }) {
     const { children, content } = this.props
 
     return (
@@ -66,8 +73,9 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...unhandledProps}
+        {...rtlProps}
       >
-        {generateContentElement(childrenExist(children) ? children : content)}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

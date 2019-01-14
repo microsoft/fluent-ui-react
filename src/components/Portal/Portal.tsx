@@ -16,7 +16,6 @@ import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
 import { ReactPropsStrict } from '../../../types/utils'
-import { generateContentElement } from '../../lib/generateContent'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -114,25 +113,25 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     triggerAccessibility: {},
   }
 
-  public renderComponent(): React.ReactNode {
+  public renderComponent({ rtlProps }): React.ReactNode {
     return (
       <React.Fragment>
-        {this.renderPortal()}
+        {this.renderPortal(rtlProps)}
         {this.renderTrigger()}
       </React.Fragment>
     )
   }
 
-  private renderPortal(): JSX.Element | undefined {
+  private renderPortal(rtlProps): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
-    const contentToRender = generateContentElement(childrenExist(children) ? children : content)
+    const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
-          <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
+          <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount} {...rtlProps}>
             {trapFocus ? (
               <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
             ) : (
@@ -150,7 +149,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     return (
       trigger && (
         <Ref innerRef={this.handleTriggerRef}>
-          {React.cloneElement(generateContentElement(trigger), {
+          {React.cloneElement(trigger, {
             onClick: this.handleTriggerClick,
             ...triggerAccessibility.attributes,
             ...triggerAccessibility.keyHandlers,
