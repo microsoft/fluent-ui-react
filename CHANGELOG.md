@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.16.2 ]------------------------------- -->
+## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.1...v0.16.2)
+
 ### Features
 - Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
 - Add `color` prop to `Label` component @Bugaa92 ([#647](https://github.com/stardust-ui/react/pull/647))
