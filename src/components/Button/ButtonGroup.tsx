@@ -60,7 +60,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
           {...unhandledProps}
           className={classes.root}
         >
-          {childrenExist(children) ? children : generateContentElement(content)}
+          {generateContentElement(childrenExist(children) ? children : content)}
         </ElementType>
       )
     }

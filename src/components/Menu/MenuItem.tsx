@@ -178,7 +178,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     const { menuOpen } = this.state
 
     const menuItemInner = childrenExist(children) ? (
-      children
+      generateContentElement(children)
     ) : (
       <Ref innerRef={this.itemRef}>
         <ElementType

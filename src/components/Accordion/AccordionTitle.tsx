@@ -57,17 +57,9 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
-    if (childrenExist(children)) {
-      return (
-        <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-          {children}
-        </ElementType>
-      )
-    }
-
     return (
       <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-        {generateContentElement(content)}
+        {generateContentElement(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }

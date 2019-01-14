@@ -57,24 +57,19 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
     const { children, content, description } = this.props
 
-    if (childrenExist(children)) {
-      return (
-        <ElementType {...unhandledProps} className={classes.root}>
-          {children}
-        </ElementType>
-      )
-    }
+    const hasChildren = childrenExist(children)
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {generateContentElement(content)}
-        {HeaderDescription.create(description, {
-          defaultProps: {
-            variables: {
-              ...(v.descriptionColor && { color: v.descriptionColor }),
+        {generateContentElement(hasChildren ? children : content)}
+        {!hasChildren &&
+          HeaderDescription.create(description, {
+            defaultProps: {
+              variables: {
+                ...(v.descriptionColor && { color: v.descriptionColor }),
+              },
             },
-          },
-        })}
+          })}
       </ElementType>
     )
   }

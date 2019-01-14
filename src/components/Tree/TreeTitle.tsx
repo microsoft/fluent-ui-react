@@ -67,7 +67,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {childrenExist(children) ? children : generateContentElement(content)}
+        {generateContentElement(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }

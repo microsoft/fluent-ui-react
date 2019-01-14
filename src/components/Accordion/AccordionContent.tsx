@@ -50,7 +50,7 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : generateContentElement(content)}
+        {generateContentElement(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }

@@ -126,7 +126,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
   private renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
-    const contentToRender = childrenExist(children) ? children : generateContentElement(content)
+    const contentToRender = generateContentElement(childrenExist(children) ? children : content)
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (

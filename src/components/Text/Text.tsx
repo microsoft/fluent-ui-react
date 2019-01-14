@@ -90,10 +90,9 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
 
     const hasChildren = childrenExist(children)
 
-    const dirAuto = { dir: 'auto' }
     const maybeDirAuto =
-      (!hasChildren && typeof content === 'string') || (hasChildren && typeof children === 'string')
-        ? dirAuto
+      (!hasChildren && typeof content === 'string') || typeof children === 'string'
+        ? { dir: 'auto' }
         : null
 
     return (

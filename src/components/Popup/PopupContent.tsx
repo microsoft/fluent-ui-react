@@ -73,7 +73,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {childrenExist(children) ? children : generateContentElement(content)}
+        {generateContentElement(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }
