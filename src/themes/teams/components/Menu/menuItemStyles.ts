@@ -252,7 +252,19 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
+    const {
+      active,
+      iconOnly,
+      isFromKeyboard,
+      pointing,
+      primary,
+      underlined,
+      vertical,
+      menu,
+      hideSubmenuIndicator,
+      submenuIndicatorHorizontal,
+      submenuIndicatorVertical,
+    } = props
     const { arrowDown } = theme.siteVariables
     const sideArrow = getSideArrow(theme)
 
@@ -335,10 +347,10 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       '::after': {
-        ...(props.menu &&
-          !props.hideSubmenuIndicator &&
-          ((!props.submenuIndicatorHorizontal && !props.vertical) ||
-            (!props.submenuIndicatorVertical && props.vertical)) && {
+        ...(menu &&
+          !hideSubmenuIndicator &&
+          ((!submenuIndicatorHorizontal && !vertical) ||
+            (!submenuIndicatorVertical && vertical)) && {
             position: 'relative',
             float: 'right',
             left: pxToRem(10),
