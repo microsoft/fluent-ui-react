@@ -105,6 +105,15 @@ export interface MenuItemProps
 
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean
+
+  /** Indicates whether the submenuIndicator should be shown, or defines an icon for it. */
+  hideSubmenuIndicator?: boolean
+
+  /** Shorthand for the submenu indicator for vertical menu item. */
+  submenuIndicatorVertical?: ShorthandValue
+
+  /** Shorthand for the submenu indicator for horizontal menu item. */
+  submenuIndicatorHorizontal?: ShorthandValue
 }
 
 export interface MenuItemState {
@@ -144,12 +153,16 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
+    hideSubmenuIndicator: PropTypes.bool,
+    submenuIndicatorVertical: customPropTypes.itemShorthand,
+    submenuIndicatorHorizontal: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
     wrapper: { as: 'li' },
+    hideSubmenuIndicator: false,
   }
 
   static autoControlledProps = ['menuOpen']
@@ -172,7 +185,21 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+    const {
+      children,
+      content,
+      icon,
+      wrapper,
+      menu,
+      primary,
+      secondary,
+      active,
+      vertical,
+      hideSubmenuIndicator,
+      submenuIndicatorHorizontal,
+      submenuIndicatorVertical,
+    } = this.props
+    const showSubmenuIndicatorIcon = menu && !hideSubmenuIndicator
 
     const { menuOpen } = this.state
 
@@ -193,6 +220,10 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
           {content}
+          {showSubmenuIndicatorIcon &&
+            Icon.create(vertical ? submenuIndicatorVertical : submenuIndicatorHorizontal, {
+              defaultProps: { styles: styles.submenuIndicator },
+            })}
         </ElementType>
       </Ref>
     )
@@ -207,6 +238,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               secondary,
               styles: styles.menu,
               submenu: true,
+              hideSubmenuIndicator,
+              submenuIndicatorHorizontal,
+              submenuIndicatorVertical,
             },
           })}
         </Ref>

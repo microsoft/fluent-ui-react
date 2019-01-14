@@ -17,7 +17,7 @@ import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { ReactProps, ShorthandCollection } from '../../../types/utils'
+import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -68,6 +68,15 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Indicates whether the menu is submenu. */
   submenu?: boolean
+
+  /** Indicates whether the submenuIndicatora should be shown. */
+  hideSubmenuIndicator?: boolean
+
+  /** Shorthand for the submenu indicators for the vertical menu items. */
+  submenuIndicatorVertical?: ShorthandValue
+
+  /** Shorthand for the submenu indicators for horizontal menu items. */
+  submenuIndicatorHorizontal?: ShorthandValue
 }
 
 export interface MenuState {
@@ -103,6 +112,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
+    hideSubmenuIndicator: PropTypes.bool,
+    submenuIndicatorVertical: customPropTypes.itemShorthand,
+    submenuIndicatorHorizontal: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -145,6 +157,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       underlined,
       vertical,
       submenu,
+      hideSubmenuIndicator,
+      submenuIndicatorHorizontal,
+      submenuIndicatorVertical,
     } = this.props
     const { activeIndex } = this.state
 
@@ -177,6 +192,9 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           index,
           active,
           inSubmenu: submenu,
+          hideSubmenuIndicator,
+          submenuIndicatorHorizontal,
+          submenuIndicatorVertical,
         },
         overrideProps: this.handleItemOverrides,
       })

@@ -335,13 +335,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       },
 
       '::after': {
-        ...(props.menu && {
-          position: 'relative',
-          float: 'right',
-          left: pxToRem(10),
-          userSelect: 'none',
-          content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
-        }),
+        ...(props.menu &&
+          !props.hideSubmenuIndicator &&
+          ((!props.submenuIndicatorHorizontal && !props.vertical) ||
+            (!props.submenuIndicatorVertical && props.vertical)) && {
+            position: 'relative',
+            float: 'right',
+            left: pxToRem(10),
+            userSelect: 'none',
+            content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
+          }),
       },
     }
   },
@@ -351,6 +354,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     position: 'absolute',
     top: vertical ? '0' : '100%',
     left: vertical ? '100%' : '0',
+  }),
+
+  submenuIndicator: () => ({
+    position: 'relative',
+    float: 'right',
+    left: pxToRem(10),
+    userSelect: 'none',
   }),
 }
 
