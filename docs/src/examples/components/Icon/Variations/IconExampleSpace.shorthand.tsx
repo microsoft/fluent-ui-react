@@ -3,31 +3,31 @@ import { Icon, Label } from '@stardust-ui/react'
 
 const IconExampleSpace = () => (
   <div>
-    <div style={{ marginBottom: '1.2rem' }}>
+    <p>
       <Label content="Default" />
       <Icon name="call-video" />
       <Label content="Default" />
-    </div>
-    <div style={{ marginBottom: '1.2rem' }}>
+    </p>
+    <p>
       <Label content="Before" />
       <Icon name="call-video" xSpacing="before" />
       <Label content="Before" />
-    </div>
-    <div style={{ marginBottom: '1.2rem' }}>
+    </p>
+    <p>
       <Label content="After" />
       <Icon name="call-video" xSpacing="after" />
       <Label content="After" />
-    </div>
-    <div style={{ marginBottom: '1.2rem' }}>
+    </p>
+    <p>
       <Label content="Both" />
       <Icon name="call-video" xSpacing="both" />
       <Label content="Both" />
-    </div>
-    <div style={{ marginBottom: '1.2rem' }}>
+    </p>
+    <p>
       <Label content="None" />
       <Icon name="call-video" xSpacing="none" />
       <Label content="None" />
-    </div>
+    </p>
   </div>
 )
 
