@@ -81,6 +81,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
   private _defaultFocusElement: HTMLElement | null
   private _focusAlignment: Point
   private _isInnerZone: boolean
+  private _potentialActiveElement
 
   /** Used to allow us to move to next focusable element even when we're focusing on a input element when pressing tab */
   private _processingTabKey: boolean
@@ -99,6 +100,28 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
     this._processingTabKey = false
     this.onKeyDownCapture = this.onKeyDownCapture.bind(this)
+    this._onBlur = this._onBlur.bind(this)
+  }
+
+  public componentDidUpdate() {
+    // console.log('FocusTrapZone componentDidUpdate')
+    // console.log('activeElement', this._activeElement)
+    const activeElementWasRemoved =
+      this._activeElement && !this._root.current.contains(this._activeElement)
+    console.log('activeElementWasRemoved', activeElementWasRemoved)
+
+    if (activeElementWasRemoved) {
+      // this.focusLast()
+      // const nextEl = getNextElement(this._root.current, this._root.current)
+      // console.log('nextEl', nextEl)
+      // nextEl && nextEl.focus()
+
+      if (this._potentialActiveElement) {
+        this.focusElement(this._potentialActiveElement)
+      } else {
+        this.focus()
+      }
+    }
   }
 
   public componentDidMount(): void {
@@ -120,6 +143,7 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
 
       if (!this._isInnerZone) {
         this.windowElement.addEventListener('keydown', this.onKeyDownCapture, true)
+        this._root.current.addEventListener('blur', this._onBlur, true)
       }
 
       // Assign initial tab indexes so that we can set initial focus as appropriate.
@@ -135,6 +159,10 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     delete _allInstances[this._id]
     if (this.windowElement) {
       this.windowElement.removeEventListener('keydown', this.onKeyDownCapture, true)
+    }
+
+    if (this._root.current) {
+      this._root.current.removeEventListener('blur', this._onBlur, true)
     }
   }
 
@@ -256,7 +284,44 @@ export class FocusZone extends React.Component<FocusZoneProps> implements IFocus
     this._root.current = ReactDOM.findDOMNode(elem) as HTMLElement
   }
 
+  private _onBlur = (ev): void => {
+    const from = ev.target
+    const to = ev.relatedTarget
+
+    console.log('from', from)
+    console.log('to', to)
+
+    if (to === null) {
+      const nextElement = getNextElement(
+        this._root.current,
+        this._activeElement,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      )
+
+      if (nextElement) {
+        // this.focusElement(nextElement)
+        this._potentialActiveElement = nextElement
+      } else {
+        const prevElem = getPreviousElement(this._root.current, this._activeElement)
+
+        if (prevElem) {
+          // this.focusElement(prevElem)
+          this._potentialActiveElement = prevElem
+        }
+        // else {
+        //   this.focus()
+        // }
+      }
+    }
+  }
+
   private _onFocus = (ev: React.FocusEvent<HTMLElement>): void => {
+    console.error('_onFocus')
     const {
       onActiveElementChanged,
       stopFocusPropagation,
