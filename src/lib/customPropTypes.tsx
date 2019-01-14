@@ -1,9 +1,7 @@
-import * as _ from 'lodash/fp'
+import _ from 'src/lib/lodashFp'
 import * as PropTypes from 'prop-types'
 import leven from './leven'
 import { ObjectOf } from '../../types/utils'
-
-type SuggestProps = { score: number; suggestion: string }
 
 const typeOf = x => Object.prototype.toString.call(x)
 
@@ -57,7 +55,7 @@ export const suggest = (suggestions: string[]) => {
 
         return { suggestion, score: propValueScore + suggestionScore }
       }),
-      _.sortBy<SuggestProps>(['score', 'suggestion']),
+      _.sortBy(['score', 'suggestion']),
       _.take(3),
     )(suggestions)
   })

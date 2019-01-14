@@ -1,5 +1,5 @@
 import keyboardKey from 'keyboard-key'
-import * as _ from 'lodash/fp'
+import _ from 'src/lib/lodashFp'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
@@ -104,7 +104,7 @@ class Sidebar extends React.Component<any, any> {
 
   private menuItemsByType = _.map(nextType => {
     const items = _.flow(
-      _.filter<ComponentMenuItem>(({ type }) => type === nextType),
+      _.filter(({ type }) => type === nextType),
       _.map(info => (
         <Menu.Item
           key={info.displayName}

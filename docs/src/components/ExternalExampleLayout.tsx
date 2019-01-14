@@ -1,4 +1,4 @@
-import * as _ from 'lodash/fp'
+import _ from 'src/lib/lodashFp'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import SourceRender from 'react-source-render'
