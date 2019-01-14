@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'

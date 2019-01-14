@@ -179,11 +179,11 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
-  private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
+  private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
-    _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
+    _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
 

@@ -142,14 +142,14 @@ class RadioGroupItem extends AutoControlledComponent<
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
     const { label, icon } = this.props
 
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.handleClick}

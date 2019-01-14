@@ -18,12 +18,35 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Features
+- Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
+- Add `color` prop to `Label` component @Bugaa92 ([#647](https://github.com/stardust-ui/react/pull/647))
+
+### Fixes
+- Fix focus outline visible only during keyboard navigation @kolaps33 ([#689] https://github.com/stardust-ui/react/pull/689)
+- Fix handling changes of `renderer` prop in `Provider` @layershifter ([#702](https://github.com/stardust-ui/react/pull/702))
+- Correctly handle disabled `Menu.Item` in styles and accessibility @miroslavstastny ([#694](https://github.com/stardust-ui/react/pull/694))
+
+<!--------------------------------[ v0.16.1 ]------------------------------- -->
+## [v0.16.1](https://github.com/stardust-ui/react/tree/v0.16.1) (2019-01-10)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.0...v0.16.1)
+
+### Features
 - Add `on` and `mouseLeaveDelay` props to `Popup` component @mnajdova ([#622](https://github.com/stardust-ui/react/pull/622))
 - Add Dropdown Single Selection variant @silviuavram ([#584](https://github.com/stardust-ui/react/pull/584))
+- Add `MenuDivider` component and `kind` prop to the `items` inside of the `Menu` for creating different components @mnajdova ([#682](https://github.com/stardust-ui/react/pull/682))
 
 ### Fixes
 - Fix unicode arrow characters to be RTL aware @mnajdova ([#690](https://github.com/stardust-ui/react/pull/690))
-- Correctly handle disabled `Menu.Item` in styles and accessibility @miroslavstastny ([#694](https://github.com/stardust-ui/react/pull/694))
+- Fix positioning of `Popup` with changable content @layershifter ([#678](https://github.com/stardust-ui/react/pull/678))
+- Fix default props in `Accordion` and `Dropdown` components @layershifter ([#675](https://github.com/stardust-ui/react/pull/675))
+- Refactor render method of `Label` component and simplify docs @davezuko ([#642](https://github.com/stardust-ui/react/pull/642))
+- Fix shorthand prop type @kuzhelov ([#697](https://github.com/stardust-ui/react/pull/697))
+- Export `ShorthandRenderer` type @miroslavstastny ([#698](https://github.com/stardust-ui/react/pull/698))
+- Temporary revert `pxToRem` changes introduced by [#371](https://github.com/stardust-ui/react/pull/371) @kuzhelov ([#700](https://github.com/stardust-ui/react/pull/700))
+
+### Documentation
+- Add ability to edit examples' code in JavaScript and TypeScript @layershifter ([#650](https://github.com/stardust-ui/react/pull/650))
+- Fix broken switch to Children API when an example is not present @layershifter ([#650](https://github.com/stardust-ui/react/pull/650))
 
 <!--------------------------------[ v0.16.0 ]------------------------------- -->
 ## [v0.16.0](https://github.com/stardust-ui/react/tree/v0.16.0) (2019-01-07)

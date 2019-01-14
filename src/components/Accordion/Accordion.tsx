@@ -118,8 +118,6 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
   static Title = AccordionTitle
   static Content = AccordionContent
 
-  state: any = { activeIndex: [0] }
-
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
   }
@@ -178,11 +176,11 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

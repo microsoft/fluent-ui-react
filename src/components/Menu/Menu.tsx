@@ -10,13 +10,17 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  getKindProp,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandCollection } from '../../../types/utils'
+import MenuDivider from './MenuDivider'
+
+export type MenuShorthandKinds = 'divider' | 'item'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -39,7 +43,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<MenuShorthandKinds>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -91,7 +95,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     fluid: PropTypes.bool,
     iconOnly: PropTypes.bool,
-    items: customPropTypes.collectionShorthand,
+    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -109,6 +113,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem
+  static Divider = MenuDivider
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
@@ -146,6 +151,19 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     return _.map(items, (item, index) => {
       const active =
         (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
+      const kind = getKindProp(item, 'item')
+
+      if (kind === 'divider') {
+        return MenuDivider.create(item, {
+          defaultProps: {
+            primary,
+            secondary,
+            vertical,
+            variables,
+          },
+        })
+      }
+
       return MenuItem.create(item, {
         defaultProps: {
           iconOnly,
@@ -165,10 +183,10 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )

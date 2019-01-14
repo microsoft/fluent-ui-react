@@ -188,6 +188,9 @@ function createShorthandFromValue(
     props.key = value
   }
 
+  // Remove the kind prop from the props object
+  delete props.kind
+
   // ----------------------------------------
   // Create Element
   // ----------------------------------------

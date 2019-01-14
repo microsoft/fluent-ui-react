@@ -53,19 +53,19 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, rest }) {
+  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
     const { children, content, description } = this.props
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...rest} className={classes.root}>
+        <ElementType {...unhandledProps} className={classes.root}>
           {children}
         </ElementType>
       )
     }
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {content}
         {HeaderDescription.create(description, {
           defaultProps: {

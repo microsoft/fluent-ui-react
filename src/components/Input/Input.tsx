@@ -109,13 +109,13 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
   renderComponent({
     ElementType,
     classes,
-    rest: restProps,
+    unhandledProps,
     styles,
     variables,
   }: RenderResultConfig<InputProps>) {
     const { className, input, inputRef, type, wrapper } = this.props
     const { value = '' } = this.state
-    const [htmlInputProps, rest] = partitionHTMLProps(restProps)
+    const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
 
     return Slot.create(wrapper, {
       defaultProps: {
@@ -149,7 +149,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
           </>
         ),
         styles: styles.root,
-        ...rest,
+        ...restProps,
       },
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,

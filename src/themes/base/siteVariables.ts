@@ -2,7 +2,7 @@
 // COLORS
 //
 
-export { colors, contextualColors, emphasisColors, naturalColors } from './colors'
+export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
 
 //
 // FONT SIZES
