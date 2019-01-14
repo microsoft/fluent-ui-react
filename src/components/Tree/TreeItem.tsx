@@ -108,11 +108,24 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     )
   }
 
-  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    accessibility,
+    classes,
+    unhandledProps,
+    styles,
+    variables,
+    rtlProps,
+  }) {
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+      <ElementType
+        className={classes.root}
+        {...rtlProps}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )

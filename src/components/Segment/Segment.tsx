@@ -38,11 +38,11 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
         {childrenExist(children) ? children : Slot.create(content)}
       </ElementType>
     )

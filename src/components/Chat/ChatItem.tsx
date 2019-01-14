@@ -51,11 +51,12 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     classes,
     unhandledProps,
     styles,
+    rtlProps,
   }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
         {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>
     )

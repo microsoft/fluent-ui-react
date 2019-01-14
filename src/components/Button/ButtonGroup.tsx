@@ -67,7 +67,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     }
 
     return (
-      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
             defaultProps: {
