@@ -73,7 +73,7 @@ export default (
   if (!partSelector) {
     // temporarily disabled as we do not support overriding of attributes applied to parts
     test('gets correct role when overrides accessibility', () => {
-      const testRole = 'test-role'
+      const testRole = 'test-mock-role'
       const element = usesWrapperSlot ? (
         <Component {...requiredProps} wrapper={{ role: testRole }} />
       ) : (
