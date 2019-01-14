@@ -19,7 +19,7 @@ const withStyles = (element: React.ReactElement<any>, styles, getClasses): any =
   console.warn('STYLES', styles)
 
   const classes = getClasses(styles)
-  console.warn('CLASSES', classes)
+  // console.warn('CLASSES', classes)
 
   return React.cloneElement(element, {
     className: cx(element.props.className, classes),
@@ -40,16 +40,24 @@ class Flex extends UIComponent<any> {
       center,
       row,
       column,
+      fluid,
       justify,
       align,
       space,
       inline,
       wrap,
       items,
+      size,
+      className,
       ...rest
     } = props
 
+    if (props.className) {
+      console.warn(props)
+    }
+
     const stylesFromProps = {
+      // ...(fluid && { 'flex': 1 }),
       ...(inline && { display: 'inline-flex' }),
 
       ...(row && { flexDirection: 'row' }),
@@ -66,6 +74,7 @@ class Flex extends UIComponent<any> {
       ...(align && { alignItems: align }),
 
       ...(wrap && { flexWrap: 'wrap' }),
+      ...(size && { flexBasis: size }),
 
       ...rest,
     }
@@ -77,7 +86,11 @@ class Flex extends UIComponent<any> {
       ...stylesFromProps,
     }
 
-    return <div style={flexStyle as any}>{(items && items.map(FlexItem.create)) || children}</div>
+    return (
+      <div style={flexStyle as any} {...className && { className }}>
+        {(items && items.map(FlexItem.create)) || children}
+      </div>
+    )
   }
 }
 
@@ -87,19 +100,21 @@ class FlexItem extends UIComponent<any> {
   static create: Function
 
   renderComponent({ rest: props, getClasses }) {
-    const { children, align, grow, shrink, fixed, noShrink, basis } = props
+    const { children, align, fluid, shrink, fixed, noShrink, basis, style } = props
 
     const flexItemStyles = {
+      ...(fluid && { flex: 1 }),
       ...((fixed || noShrink) && { flexShrink: 0 }),
       ...(align && { alignSelf: `flex-${align}` }),
 
-      ...(grow && { flexGrow: '1' }),
       ...(basis && { flexBasis: basis }),
 
       ...(shrink != null && { flexShrink: shrink ? 1 : 0 }),
+
+      ...style,
     }
 
-    console.warn(children)
+    // console.warn(children)
 
     return withStyles(React.Children.only(children), flexItemStyles, getClasses)
   }
