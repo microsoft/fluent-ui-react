@@ -1,4 +1,4 @@
-import _ from 'src/lib/lodashFp'
+import _ from './lodashFp'
 import * as PropTypes from 'prop-types'
 import leven from './leven'
 import { ObjectOf } from '../../types/utils'
