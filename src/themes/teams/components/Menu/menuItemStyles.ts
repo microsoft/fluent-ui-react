@@ -143,6 +143,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
     const {
       active,
+      disabled,
       iconOnly,
       isFromKeyboard,
       pills,
@@ -257,11 +258,27 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }),
           }),
       },
+
+      ...(disabled && {
+        color: v.disabledColor,
+        ':hover': {
+          // empty - overwrite all existing hover styles
+        },
+      }),
     }
   },
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
+    const {
+      active,
+      iconOnly,
+      isFromKeyboard,
+      pointing,
+      primary,
+      underlined,
+      vertical,
+      disabled,
+    } = props
     const { arrowDown } = theme.siteVariables
     const sideArrow = getSideArrow(theme)
 
@@ -367,6 +384,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : !active && underlined && underlinedItem(v.activeBackgroundColor)),
       },
+
+      ...(disabled && {
+        cursor: 'default',
+        ':hover': {
+          // reset all existing hover styles
+          color: 'inherit',
+        },
+      }),
 
       '::after': {
         ...(props.menu && {

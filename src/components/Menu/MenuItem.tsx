@@ -172,7 +172,17 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+    const {
+      children,
+      content,
+      icon,
+      wrapper,
+      menu,
+      primary,
+      secondary,
+      active,
+      disabled,
+    } = this.props
 
     const { menuOpen } = this.state
 
@@ -182,6 +192,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       <Ref innerRef={this.itemRef}>
         <ElementType
           className={classes.root}
+          disabled={disabled}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
           {...accessibility.attributes.root}
@@ -285,6 +296,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   private handleClick = e => {
+    const { disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
     this.performClick(e)
     _.invoke(this.props, 'onClick', e, this.props)
   }
