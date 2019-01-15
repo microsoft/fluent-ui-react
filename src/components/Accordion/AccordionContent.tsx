@@ -44,11 +44,11 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     onClick: PropTypes.func,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtlProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+      <ElementType {...unhandledProps} {...accessibility.attributes.root} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

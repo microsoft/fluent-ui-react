@@ -49,11 +49,11 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
     size: 0,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtlProps }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} {...rtlProps} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

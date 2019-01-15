@@ -62,7 +62,7 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     ElementType,
     classes,
     unhandledProps,
-    rtlProps,
+    accessibility,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
@@ -70,9 +70,9 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
       <ElementType
         className={classes.root}
         {...unhandledProps}
+        {...accessibility.attributes.root}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        {...rtlProps}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

@@ -127,6 +127,7 @@ export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelat
   role?: AriaRole
   tabIndex?: string
   [IS_FOCUSABLE_ATTRIBUTE]?: boolean
+  dir?: string
 }
 
 export type AccessibilityAttributesBySlot = { [partName: string]: AccessibilityAttributes }
