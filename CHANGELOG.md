@@ -24,6 +24,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix ignored initial state of knobs @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Fix unclearable example's code @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 
+### Features
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686] (https://github.com/stardust-ui/react/pull/686))
+
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.16.1...v0.16.2)

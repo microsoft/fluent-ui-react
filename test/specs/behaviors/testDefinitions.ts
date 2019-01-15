@@ -71,6 +71,43 @@ definitions.push({
   },
 })
 
+// Example: Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' component's part.
+definitions.push({
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' based on the property '([a-z A-Z -]+)' if the component has '([a-z -]+)' property to '([a-z -]+)' component's part\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyBasedOn,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = [...parameters.props]
+    const property = {}
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = true
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
+    expect(expectedResult).toEqual(testHelper.convertToBooleanIfApplicable(attributeExpectedValue))
+
+    // when property depending on is undefined, then there should not be 'aria' attribute added
+    const propertyDependingOnValue = undefined
+    property[propertyDependingOn] = propertyDependingOnValue
+    const expectedResultDependingPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultDependingPropertyUndefined).toEqual(propertyDependingOnValue)
+
+    // when property based on is undefined, then there should 'aria' attribute get false value
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = undefined
+    const expectedResultBasedOnPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultBasedOnPropertyUndefined).toEqual(false)
+  },
+})
+
 // Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
   regexp: /Adds attribute '([a-z -]+)' based on the property '([a-z -]+)' to '([a-z -]+)' component's part\./g,
@@ -326,33 +363,59 @@ definitions.push({
   },
 })
 
-// Example: Performs 'nextItem' action on ArrowDown, ArrowRight.
+// Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action on ([a-z A-Z]+), ([a-z A-Z]+)\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' or '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [action, firstArrow, secondArrow] = [...parameters.props]
+    const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[0].keyCode
-    const expectedSecondArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[1].keyCode
-    expect(expectedFirstArrowKeyNumber).toBe(keyboardKey[firstArrow])
-    expect(expectedSecondArrowKeyNumber).toBe(keyboardKey[secondArrow])
+    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[1].keyCode
+    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
+    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
   },
 })
 
-// Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+// Triggers 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Performs click action with '([a-z A-Z]+)' and '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [firstKey, secondKey, elementToPerformAction] = [...parameters.props]
+    const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[0].keyCode
-    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[1].keyCode
-    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
-    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is horizontal\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is vertical\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyVertical = { vertical: true }
+    const expectedKeyNumberVertical = parameters.behavior(propertyVertical).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
   },
 })
 

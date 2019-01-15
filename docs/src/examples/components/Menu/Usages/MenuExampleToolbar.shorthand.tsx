@@ -65,6 +65,30 @@ const items = [
     accessibility: toolbarButtonBehavior,
     'aria-label': 'Book Tool',
   },
+  {
+    key: 'menuButton',
+    icon: {
+      name: 'more',
+      circular: true,
+      size: 'small',
+    },
+    accessibility: toolbarButtonBehavior,
+    'aria-label': 'More options',
+    menu: {
+      items: [
+        { key: '1', content: 'item1' },
+        {
+          key: '2',
+          content: 'item2',
+        },
+        {
+          key: '3',
+          content: 'item3',
+          menu: { items: [{ key: '1', content: 'item3.1' }, { key: '2', content: 'item3.2' }] },
+        },
+      ],
+    },
+  },
 ]
 
 class MenuExampleToolbarShorthand extends React.Component {
