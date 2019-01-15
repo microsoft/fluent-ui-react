@@ -100,7 +100,7 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
     )
   }
 
-  private handleIconOverrides = (predefinedProps: DropdownLabelProps) => ({
+  private handleIconOverrides = (predefinedProps: IconProps) => ({
     onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
       e.stopPropagation()
       _.invoke(this.props, 'onRemove', e, this.props)
