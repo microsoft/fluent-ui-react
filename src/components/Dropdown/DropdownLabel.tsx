@@ -47,11 +47,11 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
  * It is used to display selected item.
  */
 class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
-  displayName = 'DropdownLabel'
+  static displayName = 'DropdownLabel'
 
   static create: Function
 
-  className = 'ui-dropdown__label'
+  static className = 'ui-dropdown__label'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
