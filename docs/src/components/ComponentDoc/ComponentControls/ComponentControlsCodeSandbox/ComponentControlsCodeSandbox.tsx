@@ -70,7 +70,7 @@ class ComponentControlsShowCode extends React.Component<
       return (
         <Menu.Item
           as="a"
-          content="Exported"
+          content="Click to open"
           href={sandboxUrl}
           icon={{ color: 'green', name: 'checkmark' }}
           target="_blank"

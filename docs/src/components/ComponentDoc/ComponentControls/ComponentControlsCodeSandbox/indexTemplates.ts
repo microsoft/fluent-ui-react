@@ -4,11 +4,10 @@ import ReactDOM from "react-dom";
 
 import Example from "./example";
 
-const element = document.getElementById("root");
 ReactDOM.render(
   <Provider theme={themes.teams}>
     <Example />
   </Provider>,
-  element
+  document.getElementById("root")
 );
 `
