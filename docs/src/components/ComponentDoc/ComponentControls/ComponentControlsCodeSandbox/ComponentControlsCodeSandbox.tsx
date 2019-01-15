@@ -1,19 +1,12 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
-import { Menu } from 'semantic-ui-react'
 
-import pkg from 'package.json'
+import { Menu } from 'semantic-ui-react'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
+import { dependencies } from 'docs/src/components/Playground/renderConfig'
 import { updateForKeys } from 'docs/src/hoc'
 import { appTemplateJs } from './indexTemplates'
-
-const dependencies = {
-  '@stardust-ui/react': pkg.version,
-  lodash: pkg.dependencies.lodash,
-  react: pkg.devDependencies.react,
-  'react-dom': pkg.devDependencies['react-dom'],
-  'react-scripts': 'latest',
-}
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
@@ -84,7 +77,7 @@ class ComponentControlsShowCode extends React.Component<
         afterDeploy={this.handleDeploy}
         examplePath="/"
         example={exampleCode}
-        dependencies={dependencies}
+        dependencies={_.mapValues(dependencies, 'version')}
         /* Magic trick to reload sources on passed code update */
         key={exampleCode}
         name={exampleName}

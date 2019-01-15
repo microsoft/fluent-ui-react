@@ -3,6 +3,8 @@ import * as React from 'react'
 import * as Stardust from '@stardust-ui/react'
 import * as ReactDOM from 'react-dom'
 
+import pkg from 'package.json'
+
 export const babelConfig = {
   plugins: ['proposal-class-properties', ['transform-typescript', { isTSX: true }]],
   presets: [
@@ -17,11 +19,25 @@ export const babelConfig = {
   ],
 }
 
-const imports = {
-  '@stardust-ui/react': Stardust,
-  lodash: _,
-  react: React,
-  'react-dom': ReactDOM,
+export const dependencies = {
+  '@stardust-ui/react': {
+    module: Stardust,
+    version: pkg.version,
+  },
+  lodash: {
+    module: _,
+    version: pkg.dependencies.lodash,
+  },
+  react: {
+    module: React,
+    version: pkg.devDependencies.react,
+  },
+  'react-dom': {
+    module: ReactDOM,
+    version: pkg.devDependencies['react-dom'],
+  },
 }
+
+const imports = _.mapValues(dependencies, 'module')
 
 export const importResolver = importName => imports[importName]
