@@ -19,6 +19,9 @@ export interface MenuVariables {
   primaryUnderlinedBorderColor: string
 
   lineHeightBase: string
+
+  horizontalPadding: string
+  verticalPadding: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -44,5 +47,8 @@ export default (siteVars: any): MenuVariables => {
     primaryUnderlinedBorderColor: siteVars.gray08,
 
     lineHeightBase: siteVars.lineHeightBase,
+
+    horizontalPadding: siteVars.menuItemHorizontalPadding,
+    verticalPadding: siteVars.menuItemVerticalPadding,
   }
 }

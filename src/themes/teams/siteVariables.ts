@@ -105,3 +105,9 @@ export const bodyLineHeight = lineHeightBase
 export const arrowRight = '\u25B8'
 export const arrowDown = '\u25BE'
 export const arrowLeft = '\u25C2'
+
+//
+// Padding
+//
+export const menuItemHorizontalPadding = `${pxToRem(14)} ${pxToRem(18)}`
+export const menuItemVerticalPadding = `${pxToRem(8)} ${pxToRem(18)}`
