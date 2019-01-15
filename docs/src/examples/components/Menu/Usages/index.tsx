@@ -10,6 +10,11 @@ const Usages = () => (
       examplePath="components/Menu/Usages/MenuExampleToolbar"
     />
     <ComponentExample
+      title="Vertical menu with icon &amp; text"
+      description="A menu with accessibility behavior. This type of menu is commonly used as a popup submenu."
+      examplePath="components/Menu/Usages/MenuExampleVerticalWithIcons"
+    />
+    <ComponentExample
       title="Menu as a toolbar that has a popup submenu"
       description="A menu can have submenus...."
       examplePath="components/Menu/Usages/MenuExampleToolbarWithPopupMenu"
