@@ -144,6 +144,7 @@ export interface DropdownState {
   backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
+  defaultHighlightedIndex: number
 }
 
 /**
@@ -228,6 +229,7 @@ export default class Dropdown extends AutoControlledComponent<
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
+      defaultHighlightedIndex: !this.props.search && !this.props.multiple ? null : undefined,
     }
   }
 
@@ -239,19 +241,20 @@ export default class Dropdown extends AutoControlledComponent<
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { searchQuery } = this.state
+    const { defaultHighlightedIndex, searchQuery } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
           onChange={this.handleSelectedChange}
-          inputValue={search ? searchQuery : undefined}
+          inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
           // If it's single search, don't pass anything. Pass a null otherwise, as Downshift does
           // not handle selection by default for single/multiple selection and multiple search.
           selectedItem={search && !multiple ? undefined : null}
           getA11yStatusMessage={getA11yStatusMessage}
+          defaultHighlightedIndex={defaultHighlightedIndex}
           onStateChange={changes => {
             if (changes.isOpen && !search) {
               this.listRef.current.focus()
@@ -519,6 +522,14 @@ export default class Dropdown extends AutoControlledComponent<
         if (state.isOpen && document.activeElement === this.listRef.current) {
           return {} // won't change state in this case.
         }
+      case Downshift.stateChangeTypes.clickItem:
+      case Downshift.stateChangeTypes.keyDownEnter:
+        if (!this.props.search && !this.props.multiple) {
+          this.setState({
+            defaultHighlightedIndex: state.highlightedIndex,
+          })
+        }
+        return changes
       default:
         return changes
     }
