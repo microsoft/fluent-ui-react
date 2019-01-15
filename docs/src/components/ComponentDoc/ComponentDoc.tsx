@@ -14,6 +14,7 @@ import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
+import ExampleContext from 'docs/src/context/ExampleContext'
 
 const topRowStyle = { margin: '1em' }
 const exampleEndStyle: React.CSSProperties = {
@@ -23,10 +24,6 @@ const exampleEndStyle: React.CSSProperties = {
 }
 
 class ComponentDoc extends React.Component<any, any> {
-  static childContextTypes = {
-    onPassed: PropTypes.func,
-  }
-
   static propTypes = {
     history: PropTypes.object.isRequired,
     info: componentInfoShape.isRequired,
@@ -44,20 +41,14 @@ class ComponentDoc extends React.Component<any, any> {
     }
   }
 
-  getChildContext() {
-    return {
-      onPassed: this.handleExamplePassed,
-    }
-  }
-
   componentWillReceiveProps({ info }) {
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
   }
 
-  handleExamplePassed = (e, { examplePath }) => {
-    this.setState({ activePath: examplePathToHash(examplePath) })
+  handleExamplePassed = (passedAnchorName: string) => {
+    this.setState({ activePath: passedAnchorName })
   }
 
   handleExamplesRef = examplesRef => this.setState({ examplesRef })
@@ -97,7 +88,14 @@ class ComponentDoc extends React.Component<any, any> {
           <Grid.Row columns="equal">
             <Grid.Column style={{ padding: '0 0 0 28px' } as React.CSSProperties}>
               <div ref={this.handleExamplesRef}>
-                <ComponentExamples displayName={info.displayName} />
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
               </div>
               <div style={exampleEndStyle}>
                 This is the bottom <Icon name="pointing down" />
