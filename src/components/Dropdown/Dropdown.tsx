@@ -70,7 +70,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
-  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if it's a multiple selection. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
   /**
@@ -252,7 +252,7 @@ export default class Dropdown extends AutoControlledComponent<
                   className={classes.container}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
-                  {multiple && this.renderSelectedItems(styles)}
+                  {multiple && this.renderSelectedItems()}
                   {search
                     ? this.renderSearchInput(
                         accessibilityRootPropsRest,
@@ -442,7 +442,7 @@ export default class Dropdown extends AutoControlledComponent<
     ]
   }
 
-  private renderSelectedItems(styles: ComponentSlotStylesInput) {
+  private renderSelectedItems() {
     const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
@@ -452,7 +452,6 @@ export default class Dropdown extends AutoControlledComponent<
     return value.map(item =>
       DropdownSelectedItem.create(item, {
         defaultProps: {
-          styles: styles.label,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
