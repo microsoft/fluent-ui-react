@@ -3,7 +3,12 @@ import { Menu } from '@stardust-ui/react'
 
 class MenuExample extends React.Component {
   handleClick = (e, props) => {
-    const items = this.state.items.filter(current => current.key !== props.index)
+    const itemToRemove = this.state.items[props.index]
+    const items = this.state.items.filter(current => {
+      console.log('current.key', current.key)
+      console.log('props.index', props.index)
+      return current.key !== itemToRemove.key
+    })
 
     this.setState({ items })
 
@@ -22,14 +27,17 @@ class MenuExample extends React.Component {
       { key: 3, content: 'Somethin else', onClick: this.handleClick },
     ],
   }
-
-  componentDidUpdate() {
-    console.log('menu example componentDidUpdate')
-  }
   render() {
     return (
       <div className="menu-example">
         <Menu defaultActiveIndex={0} items={this.state.items} />
+        <button
+          onClick={() => {
+            this.state.items.push({ key: 4, content: 'Added item', onClick: this.handleClick })
+          }}
+        >
+          Add item
+        </button>
       </div>
     )
   }
