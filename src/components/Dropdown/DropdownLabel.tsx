@@ -75,6 +75,20 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
   public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownLabelProps>) {
     const { header, icon, image } = this.props
 
+    const iconElement = Icon.create(icon, {
+      defaultProps: {
+        'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
+        'aria-hidden': false,
+        role: 'button',
+      },
+      overrideProps: this.handleIconOverrides,
+    })
+    const imageElement = Image.create(image, {
+      defaultProps: {
+        avatar: true,
+      },
+    })
+
     return (
       <Label
         styles={styles.root}
@@ -82,19 +96,8 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
         circular
         onClick={this.handleClick}
         content={header}
-        icon={Icon.create(icon, {
-          defaultProps: {
-            'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
-            'aria-hidden': false,
-            role: 'button',
-          },
-          overrideProps: this.handleIconOverrides,
-        })}
-        image={Image.create(image, {
-          defaultProps: {
-            avatar: true,
-          },
-        })}
+        icon={iconElement}
+        image={imageElement}
         {...unhandledProps}
       />
     )
