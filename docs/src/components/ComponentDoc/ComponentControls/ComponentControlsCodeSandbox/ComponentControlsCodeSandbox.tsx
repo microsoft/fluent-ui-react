@@ -86,7 +86,7 @@ class ComponentControlsShowCode extends React.Component<
         example={exampleCode}
         dependencies={dependencies}
         /* Magic trick to reload sources on passed code update */
-        key={btoa(exampleCode)}
+        key={exampleCode}
         name={exampleName}
         providedFiles={{
           'index.js': { content: appTemplateJs },
