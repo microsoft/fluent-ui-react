@@ -1,5 +1,4 @@
-export const appTemplateJs = `
-import { Provider, themes } from "@stardust-ui/react"
+export const appTemplateJs = `import { Provider, themes } from "@stardust-ui/react"
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -12,4 +11,4 @@ ReactDOM.render(
   </Provider>,
   element
 );
-`.slice(1)
+`
