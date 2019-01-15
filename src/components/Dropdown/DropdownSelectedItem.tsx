@@ -15,7 +15,7 @@ import {
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
-export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps> {
+export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
   /** Header of the selected item. */
   header?: string
 
@@ -31,7 +31,7 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onClick?: ComponentEventHandler<DropdownLabelProps>
+  onClick?: ComponentEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
@@ -39,15 +39,15 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onRemove?: ComponentEventHandler<DropdownLabelProps>
+  onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
 /**
- * A DropdownLabel is a sub-component of a multiple selection Dropdown.
+ * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
  * It is used to display selected item.
  */
-class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
-  static displayName = 'DropdownLabel'
+class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
+  static displayName = 'DropdownSelectedItem'
 
   static create: Function
 
@@ -72,7 +72,10 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownLabelProps>) {
+  public renderComponent({
+    unhandledProps,
+    styles,
+  }: RenderResultConfig<DropdownSelectedItemProps>) {
     const { header, icon, image } = this.props
 
     const iconElement = Icon.create(icon, {
@@ -119,6 +122,6 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
   })
 }
 
-DropdownLabel.create = createShorthandFactory(DropdownLabel, 'header')
+DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
 
-export default DropdownLabel
+export default DropdownSelectedItem
