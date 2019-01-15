@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix doc layout for Menu component @codepretty ([#695] https://github.com/stardust-ui/react/pull/695)
 - Fix focus outline visible only during keyboard navigation @kolaps33 ([#689] https://github.com/stardust-ui/react/pull/689)
 - Fix handling changes of `renderer` prop in `Provider` @layershifter ([#702](https://github.com/stardust-ui/react/pull/702))
+- Fix Menu themeing styles @codepretty ([#708](https://github.com/stardust-ui/react/pull/708))
 - Prevent infinite rendering loop start on `Popup` open @kuzhelov ([#705](https://github.com/stardust-ui/react/pull/705))
 
 <!--------------------------------[ v0.16.1 ]------------------------------- -->
