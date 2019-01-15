@@ -18,8 +18,6 @@ class DocsRoot extends React.Component<any, any> {
     }),
   }
 
-  state = {}
-
   render() {
     const { match } = this.props
     const displayName = _.startCase(match.params.name).replace(/ /g, '')

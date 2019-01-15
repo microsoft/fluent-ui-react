@@ -97,6 +97,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     match: PropTypes.object.isRequired,
     title: PropTypes.node,
     themeName: PropTypes.string,
+    exampleTheme: PropTypes.string,
   }
 
   componentWillMount() {
@@ -611,7 +612,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           renderHtml
           resolver={importResolver}
         >
-          <Provider theme={themes.teamsDark}>
+          <Provider theme={themes[this.getThemeKey(this.props.themeName)]}>
             <Provider.Consumer
               render={({ siteVariables }) => {
                 return (
@@ -646,6 +647,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         <Divider />
       </Segment>
     )
+  }
+
+  private getThemeKey(text: string) {
+    const key = _.find(this.getThemeOptions(), ['text', text])
+    if (key) {
+      return key.value
+    }
+    return 'teams'
+  }
+
+  private getThemeOptions = () => {
+    return Object.keys(themes).map(key => ({
+      text: _.startCase(key),
+      value: key,
+    }))
   }
 }
 

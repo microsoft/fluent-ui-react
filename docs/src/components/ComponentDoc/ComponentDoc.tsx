@@ -13,6 +13,7 @@ import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 // import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
+import { ThemeContext } from '../../../src/context/theme-context'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -29,8 +30,6 @@ class ComponentDoc extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     info: componentInfoShape.isRequired,
   }
-
-  state: any = {}
 
   componentWillMount() {
     const { history, location } = this.props
@@ -101,13 +100,18 @@ class ComponentDoc extends React.Component<any, any> {
 
     const topPart = [
       <Header content={info.displayName} description={_.join(info.docblock.description, ' ')} />,
-      <Dropdown
-        getA11yStatusMessage={getA11yStatusMessage}
-        getA11ySelectionMessage={getA11ySelectionMessage}
-        noResultsMessage="We couldn't find any matches."
-        placeholder="Theme"
-        items={this.getThemeOptions().map(o => o.text)}
-      />,
+      <ThemeContext.Consumer>
+        {({ changeTheme }) => (
+          <Dropdown
+            getA11yStatusMessage={getA11yStatusMessage}
+            getA11ySelectionMessage={getA11ySelectionMessage}
+            noResultsMessage="We couldn't find any matches."
+            placeholder="Theme"
+            onSelectedChange={changeTheme}
+            items={this.getThemeOptions().map(o => o.text)}
+          />
+        )}
+      </ThemeContext.Consumer>,
       <ComponentDocLinks
         displayName={info.displayName}
         parentDisplayName={info.parentDisplayName}

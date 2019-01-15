@@ -7,7 +7,7 @@ import Router from './routes'
 
 interface AppState {
   themeName: string
-  changeTheme: (newTheme: string) => void
+  changeTheme: (e, p) => void
 }
 
 class App extends React.Component<any, AppState> {
@@ -16,9 +16,9 @@ class App extends React.Component<any, AppState> {
   constructor(props) {
     super(props)
 
-    this.changeTheme = newTheme => {
+    this.changeTheme = (e, p) => {
       this.setState({
-        themeName: newTheme,
+        themeName: p.value,
       })
     }
 
@@ -31,11 +31,10 @@ class App extends React.Component<any, AppState> {
   }
 
   render() {
-    const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
         <Provider
-          theme={mergeThemes(themes[themeName], {
+          theme={mergeThemes(themes.teams, {
             // adjust Teams' theme to Semantic UI's font size scheme
             siteVariables: {
               htmlFontSize: '14px',
