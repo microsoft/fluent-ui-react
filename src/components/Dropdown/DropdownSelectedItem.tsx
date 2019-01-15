@@ -51,7 +51,7 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 
   static create: Function
 
-  static className = 'ui-dropdown__label'
+  static className = 'ui-dropdown__selected-item'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
