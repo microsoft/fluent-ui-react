@@ -78,7 +78,7 @@ export default class ComponentSourceManager extends React.Component<
     const sourceCodes = componentAPIs[currentCodeAPI].sourceCode
     const originalCode = sourceCodes[currentCodeLanguage]
 
-    const currentCode = storedCode || originalCode
+    const currentCode = typeof storedCode === 'string' ? storedCode : originalCode
     const currentCodePath = examplePath + componentAPIs[currentCodeAPI].fileSuffix
 
     const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'

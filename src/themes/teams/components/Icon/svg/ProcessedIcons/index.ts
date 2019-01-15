@@ -261,7 +261,6 @@ import processedIcons_callmissed from './icons-call-missed'
 import processedIcons_callmicrophoneunmuting from './icons-call-microphone-unmuting'
 import processedIcons_callmicrophoneofffilled from './icons-call-microphone-off-filled'
 import processedIcons_callmeetupline from './icons-call-meetup-line'
-import processedIcons_callmeetupfilled from './icons-call-meetup-filled'
 import processedIcons_callincomingvideo from './icons-call-incoming-video'
 import processedIcons_callhold from './icons-call-hold'
 import processedIcons_callend from './icons-call-end'
@@ -565,7 +564,6 @@ export default {
   processedIcons_callmicrophoneunmuting,
   processedIcons_callmicrophoneofffilled,
   processedIcons_callmeetupline,
-  processedIcons_callmeetupfilled,
   processedIcons_callincomingvideo,
   processedIcons_callhold,
   processedIcons_callend,
