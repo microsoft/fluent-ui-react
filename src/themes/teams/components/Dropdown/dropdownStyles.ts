@@ -72,24 +72,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     top: 'calc(100% + 2px)', // leave room for container + its border
     background: listBackgroundColor,
   }),
-
-  emptyListItem: ({ variables: { listItemBackgroundColor } }) => ({
-    backgroundColor: listItemBackgroundColor,
-  }),
-
-  toggleButton: ({ variables: { toggleButtonSize, width }, props: { fluid } }): ICSSInJSStyle => ({
-    position: 'absolute',
-    height: toggleButtonSize,
-    width: toggleButtonSize,
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    margin: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    userSelect: 'none',
-    ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
-  }),
 }
 
 export default dropdownStyles

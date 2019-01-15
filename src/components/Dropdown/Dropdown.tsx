@@ -3,11 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import {
-  ComponentSlotStylesInput,
-  ComponentVariablesInput,
-  ComponentSlotClasses,
-} from '../../themes/types'
+import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
   StateChangeOptions,
@@ -24,13 +20,15 @@ import {
   customPropTypes,
   commonPropTypes,
   handleRef,
+  UIComponentProps,
 } from '../../lib'
 import keyboardKey from 'keyboard-key'
 import List from '../List/List'
-import Text from '../Text/Text'
 import Ref from '../Ref/Ref'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import DropdownIndicator from './DropdownIndicator'
 import DropdownItem from './DropdownItem'
+import DropdownMessageLoading from './DropdownMessageLoading'
+import DropdownMessageNoResults from './DropdownMessageNoResults'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
@@ -70,6 +68,8 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
+  indicator?: ShorthandValue
+
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
@@ -78,11 +78,16 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   itemToString?: (item: ShorthandValue) => string
 
+  loading?: boolean
+
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
 
-  /** A string to be displayed in the list when dropdown has no available items to show. */
-  noResultsMessage?: string
+  /** A message to be displayed in the list when dropdown is loading. */
+  messageLoading?: ShorthandValue
+
+  /** A message to be displayed in the list when dropdown has no available items to show. */
+  messageNoResults?: ShorthandValue
 
   /**
    * Callback for change in dropdown search query value.
@@ -109,9 +114,6 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** Sets search query value (controlled mode). */
   searchQuery?: string
-
-  /** Whether toggle button (that shows/hides items list) should be rendered. */
-  toggleButton?: boolean
 
   /** Sets currently selected value(s) (controlled mode). */
   value?: ShorthandValue | ShorthandValue[]
@@ -155,17 +157,19 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
+    indicator: customPropTypes.itemShorthand,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    loading: PropTypes.bool,
     multiple: PropTypes.bool,
-    noResultsMessage: PropTypes.string,
+    messageLoading: PropTypes.string,
+    messageNoResults: PropTypes.string,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
-    toggleButton: PropTypes.bool,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
@@ -174,6 +178,7 @@ export default class Dropdown extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
+    indicator: '',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -186,6 +191,8 @@ export default class Dropdown extends AutoControlledComponent<
 
       return `${item}`
     },
+    messageLoading: 'Loading...',
+    messageNoResults: "We couldn't find any matches.",
   }
 
   static autoControlledProps = ['searchQuery', 'value']
@@ -211,7 +218,15 @@ export default class Dropdown extends AutoControlledComponent<
     variables,
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
-    const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
+    const {
+      fluid,
+      indicator,
+      loading,
+      search,
+      multiple,
+      getA11yStatusMessage,
+      itemToString,
+    } = this.props
     const { searchQuery } = this.state
 
     return (
@@ -262,7 +277,15 @@ export default class Dropdown extends AutoControlledComponent<
                         variables,
                       )
                     : this.renderTriggerButton(styles, getToggleButtonProps)}
-                  {toggleButton && this.renderToggleButton(getToggleButtonProps, classes, isOpen)}
+                  {DropdownIndicator.create(indicator, {
+                    defaultProps: {
+                      ...getToggleButtonProps(),
+                      fluid,
+                      loading,
+                      open: isOpen,
+                      variables,
+                    },
+                  })}
                   {this.renderItemsList(
                     styles,
                     variables,
@@ -322,7 +345,7 @@ export default class Dropdown extends AutoControlledComponent<
     ) => void,
     variables,
   ): JSX.Element {
-    const { searchInput, multiple, placeholder, toggleButton } = this.props
+    const { indicator, searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
@@ -331,7 +354,7 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
-        hasToggleButton: !!toggleButton,
+        hasToggleButton: !!indicator,
         variables,
         inputRef: this.inputRef,
       },
@@ -346,19 +369,6 @@ export default class Dropdown extends AutoControlledComponent<
     })
   }
 
-  private renderToggleButton(
-    getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
-    classes: ComponentSlotClasses,
-    isOpen: boolean,
-  ) {
-    const { onClick } = getToggleButtonProps()
-    return (
-      <span className={classes.toggleButton} onClick={onClick}>
-        {isOpen ? String.fromCharCode(9650) : String.fromCharCode(9660)}
-      </span>
-    )
-  }
-
   private renderItemsList(
     styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
@@ -370,7 +380,10 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
-    const accessibilityMenuProps = getMenuProps({ refKey: 'innerRef' }, { suppressRefError: true })
+    const { innerRef, ...accessibilityMenuProps } = getMenuProps(
+      { refKey: 'innerRef' },
+      { suppressRefError: true },
+    )
     const { search } = this.props
     // If it's just a selection, some attributes and listeners from Downshift input need to go on the menu list.
     if (!search) {
@@ -387,7 +400,7 @@ export default class Dropdown extends AutoControlledComponent<
         )
       }
     }
-    const { innerRef, ...accessibilityMenuPropsRest } = accessibilityMenuProps
+
     return (
       <Ref
         innerRef={(listElement: HTMLElement) => {
@@ -396,49 +409,42 @@ export default class Dropdown extends AutoControlledComponent<
         }}
       >
         <List
-          {...accessibilityMenuPropsRest}
+          {...accessibilityMenuProps}
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!isOpen}
-          items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
+          items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
     )
   }
 
   private renderItems(
-    styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { noResultsMessage } = this.props
-    const filteredItems = this.getItemsFilteredBySearchQuery()
+    const { loading, messageLoading, messageNoResults } = this.props
 
-    if (filteredItems.length > 0) {
-      return filteredItems.map((item, index) => {
-        return DropdownItem.create(item, {
-          defaultProps: {
-            active: highlightedIndex === index,
-            variables,
-            ...(typeof item === 'object' &&
-              !item.hasOwnProperty('key') && {
-                key: (item as any).header,
-              }),
-          },
-          overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
-        })
-      })
-    }
-    // render no match message.
+    const filteredItems = this.getItemsFilteredBySearchQuery()
+    const items = filteredItems.map((item, index) =>
+      DropdownItem.create(item, {
+        defaultProps: {
+          active: highlightedIndex === index,
+          variables,
+          ...(typeof item === 'object' &&
+            !item.hasOwnProperty('key') && {
+              key: (item as any).header,
+            }),
+        },
+        overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
+      }),
+    )
+
     return [
-      noResultsMessage
-        ? {
-            key: 'dropdown-no-results',
-            content: <Text weight="bold" content={noResultsMessage} />,
-            styles: styles.emptyListItem,
-          }
-        : null,
+      ...items,
+      loading && DropdownMessageLoading.create(messageLoading),
+      !loading && items.length === 0 && DropdownMessageNoResults.create(messageNoResults),
     ]
   }
 

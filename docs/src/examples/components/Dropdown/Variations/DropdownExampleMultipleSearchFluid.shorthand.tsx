@@ -17,7 +17,6 @@ const DropdownExample = () => (
     multiple
     getA11ySelectionMessage={getA11ySelectionMessage}
     getA11yStatusMessage={getA11yStatusMessage}
-    noResultsMessage="We couldn't find any matches."
     search
     fluid
     placeholder="Start typing a name"
