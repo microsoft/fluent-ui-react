@@ -69,14 +69,8 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /** Indicates whether the menu is submenu. */
   submenu?: boolean
 
-  /** Indicates whether the submenuIndicatora should be shown. */
-  hideSubmenuIndicator?: boolean
-
-  /** Shorthand for the submenu indicators for the vertical menu items. */
-  submenuIndicatorVertical?: ShorthandValue
-
-  /** Shorthand for the submenu indicators for horizontal menu items. */
-  submenuIndicatorHorizontal?: ShorthandValue
+  /** Indicates whether the submenuIndicator should be shown, or defines an icon for it. */
+  submenuIndicator?: boolean | ShorthandValue
 }
 
 export interface MenuState {
@@ -112,14 +106,13 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
-    hideSubmenuIndicator: PropTypes.bool,
-    submenuIndicatorVertical: customPropTypes.itemShorthand,
-    submenuIndicatorHorizontal: customPropTypes.itemShorthand,
+    submenuIndicator: PropTypes.oneOfType([PropTypes.bool, customPropTypes.itemShorthand]),
   }
 
   static defaultProps = {
     as: 'ul',
     accessibility: menuBehavior as Accessibility,
+    submenuIndicator: true,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -157,9 +150,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
       underlined,
       vertical,
       submenu,
-      hideSubmenuIndicator,
-      submenuIndicatorHorizontal,
-      submenuIndicatorVertical,
+      submenuIndicator,
     } = this.props
     const { activeIndex } = this.state
 
@@ -192,9 +183,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
           index,
           active,
           inSubmenu: submenu,
-          hideSubmenuIndicator,
-          submenuIndicatorHorizontal,
-          submenuIndicatorVertical,
+          submenuIndicator,
         },
         overrideProps: this.handleItemOverrides,
       })

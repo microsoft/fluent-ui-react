@@ -261,9 +261,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       underlined,
       vertical,
       menu,
-      hideSubmenuIndicator,
-      submenuIndicatorHorizontal,
-      submenuIndicatorVertical,
+      submenuIndicator,
     } = props
     const { arrowDown } = theme.siteVariables
     const sideArrow = getSideArrow(theme)
@@ -348,9 +346,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       '::after': {
         ...(menu &&
-          !hideSubmenuIndicator &&
-          ((!submenuIndicatorHorizontal && !vertical) ||
-            (!submenuIndicatorVertical && vertical)) && {
+          submenuIndicator === true && {
             position: 'relative',
             float: 'right',
             left: pxToRem(10),

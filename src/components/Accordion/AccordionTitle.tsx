@@ -10,8 +10,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  customPropTypes,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import Icon from '../Icon/Icon'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -30,6 +32,9 @@ export interface AccordionTitleProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AccordionTitleProps>
+
+  /** Indicates whether the active indicator should be shown, or defines an icon for it. */
+  activeIndicator?: boolean | ShorthandValue
 }
 
 /**
@@ -47,6 +52,11 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
+    activeIndicator: PropTypes.oneOfType([PropTypes.bool, customPropTypes.itemShorthand]),
+  }
+
+  static defaultProps = {
+    activeIndicator: true,
   }
 
   handleClick = e => {
@@ -54,19 +64,23 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {
-    const { children, content } = this.props
-
-    if (childrenExist(children)) {
-      return (
-        <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-          {children}
-        </ElementType>
-      )
-    }
+    const { children, content, activeIndicator, active } = this.props
+    const showActiveIndicatorIcon = typeof activeIndicator !== 'boolean'
+    const activeIndicatorIcon = Icon.create(activeIndicator, {
+      defaultProps: {
+        rotate: active ? 0 : -90,
+      },
+    })
+    const contentElement = (
+      <>
+        {showActiveIndicatorIcon && activeIndicatorIcon}
+        {content}
+      </>
+    )
 
     return (
       <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-        {content}
+        {childrenExist(children) ? children : contentElement}
       </ElementType>
     )
   }
