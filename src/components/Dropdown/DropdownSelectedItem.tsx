@@ -15,7 +15,7 @@ import {
 import { Image, Icon, Label } from '../..'
 import { IconProps } from '../Icon/Icon'
 
-export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps> {
+export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
   /** Header of the selected item. */
   header?: string
 
@@ -31,7 +31,7 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onClick?: ComponentEventHandler<DropdownLabelProps>
+  onClick?: ComponentEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
@@ -39,19 +39,19 @@ export interface DropdownLabelProps extends UIComponentProps<DropdownLabelProps>
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onRemove?: ComponentEventHandler<DropdownLabelProps>
+  onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
 /**
- * A DropdownLabel is a sub-component of a multiple selection Dropdown.
+ * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
  * It is used to display selected item.
  */
-class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
-  displayName = 'DropdownLabel'
+class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
+  static displayName = 'DropdownSelectedItem'
 
   static create: Function
 
-  className = 'ui-dropdown__label'
+  static className = 'ui-dropdown__selected-item'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -72,35 +72,7 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownLabelProps>) {
-    const { header, icon, image } = this.props
-
-    return (
-      <Label
-        styles={styles.root}
-        role="presentation"
-        circular
-        onClick={this.handleClick}
-        content={header}
-        icon={Icon.create(icon, {
-          defaultProps: {
-            'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
-            'aria-hidden': false,
-            role: 'button',
-          },
-          overrideProps: this.handleIconOverrides,
-        })}
-        image={Image.create(image, {
-          defaultProps: {
-            avatar: true,
-          },
-        })}
-        {...unhandledProps}
-      />
-    )
-  }
-
-  private handleIconOverrides = (predefinedProps: DropdownLabelProps) => ({
+  private handleIconOverrides = (predefinedProps: IconProps) => ({
     onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
       e.stopPropagation()
       _.invoke(this.props, 'onRemove', e, this.props)
@@ -114,8 +86,42 @@ class DropdownLabel extends UIComponent<ReactProps<DropdownLabelProps>, any> {
       _.invoke(predefinedProps, 'onKeyDown', e, iconProps)
     },
   })
+
+  public renderComponent({
+    unhandledProps,
+    styles,
+  }: RenderResultConfig<DropdownSelectedItemProps>) {
+    const { header, icon, image } = this.props
+
+    const iconElement = Icon.create(icon, {
+      defaultProps: {
+        'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
+        'aria-hidden': false,
+        role: 'button',
+      },
+      overrideProps: this.handleIconOverrides,
+    })
+    const imageElement = Image.create(image, {
+      defaultProps: {
+        avatar: true,
+      },
+    })
+
+    return (
+      <Label
+        styles={styles.root}
+        role="presentation"
+        circular
+        onClick={this.handleClick}
+        content={header}
+        icon={iconElement}
+        image={imageElement}
+        {...unhandledProps}
+      />
+    )
+  }
 }
 
-DropdownLabel.create = createShorthandFactory(DropdownLabel, 'header')
+DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
 
-export default DropdownLabel
+export default DropdownSelectedItem
