@@ -16,7 +16,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
  * Adds attribute 'aria-disabled=true' to 'root' component's part based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Adds attribute 'aria-haspopup=true' to 'root' component's part based on the property 'menu'.
+ * Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' property is set.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  * Triggers 'closeAllMenus' action with 'Escape' on 'wrapper'.
  * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.

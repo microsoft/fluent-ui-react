@@ -167,6 +167,7 @@ function testMethodConditionallyAddAttribute(
   valueOfAttributeToBeAddedIfTrue,
   component,
   propertyDependsOn,
+  valueOfProperty,
   valueOfAttributeToBeAddedOtherwise,
 ) {
   const propertyWithAriaSelected = {}
@@ -176,7 +177,7 @@ function testMethodConditionallyAddAttribute(
     testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedOtherwise),
   )
 
-  propertyWithAriaSelected[propertyDependsOn] = true
+  propertyWithAriaSelected[propertyDependsOn] = valueOfProperty
   const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
     component
   ][attributeToBeAdded]
@@ -199,6 +200,7 @@ definitions.push({
       valueOfAttributeToBeAdded,
       component,
       propertyDependsOn,
+      true,
       undefined,
     )
   },
@@ -222,6 +224,31 @@ definitions.push({
       valueOfAttributeToBeAddedIfTrue,
       component,
       propertyDependsOn,
+      true,
+      valueOfAttributeToBeAddedOtherwise,
+    )
+  },
+})
+
+// Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' menu property is set.
+definitions.push({
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is set\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      valueOfAttributeToBeAddedOtherwise,
+    ] = [...parameters.props]
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      'custom-value',
       valueOfAttributeToBeAddedOtherwise,
     )
   },
