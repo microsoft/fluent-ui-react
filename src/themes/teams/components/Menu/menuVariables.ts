@@ -1,14 +1,12 @@
-import { pxToRem } from '../../../../lib'
-
 export interface MenuVariables {
   color: string
-  backgroundColor: string
 
   activeColor: string
   activeBackgroundColor: string
   focusedBackgroundColor: string
   borderColor: string
 
+  iconOnlyActiveColor: string
   primaryActiveColor: string
   primaryActiveBackgroundColor: string
   primaryActiveBorderColor: string
@@ -20,14 +18,14 @@ export interface MenuVariables {
   primaryHoverBorderColor: string
   primaryUnderlinedBorderColor: string
 
-  circularRadius: string
   lineHeightBase: string
 }
 
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
-    backgroundColor: siteVars.white,
+
+    iconOnlyActiveColor: siteVars.brand06,
 
     activeColor: siteVars.black,
     activeBackgroundColor: siteVars.gray10,
@@ -45,7 +43,6 @@ export default (siteVars: any): MenuVariables => {
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
 
-    circularRadius: pxToRem(999),
     lineHeightBase: siteVars.lineHeightBase,
   }
 }

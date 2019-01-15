@@ -7,6 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExamplePills = () => <Menu defaultActiveIndex={0} items={items} pills />
+const MenuExampleFluid = () => <Menu defaultActiveIndex={0} items={items} vertical fluid />
 
-export default MenuExamplePills
+export default MenuExampleFluid
