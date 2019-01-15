@@ -107,7 +107,7 @@ export interface MenuItemProps
   inSubmenu?: boolean
 
   /** Indicates whether the submenuIndicator should be shown, or defines an icon for it. */
-  submenuIndicator?: boolean | ShorthandValue
+  submenuIndicator?: ShorthandValue
 }
 
 export interface MenuItemState {
@@ -147,7 +147,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
-    submenuIndicator: PropTypes.oneOfType([PropTypes.bool, customPropTypes.itemShorthand]),
+    submenuIndicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {

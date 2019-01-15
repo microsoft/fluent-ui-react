@@ -34,7 +34,7 @@ export interface AccordionTitleProps
   onClick?: ComponentEventHandler<AccordionTitleProps>
 
   /** Indicates whether the active indicator should be shown, or defines an icon for it. */
-  activeIndicator?: boolean | ShorthandValue
+  activeIndicator?: ShorthandValue
 }
 
 /**
@@ -52,7 +52,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
-    activeIndicator: PropTypes.oneOfType([PropTypes.bool, customPropTypes.itemShorthand]),
+    activeIndicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
