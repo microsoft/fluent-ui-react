@@ -163,11 +163,11 @@ definitions.push({
 
 function testMethodConditionallyAddAttribute(
   parameters,
-  attributeToBeAdded,
-  valueOfAttributeToBeAddedIfTrue,
   component,
   propertyDependsOn,
   valueOfProperty,
+  attributeToBeAdded,
+  valueOfAttributeToBeAddedIfTrue,
   valueOfAttributeToBeAddedOtherwise,
 ) {
   const propertyWithAriaSelected = {}
@@ -196,11 +196,11 @@ definitions.push({
 
     testMethodConditionallyAddAttribute(
       parameters,
-      attributeToBeAdded,
-      valueOfAttributeToBeAdded,
       component,
       propertyDependsOn,
       true,
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
       undefined,
     )
   },
@@ -220,11 +220,11 @@ definitions.push({
 
     testMethodConditionallyAddAttribute(
       parameters,
-      attributeToBeAdded,
-      valueOfAttributeToBeAddedIfTrue,
       component,
       propertyDependsOn,
       true,
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
       valueOfAttributeToBeAddedOtherwise,
     )
   },
@@ -244,11 +244,11 @@ definitions.push({
 
     testMethodConditionallyAddAttribute(
       parameters,
-      attributeToBeAdded,
-      valueOfAttributeToBeAddedIfTrue,
       component,
       propertyDependsOn,
       'custom-value',
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
       valueOfAttributeToBeAddedOtherwise,
     )
   },
