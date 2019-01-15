@@ -6,6 +6,11 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
+      title="Async popup position update"
+      description="A popup can be forced to update its position - this comes in handy in async data loading scenarios."
+      examplePath="components/Popup/Usage/PopupExampleAsync"
+    />
+    <ComponentExample
       title="Triggering popup on different actions"
       description="A popup can be triggered on click, hover or focus."
       examplePath="components/Popup/Usage/PopupExampleOn"

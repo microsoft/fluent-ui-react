@@ -93,6 +93,12 @@ export interface PopupProps
   position?: Position
 
   /**
+   * Function to render popup content.
+   * @param {Function} updatePosition - function to request popup position update.
+   */
+  renderContent?: (updatePosition: Function) => ShorthandValue
+
+  /**
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -140,6 +146,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     position: PropTypes.oneOf(POSITIONS),
+    renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: PropTypes.any,
   }
@@ -411,9 +418,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
+    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content } = this.props
+    const { content: propsContent, renderContent } = this.props
+    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -442,10 +451,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           defaultProps: popupContentAttributes,
           overrideProps: this.getContentProps,
         })
-
-    // Schedules a position update after each render.
-    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    scheduleUpdate()
 
     return (
       <Ref

@@ -1,4 +1,156 @@
 {
+  "0.16.2": {
+    "bundles": [
+      {
+        "name": "bundle-stardust-ui-core.js",
+        "size": 280822
+      },
+      {
+        "name": "bundle-stardust-ui-react.js",
+        "size": 634976
+      },
+      {
+        "name": "component-Accordion.js",
+        "size": 273192
+      },
+      {
+        "name": "component-Animation.js",
+        "size": 260006
+      },
+      {
+        "name": "component-Attachment.js",
+        "size": 278500
+      },
+      {
+        "name": "component-Avatar.js",
+        "size": 276176
+      },
+      {
+        "name": "component-Button.js",
+        "size": 274554
+      },
+      {
+        "name": "component-Chat.js",
+        "size": 276012
+      },
+      {
+        "name": "component-Divider.js",
+        "size": 261599
+      },
+      {
+        "name": "component-Dropdown.js",
+        "size": 337378
+      },
+      {
+        "name": "component-Form.js",
+        "size": 284378
+      },
+      {
+        "name": "component-Grid.js",
+        "size": 264767
+      },
+      {
+        "name": "component-Header.js",
+        "size": 267914
+      },
+      {
+        "name": "component-Icon.js",
+        "size": 262052
+      },
+      {
+        "name": "component-Image.js",
+        "size": 261591
+      },
+      {
+        "name": "component-Input.js",
+        "size": 280004
+      },
+      {
+        "name": "component-ItemLayout.js",
+        "size": 265861
+      },
+      {
+        "name": "component-Label.js",
+        "size": 273212
+      },
+      {
+        "name": "component-Layout.js",
+        "size": 260923
+      },
+      {
+        "name": "component-List.js",
+        "size": 280274
+      },
+      {
+        "name": "component-Loader.js",
+        "size": 268420
+      },
+      {
+        "name": "component-Menu.js",
+        "size": 292068
+      },
+      {
+        "name": "component-Popup.js",
+        "size": 325136
+      },
+      {
+        "name": "component-Portal.js",
+        "size": 279720
+      },
+      {
+        "name": "component-Provider.js",
+        "size": 150630
+      },
+      {
+        "name": "component-RadioGroup.js",
+        "size": 283531
+      },
+      {
+        "name": "component-Ref.js",
+        "size": 17682
+      },
+      {
+        "name": "component-Segment.js",
+        "size": 262837
+      },
+      {
+        "name": "component-Slot.js",
+        "size": 260317
+      },
+      {
+        "name": "component-Status.js",
+        "size": 268408
+      },
+      {
+        "name": "component-Text.js",
+        "size": 261885
+      },
+      {
+        "name": "component-Tree.js",
+        "size": 273375
+      },
+      {
+        "name": "theme-base.js",
+        "size": 80671
+      },
+      {
+        "name": "theme-fabric.js",
+        "size": 1194
+      },
+      {
+        "name": "theme-teams-dark.js",
+        "size": 449988
+      },
+      {
+        "name": "theme-teams-high-contrast.js",
+        "size": 450873
+      },
+      {
+        "name": "theme-teams.js",
+        "size": 446967
+      }
+    ]
+  },
   "0.16.1": {
     "bundles": [
       {
