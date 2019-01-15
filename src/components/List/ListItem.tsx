@@ -113,18 +113,15 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   }
 
   handleClick = e => {
-    console.log('CLICK')
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
     this.setState({ isFromKeyboard: isFromKeyboard() })
-    console.log('FOCUS', isFromKeyboard())
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({ classes, accessibility, unhandledProps, styles }) {
-    console.log('RENDER ITEM')
     const {
       as,
       debug,
