@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { Flex, Button, Image, Label } from '@stardust-ui/react'
+import { Flex, Image, Label } from '@stardust-ui/react'
 
 const Title = props => <Label content={props.content} styles={props.styles} />
-
-Title.__isStardust = true
 
 const SquareImage = () => (
   <Image styles={{ width: '8rem', height: '8rem' }} src="//unsplash.it/100" />
@@ -26,6 +24,10 @@ const FlexExampleShorthand = () => (
           <Flex space="between">
             <Flex.Item basis="40%">
               <Title content="stardust-ui/react" />
+            </Flex.Item>
+
+            <Flex.Item basis="30%">
+              {({ styles }) => <Title content="stardust-ui/react" styles={styles} />}
             </Flex.Item>
 
             <Label content="some side note" />

@@ -4,31 +4,30 @@ import { UIComponent, createShorthandFactory } from '../../../src/lib'
 import { mergeStyles } from '../../../src/lib/mergeThemes'
 import cx from 'classnames'
 
-// TODO introduce render method for Flex.Item
-// <Flex.Item>
-//     ({ styles, classes }) => ...
-// </Flex.Item>
-
+/**
+ * This logic seems to be a reasonable piece, however, in future we might consider the following functionality
+ * - introduce setup component that will pass Flex settings via React context. The main thing client might want to configure is target prop
+ * - however, this setting shouldn't affect Stardust components - as for them it should be still a `styles` prop used as a target
+ *  - and here is the task we might need to address
+ */
 const withStyles = (element: React.ReactElement<any>, styles, getClasses): any => {
-  if ((element.type as any).__isStardust) {
+  if (typeof element.type === 'string') {
+    const classes = getClasses(styles)
+    // console.warn('CLASSES', classes)
+
     return React.cloneElement(element, {
-      styles: mergeStyles(element.props.styles || {}, styles),
+      className: cx(element.props.className, classes),
     })
   }
 
-  console.warn('STYLES', styles)
-
-  const classes = getClasses(styles)
-  // console.warn('CLASSES', classes)
-
   return React.cloneElement(element, {
-    className: cx(element.props.className, classes),
+    styles: mergeStyles(element.props.styles || {}, styles),
   })
 }
 
 ///////////////////////
 
-class Flex extends UIComponent<any> {
+class Flex extends UIComponent<any, any> {
   static Item: any
 
   // this one is experimental
@@ -112,6 +111,13 @@ class FlexItem extends UIComponent<any> {
       ...(shrink != null && { flexShrink: shrink ? 1 : 0 }),
 
       ...style,
+    }
+
+    if (typeof children === 'function') {
+      return children({
+        styles: flexItemStyles,
+        classes: getClasses(flexItemStyles),
+      })
     }
 
     // console.warn(children)
