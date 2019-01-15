@@ -1,5 +1,6 @@
 export interface MenuVariables {
   color: string
+  backgroundColor: string
 
   activeColor: string
   activeBackgroundColor: string
@@ -24,6 +25,7 @@ export interface MenuVariables {
 export default (siteVars: any): MenuVariables => {
   return {
     color: siteVars.gray02,
+    backgroundColor: siteVars.white,
 
     iconOnlyActiveColor: siteVars.brand06,
 
