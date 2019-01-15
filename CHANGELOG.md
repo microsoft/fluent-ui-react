@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
 - Add `color` prop to `Label` component @Bugaa92 ([#647](https://github.com/stardust-ui/react/pull/647))
 - Add `accessibility` and `styles` to the API of `createComponent` @kuzhelov ([#714](https://github.com/stardust-ui/react/pull/714))
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 [#686] (https://github.com/stardust-ui/react/pull/686)
 
 ### Fixes
 - Fix doc layout for Menu component @codepretty ([#695] https://github.com/stardust-ui/react/pull/695)
