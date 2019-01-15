@@ -72,6 +72,21 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
+  private handleIconOverrides = (predefinedProps: IconProps) => ({
+    onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
+      e.stopPropagation()
+      _.invoke(this.props, 'onRemove', e, this.props)
+      _.invoke(predefinedProps, 'onClick', e, iconProps)
+    },
+    onKeyDown: (e: React.SyntheticEvent, iconProps: IconProps) => {
+      e.stopPropagation()
+      if (keyboardKey.getCode(e) === keyboardKey.Enter) {
+        _.invoke(this.props, 'onRemove', e, this.props)
+      }
+      _.invoke(predefinedProps, 'onKeyDown', e, iconProps)
+    },
+  })
+
   public renderComponent({
     unhandledProps,
     styles,
@@ -105,21 +120,6 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       />
     )
   }
-
-  private handleIconOverrides = (predefinedProps: IconProps) => ({
-    onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
-      e.stopPropagation()
-      _.invoke(this.props, 'onRemove', e, this.props)
-      _.invoke(predefinedProps, 'onClick', e, iconProps)
-    },
-    onKeyDown: (e: React.SyntheticEvent, iconProps: IconProps) => {
-      e.stopPropagation()
-      if (keyboardKey.getCode(e) === keyboardKey.Enter) {
-        _.invoke(this.props, 'onRemove', e, this.props)
-      }
-      _.invoke(predefinedProps, 'onKeyDown', e, iconProps)
-    },
-  })
 }
 
 DropdownSelectedItem.create = createShorthandFactory(DropdownSelectedItem, 'header')
