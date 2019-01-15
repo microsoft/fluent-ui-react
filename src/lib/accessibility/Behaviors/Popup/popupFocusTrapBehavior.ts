@@ -7,7 +7,7 @@ import popupBehavior from './popupBehavior'
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
- * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
+ * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  * Traps focus inside component.
  */
 const popupFocusTrapBehavior: Accessibility = (props: any) => ({
