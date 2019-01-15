@@ -13,7 +13,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' component's part.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
  * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'root' component's part.
- * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  */
 const tabBehavior: Accessibility = (props: any) => ({
   attributes: {

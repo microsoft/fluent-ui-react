@@ -17,12 +17,12 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' component's part.
  * Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'root' component's part.
  * Adds attribute 'aria-haspopup=true' to 'root' component's part based on the property 'menu'.
- * Performs 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
- * Performs 'closeAllMenus' action with 'Escape' on 'wrapper'.
- * Performs 'closeAllMenusAndFocusNextParentItem' action with 'ArrowRight' on 'wrapper'.
- * Performs 'closeMenu' action with 'ArrowLeft' on 'wrapper'.
- * Performs 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
- * Performs 'openMenu' action with 'ArrowRight' on 'wrapper', when orientation is vertical.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
+ * Triggers 'closeAllMenus' action with 'Escape' on 'wrapper'.
+ * Triggers 'closeAllMenusAndFocusNextParentItem' action with 'ArrowRight' on 'wrapper'.
+ * Triggers 'closeMenu' action with 'ArrowLeft' on 'wrapper'.
+ * Triggers 'openMenu' action with 'ArrowDown' on 'wrapper', when orientation is horizontal.
+ * Triggers 'openMenu' action with 'ArrowRight' on 'wrapper', when orientation is vertical.
  */
 
 const menuItemBehavior: Accessibility = (props: any) => ({

@@ -363,9 +363,9 @@ definitions.push({
   },
 })
 
-// Performs 'click' action with 'Enter' or 'Spacebar' on 'root'.
+// Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' or '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' or '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -380,9 +380,9 @@ definitions.push({
   },
 })
 
-// Performs 'closeAllMenus' action with 'Escape' on 'root'.
+// Triggers 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -393,9 +393,9 @@ definitions.push({
   },
 })
 
-// Performs 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+// Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is horizontal\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is horizontal\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -406,9 +406,9 @@ definitions.push({
   },
 })
 
-// Performs 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+// Triggers 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is vertical\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is vertical\.+/g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const propertyVertical = { vertical: true }
