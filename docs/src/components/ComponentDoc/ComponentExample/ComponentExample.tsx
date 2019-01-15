@@ -501,7 +501,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const { children, currentCode, currentCodePath, description, title } = this.props
+    const {
+      children,
+      currentCode,
+      currentCodeLanguage,
+      currentCodePath,
+      description,
+      title,
+    } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -547,6 +554,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
                   examplePath={currentCodePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
