@@ -31,7 +31,7 @@ import Text from '../Text/Text'
 import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem from './DropdownItem'
-import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
+import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
 
@@ -70,7 +70,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
-  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if it's a multiple selection. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
   /**
@@ -191,8 +191,8 @@ export default class Dropdown extends AutoControlledComponent<
   static autoControlledProps = ['searchQuery', 'value']
 
   static Item = DropdownItem
-  static Label = DropdownLabel
   static SearchInput = DropdownSearchInput
+  static SelectedItem = DropdownSelectedItem
 
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
@@ -252,7 +252,7 @@ export default class Dropdown extends AutoControlledComponent<
                   className={classes.container}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
-                  {multiple && this.renderSelectedItems(styles)}
+                  {multiple && this.renderSelectedItems()}
                   {search
                     ? this.renderSearchInput(
                         accessibilityRootPropsRest,
@@ -442,7 +442,7 @@ export default class Dropdown extends AutoControlledComponent<
     ]
   }
 
-  private renderSelectedItems(styles: ComponentSlotStylesInput) {
+  private renderSelectedItems() {
     const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
@@ -450,15 +450,14 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     return value.map(item =>
-      DropdownLabel.create(item, {
+      DropdownSelectedItem.create(item, {
         defaultProps: {
-          styles: styles.label,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
             }),
         },
-        overrideProps: (predefinedProps: DropdownLabelProps) =>
+        overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
           this.handleSelectedItemOverrides(predefinedProps, item),
       }),
     )
@@ -552,16 +551,16 @@ export default class Dropdown extends AutoControlledComponent<
   })
 
   private handleSelectedItemOverrides = (
-    predefinedProps: DropdownLabelProps,
+    predefinedProps: DropdownSelectedItemProps,
     item: ShorthandValue,
   ) => ({
-    onRemove: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+    onRemove: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       this.handleSelectedItemRemove(e, item)
-      _.invoke(predefinedProps, 'onRemove', e, dropdownLabelProps)
+      _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
     },
-    onClick: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+    onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       e.stopPropagation()
-      _.invoke(predefinedProps, 'onClick', e, dropdownLabelProps)
+      _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
     },
   })
 

@@ -60,10 +60,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     }
   },
 
-  label: (): ICSSInJSStyle => ({
-    margin: '.4rem 0 0 .4rem',
-  }),
-
   list: ({
     variables: { listMaxHeight, width, listBackgroundColor },
     props: { fluid },
