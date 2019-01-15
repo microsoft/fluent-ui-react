@@ -122,6 +122,14 @@ export { default as Animation, AnimationProps } from './components/Animation/Ani
 
 export { default as Tree } from './components/Tree'
 
+export {
+  default as UnicodeCharacter,
+  UnicodeCharacterProps,
+} from './components/UnicodeCharacter/UnicodeCharacter'
+export {
+  default as rtlMapUnicodeCharacters,
+} from './components/UnicodeCharacter/rtlMapUnicodeCharacters'
+
 //
 // Accessibility
 //
