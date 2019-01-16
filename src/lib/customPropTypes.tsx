@@ -37,19 +37,21 @@ export const suggest = (suggestions: string[]) => {
   const findBestSuggestions = _.memoize((str: string) => {
     const propValueWords = str.split(' ')
 
-    return _(suggestions)
+    return _.chain(suggestions)
       .map((suggestion: string) => {
         const suggestionWords = suggestion.split(' ')
 
-        const propValueScore = _(propValueWords)
+        const propValueScore = _.chain(propValueWords)
           .map(x => _.map(suggestionWords, y => leven(x, y)))
           .map(_.min)
           .sum()
+          .value()
 
-        const suggestionScore = _(suggestionWords)
+        const suggestionScore = _.chain(suggestionWords)
           .map(x => _.map(propValueWords, y => leven(x, y)))
           .map(_.min)
           .sum()
+          .value()
 
         return { suggestion, score: propValueScore + suggestionScore }
       })
@@ -166,7 +168,7 @@ export const every = (validators: Function[]) => (
     )
   }
 
-  const error = _(validators)
+  const error = _.chain(validators)
     .map(validator => {
       if (typeof validator !== 'function') {
         throw new Error(
@@ -177,6 +179,7 @@ export const every = (validators: Function[]) => (
     })
     .compact()
     .first() // we can only return one error at a time
+    .value()
 
   return error
 }
@@ -200,7 +203,7 @@ export const some = (validators: Function[]) => (
     )
   }
 
-  const errors = _(validators)
+  const errors = _.chain(validators)
     .map(validator => {
       if (!_.isFunction(validator)) {
         throw new Error(

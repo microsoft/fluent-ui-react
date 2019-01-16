@@ -103,7 +103,7 @@ class Sidebar extends React.Component<any, any> {
   }
 
   private menuItemsByType = _.map(constants.typeOrder, nextType => {
-    const items = _([...componentMenu, ...behaviorMenu])
+    const items = _.chain([...componentMenu, ...behaviorMenu])
       .filter(({ type }) => type === nextType)
       .map(info => (
         <Menu.Item
