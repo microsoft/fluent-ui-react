@@ -72,7 +72,7 @@ A shared library means more great ideas and more engineering support for feature
 
 ## Scope
 
-You can think of Stardust as the internals of a good component library. This encompasses everything except for the actual UI components themselves. We are currently discussing which, if any, components will be included.
+You can think of Stardust as the internals of a good component library. This encompasses everything that one UI library may need, starting from the common UI component available on the web, custom theming, accessibility and rtl. Currently there is an React implementation of it, available here: [stardust-ui/react](https://github.com/stardust-ui/react).
 
 ## Contributing Organizations
 
