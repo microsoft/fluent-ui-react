@@ -1,10 +1,10 @@
 import * as React from 'react'
 import Types from './Types'
 
-const LayoutExamples = () => (
+const FlexExamples = () => (
   <div>
     <Types />
   </div>
 )
 
-export default LayoutExamples
+export default FlexExamples

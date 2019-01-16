@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { Avatar, Flex, Icon, Text, FlexBody } from '@stardust-ui/react'
+import { Avatar, Flex, Icon, Text } from '@stardust-ui/react'
 
-const LayoutExample = () => (
+const FlexExample = () => (
   <Flex center>
     <Icon name="home" size="larger" />
-    <FlexBody>
+    <Flex.Body>
       <Text content="Main area" />
-    </FlexBody>
+    </Flex.Body>
     <Avatar image="public/images/avatar/small/matt.jpg" />
   </Flex>
 )
 
-export default LayoutExample
+export default FlexExample

@@ -1,6 +1,9 @@
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+
 import { UIComponent, UIComponentProps, ChildrenComponentProps } from '../../lib'
 import { Extendable } from '../../../types/utils'
+import FlexBody from './FlexBody'
 
 export interface FlexProps extends ChildrenComponentProps, UIComponentProps {
   // Content direction
@@ -29,6 +32,32 @@ export interface FlexProps extends ChildrenComponentProps, UIComponentProps {
 class Flex extends UIComponent<Extendable<FlexProps>, {}> {
   static displayName = 'Flex'
 
+  static Body = FlexBody
+  static Area: React.FunctionComponent<{ fluid?: boolean; style?: React.CSSProperties }> = p => (
+    <div
+      {...p}
+      style={{
+        ...p.style,
+        flex: p.fluid ? 1 : '0 0 auto',
+      }}
+    />
+  )
+
+  static propTypes = {
+    vertical: PropTypes.bool,
+    flexSize: PropTypes.string,
+    fluid: PropTypes.bool,
+    wrap: PropTypes.bool,
+    center: PropTypes.bool,
+    right: PropTypes.bool,
+    top: PropTypes.bool,
+    bottom: PropTypes.bool,
+    around: PropTypes.bool,
+    between: PropTypes.bool,
+    evenly: PropTypes.bool,
+    gap: PropTypes.string,
+  }
+
   renderComponent({ ElementType, classes, variables: v, rest }) {
     return (
       <ElementType {...rest} className={classes.root}>
@@ -36,21 +65,6 @@ class Flex extends UIComponent<Extendable<FlexProps>, {}> {
       </ElementType>
     )
   }
-}
-
-const flexFluid = { flex: 1 }
-
-/* Flex body: injects flex:1 into only child, wraps children otherwise */
-export const FlexBody = props => {
-  const { children } = props
-  return children.length !== undefined ? (
-    <div style={flexFluid}>{children}</div>
-  ) : (
-    React.cloneElement(children, {
-      ...children.props,
-      ...{ style: { ...children.props.style, ...flexFluid } },
-    })
-  )
 }
 
 export default Flex

@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { Avatar, Flex, Icon, Segment, Text } from '@stardust-ui/react'
 
-const LayoutExampleModel = () => (
-  <Flex center>
+const FlexExampleModel = ({ knobs }) => (
+  <Flex center={knobs.center} debug={knobs.debug}>
     <Icon name="home" size="larger" />
-    <Flex gap="1rem">
+    <Flex gap={knobs.gapStart} debug={knobs.debug}>
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
     </Flex>
     <Text content="Center" />
-    <Flex gap="0.5rem" right>
+    <Flex gap={knobs.gapEnd} right debug={knobs.debug}>
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
@@ -19,4 +19,4 @@ const LayoutExampleModel = () => (
   </Flex>
 )
 
-export default LayoutExampleModel
+export default FlexExampleModel
