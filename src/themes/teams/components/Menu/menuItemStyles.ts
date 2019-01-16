@@ -1,4 +1,3 @@
-import { getSideArrow } from '../../utils'
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
@@ -252,19 +251,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   },
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const {
-      active,
-      iconOnly,
-      isFromKeyboard,
-      pointing,
-      primary,
-      underlined,
-      vertical,
-      menu,
-      submenuIndicator,
-    } = props
-    const { arrowDown } = theme.siteVariables
-    const sideArrow = getSideArrow(theme)
+    const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
 
     return {
       color: 'inherit',
@@ -344,16 +331,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : !active && underlined && underlinedItem(v.activeBackgroundColor)),
       },
 
-      '::after': {
-        ...(menu &&
-          submenuIndicator === true && {
-            position: 'relative',
-            float: 'right',
-            left: pxToRem(10),
-            userSelect: 'none',
-            content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
-          }),
-      },
+      // '::after': {
+      //   ...(menu &&
+      //     submenuIndicator === true && {
+      //       position: 'relative',
+      //       float: 'right',
+      //       left: pxToRem(10),
+      //       userSelect: 'none',
+      //       content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
+      //     }),
+      // },
     }
   },
 

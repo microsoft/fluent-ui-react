@@ -24,6 +24,8 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
+import UnicodeCharacter from '../UnicodeCharacter/UnicodeCharacter'
+import uc from '../UnicodeCharacter/unicodeCharacters'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -190,6 +192,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       submenuIndicator,
     } = this.props
     const showSubmenuIndicatorIcon = menu && typeof submenuIndicator !== 'boolean'
+    const showSubmenuIndicatorUnicode = menu && submenuIndicator === true
 
     const { menuOpen } = this.state
 
@@ -210,6 +213,17 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
           {content}
+          {showSubmenuIndicatorUnicode &&
+            UnicodeCharacter.create(
+              {
+                hex: vertical
+                  ? uc.blackRightPointingSmallTriangle
+                  : uc.blackDownPointingSmallTriangle,
+              },
+              {
+                defaultProps: { styles: styles.submenuIndicator },
+              },
+            )}
           {showSubmenuIndicatorIcon &&
             Icon.create(submenuIndicator, {
               defaultProps: { styles: styles.submenuIndicator, rotate: vertical ? -90 : 0 },

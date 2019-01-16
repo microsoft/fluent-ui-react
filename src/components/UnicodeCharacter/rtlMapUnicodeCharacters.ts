@@ -1,8 +1,7 @@
+import uc from './unicodeCharacters'
 const rtlMapUnicodeCharacters = {
-  ['9656']: '9666', // BLACK RIGHT-POINTING SMALL TRIANGLE DEC
-  ['25B8']: '25C2', // BLACK RIGHT-POINTING SMALL TRIANGLE HEX
-  ['9666']: '9656', // BLACK LEFT-POINTING SMALL TRIANGLE DEC
-  ['25C2']: '25B8', // BLACK LEFT-POINTING SMALL TRIANGLE HEX
+  [uc.blackRightPointingSmallTriangle]: uc.blackLeftPointingSmallTriangle,
+  [uc.blackLeftPointingSmallTriangle]: uc.blackRightPointingSmallTriangle,
 }
 
 export default rtlMapUnicodeCharacters

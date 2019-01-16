@@ -13,7 +13,7 @@ import rtlMapUnicodeCharacters from './rtlMapUnicodeCharacters'
 
 export interface UnicodeCharacterProps extends UIComponentProps, ColorComponentProps {
   /** Hex representation of the unicode character. */
-  hex: string
+  hex?: string
 }
 
 /**
@@ -24,14 +24,16 @@ class UnicodeCharacter extends UIComponent<ReactProps<UnicodeCharacterProps>, an
 
   static create: Function
 
-  static className = 'ui-unicode-character'
+  static className = 'ui-unicodecharacter'
 
   static propTypes = {
     ...commonPropTypes.createCommon({ children: false, content: false }),
-    hex: PropTypes.string.isRequired,
+    hex: PropTypes.string,
   }
 
-  static defaultProps = {}
+  static defaultProps = {
+    as: 'span',
+  }
 
   renderComponent({ ElementType, classes, unhandledProps, rtl }) {
     const { hex } = this.props
@@ -40,7 +42,9 @@ class UnicodeCharacter extends UIComponent<ReactProps<UnicodeCharacterProps>, an
       <ElementType
         {...unhandledProps}
         className={classes.root}
-        dangerouslySetInnerHTML={{ __html: this.isHex(hexUnicode) ? `&#x${hexUnicode};` : '' }}
+        dangerouslySetInnerHTML={{
+          __html: hexUnicode && this.isHex(hexUnicode) ? `&#x${hexUnicode};` : '',
+        }}
       />
     )
   }

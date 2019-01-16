@@ -14,6 +14,8 @@ import {
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
+import UnicodeCharacter from '../UnicodeCharacter/UnicodeCharacter'
+import uc from '../UnicodeCharacter/unicodeCharacters'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -63,17 +65,26 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { children, content, activeIndicator, active } = this.props
     const showActiveIndicatorIcon = typeof activeIndicator !== 'boolean'
-    const activeIndicatorIcon = Icon.create(activeIndicator, {
-      defaultProps: {
-        rotate: active ? 0 : -90,
-      },
-    })
+    const showActiveIndicatorUnicode = activeIndicator === true
+
     const contentElement = (
       <>
-        {showActiveIndicatorIcon && activeIndicatorIcon}
+        {showActiveIndicatorIcon &&
+          Icon.create(activeIndicator, {
+            defaultProps: {
+              rotate: active ? 0 : -90,
+            },
+          })}
+        {showActiveIndicatorUnicode &&
+          UnicodeCharacter.create(
+            active ? uc.blackDownPointingSmallTriangle : uc.blackRightPointingSmallTriangle,
+            {
+              defaultProps: { styles: styles.activeIndicator },
+            },
+          )}
         {content}
       </>
     )

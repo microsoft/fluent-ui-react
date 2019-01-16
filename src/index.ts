@@ -129,6 +129,7 @@ export {
 export {
   default as rtlMapUnicodeCharacters,
 } from './components/UnicodeCharacter/rtlMapUnicodeCharacters'
+export { default as unicodeCharacters } from './components/UnicodeCharacter/unicodeCharacters'
 
 //
 // Accessibility

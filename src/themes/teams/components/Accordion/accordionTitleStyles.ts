@@ -1,24 +1,13 @@
-import { ICSSInJSStyle } from '../../../types'
-import { getSideArrow } from '../../utils'
-
 const accordionTitleStyles = {
-  root: ({ props, theme }): ICSSInJSStyle => {
-    const { active, activeIndicator } = props
-    const { arrowDown } = theme.siteVariables
-    const sideArrow = getSideArrow(theme)
-    return {
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      padding: '.5rem 0',
-      cursor: 'pointer',
-      ...(activeIndicator === true && {
-        '::before': {
-          userSelect: 'none',
-          content: active ? `"${arrowDown}"` : `"${sideArrow}"`,
-        },
-      }),
-    }
-  },
+  root: () => ({
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    padding: '.5rem 0',
+    cursor: 'pointer',
+  }),
+  activeIndicator: () => ({
+    userSelect: 'none',
+  }),
 }
 
 export default accordionTitleStyles
