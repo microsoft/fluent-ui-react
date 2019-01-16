@@ -20,13 +20,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
 
+### Fixes
+- Pass `jest --detectLeaks` tests @miroslavstastny ([#718](https://github.com/stardust-ui/react/pull/718))
+
+### Features
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686](https://github.com/stardust-ui/react/pull/686))
+
 ### Documentation
 - Fix ignored initial state of knobs @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Fix unclearable example's code @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Add ability to export examples to CodeSandbox @layershifter ([#731](https://github.com/stardust-ui/react/pull/731))
-
-### Features
-- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686] (https://github.com/stardust-ui/react/pull/686))
 
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
@@ -38,8 +41,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `accessibility` and `styles` to the API of `createComponent` @kuzhelov ([#714](https://github.com/stardust-ui/react/pull/714))
 
 ### Fixes
-- Fix doc layout for Menu component @codepretty ([#695] https://github.com/stardust-ui/react/pull/695)
-- Fix focus outline visible only during keyboard navigation @kolaps33 ([#689] https://github.com/stardust-ui/react/pull/689)
+- Fix doc layout for Menu component @codepretty ([#695](https://github.com/stardust-ui/react/pull/695))
+- Fix focus outline visible only during keyboard navigation @kolaps33 ([#689](https://github.com/stardust-ui/react/pull/689))
 - Fix handling changes of `renderer` prop in `Provider` @layershifter ([#702](https://github.com/stardust-ui/react/pull/702))
 - Fix Menu themeing styles @codepretty ([#708](https://github.com/stardust-ui/react/pull/708))
 - Prevent infinite rendering loop start on `Popup` open @kuzhelov ([#705](https://github.com/stardust-ui/react/pull/705))
