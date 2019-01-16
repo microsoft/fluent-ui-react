@@ -200,14 +200,17 @@ export const some = (validators: Function[]) => (
     )
   }
 
-  const errors = _.map(validators, validator => {
-    if (!_.isFunction(validator)) {
-      throw new Error(
-        `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
-      )
-    }
-    return validator(props, propName, componentName, ...args)
-  })
+  const errors = _(validators)
+    .map(validator => {
+      if (!_.isFunction(validator)) {
+        throw new Error(
+          `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
+        )
+      }
+      return validator(props, propName, componentName, ...args)
+    })
+    .compact()
+    .value()
 
   // fail only if all validators failed
   if (errors.length === validators.length) {
