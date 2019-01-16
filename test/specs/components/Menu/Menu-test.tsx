@@ -41,6 +41,20 @@ describe('Menu', () => {
       expect(items[0].onClick).toHaveBeenCalled()
     })
 
+    it('does not call onClick handler for disabled item', () => {
+      const items = getItems()
+      items[0]['disabled'] = true // mark the first item as disabled
+
+      const menuItems = mountWithProvider(<Menu items={items} />).find('MenuItem')
+
+      menuItems
+        .first()
+        .find('a')
+        .first()
+        .simulate('click')
+      expect(items[0].onClick).not.toHaveBeenCalled()
+    })
+
     it('passes arbitrary props', () => {
       const menuItems = mountWithProvider(<Menu items={getItems()} />).find('MenuItem')
 
