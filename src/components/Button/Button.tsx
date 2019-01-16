@@ -126,6 +126,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     variables,
     styles,
     unhandledProps,
+    evaluatedChildren,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -139,7 +140,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {hasChildren && children}
+        {hasChildren && evaluatedChildren}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Slot.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },

@@ -32,6 +32,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import getRtlAwareElement from './getRtlAwareElement'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -44,6 +45,8 @@ export interface RenderResultConfig<P> {
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
+  evaluatedChildren: React.ReactNode
+  evaluatedContent: React.ReactNode
 }
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
@@ -221,6 +224,10 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
+        const { children, content } = props
+        const evaluatedChildren = getRtlAwareElement(children)
+        const evaluatedContent = getRtlAwareElement(content)
+
         const config: RenderResultConfig<P> = {
           ElementType,
           unhandledProps,
@@ -230,6 +237,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           accessibility,
           rtl,
           theme,
+          evaluatedChildren,
+          evaluatedContent,
         }
 
         if (accessibility.focusZone) {
