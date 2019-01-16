@@ -156,7 +156,6 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
     wrapper: { as: 'li' },
-    submenuIndicator: true,
   }
 
   static autoControlledProps = ['menuOpen']
@@ -191,8 +190,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       vertical,
       submenuIndicator,
     } = this.props
-    const showSubmenuIndicatorIcon = menu && typeof submenuIndicator !== 'boolean'
-    const showSubmenuIndicatorUnicode = menu && submenuIndicator === true
+    const submenuIndicatorWithDefault = submenuIndicator === undefined ? true : submenuIndicator
+    const showSubmenuIndicatorIcon = menu && typeof submenuIndicatorWithDefault !== 'boolean'
+    const showSubmenuIndicatorUnicode = menu && submenuIndicatorWithDefault === true
 
     const { menuOpen } = this.state
 
