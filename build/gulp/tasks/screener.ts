@@ -12,7 +12,14 @@ const { paths } = config
 task('screener:runner', cb => {
   // kill the server when done
   sh(`screener-runner --conf ${paths.base('screener.config.js')}`)
-  cb()
+    .then(() => {
+      cb()
+      process.exit(0)
+    })
+    .catch(err => {
+      cb(err)
+      process.exit(1)
+    })
 })
 
 // ----------------------------------------
