@@ -13,10 +13,7 @@ import {
   customPropTypes,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
-import Icon from '../Icon/Icon'
-import UnicodeCharacter from '../UnicodeCharacter/UnicodeCharacter'
-import uc from '../UnicodeCharacter/unicodeCharacters'
-
+import Indicator from '../Indicator/Indicator'
 export interface AccordionTitleProps
   extends UIComponentProps,
     ContentComponentProps,
@@ -35,7 +32,7 @@ export interface AccordionTitleProps
    */
   onClick?: ComponentEventHandler<AccordionTitleProps>
 
-  /** Indicates whether the active indicator should be shown, or defines an icon for it. */
+  /** Shorthand for the active indicator. */
   activeIndicator?: ShorthandValue
 }
 
@@ -57,9 +54,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     activeIndicator: customPropTypes.itemShorthand,
   }
 
-  static defaultProps = {
-    activeIndicator: true,
-  }
+  static defaultProps = {}
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
@@ -67,24 +62,16 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { children, content, activeIndicator, active } = this.props
-    const showActiveIndicatorIcon = typeof activeIndicator !== 'boolean'
-    const showActiveIndicatorUnicode = activeIndicator === true
+    const submenuIndicatorWithDefault = activeIndicator === undefined ? {} : activeIndicator
 
     const contentElement = (
       <>
-        {showActiveIndicatorIcon &&
-          Icon.create(activeIndicator, {
-            defaultProps: {
-              rotate: active ? 0 : -90,
-            },
-          })}
-        {showActiveIndicatorUnicode &&
-          UnicodeCharacter.create(
-            active ? uc.blackDownPointingSmallTriangle : uc.blackRightPointingSmallTriangle,
-            {
-              defaultProps: { styles: styles.activeIndicator },
-            },
-          )}
+        {Indicator.create(submenuIndicatorWithDefault, {
+          defaultProps: {
+            direction: active ? 'bottom' : 'forward',
+            styles: styles.activeIndicator,
+          },
+        })}
         {content}
       </>
     )

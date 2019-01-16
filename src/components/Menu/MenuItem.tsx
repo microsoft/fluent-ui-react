@@ -24,8 +24,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
-import UnicodeCharacter from '../UnicodeCharacter/UnicodeCharacter'
-import uc from '../UnicodeCharacter/unicodeCharacters'
+import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -108,7 +107,7 @@ export interface MenuItemProps
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean
 
-  /** Indicates whether the submenuIndicator should be shown, or defines an icon for it. */
+  /** Shorthand for the submenu indicator. */
   submenuIndicator?: ShorthandValue
 }
 
@@ -190,9 +189,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       vertical,
       submenuIndicator,
     } = this.props
-    const submenuIndicatorWithDefault = submenuIndicator === undefined ? true : submenuIndicator
-    const showSubmenuIndicatorIcon = menu && typeof submenuIndicatorWithDefault !== 'boolean'
-    const showSubmenuIndicatorUnicode = menu && submenuIndicatorWithDefault === true
+    const submenuIndicatorWithDefault = submenuIndicator === undefined ? {} : submenuIndicator
 
     const { menuOpen } = this.state
 
@@ -213,20 +210,12 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
           {content}
-          {showSubmenuIndicatorUnicode &&
-            UnicodeCharacter.create(
-              {
-                hex: vertical
-                  ? uc.blackRightPointingSmallTriangle
-                  : uc.blackDownPointingSmallTriangle,
+          {menu &&
+            Indicator.create(submenuIndicatorWithDefault, {
+              defaultProps: {
+                direction: vertical ? 'forward' : 'bottom',
+                styles: styles.submenuIndicator,
               },
-              {
-                defaultProps: { styles: styles.submenuIndicator },
-              },
-            )}
-          {showSubmenuIndicatorIcon &&
-            Icon.create(submenuIndicator, {
-              defaultProps: { styles: styles.submenuIndicator, rotate: vertical ? -90 : 0 },
             })}
         </ElementType>
       </Ref>

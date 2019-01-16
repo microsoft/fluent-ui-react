@@ -1,16 +1,13 @@
 import * as _ from 'lodash'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
-import { UnicodeCharacterVariables } from './unicodeCharacterVariables'
-import { UnicodeCharacterProps } from '@stardust-ui/react'
+import { IndicatorVariables } from './indicatorVariables'
+import { IndicatorProps } from '@stardust-ui/react'
 
 export default {
   root: ({
     props: { color },
     variables: v,
-  }: ComponentStyleFunctionParam<
-    UnicodeCharacterProps,
-    UnicodeCharacterVariables
-  >): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<IndicatorProps, IndicatorVariables>): ICSSInJSStyle => {
     return {
       ...(color && { color: _.get(v.colors, color) }),
     }
