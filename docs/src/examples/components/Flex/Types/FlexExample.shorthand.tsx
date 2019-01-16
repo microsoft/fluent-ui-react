@@ -1,7 +1,11 @@
 import * as React from 'react'
 import { Flex, Image, Label } from '@stardust-ui/react'
 
-const Title = props => <Label content={props.content} styles={props.styles} />
+const Title = props => {
+  return (
+    <Label style={{ border: '1px dashed grey' }} content={props.content} styles={props.styles} />
+  )
+}
 
 const SquareImage = () => (
   <Image styles={{ width: '8rem', height: '8rem' }} src="//unsplash.it/100" />
@@ -15,34 +19,40 @@ const FlexExampleShorthand = () => (
     <Button content="One" />
   </Flex> */}
 
+    {/*
+    <Flex.Row></Flex.Row>
+    <Flex.Column><Flex.Column/>
+    */}
+
     {/* Lets implement components from Vadim's example */}
     <Flex height="150px">
       <SquareImage />
 
-      <Flex.Item fluid style={{ marginLeft: '20px' }}>
+      <Flex.Item size="*" style={{ marginLeft: '20px' }}>
         <Flex column>
           <Flex space="between">
-            <Flex.Item basis="40%">
+            <Flex.Item size="auto">
               <Title content="stardust-ui/react" />
             </Flex.Item>
 
-            <Flex.Item basis="30%">
-              {({ styles }) => <Title content="stardust-ui/react" styles={styles} />}
+            <Flex.Item>
+              {({ classes, styles }) => <Title content="stardust-ui/react" styles={styles} />}
             </Flex.Item>
 
-            <Label content="some side note" />
+            <Flex.Item>
+              <Label content="some side note" />
+            </Flex.Item>
           </Flex>
 
           <Title content="Description" size="18px" />
 
-          <Flex.Item fluid>
-            <span>
-              A themable React component library. Contribute to stardust-ui/react development by
-              creating an account on GitHub.
-            </span>
+          <Flex.Item size="*">
+            <Flex as="span" vAlign="center" hAlign="end">
+              A themable React component library.
+            </Flex>
           </Flex.Item>
 
-          <Label description content="github.com" />
+          <Label content="github.com" />
         </Flex>
       </Flex.Item>
     </Flex>

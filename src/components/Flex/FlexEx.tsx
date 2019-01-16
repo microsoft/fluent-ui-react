@@ -13,7 +13,6 @@ import cx from 'classnames'
 const withStyles = (element: React.ReactElement<any>, styles, getClasses): any => {
   if (typeof element.type === 'string') {
     const classes = getClasses(styles)
-    // console.warn('CLASSES', classes)
 
     return React.cloneElement(element, {
       className: cx(element.props.className, classes),
@@ -25,10 +24,45 @@ const withStyles = (element: React.ReactElement<any>, styles, getClasses): any =
   })
 }
 
+const toFlexAlignment = shorthandValue => {
+  const trimmedValue = shorthandValue.trim()
+
+  if (trimmedValue === 'start' || trimmedValue === 'end') {
+    return `flex-${trimmedValue}`
+  }
+
+  return trimmedValue
+}
+
+const toFlexItemSizeValues = sizeValue => {
+  const starValueMatch = sizeValue.match(/([0-9\.]+?)?[\*]/)
+
+  if (starValueMatch) {
+    return {
+      flexGrow: starValueMatch[1] || 1,
+      flexShrink: 1,
+      flexBasis: 0,
+    }
+  }
+
+  return { flexBasis: sizeValue }
+}
+
 ///////////////////////
+/**
+ * The rest to support
+ * - support star sizes
+ * - support Row and Column
+ * - support 'gap' with margin technique
+ */
+//////
 
 class Flex extends UIComponent<any, any> {
   static Item: any
+
+  // TODO implement
+  static Row: any
+  static Column: any
 
   // this one is experimental
   static Gap: any
@@ -36,6 +70,7 @@ class Flex extends UIComponent<any, any> {
   renderComponent({ rest: props }) {
     const {
       children,
+      as,
       center,
       row,
       column,
@@ -48,12 +83,15 @@ class Flex extends UIComponent<any, any> {
       items,
       size,
       className,
+
+      // experimental syntax
+      hAlign,
+      vAlign,
+
+      style,
+      styles,
       ...rest
     } = props
-
-    if (props.className) {
-      console.warn(props)
-    }
 
     const stylesFromProps = {
       // ...(fluid && { 'flex': 1 }),
@@ -67,28 +105,45 @@ class Flex extends UIComponent<any, any> {
         alignItems: 'center',
       }),
 
-      ...(justify && { justifyContent: justify }),
+      ...(justify && { justifyContent: toFlexAlignment(justify) }),
       ...(space && { justifyContent: `space-${space}` }),
 
-      ...(align && { alignItems: align }),
+      ...(align && { alignItems: toFlexAlignment(align) }),
 
       ...(wrap && { flexWrap: 'wrap' }),
       ...(size && { flexBasis: size }),
 
+      // EXPERIMENTAL alignment syntax
+      // note - too much copypaste!!
+      ...(hAlign &&
+        (column
+          ? { alignItems: toFlexAlignment(hAlign) }
+          : { justifyContent: toFlexAlignment(hAlign) })),
+      ...(vAlign &&
+        (column
+          ? { justifyContent: toFlexAlignment(vAlign) }
+          : { alignItems: toFlexAlignment(vAlign) })),
+
       ...rest,
     }
+
+    const flexStyles = mergeStyles(stylesFromProps, styles || {})
 
     const flexStyle = {
       display: 'flex',
       background: 'lightgrey',
 
-      ...stylesFromProps,
+      ...flexStyles(),
+
+      ...style,
     }
 
+    const ElementType = as || 'div'
+
     return (
-      <div style={flexStyle as any} {...className && { className }}>
+      <ElementType style={flexStyle as any} {...className && { className }}>
         {(items && items.map(FlexItem.create)) || children}
-      </div>
+      </ElementType>
     )
   }
 }
@@ -99,16 +154,30 @@ class FlexItem extends UIComponent<any> {
   static create: Function
 
   renderComponent({ rest: props, getClasses }) {
-    const { children, align, fluid, shrink, fixed, noShrink, basis, style } = props
+    const {
+      children,
+      align,
+
+      basis,
+      size,
+
+      stretch,
+      noShrink,
+      push,
+      style,
+    } = props
 
     const flexItemStyles = {
-      ...(fluid && { flex: 1 }),
-      ...((fixed || noShrink) && { flexShrink: 0 }),
-      ...(align && { alignSelf: `flex-${align}` }),
+      ...(stretch && { flex: '1 1 auto' }), // obsolete?
 
-      ...(basis && { flexBasis: basis }),
+      ...(noShrink && { flexShrink: 0 }), // or shrink='false'?
 
-      ...(shrink != null && { flexShrink: shrink ? 1 : 0 }),
+      ...(align && { alignSelf: toFlexAlignment(align) }),
+
+      ...(basis && { flexBasis: basis }), // obsolete?
+      ...(size && toFlexItemSizeValues(size)),
+
+      ...(push && { marginLeft: 'auto' }),
 
       ...style,
     }
@@ -119,8 +188,6 @@ class FlexItem extends UIComponent<any> {
         classes: getClasses(flexItemStyles),
       })
     }
-
-    // console.warn(children)
 
     return withStyles(React.Children.only(children), flexItemStyles, getClasses)
   }
