@@ -2,15 +2,15 @@ import * as React from 'react'
 import { Avatar, Flex, Icon, Segment, Text } from '@stardust-ui/react'
 
 const FlexExampleModel = ({ knobs }) => (
-  <Flex center={knobs.center} debug={knobs.debug}>
+  <Flex center>
     <Icon name="home" size="larger" />
-    <Flex gap={knobs.gapStart} debug={knobs.debug}>
+    <Flex fluid gap={knobs.leftAreaGap} debug>
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
     </Flex>
     <Text content="Center" />
-    <Flex gap={knobs.gapEnd} right debug={knobs.debug}>
+    <Flex fluid gap={knobs.rightAreaGap} right debug>
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />
       <Segment color="primary" inverted />

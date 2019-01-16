@@ -17,7 +17,7 @@ const alignmentStyles = props => {
       }
     : {
         justifyContent: props.right
-          ? 'baseline'
+          ? 'flex-end'
           : props.between
           ? 'space-between'
           : props.center
@@ -37,6 +37,7 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
   root: ({ props }): ICSSInJSStyle => {
     const flexAndGridStyles = {
       ...(props.debug && { border: '1px dashed cornflowerblue' }),
+      ...(props.fluid && { flex: 1 }),
     }
 
     if (props.gap) {
@@ -54,7 +55,6 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
       display: 'flex',
       flex: 1,
       ...(props.vertical && !props.gap && { flexDirection: 'column' }),
-      ...(props.fluid && { flex: 1 }),
       ...(props.wrap && { flexWrap: 'wrap' }),
       ...(props.flexSize && { flexBasis: props.flexSize }),
       ...alignmentStyles(props),
