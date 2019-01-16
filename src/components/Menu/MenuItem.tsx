@@ -172,7 +172,17 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+    const {
+      children,
+      content,
+      icon,
+      wrapper,
+      menu,
+      primary,
+      secondary,
+      active,
+      disabled,
+    } = this.props
 
     const { menuOpen } = this.state
 
@@ -182,9 +192,11 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       <Ref innerRef={this.itemRef}>
         <ElementType
           className={classes.root}
+          disabled={disabled}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          {...accessibility.attributes.anchor}
+          {...accessibility.attributes.root}
+          {...accessibility.keyHandlers.root}
           {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
         >
@@ -216,8 +228,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       return Slot.create(wrapper, {
         defaultProps: {
           className: cx('ui-menu__item__wrapper', classes.wrapper),
-          ...accessibility.attributes.root,
-          ...accessibility.keyHandlers.root,
+          ...accessibility.attributes.wrapper,
+          ...accessibility.keyHandlers.wrapper,
         },
         overrideProps: () => ({
           children: (
@@ -278,11 +290,19 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         // the menuItem element was clicked => toggle the open/close and stop propagation
         this.trySetState({ menuOpen: active ? !this.state.menuOpen : true })
         e.stopPropagation()
+        e.preventDefault()
       }
     }
   }
 
   private handleClick = e => {
+    const { disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
     this.performClick(e)
     _.invoke(this.props, 'onClick', e, this.props)
   }

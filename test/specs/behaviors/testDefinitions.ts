@@ -71,6 +71,43 @@ definitions.push({
   },
 })
 
+// Example: Adds attribute 'aria-expanded=true' based on the property 'menuOpen' if the component has 'menu' property to 'anchor' component's part.
+definitions.push({
+  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' based on the property '([a-z A-Z -]+)' if the component has '([a-z -]+)' property to '([a-z -]+)' component's part\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyBasedOn,
+      propertyDependingOn,
+      elementWhereToBeAdded,
+    ] = [...parameters.props]
+    const property = {}
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = true
+    const expectedResult = parameters.behavior(property).attributes[elementWhereToBeAdded][
+      attributeToBeAdded
+    ]
+    expect(expectedResult).toEqual(testHelper.convertToBooleanIfApplicable(attributeExpectedValue))
+
+    // when property depending on is undefined, then there should not be 'aria' attribute added
+    const propertyDependingOnValue = undefined
+    property[propertyDependingOn] = propertyDependingOnValue
+    const expectedResultDependingPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultDependingPropertyUndefined).toEqual(propertyDependingOnValue)
+
+    // when property based on is undefined, then there should 'aria' attribute get false value
+    property[propertyDependingOn] = [{}, {}]
+    property[propertyBasedOn] = undefined
+    const expectedResultBasedOnPropertyUndefined = parameters.behavior(property).attributes[
+      elementWhereToBeAdded
+    ][attributeToBeAdded]
+    expect(expectedResultBasedOnPropertyUndefined).toEqual(false)
+  },
+})
+
 // Example: Adds attribute 'aria-label' based on the property 'aria-label' to 'anchor' component's part.
 definitions.push({
   regexp: /Adds attribute '([a-z -]+)' based on the property '([a-z -]+)' to '([a-z -]+)' component's part\./g,
@@ -90,7 +127,7 @@ definitions.push({
 
 // Adds attribute 'aria-selected=true' to 'anchor' component's part based on the property 'active'. This can be overriden by directly providing 'aria-selected' property to the component.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '[a-z]+'\. This can be overriden by providing '([a-z -]+)' property directly to the component\./g,
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part based on the property '[a-z]+'\. This can be overriden by providing '([a-z-]+)' property directly to the component\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, component, overridingProperty] = [
       ...parameters.props,
@@ -124,20 +161,95 @@ definitions.push({
   },
 })
 
-// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
+function testMethodConditionallyAddAttribute(
+  parameters,
+  component,
+  propertyDependsOn,
+  valueOfProperty,
+  attributeToBeAdded,
+  valueOfAttributeToBeAddedIfTrue,
+  valueOfAttributeToBeAddedOtherwise,
+) {
+  const propertyWithAriaSelected = {}
+  const expectedResultAttributeNotDefined = parameters.behavior(propertyWithAriaSelected)
+    .attributes[component][attributeToBeAdded]
+  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeNotDefined)).toEqual(
+    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedOtherwise),
+  )
+
+  propertyWithAriaSelected[propertyDependsOn] = valueOfProperty
+  const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
+    component
+  ][attributeToBeAdded]
+  expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
+    testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAddedIfTrue),
+  )
+}
+
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
 definitions.push({
-  regexp: /Adds attribute '([a-z A-Z -]+)=([a-z 0-9]+)' to '([a-z -]+)' component's part based on the property '([a-z -]+)'\./g,
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, valueOfAttributeToBeAdded, component, propertyDependsOn] = [
       ...parameters.props,
     ]
-    const propertyWithAriaSelected = {}
-    propertyWithAriaSelected[propertyDependsOn] = true
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithAriaSelected).attributes[
-      component
-    ][attributeToBeAdded]
-    expect(testHelper.convertToBooleanIfApplicable(expectedResultAttributeDefined)).toEqual(
-      testHelper.convertToBooleanIfApplicable(valueOfAttributeToBeAdded),
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      component,
+      propertyDependsOn,
+      true,
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      undefined,
+    )
+  },
+})
+
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Sets the attribute to 'false' otherwise.
+definitions.push({
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is true\. Sets the attribute to '([a-z0-9]+)' otherwise\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      valueOfAttributeToBeAddedOtherwise,
+    ] = [...parameters.props]
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      component,
+      propertyDependsOn,
+      true,
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      valueOfAttributeToBeAddedOtherwise,
+    )
+  },
+})
+
+// Adds attribute 'aria-haspopup=true' to 'root' component's part if 'menu' menu property is set.
+definitions.push({
+  regexp: /Adds attribute '([a-zA-Z-]+)=([a-z0-9]+)' to '([a-z-]+)' component's part if '([a-z -]+)' property is set\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      component,
+      propertyDependsOn,
+      valueOfAttributeToBeAddedOtherwise,
+    ] = [...parameters.props]
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      component,
+      propertyDependsOn,
+      'custom-value',
+      attributeToBeAdded,
+      valueOfAttributeToBeAddedIfTrue,
+      valueOfAttributeToBeAddedOtherwise,
     )
   },
 })
@@ -326,33 +438,59 @@ definitions.push({
   },
 })
 
-// Example: Performs 'nextItem' action on ArrowDown, ArrowRight.
+// Triggers 'click' action with 'Enter' or 'Spacebar' on 'root'.
 definitions.push({
-  regexp: /Performs '([a-z A-Z]+)' action on ([a-z A-Z]+), ([a-z A-Z]+)\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' or '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [action, firstArrow, secondArrow] = [...parameters.props]
+    const [action, firstKey, secondKey, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[0].keyCode
-    const expectedSecondArrowKeyNumber = parameters.behavior(property).keyActions.root[action]
-      .keyCombinations[1].keyCode
-    expect(expectedFirstArrowKeyNumber).toBe(keyboardKey[firstArrow])
-    expect(expectedSecondArrowKeyNumber).toBe(keyboardKey[secondArrow])
+    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[1].keyCode
+    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
+    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
   },
 })
 
-// Performs click action with 'Enter' and 'Spacebar' on 'anchor'.
+// Triggers 'closeAllMenus' action with 'Escape' on 'root'.
 definitions.push({
-  regexp: /Performs click action with '([a-z A-Z]+)' and '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)'\.+/g,
   testMethod: (parameters: TestMethod) => {
-    const [firstKey, secondKey, elementToPerformAction] = [...parameters.props]
+    const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const expectedFirstKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[0].keyCode
-    const expectedSecondKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction]
-      .performClick.keyCombinations[1].keyCode
-    expect(expectedFirstKeyNumber).toBe(keyboardKey[firstKey])
-    expect(expectedSecondKeyNumber).toBe(keyboardKey[secondKey])
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
+definitions.push({
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is horizontal\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const expectedKeyNumber = parameters.behavior(property).keyActions[elementToPerformAction][
+      action
+    ].keyCombinations[0].keyCode
+    expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
+definitions.push({
+  regexp: /Triggers '([a-z A-Z]+)' action with '([a-z A-Z]+)' on '([a-z A-Z]+)', when orientation is vertical\.+/g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, key, elementToPerformAction] = [...parameters.props]
+    const propertyVertical = { vertical: true }
+    const expectedKeyNumberVertical = parameters.behavior(propertyVertical).keyActions[
+      elementToPerformAction
+    ][action].keyCombinations[0].keyCode
+    expect(expectedKeyNumberVertical).toBe(keyboardKey[key])
   },
 })
 

@@ -1,6 +1,6 @@
 {
   "name": "@stardust-ui/react",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "A themable React component library.",
   "jsnext:main": "dist/es/index.js",
   "main": "dist/commonjs/index.js",
@@ -138,6 +138,7 @@
     "prettier": "^1.15.3",
     "react": "^16.0.0",
     "react-ace": "^5.1.2",
+    "react-codesandboxer": "^3.1.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-docgen-typescript": "^1.12.2",
     "react-document-title": "^2.0.3",
