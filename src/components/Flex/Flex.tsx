@@ -33,17 +33,9 @@ class Flex extends UIComponent<Extendable<FlexProps>, {}> {
   static displayName = 'Flex'
 
   static Body = FlexBody
-  static Area: React.FunctionComponent<{ fluid?: boolean; style?: React.CSSProperties }> = p => (
-    <div
-      {...p}
-      style={{
-        ...p.style,
-        flex: p.fluid ? 1 : '0 0 auto',
-      }}
-    />
-  )
 
   static propTypes = {
+    debug: PropTypes.bool,
     vertical: PropTypes.bool,
     flexSize: PropTypes.string,
     fluid: PropTypes.bool,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Divider, Menu, Segment, Text, Flex as Layout, Icon } from '@stardust-ui/react'
+import { Menu, Segment, Text, Flex as Layout, Icon } from '@stardust-ui/react'
 
 const LayoutExampleStockCard = () => {
   const icon = <Icon size="large" name="ellipsis vertical" />
@@ -28,33 +28,8 @@ const LayoutExampleStockCard = () => {
           {menu}
         </Layout>
       </Segment>
-
-      <Divider />
-
-      <Segment style={{ width: 400 }}>
-        <Layout vertical gap="32px">
-          <Layout>
-            <Layout.Area fluid>{header}</Layout.Area>
-            {icon}
-          </Layout>
-
-          <Layout bottom center between>
-            <Layout.Area>{largeText}</Layout.Area>
-
-            {smallText}
-          </Layout>
-
-          {menu}
-        </Layout>
-      </Segment>
     </div>
   )
 }
 
 export default LayoutExampleStockCard
-
-// If we computed grid columns, they'd look like this:
-// div          auto
-// Area fluid   1fr
-// p            auto
-// Area         auto

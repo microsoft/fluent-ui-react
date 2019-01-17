@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Flex, Segment } from '@stardust-ui/react'
 
 const FlexExampleVertical = () => (
-  <Flex vertical styles={{ height: '20rem' }}>
+  <Flex gap="1rem" vertical styles={{ height: '20rem' }}>
     <Segment content="Header" />
     <Flex.Body>
       <Segment content="Main content" />

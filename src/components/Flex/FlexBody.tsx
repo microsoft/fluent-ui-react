@@ -14,7 +14,7 @@ export const FlexBody: React.FunctionComponent<FlexBodyProps> = props => {
 
   // check for multiiple children
   // should it be allowed?
-  if (children.length !== undefined) {
+  if (Array.isArray(children)) {
     return <div style={flexFluid}>{children}</div>
   }
 
@@ -25,4 +25,5 @@ export const FlexBody: React.FunctionComponent<FlexBodyProps> = props => {
   })
 }
 
+FlexBody.displayName = 'FlexBody'
 export default FlexBody

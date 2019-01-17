@@ -1,5 +1,7 @@
+import * as React from 'react'
 import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { FlexProps } from '../../../../components/Flex/Flex'
+import FlexBody from 'src/components/Flex/FlexBody'
 
 const alignmentStyles = props => {
   const isGrid = Boolean(props.gap)
@@ -33,6 +35,15 @@ const alignmentStyles = props => {
       }
 }
 
+const gridTemplateString = props => {
+  const templateString = React.Children.map(props.children, child =>
+    (child.type as any).displayName === FlexBody.displayName ? '1fr' : 'auto',
+  ).join(' ')
+  return {
+    [props.vertical ? 'gridTemplateRows' : 'gridTemplateColumns']: templateString,
+  }
+}
+
 const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
   root: ({ props }): ICSSInJSStyle => {
     const flexAndGridStyles = {
@@ -48,6 +59,7 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
           : { gridAutoFlow: 'column', gridColumnGap: props.gap, gridTemplateRows: '1fr' }),
         ...alignmentStyles(props),
         ...flexAndGridStyles,
+        ...gridTemplateString(props),
       }
     }
 
