@@ -5,7 +5,7 @@ const accordionTitleStyles = {
     padding: '.5rem 0',
     cursor: 'pointer',
   }),
-  activeIndicator: () => ({
+  indicator: () => ({
     userSelect: 'none',
   }),
 }

@@ -330,17 +330,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : !active && underlined && underlinedItem(v.activeBackgroundColor)),
       },
-
-      // '::after': {
-      //   ...(menu &&
-      //     submenuIndicator === true && {
-      //       position: 'relative',
-      //       float: 'right',
-      //       left: pxToRem(10),
-      //       userSelect: 'none',
-      //       content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
-      //     }),
-      // },
     }
   },
 
@@ -351,7 +340,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     left: vertical ? '100%' : '0',
   }),
 
-  submenuIndicator: () => ({
+  indicator: () => ({
     position: 'relative',
     float: 'right',
     left: pxToRem(10),

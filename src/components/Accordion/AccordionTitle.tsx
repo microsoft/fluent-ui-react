@@ -33,7 +33,7 @@ export interface AccordionTitleProps
   onClick?: ComponentEventHandler<AccordionTitleProps>
 
   /** Shorthand for the active indicator. */
-  activeIndicator?: ShorthandValue
+  indicator?: ShorthandValue
 }
 
 /**
@@ -51,7 +51,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
-    activeIndicator: customPropTypes.itemShorthand,
+    indicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {}
@@ -61,15 +61,15 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles }) {
-    const { children, content, activeIndicator, active } = this.props
-    const submenuIndicatorWithDefault = activeIndicator === undefined ? {} : activeIndicator
+    const { children, content, indicator, active } = this.props
+    const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const contentElement = (
       <>
-        {Indicator.create(submenuIndicatorWithDefault, {
+        {Indicator.create(indicatorWithDefaults, {
           defaultProps: {
             direction: active ? 'bottom' : 'forward',
-            styles: styles.activeIndicator,
+            styles: styles.indicator,
           },
         })}
         {content}

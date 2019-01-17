@@ -108,7 +108,7 @@ export interface MenuItemProps
   inSubmenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  submenuIndicator?: ShorthandValue
+  indicator?: ShorthandValue
 }
 
 export interface MenuItemState {
@@ -148,7 +148,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
-    submenuIndicator: customPropTypes.itemShorthand,
+    indicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -187,9 +187,9 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       secondary,
       active,
       vertical,
-      submenuIndicator,
+      indicator,
     } = this.props
-    const submenuIndicatorWithDefault = submenuIndicator === undefined ? {} : submenuIndicator
+    const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const { menuOpen } = this.state
 
@@ -211,10 +211,10 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             })}
           {content}
           {menu &&
-            Indicator.create(submenuIndicatorWithDefault, {
+            Indicator.create(indicatorWithDefaults, {
               defaultProps: {
                 direction: vertical ? 'forward' : 'bottom',
-                styles: styles.submenuIndicator,
+                styles: styles.indicator,
               },
             })}
         </ElementType>
@@ -231,7 +231,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               secondary,
               styles: styles.menu,
               submenu: true,
-              submenuIndicator,
+              indicator,
             },
           })}
         </Ref>
