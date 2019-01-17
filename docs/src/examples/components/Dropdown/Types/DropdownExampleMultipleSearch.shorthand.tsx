@@ -19,7 +19,6 @@ const DropdownExample = () => (
     search
     getA11ySelectionMessage={getA11ySelectionMessage}
     getA11yStatusMessage={getA11yStatusMessage}
-    messageNoResults="We couldn't find any matches."
     placeholder="Start typing a name"
     items={inputItems}
   />

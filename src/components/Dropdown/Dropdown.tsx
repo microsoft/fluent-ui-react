@@ -68,7 +68,8 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
-  indicator?: ShorthandValue
+  /** Whether a toggle button (that shows/hides items list) or a loader should be rendered. */
+  indicator?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
@@ -78,6 +79,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   itemToString?: (item: ShorthandValue) => string
 
+  /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
   /** A dropdown can perform a multiple selection. */
@@ -157,7 +159,7 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
-    indicator: customPropTypes.itemShorthand,
+    indicator: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -178,7 +180,7 @@ export default class Dropdown extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
-    indicator: '',
+    indicator: true,
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -277,7 +279,8 @@ export default class Dropdown extends AutoControlledComponent<
                         variables,
                       )
                     : this.renderTriggerButton(styles, getToggleButtonProps)}
-                  {DropdownIndicator.create(indicator, {
+                  /* TODO: Make `indicator` a fully working shorthand. */
+                  {DropdownIndicator.create(indicator && '', {
                     defaultProps: {
                       ...getToggleButtonProps(),
                       fluid,

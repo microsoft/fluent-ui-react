@@ -10,8 +10,18 @@ export interface DropdownIndicatorProps extends UIComponentProps<DropdownIndicat
   /** A dropdown can take the width of its container. */
   fluid?: boolean
 
+  /** A dropdown can show that it is currently loading data. */
   loading: boolean
+
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onClick?: (e: React.SyntheticEvent, props: DropdownIndicatorProps) => void
+
+  /** Controls whether or not the dropdown menu is displayed. */
   open: boolean
 }
 
