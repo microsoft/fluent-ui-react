@@ -2,13 +2,13 @@ import * as React from 'react'
 import { Provider, Text, Icon } from '@stardust-ui/react'
 import { ShorthandValue } from 'utils'
 
-export interface ILogoProps {
+export interface LogoProps {
   companyName?: string
   icon?: ShorthandValue
   style?: React.CSSProperties
 }
 
-class MSTeamsLogo extends React.Component<ILogoProps, any> {
+class MSTeamsLogo extends React.Component<LogoProps, any> {
   render() {
     const { companyName, icon, style } = this.props
     return (
@@ -19,7 +19,7 @@ class MSTeamsLogo extends React.Component<ILogoProps, any> {
               {Icon.create(icon, {
                 defaultProps: {
                   variables: { color: siteVariables.brand },
-                  size: 'large',
+                  size: 'largest',
                   xSpacing: 'after',
                   styles: { verticalAlign: 'middle' },
                 },

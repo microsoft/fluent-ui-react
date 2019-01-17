@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Divider, RadioGroup, Input, Text } from '@stardust-ui/react'
 
 class RadioGroupVerticalExample extends React.Component {
@@ -34,7 +34,8 @@ class RadioGroupVerticalExample extends React.Component {
         key: 'Custom',
         label: (
           <Text>
-            Choose your own <Input inline placeholder="flavour" />
+            Choose your own{' '}
+            <Input input={{ tabIndex: this.state.inputTabIndex }} inline placeholder="flavour" />
           </Text>
         ),
         value: 'custom',

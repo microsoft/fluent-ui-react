@@ -67,7 +67,6 @@ const config = {
     __PATH_SEP__: JSON.stringify(path.sep),
   },
   compiler_hash_type: __PROD__ ? 'chunkhash' : 'hash',
-  compiler_fail_on_warning: __PROD__,
   compiler_output_path: paths.base(envConfig.dir_docs_dist),
   compiler_public_path: __BASENAME__,
   compiler_stats: {

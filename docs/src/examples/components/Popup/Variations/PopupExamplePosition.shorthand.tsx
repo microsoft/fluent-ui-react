@@ -1,39 +1,25 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Grid, Popup } from '@stardust-ui/react'
 
-class PopupWithButton extends React.Component<any, any> {
-  state = { popupOpen: false }
+const PopupWithButton = props => {
+  const { position, align, icon, padding } = props
 
-  togglePopupState = () => {
-    this.setState(prev => ({ popupOpen: !prev.popupOpen }))
-  }
-
-  render = () => {
-    const { position, align, icon, padding } = this.props
-
-    return (
-      <Popup
-        open={this.state.popupOpen}
-        align={align}
-        position={position}
-        trigger={
-          <Button
-            onClick={() => this.togglePopupState()}
-            onMouseLeave={() => this.setState({ popupOpen: false })}
-            icon={icon}
-            styles={{ padding, height: '38px', minWidth: '64px' }}
-          />
-        }
-        content={{
-          content: (
-            <p>
-              The popup is rendered {position} the trigger<br />aligned to the {align}.
-            </p>
-          ),
-        }}
-      />
-    )
-  }
+  return (
+    <Popup
+      align={align}
+      position={position}
+      trigger={<Button icon={icon} styles={{ padding, height: '38px', minWidth: '64px' }} />}
+      content={{
+        content: (
+          <p>
+            The popup is rendered {position} the trigger
+            <br />
+            aligned to the {align}.
+          </p>
+        ),
+      }}
+    />
+  )
 }
 
 const triggers = [

@@ -5,16 +5,20 @@
 //  OR
 //  - 'yarn test' which has creating json file predefined in "pretest" step
 import {
+  attachmentBehavior,
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
-  buttonGroupBehavior,
   iconBehavior,
   imageBehavior,
   inputBehavior,
+  loaderBehavior,
   menuBehavior,
   menuItemBehavior,
+  submenuBehavior,
   popupBehavior,
+  popupFocusTrapBehavior,
+  dialogBehavior,
   radioGroupBehavior,
   radioGroupItemBehavior,
   selectableListBehavior,
@@ -23,24 +27,31 @@ import {
   tabListBehavior,
   toggleButtonBehavior,
   toolbarBehavior,
+  toolbarButtonBehavior,
+  treeTitleBehavior,
+  gridBehavior,
 } from 'src/lib/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
+
 const behaviorMenuItems = require('docs/src/behaviorMenu')
 
 const testHelper = new TestHelper()
 testHelper.addTests(definitions)
 
+testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
-testHelper.addBehavior('buttonGroupBehavior', buttonGroupBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
+testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
+testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
+testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)
 testHelper.addBehavior('radioGroupItemBehavior', radioGroupItemBehavior)
 testHelper.addBehavior('selectableListBehavior', selectableListBehavior)
@@ -49,5 +60,9 @@ testHelper.addBehavior('tabBehavior', tabBehavior)
 testHelper.addBehavior('tabListBehavior', tabListBehavior)
 testHelper.addBehavior('toolbarBehavior', toolbarBehavior)
 testHelper.addBehavior('toggleButtonBehavior', toggleButtonBehavior)
+testHelper.addBehavior('toolbarButtonBehavior', toolbarButtonBehavior)
+testHelper.addBehavior('treeTitleBehavior', treeTitleBehavior)
+testHelper.addBehavior('gridBehavior', gridBehavior)
+testHelper.addBehavior('dialogBehavior', dialogBehavior)
 
 testHelper.run(behaviorMenuItems)

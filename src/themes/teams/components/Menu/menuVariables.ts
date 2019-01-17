@@ -1,45 +1,52 @@
-import { pxToRem } from '../../../../lib'
+export interface MenuVariables {
+  color: string
 
-export interface IMenuVariables {
-  defaultColor: string
-  defaultBackgroundColor: string
+  activeColor: string
+  activeBackgroundColor: string
+  focusedBackgroundColor: string
+  borderColor: string
 
-  defaultActiveColor: string
-  defaultActiveBackgroundColor: string
-  defaultBorderColor: string
+  iconOnlyActiveColor: string
+  primaryActiveColor: string
+  primaryActiveBackgroundColor: string
+  primaryActiveBorderColor: string
 
-  typePrimaryActiveColor: string
-  typePrimaryActiveBackgroundColor: string
-  typePrimaryActiveBorderColor: string
+  primaryFocusedColor: string
+  primaryFocusedBackgroundColor: string
 
-  typePrimaryBorderColor: string
-  typePrimaryHoverBorderColor: string
-  typePrimaryUnderlinedBorderColor: string
+  primaryBorderColor: string
+  primaryHoverBorderColor: string
+  primaryUnderlinedBorderColor: string
 
-  iconsMenuItemSize?: string
-  circularRadius: string
+  disabledColor: string
+
   lineHeightBase: string
 }
 
-export default (siteVars: any): IMenuVariables => {
+export default (siteVars: any): MenuVariables => {
   return {
-    defaultColor: siteVars.gray02,
-    defaultBackgroundColor: 'transparent',
+    color: siteVars.gray02,
 
-    defaultActiveColor: siteVars.black,
-    defaultActiveBackgroundColor: siteVars.gray10,
-    defaultBorderColor: siteVars.gray08,
+    iconOnlyActiveColor: siteVars.brand06,
 
-    typePrimaryActiveColor: siteVars.white,
-    typePrimaryActiveBackgroundColor: siteVars.brand08,
-    typePrimaryActiveBorderColor: siteVars.brand,
+    activeColor: siteVars.black,
+    activeBackgroundColor: siteVars.gray10,
+    focusedBackgroundColor: siteVars.gray14,
+    borderColor: siteVars.gray08,
 
-    typePrimaryBorderColor: siteVars.brand08,
-    typePrimaryHoverBorderColor: siteVars.gray08,
-    typePrimaryUnderlinedBorderColor: siteVars.gray08,
+    primaryActiveColor: siteVars.white,
+    primaryActiveBackgroundColor: siteVars.brand08,
+    primaryActiveBorderColor: siteVars.brand,
 
-    iconsMenuItemSize: pxToRem(32),
-    circularRadius: pxToRem(999),
+    primaryFocusedColor: siteVars.white,
+    primaryFocusedBackgroundColor: siteVars.brand12,
+
+    primaryBorderColor: siteVars.brand08,
+    primaryHoverBorderColor: siteVars.gray08,
+    primaryUnderlinedBorderColor: siteVars.gray08,
+
+    disabledColor: siteVars.gray06,
+
     lineHeightBase: siteVars.lineHeightBase,
   }
 }

@@ -1,2 +1,1 @@
-export { examplePathPatterns } from './SourceCodeManager'
-export { default, IComponentExampleProps } from './ComponentExample'
+export { default, ComponentExampleProps } from './ComponentExample'

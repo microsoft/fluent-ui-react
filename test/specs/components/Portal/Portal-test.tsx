@@ -1,91 +1,91 @@
 import * as React from 'react'
-import _ from 'lodash'
 import { mount } from 'enzyme'
-import { domEvent } from '../../../utils'
+import { domEvent, nextFrame, withProvider } from 'test/utils'
 
-import Portal, { IPortalProps } from 'src/components/Portal/Portal'
+import Portal, { PortalProps } from 'src/components/Portal/Portal'
 import PortalInner from 'src/components/Portal/PortalInner'
 
 describe('Portal', () => {
-  let wrapper: any
+  const mountPortal = (props: PortalProps = {}, options?) => {
+    const TestPortal = props => withProvider(<Portal content={<p />} {...props} />)
 
-  const mountPortal = (props: IPortalProps = {}, options?) =>
-    (wrapper = mount(<Portal content={<p />} {...props} />, options))
+    const wrapperWrapper = mount(<TestPortal {...props} />, options)
+    const wrapper = wrapperWrapper.find(Portal)
 
-  const testPortalInnerIsOpen = (visible: boolean) => {
-    expect(wrapper.find(PortalInner).length).toBe(visible ? 1 : 0)
+    return {
+      wrapper: wrapperWrapper,
+      portal: wrapper,
+    }
   }
 
-  const testPortalState = (content: React.ReactNode, state: 'open' | 'closed') => {
-    const portalIsOpen = state === 'open'
-
-    testPortalInnerIsOpen(portalIsOpen)
-    expect(wrapper.contains(content)).toBe(portalIsOpen)
+  const testPortalInnerIsOpen = (rootWrapper, visible: boolean) => {
+    expect(rootWrapper.find(PortalInner).length).toBe(visible ? 1 : 0)
   }
 
-  describe('open', () => {
-    it('opens the portal when toggled from false to true', () => {
-      const content = <p />
-      mountPortal({ content })
-      testPortalState(content, 'closed')
+  const testPortalOpenState = (rootWrapper, content: React.ReactNode, isOpen: boolean) => {
+    const portalIsOpen = isOpen
 
-      wrapper.setProps({ open: true })
-      testPortalState(content, 'open')
-    })
+    testPortalInnerIsOpen(rootWrapper, portalIsOpen)
+    expect(rootWrapper.contains(content)).toBe(portalIsOpen)
+  }
 
-    it('closes the portal when toggled from true to false ', () => {
-      const content = <p />
-      mountPortal({ content, open: true })
-      testPortalState(content, 'open')
+  it('translates open prop to state', () => {
+    const content = <p />
+    const { wrapper } = mountPortal({ content })
+    testPortalOpenState(wrapper, content, false)
 
-      wrapper.setProps({ open: false })
-      testPortalState(content, 'closed')
-    })
+    const { wrapper: openPortalWrapper } = mountPortal({ content, open: true })
+    testPortalOpenState(openPortalWrapper, content, true)
   })
 
   describe('click', () => {
     it('opens the portal on trigger click when true', () => {
-      const spy = jest.fn()
-      mountPortal({ trigger: <button onClick={spy}> button </button> })
-      testPortalInnerIsOpen(false)
+      const { wrapper } = mountPortal({ trigger: <button> button </button> })
+      testPortalInnerIsOpen(wrapper, false)
 
       wrapper.find('button').simulate('click')
-      testPortalInnerIsOpen(true)
+      testPortalInnerIsOpen(wrapper, true)
     })
 
     it('closes the portal on click when set', () => {
-      mountPortal({ trigger: <button />, defaultOpen: true })
-      testPortalInnerIsOpen(true)
+      const { wrapper } = mountPortal({ trigger: <button />, defaultOpen: true })
+      testPortalInnerIsOpen(wrapper, true)
 
       wrapper.find('button').simulate('click')
-      testPortalInnerIsOpen(false)
+      testPortalInnerIsOpen(wrapper, false)
     })
   })
 
   describe('document click', () => {
-    it('closes the portal', () => {
-      mountPortal({ defaultOpen: true })
-      testPortalInnerIsOpen(true)
+    it('closes the portal', async () => {
+      const { wrapper } = mountPortal({ defaultOpen: true })
+      testPortalInnerIsOpen(wrapper, true)
+
+      await nextFrame()
 
       domEvent.click(document)
       wrapper.update()
-      testPortalInnerIsOpen(false)
+      testPortalInnerIsOpen(wrapper, false)
     })
 
     it('does not close on click inside', () => {
-      mountPortal({ content: <p id="inner" />, defaultOpen: true })
-      testPortalInnerIsOpen(true)
+      const { wrapper } = mountPortal({
+        content: <p id="inner" />,
+        defaultOpen: true,
+      })
+
+      testPortalInnerIsOpen(wrapper, true)
 
       domEvent.click('#inner')
       wrapper.update()
-      testPortalInnerIsOpen(true)
+      testPortalInnerIsOpen(wrapper, true)
     })
   })
 
   describe('onMount', () => {
     it('called when portal opens', () => {
-      const props = { open: false, onMount: jest.fn() }
-      mountPortal(props)
+      const props = { open: true, onMount: jest.fn() }
+      const { wrapper } = mountPortal(props)
       wrapper.setProps({ open: true })
 
       expect(props.onMount).toHaveBeenCalledTimes(1)
@@ -95,7 +95,7 @@ describe('Portal', () => {
   describe('onUnmount', () => {
     it('is called when portal closes', () => {
       const onUnmount = jest.fn()
-      mountPortal({ open: true, onUnmount })
+      const { wrapper } = mountPortal({ open: true, onUnmount })
       wrapper.setProps({ open: false })
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
@@ -103,7 +103,7 @@ describe('Portal', () => {
 
     it('is called only once when portal closes and then is unmounted', () => {
       const onUnmount = jest.fn()
-      mountPortal({ open: true, onUnmount })
+      const { wrapper } = mountPortal({ open: true, onUnmount })
       wrapper.setProps({ open: false })
       wrapper.unmount()
 
@@ -112,7 +112,7 @@ describe('Portal', () => {
 
     it('is called only once when directly unmounting', () => {
       const onUnmount = jest.fn()
-      mountPortal({ open: true, onUnmount })
+      const { wrapper } = mountPortal({ open: true, onUnmount })
       wrapper.unmount()
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
@@ -132,6 +132,10 @@ describe('Portal', () => {
       expect(triggerRef).toHaveBeenCalledTimes(1)
       expect(triggerRef).toHaveBeenCalledWith(triggerElem)
 
+      const { wrapper } = mountPortal(
+        { trigger: <button id="trigger" />, triggerRef },
+        { attachTo: mountNode },
+      )
       wrapper.detach()
       document.body.removeChild(mountNode)
     })
@@ -139,15 +143,15 @@ describe('Portal', () => {
 
   describe('trigger', () => {
     it('renders null when not set', () => {
-      mountPortal()
+      const { portal } = mountPortal()
 
-      expect(wrapper.html()).toEqual(null)
+      expect(portal.html()).toEqual(null)
     })
 
     it('renders the trigger when set', () => {
       const text = 'open by click on me'
       const trigger = <button>{text}</button>
-      mountPortal({ trigger })
+      const { wrapper } = mountPortal({ trigger })
 
       expect(wrapper.find('button').length).toBe(1)
       expect(wrapper.text()).toEqual(text)

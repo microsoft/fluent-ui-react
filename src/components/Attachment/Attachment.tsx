@@ -1,36 +1,70 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
-import { UIComponent, customPropTypes, createShorthandFactory, createHTMLDivision } from '../../lib'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import * as _ from 'lodash'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import {
+  UIComponent,
+  customPropTypes,
+  createShorthandFactory,
+  commonPropTypes,
+  isFromKeyboard,
+} from '../../lib'
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
+import Slot from '../Slot/Slot'
+import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { attachmentBehavior } from '../../lib/accessibility'
 
-export type AttachmentProps = {
+export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default attachmentBehavior
+   */
+  accessibility?: Accessibility
+
+  /** Button shorthand for the action slot. */
   action?: ShorthandValue
+
+  /** An Attachment can be styled to indicate possible user interaction. */
   actionable?: boolean
-  as?: any
-  children?: React.ReactChildren
+
+  /** A string describing the attachment. */
   description?: ShorthandValue
+
+  /** The name of the attachment. */
   header?: ShorthandValue
+
+  /** Shorthand for the icon. */
   icon?: ShorthandValue
+
+  /** Value indicating percent complete. */
   progress?: string | number
-  renderAction?: ShorthandRenderFunction
-  renderDescription?: ShorthandRenderFunction
-  renderHeader?: ShorthandRenderFunction
-  renderIcon?: ShorthandRenderFunction
-  renderProgress?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /**
+   * Called after user's click.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<AttachmentProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<AttachmentProps>
+}
+
+export interface AttachmentState {
+  isFromKeyboard: boolean
 }
 
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
+class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -38,118 +72,53 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
   static displayName = 'Attachment'
 
   static propTypes = {
-    /** Button shorthand for the action slot. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
+    accessibility: PropTypes.func,
     action: customPropTypes.itemShorthand,
-
-    /** An Attachment can be styled to indicate possible user interaction. */
     actionable: PropTypes.bool,
-
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** Define your own children.
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** A string describing the attachment. */
     description: customPropTypes.itemShorthand,
-
-    /** The name of the attachment. */
     header: customPropTypes.itemShorthand,
-
-    /** Shorthand for the icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** Value indicating percent complete. */
     progress: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /**
-     * A custom render function the action slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderAction: PropTypes.func,
-
-    /**
-     * A custom render function the description slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderDescription: PropTypes.func,
-
-    /**
-     * A custom render function the header slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderHeader: PropTypes.func,
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderIcon: PropTypes.func,
-
-    /**
-     * A custom render function the progress slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderProgress: PropTypes.func,
-
-    /** Custom styles to be applied to the component. */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Custom variables to be applied to the component. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const {
-      header,
-      description,
-      icon,
-      action,
-      progress,
-      renderIcon,
-      renderHeader,
-      renderDescription,
-      renderAction,
-      renderProgress,
-    } = this.props
+  static defaultProps = {
+    accessibility: attachmentBehavior as Accessibility,
+  }
+
+  public state = {
+    isFromKeyboard: false,
+  }
+
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
+    const { header, description, icon, action, progress } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        className={classes.root}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+        {...accessibility.attributes.root}
+        {...accessibility.keyHandlers.root}
+        {...unhandledProps}
+      >
         {icon && (
           <div className={classes.icon}>
             {Icon.create(icon, {
-              defaultProps: { size: 'big' },
-              render: renderIcon,
+              defaultProps: { size: 'larger' },
             })}
           </div>
         )}
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
-              defaultProps: { className: classes.header },
-              render: renderHeader,
+              defaultProps: { styles: styles.header },
             })}
 
             {Text.create(description, {
-              defaultProps: { className: classes.description },
-              render: renderDescription,
+              defaultProps: { styles: styles.description },
             })}
           </div>
         )}
@@ -157,20 +126,44 @@ class Attachment extends UIComponent<Extendable<AttachmentProps>, any> {
           <div className={classes.action}>
             {Button.create(action, {
               defaultProps: { iconOnly: true, text: true },
-              render: renderAction,
             })}
           </div>
         )}
         {!_.isNil(progress) &&
-          createHTMLDivision(progress, {
+          Slot.create('', {
             defaultProps: { className: classes.progress },
-            render: renderProgress,
           })}
       </ElementType>
     )
   }
+
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => this.performClick(event),
+  }
+
+  private performClick = e => {
+    e.stopPropagation()
+    this.handleClick(e)
+  }
+
+  private handleClick = (e: React.SyntheticEvent) => {
+    const { disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
 }
 
-Attachment.create = createShorthandFactory(Attachment, header => ({ header }))
+Attachment.create = createShorthandFactory(Attachment, 'header')
 
 export default Attachment

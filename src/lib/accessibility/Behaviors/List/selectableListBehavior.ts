@@ -1,12 +1,13 @@
 import * as keyboardKey from 'keyboard-key'
-import { Accessibility } from '../../interfaces'
+import { Accessibility } from '../../types'
 
 /**
  * @description
- * Adds role='listbox'.
  * The listbox role is used to identify an element that creates a list from which a user may select one or more items.
+ *
+ * @specification
+ * Adds role='listbox'.
  */
-
 const selectableListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {

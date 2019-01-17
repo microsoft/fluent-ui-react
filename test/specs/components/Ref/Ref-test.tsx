@@ -1,20 +1,10 @@
+import { shallow } from 'enzyme'
 import * as React from 'react'
-import { shallow, mount } from 'enzyme'
 
-import { CompositeClass, CompositeFunction, DOMClass, DOMFunction } from './fixtures'
-import Ref from 'src/components/Ref'
-
-const testInnerRef = Component => {
-  const innerRef = jest.fn()
-  const node = mount(
-    <Ref innerRef={innerRef}>
-      <Component />
-    </Ref>,
-  ).getDOMNode()
-
-  expect(innerRef).toHaveBeenCalledTimes(1)
-  expect(innerRef).toHaveBeenCalledWith(node)
-}
+import Ref from 'src/components/Ref/Ref'
+import RefFindNode from 'src/components/Ref/RefFindNode'
+import RefForward from 'src/components/Ref/RefForward'
+import { CompositeClass, ForwardedRef } from './fixtures'
 
 describe('Ref', () => {
   describe('children', () => {
@@ -24,23 +14,27 @@ describe('Ref', () => {
 
       expect(component.contains(child)).toBeTruthy()
     })
-  })
 
-  describe('innerRef', () => {
-    it('returns node from a functional component with DOM node', () => {
-      testInnerRef(DOMFunction)
+    it('renders RefFindNode when a component is passed', () => {
+      const innerRef = React.createRef()
+      const wrapper = shallow(
+        <Ref innerRef={innerRef}>
+          <CompositeClass />
+        </Ref>,
+      )
+
+      expect(wrapper.is(RefFindNode)).toBe(true)
     })
 
-    it('returns node from a functional component', () => {
-      testInnerRef(CompositeFunction)
-    })
+    it('renders RefForward when a component wrapper with forwardRef() is passed', () => {
+      const innerRef = React.createRef()
+      const wrapper = shallow(
+        <Ref innerRef={innerRef}>
+          <ForwardedRef />
+        </Ref>,
+      )
 
-    it('returns node from a class component with DOM node', () => {
-      testInnerRef(DOMClass)
-    })
-
-    it('returns node from a class component', () => {
-      testInnerRef(CompositeClass)
+      expect(wrapper.is(RefForward)).toBe(true)
     })
   })
 })

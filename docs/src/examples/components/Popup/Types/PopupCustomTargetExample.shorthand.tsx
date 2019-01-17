@@ -1,5 +1,5 @@
-import React from 'react'
-import { Popup, Divider, Icon, Text, Grid } from '@stardust-ui/react'
+import * as React from 'react'
+import { Popup, Button, Divider, Text, Grid } from '@stardust-ui/react'
 import { findDOMNode } from 'react-dom'
 
 class PopupExample extends React.Component {
@@ -16,7 +16,7 @@ class PopupExample extends React.Component {
         {/* CUSTOM DOM ELEMENT is used as target for Popup */}
         <Popup
           target={this.state.popupTarget}
-          trigger={<Icon name="question" circular bordered styles={{ cursor: 'pointer' }} />}
+          trigger={<Button icon="question" circular styles={{ cursor: 'pointer' }} />}
           content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
           position="below"
         />

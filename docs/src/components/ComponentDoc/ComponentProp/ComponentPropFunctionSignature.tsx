@@ -1,9 +1,18 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { neverUpdate } from 'docs/src/hoc'
-import ComponentPropExtra from './ComponentPropExtra'
+import ComponentPropExtra, { ComponentPropExtraProps } from './ComponentPropExtra'
+
+interface ComponentPropFunctionProps extends ComponentPropExtraProps {
+  name?: string
+  tags?: {
+    name?: string
+    description?: string
+    title?: string
+  }[]
+}
 
 const descriptionStyle = {
   flex: '5 5 0',
@@ -20,9 +29,9 @@ const rowStyle: any = {
   flexDirection: 'row',
 }
 
-const getTagType = tag => (tag.type.type === 'AllLiteral' ? 'any' : tag.type.name)
+const getTagType = tag => (tag.type ? (tag.type.type === 'AllLiteral' ? 'any' : tag.type.name) : '')
 
-const ComponentPropFunctionSignature: any = ({ name, tags }) => {
+const ComponentPropFunctionSignature: React.SFC<ComponentPropFunctionProps> = ({ name, tags }) => {
   const params = _.filter(tags, { title: 'param' })
   const returns = _.find(tags, { title: 'returns' })
 

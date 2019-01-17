@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Icon, Text } from '@stardust-ui/react'
 
 const ButtonExampleText = () => (
@@ -7,10 +7,10 @@ const ButtonExampleText = () => (
       <Icon name="book" xSpacing="after" />
       <Text content="Default" />
     </Button>
-    <Button text type="primary">
+    <Button text primary>
       Primary
     </Button>
-    <Button text type="secondary">
+    <Button text secondary>
       Secondary
     </Button>
     <Button text circular>

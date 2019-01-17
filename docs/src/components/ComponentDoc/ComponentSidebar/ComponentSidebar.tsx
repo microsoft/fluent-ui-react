@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Accordion, Menu, Sticky } from 'semantic-ui-react'
 
@@ -13,27 +12,29 @@ const sidebarStyle = {
   paddingTop: '0.1em',
 }
 
-class ComponentSidebar extends React.Component<any, any> {
-  static propTypes = {
-    activePath: PropTypes.string,
-    displayName: PropTypes.string,
-    examplesRef: PropTypes.object,
-    onItemClick: PropTypes.func,
-  }
+type ComponentSidebarProps = {
+  activePath: string
+  displayName: string
+  examplesRef: HTMLElement
+  onItemClick: (e: React.SyntheticEvent, { examplePath: string }) => void
+}
 
+class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
   state: any = {}
 
   componentDidMount() {
-    this.fetchSections()
+    this.fetchSections(this.props.displayName)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.fetchSections(nextProps)
+  componentDidUpdate(prevProps: ComponentSidebarProps) {
+    if (this.props.displayName !== prevProps.displayName) {
+      this.fetchSections(this.props.displayName)
+    }
   }
 
-  fetchSections = ({ displayName } = this.props) => {
+  fetchSections = (displayName: string) => {
     import(`docs/src/exampleMenus/${displayName}.examples.json`).then(sections => {
-      this.setState({ sections })
+      this.setState({ sections: sections.default })
     })
   }
 
@@ -44,11 +45,11 @@ class ComponentSidebar extends React.Component<any, any> {
     return (
       <Sticky context={examplesRef} offset={15}>
         <Menu as={Accordion} fluid style={sidebarStyle} text vertical>
-          {_.map(sections, ({ examples, sectionName }) => (
+          {_.map(sections, ({ examples, sectionName }, index) => (
             <ComponentSidebarSection
               activePath={activePath}
               examples={examples}
-              key={sectionName}
+              key={`${sectionName}-${index}`}
               sectionName={sectionName}
               onItemClick={onItemClick}
             />

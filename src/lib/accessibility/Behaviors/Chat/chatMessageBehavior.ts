@@ -1,11 +1,10 @@
-import { Accessibility, FocusZoneMode } from '../../interfaces'
+import { Accessibility, FocusZoneMode } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
 import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
- * Adds role 'presentation' until we come up with final roles for chat.
  * Sets the message to be a focusable element.
  * Adds a vertical circular focus zone navigation where a user navigates using a Tab key.
  * Adds a key action which prevents up and down arrow keys from navigating in FocusZone, we only want a Tab key to navigate.
@@ -13,7 +12,6 @@ import { FocusZoneTabbableElements, FocusZoneDirection } from '../../FocusZone'
 const chatMessageBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
-      role: 'presentation',
       [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },

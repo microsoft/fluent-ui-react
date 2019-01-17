@@ -1,15 +1,13 @@
 import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
 
-import { pxToRem } from 'src/lib'
-import { IChat } from './services'
-import { Sizes } from 'src/lib/enums'
+import { ChatData } from './services'
 
-export interface IChatPaneHeaderProps {
-  chat?: IChat
+export interface ChatPaneHeaderProps {
+  chat?: ChatData
 }
 
-class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
+class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
   public render() {
     return (
       <Layout
@@ -26,7 +24,6 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
       <Segment
         content={
           <Icon
-            size="big"
             name="team-create"
             variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
           />
@@ -51,7 +48,7 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
         start={<Avatar name={chat.title} />}
         main={
           <Text
-            size={Sizes.Large}
+            size="large"
             content={chat.title}
             styles={{ marginLeft: '12px', fontWeight: 600 }}
           />
@@ -72,24 +69,23 @@ class ChatPaneHeader extends React.PureComponent<IChatPaneHeaderProps> {
             key: `${index}-${name}`,
             icon: {
               name,
-              size: 'big',
               variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
             },
-            type: 'primary',
+            primary: true,
           }))}
           styles={{ marginRight: '20px' }}
         />
-        {['user plus', 'ellipsis horizontal'].map((name, index) => (
+        {['team-create', 'more'].map((name, index) => (
           <Icon
             key={`${index}-${name}`}
             name={name}
             tabIndex={0}
             styles={{
               fontWeight: 100,
-              ...(!index && { marginRight: '1.6rem' }),
-              marginTop: pxToRem(8),
+              margin: 'auto',
+              ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04 })}
+            variables={siteVars => ({ color: siteVars.gray04, outline: true })}
           />
         ))}
       </div>

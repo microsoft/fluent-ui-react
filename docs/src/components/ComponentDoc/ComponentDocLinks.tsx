@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { List } from 'semantic-ui-react'
-
-import { repoURL } from '../../utils'
+import { constants } from 'src/lib'
 
 const linkListStyle = {
   background: '#f7f7f7',
@@ -28,7 +27,7 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
           content={
             <code>
               <a
-                href={`${repoURL}/blob/master/${repoPath}`}
+                href={`${constants.repoURL}/blob/master/${repoPath}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

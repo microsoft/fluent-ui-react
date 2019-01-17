@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Avatar, Grid, Status, Text } from '@stardust-ui/react'
 
 const defaultAvatar = (
@@ -26,7 +26,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
         icon: 'check',
         title: 'Available',
       }}
-      variables={{ statusBorderColor: 'black' }}
+      variables={{ statusBorderColor: 'orange' }}
     />
     <Text content="Status can have different size for the same avatar size" />
     {defaultAvatar}

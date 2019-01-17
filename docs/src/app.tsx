@@ -2,20 +2,15 @@ import * as React from 'react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from '../../src/lib'
-import { semanticCssOverrides } from './Style'
-import { ThemeContext } from './context/theme-context'
+import { ThemeContext } from './context/ThemeContext'
 import Router from './routes'
 
-const semanticStyleOverrides = {
-  staticStyles: [semanticCssOverrides],
-}
-
-interface IAppState {
+interface AppState {
   themeName: string
   changeTheme: (newTheme: string) => void
 }
 
-class App extends React.Component<any, IAppState> {
+class App extends React.Component<any, AppState> {
   private changeTheme
 
   constructor(props) {
@@ -34,12 +29,13 @@ class App extends React.Component<any, IAppState> {
       changeTheme: this.changeTheme,
     }
   }
+
   render() {
     const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
         <Provider
-          theme={mergeThemes(semanticStyleOverrides, themes[themeName], {
+          theme={mergeThemes(themes[themeName], {
             // adjust Teams' theme to Semantic UI's font size scheme
             siteVariables: {
               htmlFontSize: '14px',

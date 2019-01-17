@@ -1,12 +1,9 @@
-import React from 'react'
+import * as React from 'react'
 import { Icon } from '@stardust-ui/react'
 
 const IconExampleDisabled = () => (
   <div>
-    <Icon disabled name="umbrella" size="big" />
-    <Icon disabled name="umbrella" size="big" variables={{ color: 'blue' }} />
-    <Icon disabled name="umbrella" size="big" variables={{ color: 'red' }} />
-    <Icon disabled name="umbrella" size="big" variables={{ color: 'orange' }} />
+    <Icon disabled name="call-video" />
   </div>
 )
 

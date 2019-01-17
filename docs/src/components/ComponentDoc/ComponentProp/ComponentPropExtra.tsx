@@ -1,5 +1,11 @@
-import PropTypes from 'prop-types'
 import * as React from 'react'
+import { Extendable } from 'types/utils'
+
+export interface ComponentPropExtraProps {
+  children?: JSX.Element[]
+  title?: React.ReactNode
+  inline?: boolean
+}
 
 const descriptionStyle = {
   color: '#666',
@@ -16,17 +22,16 @@ const contentInlineStyle = {
   display: 'inline',
 }
 
-const ComponentPropExtra: any = ({ children, inline, title, ...rest }) => (
-  <div {...rest} style={descriptionStyle}>
+const ComponentPropExtra = ({
+  children,
+  inline,
+  title,
+  ...restProps
+}: Extendable<ComponentPropExtraProps>) => (
+  <div {...restProps} style={descriptionStyle}>
     <strong>{title}</strong>
     <div style={inline ? contentInlineStyle : contentBlockStyle}>{children}</div>
   </div>
 )
-
-ComponentPropExtra.propTypes = {
-  children: PropTypes.node,
-  inline: PropTypes.bool,
-  title: PropTypes.node,
-}
 
 export default ComponentPropExtra

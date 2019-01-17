@@ -1,46 +1,52 @@
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IInputProps } from '../../../../components/Input/Input'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { InputProps } from '../../../../components/Input/Input'
+import { InputVariables } from './inputVariables'
+import { PositionProperty } from 'csstype'
 
-const inputStyles: IComponentPartStylesInput<IInputProps, any> = {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { fluid } = props
+const inputStyles: ComponentSlotStylesInput<InputProps, InputVariables> = {
+  root: ({ props: p }): ICSSInJSStyle => ({
+    display: 'inline-flex',
+    position: 'relative',
+    alignItems: 'center',
+    outline: 0,
+    ...(p.fluid && { width: '100%' }),
+  }),
 
-    return {
-      display: 'inline-flex',
-      position: 'relative',
-      alignItems: 'center',
-      outline: 0,
-      ...(fluid && { width: '100%' }),
-    }
-  },
+  input: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    outline: 0,
+    border: v.border,
+    borderRadius: v.borderRadius,
+    color: v.fontColor,
+    backgroundColor: v.backgroundColor,
+    position: 'relative',
+    padding: v.inputPadding,
+    ...(p.fluid && { width: '100%' }),
+    ...(p.inline && { float: 'left' }),
+    '::placeholder': {
+      color: v.fontColor,
+    },
+    ':focus': {
+      borderBottomColor: v.inputFocusBorderBottomColor,
+      boxShadow: v.boxShadow,
+    },
+    ...(p.clearable && { padding: v.inputPaddingWithIconAtEnd }),
+    ...(p.icon && {
+      padding:
+        p.iconPosition === 'start' ? v.inputPaddingWithIconAtStart : v.inputPaddingWithIconAtEnd,
+    }),
+  }),
 
-  input: ({ props, variables }): ICSSInJSStyle => {
-    const { fluid, inline } = props
-
-    return {
-      outline: 0,
-      border: 0,
-      borderRadius: variables.borderRadius,
-      borderBottom: variables.borderBottom,
-      color: variables.fontColor,
-      backgroundColor: variables.backgroundColor,
-      padding: variables.inputPadding,
-      ...(fluid && { width: '100%' }),
-      ...(inline && { float: 'left' }),
-      ':focus': {
-        borderColor: variables.inputFocusBorderColor,
-        borderRadius: variables.inputFocusBorderRadius,
-      },
-    }
-  },
-
-  icon: ({ props, variables }): ICSSInJSStyle => {
-    return {
-      position: variables.iconPosition,
-      right: variables.iconRight,
-      outline: 0,
-    }
-  },
+  icon: ({ props: { iconPosition }, variables: v }): ICSSInJSStyle => ({
+    position: v.iconPosition as PositionProperty,
+    color: v.iconColor,
+    ...(iconPosition === 'start' && {
+      left: v.iconLeft,
+    }),
+    ...(iconPosition === 'end' && {
+      right: v.iconRight,
+    }),
+    outline: 0,
+  }),
 }
 
 export default inputStyles

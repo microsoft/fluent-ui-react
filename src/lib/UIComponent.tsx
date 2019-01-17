@@ -1,10 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import renderComponent, { IRenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers } from './accessibility/interfaces'
-import { IFocusZone } from './accessibility/FocusZone'
+import renderComponent, { RenderResultConfig } from './renderComponent'
+import { AccessibilityActionHandlers } from './accessibility/types'
+import { FocusZone } from './accessibility/FocusZone'
 
-class UIComponent<P, S> extends React.Component<P, S> {
+// TODO @Bugaa92: deprecated by createComponent.tsx
+class UIComponent<P, S = {}> extends React.Component<P, S> {
   private readonly childClass = this.constructor as typeof UIComponent
   static defaultProps: { [key: string]: any }
   static displayName: string
@@ -25,7 +26,7 @@ class UIComponent<P, S> extends React.Component<P, S> {
   }
 
   protected actionHandlers: AccessibilityActionHandlers
-  protected focusZone: IFocusZone
+  protected focusZone: FocusZone
 
   constructor(props, context) {
     super(props, context)
@@ -41,27 +42,25 @@ class UIComponent<P, S> extends React.Component<P, S> {
     this.renderComponent = this.renderComponent.bind(this)
   }
 
-  renderComponent(config: IRenderResultConfig<P>): React.ReactNode {
+  renderComponent(config: RenderResultConfig<P>): React.ReactNode {
     throw new Error('renderComponent is not implemented.')
   }
 
   render() {
-    return renderComponent(
-      {
-        className: this.childClass.className,
-        defaultProps: this.childClass.defaultProps,
-        displayName: this.childClass.displayName,
-        handledProps: this.childClass.handledProps,
-        props: this.props,
-        state: this.state,
-        actionHandlers: this.actionHandlers,
-        focusZoneRef: this.setFocusZoneRef,
-      },
-      this.renderComponent,
-    )
+    return renderComponent({
+      className: this.childClass.className,
+      defaultProps: this.childClass.defaultProps,
+      displayName: this.childClass.displayName,
+      handledProps: this.childClass.handledProps,
+      props: this.props,
+      state: this.state,
+      actionHandlers: this.actionHandlers,
+      focusZoneRef: this.setFocusZoneRef,
+      render: this.renderComponent,
+    })
   }
 
-  private setFocusZoneRef = (focusZone: IFocusZone): void => {
+  private setFocusZoneRef = (focusZone: FocusZone): void => {
     this.focusZone = focusZone
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
@@ -19,6 +19,11 @@ const Types = () => (
       title="Content Wrapper"
       description="Use 'content' prop of the Popup to set whether Popup content should be rendered with the default wrapper."
       examplePath="components/Popup/Types/PopupContentWrapperExample"
+    />
+    <ComponentExample
+      title="Focus Trap"
+      description="Popup content traps focus on appearance by using dedicated accessibility behavior."
+      examplePath="components/Popup/Types/PopupFocusTrapExample"
     />
     <ComponentExample
       title="Custom Target"

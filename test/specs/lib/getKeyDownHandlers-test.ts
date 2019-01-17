@@ -1,39 +1,18 @@
 import getKeyDownHandlers from 'src/lib/getKeyDownHandlers'
+import * as keyboardKey from 'keyboard-key'
 
-const testKeyCode = 27
+const testKeyCode = keyboardKey.ArrowRight
 const props = {}
 const partElementName = 'anchor'
 let actionsDefinition
 
-const eventArg: React.KeyboardEvent = {
-  keyCode: testKeyCode,
+const eventArg = (keyCodeValue: number): any => ({
+  keyCode: keyCodeValue,
   altKey: false,
-  charCode: null,
-  ctrlKey: null,
-  getModifierState: () => undefined,
-  key: null,
-  locale: null,
-  location: null,
-  metaKey: null,
-  repeat: null,
-  shiftKey: null,
-  which: null,
-  bubbles: null,
-  cancelable: null,
-  currentTarget: null,
-  defaultPrevented: null,
-  eventPhase: null,
-  isTrusted: null,
-  nativeEvent: null,
-  persist: () => undefined,
-  preventDefault: () => undefined,
-  isDefaultPrevented: () => undefined,
-  stopPropagation: () => undefined,
-  isPropagationStopped: () => undefined,
-  target: null,
-  timeStamp: null,
-  type: null,
-}
+  ctrlKey: false,
+  metaKey: false,
+  shiftKey: false,
+})
 
 describe('getKeyDownHandlers', () => {
   beforeEach(() => {
@@ -109,10 +88,61 @@ describe('getKeyDownHandlers', () => {
 
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props)
 
-      keyHandlers[partElementName] && keyHandlers[partElementName]['onKeyDown'](eventArg)
+      keyHandlers[partElementName] &&
+        keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.otherAction).toHaveBeenCalled()
       expect(actions.anotherTestAction).not.toHaveBeenCalled()
+    })
+
+    describe('with respect of RTL', () => {
+      test('swap Right key to Left key', () => {
+        const actions = {
+          actionOnLeftArrow: jest.fn(),
+          actionOnRightArrow: jest.fn(),
+        }
+
+        actionsDefinition[partElementName].actionOnLeftArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        }
+        actionsDefinition[partElementName].actionOnRightArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        }
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
+
+        keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowRight))
+        expect(actions.actionOnLeftArrow).toHaveBeenCalled()
+        expect(actions.actionOnRightArrow).not.toHaveBeenCalled()
+      })
+
+      test('swap Left key to Right key', () => {
+        const actions = {
+          actionOnLeftArrow: jest.fn(),
+          actionOnRightArrow: jest.fn(),
+        }
+
+        actionsDefinition[partElementName].actionOnLeftArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+        }
+        actionsDefinition[partElementName].actionOnRightArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        }
+        const keyHandlers = getKeyDownHandlers(
+          actions,
+          actionsDefinition,
+          props,
+          /** isRtlEnabled */ true,
+        )
+
+        keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
+        expect(actions.actionOnLeftArrow).not.toHaveBeenCalled()
+        expect(actions.actionOnRightArrow).toHaveBeenCalled()
+      })
     })
   })
 
@@ -124,19 +154,15 @@ describe('getKeyDownHandlers', () => {
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test("when acessibility's actionsDefinition is null", () => {
-      const actions = {
-        otherAction: (event: React.KeyboardEvent) => {},
-      }
-
+      const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, null, props)
+
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
     test('there are not common actions and actions definition', () => {
-      const actions = {
-        otherAction: (event: React.KeyboardEvent) => {},
-      }
-
+      const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, props)
+
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
   })

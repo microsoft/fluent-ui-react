@@ -1,13 +1,27 @@
-import { pxToRem } from '../../../../lib'
-import { ICSSInJSStyle } from '../../../../../types/theme'
+import * as _ from 'lodash'
 
-export default {
-  root: (): ICSSInJSStyle => {
+import { SegmentProps } from '../../../../components/Segment/Segment'
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { SegmentVariables } from './segmentVariables'
+
+const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const segmentColor = _.get(v.colors, p.color)
+
     return {
-      padding: '1em',
-      boxShadow: '0 1px 2px 0 rgba(34,36,38,.15)',
-      border: '1px solid rgba(34,36,38,.15)',
-      borderRadius: pxToRem(5),
+      padding: v.padding,
+      borderTop: `2px solid transparent`,
+      borderRadius: v.borderRadius,
+      boxShadow: `0 1px 1px 1px ${v.boxShadowColor}`,
+      color: v.color,
+      backgroundColor: v.backgroundColor,
+      borderColor: segmentColor,
+      ...(p.inverted && {
+        color: v.backgroundColor,
+        backgroundColor: segmentColor || v.color,
+      }),
     }
   },
 }
+
+export default segmentStyles

@@ -1,5 +1,5 @@
 import AnchorJS from 'anchor-js'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import { Route } from 'react-router-dom'
@@ -73,9 +73,9 @@ class DocsLayout extends React.Component<any, any> {
   }
 
   render() {
-    const rest = getUnhandledProps(DocsLayout, this.props)
+    const unhandledProps = getUnhandledProps(DocsLayout, this.props)
 
-    return <Route {...rest} render={this.renderChildren} />
+    return <Route {...unhandledProps} render={this.renderChildren} />
   }
 }
 

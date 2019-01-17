@@ -1,12 +1,10 @@
 import { pxToRem } from '../../../../lib'
-import { IComponentPartStylesInput, ICSSInJSStyle } from '../../../../../types/theme'
-import { IButtonProps, IButtonState } from '../../../../components/Button/Button'
-import { truncateStyle } from '../../../../styles/customCSS'
+import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 
-const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> = {
+const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
   root: ({ props, variables }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, type, text, iconOnly, isFromKeyboard } = props
-    const primary = type === 'primary'
+    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
 
     const {
       height,
@@ -32,8 +30,12 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       borderColorFocus,
       borderColorFocusIndicator,
       borderColorDisabled,
+      borderWidth,
 
       primaryColor,
+      primaryColorActive,
+      primaryColorHover,
+      primaryColorFocus,
       primaryBackgroundColor,
       primaryBackgroundColorActive,
       primaryBackgroundColorHover,
@@ -43,6 +45,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       primaryBorderColorHover,
       primaryBorderColorFocus,
       primaryBorderColorFocusIndicator,
+      primaryBorderWidth,
 
       primaryCircularBorderColorFocusIndicator,
 
@@ -81,10 +84,11 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
       verticalAlign: 'middle',
       cursor: 'pointer',
 
+      // rectangular button defaults
       ...(!text && {
         outline: 0,
         borderRadius: '2px',
-        borderWidth: '1px',
+        borderWidth: `${pxToRem(borderWidth)}`,
         borderStyle: 'solid',
         borderColor,
         boxShadow,
@@ -101,11 +105,13 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
             ':after': {
               content: '""',
               position: 'absolute',
-              top: '-2px',
-              right: '-2px',
-              bottom: '-2px',
-              left: '-2px',
-              border: `${pxToRem(1)} solid ${borderColorFocusIndicator}`,
+              top: `-${pxToRem(borderWidth * 2)}`,
+              right: `-${pxToRem(borderWidth * 2)}`,
+              bottom: `-${pxToRem(borderWidth * 2)}`,
+              left: `-${pxToRem(borderWidth * 2)}`,
+              borderWidth: `${pxToRem(borderWidth)}`,
+              borderStyle: 'solid',
+              borderColor: `${borderColorFocusIndicator}`,
               borderRadius: '3px',
             },
           },
@@ -122,11 +128,15 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         }),
       }),
 
+      // circular button defaults
       ...(circular &&
         !text && {
+          minWidth: height,
+          padding: 0,
           color: circularColor,
           backgroundColor: circularBackgroundColor,
           borderColor: circularBorderColor,
+          borderRadius: circularRadius,
           ':hover': {
             color: circularColorActive,
             backgroundColor: circularBackgroundColorHover,
@@ -144,7 +154,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                 right: '0',
                 bottom: '0',
                 left: '0',
-                border: `${pxToRem(1)} solid ${circularBorderColorFocusIndicator}`,
+                borderWidth: `${pxToRem(borderWidth)}`,
+                borderStyle: 'solid',
+                borderColor: `${circularBorderColorFocusIndicator}`,
                 borderRadius: circularRadius,
               },
             },
@@ -161,29 +173,51 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           }),
         }),
 
+      // text button defaults
+      ...(text && {
+        color: textColor,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        ':hover': {
+          color: textColorHover,
+        },
+        ...(primary && {
+          color: textPrimaryColor,
+          ':hover': {
+            color: textPrimaryColorHover,
+          },
+        }),
+      }),
+
+      // Overrides for "primary" buttons
       ...(primary &&
         !text && {
           color: primaryColor,
           backgroundColor: primaryBackgroundColor,
-          borderColor: primaryBorderColor,
+          borderWidth: `${pxToRem(primaryBorderWidth)}`,
+          borderStyle: 'solid',
+          borderColor: `${primaryBorderColor}`,
           ':hover': {
+            color: primaryColorHover,
             backgroundColor: primaryBackgroundColorHover,
             borderColor: primaryBorderColorHover,
           },
-
           ...(isFromKeyboard &&
             !circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBorderColorFocus,
                 ':after': {
                   content: '""',
                   position: 'absolute',
-                  top: '-2px',
-                  right: '-2px',
-                  bottom: '-2px',
-                  left: '-2px',
-                  border: `${pxToRem(1)} solid ${primaryBorderColorFocusIndicator}`,
+                  top: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  right: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  bottom: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  left: `-${pxToRem(primaryBorderWidth * 2)}`,
+                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
+                  borderStyle: 'solid',
+                  borderColor: `${primaryBorderColorFocusIndicator}`,
                   borderRadius: '3px',
                 },
               },
@@ -191,6 +225,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(isFromKeyboard &&
             circular && {
               ':focus': {
+                color: primaryColorFocus,
                 backgroundColor: primaryBackgroundColorFocus,
                 borderColor: primaryBackgroundColorFocus,
                 ':after': {
@@ -200,7 +235,9 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
                   right: '0',
                   bottom: '0',
                   left: '0',
-                  border: `${pxToRem(1)} solid ${primaryCircularBorderColorFocusIndicator}`,
+                  borderWidth: `${pxToRem(primaryBorderWidth)}`,
+                  borderStyle: 'solid',
+                  borderColor: `${primaryCircularBorderColorFocusIndicator}`,
                   borderRadius: circularRadius,
                 },
               },
@@ -208,6 +245,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           ...(!isFromKeyboard && {
             ':focus': {
               ':active': {
+                color: primaryColorActive,
                 backgroundColor: primaryBackgroundColorActive,
                 borderColor: primaryBorderColorActive,
                 boxShadow: 'none',
@@ -216,34 +254,7 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
           }),
         }),
 
-      ...(text && {
-        color: textColor,
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        ':hover': {
-          color: textColorHover,
-        },
-      }),
-
-      ...(primary &&
-        text && {
-          color: textPrimaryColor,
-          ':hover': {
-            color: textPrimaryColorHover,
-          },
-        }),
-
-      ...(circular && {
-        minWidth: height,
-        padding: 0,
-        borderRadius: circularRadius,
-      }),
-
-      ...(fluid && {
-        width: '100%',
-        maxWidth: '100%',
-      }),
-
+      // Overrides for "disabled" buttons
       ...(disabled && {
         cursor: 'default',
         color: colorDisabled,
@@ -256,6 +267,11 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
         },
       }),
 
+      ...(fluid && {
+        width: '100%',
+        maxWidth: '100%',
+      }),
+
       ...(iconOnly && {
         minWidth: height,
         padding: 0,
@@ -263,9 +279,10 @@ const buttonStyles: IComponentPartStylesInput<IButtonProps & IButtonState, any> 
     }
   },
 
-  content: ({ props }) => ({
+  content: () => ({
     overflow: 'hidden',
-    ...(typeof props.content === 'string' && truncateStyle),
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   }),
 }
 

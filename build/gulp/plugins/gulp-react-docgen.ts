@@ -20,12 +20,15 @@ export default () =>
     }
 
     try {
+      const infoFilename = file.basename.replace(/\.tsx$/, '.info.json')
       const contents = getComponentInfo(file.path)
 
       const infoFile = new Vinyl({
-        path: `./${file.basename.replace(/tsx$/, 'info.json')}`,
+        path: `./${infoFilename}`,
         contents: Buffer.from(JSON.stringify(contents, null, 2)),
       })
+      // `gulp-cache` relies on this private entry
+      infoFile._cachedKey = file._cachedKey
 
       cb(null, infoFile)
     } catch (err) {

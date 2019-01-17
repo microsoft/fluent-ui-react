@@ -12,7 +12,9 @@ docs/src/componentInfo
 docs/src/componentMenu.json
 docs/src/behaviorMenu.json
 docs/src/exampleMenus
+docs/src/exampleSources
 docs/dist/
 dll/
 node_modules/
+stats/
 .vscode/

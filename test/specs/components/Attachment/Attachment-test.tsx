@@ -1,9 +1,9 @@
-import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
+import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
 
-import Attachment from 'src/components/Attachment'
-import Text from 'src/components/Text'
-import Icon from 'src/components/Icon'
-import Button from 'src/components/Button'
+import Attachment from 'src/components/Attachment/Attachment'
+import Text from 'src/components/Text/Text'
+import Icon from 'src/components/Icon/Icon'
+import Button from 'src/components/Button/Button'
 
 const attachmentImplementsShorthandProp = implementsShorthandProp(Attachment)
 
@@ -13,4 +13,10 @@ describe('Attachment', () => {
   attachmentImplementsShorthandProp('description', Text)
   attachmentImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
   attachmentImplementsShorthandProp('action', Button)
+
+  describe('accessibility', () => {
+    handlesAccessibility(Attachment, {
+      defaultRootRole: undefined,
+    })
+  })
 })

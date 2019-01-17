@@ -1,51 +1,45 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { html } from 'js-beautify'
 import * as copyToClipboard from 'copy-to-clipboard'
+import SourceRender from 'react-source-render'
 import { Divider, Form, Grid, Menu, Segment, Visibility } from 'semantic-ui-react'
 import { Provider, themes } from '@stardust-ui/react'
 
-import {
-  examplePathToHash,
-  getFormattedHash,
-  knobsContext,
-  repoURL,
-  scrollToAnchor,
-} from 'docs/src/utils'
-import evalTypeScript from 'docs/src/utils/evalTypeScript'
-import { callable, doesNodeContainClick, pxToRem } from 'src/lib'
+import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } from 'docs/src/utils'
+import { callable, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
+import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
+import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
-import ContributionPrompt from '../ContributionPrompt'
-import getSourceCodeManager, { ISourceCodeManager, SourceCodeType } from './SourceCodeManager'
-import { IThemeInput, IThemePrepared } from 'types/theme'
+import ComponentSourceManager, {
+  ComponentSourceManagerRenderProps,
+} from '../ComponentSourceManager'
+import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
-import { ThemeContext } from '../../../context/theme-context'
+import { ThemeContext } from '../../../context/ThemeContext'
+import CodeSnippet from '../../CodeSnippet'
 
-export interface IComponentExampleProps extends RouteComponentProps<any, any> {
-  title: string
-  description: string
+export interface ComponentExampleProps
+  extends RouteComponentProps<any, any>,
+    ComponentSourceManagerRenderProps,
+    ExampleContextValue {
+  title: React.ReactNode
+  description?: React.ReactNode
   examplePath: string
   themeName?: string
 }
 
-interface IComponentExampleState {
+interface ComponentExampleState {
   knobs: Object
   themeName: string
   componentVariables: Object
-  exampleElement?: JSX.Element
-  handleMouseLeave?: () => void
-  handleMouseMove?: () => void
-  sourceCode: string
-  markup: string
-  error?: string
+  handleMouseLeave: () => void
+  handleMouseMove: () => void
   showCode: boolean
-  showHTML: boolean
   showRtl: boolean
+  showTransparent: boolean
   showVariables: boolean
   isHovering: boolean
   copiedCode: boolean
@@ -56,69 +50,37 @@ const childrenStyle: React.CSSProperties = {
   maxWidth: pxToRem(500),
 }
 
-const codeTypeApiButtonLabels: { [key in SourceCodeType]: string } = {
-  normal: 'Children API',
-  shorthand: 'Shorthand API',
-}
+const disabledStyle = { opacity: 0.5, pointerEvents: 'none' }
 
 /**
  * Renders a `component` and the raw `code` that produced it.
  * Allows toggling the the raw `code` code block.
  */
-class ComponentExample extends React.Component<IComponentExampleProps, IComponentExampleState> {
-  private componentRef: React.Component
-  private sourceCodeMgr: ISourceCodeManager
-  private anchorName: string
-  private kebabExamplePath: string
-  private KnobsComponent: any
+class ComponentExample extends React.Component<ComponentExampleProps, ComponentExampleState> {
+  anchorName: string
+  kebabExamplePath: string
+  KnobsComponent: any
 
-  public state: IComponentExampleState = {
-    knobs: {},
-    themeName: 'teams',
-    componentVariables: {},
-    sourceCode: '',
-    markup: '',
-    showCode: false,
-    showHTML: false,
-    showRtl: false,
-    showVariables: false,
-    isHovering: false,
-    copiedCode: false,
-  }
+  constructor(props) {
+    super(props)
 
-  public static contextTypes = {
-    onPassed: PropTypes.func,
-  }
-
-  public static propTypes = {
-    children: PropTypes.node,
-    description: PropTypes.node,
-    examplePath: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    title: PropTypes.node,
-    themeName: PropTypes.string,
-  }
-
-  public componentWillMount() {
-    const { examplePath } = this.props
-    this.sourceCodeMgr = getSourceCodeManager(examplePath)
-    this.anchorName = examplePathToHash(examplePath)
-    const exampleElement = this.renderExampleFromCode(this.sourceCodeMgr.currentCode)
-
-    this.setState({
-      exampleElement,
+    this.anchorName = examplePathToHash(props.examplePath)
+    this.state = {
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
+      knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
-      showHTML: false,
-      sourceCode: this.sourceCodeMgr.currentCode,
-      markup: renderToStaticMarkup(exampleElement),
-    })
+      themeName: 'teams',
+      componentVariables: {},
+      showRtl: false,
+      showTransparent: false,
+      showVariables: false,
+      isHovering: false,
+      copiedCode: false,
+    }
   }
 
-  public componentWillReceiveProps(nextProps: IComponentExampleProps) {
+  componentWillReceiveProps(nextProps: ComponentExampleProps) {
     // deactivate examples when switching from one to the next
     if (
       this.isActiveHash() &&
@@ -129,44 +91,39 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     }
     const { themeName } = nextProps
     if (this.state.themeName !== themeName) {
-      this.setState({ themeName }, this.renderSourceCode)
+      this.setState({ themeName })
     }
   }
 
-  private clearActiveState = () => {
+  clearActiveState = () => {
     this.setState({
       showCode: false,
-      showHTML: false,
       showRtl: false,
       showVariables: false,
     })
   }
 
-  private isActiveState = () => {
-    const { showCode, showHTML, showVariables } = this.state
+  isActiveState = () => {
+    const { showCode, showVariables } = this.state
 
-    return showCode || showHTML || showVariables
+    return showCode || showVariables
   }
 
-  private isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
+  isActiveHash = () => this.anchorName === getFormattedHash(this.props.location.hash)
 
-  private clickedOutsideComponent = (e: Event): boolean => {
-    return !doesNodeContainClick((this.componentRef as any).ref, e)
-  }
-
-  private updateHash = () => {
+  updateHash = () => {
     if (this.isActiveState()) this.setHashAndScroll()
     else if (this.isActiveHash()) this.removeHash()
   }
 
-  private setHashAndScroll = () => {
+  setHashAndScroll = () => {
     const { history, location } = this.props
 
     history.replace(`${location.pathname}#${this.anchorName}`)
     scrollToAnchor()
   }
 
-  private removeHash = () => {
+  removeHash = () => {
     const { history, location } = this.props
 
     history.replace(location.pathname)
@@ -174,12 +131,12 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     this.clearActiveState()
   }
 
-  private handleDirectLinkClick = () => {
+  handleDirectLinkClick = () => {
     this.setHashAndScroll()
     copyToClipboard(window.location.href)
   }
 
-  private handleMouseLeave = () => {
+  handleMouseLeave = () => {
     this.setState({
       isHovering: false,
       handleMouseLeave: undefined,
@@ -187,7 +144,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     })
   }
 
-  private handleMouseMove = () => {
+  handleMouseMove = () => {
     this.setState({
       isHovering: true,
       handleMouseLeave: this.handleMouseLeave,
@@ -195,41 +152,13 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     })
   }
 
-  handleShowCode = (shouldShowCode: boolean) => {
-    if (shouldShowCode !== this.state.showCode) {
-      this.setState({ showCode: shouldShowCode }, this.updateHash)
-    }
-  }
-
-  handleShowCodeInactive = (e: Event) => {
-    if (this.clickedOutsideComponent(e)) {
-      this.handleShowCode(false)
-    }
-  }
-
-  handleShowHTML = (shouldShowHTML: boolean) => {
-    if (shouldShowHTML !== this.state.showHTML) {
-      this.setState({ showHTML: shouldShowHTML }, this.updateHash)
-    }
-  }
-
-  handleShowHTMLInactive = (e: Event) => {
-    if (this.clickedOutsideComponent(e)) {
-      this.handleShowHTML(false)
-    }
-  }
-
-  private handleShowRtlClick = e => {
+  handleShowRtlClick = e => {
     e.preventDefault()
 
-    const { showRtl } = this.state
-
-    this.setState({ showRtl: !showRtl }, () => {
-      this.renderSourceCode()
-    })
+    this.setState(prevState => ({ showRtl: !prevState.showRtl }))
   }
 
-  private handleShowCodeClick = e => {
+  handleShowCodeClick = e => {
     e.preventDefault()
 
     const { showCode } = this.state
@@ -237,7 +166,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     this.setState({ showCode: !showCode }, this.updateHash)
   }
 
-  private handleShowVariablesClick = e => {
+  handleShowVariablesClick = e => {
     e.preventDefault()
 
     const { showVariables } = this.state
@@ -245,91 +174,68 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     this.setState({ showVariables: !showVariables }, this.updateHash)
   }
 
-  private handlePass = () => {
-    const { title } = this.props
+  handleShowTransparentClick = e => {
+    e.preventDefault()
 
-    if (title) _.invoke(this.context, 'onPassed', null, this.props)
+    const { showTransparent } = this.state
+
+    this.setState({ showTransparent: !showTransparent })
   }
 
-  private copyJSX = () => {
-    copyToClipboard(this.state.sourceCode)
+  handlePass = () => {
+    const { title } = this.props
+
+    if (title) this.props.onExamplePassed(this.anchorName)
+  }
+
+  copySourceCode = () => {
+    copyToClipboard(this.props.currentCode)
+
     this.setState({ copiedCode: true })
     setTimeout(() => this.setState({ copiedCode: false }), 1000)
   }
 
-  private resetJSX = () => {
-    if (this.sourceCodeMgr.originalCodeHasChanged && confirm('Lose your changes?')) {
-      this.sourceCodeMgr.resetToOriginalCode()
-      this.updateAndRenderSourceCode()
+  resetSourceCode = () => {
+    if (confirm('Lose your changes?')) {
+      this.props.handleCodeReset()
     }
   }
 
-  private getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
+  getKnobsFilename = () => `./${this.props.examplePath}.knobs.tsx`
 
-  private getKebabExamplePath = () => {
+  getKebabExamplePath = () => {
     if (!this.kebabExamplePath) this.kebabExamplePath = _.kebabCase(this.props.examplePath)
 
     return this.kebabExamplePath
   }
 
-  private hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
+  hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
-  private setErrorDebounced = _.debounce(error => {
-    this.setState({ error })
-  }, 800)
+  renderElement = (element: React.ReactElement<any>) => {
+    const { showRtl, componentVariables, themeName } = this.state
 
-  private renderExampleFromCode = (code: string): JSX.Element => {
-    const Example = code != null ? evalTypeScript(code) : this.renderMissingExample()
-    return _.isFunction(Example) ? this.renderWithProvider(Example) : Example
-  }
-
-  private renderMissingExample = (): JSX.Element => {
-    const missingExamplePath = `./docs/src/examples/${this.sourceCodeMgr.currentPath}.tsx`
-    return (
-      <ContributionPrompt>
-        Looks like we're need an example file at:
-        <p>{missingExamplePath}</p>
-      </ContributionPrompt>
-    )
-  }
-
-  private renderSourceCode = _.debounce(() => {
-    try {
-      const exampleElement = this.renderExampleFromCode(this.state.sourceCode)
-
-      if (!React.isValidElement(exampleElement)) {
-        this.setErrorDebounced(
-          `Default export is not a valid React element. Check the example syntax.`,
-        )
-      } else {
-        // immediately render a null error
-        // but also ensure the last debounced error call is a null error
-        const error = undefined
-        this.setErrorDebounced(error)
-        this.setState({
-          error,
-          exampleElement,
-          markup: renderToStaticMarkup(exampleElement),
-        })
-      }
-    } catch (err) {
-      this.setErrorDebounced(err.message)
-    }
-  }, 250)
-
-  private handleKnobChange = knobs => {
-    this.setState(
-      prevState => ({
-        knobs: {
-          ...prevState.knobs,
-          ...knobs,
-        },
+    const theme = themes[themeName]
+    const newTheme: ThemeInput = {
+      siteVariables: theme.siteVariables,
+      componentVariables: mergeThemeVariables(theme.componentVariables, {
+        [this.getDisplayName()]: componentVariables,
       }),
-      this.renderSourceCode,
-    )
+      rtl: showRtl,
+    }
+
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
-  private getKnobsComponent = () => {
+  handleKnobChange = knobs => {
+    this.setState(prevState => ({
+      knobs: {
+        ...prevState.knobs,
+        ...knobs,
+      },
+    }))
+  }
+
+  getKnobsComponent = () => {
     if (typeof this.KnobsComponent !== 'undefined') {
       return this.KnobsComponent
     }
@@ -339,206 +245,200 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     return this.KnobsComponent
   }
 
-  private getKnobsValue = () => {
+  getDefaultKnobsValue = (overrides = {}) => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? { ...Knobs.defaultProps, ...this.state.knobs } : null
+    return Knobs ? { ...Knobs.defaultProps, overrides } : null
   }
 
-  private renderKnobs = () => {
+  renderKnobs = () => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
+    return Knobs ? (
+      <Knobs
+        {...this.getDefaultKnobsValue(this.state.knobs)}
+        onKnobChange={this.handleKnobChange}
+      />
+    ) : null
   }
 
-  private getDisplayName = () => this.props.examplePath.split('/')[1]
+  getDisplayName = () => this.props.examplePath.split('/')[1]
 
-  private renderWithProvider(ExampleComponent) {
-    const { showRtl, componentVariables, themeName } = this.state
-    const theme = themes[themeName]
+  handleCodeApiChange = apiType => () => {
+    this.props.handleCodeAPIChange(apiType)
+  }
 
-    const newTheme: IThemeInput = {
-      componentVariables: mergeThemeVariables(theme.componentVariables, {
-        [this.getDisplayName()]: componentVariables,
-      }),
-      rtl: showRtl,
+  handleCodeLanguageChange = language => () => {
+    const { handleCodeLanguageChange, wasCodeChanged } = this.props
+
+    if (wasCodeChanged) {
+      if (confirm('Lose your changes?')) {
+        handleCodeLanguageChange(language)
+      }
+    } else {
+      handleCodeLanguageChange(language)
     }
+  }
+
+  renderAPIsMenu = (): JSX.Element => {
+    const { componentAPIs, currentCodeAPI } = this.props
+    const menuItems = _.map(componentAPIs, ({ name, supported }, type) => (
+      <Menu.Item
+        active={currentCodeAPI === type}
+        content={
+          <span>
+            {name}
+            {!supported && <em> (not supported)</em>}
+          </span>
+        }
+        disabled={!supported}
+        key={type}
+        onClick={this.handleCodeApiChange(type)}
+      />
+    ))
+
+    return <Menu.Menu>{menuItems}</Menu.Menu>
+  }
+
+  renderLanguagesMenu = (): JSX.Element => {
+    const { currentCodeLanguage } = this.props
 
     return (
-      <Provider theme={newTheme}>
-        <ExampleComponent knobs={this.getKnobsValue()} />
-      </Provider>
+      <Menu.Menu position="right">
+        <Menu.Item
+          active={currentCodeLanguage === 'js'}
+          content="JavaScript"
+          onClick={this.handleCodeLanguageChange('js')}
+        />
+        <Menu.Item
+          active={currentCodeLanguage === 'ts'}
+          content="TypeScript"
+          onClick={this.handleCodeLanguageChange('ts')}
+        />
+      </Menu.Menu>
     )
   }
 
-  private handleChangeCode = (sourceCode: string) => {
-    this.sourceCodeMgr.currentCode = sourceCode
-    this.updateAndRenderSourceCode()
-  }
+  renderCodeEditorMenu = (): JSX.Element => {
+    const {
+      currentCodeLanguage,
+      currentCodePath,
+      canCodeBeFormatted,
+      handleCodeFormat,
+      wasCodeChanged,
+    } = this.props
+    const { copiedCode } = this.state
 
-  private updateAndRenderSourceCode = () => {
-    this.setState({ sourceCode: this.sourceCodeMgr.currentCode }, this.renderSourceCode)
-  }
+    // get component name from file path:
+    // elements/Button/Types/ButtonButtonExample
+    const pathParts = currentCodePath.split(__PATH_SEP__)
+    const filename = pathParts[pathParts.length - 1]
 
-  private setApiCodeType = (codeType: SourceCodeType) => {
-    this.sourceCodeMgr.codeType = codeType
-    this.updateAndRenderSourceCode()
-  }
-
-  private renderApiCodeMenu = (): JSX.Element => {
-    const { sourceCode } = this.state
-    const lineCount = sourceCode && sourceCode.match(/^/gm)!.length
-
-    const menuItems = [SourceCodeType.shorthand, SourceCodeType.normal].map(codeType => {
-      // we disable the menu button for Children API in case we don't have the example for it
-      const disabled =
-        codeType === SourceCodeType.normal && !this.sourceCodeMgr.isCodeValidForType(codeType)
-
-      return {
-        active: this.sourceCodeMgr.codeType === codeType,
-        disabled,
-        key: codeType,
-        onClick: this.setApiCodeType.bind(this, codeType),
-        content: codeTypeApiButtonLabels[codeType],
-        ...(disabled && { className: 'crossout' }),
-      }
-    })
+    const ghEditHref = [
+      `${constants.repoURL}/edit/master/docs/src/examples/${currentCodePath}.tsx`,
+      `?message=docs(${filename}): your description`,
+    ].join('')
 
     return (
+      <Menu size="small" secondary inverted floated="right" text>
+        <SourceRender.Consumer>
+          {({ error }) => (
+            <Menu.Item
+              icon={(error && 'bug') || (canCodeBeFormatted ? 'magic' : 'check')}
+              color={error ? 'red' : undefined}
+              active={!!error}
+              content="Prettier"
+              onClick={handleCodeFormat}
+              style={!canCodeBeFormatted ? disabledStyle : undefined}
+            />
+          )}
+        </SourceRender.Consumer>
+        <Menu.Item
+          style={!wasCodeChanged ? disabledStyle : undefined}
+          icon="refresh"
+          content="Reset"
+          onClick={this.resetSourceCode}
+        />
+        <Menu.Item
+          active={copiedCode} // to show the color
+          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
+          content="Copy"
+          onClick={this.copySourceCode}
+        />
+        {currentCodeLanguage === 'ts' && (
+          <Menu.Item
+            style={{ border: 'none' }}
+            icon="github"
+            content="Edit"
+            href={ghEditHref}
+            target="_blank"
+          />
+        )}
+      </Menu>
+    )
+  }
+
+  renderSourceCode = () => {
+    const { currentCode = '', handleCodeChange } = this.props
+    const { showCode } = this.state
+
+    const lineCount = currentCode.match(/^/gm)!.length
+
+    return showCode ? (
       // match code editor background and gutter size and colors
       <div style={{ background: EDITOR_BACKGROUND_COLOR } as React.CSSProperties}>
         <div
           style={
             {
               borderLeft: `${lineCount > 9 ? 41 : 34}px solid ${EDITOR_GUTTER_COLOR}`,
-              paddingBottom: '1rem',
+              paddingBottom: '2.6rem',
             } as React.CSSProperties
           }
         >
-          <Menu size="small" inverted secondary pointing items={menuItems} />
+          <Menu attached="top" size="small" inverted secondary pointing>
+            {this.renderAPIsMenu()}
+            {this.renderLanguagesMenu()}
+          </Menu>
+
+          {this.renderCodeEditorMenu()}
         </div>
+
+        <Editor value={currentCode} onChange={handleCodeChange} />
       </div>
-    )
+    ) : null
   }
 
-  private renderCodeEditorMenu = (): JSX.Element => {
-    const { copiedCode } = this.state
-    const { originalCodeHasChanged, currentPath } = this.sourceCodeMgr
-    const codeEditorStyle: React.CSSProperties = {
-      position: 'absolute',
-      margin: 0,
-      top: '2px',
-      right: '0.5rem',
-    }
-
-    // get component name from file path:
-    // elements/Button/Types/ButtonButtonExample
-    const pathParts = currentPath.split(__PATH_SEP__)
-    const filename = pathParts[pathParts.length - 1]
-
-    const ghEditHref = [
-      `${repoURL}/edit/master/docs/src/examples/${currentPath}.tsx`,
-      `?message=docs(${filename}): your description`,
-    ].join('')
-
+  renderError = () => {
     return (
-      <Menu size="small" secondary inverted text style={codeEditorStyle}>
-        <Menu.Item
-          style={!originalCodeHasChanged ? { opacity: 0.5, pointerEvents: 'none' } : undefined}
-          icon="refresh"
-          content="Reset"
-          onClick={this.resetJSX}
-        />
-        <Menu.Item
-          active={copiedCode} // to show the color
-          icon={copiedCode ? { color: 'green', name: 'check' } : 'copy'}
-          content="Copy"
-          onClick={this.copyJSX}
-        />
-        <Menu.Item
-          style={{ border: 'none' }}
-          icon="github"
-          content="Edit"
-          href={ghEditHref}
-          target="_blank"
-        />
-      </Menu>
+      <SourceRender.Consumer>
+        {({ error }) =>
+          error && (
+            <Segment size="small" color="red" basic inverted padded secondary>
+              <pre>{error.toString()}</pre>
+            </Segment>
+          )
+        }
+      </SourceRender.Consumer>
     )
   }
 
-  private renderJSX = () => {
-    const { showCode, sourceCode } = this.state
-
+  renderHTML = () => {
+    const { showCode } = this.state
     if (!showCode) return null
 
     return (
-      <div>
-        {this.renderApiCodeMenu()}
-
-        <div>
-          {this.renderCodeEditorMenu()}
-          <Editor
-            setOptions={{ fixedWidthGutter: true, showFoldWidgets: false }}
-            id={`${this.getKebabExamplePath()}-jsx`}
-            value={sourceCode}
-            onChange={this.handleChangeCode}
-            onOutsideClick={this.handleShowCodeInactive}
-          />
-        </div>
-      </div>
+      <SourceRender.Consumer>
+        {({ markup }) => (
+          <div>
+            <Divider inverted fitted />
+            <CodeSnippet fitted label="Rendered HTML" mode="html" value={markup} />
+          </div>
+        )}
+      </SourceRender.Consumer>
     )
   }
 
-  private renderError = () => {
-    const { error } = this.state
-
-    if (!error) return null
-
-    return (
-      <Segment size="small" color="red" basic inverted padded secondary>
-        <pre>{error}</pre>
-      </Segment>
-    )
-  }
-
-  private renderHTML = () => {
-    const { error, showCode, markup } = this.state
-    if (error || !showCode) return null
-
-    // add new lines between almost all adjacent elements
-    // moves inline elements to their own line
-    const preFormattedHTML = markup.replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
-
-    const beautifiedHTML = html(preFormattedHTML, {
-      indent_size: 2,
-      indent_char: ' ',
-      wrap_attributes: 'auto',
-      wrap_attributes_indent_size: 2,
-      end_with_newline: false,
-    })
-
-    return (
-      <div>
-        <Divider inverted horizontal>
-          <span style={{ opacity: 0.5 }}>HTML</span>
-        </Divider>
-        <div style={{ padding: '1rem', filter: 'grayscale()' } as React.CSSProperties}>
-          <Editor
-            mode="html"
-            showGutter={false}
-            showCursor={false}
-            readOnly
-            highlightActiveLine={false}
-            id={`${this.getKebabExamplePath()}-html`}
-            onOutsideClick={this.handleShowHTMLInactive}
-            value={beautifiedHTML}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  private renderVariables = () => {
+  renderVariables = () => {
     const { showVariables } = this.state
     if (!showVariables) return undefined
 
@@ -550,7 +450,7 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           <span style={{ opacity: 0.5 }}>Theme</span>
         </Divider>
         <Provider.Consumer
-          render={({ siteVariables, componentVariables }: IThemePrepared) => {
+          render={({ siteVariables, componentVariables }: ThemePrepared) => {
             const mergedVariables = mergeThemeVariables(componentVariables, {
               [displayName]: this.state.componentVariables,
             })
@@ -591,34 +491,36 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
     )
   }
 
-  private handleVariableChange = (component, variable) => (e, { value }) => {
-    this.setState(
-      state => ({
-        componentVariables: {
-          ...state.componentVariables,
-          [variable]: value,
-        },
-      }),
-      this.renderSourceCode,
-    )
+  handleVariableChange = (component, variable) => (e, { value }) => {
+    this.setState(state => ({
+      componentVariables: {
+        ...state.componentVariables,
+        [variable]: value,
+      },
+    }))
   }
 
-  public render() {
-    const { children, description, title } = this.props
+  render() {
+    const {
+      children,
+      currentCode,
+      currentCodeLanguage,
+      currentCodePath,
+      description,
+      title,
+    } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
-      exampleElement,
       isHovering,
+      knobs,
       showCode,
-      showHTML,
       showRtl,
+      showTransparent,
       showVariables,
     } = this.state
 
     const isActive = this.isActiveHash() || this.isActiveState()
-    const currentExamplePath = this.sourceCodeMgr.currentPath
-
     const exampleStyle: React.CSSProperties = {
       position: 'relative',
       transition: 'box-shadow 200ms, background 200ms',
@@ -634,15 +536,8 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
           }),
     }
 
-    const knobs = this.renderKnobs()
-
     return (
-      <Visibility
-        once={false}
-        onTopPassed={this.handlePass}
-        onTopPassedReverse={this.handlePass}
-        ref={c => (this.componentRef = c!)}
-      >
+      <Visibility once={false} onTopPassed={this.handlePass} onTopPassedReverse={this.handlePass}>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
         <Grid
@@ -659,20 +554,23 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
-                  examplePath={currentExamplePath}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
+                  examplePath={currentCodePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
                   onShowRtl={this.handleShowRtlClick}
                   onShowVariables={this.handleShowVariablesClick}
+                  onShowTransparent={this.handleShowTransparentClick}
                   showCode={showCode}
-                  showHTML={showHTML}
                   showRtl={showRtl}
+                  showTransparent={showTransparent}
                   showVariables={showVariables}
                   visible
                 />
               </div>
             </div>
-            {knobs}
+            {this.renderKnobs()}
           </Grid.Column>
 
           {children && (
@@ -681,30 +579,44 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
             </Grid.Column>
           )}
 
-          <Provider.Consumer
-            render={({ siteVariables }) => {
-              return (
-                <Grid.Column
-                  width={16}
-                  dir={showRtl ? 'rtl' : undefined}
-                  className={`rendered-example ${this.getKebabExamplePath()}`}
-                  style={{
-                    padding: '2rem',
-                    backgroundColor: siteVariables.bodyBackground,
-                    color: siteVariables.bodyColor,
-                  }}
-                >
-                  {exampleElement}
-                </Grid.Column>
-              )
-            }}
-          />
-          <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
-            {this.renderJSX()}
-            {this.renderError()}
-            {this.renderHTML()}
-            {this.renderVariables()}
-          </Grid.Column>
+          <SourceRender
+            babelConfig={babelConfig}
+            knobs={knobs}
+            source={currentCode}
+            render={this.renderElement}
+            renderHtml={showCode}
+            resolver={importResolver}
+          >
+            <Provider.Consumer
+              render={({ siteVariables }) => {
+                return (
+                  <Grid.Column
+                    width={16}
+                    dir={showRtl ? 'rtl' : undefined}
+                    className={`rendered-example ${this.getKebabExamplePath()}`}
+                    style={{
+                      padding: '2rem',
+                      color: siteVariables.bodyColor,
+                      backgroundColor: siteVariables.bodyBackground,
+                      ...(showTransparent && {
+                        backgroundImage:
+                          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+                        backgroundRepeat: 'repeat',
+                      }),
+                    }}
+                  >
+                    <SourceRender.Consumer>{({ element }) => element}</SourceRender.Consumer>
+                  </Grid.Column>
+                )
+              }}
+            />
+            <Grid.Column width={16} style={{ padding: 0, background: EDITOR_BACKGROUND_COLOR }}>
+              {this.renderSourceCode()}
+              {this.renderError()}
+              {this.renderHTML()}
+              {this.renderVariables()}
+            </Grid.Column>
+          </SourceRender>
         </Grid>
         <Divider section horizontal />
       </Visibility>
@@ -712,10 +624,20 @@ class ComponentExample extends React.Component<IComponentExampleProps, IComponen
   }
 }
 
-const ComponentExampleWithTheme = React.forwardRef((props: IComponentExampleProps) => (
+const ComponentExampleWithTheme = props => (
   <ThemeContext.Consumer>
-    {({ themeName }) => <ComponentExample {...props} themeName={themeName} />}
+    {({ themeName }) => (
+      <ExampleContext.Consumer>
+        {exampleProps => (
+          <ComponentSourceManager examplePath={props.examplePath}>
+            {codeProps => (
+              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName} />
+            )}
+          </ComponentSourceManager>
+        )}
+      </ExampleContext.Consumer>
+    )}
   </ThemeContext.Consumer>
-))
+)
 
 export default withRouter(ComponentExampleWithTheme)

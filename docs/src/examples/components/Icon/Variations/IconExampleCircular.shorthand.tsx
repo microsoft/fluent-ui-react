@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Icon } from '@stardust-ui/react'
 
 const IconExampleCircular = () => (
@@ -7,6 +7,8 @@ const IconExampleCircular = () => (
     <Icon name="book" circular />
     <Icon name="expand" circular />
     <Icon name="play" circular />
+    <Icon name="call" circular />
+    <Icon name="call-video" circular />
     <Icon name="stop" circular />
     <Icon name="calendar alternate outline" circular />
     <Icon name="coffee" circular />

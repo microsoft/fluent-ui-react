@@ -7,41 +7,50 @@ import {
   customPropTypes,
   pxToRem,
   UIComponent,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 
-import { Icon, Image, Layout } from '../..'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import Icon from '../Icon/Icon'
+import Image from '../Image/Image'
+import Layout from '../Layout/Layout'
+import { Accessibility } from '../../lib/accessibility/types'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import {
-  Extendable,
-  ReactChildren,
-  ShorthandRenderFunction,
-  ShorthandValue,
-} from '../../../types/utils'
-
-export interface ILabelProps {
+export interface LabelProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps,
+    ColorComponentProps<ComplexColorPropType> {
   accessibility?: Accessibility
-  as?: any
-  children?: ReactChildren
+
+  /** A Label can be circular. */
   circular?: boolean
-  className?: string
-  content?: React.ReactNode
+
+  /** A Label can take up the width of its container. */
   fluid?: boolean
+
+  /** A Label can have an icon. */
   icon?: ShorthandValue
+
+  /** A Label can position its Icon at the start or end of the layout. */
   iconPosition?: 'start' | 'end'
+
+  /** A Label can contain an image. */
   image?: ShorthandValue
+
+  /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
-  renderIcon?: ShorthandRenderFunction
-  renderImage?: ShorthandRenderFunction
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
- * A label displays content classification
+ * A Label is used to classify content.
  */
-class Label extends UIComponent<Extendable<ILabelProps>, any> {
+class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static displayName = 'Label'
 
   static create: Function
@@ -49,59 +58,13 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** A label can be circular. */
+    ...commonPropTypes.createCommon({ color: 'complex' }),
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: customPropTypes.contentShorthand,
-
-    /** Label can have an icon. */
     icon: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     iconPosition: PropTypes.oneOf(['start', 'end']),
-
-    /** Label can have an icon. */
     image: customPropTypes.itemShorthand,
-
-    /** An icon label can format an Icon to appear before or after the text in the label */
     imagePosition: PropTypes.oneOf(['start', 'end']),
-
-    /**
-     * A custom render function the icon slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderIcon: PropTypes.func,
-
-    /**
-     * A custom render function the image slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderImage: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    fluid: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -119,88 +82,66 @@ class Label extends UIComponent<Extendable<ILabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, rest, variables, styles }) {
-    const {
-      children,
-      content,
-      icon,
-      iconPosition,
-      image,
-      imagePosition,
-      renderIcon,
-      renderImage,
-    } = this.props
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+    const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
-    const imageElement =
-      image &&
-      Image.create(image, {
-        defaultProps: {
-          styles: styles.image,
-          variables: variables.image,
-        },
-        render: renderImage,
-      })
-
-    const iconElement =
-      icon &&
-      Icon.create(icon, {
-        defaultProps: {
-          styles: styles.icon,
-          variables: variables.icon,
-        },
-        overrideProps: this.handleIconOverrides,
-        render: renderIcon,
-      })
-
-    let start: React.ReactNode = null
-    let end: React.ReactNode = null
-
-    // Default positioning of the image and icon
-    if (image && imagePosition === 'start') {
-      start = imageElement
-    }
-    if (icon && iconPosition === 'end') {
-      end = iconElement
+    if (childrenExist(children)) {
+      return (
+        <ElementType {...unhandledProps} className={classes.root}>
+          {children}
+        </ElementType>
+      )
     }
 
-    // Custom positioning of the icon and image
-    if (icon && iconPosition === 'start') {
-      if (image && imagePosition === 'start') {
-        start = (
-          <React.Fragment>
-            {imageElement}
-            {iconElement}
-          </React.Fragment>
-        )
-      } else {
-        start = iconElement
-      }
-    }
-    if (image && imagePosition === 'end') {
-      if (icon && iconPosition === 'end') {
-        end = (
-          <React.Fragment>
-            {iconElement}
-            {imageElement}
-          </React.Fragment>
-        )
-      } else {
-        end = imageElement
-      }
-    }
+    const imageElement = Image.create(image, {
+      defaultProps: {
+        styles: styles.image,
+        variables: variables.image,
+      },
+    })
+    const iconElement = Icon.create(icon, {
+      defaultProps: {
+        styles: styles.icon,
+        variables: variables.icon,
+      },
+      overrideProps: this.handleIconOverrides,
+    })
+
+    const startImage = imagePosition === 'start' && imageElement
+    const startIcon = iconPosition === 'start' && iconElement
+    const endIcon = iconPosition === 'end' && iconElement
+    const endImage = imagePosition === 'end' && imageElement
+
+    const hasStartElement = startImage || startIcon
+    const hasEndElement = endIcon || endImage
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? (
-          children
-        ) : (
-          <Layout main={content} start={start} end={end} gap={pxToRem(3)} />
-        )}
+      <ElementType {...unhandledProps} className={classes.root}>
+        <Layout
+          start={
+            hasStartElement && (
+              <>
+                {startImage}
+                {startIcon}
+              </>
+            )
+          }
+          main={content}
+          end={
+            hasEndElement && (
+              <>
+                {endIcon}
+                {endImage}
+              </>
+            )
+          }
+          gap={pxToRem(3)}
+        />
       </ElementType>
     )
   }
 }
 
-Label.create = createShorthandFactory(Label, content => ({ content }))
+Label.create = createShorthandFactory(Label, 'content')
 
 export default Label

@@ -12,6 +12,7 @@ const { __DEV__, __PROD__ } = config.compiler_globals
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
+  mode: __DEV__ ? 'development' : 'production',
   entry: {
     app: paths.docsSrc('index'),
     vendor: config.compiler_vendor,
@@ -24,7 +25,9 @@ const webpackConfig: any = {
   },
   devtool: config.compiler_devtool,
   externals: {
+    '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
+    'prettier/standalone': 'prettier',
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -33,9 +36,12 @@ const webpackConfig: any = {
   node: {
     fs: 'empty',
     module: 'empty',
+    child_process: 'empty',
+    net: 'empty',
+    readline: 'empty',
   },
   module: {
-    noParse: [/\.json$/, /anchor-js/],
+    noParse: [/anchor-js/],
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
@@ -52,6 +58,11 @@ const webpackConfig: any = {
   plugins: [
     new AsyncTypeScriptChecker(),
     new webpack.DefinePlugin(config.compiler_globals),
+    new webpack.ContextReplacementPlugin(
+      /node_modules[\\|/]typescript[\\|/]lib/,
+      /typescript\.js/,
+      false,
+    ),
     new CopyWebpackPlugin([
       {
         from: paths.docsSrc('public'),
@@ -71,8 +82,8 @@ const webpackConfig: any = {
         collapseWhitespace: true,
       },
       versions: {
-        jsBeautify: require('js-beautify/package.json').version,
         lodash: require('lodash/package.json').version,
+        prettier: require('prettier/package.json').version,
         propTypes: require('prop-types/package.json').version,
         react: require('react/package.json').version,
         reactDOM: require('react-dom/package.json').version,
@@ -89,6 +100,9 @@ const webpackConfig: any = {
       docs: paths.base('docs'),
       'package.json': paths.base('package.json'),
     },
+  },
+  performance: {
+    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
 }
 
@@ -120,13 +134,6 @@ if (__PROD__) {
   webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        unused: true,
-        dead_code: true,
-        warnings: false,
-      },
     }),
   )
 }

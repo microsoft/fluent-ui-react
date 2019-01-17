@@ -1,24 +1,36 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
-  IRenderResultConfig,
+  RenderResultConfig,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ContentComponentProps,
+  commonPropTypes,
 } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
-export interface IPopupContentProps {
-  as?: any
-  children?: ReactChildren
-  content?: any
-  className?: string
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+export interface PopupContentProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps {
+  /**
+   * Called after user's mouse enter.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseEnter?: ComponentEventHandler<PopupContentProps>
+
+  /**
+   * Called after user's mouse leave.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseLeave?: ComponentEventHandler<PopupContentProps>
 }
 
 /**
@@ -26,52 +38,46 @@ export interface IPopupContentProps {
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class PopupContent extends UIComponent<Extendable<IPopupContentProps>, any> {
+class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
   public static create: Function
 
   public static displayName = 'PopupContent'
   public static className = 'ui-popup__content'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
+    ...commonPropTypes.createCommon(),
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+  }
 
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
+  private handleMouseEnter = e => {
+    _.invoke(this.props, 'onMouseEnter', e, this.props)
+  }
 
-    /**
-     * Wraped content.
-     */
-    content: PropTypes.any,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  private handleMouseLeave = e => {
+    _.invoke(this.props, 'onMouseLeave', e, this.props)
   }
 
   public renderComponent({
     ElementType,
     classes,
-    rest,
-  }: IRenderResultConfig<IPopupContentProps>): React.ReactNode {
+    unhandledProps,
+  }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...unhandledProps}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-PopupContent.create = createShorthandFactory(PopupContent, content => ({ content }))
+PopupContent.create = createShorthandFactory(PopupContent, 'content')
 
 export default PopupContent

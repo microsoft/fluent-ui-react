@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
@@ -13,8 +13,8 @@ const ComponentControlsMaximize: any = ({ examplePath }) => (
     target="_blank"
     rel="noopener noreferrer"
   >
-    <Icon color="grey" fitted name="window maximize" size="large" />
-    Maximize
+    <Icon color="grey" fitted name="external alternate" size="large" />
+    Popout
   </Menu.Item>
 )
 

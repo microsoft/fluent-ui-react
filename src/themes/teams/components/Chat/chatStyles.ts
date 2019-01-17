@@ -1,9 +1,10 @@
-import { ICSSInJSStyle } from '../../../../../types/theme'
-import { IChatVariables } from './chatVariables'
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ChatVariables } from './chatVariables'
+import { ChatProps } from 'src/components/Chat/Chat'
 import { pxToRem } from '../../../../lib'
 
-const chatStyles = {
-  root: ({ variables: v }: { variables: IChatVariables }): ICSSInJSStyle => ({
+const chatStyles: ComponentSlotStylesInput<ChatProps, ChatVariables> = {
+  root: ({ variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     border: `1px solid ${v.backgroundColor}`,
     display: 'flex',

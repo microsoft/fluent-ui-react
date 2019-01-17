@@ -1,23 +1,39 @@
-import { pxToRem } from '../../../../lib'
+import { ColorValues } from '../../../types'
+import { mapColorsToScheme, pxToRem } from '../../../../lib'
+
+export type IconSizeModifier = 'x' | 'xx'
 
 export interface IconVariables {
-  [key: string]: string | number | undefined
+  [key: string]: object | string | number | boolean | undefined
 
+  colors: ColorValues<string>
   color?: string
   backgroundColor?: string
   borderColor?: string
-  horizontalSpace: string
-  margin: string
+  brandColor?: string
   secondaryColor: string
+  redColor?: string
+  disabledColor: string
+
+  horizontalSpace: string
+  marginRight: string
+  outline?: boolean
+  sizeModifier?: IconSizeModifier
 }
 
-export default (): IconVariables => ({
+const colorVariant = 500
+
+export default (siteVars): IconVariables => ({
+  colors: mapColorsToScheme(siteVars, colorVariant),
   color: undefined,
-  // TODO move initial variable discovery to JSON files
-  // similar to how components have an info.json file
   backgroundColor: undefined,
   borderColor: undefined,
+  brandColor: siteVars.brandColor,
+  secondaryColor: siteVars.white,
+  redColor: siteVars.red,
+  disabledColor: siteVars.gray06,
+
   horizontalSpace: pxToRem(10),
-  margin: '0 0.25em 0 0',
-  secondaryColor: 'white',
+  marginRight: pxToRem(8),
+  outline: undefined,
 })

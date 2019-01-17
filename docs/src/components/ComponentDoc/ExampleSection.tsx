@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { Grid, Header } from 'semantic-ui-react'
@@ -14,8 +14,8 @@ const sectionStyle: React.CSSProperties = {
   paddingBottom: '5em',
 }
 
-const ExampleSection: any = ({ title, children, ...rest }) => (
-  <Grid padded style={sectionStyle} {...rest}>
+const ExampleSection: any = ({ title, children, ...restProps }) => (
+  <Grid padded style={sectionStyle} {...restProps}>
     <Grid.Column>
       <Header as="h2" style={headerStyle} className="no-anchor">
         {title}

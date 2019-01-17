@@ -1,32 +1,41 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Image, Label, Status } from '../../'
+import Image from '../Image/Image'
+import Label from '../Label/Label'
+import Status from '../Status/Status'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
+import {
+  createShorthandFactory,
+  customPropTypes,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+} from '../../lib'
 
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import { ComponentPartStyle, ComponentVariablesInput } from '../../../types/theme'
-import { Extendable, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-
-export interface IAvatarProps {
-  as?: any
-  className?: string
+export interface AvatarProps extends UIComponentProps {
+  /** Shorthand for the image. */
   image?: ShorthandValue
+
+  /** Shorthand for the label. */
   label?: ShorthandValue
+
+  /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string
-  renderImage?: ShorthandRenderFunction
-  renderLabel?: ShorthandRenderFunction
-  renderStatus?: ShorthandRenderFunction
+
+  /** Size multiplier. */
   size?: number
+
+  /** Shorthand for the status of the user. */
   status?: ShorthandValue
+
+  /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
   getInitials?: (name: string) => string
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
  * An avatar is a graphic representation of user.
- * @accessibility To be discussed
  */
-class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
+class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -34,62 +43,16 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
   static displayName = 'Avatar'
 
   static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** The name used for displaying the initials of the avatar if the image is not provided. */
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     name: PropTypes.string,
-
-    /** Shorthand for the image. */
     image: customPropTypes.itemShorthand,
-
-    /** Shorthand for the label. */
     label: customPropTypes.itemShorthand,
-
-    /** Size multiplier. */
     size: PropTypes.number,
-
-    /** Shorthand for the status of the user. */
     status: customPropTypes.itemShorthand,
-
-    /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
     getInitials: PropTypes.func,
-
-    /**
-     * A custom render function the image slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderImage: PropTypes.func,
-
-    /**
-     * A custom render function the label slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderLabel: PropTypes.func,
-
-    /**
-     * A custom render function the status slot.
-     *
-     * @param {React.ReactType} Component - The computed component for this slot.
-     * @param {object} props - The computed props for this slot.
-     * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-     */
-    renderStatus: PropTypes.func,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -117,12 +80,11 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
-    const { name, status, image, label, getInitials, renderImage, renderLabel, renderStatus } = this
-      .props as IAvatarPropsWithDefaults
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables }) {
+    const { name, status, image, label, getInitials } = this.props as AvatarPropsWithDefaults
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {Image.create(image, {
           defaultProps: {
             fluid: true,
@@ -130,19 +92,15 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
             title: name,
             styles: styles.image,
           },
-          render: renderImage,
         })}
         {!image &&
-          !renderImage &&
           Label.create(label || {}, {
             defaultProps: {
-              as: 'div',
               content: getInitials(name),
               circular: true,
               title: name,
               styles: styles.label,
             },
-            render: renderLabel,
           })}
         {Status.create(status, {
           defaultProps: {
@@ -152,15 +110,14 @@ class Avatar extends UIComponent<Extendable<IAvatarProps>, any> {
               borderWidth: variables.statusBorderWidth,
             },
           },
-          render: renderStatus,
         })}
       </ElementType>
     )
   }
 }
 
-Avatar.create = createShorthandFactory(Avatar, name => ({ name }))
+Avatar.create = createShorthandFactory(Avatar, 'name')
 
 export default Avatar
 
-export type IAvatarPropsWithDefaults = IAvatarProps & typeof Avatar.defaultProps
+export type AvatarPropsWithDefaults = AvatarProps & typeof Avatar.defaultProps

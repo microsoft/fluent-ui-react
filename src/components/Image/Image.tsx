@@ -1,23 +1,30 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
+import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { imageBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
+import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ReactChildren } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
-export interface IImageProps {
+export interface ImageProps extends UIComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default imageBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
+
+  /** An image may be formatted to appear inline with text as an avatar. */
   avatar?: boolean
-  children?: ReactChildren
+
+  /** An image can appear circular. */
   circular?: boolean
-  className?: string
+
+  /** An image can take up the width of its container. */
   fluid?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+
+  /** Image source URL. */
+  src?: string
 }
 
 /**
@@ -30,7 +37,7 @@ export interface IImageProps {
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-class Image extends UIComponent<Extendable<IImageProps>, any> {
+class Image extends UIComponent<ReactProps<ImageProps>, any> {
   static create: Function
 
   static className = 'ui-image'
@@ -38,29 +45,14 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
   static displayName = 'Image'
 
   static propTypes = {
-    /** Accessibility behavior if overridden by the user. */
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     accessibility: PropTypes.func,
-
-    /** An element type to render as. */
-    as: customPropTypes.as,
-
-    /** An image may be formatted to appear inline with text as an avatar. */
     avatar: PropTypes.bool,
-
-    /** An image can appear circular. */
     circular: PropTypes.bool,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** An image can take up the width of its container. */
     fluid: PropTypes.bool,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
   static defaultProps = {
@@ -68,11 +60,17 @@ class Image extends UIComponent<Extendable<IImageProps>, any> {
     accessibility: imageBehavior as Accessibility,
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
-    return <ElementType {...accessibility.attributes.root} {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      />
+    )
   }
 }
 
-Image.create = createShorthandFactory(Image, src => ({ src }))
+Image.create = createShorthandFactory(Image, 'src')
 
 export default Image

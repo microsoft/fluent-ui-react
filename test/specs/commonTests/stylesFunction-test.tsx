@@ -3,22 +3,22 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import { UIComponent } from 'src/lib'
 import { Extendable } from 'types/utils'
-import { ICSSInJSStyle } from 'types/theme'
-import { getTestingRenderedComponent } from 'test/utils'
+import { ICSSInJSStyle } from 'src/themes/types'
+import { mountWithProviderAndGetComponent } from 'test/utils'
 
 type AttrValue = 'props' | 'state'
 
-interface IProps {
+interface Props {
   propsAttr?: AttrValue
   commonAttr?: AttrValue
 }
 
-interface IState {
+interface State {
   commonAttr?: AttrValue
   stateAttr?: AttrValue
 }
 
-type IPropsAndState = IProps & IState
+type PropsAndState = Props & State
 
 const testClassName = 'ui-test-component'
 
@@ -26,8 +26,8 @@ const testStylesForComponent = ({
   props,
   state,
   expected,
-}: { props?: IProps; state?: IState; expected?: IPropsAndState } = {}) => {
-  class TestComponent extends UIComponent<Extendable<IProps>, IState> {
+}: { props?: Props; state?: State; expected?: PropsAndState } = {}) => {
+  class TestComponent extends UIComponent<Extendable<Props>, State> {
     public static className = testClassName
     public static propTypes = {
       propsAttr: PropTypes.any,
@@ -37,22 +37,22 @@ const testStylesForComponent = ({
 
     public state = state
 
-    public renderComponent({ ElementType, classes, rest }): React.ReactNode {
-      return <ElementType {...rest} className={classes.root} />
+    public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+      return <ElementType {...unhandledProps} className={classes.root} />
     }
   }
 
-  const TestStylesComponent = (props: Extendable<IProps>) => (
+  const TestStylesComponent = (props: Extendable<Props>) => (
     <TestComponent
       {...props}
-      styles={({ props }: { props: IPropsAndState }): ICSSInJSStyle => {
+      styles={({ props }: { props: PropsAndState }): ICSSInJSStyle => {
         expect(_.mapValues(expected, (val, key) => props[key])).toEqual(expected)
         return {}
       }}
     />
   )
 
-  getTestingRenderedComponent(TestStylesComponent, <TestStylesComponent {...props} />)
+  mountWithProviderAndGetComponent(TestStylesComponent, <TestStylesComponent {...props} />)
 }
 
 describe('styles function', () => {

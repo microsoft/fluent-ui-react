@@ -16,7 +16,7 @@
     <img alt="Gitter" src="https://img.shields.io/badge/gitter-join_chat-1dce73.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIwIiB5PSI1IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI1Ii8%2BPHJlY3QgeD0iMiIgeT0iNiIgZmlsbD0iI2ZmZiIgd2lkdGg9IjEiIGhlaWdodD0iNyIvPjxyZWN0IHg9IjQiIHk9IjYiIGZpbGw9IiNmZmYiIHdpZHRoPSIxIiBoZWlnaHQ9IjciLz48cmVjdCB4PSI2IiB5PSI2IiBmaWxsPSIjZmZmIiB3aWR0aD0iMSIgaGVpZ2h0PSI0Ii8%2BPC9zdmc%2B&logoWidth=8&style=flat-square&maxAge=2592000" />
   </a>
   <a href="https://circleci.com/gh/stardust-ui/react/tree/master">
-    <img alt="Circle" src="https://img.shields.io/circleci/project/stardust-ui/react/master.svg?style=flat-square" />
+    <img alt="Circle" src="https://img.shields.io/circleci/project/github/stardust-ui/react/master.svg?style=flat-square" />
   </a>
   <a href="https://codecov.io/gh/stardust-ui/react">
     <img alt="Codecov" src="https://img.shields.io/codecov/c/github/stardust-ui/react/master.svg?style=flat-square" />
@@ -38,7 +38,29 @@
 
 ***
 
-Stardust is a set of specifications and tools for building UI libraries. It is based on a fork of [Semantic UI React (SUIR)][200], and designed to support two initiatives: Stardust itself and SUIR v2.
+Stardust is a set of specifications and tools for building UI libraries. It is based on a fork of [Semantic UI React (SUIR)][200].
+
+## How Can I Help?
+
+### [Voice Your Opinion][101]
+
+Help shape this library by weighing in on our [RFC (request for comments)][101] issues. 
+
+### [Contribute][3]
+
+Our [CONTRIBUTING.md][3] is a step-by-step setup and development guide.
+
+### [Good First Issue][103]
+
+Issues labeled [`good first issue`][103] are a great way to ease into development on this project. 
+
+### [New Components][102]
+
+There is an issue for every new component labeled [`new component`][102].  Just comment on the issue you'd like to take.
+
+### [Help Wanted Label][100]
+
+Any other issue labeled [`help wanted`][100] is also ready for a PR.
 
 ## Why?
 
@@ -50,26 +72,9 @@ A shared library means more great ideas and more engineering support for feature
 
 ## Scope
 
-You can think of Stardust as the internals of a good component library. This encompasses everything except for the actual UI components themselves.
+You can think of Stardust as the internals of a good component library. This encompasses everything that one UI library may need, starting from the common UI component available on the web, custom theming, accessibility and rtl. Currently there is an React implementation of it, available here: [stardust-ui/react](https://github.com/stardust-ui/react).
 
-We are currently discussing which, if any, components will be included. The collaborative result of our [specifications](#specifications) will determine Stardust's final scope.
-
-## Specifications
-
-All of our specifications are listed in [/specifications][100], and are open for collaboration. You are also welcome to submit your own proposals via a pull request.
-
-It is our desire that the patterns and utilities around modern component libraries are not proprietary but the result of collaboration and shared sentiment among library developers and consumers.
-
-- [Creating Components][101]
-- [CSS-in-JS][102]
-- [Theming][103]
-- [Component API][104]
-- [Shorthand API][105]
-- [Event Stack][106]
-- [HTML Font Size][107]
-- [Parent Child Coupling][108]
-
-## Contribute
+## Contributing Organizations
 
 Currently, these teams are actively participating in Stardust's specifications and development:
 
@@ -79,7 +84,7 @@ Currently, these teams are actively participating in Stardust's specifications a
 
 If you own or are building a UI component library, we'd love to have your input. [Post an issue][2] introducing yourself and your team and join us today.
 
-You can actively contribute to Stardust by refering to the [Contributing][3] documentation.
+You can actively contribute to Stardust by referring to the [Contributing][3] documentation.
 
 ## Usage examples
 
@@ -96,16 +101,11 @@ See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specificatio
 [4]: https://github.com/stardust-ui/react/blob/master/CHANGELOG.md
 [5]: https://stardust-ui.github.io/react/quick-start
 
-<!-- SPECIFICATIONS -->
-[100]: https://github.com/stardust-ui/react/tree/master/specifications
-[101]: https://github.com/stardust-ui/react/tree/master/specifications/creating-components.md
-[102]: https://github.com/stardust-ui/react/tree/master/specifications/css-in-js.md
-[103]: https://github.com/stardust-ui/react/tree/master/specifications/theming.md
-[104]: https://github.com/stardust-ui/react/tree/master/specifications/component-api.md
-[105]: https://github.com/stardust-ui/react/tree/master/specifications/shorthand-api.md
-[106]: https://github.com/stardust-ui/react/tree/master/specifications/event-stack.md
-[107]: https://github.com/stardust-ui/react/tree/master/specifications/html-font-size.md
-[108]: https://github.com/stardust-ui/react/tree/master/specifications/parent-child-couplnig.md
+<!-- ISSUE LABELS -->
+[100]: https://github.com/stardust-ui/react/labels/help%20wanted
+[101]: https://github.com/stardust-ui/react/issues?q=is%3Aopen+RFC+label%3ARFC
+[102]: https://github.com/stardust-ui/react/issues?q=is%3Aissue+is%3Aopen+label%3A%22new+component%22
+[103]: https://github.com/stardust-ui/react/labels/good%20first%20issue
 
 <!-- SUIR -->
 [200]: https://github.com/Semantic-Org/Semantic-UI-React

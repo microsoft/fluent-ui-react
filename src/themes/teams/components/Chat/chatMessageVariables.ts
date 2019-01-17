@@ -1,15 +1,25 @@
-export interface IChatMessageVariables {
-  messageWidth: string
-  messageColor: string
-  messageColorMine: string
-  avatar: { statusBorderColor: string }
+import { pxToRem } from '../../../../lib'
+
+export interface ChatMessageVariables {
+  width: string
+  backgroundColor: string
+  backgroundColorMine: string
+  borderRadius: string
+  color: string
+  padding: string
+  authorMargin: string
+  contentFocusOutlineColor: string
+  border: string
 }
 
-export default (siteVars): IChatMessageVariables => ({
-  messageWidth: '80%',
-  messageColor: siteVars.white,
-  messageColorMine: '#E0E0ED',
-  avatar: {
-    statusBorderColor: siteVars.gray10,
-  },
+export default (siteVars): ChatMessageVariables => ({
+  width: '80%',
+  backgroundColor: siteVars.white,
+  backgroundColorMine: '#E5E5F1',
+  borderRadius: '0.3rem',
+  color: 'rgb(64, 64, 64)',
+  padding: pxToRem(14),
+  authorMargin: pxToRem(10),
+  contentFocusOutlineColor: siteVars.brand,
+  border: 'none',
 })

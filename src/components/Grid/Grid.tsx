@@ -1,75 +1,78 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { UIComponent, childrenExist, customPropTypes, IRenderResultConfig } from '../../lib'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable, ShorthandValue, ReactChildren } from '../../../types/utils'
+import {
+  UIComponent,
+  childrenExist,
+  customPropTypes,
+  RenderResultConfig,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
+import { ReactProps } from '../../../types/utils'
+import { Accessibility } from '../../lib/accessibility/types'
+import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode
 
-export interface IGridProps {
-  as?: any
-  className?: string
-  children?: ReactChildren
+export interface GridProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default defaultBehavior
+   * @available gridBehavior
+   * */
+  accessibility?: Accessibility
+
+  /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   columns?: string | number
-  content?: ShorthandValue | ShorthandValue[]
+
+  /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
   rows?: string | number
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
 }
 
 /**
- * A grid.
+ * A grid is used to harmonize negative space in a layout.
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<IGridProps>, any> {
+class Grid extends UIComponent<ReactProps<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
 
   public static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /**
-     *  Used to set content when using childrenApi - internal only
-     *  @docSiteIgnore
-     */
-    children: PropTypes.node,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** The columns of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
+    ...commonPropTypes.createCommon({
+      content: false,
+    }),
+    accessibility: PropTypes.func,
     columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** Shorthand for primary content. */
     content: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.oneOfType([
-        PropTypes.arrayOf(customPropTypes.itemShorthand),
-        customPropTypes.itemShorthand,
+        PropTypes.arrayOf(customPropTypes.nodeContent),
+        customPropTypes.nodeContent,
       ]),
     ]),
-
-    /** The rows of the grid with a space-separated list of values. The values represent the track size, and the space between them represents the grid line. */
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   }
 
-  public static defaultProps = {
+  public static defaultProps: GridProps = {
     as: 'div',
+    accessibility: defaultBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }: IRenderResultConfig<any>): ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+  }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

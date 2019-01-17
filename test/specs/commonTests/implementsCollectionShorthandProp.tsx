@@ -1,31 +1,42 @@
 import * as React from 'react'
-import { mount } from './isConformant'
+import { mountWithProvider as mount } from 'test/utils'
 import * as _ from 'lodash'
+import { PropsOf } from 'types/utils'
 
-export type CollectionShorthandTestOptions = {
-  mapsValueToProp?: string
-  skipArrayOfStrings?: boolean
+export type CollectionShorthandTestOptions<TProps = any> = {
+  mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false
 }
 
 export const DefaultCollectionShorthandTestOptions: CollectionShorthandTestOptions = {
   mapsValueToProp: 'content',
-  skipArrayOfStrings: false,
 }
 
-export default Component => {
+export type CollectionShorthandPropTestsRunner<TComponent> = <
+  TShorthandComponent extends React.ComponentType
+>(
+  shorthandProp: keyof PropsOf<TComponent>,
+  ShorthandComponent: TShorthandComponent,
+  options?: CollectionShorthandTestOptions<PropsOf<TShorthandComponent>>,
+) => any
+
+export type CollectionShorthandPropTestsFactory = <TComponent extends React.ComponentType>(
+  Component: TComponent,
+) => CollectionShorthandPropTestsRunner<TComponent>
+
+export default ((Component: React.ComponentType) => {
   return function implementsCollectionShorthandProp(
     shorthandPropertyName: string,
     ShorthandComponent: React.ComponentType,
     options: CollectionShorthandTestOptions = DefaultCollectionShorthandTestOptions,
   ) {
-    const { mapsValueToProp } = options
+    const mapsValueToProp = options.mapsValueToProp as string
 
     describe(`shorthand property for '${ShorthandComponent.displayName}'`, () => {
       test(`is defined`, () => {
         expect(Component.propTypes[shorthandPropertyName]).toBeTruthy()
       })
 
-      if (!options.skipArrayOfStrings) {
+      if (options.mapsValueToProp) {
         test(`array of string values is spread as ${
           ShorthandComponent.displayName
         }s' ${mapsValueToProp}`, () => {
@@ -73,4 +84,4 @@ export default Component => {
       })
     })
   }
-}
+}) as CollectionShorthandPropTestsFactory

@@ -8,31 +8,40 @@ import config from '../../../config'
 const { paths } = config
 const g = require('gulp-load-plugins')()
 const { log, PluginError } = g.util
-import gulpUseRelativeImportPaths from '../plugins/gulp-use-relative-import-paths'
 
 // ----------------------------------------
 // Clean
 // ----------------------------------------
 
-task('clean:dist', cb => {
-  rimraf(`${config.paths.dist()}/*`, cb)
+task('clean:dist:es', cb => {
+  rimraf(`${config.paths.dist()}/es/*`, cb)
 })
+
+task('clean:dist:commonjs', cb => {
+  rimraf(`${config.paths.dist()}/commonjs/*`, cb)
+})
+
+task('clean:dist:umd', cb => {
+  rimraf(`${config.paths.dist()}/umd/*`, cb)
+})
+
+task('clean:dist', parallel('clean:dist:es', 'clean:dist:commonjs', 'clean:dist:umd'))
 
 // ----------------------------------------
 // Build
 // ----------------------------------------
+const componentsSrc = [paths.src('**/*.{ts,tsx}'), `!${paths.src('**/umd.ts')}`]
+
 task('build:dist:commonjs', () => {
   const tsConfig = paths.base('build/tsconfig.commonjs.json')
   const settings = { declaration: true }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
-  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
   const types = src(paths.base('types/**'))
 
   return merge2([
-    dts
-      .pipe(gulpUseRelativeImportPaths({ forImportStartsWith: 'src', paths }))
-      .pipe(dest(paths.dist('commonjs'))),
+    dts.pipe(dest(paths.dist('commonjs'))),
     js.pipe(dest(paths.dist('commonjs'))),
     types.pipe(dest(paths.dist('types'))),
   ])
@@ -43,13 +52,11 @@ task('build:dist:es', () => {
   const settings = { declaration: true }
   const typescript = g.typescript.createProject(tsConfig, settings)
 
-  const { dts, js } = src(paths.src('**/*.{ts,tsx}')).pipe(typescript())
+  const { dts, js } = src(componentsSrc).pipe(typescript())
   const types = src(paths.base('types/**'))
 
   return merge2([
-    dts
-      .pipe(gulpUseRelativeImportPaths({ forImportStartsWith: 'src', paths }))
-      .pipe(dest(paths.dist('es'))),
+    dts.pipe(dest(paths.dist('es'))),
     js.pipe(dest(paths.dist('es'))),
     types.pipe(dest(paths.dist('types'))),
   ])
@@ -73,7 +80,7 @@ task('build:dist:umd', cb => {
       log('Webpack compiler encountered errors.')
       throw new PluginError('webpack', errors.toString())
     }
-    if (warnings.length > 0 && config.compiler_fail_on_warning) {
+    if (warnings.length > 0) {
       throw new PluginError('webpack', warnings.toString())
     }
 

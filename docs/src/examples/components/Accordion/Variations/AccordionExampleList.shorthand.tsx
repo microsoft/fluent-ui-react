@@ -1,5 +1,5 @@
-import React from 'react'
-import { Accordion, List, Image, Button } from '@stardust-ui/react'
+import * as React from 'react'
+import { Accordion, Button } from '@stardust-ui/react'
 
 class AccordionExampleList extends React.Component {
   render() {
@@ -10,21 +10,15 @@ class AccordionExampleList extends React.Component {
           key: 'animals',
           content: (
             <div>
-              <List
-                items={[
-                  { key: 'a', media: <Image avatar src="//placehold.it/100" />, header: 'cat' },
-                  { key: 'b', media: <Image avatar src="//placehold.it/100" />, header: 'dog' },
-                  { key: 'c', media: <Image avatar src="//placehold.it/100" />, header: 'mouse' },
-                ]}
-              />
-              <Button>Add pet</Button>
+              <Button primary>Add pet</Button>
+              <Button>Remove pet</Button>
             </div>
           ),
         },
       },
     ]
 
-    return <Accordion panels={panels} />
+    return <Accordion defaultActiveIndex={[0]} panels={panels} />
   }
 }
 

@@ -1,30 +1,29 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { mount as enzymeMount } from 'enzyme'
+import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
-import { ThemeProvider } from 'react-fela'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
-import { assertBodyContains, consoleUtil, syntheticEvent } from 'test/utils'
+import {
+  assertBodyContains,
+  consoleUtil,
+  mountWithProvider as mount,
+  syntheticEvent,
+} from 'test/utils'
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/'
-import { felaRenderer } from 'src/lib'
+
 import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 
-export interface IConformant {
+export interface Conformant {
   eventTargets?: object
+  nestingLevel?: number
   requiredProps?: object
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
-}
-
-export const mount = (node, options?) => {
-  return enzymeMount(
-    <ThemeProvider theme={{ renderer: felaRenderer }}>{node}</ThemeProvider>,
-    options,
-  )
+  usesWrapperSlot?: boolean
 }
 
 /**
@@ -32,35 +31,57 @@ export const mount = (node, options?) => {
  * @param {React.Component|Function} Component A component that should conform.
  * @param {Object} [options={}]
  * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
- * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API
+ * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
  * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
  * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
+ * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
  */
-export default (Component, options: IConformant = {}) => {
+export default (Component, options: Conformant = {}) => {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
+    nestingLevel = 0,
     requiredProps = {},
     rendersPortal = false,
+    usesWrapperSlot = false,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
   const componentType = typeof Component
 
   // This is added because the component is mounted
-  const getComponent = wrapper => {
+  const getComponent = (wrapper: ReactWrapper) => {
     // FelaTheme wrapper and the component itself:
     let component = wrapper
-      .childAt(0)
-      .childAt(0)
-      .childAt(0)
+
+    /**
+     * The wrapper is mounted with Provider, so in total there are three HOC components
+     * that we want to get rid of: ThemeProvider, the actual Component and FelaTheme,
+     * in order to be able to get to the actual rendered result of the component we are testing
+     */
+    _.times(nestingLevel + 3, () => {
+      component = component.childAt(0)
+    })
+
     if (component.type() === FocusZone) {
-      // `component` is <FocusZone>
+      // another HOC component is added: FocuZone
       component = component.childAt(0) // skip through <FocusZone>
       if (component.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
         component = component.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
+
+    if (usesWrapperSlot) {
+      /**
+       * If there is a wrapper slot, then again, we need to get rid of all three HOC components:
+       * ThemeProvider, Wrapper (Slot), and FelaTheme in order to be able to get to the actual
+       * rendered result of the component we are testing
+       */
+      _.times(3, () => {
+        component = component.childAt(0)
+      })
+    }
+
     return component
   }
 
@@ -105,6 +126,27 @@ export default (Component, options: IConformant = {}) => {
       )
     })
     return null
+  }
+
+  // ----------------------------------------
+  // Docblock description
+  // ----------------------------------------
+  const hasDocblockDescription = info.docblock.description.join('').trim().length > 0
+
+  test('has a docblock description', () => {
+    expect(hasDocblockDescription).toEqual(true)
+  })
+
+  if (hasDocblockDescription) {
+    const minWords = 5
+    const maxWords = 25
+    test(`docblock description is long enough to be meaningful (>${minWords} words)`, () => {
+      expect(_.words(info.docblock.description).length).toBeGreaterThan(minWords)
+    })
+
+    test(`docblock description is short enough to be quickly understood (<${maxWords} words)`, () => {
+      expect(_.words(info.docblock.description).length).toBeLessThan(maxWords)
+    })
   }
 
   // ----------------------------------------
@@ -303,10 +345,10 @@ export default (Component, options: IConformant = {}) => {
         if (eventTarget.length === 0) {
           throw new Error(
             'The event prop was not delegated to the children. You probably ' +
-              'forgot to use `getUnhandledProps` util to spread the `rest` props.',
+              'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
           )
         }
-        const customHandler = eventTarget.prop([listenerName])
+        const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
           customHandler(eventShape)
@@ -335,9 +377,11 @@ export default (Component, options: IConformant = {}) => {
           expect(handlerSpy).toHaveBeenCalled()
         } catch (err) {
           throw new Error(
-            `<${info.displayName} ${listenerName}={${handlerName}} />\n` +
-              `${leftPad} ^ was not called once on "${eventName}".` +
+            [
+              `<${info.displayName} ${listenerName}={${handlerName}} />\n`,
+              `${leftPad} ^ was not called once on "${eventName}".`,
               'You may need to hoist your event handlers up to the root element.\n',
+            ].join(''),
           )
         }
 
@@ -346,10 +390,11 @@ export default (Component, options: IConformant = {}) => {
 
         if (_.has(Component.propTypes, listenerName)) {
           expectedArgs = [eventShape, expect.objectContaining(component.props())]
-          errorMessage =
-            'was not called with (event, data).\n' +
-            `Ensure that 'props' object is passed to '${listenerName}'\n` +
-            `event handler of <${Component.displayName} />.`
+          errorMessage = [
+            'was not called with (event, data).\n',
+            `Ensure that 'props' object is passed to '${listenerName}'\n`,
+            `event handler of <${Component.displayName} />.`,
+          ].join('')
         }
 
         // Components should return the event first, then any data
@@ -378,7 +423,7 @@ export default (Component, options: IConformant = {}) => {
         .find('[className]')
         .hostNodes()
         .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
-        .first()
+        .at(usesWrapperSlot ? 1 : 0)
         .prop('className')
       return classes
     }
@@ -439,7 +484,7 @@ export default (Component, options: IConformant = {}) => {
       const mixedClasses = getClassesOfRootElement(wrapperWithCustomClasses)
 
       const message = [
-        'Make sure you are using the `getUnhandledProps` util to spread the `rest` props.',
+        'Make sure you are using the `getUnhandledProps` util to spread the `unhandledProps` props.',
         'This may also be of help: https://facebook.github.io/react/docs/transferring-props.html.',
       ].join(' ')
 

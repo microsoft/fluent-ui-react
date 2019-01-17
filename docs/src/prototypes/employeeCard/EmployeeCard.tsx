@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { Sizes } from '../../../../src/lib/enums'
 import { Extendable, ShorthandValue } from '../../../../types/utils'
 import { Avatar, Divider, Grid } from '@stardust-ui/react'
 import Text from './Text'
 
-export interface IEmployeeCardProps {
+export interface EmployeeCardProps {
   firstName?: string
   lastName?: string
   status?: string
@@ -16,7 +15,7 @@ export interface IEmployeeCardProps {
   avatar?: ShorthandValue
 }
 
-class EmployeeCard extends React.Component<Extendable<IEmployeeCardProps>, any> {
+class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
   render() {
     const {
       firstName,
@@ -28,16 +27,16 @@ class EmployeeCard extends React.Component<Extendable<IEmployeeCardProps>, any> 
       email,
       avatar,
       phone,
-      ...rest
+      ...restProps
     } = this.props
     return (
       <Grid
         columns="80% 20%"
         styles={{ width: '320px', padding: '10px 20px 10px 10px', background: 'white' }}
-        {...rest}
+        {...restProps}
       >
         <div>
-          <Text size={Sizes.Medium} weight={'bold'} as="div">
+          <Text size={'medium'} weight={'bold'} as="div">
             {firstName} {lastName}
           </Text>
           <Text muted as="div">

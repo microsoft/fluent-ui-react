@@ -1,59 +1,46 @@
 import * as React from 'react'
-import * as PropTypes from 'prop-types'
-import { customPropTypes, UIComponent, childrenExist, createShorthandFactory } from '../../lib'
-import { Extendable } from '../../../types/utils'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
+import {
+  childrenExist,
+  createShorthandFactory,
+  UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+} from '../../lib'
+import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
+import { ReactProps } from '../../../types/utils'
 
-export interface ISlotProps {
-  as?: any
-  className?: string
-  content?: any
-  styles?: ComponentPartStyle<ISlotProps, any>
-  variables?: ComponentVariablesInput
-}
+export interface SlotProps
+  extends UIComponentProps<SlotProps>,
+    ContentComponentProps,
+    ChildrenComponentProps {}
 
 /**
  * A Slot is a basic component (no default styles)
  */
-class Slot extends UIComponent<Extendable<ISlotProps>, any> {
-  static create: Function
+const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
+  create?: Function
+} = createComponent<SlotProps>({
+  displayName: 'Slot',
 
-  static className = 'ui-slot'
+  className: 'ui-slot',
 
-  static displayName = 'Slot'
+  propTypes: {
+    ...commonPropTypes.createCommon(),
+  },
 
-  static propTypes = {
-    /** An element type to render as (string or function). */
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
-    /** Shorthand for primary content. */
-    content: PropTypes.any,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  }
-
-  static defaultProps = {
-    as: 'div',
-  }
-
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+  render(config, props) {
+    const { ElementType, classes, unhandledProps } = config
+    const { children, content } = props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
-  }
-}
+  },
+})
 
-Slot.create = createShorthandFactory(Slot, content => ({ content }))
+Slot.create = createShorthandFactory(Slot)
 
 export default Slot

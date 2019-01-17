@@ -1,43 +1,55 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { createShorthandFactory, customPropTypes, UIComponent } from '../../lib'
-import ItemLayout from '../ItemLayout'
-import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/interfaces'
 import {
-  FocusableItem,
-  IFocusableItemProps,
-} from '../../lib/accessibility/FocusHandling/FocusableItem'
-import { ComponentVariablesInput, ComponentPartStyle } from '../../../types/theme'
-import { Extendable } from '../../../types/utils'
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
+} from '../../lib'
+import ItemLayout from '../ItemLayout/ItemLayout'
+import { listItemBehavior } from '../../lib/accessibility'
+import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
-export interface IListItemProps {
+export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @default listItemBehavior
+   * */
   accessibility?: Accessibility
-  as?: any
-  className?: string
   contentMedia?: any
-  content?: any
+  /** Toggle debug mode. */
   debug?: boolean
-  focusableItemProps?: IFocusableItemProps
   header?: any
   endMedia?: any
   headerMedia?: any
+
+  /** A list item can appear more important and draw the user's attention. */
   important?: boolean
   media?: any
-  selection?: boolean
+
+  /** A list item can indicate that it can be selected. */
+  selectable?: boolean
+
+  /** Indicates if the current list item is selected. */
+  selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
-  styles?: ComponentPartStyle
-  variables?: ComponentVariablesInput
+  /**
+   * Called on click.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onClick?: ComponentEventHandler<ListItemProps>
 }
 
-export interface IListItemState {
-  isHovering: boolean
-}
-
-class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
+/**
+ * A list item contains a single piece of content within a list.
+ */
+class ListItem extends UIComponent<ReactProps<ListItemProps>> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -45,41 +57,30 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
   static className = 'ui-list__item'
 
   static propTypes = {
-    as: customPropTypes.as,
-
-    /** Additional CSS class name(s) to apply.  */
-    className: PropTypes.string,
-
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
     contentMedia: PropTypes.any,
-
-    /** Shorthand for primary content. */
     content: PropTypes.any,
 
-    /** Toggle debug mode */
     debug: PropTypes.bool,
 
     header: PropTypes.any,
     endMedia: PropTypes.any,
     headerMedia: PropTypes.any,
 
-    /** A list item can appear more important and draw the user's attention. */
     important: PropTypes.bool,
     media: PropTypes.any,
 
-    /** A list item can indicate that it can be selected. */
-    selection: PropTypes.bool,
+    selectable: PropTypes.bool,
+    selected: PropTypes.bool,
+
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
 
-    /** Accessibility behavior if overridden by the user. */
     accessibility: PropTypes.func,
-    focusableItemProps: PropTypes.object,
-
-    /** Additional CSS styles to apply to the component instance.  */
-    styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-
-    /** Override for theme site variables to allow modifications of component styling via themes. */
-    variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    onClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -87,31 +88,18 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
     accessibility: listItemBehavior as Accessibility,
   }
 
-  constructor(props: IListItemProps) {
-    super(props, null)
-
-    this.state = {
-      isHovering: false,
-    }
+  protected actionHandlers: AccessibilityActionHandlers = {
+    performClick: event => {
+      this.handleClick(event)
+      event.preventDefault()
+    },
   }
 
-  private itemRef = React.createRef<HTMLElement>()
-
-  private focusableItem = FocusableItem.create(this)
-
-  handleMouseEnter = () => {
-    this.setState({ isHovering: true })
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleMouseLeave = () => {
-    this.setState({ isHovering: false })
-  }
-
-  componentDidUpdate() {
-    this.focusableItem.tryFocus(ReactDOM.findDOMNode(this.itemRef.current) as HTMLElement)
-  }
-
-  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
+  renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const {
       as,
       debug,
@@ -121,28 +109,9 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
       contentMedia,
       header,
       headerMedia,
-      selection,
       truncateContent,
       truncateHeader,
     } = this.props
-
-    const { isHovering } = this.state
-    const endArea = isHovering && endMedia
-
-    const hoveringSelectionCSS = selection && isHovering ? { color: 'inherit' } : {}
-
-    const headerCSS = {
-      ...styles.header,
-      ...hoveringSelectionCSS,
-    }
-    const headerMediaCSS = {
-      ...styles.headerMedia,
-      ...hoveringSelectionCSS,
-    }
-    const contentCSS = {
-      ...styles.content,
-      ...hoveringSelectionCSS,
-    }
 
     return (
       <ItemLayout
@@ -150,29 +119,27 @@ class ListItem extends UIComponent<Extendable<IListItemProps>, IListItemState> {
         className={classes.root}
         rootCSS={styles.root}
         content={content}
-        contentMedia={!isHovering && contentMedia}
+        contentMedia={contentMedia}
         debug={debug}
-        endMedia={endArea}
+        endMedia={endMedia}
         header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}
-        selection={selection}
         truncateContent={truncateContent}
         truncateHeader={truncateHeader}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        headerCSS={headerCSS}
-        headerMediaCSS={headerMediaCSS}
-        contentCSS={contentCSS}
-        ref={this.itemRef}
+        headerCSS={styles.header}
+        headerMediaCSS={styles.headerMedia}
+        contentCSS={styles.content}
+        onClick={this.handleClick}
         {...accessibility.attributes.root}
-        {...rest}
+        {...accessibility.keyHandlers.root}
+        {...unhandledProps}
       />
     )
   }
 }
 
-ListItem.create = createShorthandFactory(ListItem, main => ({ main }))
+ListItem.create = createShorthandFactory(ListItem, 'content')
 
 export default ListItem
