@@ -12,7 +12,7 @@ const alignmentStyles = props => {
           ? 'space-between'
           : props.center
           ? 'center'
-          : 'flex-start',
+          : 'inherit',
         justifyContent: props.bottom ? 'baseline' : props.center ? 'center' : 'flex-start',
       }
     : {

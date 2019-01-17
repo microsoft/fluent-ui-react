@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Avatar, Flex, Icon, Segment } from '@stardust-ui/react'
+import { Flex, Segment } from '@stardust-ui/react'
 
 const FlexExampleVertical = () => (
-  <Flex vertical>
-    <Icon name="home" size="larger" />
+  <Flex vertical styles={{ height: '20rem' }}>
+    <Segment content="Header" />
     <Flex.Body>
-      <Segment content="Main area" />
+      <Segment content="Main content" />
     </Flex.Body>
-    <Avatar image="public/images/avatar/small/matt.jpg" />
+    <Segment content="Footer" />
   </Flex>
 )
 

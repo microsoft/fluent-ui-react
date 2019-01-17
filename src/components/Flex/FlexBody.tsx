@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { childrenExist } from '../../lib'
 
 export type FlexBodyProps = {
   children?: any
@@ -13,10 +12,13 @@ const flexFluid = { flex: 1 }
 export const FlexBody: React.FunctionComponent<FlexBodyProps> = props => {
   const { children } = props
 
-  if (childrenExist(children)) {
+  // check for multiiple children
+  // should it be allowed?
+  if (children.length !== undefined) {
     return <div style={flexFluid}>{children}</div>
   }
 
+  // Only one child, inject fluid property
   return React.cloneElement(children, {
     ...children.props,
     ...{ style: { ...children.props.style, ...flexFluid } },

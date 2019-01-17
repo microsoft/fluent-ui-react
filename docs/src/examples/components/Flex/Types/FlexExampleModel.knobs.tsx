@@ -4,7 +4,7 @@ import * as React from 'react'
 import Knobs from 'docs/src/components/Knobs/Knobs'
 
 const LayoutExampleGapKnobs: any = props => {
-  const { onKnobChange, leftAreaGap, rightAreaGap, debug } = props
+  const { onKnobChange, leftAreaGap, rightAreaGap } = props
 
   return (
     <Knobs>
