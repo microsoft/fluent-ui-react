@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
+
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
@@ -27,7 +30,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Remove `render` from default factories options @layershifter ([#735](https://github.com/stardust-ui/react/pull/735))
-- Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
 
 ### Documentation
 - Fix ignored initial state of knobs @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
