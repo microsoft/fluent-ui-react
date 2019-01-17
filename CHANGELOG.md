@@ -19,6 +19,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
+- Changes in `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+  - rename `noResultsMessage` prop to `messageNoResults`
+  - `messageNoResults` has default value by default 
+  - rename `toggleButton` prop to `indicator`
+  - `indicator` is visible by default
 
 ### Fixes
 - Remove `render` from default factories options @layershifter ([#735](https://github.com/stardust-ui/react/pull/735))
@@ -31,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686] (https://github.com/stardust-ui/react/pull/686))
+- Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
 
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
