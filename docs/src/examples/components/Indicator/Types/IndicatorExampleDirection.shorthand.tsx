@@ -3,8 +3,8 @@ import { Indicator } from '@stardust-ui/react'
 
 const IndicatorExampleDirection = () => (
   <div>
-    <Indicator direction="forward" /> <Indicator direction="bottom" />{' '}
-    <Indicator direction="back" /> <Indicator direction="top" />{' '}
+    <Indicator direction="end" /> <Indicator direction="bottom" /> <Indicator direction="start" />{' '}
+    <Indicator direction="top" />{' '}
   </div>
 )
 

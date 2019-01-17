@@ -213,7 +213,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
           {menu &&
             Indicator.create(indicatorWithDefaults, {
               defaultProps: {
-                direction: vertical ? 'forward' : 'bottom',
+                direction: vertical ? 'end' : 'bottom',
                 styles: styles.indicator,
               },
             })}

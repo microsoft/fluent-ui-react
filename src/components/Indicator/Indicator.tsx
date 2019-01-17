@@ -13,7 +13,7 @@ import Icon from '../Icon/Icon'
 
 export interface IndicatorProps extends UIComponentProps {
   /** The indicator can point towards different directions. */
-  direction?: 'forward' | 'back' | 'top' | 'bottom'
+  direction?: 'start' | 'end' | 'top' | 'bottom'
 
   /** The indicator can show specific icon if provided. */
   icon?: ShorthandValue
@@ -30,15 +30,15 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   static className = 'ui-indicator'
 
   static directionMap = {
-    forward: { unicode: '25B8', rotation: -90 },
-    back: { unicode: '25C2', rotation: 90 },
+    end: { unicode: '25B8', rotation: -90 },
+    start: { unicode: '25C2', rotation: 90 },
     top: { unicode: '25B4', rotation: 180 },
     bottom: { unicode: '25BE', rotation: 0 },
   }
 
   static propTypes = {
     ...commonPropTypes.createCommon({ children: false, content: false }),
-    direction: PropTypes.oneOf(['forward', 'back', 'top', 'bottom']),
+    direction: PropTypes.oneOf(['start', 'end', 'top', 'bottom']),
     icon: customPropTypes.itemShorthand,
   }
 
@@ -59,7 +59,10 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
         }
       : {
           children: Icon.create(icon, {
-            defaultProps: { color, rotate: Indicator.directionMap[direction].rotation },
+            defaultProps: { color },
+            overrideProps: ({ rotate }) => ({
+              rotate: (Indicator.directionMap[direction].rotation || 0) + (rotate || 0),
+            }),
           }),
         }
     return <ElementType {...unhandledProps} className={classes.root} {...contentProps} />
@@ -75,8 +78,8 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
 
   private getDirectionBasedOnRtl = (rtl: boolean, direction) => {
     if (!rtl) return direction
-    if (direction === 'forward') return 'back'
-    if (direction === 'back') return 'forward'
+    if (direction === 'start') return 'end'
+    if (direction === 'end') return 'start'
     return direction
   }
 }

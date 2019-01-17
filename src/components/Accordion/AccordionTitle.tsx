@@ -68,7 +68,7 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
       <>
         {Indicator.create(indicatorWithDefaults, {
           defaultProps: {
-            direction: active ? 'bottom' : 'forward',
+            direction: active ? 'bottom' : 'end',
             styles: styles.indicator,
           },
         })}
