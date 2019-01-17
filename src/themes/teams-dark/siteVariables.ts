@@ -30,6 +30,8 @@ export const red = '#d74654'
 export const red08 = '#4f232b'
 export const green04 = green
 
+export const chatBackground = black
+
 //
 // SHADOW LEVELS
 //

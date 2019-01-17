@@ -26,6 +26,9 @@ export const errorStatusBackgroundColor = red
 export const errorStatusTextColor = black
 export const unknownStatusBackgroundColor = white
 export const unknownStatusTextColor = black
+export const brand = black
+
+export const chatBackground = black
 
 //
 // SEMANTIC ASSIGNMENTS

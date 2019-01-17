@@ -22,6 +22,7 @@ export const gray10 = '#F3F2F1'
 export const gray14 = '#FAF9F8'
 
 export const white = colors.white
+// export const gray15 = white
 
 export const brand = colors.primary[500]
 export const brand02 = colors.primary[900]
@@ -70,6 +71,8 @@ export const errorStatusBackgroundColor = red
 export const errorStatusTextColor = white
 export const unknownStatusBackgroundColor = gray04
 export const unknownStatusTextColor = white
+
+export const chatBackground = gray10
 
 //
 // FONT WEIGHTS

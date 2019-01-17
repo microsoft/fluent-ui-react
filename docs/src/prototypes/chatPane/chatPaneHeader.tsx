@@ -14,29 +14,34 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
         vertical
         start={this.renderBanner()}
         main={this.renderMainArea()}
-        end={<Divider size={2} styles={{ padding: '0 32px' }} />}
+        end={<Divider size={2} fitted />}
       />
     )
   }
 
   private renderBanner(): React.ReactNode {
     return (
-      <Segment
-        content={
-          <Icon
-            name="team-create"
-            variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
-          />
-        }
-        styles={({ variables: v }) => ({
-          backgroundColor: v.backgroundColor,
-          borderRadius: 0,
-          display: 'flex',
-          height: '40px',
-          padding: 0,
-        })}
-        variables={siteVars => ({ backgroundColor: siteVars.brand })}
-      />
+      <>
+        <Segment
+          content={
+            <Icon
+              name="team-create"
+              styles={({ theme }) => ({
+                color: theme.siteVariables.white,
+                margin: 'auto 8px',
+              })}
+            />
+          }
+          styles={({ variables: v }) => ({
+            borderRadius: 0,
+            display: 'flex',
+            height: '40px',
+            padding: 0,
+          })}
+          variables={siteVars => ({ backgroundColor: siteVars.brand })}
+        />
+        <Divider fitted />
+      </>
     )
   }
 
@@ -50,12 +55,19 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
           <Text
             size="large"
             content={chat.title}
-            styles={{ marginLeft: '12px', fontWeight: 600 }}
+            styles={({ theme }) => ({
+              marginLeft: '12px',
+              fontWeight: 600,
+              color: theme.siteVariables.bodyColor,
+            })}
           />
         }
         end={this.renderHeaderButtons()}
         alignItems="center"
-        styles={{ padding: '16px 32px' }}
+        styles={({ theme }) => ({
+          padding: '16px 32px',
+          background: theme.siteVariables.chatBackground,
+        })}
       />
     )
   }
@@ -69,7 +81,10 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             key: `${index}-${name}`,
             icon: {
               name,
-              variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
+              variables: siteVars => ({
+                color: siteVars.white,
+                margin: 'auto 8px',
+              }),
             },
             primary: true,
           }))}

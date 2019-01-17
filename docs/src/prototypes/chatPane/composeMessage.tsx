@@ -11,7 +11,10 @@ class ComposeMessage extends React.Component {
         vertical
         start={this.renderInput()}
         main={this.renderToolbar()}
-        styles={{ padding: '16px 32px' }}
+        styles={({ theme }) => ({
+          padding: '16px 32px',
+          background: theme.siteVariables.chatBackground,
+        })}
       />
     )
   }
@@ -22,7 +25,7 @@ class ComposeMessage extends React.Component {
         fluid
         placeholder="Type a message"
         input={{ styles: { height: '3.1429rem' /* 44px */ } }}
-        variables={siteVars => ({ backgroundColor: siteVars.white })}
+        inverted
       />
     )
   }
