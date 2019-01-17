@@ -17,7 +17,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### BREAKING
+<!--------------------------------[ v0.17.0 ]------------------------------- -->
+## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
+
+### BREAKING CHANGES
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
 - Make element type of component's event handler to be `HTMLElement` @kuzhelov ([#740](https://github.com/stardust-ui/react/pull/740))
 
