@@ -37,7 +37,10 @@ export {
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
-export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
+export {
+  default as DropdownSelectedItem,
+  DropdownSelectedItemProps,
+} from './components/Dropdown/DropdownSelectedItem'
 
 export {
   default as DropdownSearchInput,

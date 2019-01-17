@@ -23,7 +23,6 @@ const getActionStyles = ({
   underlined || iconOnly
     ? {
         color,
-        background: v.backgroundColor,
       }
     : primary
     ? {
@@ -44,13 +43,12 @@ const getFocusedStyles = ({
   variables: MenuVariables
   color: string
 }): ICSSInJSStyle => {
-  const { primary, underlined, iconOnly, isFromKeyboard, active } = props
+  const { primary, underlined, isFromKeyboard, active } = props
   if (active && !underlined) return {}
   return {
-    ...((underlined && !isFromKeyboard) || iconOnly
+    ...(underlined && !isFromKeyboard
       ? {
           color,
-          background: v.backgroundColor,
         }
       : primary
       ? {
@@ -144,6 +142,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
   wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
     const {
       active,
+      disabled,
       iconOnly,
       isFromKeyboard,
       pills,
@@ -155,7 +154,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
     return {
       color: v.color,
-      background: v.backgroundColor,
       lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
@@ -193,10 +191,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: `${pxToRem(12)}`,
         }),
 
-      ...(iconOnly && {
-        display: 'flex',
-      }),
-
       ...itemSeparator({ props, variables: v, theme, colors }),
 
       // active styles
@@ -211,11 +205,27 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             : pointingBeak({ props, variables: v, theme, colors }))),
       }),
 
-      // focus styles
-      ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
+      ...(iconOnly && {
+        display: 'flex',
 
-      // hover styles
-      ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+        // focus styles
+        ...(isFromKeyboard && {
+          color: v.iconOnlyActiveColor,
+        }),
+
+        // hover styles
+        ':hover': {
+          color: v.iconOnlyActiveColor,
+        },
+      }),
+
+      ...(!iconOnly && {
+        // focus styles
+        ...(isFromKeyboard && getFocusedStyles({ props, variables: v, color: v.activeColor })),
+
+        // hover styles
+        ':hover': getFocusedStyles({ props, variables: v, color: v.activeColor }),
+      }),
 
       ':first-child': {
         ...(!pills &&
@@ -247,18 +257,41 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }),
           }),
       },
+
+      ...(disabled && {
+        color: v.disabledColor,
+        ':hover': {
+          // empty - overwrite all existing hover styles
+        },
+      }),
     }
   },
 
   root: ({ props, variables: v, theme }): ICSSInJSStyle => {
-    const { active, iconOnly, isFromKeyboard, pointing, primary, underlined, vertical } = props
+    const {
+      active,
+      iconOnly,
+      isFromKeyboard,
+      pointing,
+      primary,
+      underlined,
+      vertical,
+      disabled,
+    } = props
 
     return {
       color: 'inherit',
       display: 'block',
       cursor: 'pointer',
 
-      ...(((pointing && vertical) || iconOnly) && { border: '1px solid transparent' }),
+      ...(pointing &&
+        vertical && {
+          border: '1px solid transparent',
+        }),
+
+      ...(iconOnly && {
+        border: `${pxToRem(2)} solid transparent`,
+      }),
 
       ...(underlined
         ? { padding: `${pxToRem(4)} 0` }
@@ -267,7 +300,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
 
       ...(iconOnly && {
-        padding: pxToRem(8),
+        margin: pxToRem(1),
+        padding: pxToRem(5), // padding works this way to get the border to only be 30x30px on focus which is the current design
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -291,12 +325,24 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
       // focus styles
       ...(isFromKeyboard && {
+        ...(iconOnly && {
+          borderRadius: '50%',
+          borderColor: v.iconOnlyActiveColor,
+
+          '& .ui-icon__filled': {
+            display: 'block',
+          },
+
+          '& .ui-icon__outline': {
+            display: 'none',
+          },
+        }),
+
         ...(primary
           ? {
               ...(iconOnly && {
                 color: v.primaryActiveBorderColor,
-                border: `1px solid ${v.primaryActiveBorderColor}`,
-                borderRadius: v.circularRadius,
+                borderColor: v.primaryActiveBorderColor,
               }),
 
               ...(underlined && { color: v.primaryActiveColor }),
@@ -304,11 +350,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
               ...(underlined && active && underlinedItem(v.primaryActiveColor)),
             }
           : {
-              ...(iconOnly && {
-                border: `1px solid ${v.activeColor}`,
-                borderRadius: v.circularRadius,
-              }),
-
               ...(underlined && { fontWeight: 700 }),
 
               ...(underlined && active && underlinedItem(v.activeColor)),
@@ -323,6 +364,16 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       ':hover': {
         color: 'inherit',
 
+        ...(iconOnly && {
+          '& .ui-icon__filled': {
+            display: 'block',
+          },
+
+          '& .ui-icon__outline': {
+            display: 'none',
+          },
+        }),
+
         ...(primary
           ? {
               ...(iconOnly && { color: v.primaryActiveBorderColor }),
@@ -330,6 +381,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             }
           : !active && underlined && underlinedItem(v.activeBackgroundColor)),
       },
+
+      ...(disabled && {
+        cursor: 'default',
+        ':hover': {
+          // reset all existing hover styles
+          color: 'inherit',
+        },
+      }),
     }
   },
 
