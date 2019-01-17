@@ -54,8 +54,6 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     indicator: customPropTypes.itemShorthand,
   }
 
-  static defaultProps = {}
-
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
