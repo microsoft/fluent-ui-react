@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
+
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
@@ -35,7 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix remove empty item in docs sidebar @layershifter ([#728](https://github.com/stardust-ui/react/pull/728))
 
 ### Features
-- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686] (https://github.com/stardust-ui/react/pull/686))
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686](https://github.com/stardust-ui/react/pull/686))
 
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
