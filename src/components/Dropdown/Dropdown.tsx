@@ -279,7 +279,7 @@ export default class Dropdown extends AutoControlledComponent<
                         variables,
                       )
                     : this.renderTriggerButton(styles, getToggleButtonProps)}
-                  /* TODO: Make `indicator` a fully working shorthand. */
+                  {/* TODO: Make `indicator` a fully working shorthand. */}
                   {DropdownIndicator.create(indicator && '', {
                     defaultProps: {
                       ...getToggleButtonProps(),
@@ -698,7 +698,12 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     // we don't have event for it, but want to keep the event handling interface, event is empty.
-    _.invoke(this.props, 'onSelectedChange', {}, { ...this.props, value: newValue })
+    _.invoke(
+      this.props,
+      'onSelectedChange',
+      {},
+      { ...this.props, searchQuery: '', value: newValue },
+    )
   }
 
   private handleSelectedItemRemove(e: React.SyntheticEvent, item: ShorthandValue) {

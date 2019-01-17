@@ -6,20 +6,21 @@ import Editor, { EDITOR_BACKGROUND_COLOR } from './Editor'
 export interface CodeSnippetProps {
   fitted?: boolean
   label?: string
-  mode?: 'jsx' | 'html' | 'sh'
-  value: string
+  mode?: 'json' | 'jsx' | 'html' | 'sh'
+  value: string | Object
   style?: React.CSSProperties
 }
 
 const formatters = {
   sh: (val: string = ''): string => val.replace(/^/g, '$  '),
   html: (val: string = ''): string => formatCode(val, 'html'),
+  json: (val: Object = {}): string => JSON.stringify(val, null, 2),
   jsx: (val: string = ''): string => formatCode(val, 'babylon'),
 }
 
 const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
-  const formattedValue = format(value)
+  const formattedValue = format(value as any)
     // remove eof line break, they are not helpful for snippets
     .replace(/\n$/, '')
 
