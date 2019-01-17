@@ -2919,7 +2919,7 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-downshift@^3.1.12:
+downshift@^3.0.0:
   version "3.1.12"
   resolved "https://registry.yarnpkg.com/downshift/-/downshift-3.1.12.tgz#70da0bfb92711393717206cc008b865e7f9fde4d"
   integrity sha512-dkDlHVIHFT9kFxvPcmlp/kIwV1Uq/aI4rC70nNQkDGZNrpcexfnv4sIVK0hkIuewr9ZNo+Keqcwr3ao476YqJQ==
