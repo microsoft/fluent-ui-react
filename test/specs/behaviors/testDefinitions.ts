@@ -44,7 +44,7 @@ definitions.push({
 
 // Example:  Adds role 'menuitem' to 'anchor' component's part
 definitions.push({
-  regexp: /Adds role '(\w+)' to '(\w+)' component's part/g,
+  regexp: /Adds role '(\w+)' to '([\w-]+)' component's part/g,
   testMethod: (parameters: TestMethod) => {
     const [roleToBeAdded, elementWhereToBeAdded] = [...parameters.props]
     const property = {}
@@ -56,7 +56,7 @@ definitions.push({
 // Example: Adds attribute 'tabIndex=0' to 'anchor' component's part.
 //          Adds attribute 'data-is-focusable=true' to 'anchor' component's part.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w\d]+)' component's part\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' component's part\./g,
   testMethod: (parameters: TestMethod) => {
     const [attributeToBeAdded, attributeExpectedValue, elementWhereToBeAdded] = [
       ...parameters.props,
@@ -470,7 +470,7 @@ definitions.push({
 
 // Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' on '(\w+)', when orientation is horizontal\./g,
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const property = {}
@@ -483,7 +483,7 @@ definitions.push({
 
 // Triggers 'openMenu' action with 'ArrowRight' on 'root', when orientation is vertical.
 definitions.push({
-  regexp: /Triggers '(\w+)' action with '(\w+)' on '(\w+)', when orientation is vertical\./g,
+  regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is vertical\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
     const propertyVertical = { vertical: true }
