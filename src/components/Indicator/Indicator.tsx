@@ -6,14 +6,13 @@ import {
   UIComponent,
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   customPropTypes,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 
-export interface IndicatorProps extends UIComponentProps, ColorComponentProps {
-  /** The indicator can be direction in different directions. */
+export interface IndicatorProps extends UIComponentProps {
+  /** The indicator can point towards different directions. */
   direction?: 'forward' | 'back' | 'top' | 'bottom'
 
   /** The indicator can show specific icon if provided. */
@@ -21,7 +20,7 @@ export interface IndicatorProps extends UIComponentProps, ColorComponentProps {
 }
 
 /**
- * An indicator is suggest additional content next to the element it is inside.
+ * An indicator is suggesting additional content next to the element it is used in.
  */
 class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   static displayName = 'Indicator'
