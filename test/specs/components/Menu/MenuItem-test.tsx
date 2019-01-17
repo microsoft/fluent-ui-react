@@ -4,6 +4,7 @@ import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/s
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 import { toolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
+import { Accessibility } from '../../../../src/lib/accessibility/types'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {
@@ -46,202 +47,35 @@ describe('MenuItem', () => {
     handlesAccessibility(MenuItem, { defaultRootRole: 'presentation', usesWrapperSlot: true })
     handlesAccessibility(MenuItem, { defaultRootRole: 'menuitem', partSelector: 'a' })
 
-    describe('as a default MenuItem', () => {
-      test('root role should be presentation', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(MenuItem, <MenuItem />)
-        expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
-      })
+    const accessibility: { name: string; behavior: Accessibility; expectedAnchorRole: string }[] = [
+      { name: 'default', behavior: undefined, expectedAnchorRole: 'menuitem' },
+      {
+        name: 'toolbarButtonBehavior',
+        behavior: toolbarButtonBehavior,
+        expectedAnchorRole: 'button',
+      },
+      { name: 'tabBehavior', behavior: tabBehavior, expectedAnchorRole: 'tab' },
+    ]
+    accessibility.forEach(accessibility => {
+      test(`integration test for ${accessibility.name} behavior`, () => {
+        // accessibility functionality is covered by a combination of behavior tests and `handlesAccessibility()`
+        // this is just an integration smoke test
 
-      test('anchor role should be menuitem', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(MenuItem, <MenuItem />)
-        expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('menuitem')
-      })
-
-      test('aria-label should be added to the child anchor', () => {
         const ariaLabel = 'Useful Tool Tip'
+
         const menuItemComponent = mountWithProviderAndGetComponent(
           MenuItem,
-          <MenuItem aria-label={ariaLabel} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', 'a')).toBe(ariaLabel)
-      })
-
-      test('aria-labelledby should be added to the child anchor', () => {
-        const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', 'a')).toBe(
-          ariaLabelledByID,
-        )
-      })
-    })
-
-    describe('as a ToolbarButton', () => {
-      test('root role should be presentation', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem accessibility={toolbarButtonBehavior} />,
+          <MenuItem disabled aria-label={ariaLabel} accessibility={accessibility.behavior} />,
         )
         expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
-      })
-
-      test('anchor role should be button', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem accessibility={toolbarButtonBehavior} />,
-        )
-        expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('button')
-      })
-
-      test('aria-label should be added to the child anchor', () => {
-        const ariaLabel = 'Useful Tool Tip'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-label={ariaLabel} accessibility={toolbarButtonBehavior} />,
-        )
-
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(undefined)
+
+        expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe(
+          accessibility.expectedAnchorRole,
+        )
+        expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe('true')
         expect(getRenderedAttribute(menuItemComponent, 'aria-label', 'a')).toBe(ariaLabel)
-      })
-
-      test('aria-labelledby should be added to the child anchor', () => {
-        const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={toolbarButtonBehavior} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', 'a')).toBe(
-          ariaLabelledByID,
-        )
-      })
-
-      const disabledFlags = [true, false]
-      disabledFlags.forEach(disabledValue => {
-        test(`aria-disabled should be ${disabledValue} if menuitem disabled prop is ${disabledValue}`, () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
-            MenuItem,
-            <MenuItem disabled={disabledValue} accessibility={toolbarButtonBehavior} />,
-          )
-
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            `${disabledValue}`,
-          )
-        })
-      })
-
-      disabledFlags.forEach(disabledValue => {
-        test(`aria-disabled should be ${disabledValue} if menuitem also has the disabled prop and aria-disabled is ${disabledValue}`, () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
-            MenuItem,
-            <MenuItem
-              aria-disabled={disabledValue}
-              disabled={!disabledValue}
-              accessibility={toolbarButtonBehavior}
-            />,
-          )
-
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', '')).toBe(undefined)
-          expect(getRenderedAttribute(menuItemComponent, 'aria-disabled', 'a')).toBe(
-            `${disabledValue}`,
-          )
-        })
-      })
-    })
-
-    describe('as a Tab', () => {
-      test('root role should be presentation', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem accessibility={tabBehavior} />,
-        )
-        expect(getRenderedAttribute(menuItemComponent, 'role', '')).toBe('presentation')
-      })
-
-      test('anchor role should be tab', () => {
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem accessibility={tabBehavior} />,
-        )
-        expect(getRenderedAttribute(menuItemComponent, 'role', 'a')).toBe('tab')
-      })
-
-      test('aria-label should be added to the child anchor', () => {
-        const ariaLabel = 'Useful Tool Tip'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-label={ariaLabel} accessibility={tabBehavior} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-label', 'a')).toBe(ariaLabel)
-      })
-
-      test('aria-labelledby should be added to the child anchor', () => {
-        const ariaLabelledByID = 'element-that-labels'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-labelledby={ariaLabelledByID} accessibility={tabBehavior} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-labelledby', 'a')).toBe(
-          ariaLabelledByID,
-        )
-      })
-
-      const activeFlags = [true, false]
-      activeFlags.forEach(activeValue => {
-        test(`aria-selected should be ${activeValue} if menuitem active prop is ${activeValue}`, () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
-            MenuItem,
-            <MenuItem active={activeValue} accessibility={tabBehavior} />,
-          )
-
-          expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
-          expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            `${activeValue}`,
-          )
-        })
-      })
-
-      activeFlags.forEach(activeValue => {
-        test(`aria-selected should be ${activeValue} if menuitem also has the active prop and aria-selected prop is ${activeValue}`, () => {
-          const menuItemComponent = mountWithProviderAndGetComponent(
-            MenuItem,
-            <MenuItem
-              aria-selected={activeValue}
-              active={!activeValue}
-              accessibility={tabBehavior}
-            />,
-          )
-
-          expect(getRenderedAttribute(menuItemComponent, 'aria-selected', '')).toBe(undefined)
-          expect(getRenderedAttribute(menuItemComponent, 'aria-selected', 'a')).toBe(
-            `${activeValue}`,
-          )
-        })
-      })
-
-      test('aria-controls should be added to the child anchor', () => {
-        const ariaControlsPanelID = 'panel-that-is-controlled'
-        const menuItemComponent = mountWithProviderAndGetComponent(
-          MenuItem,
-          <MenuItem aria-controls={ariaControlsPanelID} accessibility={tabBehavior} />,
-        )
-
-        expect(getRenderedAttribute(menuItemComponent, 'aria-controls', '')).toBe(undefined)
-        expect(getRenderedAttribute(menuItemComponent, 'aria-controls', 'a')).toBe(
-          ariaControlsPanelID,
-        )
       })
     })
   })

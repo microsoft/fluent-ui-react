@@ -17,7 +17,7 @@ export const babelConfig = {
   ],
 }
 
-const imports = {
+export const imports = {
   '@stardust-ui/react': Stardust,
   lodash: _,
   react: React,
