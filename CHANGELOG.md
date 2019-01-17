@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `Indicator` component and used it in `MenuItem` and `AccordionTitle` @mnajdova ([#721](https://github.com/stardust-ui/react/pull/721))
+
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
