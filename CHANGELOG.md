@@ -21,6 +21,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
 - Fix Avatar's size example @mnajdova ([#745](https://github.com/stardust-ui/react/pull/745))
 
+### Features
+- Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
+
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
@@ -49,7 +52,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `Loader` component @layershifter ([#685](https://github.com/stardust-ui/react/pull/685))
 - Add `color` prop to `Label` component @Bugaa92 ([#647](https://github.com/stardust-ui/react/pull/647))
 - Add `accessibility` and `styles` to the API of `createComponent` @kuzhelov ([#714](https://github.com/stardust-ui/react/pull/714))
-- Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
 
 ### Fixes
 - Fix doc layout for Menu component @codepretty ([#695] https://github.com/stardust-ui/react/pull/695)
