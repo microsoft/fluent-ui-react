@@ -85,13 +85,18 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility }): React.ReactNode {
-    const { children, content } = this.props
-    const hasChildren = childrenExist(children)
+  renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+    rtlTransformedChildren,
+    rtlTransformedContent,
+  }): React.ReactNode {
+    const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {hasChildren ? children : content}
+      <ElementType className={classes.root} {...unhandledProps}>
+        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
       </ElementType>
     )
   }

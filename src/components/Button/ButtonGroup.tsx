@@ -50,8 +50,10 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     accessibility,
     styles,
     unhandledProps,
+    rtlTransformedChildren,
+    rtlTransformedContent,
   }): React.ReactNode {
-    const { children, content, buttons, circular } = this.props
+    const { children, buttons, circular } = this.props
     if (_.isNil(buttons)) {
       return (
         <ElementType
@@ -59,7 +61,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
           {...unhandledProps}
           className={classes.root}
         >
-          {childrenExist(children) ? children : content}
+          {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
         </ElementType>
       )
     }

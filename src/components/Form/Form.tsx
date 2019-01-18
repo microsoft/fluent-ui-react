@@ -55,7 +55,12 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+    rtlTransformedChildren,
+  }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType
@@ -64,7 +69,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
         onSubmit={this.handleSubmit}
         {...unhandledProps}
       >
-        {childrenExist(children) ? children : this.renderFields()}
+        {childrenExist(children) ? rtlTransformedChildren : this.renderFields()}
       </ElementType>
     )
   }

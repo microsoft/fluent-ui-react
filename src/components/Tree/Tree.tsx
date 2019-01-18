@@ -71,12 +71,20 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    variables,
+    rtlTransformedChildren,
+  }) {
     const { children } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? rtlTransformedChildren : this.renderContent()}
       </ElementType>
     )
   }

@@ -176,12 +176,12 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlTransformedChildren }) {
     const { children } = this.props
 
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : this.renderPanels()}
+        {childrenExist(children) ? rtlTransformedChildren : this.renderPanels()}
       </ElementType>
     )
   }

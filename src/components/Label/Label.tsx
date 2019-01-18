@@ -79,8 +79,17 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles, accessibility }) {
-    const { children, content, icon, iconPosition, image, imagePosition } = this.props
+  renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+    variables,
+    styles,
+    accessibility,
+    rtlTransformedChildren,
+    rtlTransformedContent,
+  }) {
+    const { children, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
@@ -89,7 +98,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
           {...accessibility.attributes.root}
           className={classes.root}
         >
-          {children}
+          {rtlTransformedChildren}
         </ElementType>
       )
     }
@@ -127,7 +136,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={content}
+          main={rtlTransformedContent}
           end={
             hasEndElement && (
               <>

@@ -76,6 +76,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
     accessibility,
     unhandledProps,
     styles,
+    rtlTransformedChildren,
   }: RenderResultConfig<ChatMessageProps>) {
     const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
@@ -89,7 +90,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
         className={className}
       >
         {childrenPropExists ? (
-          children
+          rtlTransformedChildren
         ) : (
           <>
             {!mine &&

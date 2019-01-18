@@ -68,12 +68,14 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     ElementType,
     classes,
     unhandledProps,
+    rtlTransformedChildren,
+    rtlTransformedContent,
   }: RenderResultConfig<any>): ReactNode {
-    const { children, content } = this.props
+    const { children } = this.props
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
       </ElementType>
     )
   }

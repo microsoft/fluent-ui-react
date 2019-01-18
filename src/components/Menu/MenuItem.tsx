@@ -171,7 +171,14 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     this.outsideClickSubscription.unsubscribe()
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    rtlTransformedContent,
+  }) {
     const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { menuOpen } = this.state
@@ -192,7 +199,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             Icon.create(this.props.icon, {
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
-          {content}
+          {rtlTransformedContent}
         </ElementType>
       </Ref>
     )

@@ -36,11 +36,18 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
-    const { children, content } = this.props
+  renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+    accessibility,
+    rtlTransformedChildren,
+    rtlTransformedContent,
+  }) {
+    const { children } = this.props
     return (
-      <ElementType {...unhandledProps} {...accessibility.attributes.root} className={classes.root}>
-        {childrenExist(children) ? children : content}
+      <ElementType {...unhandledProps} className={classes.root}>
+        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
       </ElementType>
     )
   }

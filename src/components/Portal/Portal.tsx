@@ -113,19 +113,27 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     triggerAccessibility: {},
   }
 
-  public renderComponent({ accessibility }): React.ReactNode {
+  public renderComponent({
+    accessibility,
+    rtlTransformedContent,
+    rtlTransformedChildren,
+  }): React.ReactNode {
     return (
       <React.Fragment>
-        {this.renderPortal(accessibility)}
+        {this.renderPortal(accessibility, rtlTransformedContent, rtlTransformedChildren)}
         {this.renderTrigger()}
       </React.Fragment>
     )
   }
 
-  private renderPortal(accessibility): JSX.Element | undefined {
-    const { children, content, trapFocus } = this.props
+  private renderPortal(
+    accessibility,
+    rtlTransformedContent,
+    rtlTransformedChildren,
+  ): JSX.Element | undefined {
+    const { children, trapFocus } = this.props
     const { open } = this.state
-    const contentToRender = childrenExist(children) ? children : content
+    const contentToRender = childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
 
     return (

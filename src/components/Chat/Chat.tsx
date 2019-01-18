@@ -46,7 +46,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlTransformedChildren }) {
     const { children, items } = this.props
 
     return (
@@ -56,7 +56,9 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         {...accessibility.keyHandlers.root}
         {...unhandledProps}
       >
-        {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
+        {childrenExist(children)
+          ? rtlTransformedChildren
+          : _.map(items, item => ChatItem.create(item))}
       </ElementType>
     )
   }

@@ -56,8 +56,17 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { children, content } = this.props
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    variables,
+    rtlTransformedChildren,
+    rtlTransformedContent,
+  }) {
+    const { children } = this.props
 
     return (
       <ElementType
@@ -66,7 +75,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {childrenExist(children) ? children : content}
+        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
       </ElementType>
     )
   }

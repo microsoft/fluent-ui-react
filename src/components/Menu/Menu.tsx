@@ -183,11 +183,18 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    unhandledProps,
+    rtlTransformedChildren,
+  }) {
     const { children } = this.props
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : this.renderItems(variables)}
+        {childrenExist(children) ? rtlTransformedChildren : this.renderItems(variables)}
       </ElementType>
     )
   }

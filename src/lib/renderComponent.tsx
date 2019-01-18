@@ -45,8 +45,8 @@ export interface RenderResultConfig<P> {
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
-  evaluatedChildren: React.ReactNode
-  evaluatedContent: React.ReactNode
+  rtlTransformedChildren: React.ReactNode
+  rtlTransformedContent: React.ReactNode
 }
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
@@ -225,8 +225,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         classes.root = cx(className, classes.root, props.className)
 
         const { children, content } = props
-        const evaluatedChildren = getRtlAwareElement(children)
-        const evaluatedContent = getRtlAwareElement(content)
+        const rtlTransformedChildren = getRtlAwareElement(children)
+        const rtlTransformedContent = getRtlAwareElement(content)
 
         const config: RenderResultConfig<P> = {
           ElementType,
@@ -237,8 +237,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           accessibility,
           rtl,
           theme,
-          evaluatedChildren,
-          evaluatedContent,
+          rtlTransformedChildren,
+          rtlTransformedContent,
         }
 
         if (accessibility.focusZone) {
