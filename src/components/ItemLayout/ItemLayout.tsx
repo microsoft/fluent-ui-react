@@ -13,6 +13,7 @@ import {
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { ReactProps } from '../../../types/utils'
+import getRtlTransformedElement from '../../lib/getRtlTransformedElement'
 
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
@@ -126,12 +127,12 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          main={header}
+          main={getRtlTransformedElement(header)}
           rootCSS={headerCSS}
           end={
             headerMedia && (
               <span style={headerMediaCSS} className={mediaClasses}>
-                {headerMedia}
+                {getRtlTransformedElement(headerMedia)}
               </span>
             )
           }
@@ -153,11 +154,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           debug={debug}
           truncateMain={truncateContent}
           rootCSS={contentCSS}
-          main={content}
+          main={getRtlTransformedElement(content)}
           end={
             contentMedia && (
               <span style={contentMediaCSS} className={mediaClasses}>
-                {contentMedia}
+                {getRtlTransformedElement(contentMedia)}
               </span>
             )
           }
@@ -190,7 +191,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         start={
           startArea && (
             <span style={mediaCSS} className={mergedMediaClasses}>
-              {startArea}
+              {getRtlTransformedElement(startArea)}
             </span>
           )
         }
@@ -198,7 +199,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         end={
           endArea && (
             <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {endArea}
+              {getRtlTransformedElement(endArea)}
             </span>
           )
         }

@@ -5,6 +5,7 @@ import cx from 'classnames'
 import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
+import getRtlTransformedElement from '../../lib/getRtlTransformedElement'
 
 export interface LayoutProps extends UIComponentProps {
   debug?: boolean
@@ -96,15 +97,31 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     // TODO: when an area is another Layout, do not wrap them in an extra div
     // TODO: option 1) higher value layouts could use start={Layout.create(start)} to ensure Areas are layout root
     renderStartArea({ start, classes }) {
-      return start && <div className={cx('ui-layout__start', classes.start)}>{start}</div>
+      return (
+        start && (
+          <div className={cx('ui-layout__start', classes.start)}>
+            {getRtlTransformedElement(start)}
+          </div>
+        )
+      )
     },
 
     renderMainArea({ main, classes }) {
-      return main && <div className={cx('ui-layout__main', classes.main)}>{main}</div>
+      return (
+        main && (
+          <div className={cx('ui-layout__main', classes.main)}>
+            {getRtlTransformedElement(main)}
+          </div>
+        )
+      )
     },
 
     renderEndArea({ end, classes }) {
-      return end && <div className={cx('ui-layout__end', classes.end)}>{end}</div>
+      return (
+        end && (
+          <div className={cx('ui-layout__end', classes.end)}>{getRtlTransformedElement(end)}</div>
+        )
+      )
     },
 
     // Heads up!

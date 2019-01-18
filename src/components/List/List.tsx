@@ -134,7 +134,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlTransformedChildren }) {
     const { children } = this.props
 
     return (
@@ -144,7 +144,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems()}
+        {childrenExist(children) ? rtlTransformedChildren : this.renderItems()}
       </ElementType>
     )
   }
