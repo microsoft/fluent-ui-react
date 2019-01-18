@@ -4,7 +4,7 @@ import ChatMessage from 'src/components/Chat/ChatMessage'
 import { chatMessageBehavior } from 'src/lib/accessibility'
 import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 import Text from 'src/components/Text/Text'
-import Slot from 'src/components/Slot/Slot'
+import Box from 'src/components/Box/Box'
 
 const chatMessageImplementsShorthandProp = implementsShorthandProp(ChatMessage)
 
@@ -13,7 +13,7 @@ describe('ChatMessage', () => {
 
   chatMessageImplementsShorthandProp('author', Text)
   chatMessageImplementsShorthandProp('timestamp', Text)
-  chatMessageImplementsShorthandProp('content', Slot, { mapsValueToProp: 'children' })
+  chatMessageImplementsShorthandProp('content', Box, { mapsValueToProp: 'children' })
 
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {

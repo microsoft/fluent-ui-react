@@ -18,7 +18,7 @@ import {
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
@@ -225,7 +225,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       ) : null
 
     if (wrapper) {
-      return Slot.create(wrapper, {
+      return Box.create(wrapper, {
         defaultProps: {
           className: cx('ui-menu__item__wrapper', classes.wrapper),
           ...accessibility.attributes.wrapper,

@@ -10,20 +10,18 @@ import {
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../../types/utils'
 
-export interface SlotProps
-  extends UIComponentProps<SlotProps>,
+export interface BoxProps
+  extends UIComponentProps<BoxProps>,
     ContentComponentProps,
     ChildrenComponentProps {}
 
 /**
- * A Slot is a basic component (no default styles)
+ * A Box is a basic component (no default styles)
  */
-const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
-  create?: Function
-} = createComponent<SlotProps>({
-  displayName: 'Slot',
+const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<BoxProps>({
+  displayName: 'Box',
 
-  className: 'ui-slot',
+  className: 'ui-box',
 
   propTypes: {
     ...commonPropTypes.createCommon(),
@@ -41,6 +39,6 @@ const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   },
 })
 
-Slot.create = createShorthandFactory(Slot)
+Box.create = createShorthandFactory(Box)
 
-export default Slot
+export default Box
