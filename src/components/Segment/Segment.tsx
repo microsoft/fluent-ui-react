@@ -38,7 +38,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility, rtlTransformedChildren }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlTransformedChildren }) {
     const { children, content } = this.props
 
     return (

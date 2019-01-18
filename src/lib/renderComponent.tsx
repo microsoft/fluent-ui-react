@@ -32,7 +32,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import getRtlAwareElement from './getRtlAwareElement'
+import getRtlTransformedElement from './getRtlTransformedElement'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -225,8 +225,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         classes.root = cx(className, classes.root, props.className)
 
         const { children, content } = props
-        const rtlTransformedChildren = getRtlAwareElement(children)
-        const rtlTransformedContent = getRtlAwareElement(content)
+        const rtlTransformedChildren = getRtlTransformedElement(children)
+        const rtlTransformedContent = getRtlTransformedElement(content)
 
         const config: RenderResultConfig<P> = {
           ElementType,

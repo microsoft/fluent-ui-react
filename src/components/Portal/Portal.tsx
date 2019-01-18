@@ -113,24 +113,16 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     triggerAccessibility: {},
   }
 
-  public renderComponent({
-    accessibility,
-    rtlTransformedContent,
-    rtlTransformedChildren,
-  }): React.ReactNode {
+  public renderComponent({ rtlTransformedContent, rtlTransformedChildren }): React.ReactNode {
     return (
       <React.Fragment>
-        {this.renderPortal(accessibility, rtlTransformedContent, rtlTransformedChildren)}
+        {this.renderPortal(rtlTransformedContent, rtlTransformedChildren)}
         {this.renderTrigger()}
       </React.Fragment>
     )
   }
 
-  private renderPortal(
-    accessibility,
-    rtlTransformedContent,
-    rtlTransformedChildren,
-  ): JSX.Element | undefined {
+  private renderPortal(rtlTransformedContent, rtlTransformedChildren): JSX.Element | undefined {
     const { children, trapFocus } = this.props
     const { open } = this.state
     const contentToRender = childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent
@@ -139,11 +131,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
-          <PortalInner
-            onMount={this.handleMount}
-            onUnmount={this.handleUnmount}
-            {...accessibility.attributes.root}
-          >
+          <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
             {trapFocus ? (
               <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
             ) : (

@@ -40,7 +40,6 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
     ElementType,
     classes,
     unhandledProps,
-    accessibility,
     rtlTransformedChildren,
     rtlTransformedContent,
   }) {
