@@ -61,12 +61,11 @@ export interface MenuItemProps
   onClick?: ComponentEventHandler<MenuItemProps>
 
   /**
-   * Called on key down pressed.
-   *
+   * Called after user's focus.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onKeyDown?: ComponentEventHandler<MenuItemProps>
+  onFocus?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -132,6 +131,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     onClick: PropTypes.func,
+    onFocus: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -171,8 +171,18 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     this.outsideClickSubscription.unsubscribe()
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles }) {
-    const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+    const {
+      children,
+      content,
+      icon,
+      wrapper,
+      menu,
+      primary,
+      secondary,
+      active,
+      disabled,
+    } = this.props
 
     const { menuOpen } = this.state
 
@@ -182,10 +192,12 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       <Ref innerRef={this.itemRef}>
         <ElementType
           className={classes.root}
+          disabled={disabled}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          {...accessibility.attributes.anchor}
-          {...rest}
+          {...accessibility.attributes.root}
+          {...accessibility.keyHandlers.root}
+          {...unhandledProps}
           {...!wrapper && { onClick: this.handleClick }}
         >
           {icon &&
@@ -216,8 +228,8 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       return Slot.create(wrapper, {
         defaultProps: {
           className: cx('ui-menu__item__wrapper', classes.wrapper),
-          ...accessibility.attributes.root,
-          ...accessibility.keyHandlers.root,
+          ...accessibility.attributes.wrapper,
+          ...accessibility.keyHandlers.wrapper,
         },
         overrideProps: () => ({
           children: (
@@ -278,11 +290,19 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
         // the menuItem element was clicked => toggle the open/close and stop propagation
         this.trySetState({ menuOpen: active ? !this.state.menuOpen : true })
         e.stopPropagation()
+        e.preventDefault()
       }
     }
   }
 
   private handleClick = e => {
+    const { disabled } = this.props
+
+    if (disabled) {
+      e.preventDefault()
+      return
+    }
+
     this.performClick(e)
     _.invoke(this.props, 'onClick', e, this.props)
   }

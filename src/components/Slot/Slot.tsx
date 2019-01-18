@@ -30,11 +30,11 @@ const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   },
 
   render(config, props) {
-    const { ElementType, classes, rest } = config
+    const { ElementType, classes, unhandledProps } = config
     const { children, content } = props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

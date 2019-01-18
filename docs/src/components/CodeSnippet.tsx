@@ -17,7 +17,7 @@ const formatters = {
   jsx: (val: string = ''): string => formatCode(val, 'babylon'),
 }
 
-const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippetProps) => {
+const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
   const formattedValue = format(value)
     // remove eof line break, they are not helpful for snippets
@@ -30,7 +30,7 @@ const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippe
         padding: '1rem',
         marginBottom: fitted ? 0 : '2rem',
         background: EDITOR_BACKGROUND_COLOR,
-        ...rest.style,
+        ...restProps.style,
       }}
     >
       <div
@@ -57,7 +57,7 @@ const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippe
         showGutter={false}
         showCursor={false}
         value={formattedValue}
-        {...rest}
+        {...restProps}
       />
     </div>
   )

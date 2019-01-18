@@ -7,6 +7,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  isFromKeyboard,
 } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
@@ -44,12 +45,23 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<ListItemProps>
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<ListItemProps>
+}
+
+export interface ListItemState {
+  isFromKeyboard: boolean
 }
 
 /**
  * A list item contains a single piece of content within a list.
  */
-class ListItem extends UIComponent<ReactProps<ListItemProps>> {
+class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
   static create: Function
 
   static displayName = 'ListItem'
@@ -81,11 +93,16 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
 
     accessibility: PropTypes.func,
     onClick: PropTypes.func,
+    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'li',
     accessibility: listItemBehavior as Accessibility,
+  }
+
+  state = {
+    isFromKeyboard: false,
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -99,7 +116,12 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ classes, accessibility, rest, styles }) {
+  handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  renderComponent({ classes, accessibility, unhandledProps, styles }) {
     const {
       as,
       debug,
@@ -132,9 +154,10 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>> {
         headerMediaCSS={styles.headerMedia}
         contentCSS={styles.content}
         onClick={this.handleClick}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
       />
     )
   }

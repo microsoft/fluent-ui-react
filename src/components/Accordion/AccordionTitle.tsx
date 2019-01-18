@@ -53,20 +53,19 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { active, children, content } = this.props
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const { children, content } = this.props
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
+        <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
           {children}
         </ElementType>
       )
     }
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-        {active ? <span>&#9660;</span> : <span>&#9654;</span>}
+      <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
         {content}
       </ElementType>
     )

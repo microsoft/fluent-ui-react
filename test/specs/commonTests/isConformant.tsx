@@ -345,7 +345,7 @@ export default (Component, options: Conformant = {}) => {
         if (eventTarget.length === 0) {
           throw new Error(
             'The event prop was not delegated to the children. You probably ' +
-              'forgot to use `getUnhandledProps` util to spread the `rest` props.',
+              'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
           )
         }
         const customHandler: Function = eventTarget.prop(listenerName)
@@ -484,7 +484,7 @@ export default (Component, options: Conformant = {}) => {
       const mixedClasses = getClassesOfRootElement(wrapperWithCustomClasses)
 
       const message = [
-        'Make sure you are using the `getUnhandledProps` util to spread the `rest` props.',
+        'Make sure you are using the `getUnhandledProps` util to spread the `unhandledProps` props.',
         'This may also be of help: https://facebook.github.io/react/docs/transferring-props.html.',
       ].join(' ')
 

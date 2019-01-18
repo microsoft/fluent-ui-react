@@ -14,6 +14,6 @@ const panels = [
   },
 ]
 
-const AccordionExample = () => <Accordion panels={panels} />
+const AccordionExample = () => <Accordion defaultActiveIndex={[0]} panels={panels} />
 
 export default AccordionExample

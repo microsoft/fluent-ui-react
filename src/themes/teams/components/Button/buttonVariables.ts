@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 export interface ButtonVariables {
   [key: string]: string | number

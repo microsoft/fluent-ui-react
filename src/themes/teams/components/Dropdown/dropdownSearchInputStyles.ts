@@ -6,18 +6,25 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
   DropdownSearchInputProps,
   DropdownVariables
 > = {
-  input: ({ variables: { backgroundColor } }): ICSSInJSStyle => ({
+  input: ({ variables: { backgroundColor, comboboxPaddingInput } }): ICSSInJSStyle => ({
     width: '100%',
     backgroundColor,
+    padding: comboboxPaddingInput,
 
     ':focus': {
       borderBottomColor: 'transparent',
     },
   }),
 
-  wrapper: ({ variables: { editTextFlexBasis } }): ICSSInJSStyle => ({
-    flexBasis: editTextFlexBasis,
+  combobox: ({
+    variables: { comboboxFlexBasis, toggleButtonSize },
+    props: { hasToggleButton },
+  }): ICSSInJSStyle => ({
+    flexBasis: comboboxFlexBasis,
     flexGrow: 1,
+    ...(hasToggleButton && {
+      marginRight: toggleButtonSize,
+    }),
   }),
 }
 
