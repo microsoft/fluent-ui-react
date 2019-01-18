@@ -2,17 +2,7 @@ import * as React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { Chat, Divider, Avatar } from '@stardust-ui/react'
 import { ChatData, ChatItemTypes, generateChatProps } from './services'
-
-const screenReaderMessageContainerStyles: React.CSSProperties = {
-  border: '0px',
-  clip: 'rect(0px, 0px, 0px, 0px)',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden',
-  padding: '0px',
-  width: '1px',
-  position: 'absolute',
-}
+import style from './chatProtoStyle'
 
 export interface ChatPaneContainerProps {
   chat: ChatData
@@ -32,7 +22,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
           >
             <div
               id="chat-pane-reader-text"
-              style={screenReaderMessageContainerStyles}
+              style={style.screenReaderContainerStyles}
               role="heading"
               aria-level={2}
             >
@@ -65,7 +55,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
               content: (
                 <>
                   {itemType === ChatItemTypes.message && (
-                    <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
+                    <div style={style.screenReaderContainerStyles} role="heading" aria-level={4}>
                       {this.getMessagePreviewForScreenReader(props)}
                     </div>
                   )}

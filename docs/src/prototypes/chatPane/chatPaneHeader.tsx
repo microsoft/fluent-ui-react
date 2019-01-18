@@ -1,21 +1,11 @@
 import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
+import style from './chatProtoStyle'
 
 import { ChatData } from './services'
 
 export interface ChatPaneHeaderProps {
   chat?: ChatData
-}
-
-const screenReaderMessageContainerStyles: React.CSSProperties = {
-  border: '0px',
-  clip: 'rect(0px, 0px, 0px, 0px)',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden',
-  padding: '0px',
-  width: '1px',
-  position: 'absolute',
 }
 
 class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
@@ -66,7 +56,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             aria-level={2}
             aria-labelledby="chat-header-reader-text chat-header-title"
           >
-            <div id="chat-header-reader-text" style={screenReaderMessageContainerStyles}>
+            <div id="chat-header-reader-text" style={style.screenReaderContainerStyles}>
               Chat header
             </div>
             <Text
