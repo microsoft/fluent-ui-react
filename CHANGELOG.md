@@ -17,11 +17,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### BREAKING
+### Fixes
+- Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
+- Pass `jest --detectLeaks` tests @miroslavstastny ([#718](https://github.com/stardust-ui/react/pull/718))
+
+<!--------------------------------[ v0.17.0 ]------------------------------- -->
+## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
+
+### BREAKING CHANGES
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
+- Make element type of component's event handler to be `HTMLElement` @kuzhelov ([#740](https://github.com/stardust-ui/react/pull/740))
 
 ### Fixes
-- Pass `jest --detectLeaks` tests @miroslavstastny ([#718](https://github.com/stardust-ui/react/pull/718))
+- Remove `render` from default factories options @layershifter ([#735](https://github.com/stardust-ui/react/pull/735))
 
 ### Features
 - Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686](https://github.com/stardust-ui/react/pull/686))
@@ -30,6 +39,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix ignored initial state of knobs @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Fix unclearable example's code @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Add ability to export examples to CodeSandbox @layershifter ([#731](https://github.com/stardust-ui/react/pull/731))
+- Fix remove empty item in docs sidebar @layershifter ([#728](https://github.com/stardust-ui/react/pull/728))
+
+### Features
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686](https://github.com/stardust-ui/react/pull/686))
 
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
