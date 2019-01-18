@@ -14,47 +14,58 @@ import { babelConfig, importResolver } from './Playground/renderConfig'
 
 const examplePaths = exampleSourcesContext.keys()
 
-const ExternalExampleLayout: any = props => {
-  const { exampleName } = props.match.params
-  const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
-
-  const examplePath = _.find(path => {
-    const { exampleName } = parseExamplePath(path)
-    return exampleFilename === exampleName
-  }, examplePaths)
-
-  if (!examplePath) return <PageNotFound />
-  const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-
-  return (
-    <SourceRender
-      babelConfig={babelConfig}
-      source={exampleSource.js}
-      renderHtml={false}
-      resolver={importResolver}
-    >
-      <SourceRender.Consumer>
-        {({ element, error }) => (
-          <>
-            {element}
-            {/* This block allows to see issues with examples as visual regressions. */}
-            {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
-          </>
-        )}
-      </SourceRender.Consumer>
-    </SourceRender>
-  )
-}
-
-ExternalExampleLayout.propTypes = {
-  children: PropTypes.node,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      exampleName: PropTypes.string.isRequired,
+class ExternalExampleLayout extends React.Component<any> {
+  static propTypes = {
+    children: PropTypes.node,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        exampleName: PropTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
-  }).isRequired,
+  }
+
+  componentWillMount() {
+    performance.mark('startMount')
+  }
+
+  componentDidMount() {
+    performance.mark('endMount')
+    performance.measure('stardust.perf.measureMount', 'startMount', 'endMount')
+  }
+
+  render() {
+    const { exampleName } = this.props.match.params
+    const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
+
+    const examplePath = _.find(path => {
+      const { exampleName } = parseExamplePath(path)
+      return exampleFilename === exampleName
+    }, examplePaths)
+
+    if (!examplePath) return <PageNotFound />
+    const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
+
+    return (
+      <SourceRender
+        babelConfig={babelConfig}
+        source={exampleSource.js}
+        renderHtml={false}
+        resolver={importResolver}
+      >
+        <SourceRender.Consumer>
+          {({ element, error }) => (
+            <>
+              {element}
+              {/* This block allows to see issues with examples as visual regressions. */}
+              {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+            </>
+          )}
+        </SourceRender.Consumer>
+      </SourceRender>
+    )
+  }
 }
 
 export default ExternalExampleLayout
