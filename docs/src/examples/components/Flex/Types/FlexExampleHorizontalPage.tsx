@@ -3,7 +3,7 @@ import { Flex, Button, Segment } from '@stardust-ui/react'
 
 const FlexExampleHorizontalPage = () => (
   <Flex gap="1rem" styles={{ height: '20rem' }}>
-    <Flex vertical>
+    <Flex vertical gap="1rem">
       <Button primary iconOnly icon="home" />
       <Button primary iconOnly icon="coffee" />
     </Flex>
