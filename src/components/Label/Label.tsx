@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   addRtlSupport,
+  ColorComponentProps,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -19,11 +20,13 @@ import Image from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps<ComplexColorPropType> {
   accessibility?: Accessibility
 
   /** A Label can be circular. */
@@ -56,7 +59,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: 'complex' }),
     circular: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
@@ -81,7 +84,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
-    const { children, icon, iconPosition, image, imagePosition, content } = this.props
+    const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (

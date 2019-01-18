@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
@@ -11,6 +10,7 @@ import { examplePathToHash, getFormattedHash, knobsContext, scrollToAnchor } fro
 import { callable, pxToRem, constants } from 'src/lib'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
+import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
@@ -18,12 +18,13 @@ import ComponentSourceManager, {
 } from '../ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
-import { ThemeContext } from '../../../context/theme-context'
+import { ThemeContext } from '../../../context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
 export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
-    ComponentSourceManagerRenderProps {
+    ComponentSourceManagerRenderProps,
+    ExampleContextValue {
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
@@ -60,44 +61,23 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   kebabExamplePath: string
   KnobsComponent: any
 
-  state = {
-    knobs: {},
-    themeName: 'teams',
-    componentVariables: {},
-    handleMouseLeave: _.noop,
-    handleMouseMove: _.noop,
-    showCode: false,
-    showRtl: false,
-    showTransparent: false,
-    showVariables: false,
-    isHovering: false,
-    copiedCode: false,
-  }
+  constructor(props) {
+    super(props)
 
-  static contextTypes = {
-    onPassed: PropTypes.func,
-  }
-
-  static propTypes = {
-    children: PropTypes.node,
-    description: PropTypes.node,
-    examplePath: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    title: PropTypes.node,
-    themeName: PropTypes.string,
-  }
-
-  componentWillMount() {
-    const { examplePath } = this.props
-    this.anchorName = examplePathToHash(examplePath)
-
-    this.setState({
+    this.anchorName = examplePathToHash(props.examplePath)
+    this.state = {
       handleMouseLeave: this.handleMouseLeave,
       handleMouseMove: this.handleMouseMove,
+      knobs: this.getDefaultKnobsValue(),
       showCode: this.isActiveHash(),
-    })
+      themeName: 'teams',
+      componentVariables: {},
+      showRtl: false,
+      showTransparent: false,
+      showVariables: false,
+      isHovering: false,
+      copiedCode: false,
+    }
   }
 
   componentWillReceiveProps(nextProps: ComponentExampleProps) {
@@ -205,7 +185,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   handlePass = () => {
     const { title } = this.props
 
-    if (title) _.invoke(this.context, 'onPassed', null, this.props)
+    if (title) this.props.onExamplePassed(this.anchorName)
   }
 
   copySourceCode = () => {
@@ -232,11 +212,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   hasKnobs = () => _.includes(knobsContext.keys(), this.getKnobsFilename())
 
   renderElement = (element: React.ReactElement<any>) => {
-    const { examplePath } = this.props
     const { showRtl, componentVariables, themeName } = this.state
 
     const theme = themes[themeName]
-
     const newTheme: ThemeInput = {
       siteVariables: theme.siteVariables,
       componentVariables: mergeThemeVariables(theme.componentVariables, {
@@ -245,11 +223,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       rtl: showRtl,
     }
 
-    return (
-      <Provider key={`${examplePath}${showRtl ? '-rtl' : ''}`} theme={newTheme}>
-        {element}
-      </Provider>
-    )
+    return <Provider theme={newTheme}>{element}</Provider>
   }
 
   handleKnobChange = knobs => {
@@ -271,16 +245,21 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     return this.KnobsComponent
   }
 
-  getKnobsValue = () => {
+  getDefaultKnobsValue = (overrides = {}) => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? { ...Knobs.defaultProps, ...this.state.knobs } : null
+    return Knobs ? { ...Knobs.defaultProps, overrides } : null
   }
 
   renderKnobs = () => {
     const Knobs = this.getKnobsComponent()
 
-    return Knobs ? <Knobs {...this.getKnobsValue()} onKnobChange={this.handleKnobChange} /> : null
+    return Knobs ? (
+      <Knobs
+        {...this.getDefaultKnobsValue(this.state.knobs)}
+        onKnobChange={this.handleKnobChange}
+      />
+    ) : null
   }
 
   getDisplayName = () => this.props.examplePath.split('/')[1]
@@ -522,7 +501,14 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   render() {
-    const { children, currentCode, currentCodePath, description, title } = this.props
+    const {
+      children,
+      currentCode,
+      currentCodeLanguage,
+      currentCodePath,
+      description,
+      title,
+    } = this.props
     const {
       handleMouseLeave,
       handleMouseMove,
@@ -568,6 +554,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <div style={{ flex: '0 0 auto' }}>
                 <ComponentControls
                   anchorName={this.anchorName}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
                   examplePath={currentCodePath}
                   onShowCode={this.handleShowCodeClick}
                   onCopyLink={this.handleDirectLinkClick}
@@ -639,9 +627,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 const ComponentExampleWithTheme = props => (
   <ThemeContext.Consumer>
     {({ themeName }) => (
-      <ComponentSourceManager examplePath={props.examplePath}>
-        {codeProps => <ComponentExample {...props} {...codeProps} themeName={themeName} />}
-      </ComponentSourceManager>
+      <ExampleContext.Consumer>
+        {exampleProps => (
+          <ComponentSourceManager examplePath={props.examplePath}>
+            {codeProps => (
+              <ComponentExample {...props} {...exampleProps} {...codeProps} themeName={themeName} />
+            )}
+          </ComponentSourceManager>
+        )}
+      </ExampleContext.Consumer>
     )}
   </ThemeContext.Consumer>
 )

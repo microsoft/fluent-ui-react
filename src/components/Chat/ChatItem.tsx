@@ -13,7 +13,7 @@ import {
   customPropTypes,
   addRtlSupport,
 } from '../../lib'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
@@ -64,12 +64,12 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
     const { message, gutter, gutterPosition } = this.props
-    const gutterElement = gutter && Slot.create(gutter, { defaultProps: { styles: styles.gutter } })
+    const gutterElement = gutter && Box.create(gutter, { defaultProps: { styles: styles.gutter } })
 
     return (
       <>
         {gutterPosition === 'start' && gutterElement}
-        {Slot.create(message, { defaultProps: { styles: styles.message } })}
+        {Box.create(message, { defaultProps: { styles: styles.message } })}
         {gutterPosition === 'end' && gutterElement}
       </>
     )

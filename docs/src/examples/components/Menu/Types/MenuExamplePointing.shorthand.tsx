@@ -7,8 +7,11 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleVerticalPointing = () => (
-  <Menu defaultActiveIndex={0} items={items} vertical pointing />
+const MenuExamplePointing = () => (
+  <div>
+    <Menu defaultActiveIndex={2} items={items} pointing />
+    <br />
+    <Menu defaultActiveIndex={0} items={items} pointing="start" />
+  </div>
 )
-
-export default MenuExampleVerticalPointing
+export default MenuExamplePointing

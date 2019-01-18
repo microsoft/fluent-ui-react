@@ -10,7 +10,7 @@ import {
   addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
@@ -44,7 +44,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? addRtlSupport(children) : Slot.create(content)}
+        {childrenExist(children) ? addRtlSupport(children) : Box.create(content)}
       </ElementType>
     )
   }

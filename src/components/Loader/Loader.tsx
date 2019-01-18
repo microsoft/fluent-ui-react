@@ -12,7 +12,7 @@ import {
 import { loaderBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
 export type LoaderSize =
@@ -77,8 +77,8 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {Slot.create(indicator, { defaultProps: { styles: styles.indicator } })}
-        {Slot.create(label, { defaultProps: { styles: styles.label } })}
+        {Box.create(indicator, { defaultProps: { styles: styles.indicator } })}
+        {Box.create(label, { defaultProps: { styles: styles.label } })}
       </ElementType>
     )
   }

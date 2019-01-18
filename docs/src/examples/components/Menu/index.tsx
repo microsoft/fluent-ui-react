@@ -1,13 +1,18 @@
 import * as React from 'react'
 import Types from './Types'
+import Slots from './Slots'
+import States from './States'
 import Variations from './Variations'
-import Content from './Content'
+
+import Usages from './Usages'
 
 const MenuExamples = () => (
   <div>
     <Types />
-    <Content />
+    <Slots />
+    <States />
     <Variations />
+    <Usages />
   </div>
 )
 

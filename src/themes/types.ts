@@ -74,7 +74,7 @@ export type EmphasisColors = Extendable<EmphasisColorsStrict, ColorVariants>
 /**
  * A type for extracting the color names.
  */
-type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
+export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
 
 /**
  * A type for an extendable set of ColorNames properties of type T
@@ -95,6 +95,18 @@ type ExtendablePalette<T> = T &
 export type ColorPalette = ExtendablePalette<
   EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
 >
+
+/**
+ * A type for the generic color scheme of a component based on CSS property names
+ */
+export type ColorScheme = {
+  foreground: string
+  background: string
+  border: string
+  shadow: string
+}
+
+export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
 
 // ========================================================
 // Props
@@ -117,6 +129,7 @@ export type State = ObjectOf<any>
 
 export interface SiteVariablesInput extends ObjectOf<any> {
   colors?: ColorPalette
+  colorScheme?: ColorSchemeMapping
   contextualColors?: ContextualColors
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
@@ -124,13 +137,7 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   htmlFontSize?: string
 }
 
-export interface SiteVariablesPrepared extends ObjectOf<any> {
-  colors?: ColorPalette
-  contextualColors?: ContextualColors
-  emphasisColors?: EmphasisColors
-  naturalColors?: NaturalColorsStrict
-  brand?: string
-  htmlFontSize?: string
+export interface SiteVariablesPrepared extends SiteVariablesInput {
   fontSizes: ObjectOf<string>
 }
 
@@ -190,6 +197,7 @@ export interface ComponentStyleFunctionParam<
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
+  colors: Partial<ColorScheme>
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

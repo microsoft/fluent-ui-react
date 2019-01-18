@@ -15,7 +15,7 @@ import {
   addRtlSupport,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
@@ -142,7 +142,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
       >
         {hasChildren && addRtlSupport(children)}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
+        {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}

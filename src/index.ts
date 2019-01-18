@@ -16,6 +16,8 @@ export { default as Attachment, AttachmentProps } from './components/Attachment/
 
 export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
 
+export { default as Box, BoxProps } from './components/Box/Box'
+
 export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
@@ -37,7 +39,10 @@ export {
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
-export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
+export {
+  default as DropdownSelectedItem,
+  DropdownSelectedItemProps,
+} from './components/Dropdown/DropdownSelectedItem'
 
 export {
   default as DropdownSearchInput,
