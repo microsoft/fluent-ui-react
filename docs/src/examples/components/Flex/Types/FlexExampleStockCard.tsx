@@ -20,7 +20,7 @@ const LayoutExampleStockCard = () => {
             {icon}
           </Layout>
 
-          <Layout bottom between>
+          <Layout baseline between>
             {largeText}
             {smallText}
           </Layout>

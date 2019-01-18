@@ -3,41 +3,66 @@ import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { FlexProps } from '../../../../components/Flex/Flex'
 import FlexBody from 'src/components/Flex/FlexBody'
 
+/**
+ * Maps alignment properties into styles
+ * @param props
+ */
 const alignmentStyles = props => {
   const isGrid = Boolean(props.gap)
 
   return props.vertical && !isGrid
     ? {
         alignItems: props.right
-          ? 'baseline'
+          ? 'flex-end'
           : props.between
           ? 'space-between'
+          : props.evenly
+          ? 'space-evenly'
+          : props.around
+          ? 'space-around'
           : props.center
           ? 'center'
-          : 'inherit',
-        justifyContent: props.bottom ? 'baseline' : props.center ? 'center' : 'flex-start',
+          : 'unset',
+        justifyContent: props.bottom
+          ? 'flex-end'
+          : props.baseline
+          ? 'baseline'
+          : props.center
+          ? 'center'
+          : 'flex-start',
       }
     : {
         justifyContent: props.right
           ? 'flex-end'
           : props.between
           ? 'space-between'
+          : props.evenly
+          ? 'space-evenly'
+          : props.around
+          ? 'space-around'
           : props.center
           ? 'center'
           : 'flex-start',
         alignItems: props.bottom
+          ? 'flex-end'
+          : props.baseline
           ? 'baseline'
           : props.center
           ? 'center'
           : props.top
           ? 'flex-start'
           : 'inherit',
+        alignContent: 'flex-start',
       }
 }
 
+/**
+ * Computes grid template string to emulate flex:1 logic in grid layout
+ * @param props
+ */
 const gridTemplateString = props => {
   const templateString = React.Children.map(props.children, child =>
-    (child.type as any).displayName === FlexBody.displayName ? '1fr' : 'auto',
+    child.props.fluid || (child.type as any).displayName === FlexBody.displayName ? '1fr' : 'auto',
   ).join(' ')
   return {
     [props.vertical ? 'gridTemplateRows' : 'gridTemplateColumns']: templateString,
@@ -65,7 +90,6 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, {}> = {
 
     return {
       display: 'flex',
-      flex: 1,
       ...(props.vertical && !props.gap && { flexDirection: 'column' }),
       ...(props.wrap && { flexWrap: 'wrap' }),
       ...(props.flexSize && { flexBasis: props.flexSize }),

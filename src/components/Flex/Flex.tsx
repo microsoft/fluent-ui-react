@@ -19,6 +19,7 @@ export interface FlexProps extends ChildrenComponentProps, UIComponentProps {
   right?: boolean // { justifyContent:'flex-end' } or {alignItems: 'flex-end'}
   top?: boolean // { alignItems: 'flex-start'} or { justifyContent:'flex-start' }
   bottom?: boolean // { alignItems: 'flex-end'} or { justifyContent:'flex-end' }
+  baseline?: boolean
   around?: boolean // { justifyContent:'space-around' }
   between?: boolean // { justifyContent:'space-between' }
   evenly?: boolean // { justifyContent:'space-evenly' }
@@ -44,6 +45,7 @@ class Flex extends UIComponent<Extendable<FlexProps>, {}> {
     right: PropTypes.bool,
     top: PropTypes.bool,
     bottom: PropTypes.bool,
+    baseline: PropTypes.bool,
     around: PropTypes.bool,
     between: PropTypes.bool,
     evenly: PropTypes.bool,

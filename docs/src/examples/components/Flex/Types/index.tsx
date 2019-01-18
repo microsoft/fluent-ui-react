@@ -15,9 +15,19 @@ const Types = () => (
       examplePath="components/Flex/Types/FlexExampleVertical"
     />
     <ComponentExample
+      title="Horizontal page layout"
+      description="A horizontal page layout."
+      examplePath="components/Flex/Types/FlexExampleHorizontalPage"
+    />
+    <ComponentExample
       title="Contact card"
       description="A user contact card with actions"
       examplePath="components/Flex/Types/FlexContactCard"
+    />
+    <ComponentExample
+      title="Message"
+      description="A user message card"
+      examplePath="components/Flex/Types/FlexExampleMessage"
     />
     <ComponentExample
       title="Flex model"
