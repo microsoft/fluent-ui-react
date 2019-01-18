@@ -10,6 +10,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
@@ -134,7 +135,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlTransformedChildren }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
@@ -144,7 +145,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? rtlTransformedChildren : this.renderItems()}
+        {childrenExist(children) ? addRtlSupport(children) : this.renderItems()}
       </ElementType>
     )
   }

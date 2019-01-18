@@ -10,6 +10,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
@@ -53,18 +54,12 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    unhandledProps,
-    rtlTransformedChildren,
-    rtlTransformedContent,
-  }) {
-    const { children } = this.props
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const { children, content } = this.props
 
     return (
       <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
-        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
+        {addRtlSupport(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }

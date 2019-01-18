@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   getKindProp,
+  addRtlSupport,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -183,18 +184,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    variables,
-    unhandledProps,
-    rtlTransformedChildren,
-  }) {
+  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
     const { children } = this.props
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? rtlTransformedChildren : this.renderItems(variables)}
+        {childrenExist(children) ? addRtlSupport(children) : this.renderItems(variables)}
       </ElementType>
     )
   }

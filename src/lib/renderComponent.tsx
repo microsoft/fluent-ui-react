@@ -32,7 +32,6 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import getRtlTransformedElement from './getRtlTransformedElement'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -45,8 +44,6 @@ export interface RenderResultConfig<P> {
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
-  rtlTransformedChildren: React.ReactNode
-  rtlTransformedContent: React.ReactNode
 }
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
@@ -224,10 +221,6 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
         classes.root = cx(className, classes.root, props.className)
 
-        const { children, content } = props
-        const rtlTransformedChildren = getRtlTransformedElement(children)
-        const rtlTransformedContent = getRtlTransformedElement(content)
-
         const config: RenderResultConfig<P> = {
           ElementType,
           unhandledProps,
@@ -237,8 +230,6 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           accessibility,
           rtl,
           theme,
-          rtlTransformedChildren,
-          rtlTransformedContent,
         }
 
         if (accessibility.focusZone) {

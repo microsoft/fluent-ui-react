@@ -2,7 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
+  commonPropTypes,
+  addRtlSupport,
+} from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
@@ -46,7 +52,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlTransformedChildren }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
 
     return (
@@ -57,7 +63,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         {...unhandledProps}
       >
         {childrenExist(children)
-          ? rtlTransformedChildren
+          ? addRtlSupport(children)
           : _.map(items, item => ChatItem.create(item))}
       </ElementType>
     )

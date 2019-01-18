@@ -11,13 +11,13 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import Label from '../Label/Label'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
-import getRtlTransformedElement from '../../lib/getRtlTransformedElement'
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -165,7 +165,7 @@ class RadioGroupItem extends AutoControlledComponent<
               styles: styles.icon,
             },
           })}
-          {getRtlTransformedElement(label)}
+          {addRtlSupport(label)}
         </Label>
       </ElementType>
     )

@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import Button from './Button'
 
@@ -50,10 +51,8 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     accessibility,
     styles,
     unhandledProps,
-    rtlTransformedChildren,
-    rtlTransformedContent,
   }): React.ReactNode {
-    const { children, buttons, circular } = this.props
+    const { children, buttons, circular, content } = this.props
     if (_.isNil(buttons)) {
       return (
         <ElementType
@@ -61,7 +60,7 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
           {...unhandledProps}
           className={classes.root}
         >
-          {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
+          {addRtlSupport(childrenExist(children) ? children : content)}
         </ElementType>
       )
     }

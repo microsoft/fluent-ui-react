@@ -9,11 +9,11 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  addRtlSupport,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
 import { ReactProps } from '../../../types/utils'
-import getRtlTransformedElement from '../../lib/getRtlTransformedElement'
 
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
@@ -127,12 +127,12 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          main={getRtlTransformedElement(header)}
+          main={addRtlSupport(header)}
           rootCSS={headerCSS}
           end={
             headerMedia && (
               <span style={headerMediaCSS} className={mediaClasses}>
-                {getRtlTransformedElement(headerMedia)}
+                {addRtlSupport(headerMedia)}
               </span>
             )
           }
@@ -154,11 +154,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           debug={debug}
           truncateMain={truncateContent}
           rootCSS={contentCSS}
-          main={getRtlTransformedElement(content)}
+          main={addRtlSupport(content)}
           end={
             contentMedia && (
               <span style={contentMediaCSS} className={mediaClasses}>
-                {getRtlTransformedElement(contentMedia)}
+                {addRtlSupport(contentMedia)}
               </span>
             )
           }
@@ -191,7 +191,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         start={
           startArea && (
             <span style={mediaCSS} className={mergedMediaClasses}>
-              {getRtlTransformedElement(startArea)}
+              {addRtlSupport(startArea)}
             </span>
           )
         }
@@ -199,7 +199,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         end={
           endArea && (
             <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {getRtlTransformedElement(endArea)}
+              {addRtlSupport(endArea)}
             </span>
           )
         }

@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   customPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import Slot from '../Slot/Slot'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
@@ -51,13 +52,12 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     classes,
     unhandledProps,
     styles,
-    rtlTransformedChildren,
   }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? rtlTransformedChildren : this.renderChatItem(styles)}
+        {childrenExist(children) ? addRtlSupport(children) : this.renderChatItem(styles)}
       </ElementType>
     )
   }

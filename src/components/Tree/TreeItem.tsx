@@ -14,6 +14,7 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
+  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
@@ -108,20 +109,12 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     )
   }
 
-  renderComponent({
-    ElementType,
-    accessibility,
-    classes,
-    unhandledProps,
-    styles,
-    variables,
-    rtlTransformedChildren,
-  }) {
+  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
     const { children } = this.props
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {childrenExist(children) ? rtlTransformedChildren : this.renderContent()}
+        {childrenExist(children) ? addRtlSupport(children) : this.renderContent()}
       </ElementType>
     )
   }

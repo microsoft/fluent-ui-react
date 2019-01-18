@@ -9,6 +9,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  addRtlSupport,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -68,14 +69,12 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     ElementType,
     classes,
     unhandledProps,
-    rtlTransformedChildren,
-    rtlTransformedContent,
   }: RenderResultConfig<any>): ReactNode {
-    const { children } = this.props
+    const { children, content } = this.props
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
-        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
+        {addRtlSupport(childrenExist(children) ? children : content)}
       </ElementType>
     )
   }

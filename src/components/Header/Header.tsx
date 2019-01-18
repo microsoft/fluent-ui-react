@@ -10,6 +10,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  addRtlSupport,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
@@ -53,21 +54,14 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({
-    ElementType,
-    classes,
-    variables: v,
-    unhandledProps,
-    rtlTransformedChildren,
-    rtlTransformedContent,
-  }) {
-    const { children, description } = this.props
+  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
+    const { children, description, content } = this.props
 
     const hasChildren = childrenExist(children)
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {hasChildren ? rtlTransformedChildren : rtlTransformedContent}
+        {hasChildren ? addRtlSupport(children) : addRtlSupport(content)}
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {

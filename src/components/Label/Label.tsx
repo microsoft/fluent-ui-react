@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -79,21 +80,13 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    unhandledProps,
-    variables,
-    styles,
-    rtlTransformedChildren,
-    rtlTransformedContent,
-  }) {
-    const { children, icon, iconPosition, image, imagePosition } = this.props
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+    const { children, icon, iconPosition, image, imagePosition, content } = this.props
 
     if (childrenExist(children)) {
       return (
         <ElementType {...unhandledProps} className={classes.root}>
-          {rtlTransformedChildren}
+          {addRtlSupport(children)}
         </ElementType>
       )
     }
@@ -131,7 +124,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={rtlTransformedContent}
+          main={addRtlSupport(content)}
           end={
             hasEndElement && (
               <>

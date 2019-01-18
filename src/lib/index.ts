@@ -8,7 +8,7 @@ export { default as UIComponent } from './UIComponent'
 export { EventStack } from './eventStack'
 export { felaRenderer, felaRtlRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
-export { default as getRtlTransformedElement } from './getRtlTransformedElement'
+export { default as addRtlSupport } from './addRtlSupport'
 
 export * from './factories'
 export { default as callable } from './callable'

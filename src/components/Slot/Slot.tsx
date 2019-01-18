@@ -6,6 +6,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../../types/utils'
@@ -30,19 +31,12 @@ const Slot: CreateComponentReturnType<ReactProps<SlotProps>> & {
   },
 
   render(config, props) {
-    const {
-      ElementType,
-      classes,
-      unhandledProps,
-      accessibility,
-      rtlTransformedChildren,
-      rtlTransformedContent,
-    } = config
-    const { children } = props
+    const { ElementType, classes, unhandledProps, accessibility } = config
+    const { children, content } = props
 
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? rtlTransformedChildren : rtlTransformedContent}
+        {addRtlSupport(childrenExist(children) ? children : content)}
       </ElementType>
     )
   },

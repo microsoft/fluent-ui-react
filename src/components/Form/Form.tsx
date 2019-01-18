@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
@@ -55,12 +56,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({
-    ElementType,
-    classes,
-    unhandledProps,
-    rtlTransformedChildren,
-  }): React.ReactNode {
+  public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType
@@ -69,7 +65,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
         onSubmit={this.handleSubmit}
         {...unhandledProps}
       >
-        {childrenExist(children) ? rtlTransformedChildren : this.renderFields()}
+        {childrenExist(children) ? addRtlSupport(children) : this.renderFields()}
       </ElementType>
     )
   }

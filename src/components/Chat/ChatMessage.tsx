@@ -12,6 +12,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
@@ -76,7 +77,6 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
     accessibility,
     unhandledProps,
     styles,
-    rtlTransformedChildren,
   }: RenderResultConfig<ChatMessageProps>) {
     const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
@@ -90,7 +90,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
         className={className}
       >
         {childrenPropExists ? (
-          rtlTransformedChildren
+          addRtlSupport(children)
         ) : (
           <>
             {!mine &&

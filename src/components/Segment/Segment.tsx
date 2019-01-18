@@ -7,6 +7,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Slot from '../Slot/Slot'
@@ -38,12 +39,12 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtlTransformedChildren }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
       <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? rtlTransformedChildren : Slot.create(content)}
+        {childrenExist(children) ? addRtlSupport(children) : Slot.create(content)}
       </ElementType>
     )
   }

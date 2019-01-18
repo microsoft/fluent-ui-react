@@ -15,6 +15,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   EventStack,
+  addRtlSupport,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
@@ -171,14 +172,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     this.outsideClickSubscription.unsubscribe()
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    unhandledProps,
-    styles,
-    rtlTransformedContent,
-  }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
     const { children, content, icon, wrapper, menu, primary, secondary, active } = this.props
 
     const { menuOpen } = this.state
@@ -199,7 +193,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             Icon.create(this.props.icon, {
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
-          {rtlTransformedContent}
+          {addRtlSupport(content)}
         </ElementType>
       </Ref>
     )

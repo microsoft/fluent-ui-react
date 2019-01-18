@@ -2,10 +2,9 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import { UIComponent, UIComponentProps, commonPropTypes, addRtlSupport } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
-import getRtlTransformedElement from '../../lib/getRtlTransformedElement'
 
 export interface LayoutProps extends UIComponentProps {
   debug?: boolean
@@ -98,30 +97,18 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     // TODO: option 1) higher value layouts could use start={Layout.create(start)} to ensure Areas are layout root
     renderStartArea({ start, classes }) {
       return (
-        start && (
-          <div className={cx('ui-layout__start', classes.start)}>
-            {getRtlTransformedElement(start)}
-          </div>
-        )
+        start && <div className={cx('ui-layout__start', classes.start)}>{addRtlSupport(start)}</div>
       )
     },
 
     renderMainArea({ main, classes }) {
       return (
-        main && (
-          <div className={cx('ui-layout__main', classes.main)}>
-            {getRtlTransformedElement(main)}
-          </div>
-        )
+        main && <div className={cx('ui-layout__main', classes.main)}>{addRtlSupport(main)}</div>
       )
     },
 
     renderEndArea({ end, classes }) {
-      return (
-        end && (
-          <div className={cx('ui-layout__end', classes.end)}>{getRtlTransformedElement(end)}</div>
-        )
-      )
+      return end && <div className={cx('ui-layout__end', classes.end)}>{addRtlSupport(end)}</div>
     },
 
     // Heads up!
