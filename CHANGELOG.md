@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
+- Add rtl support for the strings used inside the components @mnajdova ([#704](https://github.com/stardust-ui/react/pull/704))
 
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
