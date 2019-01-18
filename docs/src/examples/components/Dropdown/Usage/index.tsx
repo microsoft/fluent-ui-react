@@ -6,7 +6,7 @@ const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
       title="Render callbacks"
-      description="A multiple search dropdown which items have header, content and image."
+      description="You can customize rendered elements with render callbacks."
       examplePath="components/Dropdown/Usage/DropdownExampleRender"
     />
   </ExampleSection>
