@@ -12,7 +12,7 @@ import {
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
@@ -130,7 +130,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentStat
           </div>
         )}
         {!_.isNil(progress) &&
-          Slot.create('', {
+          Box.create('', {
             defaultProps: { className: classes.progress },
           })}
       </ElementType>
