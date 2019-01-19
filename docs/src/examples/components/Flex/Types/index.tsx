@@ -20,6 +20,11 @@ const Types = () => (
       examplePath="components/Flex/Types/FlexExampleHorizontalPage"
     />
     <ComponentExample
+      title="Layout alignment model"
+      description="A layout can align its children"
+      examplePath="components/Flex/Types/FlexExampleAlignment"
+    />
+    <ComponentExample
       title="Contact card"
       description="A user contact card with actions"
       examplePath="components/Flex/Types/FlexContactCard"

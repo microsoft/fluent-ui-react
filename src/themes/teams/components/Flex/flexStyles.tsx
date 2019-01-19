@@ -25,6 +25,8 @@ const alignmentStyles = props => {
           : 'unset',
         justifyContent: props.bottom
           ? 'flex-end'
+          : props.top
+          ? 'flex-start'
           : props.baseline
           ? 'baseline'
           : props.center
@@ -34,6 +36,8 @@ const alignmentStyles = props => {
     : {
         justifyContent: props.right
           ? 'flex-end'
+          : props.left
+          ? 'flex-start'
           : props.between
           ? 'space-between'
           : props.evenly
@@ -45,6 +49,8 @@ const alignmentStyles = props => {
           : 'flex-start',
         alignItems: props.bottom
           ? 'flex-end'
+          : props.top
+          ? 'flex-start'
           : props.baseline
           ? 'baseline'
           : props.center
