@@ -1,8 +1,10 @@
 import { RtlFunc } from './types'
+import { childrenExist } from '../index'
 
 const childrenDependentRtlAttributes: RtlFunc = (props: any) => {
   const { children } = props
-  const rootRtlAttributes = typeof children === 'string' ? { dir: 'auto' } : {}
+  const rootRtlAttributes =
+    childrenExist(children) && typeof children === 'string' ? { dir: 'auto' } : {}
   return {
     root: rootRtlAttributes,
   }
