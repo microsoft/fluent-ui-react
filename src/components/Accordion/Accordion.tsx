@@ -9,7 +9,6 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
@@ -22,6 +21,8 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
+import { accordionRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
@@ -68,6 +69,12 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @default defaultBehavior
    * */
   accessibility?: Accessibility
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default accordionRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 /**
@@ -108,10 +115,12 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
     renderPanelTitle: PropTypes.func,
     renderPanelContent: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     accessibility: defaultBehavior as Accessibility,
+    rtlAttributes: accordionRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -177,12 +186,17 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? addRtlSupport(children) : this.renderPanels()}
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlAttributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )
   }
