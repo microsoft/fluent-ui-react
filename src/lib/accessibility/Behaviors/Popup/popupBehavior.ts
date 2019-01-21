@@ -8,7 +8,7 @@ import * as _ from 'lodash'
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
- * Adds attribute 'aria-disabled=true' to 'trigger' component's part based on the property 'disabled'.
+ * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  */
 const popupBehavior: Accessibility = (props: any) => {
   return {
@@ -18,7 +18,9 @@ const popupBehavior: Accessibility = (props: any) => {
         tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
         'aria-disabled': !_.isNil(props['aria-disabled'])
           ? props['aria-disabled']
-          : !!props['disabled'],
+          : !!props['disabled']
+          ? true
+          : undefined,
       },
     },
     keyActions: {

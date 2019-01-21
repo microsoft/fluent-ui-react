@@ -164,6 +164,12 @@ describe('factories', () => {
       expect(goodUsage).not.toThrowError()
     })
 
+    test('does not throw if do not passed `mappedProp`', () => {
+      const goodUsage = () => createShorthandFactory(() => <div />)
+
+      expect(goodUsage).not.toThrowError()
+    })
+
     test('throw if passed Component that is not a string nor function', () => {
       consoleUtil.disableOnce()
       const badComponents: any = [undefined, null, true, false, [], {}, 123]
