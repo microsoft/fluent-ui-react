@@ -12,7 +12,6 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -20,6 +19,8 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
+import buttonRtlAttributes from '../../lib/rtl/Button/buttonRtlAttributes'
+import { RtlFunc } from '@stardust-ui/react'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -66,6 +67,12 @@ export interface ButtonProps
   /** A button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default buttonRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
+
   /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean
 
@@ -107,11 +114,13 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
+    rtlAttributes: buttonRtlAttributes,
   }
 
   static Group = ButtonGroup
@@ -127,6 +136,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     variables,
     styles,
     unhandledProps,
+    rtlAttributes,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -138,9 +148,10 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
       >
-        {hasChildren && addRtlSupport(children)}
+        {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', styles: styles.content },

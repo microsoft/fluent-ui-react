@@ -170,3 +170,13 @@ export {
   ContentComponentProps,
 } from './lib'
 export { ShorthandRenderer } from '../types/utils'
+
+//
+// Rtl
+//
+export * from './lib/rtl/types'
+export { default as defaultRtlAttributes } from './lib/rtl/defaultRtlAttributes'
+export { default as buttonRtlAttributes } from './lib/rtl/Button/buttonRtlAttributes'
+export { default as treeRtlAttributes } from './lib/rtl/Tree/treeRtlAttributes'
+export { default as treeItemRtlAttributes } from './lib/rtl/Tree/treeItemRtlAttributes'
+export { default as segmentRtlAttributes } from './lib/rtl/Segment/segmentRtlAttributes'

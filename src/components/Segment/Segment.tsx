@@ -7,10 +7,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Box from '../Box/Box'
+import { segmentRtlAttributes, RtlFunc } from '@stardust-ui/react'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
@@ -18,6 +18,12 @@ export interface SegmentProps
     ContentComponentProps<ShorthandValue> {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default segmentRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 /**
@@ -33,18 +39,20 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
       content: 'shorthand',
     }),
     inverted: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'div',
+    rtlAttributes: segmentRtlAttributes,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? addRtlSupport(children) : Box.create(content)}
+      <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
+        {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
     )
   }

@@ -10,7 +10,6 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  addRtlSupport,
 } from '../../lib'
 
 import { ReactProps } from '../../../types/utils'
@@ -86,12 +85,12 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }): React.ReactNode {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...unhandledProps}>
-        {addRtlSupport(childrenExist(children) ? children : content)}
+      <ElementType className={classes.root} {...rtlAttributes.root} {...unhandledProps}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

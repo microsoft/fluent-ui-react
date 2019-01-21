@@ -14,9 +14,9 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
+import { treeItemRtlAttributes, RtlFunc } from '@stardust-ui/react'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -44,6 +44,12 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    */
   renderItemTitle?: ShorthandRenderFunction
 
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default treeItemRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
+
   /** Properties for TreeTitle. */
   title?: ShorthandValue
 }
@@ -70,12 +76,14 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     items: customPropTypes.collectionShorthand,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
+    treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
   public static defaultProps = {
     as: 'li',
     accessibility: defaultBehavior,
+    rtlAttributes: treeItemRtlAttributes,
   }
 
   handleTitleOverrides = predefinedProps => ({
@@ -109,12 +117,25 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     )
   }
 
-  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    accessibility,
+    classes,
+    unhandledProps,
+    styles,
+    variables,
+    rtlAttributes,
+  }) {
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {childrenExist(children) ? addRtlSupport(children) : this.renderContent()}
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlAttributes.root}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
   }

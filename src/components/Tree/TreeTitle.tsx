@@ -10,7 +10,6 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
-  addRtlSupport,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -57,7 +56,15 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    variables,
+    rtlAttributes,
+  }) {
     const { children, content } = this.props
 
     return (
@@ -65,9 +72,10 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
       >
-        {addRtlSupport(childrenExist(children) ? children : content)}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

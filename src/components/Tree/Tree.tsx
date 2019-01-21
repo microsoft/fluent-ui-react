@@ -9,12 +9,12 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
-  addRtlSupport,
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
+import { treeRtlAttributes, RtlFunc } from '@stardust-ui/react'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -34,6 +34,12 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default treeRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 /**
@@ -53,11 +59,13 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     as: 'ul',
     accessibility: defaultBehavior,
+    rtlAttributes: treeRtlAttributes,
   }
 
   renderContent() {
@@ -72,12 +80,25 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    unhandledProps,
+    styles,
+    variables,
+    rtlAttributes,
+  }) {
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {childrenExist(children) ? addRtlSupport(children) : this.renderContent()}
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlAttributes.root}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
   }

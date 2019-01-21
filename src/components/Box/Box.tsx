@@ -6,7 +6,6 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../../types/utils'
@@ -29,12 +28,17 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
   },
 
   render(config, props) {
-    const { ElementType, classes, unhandledProps, accessibility } = config
+    const { ElementType, classes, unhandledProps, accessibility, rtlAttributes } = config
     const { children, content } = props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {addRtlSupport(childrenExist(children) ? children : content)}
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlAttributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   },
