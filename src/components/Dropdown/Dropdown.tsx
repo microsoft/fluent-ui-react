@@ -2,7 +2,12 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import {
+  Extendable,
+  ShorthandValue,
+  ComponentEventHandler,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import {
   ComponentSlotStylesInput,
   ComponentVariablesInput,
@@ -101,6 +106,24 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A placeholder message for the input field. */
   placeholder?: string
 
+  /**
+   * A custom render function for the item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
+
+  /**
+   * A custom render function for the selected item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderSelectedItem?: ShorthandRenderFunction
+
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
 
@@ -162,6 +185,8 @@ export default class Dropdown extends AutoControlledComponent<
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
+    renderItem: PropTypes.func,
+    renderSelectedItem: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
@@ -412,7 +437,7 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { noResultsMessage } = this.props
+    const { renderItem, noResultsMessage } = this.props
     const filteredItems = this.getItemsFilteredBySearchQuery()
 
     if (filteredItems.length > 0) {
@@ -427,6 +452,7 @@ export default class Dropdown extends AutoControlledComponent<
               }),
           },
           overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
+          render: renderItem,
         })
       })
     }
@@ -443,6 +469,7 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private renderSelectedItems() {
+    const { renderSelectedItem } = this.props
     const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
@@ -459,6 +486,7 @@ export default class Dropdown extends AutoControlledComponent<
         },
         overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
           this.handleSelectedItemOverrides(predefinedProps, item),
+        render: renderSelectedItem,
       }),
     )
   }
