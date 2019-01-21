@@ -37,6 +37,9 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   /** Name of the icon. */
   name?: string
 
+  /** An icon can be rotated by the degree specified as number. */
+  rotate?: number
+
   /** Size of the icon. */
   size?: IconSize
 
@@ -65,6 +68,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     name: PropTypes.string,
+    rotate: PropTypes.number,
     size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
@@ -73,6 +77,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     as: 'span',
     size: 'medium',
     accessibility: iconBehavior,
+    rotate: 0,
   }
 
   private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {

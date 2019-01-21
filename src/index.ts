@@ -127,6 +127,8 @@ export { default as Animation, AnimationProps } from './components/Animation/Ani
 
 export { default as Tree } from './components/Tree'
 
+export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
+
 //
 // Accessibility
 //
