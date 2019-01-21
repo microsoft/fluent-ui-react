@@ -78,6 +78,13 @@ class ShorthandProps extends React.Component {
           element.
         </p>
 
+        {subheader(`Disable slot's rendering`)}
+        <p>
+          It is also possible to pass falsy values ({code('false')}, {code('null')} or{' '}
+          {code('undefined')}) to shorthand prop - in that case there will be nothing rendered for
+          the component's slot.
+        </p>
+
         {/* SHORTHAND AS REACT ELEMENT */}
         {header('Shorthand value as React Element')}
         <p>
