@@ -27,6 +27,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
 - Add `Indicator` component and used it in `MenuItem` and `AccordionTitle` @mnajdova ([#721](https://github.com/stardust-ui/react/pull/721))
 - Expose `renderItem` and `renderSelectedItem` callbacks API for `Dropdown` @layershifter ([#746](https://github.com/stardust-ui/react/pull/746))
+
+### Documentation
 - Refine Shorthand docs page content @kuzhelov ([#751](https://github.com/stardust-ui/react/pull/751))
 
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
