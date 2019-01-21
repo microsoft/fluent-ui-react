@@ -55,7 +55,7 @@ const normalizeMeasures = (measures: ProfilerMeasureCycle[]) => {
     measures,
     (result, cycle: ProfilerMeasureCycle) => {
       _.forEach(cycle, (value: ProfilerMeasure, exampleName: string) => {
-         (result[exampleName] || (result[exampleName] = [])).push(value)
+        result[exampleName] = [...(result[exampleName] || []), value]
       })
 
       return result
