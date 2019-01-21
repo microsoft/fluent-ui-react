@@ -97,7 +97,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...unhandledProps} {...rtlAttributes.root} className={classes.root}>
+        <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
           {children}
         </ElementType>
       )

@@ -13,7 +13,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  addRtlSupport,
   isFromKeyboard,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
@@ -22,6 +21,8 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
+import { chatMessageRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -48,6 +49,12 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default chatMessageRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 export interface ChatMessageState {
@@ -71,11 +78,13 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
     onFocus: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
+    rtlAttributes: chatMessageRtlAttributes,
   }
 
   public state = {
@@ -101,6 +110,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     accessibility,
     unhandledProps,
     styles,
+    rtlAttributes,
   }: RenderResultConfig<ChatMessageProps>) {
     const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
@@ -110,12 +120,13 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
         onFocus={this.handleFocus}
         className={className}
       >
         {childrenPropExists ? (
-          addRtlSupport(children)
+          children
         ) : (
           <>
             {!mine &&
