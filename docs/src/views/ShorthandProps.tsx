@@ -32,11 +32,6 @@ class ShorthandProps extends React.Component {
         {codeExample([`<Button icon='chess rook' />`])}
 
         <p>
-          So, what this string value (i.e. {code("'chess rook'")}) means for {code('Button')}{' '}
-          component and, essentially, how it transforms into rendered {code('<Icon />')} element?
-        </p>
-
-        <p>
           There are several forms of shorthand values that can be provided, but all of them share
           one common thing - each is eventually evaluated to React Element. Thus, you can think of
           shorthand values as a recipe to customize rendered React Element at corresponding slot.
