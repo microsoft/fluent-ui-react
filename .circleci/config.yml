@@ -43,9 +43,14 @@ jobs:
       - run:
           name: Prettier
           command: yarn prettier
+      # weak package is required for --detectLeaks in Unit tests
+      # it is not in package.json as it would require Python on Windows
+      - run:
+          name: Install weak
+          command: yarn add --dev weak
       - run:
           name: Unit Tests
-          command: yarn test --strict --maxWorkers=4
+          command: yarn test --strict --maxWorkers=4 --detectLeaks
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
