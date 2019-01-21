@@ -13,5 +13,4 @@ performanceExamples.keys().forEach(exampleName => {
   const Component = performanceExamples(exampleName).default
 
   renderCycle(Component)
-  console.log(Component)
 })
