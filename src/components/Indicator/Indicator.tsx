@@ -30,10 +30,10 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
   static className = 'ui-indicator'
 
   static directionMap = {
-    end: { unicode: '25B8', rotation: -90 },
-    start: { unicode: '25C2', rotation: 90 },
-    top: { unicode: '25B4', rotation: 180 },
-    bottom: { unicode: '25BE', rotation: 0 },
+    end: { unicode: '\u25B8', rotation: -90 },
+    start: { unicode: '\u25C2', rotation: 90 },
+    top: { unicode: '\u25B4', rotation: 180 },
+    bottom: { unicode: '\u25BE', rotation: 0 },
   }
 
   static propTypes = {
@@ -51,28 +51,18 @@ class Indicator extends UIComponent<ReactProps<IndicatorProps>, any> {
     const { direction, icon, color } = this.props
     const hexUnicode =
       direction && Indicator.directionMap[this.getDirectionBasedOnRtl(rtl, direction)].unicode
-    const contentProps = !icon
-      ? {
-          dangerouslySetInnerHTML: {
-            __html: hexUnicode && this.isHex(hexUnicode) ? `&#x${hexUnicode};` : '',
-          },
-        }
-      : {
-          children: Icon.create(icon, {
-            defaultProps: { color },
-            overrideProps: ({ rotate }) => ({
-              rotate: (Indicator.directionMap[direction].rotation || 0) + (rotate || 0),
-            }),
-          }),
-        }
-    return <ElementType {...unhandledProps} className={classes.root} {...contentProps} />
-  }
 
-  private isHex(h) {
     return (
-      parseInt(h, 16)
-        .toString(16)
-        .toUpperCase() === h.toUpperCase()
+      <ElementType {...unhandledProps} className={classes.root}>
+        {icon
+          ? Icon.create(icon, {
+              defaultProps: { color },
+              overrideProps: ({ rotate }) => ({
+                rotate: (Indicator.directionMap[direction].rotation || 0) + (rotate || 0),
+              }),
+            })
+          : hexUnicode}
+      </ElementType>
     )
   }
 
