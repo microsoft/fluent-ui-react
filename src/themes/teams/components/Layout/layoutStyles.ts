@@ -61,7 +61,7 @@ const layoutStyles: ComponentSlotStylesInput = {
 
   main: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    display: 'inline-flex',
+    display: 'grid',
     alignItems: 'center',
     ...(props.truncateMain && truncateStyle),
     ...props.mainCSS,
