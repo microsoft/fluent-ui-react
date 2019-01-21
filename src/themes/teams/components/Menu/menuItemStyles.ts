@@ -1,4 +1,3 @@
-import { getSideArrow } from '../../utils'
 import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
@@ -279,8 +278,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       vertical,
       disabled,
     } = props
-    const { arrowDown } = theme.siteVariables
-    const sideArrow = getSideArrow(theme)
 
     return {
       color: 'inherit',
@@ -392,16 +389,6 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           color: 'inherit',
         },
       }),
-
-      '::after': {
-        ...(props.menu && {
-          position: 'relative',
-          float: 'right',
-          left: pxToRem(10),
-          userSelect: 'none',
-          content: props.vertical ? `"${sideArrow}"` : `"${arrowDown}"`,
-        }),
-      },
     }
   },
 
@@ -410,6 +397,13 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     position: 'absolute',
     top: vertical ? '0' : '100%',
     left: vertical ? '100%' : '0',
+  }),
+
+  indicator: () => ({
+    position: 'relative',
+    float: 'right',
+    left: pxToRem(10),
+    userSelect: 'none',
   }),
 }
 

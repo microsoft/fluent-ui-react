@@ -13,7 +13,7 @@ import {
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /** A control for the form field. */
@@ -94,7 +94,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
       },
     })
 
-    const controlElement = Slot.create(control || {}, {
+    const controlElement = Box.create(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
     })
 

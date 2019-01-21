@@ -18,4 +18,5 @@ export default siteVariables => ({
   selectableFocusHoverBackgroundColor: siteVariables.brand08,
   selectedColor: siteVariables.black,
   selectedBackgroundColor: siteVariables.gray10,
+  selectedFocusOutlineColor: siteVariables.brand,
 })

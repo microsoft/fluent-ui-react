@@ -16,6 +16,8 @@ export { default as Attachment, AttachmentProps } from './components/Attachment/
 
 export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
 
+export { default as Box, BoxProps } from './components/Box/Box'
+
 export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
@@ -124,6 +126,8 @@ export { default as Text, TextProps } from './components/Text/Text'
 export { default as Animation, AnimationProps } from './components/Animation/Animation'
 
 export { default as Tree } from './components/Tree'
+
+export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
 
 //
 // Accessibility
