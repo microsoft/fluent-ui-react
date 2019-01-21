@@ -72,7 +72,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
 
     return (
       <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
-        {description ? contentElement : addRtlSupport(contentElement)}
+        {description ? addRtlSupport(contentElement) : contentElement}
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {
