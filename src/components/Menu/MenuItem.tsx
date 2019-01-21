@@ -25,6 +25,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import { focusAsync } from '../../lib/accessibility/FocusZone'
 import Ref from '../Ref/Ref'
+import Indicator from '../Indicator/Indicator'
 
 export interface MenuItemProps
   extends UIComponentProps,
@@ -106,6 +107,9 @@ export interface MenuItemProps
 
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean
+
+  /** Shorthand for the submenu indicator. */
+  indicator?: ShorthandValue
 }
 
 export interface MenuItemState {
@@ -145,6 +149,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
+    indicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -182,8 +187,11 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
       primary,
       secondary,
       active,
+      vertical,
+      indicator,
       disabled,
     } = this.props
+    const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const { menuOpen } = this.state
 
@@ -206,6 +214,13 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
           {addRtlSupport(content)}
+          {menu &&
+            Indicator.create(indicatorWithDefaults, {
+              defaultProps: {
+                direction: vertical ? 'end' : 'bottom',
+                styles: styles.indicator,
+              },
+            })}
         </ElementType>
       </Ref>
     )
@@ -220,6 +235,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
               secondary,
               styles: styles.menu,
               submenu: true,
+              indicator,
             },
           })}
         </Ref>
