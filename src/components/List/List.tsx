@@ -16,7 +16,7 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { listRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
@@ -50,7 +50,7 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default listRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 
@@ -93,7 +93,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static defaultProps = {
     as: 'ul',
     accessibility: listBehavior as Accessibility,
-    rtlAttributes: listRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['selectedIndex']

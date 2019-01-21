@@ -20,7 +20,7 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
-import { labelRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface LabelProps
@@ -50,7 +50,7 @@ export interface LabelProps
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default labelRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -80,7 +80,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
-    rtlAttributes: labelRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   handleIconOverrides = iconProps => {

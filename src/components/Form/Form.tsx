@@ -12,7 +12,7 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
-import { formRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
@@ -60,7 +60,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
 
   public static defaultProps = {
     as: 'form',
-    rtlAttributes: formRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   public static Field = FormField

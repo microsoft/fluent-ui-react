@@ -10,7 +10,7 @@ import {
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Box from '../Box/Box'
-import { segmentRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface SegmentProps
@@ -22,7 +22,7 @@ export interface SegmentProps
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default segmentRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -45,7 +45,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
 
   static defaultProps = {
     as: 'div',
-    rtlAttributes: segmentRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }) {

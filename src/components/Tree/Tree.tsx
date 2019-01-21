@@ -15,7 +15,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
 import { RtlFunc } from '../../lib/rtl/types'
-import { treeRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -38,7 +38,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default treeRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -66,7 +66,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
   public static defaultProps = {
     as: 'ul',
     accessibility: defaultBehavior,
-    rtlAttributes: treeRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   renderContent() {

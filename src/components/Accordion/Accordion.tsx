@@ -21,7 +21,7 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import { accordionRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
@@ -72,7 +72,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default accordionRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -120,7 +120,7 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
   public static defaultProps = {
     accessibility: defaultBehavior as Accessibility,
-    rtlAttributes: accordionRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']

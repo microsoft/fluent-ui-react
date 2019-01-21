@@ -17,7 +17,7 @@ import {
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 import { RtlFunc } from '../../lib/rtl/types'
-import { treeItemRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -47,7 +47,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default treeItemRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 
@@ -84,7 +84,7 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
   public static defaultProps = {
     as: 'li',
     accessibility: defaultBehavior,
-    rtlAttributes: treeItemRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   handleTitleOverrides = predefinedProps => ({

@@ -19,7 +19,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandCollection } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
-import { menuRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export type MenuShorthandKinds = 'divider' | 'item'
@@ -73,7 +73,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default menuRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -117,7 +117,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static defaultProps = {
     as: 'ul',
     accessibility: menuBehavior as Accessibility,
-    rtlAttributes: menuRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']

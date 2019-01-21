@@ -14,7 +14,7 @@ import {
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import { chatItemRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
@@ -29,7 +29,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default chatItemRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -53,7 +53,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   static defaultProps = {
     as: 'li',
     gutterPosition: 'start',
-    rtlAttributes: chatItemRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   renderComponent({

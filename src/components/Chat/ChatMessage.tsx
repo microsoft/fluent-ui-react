@@ -21,7 +21,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
-import { chatMessageRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ChatMessageProps
@@ -52,7 +52,7 @@ export interface ChatMessageProps
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default chatMessageRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -84,7 +84,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
-    rtlAttributes: chatMessageRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   public state = {

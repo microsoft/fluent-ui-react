@@ -9,7 +9,7 @@ import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { chatRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
@@ -24,7 +24,7 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default chatRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 }
@@ -46,7 +46,11 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     rtlAttributes: PropTypes.func,
   }
 
-  static defaultProps = { accessibility: chatBehavior, as: 'ul', rtlAttributes: chatRtlAttributes }
+  static defaultProps = {
+    accessibility: chatBehavior,
+    as: 'ul',
+    rtlAttributes: childrenDependentRtlAttributes,
+  }
 
   static Item = ChatItem
   static Message = ChatMessage

@@ -16,7 +16,7 @@ import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { radioGroupRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes } from '../../lib/rtl'
 import { RtlFunc } from '../../lib/rtl/types'
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
@@ -44,7 +44,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
 
   /**
    * Rtl attributes function if overridden by the user.
-   * @default radioGroupRtlAttributes
+   * @default childrenDependentRtlAttributes
    */
   rtlAttributes?: RtlFunc
 
@@ -80,7 +80,7 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
   static defaultProps = {
     as: 'div',
     accessibility: radioGroupBehavior as Accessibility,
-    rtlAttributes: radioGroupRtlAttributes,
+    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['checkedValue']
