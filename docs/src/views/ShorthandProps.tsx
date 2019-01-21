@@ -96,10 +96,10 @@ class ShorthandProps extends React.Component {
             {code('accessibility')}).
           </strong>{' '}
           This is because, in contrast to other forms of shorthand values, Stardust-evaluated props
-          cannot be unsafely passed to the element which type is, generally, doesn't allow Stardust
-          to make any prior assumptions about. Due to this limitation, you should strive to use
-          other options for shorthand values whenever is possible - for instance, this is how
-          previous example can be rewritten:
+          cannot be safely passed to the element which type is, generally, doesn't allow Stardust to
+          make any prior assumptions about. Due to this limitation, you should strive to use other
+          options for shorthand values whenever is possible - for instance, this is how previous
+          example can be rewritten:
         </blockquote>
         {codeExample([`<Button icon={{ as: 'i', className: 'my-icon' }} />`])}
 
