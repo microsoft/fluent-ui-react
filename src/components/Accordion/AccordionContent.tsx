@@ -48,7 +48,7 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} {...rtlAttributes.root} className={classes.root}>
+      <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
