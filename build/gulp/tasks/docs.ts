@@ -19,10 +19,11 @@ import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
 import { getRelativePathToSourceFile } from '../plugins/util'
+import webpackPlugin from '../plugins/gulp-webpack'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
-const { colors, log, PluginError } = g.util
+const { colors, log } = g.util
 
 const handleWatchChange = path => log(`File ${path} was changed, running tasks...`)
 const handleWatchUnlink = (group, path) => {
@@ -54,10 +55,6 @@ task('clean:docs:example-menus', cb => {
 
 task('clean:docs:example-sources', cb => {
   rimraf(paths.docsSrc('exampleSources'), cb)
-})
-
-task('clean:perf', cb => {
-  rimraf(paths.perfDist(), cb)
 })
 
 task(
@@ -156,53 +153,7 @@ task('build:docs:toc', () =>
 )
 
 task('build:docs:webpack', cb => {
-  const webpackConfig = require('../../../webpack.config').default
-  const compiler = webpack(webpackConfig)
-
-  compiler.run((err, stats) => {
-    const { errors, warnings } = stats.toJson()
-
-    log(stats.toString(config.compiler_stats))
-
-    if (err) {
-      log('Webpack compiler encountered a fatal error.')
-      throw new PluginError('webpack', err.toString())
-    }
-    if (errors.length > 0) {
-      log('Webpack compiler encountered errors.')
-      throw new PluginError('webpack', errors.toString())
-    }
-    if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
-    }
-
-    cb(err)
-  })
-})
-
-task('build:perf', cb => {
-  const webpackConfig = require('../../../build/webpack.config.perf').default
-  const compiler = webpack(webpackConfig)
-
-  compiler.run((err, stats) => {
-    const { errors, warnings } = stats.toJson()
-
-    log(stats.toString(config.compiler_stats))
-
-    if (err) {
-      log('Webpack compiler encountered a fatal error.')
-      throw new PluginError('webpack', err.toString())
-    }
-    if (errors.length > 0) {
-      log('Webpack compiler encountered errors.')
-      throw new PluginError('webpack', errors.toString())
-    }
-    if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
-    }
-
-    cb(err)
-  })
+  webpackPlugin(require('../../../webpack.config').default, cb)
 })
 
 task(
@@ -264,21 +215,6 @@ task('serve:docs', cb => {
       cb()
     })
 })
-
-task('serve:perf', cb => {
-  express()
-    .use(express.static(paths.perfDist()))
-    .listen(config.server_port, config.server_host, () => {
-      log(colors.yellow('Server running at http://%s:%d'), config.server_host, config.server_port)
-      cb()
-    })
-})
-
-//
-// Perf
-//
-
-task('perf', series('clean:perf', 'build:perf', 'serve:perf'))
 
 // ----------------------------------------
 // Watch
