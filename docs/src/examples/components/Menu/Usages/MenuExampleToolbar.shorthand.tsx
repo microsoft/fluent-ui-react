@@ -74,6 +74,7 @@ const items = [
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',
+    indicator: false,
     menu: {
       items: [
         { key: '1', content: 'item1' },

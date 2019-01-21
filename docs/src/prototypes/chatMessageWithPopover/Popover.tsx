@@ -87,6 +87,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
             icon: 'ellipsis horizontal',
             accessibility: toolbarButtonBehavior,
             'aria-label': 'more options',
+            indicator: false,
             menu: {
               pills: true,
               items: [
