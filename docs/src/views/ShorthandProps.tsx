@@ -239,7 +239,7 @@ class ShorthandProps extends React.Component {
           `  /* how to render */`,
           `  (ComponentType, props) => (`,
           `    <div class='my-icon-container'>`,
-          `      <i {...props} />`,
+          `      <i class="my-chess-rook-icon" {...props.accessibility.root} />`,
           `    </div>`,
           `  )`,
           `)} />`,
@@ -249,8 +249,7 @@ class ShorthandProps extends React.Component {
           Here we are passing a recipe of how evaluated {code('ComponentType')} ({code('Icon')} in
           our case, which is ignored by the rendered tree) and {code('props')} should be passed to
           custom elements tree. Note that {code('props')} object, amongst others, contains all the
-          necessary evaluated styles and accessibility aspects that should be applied to rendered
-          element, so that nothing will be lost.
+          necessary evaluated accessibility attributes that should be applied to rendered element.
         </p>
 
         <br />
