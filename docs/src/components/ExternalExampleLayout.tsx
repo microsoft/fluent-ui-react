@@ -1,4 +1,4 @@
-import * as _ from 'lodash/fp'
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import SourceRender from 'react-source-render'
@@ -18,10 +18,10 @@ const ExternalExampleLayout: any = props => {
   const { exampleName } = props.match.params
   const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
 
-  const examplePath = _.find(path => {
+  const examplePath = _.find(examplePaths, path => {
     const { exampleName } = parseExamplePath(path)
     return exampleFilename === exampleName
-  }, examplePaths)
+  })
 
   if (!examplePath) return <PageNotFound />
   const exampleSource: ExampleSource = exampleSourcesContext(examplePath)

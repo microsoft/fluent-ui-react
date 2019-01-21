@@ -18,6 +18,7 @@ const jest = ({ watch = false } = {}) => cb => {
     watch && '--watchAll',
     argv.runInBand && '--runInBand',
     argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,
+    argv.detectLeaks && '--detectLeaks',
   ]
     .filter(Boolean)
     .join(' ')
