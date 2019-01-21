@@ -1,8 +1,8 @@
 import { RtlFunc } from '../types'
 import childrenDependentRtlAttributes from '../childrenDependentRtlAttributes'
 
-const treeRtlAttributes: RtlFunc = (props: any) => {
+const labelRtlAttributes: RtlFunc = (props: any) => {
   return childrenDependentRtlAttributes(props)
 }
 
-export default treeRtlAttributes
+export default labelRtlAttributes

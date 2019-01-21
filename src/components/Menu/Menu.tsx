@@ -11,7 +11,6 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   getKindProp,
-  addRtlSupport,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -20,6 +19,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandCollection } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
+import { menuRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -69,6 +70,12 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Indicates whether the menu is submenu. */
   submenu?: boolean
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default menuRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 export interface MenuState {
@@ -104,11 +111,13 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'ul',
     accessibility: menuBehavior as Accessibility,
+    rtlAttributes: menuRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -184,11 +193,23 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    variables,
+    unhandledProps,
+    rtlAttributes,
+  }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? addRtlSupport(children) : this.renderItems(variables)}
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlAttributes.root}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }

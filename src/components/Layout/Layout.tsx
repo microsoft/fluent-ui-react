@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { UIComponent, UIComponentProps, commonPropTypes, addRtlSupport } from '../../lib'
+import { UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 import { ICSSInJSStyle } from '../../themes/types'
 
@@ -95,20 +95,34 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
 
     // TODO: when an area is another Layout, do not wrap them in an extra div
     // TODO: option 1) higher value layouts could use start={Layout.create(start)} to ensure Areas are layout root
-    renderStartArea({ start, classes }) {
+    renderStartArea({ start, classes, rtlAttributes }) {
       return (
-        start && <div className={cx('ui-layout__start', classes.start)}>{addRtlSupport(start)}</div>
+        start && (
+          <div className={cx('ui-layout__start', classes.start)} {...rtlAttributes.start}>
+            {start}
+          </div>
+        )
       )
     },
 
-    renderMainArea({ main, classes }) {
+    renderMainArea({ main, classes, rtlAttributes }) {
       return (
-        main && <div className={cx('ui-layout__main', classes.main)}>{addRtlSupport(main)}</div>
+        main && (
+          <div className={cx('ui-layout__main', classes.main)} {...rtlAttributes.main}>
+            {main}
+          </div>
+        )
       )
     },
 
-    renderEndArea({ end, classes }) {
-      return end && <div className={cx('ui-layout__end', classes.end)}>{addRtlSupport(end)}</div>
+    renderEndArea({ end, classes, rtlAttributes }) {
+      return (
+        end && (
+          <div className={cx('ui-layout__end', classes.end)} {...rtlAttributes.end}>
+            {end}
+          </div>
+        )
+      )
     },
 
     // Heads up!
@@ -118,7 +132,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }) {
     const {
       reducing,
       disappearing,
@@ -131,9 +145,9 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       renderGap,
     } = this.props as LayoutPropsWithDefaults
 
-    const startArea = renderStartArea({ ...this.props, classes })
-    const mainArea = renderMainArea({ ...this.props, classes })
-    const endArea = renderEndArea({ ...this.props, classes })
+    const startArea = renderStartArea({ ...this.props, classes, rtlAttributes })
+    const mainArea = renderMainArea({ ...this.props, classes, rtlAttributes })
+    const endArea = renderEndArea({ ...this.props, classes, rtlAttributes })
 
     if (!startArea && !mainArea && !endArea) {
       return <ElementType {...unhandledProps} className={classes.root} />

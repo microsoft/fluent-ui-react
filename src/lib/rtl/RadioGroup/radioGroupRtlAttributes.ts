@@ -1,8 +1,8 @@
 import { RtlFunc } from '../types'
 import childrenDependentRtlAttributes from '../childrenDependentRtlAttributes'
 
-const treeRtlAttributes: RtlFunc = (props: any) => {
+const radioGroupRtlAttributes: RtlFunc = (props: any) => {
   return childrenDependentRtlAttributes(props)
 }
 
-export default treeRtlAttributes
+export default radioGroupRtlAttributes

@@ -11,7 +11,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  addRtlSupport,
   ColorComponentProps,
 } from '../../lib'
 
@@ -21,6 +20,8 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
+import { labelRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -46,6 +47,12 @@ export interface LabelProps
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default labelRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 /**
@@ -66,12 +73,14 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
+    rtlAttributes: labelRtlAttributes,
   }
 
   handleIconOverrides = iconProps => {
@@ -83,13 +92,13 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles, rtlAttributes }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...unhandledProps} className={classes.root}>
-          {addRtlSupport(children)}
+        <ElementType {...unhandledProps} {...rtlAttributes.root} className={classes.root}>
+          {children}
         </ElementType>
       )
     }
@@ -127,7 +136,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
               </>
             )
           }
-          main={addRtlSupport(content)}
+          main={content}
           end={
             hasEndElement && (
               <>

@@ -19,8 +19,8 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
-import buttonRtlAttributes from '../../lib/rtl/Button/buttonRtlAttributes'
-import { RtlFunc } from '@stardust-ui/react'
+import { buttonRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ButtonProps
   extends UIComponentProps,

@@ -14,7 +14,8 @@ import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../ty
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
-import { treeRtlAttributes, RtlFunc } from '@stardust-ui/react'
+import { RtlFunc } from '../../lib/rtl/types'
+import { treeRtlAttributes } from '../../lib/rtl'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**

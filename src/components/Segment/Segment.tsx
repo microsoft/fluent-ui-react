@@ -10,7 +10,8 @@ import {
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Box from '../Box/Box'
-import { segmentRtlAttributes, RtlFunc } from '@stardust-ui/react'
+import { segmentRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,

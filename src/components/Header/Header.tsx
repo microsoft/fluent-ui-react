@@ -14,6 +14,8 @@ import {
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { headerRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface HeaderProps
   extends UIComponentProps,
@@ -25,6 +27,12 @@ export interface HeaderProps
 
   /** Align header content. */
   textAlign?: 'left' | 'center' | 'right' | 'justified'
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default radioGroupRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 }
 
 /**
@@ -46,22 +54,25 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
     ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'h1',
+    rtlAttributes: headerRtlAttributes,
   }
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
+  renderComponent({ ElementType, classes, variables: v, unhandledProps, rtlAttributes }) {
     const { children, description, content } = this.props
 
     const hasChildren = childrenExist(children)
+    const contentElement = childrenExist(children) ? children : content
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {hasChildren ? addRtlSupport(children) : addRtlSupport(content)}
+      <ElementType {...unhandledProps} {...rtlAttributes.root} className={classes.root}>
+        {description ? contentElement : addRtlSupport(contentElement)}
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: {

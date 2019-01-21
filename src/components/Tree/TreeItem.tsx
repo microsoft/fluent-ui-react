@@ -16,7 +16,8 @@ import {
   ChildrenComponentProps,
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { treeItemRtlAttributes, RtlFunc } from '@stardust-ui/react'
+import { RtlFunc } from '../../lib/rtl/types'
+import { treeItemRtlAttributes } from '../../lib/rtl'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**

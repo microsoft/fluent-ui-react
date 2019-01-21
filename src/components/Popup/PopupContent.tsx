@@ -11,7 +11,6 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
@@ -63,17 +62,19 @@ class PopupContent extends UIComponent<ReactProps<PopupContentProps>, any> {
     ElementType,
     classes,
     unhandledProps,
+    rtlAttributes,
   }: RenderResultConfig<PopupContentProps>): React.ReactNode {
     const { children, content } = this.props
 
     return (
       <ElementType
         className={classes.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {addRtlSupport(childrenExist(children) ? children : content)}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

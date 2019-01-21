@@ -9,7 +9,6 @@ import {
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  addRtlSupport,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 
@@ -37,11 +36,11 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
+  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }) {
     const { children, content } = this.props
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {addRtlSupport(childrenExist(children) ? children : content)}
+      <ElementType {...unhandledProps} {...rtlAttributes.root} className={classes.root}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

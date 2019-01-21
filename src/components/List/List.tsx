@@ -10,13 +10,14 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { listRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -46,6 +47,12 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} data - All props and proposed value.
    */
   onSelectedIndexChange?: ComponentEventHandler<ListProps>
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default listRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 
   /** Truncates content */
   truncateContent?: boolean
@@ -77,6 +84,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     selectable: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
@@ -85,6 +93,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static defaultProps = {
     as: 'ul',
     accessibility: listBehavior as Accessibility,
+    rtlAttributes: listRtlAttributes,
   }
 
   static autoControlledProps = ['selectedIndex']
@@ -135,17 +144,18 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
     const { children } = this.props
 
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? addRtlSupport(children) : this.renderItems()}
+        {childrenExist(children) ? children : this.renderItems()}
       </ElementType>
     )
   }

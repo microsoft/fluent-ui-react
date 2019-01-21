@@ -1,11 +1,8 @@
 import { RtlFunc } from '../types'
+import childrenDependentRtlAttributes from '../childrenDependentRtlAttributes'
 
 const segmentRtlAttributes: RtlFunc = (props: any) => {
-  const { children } = props
-  const rootRtlAttributes = typeof children === 'string' ? { dir: 'auto' } : {}
-  return {
-    root: rootRtlAttributes,
-  }
+  return childrenDependentRtlAttributes(props)
 }
 
 export default segmentRtlAttributes

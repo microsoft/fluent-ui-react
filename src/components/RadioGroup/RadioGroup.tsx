@@ -11,12 +11,13 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { radioGroupRtlAttributes } from '../../lib/rtl'
+import { RtlFunc } from '../../lib/rtl/types'
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -40,6 +41,12 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
 
   /** Shorthand array of props for RadioGroup. */
   items?: ShorthandValue[]
+
+  /**
+   * Rtl attributes function if overridden by the user.
+   * @default radioGroupRtlAttributes
+   */
+  rtlAttributes?: RtlFunc
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
@@ -66,28 +73,31 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: customPropTypes.collectionShorthand,
     checkedValueChanged: PropTypes.func,
+    rtlAttributes: PropTypes.func,
     vertical: PropTypes.bool,
   }
 
   static defaultProps = {
     as: 'div',
     accessibility: radioGroupBehavior as Accessibility,
+    rtlAttributes: radioGroupRtlAttributes,
   }
 
   static autoControlledProps = ['checkedValue']
 
   static Item = RadioGroupItem
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
     const { children, vertical } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rtlAttributes.root}
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? addRtlSupport(children) : this.renderItems(vertical)}
+        {childrenExist(children) ? children : this.renderItems(vertical)}
       </ElementType>
     )
   }
