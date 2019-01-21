@@ -175,10 +175,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       this.close(e, () => _.invoke(this.triggerDomElement, 'focus'))
       e.stopPropagation()
     },
-    close: e => {
-      this.close(e)
-      e.stopPropagation()
-    },
+    close: e => this.close(e),
   }
 
   public componentDidMount() {
