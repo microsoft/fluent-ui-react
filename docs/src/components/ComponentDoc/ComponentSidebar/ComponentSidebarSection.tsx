@@ -57,6 +57,10 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
 
     const active = isActiveByUser || isActiveByProps
 
+    if (process.env.NODE_ENV !== 'development' && sectionName === 'Performance') {
+      return null
+    }
+
     return (
       <Menu.Item>
         <Accordion.Title active={active} onClick={this.handleTitleClick}>
