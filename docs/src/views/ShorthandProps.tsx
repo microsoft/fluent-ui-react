@@ -56,7 +56,7 @@ class ShorthandProps extends React.Component {
         <p>
           There is even shorter way to define default element's props - by using a primitive value.
           In that case provided shorthand value will be taken as a value for 'default prop' of this
-          default element.
+          element.
         </p>
 
         <p>
