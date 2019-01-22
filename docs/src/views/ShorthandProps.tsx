@@ -5,19 +5,11 @@ import DocPage from '../components/DocPage/DocPage'
 import CodeSnippet from '../components/CodeSnippet'
 import Button from '../../../src/components/Button/Button'
 
-const joinToString = stringOrArray => {
-  if (typeof stringOrArray === 'string') {
-    return stringOrArray
-  }
-
-  return stringOrArray.join('\n')
-}
-
 const header = content => <Header as="h2">{content}</Header>
 const subheader = content => <Header as="h3">{content}</Header>
 
 const code = content => <code>{content}</code>
-const codeExample = snippet => <CodeSnippet value={joinToString(snippet)} />
+const codeExample = snippet => <CodeSnippet value={snippet} />
 
 const ShorthandProps = props => (
   <DocPage title="Shorthand Props">
@@ -27,7 +19,7 @@ const ShorthandProps = props => (
       that will be rendered.
     </p>
 
-    {codeExample([`<Button icon='chess rook' />`])}
+    {codeExample(`<Button icon='chess rook' />`)}
 
     <p>
       There are several forms of shorthand values that can be provided, but all of them share one
@@ -167,7 +159,7 @@ const ShorthandProps = props => (
       simply as that, as icon's name is not known at the moment {code('Button')} is rendered:
     </p>
 
-    {codeExample([`<Button icon={{ name: /* unknown yet */ undefined }} />`])}
+    {codeExample(`<Button icon={{ name: /* unknown yet */ undefined }} />`)}
 
     <p>
       It is quite common case that there is some component that is responsible for data fetching
