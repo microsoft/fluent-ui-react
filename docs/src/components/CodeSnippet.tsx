@@ -11,12 +11,8 @@ export interface CodeSnippetProps {
   style?: React.CSSProperties
 }
 
-const joinToString = stringOrArray => {
-  if (typeof stringOrArray === 'string') {
-    return stringOrArray
-  }
-
-  return stringOrArray.join('\n')
+const joinToString = (stringOrArray: string | string[]) => {
+  return typeof stringOrArray === 'string' ? stringOrArray : stringOrArray.join('\n')
 }
 
 const formatters = {
