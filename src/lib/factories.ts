@@ -87,7 +87,8 @@ export function createShorthandFactory<T extends React.ReactType>(
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
-  return (val, options) => createShorthand(Component, mappedProp as string, val, options)
+  return (val, options: CreateShorthandOptions) =>
+    createShorthand(Component, mappedProp as string, val, options)
 }
 
 // ============================================================
