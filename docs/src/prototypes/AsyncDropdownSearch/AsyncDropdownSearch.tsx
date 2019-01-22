@@ -77,7 +77,6 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
         <Segment>
           <Dropdown
             fluid
-            indicator={false}
             items={items}
             loading={loading}
             loadingMessage={{
@@ -89,6 +88,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             placeholder="Try to enter something..."
             search
             searchQuery={searchQuery}
+            toggleIndicator={false}
             value={value}
           />
           <Divider />

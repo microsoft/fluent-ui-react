@@ -28,9 +28,9 @@ import {
   UIComponentProps,
 } from '../../lib'
 import keyboardKey from 'keyboard-key'
+import Indicator from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
-import DropdownIndicator from './DropdownIndicator'
 import DropdownItem from './DropdownItem'
 import DropdownMessageLoading from './DropdownMessageLoading'
 import DropdownMessageNoResults from './DropdownMessageNoResults'
@@ -72,9 +72,6 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * @param {A11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
-
-  /** Whether a toggle button (that shows/hides items list) or a loader should be rendered. */
-  indicator?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
@@ -140,6 +137,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
+  /** Whether a toggle indicator (that shows/hides items list) should be rendered. */
+  toggleIndicator?: ShorthandValue
+
   /** Sets currently selected value(s) (controlled mode). */
   value?: ShorthandValue | ShorthandValue[]
 }
@@ -182,7 +182,6 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
-    indicator: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -197,6 +196,7 @@ export default class Dropdown extends AutoControlledComponent<
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
+    toggleIndicator: customPropTypes.itemShorthand,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
@@ -205,7 +205,6 @@ export default class Dropdown extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'div',
-    indicator: true,
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -218,6 +217,7 @@ export default class Dropdown extends AutoControlledComponent<
 
       return `${item}`
     },
+    toggleIndicator: {},
   }
 
   static autoControlledProps = ['searchQuery', 'value']
@@ -243,15 +243,7 @@ export default class Dropdown extends AutoControlledComponent<
     variables,
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
-    const {
-      fluid,
-      indicator,
-      loading,
-      search,
-      multiple,
-      getA11yStatusMessage,
-      itemToString,
-    } = this.props
+    const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
     const { searchQuery } = this.state
 
     return (
@@ -302,14 +294,11 @@ export default class Dropdown extends AutoControlledComponent<
                         variables,
                       )
                     : this.renderTriggerButton(styles, getToggleButtonProps)}
-                  {/* TODO: Make `indicator` a fully working shorthand. */}
-                  {DropdownIndicator.create(indicator && '', {
+                  {Indicator.create(toggleIndicator, {
                     defaultProps: {
-                      ...getToggleButtonProps(),
-                      fluid,
-                      loading,
-                      open: isOpen,
-                      variables,
+                      direction: isOpen ? 'top' : 'bottom',
+                      onClick: getToggleButtonProps().onClick,
+                      styles: styles.toggleIndicator,
                     },
                   })}
                   {this.renderItemsList(
@@ -371,7 +360,7 @@ export default class Dropdown extends AutoControlledComponent<
     ) => void,
     variables,
   ): JSX.Element {
-    const { indicator, searchInput, multiple, placeholder } = this.props
+    const { searchInput, multiple, placeholder, toggleIndicator } = this.props
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
@@ -380,7 +369,7 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
-        hasToggleButton: !!indicator,
+        hasToggleButton: !!toggleIndicator,
         variables,
         inputRef: this.inputRef,
       },

@@ -16,7 +16,6 @@ export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 export { default as Divider } from './components/Divider/dividerStyles'
 
 export { default as Dropdown } from './components/Dropdown/dropdownStyles'
-export { default as DropdownIndicator } from './components/Dropdown/dropdownIndicatorStyles'
 export {
   default as DropdownMessageLoading,
 } from './components/Dropdown/dropdownMessageLoadingStyles'

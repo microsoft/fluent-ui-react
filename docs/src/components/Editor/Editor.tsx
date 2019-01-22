@@ -62,7 +62,7 @@ class Editor extends React.Component<EditorProps> {
 
   static propTypes = {
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
+    mode: PropTypes.oneOf(['html', 'json', 'jsx', 'sh']),
     active: PropTypes.bool,
     showCursor: PropTypes.bool,
   }
