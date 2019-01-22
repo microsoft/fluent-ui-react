@@ -14,7 +14,7 @@ const performanceExamplesContext = require.context('docs/src/examples/', true, /
 const performanceExampleNames = _.shuffle(performanceExamplesContext.keys())
 const performanceMeasures = {}
 
-const renderCycle = (exampleName: string, Component: React.ComponentType, order: number) => {
+const renderCycle = (exampleName: string, Component: React.ComponentType, exampleIndex: number) => {
   ReactDOM.render(
     <Provider theme={themes.teams}>
       <Profiler
@@ -30,7 +30,7 @@ const renderCycle = (exampleName: string, Component: React.ComponentType, order:
           performanceMeasures[exampleName] = {
             actualTime,
             baseTime,
-            order,
+            exampleIndex,
             phase,
             commitTime,
             startTime,
@@ -46,12 +46,12 @@ const renderCycle = (exampleName: string, Component: React.ComponentType, order:
 }
 
 window.runMeasures = () => {
-  performanceExampleNames.forEach((exampleName: string, order: number) => {
+  performanceExampleNames.forEach((exampleName: string, exampleIndex: number) => {
     // ./components/Button/Performance/Button.perf.tsx => Button.perf.tsx
     const componentName = _.last(exampleName.split('/'))
     const Component = performanceExamplesContext(exampleName).default
 
-    renderCycle(componentName, Component, order)
+    renderCycle(componentName, Component, exampleIndex)
   })
 
   return performanceMeasures

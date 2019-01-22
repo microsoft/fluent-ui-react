@@ -5,10 +5,10 @@ declare global {
 }
 
 export type ProfilerMeasure = {
-  order: number
-  phase: string
   actualTime: number
   baseTime: number
+  exampleIndex: number
+  phase: string
   startTime: number
   commitTime: number
 }

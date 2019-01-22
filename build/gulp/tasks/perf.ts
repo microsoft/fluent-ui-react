@@ -44,7 +44,7 @@ const reduceMeasures = (measures: ProfilerMeasure[], key: string) => {
     min: floor(min),
     max: floor(max),
     values: _.map(measures, measure => ({
-      order: measure.order,
+      exampleIndex: measure.exampleIndex,
       value: measure[key],
     })),
   }
