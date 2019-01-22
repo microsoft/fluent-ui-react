@@ -27,6 +27,8 @@ const computeMeasureMedian = (measures: ProfilerMeasure[], key: string) => {
 }
 
 const reduceMeasures = (measures: ProfilerMeasure[], key: string) => {
+  if (measures.length === 0) throw new Error('`measures` are empty')
+
   let min = measures[0][key]
   let max = measures[0][key]
   let sum = measures[0][key]
