@@ -2,8 +2,9 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { ReactProps } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { commonPropTypes, createShorthandFactory, UIComponent, UIComponentProps } from '../../lib'
+import Indicator from '../Indicator/Indicator'
 import Loader from '../Loader/Loader'
 
 export interface DropdownIndicatorProps extends UIComponentProps<DropdownIndicatorProps> {
@@ -19,7 +20,7 @@ export interface DropdownIndicatorProps extends UIComponentProps<DropdownIndicat
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
-  onClick?: (e: React.SyntheticEvent, props: DropdownIndicatorProps) => void
+  onClick?: ComponentEventHandler<DropdownIndicatorProps>
 
   /** Controls whether or not the dropdown menu is displayed. */
   open: boolean
@@ -46,11 +47,16 @@ class DropdownIndicator extends UIComponent<ReactProps<DropdownIndicatorProps>> 
 
   renderComponent({ classes, ElementType, unhandledProps }) {
     const { loading, open } = this.props
-    const content = open ? String.fromCharCode(9650) : String.fromCharCode(9660)
 
     return (
       <ElementType className={classes.root} onClick={this.handleClick}>
-        {loading ? <Loader size="small" /> : <span>{content}</span>}
+        {loading ? (
+          <Loader size="small" />
+        ) : (
+          Indicator.create('', {
+            defaultProps: { direction: open ? 'top' : 'bottom' },
+          })
+        )}
       </ElementType>
     )
   }

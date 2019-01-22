@@ -16,6 +16,7 @@ const inputItems = [
 const DropdownExampleLoading: React.FC<{ knobs: { loading: boolean } }> = ({ knobs }) => (
   <Dropdown
     loading={knobs.loading}
+    loadingMessage="Loading..."
     multiple
     items={inputItems}
     placeholder="Start typing a name"

@@ -2,7 +2,12 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { Extendable, ShorthandRenderFunction, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import {
+  Extendable,
+  ShorthandRenderFunction,
+  ShorthandValue,
+  ComponentEventHandler,
+} from '../../../types/utils'
 import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
 import Downshift, {
   DownshiftState,
@@ -181,9 +186,9 @@ export default class Dropdown extends AutoControlledComponent<
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
+    loadingMessage: customPropTypes.itemShorthand,
     multiple: PropTypes.bool,
-    messageLoading: PropTypes.string,
-    noResultsMessage: PropTypes.string,
+    noResultsMessage: customPropTypes.itemShorthand,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,

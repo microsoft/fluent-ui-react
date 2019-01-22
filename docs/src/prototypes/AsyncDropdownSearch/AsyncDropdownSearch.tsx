@@ -1,4 +1,4 @@
-import { Divider, Dropdown, DropdownProps, Header, Segment } from '@stardust-ui/react'
+import { Divider, Dropdown, DropdownProps, Header, Loader, Segment } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -79,6 +79,9 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             indicator={false}
             items={items}
             loading={loading}
+            loadingMessage={{
+              content: <Loader inline label="Loading..." labelPosition="end" size="larger" />,
+            }}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
             onSelectedChange={this.handleSelectedChange}
