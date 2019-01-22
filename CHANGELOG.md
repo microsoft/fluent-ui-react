@@ -20,8 +20,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
 - Changes in `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
-  - rename `noResultsMessage` prop to `messageNoResults`
-  - `messageNoResults` has default value by default 
   - rename `toggleButton` prop to `indicator`
   - `indicator` is visible by default
 

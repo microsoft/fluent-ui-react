@@ -1,7 +1,7 @@
-import { DropdownMessageNoResultsProps } from '../../../../components/Dropdown/DropdownMessageNoResults'
+import { DropdownIndicatorProps } from '../../../../components/Dropdown/DropdownIndicator'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const dropdownIndicatorStyles: ComponentSlotStylesInput<DropdownMessageNoResultsProps, any> = {
+const dropdownIndicatorStyles: ComponentSlotStylesInput<DropdownIndicatorProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
     height: v.toggleButtonSize,

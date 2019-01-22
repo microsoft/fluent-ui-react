@@ -82,14 +82,14 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
+  /** A message to be displayed in the list when dropdown is loading. */
+  loadingMessage?: ShorthandValue
+
   /** A dropdown can perform a multiple selection. */
   multiple?: boolean
 
-  /** A message to be displayed in the list when dropdown is loading. */
-  messageLoading?: ShorthandValue
-
   /** A message to be displayed in the list when dropdown has no available items to show. */
-  messageNoResults?: ShorthandValue
+  noResultsMessage?: ShorthandValue
 
   /**
    * Callback for change in dropdown search query value.
@@ -165,7 +165,7 @@ export default class Dropdown extends AutoControlledComponent<
     loading: PropTypes.bool,
     multiple: PropTypes.bool,
     messageLoading: PropTypes.string,
-    messageNoResults: PropTypes.string,
+    noResultsMessage: PropTypes.string,
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
@@ -193,8 +193,6 @@ export default class Dropdown extends AutoControlledComponent<
 
       return `${item}`
     },
-    messageLoading: 'Loading...',
-    messageNoResults: "We couldn't find any matches.",
   }
 
   static autoControlledProps = ['searchQuery', 'value']
@@ -427,7 +425,7 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { loading, messageLoading, messageNoResults } = this.props
+    const { loading, loadingMessage, noResultsMessage } = this.props
 
     const filteredItems = this.getItemsFilteredBySearchQuery()
     const items = filteredItems.map((item, index) =>
@@ -446,8 +444,8 @@ export default class Dropdown extends AutoControlledComponent<
 
     return [
       ...items,
-      loading && DropdownMessageLoading.create(messageLoading),
-      !loading && items.length === 0 && DropdownMessageNoResults.create(messageNoResults),
+      loading && DropdownMessageLoading.create(loadingMessage),
+      !loading && items.length === 0 && DropdownMessageNoResults.create(noResultsMessage),
     ]
   }
 

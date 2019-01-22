@@ -1,8 +1,8 @@
 import ListItem from '../../../../components/List/ListItem'
-import { DropdownMessageNoResultsProps } from '../../../../components/Dropdown/DropdownMessageNoResults'
+import { DropdownMessageLoadingProps } from '../../../../components/Dropdown/DropdownMessageLoading'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const dropdownSelectedItemStyles: ComponentSlotStylesInput<DropdownMessageNoResultsProps, any> = {
+const dropdownSelectedItemStyles: ComponentSlotStylesInput<DropdownMessageLoadingProps, any> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
     [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
   }),
