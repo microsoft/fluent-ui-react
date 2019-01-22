@@ -8,14 +8,9 @@ const rtlTextContainer = {
     condition?: boolean
     forElements: any[]
   }) => {
-    if (condition) {
-      for (const element of forElements) {
-        if (element && typeof element === 'string') {
-          return { dir: 'auto' }
-        }
-      }
-    }
-    return {}
+    return condition && forElements.some(child => child && typeof child === 'string')
+      ? { dir: 'auto' }
+      : {}
   },
   createFor: ({ element, condition = true }: { element: any; condition?: boolean }) => {
     if (condition && element && typeof element === 'string') {
