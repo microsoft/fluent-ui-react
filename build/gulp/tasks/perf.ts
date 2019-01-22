@@ -85,7 +85,7 @@ task('perf:run', async () => {
 
   for (let i = 0; i < times; i++) {
     const page = await browser.newPage()
-    await page.goto(`http://${config.server_host}:${config.server_port}`)
+    await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
     const measuresFromStep = await page.evaluate(() => window.runMeasures())
     await page.close()
@@ -94,18 +94,17 @@ task('perf:run', async () => {
   }
 
   await browser.close()
+  const resultsFile = paths.perfDist('result.json')
 
-  fs.writeFileSync(
-    paths.perfDist('result.json'),
-    JSON.stringify(normalizeMeasures(measures), null, 2),
-  )
+  fs.writeFileSync(resultsFile, JSON.stringify(normalizeMeasures(measures), null, 2))
+  log(colors.green('Results are written to "%s"'), resultsFile)
 })
 
 task('perf:serve', cb => {
   server = express()
     .use(express.static(paths.perfDist()))
-    .listen(config.server_port, config.server_host, () => {
-      log(colors.yellow('Server running at http://%s:%d'), config.server_host, config.server_port)
+    .listen(config.perf_port, config.server_host, () => {
+      log(colors.yellow('Server running at http://%s:%d'), config.server_host, config.perf_port)
       cb()
     })
 })
