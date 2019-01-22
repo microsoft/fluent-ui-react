@@ -7,8 +7,12 @@ export interface CodeSnippetProps {
   fitted?: boolean
   label?: string
   mode?: 'jsx' | 'html' | 'sh'
-  value: string
+  value: string | string[]
   style?: React.CSSProperties
+}
+
+const joinToString = (stringOrArray: string | string[]) => {
+  return typeof stringOrArray === 'string' ? stringOrArray : stringOrArray.join('\n')
 }
 
 const formatters = {
@@ -19,7 +23,7 @@ const formatters = {
 
 const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
-  const formattedValue = format(value)
+  const formattedValue = format(joinToString(value))
     // remove eof line break, they are not helpful for snippets
     .replace(/\n$/, '')
 
