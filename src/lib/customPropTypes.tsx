@@ -1,9 +1,7 @@
-import * as _ from 'lodash/fp'
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import leven from './leven'
 import { ObjectOf } from '../../types/utils'
-
-type SuggestProps = { score: number; suggestion: string }
 
 const typeOf = x => Object.prototype.toString.call(x)
 
@@ -39,27 +37,27 @@ export const suggest = (suggestions: string[]) => {
   const findBestSuggestions = _.memoize((str: string) => {
     const propValueWords = str.split(' ')
 
-    return _.flow(
-      _.map((suggestion: string) => {
+    return _.chain(suggestions)
+      .map((suggestion: string) => {
         const suggestionWords = suggestion.split(' ')
 
-        const propValueScore = _.flow(
-          _.map(x => _.map(y => leven(x, y), suggestionWords)),
-          _.map(_.min),
-          _.sum,
-        )(propValueWords)
+        const propValueScore = _.chain(propValueWords)
+          .map(x => _.map(suggestionWords, y => leven(x, y)))
+          .map(_.min)
+          .sum()
+          .value()
 
-        const suggestionScore = _.flow(
-          _.map(x => _.map(y => leven(x, y), propValueWords)),
-          _.map(_.min),
-          _.sum,
-        )(suggestionWords)
+        const suggestionScore = _.chain(suggestionWords)
+          .map(x => _.map(propValueWords, y => leven(x, y)))
+          .map(_.min)
+          .sum()
+          .value()
 
         return { suggestion, score: propValueScore + suggestionScore }
-      }),
-      _.sortBy<SuggestProps>(['score', 'suggestion']),
-      _.take(3),
-    )(suggestions)
+      })
+      .sortBy(['score', 'suggestion'])
+      .take(3)
+      .value()
   })
 
   // Convert the suggestions list into a hash map for O(n) lookup times. Ensure
@@ -159,7 +157,7 @@ export const every = (validators: Function[]) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any[]
+  ...args: any[]
 ) => {
   if (!Array.isArray(validators)) {
     throw new Error(
@@ -170,20 +168,20 @@ export const every = (validators: Function[]) => (
     )
   }
 
-  const errors = _.flow(
-    _.map(validator => {
+  const error = _.chain(validators)
+    .map(validator => {
       if (typeof validator !== 'function') {
         throw new Error(
           `every() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
-      return validator(props, propName, componentName, ...rest)
-    }),
-    _.compact,
-  )(validators)
+      return validator(props, propName, componentName, ...args)
+    })
+    .compact()
+    .first() // we can only return one error at a time
+    .value()
 
-  // we can only return one error at a time
-  return errors[0]
+  return error
 }
 
 /**
@@ -194,7 +192,7 @@ export const some = (validators: Function[]) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any[]
+  ...args: any[]
 ) => {
   if (!Array.isArray(validators)) {
     throw new Error(
@@ -205,21 +203,22 @@ export const some = (validators: Function[]) => (
     )
   }
 
-  const errors = _.compact(
-    _.map(validator => {
+  const errors = _.chain(validators)
+    .map(validator => {
       if (!_.isFunction(validator)) {
         throw new Error(
           `some() argument "validators" should contain functions, found: ${typeOf(validator)}.`,
         )
       }
-      return validator(props, propName, componentName, ...rest)
-    }, validators),
-  )
+      return validator(props, propName, componentName, ...args)
+    })
+    .compact()
+    .value()
 
   // fail only if all validators failed
   if (errors.length === validators.length) {
     const error = new Error('One of these validators must pass:')
-    error.message += `\n${_.map(err => `- ${err.message}`, errors).join('\n')}`
+    error.message += `\n${_.map(errors, err => `- ${err.message}`).join('\n')}`
     return error
   }
 
@@ -235,7 +234,7 @@ export const givenProps = (propsShape: object, validator: Function) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,
-  ...rest: any
+  ...args: any
 ) => {
   if (!_.isPlainObject(propsShape)) {
     throw new Error(
@@ -259,17 +258,17 @@ export const givenProps = (propsShape: object, validator: Function) => (
     const val = propsShape[key]
     // require propShape validators to pass or prop values to match
     return typeof val === 'function'
-      ? !val(props, key, componentName, ...rest)
+      ? !val(props, key, componentName, ...args)
       : val === props[propName]
   })
 
   if (!shouldValidate) return undefined
 
-  const error = validator(props, propName, componentName, ...rest)
+  const error = validator(props, propName, componentName, ...args)
 
   if (error) {
     // poor mans shallow pretty print, prevents JSON circular reference errors
-    const prettyProps = `{ ${_.keys(_.pick(_.keys(propsShape), props))
+    const prettyProps = `{ ${_.keys(_.pick(props, _.keys(propsShape)))
       .map(key => {
         const val = props[key]
         let renderedValue = val
@@ -374,11 +373,11 @@ export const wrapperShorthand = PropTypes.oneOfType([
 
 /**
  * Item shorthand is a description of a component that can be a literal,
- * a props object, or an element.
+ * a props object, an element or a render function.
  */
 export const itemShorthand = every([
   disallow(['children']),
-  PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
+  PropTypes.oneOfType([PropTypes.node, PropTypes.object, PropTypes.func]),
 ])
 export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
   return every([
@@ -388,6 +387,7 @@ export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
       PropTypes.shape({
         kind: PropTypes.oneOf(kindPropValues),
       }),
+      PropTypes.func,
     ]),
   ])
 }

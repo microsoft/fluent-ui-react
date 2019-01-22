@@ -16,6 +16,8 @@ export { default as Attachment, AttachmentProps } from './components/Attachment/
 
 export { default as Avatar, AvatarProps, AvatarPropsWithDefaults } from './components/Avatar/Avatar'
 
+export { default as Box, BoxProps } from './components/Box/Box'
+
 export { default as Button, ButtonProps, ButtonState } from './components/Button/Button'
 export { default as ButtonGroup, ButtonGroupProps } from './components/Button/ButtonGroup'
 
@@ -37,7 +39,10 @@ export {
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
-export { default as DropdownLabel, DropdownLabelProps } from './components/Dropdown/DropdownLabel'
+export {
+  default as DropdownSelectedItem,
+  DropdownSelectedItemProps,
+} from './components/Dropdown/DropdownSelectedItem'
 
 export {
   default as DropdownSearchInput,
@@ -68,6 +73,7 @@ export {
 } from './components/ItemLayout/ItemLayout'
 
 export { default as Label, LabelProps } from './components/Label/Label'
+export { default as Loader, LoaderProps } from './components/Loader/Loader'
 
 export { default as Layout, LayoutPropsWithDefaults, LayoutProps } from './components/Layout/Layout'
 
@@ -121,6 +127,8 @@ export { default as Animation, AnimationProps } from './components/Animation/Ani
 
 export { default as Tree } from './components/Tree'
 
+export { default as Indicator, IndicatorProps } from './components/Indicator/Indicator'
+
 //
 // Accessibility
 //
@@ -163,3 +171,4 @@ export {
   ChildrenComponentProps,
   ContentComponentProps,
 } from './lib'
+export { ShorthandRenderer } from '../types/utils'

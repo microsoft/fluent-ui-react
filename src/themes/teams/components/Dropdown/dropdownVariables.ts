@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 export interface DropdownVariables {
   backgroundColor: string
   borderBottom: string

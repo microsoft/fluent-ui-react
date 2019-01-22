@@ -13,7 +13,8 @@ import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 // import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
-import { ThemeContext } from '../../../src/context/theme-context'
+import { ThemeContext } from '../../../src/context/themeContext'
+// import ExampleContext from 'docs/src/context/ExampleContext'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -22,10 +23,6 @@ const exampleEndStyle: React.CSSProperties = {
 }
 
 class ComponentDoc extends React.Component<any, any> {
-  static childContextTypes = {
-    onPassed: PropTypes.func,
-  }
-
   static propTypes = {
     history: PropTypes.object.isRequired,
     info: componentInfoShape.isRequired,
@@ -41,20 +38,14 @@ class ComponentDoc extends React.Component<any, any> {
     }
   }
 
-  getChildContext() {
-    return {
-      onPassed: this.handleExamplePassed,
-    }
-  }
-
   componentWillReceiveProps({ info }) {
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
   }
 
-  handleExamplePassed = (e, { examplePath }) => {
-    this.setState({ activePath: examplePathToHash(examplePath) })
+  handleExamplePassed = (passedAnchorName: string) => {
+    this.setState({ activePath: passedAnchorName })
   }
 
   handleExamplesRef = examplesRef => this.setState({ examplesRef })
@@ -148,7 +139,53 @@ class ComponentDoc extends React.Component<any, any> {
         </div>
       </DocumentTitle>
     )
+    /*
+        <Grid>
+          <Grid.Row style={topRowStyle}>
+            <Grid.Column>
+              <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
+              <p>{_.join(info.docblock.description, ' ')}</p>
+              <ComponentAccessibility info={info} />
+              <ComponentDocSee displayName={info.displayName} />
+              <ComponentDocLinks
+                displayName={info.displayName}
+                parentDisplayName={info.parentDisplayName}
+                repoPath={info.repoPath}
+                type={info.type}
+              />
+              <ComponentProps displayName={info.displayName} props={info.props} />
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns="equal">
+            <Grid.Column style={{ padding: '0 0 0 28px' } as React.CSSProperties}>
+              <div ref={this.handleExamplesRef}>
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
+              </div>
+              <div style={exampleEndStyle}>
+                This is the bottom <Icon name="pointing down" />
+              </div>
+            </Grid.Column>
+            <Grid.Column computer={5} largeScreen={4} widescreen={4}>
+              <ComponentSidebar
+                activePath={activePath}
+                displayName={info.displayName}
+                examplesRef={examplesRef}
+                onItemClick={this.handleSidebarItemClick}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+*/
   }
+
   private getThemeOptions = () => {
     return Object.keys(themes).map(key => ({
       text: _.startCase(key),

@@ -33,8 +33,8 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
     vertical: PropTypes.bool,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    return <ElementType {...rest} className={classes.root} />
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    return <ElementType {...unhandledProps} className={classes.root} />
   }
 }
 

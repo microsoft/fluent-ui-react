@@ -93,6 +93,12 @@ export interface PopupProps
   position?: Position
 
   /**
+   * Function to render popup content.
+   * @param {Function} updatePosition - function to request popup position update.
+   */
+  renderContent?: (updatePosition: Function) => ShorthandValue
+
+  /**
    * DOM element that should be used as popup's target - instead of 'trigger' element that is used by default.
    */
   target?: HTMLElement
@@ -140,6 +146,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     position: PropTypes.oneOf(POSITIONS),
+    renderContent: PropTypes.func,
     target: PropTypes.any,
     trigger: PropTypes.any,
   }
@@ -168,10 +175,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       this.close(e, () => _.invoke(this.triggerDomElement, 'focus'))
       e.stopPropagation()
     },
-    close: e => {
-      this.close(e)
-      e.stopPropagation()
-    },
+    close: e => this.close(e),
   }
 
   public componentDidMount() {
@@ -248,21 +252,21 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      * The focus is adding the focus, blur and click event (always opening on click)
      */
     if (_.includes(normalizedOn, 'focus')) {
-      triggerProps.onFocus = (e, ...rest) => {
+      triggerProps.onFocus = (e, ...args) => {
         if (isFromKeyboard()) {
           this.trySetOpen(true, e)
         }
-        _.invoke(triggerElement, 'props.onFocus', e, ...rest)
+        _.invoke(triggerElement, 'props.onFocus', e, ...args)
       }
-      triggerProps.onBlur = (e, ...rest) => {
+      triggerProps.onBlur = (e, ...args) => {
         if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
-        _.invoke(triggerElement, 'props.onBlur', e, ...rest)
+        _.invoke(triggerElement, 'props.onBlur', e, ...args)
       }
-      triggerProps.onClick = (e, ...rest) => {
+      triggerProps.onClick = (e, ...args) => {
         this.setPopupOpen(true, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+        _.invoke(triggerElement, 'props.onClick', e, ...args)
       }
     }
 
@@ -270,9 +274,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      * The click is toggling the open state of the popup
      */
     if (_.includes(normalizedOn, 'click')) {
-      triggerProps.onClick = (e, ...rest) => {
+      triggerProps.onClick = (e, ...args) => {
         this.trySetOpen(!this.state.open, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+        _.invoke(triggerElement, 'props.onClick', e, ...args)
       }
     }
 
@@ -280,23 +284,23 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
      * The hover is adding the mouseEnter, mouseLeave, blur and click event (always opening on click)
      */
     if (_.includes(normalizedOn, 'hover')) {
-      triggerProps.onMouseEnter = (e, ...rest) => {
+      triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
-        _.invoke(triggerElement, 'props.onMouseEnter', e, ...rest)
+        _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
-      triggerProps.onMouseLeave = (e, ...rest) => {
+      triggerProps.onMouseLeave = (e, ...args) => {
         this.setPopupOpen(false, e)
-        _.invoke(triggerElement, 'props.onMouseLeave', e, ...rest)
+        _.invoke(triggerElement, 'props.onMouseLeave', e, ...args)
       }
-      triggerProps.onClick = (e, ...rest) => {
+      triggerProps.onClick = (e, ...args) => {
         this.setPopupOpen(true, e)
-        _.invoke(triggerElement, 'props.onClick', e, ...rest)
+        _.invoke(triggerElement, 'props.onClick', e, ...args)
       }
-      triggerProps.onBlur = (e, ...rest) => {
+      triggerProps.onBlur = (e, ...args) => {
         if (this.shouldBlurClose(e)) {
           this.trySetOpen(false, e)
         }
-        _.invoke(triggerElement, 'props.onBlur', e, ...rest)
+        _.invoke(triggerElement, 'props.onBlur', e, ...args)
       }
     }
 
@@ -411,9 +415,11 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: AccessibilityBehavior,
+    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
     { ref, scheduleUpdate, style: popupPlacementStyles }: PopperChildrenProps,
   ) => {
-    const { content } = this.props
+    const { content: propsContent, renderContent } = this.props
+    const content = renderContent ? renderContent(scheduleUpdate) : propsContent
 
     const popupWrapperAttributes = {
       ...(rtl && { dir: 'rtl' }),
@@ -442,10 +448,6 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           defaultProps: popupContentAttributes,
           overrideProps: this.getContentProps,
         })
-
-    // Schedules a position update after each render.
-    // https://popper.js.org/popper-documentation.html#Popper.scheduleUpdate
-    scheduleUpdate()
 
     return (
       <Ref

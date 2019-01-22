@@ -96,11 +96,11 @@ export default () => (
     <ul>
       <li>
         <code>stardust</code> - the object containing the evaluated theming props (
-        <code>classes</code>
+        <code>classes/styles</code>,<code>accessibility</code>
         and <code>rtl</code>).
       </li>
       <li>
-        <code>...props</code> - all <code>user props</code>.
+        <code>...props</code> - all user-defined <code>props</code>.
       </li>
     </ul>
     <Header as="h2" content="Using the custom components" />
@@ -125,8 +125,10 @@ export default () => (
         </StyledButton>
       )}
     />
-    The same can be achieved with adding styles in the <code>componentStyles</code> part of the{' '}
-    <code>theme</code> in the <code>Provider</code>.
+    <p>
+      The same can be achieved with adding styles in the <code>componentStyles</code> part of the{' '}
+      <code>theme</code> in the <code>Provider</code>.
+    </p>
     <ExampleSnippet
       render={() => (
         <Provider
@@ -157,7 +159,9 @@ export default () => (
         </>
       }
     />
-    Let's consider that the following <code>theme</code> was passed to the <code>Provider</code>.
+    <p>
+      Let's consider that the following <code>theme</code> was passed to the <code>Provider</code>.
+    </p>
     <ExampleSnippet
       value={`
         <Provider
@@ -176,8 +180,10 @@ export default () => (
         </Provider>
       `}
     />
-    Then we can use the <code>variables</code> prop for changing the color inside the{' '}
-    <code>StyledButton</code>.
+    <p>
+      Then we can use the <code>variables</code> prop for changing the color inside the{' '}
+      <code>StyledButton</code>.
+    </p>
     <ExampleSnippet
       value={`
         <StyledButton variables={{color: "red" }}>
@@ -200,8 +206,10 @@ export default () => (
         </Provider>
       )}
     />
-    The alternative approach with defining <code>componentVariables</code> inside the{' '}
-    <code>theme</code> would like like this:
+    <p>
+      The alternative approach with defining <code>componentVariables</code> inside the{' '}
+      <code>theme</code> would like like this:
+    </p>
     <ExampleSnippet
       value={`
         <Provider
@@ -229,6 +237,45 @@ export default () => (
       For more advanced theming scenarios, please take a look in the <b>Variables</b> section on the{' '}
       <NavLink to="theming">Theming guide</NavLink>.
     </p>
+
+    <Header
+      as="h3"
+      content={
+        <>
+          Example 3. Using <code>accessibility</code> property
+        </>
+      }
+    />
+    <p>
+      It is possible to define accessibility behavior of the created component - in order to do that
+      the <code>accessibility</code> prop should be defined as part of <code>defaultProps</code>.
+    </p>
+    <p>
+      In the following example <code>buttonBehavior</code> is provided to <code>StyledButton</code>{' '}
+      that results in accessibility attributes being evaluated for the component - and those,
+      subsequently, are consumed in the <code>render</code> function:
+    </p>
+    <ExampleSnippet
+      value={`
+        import { buttonBehavior } from '@stardust-ui/react'
+
+        const StyledButton = createComponent({
+          displayName: 'StyledButton',
+          defaultProps: {
+            accessibility: buttonBehavior
+          },
+          render: ({stardust, className, children}) => {
+            const { classes, accessibility } = stardust
+            return <button {...accessibility.attributes.root} className={classes.root}>{children}</button>
+          }
+        })
+      `}
+    />
+    <p>
+      To get more details on <b>Accessibility</b> support in Stardust refer to the{' '}
+      <NavLink to="accessibility">Accessibility guide</NavLink> section.
+    </p>
+
     <br />
     <Divider size={1} />
     <br />

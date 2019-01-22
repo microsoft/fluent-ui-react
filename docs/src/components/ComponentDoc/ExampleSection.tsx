@@ -1,7 +1,7 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
 import { Segment, Header } from '@stardust-ui/react'
+
+import { Extendable } from 'types/utils'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -10,7 +10,15 @@ const headerStyle: React.CSSProperties = {
   textTransform: 'uppercase',
 }
 
-const ExampleSection: any = ({ title, children, ...rest }) => (
+/*const sectionStyle: React.CSSProperties = {
+  paddingBottom: '5em',
+}*/
+
+export type ExampleSectionProps = Extendable<{
+  title: string
+}>
+
+const ExampleSection: React.FC<ExampleSectionProps> = ({ title, children, ...restProps }) => (
   <Segment>
     <Header as="h2" styles={headerStyle} className="no-anchor">
       {title}
@@ -18,10 +26,5 @@ const ExampleSection: any = ({ title, children, ...rest }) => (
     {children}
   </Segment>
 )
-
-ExampleSection.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string,
-}
 
 export default ExampleSection

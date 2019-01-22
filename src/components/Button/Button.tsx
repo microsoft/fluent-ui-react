@@ -14,7 +14,7 @@ import {
   commonPropTypes,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
@@ -125,7 +125,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     accessibility,
     variables,
     styles,
-    rest,
+    unhandledProps,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -137,11 +137,11 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...rest}
+        {...unhandledProps}
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
+        {Box.create(!hasChildren && content, {
           defaultProps: { as: 'span', className: classes.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}

@@ -1,4 +1,4 @@
-import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
+/*import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { Partial } from 'types/utils'
 
 export default (siteVars: any): Partial<MenuVariables> => {
@@ -21,5 +21,13 @@ export default (siteVars: any): Partial<MenuVariables> => {
     primaryBorderColor: siteVars.brand08,
     primaryHoverBorderColor: siteVars.gray08,
     primaryUnderlinedBorderColor: siteVars.gray08,
+*/
+export interface MenuVariables {
+  color: string
+}
+
+export default (siteVars: any): MenuVariables => {
+  return {
+    color: siteVars.white,
   }
 }

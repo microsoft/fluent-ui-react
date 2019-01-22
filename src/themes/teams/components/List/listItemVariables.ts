@@ -16,6 +16,7 @@ export interface ListItemVariables {
   selectableFocusHoverBackgroundColor: string
   selectedColor: string
   selectedBackgroundColor: string
+  selectedFocusOutlineColor: string
 }
 
 export default (siteVariables: any): ListItemVariables => {
@@ -39,5 +40,6 @@ export default (siteVariables: any): ListItemVariables => {
     selectableFocusHoverBackgroundColor: siteVariables.brand08,
     selectedColor: siteVariables.black,
     selectedBackgroundColor: siteVariables.gray10,
+    selectedFocusOutlineColor: siteVariables.brand,
   }
 }

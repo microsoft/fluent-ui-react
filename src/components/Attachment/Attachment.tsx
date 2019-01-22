@@ -12,7 +12,7 @@ import {
 import Icon from '../Icon/Icon'
 import Button from '../Button/Button'
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { attachmentBehavior } from '../../lib/accessibility'
@@ -64,7 +64,7 @@ export interface AttachmentState {
 /**
  * An Attachment displays a file attachment.
  */
-class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
+class Attachment extends UIComponent<ReactProps<AttachmentProps>, AttachmentState> {
   static create: Function
 
   static className = 'ui-attachment'
@@ -92,7 +92,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
     isFromKeyboard: false,
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
     const { header, description, icon, action, progress } = this.props
 
     return (
@@ -102,7 +102,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
       >
         {icon && (
           <div className={classes.icon}>
@@ -130,7 +130,7 @@ class Attachment extends UIComponent<ReactProps<AttachmentProps>, any> {
           </div>
         )}
         {!_.isNil(progress) &&
-          Slot.create('', {
+          Box.create('', {
             defaultProps: { className: classes.progress },
           })}
       </ElementType>

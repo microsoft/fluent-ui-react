@@ -12,6 +12,7 @@ import {
   iconBehavior,
   imageBehavior,
   inputBehavior,
+  loaderBehavior,
   menuBehavior,
   menuItemBehavior,
   submenuBehavior,
@@ -45,6 +46,7 @@ testHelper.addBehavior('buttonBehavior', buttonBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
+testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
 testHelper.addBehavior('submenuBehavior', submenuBehavior)

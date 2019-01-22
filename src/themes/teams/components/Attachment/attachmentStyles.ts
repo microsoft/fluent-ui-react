@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({

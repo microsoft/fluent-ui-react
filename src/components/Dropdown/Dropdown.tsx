@@ -2,7 +2,12 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import {
+  Extendable,
+  ShorthandValue,
+  ComponentEventHandler,
+  ShorthandRenderFunction,
+} from '../../../types/utils'
 import {
   ComponentSlotStylesInput,
   ComponentVariablesInput,
@@ -31,7 +36,7 @@ import Text from '../Text/Text'
 import Ref from '../Ref/Ref'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import DropdownItem from './DropdownItem'
-import DropdownLabel, { DropdownLabelProps } from './DropdownLabel'
+import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
 
@@ -70,7 +75,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    */
   getA11yStatusMessage?: (options: A11yStatusMessageOptions<ShorthandValue>) => string
 
-  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.Label[]), if it's a multiple selection. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
 
   /**
@@ -100,6 +105,24 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 
   /** A placeholder message for the input field. */
   placeholder?: string
+
+  /**
+   * A custom render function for the item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItem?: ShorthandRenderFunction
+
+  /**
+   * A custom render function for the selected item.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderSelectedItem?: ShorthandRenderFunction
 
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?: boolean | ((items: ShorthandValue[], searchQuery: string) => ShorthandValue[])
@@ -162,6 +185,8 @@ export default class Dropdown extends AutoControlledComponent<
     onSearchQueryChange: PropTypes.func,
     onSelectedChange: PropTypes.func,
     placeholder: PropTypes.string,
+    renderItem: PropTypes.func,
+    renderSelectedItem: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
@@ -191,8 +216,8 @@ export default class Dropdown extends AutoControlledComponent<
   static autoControlledProps = ['searchQuery', 'value']
 
   static Item = DropdownItem
-  static Label = DropdownLabel
   static SearchInput = DropdownSearchInput
+  static SelectedItem = DropdownSelectedItem
 
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
@@ -209,13 +234,13 @@ export default class Dropdown extends AutoControlledComponent<
     classes,
     styles,
     variables,
-    rest,
+    unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, toggleButton, getA11yStatusMessage, itemToString } = this.props
     const { searchQuery } = this.state
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
           onChange={this.handleSelectedChange}
           inputValue={search ? searchQuery : undefined}
@@ -252,7 +277,7 @@ export default class Dropdown extends AutoControlledComponent<
                   className={classes.container}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
-                  {multiple && this.renderSelectedItems(styles)}
+                  {multiple && this.renderSelectedItems()}
                   {search
                     ? this.renderSearchInput(
                         accessibilityRootPropsRest,
@@ -412,7 +437,7 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
   ) {
-    const { noResultsMessage } = this.props
+    const { renderItem, noResultsMessage } = this.props
     const filteredItems = this.getItemsFilteredBySearchQuery()
 
     if (filteredItems.length > 0) {
@@ -427,6 +452,7 @@ export default class Dropdown extends AutoControlledComponent<
               }),
           },
           overrideProps: () => this.handleItemOverrides(item, index, getItemProps),
+          render: renderItem,
         })
       })
     }
@@ -442,7 +468,8 @@ export default class Dropdown extends AutoControlledComponent<
     ]
   }
 
-  private renderSelectedItems(styles: ComponentSlotStylesInput) {
+  private renderSelectedItems() {
+    const { renderSelectedItem } = this.props
     const value = this.state.value as ShorthandValue[]
 
     if (value.length === 0) {
@@ -450,16 +477,16 @@ export default class Dropdown extends AutoControlledComponent<
     }
 
     return value.map(item =>
-      DropdownLabel.create(item, {
+      DropdownSelectedItem.create(item, {
         defaultProps: {
-          styles: styles.label,
           ...(typeof item === 'object' &&
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
             }),
         },
-        overrideProps: (predefinedProps: DropdownLabelProps) =>
+        overrideProps: (predefinedProps: DropdownSelectedItemProps) =>
           this.handleSelectedItemOverrides(predefinedProps, item),
+        render: renderSelectedItem,
       }),
     )
   }
@@ -552,16 +579,16 @@ export default class Dropdown extends AutoControlledComponent<
   })
 
   private handleSelectedItemOverrides = (
-    predefinedProps: DropdownLabelProps,
+    predefinedProps: DropdownSelectedItemProps,
     item: ShorthandValue,
   ) => ({
-    onRemove: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+    onRemove: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       this.handleSelectedItemRemove(e, item)
-      _.invoke(predefinedProps, 'onRemove', e, dropdownLabelProps)
+      _.invoke(predefinedProps, 'onRemove', e, DropdownSelectedItemProps)
     },
-    onClick: (e: React.SyntheticEvent, dropdownLabelProps: DropdownLabelProps) => {
+    onClick: (e: React.SyntheticEvent, DropdownSelectedItemProps: DropdownSelectedItemProps) => {
       e.stopPropagation()
-      _.invoke(predefinedProps, 'onClick', e, dropdownLabelProps)
+      _.invoke(predefinedProps, 'onClick', e, DropdownSelectedItemProps)
     },
   })
 

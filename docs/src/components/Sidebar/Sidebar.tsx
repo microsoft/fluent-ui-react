@@ -4,12 +4,17 @@ import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibilit
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'
-import * as _ from 'lodash/fp'
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { withRouter } from 'react-router'
+
 import { NavLink } from 'react-router-dom'
+
+// import { themes } from '@stardust-ui/react'
+// import { ThemeContext } from '../../context/ThemeContext'
+
 import { constants } from 'src/lib'
 import { fontWeightBold } from 'src/themes/teams/siteVariables'
 
@@ -69,6 +74,7 @@ class Sidebar extends React.Component<any, any> {
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
 
+  /*
   private menuItemsByType = _.map(nextType => {
     const items = _.flow(
       _.filter<ComponentMenuItem>(({ type }) => type === nextType),
@@ -84,6 +90,30 @@ class Sidebar extends React.Component<any, any> {
 
     return { items }
   }, constants.typeOrder)
+*/
+  private menuItemsByType = _.map(constants.typeOrder, nextType => {
+    const items = _.chain([...componentMenu, ...behaviorMenu])
+      .filter(({ type }) => type === nextType)
+      .map(info => (
+        <Menu.Item
+          key={info.displayName}
+          name={info.displayName}
+          onClick={this.handleItemClick}
+          as={NavLink}
+          to={getComponentPathname(info)}
+          activeClassName="active"
+        />
+      ))
+      .value()
+
+    return { items }
+    /*return (
+      <Menu.Item key={nextType}>
+        <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
+        <Menu.Menu>{items}</Menu.Menu>
+      </Menu.Item>
+    )*/
+  })
 
   // private renderSearchItems = () => {
   //   const { selectedItemIndex, query } = this.state
@@ -107,6 +137,21 @@ class Sidebar extends React.Component<any, any> {
   //     itemIndex += 1
   //     const isSelected = itemIndex === selectedItemIndex
 
+  /*
+    _.each(componentMenu, info => {
+      if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
+        startsWithMatches.push(info)
+      } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
+        containsMatches.push(info)
+      }
+    })
+
+    this.filteredMenu = [...startsWithMatches, ...containsMatches]
+    const menuItems = _.map(this.filteredMenu, info => {
+      itemIndex += 1
+      const isSelected = itemIndex === selectedItemIndex
+*/
+
   //     if (isSelected) this.selectedRoute = getComponentPathname(info)
 
   //     return (
@@ -120,6 +165,22 @@ class Sidebar extends React.Component<any, any> {
   //       />
   //     )
   //   }, this.filteredMenu)
+
+  /*     return (
+        <Menu.Item
+          key={info.displayName}
+          name={info.displayName}
+          onClick={this.handleItemClick}
+          active={isSelected}
+          as={NavLink}
+          to={getComponentPathname(info)}
+        >
+          {info.displayName}
+          {isSelected && selectedItemLabel}
+        </Menu.Item>
+      )
+    })
+*/
 
   //   return <Menu vertical pills items={menuItems} />
   // }

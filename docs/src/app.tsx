@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Provider, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from '../../src/lib'
-import { ThemeContext } from './context/theme-context'
+import { ThemeContext } from './context/ThemeContext'
 import Router from './routes'
 
 interface AppState {

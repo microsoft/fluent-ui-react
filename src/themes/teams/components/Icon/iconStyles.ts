@@ -2,11 +2,10 @@ import * as _ from 'lodash'
 
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { fittedStyle } from '../../../../styles/customCSS'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
-import { pxToRem } from '../../utils'
+import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
@@ -51,13 +50,13 @@ const getFontStyles = (
 const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICSSInJSStyle => {
   switch (xSpacing) {
     case 'none':
-      return fittedStyle
+      return { marginLeft: 0, marginRight: 0 }
     case 'before':
-      return { ...fittedStyle, marginLeft: horizontalSpace }
+      return { marginLeft: horizontalSpace, marginRight: 0 }
     case 'after':
-      return { ...fittedStyle, marginRight: horizontalSpace }
+      return { marginLeft: 0, marginRight: horizontalSpace }
     case 'both':
-      return { ...fittedStyle, margin: `0 ${horizontalSpace}` }
+      return { marginLeft: horizontalSpace, marginRight: horizontalSpace }
   }
 }
 
@@ -94,17 +93,18 @@ const getIconColor = (colorProp: string, variables: IconVariables) =>
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
-    props: { disabled, name, size, bordered, circular, color, xSpacing },
+    props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
     variables: v,
     theme,
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
+    const rtl = theme.rtl
     const isFontBased = !iconSpec || !iconSpec.isSvg
 
     return {
       backgroundColor: v.backgroundColor,
       display: 'inline-block',
-      margin: v.margin,
+      marginRight: v.marginRight,
       speak: 'none',
       verticalAlign: 'middle',
 
@@ -122,6 +122,14 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
+
+      ...(rtl && {
+        transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
+      }),
+
+      ...(!rtl && {
+        transform: `rotate(${rotate}deg)`,
+      }),
     }
   },
 

@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   root: (): ICSSInJSStyle => ({}),
@@ -59,10 +59,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       ':active': transparentColorStyle,
     }
   },
-
-  label: (): ICSSInJSStyle => ({
-    margin: '.4rem 0 0 .4rem',
-  }),
 
   list: ({
     variables: { listMaxHeight, width, listBackgroundColor },
