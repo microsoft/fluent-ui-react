@@ -75,8 +75,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
 
   toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
-    height: v.toggleButtonSize,
-    width: v.toggleButtonSize,
+    height: v.toggleIndicatorSize,
+    width: v.toggleIndicatorSize,
     cursor: 'pointer',
     backgroundColor: 'transparent',
     margin: 0,
@@ -84,7 +84,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     justifyContent: 'center',
     alignItems: 'center',
     userSelect: 'none',
-    ...(p.fluid ? { right: 0 } : { left: `calc(${v.width} - ${v.toggleButtonSize})` }),
+    ...(p.fluid ? { right: 0 } : { left: `calc(${v.width} - ${v.toggleIndicatorSize})` }),
   }),
 }
 
