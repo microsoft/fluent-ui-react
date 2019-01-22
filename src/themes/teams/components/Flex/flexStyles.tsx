@@ -14,6 +14,8 @@ const alignmentStyles = props => {
     ? {
         alignItems: props.right
           ? 'flex-end'
+          : props.left
+          ? 'flex-start'
           : props.between
           ? 'space-between'
           : props.evenly
