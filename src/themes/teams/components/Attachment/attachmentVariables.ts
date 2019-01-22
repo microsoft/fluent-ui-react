@@ -1,3 +1,5 @@
+import { pxToRem } from '../../../../lib'
+
 export type AttachmentVariables = {
   padding: number
   iconSpace: number
@@ -21,15 +23,15 @@ export type AttachmentVariables = {
 }
 
 export default siteVariables => ({
-  padding: 8,
-  iconSpace: 12,
+  padding: pxToRem(8),
+  iconSpace: pxToRem(12),
 
   backgroundColor: siteVariables.gray09,
   backgroundColorHover: siteVariables.gray08,
   textColor: siteVariables.black,
 
   progressColor: siteVariables.green,
-  progressHeight: 4,
+  progressHeight: pxToRem(4),
 
   headerFontSize: siteVariables.fontSizes.medium,
   headerFontWeight: siteVariables.fontWeightSemibold,

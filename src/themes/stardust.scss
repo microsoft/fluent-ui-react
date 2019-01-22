@@ -1,0 +1,860 @@
+/*
+ * Name    : Stardust UI React
+ * Version : 0.17.0
+ * Theme   : Teams
+ * GitHub  : https://github.com/stardust-ui/react
+ * NPM     : https://npmjs.com/@stardust-ui/react
+ * Docs    : https://stardust-ui.github.io/react
+ *
+ */
+/***************************************
+                 Loader                 
+***************************************/
+
+.ui-loader {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ui-loader__indicator {
+  animation-name: k1;
+  animation-duration: 1.3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
+  border-color: #A2A2A2 #E6E6E6 #E6E6E6;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.125rem;
+  box-sizing: border-box;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ui-loader__label {
+  margin: 0.625rem;
+}
+
+/***************************************
+                  Text                  
+***************************************/
+
+.ui-text {
+  display: inline-block;
+}
+
+/***************************************
+               Accordion               
+***************************************/
+
+.ui-accordion {
+  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+}
+
+/***************************************
+            AccordionContent            
+***************************************/
+
+.ui-accordion-content {
+  display: none;
+  vertical-align: middle;
+}
+
+/***************************************
+             AccordionTitle             
+***************************************/
+
+.ui-accordion-title {
+  display: inline-block;
+  vertical-align: middle;
+  padding: .5rem 0;
+  cursor: pointer;
+}
+
+.ui-accordion-title__indicator {
+  user-select: none;
+}
+
+/***************************************
+               Attachment               
+***************************************/
+
+.ui-attachment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 18.75rem;
+  min-height: 3rem;
+  padding: 0.5rem;
+  margin-bottom: 0.125rem;
+  margin-right: 0.125rem;
+  background: #EDEBE9;
+  color: #252424;
+  outline: 0;
+}
+
+.ui-attachment__content {
+  flex: 1;
+}
+
+.ui-attachment__header {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3333;
+}
+
+.ui-attachment__description {
+  display: block;
+  opacity: 0.5;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.3333;
+}
+
+.ui-attachment__icon {
+  flex: 0 0 auto;
+  margin-right: 0.75rem;
+}
+
+.ui-attachment__action {
+  flex: 0 0 auto;
+}
+
+.ui-attachment__progress {
+  transition: width 0.2s;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  max-width: 100%;
+  height: 0.25rem;
+  background: #92C353;
+}
+
+/***************************************
+                 Avatar                 
+***************************************/
+
+.ui-avatar {
+  position: relative;
+  background-color: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  height: 2rem;
+  width: 2rem;
+}
+
+.ui-avatar__image {
+  vertical-align: top;
+}
+
+.ui-avatar__label {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 0.8573rem;
+  vertical-align: top;
+  text-align: center;
+  padding: 0px;
+}
+
+.ui-avatar__status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+}
+
+/***************************************
+                 Button                 
+***************************************/
+
+.ui-button {
+  height: 2rem;
+  min-width: 6rem;
+  max-width: 17.5rem;
+  color: #252424;
+  background-color: #FFFFFF;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 1.25rem;
+  margin: 0 0.5rem 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 0.0625rem;
+  border-style: solid;
+  border-color: #E1DFDD;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1);
+  :hover {
+    color: #252424;
+    background-color: #FAF9F8;
+    border-color: #C8C6C4;
+  }
+  :focus {
+    :active {
+      color: #252424;
+      background-color: #E1DFDD;
+      border-color: #C8C6C4;
+      box-shadow: none;
+    }
+  }
+}
+
+.ui-button__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/***************************************
+              ButtonGroup              
+***************************************/
+
+.ui-button-group {}
+
+.ui-button-group__middle-button {
+  margin: 0px;
+  border-radius: 0px;
+}
+
+.ui-button-group__first-button {
+  margin: 0px;
+  border-radius: 0px;
+  border-top-left-radius: 0.125rem;
+  border-bottom-left-radius: 0.125rem;
+}
+
+.ui-button-group__last-button {
+  margin: 0px;
+  border-radius: 0px;
+  border-top-right-radius: 0.125rem;
+  border-bottom-right-radius: 0.125rem;
+}
+
+/***************************************
+                  Chat                  
+***************************************/
+
+.ui-chat {
+  background-color: #F3F2F1;
+  border: 1px solid #F3F2F1;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0 0.625rem 0 0.625rem;
+  margin: 0;
+}
+
+/***************************************
+                ChatItem                
+***************************************/
+
+.ui-chat-item {
+  position: relative;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ui-chat-item__gutter {
+  position: absolute;
+  margin-top: 0.625rem;
+  left: 0;
+}
+
+.ui-chat-item__message {
+  position: relative;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+/***************************************
+              ChatMessage              
+***************************************/
+
+.ui-chat-message {
+  display: inline-block;
+  padding: 0.875rem;
+  border-radius: 0.3rem;
+  border: none;
+  color: rgb(64, 64, 64);
+  background-color: #FFFFFF;
+  max-width: 100%;
+  word-break: break-word;
+  word-wrap: break-word;
+  outline: 0;
+}
+
+.ui-chat-message__author {
+  margin-right: 0.625rem;
+}
+
+.ui-chat-message__content {
+  display: block;
+  & a:focus {
+    outline: none;
+    color: #6264A7;
+    text-decoration: underline;
+  }
+}
+
+/***************************************
+                Divider                
+***************************************/
+
+.ui-divider {
+  color: #605E5C;
+  display: flex;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  ::before {
+    content: "\\";
+    flex: 1;
+    height: 1px;
+    background: #EDEBE9;
+  }
+}
+
+/***************************************
+                Dropdown                
+***************************************/
+
+.ui-dropdown {}
+
+.ui-dropdown__container {
+  display: flex;
+  flex-wrap: wrap;
+  outline: 0;
+  border: 0;
+  background-color: #F3F2F1;
+  border-bottom: 0.125rem solid transparent;
+  border-color: transparent;
+  border-radius: 0.1875rem;
+  color: #252424;
+  width: 22.25rem;
+  position: relative;
+}
+
+.ui-dropdown__button {
+  box-shadow: none;
+  margin: 0;
+  justify-content: left;
+  padding: 0 0.75rem;
+  background-color: transparent;
+  border-color: transparent;
+  height: 1.875rem;
+  :hover {
+    background-color: transparent;
+    border-color: transparent;
+  }
+  :focus {
+    background-color: transparent;
+    border-color: transparent;
+    :after {
+      border-color: transparent;
+    }
+    :active {
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+  :active {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+.ui-dropdown__list {
+  position: absolute;
+  z-index: 1000;
+  max-height: 20rem;
+  overflow-y: auto;
+  width: 22.25rem;
+  top: calc(100% + 2px);
+  background: #FFFFFF;
+}
+
+.ui-dropdown__empty-list-item {
+  background-color: #FFFFFF;
+}
+
+.ui-dropdown__toggle-button {
+  position: absolute;
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  background-color: transparent;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  left: calc(22.25rem - 2rem);
+}
+
+/***************************************
+          DropdownSearchInput          
+***************************************/
+
+.ui-dropdown-search-input__input {
+  width: 100%;
+  :focus {
+    border-bottom-color: transparent;
+  }
+}
+
+.ui-dropdown-search-input__combobox {
+  flex-grow: 1;
+}
+
+/***************************************
+          DropdownSelectedItem          
+***************************************/
+
+.ui-dropdown-selected-item {
+  margin: .4rem 0 0 .4rem;
+}
+
+/***************************************
+              DropdownItem              
+***************************************/
+
+.ui-dropdown-item {
+}
+
+/***************************************
+                  Form                  
+***************************************/
+
+.ui-form {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: space-evenly;
+  grid-gap: 1.25rem;
+  justify-items: start;
+}
+
+/***************************************
+               FormField               
+***************************************/
+
+.ui-form-field {}
+
+.ui-form-field__label {
+  display: block;
+}
+
+.ui-form-field__control {}
+
+.ui-form-field__message {
+  display: block;
+}
+
+/***************************************
+                 Header                 
+***************************************/
+
+.ui-header {
+  display: block;
+  color: #252424;
+}
+
+/***************************************
+           HeaderDescription           
+***************************************/
+
+.ui-header-description {
+  display: block;
+  color: #979593;
+  font-size: 1.375rem;
+  font-weight: 400;
+}
+
+/***************************************
+                  Grid                  
+***************************************/
+
+.ui-grid {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/***************************************
+                  Icon                  
+***************************************/
+
+.ui-icon {
+  display: inline-block;
+  margin-right: 0.5rem;
+  speak: none;
+  vertical-align: middle;
+  font-family: ;
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+  ::before {
+    content: "?";
+    display: block;
+    width: 1rem;
+    height: 1rem;
+  }
+  color: currentColor;
+  transform: rotate(0deg);
+}
+
+.ui-icon__outline-part {
+  display: none;
+}
+
+.ui-icon__filled-part {}
+
+.ui-icon__svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+}
+
+.ui-icon__g {}
+
+.ui-icon__path {}
+
+.ui-icon__secondary-path {}
+
+/***************************************
+                 Image                 
+***************************************/
+
+.ui-image {
+  display: inline-block;
+  vertical-align: middle;
+  height: auto;
+}
+
+/***************************************
+                 Input                 
+***************************************/
+
+.ui-input {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  outline: 0;
+}
+
+.ui-input__input {
+  outline: 0;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.1875rem;
+  color: #252424;
+  background-color: #F3F2F1;
+  position: relative;
+  padding: 0.375rem 0.75rem 0.375rem 0.75rem;
+  ::placeholder {
+    color: #252424;
+  }
+  :focus {
+    border-bottom-color: #6264A7;
+    box-shadow: 0 0.0625rem 0 #6264A7;
+  }
+}
+
+.ui-input__icon {
+  position: absolute;
+  color: #252424;
+  right: 0.125rem;
+  outline: 0;
+}
+
+/***************************************
+                 Label                 
+***************************************/
+
+.ui-label {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  font-size: 0.875rem;
+  border-radius: 0.1875rem;
+  padding: 0 0.25rem 0 0.25rem;
+}
+
+.ui-label__image {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.ui-label__icon {}
+
+/***************************************
+                 Layout                 
+***************************************/
+
+.ui-layout {
+  display: grid;
+  grid-template-columns: ;
+}
+
+.ui-layout__gap {}
+
+.ui-layout__start {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ui-layout__main {}
+
+.ui-layout__end {
+  display: inline-flex;
+  align-items: center;
+}
+
+/***************************************
+               ItemLayout               
+***************************************/
+
+.ui-item-layout {
+  grid-template-rows: minmax(3rem, max-content);
+  padding-left: 1.25rem;
+  padding-right: 1.125rem;
+}
+
+/***************************************
+                  List                  
+***************************************/
+
+.ui-list {
+  list-style: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+/***************************************
+                ListItem                
+***************************************/
+
+.ui-list-item {}
+
+.ui-list-item__media {}
+
+.ui-list-item__header {
+  font-size: 0.875rem;
+  line-height: 1.3333;
+}
+
+.ui-list-item__header-media {
+  font-size: 0.75rem;
+  line-height: 1.3333;
+}
+
+.ui-list-item__content {
+  font-size: 0.75rem;
+  line-height: 1.3333;
+}
+
+/***************************************
+                  Menu                  
+***************************************/
+
+.ui-menu {
+  display: flex;
+  border: 1px solid #E1DFDD;
+  border-radius: 0.25rem;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/***************************************
+                MenuItem                
+***************************************/
+
+.ui-menu-item__wrapper {
+  color: #484644;
+  line-height: 1;
+  position: relative;
+  vertical-align: middle;
+  display: block;
+  ::before {
+    position: absolute;
+    content: "\\";
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: #E1DFDD;
+  }
+  :hover {
+    color: #252424;
+    background: #FAF9F8;
+  }
+  :first-child {
+    border-bottom-left-radius: 0.1875rem;
+    border-top-left-radius: 0.1875rem;
+  }
+}
+
+.ui-menu-item {
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  padding: 0.875rem 1.125rem;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: inherit;
+  }
+}
+
+.ui-menu-item__menu {
+  z-index: 1000;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.ui-menu-item__indicator {
+  position: relative;
+  float: right;
+  left: 0.625rem;
+  user-select: none;
+}
+
+/***************************************
+              MenuDivider              
+***************************************/
+
+.ui-menu-divider {
+  border-left: 1px solid #E1DFDD;
+}
+
+/***************************************
+                 Popup                 
+***************************************/
+
+.ui-popup {}
+
+.ui-popup__popup {
+  z-index: 1000;
+  position: absolute;
+}
+
+/***************************************
+              PopupContent              
+***************************************/
+
+.ui-popup-content {
+  display: block;
+  background-color: #FFFFFF;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #C8C6C4;
+  border-radius: 0.1875rem;
+  box-shadow: 0 2px 4px 0 #C8C6C4, 0 2px 10px 0 #C8C6C4;
+}
+
+/***************************************
+             RadioGroupItem             
+***************************************/
+
+.ui-radio-group-item {
+  outline: 0;
+  display: inline-block;
+}
+
+.ui-radio-group-item__label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  font-weight: 400;
+  min-height: 2.5rem;
+  background-color: transparent;
+}
+
+.ui-radio-group-item__icon {}
+
+/***************************************
+                Segment                
+***************************************/
+
+.ui-segment {
+  padding: 1em;
+  border-top: 2px solid transparent;
+  border-radius: 0;
+  box-shadow: 0 1px 1px 1px rgba(34,36,38,.15);
+  color: #252424;
+  background-color: #FFFFFF;
+}
+
+/***************************************
+                 Status                 
+***************************************/
+
+.ui-status {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.625rem;
+  width: 0.625rem;
+  vertical-align: middle;
+  border-radius: 9999px;
+  background-color: #979593;
+}
+
+.ui-status__icon {
+  color: #FFFFFF;
+}
+
+/***************************************
+                  Tree                  
+***************************************/
+
+.ui-tree {
+  display: block;
+  padding-left: 0.625rem;
+}
+
+/***************************************
+                TreeItem                
+***************************************/
+
+.ui-tree-item {
+  list-style-type: none;
+  padding: 0 0 0 0.0625rem;
+}
+
+/***************************************
+               TreeTitle               
+***************************************/
+
+.ui-tree-title {
+  padding: 0.0625rem 0;
+  cursor: pointer;
+  color: #252424;
+}
+
+/***************************************
+               Animation               
+***************************************/
+
+.ui-animation {
+  display: inline-block;
+}

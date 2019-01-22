@@ -35,6 +35,8 @@ export { default as ItemLayout } from './components/ItemLayout/itemLayoutVariabl
 export { default as ListItem } from './components/List/listItemVariables'
 
 export { default as Menu } from './components/Menu/menuVariables'
+export { default as MenuDivider } from './components/Menu/menuDividerVariables'
+export { default as MenuItem } from './components/Menu/menuItemVariables'
 
 export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'

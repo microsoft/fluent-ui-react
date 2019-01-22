@@ -66,9 +66,9 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     display: 'block',
     bottom: 0,
     left: 0,
-    width: `${props.progress}%`,
+    width: `${props.progress || 0}%`,
     maxWidth: '100%',
-    height: pxToRem(variables.progressHeight),
+    height: variables.progressHeight,
     background: variables.progressColor,
   }),
 }
