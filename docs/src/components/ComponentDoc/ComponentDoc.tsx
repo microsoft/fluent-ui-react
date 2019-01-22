@@ -13,7 +13,7 @@ import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 // import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
-import { ThemeContext } from '../../../src/context/themeContext'
+import { ThemeContext } from 'docs/src/context/ThemeContext'
 // import ExampleContext from 'docs/src/context/ExampleContext'
 
 const exampleEndStyle: React.CSSProperties = {

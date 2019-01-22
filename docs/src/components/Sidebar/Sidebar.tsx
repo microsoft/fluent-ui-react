@@ -13,7 +13,7 @@ import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 
 // import { themes } from '@stardust-ui/react'
-// import { ThemeContext } from '../../context/ThemeContext'
+// import { ThemeContext } from 'docs/src/context/ThemeContext'
 
 import { constants } from 'src/lib'
 import { fontWeightBold } from 'src/themes/teams/siteVariables'
@@ -73,7 +73,6 @@ class Sidebar extends React.Component<any, any> {
     if (query) this.setState({ query: '' })
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
-
   /*
   private menuItemsByType = _.map(nextType => {
     const items = _.flow(
@@ -87,32 +86,30 @@ class Sidebar extends React.Component<any, any> {
         accessibility: listItemBehavior,
       })),
     )([...componentMenu, ...behaviorMenu])
-
     return { items }
   }, constants.typeOrder)
 */
+
   private menuItemsByType = _.map(constants.typeOrder, nextType => {
     const items = _.chain([...componentMenu, ...behaviorMenu])
       .filter(({ type }) => type === nextType)
-      .map(info => (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          as={NavLink}
-          to={getComponentPathname(info)}
-          activeClassName="active"
-        />
-      ))
+      .map(info => ({
+        key: info.displayName.concat(nextType),
+        content: info.displayName,
+        onClick: this.handleItemClick,
+        as: NavLink,
+        to: getComponentPathname(info),
+        accessibility: listItemBehavior,
+      }))
       .value()
 
     return { items }
-    /*return (
-      <Menu.Item key={nextType}>
-        <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
-        <Menu.Menu>{items}</Menu.Menu>
-      </Menu.Item>
-    )*/
+    // return (
+    //  <Menu.Item key={nextType}>
+    //    <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
+    //    <Menu.Menu>{items}</Menu.Menu>
+    //  </Menu.Item>
+    // )
   })
 
   // private renderSearchItems = () => {
@@ -243,6 +240,10 @@ class Sidebar extends React.Component<any, any> {
         accessibility: listItemBehavior,
       },
       {
+        key: 'divider1',
+        kind: 'Divider',
+      },
+      {
         key: 'concepts',
         content: 'Concepts',
         styles: menuSectionStyles,
@@ -268,6 +269,10 @@ class Sidebar extends React.Component<any, any> {
         as: NavLink,
         to: '/shorthand-props',
         accessibility: listItemBehavior,
+      },
+      {
+        key: 'divider2',
+        kind: 'Divider',
       },
       {
         key: 'guides',

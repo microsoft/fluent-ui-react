@@ -53,7 +53,7 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
 
   render() {
     const { activePath, examples } = this.props
-    //    const { activePath, examples, sectionName } = this.props
+    const { /*activePath, examples,*/ sectionName } = this.props
     //    const { isActiveByProps, isActiveByUser } = this.state
 
     //    const active = isActiveByUser || isActiveByProps

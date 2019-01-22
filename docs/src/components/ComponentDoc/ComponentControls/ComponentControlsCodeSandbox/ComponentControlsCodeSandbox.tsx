@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
-import { Menu } from 'semantic-ui-react'
+import { Menu } from '@stardust-ui/react'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import { imports } from 'docs/src/components/Playground/renderConfig'
 import { updateForKeys } from 'docs/src/hoc'

@@ -88,7 +88,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
           content: <ComponentControlsMaximize />,
           onClick: onMaximize,
           as: NavLink,
-          // to: `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
+          to: `/maximize/${_.kebabCase(props.examplePath)}`, // `/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`,
           target: '_blank',
           rel: 'noopener noreferrer',
           accessibility: toolbarButtonBehavior,
@@ -103,22 +103,6 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     />
   )
 }
-
-/*ComponentControls.propTypes = {
-  examplePath: PropTypes.string,
-  anchorName: PropTypes.string,
-  onCopyLink: PropTypes.func,
-  onShowCode: PropTypes.func,
-  onShowRtl: PropTypes.func,
-  onShowTransparent: PropTypes.func,
-  onShowVariables: PropTypes.func,
-  onMaximize: PropTypes.func,
-  showCode: PropTypes.bool,
-  showRtl: PropTypes.bool,
-  showTransparent: PropTypes.bool,
-  showVariables: PropTypes.bool,
-  visible: PropTypes.bool,
-}*/
 
 /*<Menu color="green" icon="labeled" size="tiny" compact text>
       <ComponentControlsShowCode active={showCode} onClick={onShowCode} />

@@ -27,7 +27,7 @@ import ComponentSourceManager, {
 } from '../ComponentSourceManager'
 import { ThemeInput, ThemePrepared } from 'src/themes/types'
 import { mergeThemeVariables } from '../../../../../src/lib/mergeThemes'
-import { ThemeContext } from '../../../context/ThemeContext'
+import { ThemeContext } from 'docs/src/context/ThemeContext'
 import CodeSnippet from '../../CodeSnippet'
 
 export interface ComponentExampleProps
