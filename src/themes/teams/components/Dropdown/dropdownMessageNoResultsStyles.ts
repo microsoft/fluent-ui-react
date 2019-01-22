@@ -2,7 +2,10 @@ import ListItem from '../../../../components/List/ListItem'
 import { DropdownMessageNoResultsProps } from '../../../../components/Dropdown/DropdownMessageNoResults'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 
-const dropdownSelectedItemStyles: ComponentSlotStylesInput<DropdownMessageNoResultsProps, any> = {
+const dropdownMessageNoResultsStyles: ComponentSlotStylesInput<
+  DropdownMessageNoResultsProps,
+  any
+> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
     [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
 
@@ -10,4 +13,4 @@ const dropdownSelectedItemStyles: ComponentSlotStylesInput<DropdownMessageNoResu
   }),
 }
 
-export default dropdownSelectedItemStyles
+export default dropdownMessageNoResultsStyles
