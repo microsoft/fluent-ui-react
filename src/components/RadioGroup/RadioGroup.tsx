@@ -16,8 +16,7 @@ import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -46,7 +45,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean

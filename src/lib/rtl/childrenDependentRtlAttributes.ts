@@ -1,7 +1,7 @@
-import { RtlFunc } from './types'
+import { RtlAttributesProvider } from './types'
 import { childrenExist } from '../index'
 
-const childrenDependentRtlAttributes: RtlFunc = (props: any) => {
+const childrenDependentRtlAttributes: RtlAttributesProvider = (props: any) => {
   const { children } = props
   const rootRtlAttributes =
     childrenExist(children) && typeof children === 'string' ? { dir: 'auto' } : {}

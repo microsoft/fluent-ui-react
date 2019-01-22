@@ -1,6 +1,6 @@
-import { RtlFunc } from '../types'
+import { RtlAttributesProvider } from '../types'
 
-const radioGroupRtlAttributes: RtlFunc = (props: any) => {
+const radioGroupRtlAttributes: RtlAttributesProvider = (props: any) => {
   const { start, main, end } = props
   return {
     start: generateRtlAttributes(start),

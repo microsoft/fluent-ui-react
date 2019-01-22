@@ -19,8 +19,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -78,7 +77,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 export interface MenuState {

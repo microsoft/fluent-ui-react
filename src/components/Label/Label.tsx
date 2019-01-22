@@ -20,8 +20,7 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -52,7 +51,7 @@ export interface LabelProps
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

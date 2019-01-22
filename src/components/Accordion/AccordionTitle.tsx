@@ -14,8 +14,7 @@ import {
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Indicator from '../Indicator/Indicator'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 import addRtlSupport from '../../lib/addRtlSupport'
 
 export interface AccordionTitleProps
@@ -43,7 +42,7 @@ export interface AccordionTitleProps
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

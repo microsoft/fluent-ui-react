@@ -176,5 +176,4 @@ export { ShorthandRenderer } from '../types/utils'
 //
 // Rtl
 //
-export * from './lib/rtl/types'
 export * from './lib/rtl'

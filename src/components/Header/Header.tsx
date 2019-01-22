@@ -14,8 +14,7 @@ import {
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import { headerRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { headerRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface HeaderProps
   extends UIComponentProps,
@@ -32,7 +31,7 @@ export interface HeaderProps
    * Rtl attributes function if overridden by the user.
    * @default radioGroupRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

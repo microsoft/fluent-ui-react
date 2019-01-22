@@ -21,8 +21,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -54,7 +53,7 @@ export interface ChatMessageProps
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 export interface ChatMessageState {

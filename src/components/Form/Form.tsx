@@ -12,8 +12,7 @@ import {
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML form action. */
@@ -33,7 +32,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
    * Rtl attributes function if overridden by the user.
    * @default formRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

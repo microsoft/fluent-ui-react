@@ -14,8 +14,7 @@ import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../ty
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
-import { RtlFunc } from '../../lib/rtl/types'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -40,7 +39,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

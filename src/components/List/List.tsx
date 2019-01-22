@@ -16,8 +16,7 @@ import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -52,7 +51,7 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 
   /** Truncates content */
   truncateContent?: boolean

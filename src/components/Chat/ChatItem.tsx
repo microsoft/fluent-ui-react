@@ -14,8 +14,7 @@ import {
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Chat items can have a gutter. */
@@ -31,7 +30,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 }
 
 /**

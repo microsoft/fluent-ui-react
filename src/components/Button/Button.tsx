@@ -19,8 +19,7 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
-import { RtlFunc } from '../../lib/rtl/types'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -71,7 +70,7 @@ export interface ButtonProps
    * Rtl attributes function if overridden by the user.
    * @default buttonRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 
   /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean

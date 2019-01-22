@@ -4,4 +4,4 @@ export interface RtlAttributes {
   [partName: string]: ObjectOf<string>
 }
 
-export type RtlFunc = (props: any) => RtlAttributes
+export type RtlAttributesProvider = (props: any) => RtlAttributes

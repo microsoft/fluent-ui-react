@@ -16,8 +16,7 @@ import {
   ChildrenComponentProps,
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
-import { RtlFunc } from '../../lib/rtl/types'
-import { childrenDependentRtlAttributes } from '../../lib/rtl'
+import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -49,7 +48,7 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    * Rtl attributes function if overridden by the user.
    * @default childrenDependentRtlAttributes
    */
-  rtlAttributes?: RtlFunc
+  rtlAttributes?: RtlAttributesProvider
 
   /** Properties for TreeTitle. */
   title?: ShorthandValue
