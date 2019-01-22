@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -87,7 +88,11 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...unhandledProps} className={classes.root}>
+        <ElementType
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...unhandledProps}
+          className={classes.root}
+        >
           {children}
         </ElementType>
       )

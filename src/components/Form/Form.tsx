@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
@@ -62,6 +63,7 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
         className={classes.root}
         action={action}
         onSubmit={this.handleSubmit}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderFields()}

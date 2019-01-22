@@ -14,6 +14,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
@@ -109,6 +110,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         onFocus={this.handleFocus}
         className={className}
