@@ -8,6 +8,7 @@ import KnobsValue from './KnobsValue'
 
 import KnobsBoolean from './KnobsBoolean'
 import KnobsScalar from './KnobsScalar'
+import KnobsSelect from './KnobsSelect'
 
 const Knobs: any = createComponent(
   () => ({
@@ -31,6 +32,7 @@ const Knobs: any = createComponent(
   }),
   'div',
 )
+
 Knobs.Field = KnobsField
 Knobs.Control = KnobsControl
 Knobs.Label = KnobsLabel
@@ -38,5 +40,6 @@ Knobs.Value = KnobsValue
 
 Knobs.Boolean = KnobsBoolean
 Knobs.Scalar = KnobsScalar
+Knobs.Select = KnobsSelect
 
 export default Knobs
