@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -113,16 +114,16 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     triggerAccessibility: {},
   }
 
-  public renderComponent({ rtlAttributes }): React.ReactNode {
+  public renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
-        {this.renderPortal(rtlAttributes)}
+        {this.renderPortal()}
         {this.renderTrigger()}
       </React.Fragment>
     )
   }
 
-  private renderPortal(rtlAttributes): JSX.Element | undefined {
+  private renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
     const contentToRender = childrenExist(children) ? children : content
@@ -134,7 +135,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
           <PortalInner
             onMount={this.handleMount}
             onUnmount={this.handleUnmount}
-            {...rtlAttributes.root}
+            {...rtlTextContainer.getAttributes({ forElements: [contentToRender] })}
           >
             {trapFocus ? (
               <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>

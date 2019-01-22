@@ -7,10 +7,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Box from '../Box/Box'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
@@ -18,12 +18,6 @@ export interface SegmentProps
     ContentComponentProps<ShorthandValue> {
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -44,14 +38,17 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
 
   static defaultProps = {
     as: 'div',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
     )

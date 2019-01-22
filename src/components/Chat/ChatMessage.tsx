@@ -14,6 +14,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
@@ -21,7 +22,6 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -48,12 +48,6 @@ export interface ChatMessageProps
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 export interface ChatMessageState {
@@ -77,13 +71,11 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
     onFocus: PropTypes.func,
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   public state = {
@@ -109,7 +101,6 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     accessibility,
     unhandledProps,
     styles,
-    rtlAttributes,
   }: RenderResultConfig<ChatMessageProps>) {
     const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
@@ -119,7 +110,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         onFocus={this.handleFocus}
         className={className}

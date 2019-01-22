@@ -33,8 +33,6 @@ import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './acces
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import { generateColorScheme } from './index'
-import { RtlAttributes } from './rtl/types'
-import defaultRtlAttributes from './rtl/defaultRtlAttributes'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -47,7 +45,6 @@ export interface RenderResultConfig<P> {
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
-  rtlAttributes: RtlAttributes
 }
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
@@ -84,11 +81,6 @@ const getAccessibility = (
     ...accessibility,
     keyHandlers,
   }
-}
-
-const getRtlAttributes = (props: State & PropsWithVarsAndStyles): RtlAttributes => {
-  const { rtlAttributes: customRtlAttributes } = props
-  return (customRtlAttributes || defaultRtlAttributes)(props)
 }
 
 /**
@@ -208,8 +200,6 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           rtl,
         )
 
-        const rtlAttributes: RtlAttributes = getRtlAttributes(stateAndProps)
-
         const unhandledProps = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
@@ -246,7 +236,6 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           accessibility,
           rtl,
           theme,
-          rtlAttributes,
         }
 
         if (accessibility.focusZone) {

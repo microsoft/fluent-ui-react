@@ -9,7 +9,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  addRtlSupport,
+  rtlTextContainer,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
@@ -127,12 +127,12 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          main={addRtlSupport(header)}
+          main={rtlTextContainer.createFor({ element: header })}
           rootCSS={headerCSS}
           end={
             headerMedia && (
               <span style={headerMediaCSS} className={mediaClasses}>
-                {addRtlSupport(headerMedia)}
+                {rtlTextContainer.createFor({ element: headerMedia })}
               </span>
             )
           }
@@ -154,11 +154,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           debug={debug}
           truncateMain={truncateContent}
           rootCSS={contentCSS}
-          main={addRtlSupport(content)}
+          main={rtlTextContainer.createFor({ element: content })}
           end={
             contentMedia && (
               <span style={contentMediaCSS} className={mediaClasses}>
-                {addRtlSupport(contentMedia)}
+                {rtlTextContainer.createFor({ element: contentMedia })}
               </span>
             )
           }
@@ -191,7 +191,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         start={
           startArea && (
             <span style={mediaCSS} className={mergedMediaClasses}>
-              {addRtlSupport(startArea)}
+              {rtlTextContainer.createFor({ element: startArea })}
             </span>
           )
         }
@@ -199,7 +199,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         end={
           endArea && (
             <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {addRtlSupport(endArea)}
+              {rtlTextContainer.createFor({ element: endArea })}
             </span>
           )
         }

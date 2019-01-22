@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 
 import Icon from '../Icon/Icon'
@@ -20,7 +21,6 @@ import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { ComplexColorPropType } from '../../lib/commonPropInterfaces'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface LabelProps
   extends UIComponentProps,
@@ -46,12 +46,6 @@ export interface LabelProps
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -72,14 +66,12 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     image: customPropTypes.itemShorthand,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   handleIconOverrides = iconProps => {
@@ -91,12 +83,16 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
     }
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, variables, styles, rtlAttributes }) {
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
     const { children, content, icon, iconPosition, image, imagePosition } = this.props
 
     if (childrenExist(children)) {
       return (
-        <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
+        <ElementType
+          {...rtlTextContainer.getAttributes({ forElements: [children] })}
+          {...unhandledProps}
+          className={classes.root}
+        >
           {children}
         </ElementType>
       )

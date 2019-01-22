@@ -9,12 +9,12 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -34,12 +34,6 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -65,7 +59,6 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
   public static defaultProps = {
     as: 'ul',
     accessibility: defaultBehavior,
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   renderContent() {
@@ -80,22 +73,14 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     )
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    unhandledProps,
-    styles,
-    variables,
-    rtlAttributes,
-  }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
 
     return (
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderContent()}

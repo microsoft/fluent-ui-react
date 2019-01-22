@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   getKindProp,
+  rtlTextContainer,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
@@ -19,7 +20,6 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -72,12 +72,6 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Shorthand for the submenu indicator. */
   indicator?: ShorthandValue
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 export interface MenuState {
@@ -114,13 +108,11 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
     indicator: customPropTypes.itemShorthand,
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'ul',
     accessibility: menuBehavior as Accessibility,
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -198,19 +190,12 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    variables,
-    unhandledProps,
-    rtlAttributes,
-  }) {
+  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
     const { children } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         className={classes.root}
       >

@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Box from '../Box/Box'
@@ -19,7 +20,6 @@ import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -66,12 +66,6 @@ export interface ButtonProps
   /** A button can be formatted to show different levels of emphasis. */
   primary?: boolean
 
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default buttonRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
-
   /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
   text?: boolean
 
@@ -113,13 +107,11 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     text: PropTypes.bool,
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     accessibility: PropTypes.func,
-    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static Group = ButtonGroup
@@ -135,7 +127,6 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
     variables,
     styles,
     unhandledProps,
-    rtlAttributes,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -147,7 +138,7 @@ class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {hasChildren && children}

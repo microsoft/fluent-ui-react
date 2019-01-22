@@ -15,7 +15,7 @@ import {
   commonPropTypes,
   isFromKeyboard,
   EventStack,
-  addRtlSupport,
+  rtlTextContainer,
 } from '../../lib'
 import Icon from '../Icon/Icon'
 import Menu from '../Menu/Menu'
@@ -213,7 +213,7 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
             Icon.create(this.props.icon, {
               defaultProps: { xSpacing: !!content ? 'after' : 'none' },
             })}
-          {addRtlSupport(content)}
+          {rtlTextContainer.createFor({ element: content })}
           {menu &&
             Indicator.create(indicatorWithDefaults, {
               defaultProps: {

@@ -172,8 +172,3 @@ export {
   ContentComponentProps,
 } from './lib'
 export { ShorthandRenderer } from '../types/utils'
-
-//
-// Rtl
-//
-export * from './lib/rtl'

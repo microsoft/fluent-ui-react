@@ -11,11 +11,10 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   customPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Indicator from '../Indicator/Indicator'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
-import addRtlSupport from '../../lib/addRtlSupport'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -37,12 +36,6 @@ export interface AccordionTitleProps
 
   /** Shorthand for the active indicator. */
   indicator?: ShorthandValue
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -61,18 +54,13 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
-    rtlAttributes: PropTypes.func,
-  }
-
-  static defaultProps = {
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, rtlAttributes, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { children, content, indicator, active } = this.props
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
@@ -84,13 +72,13 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
             styles: styles.indicator,
           },
         })}
-        {addRtlSupport(content)}
+        {rtlTextContainer.createFor({ element: content })}
       </>
     )
 
     return (
       <ElementType
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         className={classes.root}
         onClick={this.handleClick}

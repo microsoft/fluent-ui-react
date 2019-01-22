@@ -9,10 +9,10 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
   /** The HTML form action. */
@@ -27,12 +27,6 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} data - All props.
    */
   onSubmit?: ComponentEventHandler<FormProps>
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default formRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -54,24 +48,22 @@ class Form extends UIComponent<ReactProps<FormProps>, any> {
     action: PropTypes.string,
     fields: customPropTypes.collectionShorthand,
     onSubmit: PropTypes.func,
-    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     as: 'form',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   public static Field = FormField
 
-  public renderComponent({ ElementType, classes, unhandledProps, rtlAttributes }): React.ReactNode {
+  public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     const { action, children } = this.props
     return (
       <ElementType
         className={classes.root}
         action={action}
         onSubmit={this.handleSubmit}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderFields()}

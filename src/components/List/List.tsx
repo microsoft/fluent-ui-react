@@ -10,13 +10,13 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import ListItem from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -46,12 +46,6 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} data - All props and proposed value.
    */
   onSelectedIndexChange?: ComponentEventHandler<ListProps>
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 
   /** Truncates content */
   truncateContent?: boolean
@@ -83,7 +77,6 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     selectable: PropTypes.bool,
     truncateContent: PropTypes.bool,
     truncateHeader: PropTypes.bool,
-    rtlAttributes: PropTypes.func,
     selectedIndex: PropTypes.number,
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
@@ -92,7 +85,6 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   static defaultProps = {
     as: 'ul',
     accessibility: listBehavior as Accessibility,
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['selectedIndex']
@@ -143,14 +135,14 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         className={classes.root}
       >

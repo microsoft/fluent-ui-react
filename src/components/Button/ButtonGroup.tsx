@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Button from './Button'
 
@@ -50,14 +51,13 @@ class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
     accessibility,
     styles,
     unhandledProps,
-    rtlAttributes,
   }): React.ReactNode {
     const { children, buttons, circular, content } = this.props
     if (_.isNil(buttons)) {
       return (
         <ElementType
           {...accessibility.attributes.root}
-          {...rtlAttributes.root}
+          {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
           {...unhandledProps}
           className={classes.root}
         >

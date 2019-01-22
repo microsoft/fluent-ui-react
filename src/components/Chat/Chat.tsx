@@ -2,14 +2,19 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
+  commonPropTypes,
+  rtlTextContainer,
+} from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -20,12 +25,6 @@ export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
 
   /** Shorthand array of the items inside the chat. */
   items?: ShorthandValue[]
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -42,13 +41,11 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     accessibility: chatBehavior,
     as: 'ul',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static Item = ChatItem
@@ -58,7 +55,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
 
     return (
@@ -66,7 +63,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         className={classes.root}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}

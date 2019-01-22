@@ -11,7 +11,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  addRtlSupport,
+  rtlTextContainer,
 } from '../../lib'
 import Label from '../Label/Label'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
@@ -165,7 +165,7 @@ class RadioGroupItem extends AutoControlledComponent<
               styles: styles.icon,
             },
           })}
-          {addRtlSupport(label)}
+          {rtlTextContainer.createFor({ element: label })}
         </Label>
       </ElementType>
     )

@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
@@ -21,7 +22,6 @@ import {
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface AccordionProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active panel. */
@@ -68,12 +68,6 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @default defaultBehavior
    * */
   accessibility?: Accessibility
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -114,12 +108,10 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
 
     renderPanelTitle: PropTypes.func,
     renderPanelContent: PropTypes.func,
-    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
     accessibility: defaultBehavior as Accessibility,
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -185,13 +177,13 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtlAttributes }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
       <ElementType
         {...accessibility.attributes.root}
-        {...rtlAttributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         className={classes.root}
       >

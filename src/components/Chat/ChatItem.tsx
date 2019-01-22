@@ -11,10 +11,10 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   customPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
-import { childrenDependentRtlAttributes, RtlAttributesProvider } from '../../lib/rtl'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Chat items can have a gutter. */
@@ -25,12 +25,6 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Chat items can have a message. */
   message?: ShorthandValue
-
-  /**
-   * Rtl attributes function if overridden by the user.
-   * @default childrenDependentRtlAttributes
-   */
-  rtlAttributes?: RtlAttributesProvider
 }
 
 /**
@@ -46,13 +40,11 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     gutter: customPropTypes.itemShorthand,
     gutterPosition: PropTypes.oneOf(['start', 'end']),
     message: customPropTypes.itemShorthand,
-    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'li',
     gutterPosition: 'start',
-    rtlAttributes: childrenDependentRtlAttributes,
   }
 
   renderComponent({
@@ -60,12 +52,15 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     classes,
     unhandledProps,
     styles,
-    rtlAttributes,
   }: RenderResultConfig<ChatItemProps>) {
     const { children } = this.props
 
     return (
-      <ElementType {...rtlAttributes.root} {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>
     )
