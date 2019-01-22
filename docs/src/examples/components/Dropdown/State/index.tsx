@@ -7,7 +7,7 @@ const State = () => (
   <ExampleSection title="State">
     <ComponentExample
       title="Loading"
-      description="A dropdown with single selection."
+      description="A dropdown can show that it is currently loading data."
       examplePath="components/Dropdown/State/DropdownExampleLoading"
     />
   </ExampleSection>
