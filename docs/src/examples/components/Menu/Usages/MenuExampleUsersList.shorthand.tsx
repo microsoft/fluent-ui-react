@@ -1,28 +1,53 @@
 import * as React from 'react'
-import { Menu, Popup, ItemLayout, Status } from '@stardust-ui/react'
+import {
+  Menu,
+  Popup,
+  Status,
+  Box,
+  navigableListBehavior,
+  navigableListItemBehavior,
+} from '@stardust-ui/react'
 
+// when Flex component will be released then Box should be replaced
 const PopupItemLayout = props => {
-  return <Popup on={['hover']} trigger={<ItemLayout {...props} />} content="Hello from popup!" />
+  return <Popup trigger={<Box {...props} />} content="Hello from popup!" />
 }
 
 const items = [
   {
     as: PopupItemLayout,
     key: 'IrvingKuhic',
-    media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Irving Kuhic,',
+    content: (
+      <>
+        <Status color="red" icon="minus" title="Busy" /> <span> Irving Kuhic,</span>
+      </>
+    ),
+    role: 'button',
+    accessibility: navigableListItemBehavior,
   },
   {
     as: PopupItemLayout,
     key: 'SkylerParks',
-    media: <Status color="green" icon="check" title="Available" />,
-    header: 'Skyler Parks,',
+    content: (
+      <>
+        {' '}
+        <Status color="green" icon="check" title="Available" /> <span> Skyler Parks,</span>
+      </>
+    ),
+    role: 'button',
+    accessibility: navigableListItemBehavior,
   },
   {
     as: PopupItemLayout,
     key: 'DanteSchneider',
-    header: 'Dante Schneider',
-    media: <Status color="green" icon="check" title="Available" />,
+    content: (
+      <>
+        {' '}
+        <Status color="green" icon="check" title="Available" /> <span>Dante Schneider </span>
+      </>
+    ),
+    role: 'button',
+    accessibility: navigableListItemBehavior,
   },
 ]
 
@@ -32,12 +57,16 @@ class MenuExampleShorthand extends React.Component {
       <Menu
         defaultActiveIndex={0}
         items={items}
-        variables={{ borderColor: 'transparent', horizontalPadding: '3px 3px' }}
+        accessibility={navigableListBehavior}
+        variables={{
+          borderColor: 'transparent',
+          paddingRight: '3px',
+          paddingLeft: '3px',
+          activeBackgroundColor: 'transparent',
+        }}
       />
     )
   }
 }
 
 export default MenuExampleShorthand
-
-// variables: {horizontalPadding:  '0 0' }   horizontalPadding: '3px 3px'
