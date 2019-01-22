@@ -59,10 +59,10 @@ class MenuExampleShorthand extends React.Component {
         items={items}
         accessibility={navigableListBehavior}
         variables={{
+          activeBackgroundColor: 'transparent',
           borderColor: 'transparent',
           paddingRight: '3px',
           paddingLeft: '3px',
-          activeBackgroundColor: 'transparent',
         }}
       />
     )

@@ -20,8 +20,8 @@ const Usages = () => (
       examplePath="components/Menu/Usages/MenuExampleWithSubmenu"
     />
     <ComponentExample
-      title="Menu as user list"
-      description="A menu can be use as list in special case "
+      title="Menu as list of actionable elements"
+      description="A menu structure can be use in special cases as list of actionable elements. Together with 'navigableListBehavior' and 'navigableListItemBehavior'"
       examplePath="components/Menu/Usages/MenuExampleUsersList"
     />
   </ExampleSection>

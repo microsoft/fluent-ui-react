@@ -3,7 +3,9 @@ import { FocusZoneDirection } from '../../FocusZone'
 
 /**
  * @description
+ * The behavior is designed when user needs create list of actionable elements.
  * @specification
+ * Adds role='list'.
  * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
  */
 
