@@ -13,6 +13,7 @@ import webpackPlugin from '../plugins/gulp-webpack'
 const { paths } = config
 const { colors, log } = require('gulp-load-plugins')().util
 
+const DEFAULT_RUN_TIMES = 10
 let server
 
 const floor = (value: number) => _.floor(value, 2)
@@ -81,7 +82,7 @@ task('perf:build', cb => {
 
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
-  const times = argv.times || 10
+  const times = argv.times || DEFAULT_RUN_TIMES
 
   const browser = await puppeteer.launch()
 
