@@ -13,7 +13,7 @@ export interface ChatMessageVariables {
 }
 
 export default (siteVars): ChatMessageVariables => ({
-  width: '80%',
+  width: '100%',
   backgroundColor: siteVars.white,
   backgroundColorMine: '#E5E5F1',
   borderRadius: '0.3rem',
