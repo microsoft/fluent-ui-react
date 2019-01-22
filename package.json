@@ -40,7 +40,6 @@
     "test:watch": "gulp test:watch",
     "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
-    "test:perf": "gulp perf",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
   },
