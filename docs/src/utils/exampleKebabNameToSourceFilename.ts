@@ -9,7 +9,8 @@ const exampleKebabNameToSourceFilename = (exampleKebabName: string) => {
   // button-example-shorthand => ButtonExample.shorthand.source.json
   return `${_.startCase(exampleKebabName)
     .replace(/ /g, '')
-    .replace(/Shorthand$/, '.shorthand')}.source.json`
+    .replace(/Shorthand$/, '.shorthand')
+    .replace(/Perf$/, '.perf')}.source.json`
 }
 
 export default exampleKebabNameToSourceFilename
