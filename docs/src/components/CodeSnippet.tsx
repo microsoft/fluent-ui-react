@@ -11,9 +11,8 @@ export interface CodeSnippetProps {
   style?: React.CSSProperties
 }
 
-const joinToString = (stringOrArray: string | string[]) => {
-  return typeof stringOrArray === 'string' ? stringOrArray : stringOrArray.join('\n')
-}
+const joinToString = (stringOrArray: string | string[]) =>
+  Array.isArray(stringOrArray) ? stringOrArray.join('\n') : stringOrArray
 
 const formatters = {
   sh: (val: string = ''): string => val.replace(/^/g, '$  '),
