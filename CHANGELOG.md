@@ -18,10 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING
-- Rename `toggleButton` prop to `indicator` and make it visible by default @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
-
-### Features
-- Expose `renderItem` and `renderSelectedItem` callbacks API for `Dropdown` @layershifter ([#746](https://github.com/stardust-ui/react/pull/746))
+- Rename `toggleButton` prop to `toggleIndicator` and make it visible by default @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
 
 ### Fixes
 - Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
@@ -29,12 +26,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix Avatar's size example @mnajdova ([#745](https://github.com/stardust-ui/react/pull/745))
 - Fix teams theme `Status` and `Chat.Message` styles ([#747](https://github.com/stardust-ui/react/pull/747))
 - Fix `Popup` - do not stop event propagation when pressing Esc on trigger element @sophieH29 ([#750](https://github.com/stardust-ui/react/pull/750))
+- Fix alignment of `Layout`'s `main` area @kuzhelov ([#752](https://github.com/stardust-ui/react/pull/752))
 
 ### Features
 - Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
 - Add and export 'missed call' icon in Teams theme @codepretty ([#748](https://github.com/stardust-ui/react/pull/748))
 - Add `Indicator` component and used it in `MenuItem` and `AccordionTitle` @mnajdova ([#721](https://github.com/stardust-ui/react/pull/721))
+- Expose `renderItem` and `renderSelectedItem` callbacks API for `Dropdown` @layershifter ([#746](https://github.com/stardust-ui/react/pull/746))
 - Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+
+### Documentation
+- Refine Shorthand docs page content @kuzhelov ([#751](https://github.com/stardust-ui/react/pull/751))
 
 <!--------------------------------[ v0.17.0 ]------------------------------- -->
 ## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
