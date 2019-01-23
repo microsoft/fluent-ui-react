@@ -1,9 +1,6 @@
 import * as React from 'react'
 import { Avatar, Flex, Icon, Text, Divider } from '@stardust-ui/react'
 
-const baseFont = { fontFamily: 'Base' }
-const captionFont = { fontFamily: 'Caption' }
-
 const FlexExampleMessage = () => (
   <>
     <Flex gap="1rem">
@@ -22,7 +19,7 @@ const FlexExampleMessage = () => (
 
     <Divider />
 
-    <Flex center debug gap="12px" style={{ height: '48px', padding: '0 20px', width: '326px' }}>
+    <Flex center debug gap="12px" style={cardStyle}>
       <Avatar image="public/images/avatar/small/matt.jpg" size={28} />
       <Flex vertical fluid>
         <Flex baseline between>
@@ -38,5 +35,9 @@ const FlexExampleMessage = () => (
     </Flex>
   </>
 )
+
+const cardStyle = { height: '48px', padding: '0 20px', width: '326px' }
+const baseFont = { fontFamily: 'Base' }
+const captionFont = { fontFamily: 'Caption' }
 
 export default FlexExampleMessage
