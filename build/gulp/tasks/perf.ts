@@ -88,12 +88,17 @@ task('perf:run', async () => {
 
   for (let i = 0; i < times; i++) {
     const page = await browser.newPage()
-    await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-    const measuresFromStep = await page.evaluate(() => window.runMeasures())
-    await page.close()
+    try {
+      await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-    measures.push(measuresFromStep)
+      const measuresFromStep = await page.evaluate(() => window.runMeasures())
+      measures.push(measuresFromStep)
+    } catch (e) {
+      throw e
+    } finally {
+      await page.close()
+    }
   }
 
   await browser.close()
