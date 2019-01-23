@@ -86,14 +86,13 @@ const ShorthandProps = props => (
     <blockquote>
       <strong>
         There is a very important caveat here, though: whenever React Element is directly used as a
-        shorthand value, it becomes client's responsibility to handle some aspects that Stardust was
-        originally responsible for (such as {code('styles')} or {code('accessibility')}).
+        shorthand value, all props that Stardust has created for the slot's Component will be spread
+        on the passed element. This means that provided element should be able to handle Stardust
+        props - while this requirement is satisfied for all Stardust components, you should be aware
+        of that when either HTML or any third-party elements are provided.
       </strong>{' '}
-      This is because, in contrast to other forms of shorthand values, Stardust-evaluated props
-      cannot be safely passed to the element which type is, generally, doesn't allow Stardust to
-      make any prior assumptions about. Due to this limitation, you should strive to use other
-      options for shorthand values whenever is possible - for instance, this is how previous example
-      can be rewritten:
+      Due to this limitation, you should strive to use other options for shorthand values whenever
+      is possible - for instance, this is how previous example can be rewritten:
     </blockquote>
     {codeExample([`<Button icon={{ as: 'i', className: 'my-icon' }} />`])}
 
