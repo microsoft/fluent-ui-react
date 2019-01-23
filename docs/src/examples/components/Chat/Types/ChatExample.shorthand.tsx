@@ -53,7 +53,7 @@ const items = [
     key: 'message-id-5',
   },
   {
-    message: <Divider content="Today" color="primary" important />,
+    children: <Divider content="Today" color="primary" important />,
     key: 'message-id-6',
   },
   {
