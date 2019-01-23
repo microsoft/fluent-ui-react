@@ -97,8 +97,6 @@ task('perf:run', async () => {
 
       await page.close()
     }
-  } catch (e) {
-    throw e
   } finally {
     if (browser) {
       await browser.close()
