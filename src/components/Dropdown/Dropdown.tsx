@@ -462,12 +462,14 @@ export default class Dropdown extends AutoControlledComponent<
       loading &&
         ListItem.create(loadingMessage, {
           defaultProps: {
+            key: 'loading-message',
             styles: styles.loadingMessage,
           },
         }),
       !loading &&
         items.length === 0 &&
         ListItem.create(noResultsMessage, {
+          key: 'no-results-message',
           styles: styles.noResultsMessage,
         }),
     ]
