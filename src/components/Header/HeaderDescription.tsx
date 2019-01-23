@@ -9,6 +9,7 @@ import {
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 
@@ -39,7 +40,11 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
