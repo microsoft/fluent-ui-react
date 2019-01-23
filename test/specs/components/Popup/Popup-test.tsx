@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
   getPopupPlacement,
   applyRtlToOffset,
@@ -5,6 +6,10 @@ import {
   Alignment,
 } from 'src/components/Popup/positioningHelper'
 import { Placement } from 'popper.js'
+import { mountWithProvider } from 'test/utils'
+import * as keyboardKey from 'keyboard-key'
+import Popup from 'src/components/Popup/Popup'
+import { ReactWrapper } from 'enzyme'
 
 type PositionTestInput = {
   align: Alignment
@@ -31,6 +36,10 @@ describe('Popup', () => {
     expectedPlacement,
   }: PositionTestInput & { rtl?: never }) =>
     testPopupPosition({ align, position, expectedPlacement, rtl: true })
+
+  const getPopupContent = (popup: ReactWrapper) => {
+    return popup.find('.ui-popup__content')
+  }
 
   describe('handles Popup position correctly in ltr', () => {
     testPopupPosition({ position: 'above', align: 'start', expectedPlacement: 'top-start' })
@@ -100,6 +109,30 @@ describe('Popup', () => {
 
       expect(xOffsetTransformed.trim()).not.toBe(xOffset)
       expect(yOffsetTransformed.trim()).toBe(yOffset)
+    })
+  })
+
+  describe('toggle popup', () => {
+    test('with enter/space key', () => {
+      const triggerId = 'triggerElement'
+      const popupContent = 'any test content'
+      const popup = mountWithProvider(
+        <Popup
+          trigger={<span id={triggerId}> text to trigger popup </span>}
+          content={popupContent}
+        />,
+      )
+      const popupTriggerElement = popup.find(`#${triggerId}`)
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
+      expect(getPopupContent(popup).length).toBe(1)
+      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
+
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Spacebar })
+      expect(getPopupContent(popup).length).toBe(0)
+
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
+      expect(getPopupContent(popup).length).toBe(1)
+      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
     })
   })
 })
