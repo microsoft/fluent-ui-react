@@ -442,7 +442,7 @@ export default class Dropdown extends AutoControlledComponent<
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
 
     const filteredItems = this.getItemsFilteredBySearchQuery()
-    const items = filteredItems.map((item, index) =>
+    const items = _.map(filteredItems, (item, index) =>
       DropdownItem.create(item, {
         defaultProps: {
           active: highlightedIndex === index,
