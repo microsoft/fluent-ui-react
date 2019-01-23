@@ -53,7 +53,7 @@ export default {
         fontWeight: v.fontWeightBold,
       }),
 
-      ...(size === 'smaller' && {
+      ...(size === 'smallest' && {
         fontSize: v.fontSizeSmallest,
         lineHeight: v.fontLineHeightSmallest,
       }),
