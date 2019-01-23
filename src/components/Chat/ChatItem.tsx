@@ -11,6 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   customPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
@@ -55,7 +56,11 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     const { children } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>
     )

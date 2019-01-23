@@ -11,9 +11,11 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   customPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Indicator from '../Indicator/Indicator'
+
 export interface AccordionTitleProps
   extends UIComponentProps,
     ContentComponentProps,
@@ -70,12 +72,17 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
             styles: styles.indicator,
           },
         })}
-        {content}
+        {rtlTextContainer.createFor({ element: content })}
       </>
     )
 
     return (
-      <ElementType {...unhandledProps} className={classes.root} onClick={this.handleClick}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+        onClick={this.handleClick}
+      >
         {childrenExist(children) ? children : contentElement}
       </ElementType>
     )

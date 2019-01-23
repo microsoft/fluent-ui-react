@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
@@ -180,7 +181,12 @@ class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any>
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )
