@@ -16,7 +16,7 @@ import {
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import Icon from '../Icon/Icon'
 import Ref from '../Ref/Ref'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   /** A property that will change the icon on the input and clear the input on click on Cancel. */
@@ -117,7 +117,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     const { value = '' } = this.state
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
 
-    return Slot.create(wrapper, {
+    return Box.create(wrapper, {
       defaultProps: {
         className: cx(Input.className, className),
         children: (
@@ -128,7 +128,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                 handleRef(inputRef, inputElement)
               }}
             >
-              {Slot.create(input || type, {
+              {Box.create(input || type, {
                 defaultProps: {
                   ...htmlInputProps,
                   as: 'input',

@@ -21,6 +21,7 @@
     "deploy:docs": "gulp deploy:docs",
     "lint": "tslint -t stylish -p .",
     "lint:fix": "yarn lint --fix",
+    "perf": "cross-env PERF=true gulp perf",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",

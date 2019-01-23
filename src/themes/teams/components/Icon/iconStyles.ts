@@ -92,11 +92,12 @@ const getIconColor = (colorProp: string, variables: IconVariables) =>
 
 const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
   root: ({
-    props: { disabled, name, size, bordered, circular, color, xSpacing },
+    props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
     variables: v,
     theme,
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
+    const rtl = theme.rtl
     const isFontBased = !iconSpec || !iconSpec.isSvg
 
     return {
@@ -120,6 +121,14 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
 
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
+
+      ...(rtl && {
+        transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
+      }),
+
+      ...(!rtl && {
+        transform: `rotate(${rotate}deg)`,
+      }),
     }
   },
 

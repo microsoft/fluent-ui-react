@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from 'test/utils'
 
-import Slot from 'src/components/Slot/Slot'
+import Box from 'src/components/Box/Box'
 import { ReactProps, ShorthandValue } from 'utils'
 
 export interface ImplementsWrapperPropOptions {
@@ -18,7 +18,7 @@ const implementsWrapperProp = (
   Component: React.ComponentType<ReactProps<WrapperProps>>,
   options: ImplementsWrapperPropOptions,
 ) => {
-  const { wrapppedComponentSelector, WrapperComponent = Slot } = options
+  const { wrapppedComponentSelector, WrapperComponent = Box } = options
 
   const wrapperTests = (wrapper: ReactWrapper) => {
     expect(wrapper.length).toBeGreaterThan(0)

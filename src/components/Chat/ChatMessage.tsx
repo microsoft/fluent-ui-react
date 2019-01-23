@@ -14,13 +14,14 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -109,6 +110,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         onFocus={this.handleFocus}
         className={className}
@@ -122,7 +124,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
             {Text.create(timestamp, {
               defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
             })}
-            {Slot.create(content, { defaultProps: { styles: styles.content } })}
+            {Box.create(content, { defaultProps: { styles: styles.content } })}
           </>
         )}
       </ElementType>

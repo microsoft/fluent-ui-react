@@ -53,23 +53,25 @@ const layoutStyles: ComponentSlotStylesInput = {
 
   start: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateStart && truncateStyle),
     display: 'inline-flex',
     alignItems: 'center',
+    ...(props.truncateStart && truncateStyle),
     ...props.startCSS,
   }),
 
   main: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
+    display: 'grid',
+    alignItems: 'center',
     ...(props.truncateMain && truncateStyle),
     ...props.mainCSS,
   }),
 
   end: ({ props }): ICSSInJSStyle => ({
     ...(props.debug && debugArea()),
-    ...(props.truncateEnd && truncateStyle),
     display: 'inline-flex',
     alignItems: 'center',
+    ...(props.truncateEnd && truncateStyle),
     ...props.endCSS,
   }),
 }

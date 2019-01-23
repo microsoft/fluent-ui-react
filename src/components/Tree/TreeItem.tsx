@@ -14,6 +14,7 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandRenderFunction, ShorthandValue } from '../../../types/utils'
 
@@ -69,6 +70,7 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     items: customPropTypes.collectionShorthand,
     open: PropTypes.bool,
     renderItemTitle: PropTypes.func,
+    treeItemRtlAttributes: PropTypes.func,
     title: customPropTypes.itemShorthand,
   }
 
@@ -112,7 +114,12 @@ class TreeItem extends AutoControlledComponent<ReactProps<TreeItemProps>, TreeIt
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )
