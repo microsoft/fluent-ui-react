@@ -41,6 +41,26 @@ describe('Popup', () => {
     return popup.find('.ui-popup__content')
   }
 
+  const togglePopupTest = (keyName: string, keyboardKey: keyboardKey) => {
+    test(`with ${keyName} key`, () => {
+      const triggerId = 'triggerElement'
+      const popupContent = 'any test content'
+      const popup = mountWithProvider(
+        <Popup
+          trigger={<span id={triggerId}> text to trigger popup </span>}
+          content={popupContent}
+        />,
+      )
+      const popupTriggerElement = popup.find(`#${triggerId}`)
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey })
+      expect(getPopupContent(popup).length).toBe(1)
+      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
+
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey })
+      expect(getPopupContent(popup).length).toBe(0)
+    })
+  }
+
   describe('handles Popup position correctly in ltr', () => {
     testPopupPosition({ position: 'above', align: 'start', expectedPlacement: 'top-start' })
     testPopupPosition({ position: 'above', align: 'center', expectedPlacement: 'top' })
@@ -113,26 +133,7 @@ describe('Popup', () => {
   })
 
   describe('toggle popup', () => {
-    test('with enter/space key', () => {
-      const triggerId = 'triggerElement'
-      const popupContent = 'any test content'
-      const popup = mountWithProvider(
-        <Popup
-          trigger={<span id={triggerId}> text to trigger popup </span>}
-          content={popupContent}
-        />,
-      )
-      const popupTriggerElement = popup.find(`#${triggerId}`)
-      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
-      expect(getPopupContent(popup).length).toBe(1)
-      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
-
-      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Spacebar })
-      expect(getPopupContent(popup).length).toBe(0)
-
-      popupTriggerElement.simulate('keydown', { keyCode: keyboardKey.Enter })
-      expect(getPopupContent(popup).length).toBe(1)
-      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
-    })
+    togglePopupTest('enter', keyboardKey.Enter)
+    togglePopupTest('space', keyboardKey.Spacebar)
   })
 })
