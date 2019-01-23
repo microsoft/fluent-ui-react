@@ -105,7 +105,7 @@ yarn test:watch
 
 [1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
 
-## Behaviors tets
+## Behavior tets
 
 Behavior unit tests are generated from the specification written in each behavior file.
 Each line under the "@specification" tag is taken and matched against the regex experesion written in "testDefinitions.ts" file. 
