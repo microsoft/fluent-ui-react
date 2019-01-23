@@ -87,8 +87,9 @@ const ShorthandProps = props => (
       <strong>
         There is a very important caveat here, though: whenever React Element is directly used as a
         shorthand value, all props that Stardust has created for the slot's Component will be spread
-        on the passed element. This means, you may end up with invalid props applied on HTML
-        element.
+        on the passed element. This means that provided element should be able to handle Stardust
+        props - while this requirement is satisfied for all Stardust components, you should be aware
+        of that when either HTML or any third-party elements are provided.
       </strong>{' '}
       Due to this limitation, you should strive to use other options for shorthand values whenever
       is possible - for instance, this is how previous example can be rewritten:
