@@ -2,7 +2,6 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
-import ListItem from '../../../../components/List/ListItem'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   root: (): ICSSInJSStyle => ({}),
@@ -75,12 +74,11 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
   }),
 
   loadingMessage: ({ variables: v }): ICSSInJSStyle => ({
-    [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
+    backgroundColor: v.listItemBackgroundColor,
   }),
 
   noResultsMessage: ({ variables: v }): ICSSInJSStyle => ({
-    [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
-
+    backgroundColor: v.listItemBackgroundColor,
     fontWeight: 'bold',
   }),
 
