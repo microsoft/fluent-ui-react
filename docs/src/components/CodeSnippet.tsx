@@ -1,29 +1,34 @@
+import * as _ from 'lodash'
 import * as React from 'react'
 
 import formatCode from '../utils/formatCode'
 import Editor, { EDITOR_BACKGROUND_COLOR } from './Editor'
 
+export type CodeSnippetValue = string | string[] | Object
+
 export interface CodeSnippetProps {
   fitted?: boolean
   label?: string
   mode?: 'json' | 'jsx' | 'html' | 'sh'
-  value: string | string[] | Object
+  value: CodeSnippetValue
   style?: React.CSSProperties
 }
 
-const joinToString = (stringOrArray: string | string[]) =>
-  Array.isArray(stringOrArray) ? stringOrArray.join('\n') : stringOrArray
+const normalizeToString = (value: CodeSnippetValue): string => {
+  if (_.isArray(value)) return value.join('\n')
+  return _.isObject(value) ? JSON.stringify(value, null, 2) : (value as string)
+}
 
 const formatters = {
   sh: (val: string = ''): string => val.replace(/^/g, '$  '),
   html: (val: string = ''): string => formatCode(val, 'html'),
-  json: (val: Object = {}): string => JSON.stringify(val, null, 2),
+  json: (val: string): string => val,
   jsx: (val: string = ''): string => formatCode(val, 'babylon'),
 }
 
-const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeSnippetProps) => {
+const CodeSnippet = ({ fitted, label, mode, value, ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
-  const formattedValue = format(joinToString(value as any))
+  const formattedValue = format(normalizeToString(value))
     // remove eof line break, they are not helpful for snippets
     .replace(/\n$/, '')
 
@@ -66,4 +71,9 @@ const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeS
     </div>
   )
 }
+
+CodeSnippet.defaultProps = {
+  mode: 'jsx',
+}
+
 export default CodeSnippet
