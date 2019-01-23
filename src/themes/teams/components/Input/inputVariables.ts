@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface InputVariables {
   backgroundColor: string
   border: string
@@ -18,7 +16,7 @@ export interface InputVariables {
   inputFocusBorderRadius: string
 }
 
-export default (siteVars): InputVariables => ({
+export default (siteVars, props, pxToRem): InputVariables => ({
   backgroundColor: siteVars.gray10,
   border: `${pxToRem(1)} solid transparent`,
   borderRadius: pxToRem(3),

@@ -1,4 +1,4 @@
-import { pxToRem, getColorSchemeWithCustomDefaults } from '../../../../lib'
+import { getColorSchemeWithCustomDefaults } from '../../../../lib'
 import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
 
 type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
@@ -13,7 +13,7 @@ export interface LabelVariables {
   iconColor: string
 }
 
-export default (siteVars: SiteVariablesPrepared): LabelVariables => {
+export default (siteVars: SiteVariablesPrepared, props, pxToRem): LabelVariables => {
   const color = 'rgba(0, 0, 0, 0.6)'
 
   return {

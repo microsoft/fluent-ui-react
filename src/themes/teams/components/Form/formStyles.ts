@@ -1,9 +1,8 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { pxToRem } from '../../../../lib'
 
 const formStyles: ComponentSlotStylesInput<FormProps, any> = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({ props, variables, pxToRem }): ICSSInJSStyle => ({
     height: '100%',
     width: '100%',
     display: 'grid',

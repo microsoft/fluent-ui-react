@@ -5,7 +5,6 @@ import { callable } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
-import { pxToRem } from './../../../../lib'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, IconSizeModifier } from './iconVariables'
 
@@ -26,6 +25,7 @@ const getDefaultFontIcon = (iconName: string) => {
 const getFontStyles = (
   size: number,
   iconName: string,
+  pxToRem: any, // TODO remove sloppiness
   themeIcon?: ResultOf<FontIconSpec>,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
@@ -59,16 +59,22 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const getBorderedStyles = (circular: boolean, boxShadowColor: string): ICSSInJSStyle => {
+// TODO sloppy typings
+const getBorderedStyles = (
+  circular: boolean,
+  boxShadowColor: string,
+  pxToRem: any,
+): ICSSInJSStyle => {
   return {
-    ...getPaddedStyle(),
+    ...getPaddedStyle(pxToRem),
 
     boxShadow: `0 0 0 .05rem ${boxShadowColor} inset`,
     ...(circular ? { borderRadius: '50%' } : {}),
   }
 }
 
-const getPaddedStyle = (): ICSSInJSStyle => ({
+// TODO sloppy types
+const getPaddedStyle = (pxToRem): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
@@ -95,6 +101,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     props: { disabled, name, size, bordered, circular, color, xSpacing, rotate },
     variables: v,
     theme,
+    pxToRem,
   }): ICSSInJSStyle => {
     const iconSpec = theme.icons[name]
     const rtl = theme.rtl
@@ -107,7 +114,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       speak: 'none',
       verticalAlign: 'middle',
 
-      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name)),
+      ...(isFontBased && getFontStyles(getIconSize(size, v.sizeModifier), name, pxToRem)),
 
       ...(isFontBased && {
         color: getIconColor(color, v),
@@ -120,7 +127,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...getXSpacingStyles(xSpacing, v.horizontalSpace),
 
       ...((bordered || v.borderColor || circular) &&
-        getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
+        getBorderedStyles(circular, v.borderColor || getIconColor(color, v), pxToRem)),
 
       ...(rtl && {
         transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
@@ -150,7 +157,7 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }
   },
 
-  svg: ({ props: { size, color, disabled }, variables: v }): ICSSInJSStyle => {
+  svg: ({ props: { size, color, disabled }, variables: v, pxToRem }): ICSSInJSStyle => {
     const iconSizeInRems = pxToRem(getIconSize(size, v.sizeModifier))
 
     return {

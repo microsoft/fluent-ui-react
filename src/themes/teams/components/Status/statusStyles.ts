@@ -1,4 +1,3 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
@@ -36,7 +35,7 @@ const getTextColor = (state: string, variables: StatusVariables) => {
 }
 
 const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVariables> = {
-  root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
+  root: ({ props: { color, size, state }, variables, pxToRem }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
     return {
       boxSizing: 'border-box',

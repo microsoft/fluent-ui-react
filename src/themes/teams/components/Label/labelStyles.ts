@@ -1,12 +1,10 @@
 import * as _ from 'lodash'
-
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 
 const labelStyles: ComponentSlotStylesInput<LabelProps, LabelVariables> = {
-  root: ({ props: p, variables: v, colors }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, colors, pxToRem }): ICSSInJSStyle => {
     return {
       display: 'inline-flex',
       alignItems: 'center',

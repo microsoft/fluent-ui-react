@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface PopupContentVariables {
   [key: string]: string | number
 
@@ -8,7 +6,7 @@ export interface PopupContentVariables {
   padding: string
 }
 
-export default (siteVars: any): PopupContentVariables => {
+export default (siteVars: any, props, pxToRem): PopupContentVariables => {
   return {
     backgroundColor: siteVars.white,
     borderColor: siteVars.gray06,

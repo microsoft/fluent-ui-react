@@ -37,10 +37,7 @@ class App extends React.Component<any, AppState> {
         <Provider
           theme={mergeThemes(themes[themeName], {
             // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {
-              htmlFontSize: '14px',
-              bodyFontSize: '1rem',
-            },
+            remSize: 14,
           })}
         >
           <Router />

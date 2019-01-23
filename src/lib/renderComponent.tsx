@@ -32,7 +32,7 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from './index'
+import { generateColorScheme, pxToRem } from './'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
@@ -171,8 +171,10 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           componentStyles = {},
           rtl = false,
           renderer = felaRenderer,
+          remSize: themeRemSize,
         } = theme
         const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+        const themePxToRem = size => pxToRem(size, themeRemSize)
 
         const stateAndProps = { ...state, ...props }
 
@@ -180,7 +182,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
-        )(siteVariables, stateAndProps)
+        )(siteVariables, stateAndProps, themePxToRem)
 
         const animationCSSProp = props.animation
           ? createAnimationStyles(props.animation, theme)
@@ -212,6 +214,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           variables: resolvedVariables,
           theme,
           colors,
+          pxToRem: size => pxToRem(size, themeRemSize),
         }
 
         mergedStyles.root = {

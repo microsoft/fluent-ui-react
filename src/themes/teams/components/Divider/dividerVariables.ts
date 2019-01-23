@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import { FontWeightProperty } from 'csstype'
 
 import { ColorValues } from '../../../types'
-import { pxToRem, mapColorsToScheme } from '../../../../lib'
+import { mapColorsToScheme } from '../../../../lib'
 
 export interface DividerVariables {
   colors: ColorValues<string>
@@ -14,7 +14,7 @@ export interface DividerVariables {
   dividerPadding: string
 }
 
-export default (siteVars: any): DividerVariables => {
+export default (siteVars: any, props, pxToRem): DividerVariables => {
   const colorVariant = 500
 
   return {

@@ -1,11 +1,11 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
-const underlinedItem = (color: string): ICSSInJSStyle => ({
+// TODO sloppy types used
+const underlinedItem = (color: string, pxToRem: any): ICSSInJSStyle => ({
   paddingBottom: 0,
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',
@@ -88,6 +88,7 @@ const itemSeparator: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVaria
 const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariables> = ({
   props,
   variables: v,
+  pxToRem,
 }): ICSSInJSStyle => {
   const { pointing, primary } = props
 
@@ -139,7 +140,7 @@ const pointingBeak: ComponentSlotStyleFunction<MenuItemPropsAndState, MenuVariab
 }
 
 const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme, colors }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v, theme, colors, pxToRem }): ICSSInJSStyle => {
     const {
       active,
       disabled,
@@ -191,7 +192,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           marginBottom: `${pxToRem(12)}`,
         }),
 
-      ...itemSeparator({ props, variables: v, theme, colors }),
+      ...itemSeparator({ props, variables: v, theme, colors, pxToRem }),
 
       // active styles
       ...(active && {
@@ -202,7 +203,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
             ? pointing === 'end'
               ? { borderRight: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
               : { borderLeft: `${pxToRem(3)} solid ${v.primaryActiveBorderColor}` }
-            : pointingBeak({ props, variables: v, theme, colors }))),
+            : pointingBeak({ props, variables: v, theme, colors, pxToRem }))),
       }),
 
       ...(iconOnly && {
@@ -267,7 +268,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  root: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  root: ({ props, variables: v, pxToRem }): ICSSInJSStyle => {
     const {
       active,
       iconOnly,
@@ -315,12 +316,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
               ...(underlined && {
                 color: v.primaryActiveBorderColor,
-                ...underlinedItem(v.primaryActiveBorderColor),
+                ...underlinedItem(v.primaryActiveBorderColor, pxToRem),
               }),
             }
           : underlined && {
               fontWeight: 700,
-              ...underlinedItem(v.activeColor),
+              ...underlinedItem(v.activeColor, pxToRem),
             })),
 
       // focus styles
@@ -347,12 +348,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
 
               ...(underlined && { color: v.primaryActiveColor }),
 
-              ...(underlined && active && underlinedItem(v.primaryActiveColor)),
+              ...(underlined && active && underlinedItem(v.primaryActiveColor, pxToRem)),
             }
           : {
               ...(underlined && { fontWeight: 700 }),
 
-              ...(underlined && active && underlinedItem(v.activeColor)),
+              ...(underlined && active && underlinedItem(v.activeColor, pxToRem)),
             }),
       }),
 
@@ -377,9 +378,11 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ...(primary
           ? {
               ...(iconOnly && { color: v.primaryActiveBorderColor }),
-              ...(!active && underlined && underlinedItem(v.primaryHoverBorderColor as string)),
+              ...(!active &&
+                underlined &&
+                underlinedItem(v.primaryHoverBorderColor as string, pxToRem)),
             }
-          : !active && underlined && underlinedItem(v.activeBackgroundColor)),
+          : !active && underlined && underlinedItem(v.activeBackgroundColor, pxToRem)),
       },
 
       ...(disabled && {
@@ -399,7 +402,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     left: vertical ? '100%' : '0',
   }),
 
-  indicator: () => ({
+  indicator: ({ pxToRem }) => ({
     position: 'relative',
     float: 'right',
     left: pxToRem(10),

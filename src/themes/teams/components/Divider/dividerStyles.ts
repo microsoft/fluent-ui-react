@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-import { childrenExist, pxToRem } from '../../../../lib'
+import { childrenExist } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DividerPropsWithDefaults } from '../../../../components/Divider/Divider'
 import { DividerVariables } from './dividerVariables'
@@ -17,7 +17,7 @@ const beforeAndAfter = (
 })
 
 const dividerStyles: ComponentSlotStylesInput<DividerPropsWithDefaults, DividerVariables> = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables, pxToRem }): ICSSInJSStyle => {
     const { children, color, fitted, size, important, content } = props
     return {
       color: _.get(variables.colors, color, variables.textColor),

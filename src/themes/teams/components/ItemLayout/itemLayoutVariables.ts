@@ -1,6 +1,4 @@
-import { pxToRem } from '../../../../lib'
-
-export default () => {
+export default (siteVariables, props, pxToRem) => {
   const vars: any = {}
 
   vars.paddingLeft = pxToRem(20)

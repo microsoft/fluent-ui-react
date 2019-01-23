@@ -143,9 +143,11 @@ export interface SiteVariablesPrepared extends SiteVariablesInput {
 
 export type ComponentVariablesObject = any
 
+// TODO this should be refactored
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
   props?: any,
+  pxToRem?: any,
 ) => ComponentVariablesObject
 
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
@@ -198,6 +200,7 @@ export interface ComponentStyleFunctionParam<
   variables: TVars
   theme: ThemePrepared
   colors: Partial<ColorScheme>
+  pxToRem: any
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
@@ -267,6 +270,7 @@ export interface ThemeInput {
   staticStyles?: StaticStyles
   icons?: ThemeIcons
   animations?: { [key: string]: ThemeAnimation }
+  remSize?: number
 }
 
 // Component variables and styles must be resolved by the component after
@@ -287,6 +291,7 @@ export interface ThemePrepared {
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
+  remSize: number
 }
 
 export interface ThemeComponentStylesInput {

@@ -1,10 +1,9 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
-import { pxToRem } from '../../../../lib'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
-  root: ({ props, variables }): ICSSInJSStyle => ({
+  root: ({ props, variables, pxToRem }): ICSSInJSStyle => ({
     position: 'relative',
     display: 'inline-flex',
     alignItems: 'center',
@@ -60,7 +59,7 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     flex: '0 0 auto',
   }),
 
-  progress: ({ props, variables }): ICSSInJSStyle => ({
+  progress: ({ props, variables, pxToRem }): ICSSInJSStyle => ({
     transition: 'width 0.2s',
     position: 'absolute',
     display: 'block',

@@ -1,5 +1,5 @@
 import { ColorValues } from '../../../types'
-import { mapColorsToScheme, pxToRem } from '../../../../lib'
+import { mapColorsToScheme } from '../../../../lib'
 
 export type IconSizeModifier = 'x' | 'xx'
 
@@ -23,7 +23,7 @@ export interface IconVariables {
 
 const colorVariant = 500
 
-export default (siteVars): IconVariables => ({
+export default (siteVars, props, pxToRem): IconVariables => ({
   colors: mapColorsToScheme(siteVars, colorVariant),
   color: undefined,
   backgroundColor: undefined,

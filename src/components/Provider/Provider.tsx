@@ -5,6 +5,8 @@ import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, isBrowser, mergeThemes } from '../../lib'
+import { pxToRem } from '../../lib/fontSizeUtility'
+
 import {
   ThemePrepared,
   ThemeInput,
@@ -14,7 +16,7 @@ import {
   FontFace,
 } from '../../themes/types'
 import ProviderConsumer from './ProviderConsumer'
-import { mergeSiteVariables } from '../../lib/mergeThemes'
+import { mergeSiteVariables, resolveSiteVariables } from '../../lib/mergeThemes'
 
 export interface ProviderProps {
   theme: ThemeInput
@@ -124,7 +126,9 @@ class Provider extends React.Component<ProviderProps> {
     return (
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
-          const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+          const outgoingTheme: ThemePrepared = this.resolveSiteVariables(
+            mergeThemes(incomingTheme, theme),
+          )
 
           // Heads up!
           // We should call render() to ensure that a subscription for DOM updates was created
@@ -147,6 +151,18 @@ class Provider extends React.Component<ProviderProps> {
     if (!this.staticStylesRendered && staticStyles) {
       this.renderStaticStyles(mergedTheme)
       this.staticStylesRendered = true
+    }
+  }
+
+  resolveSiteVariables = (theme: ThemePrepared) => {
+    const { siteVariables: siteVariablesInput, remSize } = theme
+
+    const siteVariables = resolveSiteVariables(siteVariablesInput, {
+      pxToRem: pxValue => pxToRem(pxValue, remSize),
+    }) as any
+    return {
+      ...theme,
+      siteVariables,
     }
   }
 }

@@ -23,6 +23,19 @@ import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
 import { ObjectOf } from 'types/utils'
 
+export const resolveSiteVariables = (siteVariablesInput, withTools) => {
+  if (!siteVariablesInput) {
+    return siteVariablesInput
+  }
+
+  return Object.keys(siteVariablesInput).reduce((acc, variableName) => {
+    const value = siteVariablesInput[variableName]
+    acc[variableName] = value && value.__marker ? value(withTools) : value
+
+    return acc
+  }, {})
+}
+
 // ----------------------------------------
 // Component level merge functions
 // ----------------------------------------
@@ -167,6 +180,10 @@ export const mergeRTL = (target, ...sources) => {
   }, target)
 }
 
+export const mergeRemSizes = (target: number, ...sources) => {
+  return sources[sources.length - 1] || target
+}
+
 export const mergeFontFaces = (...sources: FontFace[]) => {
   return toCompactArray<FontFace>(...sources)
 }
@@ -203,6 +220,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     staticStyles: [],
     icons: {},
     animations: {},
+    remSize: 16, // TODO default size
   } as ThemePrepared
 
   return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {
@@ -228,6 +246,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...next.staticStyles)
 
     acc.animations = mergeAnimations(acc.animations, next.animations)
+
+    acc.remSize = mergeRemSizes(acc.remSize, next.remSize)
 
     return acc
   }, emptyTheme)

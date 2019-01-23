@@ -1,4 +1,3 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps, ListItemState } from '../../../../components/List/ListItem'
 
@@ -51,7 +50,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
       fontWeight: 'bold',
     }),
   }),
-  media: ({ props: p }): ICSSInJSStyle => ({
+  media: ({ props: p, pxToRem }): ICSSInJSStyle => ({
     ...(p.important && {
       '::before': {
         content: '""',

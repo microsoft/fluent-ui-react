@@ -1,9 +1,8 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
 
 const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables, pxToRem }): ICSSInJSStyle => {
     const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
 
     const {

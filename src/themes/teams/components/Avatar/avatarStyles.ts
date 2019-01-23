@@ -1,9 +1,8 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AvatarPropsWithDefaults } from '../../../../components/Avatar/Avatar'
 
 const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
-  root: ({ props: { size } }): ICSSInJSStyle => {
+  root: ({ props: { size }, pxToRem }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(size)
     return {
       position: 'relative',
@@ -17,7 +16,7 @@ const avatarStyles: ComponentSlotStylesInput<AvatarPropsWithDefaults, any> = {
   image: (): ICSSInJSStyle => ({
     verticalAlign: 'top',
   }),
-  label: ({ props: { size } }): ICSSInJSStyle => {
+  label: ({ props: { size }, pxToRem }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(size)
     return {
       display: 'inline-block',

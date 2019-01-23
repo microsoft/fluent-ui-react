@@ -1,5 +1,7 @@
-import { pxToRem } from '../../lib'
 import { colors } from './colors'
+
+// TODO should be declared at another place
+import { resolve } from '../../lib/fontSizeUtility'
 
 //
 // VARIABLES
@@ -49,13 +51,13 @@ export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.1)'
 //
 // FONT SIZES
 //
-export const fontSizes = {
+export const fontSizes = resolve(({ pxToRem }) => ({
   smaller: pxToRem(10),
   small: pxToRem(12),
   medium: pxToRem(14),
   large: pxToRem(18),
   larger: pxToRem(24),
-}
+}))
 
 //
 // STATUS COLORS

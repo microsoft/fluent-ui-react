@@ -1,4 +1,3 @@
-import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
@@ -10,7 +9,7 @@ const solidBorder = (color: string) => ({
 })
 
 export default {
-  root: ({ props, variables }): ICSSInJSStyle => {
+  root: ({ props, variables, pxToRem }): ICSSInJSStyle => {
     const { iconOnly, fluid, pointing, pills, primary, underlined, vertical } = props
     return {
       display: 'flex',

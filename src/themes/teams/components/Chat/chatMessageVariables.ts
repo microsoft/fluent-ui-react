@@ -1,5 +1,3 @@
-import { pxToRem } from '../../../../lib'
-
 export interface ChatMessageVariables {
   width: string
   backgroundColor: string
@@ -12,7 +10,7 @@ export interface ChatMessageVariables {
   border: string
 }
 
-export default (siteVars): ChatMessageVariables => ({
+export default (siteVars, props, pxToRem): ChatMessageVariables => ({
   width: '100%',
   backgroundColor: siteVars.white,
   backgroundColorMine: '#E5E5F1',

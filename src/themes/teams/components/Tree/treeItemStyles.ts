@@ -1,8 +1,7 @@
 import { ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
 
 const treeItemStyles = {
-  root: (): ICSSInJSStyle => ({
+  root: ({ pxToRem }): ICSSInJSStyle => ({
     listStyleType: 'none',
     padding: `0 0 0 ${pxToRem(1)}`,
   }),
