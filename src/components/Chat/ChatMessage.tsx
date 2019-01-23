@@ -119,8 +119,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
-            {!mine &&
-              Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
+            {Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
             {Text.create(timestamp, {
               defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
             })}
