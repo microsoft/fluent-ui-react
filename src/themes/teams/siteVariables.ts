@@ -1,4 +1,4 @@
-import { pxToRem } from './utils'
+import { pxToRem } from '../../lib'
 import { colors } from './colors'
 
 //
@@ -9,7 +9,7 @@ export const htmlFontSize = '10px' // what 1rem represents
 //
 // COLORS
 //
-export { colors, contextualColors, emphasisColors, naturalColors } from './colors'
+export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
 
 export const black = colors.black
 export const gray02 = '#484644'
@@ -98,10 +98,3 @@ export const bodyFontSize = '1.4rem'
 export const bodyBackground = white
 export const bodyColor = black
 export const bodyLineHeight = lineHeightBase
-
-//
-// UNICODE CHARACTERS
-//
-export const arrowRight = '\u25B8'
-export const arrowDown = '\u25BE'
-export const arrowLeft = '\u25C2'

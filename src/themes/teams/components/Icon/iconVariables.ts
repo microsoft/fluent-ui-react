@@ -1,6 +1,5 @@
 import { ColorValues } from '../../../types'
-import { mapColorsToScheme } from '../../../../lib'
-import { pxToRem } from '../../utils'
+import { mapColorsToScheme, pxToRem } from '../../../../lib'
 
 export type IconSizeModifier = 'x' | 'xx'
 
@@ -17,7 +16,7 @@ export interface IconVariables {
   disabledColor: string
 
   horizontalSpace: string
-  margin: string
+  marginRight: string
   outline?: boolean
   sizeModifier?: IconSizeModifier
 }
@@ -35,6 +34,6 @@ export default (siteVars): IconVariables => ({
   disabledColor: siteVars.gray06,
 
   horizontalSpace: pxToRem(10),
-  margin: `0 ${pxToRem(8)} 0 0`,
+  marginRight: pxToRem(8),
   outline: undefined,
 })

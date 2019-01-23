@@ -11,6 +11,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
@@ -77,13 +78,14 @@ class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, an
 
   static Item = RadioGroupItem
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, vertical } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems(vertical)}

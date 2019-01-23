@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -131,7 +132,11 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
-          <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
+          <PortalInner
+            onMount={this.handleMount}
+            onUnmount={this.handleUnmount}
+            {...rtlTextContainer.getAttributes({ forElements: [contentToRender] })}
+          >
             {trapFocus ? (
               <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
             ) : (
@@ -179,11 +184,11 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
-  private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
+  private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
-    _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
+    _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
 

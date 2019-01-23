@@ -1,6 +1,7 @@
 import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import * as cache from 'gulp-cache'
 import * as remember from 'gulp-remember'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -18,10 +19,11 @@ import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
 import { getRelativePathToSourceFile } from '../plugins/util'
+import webpackPlugin from '../plugins/gulp-webpack'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
-const { colors, log, PluginError } = g.util
+const { colors, log } = g.util
 
 const handleWatchChange = path => log(`File ${path} was changed, running tasks...`)
 const handleWatchUnlink = (group, path) => {
@@ -32,6 +34,8 @@ const handleWatchUnlink = (group, path) => {
 // ----------------------------------------
 // Clean
 // ----------------------------------------
+
+task('clean:cache', () => cache.clearAll())
 
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
@@ -68,7 +72,7 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Slot.tsx']
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
 const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
@@ -83,7 +87,11 @@ const markdownSrc = [
 
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
-    .pipe(gulpReactDocgen())
+    .pipe(
+      cache(gulpReactDocgen(), {
+        name: 'componentInfo',
+      }),
+    )
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
 
@@ -109,7 +117,11 @@ task('build:docs:example-menu', () =>
 
 task('build:docs:example-sources', () =>
   src(examplesSrc, { since: lastRun('build:docs:example-sources') })
-    .pipe(gulpExampleSource())
+    .pipe(
+      cache(gulpExampleSource(), {
+        name: 'exampleSources',
+      }),
+    )
     .pipe(dest(paths.docsSrc('exampleSources'))),
 )
 
@@ -141,28 +153,7 @@ task('build:docs:toc', () =>
 )
 
 task('build:docs:webpack', cb => {
-  const webpackConfig = require('../../../webpack.config').default
-  const compiler = webpack(webpackConfig)
-
-  compiler.run((err, stats) => {
-    const { errors, warnings } = stats.toJson()
-
-    log(stats.toString(config.compiler_stats))
-
-    if (err) {
-      log('Webpack compiler encountered a fatal error.')
-      throw new PluginError('webpack', err.toString())
-    }
-    if (errors.length > 0) {
-      log('Webpack compiler encountered errors.')
-      throw new PluginError('webpack', errors.toString())
-    }
-    if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
-    }
-
-    cb(err)
-  })
+  webpackPlugin(require('../../../webpack.config').default, cb)
 })
 
 task(

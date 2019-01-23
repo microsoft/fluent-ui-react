@@ -2,7 +2,13 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { childrenExist, customPropTypes, UIComponent, commonPropTypes } from '../../lib'
+import {
+  childrenExist,
+  customPropTypes,
+  UIComponent,
+  commonPropTypes,
+  rtlTextContainer,
+} from '../../lib'
 import ChatItem from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
@@ -37,7 +43,10 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     items: PropTypes.arrayOf(customPropTypes.itemShorthand),
   }
 
-  static defaultProps = { accessibility: chatBehavior, as: 'ul' }
+  static defaultProps = {
+    accessibility: chatBehavior,
+    as: 'ul',
+  }
 
   static Item = ChatItem
   static Message = ChatMessage
@@ -46,7 +55,7 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
     focus: () => this.focusZone && this.focusZone.focus(),
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
 
     return (
@@ -54,7 +63,8 @@ class Chat extends UIComponent<ReactProps<ChatProps>, any> {
         className={classes.root}
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
       >
         {childrenExist(children) ? children : _.map(items, item => ChatItem.create(item))}
       </ElementType>

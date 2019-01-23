@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
+import style from './chatProtoStyle'
 
 import { ChatData } from './services'
 
@@ -45,13 +46,26 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
 
     return (
       <Layout
+        role="region"
+        aria-labelledby="heading"
         start={<Avatar name={chat.title} />}
         main={
-          <Text
-            size="large"
-            content={chat.title}
-            styles={{ marginLeft: '12px', fontWeight: 600 }}
-          />
+          <div
+            id="heading"
+            role="heading"
+            aria-level={2}
+            aria-labelledby="chat-header-reader-text chat-header-title"
+          >
+            <div id="chat-header-reader-text" style={style.screenReaderContainerStyles}>
+              Chat header
+            </div>
+            <Text
+              id="chat-header-title"
+              size="large"
+              content={chat.title}
+              styles={{ marginLeft: '12px', fontWeight: 600 }}
+            />
+          </div>
         }
         end={this.renderHeaderButtons()}
         alignItems="center"

@@ -18,7 +18,7 @@ class AccordionExampleList extends React.Component {
       },
     ]
 
-    return <Accordion panels={panels} />
+    return <Accordion defaultActiveIndex={[0]} panels={panels} />
   }
 }
 

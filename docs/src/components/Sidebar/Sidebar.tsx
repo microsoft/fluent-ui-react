@@ -1,5 +1,5 @@
 import keyboardKey from 'keyboard-key'
-import * as _ from 'lodash/fp'
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { findDOMNode } from 'react-dom'
@@ -10,7 +10,7 @@ import { Icon, Input as SemanticUIInput, Menu } from 'semantic-ui-react'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import { themes } from '@stardust-ui/react'
-import { ThemeContext } from '../../context/theme-context'
+import { ThemeContext } from '../../context/ThemeContext'
 import { constants } from 'src/lib'
 
 type ComponentMenuItem = { displayName: string; type: string }
@@ -102,10 +102,10 @@ class Sidebar extends React.Component<any, any> {
     }
   }
 
-  private menuItemsByType = _.map(nextType => {
-    const items = _.flow(
-      _.filter<ComponentMenuItem>(({ type }) => type === nextType),
-      _.map(info => (
+  private menuItemsByType = _.map(constants.typeOrder, nextType => {
+    const items = _.chain([...componentMenu, ...behaviorMenu])
+      .filter(({ type }) => type === nextType)
+      .map(info => (
         <Menu.Item
           key={info.displayName}
           name={info.displayName}
@@ -114,8 +114,8 @@ class Sidebar extends React.Component<any, any> {
           to={getComponentPathname(info)}
           activeClassName="active"
         />
-      )),
-    )([...componentMenu, ...behaviorMenu])
+      ))
+      .value()
 
     return (
       <Menu.Item key={nextType}>
@@ -123,7 +123,7 @@ class Sidebar extends React.Component<any, any> {
         <Menu.Menu>{items}</Menu.Menu>
       </Menu.Item>
     )
-  }, constants.typeOrder)
+  })
 
   private renderSearchItems = () => {
     const { selectedItemIndex, query } = this.state
@@ -134,16 +134,16 @@ class Sidebar extends React.Component<any, any> {
     const containsMatches: ComponentMenuItem[] = []
     const escapedQuery = _.escapeRegExp(query)
 
-    _.each(info => {
+    _.each(componentMenu, info => {
       if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
         startsWithMatches.push(info)
       } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
         containsMatches.push(info)
       }
-    }, componentMenu)
+    })
 
     this.filteredMenu = [...startsWithMatches, ...containsMatches]
-    const menuItems = _.map(info => {
+    const menuItems = _.map(this.filteredMenu, info => {
       itemIndex += 1
       const isSelected = itemIndex === selectedItemIndex
 
@@ -162,7 +162,7 @@ class Sidebar extends React.Component<any, any> {
           {isSelected && selectedItemLabel}
         </Menu.Item>
       )
-    }, this.filteredMenu)
+    })
 
     return <Menu.Menu>{menuItems}</Menu.Menu>
   }

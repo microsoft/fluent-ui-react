@@ -39,7 +39,9 @@ import micOff from './micOff'
 import more from './more'
 import numberList from './numberList'
 import outdent from './outdent'
+import paperclip from './paperclip'
 import participantRemove from './participantRemove'
+import phoneClock from './phoneClock'
 import quote from './quote'
 import redbang from './redbang'
 import redo from './redo'
@@ -58,6 +60,7 @@ import translation from './translation'
 import trashCan from './trashCan'
 import underline from './underline'
 import undo from './undo'
+import videoCameraEmphasis from './videoCameraEmphasis'
 
 export default {
   add,
@@ -98,8 +101,10 @@ export default {
   more,
   'number-list': numberList,
   outdent,
+  paperclip,
   'participant-add': addParticipant,
   'participant-remove': participantRemove,
+  'phone-clock': phoneClock,
   quote,
   redbang,
   redo,
@@ -118,4 +123,5 @@ export default {
   'team-create': teamCreate,
   underline,
   undo,
+  'video-camera-emphasis': videoCameraEmphasis,
 } as { [iconName: string]: TeamsSvgIconSpec }

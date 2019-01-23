@@ -10,8 +10,11 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  customPropTypes,
+  rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
+import Indicator from '../Indicator/Indicator'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -30,6 +33,9 @@ export interface AccordionTitleProps
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AccordionTitleProps>
+
+  /** Shorthand for the active indicator. */
+  indicator?: ShorthandValue
 }
 
 /**
@@ -47,26 +53,37 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     active: PropTypes.bool,
     index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClick: PropTypes.func,
+    indicator: customPropTypes.itemShorthand,
   }
 
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, rest }) {
-    const { children, content } = this.props
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
+    const { children, content, indicator, active } = this.props
+    const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
-    if (childrenExist(children)) {
-      return (
-        <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-          {children}
-        </ElementType>
-      )
-    }
+    const contentElement = (
+      <>
+        {Indicator.create(indicatorWithDefaults, {
+          defaultProps: {
+            direction: active ? 'bottom' : 'end',
+            styles: styles.indicator,
+          },
+        })}
+        {rtlTextContainer.createFor({ element: content })}
+      </>
+    )
 
     return (
-      <ElementType {...rest} className={classes.root} onClick={this.handleClick}>
-        {content}
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+        onClick={this.handleClick}
+      >
+        {childrenExist(children) ? children : contentElement}
       </ElementType>
     )
   }

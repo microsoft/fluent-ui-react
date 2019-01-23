@@ -26,9 +26,9 @@ const ComponentPropExtra = ({
   children,
   inline,
   title,
-  ...rest
+  ...restProps
 }: Extendable<ComponentPropExtraProps>) => (
-  <div {...rest} style={descriptionStyle}>
+  <div {...restProps} style={descriptionStyle}>
     <strong>{title}</strong>
     <div style={inline ? contentInlineStyle : contentBlockStyle}>{children}</div>
   </div>
