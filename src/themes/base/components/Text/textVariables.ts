@@ -13,17 +13,21 @@ export interface TextVariables {
   errorColor: string
   successColor: string
 
-  fontSizeExtraSmall: string
+  fontSizeSmallest: string
+  fontSizeSmaller: string
   fontSizeSmall: string
   fontSizeMedium: string
   fontSizeLarge: string
-  fontSizeExtraLarge: string
+  fontSizeLarger: string
+  fontSizeLargest: string
 
-  fontLineHeightExtraSmall: number
+  fontLineHeightSmallest: number
+  fontLineHeightSmaller: number
   fontLineHeightSmall: number
   fontLineHeightMedium: number
   fontLineHeightLarge: number
-  fontLineHeightExtraLarge: number
+  fontLineHeightLarger: number
+  fontLineHeightLargest: number
 
   fontWeightLight: number
   fontWeightSemilight: number
@@ -47,8 +51,11 @@ export default (siteVariables): TextVariables => {
     errorColor: siteVariables.colors.red[500],
     successColor: siteVariables.colors.green[500],
 
-    fontSizeExtraSmall: siteVariables.fontSizes.smaller,
-    fontLineHeightExtraSmall: siteVariables.lineHeightExtraSmall,
+    fontSizeSmallest: siteVariables.fontSizes.smallest,
+    fontLineHeightSmallest: siteVariables.lineHeightExtraSmall,
+
+    fontSizeSmaller: siteVariables.fontSizes.smaller,
+    fontLineHeightSmaller: siteVariables.lineHeightSmaller,
 
     fontSizeSmall: siteVariables.fontSizes.small,
     fontLineHeightSmall: siteVariables.lineHeightSmall,
@@ -59,8 +66,11 @@ export default (siteVariables): TextVariables => {
     fontSizeLarge: siteVariables.fontSizes.large,
     fontLineHeightLarge: siteVariables.lineHeightSmall,
 
-    fontSizeExtraLarge: siteVariables.fontSizes.larger,
-    fontLineHeightExtraLarge: siteVariables.lineHeightSmall,
+    fontSizeLarger: siteVariables.fontSizes.larger,
+    fontLineHeightLarger: siteVariables.lineHeightSmall,
+
+    fontSizeLargest: siteVariables.fontSizes.largest,
+    fontLineHeightLargest: siteVariables.lineHeightSmall,
 
     fontWeightLight: siteVariables.fontWeightLight,
     fontWeightSemilight: siteVariables.fontWeightSemilight,
