@@ -1,4 +1,4 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import { Icon, Menu, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../types/utils'
 import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -185,30 +185,33 @@ class Sidebar extends React.Component<any, any> {
   render() {
     // Should be applied by provider
     const sidebarStyles: ICSSInJSStyle = {
-      width: '230px',
+      width: '250px',
       position: 'fixed',
       overflowY: 'scroll',
       top: '0px',
       bottom: '0px',
-      paddingLeft: '1em',
+      paddingLeft: '0em',
       paddingRight: '0em',
       paddingTop: '0em',
       paddingBottom: '0em',
     }
 
     const menuSectionStyles: ICSSInJSStyle = {
-      marginLeft: '0px',
-      paddingLeft: '0px',
-      paddingTop: '3px',
       fontWeight: fontWeightBold,
+      color: 'white',
+      ':hover, :focus': {
+        background: 'none',
+      },
     }
     const navBarStyles: ICSSInJSStyle = {
+      color: '#ffffff80',
       padding: '0px',
     }
 
     const logoStyles: ICSSInJSStyle = {
       padding: '5px',
       color: 'white',
+      fontWeight: 700,
     }
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
 
@@ -218,7 +221,7 @@ class Sidebar extends React.Component<any, any> {
         content: (
           <div style={flexDislayStyle}>
             GitHub
-            <Icon name="chess rook" styles={{ float: 'right' }} />
+            <Icon name="github" styles={{ float: 'right' }} />
           </div>
         ),
         href: constants.repoURL,
@@ -241,7 +244,7 @@ class Sidebar extends React.Component<any, any> {
       },
       {
         key: 'divider1',
-        kind: 'Divider',
+        kind: 'divider',
       },
       {
         key: 'concepts',
@@ -272,7 +275,7 @@ class Sidebar extends React.Component<any, any> {
       },
       {
         key: 'divider2',
-        kind: 'Divider',
+        kind: 'divider',
       },
       {
         key: 'guides',
@@ -315,6 +318,10 @@ class Sidebar extends React.Component<any, any> {
         to: '/integrate-custom-components',
         accessibility: listItemBehavior,
       },
+      {
+        key: 'divider3',
+        kind: 'divider',
+      },
       // {
       //   key: 'search',
       //   content: (
@@ -343,35 +350,45 @@ class Sidebar extends React.Component<any, any> {
     }
 
     const withComponents = menuItems.concat(componentMenuItem).concat(this.menuItemsByType[0].items)
-    const allItems = withComponents.concat(behaviorMenuItem).concat(this.menuItemsByType[1].items)
+    const allItems = withComponents
+      .concat({
+        key: 'divider4',
+        kind: 'divider',
+      })
+      .concat(behaviorMenuItem)
+      .concat(this.menuItemsByType[1].items)
 
     // {query ? this.renderSearchItems() : this.menuItemsByType},
+    // TODO: bring back the active elements indicators
     return (
-      <Segment
-        styles={sidebarStyles}
-        content={
-          <div>
-            <Logo width="32px" styles={logoStyles} />
-            <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
-            <Text
-              color="white"
-              content={pkg.version}
-              size="small"
-              weight="bold"
-              styles={logoStyles}
-            />
+      <Provider
+        theme={{
+          siteVariables: {},
+          componentVariables: {
+            Menu: {},
+          },
+        }}
+      >
+        <Segment
+          styles={sidebarStyles}
+          content={
+            <div>
+              <Logo width="32px" styles={logoStyles} />
+              <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
+              <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
 
-            <Menu
-              vertical
-              fluid
-              pills
-              accessibility={listBehavior}
-              styles={navBarStyles}
-              items={allItems}
-            />
-          </div>
-        }
-      />
+              <Menu
+                vertical
+                fluid
+                pills
+                accessibility={listBehavior}
+                styles={navBarStyles}
+                items={allItems}
+              />
+            </div>
+          }
+        />
+      </Provider>
     )
   }
 

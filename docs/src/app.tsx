@@ -30,18 +30,47 @@ class App extends React.Component<any, AppState> {
     }
   }
 
+  docsTheme = {
+    // adjust Teams' theme to Semantic UI's font size scheme
+    siteVariables: {
+      htmlFontSize: '16px',
+      bodyFontSize: '1rem',
+      fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+    },
+    componentStyles: {
+      Header: {
+        root: {
+          fontWeight: 700,
+        },
+      },
+      Grid: {
+        root: {
+          gridColumnGap: '1rem',
+          gridRowGap: '1rem',
+        },
+      },
+      Button: {
+        root: {
+          textDecoration: 'none',
+          padding: '5px 20px',
+        },
+      },
+    },
+    staticStyles: [
+      {
+        h1: {
+          fontSize: '28px',
+          marginTop: '-4px',
+        },
+        h2: { fontSize: '24px' },
+      },
+    ],
+  }
+
   render() {
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider
-          theme={mergeThemes(themes.teams, {
-            // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {
-              htmlFontSize: '14px',
-              bodyFontSize: '1rem',
-            },
-          })}
-        >
+        <Provider theme={mergeThemes(themes.teams, this.docsTheme)}>
           <Router />
         </Provider>
       </ThemeContext.Provider>

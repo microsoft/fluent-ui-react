@@ -26,7 +26,7 @@ const ColorVariants = createComponent<ColorVariantsProps>({
           <ColorBox name={name} size="big" value={colors[name][500]} />
 
           {_.map(colors[name], (value, variable) => (
-            <ColorBox key={variable} name={variable} size="small" value={value} />
+            <ColorBox key={variable} name={variable} size="medium" value={value} />
           ))}
         </div>
       )}

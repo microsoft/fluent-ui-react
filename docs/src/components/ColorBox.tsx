@@ -9,7 +9,7 @@ type ColorBoxProps = {
   children?: React.ReactNode
   name?: string
   rounded?: boolean
-  size?: 'small' | 'normal' | 'big'
+  size?: 'small' | 'normal' | 'big' | 'medium'
   value: string
 }
 
@@ -20,11 +20,13 @@ type ColorBoxVariables = {
     big: string
     normal: string
     small: string
+    medium: string
   }
   padding: {
     big: string
     normal: string
     small: string
+    medium: string
   }
 }
 
@@ -34,12 +36,14 @@ export const colorBoxVariables = (siteVariables): ColorBoxVariables => ({
   fontSize: {
     big: '1.25em',
     small: '.85em',
+    medium: '1rem',
     normal: '1.25em',
   },
   padding: {
     big: '4rem .75rem .75rem .75rem',
     small: '.75rem',
     normal: '2.5rem .75rem .75rem .75rem',
+    medium: '1rem',
   },
 })
 

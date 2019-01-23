@@ -13,6 +13,12 @@ const ColorPalette = () => (
       componentStyles: {
         ColorBox: colorBoxStyles,
         ColorVariants: colorVariantsStyles,
+        Header: {
+          root: {
+            fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+            fontWeight: 700,
+          },
+        },
       },
       componentVariables: {
         ColorBox: colorBoxVariables,
@@ -42,7 +48,7 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(['black', 'white'], color => (
-              <div key={color}>
+              <div key={color} style={{ paddingTop: '1em', paddingBottom: '1em' }}>
                 <ColorBox name={color} rounded size="big" value={colors[color]} />
               </div>
             ))}
@@ -97,7 +103,7 @@ const ColorPalette = () => (
           </p>
 
           {_.map(colors.text, (color, variant) => (
-            <ColorBox key={color} size="small" value={color}>
+            <ColorBox key={color} size="medium" value={color}>
               {`${variant} | ${faker.lorem.sentence(4)}`}
             </ColorBox>
           ))}
