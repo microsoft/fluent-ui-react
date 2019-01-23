@@ -6,6 +6,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import createComponent, { CreateComponentReturnType } from '../../lib/createComponent'
 import { ReactProps } from '../../../types/utils'
@@ -32,7 +33,11 @@ const Box: CreateComponentReturnType<ReactProps<BoxProps>> = createComponent<Box
     const { children, content } = props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )
