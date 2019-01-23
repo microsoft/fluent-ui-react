@@ -427,7 +427,7 @@ export default class Dropdown extends AutoControlledComponent<
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!isOpen}
-          items={this.renderItems(styles, variables, getItemProps, highlightedIndex)}
+          items={isOpen ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []}
         />
       </Ref>
     )
