@@ -24,7 +24,7 @@ class KnobsBoolean extends React.Component<any, any> {
 
     return (
       <KnobsField>
-        <KnobsControl>
+        <KnobsControl textAlign="center">
           <input type="checkbox" defaultChecked={booleanValue} onChange={this.handleChange} />
         </KnobsControl>
         <KnobsLabel value={value} name={name} />

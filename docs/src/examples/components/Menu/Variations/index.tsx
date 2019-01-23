@@ -24,6 +24,11 @@ const Variations = () => (
       description="A Menu can have different colors."
       examplePath="components/Menu/Variations/MenuExampleColor"
     />
+    <ComponentExample
+      title="Complex Colored Menu"
+      description="A Menu can have different colors for different areas (border, background, foregroung)."
+      examplePath="components/Menu/Variations/MenuExampleColorComplex"
+    />
   </ExampleSection>
 )
 

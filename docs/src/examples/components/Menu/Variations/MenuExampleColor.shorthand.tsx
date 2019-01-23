@@ -26,32 +26,25 @@ const MenuExampleColor = ({
     styles={{ justifyContent: 'left', justifyItems: 'left', alignItems: 'center' }}
     variables={{ gridGap: '10px' }}
   >
-    <Text content={`${name} DEFAULT MENU:`} weight="bold" />
+    <Text content="Default menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} items={items} />
-    <Text content={`${name} PILLS MENU:`} weight="bold" />
+    <Text content="Pills menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} pills items={items} />
-    <Text content={`${name} POINTING MENU:`} weight="bold" />
+    <Text content="Pointing menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} pointing items={items} />
-    <Text content={`${name} VERTICAL POINTING MENU:`} weight="bold" />
+    <Text content="Vertical pointing menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} vertical pointing items={items} />
-    <Text content={`${name} UNDERLINED MENU:`} weight="bold" />
+    <Text content="Underlined menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} underlined items={items} />
-    <Text content={`${name} ICON MENU:`} weight="bold" />
+    <Text content="Icon menu:" weight="bold" />
     <Menu defaultActiveIndex={0} color={value} items={iconItems} />
-    <Text content={`${name} ICON ONLY MENU:`} weight="bold" />
+    <Text content="Icon only menu:" weight="bold" />
     <Menu
       defaultActiveIndex={0}
       color={value}
       iconOnly
       items={iconItems.map(item => _.pick(item, ['key', 'icon']))}
     />
-    <Text content={`UNDERLINED MENU (mutiple colors):`} weight="bold" />
-    {/* <Menu
-      defaultActiveIndex={0}
-      underlined
-      color={{ foreground: value, background: value, border: value }}
-      items={items}
-    /> */}
   </Grid>
 )
 

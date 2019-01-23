@@ -1,9 +1,10 @@
 import { createComponent } from 'react-fela'
 import { pxToRem } from 'src/lib'
 
-const KnobsField = createComponent(() => ({
+const KnobsField = createComponent(({ width = 60 }: { width?: number }) => ({
   display: 'grid',
-  gridTemplateColumns: `${pxToRem(60)} auto`,
+  alignItems: 'center',
+  gridTemplateColumns: `${pxToRem(width)} auto`,
 }))
 
 export default KnobsField

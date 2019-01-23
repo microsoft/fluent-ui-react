@@ -17,7 +17,7 @@ export interface KnobsSelectProps {
 }
 
 class KnobsSelect extends React.Component<KnobsSelectProps, {}> {
-  private itemsMap: ObjectOf<KnobsSelectItem> = {}
+  private itemsMap: ObjectOf<KnobsSelectItem>
 
   public static propTypes = {
     onChange: PropTypes.func,
@@ -27,9 +27,14 @@ class KnobsSelect extends React.Component<KnobsSelectProps, {}> {
   }
 
   componentDidMount() {
+    this.itemsMap = {}
     this.props.items.forEach(item => {
       this.itemsMap[item.value] = item
     })
+  }
+
+  componentWillUnmount() {
+    this.itemsMap = {}
   }
 
   render() {
@@ -41,15 +46,17 @@ class KnobsSelect extends React.Component<KnobsSelectProps, {}> {
     const selectedItem = this.props.selectedItem || this.props.items[0]
 
     return (
-      <KnobsField>
+      <KnobsField width={120}>
         <KnobsControl>
           <select value={selectedItem.value} onChange={this.handleChange}>
             {items.map(({ name, value }) => (
-              <option value={value}>{name}</option>
+              <option key={value} value={value}>
+                {name}
+              </option>
             ))}
           </select>
         </KnobsControl>
-        <KnobsLabel value={selectedItem.value} name={name} />
+        <KnobsLabel value={selectedItem.name} name={name} />
       </KnobsField>
     )
   }
