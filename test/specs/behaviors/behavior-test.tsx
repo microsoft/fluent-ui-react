@@ -5,14 +5,17 @@
 //  OR
 //  - 'yarn test' which has creating json file predefined in "pretest" step
 import {
+  attachmentBehavior,
   basicListBehavior,
   basicListItemBehavior,
   buttonBehavior,
   iconBehavior,
   imageBehavior,
   inputBehavior,
+  loaderBehavior,
   menuBehavior,
   menuItemBehavior,
+  submenuBehavior,
   popupBehavior,
   popupFocusTrapBehavior,
   dialogBehavior,
@@ -36,14 +39,17 @@ const behaviorMenuItems = require('docs/src/behaviorMenu')
 const testHelper = new TestHelper()
 testHelper.addTests(definitions)
 
+testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
 testHelper.addBehavior('imageBehavior', imageBehavior)
+testHelper.addBehavior('loaderBehavior', loaderBehavior)
 testHelper.addBehavior('menuBehavior', menuBehavior)
 testHelper.addBehavior('menuItemBehavior', menuItemBehavior)
+testHelper.addBehavior('submenuBehavior', submenuBehavior)
 testHelper.addBehavior('popupBehavior', popupBehavior)
 testHelper.addBehavior('popupFocusTrapBehavior', popupFocusTrapBehavior)
 testHelper.addBehavior('radioGroupBehavior', radioGroupBehavior)

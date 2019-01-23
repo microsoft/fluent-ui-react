@@ -9,8 +9,9 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import FormField from './FormField'
 
 export interface FormProps extends UIComponentProps, ChildrenComponentProps {
@@ -33,7 +34,7 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
  * @accessibility
  * Label needs to be provided by using 'aria-label', or 'aria-labelledby' attributes on the <form> element.
  */
-class Form extends UIComponent<Extendable<FormProps>, any> {
+class Form extends UIComponent<ReactProps<FormProps>, any> {
   static create: Function
 
   public static displayName = 'Form'
@@ -55,10 +56,16 @@ class Form extends UIComponent<Extendable<FormProps>, any> {
 
   public static Field = FormField
 
-  public renderComponent({ ElementType, classes, rest }): React.ReactNode {
+  public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     const { action, children } = this.props
     return (
-      <ElementType className={classes.root} action={action} onSubmit={this.handleSubmit} {...rest}>
+      <ElementType
+        className={classes.root}
+        action={action}
+        onSubmit={this.handleSubmit}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : this.renderFields()}
       </ElementType>
     )

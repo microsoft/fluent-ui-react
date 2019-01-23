@@ -9,8 +9,9 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import ReactNode = React.ReactNode
@@ -38,7 +39,7 @@ export interface GridProps
  * @accessibility This is example usage of the accessibility tag.
  * This should be replaced with the actual description after the PR is merged
  */
-class Grid extends UIComponent<Extendable<GridProps>, any> {
+class Grid extends UIComponent<ReactProps<GridProps>, any> {
   public static displayName = 'Grid'
 
   public static className = 'ui-grid'
@@ -64,11 +65,19 @@ class Grid extends UIComponent<Extendable<GridProps>, any> {
     accessibility: defaultBehavior,
   }
 
-  public renderComponent({ ElementType, classes, rest }: RenderResultConfig<any>): ReactNode {
+  public renderComponent({
+    ElementType,
+    classes,
+    unhandledProps,
+  }: RenderResultConfig<any>): ReactNode {
     const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

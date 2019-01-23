@@ -9,14 +9,17 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 
 export interface HeaderProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
+    ContentComponentProps,
+    ColorComponentProps {
   /** Shorthand for Header.Description. */
   description?: ShorthandValue
 
@@ -34,15 +37,16 @@ export interface HeaderProps
  *  - when the description property is used in header, readers will narrate both header content and description within the element.
  *    In addition to that, both will be displayed in the list of headings.
  */
-class Header extends UIComponent<Extendable<HeaderProps>, any> {
+class Header extends UIComponent<ReactProps<HeaderProps>, any> {
   static className = 'ui-header'
 
   static displayName = 'Header'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
     description: customPropTypes.itemShorthand,
     textAlign: PropTypes.oneOf(['left', 'center', 'right', 'justified']),
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
@@ -51,27 +55,30 @@ class Header extends UIComponent<Extendable<HeaderProps>, any> {
 
   static Description = HeaderDescription
 
-  renderComponent({ ElementType, classes, variables: v, rest }) {
-    const { children, content, description } = this.props
+  renderComponent({ ElementType, classes, variables: v, unhandledProps }) {
+    const { children, description, content } = this.props
 
-    if (childrenExist(children)) {
-      return (
-        <ElementType {...rest} className={classes.root}>
-          {children}
-        </ElementType>
-      )
-    }
+    const hasChildren = childrenExist(children)
+    const contentElement = childrenExist(children) ? children : content
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {content}
-        {HeaderDescription.create(description, {
-          defaultProps: {
-            variables: {
-              ...(v.descriptionColor && { color: v.descriptionColor }),
-            },
-          },
+      <ElementType
+        {...rtlTextContainer.getAttributes({
+          forElements: [children, content],
+          condition: !description,
         })}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {rtlTextContainer.createFor({ element: contentElement, condition: !!description })}
+        {!hasChildren &&
+          HeaderDescription.create(description, {
+            defaultProps: {
+              variables: {
+                ...(v.descriptionColor && { color: v.descriptionColor }),
+              },
+            },
+          })}
       </ElementType>
     )
   }

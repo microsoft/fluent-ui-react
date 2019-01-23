@@ -1,5 +1,5 @@
-import _ from 'lodash'
-import React from 'react'
+import * as _ from 'lodash'
+import * as React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
 const statusProps = { icon: 'check', color: 'green', title: 'Available' }
@@ -10,7 +10,7 @@ const AvatarExampleSizeShorthand = () =>
     const status = { ...statusProps, size: size * 0.3125 }
 
     return (
-      <p key={size}>
+      <div key={size}>
         <strong>{size}</strong>
         &emsp;
         <Avatar size={size} image="public/images/avatar/small/matt.jpg" status={status} />
@@ -18,7 +18,7 @@ const AvatarExampleSizeShorthand = () =>
         <Avatar size={size} name="John Doe" status={status} />
         &emsp;
         <Avatar size={size} image="public/images/avatar/small/matt.jpg" />
-      </p>
+      </div>
     )
   })
 

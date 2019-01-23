@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Button, Header, Portal } from '@stardust-ui/react'
 
 class PortalExamplePortal extends React.Component {
@@ -25,6 +25,10 @@ class PortalExamplePortal extends React.Component {
             // When 'false', all clicks outside the Portal will be caught and not handled.
             // 'true' by default.
             isClickableOutsideFocusTrap: false,
+            // Indicates whether to focus element which triggered FTZ on outside click
+            // 'false' by default
+            // note: if isClickableOutsideFocusTrap === 'false', focusTriggerOnOutsideClick will not be taken into account.
+            focusTriggerOnOutsideClick: false,
             // Allows to pass element which you want to be focused after Portal is closed.
             // 'null' by default, so the trigger element would be focused on close.
             elementToFocusOnDismiss: null,

@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import AccordionTitle from './AccordionTitle'
 import AccordionContent from './AccordionContent'
@@ -17,7 +18,7 @@ import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,
-  Extendable,
+  ReactProps,
   ShorthandValue,
   ShorthandRenderFunction,
 } from '../../../types/utils'
@@ -71,8 +72,11 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
 /**
  * An accordion allows users to toggle the display of sections of content.
+ * @accessibility
+ * Implements ARIA Accordion design pattern (keyboard navigation not yet supported).
+ * Consider using Tree if you intend to wrap Lists in an Accordion.
  */
-class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any> {
+class Accordion extends AutoControlledComponent<ReactProps<AccordionProps>, any> {
   static displayName = 'Accordion'
 
   static className = 'ui-accordion'
@@ -114,8 +118,6 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
 
   static Title = AccordionTitle
   static Content = AccordionContent
-
-  state: any = { activeIndex: [0] }
 
   getInitialAutoControlledState({ exclusive }) {
     return { activeIndex: exclusive ? -1 : [-1] }
@@ -175,11 +177,16 @@ class Accordion extends AutoControlledComponent<Extendable<AccordionProps>, any>
     return children
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderPanels()}
       </ElementType>
     )

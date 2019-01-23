@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Avatar, Button, Divider, Icon, Layout, Segment, Text } from '@stardust-ui/react'
+import style from './chatProtoStyle'
 
 import { ChatData } from './services'
 
@@ -24,7 +25,6 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
       <Segment
         content={
           <Icon
-            size="big"
             name="team-create"
             variables={siteVars => ({ color: siteVars.white, margin: 'auto 8px' })}
           />
@@ -46,13 +46,26 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
 
     return (
       <Layout
+        role="region"
+        aria-labelledby="heading"
         start={<Avatar name={chat.title} />}
         main={
-          <Text
-            size="large"
-            content={chat.title}
-            styles={{ marginLeft: '12px', fontWeight: 600 }}
-          />
+          <div
+            id="heading"
+            role="heading"
+            aria-level={2}
+            aria-labelledby="chat-header-reader-text chat-header-title"
+          >
+            <div id="chat-header-reader-text" style={style.screenReaderContainerStyles}>
+              Chat header
+            </div>
+            <Text
+              id="chat-header-title"
+              size="large"
+              content={chat.title}
+              styles={{ marginLeft: '12px', fontWeight: 600 }}
+            />
+          </div>
         }
         end={this.renderHeaderButtons()}
         alignItems="center"
@@ -70,14 +83,13 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
             key: `${index}-${name}`,
             icon: {
               name,
-              size: 'big',
               variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
             },
             primary: true,
           }))}
           styles={{ marginRight: '20px' }}
         />
-        {['user plus', 'ellipsis horizontal'].map((name, index) => (
+        {['team-create', 'more'].map((name, index) => (
           <Icon
             key={`${index}-${name}`}
             name={name}
@@ -87,7 +99,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
               margin: 'auto',
               ...(!index && { margin: 'auto 1.6rem auto auto' }),
             }}
-            variables={siteVars => ({ color: siteVars.gray04 })}
+            variables={siteVars => ({ color: siteVars.gray04, outline: true })}
           />
         ))}
       </div>

@@ -5,17 +5,23 @@ import * as React from 'react'
 import {
   AutoControlledComponent,
   childrenExist,
+  createShorthandFactory,
   customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  getKindProp,
+  rtlTextContainer,
 } from '../../lib'
 import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentVariablesObject } from '../../themes/types'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
+import MenuDivider from './MenuDivider'
+
+export type MenuShorthandKinds = 'divider' | 'item'
 
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -38,7 +44,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<MenuShorthandKinds>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -60,12 +66,24 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
 
   /** A vertical menu displays elements vertically. */
   vertical?: boolean
+
+  /** Indicates whether the menu is submenu. */
+  submenu?: boolean
+
+  /** Shorthand for the submenu indicator. */
+  indicator?: ShorthandValue
+}
+
+export interface MenuState {
+  activeIndex?: number | string
 }
 
 /**
  * A menu displays grouped navigation actions.
+ * @accessibility
+ * Implements ARIA Menu, Toolbar or Tabs design pattern, depending on the behavior used.
  */
-class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
+class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
   static displayName = 'Menu'
 
   static className = 'ui-menu'
@@ -81,13 +99,15 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     fluid: PropTypes.bool,
     iconOnly: PropTypes.bool,
-    items: customPropTypes.collectionShorthand,
+    items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
+    submenu: PropTypes.bool,
+    indicator: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -98,6 +118,7 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
   static autoControlledProps = ['activeIndex']
 
   static Item = MenuItem
+  static Divider = MenuDivider
 
   handleItemOverrides = predefinedProps => ({
     onClick: (e, itemProps) => {
@@ -106,6 +127,15 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
       this.trySetState({ activeIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, itemProps)
+    },
+    onActiveChanged: (e, props) => {
+      const { index, active } = props
+      if (active) {
+        this.trySetState({ activeIndex: index })
+      } else if (this.state.activeIndex === index) {
+        this.trySetState({ activeIndex: null })
+      }
+      _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
   })
 
@@ -119,11 +149,28 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
       secondary,
       underlined,
       vertical,
+      submenu,
+      indicator,
     } = this.props
     const { activeIndex } = this.state
 
-    return _.map(items, (item, index) =>
-      MenuItem.create(item, {
+    return _.map(items, (item, index) => {
+      const active =
+        (typeof activeIndex === 'string' ? parseInt(activeIndex, 10) : activeIndex) === index
+      const kind = getKindProp(item, 'item')
+
+      if (kind === 'divider') {
+        return MenuDivider.create(item, {
+          defaultProps: {
+            primary,
+            secondary,
+            vertical,
+            variables,
+          },
+        })
+      }
+
+      return MenuItem.create(item, {
         defaultProps: {
           iconOnly,
           pills,
@@ -134,21 +181,30 @@ class Menu extends AutoControlledComponent<Extendable<MenuProps>, any> {
           variables,
           vertical,
           index,
-          active: parseInt(activeIndex, 10) === index,
+          active,
+          inSubmenu: submenu,
+          indicator,
         },
         overrideProps: this.handleItemOverrides,
-      }),
-    )
+      })
+    })
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, rest }) {
+  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
     const { children } = this.props
     return (
-      <ElementType {...accessibility.attributes.root} {...rest} className={classes.root}>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }
 }
+
+Menu.create = createShorthandFactory(Menu, 'items')
 
 export default Menu

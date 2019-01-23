@@ -10,11 +10,13 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
+import { ReactPropsStrict } from '../../../types/utils'
 
 type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
@@ -81,7 +83,7 @@ export interface PortalState {
 /**
  * A component that allows you to render children outside their parent.
  */
-class Portal extends AutoControlledComponent<PortalProps, PortalState> {
+class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, PortalState> {
   private portalNode: HTMLElement
   private triggerNode: HTMLElement
 
@@ -130,7 +132,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     return (
       open && (
         <Ref innerRef={this.handlePortalRef}>
-          <PortalInner onMount={this.handleMount} onUnmount={this.handleUnmount}>
+          <PortalInner
+            onMount={this.handleMount}
+            onUnmount={this.handleUnmount}
+            {...rtlTextContainer.getAttributes({ forElements: [contentToRender] })}
+          >
             {trapFocus ? (
               <FocusTrapZone {...focusTrapZoneProps}>{contentToRender}</FocusTrapZone>
             ) : (
@@ -178,11 +184,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
     _.invoke(this.props, 'triggerRef', triggerNode)
   }
 
-  private handleTriggerClick = (e: ReactMouseEvent, ...rest) => {
+  private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
-    _.invoke(trigger, 'props.onClick', e, ...rest) // Call original event handler
+    _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
     this.trySetState({ open: !this.state.open })
   }
 

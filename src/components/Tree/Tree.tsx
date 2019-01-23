@@ -9,8 +9,9 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
+  rtlTextContainer,
 } from '../../lib'
-import { ShorthandValue, ShorthandRenderFunction } from '../../../types/utils'
+import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
 import { defaultBehavior } from '../../lib/accessibility'
 import * as customPropTypes from '../../lib/customPropTypes'
@@ -38,7 +39,7 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
 /**
  * Allows users to display data organised in tree-hierarchy.
  */
-class Tree extends UIComponent<TreeProps> {
+class Tree extends UIComponent<ReactProps<TreeProps>> {
   static create: Function
 
   static className = 'ui-tree'
@@ -52,6 +53,7 @@ class Tree extends UIComponent<TreeProps> {
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -71,11 +73,16 @@ class Tree extends UIComponent<TreeProps> {
     )
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )

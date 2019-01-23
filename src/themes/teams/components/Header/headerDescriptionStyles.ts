@@ -1,11 +1,17 @@
-import { pxToRem } from '../../utils'
-import { ICSSInJSStyle } from '../../../types'
+import * as _ from 'lodash'
 
-export default {
-  root: ({ variables: v }): ICSSInJSStyle => ({
+import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { HeaderDescriptionProps } from '../../../../components/Header/HeaderDescription'
+import { HeaderDescriptionVariables } from './headerDescriptionVariables'
+import { pxToRem } from '../../../../lib'
+
+const headerStyles: ComponentSlotStylesInput<HeaderDescriptionProps, HeaderDescriptionVariables> = {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'block',
+    color: _.get(v.colors, p.color, v.color),
     fontSize: pxToRem(22),
-    color: v.color,
     fontWeight: 400,
   }),
 }
+
+export default headerStyles

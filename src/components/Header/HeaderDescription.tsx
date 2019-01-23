@@ -8,18 +8,21 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {}
+    ContentComponentProps,
+    ColorComponentProps {}
 
 /**
  * A header's description provides more detailed information.
  */
-class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, any> {
+class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
   static create: Function
 
   static className = 'ui-header__description'
@@ -27,17 +30,21 @@ class HeaderDescription extends UIComponent<Extendable<HeaderDescriptionProps>, 
   static displayName = 'HeaderDescription'
 
   static propTypes = {
-    ...commonPropTypes.createCommon(),
+    ...commonPropTypes.createCommon({ color: true }),
   }
 
   static defaultProps = {
     as: 'p',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

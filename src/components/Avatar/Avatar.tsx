@@ -3,7 +3,7 @@ import * as React from 'react'
 import Image from '../Image/Image'
 import Label from '../Label/Label'
 import Status from '../Status/Status'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import {
   createShorthandFactory,
   customPropTypes,
@@ -35,7 +35,7 @@ export interface AvatarProps extends UIComponentProps {
 /**
  * An avatar is a graphic representation of user.
  */
-class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
+class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   static create: Function
 
   static className = 'ui-avatar'
@@ -80,11 +80,11 @@ class Avatar extends UIComponent<Extendable<AvatarProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables }) {
     const { name, status, image, label, getInitials } = this.props as AvatarPropsWithDefaults
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {Image.create(image, {
           defaultProps: {
             fluid: true,

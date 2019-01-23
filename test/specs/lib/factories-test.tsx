@@ -153,13 +153,19 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthandFactory(() => <div />, '')
+      const goodUsage = () => createShorthandFactory(() => <div />, 'children')
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
       const goodUsage = () => createShorthandFactory('div', '')
+
+      expect(goodUsage).not.toThrowError()
+    })
+
+    test('does not throw if do not passed `mappedProp`', () => {
+      const goodUsage = () => createShorthandFactory(() => <div />)
 
       expect(goodUsage).not.toThrowError()
     })
@@ -232,9 +238,9 @@ describe('factories', () => {
           getShorthand({
             value: render =>
               render({}, (Component, props) => {
-                expect(Component).toBe('foo-span')
+                expect(Component).toBe('span')
               }),
-            Component: 'foo-span',
+            Component: 'span',
           })
         })
 
@@ -486,6 +492,16 @@ describe('factories', () => {
         testCreateShorthand({ overrideProps, value: testValue }, overrideProps())
       })
 
+      test("is called with the user's element's and default props", () => {
+        const defaultProps = { 'data-some': 'defaults' }
+        const overrideProps = jest.fn(() => ({}))
+        const userProps = { 'data-user': 'props' }
+        const value = <div {...userProps} />
+
+        shallow(getShorthand({ defaultProps, overrideProps, value }))
+        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
+      })
+
       test("is called with the user's props object", () => {
         const defaultProps = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
@@ -518,21 +534,18 @@ describe('factories', () => {
 
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
+      itAppliesDefaultProps(<div />)
       itDoesNotIncludePropsFromMappedProp(<div />)
+      itMergesClassNames('element', 'user', { value: <div className="user" /> })
       itAppliesProps('element', { foo: 'foo' }, { value: <div {...{ foo: 'foo' } as any} /> })
-
-      test('forwards original element "as is"', () => {
-        testCreateShorthand(
-          {
-            Component: 'p',
-            value: (
-              <span {...{ commonProp: 'originalElement', originalElementProp: true } as any} />
-            ),
-            defaultProps: { commonProp: 'default', defaultProp: true },
-            overrideProps: { commonProp: 'override', overrideProp: true },
-          },
-          { commonProp: 'originalElement', originalElementProp: true },
-        )
+      itOverridesDefaultProps(
+        'element',
+        { some: 'defaults', overridden: false },
+        { some: 'defaults', overridden: true },
+        { value: <div {...{ overridden: true } as any} /> },
+      )
+      itOverridesDefaultPropsWithFalseyProps('element', {
+        value: <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />,
       })
     })
 

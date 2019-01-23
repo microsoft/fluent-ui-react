@@ -6,26 +6,19 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
+  ColorComponentProps,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility/'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import { SvgIconSpec } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
-export type IconSize =
-  | 'micro'
-  | 'mini'
-  | 'tiny'
-  | 'small'
-  | 'normal'
-  | 'large'
-  | 'big'
-  | 'huge'
-  | 'massive'
 
-export interface IconProps extends UIComponentProps {
+export type IconSize = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+
+export interface IconProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overriden by the user.
    * @default iconBehavior
@@ -44,6 +37,9 @@ export interface IconProps extends UIComponentProps {
   /** Name of the icon. */
   name?: string
 
+  /** An icon can be rotated by the degree specified as number. */
+  rotate?: number
+
   /** Size of the icon. */
   size?: IconSize
 
@@ -54,7 +50,7 @@ export interface IconProps extends UIComponentProps {
 /**
  * An icon is a glyph used to represent something else.
  */
-class Icon extends UIComponent<Extendable<IconProps>, any> {
+class Icon extends UIComponent<ReactProps<IconProps>, any> {
   static create: Function
 
   static className = 'ui-icon'
@@ -65,58 +61,63 @@ class Icon extends UIComponent<Extendable<IconProps>, any> {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
+      color: true,
     }),
     accessibility: PropTypes.func,
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
     name: PropTypes.string,
-    size: PropTypes.oneOf([
-      'micro',
-      'mini',
-      'tiny',
-      'small',
-      'normal',
-      'large',
-      'big',
-      'huge',
-      'massive',
-    ]),
+    rotate: PropTypes.number,
+    size: PropTypes.oneOf(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest']),
     xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
   }
 
   static defaultProps = {
     as: 'span',
-    size: 'normal',
+    size: 'medium',
     accessibility: iconBehavior,
+    rotate: 0,
   }
 
-  private renderFontIcon(ElementType, classes, rest, accessibility): React.ReactNode {
-    return <ElementType className={classes.root} {...accessibility.attributes.root} {...rest} />
+  private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {
+    return (
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      />
+    )
   }
 
   private renderSvgIcon(
     ElementType,
     svgIconDescriptor: SvgIconSpec,
     classes,
-    rest,
+    unhandledProps,
     accessibility,
   ): React.ReactNode {
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...rest}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
       </ElementType>
     )
   }
 
-  public renderComponent({ ElementType, classes, rest, accessibility, theme }) {
+  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme }) {
     const { icons = {} } = theme
 
     const maybeIcon = icons[this.props.name]
 
     return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(ElementType, maybeIcon.icon as SvgIconSpec, classes, rest, accessibility)
-      : this.renderFontIcon(ElementType, classes, rest, accessibility)
+      ? this.renderSvgIcon(
+          ElementType,
+          maybeIcon.icon as SvgIconSpec,
+          classes,
+          unhandledProps,
+          accessibility,
+        )
+      : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
   }
 }
 

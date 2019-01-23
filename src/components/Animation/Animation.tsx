@@ -10,6 +10,7 @@ import {
 } from '../../lib'
 import { AnimationProp } from '../../themes/types'
 import createAnimationStyles from '../../lib/createAnimationStyles'
+import { ReactPropsStrict } from '../../../types/utils'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -78,7 +79,7 @@ export interface AnimationProps
 /**
  * An animation allows the user to animate their own components.
  */
-class Animation extends UIComponent<AnimationProps, any> {
+class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
   static create: Function
 
   static className = 'ui-animation'
@@ -101,7 +102,7 @@ class Animation extends UIComponent<AnimationProps, any> {
     timingFunction: PropTypes.string,
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, theme }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, theme }) {
     const { children, name } = this.props
 
     const animation: AnimationProp = {
@@ -125,7 +126,7 @@ class Animation extends UIComponent<AnimationProps, any> {
       : ''
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {result}
       </ElementType>
     )

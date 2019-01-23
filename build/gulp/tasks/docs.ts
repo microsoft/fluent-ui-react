@@ -1,7 +1,9 @@
 import * as historyApiFallback from 'connect-history-api-fallback'
 import * as express from 'express'
 import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import * as cache from 'gulp-cache'
 import * as remember from 'gulp-remember'
+import * as fs from 'fs'
 import * as path from 'path'
 import * as rimraf from 'rimraf'
 import * as through2 from 'through2'
@@ -14,11 +16,14 @@ import config from '../../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
+import gulpExampleSource from '../plugins/gulp-example-source'
 import gulpReactDocgen from '../plugins/gulp-react-docgen'
+import { getRelativePathToSourceFile } from '../plugins/util'
+import webpackPlugin from '../plugins/gulp-webpack'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
-const { colors, log, PluginError } = g.util
+const { colors, log } = g.util
 
 const handleWatchChange = path => log(`File ${path} was changed, running tasks...`)
 const handleWatchUnlink = (group, path) => {
@@ -29,6 +34,8 @@ const handleWatchUnlink = (group, path) => {
 // ----------------------------------------
 // Clean
 // ----------------------------------------
+
+task('clean:cache', () => cache.clearAll())
 
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
@@ -46,6 +53,10 @@ task('clean:docs:example-menus', cb => {
   rimraf(paths.docsSrc('exampleMenus'), cb)
 })
 
+task('clean:docs:example-sources', cb => {
+  rimraf(paths.docsSrc('exampleSources'), cb)
+})
+
 task(
   'clean:docs',
   parallel(
@@ -53,6 +64,7 @@ task(
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
     'clean:docs:example-menus',
+    'clean:docs:example-sources',
   ),
 )
 
@@ -60,9 +72,10 @@ task(
 // Build
 // ----------------------------------------
 
-const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Slot.tsx']
+const componentsSrc = [`${paths.posix.src()}/components/*/[A-Z]*.tsx`, '!**/Box.tsx']
 const behaviorSrc = [`${paths.posix.src()}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
-const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
+const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
+const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
   '.github/CONTRIBUTING.md',
   '.github/setup-local-development.md',
@@ -72,9 +85,13 @@ const markdownSrc = [
   'specifications/*.md',
 ]
 
-task('build:docs:docgen', () =>
-  src(componentsSrc, { since: lastRun('build:docs:docgen') })
-    .pipe(gulpReactDocgen())
+task('build:docs:component-info', () =>
+  src(componentsSrc, { since: lastRun('build:docs:component-info') })
+    .pipe(
+      cache(gulpReactDocgen(), {
+        name: 'componentInfo',
+      }),
+    )
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
 
@@ -92,18 +109,29 @@ task('build:docs:component-menu-behaviors', () =>
 )
 
 task('build:docs:example-menu', () =>
-  src(examplesSrc, { since: lastRun('build:docs:example-menu') })
+  src(examplesIndexSrc, { since: lastRun('build:docs:example-menu') })
     .pipe(remember('example-menu')) // FIXME: with watch this unnecessarily processes index files for all examples
     .pipe(gulpExampleMenu())
     .pipe(dest(paths.docsSrc('exampleMenus'))),
 )
 
+task('build:docs:example-sources', () =>
+  src(examplesSrc, { since: lastRun('build:docs:example-sources') })
+    .pipe(
+      cache(gulpExampleSource(), {
+        name: 'exampleSources',
+      }),
+    )
+    .pipe(dest(paths.docsSrc('exampleSources'))),
+)
+
 task(
   'build:docs:json',
   parallel(
-    series('build:docs:docgen', 'build:docs:component-menu'),
+    series('build:docs:component-info', 'build:docs:component-menu'),
     'build:docs:component-menu-behaviors',
     'build:docs:example-menu',
+    'build:docs:example-sources',
   ),
 )
 
@@ -125,28 +153,7 @@ task('build:docs:toc', () =>
 )
 
 task('build:docs:webpack', cb => {
-  const webpackConfig = require('../../../webpack.config').default
-  const compiler = webpack(webpackConfig)
-
-  compiler.run((err, stats) => {
-    const { errors, warnings } = stats.toJson()
-
-    log(stats.toString(config.compiler_stats))
-
-    if (err) {
-      log('Webpack compiler encountered a fatal error.')
-      throw new PluginError('webpack', err.toString())
-    }
-    if (errors.length > 0) {
-      log('Webpack compiler encountered errors.')
-      throw new PluginError('webpack', errors.toString())
-    }
-    if (warnings.length > 0) {
-      throw new PluginError('webpack', warnings.toString())
-    }
-
-    cb(err)
-  })
+  webpackPlugin(require('../../../webpack.config').default, cb)
 })
 
 task(
@@ -215,12 +222,23 @@ task('serve:docs', cb => {
 
 task('watch:docs', cb => {
   // rebuild component info
-  watch(componentsSrc, series('build:docs:docgen')).on('change', handleWatchChange)
+  watch(componentsSrc, series('build:docs:component-info')).on('change', handleWatchChange)
 
   // rebuild example menus
-  watch(examplesSrc, series('build:docs:example-menu'))
+  watch(examplesIndexSrc, series('build:docs:example-menu'))
     .on('change', handleWatchChange)
     .on('unlink', path => handleWatchUnlink('example-menu', path))
+
+  watch(examplesSrc, series('build:docs:example-sources'))
+    .on('change', handleWatchChange)
+    .on('unlink', filePath => {
+      log(`File ${filePath} was deleted, running tasks...`)
+
+      const sourceFilename = getRelativePathToSourceFile(filePath)
+      const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
+
+      fs.unlinkSync(sourcePath)
+    })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
     .on('change', handleWatchChange)

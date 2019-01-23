@@ -10,9 +10,11 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
+import { ReactProps } from '../../../types/utils'
 
 export interface TreeTitleProps
   extends UIComponentProps,
@@ -31,7 +33,7 @@ export interface TreeTitleProps
   hasSubtree?: boolean
 }
 
-class TreeTitle extends UIComponent<TreeTitleProps> {
+class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   static create: Function
 
   static className = 'ui-tree__title'
@@ -55,7 +57,7 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ ElementType, classes, accessibility, rest, styles, variables }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { children, content } = this.props
 
     return (
@@ -63,7 +65,8 @@ class TreeTitle extends UIComponent<TreeTitleProps> {
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

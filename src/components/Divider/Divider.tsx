@@ -10,8 +10,9 @@ import {
   ColorComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface DividerProps
   extends UIComponentProps,
@@ -31,7 +32,7 @@ export interface DividerProps
 /**
  * A divider visually segments content into groups.
  */
-class Divider extends UIComponent<Extendable<DividerProps>, any> {
+class Divider extends UIComponent<ReactProps<DividerProps>, any> {
   static displayName = 'Divider'
 
   static create: Function
@@ -49,11 +50,15 @@ class Divider extends UIComponent<Extendable<DividerProps>, any> {
     size: 0,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

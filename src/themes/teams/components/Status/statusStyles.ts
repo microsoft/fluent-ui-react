@@ -1,4 +1,4 @@
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { StatusPropsWithDefaults } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
@@ -39,6 +39,7 @@ const statusStyles: ComponentSlotStylesInput<StatusPropsWithDefaults, StatusVari
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(size + 2 * ((variables.borderColor && variables.borderWidth) || 0))
     return {
+      boxSizing: 'border-box',
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',

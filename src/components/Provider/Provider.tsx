@@ -1,9 +1,10 @@
+import { render } from 'fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
 
-import { felaRenderer as felaLtrRenderer, mergeThemes } from '../../lib'
+import { felaRenderer as felaLtrRenderer, isBrowser, mergeThemes } from '../../lib'
 import {
   ThemePrepared,
   ThemeInput,
@@ -124,7 +125,13 @@ class Provider extends React.Component<ProviderProps> {
       <ProviderConsumer
         render={(incomingTheme: ThemePrepared) => {
           const outgoingTheme: ThemePrepared = mergeThemes(incomingTheme, theme)
+
+          // Heads up!
+          // We should call render() to ensure that a subscription for DOM updates was created
+          // https://github.com/stardust-ui/react/issues/581
+          if (isBrowser()) render(outgoingTheme.renderer)
           this.renderStaticStylesOnce(outgoingTheme)
+
           return (
             <RendererProvider renderer={outgoingTheme.renderer} {...{ rehydrate: false }}>
               <ThemeProvider theme={outgoingTheme}>{children}</ThemeProvider>

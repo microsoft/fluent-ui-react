@@ -1,15 +1,13 @@
+import { pxToRem } from '../../../../lib'
+
 export interface ChatItemVariables {
-  messageWidth: string
-  messageColor: string
-  messageColorMine: string
-  avatar: { statusBorderColor: string }
+  margin: string
+  gutterMargin: string
+  messageMargin: string
 }
 
-export default (siteVars): ChatItemVariables => ({
-  messageWidth: '80%',
-  messageColor: siteVars.white,
-  messageColorMine: '#E0E0ED',
-  avatar: {
-    statusBorderColor: siteVars.gray10,
-  },
+export default (): ChatItemVariables => ({
+  margin: pxToRem(8),
+  gutterMargin: pxToRem(10),
+  messageMargin: pxToRem(40),
 })

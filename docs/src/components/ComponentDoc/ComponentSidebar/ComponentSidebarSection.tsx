@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import PropTypes from 'prop-types'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Accordion, Icon, Menu } from 'semantic-ui-react'
 
@@ -56,6 +56,10 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
     const { isActiveByProps, isActiveByUser } = this.state
 
     const active = isActiveByUser || isActiveByProps
+
+    if (process.env.NODE_ENV !== 'development' && sectionName === 'Performance') {
+      return null
+    }
 
     return (
       <Menu.Item>

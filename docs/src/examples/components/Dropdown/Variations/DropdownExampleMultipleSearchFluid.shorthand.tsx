@@ -12,23 +12,18 @@ const inputItems = [
   'Peter Parker',
   'Selina Kyle',
 ]
-
-class DropdownExample extends React.Component {
-  render() {
-    return (
-      <Dropdown
-        multiple
-        getA11ySelectionMessage={getA11ySelectionMessage}
-        getA11yStatusMessage={getA11yStatusMessage}
-        noResultsMessage="We couldn't find any matches."
-        search
-        fluid
-        placeholder="Start typing a name"
-        items={inputItems}
-      />
-    )
-  }
-}
+const DropdownExample = () => (
+  <Dropdown
+    multiple
+    getA11ySelectionMessage={getA11ySelectionMessage}
+    getA11yStatusMessage={getA11yStatusMessage}
+    noResultsMessage="We couldn't find any matches."
+    search
+    fluid
+    placeholder="Start typing a name"
+    items={inputItems}
+  />
+)
 
 const getA11ySelectionMessage = {
   onAdd: item => `${item} has been selected.`,

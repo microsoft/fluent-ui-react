@@ -9,10 +9,11 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { Extendable } from '../../../types/utils'
+import { ReactProps } from '../../../types/utils'
 
 export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps<any> {
   contentMedia?: any
@@ -58,7 +59,7 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
 /**
  * The Item Layout handles layout styles for menu items, list items and other similar item templates.
  */
-class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
+class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
   static create: Function
 
   static displayName = 'ItemLayout'
@@ -126,12 +127,12 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          main={header}
+          main={rtlTextContainer.createFor({ element: header })}
           rootCSS={headerCSS}
           end={
             headerMedia && (
               <span style={headerMediaCSS} className={mediaClasses}>
-                {headerMedia}
+                {rtlTextContainer.createFor({ element: headerMedia })}
               </span>
             )
           }
@@ -153,11 +154,11 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
           debug={debug}
           truncateMain={truncateContent}
           rootCSS={contentCSS}
-          main={content}
+          main={rtlTextContainer.createFor({ element: content })}
           end={
             contentMedia && (
               <span style={contentMediaCSS} className={mediaClasses}>
-                {contentMedia}
+                {rtlTextContainer.createFor({ element: contentMedia })}
               </span>
             )
           }
@@ -166,7 +167,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
       .props as ItemLayoutPropsWithDefaults
 
@@ -190,7 +191,7 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
         start={
           startArea && (
             <span style={mediaCSS} className={mergedMediaClasses}>
-              {startArea}
+              {rtlTextContainer.createFor({ element: startArea })}
             </span>
           )
         }
@@ -198,17 +199,17 @@ class ItemLayout extends UIComponent<Extendable<ItemLayoutProps>, any> {
         end={
           endArea && (
             <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {endArea}
+              {rtlTextContainer.createFor({ element: endArea })}
             </span>
           )
         }
-        {...rest}
+        {...unhandledProps}
       />
     )
   }
 }
 
-ItemLayout.create = createShorthandFactory(ItemLayout, 'main')
+ItemLayout.create = createShorthandFactory(ItemLayout, 'content')
 
 export default ItemLayout
 

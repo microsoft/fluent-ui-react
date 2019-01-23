@@ -10,10 +10,10 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
 import Text from '../Text/Text'
 import Input from '../Input/Input'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /** A control for the form field. */
@@ -44,7 +44,7 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
 /**
  * A field is a form element containing a label and an input.
  */
-class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
+class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
   public static displayName = 'FormField'
 
   public static className = 'ui-form__field'
@@ -76,7 +76,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     accessibility,
     variables,
     styles,
-    rest,
+    unhandledProps,
   }): React.ReactNode {
     const { children, control, id, label, message, name, required, type } = this.props
 
@@ -94,7 +94,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
       },
     })
 
-    const controlElement = Slot.create(control || {}, {
+    const controlElement = Box.create(control || {}, {
       defaultProps: { required, id, name, type, styles: styles.control },
     })
 
@@ -108,7 +108,7 @@ class FormField extends UIComponent<Extendable<FormFieldProps>, any> {
     )
 
     return (
-      <ElementType className={classes.root} {...rest}>
+      <ElementType className={classes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

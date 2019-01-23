@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Label } from '@stardust-ui/react'
 
 class LabelExampleContentCustomizationShorthand extends React.Component {
@@ -18,14 +18,8 @@ class LabelExampleContentCustomizationShorthand extends React.Component {
       <Label
         content="You can remove me!"
         circular
-        image={{
-          src: 'public/images/avatar/small/matt.jpg',
-          avatar: true,
-        }}
-        icon={{
-          name: 'close',
-          onClick: this.hide,
-        }}
+        image={{ src: 'public/images/avatar/small/matt.jpg', avatar: true }}
+        icon={{ name: 'close', onClick: this.hide }}
       />
     )
   }

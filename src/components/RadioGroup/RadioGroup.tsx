@@ -11,11 +11,12 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import { radioGroupBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { Extendable, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -46,8 +47,10 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
 
 /**
  * A radio group allows a user to select a value from a small set of options.
+ * @accessibility
+ * Implements ARIA Radio Group design pattern.
  */
-class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, any> {
+class RadioGroup extends AutoControlledComponent<ReactProps<RadioGroupProps>, any> {
   static displayName = 'RadioGroup'
 
   static className = 'ui-radiogroup'
@@ -75,13 +78,14 @@ class RadioGroup extends AutoControlledComponent<Extendable<RadioGroupProps>, an
 
   static Item = RadioGroupItem
 
-  renderComponent({ ElementType, classes, accessibility, rest }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, vertical } = this.props
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
         className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems(vertical)}

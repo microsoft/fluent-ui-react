@@ -1,17 +1,25 @@
+import { pxToRem } from '../../../../lib'
+
 export interface ChatMessageVariables {
-  messageWidth: string
-  messageColor: string
-  messageColorMine: string
-  avatar: { statusBorderColor: string }
-  messageBody: { focusOutlineColor: string }
+  width: string
+  backgroundColor: string
+  backgroundColorMine: string
+  borderRadius: string
+  color: string
+  padding: string
+  authorMargin: string
+  contentFocusOutlineColor: string
+  border: string
 }
 
 export default (siteVars): ChatMessageVariables => ({
-  messageWidth: '80%',
-  messageColor: siteVars.white,
-  messageColorMine: '#E0E0ED',
-  avatar: {
-    statusBorderColor: siteVars.gray10,
-  },
-  messageBody: { focusOutlineColor: siteVars.brand },
+  width: '100%',
+  backgroundColor: siteVars.white,
+  backgroundColorMine: '#E5E5F1',
+  borderRadius: '0.3rem',
+  color: 'rgb(64, 64, 64)',
+  padding: pxToRem(14),
+  authorMargin: pxToRem(10),
+  contentFocusOutlineColor: siteVars.brand,
+  border: 'none',
 })

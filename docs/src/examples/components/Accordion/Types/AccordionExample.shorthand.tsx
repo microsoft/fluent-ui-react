@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Accordion } from '@stardust-ui/react'
 
 const panels = [
@@ -14,6 +14,6 @@ const panels = [
   },
 ]
 
-const AccordionExample = () => <Accordion panels={panels} />
+const AccordionExample = () => <Accordion defaultActiveIndex={[0]} panels={panels} />
 
 export default AccordionExample

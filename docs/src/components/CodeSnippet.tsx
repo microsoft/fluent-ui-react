@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import * as React from 'react'
 
 import formatCode from '../utils/formatCode'
@@ -8,8 +7,12 @@ export interface CodeSnippetProps {
   fitted?: boolean
   label?: string
   mode?: 'jsx' | 'html' | 'sh'
-  value: string
+  value: string | string[]
   style?: React.CSSProperties
+}
+
+const joinToString = (stringOrArray: string | string[]) => {
+  return typeof stringOrArray === 'string' ? stringOrArray : stringOrArray.join('\n')
 }
 
 const formatters = {
@@ -18,9 +21,9 @@ const formatters = {
   jsx: (val: string = ''): string => formatCode(val, 'babylon'),
 }
 
-const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippetProps) => {
+const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...restProps }: CodeSnippetProps) => {
   const format = formatters[mode]
-  const formattedValue = format(value)
+  const formattedValue = format(joinToString(value))
     // remove eof line break, they are not helpful for snippets
     .replace(/\n$/, '')
 
@@ -31,7 +34,7 @@ const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippe
         padding: '1rem',
         marginBottom: fitted ? 0 : '2rem',
         background: EDITOR_BACKGROUND_COLOR,
-        ...rest.style,
+        ...restProps.style,
       }}
     >
       <div
@@ -58,7 +61,7 @@ const CodeSnippet = ({ fitted, label, value, mode = 'jsx', ...rest }: CodeSnippe
         showGutter={false}
         showCursor={false}
         value={formattedValue}
-        {...rest}
+        {...restProps}
       />
     </div>
   )

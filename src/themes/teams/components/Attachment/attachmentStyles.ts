@@ -1,7 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
-import { pxToRem } from '../../utils'
+import { pxToRem } from '../../../../lib'
 
 const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVariables> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
@@ -15,6 +15,14 @@ const attachmentStyles: ComponentSlotStylesInput<AttachmentProps, AttachmentVari
     marginRight: pxToRem(2),
     background: variables.backgroundColor,
     color: variables.textColor,
+
+    outline: 0,
+
+    ...(props.isFromKeyboard && {
+      ':focus': {
+        outline: `.2rem solid ${variables.focusOutlineColor}`,
+      },
+    }),
 
     ...((props.actionable || props.onClick) && {
       cursor: 'pointer',

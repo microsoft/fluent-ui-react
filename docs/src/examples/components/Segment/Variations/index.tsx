@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
@@ -8,6 +8,11 @@ const Variations = () => (
       title="Inverted"
       description="A segment can have its colors inverted for contrast."
       examplePath="components/Segment/Variations/SegmentExampleInverted"
+    />
+    <ComponentExample
+      title="Color"
+      description="A segment can have different colors."
+      examplePath="components/Segment/Variations/SegmentExampleColor"
     />
   </ExampleSection>
 )

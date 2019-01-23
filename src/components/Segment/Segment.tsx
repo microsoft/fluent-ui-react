@@ -7,9 +7,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
-import { Extendable, ShorthandValue } from '../../../types/utils'
-import Slot from '../Slot/Slot'
+import { ReactProps, ShorthandValue } from '../../../types/utils'
+import Box from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
@@ -22,7 +23,7 @@ export interface SegmentProps
 /**
  * A segment is used to create a grouping of related content.
  */
-class Segment extends UIComponent<Extendable<SegmentProps>, any> {
+class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
   static className = 'ui-segment'
 
   static displayName = 'Segment'
@@ -32,18 +33,23 @@ class Segment extends UIComponent<Extendable<SegmentProps>, any> {
       content: 'shorthand',
     }),
     inverted: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
     as: 'div',
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
-        {childrenExist(children) ? children : Slot.create(content)}
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
     )
   }

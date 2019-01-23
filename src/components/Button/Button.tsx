@@ -12,12 +12,13 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Icon from '../Icon/Icon'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 import { buttonBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, Extendable, ShorthandValue } from '../../../types/utils'
+import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import ButtonGroup from './ButtonGroup'
 
 export interface ButtonProps
@@ -83,7 +84,7 @@ export interface ButtonState {
  *  - for disabled buttons, add 'disabled' attribute so that the state is properly recognized by the screen reader
  *  - if button includes icon only, textual representation needs to be provided by using 'title', 'aria-label', or 'aria-labelledby' attributes
  */
-class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
+class Button extends UIComponent<ReactProps<ButtonProps>, ButtonState> {
   static create: Function
 
   public static displayName = 'Button'
@@ -125,7 +126,7 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
     accessibility,
     variables,
     styles,
-    rest,
+    unhandledProps,
   }): React.ReactNode {
     const { children, content, disabled, iconPosition } = this.props
     const hasChildren = childrenExist(children)
@@ -137,12 +138,13 @@ class Button extends UIComponent<Extendable<ButtonProps>, ButtonState> {
         onClick={this.handleClick}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
       >
         {hasChildren && children}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Slot.create(!hasChildren && content, {
-          defaultProps: { as: 'span', className: classes.content },
+        {Box.create(!hasChildren && content, {
+          defaultProps: { as: 'span', styles: styles.content },
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
