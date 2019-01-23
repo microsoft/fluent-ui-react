@@ -136,7 +136,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
-  /** Whether a toggle indicator (that shows/hides items list) should be rendered. */
+  /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
 
   /** Sets currently selected value(s) (controlled mode). */
