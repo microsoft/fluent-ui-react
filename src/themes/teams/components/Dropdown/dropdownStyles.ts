@@ -2,6 +2,7 @@ import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
+import ListItem from '../../../../components/List/ListItem'
 
 const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
   root: (): ICSSInJSStyle => ({}),
@@ -71,6 +72,16 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     width: fluid ? '100%' : width,
     top: 'calc(100% + 2px)', // leave room for container + its border
     background: listBackgroundColor,
+  }),
+
+  loadingMessage: ({ variables: v }): ICSSInJSStyle => ({
+    [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
+  }),
+
+  noResultsMessage: ({ variables: v }): ICSSInJSStyle => ({
+    [`&.${ListItem.className}`]: { backgroundColor: v.listItemBackgroundColor },
+
+    fontWeight: 'bold',
   }),
 
   toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({

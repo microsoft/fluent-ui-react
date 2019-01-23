@@ -32,11 +32,10 @@ import Indicator from '../Indicator/Indicator'
 import List from '../List/List'
 import Ref from '../Ref/Ref'
 import DropdownItem from './DropdownItem'
-import DropdownMessageLoading from './DropdownMessageLoading'
-import DropdownMessageNoResults from './DropdownMessageNoResults'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
+import ListItem from '../List/ListItem'
 
 // TODO: To be replaced when Downshift will add highlightedItem in their interface.
 export interface A11yStatusMessageOptions<Item> extends DownshiftA11yStatusMessageOptions<Item> {
@@ -428,13 +427,14 @@ export default class Dropdown extends AutoControlledComponent<
           styles={styles.list}
           tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
           aria-hidden={!isOpen}
-          items={isOpen ? this.renderItems(variables, getItemProps, highlightedIndex) : []}
+          items={this.renderItems(styles, variables, getItemProps, highlightedIndex)}
         />
       </Ref>
     )
   }
 
   private renderItems(
+    styles: ComponentSlotStylesInput,
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     highlightedIndex: number,
@@ -459,8 +459,17 @@ export default class Dropdown extends AutoControlledComponent<
 
     return [
       ...items,
-      loading && DropdownMessageLoading.create(loadingMessage),
-      !loading && items.length === 0 && DropdownMessageNoResults.create(noResultsMessage),
+      loading &&
+        ListItem.create(loadingMessage, {
+          defaultProps: {
+            styles: styles.loadingMessage,
+          },
+        }),
+      !loading &&
+        items.length === 0 &&
+        ListItem.create(noResultsMessage, {
+          styles: styles.noResultsMessage,
+        }),
     ]
   }
 

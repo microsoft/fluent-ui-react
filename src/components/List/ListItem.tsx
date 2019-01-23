@@ -8,13 +8,18 @@ import {
   commonPropTypes,
   ContentComponentProps,
   isFromKeyboard,
+  childrenExist,
+  ChildrenComponentProps,
 } from '../../lib'
 import ItemLayout from '../ItemLayout/ItemLayout'
 import { listItemBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
-export interface ListItemProps extends UIComponentProps, ContentComponentProps<any> {
+export interface ListItemProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    ContentComponentProps<any> {
   /**
    * Accessibility behavior if overridden by the user.
    * @default listItemBehavior
@@ -70,7 +75,6 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      children: false,
       content: false,
     }),
     contentMedia: PropTypes.any,
@@ -127,6 +131,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
       debug,
       endMedia,
       media,
+      children,
       content,
       contentMedia,
       header,
@@ -140,7 +145,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         as={as}
         className={classes.root}
         rootCSS={styles.root}
-        content={content}
+        content={childrenExist(children) ? children : content}
         contentMedia={contentMedia}
         debug={debug}
         endMedia={endMedia}
