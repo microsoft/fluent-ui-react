@@ -83,25 +83,28 @@ task('perf:build', cb => {
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
   const times = argv.times || DEFAULT_RUN_TIMES
+  let browser
 
-  const browser = await puppeteer.launch()
+  try {
+    browser = await puppeteer.launch()
 
-  for (let i = 0; i < times; i++) {
-    const page = await browser.newPage()
-
-    try {
+    for (let i = 0; i < times; i++) {
+      const page = await browser.newPage()
       await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
       const measuresFromStep = await page.evaluate(() => window.runMeasures())
       measures.push(measuresFromStep)
-    } catch (e) {
-      throw e
-    } finally {
+
       await page.close()
+    }
+  } catch (e) {
+    throw e
+  } finally {
+    if (browser) {
+      await browser.close()
     }
   }
 
-  await browser.close()
   const resultsFile = paths.perfDist('result.json')
 
   fs.writeFileSync(resultsFile, JSON.stringify(normalizeMeasures(measures), null, 2))
