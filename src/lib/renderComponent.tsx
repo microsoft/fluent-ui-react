@@ -1,9 +1,7 @@
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
-import * as fela from 'react-fela'
-
-const FelaTheme = (fela as any).FelaTheme
+import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
 import felaRenderer from './felaRenderer'

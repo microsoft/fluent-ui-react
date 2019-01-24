@@ -1,8 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as fela from 'react-fela'
-
-const FelaTheme = (fela as any).FelaTheme
+import { FelaTheme } from 'react-fela'
 
 import { ThemePrepared } from '../../themes/types'
 
