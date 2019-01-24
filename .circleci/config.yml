@@ -10,6 +10,7 @@ jobs:
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
+      # https://circleci.com/docs/2.0/api-job-trigger/
       - run:
           name: Start Visual Tests job
           command: |
