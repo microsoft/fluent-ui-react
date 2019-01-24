@@ -180,7 +180,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
         const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
           componentVariables[displayName],
           props.variables,
-        )(siteVariables, stateAndProps)
+        )(siteVariables)
 
         const animationCSSProp = props.animation
           ? createAnimationStyles(props.animation, theme)
