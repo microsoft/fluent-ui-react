@@ -8,7 +8,7 @@ delete prettierConfig.overrides
 // Please use this function directly and don't reexport it in utils.
 // https://github.com/prettier/prettier/issues/4959
 
-const formatCode = (code, parser = 'babylon') => {
+const formatCode = (code: string, parser = 'babylon') => {
   if (!code) return ''
 
   const formatted = prettier.format(code, {

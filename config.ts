@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 // ------------------------------------
 const env = process.env.NODE_ENV || 'development'
 const __DEV__ = env === 'development'
+const __PERF__ = !!process.env.PERF
 const __PROD__ = env === 'production'
 const __BASENAME__ = __PROD__ ? '/react/' : '/'
 
@@ -21,6 +22,8 @@ const envConfig = {
   dir_dll: 'dll',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
+  dir_perf_dist: 'perf/dist',
+  dir_perf_src: 'perf/src',
   dir_umd_dist: 'dist/umd',
 }
 
@@ -36,6 +39,8 @@ const paths = {
   dll: base.bind(null, envConfig.dir_dll),
   docsDist: base.bind(null, envConfig.dir_docs_dist),
   docsSrc: base.bind(null, envConfig.dir_docs_src),
+  perfDist: base.bind(null, envConfig.dir_perf_dist),
+  perfSrc: base.bind(null, envConfig.dir_perf_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
   withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
   posix: undefined, // all the sibling values, but with forward slashes regardless the OS
@@ -52,6 +57,7 @@ const config = {
   // ----------------------------------
   server_host: 'localhost',
   server_port: process.env.PORT || 8080,
+  perf_port: process.env.PERF_PORT || 8081,
 
   // ----------------------------------
   // Compiler Configuration
@@ -59,6 +65,7 @@ const config = {
   compiler_devtool: __DEV__ && 'eval-source-map',
   compiler_globals: {
     __DEV__,
+    __PERF__,
     __PROD__,
     __BASENAME__: JSON.stringify(__BASENAME__),
     'process.env': {

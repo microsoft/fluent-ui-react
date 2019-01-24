@@ -26,16 +26,11 @@ const ChatWithPopover = () => (
             },
           }),
         },
-        ContextMenu: {
-          root: ({ theme: { siteVariables } }) => ({
-            background: siteVariables.white,
-            boxShadow: '0 0.2rem 1.6rem 0 rgba(37,36,35,.3)',
-            borderRadius: '.3rem',
-            marginTop: '5px',
-          }),
-        },
         Menu: {
           root: {
+            background: '#fff',
+            boxShadow: '0px 2px 4px #ddd',
+            borderRadius: '.3rem',
             '& a:focus': {
               textDecoration: 'none',
               color: 'inherit',

@@ -9,6 +9,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ComponentEventHandler } from '../../../types/utils'
 
@@ -44,11 +45,15 @@ class AccordionContent extends UIComponent<ReactProps<AccordionContentProps>, an
     onClick: PropTypes.func,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

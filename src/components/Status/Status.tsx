@@ -52,10 +52,10 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
     state: 'unknown',
   }
 
-  renderComponent({ ElementType, classes, rest, variables, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, variables, styles }) {
     const { icon } = this.props as StatusPropsWithDefaults
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType {...unhandledProps} className={classes.root}>
         {Icon.create(icon, {
           defaultProps: {
             size: 'smallest',

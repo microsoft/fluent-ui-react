@@ -10,6 +10,7 @@ import {
   ColorComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps } from '../../../types/utils'
 
@@ -49,11 +50,15 @@ class Divider extends UIComponent<ReactProps<DividerProps>, any> {
     size: 0,
   }
 
-  renderComponent({ ElementType, classes, rest }) {
+  renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, content } = this.props
 
     return (
-      <ElementType {...rest} className={classes.root}>
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
         {childrenExist(children) ? children : content}
       </ElementType>
     )

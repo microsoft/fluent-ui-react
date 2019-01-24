@@ -25,13 +25,16 @@ export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResul
 // Props
 // ========================================================
 
-export type Props = ObjectOf<any>
+export type Props<T = {}> = T & ObjectOf<any>
 export type ReactChildren = React.ReactNodeArray | React.ReactNode
 
 export type ReactPropsStrict<T> = { [K in keyof T]: NullableIfUndefined<T[K]> }
 export type ReactProps<T> = Extendable<ReactPropsStrict<T>>
 
-export type ComponentEventHandler<TProps> = (event: React.SyntheticEvent, data: TProps) => void
+export type ComponentEventHandler<TProps> = (
+  event: React.SyntheticEvent<HTMLElement>,
+  data: TProps,
+) => void
 
 type ChildrenProps = { children: any }
 export type PropsOf<T> = T extends React.ComponentClass<Extendable<infer TProps>>
@@ -60,4 +63,14 @@ export type ShorthandRenderer = (
 
 export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
 
-export type ShorthandValue = React.ReactNode | Props
+// The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
+type ReactNode =
+  | React.ReactChild
+  | React.ReactNodeArray
+  | React.ReactPortal
+  | boolean
+  | null
+  | undefined
+
+export type ShorthandValue<P = {}> = ReactNode | Props<P>
+export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]

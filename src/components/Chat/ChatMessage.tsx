@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
+import * as _ from 'lodash'
 
 import {
   childrenExist,
@@ -12,13 +13,15 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
+  isFromKeyboard,
+  rtlTextContainer,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../../types/utils'
+import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
 import { chatMessageBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 import Text from '../Text/Text'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface ChatMessageProps
   extends UIComponentProps,
@@ -38,12 +41,23 @@ export interface ChatMessageProps
 
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onFocus?: ComponentEventHandler<ChatMessageProps>
+}
+
+export interface ChatMessageState {
+  isFromKeyboard: boolean
 }
 
 /**
  * A chat message represents a single statement communicated to a user.
  */
-class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
+class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageState> {
   static className = 'ui-chat__message'
 
   static create: Function
@@ -56,11 +70,22 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
     author: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
+    onFocus: PropTypes.func,
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
+  }
+
+  public state = {
+    isFromKeyboard: false,
+  }
+
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -74,7 +99,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
     ElementType,
     classes,
     accessibility,
-    rest,
+    unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
     const { author, children, content, mine, timestamp } = this.props
@@ -85,7 +110,9 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        onFocus={this.handleFocus}
         className={className}
       >
         {childrenPropExists ? (
@@ -97,7 +124,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, any> {
             {Text.create(timestamp, {
               defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
             })}
-            {Slot.create(content, { defaultProps: { styles: styles.content } })}
+            {Box.create(content, { defaultProps: { styles: styles.content } })}
           </>
         )}
       </ElementType>

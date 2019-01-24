@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ColorComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 
 import { ReactProps } from '../../../types/utils'
@@ -85,16 +86,16 @@ class Text extends UIComponent<ReactProps<TextProps>, any> {
     as: 'span',
   }
 
-  renderComponent({ ElementType, classes, rest }): React.ReactNode {
+  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     const { children, content } = this.props
 
-    const hasChildren = childrenExist(children)
-
-    const maybeDirAuto = !hasChildren && typeof content === 'string' ? { dir: 'auto' } : null
-
     return (
-      <ElementType className={classes.root} {...maybeDirAuto} {...rest}>
-        {hasChildren ? children : content}
+      <ElementType
+        className={classes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

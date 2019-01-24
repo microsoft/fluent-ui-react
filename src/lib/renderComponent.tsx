@@ -32,13 +32,14 @@ import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
+import { generateColorScheme } from './index'
 
 export interface RenderResultConfig<P> {
   // TODO: Switch back to React.ReactType after issue will be resolved
   // https://github.com/Microsoft/TypeScript/issues/28768
   ElementType: React.ComponentType<P> | string
   classes: ComponentSlotClasses
-  rest: Props
+  unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
   accessibility: AccessibilityBehavior
@@ -63,13 +64,19 @@ export interface RenderConfig<P> {
 const getAccessibility = (
   props: State & PropsWithVarsAndStyles,
   actionHandlers: AccessibilityActionHandlers,
+  isRtlEnabled: boolean,
 ) => {
   const { accessibility: customAccessibility, defaultAccessibility } = props
   const accessibility: AccessibilityDefinition = (customAccessibility ||
     defaultAccessibility ||
     defaultBehavior)(props)
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, props)
+  const keyHandlers = getKeyDownHandlers(
+    actionHandlers,
+    accessibility.keyActions,
+    props,
+    isRtlEnabled,
+  )
   return {
     ...accessibility,
     keyHandlers,
@@ -123,10 +130,10 @@ const renderWithFocusZone = <P extends {}>(
   if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
     const originalElementType = config.ElementType
     config.ElementType = FabricFocusZone as any
-    config.rest = { ...config.rest, ...focusZoneDefinition.props }
-    config.rest.as = originalElementType
-    config.rest.ref = focusZoneRef
-    config.rest.isRtl = config.rtl
+    config.unhandledProps = { ...config.unhandledProps, ...focusZoneDefinition.props }
+    config.unhandledProps.as = originalElementType
+    config.unhandledProps.ref = focusZoneRef
+    config.unhandledProps.isRtl = config.rtl
   }
   return render(config)
 }
@@ -153,6 +160,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
 
         const {
           siteVariables = {
+            colorScheme: {},
             colors: {},
             contextualColors: {},
             emphasisColors: {},
@@ -185,15 +193,25 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
             root: props.styles,
           },
         )
-        const accessibility: AccessibilityBehavior = getAccessibility(stateAndProps, actionHandlers)
-        const rest = getUnhandledProps(
+
+        const accessibility: AccessibilityBehavior = getAccessibility(
+          stateAndProps,
+          actionHandlers,
+          rtl,
+        )
+
+        const unhandledProps = getUnhandledProps(
           { handledProps: [...handledProps, ...accessibility.handledProps] },
           props,
         )
+
+        const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
+
         const styleParam: ComponentStyleFunctionParam = {
           props: stateAndProps,
           variables: resolvedVariables,
           theme,
+          colors,
         }
 
         mergedStyles.root = {
@@ -211,7 +229,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
 
         const config: RenderResultConfig<P> = {
           ElementType,
-          rest,
+          unhandledProps,
           classes,
           variables: resolvedVariables,
           styles: resolvedStyles,

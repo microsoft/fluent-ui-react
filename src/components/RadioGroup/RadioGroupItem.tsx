@@ -11,6 +11,7 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import Label from '../Label/Label'
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
@@ -142,14 +143,14 @@ class RadioGroupItem extends AutoControlledComponent<
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
-  renderComponent({ ElementType, classes, rest, styles, variables, accessibility }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
     const { label, icon } = this.props
 
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...accessibility.keyHandlers.root}
-        {...rest}
+        {...unhandledProps}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onClick={this.handleClick}
@@ -164,7 +165,7 @@ class RadioGroupItem extends AutoControlledComponent<
               styles: styles.icon,
             },
           })}
-          {label}
+          {rtlTextContainer.createFor({ element: label })}
         </Label>
       </ElementType>
     )

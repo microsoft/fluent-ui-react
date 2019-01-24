@@ -9,14 +9,7 @@ const warningWhitelist = [
 ]
 
 export default {
-  external: [
-    'lodash',
-    'lodash/fp',
-    'prop-types',
-    'react',
-    'react-dom',
-    'react-is',
-  ],
+  external: ['lodash', 'lodash/fp', 'prop-types', 'react', 'react-dom', 'react-is'],
   input: 'app.js',
   onwarn: (warning, warn) => {
     if (warningWhitelist.includes(warning.code)) {

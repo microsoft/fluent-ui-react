@@ -73,12 +73,15 @@ export default (
   if (!partSelector) {
     // temporarily disabled as we do not support overriding of attributes applied to parts
     test('gets correct role when overrides accessibility', () => {
-      const rendered = mountWithProviderAndGetComponent(
-        Component,
-        <Component {...requiredProps} accessibility={TestBehavior} />,
+      const testRole = 'test-mock-role'
+      const element = usesWrapperSlot ? (
+        <Component {...requiredProps} wrapper={{ role: testRole }} />
+      ) : (
+        <Component {...requiredProps} accessibility={TestBehavior} />
       )
+      const rendered = mountWithProviderAndGetComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
-      expect(role).toBe(overriddenRootRole)
+      expect(role).toBe(testRole)
     })
 
     test('gets correct role when overrides role', () => {

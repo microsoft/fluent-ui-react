@@ -17,6 +17,7 @@ export { default as Divider } from './components/Divider/dividerStyles'
 
 export { default as Dropdown } from './components/Dropdown/dropdownStyles'
 export { default as DropdownSearchInput } from './components/Dropdown/dropdownSearchInputStyles'
+export { default as DropdownSelectedItem } from './components/Dropdown/dropdownSelectedItemStyles'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
 
 export { default as Form } from './components/Form/formStyles'
@@ -44,6 +45,7 @@ export { default as ListItem } from './components/List/listItemStyles'
 
 export { default as Menu } from './components/Menu/menuStyles'
 export { default as MenuItem } from './components/Menu/menuItemStyles'
+export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'

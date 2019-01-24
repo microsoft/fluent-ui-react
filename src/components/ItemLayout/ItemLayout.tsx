@@ -9,6 +9,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
@@ -126,12 +127,12 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           gap={pxToRem(8)}
           debug={debug}
           truncateMain={truncateHeader}
-          main={header}
+          main={rtlTextContainer.createFor({ element: header })}
           rootCSS={headerCSS}
           end={
             headerMedia && (
               <span style={headerMediaCSS} className={mediaClasses}>
-                {headerMedia}
+                {rtlTextContainer.createFor({ element: headerMedia })}
               </span>
             )
           }
@@ -153,11 +154,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           debug={debug}
           truncateMain={truncateContent}
           rootCSS={contentCSS}
-          main={content}
+          main={rtlTextContainer.createFor({ element: content })}
           end={
             contentMedia && (
               <span style={contentMediaCSS} className={mediaClasses}>
-                {contentMedia}
+                {rtlTextContainer.createFor({ element: contentMedia })}
               </span>
             )
           }
@@ -166,7 +167,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, rest, styles }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles }) {
     const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
       .props as ItemLayoutPropsWithDefaults
 
@@ -190,7 +191,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         start={
           startArea && (
             <span style={mediaCSS} className={mergedMediaClasses}>
-              {startArea}
+              {rtlTextContainer.createFor({ element: startArea })}
             </span>
           )
         }
@@ -198,11 +199,11 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
         end={
           endArea && (
             <span style={endMediaCSS} className={mergedEndMediaClasses}>
-              {endArea}
+              {rtlTextContainer.createFor({ element: endArea })}
             </span>
           )
         }
-        {...rest}
+        {...unhandledProps}
       />
     )
   }

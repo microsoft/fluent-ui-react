@@ -1,11 +1,12 @@
-import { ICSSInJSStyle } from '../../../types'
-
 const accordionTitleStyles = {
-  root: (): ICSSInJSStyle => ({
+  root: () => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     padding: '.5rem 0',
     cursor: 'pointer',
+  }),
+  indicator: () => ({
+    userSelect: 'none',
   }),
 }
 
