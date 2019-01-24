@@ -8,7 +8,7 @@ export interface LoaderVariables {
   indicatorSizes: Record<LoaderSize, string>
 }
 
-export default (siteVariables, pxToRem): LoaderVariables => ({
+export default (siteVariables, props, pxToRem): LoaderVariables => ({
   foregroundColor: siteVariables.colors.grey[400],
   backgroundColor: siteVariables.colors.grey[100],
 

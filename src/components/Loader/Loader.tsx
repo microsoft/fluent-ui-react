@@ -72,7 +72,7 @@ class Loader extends UIComponent<ReactProps<LoaderProps>> {
     size: 'medium',
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, styles, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, styles, unhandledProps }) {
     const { indicator, label } = this.props
 
     return (
