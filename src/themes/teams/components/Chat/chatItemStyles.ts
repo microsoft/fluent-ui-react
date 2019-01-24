@@ -26,6 +26,7 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
 
   gutter: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
+    marginTop: v.gutterMargin,
     [p.gutterPosition === 'end' ? 'right' : 'left']: 0,
     ...(p.consecutive && {
       visibility: 'hidden',
