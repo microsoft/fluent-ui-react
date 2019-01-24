@@ -53,9 +53,13 @@ export default {
         fontWeight: v.fontWeightBold,
       }),
 
+      ...(size === 'smallest' && {
+        fontSize: v.fontSizeSmallest,
+        lineHeight: v.fontLineHeightSmallest,
+      }),
       ...(size === 'smaller' && {
-        fontSize: v.fontSizeExtraSmall,
-        lineHeight: v.fontLineHeightExtraSmall,
+        fontSize: v.fontSizeSmaller,
+        lineHeight: v.fontLineHeightSmaller,
       }),
       ...(size === 'small' && {
         fontSize: v.fontSizeSmall,
@@ -70,8 +74,12 @@ export default {
         lineHeight: v.fontLineHeightLarge,
       }),
       ...(size === 'larger' && {
-        fontSize: v.fontSizeExtraLarge,
-        lineHeight: v.fontLineHeightExtraLarge,
+        fontSize: v.fontSizeLarger,
+        lineHeight: v.fontLineHeightLarger,
+      }),
+      ...(size === 'largest' && {
+        fontSize: v.fontSizeLargest,
+        lineHeight: v.fontLineHeightLargest,
       }),
     }
   },

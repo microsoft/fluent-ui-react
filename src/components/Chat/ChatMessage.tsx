@@ -102,7 +102,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { author, children, content, mine, timestamp } = this.props
+    const { author, children, content, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -119,8 +119,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
-            {!mine &&
-              Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
+            {Text.create(author, { defaultProps: { size: 'small', styles: styles.author } })}
             {Text.create(timestamp, {
               defaultProps: { size: 'small', styles: styles.timestamp, timestamp: true },
             })}
