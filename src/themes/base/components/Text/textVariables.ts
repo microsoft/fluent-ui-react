@@ -52,7 +52,7 @@ export default (siteVariables): TextVariables => {
     successColor: siteVariables.colors.green[500],
 
     fontSizeSmallest: siteVariables.fontSizes.smallest,
-    fontLineHeightSmallest: siteVariables.lineHeightExtraSmall,
+    fontLineHeightSmallest: siteVariables.lineHeightSmallest,
 
     fontSizeSmaller: siteVariables.fontSizes.smaller,
     fontLineHeightSmaller: siteVariables.lineHeightSmaller,
@@ -61,16 +61,16 @@ export default (siteVariables): TextVariables => {
     fontLineHeightSmall: siteVariables.lineHeightSmall,
 
     fontSizeMedium: siteVariables.fontSizes.medium,
-    fontLineHeightMedium: siteVariables.lineHeightBase,
+    fontLineHeightMedium: siteVariables.lineHeightMedium,
 
     fontSizeLarge: siteVariables.fontSizes.large,
-    fontLineHeightLarge: siteVariables.lineHeightSmall,
+    fontLineHeightLarge: siteVariables.lineHeightLarge,
 
     fontSizeLarger: siteVariables.fontSizes.larger,
-    fontLineHeightLarger: siteVariables.lineHeightSmall,
+    fontLineHeightLarger: siteVariables.lineHeightLarger,
 
     fontSizeLargest: siteVariables.fontSizes.largest,
-    fontLineHeightLargest: siteVariables.lineHeightSmall,
+    fontLineHeightLargest: siteVariables.lineHeightLargest,
 
     fontWeightLight: siteVariables.fontWeightLight,
     fontWeightSemilight: siteVariables.fontWeightSemilight,
