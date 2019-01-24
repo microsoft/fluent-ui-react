@@ -72,11 +72,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
     const { message, gutter, gutterPosition } = this.props
-    const gutterElement =
-      gutter &&
-      Box.create(gutter, {
-        defaultProps: { styles: styles.gutter, className: `${ChatItem.className}__gutter` },
-      })
+    const gutterElement = gutter && Box.create(gutter, { defaultProps: { styles: styles.gutter } })
 
     return (
       <>
