@@ -18,8 +18,8 @@ _.mixin({
 const before = _.sortKeysBy(require('./before.json'))
 const after = _.sortKeysBy(require('./after.json'))
 
-console.log('| Test name | Before | After | Diff |')
-console.log('| --------- | ------ | ----- | ---- | ')
+console.log('| Test name | Measure | | Before | After | Diff |')
+console.log('| --------- | ------- | ------ | ----- | ---- | ')
 
 const compDiff = (a, b) => {
   const sign = a > b ? '-' : '+'
@@ -33,7 +33,7 @@ const logLine = (b, a, testName, measure) => {
   const after = a[measure]
 
   console.log(
-    `| ${testName}:${measure} | ${before} ms | ${after} ms | ${compDiff(before, after)} |`,
+    `| ${testName} | ${measure} | ${before} ms | ${after} ms | ${compDiff(before, after)} |`,
   )
 }
 
