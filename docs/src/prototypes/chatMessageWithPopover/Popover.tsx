@@ -28,6 +28,14 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     this.changeFocusState(shouldPreserveFocusState)
   }
 
+  getToolbarBehavior: Accessibility = (props: any) => {
+    const behavior = toolbarBehavior(props)
+    behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
+      return root.querySelector('[aria-label="thumbs up"]')
+    }
+    return behavior
+  }
+
   popoverStyles = ({ theme: { siteVariables } }) => ({
     transition: 'opacity 0.2s',
     position: 'absolute',
@@ -55,14 +63,6 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   })
 
   render() {
-    const overridenToolbarBehavior: Accessibility = (props: any) => {
-      const behavior = toolbarBehavior(props)
-      behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
-        return root.querySelector('[aria-label="thumbs up"]')
-      }
-      return behavior
-    }
-
     return (
       <Menu
         styles={this.popoverStyles}
@@ -114,7 +114,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         ]}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        accessibility={overridenToolbarBehavior}
+        accessibility={this.getToolbarBehavior}
         data-is-focusable={true}
       />
     )
