@@ -1,4 +1,4 @@
-import { Menu, toolbarBehavior, toolbarButtonBehavior } from '@stardust-ui/react'
+import { Menu, toolbarBehavior, toolbarButtonBehavior, Accessibility } from '@stardust-ui/react'
 import * as React from 'react'
 import cx from 'classnames'
 
@@ -36,19 +36,40 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     opacity: 0,
 
     '& .smile-emoji': {
-      display: 'none',
+      position: 'absolute',
+      opacity: 0,
+      zIndex: -1,
     },
 
     '&.focused .smile-emoji': {
-      display: 'flex',
+      position: 'initial',
+      zIndex: 'initial',
+      opacity: 1,
     },
 
     '&:hover .smile-emoji': {
-      display: 'flex',
+      position: 'initial',
+      zIndex: 'initial',
+      opacity: 1,
     },
   })
 
   render() {
+    const overridenToolbarBehavior: Accessibility = (props: any) => {
+      const toolbarFocusZone = toolbarBehavior(props).focusZone
+      toolbarFocusZone.props = {
+        ...toolbarFocusZone.props,
+        defaultTabbableElement: (root: HTMLElement): HTMLElement => {
+          return root.querySelector('[aria-label="thumbs up"]')
+        },
+      }
+
+      return {
+        ...toolbarBehavior(props),
+        focusZone: toolbarFocusZone,
+      }
+    }
+
     return (
       <Menu
         styles={this.popoverStyles}
@@ -100,7 +121,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         ]}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        accessibility={toolbarBehavior}
+        accessibility={overridenToolbarBehavior}
         data-is-focusable={true}
       />
     )
