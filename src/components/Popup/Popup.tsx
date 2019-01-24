@@ -231,7 +231,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
               this.triggerDomElement && !this.triggerDomElement.contains(e.target)
 
             if (isOutsidePopupElement && isOutsideTriggerElement) {
-              this.state.open && this.trySetOpen(false, e, true)
+              this.state.open && this.trySetOpen(false, e)
             }
           },
           {
@@ -465,10 +465,9 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
     )
   }
 
-  private trySetOpen(newValue: boolean, eventArgs: any, forceChangeEvent: boolean = false) {
-    if (this.trySetState({ open: newValue }) || forceChangeEvent) {
-      _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
-    }
+  private trySetOpen(newValue: boolean, eventArgs: any) {
+    this.trySetState({ open: newValue })
+    _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
   private setPopupOpen(newOpen, e) {
@@ -486,7 +485,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
 
   private close = (e, onClose?: Function) => {
     if (this.state.open) {
-      this.trySetOpen(false, e, true)
+      this.trySetOpen(false, e)
       onClose && onClose()
     }
   }
