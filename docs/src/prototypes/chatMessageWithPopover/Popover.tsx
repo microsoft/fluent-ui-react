@@ -56,18 +56,11 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
 
   render() {
     const overridenToolbarBehavior: Accessibility = (props: any) => {
-      const toolbarFocusZone = toolbarBehavior(props).focusZone
-      toolbarFocusZone.props = {
-        ...toolbarFocusZone.props,
-        defaultTabbableElement: (root: HTMLElement): HTMLElement => {
-          return root.querySelector('[aria-label="thumbs up"]')
-        },
+      const behavior = toolbarBehavior(props)
+      behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
+        return root.querySelector('[aria-label="thumbs up"]')
       }
-
-      return {
-        ...toolbarBehavior(props),
-        focusZone: toolbarFocusZone,
-      }
+      return behavior
     }
 
     return (
