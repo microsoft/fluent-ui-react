@@ -18,7 +18,7 @@ _.mixin({
 const before = _.sortKeysBy(require('./before.json'))
 const after = _.sortKeysBy(require('./after.json'))
 
-console.log('| Test name | Measure | | Before | After | Diff |')
+console.log('| Test name | Measure | Before | After | Diff |')
 console.log('| --------- | ------- | ------ | ----- | ---- | ')
 
 const compDiff = (a, b) => {
