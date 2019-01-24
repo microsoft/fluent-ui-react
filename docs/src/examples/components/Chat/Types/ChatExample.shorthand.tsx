@@ -20,6 +20,7 @@ const items = [
     message: {
       content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     },
+    grouped: 'start',
     key: 'message-id-2',
   },
   {
@@ -29,7 +30,17 @@ const items = [
         <Chat.Message content="What's up?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
-    consecutive: true,
+    grouped: 'middle',
+    key: 'message-id-3',
+  },
+  {
+    gutter: { content: <Avatar {...janeAvatar} /> },
+    message: {
+      content: (
+        <Chat.Message content="What's new?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+      ),
+    },
+    grouped: 'end',
     key: 'message-id-3',
   },
   {

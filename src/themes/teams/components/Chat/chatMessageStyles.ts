@@ -1,12 +1,15 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
+import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',
     paddingLeft: v.padding,
     paddingRight: v.padding,
+    paddingTop: pxToRem(8),
+    paddingBottom: pxToRem(10),
     borderRadius: v.borderRadius,
     border: v.border,
     color: v.color,
