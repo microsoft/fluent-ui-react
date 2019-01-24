@@ -39,6 +39,7 @@ import DropdownItem from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button from '../Button/Button'
+import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 
 // TODO: To be replaced when Downshift will add highlightedItem in their interface.
 export interface A11yStatusMessageOptions<Item> extends DownshiftA11yStatusMessageOptions<Item> {
@@ -554,16 +555,7 @@ export default class Dropdown extends AutoControlledComponent<
       statusDiv.setAttribute('role', 'status')
       statusDiv.setAttribute('aria-live', 'polite')
       statusDiv.setAttribute('aria-relevant', 'additions text')
-      Object.assign(statusDiv.style, {
-        border: '0',
-        clip: 'rect(0 0 0 0)',
-        height: '1px',
-        margin: '-1px',
-        overflow: 'hidden',
-        padding: '0',
-        position: 'absolute',
-        width: '1px',
-      })
+      Object.assign(statusDiv.style, screenReaderContainerStyles)
       document.body.appendChild(statusDiv)
     }
 
