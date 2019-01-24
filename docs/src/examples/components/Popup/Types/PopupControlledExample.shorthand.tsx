@@ -4,7 +4,10 @@ import { Button, Input, Popup } from '@stardust-ui/react'
 class PopupControlledExample extends React.Component {
   state = { open: false }
 
-  handleOpenChange = (e, { open }) => this.setState({ open })
+  handleOpenChange = (e, { open }) => {
+    alert(`Popup requested to change its open state to "${open}".`)
+    this.setState({ open })
+  }
 
   render() {
     return (
