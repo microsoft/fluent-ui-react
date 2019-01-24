@@ -7,9 +7,10 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
-import Slot from '../Slot/Slot'
+import Box from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
@@ -32,6 +33,7 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
       content: 'shorthand',
     }),
     inverted: PropTypes.bool,
+    rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
@@ -42,8 +44,12 @@ class Segment extends UIComponent<ReactProps<SegmentProps>, any> {
     const { children, content } = this.props
 
     return (
-      <ElementType {...unhandledProps} className={classes.root}>
-        {childrenExist(children) ? children : Slot.create(content)}
+      <ElementType
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : Box.create(content)}
       </ElementType>
     )
   }

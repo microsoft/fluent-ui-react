@@ -17,16 +17,59 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### BREAKING
+### BREAKING CHANGES
+- Update variable names in themes, add missing sizes @layershifter ([#762](https://github.com/stardust-ui/react/pull/762))
+- Rename `toggleButton` prop to `toggleIndicator` and make it visible by default @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+
+### Features
+- Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+
+<!--------------------------------[ v0.18.0 ]------------------------------- -->
+## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.17.0...v0.18.0)
+
+### BREAKING CHANGES
+- Forwarding props for `createShorthand` calls if the value is a React element @mnajdova ([#759](https://github.com/stardust-ui/react/pull/759))
+- Rename `Slot` component to `Box` and export it @Bugaa92 ([#713](https://github.com/stardust-ui/react/pull/713))
+
+### Fixes
+- Fix focus outline visible only during keyboard navigation in `ListItem` @layershifter ([#727](https://github.com/stardust-ui/react/pull/727))
+- Pass `jest --detectLeaks` tests @miroslavstastny ([#718](https://github.com/stardust-ui/react/pull/718))
+- Fix Avatar's size example @mnajdova ([#745](https://github.com/stardust-ui/react/pull/745))
+- Fix teams theme `Status` and `Chat.Message` styles ([#747](https://github.com/stardust-ui/react/pull/747))
+- Fix `Popup` - do not stop event propagation when pressing Esc on trigger element @sophieH29 ([#750](https://github.com/stardust-ui/react/pull/750))
+- Fix alignment of `Layout`'s `main` area @kuzhelov ([#752](https://github.com/stardust-ui/react/pull/752))
+- Call `Popup` `onOpenChange` on all user initiated events @levithomason ([#619](https://github.com/stardust-ui/react/pull/619))
+- Fix `ChatMessage` - Author element should always be rendered @sophieH29 ([#761](https://github.com/stardust-ui/react/pull/761))
+
+### Features
+- Add and export 'missed call' icon in Teams theme @codepretty ([#748](https://github.com/stardust-ui/react/pull/748))
+- Add `Indicator` component and used it in `MenuItem` and `AccordionTitle` @mnajdova ([#721](https://github.com/stardust-ui/react/pull/721))
+- Expose `renderItem` and `renderSelectedItem` callbacks API for `Dropdown` @layershifter ([#746](https://github.com/stardust-ui/react/pull/746))
+- Add RTL support for the strings used inside the components @mnajdova ([#704](https://github.com/stardust-ui/react/pull/704))
+
+### Documentation
+- Refine Shorthand docs page content @kuzhelov ([#751](https://github.com/stardust-ui/react/pull/751))
+
+<!--------------------------------[ v0.17.0 ]------------------------------- -->
+## [v0.17.0](https://github.com/stardust-ui/react/tree/v0.17.0) (2019-01-17)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.16.2...v0.17.0)
+
+### BREAKING CHANGES
 - Rename `DropdownLabel` to `DropdownSelectedItem` and extract styles @layershifter ([#725](https://github.com/stardust-ui/react/pull/725))
+- Make element type of component's event handler to be `HTMLElement` @kuzhelov ([#740](https://github.com/stardust-ui/react/pull/740))
+
+### Fixes
+- Remove `render` from default factories options @layershifter ([#735](https://github.com/stardust-ui/react/pull/735))
+
+### Features
+- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686](https://github.com/stardust-ui/react/pull/686))
 
 ### Documentation
 - Fix ignored initial state of knobs @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Fix unclearable example's code @layershifter ([#720](https://github.com/stardust-ui/react/pull/720))
 - Add ability to export examples to CodeSandbox @layershifter ([#731](https://github.com/stardust-ui/react/pull/731))
-
-### Features
-- Add accessibility for submenu in toolbar and menu behavior @kolaps33 ([#686] (https://github.com/stardust-ui/react/pull/686))
+- Fix remove empty item in docs sidebar @layershifter ([#728](https://github.com/stardust-ui/react/pull/728))
 
 <!--------------------------------[ v0.16.2 ]------------------------------- -->
 ## [v0.16.2](https://github.com/stardust-ui/react/tree/v0.16.2) (2019-01-14)
@@ -38,8 +81,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `accessibility` and `styles` to the API of `createComponent` @kuzhelov ([#714](https://github.com/stardust-ui/react/pull/714))
 
 ### Fixes
-- Fix doc layout for Menu component @codepretty ([#695] https://github.com/stardust-ui/react/pull/695)
-- Fix focus outline visible only during keyboard navigation @kolaps33 ([#689] https://github.com/stardust-ui/react/pull/689)
+- Fix doc layout for Menu component @codepretty ([#695](https://github.com/stardust-ui/react/pull/695))
+- Fix focus outline visible only during keyboard navigation @kolaps33 ([#689](https://github.com/stardust-ui/react/pull/689))
 - Fix handling changes of `renderer` prop in `Provider` @layershifter ([#702](https://github.com/stardust-ui/react/pull/702))
 - Fix Menu themeing styles @codepretty ([#708](https://github.com/stardust-ui/react/pull/708))
 - Prevent infinite rendering loop start on `Popup` open @kuzhelov ([#705](https://github.com/stardust-ui/react/pull/705))

@@ -1,6 +1,7 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
+import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -23,8 +24,8 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: p.mine ? 'none' : undefined,
     marginRight: v.authorMargin,
+    ...(p.mine && screenReaderContainerStyles),
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({

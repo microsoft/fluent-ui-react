@@ -1,7 +1,7 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
 import { Grid, Header } from 'semantic-ui-react'
+
+import { Extendable } from 'types/utils'
 
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -14,7 +14,11 @@ const sectionStyle: React.CSSProperties = {
   paddingBottom: '5em',
 }
 
-const ExampleSection: any = ({ title, children, ...restProps }) => (
+export type ExampleSectionProps = Extendable<{
+  title: string
+}>
+
+const ExampleSection: React.FC<ExampleSectionProps> = ({ title, children, ...restProps }) => (
   <Grid padded style={sectionStyle} {...restProps}>
     <Grid.Column>
       <Header as="h2" style={headerStyle} className="no-anchor">
@@ -24,10 +28,5 @@ const ExampleSection: any = ({ title, children, ...restProps }) => (
     </Grid.Column>
   </Grid>
 )
-
-ExampleSection.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string,
-}
 
 export default ExampleSection

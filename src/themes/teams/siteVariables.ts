@@ -83,9 +83,11 @@ export const fontWeightBold = 700
 //
 // LINE HEIGHTS
 //
-export const lineHeightBase = 1.4286
+export const lineHeightSmaller = 1.2
 export const lineHeightSmall = 1.3333
-export const lineHeightExtraSmall = 1.2
+export const lineHeightMedium = 1.4286
+export const lineHeightLarge = 1.3333
+export const lineHeightLarger = 1.3333
 
 //
 // SEMANTIC ASSIGNMENTS
@@ -97,11 +99,4 @@ export const bodyFontFamily =
 export const bodyFontSize = '1.4rem'
 export const bodyBackground = white
 export const bodyColor = black
-export const bodyLineHeight = lineHeightBase
-
-//
-// UNICODE CHARACTERS
-//
-export const arrowRight = '\u25B8'
-export const arrowDown = '\u25BE'
-export const arrowLeft = '\u25C2'
+export const bodyLineHeight = lineHeightMedium

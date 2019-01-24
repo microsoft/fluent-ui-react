@@ -9,6 +9,7 @@ import {
   commonPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
+  rtlTextContainer,
 } from '../../lib'
 import { ShorthandValue, ShorthandRenderFunction, ReactProps } from '../../../types/utils'
 import { Accessibility } from '../../lib/accessibility/types'
@@ -52,6 +53,7 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     accessibility: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
+    rtlAttributes: PropTypes.func,
   }
 
   public static defaultProps = {
@@ -75,7 +77,12 @@ class Tree extends UIComponent<ReactProps<TreeProps>> {
     const { children } = this.props
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+      >
         {childrenExist(children) ? children : this.renderContent()}
       </ElementType>
     )

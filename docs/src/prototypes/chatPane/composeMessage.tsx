@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@stardust-ui/react'
 import { MenuItemProps } from 'src/components/Menu/MenuItem'
+import style from './chatProtoStyle'
 
 type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
 
@@ -8,8 +9,22 @@ class ComposeMessage extends React.Component {
   public render() {
     return (
       <Layout
+        role="region"
+        aria-labelledby="chat-compose-reader-text"
         vertical
-        start={this.renderInput()}
+        start={
+          <div>
+            <div
+              role="heading"
+              aria-level={2}
+              id="chat-compose-reader-text"
+              style={style.screenReaderContainerStyles}
+            >
+              Compose
+            </div>
+            {this.renderInput()}
+          </div>
+        }
         main={this.renderToolbar()}
         styles={{ padding: '16px 32px' }}
       />

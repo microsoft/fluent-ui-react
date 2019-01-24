@@ -10,7 +10,7 @@ import {
 
 import Input from 'src/components/Input/Input'
 import Icon from 'src/components/Icon/Icon'
-import Slot from 'src/components/Slot/Slot'
+import Box from 'src/components/Box/Box'
 
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']
@@ -35,11 +35,11 @@ describe('Input', () => {
     })
   })
 
-  implementsShorthandProp(Input)('input', Slot, { mapsValueToProp: 'type' })
+  implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })
   implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
 
   describe('wrapper', () => {
-    implementsShorthandProp(Input)('wrapper', Slot, { mapsValueToProp: 'children' })
+    implementsShorthandProp(Input)('wrapper', Box, { mapsValueToProp: 'children' })
     implementsWrapperProp(Input, { wrapppedComponentSelector: 'input' })
   })
 
