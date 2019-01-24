@@ -1,0 +1,2928 @@
+{
+  "Divider.perf.tsx": {
+    "actualTime": {
+      "avg": 3.03,
+      "median": 2.06,
+      "min": 1.58,
+      "max": 9.06,
+      "values": [
+        {
+          "exampleIndex": 0,
+          "value": 7.855000003473833
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.879999996162951
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.0249999943189323
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.1000000124331564
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8949999939650297
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.9950000171083957
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.1749999907333404
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.1549999839626253
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.0650000078603625
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.1000000124331564
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.0699999877251685
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.065000020200387
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8350000027567148
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.6750000067986548
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.9949999987147748
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.664999988861382
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.6199999954551458
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.8449999915901572
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.929999974090606
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.9150000007357448
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.660000008996576
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.9650000031106174
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.275000006193295
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.130000008037314
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.0450000010896474
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.255000004079193
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.1200000192038715
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8449999915901572
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.8600000184960663
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.1000000124331564
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.9050000119023025
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.875000020954758
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.505000011296943
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.2800000151619315
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.749999985098839
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.759999978588894
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.9500000099651515
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.5899999998509884
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.755000009434298
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.9099999917671084
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.0699999877251685
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.8149999959859997
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.999999983236194
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.6250000044237822
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.9449999963399023
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.7050000024028122
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.85500000952743
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.6150000048801303
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.8949999939650297
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.7249999984633178
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 2.55,
+      "median": 1.92,
+      "min": 1.45,
+      "max": 7.01,
+      "values": [
+        {
+          "exampleIndex": 0,
+          "value": 5.789999995613471
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.7499999958090484
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8900000432040542
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.9249999604653567
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.7850000585895032
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.8250000323168933
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.9599999834317714
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.935000025900081
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.9249999895691872
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.9400000455789268
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.929999969433993
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.010000059381127
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.6999999934341758
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.5499999863095582
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8600000184960663
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.534999959403649
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.4600000286009163
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.7300000181421638
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.0700000138022006
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.7800000205170363
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.5399999974761158
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.8450000206939876
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.0149999763816595
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.9549999851733446
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.905000041006133
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.06999998469837
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.9450000254437327
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.720000000204891
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.7550000047776848
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.9900000479537994
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.7750000406522304
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.014999973354861
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.3549999750684947
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.115000010235235
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.569999953266233
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.519999976968393
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.039999989094213
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.4500000106636435
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.890000011073425
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.7799999914132059
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.9549999851733446
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.690000033704564
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.094999942230061
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.49500003317371
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.824999984819442
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.585000049090013
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.7200000293087214
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.470000006724149
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.7549999756738544
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.5849999801721424
+        }
+      ]
+    }
+  },
+  "Icon.perf.tsx": {
+    "actualTime": {
+      "avg": 5.12,
+      "median": 3.45,
+      "min": 2.9,
+      "max": 10.42,
+      "values": [
+        {
+          "exampleIndex": 1,
+          "value": 3.8899999926798046
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.249999979743734
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.535000019241124
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.5250000073574483
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.4349999914411455
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.069999981671572
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.370000014314428
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.540000005159527
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.185000002617016
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.120000008493662
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.805000001098961
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.3700000203680247
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.230000006733462
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.129999997327104
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.089999983785674
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.440000000409782
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.540000005159527
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.085000003920868
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.0799999949522316
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.3699999912641943
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.145000021206215
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.795000001555309
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.4200000166893
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.3899999980349094
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.574999988311902
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.124999988358468
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.4549999982118607
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.349999989150092
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.845000003930181
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.994999981950969
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.53999998071231
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.4300000115763396
+        },
+        {
+          "exampleIndex": 0,
+          "value": 10.424999985843897
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.7449999945238233
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.3750000002328306
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.6850000033155084
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.200000006472692
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.069999977014959
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.9999999969732016
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.249999979743734
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.459999985760078
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.144999995129183
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.909999981056899
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.1350000062957406
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.9599999834317714
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.1799999997019768
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.4500000183470547
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.54000000981614
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.440000000409782
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.155000007012859
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 3.29,
+      "median": 2.53,
+      "min": 2.04,
+      "max": 5.87,
+      "values": [
+        {
+          "exampleIndex": 1,
+          "value": 2.599999977974221
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.3799999326001853
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.2850000793114305
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.624999964609742
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.39000006695278
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.960000020219013
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.970000009052455
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.430000022286549
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.120000016177073
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.144999976735562
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.844999930355698
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.4449999909847975
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.6199999342206866
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.304999972693622
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.229999954579398
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.5449999957345426
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.5850000383798033
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.265000017359853
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.309999952558428
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.4799999955575913
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.215000011958182
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.814999963855371
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.774999950313941
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.410000015515834
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.280000051949173
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.2599998919758946
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.5649999734014273
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.544999974314123
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.0700000720098615
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.620000021532178
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.769999912241474
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.449999999953434
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.875000060768798
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.7499999559950083
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.470000006724149
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.754999994067475
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.394999988609925
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.284999965922907
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.1650000126101077
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.4199999461416155
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.55000001238659
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.3400000063702464
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.044999971985817
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.340000035474077
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.125000028172508
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.2950000420678407
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.529999939724803
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.659999976865947
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.449999941745773
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.024999991292134
+        }
+      ]
+    }
+  },
+  "Header.perf.tsx": {
+    "actualTime": {
+      "avg": 1.61,
+      "median": 0.82,
+      "min": 0.63,
+      "max": 7.4,
+      "values": [
+        {
+          "exampleIndex": 2,
+          "value": 1.4850000152364373
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.750000006519258
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.1150000209454447
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.3949999993201345
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.12500000372529
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.480000006267801
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.69500001356937
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.4099999910686165
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.3899999796412885
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.7100000220816582
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.6950000242795795
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.0000000183936208
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.3050000017974526
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.6550000107381493
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.6449999928008765
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.510000006528571
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.3899999903514981
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.4149999769870192
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.6300000241026282
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.7349999796133488
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.6549999816343188
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.725000019883737
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.0049999982584268
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.209999987622723
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.7099999929778278
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.6649999995715916
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.7049999840091914
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.4200000043492764
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.6649999995715916
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.2499999904539436
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.670000008540228
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.6799999973736703
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.7599999953527004
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.7899999909568578
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.6949999951757491
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.1149999918416142
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.9549999958835542
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.3800000015180558
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.6799999973736703
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.7000000041443855
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.6349999748636037
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.7150000019464642
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.8549999911338091
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.750000006519258
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.664999993517995
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.6849999772384763
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.869999982882291
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.9950000094249845
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.7150000019464642
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.0900000052060932
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 1.18,
+      "median": 0.57,
+      "min": 0.44,
+      "max": 5.02,
+      "values": [
+        {
+          "exampleIndex": 2,
+          "value": 1.2099999585188925
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.5499999970197678
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.8500000403728336
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.9999999892897904
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.775000008521602
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.1899999517481774
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.3800000015180558
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.0200000405311584
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.0999999542254955
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.5049999745097011
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.510000012582168
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.754999986384064
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.0300000614952296
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.45500005944631994
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.44999999227002263
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.320000036386773
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.125000009778887
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.154999976279214
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.4450000124052167
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.5150000506546348
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.46999999904073775
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.5200000305194408
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.7599999662488699
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.9199999913107604
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.48499999684281647
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.48499999684281647
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.49999996554106474
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.0700000459328294
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.46499999007210135
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.9799999136012048
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.4699999699369073
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.4750000371132046
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.5449999880511314
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.5400000081863254
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.49500001478008926
+        },
+        {
+          "exampleIndex": 2,
+          "value": 0.8199999865610152
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.7399999594781548
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.1200000008102506
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.4799999878741801
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.4949999856762588
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.44499998330138624
+        },
+        {
+          "exampleIndex": 5,
+          "value": 0.5149999633431435
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.5999999993946403
+        },
+        {
+          "exampleIndex": 1,
+          "value": 0.5099999834783375
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.5399999944493175
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.48499999684281647
+        },
+        {
+          "exampleIndex": 0,
+          "value": 4.76500004879199
+        },
+        {
+          "exampleIndex": 4,
+          "value": 0.7449999975506216
+        },
+        {
+          "exampleIndex": 6,
+          "value": 0.4949999856762588
+        },
+        {
+          "exampleIndex": 3,
+          "value": 0.8449999731965363
+        }
+      ]
+    }
+  },
+  "Attachment.perf.tsx": {
+    "actualTime": {
+      "avg": 7.35,
+      "median": 6.28,
+      "min": 5.33,
+      "max": 13.82,
+      "values": [
+        {
+          "exampleIndex": 3,
+          "value": 8.445000014035031
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.815000011352822
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.114999996498227
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.235000008018687
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.070000003091991
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.5799999865703285
+        },
+        {
+          "exampleIndex": 6,
+          "value": 6.220000010216609
+        },
+        {
+          "exampleIndex": 6,
+          "value": 8.449999993899837
+        },
+        {
+          "exampleIndex": 3,
+          "value": 8.854999992763624
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.274999992456287
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.055000005289912
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.530000013299286
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.994999984977767
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.894999980228022
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.084999997867271
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.289999990258366
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.6600000243633986
+        },
+        {
+          "exampleIndex": 2,
+          "value": 6.240000016987324
+        },
+        {
+          "exampleIndex": 2,
+          "value": 8.495000016409904
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.579999997280538
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.920000025071204
+        },
+        {
+          "exampleIndex": 6,
+          "value": 6.160000019008294
+        },
+        {
+          "exampleIndex": 2,
+          "value": 6.00500000291504
+        },
+        {
+          "exampleIndex": 6,
+          "value": 6.534999993164092
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.380000006174669
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.294999996200204
+        },
+        {
+          "exampleIndex": 2,
+          "value": 6.025000009685755
+        },
+        {
+          "exampleIndex": 3,
+          "value": 8.334999991348013
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.209999989252537
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.620000010821968
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.319999982835725
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.744999991497025
+        },
+        {
+          "exampleIndex": 1,
+          "value": 10.320000001229346
+        },
+        {
+          "exampleIndex": 3,
+          "value": 6.0150000208523124
+        },
+        {
+          "exampleIndex": 0,
+          "value": 13.825000001816079
+        },
+        {
+          "exampleIndex": 1,
+          "value": 10.830000013811514
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.720000001834705
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.0400000074878335
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.990000005112961
+        },
+        {
+          "exampleIndex": 0,
+          "value": 12.465000007068738
+        },
+        {
+          "exampleIndex": 0,
+          "value": 12.110000010579824
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.094999989727512
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.6650000042282045
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.435000017518178
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.335000023478642
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.055000005289912
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.464999994728714
+        },
+        {
+          "exampleIndex": 1,
+          "value": 10.145000007469207
+        },
+        {
+          "exampleIndex": 5,
+          "value": 7.1149999857880175
+        },
+        {
+          "exampleIndex": 1,
+          "value": 7.554999989224598
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 6.69,
+      "median": 5.88,
+      "min": 4.91,
+      "max": 10.91,
+      "values": [
+        {
+          "exampleIndex": 3,
+          "value": 7.7550000278279185
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.410000012489036
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.719999928260222
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.789999995613471
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.750000011175871
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.244999938644469
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.915000045206398
+        },
+        {
+          "exampleIndex": 6,
+          "value": 8.065000001806766
+        },
+        {
+          "exampleIndex": 3,
+          "value": 8.15500007593073
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.594999936874956
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.745000031311065
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.129999965196475
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.6099999928846955
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.60500001301989
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.344999951077625
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.920000025071204
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.34999999217689
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.795000062789768
+        },
+        {
+          "exampleIndex": 2,
+          "value": 7.775000005494803
+        },
+        {
+          "exampleIndex": 3,
+          "value": 4.9149999977089465
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.609999963780865
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.850000015925616
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.414999992353842
+        },
+        {
+          "exampleIndex": 6,
+          "value": 6.194999965373427
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.629999999655411
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.360000036191195
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.600000062258914
+        },
+        {
+          "exampleIndex": 3,
+          "value": 7.645000034244731
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.535000000847504
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.039999959990382
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.605000039096922
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.380000006174669
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.485000016866252
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.310000036843121
+        },
+        {
+          "exampleIndex": 0,
+          "value": 10.91499996255152
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.724999981699511
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.795000001555309
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.710000026738271
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.700000067008659
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.815000055823475
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.524999972200021
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.755000020144507
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.3449999541044235
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.0850001173093915
+        },
+        {
+          "exampleIndex": 4,
+          "value": 4.999999975552782
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.690000078175217
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.095000029541552
+        },
+        {
+          "exampleIndex": 1,
+          "value": 9.095000044908375
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.744999991497025
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.735000002663583
+        }
+      ]
+    }
+  },
+  "HeaderDescription.perf.tsx": {
+    "actualTime": {
+      "avg": 2.92,
+      "median": 2.03,
+      "min": 1.59,
+      "max": 8.94,
+      "values": [
+        {
+          "exampleIndex": 4,
+          "value": 1.7250000091735274
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.405000000493601
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8850000051315874
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.0249999943189323
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.5449999957345426
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8149999959859997
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.0249999943189323
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.9550000035669655
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8449999915901572
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.945000008679926
+        },
+        {
+          "exampleIndex": 5,
+          "value": 2.2600000083912164
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8050000071525574
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.7250000091735274
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.4099999864120036
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.8900000141002238
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.1349999879021198
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.8899999849963933
+        },
+        {
+          "exampleIndex": 6,
+          "value": 2.0800000056624413
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.9400000164750963
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.005000010598451
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.9700000120792538
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.519999998388812
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.9249999895691872
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.93500000750646
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.520000003045425
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.1699999924749136
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.594999998109415
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.6799999866634607
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.8850000051315874
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.5949999797157943
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.0400000212248415
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.29499998386018
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.6350000116508454
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.785000012721866
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.115000010235235
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.9800000009126961
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.744999986840412
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.6999999934341758
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.164999983506277
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.0099999965168536
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.900000002933666
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.1949999791104347
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.1250000174622983
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.009999990463257
+        },
+        {
+          "exampleIndex": 2,
+          "value": 4.220000002533197
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.745000005234033
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.6900000046007335
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8449999915901572
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.9550000035669655
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8850000051315874
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 2.26,
+      "median": 1.62,
+      "min": 1.24,
+      "max": 6.48,
+      "values": [
+        {
+          "exampleIndex": 4,
+          "value": 1.3700000126846135
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.9550000296439976
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.5350000467151403
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.5400000265799463
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.5199999907054007
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.4850000152364373
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.635000022361055
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.4250000424217433
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.4899999659974128
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.489999970654026
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.8250000139232725
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.470000046538189
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.4099999971222132
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.9999999785795808
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.5449999773409218
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.8050000362563878
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.5599999751430005
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.7199999711010605
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.5999999886844307
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.615000030957162
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.6099999484140426
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.049999999348074
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.580000011017546
+        },
+        {
+          "exampleIndex": 4,
+          "value": 1.575000089360401
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.820000020321459
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.71999994199723
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.1300000371411443
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.3050000125076622
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.5500000154133886
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.2499999720603228
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.6699999978300184
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.8700000073295087
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.03999993391335
+        },
+        {
+          "exampleIndex": 0,
+          "value": 6.209999963175505
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.665000047069043
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.5950000088196248
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.4249999658204615
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.3900000194553286
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.749999966705218
+        },
+        {
+          "exampleIndex": 1,
+          "value": 1.584999990882352
+        },
+        {
+          "exampleIndex": 2,
+          "value": 1.4999999839346856
+        },
+        {
+          "exampleIndex": 3,
+          "value": 1.744999986840412
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.45499997981824
+        },
+        {
+          "exampleIndex": 0,
+          "value": 5.620000039925799
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.835000010440126
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.2199999657459557
+        },
+        {
+          "exampleIndex": 6,
+          "value": 1.3900000194553286
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.4650000084657222
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.440000040223822
+        },
+        {
+          "exampleIndex": 5,
+          "value": 1.560000004246831
+        }
+      ]
+    }
+  },
+  "Loader.perf.tsx": {
+    "actualTime": {
+      "avg": 3.87,
+      "median": 3.7,
+      "min": 3.08,
+      "max": 9.69,
+      "values": [
+        {
+          "exampleIndex": 5,
+          "value": 3.6450000188779086
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.8449999992735684
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.7650000012945384
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.784999978961423
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.2300000020768493
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.2999999821186066
+        },
+        {
+          "exampleIndex": 4,
+          "value": 6.240000016987324
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.505000000586733
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.7899999879300594
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.7850000080652535
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.3599999733269215
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.224999993108213
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.0849999748170376
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.1799999997019768
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.694999986095354
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.304999991087243
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.4200000227428973
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.374999989522621
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.264999995939434
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.519999998388812
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.1100000196602196
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.400000015972182
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.714999998919666
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.5549999738577753
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.4300000115763396
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.704999980982393
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.7700000102631748
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.749999974388629
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.7150000280234963
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.625000019790605
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.4499999892432243
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.210000013699755
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.954999992856756
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.039999999804422
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.8200000126380473
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.9949999772943556
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.624999983003363
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.144999995129183
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.3050000201910734
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.499999991618097
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.4650000161491334
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.615000001853332
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.499999991618097
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.1549999839626253
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.555000002961606
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.79000001703389
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.915000008419156
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.7299999967217445
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.874999994877726
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.9249999972525984
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 3.56,
+      "median": 3.44,
+      "min": 2.84,
+      "max": 7.49,
+      "values": [
+        {
+          "exampleIndex": 5,
+          "value": 3.3950000652112067
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.6000000254716724
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.4500000765547156
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.5450000141281635
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.9850000282749534
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.01499996567145
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.950000020675361
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.2250000222120434
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.5300000745337456
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.5450000141281635
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.1199999793898314
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.9699999431613833
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.844999951776117
+        },
+        {
+          "exampleIndex": 1,
+          "value": 2.9050000302959234
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.4949999689124525
+        },
+        {
+          "exampleIndex": 2,
+          "value": 2.9599999834317714
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.2100000244099647
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.080000042449683
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.800000005867332
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.2649999775458127
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.884999994421378
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.15000003320165
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.43000004068017
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.304999991087243
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.109999990556389
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.489999973680824
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.5299999872222543
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.519999998388812
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.4900000027846545
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.375000007916242
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.2050000154413283
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.7200000369921327
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.729999967617914
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.7850000080652535
+        },
+        {
+          "exampleIndex": 1,
+          "value": 3.499999991618097
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.754999954253435
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.384999989066273
+        },
+        {
+          "exampleIndex": 3,
+          "value": 2.879999956348911
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.0300000216811895
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.289999964181334
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.235000040149316
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.3150000458117574
+        },
+        {
+          "exampleIndex": 5,
+          "value": 3.305000049294904
+        },
+        {
+          "exampleIndex": 4,
+          "value": 2.919999969890341
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.3350000448990613
+        },
+        {
+          "exampleIndex": 6,
+          "value": 3.5599999828264117
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.674999956274405
+        },
+        {
+          "exampleIndex": 2,
+          "value": 3.464999987045303
+        },
+        {
+          "exampleIndex": 3,
+          "value": 3.5949999873992056
+        },
+        {
+          "exampleIndex": 4,
+          "value": 3.619999944930896
+        }
+      ]
+    }
+  },
+  "Button.perf.tsx": {
+    "actualTime": {
+      "avg": 7.43,
+      "median": 5.79,
+      "min": 4.9,
+      "max": 16.13,
+      "values": [
+        {
+          "exampleIndex": 6,
+          "value": 5.299999989802018
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.079999991925433
+        },
+        {
+          "exampleIndex": 1,
+          "value": 7.429999997839332
+        },
+        {
+          "exampleIndex": 0,
+          "value": 12.269999977434054
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.225000000791624
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.195000005187467
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.334999994374812
+        },
+        {
+          "exampleIndex": 3,
+          "value": 11.079999996582046
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.3650000190827996
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.325000005541369
+        },
+        {
+          "exampleIndex": 1,
+          "value": 7.834999996703118
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.755000009434298
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.054999986896291
+        },
+        {
+          "exampleIndex": 0,
+          "value": 11.304999992717057
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.405000003520399
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.245000007562339
+        },
+        {
+          "exampleIndex": 0,
+          "value": 11.070000007748604
+        },
+        {
+          "exampleIndex": 0,
+          "value": 13.155000022379681
+        },
+        {
+          "exampleIndex": 3,
+          "value": 5.054999986896291
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.264999985229224
+        },
+        {
+          "exampleIndex": 0,
+          "value": 11.430000013206154
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.124999996041879
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.98000001325272
+        },
+        {
+          "exampleIndex": 0,
+          "value": 13.620000012451783
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.34999999217689
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.384999996749684
+        },
+        {
+          "exampleIndex": 0,
+          "value": 12.515000009443611
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.950000020675361
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.065000004833564
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.995000024791807
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.444999987957999
+        },
+        {
+          "exampleIndex": 2,
+          "value": 7.585000013932586
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.620000010821968
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.74999998207204
+        },
+        {
+          "exampleIndex": 5,
+          "value": 8.535000000847504
+        },
+        {
+          "exampleIndex": 5,
+          "value": 6.099999998696148
+        },
+        {
+          "exampleIndex": 2,
+          "value": 4.959999991115183
+        },
+        {
+          "exampleIndex": 0,
+          "value": 10.39499999023974
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.34000000031665
+        },
+        {
+          "exampleIndex": 2,
+          "value": 7.62000001850538
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.000000004656613
+        },
+        {
+          "exampleIndex": 0,
+          "value": 11.404999997466803
+        },
+        {
+          "exampleIndex": 3,
+          "value": 4.905000008875504
+        },
+        {
+          "exampleIndex": 2,
+          "value": 8.025000017369166
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.1549999916460365
+        },
+        {
+          "exampleIndex": 0,
+          "value": 11.065000027883798
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.304999998770654
+        },
+        {
+          "exampleIndex": 6,
+          "value": 5.299999989802018
+        },
+        {
+          "exampleIndex": 0,
+          "value": 16.134999983478338
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.850000015925616
+        }
+      ]
+    },
+    "baseTime": {
+      "avg": 6.35,
+      "median": 5.27,
+      "min": 4.22,
+      "max": 13.34,
+      "values": [
+        {
+          "exampleIndex": 6,
+          "value": 4.89499993273057
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.5900000259280205
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.560000008903444
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.440000023460016
+        },
+        {
+          "exampleIndex": 3,
+          "value": 4.554999992251396
+        },
+        {
+          "exampleIndex": 4,
+          "value": 4.474999936064705
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.639999970095232
+        },
+        {
+          "exampleIndex": 3,
+          "value": 10.024999966844916
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.98999998671934
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.944999993313104
+        },
+        {
+          "exampleIndex": 1,
+          "value": 6.714999966789037
+        },
+        {
+          "exampleIndex": 1,
+          "value": 5.730000033508986
+        },
+        {
+          "exampleIndex": 2,
+          "value": 4.380000056698918
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.589999983087182
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.050000036135316
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.465000005438924
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.430000045336783
+        },
+        {
+          "exampleIndex": 0,
+          "value": 10.4750000173226
+        },
+        {
+          "exampleIndex": 3,
+          "value": 4.664999985834584
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.874999955063686
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.735000039450824
+        },
+        {
+          "exampleIndex": 4,
+          "value": 4.424999991897494
+        },
+        {
+          "exampleIndex": 1,
+          "value": 8.239999995566905
+        },
+        {
+          "exampleIndex": 0,
+          "value": 10.53999998839572
+        },
+        {
+          "exampleIndex": 4,
+          "value": 4.920000006677583
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.00500004272908
+        },
+        {
+          "exampleIndex": 0,
+          "value": 9.654999972553924
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.555000010645017
+        },
+        {
+          "exampleIndex": 2,
+          "value": 4.694999952334911
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.66999996569939
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.089999962365255
+        },
+        {
+          "exampleIndex": 2,
+          "value": 6.790000043110922
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.2100000029895455
+        },
+        {
+          "exampleIndex": 4,
+          "value": 5.34999999217689
+        },
+        {
+          "exampleIndex": 5,
+          "value": 8.130000031087548
+        },
+        {
+          "exampleIndex": 5,
+          "value": 5.64500002656132
+        },
+        {
+          "exampleIndex": 2,
+          "value": 4.524999996647239
+        },
+        {
+          "exampleIndex": 0,
+          "value": 7.775000005494803
+        },
+        {
+          "exampleIndex": 1,
+          "value": 7.424999988870695
+        },
+        {
+          "exampleIndex": 2,
+          "value": 7.235000055516139
+        },
+        {
+          "exampleIndex": 5,
+          "value": 4.659999976865947
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.76499997684732
+        },
+        {
+          "exampleIndex": 3,
+          "value": 4.225000011501834
+        },
+        {
+          "exampleIndex": 2,
+          "value": 7.3000000265892595
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.394999967189506
+        },
+        {
+          "exampleIndex": 0,
+          "value": 8.349999960046262
+        },
+        {
+          "exampleIndex": 1,
+          "value": 4.520000016782433
+        },
+        {
+          "exampleIndex": 6,
+          "value": 4.895000020042062
+        },
+        {
+          "exampleIndex": 0,
+          "value": 13.340000004973263
+        },
+        {
+          "exampleIndex": 2,
+          "value": 5.420000001322478
+        }
+      ]
+    }
+  }
+}

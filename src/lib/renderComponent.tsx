@@ -1,7 +1,9 @@
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { FelaTheme } from 'react-fela'
+import * as fela from 'react-fela'
+
+const FelaTheme = (fela as any).FelaTheme
 
 import callable from './callable'
 import felaRenderer from './felaRenderer'
@@ -152,8 +154,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
   } = config
 
   return (
-    <FelaTheme
-      render={(theme: ThemePrepared) => {
+    <FelaTheme>
+      {(theme: ThemePrepared) => {
         if (_.isEmpty(theme)) {
           logProviderMissingWarning()
         }
@@ -244,7 +246,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
 
         return render(config)
       }}
-    />
+    </FelaTheme>
   )
 }
 
