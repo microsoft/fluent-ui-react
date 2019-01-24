@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import cx from 'classnames'
 
 import { ReactProps, ShorthandValue } from '../../../types/utils'
 import {
@@ -19,7 +18,7 @@ import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Indicates whether the ChatItem is part of a batch. */
-  grouped?: boolean
+  consecutive?: boolean
 
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
@@ -41,7 +40,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
-    grouped: PropTypes.bool,
+    consecutive: PropTypes.bool,
     gutter: customPropTypes.itemShorthand,
     gutterPosition: PropTypes.oneOf(['start', 'end']),
     message: customPropTypes.itemShorthand,
@@ -58,13 +57,13 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatItemProps>) {
-    const { children, grouped } = this.props
+    const { children } = this.props
 
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
-        className={grouped ? cx(classes.root, `${ChatItem.className}-grouped`) : classes.root}
+        className={classes.root}
       >
         {childrenExist(children) ? children : this.renderChatItem(styles)}
       </ElementType>

@@ -20,7 +20,6 @@ const items = [
     message: {
       content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     },
-    grouped: true,
     key: 'message-id-2',
   },
   {
@@ -30,7 +29,7 @@ const items = [
         <Chat.Message content="What's up?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
-    grouped: true,
+    consecutive: true,
     key: 'message-id-3',
   },
   {

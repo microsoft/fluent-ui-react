@@ -102,7 +102,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { author, children, content, mine, timestamp, grouped } = this.props
+    const { author, children, content, mine, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -113,7 +113,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
         onFocus={this.handleFocus}
-        className={grouped ? cx(className, `${ChatMessage.className}-grouped`) : className}
+        className={className}
       >
         {childrenPropExists ? (
           children

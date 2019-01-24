@@ -18,7 +18,7 @@ export default (siteVars): ChatMessageVariables => ({
   backgroundColorMine: '#E5E5F1',
   borderRadius: '0.3rem',
   color: 'rgb(64, 64, 64)',
-  padding: pxToRem(14),
+  padding: pxToRem(16),
   authorMargin: pxToRem(10),
   contentFocusOutlineColor: siteVars.brand,
   border: 'none',
