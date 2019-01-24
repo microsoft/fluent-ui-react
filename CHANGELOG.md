@@ -19,6 +19,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Update variable names in themes, add missing sizes @layershifter ([#762](https://github.com/stardust-ui/react/pull/762))
+- Rename `toggleButton` prop to `toggleIndicator` and make it visible by default @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
+
+### Features
+- Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
 
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
