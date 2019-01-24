@@ -1,22 +1,20 @@
 import * as React from 'react'
 import { Button, Input, Popup } from '@stardust-ui/react'
 
-class PopupControlledExample extends React.Component<any, any> {
-  state = { popupOpen: false }
+class PopupControlledExample extends React.Component {
+  state = { open: false }
 
-  togglePopup() {
-    this.setState(prev => ({ popupOpen: !prev.popupOpen }))
+  handleOpenChange = (e, { open }) => {
+    alert(`Popup requested to change its open state to "${open}".`)
+    this.setState({ open })
   }
 
   render() {
     return (
       <Popup
-        open={this.state.popupOpen}
-        onOpenChange={(e, newProps) => {
-          alert(`Popup is requested to change its open state to "${newProps.open}".`)
-          this.setState({ popupOpen: newProps.open })
-        }}
-        trigger={<Button icon="expand" onClick={() => this.togglePopup()} />}
+        open={this.state.open}
+        onOpenChange={this.handleOpenChange}
+        trigger={<Button icon="expand" />}
         content={{ content: <Input icon="search" placeholder="Search..." /> }}
       />
     )

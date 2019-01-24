@@ -1,4 +1,6 @@
 import * as React from 'react'
+
+import Performance from './Performance'
 import Types from './Types'
 import Slots from './Slots'
 import Variations from './Variations'
@@ -8,6 +10,7 @@ const AttachmentExamples = () => (
     <Types />
     <Slots />
     <Variations />
+    <Performance />
   </div>
 )
 
