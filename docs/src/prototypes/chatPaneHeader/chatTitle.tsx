@@ -3,11 +3,12 @@ import {
   Button,
   Popup,
   Menu,
-  // popupFocusTrapBehavior,
+  popupFocusTrapBehavior,
   Avatar,
   Icon,
   Header,
   Box,
+  Input,
   navigableListBehavior,
   navigableListItemBehavior,
 } from '@stardust-ui/react'
@@ -51,10 +52,7 @@ class ChatTitle extends React.Component<any> {
         menu: {
           styles: menuStyles,
           pills: true,
-          items: this.getMenuItems(listItems),
-          // items: () => {
-          //   <Popup trigger={<Button icon="expand" />} content="Hello from popup!" />
-          // },
+          items: this.getMenuItemsAsPopupTrigger(listItems),
         },
       },
     ]
@@ -70,11 +68,28 @@ class ChatTitle extends React.Component<any> {
     )
   }
 
-  private getMenuItems(listItems): any {
+  private userListFromMenu(userList): any {
+    return (
+      <Menu
+        variables={{
+          activeBackgroundColor: 'transparent',
+          borderColor: 'transparent',
+          horizontalPaddingRight: '3px',
+          horizontalPaddingLeft: '3px',
+          horizontalPaddingBottom: '1px',
+        }}
+        defaultActiveIndex={0}
+        accessibility={navigableListBehavior}
+        aria-label="chat participants"
+        items={this.getItemsForMenuAsList(userList)}
+      />
+    )
+  }
+
+  getMenuItemsAsPopupTrigger(items): any {
     const newMenuItems = []
-    listItems.map(listItem => {
+    items.map(listItem => {
       newMenuItems.push({
-        onClick: e => window.alert('user info card will be here'),
         'aria-haspopup': 'dialog',
         key: listItem.key,
         content: listItem.content,
@@ -88,14 +103,17 @@ class ChatTitle extends React.Component<any> {
         ),
       })
     })
+
     const leaveChat = {
       onClick: e => window.alert('leave chat popup will be here'),
       key: 'leaveChat',
       content: 'Leave chat',
       icon: <Icon name="leave" />,
     }
-    newMenuItems.push(leaveChat)
-    return newMenuItems
+
+    const newMenuItemsWithLeave = newMenuItems.map(item => render => render(item, this.renderPopup))
+    newMenuItemsWithLeave.push(render => render(leaveChat))
+    return newMenuItemsWithLeave
   }
 
   private getItemsForMenuAsList(userList): any {
@@ -134,30 +152,34 @@ class ChatTitle extends React.Component<any> {
         menu: {
           styles: menuStyles,
           pills: true,
-          items: this.getMenuItems(userList.slice(3, userList.length)),
-          // items: () => {
-          //   <Popup trigger={<Button icon="expand" />} content="Hello from popup!" />
-          // },
+          items: this.getMenuItemsAsPopupTrigger(userList.slice(3, userList.length)),
         },
       })
     }
     return newMenuAsListItems
   }
 
-  private getMenuAsUserList(userList): any {
+  private renderPopup = (MenuItem, props) => {
     return (
-      <Menu
-        variables={{
-          activeBackgroundColor: 'transparent',
-          borderColor: 'transparent',
-          horizontalPaddingRight: '3px',
-          horizontalPaddingLeft: '3px',
-          horizontalPaddingBottom: '1px',
-        }}
-        defaultActiveIndex={0}
-        accessibility={navigableListBehavior}
-        aria-label="chat participants"
-        items={this.getItemsForMenuAsList(userList)}
+      <Popup
+        styles={{ marginLeft: '10px', backgroundColor: 'white' }}
+        on="hover"
+        key={props.key}
+        position="after"
+        align="bottom"
+        // accessibility={popupFocusTrapBehavior}
+        trigger={<MenuItem {...props} />}
+        content={
+          <div>
+            <Header as="h4">Any content.</Header>
+            <Input icon="search" placeholder="Search..." />
+            <Button>Testing button</Button>
+            <Input icon="search" placeholder="Search..." />
+            <Button>Testing button</Button>
+            <Input icon="search" placeholder="Search..." />
+            <Button>Testing button</Button>
+          </div>
+        }
       />
     )
   }
@@ -172,10 +194,10 @@ class ChatTitle extends React.Component<any> {
       )
     }
     if (userList.length <= 3) {
-      return this.getMenuAsUserList(userList)
+      return this.userListFromMenu(userList)
     }
     if (userList.length > 3) {
-      return <div style={{ display: 'flex' }}>{this.getMenuAsUserList(userList)}</div>
+      return <div style={{ display: 'flex' }}>{this.userListFromMenu(userList)}</div>
     }
   }
 
