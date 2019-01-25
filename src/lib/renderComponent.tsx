@@ -152,8 +152,8 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
   } = config
 
   return (
-    <FelaTheme
-      render={(theme: ThemePrepared) => {
+    <FelaTheme>
+      {(theme: ThemePrepared) => {
         if (_.isEmpty(theme)) {
           logProviderMissingWarning()
         }
@@ -244,7 +244,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
 
         return render(config)
       }}
-    />
+    </FelaTheme>
   )
 }
 
