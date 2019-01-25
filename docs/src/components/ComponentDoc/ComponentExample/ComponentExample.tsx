@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import * as copyToClipboard from 'copy-to-clipboard'
 import SourceRender from 'react-source-render'
 import {
+  Box,
   Divider,
   Form,
   Input,
@@ -583,7 +584,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     // }
 
     return (
-      <Segment>
+      <Box>
         {/* Ensure anchor links don't occlude card shadow effect */}
         <div id={this.anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
@@ -619,11 +620,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           {this.renderKnobs()}
         </Segment>
 
-        {children && (
-          <Segment width={16} styles={childrenStyle}>
-            {children}
-          </Segment>
-        )}
+        {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
         <SourceRender
           babelConfig={babelConfig}
@@ -666,8 +663,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
           </Segment>
           <div style={{ paddingBottom: '10px' }} />
         </SourceRender>
-        <Divider />
-      </Segment>
+      </Box>
     )
   }
 

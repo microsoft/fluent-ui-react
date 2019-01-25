@@ -30,7 +30,7 @@ class App extends React.Component<any, AppState> {
     }
   }
 
-  docsTheme = {
+  private docsTheme = {
     // adjust Teams' theme to Semantic UI's font size scheme
     siteVariables: {
       htmlFontSize: '16px',
@@ -62,7 +62,18 @@ class App extends React.Component<any, AppState> {
           fontSize: '28px',
           marginTop: '-4px',
         },
-        h2: { fontSize: '24px' },
+        h2: {
+          fontSize: '24px',
+          marginBottom: '14px',
+          marginTop: '24.5714px',
+        },
+        a: {
+          color: '#4183c4',
+          textDecoration: 'none',
+          ':hover, :focus': {
+            color: '#1e70bf',
+          },
+        },
       },
     ],
   }

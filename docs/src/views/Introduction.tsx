@@ -1,46 +1,66 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Segment, ICSSInJSStyle } from '@stardust-ui/react'
+import { Header, Segment, ICSSInJSStyle, Provider } from '@stardust-ui/react'
 
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')
 const centerAligned: ICSSInJSStyle = {
   textAlign: 'center',
+  padding: '14px',
+  backgroundColor: 'transparent',
+  boxShadow: 'none',
 }
 
 const Introduction = () => (
-  <div>
-    <Segment styles={centerAligned}>
-      <Logo width="48px" />
-      <Header as="h1">
-        {_.capitalize(pkg.name)}
-        <Header.Description>{pkg.description}</Header.Description>
-      </Header>
-    </Segment>
-    <p>
-      Stardust UI provides extensible vanilla JavaScript solutions to component state, styling, and
-      accessibility. These powerful features are exposed behind simple APIs based on natural
-      language.
-    </p>
-    <p>
-      Stardust UI React is being built as an exemplar of the Stardust UI design language, component
-      specifications, and utilities.
-    </p>
+  <Provider
+    theme={{
+      componentStyles: {
+        Header: {
+          root: {
+            margin: '24px',
+          },
+        },
+        HeaderDescription: {
+          root: {
+            marginTop: 0,
+          },
+        },
+      },
+    }}
+  >
+    <div style={{ margin: '0 225px', fontSize: '16.1px', maxWidth: '80ch' }}>
+      <Segment styles={centerAligned}>
+        <Logo width="150px" />
+        <Header as="h1">
+          {_.capitalize(pkg.name)}
+          <Header.Description>{pkg.description}</Header.Description>
+        </Header>
+      </Segment>
+      <p>
+        Stardust UI provides extensible vanilla JavaScript solutions to component state, styling,
+        and accessibility. These powerful features are exposed behind simple APIs based on natural
+        language.
+      </p>
+      <p>
+        Stardust UI React is being built as an exemplar of the Stardust UI design language,
+        component specifications, and utilities.
+      </p>
 
-    <h3>Learn</h3>
-    <p>
-      The best place to start is with the <NavLink to="shorthand-props">Shorthand Props</NavLink>{' '}
-      concept.
-    </p>
+      <h3>Learn</h3>
+      <p>
+        The best place to start is with the <NavLink to="shorthand-props">Shorthand Props</NavLink>{' '}
+        concept.
+      </p>
 
-    <h3>Start</h3>
-    <p>
-      If you want to get going right away, see the <NavLink to="quick-start">Quick Start</NavLink>{' '}
-      guide.
-    </p>
-  </div>
+      <h3>Start</h3>
+      <p>
+        If you want to get going right away, see the <NavLink to="quick-start">Quick Start</NavLink>{' '}
+        guide.
+      </p>
+    </div>
+  </Provider>
 )
 
 export default Introduction

@@ -217,6 +217,18 @@ class Sidebar extends React.Component<any, any> {
 
     const menuItems: ShorthandValue[] = [
       {
+        key: 'stardust',
+        content: (
+          <>
+            <Logo width="32px" styles={logoStyles} />
+            <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
+            <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
+          </>
+        ),
+        styles: menuSectionStyles,
+        accessibility: listItemBehavior,
+      },
+      {
         key: 'github',
         content: (
           <div style={flexDislayStyle}>
@@ -372,20 +384,14 @@ class Sidebar extends React.Component<any, any> {
         <Segment
           styles={sidebarStyles}
           content={
-            <div>
-              <Logo width="32px" styles={logoStyles} />
-              <Text color="white" content="Stardust UI React &nbsp;" styles={logoStyles} />
-              <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-
-              <Menu
-                vertical
-                fluid
-                pills
-                accessibility={listBehavior}
-                styles={navBarStyles}
-                items={allItems}
-              />
-            </div>
+            <Menu
+              vertical
+              fluid
+              pills
+              accessibility={listBehavior}
+              styles={navBarStyles}
+              items={allItems}
+            />
           }
         />
       </Provider>

@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import DocumentTitle from 'react-document-title'
 import { withRouter } from 'react-router'
-import { Grid, Header, Icon, ICSSInJSStyle, Dropdown, themes } from '@stardust-ui/react'
+import { Box, Header, Icon, Dropdown, Provider, Text, themes } from '@stardust-ui/react'
 
 import componentInfoShape from 'docs/src/utils/componentInfoShape'
 import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
@@ -11,10 +10,11 @@ import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-// import ComponentSidebar from './ComponentSidebar'
+import ComponentSidebar from './ComponentSidebar'
 import ComponentAccessibility from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
-// import ExampleContext from 'docs/src/context/ExampleContext'
+// import felaPluginExtend from 'fela-plugin-extend';
+import ExampleContext from 'docs/src/context/ExampleContext'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -27,6 +27,8 @@ class ComponentDoc extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     info: componentInfoShape.isRequired,
   }
+
+  state: any = {}
 
   componentWillMount() {
     const { history, location } = this.props
@@ -87,9 +89,9 @@ class ComponentDoc extends React.Component<any, any> {
     }
 
     const { info } = this.props
-    //   const { activePath, examplesRef } = this.state
+    const { activePath, examplesRef } = this.state
 
-    const topPart = [
+    /* const topPart = [
       <Header content={info.displayName} description={_.join(info.docblock.description, ' ')} />,
       <ThemeContext.Consumer>
         {({ changeTheme }) => (
@@ -109,14 +111,107 @@ class ComponentDoc extends React.Component<any, any> {
         repoPath={info.repoPath}
         type={info.type}
       />,
-    ]
+    ] */
 
-    const gridStyle: ICSSInJSStyle = {
-      justifyContent: 'space-between',
-    }
+    // const gridStyle: ICSSInJSStyle = {
+    //   justifyContent: 'space-between',
+    // }
 
     return (
-      <DocumentTitle title={`${info.displayName} | Stardust`}>
+      // replace with Flex component when released
+      <Provider
+        theme={{
+          componentStyles: {
+            Box: {
+              root: {
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              },
+            },
+            Header: {
+              root: {
+                // width: '50%',
+              },
+            },
+            Dropdown: {
+              root: {
+                Button: {
+                  root: {
+                    backgroundColor: 'white',
+                  },
+                },
+              },
+            },
+            Text: {
+              root: {
+                marginBottom: '14px',
+              },
+            },
+          },
+        }}
+      >
+        <div style={{ paddingLeft: '20px' }}>
+          <Box styles={{ padding: '10px 0' }}>
+            <ThemeContext.Consumer>
+              {({ changeTheme }) => (
+                <Dropdown
+                  getA11yStatusMessage={getA11yStatusMessage}
+                  getA11ySelectionMessage={getA11ySelectionMessage}
+                  noResultsMessage="We couldn't find any matches."
+                  placeholder="Theme"
+                  onSelectedChange={changeTheme}
+                  items={this.getThemeOptions().map(o => o.text)}
+                />
+              )}
+            </ThemeContext.Consumer>
+          </Box>
+          <Box>
+            <Box styles={{ display: 'flex', flexDirection: 'row' }}>
+              <Header as="h1" content={info.displayName} variables={{ color: 'black' }} />
+              <ComponentDocLinks
+                displayName={info.displayName}
+                parentDisplayName={info.parentDisplayName}
+                repoPath={info.repoPath}
+                type={info.type}
+              />
+            </Box>
+            <Text content={_.join(info.docblock.description, ' ')} />
+            <ComponentAccessibility info={info} />
+            <ComponentDocSee displayName={info.displayName} />
+
+            <ComponentProps displayName={info.displayName} props={info.props} />
+          </Box>
+          <Box styles={{ display: 'flex', flexDirection: 'row' }}>
+            <Box styles={{ width: '75%' }}>
+              <div ref={this.handleExamplesRef}>
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
+              </div>
+
+              <div style={exampleEndStyle}>
+                This is the bottom <Icon name="pointing down" />
+              </div>
+            </Box>
+            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
+              <ComponentSidebar
+                activePath={activePath}
+                displayName={info.displayName}
+                examplesRef={examplesRef}
+                onItemClick={this.handleSidebarItemClick}
+              />
+            </Box>
+          </Box>
+        </div>
+      </Provider>
+
+      /*<DocumentTitle title={`${info.displayName} | Stardust`}>
         <div>
           <Grid rows="1" content={topPart} styles={gridStyle} />
           <ComponentAccessibility info={info} />
@@ -130,14 +225,14 @@ class ComponentDoc extends React.Component<any, any> {
           <div style={exampleEndStyle}>
             This is the bottom <Icon name="pointing down" />
           </div>
-          {/* <ComponentSidebar
+          <!-- <ComponentSidebar
             activePath={activePath}
             displayName={info.displayName}
             examplesRef={examplesRef}
             onItemClick={this.handleSidebarItemClick}
-          /> */}
+          /> -->
         </div>
-      </DocumentTitle>
+      </DocumentTitle>*/
     )
     /*
         <Grid>
