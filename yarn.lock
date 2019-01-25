@@ -3658,25 +3658,25 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fela-bindings@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.1.1.tgz#8b90c15f98b4091400ec8b7b72dd7e9044704f32"
-  integrity sha512-D4SP6evRkFxvc66ZRUUqZZo+iFOuZcVtfO3XuVipLwT7ZXoVDkapqVas38TFsUyQYgJNt8RViSFddBoSszitRA==
+fela-bindings@^10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/fela-bindings/-/fela-bindings-10.1.3.tgz#d1e75eace8bef77c6ce012c9d068bebf1cfd698f"
+  integrity sha512-qlic73Td0NvXdVxlfCGgaxwj6W4yWuHeHoWg84n9tbnoqVbcXtmhQPSGUFPcZ7updXviIPicfqUPpYFz7sq3KQ==
   dependencies:
     fast-loops "^1.0.0"
-    fela-dom "^10.1.1"
-    fela-tools "^10.1.1"
+    fela-dom "^10.1.3"
+    fela-tools "^10.1.3"
     react-addons-shallow-compare "^15.6.2"
     shallow-equal "^1.0.0"
 
-fela-dom@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.1.1.tgz#203824b57ae0239f28f87ef01e57dd2e51b800a3"
-  integrity sha512-lKB3nSafHsOmn8eu7xMz94xM74jM2RT9xJjpc7kx3KkTs4JzEmiX62LOMDrKC6AsozSAGDQWtLbdnVOja1IJMA==
+fela-dom@^10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/fela-dom/-/fela-dom-10.1.3.tgz#364972e7e929697571e7260a61ea09777a164b3a"
+  integrity sha512-NvYF+SRb5ntgs39m2m/52Y5RrCb9kqVSDjukL41xU1TThB6JkWQrK5kG9ncMIMugWVU1AFfdMOxMpTM76QrnUw==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.1"
-    fela-utils "^10.1.1"
+    fela-utils "^10.1.3"
 
 fela-plugin-custom-property@^10.1.3:
   version "10.1.3"
@@ -3720,23 +3720,15 @@ fela-plugin-rtl@^10.1.3:
   dependencies:
     rtl-css-js "^1.1.3"
 
-fela-tools@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fela-tools/-/fela-tools-10.1.1.tgz#343581ed2a35f14d1a5687a7608ebf564e057ba8"
-  integrity sha512-c0OO6XxUZdmxzjd+z2UquufGwO6w5VEjSpRb5bkXKjQfmIz1jEcDhEV2K4j6YmsHskquQjsVro8zDF/A8GYYwg==
+fela-tools@^10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/fela-tools/-/fela-tools-10.1.3.tgz#99cdadcc845dbf0f153de21c1dab44fe9180e9e7"
+  integrity sha512-yFQSI8aFKndqzaXvh4P4u/uVacRFG0l3qd1GpPGZ2DsmmdBul7RPYkDOAw9is0PlyarQQj6Q7sAfWoTLtUTYPQ==
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-    fela "^10.1.1"
-    fela-utils "^10.1.1"
-
-fela-utils@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-10.1.1.tgz#626b96201f9c9d87c85f8666c5ccd7e85748016d"
-  integrity sha512-DM00bRyYkRx1LFE2rQhcV+e2k869G1D//F9kgfpuT4sWeMTvdvkoOGwu6rAcHy3+aUyI653Yk1YytYOHKnc3zg==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    fast-loops "^1.0.0"
+    fela "^10.1.3"
+    fela-utils "^10.1.3"
 
 fela-utils@^10.1.3:
   version "10.1.3"
@@ -3745,17 +3737,6 @@ fela-utils@^10.1.3:
   dependencies:
     css-in-js-utils "^3.0.0"
     fast-loops "^1.0.0"
-
-fela@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/fela/-/fela-10.1.1.tgz#e2801759bd7ec7de003e96268fe4a663c9a0c265"
-  integrity sha512-BNwcCe9/NWYEKp7kTsfomwO+wYOLSZy4J9v5jHtggVwD0/r375kVscgy80Kh7IbguerKUR/PaxbGJ1+Y29M68g==
-  dependencies:
-    css-in-js-utils "^3.0.0"
-    csstype "^2.5.5"
-    fast-loops "^1.0.0"
-    fela-utils "^10.1.1"
-    isobject "^3.0.1"
 
 fela@^10.1.3:
   version "10.1.3"
@@ -8695,13 +8676,13 @@ react-element-to-jsx-string@^14.0.2:
     is-plain-object "2.0.4"
     stringify-object "3.2.2"
 
-react-fela@^10.1.1:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.1.1.tgz#d8fa9b9c81dc9552cc033997429d40635afeadf4"
-  integrity sha512-V1qAwixIC2TKU2nTrbocTjug77mSMr2WyZtIH2AjFqk+leqNLaKWgz/3YZgURAa29JgdslHbTkdUxFRcmuLbAw==
+react-fela@^10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/react-fela/-/react-fela-10.1.3.tgz#7de04382ae6e67b8b3c18514f8f60856a3769529"
+  integrity sha512-8tU9yWU/c/9unbZPn0PN4WQF93j0C7ASSjZHm/ADHNQV0AanCX0H9mE4RbdOFMAhdv0iKE6/fWbPD6DPIhC6kA==
   dependencies:
-    fela-bindings "^10.1.1"
-    fela-dom "^10.1.1"
+    fela-bindings "^10.1.3"
+    fela-dom "^10.1.3"
     prop-types "^15.5.8"
 
 react-hot-loader@^4.1.3:
