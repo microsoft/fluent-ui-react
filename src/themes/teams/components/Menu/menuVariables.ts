@@ -1,3 +1,5 @@
+import { pxToRem } from '../../../../lib'
+
 export interface MenuVariables {
   color: string
 
@@ -21,6 +23,11 @@ export interface MenuVariables {
   disabledColor: string
 
   lineHeightBase: string
+
+  horizontalPaddingLeft: string
+  horizontalPaddingRight: string
+  horizontalPaddingTop: string
+  horizontalPaddingBottom: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -48,5 +55,10 @@ export default (siteVars: any): MenuVariables => {
     disabledColor: siteVars.gray06,
 
     lineHeightBase: siteVars.lineHeightBase,
+
+    horizontalPaddingLeft: pxToRem(18),
+    horizontalPaddingRight: pxToRem(18),
+    horizontalPaddingTop: pxToRem(14),
+    horizontalPaddingBottom: pxToRem(14),
   }
 }

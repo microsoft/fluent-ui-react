@@ -297,7 +297,12 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         ? { padding: `${pxToRem(4)} 0` }
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
-        : { padding: `${pxToRem(14)} ${pxToRem(18)}` }),
+        : {
+            paddingTop: v.horizontalPaddingTop,
+            paddingBottom: v.horizontalPaddingBottom,
+            paddingLeft: v.horizontalPaddingLeft,
+            paddingRight: v.horizontalPaddingRight,
+          }),
 
       ...(iconOnly && {
         margin: pxToRem(1),
@@ -357,7 +362,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       ':focus': {
-        outline: 0,
+        outline: 'auto',
       },
 
       // hover styles

@@ -1,25 +1,16 @@
 import * as React from 'react'
 import {
-  List,
   Button,
   Popup,
   Menu,
-  popupFocusTrapBehavior,
+  // popupFocusTrapBehavior,
   Avatar,
   Icon,
   Header,
+  Box,
+  navigableListBehavior,
+  navigableListItemBehavior,
 } from '@stardust-ui/react'
-
-const listStyle = {
-  '& > li': {
-    paddingLeft: '0.2rem',
-    paddingRight: '0.2rem',
-  },
-  '& > li:last-of-type': {
-    paddingRight: '0.6rem',
-  },
-  marginLeft: '-1rem',
-}
 
 const headingStyle = {
   marginRight: '0.6rem',
@@ -32,56 +23,49 @@ const menuStyles = ({ theme: { siteVariables } }) => ({
   marginTop: '5px',
 })
 
-class ChatTitle extends React.Component<any> {
-  private getButtonWithRestParticipants(listItems: any) {
-    return (
-      <Popup
-        position="below"
-        accessibility={popupFocusTrapBehavior}
-        trigger={
-          <Button
-            circular
-            content={`+ ${listItems.length - 3}`}
-            aria-label={`${listItems.length - 3} more participants`}
-            aria-haspopup="true"
-          />
-        }
-        content={
-          <Menu
-            styles={menuStyles}
-            vertical
-            pills
-            className="actions"
-            items={this.getMenuItems(listItems.slice(3, listItems.length))}
-          />
-        }
-      />
-    )
-  }
+const PopupItemLayout = props => {
+  return <Popup trigger={<Box {...props} />} content="Hello from popup!" />
+}
 
+class ChatTitle extends React.Component<any> {
   private getButtonWithAllParticipants(listItems: any) {
+    const MenuButton = props => (
+      <Button
+        {...props}
+        circular
+        aria-label={`${listItems.length} participants`}
+        aria-haspopup="true"
+      >{`+${listItems.length}`}</Button>
+    )
+
+    const items = [
+      {
+        styles: {
+          'box-shadow': '0px 0px 0px',
+          'border-color': '#484644',
+        },
+        role: undefined,
+        as: MenuButton,
+        key: 'moreButton',
+        indicator: false,
+        menu: {
+          styles: menuStyles,
+          pills: true,
+          items: this.getMenuItems(listItems),
+          // items: () => {
+          //   <Popup trigger={<Button icon="expand" />} content="Hello from popup!" />
+          // },
+        },
+      },
+    ]
     return (
-      <Popup
-        position="below"
-        accessibility={popupFocusTrapBehavior}
-        trigger={
-          <Button
-            circular
-            content={`${listItems.length}`}
-            aria-label={`${listItems.length} participants`}
-            icon="teams"
-            aria-haspopup="true"
-          />
-        }
-        content={
-          <Menu
-            styles={menuStyles}
-            vertical
-            pills
-            className="actions"
-            items={this.getMenuItems(listItems)}
-          />
-        }
+      <Menu
+        defaultActiveIndex={0}
+        iconOnly
+        role="presentation"
+        pills
+        className="actions"
+        items={items}
       />
     )
   }
@@ -93,7 +77,7 @@ class ChatTitle extends React.Component<any> {
         onClick: e => window.alert('user info card will be here'),
         'aria-haspopup': 'dialog',
         key: listItem.key,
-        content: listItem.header,
+        content: listItem.content,
         icon: (
           <Avatar
             image={{
@@ -114,25 +98,84 @@ class ChatTitle extends React.Component<any> {
     return newMenuItems
   }
 
-  private renderTitleOrUserList(listItems, groupChatName): any {
+  private getItemsForMenuAsList(userList): any {
+    const newMenuAsListItems = []
+    const MenuButton = props => (
+      <Button
+        {...props}
+        circular
+        aria-label={`${newMenuAsListItems.length} more participants`}
+        aria-haspopup="true"
+      >{`+${newMenuAsListItems.length}`}</Button>
+    )
+
+    userList.slice(0, 3).map(user => {
+      newMenuAsListItems.push({
+        as: PopupItemLayout,
+        key: user.key,
+        content: (
+          <>
+            {user.media} <span> {user.content} </span>
+          </>
+        ),
+        role: 'button',
+        accessibility: navigableListItemBehavior,
+      })
+    })
+
+    if (userList.length > 3) {
+      newMenuAsListItems.push({
+        key: 'restOfParticipants',
+        role: 'button',
+        'aria-haspopup': true,
+        'aria-label': `${newMenuAsListItems.length} more participants`,
+        accessibility: navigableListItemBehavior,
+        as: MenuButton,
+        menu: {
+          styles: menuStyles,
+          pills: true,
+          items: this.getMenuItems(userList.slice(3, userList.length)),
+          // items: () => {
+          //   <Popup trigger={<Button icon="expand" />} content="Hello from popup!" />
+          // },
+        },
+      })
+    }
+    return newMenuAsListItems
+  }
+
+  private getMenuAsUserList(userList): any {
+    return (
+      <Menu
+        variables={{
+          activeBackgroundColor: 'transparent',
+          borderColor: 'transparent',
+          horizontalPaddingRight: '3px',
+          horizontalPaddingLeft: '3px',
+          horizontalPaddingBottom: '1px',
+        }}
+        defaultActiveIndex={0}
+        accessibility={navigableListBehavior}
+        aria-label="chat participants"
+        items={this.getItemsForMenuAsList(userList)}
+      />
+    )
+  }
+
+  private renderTitleOrUserList(userList, groupChatName): any {
     if (groupChatName) {
       return (
         <div style={{ display: 'flex' }}>
           <Header styles={headingStyle} as="h2" content={groupChatName} className="no-anchor" />
-          {this.getButtonWithAllParticipants(listItems)}
+          {this.getButtonWithAllParticipants(userList)}
         </div>
       )
     }
-    if (listItems.length <= 3) {
-      return <List styles={listStyle} aria-label="chat participants" items={listItems} />
+    if (userList.length <= 3) {
+      return this.getMenuAsUserList(userList)
     }
-    if (listItems.length > 3) {
-      return (
-        <div style={{ display: 'flex' }}>
-          <List styles={listStyle} aria-label="chat participants" items={listItems.slice(0, 3)} />
-          {this.getButtonWithRestParticipants(listItems)}
-        </div>
-      )
+    if (userList.length > 3) {
+      return <div style={{ display: 'flex' }}>{this.getMenuAsUserList(userList)}</div>
     }
   }
 

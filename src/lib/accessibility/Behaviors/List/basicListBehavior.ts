@@ -1,4 +1,4 @@
-import { Accessibility, FocusZoneMode } from '../../types'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -12,14 +12,6 @@ const basicListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'list',
-    },
-  },
-  focusZone: {
-    mode: FocusZoneMode.Embed,
-    props: {
-      isCircularNavigation: false,
-      preventDefaultWhenHandled: true,
-      shouldFocusFirstElementWhenReceivedFocus: true,
     },
   },
 })

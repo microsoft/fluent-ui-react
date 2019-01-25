@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Avatar, Divider, Status, Icon, Segment, Provider, Header } from '@stardust-ui/react'
 import ChatTitle from './chatTitle'
 import Tabs from './tabs'
@@ -6,55 +6,41 @@ import CallingButtons from './callingButtons'
 import RightTopButtons from './rightTopButtons'
 import { Button } from 'semantic-ui-react'
 
-const listItemStyle = {
-  float: 'left',
-  paddingRight: '0.1rem',
-  paddingLeft: '0.1rem',
-  fontWeight: 'bold',
-}
-
 const itemsList = [
   {
     key: 'irving',
     media: <Status color="green" icon="check" title="Available" />,
-    header: 'Irving Kuhic,',
-    styles: listItemStyle,
+    content: 'Irving Kuhic,',
   },
   {
     key: 'skyler',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Skyler Parks,',
-    styles: listItemStyle,
+    content: 'Skyler Parks,',
   },
   {
     key: 'dante',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Dante Schneider',
-    styles: listItemStyle,
+    content: 'Dante Schneider',
   },
   {
     key: 'nobody',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Nobody Schneider',
-    styles: listItemStyle,
+    content: 'Nobody Schneider',
   },
   {
     key: 'michelangelo',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Michelangelo Lodovico',
-    styles: listItemStyle,
+    content: 'Michelangelo Lodovico',
   },
   {
     key: ' FarrokhBulsara',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: ' Farrokh Bulsara',
-    styles: listItemStyle,
+    content: ' Farrokh Bulsara',
   },
   {
     key: ' WelvetChocolateSweetyBurms',
     media: <Status color="red" icon="minus" title="Busy" />,
-    header: 'Welvet Chocolate Sweety Burms',
-    styles: listItemStyle,
+    content: 'Welvet Chocolate Sweety Burms',
   },
 ]
 
@@ -142,7 +128,7 @@ export default () => (
       >
         <Icon
           name="calendar"
-          size="big"
+          size="large"
           circular
           variables={siteVars => ({
             color: siteVars.white,

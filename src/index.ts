@@ -154,6 +154,12 @@ export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
+export {
+  default as navigableListBehavior,
+} from './lib/accessibility/Behaviors/List/navigableListBehavior'
+export {
+  default as navigableListItemBehavior,
+} from './lib/accessibility/Behaviors/List/navigableListItemBehavior'
 
 //
 // Utilities
