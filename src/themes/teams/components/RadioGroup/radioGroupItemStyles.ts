@@ -29,23 +29,18 @@ const radioStyles: ComponentSlotStylesInput<
     }),
   }),
 
-  icon: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
-    const { siteVariables: siteVars } = theme
+  icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    margin: `0 ${pxToRem(10)} 0 0`,
+    color: p.checked ? v.colorChecked : v.color,
+    backgroundColor: p.checked ? v.colorBackgroundChecked : v.colorBackground,
+    borderColor: p.checked ? v.colorBorderChecked : v.colorBorder,
+    outlineColor: v.color,
 
-    return {
-      margin: `0 ${pxToRem(10)} 0 0`,
-      color: p.checked ? v.colorChecked : v.color,
-      backgroundColor: p.checked ? v.colorBackgroundChecked : v.colorBackground,
-      borderColor: p.checked ? v.colorBorderChecked : v.colorBorder,
-      outlineColor: siteVars.brand,
-
-      ...(p.isFromKeyboard && {
-        // this creates both inset and outset box shadow that some readers (NVDA) show when radio is not checked but it is focused
-        boxShadow:
-          `0 0 0 ${pxToRem(1)} ${siteVars.brand},` + `0 0 0 ${pxToRem(2)} ${siteVars.brand} inset`,
-      }),
-    }
-  },
+    ...(p.isFromKeyboard && {
+      // this creates both inset and outset box shadow that some readers (NVDA) show when radio is not checked but it is focused
+      boxShadow: `0 0 0 ${pxToRem(1)} ${v.color},` + `0 0 0 ${pxToRem(2)} ${v.color} inset`,
+    }),
+  }),
 }
 
 export default radioStyles
