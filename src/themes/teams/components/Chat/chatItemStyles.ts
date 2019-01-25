@@ -3,6 +3,7 @@ import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../lib'
 import ChatMessage from '../../../../components/Chat/ChatMessage'
+import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 
 const chatMessageClassNameSelector = `& .${ChatMessage.className}`
 const chatMessageAuthorClassNameSelector = `& .${ChatMessage.className}__author`
@@ -46,12 +47,8 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     ...(p.grouped &&
       p.grouped !== 'start' && {
         marginTop: pxToRem(2),
-        [chatMessageAuthorClassNameSelector]: {
-          display: 'none',
-        },
-        [chatMessageTimestampClassNameSelector]: {
-          display: 'none',
-        },
+        [chatMessageAuthorClassNameSelector]: screenReaderContainerStyles,
+        [chatMessageTimestampClassNameSelector]: screenReaderContainerStyles,
       }),
     marginBottom: 0,
   }),

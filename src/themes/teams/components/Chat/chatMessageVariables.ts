@@ -8,7 +8,6 @@ export interface ChatMessageVariables {
   color: string
   padding: string
   authorMarginRight: string
-  authorFontSize: string
   headerMarginBottom: string
   contentFocusOutlineColor: string
   border: string
@@ -22,7 +21,6 @@ export default (siteVars): ChatMessageVariables => ({
   color: 'rgb(64, 64, 64)',
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
-  authorFontSize: siteVars.fontSizes.small,
   headerMarginBottom: pxToRem(2),
   contentFocusOutlineColor: siteVars.brand,
   border: 'none',
