@@ -2,12 +2,15 @@ import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../lib'
-import ChatMessage from '../../../../components/Chat/ChatMessage'
+import {
+  default as ChatMessage,
+  chatMessageMetadata,
+} from '../../../../components/Chat/ChatMessage'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 
 const chatMessageClassNameSelector = `& .${ChatMessage.className}`
-const chatMessageAuthorClassNameSelector = `& .${ChatMessage.className}__author`
-const chatMessageTimestampClassNameSelector = `& .${ChatMessage.className}__timestamp`
+const chatMessageAuthorClassNameSelector = `& .${chatMessageMetadata.authorClassName}`
+const chatMessageTimestampClassNameSelector = `& .${chatMessageMetadata.timestampClassName}`
 
 const getPositionStyles = (props: ChatItemProps) => ({
   float: props.contentPosition === 'end' ? 'right' : 'left',
@@ -59,7 +62,7 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     [p.contentPosition === 'end' ? 'right' : 'left']: 0,
     ...(p.grouped &&
       p.grouped !== 'start' && {
-        visibility: 'hidden',
+        display: 'none',
       }),
   }),
 

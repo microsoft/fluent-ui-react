@@ -123,7 +123,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               defaultProps: {
                 size: 'small',
                 styles: styles.author,
-                className: `${ChatMessage.className}__author`,
+                className: chatMessageMetadata.authorClassName,
               },
             })}
             {Text.create(timestamp, {
@@ -131,7 +131,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
                 size: 'small',
                 styles: styles.timestamp,
                 timestamp: true,
-                className: `${ChatMessage.className}__timestamp`,
+                className: chatMessageMetadata.timestampClassName,
               },
             })}
             {Box.create(content, { defaultProps: { styles: styles.content } })}
@@ -143,5 +143,10 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 }
 
 ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
+
+export const chatMessageMetadata = {
+  authorClassName: `${ChatMessage.className}__author`,
+  timestampClassName: `${ChatMessage.className}__timestamp`,
+}
 
 export default ChatMessage
