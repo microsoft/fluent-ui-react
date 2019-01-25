@@ -8,11 +8,13 @@ export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } 
 // FONT SIZES
 //
 export const fontSizes = {
+  smallest: '0.8rem',
   smaller: '1rem',
   small: '1.2rem',
   medium: '1.4rem',
   large: '1.8rem',
   larger: '2.4rem',
+  largest: '3rem',
 }
 
 //
@@ -27,6 +29,10 @@ export const fontWeightBold = 700
 //
 // LINE HEIGHTS
 //
-export const lineHeightBase = 1.4286
+export const lineHeightSmallest = 1.2
+export const lineHeightSmaller = 1.2
 export const lineHeightSmall = 1.3333
-export const lineHeightExtraSmall = 1.2
+export const lineHeightMedium = 1.4286
+export const lineHeightLarge = 1.3333
+export const lineHeightLarger = 1.3333
+export const lineHeightLargest = 1.3333

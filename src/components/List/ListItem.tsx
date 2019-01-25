@@ -70,7 +70,6 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      children: false,
       content: false,
     }),
     contentMedia: PropTypes.any,
