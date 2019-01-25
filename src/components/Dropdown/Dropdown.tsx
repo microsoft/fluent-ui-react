@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
+import cx from 'classnames'
 
 import {
   Extendable,
@@ -39,6 +40,9 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
+  /** The initial value for the open state. */
+  defaultIsOpen?: boolean
+
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 
@@ -67,6 +71,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
+
+  /** Sets the open state of the dropdown (controlled mode). */
+  isOpen?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
@@ -140,6 +147,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 }
 
 export interface DropdownState {
+  isOpen?: boolean
   value: ShorthandValue | ShorthandValue[]
   backspaceDelete: boolean
   focused: boolean
@@ -170,6 +178,7 @@ export default class Dropdown extends AutoControlledComponent<
       children: false,
       content: false,
     }),
+    defaultIsOpen: PropTypes.bool,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -178,6 +187,7 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
+    isOpen: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -216,7 +226,7 @@ export default class Dropdown extends AutoControlledComponent<
     toggleIndicator: {},
   }
 
-  static autoControlledProps = ['searchQuery', 'value']
+  static autoControlledProps = ['isOpen', 'searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -226,6 +236,7 @@ export default class Dropdown extends AutoControlledComponent<
     return {
       // prevent deletion of last character + last selected value at the same time on backspace.
       backspaceDelete: multiple,
+      isOpen: false,
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
@@ -242,11 +253,12 @@ export default class Dropdown extends AutoControlledComponent<
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { defaultHighlightedIndex, searchQuery } = this.state
+    const { defaultHighlightedIndex, searchQuery, isOpen } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
+          isOpen={isOpen}
           onChange={this.handleSelectedChange}
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
@@ -257,6 +269,10 @@ export default class Dropdown extends AutoControlledComponent<
           getA11yStatusMessage={getA11yStatusMessage}
           defaultHighlightedIndex={defaultHighlightedIndex}
           onStateChange={changes => {
+            if (changes.isOpen !== undefined) {
+              this.trySetState({ isOpen: changes.isOpen })
+            }
+
             if (changes.isOpen && !search) {
               this.listRef.current.focus()
             }
@@ -280,9 +296,10 @@ export default class Dropdown extends AutoControlledComponent<
             return (
               <Ref innerRef={innerRef}>
                 <div
-                  className={classes.container}
+                  className={cx(`${Dropdown.className}__container`, classes.container)}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
+                  {/* {multiple && <div className={cx(`${Dropdown.className}__selected-items`, classes.selectedItems)}>{this.renderSelectedItems()}</div>} */}
                   {multiple && this.renderSelectedItems()}
                   {search
                     ? this.renderSearchInput(

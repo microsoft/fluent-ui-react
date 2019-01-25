@@ -98,7 +98,11 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     _.invoke(this.props, 'onKeyUp', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
+  public renderComponent({
+    classes,
+    unhandledProps,
+    styles,
+  }: RenderResultConfig<DropdownSearchInputProps>) {
     const {
       accessibilityComboboxProps,
       accessibilityInputProps,
@@ -107,6 +111,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     } = this.props
     return (
       <Input
+        className={classes.root}
         inputRef={inputRef}
         onFocus={this.handleFocus}
         onKeyUp={this.handleKeyUp}

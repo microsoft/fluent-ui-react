@@ -1,42 +1,33 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { DropdownProps } from '../../../../components/Dropdown/Dropdown'
+import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables> = {
+const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, DropdownVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
-  container: ({
-    props: { focused, fluid },
-    variables: {
-      backgroundColor,
-      borderBottom,
-      borderRadius,
-      borderColor,
-      borderColorFocus,
-      borderRadiusFocus,
-      color,
-      width,
-    },
-  }): ICSSInJSStyle => ({
+  container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
     outline: 0,
     border: 0,
-    backgroundColor,
-    borderBottom,
-    borderColor,
-    borderRadius,
-    color,
-    width: fluid ? '100%' : width,
+    backgroundColor: v.backgroundColor,
+    borderBottom: v.borderBottom,
+    borderRadius: v.borderRadius,
+    color: v.color,
+    width: p.fluid ? '100%' : v.width,
     position: 'relative',
-    ...(focused && {
-      borderColor: borderColorFocus,
-      borderRadius: borderRadiusFocus,
+    ...(p.focused && {
+      borderColor: v.borderColorFocus,
     }),
   }),
 
-  button: ({ variables: { comboboxPaddingButton } }): ICSSInJSStyle => {
+  // selectedItems: (): ICSSInJSStyle => ({
+  //   maxHeight: '40px', // v.containerMaxHeight,
+  //   overflowY: 'auto',
+  // }),
+
+  button: ({ variables: v }): ICSSInJSStyle => {
     const transparentColorStyle = {
       backgroundColor: 'transparent',
       borderColor: 'transparent',
@@ -45,7 +36,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
       boxShadow: 'none',
       margin: '0',
       justifyContent: 'left',
-      padding: comboboxPaddingButton,
+      padding: v.comboboxPaddingButton,
       ...transparentColorStyle,
       height: pxToRem(30),
       ':hover': transparentColorStyle,
@@ -60,17 +51,20 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     }
   },
 
-  list: ({
-    variables: { listMaxHeight, width, listBackgroundColor },
-    props: { fluid },
-  }): ICSSInJSStyle => ({
+  list: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    outline: 0,
     position: 'absolute',
+    borderRadius: v.listBorderRadius,
     zIndex: 1000,
-    maxHeight: listMaxHeight,
+    maxHeight: v.listMaxHeight,
     overflowY: 'auto',
-    width: fluid ? '100%' : width,
+    width: p.fluid ? '100%' : v.width,
     top: 'calc(100% + 2px)', // leave room for container + its border
-    background: listBackgroundColor,
+    background: v.listBackgroundColor,
+    ...(p.isOpen && {
+      boxShadow: v.listBoxShadow,
+      padding: v.listPadding,
+    }),
   }),
 
   loadingMessage: ({ variables: v }): ICSSInJSStyle => ({

@@ -2,9 +2,9 @@ import { pxToRem } from '../../../../lib'
 
 export interface InputVariables {
   backgroundColor: string
-  border: string
+  border: string | number
+  borderBottom: string
   borderRadius: string
-  boxShadow: string
   fontColor: string
   fontSize: string
   iconColor: string
@@ -20,11 +20,11 @@ export interface InputVariables {
 
 export default (siteVars): InputVariables => ({
   backgroundColor: siteVars.gray10,
-  border: `${pxToRem(1)} solid transparent`,
-  borderRadius: pxToRem(3),
-  boxShadow: `0 ${pxToRem(1)} 0 ${siteVars.brand}`,
+  border: 'none',
+  borderBottom: `${pxToRem(2)} solid transparent`,
+  borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
 
-  fontColor: siteVars.bodyColor,
+  fontColor: siteVars.gray02,
   fontSize: siteVars.fontSizes.medium,
 
   iconPosition: 'absolute',
