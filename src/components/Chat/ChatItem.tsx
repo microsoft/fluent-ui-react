@@ -23,8 +23,8 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
 
-  /** Indicates whether the gutter is positioned at the start or the end. */
-  gutterPosition?: 'start' | 'end'
+  /** Indicates whether the content is positioned at the start or the end. */
+  contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
   message?: ShorthandValue
@@ -42,13 +42,13 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
     ...commonPropTypes.createCommon({ content: false }),
     grouped: PropTypes.oneOf(['start', 'middle', 'end']),
     gutter: customPropTypes.itemShorthand,
-    gutterPosition: PropTypes.oneOf(['start', 'end']),
+    contentPosition: PropTypes.oneOf(['start', 'end']),
     message: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'li',
-    gutterPosition: 'start',
+    contentPosition: 'start',
   }
 
   renderComponent({
@@ -71,14 +71,14 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   }
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { message, gutter, gutterPosition } = this.props
+    const { message, gutter, contentPosition } = this.props
     const gutterElement = gutter && Box.create(gutter, { defaultProps: { styles: styles.gutter } })
 
     return (
       <>
-        {gutterPosition === 'start' && gutterElement}
+        {contentPosition === 'start' && gutterElement}
         {Box.create(message, { defaultProps: { styles: styles.message } })}
-        {gutterPosition === 'end' && gutterElement}
+        {contentPosition === 'end' && gutterElement}
       </>
     )
   }

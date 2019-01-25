@@ -13,7 +13,34 @@ const items = [
         <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
       ),
     },
+    contentPosition: 'end',
+    grouped: 'start',
     key: 'message-id-1',
+  },
+  {
+    message: {
+      content: (
+        <Chat.Message content="I'm back!" author="John Doe" timestamp="Yesterday, 10:15 PM" mine />
+      ),
+    },
+    contentPosition: 'end',
+    grouped: 'middle',
+    key: 'message-id-2',
+  },
+  {
+    message: {
+      content: (
+        <Chat.Message
+          content="Thanks for waiting!"
+          author="John Doe"
+          timestamp="Yesterday, 10:15 PM"
+          mine
+        />
+      ),
+    },
+    contentPosition: 'end',
+    grouped: 'end',
+    key: 'message-id-3',
   },
   {
     gutter: { content: <Avatar {...janeAvatar} /> },
@@ -21,7 +48,17 @@ const items = [
       content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     },
     grouped: 'start',
-    key: 'message-id-2',
+    key: 'message-id-4',
+  },
+  {
+    gutter: { content: <Avatar {...janeAvatar} /> },
+    message: {
+      content: (
+        <Chat.Message content="No problem!" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
+      ),
+    },
+    grouped: 'middle',
+    key: 'message-id-5',
   },
   {
     gutter: { content: <Avatar {...janeAvatar} /> },
@@ -30,18 +67,8 @@ const items = [
         <Chat.Message content="What's up?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
-    grouped: 'middle',
-    key: 'message-id-3',
-  },
-  {
-    gutter: { content: <Avatar {...janeAvatar} /> },
-    message: {
-      content: (
-        <Chat.Message content="What's new?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
-      ),
-    },
     grouped: 'end',
-    key: 'message-id-3',
+    key: 'message-id-6',
   },
   {
     message: {
@@ -54,37 +81,34 @@ const items = [
         />
       ),
     },
-    key: 'message-id-4',
+    contentPosition: 'end',
+    key: 'message-id-7',
   },
   {
     gutter: { content: <Avatar {...janeAvatar} /> },
     message: {
       content: (
         <Chat.Message
-          content="Sure! Let's try the new place downtown"
+          content="Sure! Let's try the new place downtown."
           author="Jane Doe"
           timestamp="Yesterday, 10:15 PM"
         />
       ),
     },
-    key: 'message-id-5',
+    key: 'message-id-8',
   },
   {
     children: <Divider content="Today" color="primary" important />,
-    key: 'message-id-6',
+    key: 'message-id-9',
   },
   {
     message: {
       content: (
-        <Chat.Message
-          content="Let's have a call"
-          author="John Doe"
-          timestamp="Today, 11:15 PM"
-          mine
-        />
+        <Chat.Message content="Ok, let's go." author="John Doe" timestamp="Today, 11:15 PM" mine />
       ),
     },
-    key: 'message-id-7',
+    contentPosition: 'end',
+    key: 'message-id-10',
   },
 ]
 

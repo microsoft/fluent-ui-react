@@ -18,7 +18,6 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     wordBreak: 'break-word',
     wordWrap: 'break-word',
     outline: 0,
-    ...(p.mine && { float: 'right' }),
     ...(p.isFromKeyboard && {
       ':focus': {
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
@@ -30,7 +29,13 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     ...(p.mine && {
       display: 'none',
     }),
-    marginRight: v.authorMargin,
+    fontSize: v.authorFontSize,
+    marginRight: v.authorMarginRight,
+    marginBottom: v.headerMarginBottom,
+  }),
+
+  timestamp: ({ variables: v }) => ({
+    marginBottom: v.headerMarginBottom,
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({
