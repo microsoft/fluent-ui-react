@@ -34,11 +34,6 @@ const Types = () => (
       description="Flex columns example."
       examplePath="components/Flex/Types/FlexColumnsExample"
     />
-    <ComponentExample
-      title="Default"
-      description="A default Flex."
-      examplePath="components/Flex/Types/FlexExample"
-    />
   </ExampleSection>
 )
 

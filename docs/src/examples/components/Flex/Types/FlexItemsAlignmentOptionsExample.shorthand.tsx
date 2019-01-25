@@ -22,7 +22,7 @@ const FlexExampleShorthand = () => (
         ],
       ].map(rowOfAlignmentProps => (
         <Flex.Row gap={30}>
-          {rowOfAlignmentProps.map(alignmentProps => (
+          {rowOfAlignmentProps.map((alignmentProps: any) => (
             <Flex
               inline
               {...alignmentProps}

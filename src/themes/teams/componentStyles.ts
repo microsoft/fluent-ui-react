@@ -19,6 +19,9 @@ export { default as Dropdown } from './components/Dropdown/dropdownStyles'
 export { default as DropdownSearchInput } from './components/Dropdown/dropdownSearchInputStyles'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemStyles'
 
+export { default as Flex } from './components/Flex/flexStyles'
+export { default as FlexItem } from './components/Flex/flexItemStyles'
+
 export { default as Form } from './components/Form/formStyles'
 export { default as FormField } from './components/Form/formFieldStyles'
 

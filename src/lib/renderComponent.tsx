@@ -41,7 +41,6 @@ export interface RenderResultConfig<P> {
   accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
-  getClasses: any
 }
 
 export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
@@ -207,7 +206,6 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           accessibility,
           rtl,
           theme,
-          getClasses: styles => getClasses(renderer, { root: styles }, null).root,
         }
 
         if (accessibility.focusZone) {

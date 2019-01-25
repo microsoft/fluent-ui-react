@@ -45,6 +45,10 @@ export {
 } from './components/Dropdown/DropdownSearchInput'
 
 export { default as Form, FormProps } from './components/Form/Form'
+
+// export { default as Flex } from './components/Flex/FlexEx'
+export { default as Flex } from './components/Flex/Flex'
+
 export { default as FormField, FormFieldProps } from './components/Form/FormField'
 
 export { default as Grid, GridProps } from './components/Grid/Grid'
@@ -111,8 +115,6 @@ export { default as Text, TextProps } from './components/Text/Text'
 export { default as Animation, AnimationProps } from './components/Animation/Animation'
 
 export { default as Tree } from './components/Tree'
-
-export { default as Flex } from './components/Flex/FlexEx'
 
 //
 // Accessibility
