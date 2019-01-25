@@ -10,7 +10,8 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     const {
       height,
       minWidth,
-      maxWidth,
+      // TEMP CHANGES NECESSARY FOR LAYOUT EXAMPLES
+      // maxWidth,
       borderRadius,
       circularRadius,
       paddingLeftRightValue,
@@ -72,7 +73,6 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
     return {
       height,
       minWidth,
-      maxWidth,
       color,
       backgroundColor,
       borderRadius,
@@ -81,7 +81,9 @@ const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, any> = {
       alignItems: 'center',
       position: 'relative',
       padding: `0 ${pxToRem(paddingLeftRightValue)}`,
-      margin: `0 ${pxToRem(8)} 0 0`,
+      // TEMP CHANGES NECESSARY FOR LAYOUT EXAMPLES
+      // (however, these ones should be considered for the future)
+      margin: `0 0 0 0`,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
