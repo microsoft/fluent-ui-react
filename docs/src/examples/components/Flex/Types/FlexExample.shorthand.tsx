@@ -13,49 +13,33 @@ const SquareImage = () => (
 
 const FlexExampleShorthand = () => (
   <>
-    {/* <Flex column height="300px" center space="around">
-    <Button content="Hello" />
-    <Button content="Another" />
-    <Button content="One" />
-  </Flex> */}
-
-    {/*
-    <Flex.Row></Flex.Row>
-    <Flex.Column><Flex.Column/>
-    */}
-
-    {/* Lets implement components from Vadim's example */}
-    <Flex height="150px">
+    <Flex.Row>
       <SquareImage />
 
-      <Flex.Item size="*" style={{ marginLeft: '20px' }}>
-        <Flex column>
-          <Flex space="between">
+      <Flex.Item stretch style={{ marginLeft: '20px' }}>
+        <Flex.Column>
+          <Flex.Row space="between">
             <Flex.Item size="auto">
               <Title content="stardust-ui/react" />
             </Flex.Item>
 
             <Flex.Item>
-              {({ classes, styles }) => <Title content="stardust-ui/react" styles={styles} />}
-            </Flex.Item>
-
-            <Flex.Item>
               <Label content="some side note" />
             </Flex.Item>
-          </Flex>
+          </Flex.Row>
 
           <Title content="Description" size="18px" />
 
-          <Flex.Item size="*">
-            <Flex as="span" vAlign="center" hAlign="end">
+          <Flex.Item stretch>
+            <Flex.Row as="span" vAlign="center" hAlign="end">
               A themable React component library.
-            </Flex>
+            </Flex.Row>
           </Flex.Item>
 
           <Label content="github.com" />
-        </Flex>
+        </Flex.Column>
       </Flex.Item>
-    </Flex>
+    </Flex.Row>
   </>
 )
 
