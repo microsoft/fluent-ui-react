@@ -180,6 +180,10 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
       e.preventDefault()
       this.trySetOpen(!this.state.open, e, true)
     },
+    open: e => {
+      e.preventDefault()
+      this.setPopupOpen(true, e)
+    },
   }
 
   public componentDidMount() {

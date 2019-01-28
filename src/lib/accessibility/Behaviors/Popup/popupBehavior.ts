@@ -11,6 +11,7 @@ import * as _ from 'lodash'
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  */
 const popupBehavior: Accessibility = (props: any) => {
+  const normalizedOn = _.isArray(props.on) ? props.on : [props.on]
   return {
     attributes: {
       trigger: {
@@ -34,7 +35,11 @@ const popupBehavior: Accessibility = (props: any) => {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
         },
         toggle: {
-          keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+          keyCombinations: (_.includes(normalizedOn, 'click') ||
+            _.includes(normalizedOn, 'hover')) && [
+            { keyCode: keyboardKey.Enter },
+            { keyCode: keyboardKey.Spacebar },
+          ],
         },
       },
     },
