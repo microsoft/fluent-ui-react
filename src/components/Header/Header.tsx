@@ -11,6 +11,7 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  createShorthandFactory,
 } from '../../lib'
 import HeaderDescription from './HeaderDescription'
 import { ReactProps, ShorthandValue } from '../../../types/utils'
@@ -38,6 +39,8 @@ export interface HeaderProps
  *    In addition to that, both will be displayed in the list of headings.
  */
 class Header extends UIComponent<ReactProps<HeaderProps>, any> {
+  static create: Function
+
   static className = 'ui-header'
 
   static displayName = 'Header'
@@ -83,5 +86,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
     )
   }
 }
+
+Header.create = createShorthandFactory(Header, 'content')
 
 export default Header
