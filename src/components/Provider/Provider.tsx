@@ -1,8 +1,9 @@
+import { IStyle } from 'fela'
 import { render } from 'fela-dom'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Provider as RendererProvider, ThemeProvider } from 'react-fela'
+import { RendererProvider, ThemeProvider } from 'react-fela'
 
 import { felaRenderer as felaLtrRenderer, isBrowser, mergeThemes } from '../../lib'
 import {
@@ -70,7 +71,7 @@ class Provider extends React.Component<ProviderProps> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaLtrRenderer.renderStatic(style, selector)
+        felaLtrRenderer.renderStatic(style as IStyle, selector)
       })
     }
 
