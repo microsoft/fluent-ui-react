@@ -3,7 +3,7 @@ import { Layout, Input, toolbarButtonBehavior, toolbarBehavior, Menu } from '@st
 import { MenuItemProps } from 'src/components/Menu/MenuItem'
 import style from './chatProtoStyle'
 
-type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string }
+type ToolbarProps = MenuItemProps & { key: string; 'aria-label'?: string; role?: string }
 
 class ComposeMessage extends React.Component {
   public render() {
@@ -54,7 +54,7 @@ class ComposeMessage extends React.Component {
       'send',
     ].map((icon, index) => this.getMenuItem(icon, index))
 
-    items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+    items.splice(-1, 0, { key: 'separator', role: 'separator', styles: { flex: 1 } })
 
     return (
       <Menu

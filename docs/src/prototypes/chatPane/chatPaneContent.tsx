@@ -28,7 +28,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
             >
               Message list.
             </div>
-            <Chat items={items} styles={{ padding: '0 32px' }} />
+            <Chat items={items} styles={{ padding: '0 32px' }} as="div" />
           </div>
         </Scrollbars>
       )
@@ -48,6 +48,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
             : {}
         return (
           <Chat.Item
+            as="div"
             key={`chat-item-${index}`}
             gutterPosition={mine ? 'end' : 'start'}
             gutter={gutter && { content: <Avatar {...gutter} /> }}

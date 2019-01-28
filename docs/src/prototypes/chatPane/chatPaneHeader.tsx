@@ -86,6 +86,7 @@ class ChatPaneHeader extends React.PureComponent<ChatPaneHeaderProps> {
               variables: siteVars => ({ color: siteVars.white, margin: 'auto 8px' }),
             },
             primary: true,
+            'aria-label': name,
           }))}
           styles={{ marginRight: '20px' }}
         />

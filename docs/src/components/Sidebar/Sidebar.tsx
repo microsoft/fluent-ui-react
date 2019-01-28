@@ -175,8 +175,8 @@ class Sidebar extends React.Component<any, any> {
         {({ themeName, changeTheme }) => (
           <Menu vertical fixed="left" inverted style={{ ...style }}>
             <Menu.Item>
-              <Logo spaced="right" size="mini" />
-              <strong>
+              <Logo spaced="right" size="mini" aria-hidden={true} />
+              <strong role="heading" aria-level={1}>
                 Stardust UI React &nbsp;
                 <small>
                   <em>{pkg.version}</em>
