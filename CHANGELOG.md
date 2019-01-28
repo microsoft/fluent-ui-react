@@ -27,6 +27,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `loading` prop for `Dropdown` @layershifter ([#729](https://github.com/stardust-ui/react/pull/729))
 - Export `close` icon in Teams theme @alinais ([#774](https://github.com/stardust-ui/react/pull/774))
 
+### Fixes
+- Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
+
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.17.0...v0.18.0)
