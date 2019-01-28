@@ -80,6 +80,7 @@ const ChatMessageExampleStyled = () => (
               />
             ),
           },
+          contentPosition: 'end',
           key: 'message-id-1',
         },
         {
