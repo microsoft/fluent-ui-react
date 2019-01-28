@@ -17,8 +17,8 @@ import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
-  /** Indicates whether the ChatItem is the part of a batch. */
-  grouped?: 'start' | 'middle' | 'end'
+  /** Attach ChatItem to other content. */
+  attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
@@ -40,7 +40,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
-    grouped: PropTypes.oneOf(['start', 'middle', 'end']),
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     gutter: customPropTypes.itemShorthand,
     contentPosition: PropTypes.oneOf(['start', 'end']),
     message: customPropTypes.itemShorthand,
@@ -49,6 +49,7 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   static defaultProps = {
     as: 'li',
     contentPosition: 'start',
+    attached: false,
   }
 
   renderComponent({

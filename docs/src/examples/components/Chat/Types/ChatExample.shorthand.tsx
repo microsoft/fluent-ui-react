@@ -14,7 +14,7 @@ const items = [
       ),
     },
     contentPosition: 'end',
-    grouped: 'start',
+    attached: 'top',
     key: 'message-id-1',
   },
   {
@@ -24,7 +24,7 @@ const items = [
       ),
     },
     contentPosition: 'end',
-    grouped: 'middle',
+    attached: true,
     key: 'message-id-2',
   },
   {
@@ -39,7 +39,7 @@ const items = [
       ),
     },
     contentPosition: 'end',
-    grouped: 'end',
+    attached: 'bottom',
     key: 'message-id-3',
   },
   {
@@ -47,7 +47,7 @@ const items = [
     message: {
       content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />,
     },
-    grouped: 'start',
+    attached: 'top',
     key: 'message-id-4',
   },
   {
@@ -57,7 +57,7 @@ const items = [
         <Chat.Message content="No problem!" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
-    grouped: 'middle',
+    attached: true,
     key: 'message-id-5',
   },
   {
@@ -67,7 +67,7 @@ const items = [
         <Chat.Message content="What's up?" author="Jane Doe" timestamp="Yesterday, 10:15 PM" />
       ),
     },
-    grouped: 'end',
+    attached: 'bottom',
     key: 'message-id-6',
   },
   {

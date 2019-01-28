@@ -26,7 +26,7 @@ export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'
 export {
   default as ChatMessage,
   ChatMessageProps,
-  chatMessageMetadata,
+  ChatMessageSlotClassNames,
 } from './components/Chat/ChatMessage'
 
 export {

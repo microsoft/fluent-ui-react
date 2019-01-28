@@ -23,6 +23,11 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import Text from '../Text/Text'
 import Box from '../Box/Box'
 
+export interface ChatMessageSlotClassNames {
+  author: string
+  timestamp: string
+}
+
 export interface ChatMessageProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -61,6 +66,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static className = 'ui-chat__message'
 
   static create: Function
+
+  static slotClassNames: ChatMessageSlotClassNames
 
   static displayName = 'ChatMessage'
 
@@ -123,7 +130,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               defaultProps: {
                 size: 'small',
                 styles: styles.author,
-                className: chatMessageMetadata.authorClassName,
+                className: ChatMessage.slotClassNames.author,
               },
             })}
             {Text.create(timestamp, {
@@ -131,7 +138,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
                 size: 'small',
                 styles: styles.timestamp,
                 timestamp: true,
-                className: chatMessageMetadata.timestampClassName,
+                className: ChatMessage.slotClassNames.timestamp,
               },
             })}
             {Box.create(content, { defaultProps: { styles: styles.content } })}
@@ -143,10 +150,9 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 }
 
 ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
-
-export const chatMessageMetadata = {
-  authorClassName: `${ChatMessage.className}__author`,
-  timestampClassName: `${ChatMessage.className}__timestamp`,
+ChatMessage.slotClassNames = {
+  author: `${ChatMessage.className}__author`,
+  timestamp: `${ChatMessage.className}__timestamp`,
 }
 
 export default ChatMessage
