@@ -25,7 +25,13 @@ const ComponentPropsComponents: any = ({
   }))
 
   return (
-    <Menu styles={{ color: 'green' }} primary pills accessibility={tabListBehavior} items={items} />
+    <Menu
+      styles={{ color: 'green', display: 'inline-flex' }}
+      primary
+      pills
+      accessibility={tabListBehavior}
+      items={items}
+    />
   )
 }
 

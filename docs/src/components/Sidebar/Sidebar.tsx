@@ -1,4 +1,4 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle, Provider } from '@stardust-ui/react'
+import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
 import { ShorthandValue } from '../../../../types/utils'
 import { listItemBehavior, listBehavior } from '../../../../src/lib/accessibility'
 import Logo from 'docs/src/components/Logo/Logo'
@@ -11,9 +11,6 @@ import { findDOMNode } from 'react-dom'
 import { withRouter } from 'react-router'
 
 import { NavLink } from 'react-router-dom'
-
-// import { themes } from '@stardust-ui/react'
-// import { ThemeContext } from 'docs/src/context/ThemeContext'
 
 import { constants } from 'src/lib'
 import { fontWeightBold } from 'src/themes/teams/siteVariables'
@@ -73,22 +70,6 @@ class Sidebar extends React.Component<any, any> {
     if (query) this.setState({ query: '' })
     //   if (document.activeElement === this._searchInput) this._searchInput.blur()
   }
-  /*
-  private menuItemsByType = _.map(nextType => {
-    const items = _.flow(
-      _.filter<ComponentMenuItem>(({ type }) => type === nextType),
-      _.map(info => ({
-        key: info.displayName.concat(nextType),
-        content: info.displayName,
-        onClick: this.handleItemClick,
-        as: NavLink,
-        to: getComponentPathname(info),
-        accessibility: listItemBehavior,
-      })),
-    )([...componentMenu, ...behaviorMenu])
-    return { items }
-  }, constants.typeOrder)
-*/
 
   private menuItemsByType = _.map(constants.typeOrder, nextType => {
     const items = _.chain([...componentMenu, ...behaviorMenu])
@@ -104,12 +85,6 @@ class Sidebar extends React.Component<any, any> {
       .value()
 
     return { items }
-    // return (
-    //  <Menu.Item key={nextType}>
-    //    <Menu.Header>{_.capitalize(nextType)}s</Menu.Header>
-    //    <Menu.Menu>{items}</Menu.Menu>
-    //  </Menu.Item>
-    // )
   })
 
   // private renderSearchItems = () => {
@@ -120,19 +95,6 @@ class Sidebar extends React.Component<any, any> {
   //   const startsWithMatches: ComponentMenuItem[] = []
   //   const containsMatches: ComponentMenuItem[] = []
   //   const escapedQuery = _.escapeRegExp(query)
-
-  //   _.each(info => {
-  //     if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-  //       startsWithMatches.push(info)
-  //     } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-  //       containsMatches.push(info)
-  //     }
-  //   }, componentMenu)
-
-  //   this.filteredMenu = [...startsWithMatches, ...containsMatches]
-  //   const menuItems = _.map(info => {
-  //     itemIndex += 1
-  //     const isSelected = itemIndex === selectedItemIndex
 
   /*
     _.each(componentMenu, info => {
@@ -209,7 +171,7 @@ class Sidebar extends React.Component<any, any> {
     }
 
     const logoStyles: ICSSInJSStyle = {
-      padding: '5px',
+      paddingRight: '5px',
       color: 'white',
       fontWeight: 700,
     }
@@ -348,6 +310,89 @@ class Sidebar extends React.Component<any, any> {
       //   ),
       // },
     ]
+
+    const prototypesMenuItemTitle = {
+      key: 'prototypes',
+      content: 'Prototypes',
+      styles: menuSectionStyles,
+      accessibility: listItemBehavior,
+    }
+
+    const prototypesMenuItems: ShorthandValue[] = [
+      {
+        key: 'chatpane',
+        content: 'Chat Pane',
+        as: NavLink,
+        to: '/prototype-chat-pane',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'chatmessagepopover',
+        content: 'Chat message with popover',
+        as: NavLink,
+        to: '/prototype-chat-message-with-popover',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'asyncdropdown',
+        content: 'Async Dropdown Search',
+        as: NavLink,
+        to: '/prototype-async-dropdown-search',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'asyncshorthand',
+        content: 'Async Shorthand',
+        as: NavLink,
+        to: '/prototype-async-shorthand',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'employeecard',
+        content: 'Employee Card',
+        as: NavLink,
+        to: '/prototype-employee-card',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'meetingoptions',
+        content: 'Meeting Options',
+        as: NavLink,
+        to: '/prototype-meeting-options',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'searchpage',
+        content: 'Search Page',
+        as: NavLink,
+        to: '/prototype-search-page',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'popups',
+        content: 'Popups',
+        as: NavLink,
+        to: '/prototype-popups',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'iconviewer',
+        content: 'Icon Viewer',
+        as: NavLink,
+        to: '/icon-viewer',
+        accessibility: listItemBehavior,
+      },
+      {
+        key: 'divider4',
+        kind: 'divider',
+      },
+    ]
+
+    const withPrototypes =
+      process.env.NODE_ENV !== 'production'
+        ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
+        : []
+
     const componentMenuItem = {
       key: 'components',
       content: 'Components',
@@ -361,10 +406,12 @@ class Sidebar extends React.Component<any, any> {
       accessibility: listItemBehavior,
     }
 
-    const withComponents = menuItems.concat(componentMenuItem).concat(this.menuItemsByType[0].items)
+    const withComponents = withPrototypes
+      .concat(componentMenuItem)
+      .concat(this.menuItemsByType[0].items)
     const allItems = withComponents
       .concat({
-        key: 'divider4',
+        key: 'divider5',
         kind: 'divider',
       })
       .concat(behaviorMenuItem)
@@ -373,180 +420,23 @@ class Sidebar extends React.Component<any, any> {
     // {query ? this.renderSearchItems() : this.menuItemsByType},
     // TODO: bring back the active elements indicators
     return (
-      <Provider
-        theme={{
-          siteVariables: {},
-          componentVariables: {
-            Menu: {},
-          },
-        }}
-      >
-        <Segment
-          styles={sidebarStyles}
-          content={
-            <Menu
-              vertical
-              fluid
-              pills
-              accessibility={listBehavior}
-              styles={navBarStyles}
-              items={allItems}
-            />
-          }
-        />
-      </Provider>
+      <Segment
+        styles={sidebarStyles}
+        content={
+          <Menu
+            vertical
+            fluid
+            pills
+            accessibility={listBehavior}
+            styles={navBarStyles}
+            items={allItems}
+          />
+        }
+      />
       /*
       <ThemeContext.Consumer>
         {({ themeName, changeTheme }) => (
           <Menu vertical fixed="left" inverted style={{ ...style }}>
-            <Menu.Item>
-              <Logo spaced="right" size="mini" />
-              <strong>
-                Stardust UI React &nbsp;
-                <small>
-                  <em>{pkg.version}</em>
-                </small>
-              </strong>
-              <Menu.Menu>
-                <Menu.Item
-                  as="a"
-                  href={constants.repoURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon name="github" /> GitHub
-                </Menu.Item>
-                <Menu.Item
-                  as="a"
-                  href={`${constants.repoURL}/blob/master/CHANGELOG.md`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon name="file alternate outline" /> CHANGELOG
-                </Menu.Item>
-              </Menu.Menu>
-            </Menu.Item>
-            {process.env.NODE_ENV !== 'production' && (
-              <Menu.Item>
-                <p>Theme:</p>
-                <select
-                  placeholder="Select theme..."
-                  defaultValue={themeName}
-                  onChange={e => {
-                    changeTheme(e.target.value)
-                  }}
-                >
-                  {this.getThemeOptions().map(o => (
-                    <option key={o.value} value={o.value}>
-                      {o.text}
-                    </option>
-                  ))}
-                </select>
-              </Menu.Item>
-            )}
-            <Menu.Item>
-              Concepts
-              <Menu.Menu>
-                <Menu.Item as={NavLink} exact to="/" activeClassName="active">
-                  Introduction
-                </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
-                  Color Palette
-                </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
-                  Shorthand Props
-                </Menu.Item>
-              </Menu.Menu>
-            </Menu.Item>
-            <Menu.Item>
-              Guides
-              <Menu.Menu>
-                <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
-                  Quick Start
-                </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
-                  Accessibility
-                </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
-                  Theming
-                </Menu.Item>
-                <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
-                  Theming Examples
-                </Menu.Item>
-                <Menu.Item
-                  as={NavLink}
-                  exact
-                  to="/integrate-custom-components"
-                  activeClassName="active"
-                >
-                  Integrate Custom Components
-                </Menu.Item>
-              </Menu.Menu>
-            </Menu.Item>
-            {process.env.NODE_ENV !== 'production' && (
-              <Menu.Item>
-                Prototypes
-                <Menu.Menu>
-                  <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
-                    Chat Pane
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-chat-message-with-popover"
-                    activeClassName="active"
-                  >
-                    Chat message with popover
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-async-dropdown-search"
-                    activeClassName="active"
-                  >
-                    Async Dropdown Search
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-async-shorthand"
-                    activeClassName="active"
-                  >
-                    Async Shorthand
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-employee-card"
-                    activeClassName="active"
-                  >
-                    Employee Card
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-meeting-options"
-                    activeClassName="active"
-                  >
-                    Meeting Options
-                  </Menu.Item>
-                  <Menu.Item
-                    as={NavLink}
-                    exact
-                    to="/prototype-search-page"
-                    activeClassName="active"
-                  >
-                    Search Page
-                  </Menu.Item>
-                  <Menu.Item as={NavLink} exact to="/prototype-popups" activeClassName="active">
-                    Popups
-                  </Menu.Item>
-                  <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
-                    Processed Icons
-                  </Menu.Item>
-                </Menu.Menu>
-              </Menu.Item>
-            )}
             <Menu.Item active>
               <SemanticUIInput
                 className="transparent inverted icon"

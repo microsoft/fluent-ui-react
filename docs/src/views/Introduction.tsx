@@ -1,8 +1,9 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header, Segment, ICSSInJSStyle, Provider } from '@stardust-ui/react'
+import { Header, Segment, ICSSInJSStyle, Provider, themes } from '@stardust-ui/react'
 
+import { mergeThemes } from '../../../src/lib'
 import Logo from '../components/Logo/Logo'
 
 const pkg = require('package.json')
@@ -15,22 +16,24 @@ const centerAligned: ICSSInJSStyle = {
 
 const Introduction = () => (
   <Provider
-    theme={{
+    theme={mergeThemes(themes.teams, {
       componentStyles: {
         Header: {
           root: {
-            margin: '24px',
+            marginTop: '24px',
+            marginBottom: '0px',
           },
         },
         HeaderDescription: {
           root: {
-            marginTop: 0,
+            margin: 0,
+            fontSize: '1.14285714rem',
           },
         },
       },
-    }}
+    })}
   >
-    <div style={{ margin: '0 225px', fontSize: '16.1px', maxWidth: '80ch' }}>
+    <div style={{ margin: '0 225px', fontSize: '1.15rem', maxWidth: '80ch' }}>
       <Segment styles={centerAligned}>
         <Logo width="150px" />
         <Header as="h1">

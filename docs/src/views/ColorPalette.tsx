@@ -15,7 +15,6 @@ const ColorPalette = () => (
         ColorVariants: colorVariantsStyles,
         Header: {
           root: {
-            fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
             fontWeight: 700,
           },
         },
@@ -48,7 +47,7 @@ const ColorPalette = () => (
 
           <Grid columns={2}>
             {_.map(['black', 'white'], color => (
-              <div key={color} style={{ paddingTop: '1em', paddingBottom: '1em' }}>
+              <div key={color}>
                 <ColorBox name={color} rounded size="big" value={colors[color]} />
               </div>
             ))}
@@ -63,7 +62,7 @@ const ColorPalette = () => (
             naming (lightest, lighter, etc.).
           </p>
 
-          <Grid columns={2}>
+          <Grid columns={2} variables={{ gridGap: '2rem' }}>
             {_.map(naturalColors, (variants, color) => (
               <div key={color}>
                 <ColorBox name={color} rounded value={colors[color][500]} />
@@ -103,13 +102,13 @@ const ColorPalette = () => (
           </p>
 
           {_.map(colors.text, (color, variant) => (
-            <ColorBox key={color} size="medium" value={color}>
+            <ColorBox key={color} size="small" value={color}>
               {`${variant} | ${faker.lorem.sentence(4)}`}
             </ColorBox>
           ))}
 
           <Header as="h2">Color variables</Header>
-          <Grid columns={2}>
+          <Grid columns={2} variables={{ gridGap: '2rem' }}>
             {_.map(
               { ...emphasisColors, ...contextualColors, ...naturalColors },
               (variants, color) => (

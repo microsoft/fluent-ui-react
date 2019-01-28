@@ -31,12 +31,6 @@ class App extends React.Component<any, AppState> {
   }
 
   private docsTheme = {
-    // adjust Teams' theme to Semantic UI's font size scheme
-    siteVariables: {
-      htmlFontSize: '16px',
-      bodyFontSize: '1rem',
-      fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
-    },
     componentStyles: {
       Header: {
         root: {
@@ -52,26 +46,36 @@ class App extends React.Component<any, AppState> {
       Button: {
         root: {
           textDecoration: 'none',
-          padding: '5px 20px',
         },
       },
     },
     staticStyles: [
       {
         h1: {
-          fontSize: '28px',
-          marginTop: '-4px',
+          fontSize: '2rem',
+          marginTop: '-.14285714em',
         },
         h2: {
-          fontSize: '24px',
-          marginBottom: '14px',
-          marginTop: '24.5714px',
+          fontSize: '1.71428571rem',
+          marginTop: 'calc(2rem - 0.142857em)',
         },
         a: {
           color: '#4183c4',
           textDecoration: 'none',
           ':hover, :focus': {
             color: '#1e70bf',
+          },
+        },
+        html: {
+          fontSize: '14px',
+        },
+        body: {
+          fontSize: '1rem',
+          fontFamily: "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+          '::-webkit-scrollbar': {
+            '-webkit-appearance': 'none',
+            width: '10px',
+            height: '10px',
           },
         },
       },

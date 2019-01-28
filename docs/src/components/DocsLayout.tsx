@@ -68,7 +68,6 @@ class DocsLayout extends React.Component<any, any> {
         <Provider
           theme={mergeThemes(themes.teamsDark, {
             // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {},
             componentVariables: {
               MenuDivider: {
                 borderColor: '#ffffff80',
@@ -83,7 +82,7 @@ class DocsLayout extends React.Component<any, any> {
                 root: {
                   padding: '.5em 1.33333333em',
                   textDecoration: 'none',
-                  fontSize: '12px',
+                  fontSize: '0.85714286em',
                   fontWeight: 400,
                   color: '#ffffff80',
                   ':hover, :focus': {

@@ -53,11 +53,17 @@ export default class ComponentProps extends React.Component<any, any> {
 
     return (
       <div>
-        <Box styles={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+        <Box styles={{ display: 'block', verticalAlign: 'middle' }}>
           {/* Should be toggle component - need to associate text with checkbox.   */}
-          <Input type="checkbox" checked={!!activeDisplayName} onClick={this.handleToggle} inline />
-          <Text content="Props" />
-
+          <div style={{ display: 'inline-block' }}>
+            <Input
+              type="checkbox"
+              checked={!!activeDisplayName}
+              onClick={this.handleToggle}
+              inline
+            />
+            <Text content="Props" styles={{ marginBottom: '0' }} />
+          </div>
           <ComponentPropsComponents
             activeDisplayName={activeDisplayName}
             displayNames={displayNames}

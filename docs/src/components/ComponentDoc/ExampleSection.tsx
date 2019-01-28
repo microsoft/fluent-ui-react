@@ -10,10 +10,6 @@ const headerStyle: React.CSSProperties = {
   textTransform: 'uppercase',
 }
 
-/*const sectionStyle: React.CSSProperties = {
-  paddingBottom: '5em',
-}*/
-
 export type ExampleSectionProps = Extendable<{
   title: string
 }>
@@ -23,7 +19,7 @@ const ExampleSection: React.FC<ExampleSectionProps> = ({ title, children, ...res
     <Header as="h2" styles={headerStyle} className="no-anchor">
       {title}
     </Header>
-    <Grid styles={{ gridRowGap: '20px' }} columns="1">
+    <Grid variables={{ gridGap: '2rem' }} columns="1">
       {children}
     </Grid>
   </Box>
