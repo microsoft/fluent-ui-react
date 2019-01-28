@@ -29,6 +29,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
+- Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
 
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
