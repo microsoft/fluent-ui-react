@@ -30,18 +30,16 @@ class RadioGroupColorPickerExample extends React.Component {
     const isSelected = selectedValue === value
 
     return {
-      variables: {
-        backgroundColor: value,
-        borderColor: 'white',
-        ...(isSelected && {
-          borderColor: 'black',
-        }),
-      },
       styles: {
+        backgroundColor: value,
+        border: '1px solid white',
+        ...(isSelected && {
+          border: '1px solid black',
+        }),
         borderRadius: '3px',
         ...(isSelected && {
           backgroundClip: 'content-box',
-          padding: '2px',
+          padding: '5px',
         }),
       },
     }
