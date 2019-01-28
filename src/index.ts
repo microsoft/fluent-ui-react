@@ -23,7 +23,11 @@ export { default as ButtonGroup, ButtonGroupProps } from './components/Button/Bu
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
 export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'
-export { default as ChatMessage, ChatMessageProps } from './components/Chat/ChatMessage'
+export {
+  default as ChatMessage,
+  ChatMessageProps,
+  ChatMessageSlotClassNames,
+} from './components/Chat/ChatMessage'
 
 export {
   default as Divider,
