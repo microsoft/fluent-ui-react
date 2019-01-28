@@ -395,6 +395,173 @@ class Sidebar extends React.Component<any, any> {
           }
         />
       </Provider>
+      /*
+      <ThemeContext.Consumer>
+        {({ themeName, changeTheme }) => (
+          <Menu vertical fixed="left" inverted style={{ ...style }}>
+            <Menu.Item>
+              <Logo spaced="right" size="mini" />
+              <strong>
+                Stardust UI React &nbsp;
+                <small>
+                  <em>{pkg.version}</em>
+                </small>
+              </strong>
+              <Menu.Menu>
+                <Menu.Item
+                  as="a"
+                  href={constants.repoURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name="github" /> GitHub
+                </Menu.Item>
+                <Menu.Item
+                  as="a"
+                  href={`${constants.repoURL}/blob/master/CHANGELOG.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name="file alternate outline" /> CHANGELOG
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                <p>Theme:</p>
+                <select
+                  placeholder="Select theme..."
+                  defaultValue={themeName}
+                  onChange={e => {
+                    changeTheme(e.target.value)
+                  }}
+                >
+                  {this.getThemeOptions().map(o => (
+                    <option key={o.value} value={o.value}>
+                      {o.text}
+                    </option>
+                  ))}
+                </select>
+              </Menu.Item>
+            )}
+            <Menu.Item>
+              Concepts
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/" activeClassName="active">
+                  Introduction
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/color-palette" activeClassName="active">
+                  Color Palette
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/shorthand-props" activeClassName="active">
+                  Shorthand Props
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            <Menu.Item>
+              Guides
+              <Menu.Menu>
+                <Menu.Item as={NavLink} exact to="/quick-start" activeClassName="active">
+                  Quick Start
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/accessibility" activeClassName="active">
+                  Accessibility
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming" activeClassName="active">
+                  Theming
+                </Menu.Item>
+                <Menu.Item as={NavLink} exact to="/theming-examples" activeClassName="active">
+                  Theming Examples
+                </Menu.Item>
+                <Menu.Item
+                  as={NavLink}
+                  exact
+                  to="/integrate-custom-components"
+                  activeClassName="active"
+                >
+                  Integrate Custom Components
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
+            {process.env.NODE_ENV !== 'production' && (
+              <Menu.Item>
+                Prototypes
+                <Menu.Menu>
+                  <Menu.Item as={NavLink} exact to="/prototype-chat-pane" activeClassName="active">
+                    Chat Pane
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-chat-message-with-popover"
+                    activeClassName="active"
+                  >
+                    Chat message with popover
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-async-dropdown-search"
+                    activeClassName="active"
+                  >
+                    Async Dropdown Search
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-async-shorthand"
+                    activeClassName="active"
+                  >
+                    Async Shorthand
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-employee-card"
+                    activeClassName="active"
+                  >
+                    Employee Card
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-meeting-options"
+                    activeClassName="active"
+                  >
+                    Meeting Options
+                  </Menu.Item>
+                  <Menu.Item
+                    as={NavLink}
+                    exact
+                    to="/prototype-search-page"
+                    activeClassName="active"
+                  >
+                    Search Page
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/prototype-popups" activeClassName="active">
+                    Popups
+                  </Menu.Item>
+                  <Menu.Item as={NavLink} exact to="/icon-viewer" activeClassName="active">
+                    Processed Icons
+                  </Menu.Item>
+                </Menu.Menu>
+              </Menu.Item>
+            )}
+            <Menu.Item active>
+              <SemanticUIInput
+                className="transparent inverted icon"
+                icon="search"
+                placeholder="Search components..."
+                value={query}
+                onChange={this.handleSearchChange}
+                onKeyDown={this.handleSearchKeyDown}
+              />
+            </Menu.Item>
+            {query ? this.renderSearchItems() : this.menuItemsByType}
+          </Menu>
+        )}
+      </ThemeContext.Consumer>
+*/
     )
   }
 

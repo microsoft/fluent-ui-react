@@ -6,12 +6,10 @@ const TextExampleColor = () => (
   <ProviderConsumer
     render={({ siteVariables: { emphasisColors, naturalColors } }) =>
       _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-        <>
-          <Text key={color} color={color}>
-            {_.startCase(color)}
-          </Text>
+        <React.Fragment key={color}>
+          <Text color={color}>{_.startCase(color)}</Text>
           <br />
-        </>
+        </React.Fragment>
       ))
     }
   />

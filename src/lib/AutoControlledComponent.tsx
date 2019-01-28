@@ -188,7 +188,7 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
    * @param {object} maybeState State that corresponds to controlled props.
    * @param {object} [state] Actual state, useful when you also need to setState.
    */
-  trySetState = (maybeState, state?): boolean => {
+  trySetState = (maybeState, state?) => {
     const { autoControlledProps } = this.constructor as any
     if (process.env.NODE_ENV !== 'production') {
       const { name } = this.constructor
@@ -218,11 +218,6 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
 
     if (state) newState = { ...newState, ...state }
 
-    if (Object.keys(newState).length > 0) {
-      this.setState(newState)
-      return true
-    }
-
-    return false
+    if (Object.keys(newState).length > 0) this.setState(newState)
   }
 }
