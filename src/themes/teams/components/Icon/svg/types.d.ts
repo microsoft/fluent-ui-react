@@ -5,6 +5,7 @@ import { IconProps } from '../../../../../components/Icon/Icon'
 type SvgIconSpecWithStyles = {
   icon: SvgIconSpec
   styles: ObjectOf<ComponentSlotStyleFunction<IconProps, any>>
+  rotateInRtl?: boolean
 }
 
 export type TeamsSvgIconSpec = SvgIconSpec | SvgIconSpecWithStyles

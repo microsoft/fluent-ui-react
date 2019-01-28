@@ -14,9 +14,10 @@ import { default as fontIcons } from './components/Icon/font'
 
 import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
 
-const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
+const declareSvg = (svgIcon: SvgIconSpec, rotateInRtl: boolean): ThemeIconSpec => ({
   isSvg: true,
   icon: svgIcon,
+  rotateInRtl,
 })
 
 const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
@@ -30,7 +31,11 @@ const icons: ThemeIcons = Object.keys(svgIconsAndStyles as {
     ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
     : (iconAndMaybeStyles as SvgIconSpec)
 
-  return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
+  const rotateInRtl = (iconAndMaybeStyles as any).rotateInRtl
+    ? (iconAndMaybeStyles as any).rotateInRtl
+    : false
+
+  return { ...accIcons, ...{ [iconName]: declareSvg(icon, rotateInRtl) } }
 }, {})
 
 Object.keys(fontIcons).forEach(iconName => {

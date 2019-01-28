@@ -122,9 +122,11 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
       ...((bordered || v.borderColor || circular) &&
         getBorderedStyles(circular, v.borderColor || getIconColor(color, v))),
 
-      ...(rtl && {
-        transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
-      }),
+      ...(rtl &&
+        !isFontBased &&
+        iconSpec.rotateInRtl && {
+          transform: `scaleX(-1) rotate(${-1 * rotate}deg)`,
+        }),
 
       ...(!rtl && {
         transform: `rotate(${rotate}deg)`,
