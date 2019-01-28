@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix layout of `Accordion` panel's title @kuzhelov ([#780](https://github.com/stardust-ui/react/pull/780))
+
 <!--------------------------------[ v0.19.0 ]------------------------------- -->
 ## [v0.19.0](https://github.com/stardust-ui/react/tree/v0.19.0) (2019-01-28)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.18.0...v0.19.0)
