@@ -1,11 +1,15 @@
-import { ComponentSlotStyleFunction, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import {
+  ComponentSlotStyleFunction,
+  ComponentSlotStylesInput,
+  ICSSInJSStyle,
+  PxToRemFunc,
+} from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
-// TODO sloppy types used
-const underlinedItem = (color: string, pxToRem: any): ICSSInJSStyle => ({
+const underlinedItem = (color: string, pxToRem: PxToRemFunc): ICSSInJSStyle => ({
   paddingBottom: 0,
   borderBottom: `solid ${pxToRem(4)} ${color}`,
   transition: 'color .1s ease',

@@ -124,6 +124,12 @@ export type PropsWithVarsAndStyles = Extendable<{
 export type State = ObjectOf<any>
 
 // ========================================================
+// Px To Rem
+// ========================================================
+
+export type PxToRemFunc = (valueInPx: number, remSize?: number) => string
+
+// ========================================================
 // Variables
 // ========================================================
 
@@ -143,11 +149,10 @@ export interface SiteVariablesPrepared extends SiteVariablesInput {
 
 export type ComponentVariablesObject = any
 
-// TODO this should be refactored
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
   props?: any,
-  pxToRem?: any,
+  pxToRem?: PxToRemFunc,
 ) => ComponentVariablesObject
 
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
@@ -200,7 +205,7 @@ export interface ComponentStyleFunctionParam<
   variables: TVars
   theme: ThemePrepared
   colors: Partial<ColorScheme>
-  pxToRem: any
+  pxToRem: PxToRemFunc
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((

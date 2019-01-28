@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import { PxToRemFunc } from '../themes/types'
 
 const createResolver = getData => {
   const resolver = withTools => getData(withTools)
@@ -23,6 +24,6 @@ export const resolve = getData => createResolver(getData)
  * pxToRem(16, 8)
  * @returns {string} The value converted to the rem.
  */
-export const pxToRem = (pxValue: number, remSize: number = 16): string => {
+export const pxToRem: PxToRemFunc = (pxValue: number, remSize: number = 16): string => {
   return `${_.round(pxValue / remSize, 4)}rem`
 }

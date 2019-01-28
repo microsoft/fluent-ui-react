@@ -1,7 +1,7 @@
 import { RadioGroupItemProps } from '../../../../components/RadioGroup/RadioGroupItem'
+import { PxToRemFunc } from '../../../types'
 
-// TODO remove sloppy types
-export default (siteVars: any, props: RadioGroupItemProps, pxToRem: any) => {
+export default (siteVars: any, props: RadioGroupItemProps, pxToRem: PxToRemFunc) => {
   const { checked } = props
 
   return {

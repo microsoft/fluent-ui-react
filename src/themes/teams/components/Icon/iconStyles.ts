@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 
 import fontAwesomeIcons from './fontAwesomeIconStyles'
 import { callable } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle, FontIconSpec } from '../../../types'
+import { ComponentSlotStylesInput, FontIconSpec, ICSSInJSStyle, PxToRemFunc } from '../../../types'
 import { ResultOf } from '../../../../../types/utils'
 import { IconXSpacing, IconProps, IconSize } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
@@ -25,7 +25,7 @@ const getDefaultFontIcon = (iconName: string) => {
 const getFontStyles = (
   size: number,
   iconName: string,
-  pxToRem: any, // TODO remove sloppiness
+  pxToRem: PxToRemFunc,
   themeIcon?: ResultOf<FontIconSpec>,
 ): ICSSInJSStyle => {
   const { fontFamily, content } = themeIcon || getDefaultFontIcon(iconName)
@@ -63,7 +63,7 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
 const getBorderedStyles = (
   circular: boolean,
   boxShadowColor: string,
-  pxToRem: any,
+  pxToRem: PxToRemFunc,
 ): ICSSInJSStyle => {
   return {
     ...getPaddedStyle(pxToRem),
@@ -73,8 +73,7 @@ const getBorderedStyles = (
   }
 }
 
-// TODO sloppy types
-const getPaddedStyle = (pxToRem): ICSSInJSStyle => ({
+const getPaddedStyle = (pxToRem: PxToRemFunc): ICSSInJSStyle => ({
   padding: pxToRem(4),
 })
 
