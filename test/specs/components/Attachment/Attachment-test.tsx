@@ -1,4 +1,11 @@
-import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
+import * as React from 'react'
+
+import {
+  isConformant,
+  implementsShorthandProp,
+  handlesAccessibility,
+  htmlIsAccessibilityCompliant,
+} from 'test/specs/commonTests'
 
 import Attachment from 'src/components/Attachment/Attachment'
 import Text from 'src/components/Text/Text'
@@ -18,5 +25,14 @@ describe('Attachment', () => {
     handlesAccessibility(Attachment, {
       defaultRootRole: undefined,
     })
+
+    test('ARIA compliant', () =>
+      htmlIsAccessibilityCompliant(
+        <Attachment
+          header="Picture.jpg"
+          action={{ icon: 'x', 'aria-label': 'label' }}
+          items={['item']}
+        />,
+      ))
   })
 })

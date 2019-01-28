@@ -1,7 +1,12 @@
 import * as React from 'react'
 
 import Menu from 'src/components/Menu/Menu'
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
+import {
+  isConformant,
+  handlesAccessibility,
+  getRenderedAttribute,
+  htmlIsAccessibilityCompliant,
+} from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import { toolbarBehavior, tabListBehavior } from '../../../../src/lib/accessibility'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
@@ -90,6 +95,23 @@ describe('Menu', () => {
         defaultRootRole: 'menu',
         focusZoneDefinition: (menuBehavior as AccessibilityDefinition).focusZone,
       })
+
+      test('basic menu is ARIA compliant', () =>
+        htmlIsAccessibilityCompliant(<Menu items={['item']} />))
+
+      test('submenu is ARIA compliant', () =>
+        htmlIsAccessibilityCompliant(
+          <Menu
+            items={[
+              {
+                content: 'with submenu',
+                menu: {
+                  items: ['a', 'b', 'c'],
+                },
+              },
+            ]}
+          />,
+        ))
 
       test('aria-label should be added to the menu', () => {
         const ariaLabel = 'A Nice Toolbar'
