@@ -11,7 +11,7 @@ const [janeAvatar, johnAvatar] = [
 
 const items = [
   {
-    gutterPosition: 'start',
+    contentPosition: 'start',
     gutter: { content: <Avatar {...johnAvatar} /> },
     message: {
       content: <Chat.Message content="Hello" author="John Doe" timestamp="Yesterday, 10:15 PM" />,
@@ -19,7 +19,7 @@ const items = [
     key: 'message-id-1',
   },
   {
-    gutterPosition: 'end',
+    contentPosition: 'end',
     gutter: { content: <Avatar {...janeAvatar} /> },
     message: {
       content: <Chat.Message content="Hi" author="Jane Doe" timestamp="Yesterday, 10:15 PM" mine />,
@@ -28,6 +28,6 @@ const items = [
   },
 ]
 
-const ChatExampleGutterPosition = () => <Chat items={items} />
+const ChatExampleContentPosition = () => <Chat items={items} />
 
-export default ChatExampleGutterPosition
+export default ChatExampleContentPosition
