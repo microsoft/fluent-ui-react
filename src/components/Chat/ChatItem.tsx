@@ -17,7 +17,7 @@ import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
-  /** Attach ChatItem to other content. */
+  /** Controls item's relation to other chat items. */
   attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
