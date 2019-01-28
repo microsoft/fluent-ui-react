@@ -4,7 +4,7 @@ import * as webpack from 'webpack'
 import config from '../config'
 
 const { paths } = config
-const { __DEV__, __PERF__, __PROD__ } = config.compiler_globals
+const { __DEV__, __PROD__ } = config.compiler_globals
 
 const webpackConfig: any = {
   name: 'client',
@@ -37,9 +37,7 @@ const webpackConfig: any = {
         exclude: /node_modules/,
         options: {
           useCache: true,
-          configFileName: __PERF__
-            ? paths.base('build/tsconfig.perf.json')
-            : paths.base('build/tsconfig.docs.json'),
+          configFileName: paths.base('build/tsconfig.perf.json'),
           errorsAsWarnings: __DEV__,
         },
       },

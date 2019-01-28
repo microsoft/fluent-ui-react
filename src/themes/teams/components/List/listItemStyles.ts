@@ -1,4 +1,5 @@
 import { pxToRem } from '../../../../lib'
+import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ListItemProps, ListItemState } from '../../../../components/List/ListItem'
 
@@ -13,7 +14,7 @@ const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   '& .ui-item-layout__content': { color: 'inherit' },
 
   // hide the header media and content media on hover
-  '& .ui-item-layout__headerMedia': { display: 'none', color: 'inherit' },
+  '& .ui-item-layout__headerMedia': { ...screenReaderContainerStyles, color: 'inherit' },
   '& .ui-item-layout__contentMedia': { display: 'none', color: 'inherit' },
 
   // show the end media on hover
