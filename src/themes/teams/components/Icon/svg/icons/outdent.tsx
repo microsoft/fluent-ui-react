@@ -1,9 +1,15 @@
 import * as React from 'react'
 import { TeamsProcessedSvgIconSpec } from '../types'
+import cx from 'classnames'
 
 export default {
   icon: ({ classes }) => (
-    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
+    <svg
+      role="presentation"
+      focusable="false"
+      viewBox="8 8 16 16"
+      className={cx(classes.svg, classes.rotateInRtl)}
+    >
       <g>
         <path
           className={classes.outlinePart}
@@ -33,5 +39,4 @@ export default {
     </svg>
   ),
   styles: {},
-  rotateInRtl: true,
 } as TeamsProcessedSvgIconSpec

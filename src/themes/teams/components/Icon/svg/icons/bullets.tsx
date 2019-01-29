@@ -1,9 +1,15 @@
 import * as React from 'react'
 import { TeamsSvgIconSpec } from '../types'
+import cx from 'classnames'
 
 export default {
   icon: ({ classes }) => (
-    <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
+    <svg
+      role="presentation"
+      focusable="false"
+      viewBox="8 8 16 16"
+      className={cx(classes.svg, classes.rotateInRtl)}
+    >
       <g>
         <g className={classes.outlinePart}>
           <path d="M13.5 11h9a.5.5 0 1 0 0-1h-9a.5.5 0 1 0 0 1zM22.5 15h-9a.5.5 0 1 0 0 1h9a.5.5 0 1 0 0-1zM22.5 20h-9a.5.5 0 1 0 0 1h9a.5.5 0 1 0 0-1z" />
@@ -21,5 +27,4 @@ export default {
     </svg>
   ),
   styles: {},
-  rotateInRtl: true,
 } as TeamsSvgIconSpec

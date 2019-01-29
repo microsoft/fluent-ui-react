@@ -9,33 +9,28 @@ import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
 
-import { default as svgIconsAndMetaData } from './components/Icon/svg'
+import { default as svgIconsAndStyles } from './components/Icon/svg'
 import { default as fontIcons } from './components/Icon/font'
 
-import { TeamsSvgIconSpec, SvgIconSpecWithMetaData } from './components/Icon/svg/types'
+import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
 
-const declareSvg = (svgIcon: SvgIconSpec, rotateInRtl: boolean): ThemeIconSpec => ({
+const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
   isSvg: true,
   icon: svgIcon,
-  rotateInRtl,
 })
 
 const declareFontBased = (fontIcon: FontIconSpec): ThemeIconSpec => ({ icon: fontIcon })
 
-const icons: ThemeIcons = Object.keys(svgIconsAndMetaData as {
+const icons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   [iconName: string]: TeamsSvgIconSpec
 }).reduce<ThemeIcons>((accIcons, iconName) => {
-  const iconAndMaybeMetaData = svgIconsAndMetaData[iconName]
+  const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
-  const icon: SvgIconSpec = (iconAndMaybeMetaData as any).styles
-    ? (iconAndMaybeMetaData as SvgIconSpecWithMetaData).icon
-    : (iconAndMaybeMetaData as SvgIconSpec)
+  const icon: SvgIconSpec = (iconAndMaybeStyles as any).styles
+    ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
+    : (iconAndMaybeStyles as SvgIconSpec)
 
-  const rotateInRtl = (iconAndMaybeMetaData as any).rotateInRtl
-    ? (iconAndMaybeMetaData as any).rotateInRtl
-    : false
-
-  return { ...accIcons, ...{ [iconName]: declareSvg(icon, rotateInRtl) } }
+  return { ...accIcons, ...{ [iconName]: declareSvg(icon) } }
 }, {})
 
 Object.keys(fontIcons).forEach(iconName => {
