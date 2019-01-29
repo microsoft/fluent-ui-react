@@ -10,6 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  handleRef,
   rtlTextContainer,
 } from '../../lib'
 import Ref from '../Ref/Ref'
@@ -57,9 +58,9 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /**
    * Called with a ref to the trigger node.
    *
-   * @param {JSX.Element} node - Referred node.
+   * @param {HTMLElement} node - Referred node.
    */
-  triggerRef?: (node: HTMLElement) => void
+  triggerRef?: React.Ref<any>
 
   /**
    * Called when trigger node was clicked.
@@ -84,8 +85,8 @@ export interface PortalState {
  * A component that allows you to render children outside their parent.
  */
 class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, PortalState> {
-  private portalNode: HTMLElement
-  private triggerNode: HTMLElement
+  private portalRef = React.createRef<HTMLElement>()
+  private triggerRef = React.createRef<HTMLElement>()
 
   private clickSubscription = EventStack.noSubscription
 
@@ -103,7 +104,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     onUnmount: PropTypes.func,
     open: PropTypes.bool,
     trigger: PropTypes.node,
-    triggerRef: PropTypes.func,
+    triggerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     triggerAccessibility: PropTypes.object,
     onTriggerClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
@@ -175,13 +176,12 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
   }
 
   private handlePortalRef = (portalNode: HTMLElement) => {
-    this.portalNode = portalNode
+    handleRef(this.portalRef, portalNode)
   }
 
   private handleTriggerRef = (triggerNode: HTMLElement) => {
-    this.triggerNode = triggerNode
-
-    _.invoke(this.props, 'triggerRef', triggerNode)
+    handleRef(this.triggerRef, triggerNode)
+    handleRef(this.props.triggerRef, triggerNode)
   }
 
   private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
@@ -194,9 +194,9 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
 
   private handleDocumentClick = (e: ReactMouseEvent) => {
     if (
-      !this.portalNode || // no portal
-      doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)
-      doesNodeContainClick(this.portalNode, e) // event happened in the portal
+      !this.portalRef.current || // no portal
+      doesNodeContainClick(this.triggerRef.current, e) || // event happened in trigger (delegate to trigger handlers)
+      doesNodeContainClick(this.portalRef.current, e) // event happened in the portal
     ) {
       return // ignore the click
     }
