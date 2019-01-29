@@ -227,6 +227,7 @@ export type AnimationProp =
       iterationCount?: string
       playState?: string
       timingFunction?: string
+      keyframeParams?: object
     }
   | string
 // ========================================================
@@ -252,6 +253,7 @@ export interface ThemeAnimation {
   iterationCount?: string
   playState?: string
   timingFunction?: string
+  keyframeParams?: object
 }
 
 // ========================================================
