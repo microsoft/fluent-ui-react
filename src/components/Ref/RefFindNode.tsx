@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
-import { ChildrenComponentProps, handleRef } from '../../lib'
+import { ChildrenComponentProps, customPropTypes, handleRef } from '../../lib'
 
 export interface RefFindNodeProps extends ChildrenComponentProps<React.ReactElement<any>> {
   /**
@@ -16,7 +16,7 @@ export interface RefFindNodeProps extends ChildrenComponentProps<React.ReactElem
 export default class RefFindNode extends React.Component<RefFindNodeProps> {
   static propTypes = {
     children: PropTypes.element.isRequired,
-    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    innerRef: customPropTypes.ref,
   }
 
   componentDidMount() {

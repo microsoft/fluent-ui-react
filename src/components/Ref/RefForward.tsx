@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { ChildrenComponentProps, handleRef } from '../../lib'
+import { ChildrenComponentProps, customPropTypes, handleRef } from '../../lib'
 
 export interface RefForwardProps
   extends ChildrenComponentProps<React.ReactElement<any> & { ref: React.Ref<any> }> {
@@ -16,7 +16,7 @@ export interface RefForwardProps
 export default class RefForward extends React.Component<RefForwardProps> {
   static propTypes = {
     children: PropTypes.element.isRequired,
-    innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    innerRef: customPropTypes.ref,
   }
 
   private handleRefOverride = (node: HTMLElement) => {
