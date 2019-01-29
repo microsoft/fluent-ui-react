@@ -85,8 +85,8 @@ export interface PortalState {
  * A component that allows you to render children outside their parent.
  */
 class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, PortalState> {
-  private portalRef = React.createRef<HTMLElement>()
-  private triggerRef = React.createRef<HTMLElement>()
+  private portalRef: HTMLElement
+  private triggerRef: HTMLElement
 
   private clickSubscription = EventStack.noSubscription
 
@@ -176,11 +176,11 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
   }
 
   private handlePortalRef = (portalNode: HTMLElement) => {
-    handleRef(this.portalRef, portalNode)
+    this.portalRef = portalNode
   }
 
   private handleTriggerRef = (triggerNode: HTMLElement) => {
-    handleRef(this.triggerRef, triggerNode)
+    this.triggerRef = triggerNode
     handleRef(this.props.triggerRef, triggerNode)
   }
 
@@ -194,9 +194,9 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
 
   private handleDocumentClick = (e: ReactMouseEvent) => {
     if (
-      !this.portalRef.current || // no portal
-      doesNodeContainClick(this.triggerRef.current, e) || // event happened in trigger (delegate to trigger handlers)
-      doesNodeContainClick(this.portalRef.current, e) // event happened in the portal
+      !this.portalRef || // no portal
+      doesNodeContainClick(this.triggerRef, e) || // event happened in trigger (delegate to trigger handlers)
+      doesNodeContainClick(this.portalRef, e) // event happened in the portal
     ) {
       return // ignore the click
     }
