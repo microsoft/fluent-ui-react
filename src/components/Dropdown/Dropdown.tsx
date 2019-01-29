@@ -523,14 +523,6 @@ export default class Dropdown extends AutoControlledComponent<
         if (state.isOpen && document.activeElement === this.listRef.current) {
           return {} // won't change state in this case.
         }
-      case Downshift.stateChangeTypes.clickItem:
-      case Downshift.stateChangeTypes.keyDownEnter:
-        if (!this.props.search && !this.props.multiple) {
-          this.setState({
-            defaultHighlightedIndex: state.highlightedIndex,
-          })
-        }
-        return changes
       default:
         return changes
     }
@@ -715,6 +707,11 @@ export default class Dropdown extends AutoControlledComponent<
       value: newValue,
       searchQuery: '',
     })
+    if (!this.props.search && !this.props.multiple) {
+      this.setState({
+        defaultHighlightedIndex: this.props.items.indexOf(item),
+      })
+    }
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
