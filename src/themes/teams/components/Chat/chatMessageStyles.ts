@@ -1,11 +1,16 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { ChatMessageProps } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
+import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
+import { pxToRem } from '../../../../lib'
 
 const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',
-    padding: v.padding,
+    paddingLeft: v.padding,
+    paddingRight: v.padding,
+    paddingTop: pxToRem(8),
+    paddingBottom: pxToRem(10),
     borderRadius: v.borderRadius,
     border: v.border,
     color: v.color,
@@ -14,7 +19,6 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     wordBreak: 'break-word',
     wordWrap: 'break-word',
     outline: 0,
-    ...(p.mine && { float: 'right' }),
     ...(p.isFromKeyboard && {
       ':focus': {
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
@@ -23,8 +27,13 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    display: p.mine ? 'none' : undefined,
-    marginRight: v.authorMargin,
+    ...(p.mine && screenReaderContainerStyles),
+    marginRight: v.authorMarginRight,
+    marginBottom: v.headerMarginBottom,
+  }),
+
+  timestamp: ({ variables: v }) => ({
+    marginBottom: v.headerMarginBottom,
   }),
 
   content: ({ variables: v }): ICSSInJSStyle => ({

@@ -73,14 +73,19 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     background: listBackgroundColor,
   }),
 
-  emptyListItem: ({ variables: { listItemBackgroundColor } }) => ({
-    backgroundColor: listItemBackgroundColor,
+  loadingMessage: ({ variables: v }): ICSSInJSStyle => ({
+    backgroundColor: v.listItemBackgroundColor,
   }),
 
-  toggleButton: ({ variables: { toggleButtonSize, width }, props: { fluid } }): ICSSInJSStyle => ({
+  noResultsMessage: ({ variables: v }): ICSSInJSStyle => ({
+    backgroundColor: v.listItemBackgroundColor,
+    fontWeight: 'bold',
+  }),
+
+  toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
-    height: toggleButtonSize,
-    width: toggleButtonSize,
+    height: v.toggleIndicatorSize,
+    width: v.toggleIndicatorSize,
     cursor: 'pointer',
     backgroundColor: 'transparent',
     margin: 0,
@@ -88,7 +93,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps, DropdownVariables>
     justifyContent: 'center',
     alignItems: 'center',
     userSelect: 'none',
-    ...(fluid ? { right: 0 } : { left: `calc(${width} - ${toggleButtonSize})` }),
+    ...(p.fluid ? { right: 0 } : { left: `calc(${v.width} - ${v.toggleIndicatorSize})` }),
   }),
 }
 

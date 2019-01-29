@@ -1,21 +1,23 @@
-import { pxToRem } from '../../../../lib'
-import { RadioGroupItemProps } from '../../../../components/RadioGroup/RadioGroupItem'
+export type RadioGroupItemVariables = {
+  color: string
+  colorChecked: string
+  colorDisabled: string
 
-export default (siteVars: any, props: RadioGroupItemProps) => {
-  const { checked } = props
+  colorBorder: string
+  colorBorderChecked: string
 
-  return {
-    fontWeight: 400,
-    radioMargin: `${pxToRem(10)}`,
-    disabledColor: siteVars.gray06,
-
-    // variables for the icon part
-    icon: {
-      margin: `0 ${pxToRem(10)} 0 0`,
-      color: checked ? siteVars.white : siteVars.brand,
-      backgroundColor: checked ? siteVars.brand : siteVars.white,
-      borderColor: checked ? siteVars.white : siteVars.brand,
-      outlineColor: siteVars.brand,
-    },
-  }
+  colorBackground: string
+  colorBackgroundChecked: string
 }
+
+export default (siteVars: any): RadioGroupItemVariables => ({
+  color: siteVars.brand,
+  colorChecked: siteVars.white,
+  colorDisabled: siteVars.gray06,
+
+  colorBorder: siteVars.brand,
+  colorBorderChecked: siteVars.white,
+
+  colorBackground: siteVars.white,
+  colorBackgroundChecked: siteVars.brand,
+})

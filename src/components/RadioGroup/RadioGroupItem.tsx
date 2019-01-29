@@ -143,7 +143,7 @@ class RadioGroupItem extends AutoControlledComponent<
     this.elementRef = ReactDOM.findDOMNode(this) as HTMLElement
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
+  renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { label, icon } = this.props
 
     return (
@@ -161,7 +161,6 @@ class RadioGroupItem extends AutoControlledComponent<
             defaultProps: {
               circular: true,
               size: 'smaller',
-              variables: variables.icon,
               styles: styles.icon,
             },
           })}

@@ -14,7 +14,7 @@ const popupBehavior: Accessibility = (props: any) => {
   return {
     attributes: {
       trigger: {
-        role: getAriaAttributeFromProps('role', props, 'button'),
+        // role: getAriaAttributeFromProps('role', props, 'button'),
         tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
         'aria-disabled': !_.isNil(props['aria-disabled'])
           ? props['aria-disabled']

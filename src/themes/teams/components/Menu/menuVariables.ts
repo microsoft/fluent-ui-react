@@ -54,7 +54,7 @@ export default (siteVars: any): MenuVariables => {
 
     disabledColor: siteVars.gray06,
 
-    lineHeightBase: siteVars.lineHeightBase,
+    lineHeightBase: siteVars.lineHeightMedium,
 
     horizontalPaddingLeft: pxToRem(18),
     horizontalPaddingRight: pxToRem(18),

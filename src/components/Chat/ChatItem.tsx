@@ -17,11 +17,14 @@ import Box from '../Box/Box'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
+  /** Controls item's relation to other chat items. */
+  attached?: boolean | 'top' | 'bottom'
+
   /** Chat items can have a gutter. */
   gutter?: ShorthandValue
 
-  /** Indicates whether the gutter is positioned at the start or the end. */
-  gutterPosition?: 'start' | 'end'
+  /** Indicates whether the content is positioned at the start or the end. */
+  contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
   message?: ShorthandValue
@@ -37,14 +40,16 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
 
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false }),
+    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
     gutter: customPropTypes.itemShorthand,
-    gutterPosition: PropTypes.oneOf(['start', 'end']),
+    contentPosition: PropTypes.oneOf(['start', 'end']),
     message: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'li',
-    gutterPosition: 'start',
+    contentPosition: 'start',
+    attached: false,
   }
 
   renderComponent({
@@ -67,14 +72,14 @@ class ChatItem extends UIComponent<ReactProps<ChatItemProps>, any> {
   }
 
   private renderChatItem(styles: ComponentSlotStylesPrepared) {
-    const { message, gutter, gutterPosition } = this.props
+    const { message, gutter, contentPosition } = this.props
     const gutterElement = gutter && Box.create(gutter, { defaultProps: { styles: styles.gutter } })
 
     return (
       <>
-        {gutterPosition === 'start' && gutterElement}
+        {contentPosition === 'start' && gutterElement}
         {Box.create(message, { defaultProps: { styles: styles.message } })}
-        {gutterPosition === 'end' && gutterElement}
+        {contentPosition === 'end' && gutterElement}
       </>
     )
   }

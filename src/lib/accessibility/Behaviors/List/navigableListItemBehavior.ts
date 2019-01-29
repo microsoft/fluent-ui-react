@@ -1,6 +1,7 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 
 /**
  * @description
@@ -13,16 +14,14 @@ import * as _ from 'lodash'
 
 const navigableListItemBehavior: Accessibility = (props: any) => ({
   attributes: {
-    wrapper: {
-      role: 'listitem',
-    },
     root: {
-      tabIndex: '0',
+      role: 'listitem',
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
 
   keyActions: {
-    wrapper: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

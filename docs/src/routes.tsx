@@ -62,6 +62,12 @@ const Router = () => (
           />,
           <DocsLayout
             exact
+            key="/prototype-async-dropdown-search"
+            path="/prototype-async-dropdown-search"
+            component={require('./prototypes/AsyncDropdownSearch/index').default}
+          />,
+          <DocsLayout
+            exact
             key="/prototype-popups"
             path="/prototype-popups"
             component={require('./prototypes/popups/index').default}
