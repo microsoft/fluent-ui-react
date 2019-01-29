@@ -1,4 +1,6 @@
-export default (siteVariables, props, pxToRem) => ({
+import { PxToRemFunc } from '../../../types'
+
+export default (siteVariables, pxToRem: PxToRemFunc) => ({
   width: undefined,
   height: undefined,
   avatarRadius: pxToRem(9999),
