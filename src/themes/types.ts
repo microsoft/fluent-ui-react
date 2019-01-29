@@ -489,7 +489,6 @@ export type FontIconSpec = ObjectOrFunc<{
 export type ThemeIconSpec = {
   isSvg?: boolean
   icon: FontIconSpec | SvgIconSpec
-  rotateInRtl?: boolean
 }
 
 export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
