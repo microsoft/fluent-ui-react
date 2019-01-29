@@ -20,22 +20,22 @@ const getFontSizeValue = (size?: string | null): number | null => {
  * Converts the provided px size to rem based on the default font size of 10px unless
  * the HTML font size has been previously defined with setHTMLFontSize().
  * @param {number} valueInPx The px value to convert to rem.
+ * @param {number} valueInPx Rem size to use for convertions. Optional - document's font size will be taken otherwise.
  * @example
- * // Returns '1rem'
- * pxToRem(10)
+ * // Returns '1rem' for default document font size (16px).
+ * pxToRem(16)
+ *
+ * // Returns '2rem'.
+ * pxToRem(32, 16)
  * @returns {string} The value converted to the rem.
  */
-export const pxToRem = (valueInPx: number = 0): string => {
-  if (!_documentRemSize) {
+export const pxToRem = (valueInPx: number = 0, baseRemSize?: number): string => {
+  if (!baseRemSize && !_documentRemSize) {
     _documentRemSize = getDocumentRemSize()
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (valueInPx < 0) {
-      throw new Error(`Invalid value of: '${valueInPx}'.`)
-    }
-  }
-  const convertedValueInRems = valueInPx / _documentRemSize
+  const remSize = baseRemSize || _documentRemSize || DEFAULT_REM_SIZE_IN_PX
+  const convertedValueInRems = valueInPx / remSize
 
   return `${_.round(convertedValueInRems, 4)}rem`
 }
