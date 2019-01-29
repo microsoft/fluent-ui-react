@@ -229,6 +229,7 @@ export default class Dropdown extends AutoControlledComponent<
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
+      // used on single selection to open the dropdown with the selected option as highlighted.
       defaultHighlightedIndex: !this.props.search && !this.props.multiple ? null : undefined,
     }
   }
