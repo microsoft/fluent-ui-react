@@ -32,4 +32,5 @@ export default {
     </svg>
   ),
   styles: {},
+  rotateInRtl: true,
 } as TeamsProcessedSvgIconSpec
