@@ -8,5 +8,4 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'triangle-down',
 } as TeamsProcessedSvgIconSpec
