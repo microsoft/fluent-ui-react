@@ -22,19 +22,33 @@ import callable from './callable'
 import { felaRenderer, felaRtlRenderer } from './felaRenderer'
 import toCompactArray from './toCompactArray'
 import { ObjectOf } from 'types/utils'
+import { DEFAULT_REM_SIZE } from './fontSizeUtility'
 
-export const resolveSiteVariables = (siteVariablesInput, withTools) => {
+// ----------------------------------------
+// Resolve site variables
+// ----------------------------------------
+
+export const resolveSiteVariables = (siteVariablesInput, withTools): SiteVariablesPrepared => {
   if (!siteVariablesInput) {
     return siteVariablesInput
   }
 
   return Object.keys(siteVariablesInput).reduce((acc, variableName) => {
     const value = siteVariablesInput[variableName]
-    acc[variableName] = value && value.__marker ? value(withTools) : value
+    acc[variableName] = value && value.__deferredSiteVariablesMarker ? value(withTools) : value
 
     return acc
-  }, {})
+  }, {}) as any
 }
+
+const createResolver = getData => {
+  const resolver = withTools => getData(withTools)
+  resolver.__deferredSiteVariablesMarker = true
+
+  return resolver
+}
+
+export const declareSiteVariables = getData => createResolver(getData)
 
 // ----------------------------------------
 // Component level merge functions
@@ -220,7 +234,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
     staticStyles: [],
     icons: {},
     animations: {},
-    remSize: 16, // TODO default size
+    remSize: DEFAULT_REM_SIZE,
   } as ThemePrepared
 
   return themes.reduce<ThemePrepared>((acc: ThemePrepared, next: ThemeInput) => {

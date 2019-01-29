@@ -59,7 +59,6 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-// TODO sloppy typings
 const getBorderedStyles = (
   circular: boolean,
   boxShadowColor: string,

@@ -1,15 +1,10 @@
 import * as _ from 'lodash'
 import { PxToRemFunc } from '../themes/types'
 
-const createResolver = getData => {
-  const resolver = withTools => getData(withTools)
-  resolver.__marker = true
-
-  return resolver
-}
-
-// TODO Marker should be renamed, consider to use Symbol
-export const resolve = getData => createResolver(getData)
+/**
+ * Default rem size of the Web page.
+ */
+export const DEFAULT_REM_SIZE = 16
 
 /**
  * Converts the provided px size to rem based on the default font size of 16px unless
