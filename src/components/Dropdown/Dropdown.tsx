@@ -162,6 +162,7 @@ export default class Dropdown extends AutoControlledComponent<
   private buttonRef = React.createRef<HTMLElement>()
   private inputRef = React.createRef<HTMLElement>()
   private listRef = React.createRef<HTMLElement>()
+  private selectedItemsRef = React.createRef<HTMLDivElement>()
 
   static displayName = 'Dropdown'
 
@@ -281,16 +282,21 @@ export default class Dropdown extends AutoControlledComponent<
                   className={cx(`${Dropdown.className}__container`, classes.container)}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
-                  {multiple && this.renderSelectedItems()}
-                  {search
-                    ? this.renderSearchInput(
-                        accessibilityRootPropsRest,
-                        getInputProps,
-                        highlightedIndex,
-                        selectItemAtIndex,
-                        variables,
-                      )
-                    : this.renderTriggerButton(styles, getToggleButtonProps)}
+                  <div
+                    ref={this.selectedItemsRef}
+                    className={cx(`${Dropdown.className}__selected-items`, classes.selectedItems)}
+                  >
+                    {multiple && this.renderSelectedItems()}
+                    {search
+                      ? this.renderSearchInput(
+                          accessibilityRootPropsRest,
+                          getInputProps,
+                          highlightedIndex,
+                          selectItemAtIndex,
+                          variables,
+                        )
+                      : this.renderTriggerButton(styles, getToggleButtonProps)}
+                  </div>
                   {Indicator.create(toggleIndicator, {
                     defaultProps: {
                       direction: isOpen ? 'top' : 'bottom',
@@ -709,14 +715,14 @@ export default class Dropdown extends AutoControlledComponent<
   }
 
   private handleSelectedChange = (item: ShorthandValue) => {
-    const { multiple, getA11ySelectionMessage, search } = this.props
+    const { items, multiple, getA11ySelectionMessage, search } = this.props
     const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
     this.trySetState({ value: newValue, searchQuery: '' })
 
-    if (!this.props.search && !this.props.multiple) {
+    if (!search && !multiple) {
       this.setState({
-        defaultHighlightedIndex: this.props.items.indexOf(item),
+        defaultHighlightedIndex: items.indexOf(item),
       })
     }
 
@@ -724,7 +730,15 @@ export default class Dropdown extends AutoControlledComponent<
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
 
-    if (!search) {
+    if (search) {
+      setTimeout(
+        () =>
+          this.selectedItemsRef.current.scrollTo({
+            top: this.selectedItemsRef.current.scrollHeight,
+          }),
+        0,
+      )
+    } else {
       this.buttonRef.current.focus()
     }
 

@@ -15,6 +15,7 @@ export interface DropdownVariables {
   listItemBackgroundColor: string
   listItemBackgroundColorActive: string
   listItemColorActive: string
+  selectedItemsMaxHeight: string
   toggleIndicatorSize: string
   width: string
 }
@@ -37,6 +38,7 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColor: siteVars.white,
   listItemBackgroundColorActive: siteVars.brand,
   listItemColorActive: siteVars.white,
+  selectedItemsMaxHeight: pxToRem(80),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
 })
