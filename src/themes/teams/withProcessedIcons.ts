@@ -1,29 +1,38 @@
 import { ThemeInput, ThemeIcons, ThemeIconSpec, SvgIconSpec } from '../types'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg/ProcessedIcons'
-import { TeamsProcessedSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
+import { TeamsProcessedSvgIconSpec, SvgIconSpecWithMetaData } from './components/Icon/svg/types'
 
 type ThemeProcessedIconSpec = ThemeIconSpec &
   { [K in keyof TeamsProcessedSvgIconSpec]?: TeamsProcessedSvgIconSpec[K] }
 
-const declareSvg = (svgIcon: SvgIconSpec, exportedAs?: string): ThemeProcessedIconSpec => ({
+const declareSvg = (
+  svgIcon: SvgIconSpec,
+  rotateInRtl,
+  exportedAs?: string,
+): ThemeProcessedIconSpec => ({
   isSvg: true,
   icon: svgIcon,
+  rotateInRtl,
   exportedAs,
 })
 
 const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
   [iconName: string]: TeamsProcessedSvgIconSpec
 }).reduce<ThemeIcons>((accIcons, iconName) => {
-  const iconAndMaybeStyles = svgIconsAndStyles[iconName]
+  const iconAndMaybeMetaData = svgIconsAndStyles[iconName]
 
-  const icon: SvgIconSpec = (iconAndMaybeStyles as any).styles
-    ? (iconAndMaybeStyles as SvgIconSpecWithStyles).icon
-    : (iconAndMaybeStyles as SvgIconSpec)
+  const icon: SvgIconSpec = (iconAndMaybeMetaData as any).styles
+    ? (iconAndMaybeMetaData as SvgIconSpecWithMetaData).icon
+    : (iconAndMaybeMetaData as SvgIconSpec)
+
+  const rotateInRtl = (iconAndMaybeMetaData as any).rotateInRtl
+    ? (iconAndMaybeMetaData as any).rotateInRtl
+    : false
 
   return {
     ...accIcons,
-    ...{ [iconName]: declareSvg(icon, (iconAndMaybeStyles as any).exportedAs) },
+    ...{ [iconName]: declareSvg(icon, rotateInRtl, (iconAndMaybeMetaData as any).exportedAs) },
   }
 }, {})
 

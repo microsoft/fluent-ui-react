@@ -1,12 +1,12 @@
-import svgIconsAndStyles from './icons'
-import { SvgIconSpecWithStyles, TeamsSvgIconSpec } from './types'
+import svgIconsAndMetaData from './icons'
+import { SvgIconSpecWithMetaData, TeamsSvgIconSpec } from './types'
 
 export const getStyle = partName => {
   return args => {
     const { props } = args
 
-    const maybeIconSpec = svgIconsAndStyles[props.name]
-    const maybeIconStyles = maybeIconSpec && (maybeIconSpec as SvgIconSpecWithStyles).styles
+    const maybeIconSpec = svgIconsAndMetaData[props.name]
+    const maybeIconStyles = maybeIconSpec && (maybeIconSpec as SvgIconSpecWithMetaData).styles
 
     if (maybeIconStyles && maybeIconStyles[partName]) {
       return maybeIconStyles[partName](args)
@@ -16,4 +16,4 @@ export const getStyle = partName => {
   }
 }
 
-export default svgIconsAndStyles as { [iconName: string]: TeamsSvgIconSpec }
+export default svgIconsAndMetaData as { [iconName: string]: TeamsSvgIconSpec }
