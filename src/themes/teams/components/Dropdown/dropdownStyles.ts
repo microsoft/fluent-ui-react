@@ -17,15 +17,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     color: v.color,
     width: p.fluid ? '100%' : v.width,
     position: 'relative',
-    ...(p.focused && {
-      borderColor: v.borderColorFocus,
-    }),
+    ...(p.focused && { borderColor: v.borderColorFocus }),
+    ...(!!p.toggleIndicator && { paddingRight: v.toggleIndicatorSize }),
   }),
-
-  // selectedItems: (): ICSSInJSStyle => ({
-  //   maxHeight: '40px', // v.containerMaxHeight,
-  //   overflowY: 'auto',
-  // }),
 
   button: ({ variables: v }): ICSSInJSStyle => {
     const transparentColorStyle = {
@@ -61,7 +55,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     width: p.fluid ? '100%' : v.width,
     top: 'calc(100% + 2px)', // leave room for container + its border
     background: v.listBackgroundColor,
-    ...(p.isOpen && {
+    ...(p.open && {
       boxShadow: v.listBoxShadow,
       padding: v.listPadding,
     }),
@@ -76,7 +70,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     fontWeight: 'bold',
   }),
 
-  toggleIndicator: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  toggleIndicator: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
     height: v.toggleIndicatorSize,
     width: v.toggleIndicatorSize,
@@ -87,7 +81,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     justifyContent: 'center',
     alignItems: 'center',
     userSelect: 'none',
-    ...(p.fluid ? { right: 0 } : { left: `calc(${v.width} - ${v.toggleIndicatorSize})` }),
+    right: 0,
   }),
 }
 

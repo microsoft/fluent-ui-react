@@ -14,9 +14,6 @@ import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
-  /** Informs the search input about an existing toggle button. */
-  hasToggleButton?: boolean
-
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
 

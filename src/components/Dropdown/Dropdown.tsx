@@ -41,7 +41,7 @@ import ListItem from '../List/ListItem'
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
   /** The initial value for the open state. */
-  defaultIsOpen?: boolean
+  defaultOpen?: boolean
 
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
@@ -73,7 +73,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
 
   /** Sets the open state of the dropdown (controlled mode). */
-  isOpen?: boolean
+  open?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
@@ -147,7 +147,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 }
 
 export interface DropdownState {
-  isOpen?: boolean
+  open?: boolean
   value: ShorthandValue | ShorthandValue[]
   backspaceDelete: boolean
   focused: boolean
@@ -178,7 +178,7 @@ export default class Dropdown extends AutoControlledComponent<
       children: false,
       content: false,
     }),
-    defaultIsOpen: PropTypes.bool,
+    defaultOpen: PropTypes.bool,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -187,7 +187,7 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
-    isOpen: PropTypes.bool,
+    open: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -209,7 +209,7 @@ export default class Dropdown extends AutoControlledComponent<
     ]),
   }
 
-  static defaultProps = {
+  static defaultProps: DropdownProps = {
     as: 'div',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
@@ -226,7 +226,7 @@ export default class Dropdown extends AutoControlledComponent<
     toggleIndicator: {},
   }
 
-  static autoControlledProps = ['isOpen', 'searchQuery', 'value']
+  static autoControlledProps = ['open', 'searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -236,7 +236,7 @@ export default class Dropdown extends AutoControlledComponent<
     return {
       // prevent deletion of last character + last selected value at the same time on backspace.
       backspaceDelete: multiple,
-      isOpen: false,
+      open: false,
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
@@ -253,12 +253,12 @@ export default class Dropdown extends AutoControlledComponent<
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { defaultHighlightedIndex, searchQuery, isOpen } = this.state
+    const { defaultHighlightedIndex, searchQuery, open } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
-          isOpen={isOpen}
+          isOpen={open}
           onChange={this.handleSelectedChange}
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
@@ -270,7 +270,7 @@ export default class Dropdown extends AutoControlledComponent<
           defaultHighlightedIndex={defaultHighlightedIndex}
           onStateChange={changes => {
             if (changes.isOpen !== undefined) {
-              this.trySetState({ isOpen: changes.isOpen })
+              this.trySetState({ open: changes.isOpen })
             }
 
             if (changes.isOpen && !search) {
@@ -299,7 +299,6 @@ export default class Dropdown extends AutoControlledComponent<
                   className={cx(`${Dropdown.className}__container`, classes.container)}
                   onClick={multiple ? this.handleContainerClick.bind(this, isOpen) : undefined}
                 >
-                  {/* {multiple && <div className={cx(`${Dropdown.className}__selected-items`, classes.selectedItems)}>{this.renderSelectedItems()}</div>} */}
                   {multiple && this.renderSelectedItems()}
                   {search
                     ? this.renderSearchInput(
@@ -376,7 +375,7 @@ export default class Dropdown extends AutoControlledComponent<
     ) => void,
     variables,
   ): JSX.Element {
-    const { searchInput, multiple, placeholder, toggleIndicator } = this.props
+    const { searchInput, multiple, placeholder } = this.props
     const { searchQuery, value } = this.state
 
     const noPlaceholder =
@@ -385,7 +384,6 @@ export default class Dropdown extends AutoControlledComponent<
     return DropdownSearchInput.create(searchInput || {}, {
       defaultProps: {
         placeholder: noPlaceholder ? '' : placeholder,
-        hasToggleButton: !!toggleIndicator,
         variables,
         inputRef: this.inputRef,
       },
