@@ -56,7 +56,7 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /** Accessibility behavior object to apply on trigger node. */
   triggerAccessibility?: TriggerAccessibility
 
-  /** Assigns a passed ref or called with a ref to the trigger node. */
+  /** Sets trigger node to passed ref. */
   triggerRef?: React.Ref<any>
 
   /**
