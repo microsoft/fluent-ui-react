@@ -40,9 +40,6 @@ import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/acce
 import ListItem from '../List/ListItem'
 
 export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownState> {
-  /** The initial value for the open state. */
-  defaultOpen?: boolean
-
   /** The initial value for the search query, if the dropdown is also a search. */
   defaultSearchQuery?: string
 
@@ -71,9 +68,6 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
    * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (options: DownshiftA11yStatusMessageOptions<ShorthandValue>) => string
-
-  /** Sets the open state of the dropdown (controlled mode). */
-  open?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandValue[]
@@ -147,7 +141,7 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
 }
 
 export interface DropdownState {
-  open?: boolean
+  isOpen?: boolean
   value: ShorthandValue | ShorthandValue[]
   backspaceDelete: boolean
   focused: boolean
@@ -178,7 +172,6 @@ export default class Dropdown extends AutoControlledComponent<
       children: false,
       content: false,
     }),
-    defaultOpen: PropTypes.bool,
     defaultSearchQuery: PropTypes.string,
     defaultValue: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
@@ -187,7 +180,6 @@ export default class Dropdown extends AutoControlledComponent<
     fluid: PropTypes.bool,
     getA11ySelectionMessage: PropTypes.object,
     getA11yStatusMessage: PropTypes.func,
-    open: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     loading: PropTypes.bool,
@@ -226,7 +218,7 @@ export default class Dropdown extends AutoControlledComponent<
     toggleIndicator: {},
   }
 
-  static autoControlledProps = ['open', 'searchQuery', 'value']
+  static autoControlledProps = ['searchQuery', 'value']
 
   static Item = DropdownItem
   static SearchInput = DropdownSearchInput
@@ -236,7 +228,6 @@ export default class Dropdown extends AutoControlledComponent<
     return {
       // prevent deletion of last character + last selected value at the same time on backspace.
       backspaceDelete: multiple,
-      open: false,
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
@@ -253,12 +244,11 @@ export default class Dropdown extends AutoControlledComponent<
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { defaultHighlightedIndex, searchQuery, open } = this.state
+    const { defaultHighlightedIndex, searchQuery } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
-          isOpen={open}
           onChange={this.handleSelectedChange}
           inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
@@ -268,15 +258,7 @@ export default class Dropdown extends AutoControlledComponent<
           selectedItem={search && !multiple ? undefined : null}
           getA11yStatusMessage={getA11yStatusMessage}
           defaultHighlightedIndex={defaultHighlightedIndex}
-          onStateChange={changes => {
-            if (changes.isOpen !== undefined) {
-              this.trySetState({ open: changes.isOpen })
-            }
-
-            if (changes.isOpen && !search) {
-              this.listRef.current.focus()
-            }
-          }}
+          onStateChange={this.handleStateChange}
         >
           {({
             getInputProps,
@@ -409,14 +391,16 @@ export default class Dropdown extends AutoControlledComponent<
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
     getInputProps: (options?: GetInputPropsOptions) => any,
   ) {
+    const { search } = this.props
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
       { refKey: 'innerRef' },
       { suppressRefError: true },
     )
-    const { search } = this.props
+
     // If it's just a selection, some attributes and listeners from Downshift input need to go on the menu list.
     if (!search) {
       const accessibilityInputProps = getInputProps()
+
       accessibilityMenuProps['aria-activedescendant'] =
         accessibilityInputProps['aria-activedescendant']
       accessibilityMenuProps['onKeyDown'] = e => {
@@ -455,8 +439,8 @@ export default class Dropdown extends AutoControlledComponent<
     highlightedIndex: number,
   ) {
     const { loading, loadingMessage, noResultsMessage, renderItem } = this.props
-
     const filteredItems = this.getItemsFilteredBySearchQuery()
+
     const items = _.map(filteredItems, (item, index) =>
       DropdownItem.create(item, {
         defaultProps: {
@@ -543,6 +527,16 @@ export default class Dropdown extends AutoControlledComponent<
     }
   }
 
+  private handleStateChange = (changes: StateChangeOptions<ShorthandValue>) => {
+    if (changes.isOpen !== undefined && changes.isOpen !== this.state.isOpen) {
+      this.setState({ isOpen: changes.isOpen })
+    }
+
+    if (changes.isOpen && !this.props.search) {
+      this.listRef.current.focus()
+    }
+  }
+
   private getItemsFilteredBySearchQuery = (): ShorthandValue[] => {
     const { items, itemToString, multiple, search } = this.props
     const { searchQuery, value } = this.state
@@ -551,10 +545,12 @@ export default class Dropdown extends AutoControlledComponent<
     if (multiple) {
       filteredItems = _.difference(filteredItems, value as ShorthandValue[])
     }
+
     if (search) {
       if (_.isFunction(search)) {
         return search(filteredItems, searchQuery)
       }
+
       return filteredItems.filter(
         item =>
           itemToString(item)
@@ -587,9 +583,7 @@ export default class Dropdown extends AutoControlledComponent<
     item: ShorthandValue,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue>) => any,
-  ) => ({
-    accessibilityItemProps: getItemProps({ item, index }),
-  })
+  ) => ({ accessibilityItemProps: getItemProps({ item, index }) })
 
   private handleSelectedItemOverrides = (
     predefinedProps: DropdownSelectedItemProps,
@@ -621,9 +615,9 @@ export default class Dropdown extends AutoControlledComponent<
       searchInputProps: DropdownSearchInputProps,
     ) => {
       this.setState({ focused: false })
-
       _.invoke(predefinedProps, 'onInputBlur', e, searchInputProps)
     }
+
     const handleInputKeyDown = (
       e: React.SyntheticEvent,
       searchInputProps: DropdownSearchInputProps,
@@ -718,18 +712,18 @@ export default class Dropdown extends AutoControlledComponent<
     const { multiple, getA11ySelectionMessage, search } = this.props
     const newValue = multiple ? [...(this.state.value as ShorthandValue[]), item] : item
 
-    this.trySetState({
-      value: newValue,
-      searchQuery: '',
-    })
+    this.trySetState({ value: newValue, searchQuery: '' })
+
     if (!this.props.search && !this.props.multiple) {
       this.setState({
         defaultHighlightedIndex: this.props.items.indexOf(item),
       })
     }
+
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
+
     if (!search) {
       this.buttonRef.current.focus()
     }
@@ -760,9 +754,8 @@ export default class Dropdown extends AutoControlledComponent<
       poppedItem = value.pop()
     }
 
-    this.trySetState({
-      value,
-    })
+    this.trySetState({ value })
+
     if (getA11ySelectionMessage && getA11ySelectionMessage.onRemove) {
       this.setA11yStatus(getA11ySelectionMessage.onRemove(poppedItem))
     }

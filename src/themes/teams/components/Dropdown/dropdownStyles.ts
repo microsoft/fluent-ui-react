@@ -55,7 +55,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     width: p.fluid ? '100%' : v.width,
     top: 'calc(100% + 2px)', // leave room for container + its border
     background: v.listBackgroundColor,
-    ...(p.open && {
+    ...(p.isOpen && {
       boxShadow: v.listBoxShadow,
       padding: v.listPadding,
     }),
