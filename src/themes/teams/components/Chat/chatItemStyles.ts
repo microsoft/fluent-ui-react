@@ -1,7 +1,6 @@
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesInput, PxToRemFunc } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
-import { pxToRem } from '../../../../lib'
 import { default as ChatMessage } from '../../../../components/Chat/ChatMessage'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 
@@ -13,7 +12,7 @@ const getPositionStyles = (props: ChatItemProps) => ({
   float: props.contentPosition === 'end' ? 'right' : 'left',
 })
 
-const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
+const getChatMessageEvaluatedStyles = (p: ChatItemProps, pxToRem: PxToRemFunc) => ({
   ...(!p.attached && { [chatMessageClassNameSelector]: getPositionStyles(p) }),
   ...(p.attached === true && {
     [chatMessageClassNameSelector]: {
@@ -41,7 +40,7 @@ const getChatMessageEvaluatedStyles = (p: ChatItemProps) => ({
 })
 
 const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, pxToRem }): ICSSInJSStyle => ({
     position: 'relative',
     ...((!p.attached || p.attached === 'top') && { marginTop: pxToRem(16) }),
     ...((p.attached === 'bottom' || p.attached === true) && {
@@ -61,11 +60,11 @@ const chatItemStyles: ComponentSlotStylesInput<ChatItemProps, ChatItemVariables>
     }),
   }),
 
-  message: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  message: ({ props: p, variables: v, pxToRem }): ICSSInJSStyle => ({
     position: 'relative',
     marginLeft: v.messageMargin,
     marginRight: v.messageMargin,
-    ...getChatMessageEvaluatedStyles(p),
+    ...getChatMessageEvaluatedStyles(p, pxToRem),
   }),
 }
 
