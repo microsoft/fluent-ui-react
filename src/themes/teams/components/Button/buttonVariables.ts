@@ -1,3 +1,5 @@
+import { PxToRemFunc } from '../../../types'
+
 export interface ButtonVariables {
   [key: string]: string | number
 
@@ -65,7 +67,7 @@ export interface ButtonVariables {
   boxShadow: string
 }
 
-export default (siteVars: any, props, pxToRem: any): ButtonVariables => {
+export default (siteVars: any, pxToRem: PxToRemFunc): ButtonVariables => {
   return {
     height: pxToRem(32),
     minWidth: pxToRem(96),

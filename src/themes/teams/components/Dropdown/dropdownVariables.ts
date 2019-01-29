@@ -1,3 +1,5 @@
+import { PxToRemFunc } from '../../../types'
+
 export interface DropdownVariables {
   backgroundColor: string
   borderBottom: string
@@ -18,7 +20,7 @@ export interface DropdownVariables {
   width: string
 }
 
-export default (siteVars, pxToRem): DropdownVariables => {
+export default (siteVars, pxToRem: PxToRemFunc): DropdownVariables => {
   const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem] = [2, 3, 6, 12].map(v => pxToRem(v))
 
   return {
