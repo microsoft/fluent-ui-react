@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix layout of `Accordion` panel's title @kuzhelov ([#780](https://github.com/stardust-ui/react/pull/780))
 
+### Features
+- Add mechanism for marking icons that should rotate in rtl in teams theme; marked icons: `send`, `bullets`, `leave`, `number-list`, `outdent`, `redo`, `undo`, `send` @mnajdova ([#788](https://github.com/stardust-ui/react/pull/788))
+
 <!--------------------------------[ v0.19.0 ]------------------------------- -->
 ## [v0.19.0](https://github.com/stardust-ui/react/tree/v0.19.0) (2019-01-28)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.18.0...v0.19.0)
