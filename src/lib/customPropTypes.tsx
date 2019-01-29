@@ -464,3 +464,6 @@ export const animation = PropTypes.oneOfType([
   }) as any,
   PropTypes.string,
 ])
+
+/** A checker that matches the React.Ref type. */
+export const ref = PropTypes.oneOfType([PropTypes.func, PropTypes.object])

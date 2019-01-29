@@ -10,7 +10,9 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
+  handleRef,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -54,12 +56,8 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /** Accessibility behavior object to apply on trigger node. */
   triggerAccessibility?: TriggerAccessibility
 
-  /**
-   * Called with a ref to the trigger node.
-   *
-   * @param {JSX.Element} node - Referred node.
-   */
-  triggerRef?: (node: HTMLElement) => void
+  /** Sets trigger node to passed ref. */
+  triggerRef?: React.Ref<any>
 
   /**
    * Called when trigger node was clicked.
@@ -103,7 +101,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     onUnmount: PropTypes.func,
     open: PropTypes.bool,
     trigger: PropTypes.node,
-    triggerRef: PropTypes.func,
+    triggerRef: customPropTypes.ref,
     triggerAccessibility: PropTypes.object,
     onTriggerClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
@@ -180,8 +178,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
 
   private handleTriggerRef = (triggerNode: HTMLElement) => {
     this.triggerNode = triggerNode
-
-    _.invoke(this.props, 'triggerRef', triggerNode)
+    handleRef(this.props.triggerRef, triggerNode)
   }
 
   private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
