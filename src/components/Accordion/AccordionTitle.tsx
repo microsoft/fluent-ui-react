@@ -15,6 +15,7 @@ import {
 } from '../../lib'
 import { ReactProps, ComponentEventHandler, ShorthandValue } from '../../../types/utils'
 import Indicator from '../Indicator/Indicator'
+import Layout from '../Layout/Layout'
 
 export interface AccordionTitleProps
   extends UIComponentProps,
@@ -65,15 +66,15 @@ class AccordionTitle extends UIComponent<ReactProps<AccordionTitleProps>, any> {
     const indicatorWithDefaults = indicator === undefined ? {} : indicator
 
     const contentElement = (
-      <>
-        {Indicator.create(indicatorWithDefaults, {
+      <Layout
+        start={Indicator.create(indicatorWithDefaults, {
           defaultProps: {
             direction: active ? 'bottom' : 'end',
             styles: styles.indicator,
           },
         })}
-        {rtlTextContainer.createFor({ element: content })}
-      </>
+        main={rtlTextContainer.createFor({ element: content })}
+      />
     )
 
     return (

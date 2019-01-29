@@ -35,11 +35,7 @@ export {
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
 
-export {
-  default as Dropdown,
-  DropdownProps,
-  A11yStatusMessageOptions,
-} from './components/Dropdown/Dropdown'
+export { default as Dropdown, DropdownProps } from './components/Dropdown/Dropdown'
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 
