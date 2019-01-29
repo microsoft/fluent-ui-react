@@ -90,7 +90,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     icon: customPropTypes.itemShorthand,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
-    inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    inputRef: customPropTypes.ref,
     inline: PropTypes.bool,
     onChange: PropTypes.func,
     type: PropTypes.string,

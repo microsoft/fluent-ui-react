@@ -12,6 +12,7 @@ import {
   ContentComponentProps,
   handleRef,
   rtlTextContainer,
+  customPropTypes,
 } from '../../lib'
 import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
@@ -55,11 +56,7 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /** Accessibility behavior object to apply on trigger node. */
   triggerAccessibility?: TriggerAccessibility
 
-  /**
-   * Called with a ref to the trigger node.
-   *
-   * @param {HTMLElement} node - Referred node.
-   */
+  /** Assigns a passed ref or called with a ref to the trigger node. */
   triggerRef?: React.Ref<any>
 
   /**
@@ -104,7 +101,7 @@ class Portal extends AutoControlledComponent<ReactPropsStrict<PortalProps>, Port
     onUnmount: PropTypes.func,
     open: PropTypes.bool,
     trigger: PropTypes.node,
-    triggerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    triggerRef: customPropTypes.ref,
     triggerAccessibility: PropTypes.object,
     onTriggerClick: PropTypes.func,
     onOutsideClick: PropTypes.func,
