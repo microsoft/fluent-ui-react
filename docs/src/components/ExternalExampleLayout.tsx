@@ -18,17 +18,20 @@ const examplePaths = exampleSourcesContext.keys()
 const ExternalExampleLayout: any = props => {
   const { exampleName, rtl } = props.match.params
   const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
-  console.log(exampleFilename)
+
   const examplePath = _.find(examplePaths, path => {
     const { exampleName } = parseExamplePath(path)
     return exampleFilename === exampleName
   })
-  console.log(examplePath)
+
   if (!examplePath) return <PageNotFound />
   const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
 
+  const isRtlEnabled = rtl === 'true'
+
   return (
-    <Provider theme={{ rtl: rtl === 'true' ? true : false }}>
+    <Provider theme={{ rtl: isRtlEnabled }}>
+      {/*<div dir={isRtlEnabled ? 'rtl' : undefined}>*/}
       <SourceRender
         babelConfig={babelConfig}
         source={exampleSource.js}
@@ -45,6 +48,7 @@ const ExternalExampleLayout: any = props => {
           )}
         </SourceRender.Consumer>
       </SourceRender>
+      {/*</div>*/}
     </Provider>
   )
 }
