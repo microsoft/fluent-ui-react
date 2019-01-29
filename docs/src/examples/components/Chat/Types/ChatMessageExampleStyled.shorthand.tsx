@@ -51,7 +51,9 @@ const ChatMessageExampleStyled = () => (
         },
         ChatMessage: {
           root: { ...slotLabelStyles('chat-message-root'), backgroundColor: '#87CEFA' },
-          author: { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' },
+          author: ({ props: { mine } }) => ({
+            ...(!mine && { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' }),
+          }),
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
           timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
         },
@@ -78,6 +80,7 @@ const ChatMessageExampleStyled = () => (
               />
             ),
           },
+          contentPosition: 'end',
           key: 'message-id-1',
         },
         {

@@ -5,6 +5,7 @@ import AceEditor, { AceEditorProps } from 'react-ace'
 import * as ace from 'brace'
 import 'brace/ext/language_tools'
 import 'brace/mode/html'
+import 'brace/mode/json'
 import 'brace/mode/jsx'
 import 'brace/mode/sh'
 import 'brace/theme/tomorrow_night'
@@ -47,7 +48,7 @@ languageTools.addCompleter(semanticUIReactCompleter)
 export interface EditorProps extends AceEditorProps {
   active?: boolean
   highlightGutterLine?: boolean
-  mode?: 'html' | 'jsx' | 'sh'
+  mode?: 'html' | 'jsx' | 'sh' | 'json'
   value?: string
   showCursor?: boolean
 }
@@ -61,7 +62,7 @@ class Editor extends React.Component<EditorProps> {
 
   static propTypes = {
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
+    mode: PropTypes.oneOf(['html', 'json', 'jsx', 'sh']),
     active: PropTypes.bool,
     showCursor: PropTypes.bool,
   }

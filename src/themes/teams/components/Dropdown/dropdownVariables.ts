@@ -14,11 +14,11 @@ export interface DropdownVariables {
   listItemBackgroundColorActive: string
   listItemColorActive: string
   listMaxHeight: string
-  toggleButtonSize: string
+  toggleIndicatorSize: string
   width: string
 }
 
-export default (siteVars, props, pxToRem): DropdownVariables => {
+export default (siteVars, pxToRem): DropdownVariables => {
   const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem] = [2, 3, 6, 12].map(v => pxToRem(v))
 
   return {
@@ -37,7 +37,7 @@ export default (siteVars, props, pxToRem): DropdownVariables => {
     listItemBackgroundColorActive: siteVars.brand,
     listItemColorActive: siteVars.white,
     listMaxHeight: '20rem',
-    toggleButtonSize: pxToRem(32),
+    toggleIndicatorSize: pxToRem(32),
     width: pxToRem(356),
   }
 }
