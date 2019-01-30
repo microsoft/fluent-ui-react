@@ -44,6 +44,11 @@ const Types = () => (
       description="An Animation can specify whether the animation is running or paused. "
       examplePath="components/Animation/Types/AnimationExamplePlayState"
     />
+    <ComponentExample
+      title="Keyframe params"
+      description="An Animation can specify different params for the keyframe."
+      examplePath="components/Animation/Types/AnimationExampleKeyframeParams"
+    />
   </ExampleSection>
 )
 
