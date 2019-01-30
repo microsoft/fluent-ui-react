@@ -14,8 +14,8 @@ describe('List', () => {
   handlesAccessibility(List, { defaultRootRole: 'list' })
   listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'content' })
 
-  const getItems = () => [
-    { key: 'irving', content: 'Irving', onClick: jest.fn() },
+  const getItems = (onClick?: Function) => [
+    { key: 'irving', content: 'Irving', onClick },
     { key: 'skyler', content: 'Skyler' },
     { key: 'dante', content: 'Dante' },
   ]
@@ -29,15 +29,15 @@ describe('List', () => {
     })
 
     it('calls onClick handler for item', () => {
-      const items = getItems()
-      const listItems = mountWithProvider(<List items={items} />).find('ListItem')
+      const onClick = jest.fn()
+      const listItems = mountWithProvider(<List items={getItems(onClick)} />).find('ListItem')
 
       listItems
         .first()
         .find('li')
         .first()
         .simulate('click')
-      expect(items[0].onClick).toHaveBeenCalled()
+      expect(onClick).toHaveBeenCalled()
     })
   })
 
@@ -71,6 +71,23 @@ describe('List', () => {
 
       expect(updatedItems.at(0).props().selected).toBe(false)
       expect(updatedItems.at(1).props().selected).toBe(true)
+    })
+
+    it('calls onClick handler for item if `selectable`', () => {
+      const onClick = jest.fn()
+      const onSelectedIndexChange = jest.fn()
+      const listItems = mountWithProvider(
+        <List items={getItems(onClick)} onSelectedIndexChange={onSelectedIndexChange} selectable />,
+      ).find('ListItem')
+
+      listItems
+        .first()
+        .find('li')
+        .first()
+        .simulate('click')
+
+      expect(onClick).toHaveBeenCalled()
+      expect(onSelectedIndexChange).toHaveBeenCalled()
     })
   })
 })
