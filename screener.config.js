@@ -1,7 +1,8 @@
 const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
-const stepTests = require('./test/screener')
+const fs = require('fs')
+const Steps = require('screener-runner/src/steps')
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
@@ -30,19 +31,19 @@ const screenerConfig = {
   states: glob
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .reduce((states, examplePath) => {
-      const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
-      const componentStepTests = stepTests[nameWithoutExtension]
+      const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
       const rtl = nameWithExtension.endsWith('.rtl.tsx')
+      const url = `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
 
       states.push({
-        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`,
+        url,
         name: nameWithExtension,
       })
-
-      if (componentStepTests) {
-        componentStepTests.forEach(test => {
+      if (fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)) {
+        const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)(Steps)
+        stepTests.forEach(test => {
           states.push({
-            url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`,
+            url,
             name: `${nameWithExtension}: ${test.name}`,
             steps: test.steps,
           })
