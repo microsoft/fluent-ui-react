@@ -18,10 +18,6 @@ describe('fontSizeUtility', () => {
       expect(pxToRem(10, 8)).toEqual('1.25rem')
     })
 
-    it('returns 0rem when pxToRem is called without a value.', () => {
-      expect(pxToRem()).toEqual('0rem')
-    })
-
     it('returns 0rem when pxToRem is called with 0.', () => {
       expect(pxToRem(0)).toEqual('0rem')
     })

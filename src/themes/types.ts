@@ -134,6 +134,7 @@ export interface SiteVariablesInput extends ObjectOf<any> {
   emphasisColors?: EmphasisColors
   naturalColors?: NaturalColorsStrict
   brand?: string
+  htmlFontSize?: string
 }
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Provider, themes } from '@stardust-ui/react'
 
+import { mergeThemes } from '../../src/lib'
 import { ThemeContext } from './context/ThemeContext'
 import Router from './routes'
 
@@ -33,7 +34,15 @@ class App extends React.Component<any, AppState> {
     const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider theme={themes[themeName]}>
+        <Provider
+          theme={mergeThemes(themes[themeName], {
+            // adjust Teams' theme to Semantic UI's font size scheme
+            siteVariables: {
+              htmlFontSize: '14px',
+              bodyFontSize: '1rem',
+            },
+          })}
+        >
           <Router />
         </Provider>
       </ThemeContext.Provider>

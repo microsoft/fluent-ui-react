@@ -2,6 +2,11 @@ import { pxToRem } from '../../lib'
 import { colors } from './colors'
 
 //
+// VARIABLES
+//
+export const htmlFontSize = '10px' // what 1rem represents
+
+//
 // COLORS
 //
 export { colors, contextualColors, emphasisColors, naturalColors, colorScheme } from './colors'
