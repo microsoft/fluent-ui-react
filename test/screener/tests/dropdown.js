@@ -1,5 +1,5 @@
 const Steps = require('screener-runner/src/steps')
-const selector = elementTestId => `[data-testid="${elementTestId}"]`
+const selector = require('../utils').selector
 
 module.exports = {
   'DropdownExampleSingleSelection.shorthand': [

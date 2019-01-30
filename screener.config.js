@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
-const stepTests = require('./test/screener/screener-test-steps')
+const stepTests = require('./test/screener')
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
