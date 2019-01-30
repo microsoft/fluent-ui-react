@@ -221,6 +221,7 @@ export default class Dropdown extends AutoControlledComponent<
       return `${item}`
     },
     toggleIndicator: {},
+    triggerButton: {},
   }
 
   static autoControlledProps = ['searchQuery', 'value']
