@@ -8,7 +8,7 @@ export default {
       role="presentation"
       focusable="false"
       viewBox="8 8 16 16"
-      className={cx(classes.svg, classes.rotateInRtl)}
+      className={cx(classes.svg, classes.flipInRtl)}
     >
       <path
         className={classes.outlinePart}
