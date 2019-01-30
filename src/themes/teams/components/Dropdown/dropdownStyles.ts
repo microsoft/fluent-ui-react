@@ -88,7 +88,7 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     justifyContent: 'center',
     alignItems: 'center',
     userSelect: 'none',
-    right: 0,
+    right: pxToRem(5),
   }),
 }
 

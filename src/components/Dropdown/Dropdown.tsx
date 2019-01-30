@@ -721,24 +721,22 @@ export default class Dropdown extends AutoControlledComponent<
     this.trySetState({ value: newValue, searchQuery: '' })
 
     if (!search && !multiple) {
-      this.setState({
-        defaultHighlightedIndex: items.indexOf(item),
-      })
+      this.setState({ defaultHighlightedIndex: items.indexOf(item) })
     }
 
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
 
-    if (search) {
+    if (multiple) {
       setTimeout(
         () =>
-          this.selectedItemsRef.current.scrollTo({
-            top: this.selectedItemsRef.current.scrollHeight,
-          }),
+          (this.selectedItemsRef.current.scrollTop = this.selectedItemsRef.current.scrollHeight),
         0,
       )
-    } else {
+    }
+
+    if (!search) {
       this.buttonRef.current.focus()
     }
 
