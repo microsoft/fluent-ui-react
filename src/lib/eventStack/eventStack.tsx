@@ -61,10 +61,15 @@ class EventStackSubscription {
     return new EventStackSubscription(() => {}, true)
   }
 
-  public constructor(private _unsubscribe: Function, public readonly isEmpty: boolean = false) {}
+  public get isEmpty(): boolean {
+    return this._isEmpty
+  }
+
+  public constructor(private _unsubscribe: Function, public _isEmpty: boolean = false) {}
 
   public unsubscribe(): void {
     this._unsubscribe()
+    this._isEmpty = true
   }
 }
 
