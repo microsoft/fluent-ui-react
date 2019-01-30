@@ -1,14 +1,15 @@
+import { Placement } from 'popper.js'
 import * as React from 'react'
+
 import {
   getPopupPlacement,
   applyRtlToOffset,
   Position,
   Alignment,
 } from 'src/components/Popup/positioningHelper'
-import { Placement } from 'popper.js'
-import { mountWithProvider } from 'test/utils'
+import Popup, { PopupEvents } from 'src/components/Popup/Popup'
+import { mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
-import Popup from 'src/components/Popup/Popup'
 import { ReactWrapper } from 'enzyme'
 
 type PositionTestInput = {
@@ -41,14 +42,15 @@ describe('Popup', () => {
     return popup.find('.ui-popup__content')
   }
 
-  const togglePopupTest = (keyName: string, keyboardKey: keyboardKey) => {
-    test(`with ${keyName} key`, () => {
+  const togglePopupTest = (keyName: string, keyboardKey: keyboardKey, onProp: PopupEvents) => {
+    test(`toggle popup with ${keyName} key`, () => {
       const triggerId = 'triggerElement'
       const popupContent = 'any test content'
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
           content={popupContent}
+          on={onProp}
         />,
       )
       const popupTriggerElement = popup.find(`#${triggerId}`)
@@ -57,6 +59,32 @@ describe('Popup', () => {
       expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
 
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKey })
+      expect(getPopupContent(popup).length).toBe(0)
+    })
+  }
+
+  const openAndClosePopupTest = (
+    keyNameToOpen: string,
+    keyboardKeyToOpen: keyboardKey,
+    keyboardKeyToClose: keyboardKey,
+    onProp: PopupEvents,
+  ) => {
+    test(`open popup with ${keyNameToOpen} key and close it with escape key`, () => {
+      const triggerId = 'triggerElement'
+      const popupContent = 'any test content'
+      const popup = mountWithProvider(
+        <Popup
+          trigger={<span id={triggerId}> text to trigger popup </span>}
+          content={popupContent}
+          on={onProp}
+        />,
+      )
+      const popupTriggerElement = popup.find(`#${triggerId}`)
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
+      expect(getPopupContent(popup).length).toBe(1)
+      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
+
+      popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
       expect(getPopupContent(popup).length).toBe(0)
     })
   }
@@ -132,8 +160,35 @@ describe('Popup', () => {
     })
   })
 
-  describe('toggle popup', () => {
-    togglePopupTest('enter', keyboardKey.Enter)
-    togglePopupTest('space', keyboardKey.Spacebar)
+  describe('onOpenChange', () => {
+    test('is called on click', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(<Popup trigger={<button />} content="Hi" onOpenChange={spy} />)
+        .find('button')
+        .simulate('click')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+
+    // https://github.com/stardust-ui/react/pull/619
+    test('is called on click when controlled', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(<Popup open={false} trigger={<button />} content="Hi" onOpenChange={spy} />)
+        .find('button')
+        .simulate('click')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+  })
+
+  describe('open/close popup by keyboard', () => {
+    togglePopupTest('enter', keyboardKey.Enter, 'click')
+    togglePopupTest('space', keyboardKey.Spacebar, 'click')
+    openAndClosePopupTest('enter', keyboardKey.Enter, keyboardKey.Escape, 'hover')
+    openAndClosePopupTest('space', keyboardKey.Spacebar, keyboardKey.Escape, 'hover')
   })
 })

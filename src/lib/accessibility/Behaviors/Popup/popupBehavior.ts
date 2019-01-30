@@ -35,8 +35,13 @@ const popupBehavior: Accessibility = (props: any) => {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
         },
         toggle: {
-          keyCombinations: (_.includes(normalizedOn, 'click') ||
-            _.includes(normalizedOn, 'hover')) && [
+          keyCombinations: _.includes(normalizedOn, 'click') && [
+            { keyCode: keyboardKey.Enter },
+            { keyCode: keyboardKey.Spacebar },
+          ],
+        },
+        open: {
+          keyCombinations: _.includes(normalizedOn, 'hover') && [
             { keyCode: keyboardKey.Enter },
             { keyCode: keyboardKey.Spacebar },
           ],

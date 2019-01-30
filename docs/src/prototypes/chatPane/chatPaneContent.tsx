@@ -49,7 +49,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
         return (
           <Chat.Item
             key={`chat-item-${index}`}
-            gutterPosition={mine ? 'end' : 'start'}
+            contentPosition={mine ? 'end' : 'start'}
             gutter={gutter && { content: <Avatar {...gutter} /> }}
             message={{
               content: (
