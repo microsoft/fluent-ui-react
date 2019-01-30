@@ -1,32 +1,18 @@
 import { Accessibility } from '../../types'
-import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import { menuItemBehavior } from '../..'
 
 /**
  * @description
  * The behavior is used as complementary role for 'navigableListBehavior'.
  * @specification
- * Adds role 'listitem' to 'wrapper' component's part.
- * Adds attribute 'tabIndex=0' to 'root' component's part.
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  */
 
-const navigableListItemBehavior: Accessibility = (props: any) => ({
-  attributes: {
-    root: {
-      role: 'listitem',
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
-    },
-  },
-
-  keyActions: {
-    root: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-    },
-  },
-})
+const navigableListItemBehavior: Accessibility = (props: any) => {
+  const behavior = menuItemBehavior(props)
+  behavior.attributes.wrapper = undefined
+  behavior.attributes.root.role = 'listitem'
+  return behavior
+}
 
 export default navigableListItemBehavior

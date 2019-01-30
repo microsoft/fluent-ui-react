@@ -24,17 +24,7 @@ const menuStyles = ({ theme: { siteVariables } }) => ({
 
 const MoreParticipantsButton = props => {
   const { count, ...rest } = props
-  return (
-    <Button
-      role="listitem"
-      {...rest}
-      circular
-      aria-label={`${count} participants`}
-      aria-haspopup="true"
-      aria-posinset={count}
-      aria-setsize={count}
-    >{`+${count}`}</Button>
-  )
+  return <Button {...rest} circular>{`+${count}`}</Button>
 }
 
 class ChatTitle extends React.Component<any> {
@@ -79,12 +69,10 @@ class ChatTitle extends React.Component<any> {
   private createHorizontalItem = user => {
     const item = {
       as: 'li',
-      role: 'listitem',
       key: user.key,
       content: (
         <>
-          {' '}
-          {user.media} <span> {user.content} </span>{' '}
+          {user.media} <span> {user.content} </span>
         </>
       ),
       userName: user.content,
@@ -151,7 +139,7 @@ class ChatTitle extends React.Component<any> {
     const { userName, ...rest } = props
     return (
       <Popup
-        // accessibility={popupFocusTrapBehavior}
+        accessibility={popupFocusTrapBehavior}
         aria-haspopup="dialog"
         on="hover"
         trigger={<MenuItem {...rest} />}
