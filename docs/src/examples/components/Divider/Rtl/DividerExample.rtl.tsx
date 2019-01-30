@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Divider } from '@stardust-ui/react'
 
-const DividerExampleShorthand = () => <Divider content="مثال النص" />
+const DividerExampleRtl = () => <Divider content="مثال النص" />
 
-export default DividerExampleShorthand
+export default DividerExampleRtl
