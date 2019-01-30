@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { isForwardRef } from 'react-is'
 
-import { ChildrenComponentProps } from '../../lib'
+import { ChildrenComponentProps, customPropTypes } from '../../lib'
 import { ReactPropsStrict } from '../../../types/utils'
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
@@ -27,7 +27,7 @@ const Ref: React.SFC<ReactPropsStrict<RefProps>> = props => {
 
 Ref.propTypes = {
   children: PropTypes.element.isRequired,
-  innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]) as PropTypes.Requireable<any>,
+  innerRef: customPropTypes.ref as PropTypes.Requireable<any>,
 }
 
 export default Ref

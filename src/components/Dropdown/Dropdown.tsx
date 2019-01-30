@@ -144,6 +144,7 @@ export interface DropdownState {
   backspaceDelete: boolean
   focused: boolean
   searchQuery?: string
+  defaultHighlightedIndex: number
 }
 
 /**
@@ -228,6 +229,8 @@ export default class Dropdown extends AutoControlledComponent<
       focused: false,
       searchQuery: search ? '' : undefined,
       value: multiple ? [] : null,
+      // used on single selection to open the dropdown with the selected option as highlighted.
+      defaultHighlightedIndex: !this.props.search && !this.props.multiple ? null : undefined,
     }
   }
 
@@ -239,19 +242,20 @@ export default class Dropdown extends AutoControlledComponent<
     unhandledProps,
   }: RenderResultConfig<DropdownProps>) {
     const { search, multiple, getA11yStatusMessage, itemToString, toggleIndicator } = this.props
-    const { searchQuery } = this.state
+    const { defaultHighlightedIndex, searchQuery } = this.state
 
     return (
       <ElementType className={classes.root} {...unhandledProps}>
         <Downshift
           onChange={this.handleSelectedChange}
-          inputValue={search ? searchQuery : undefined}
+          inputValue={search ? searchQuery : null}
           stateReducer={this.handleDownshiftStateChanges}
           itemToString={itemToString}
           // If it's single search, don't pass anything. Pass a null otherwise, as Downshift does
           // not handle selection by default for single/multiple selection and multiple search.
           selectedItem={search && !multiple ? undefined : null}
           getA11yStatusMessage={getA11yStatusMessage}
+          defaultHighlightedIndex={defaultHighlightedIndex}
           onStateChange={changes => {
             if (changes.isOpen && !search) {
               this.listRef.current.focus()
@@ -703,6 +707,11 @@ export default class Dropdown extends AutoControlledComponent<
       value: newValue,
       searchQuery: '',
     })
+    if (!this.props.search && !this.props.multiple) {
+      this.setState({
+        defaultHighlightedIndex: this.props.items.indexOf(item),
+      })
+    }
     if (getA11ySelectionMessage && getA11ySelectionMessage.onAdd) {
       this.setA11yStatus(getA11ySelectionMessage.onAdd(item))
     }
