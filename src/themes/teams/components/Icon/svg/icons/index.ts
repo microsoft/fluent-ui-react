@@ -59,6 +59,8 @@ import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
 import trashCan from './trashCan'
+import triangleDown from './triangleDown'
+import triangleRight from './triangleRight'
 import underline from './underline'
 import undo from './undo'
 import videoCameraEmphasis from './videoCameraEmphasis'
@@ -122,6 +124,8 @@ export default {
   teams,
   translation,
   'trash-can': trashCan,
+  'triangle-down': triangleDown,
+  'triangle-right': triangleRight,
   'team-create': teamCreate,
   underline,
   undo,
