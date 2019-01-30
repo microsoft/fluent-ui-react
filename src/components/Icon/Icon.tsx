@@ -96,10 +96,11 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     classes,
     unhandledProps,
     accessibility,
+    rtl,
   ): React.ReactNode {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes })}
+        {svgIconDescriptor && callable(svgIconDescriptor)({ classes, rtl })}
       </ElementType>
     )
   }
@@ -116,6 +117,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
           classes,
           unhandledProps,
           accessibility,
+          theme.rtl,
         )
       : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
   }
