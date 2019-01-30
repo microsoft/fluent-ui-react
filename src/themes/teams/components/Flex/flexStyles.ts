@@ -14,11 +14,6 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
       ...(p.row && { flexDirection: 'row' }),
       ...(p.column && { flexDirection: 'column' }),
 
-      ...(p.center && {
-        justifyContent: 'center',
-        alignItems: 'center',
-      }),
-
       // TODO note - too much copypaste!!
       ...(p.hAlign &&
         (p.column

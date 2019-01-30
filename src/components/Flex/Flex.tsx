@@ -19,9 +19,6 @@ export interface FlexProps {
   /** Allows overflow items to wrap on the next container's line. */
   wrap?: boolean
 
-  /** Centers container's content in both directions. */
-  center?: boolean
-
   /** Controls items alignment in horizontal direction. */
   hAlign?: 'start' | 'center' | 'end' | 'stretch'
 
@@ -76,7 +73,6 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
     wrap: PropTypes.bool,
 
-    center: PropTypes.bool,
     hAlign: PropTypes.oneOf(['start', 'center', 'end', 'stretch']),
     vAlign: PropTypes.oneOf(['start', 'center', 'end', 'stretch']),
 
