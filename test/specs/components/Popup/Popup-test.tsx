@@ -38,28 +38,27 @@ describe('Popup', () => {
   }: PositionTestInput & { rtl?: never }) =>
     testPopupPosition({ align, position, expectedPlacement, rtl: true })
 
-  const getPopupContent = (popup: ReactWrapper) => {
-    return popup.find('.ui-popup__content')
+  const getPopupContent = (popup: ReactWrapper, contentId: string) => {
+    return popup.find(`#${contentId}`)
   }
 
-  const togglePopupTest = (keyName: string, keyboardKey: keyboardKey, onProp: PopupEvents) => {
+  const testPopupToggleOn = (keyName: string, keyboardKey: keyboardKey, onProp: PopupEvents) => {
     test(`toggle popup with ${keyName} key`, () => {
       const triggerId = 'triggerElement'
-      const popupContent = 'any test content'
+      const contentId = 'contentId'
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
-          content={popupContent}
+          content={<span id={contentId} />}
           on={onProp}
         />,
       )
       const popupTriggerElement = popup.find(`#${triggerId}`)
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKey })
-      expect(getPopupContent(popup).length).toBe(1)
-      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
+      expect(getPopupContent(popup, contentId).length).toBe(1)
 
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKey })
-      expect(getPopupContent(popup).length).toBe(0)
+      expect(getPopupContent(popup, contentId).length).toBe(0)
     })
   }
 
@@ -71,21 +70,20 @@ describe('Popup', () => {
   ) => {
     test(`open popup with ${keyNameToOpen} key and close it with escape key`, () => {
       const triggerId = 'triggerElement'
-      const popupContent = 'any test content'
+      const contentId = 'contentId'
       const popup = mountWithProvider(
         <Popup
           trigger={<span id={triggerId}> text to trigger popup </span>}
-          content={popupContent}
+          content={<span id={contentId} />}
           on={onProp}
         />,
       )
       const popupTriggerElement = popup.find(`#${triggerId}`)
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
-      expect(getPopupContent(popup).length).toBe(1)
-      expect(getPopupContent(popup).getElement().props.children).toMatch(popupContent)
+      expect(getPopupContent(popup, contentId).length).toBe(1)
 
       popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
-      expect(getPopupContent(popup).length).toBe(0)
+      expect(getPopupContent(popup, contentId).length).toBe(0)
     })
   }
 
@@ -186,8 +184,8 @@ describe('Popup', () => {
   })
 
   describe('open/close popup by keyboard', () => {
-    togglePopupTest('enter', keyboardKey.Enter, 'click')
-    togglePopupTest('space', keyboardKey.Spacebar, 'click')
+    testPopupToggleOn('enter', keyboardKey.Enter, 'click')
+    testPopupToggleOn('space', keyboardKey.Spacebar, 'click')
     openAndClosePopupTest('enter', keyboardKey.Enter, keyboardKey.Escape, 'hover')
     openAndClosePopupTest('space', keyboardKey.Spacebar, keyboardKey.Escape, 'hover')
   })
