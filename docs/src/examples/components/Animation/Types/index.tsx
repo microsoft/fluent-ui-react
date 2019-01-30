@@ -1,6 +1,7 @@
 import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import { Segment } from '@stardust-ui/react'
 
 const Types = () => (
   <ExampleSection title="Types">
@@ -48,7 +49,11 @@ const Types = () => (
       title="Keyframe params"
       description="An Animation can specify different params for the keyframe."
       examplePath="components/Animation/Types/AnimationExampleKeyframeParams"
-    />
+    >
+      <Segment style={{ marginTop: '10px' }} color="orange" inverted>
+        Be aware, each unique keyframeParams will render as a new @keyframes!
+      </Segment>
+    </ComponentExample>
   </ExampleSection>
 )
 

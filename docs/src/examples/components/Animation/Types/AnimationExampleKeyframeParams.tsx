@@ -1,17 +1,15 @@
 import * as React from 'react'
-import { Animation, Icon, Provider } from '@stardust-ui/react'
+import { Animation, Icon, Provider, ThemeAnimation } from '@stardust-ui/react'
 
-const colorChanger = {
-  keyframe: ({ fromColor, toColor }) => {
-    return {
-      from: {
-        color: fromColor,
-      },
-      to: {
-        color: toColor,
-      },
-    }
-  },
+const colorChanger: ThemeAnimation<{ fromColor: string; toColor: string }> = {
+  keyframe: ({ fromColor, toColor }) => ({
+    from: {
+      color: fromColor,
+    },
+    to: {
+      color: toColor,
+    },
+  }),
   keyframeParams: { fromColor: 'red', toColor: 'blue' },
   duration: '5s',
   iterationCount: 'infinite',
@@ -24,6 +22,9 @@ const AnimationExample = () => (
         <Icon name="umbrella" circular />
       </Animation>
       <Animation name="colorChanger" keyframeParams={{ fromColor: 'green', toColor: 'yellow' }}>
+        <Icon name="umbrella" circular />
+      </Animation>
+      <Animation name="colorChanger" keyframeParams={{ toColor: 'black' }}>
         <Icon name="umbrella" circular />
       </Animation>
     </div>
