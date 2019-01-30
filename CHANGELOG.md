@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
+- Improve `Dropdown` component styles @Bugaa92 ([#786](https://github.com/stardust-ui/react/pull/786))
 
 <!--------------------------------[ v0.19.1 ]------------------------------- -->
 ## [v0.19.1](https://github.com/stardust-ui/react/tree/v0.19.1) (2019-01-29)
@@ -54,7 +55,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Make `headerMedia` visible for screen readers in `ListItem` @layershifter ([#772](https://github.com/stardust-ui/react/pull/772))
 - Cleanup for `Dropdown` examples' accessibility and added localisation example. @silviuavram ([#771](https://github.com/stardust-ui/react/pull/771))
 - Fix highlighted selected option in single selection `Dropdown` when opened @silviuavram ([#726](https://github.com/stardust-ui/react/pull/726))
-- Improve `Dropdown` component styles @Bugaa92 ([#786](https://github.com/stardust-ui/react/pull/786))
 
 <!--------------------------------[ v0.18.0 ]------------------------------- -->
 ## [v0.18.0](https://github.com/stardust-ui/react/tree/v0.18.0) (2019-01-24)
