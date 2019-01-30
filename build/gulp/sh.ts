@@ -26,7 +26,13 @@ const sh = (command: string, pipeOutputToResult: boolean = false): Promise<strin
         resolve(stdoutData)
       }
 
-      reject(new Error(`child process exited with code ${code}`))
+      reject(
+        new Error(
+          [`${stdoutData}`, `-`.repeat(80), `ERROR: Child process exited with code ${code}`].join(
+            '\n',
+          ),
+        ),
+      )
     })
   })
 }

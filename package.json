@@ -40,6 +40,8 @@
     "test:watch": "gulp test:watch",
     "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
+    "test:visual:async": "gulp screener:async",
+    "test:visual:await": "gulp screener:await",
     "test:projects": "gulp test:projects",
     "generate:component": "gulp generate:component"
   },
