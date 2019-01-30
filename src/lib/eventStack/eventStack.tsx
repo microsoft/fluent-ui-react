@@ -65,7 +65,7 @@ class EventStackSubscription {
     return this._isEmpty
   }
 
-  public constructor(private _unsubscribe: Function, public _isEmpty: boolean = false) {}
+  public constructor(private _unsubscribe: Function, private _isEmpty: boolean = false) {}
 
   public unsubscribe(): void {
     this._unsubscribe()
