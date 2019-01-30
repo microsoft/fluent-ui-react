@@ -87,7 +87,15 @@ describe('List', () => {
         .simulate('click')
 
       expect(onClick).toHaveBeenCalled()
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ index: 0 }),
+      )
       expect(onSelectedIndexChange).toHaveBeenCalled()
+      expect(onSelectedIndexChange).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'click' }),
+        expect.objectContaining({ selectedIndex: 0 }),
+      )
     })
   })
 })
