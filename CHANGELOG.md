@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix layout of `Accordion` panel's title @kuzhelov ([#780](https://github.com/stardust-ui/react/pull/780))
 
 ### Features
-- Add mechanism for adding rtl visual tests @mnajdova ([#792](https://github.com/stardust-ui/react/pull/792))
+- Add rtl examples for `Button` and `Divider` components @mnajdova ([#792](https://github.com/stardust-ui/react/pull/792))
 
 <!--------------------------------[ v0.19.0 ]------------------------------- -->
 ## [v0.19.0](https://github.com/stardust-ui/react/tree/v0.19.0) (2019-01-28)
