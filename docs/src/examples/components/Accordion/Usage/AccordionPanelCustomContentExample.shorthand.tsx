@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Accordion, Button } from '@stardust-ui/react'
 
-class AccordionExampleList extends React.Component {
+class AccordionPanelCustomContentExample extends React.Component {
   render() {
     const panels = [
       {
@@ -22,4 +22,4 @@ class AccordionExampleList extends React.Component {
   }
 }
 
-export default AccordionExampleList
+export default AccordionPanelCustomContentExample

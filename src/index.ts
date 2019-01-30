@@ -23,7 +23,11 @@ export { default as ButtonGroup, ButtonGroupProps } from './components/Button/Bu
 
 export { default as Chat, ChatProps } from './components/Chat/Chat'
 export { default as ChatItem, ChatItemProps } from './components/Chat/ChatItem'
-export { default as ChatMessage, ChatMessageProps } from './components/Chat/ChatMessage'
+export {
+  default as ChatMessage,
+  ChatMessageProps,
+  ChatMessageSlotClassNames,
+} from './components/Chat/ChatMessage'
 
 export {
   default as Divider,
@@ -31,11 +35,7 @@ export {
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
 
-export {
-  default as Dropdown,
-  DropdownProps,
-  A11yStatusMessageOptions,
-} from './components/Dropdown/Dropdown'
+export { default as Dropdown, DropdownProps } from './components/Dropdown/Dropdown'
 
 export { default as DropdownItem, DropdownItemProps } from './components/Dropdown/DropdownItem'
 

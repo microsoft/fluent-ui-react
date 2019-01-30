@@ -2,15 +2,18 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  commonPropTypes,
+  customPropTypes,
+} from '../../lib'
 import { ComponentEventHandler, ReactProps } from '../../../types/utils'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
-  /** Informs the search input about an existing toggle button. */
-  hasToggleButton?: boolean
-
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
 
@@ -68,7 +71,7 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     accessibilityInputProps: PropTypes.object,
     accessibilityComboboxProps: PropTypes.object,
     hasToggleButton: PropTypes.bool,
-    inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+    inputRef: customPropTypes.ref,
     onFocus: PropTypes.func,
     onInputBlur: PropTypes.func,
     onInputKeyDown: PropTypes.func,

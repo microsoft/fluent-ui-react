@@ -14,6 +14,7 @@ import callRecording from './callRecording'
 import callVideo from './callVideo'
 import callVideoOff from './callVideoOff'
 import canvasAddPage from './canvasAddPage'
+import close from './close'
 import codeSnippet from './codeSnippet'
 import edit from './edit'
 import emoji from './emoji'
@@ -58,6 +59,8 @@ import teamCreate from './teamCreate'
 import teams from './teams'
 import translation from './translation'
 import trashCan from './trashCan'
+import triangleDown from './triangleDown'
+import triangleRight from './triangleRight'
 import underline from './underline'
 import undo from './undo'
 import videoCameraEmphasis from './videoCameraEmphasis'
@@ -76,6 +79,7 @@ export default {
   'call-control-stop-presenting-new': callControlStopPresentingNew,
   'call-recording': callRecording,
   'canvas-add-page': canvasAddPage,
+  close,
   'code-snippet': codeSnippet,
   edit,
   emoji,
@@ -120,6 +124,8 @@ export default {
   teams,
   translation,
   'trash-can': trashCan,
+  'triangle-down': triangleDown,
+  'triangle-right': triangleRight,
   'team-create': teamCreate,
   underline,
   undo,
