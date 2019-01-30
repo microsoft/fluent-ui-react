@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Export `triangle-left` and `triangle-right` icons in Teams theme @codepretty ([#785](https://github.com/stardust-ui/react/pull/785))
+- Remove ability to introduce global style changes for HTML document from `pxToRem` @kuzhelov ([#789](https://github.com/stardust-ui/react/pull/789))
 
 ### Fixes
 - Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
