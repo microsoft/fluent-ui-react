@@ -23,8 +23,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
   selectedItems: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
-    maxHeight: v.selectedItemsMaxHeight,
     overflowY: 'auto',
+    maxHeight: v.selectedItemsMaxHeight,
+    ...(p.toggleIndicator && { paddingRight: v.toggleIndicatorSize }),
   }),
 
   button: ({ variables: v }): ICSSInJSStyle => {
@@ -87,7 +88,6 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownProps & DropdownState, Dr
     justifyContent: 'center',
     alignItems: 'center',
     userSelect: 'none',
-    bottom: 0,
     right: 0,
   }),
 }
