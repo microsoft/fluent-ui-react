@@ -19,8 +19,8 @@ const getFontSizeValue = (size?: string | null): number | null => {
 /**
  * Converts the provided px size to rem based on the default font size of 10px unless
  * the HTML font size has been previously defined with setHTMLFontSize().
- * @param {number} valueInPx The px value to convert to rem.
- * @param {number} valueInPx Rem size to use for convertions. Optional - document's font size will be taken otherwise.
+ * @param {number} valueInPx - The px value to convert to rem.
+ * @param {number} baseRemSize - Rem size to use for convertions. Optional - document's font size will be taken otherwise.
  * @example
  * // Returns '1rem' for default document font size (16px).
  * pxToRem(16)
@@ -29,7 +29,7 @@ const getFontSizeValue = (size?: string | null): number | null => {
  * pxToRem(32, 16)
  * @returns {string} The value converted to the rem.
  */
-export const pxToRem = (valueInPx: number = 0, baseRemSize?: number): string => {
+export const pxToRem = (valueInPx: number, baseRemSize?: number): string => {
   if (!baseRemSize && !_documentRemSize) {
     _documentRemSize = getDocumentRemSize()
   }
