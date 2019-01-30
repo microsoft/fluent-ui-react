@@ -10,6 +10,7 @@ const exampleKebabNameToSourceFilename = (exampleKebabName: string) => {
   return `${_.startCase(exampleKebabName)
     .replace(/ /g, '')
     .replace(/Shorthand$/, '.shorthand')
+    .replace(/Rtl$/, '.rtl')
     .replace(/Perf$/, '.perf')}.source.json`
 }
 

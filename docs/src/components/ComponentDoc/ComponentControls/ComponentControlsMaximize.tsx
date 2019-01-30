@@ -6,10 +6,10 @@ import { NavLink } from 'react-router-dom'
 
 import { updateForKeys } from 'docs/src/hoc'
 
-const ComponentControlsMaximize: any = ({ examplePath }) => (
+const ComponentControlsMaximize: any = ({ examplePath, rtl }) => (
   <Menu.Item
     as={NavLink}
-    to={`/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}`}
+    to={`/maximize/${_.kebabCase(examplePath.split('/').slice(-1))}/${rtl}`}
     target="_blank"
     rel="noopener noreferrer"
   >
@@ -22,4 +22,4 @@ ComponentControlsMaximize.propTypes = {
   examplePath: PropTypes.string.isRequired,
 }
 
-export default updateForKeys(['examplePath'])(ComponentControlsMaximize)
+export default updateForKeys(['examplePath', 'rtl'])(ComponentControlsMaximize)
