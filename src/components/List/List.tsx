@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../lib'
-import ListItem from './ListItem'
+import ListItem, { ListItemProps } from './ListItem'
 import { listBehavior } from '../../lib/accessibility'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
@@ -88,6 +88,7 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 
   static autoControlledProps = ['selectedIndex']
+
   getInitialAutoControlledState() {
     return { selectedIndex: -1, focusedIndex: 0 }
   }
@@ -135,6 +136,31 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
     )
   }
 
+  handleItemOverrides = (predefinedProps: ListItemProps) => {
+    const { selectable } = this.props
+
+    return {
+      onFocus: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
+        _.invoke(predefinedProps, 'onFocus', e, itemProps)
+
+        if (selectable) {
+          this.setState({ focusedIndex: itemProps.index })
+        }
+      },
+      onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
+        _.invoke(predefinedProps, 'onClick', e, itemProps)
+
+        if (selectable) {
+          this.trySetState({ selectedIndex: itemProps.index })
+          _.invoke(this.props, 'onSelectedIndexChange', e, {
+            ...this.props,
+            ...{ selectedIndex: itemProps.index },
+          })
+        }
+      },
+    }
+  }
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children } = this.props
 
@@ -152,40 +178,34 @@ class List extends AutoControlledComponent<ReactProps<ListProps>, ListState> {
   }
 
   renderItems() {
-    const { items } = this.props
+    const { items, selectable } = this.props
     const { focusedIndex, selectedIndex } = this.state
 
     this.focusHandler.syncFocusedIndex(focusedIndex)
 
     this.itemRefs = []
 
-    return _.map(items, (item, idx) => {
+    return _.map(items, (item, index) => {
       const maybeSelectableItemProps = {} as any
 
-      if (this.props.selectable) {
+      if (selectable) {
         const ref = React.createRef()
-        this.itemRefs[idx] = ref
+        this.itemRefs[index] = ref
 
         maybeSelectableItemProps.ref = ref
-        maybeSelectableItemProps.onFocus = () => this.setState({ focusedIndex: idx })
-        maybeSelectableItemProps.onClick = e => {
-          this.trySetState({ selectedIndex: idx })
-          _.invoke(this.props, 'onSelectedIndexChange', e, {
-            ...this.props,
-            ...{ selectedIndex: idx },
-          })
-        }
-        maybeSelectableItemProps.selected = idx === selectedIndex
-        maybeSelectableItemProps.tabIndex = idx === focusedIndex ? 0 : -1
+        maybeSelectableItemProps.selected = index === selectedIndex
+        maybeSelectableItemProps.tabIndex = index === focusedIndex ? 0 : -1
       }
 
       const itemProps = {
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
+        index,
       }
 
       return ListItem.create(item, {
         defaultProps: itemProps,
+        overrideProps: this.handleItemOverrides,
       })
     })
   }
