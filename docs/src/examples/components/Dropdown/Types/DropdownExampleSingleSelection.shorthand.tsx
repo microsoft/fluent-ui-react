@@ -20,6 +20,9 @@ const DropdownExample = () => (
     }}
     placeholder="Select your hero"
     items={inputItems}
+    triggerButton={{
+      'data-testid': 'trigger-button',
+    }}
   />
 )
 
