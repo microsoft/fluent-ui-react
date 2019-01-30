@@ -128,15 +128,11 @@ const iconStyles: ComponentSlotStylesInput<IconProps, IconVariables> = {
     }
   },
 
-  rotateInRtl: ({ props: p, theme }) => {
-    const rtl = theme.rtl
-
-    return {
-      ...(rtl && {
-        transform: `scaleX(-1) rotate(${-1 * p.rotate}deg)`,
-      }),
-    }
-  },
+  rotateInRtl: ({ props: p, theme: { rtl } }) => ({
+    ...(rtl && {
+      transform: `scaleX(-1) rotate(${-1 * p.rotate}deg)`,
+    }),
+  }),
 
   outlinePart: ({ variables: v }): ICSSInJSStyle => {
     return {
