@@ -18,7 +18,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Features
-- Export `triangle-left` and `triangle-right` icons in Teams theme @codepretty ([#785](https://github.com/stardust-ui/react/pull/785))
+- Export `triangle-down` and `triangle-right` icons in Teams theme @codepretty ([#785](https://github.com/stardust-ui/react/pull/785))
+- Add rtl examples for `Button` and `Divider` components @mnajdova ([#792](https://github.com/stardust-ui/react/pull/792))
 
 ### Fixes
 - Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
@@ -30,9 +31,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix layout of `Accordion` panel's title @kuzhelov ([#780](https://github.com/stardust-ui/react/pull/780))
 - Allow to use `createRef()` API with `triggerRef` prop in `Portal` component @layershifter ([#787](https://github.com/stardust-ui/react/pull/787))
-
-### Features
-- Add rtl examples for `Button` and `Divider` components @mnajdova ([#792](https://github.com/stardust-ui/react/pull/792))
 
 <!--------------------------------[ v0.19.0 ]------------------------------- -->
 ## [v0.19.0](https://github.com/stardust-ui/react/tree/v0.19.0) (2019-01-28)
