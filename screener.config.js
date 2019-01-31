@@ -8,7 +8,7 @@ const fs = require('fs')
 const { default: config } = require('./config')
 const Steps = require('screener-runner/src/steps')
 
-const SCREENER_URL = `http://${config.server_host}:${config.server_port}`
+const SCREENER_HOST_URL = `${config.server_host}:${config.server_port}`
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
@@ -17,7 +17,7 @@ const screenerConfig = {
   apiKey: process.env.SCREENER_API_KEY,
 
   tunnel: {
-    host: SCREENER_URL,
+    host: `${SCREENER_HOST_URL}`,
     gzip: true, // gzip compress all content being served from tunnel host
     cache: true, // sets cache-control header for all content being served from tunnel host. Must be used with gzip option
   },
@@ -39,7 +39,7 @@ const screenerConfig = {
     .reduce((states, examplePath) => {
       const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
       const rtl = nameWithExtension.endsWith('.rtl.tsx')
-      const url = `${SCREENER_URL}/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
+      const url = `http://${SCREENER_HOST_URL}/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
 
       states.push({
         url,
