@@ -37,18 +37,22 @@ const screenerConfig = {
   states: glob
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .reduce((states, examplePath) => {
-      const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
-      const rtl = nameWithExtension.endsWith('.rtl.tsx')
-      const url = `http://${SCREENER_HOST_URL}/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
+      const {
+        name: exampleNameWithoutExtension,
+        base: exampleNameWithExtension,
+        dir: exampleDir,
+      } = path.parse(examplePath)
+      const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
+      const url = `http://${SCREENER_HOST_URL}/maximize/${_.kebabCase(
+        exampleNameWithoutExtension,
+      )}/${rtl}`
 
       states.push({
         url,
-        name: nameWithExtension,
+        name: exampleNameWithExtension,
 
         // https://www.npmjs.com/package/screener-runner#testing-interactions
-        steps: fs.existsSync(`${dir}/${nameWithoutExtension}.steps.ts`)
-          ? getSteps(dir, nameWithoutExtension).end()
-          : undefined,
+        steps: getSteps(exampleDir, exampleNameWithoutExtension),
       })
 
       return states
@@ -56,8 +60,13 @@ const screenerConfig = {
 }
 
 function getSteps(dir, nameWithoutExtension) {
-  const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`).default
-  return stepTests.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
+  const stepsSpecModulePath = `${dir}/${nameWithoutExtension}.steps.ts`
+
+  return fs.existsSync(stepsSpecModulePath)
+    ? require(`./${dir}/${nameWithoutExtension}.steps`)
+        .default.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
+        .end()
+    : undefined
 }
 
 if (process.env.CI) {
