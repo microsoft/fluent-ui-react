@@ -148,7 +148,6 @@ export type KeyActions = { [partName: string]: { [actionName: string]: KeyAction
 export interface AccessibilityDefinition {
   attributes?: AccessibilityAttributesBySlot
   keyActions?: KeyActions
-  handledProps?: (keyof AccessibilityAttributes)[]
   focusZone?: FocusZoneDefinition
   focusTrap?: FocusTrapDefinition
 }
