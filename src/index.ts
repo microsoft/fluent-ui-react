@@ -133,6 +133,8 @@ export { default as Indicator, IndicatorProps } from './components/Indicator/Ind
 // Accessibility
 //
 export * from './lib/accessibility/types'
+export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
+export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
 export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
 export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
 export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
@@ -154,12 +156,6 @@ export {
   default as popupFocusTrapBehavior,
 } from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
 export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
-export {
-  default as navigableListBehavior,
-} from './lib/accessibility/Behaviors/List/navigableListBehavior'
-export {
-  default as navigableListItemBehavior,
-} from './lib/accessibility/Behaviors/List/navigableListItemBehavior'
 
 //
 // Utilities

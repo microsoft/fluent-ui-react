@@ -145,12 +145,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
         contentMedia={contentMedia}
         debug={debug}
         endMedia={endMedia}
-        header={
-          // we need to get on the element either onclick, which will invoke user card on enter/space key
-          <div role="button" tabIndex={0} aria-haspopup="dialog">
-            {header}
-          </div>
-        }
+        header={header}
         headerMedia={headerMedia}
         media={media}
         mediaCSS={styles.media}

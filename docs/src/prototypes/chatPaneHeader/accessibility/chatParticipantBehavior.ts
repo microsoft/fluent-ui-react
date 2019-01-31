@@ -1,6 +1,5 @@
-import { Accessibility } from '../../types'
+import { Accessibility, menuItemBehavior } from '@stardust-ui/react'
 import * as _ from 'lodash'
-import { menuItemBehavior } from '../..'
 
 /**
  * @description
@@ -8,11 +7,11 @@ import { menuItemBehavior } from '../..'
  * @specification
  */
 
-const navigableListItemBehavior: Accessibility = (props: any) => {
+const chatParticipantBehavior: Accessibility = (props: any) => {
   const behavior = menuItemBehavior(props)
   behavior.attributes.wrapper = undefined
   behavior.attributes.root.role = 'listitem'
   return behavior
 }
 
-export default navigableListItemBehavior
+export default chatParticipantBehavior

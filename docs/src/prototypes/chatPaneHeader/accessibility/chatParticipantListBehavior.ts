@@ -1,5 +1,4 @@
-import { Accessibility, FocusZoneMode } from '../../types'
-import { FocusZoneDirection } from '../../FocusZone'
+import { Accessibility, FocusZoneMode, FocusZoneDirection } from '@stardust-ui/react'
 
 /**
  * @description
@@ -9,7 +8,7 @@ import { FocusZoneDirection } from '../../FocusZone'
  * Embeds FocusZone into component allowing circular arrow key navigation through the children of the component.
  */
 
-const navigableListBehavior: Accessibility = (props: any) => ({
+const chatParticipantListBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: 'list',
@@ -26,4 +25,4 @@ const navigableListBehavior: Accessibility = (props: any) => ({
   },
 })
 
-export default navigableListBehavior
+export default chatParticipantListBehavior

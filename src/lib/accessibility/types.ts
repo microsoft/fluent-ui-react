@@ -131,6 +131,8 @@ export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelat
 
 export type AccessibilityAttributesBySlot = { [partName: string]: AccessibilityAttributes }
 
+export { FocusZoneDirection } from './FocusZone'
+
 export enum FocusZoneMode {
   Custom,
   Wrap,

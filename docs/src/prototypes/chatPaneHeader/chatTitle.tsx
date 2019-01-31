@@ -7,9 +7,9 @@ import {
   Input,
   Avatar,
   Header,
-  navigableListBehavior,
-  navigableListItemBehavior,
 } from '@stardust-ui/react'
+import chatParticipantBehavior from './accessibility/chatParticipantBehavior'
+import chatParticipantListBehavior from './accessibility/chatParticipantListBehavior'
 
 const headingStyle = {
   marginRight: '0.6rem',
@@ -77,7 +77,7 @@ class ChatTitle extends React.Component<any> {
       ),
       userName: user.content,
       'aria-haspopup': 'dialog',
-      accessibility: navigableListItemBehavior,
+      accessibility: chatParticipantBehavior,
       wrapper: null,
     }
 
@@ -106,7 +106,7 @@ class ChatTitle extends React.Component<any> {
     key: 'restOfParticipants',
     'aria-haspopup': true,
     'aria-label': `${menuItems.length} more participants`,
-    accessibility: navigableListItemBehavior,
+    accessibility: chatParticipantBehavior,
     wrapper: { as: 'li', role: 'presentation' },
     as: MoreParticipantsButton,
     count: menuItems.length,
@@ -123,12 +123,10 @@ class ChatTitle extends React.Component<any> {
         variables={{
           activeBackgroundColor: 'transparent',
           borderColor: 'transparent',
-          horizontalPaddingRight: '3px',
-          horizontalPaddingLeft: '3px',
-          horizontalPaddingBottom: '1px',
+          horizontalPadding: `14px 3px 1px 3px`,
         }}
         defaultActiveIndex={0}
-        accessibility={navigableListBehavior}
+        accessibility={chatParticipantListBehavior}
         aria-label="chat participants"
         items={items}
       />
