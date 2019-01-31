@@ -5,6 +5,10 @@ import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuIt
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
+export const verticalPillsBottomMargin = pxToRem(5)
+export const horizontalPillsRightMargin = pxToRem(8)
+export const verticalPointingBottomMargin = pxToRem(12)
+
 const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
   borderBottom: `solid ${pxToRem(4)} ${color}`,
@@ -164,7 +168,9 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       ...(pills && {
-        ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
+        ...(vertical
+          ? { margin: `0 0 ${verticalPillsBottomMargin} 0` }
+          : { margin: `0 ${horizontalPillsRightMargin} 0 0` }),
         borderRadius: pxToRem(5),
       }),
 
@@ -188,7 +194,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           ...(pointing === 'end'
             ? { borderRight: `${pxToRem(3)} solid transparent` }
             : { borderLeft: `${pxToRem(3)} solid transparent` }),
-          marginBottom: `${pxToRem(12)}`,
+          marginBottom: verticalPointingBottomMargin,
         }),
 
       ...itemSeparator({ props, variables: v, theme, colors }),
