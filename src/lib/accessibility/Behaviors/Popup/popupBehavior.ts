@@ -4,17 +4,16 @@ import * as _ from 'lodash'
 
 /**
  * @description
- * Adds role='button' to 'trigger' component's part, if it is not focusable element and no role attribute provided.
  * Adds tabIndex='0' to 'trigger' component's part, if it is not tabbable element and no tabIndex attribute provided.
  *
  * @specification
  * Adds attribute 'aria-disabled=true' to 'trigger' component's part if 'disabled' property is true. Does not set the attribute otherwise.
  */
 const popupBehavior: Accessibility = (props: any) => {
+  const onAsArray = _.isArray(props.on) ? props.on : [props.on]
   return {
     attributes: {
       trigger: {
-        role: getAriaAttributeFromProps('role', props, 'button'),
         tabIndex: getAriaAttributeFromProps('tabIndex', props, '0'),
         'aria-disabled': !_.isNil(props['aria-disabled'])
           ? props['aria-disabled']
@@ -32,6 +31,18 @@ const popupBehavior: Accessibility = (props: any) => {
       trigger: {
         close: {
           keyCombinations: [{ keyCode: keyboardKey.Escape }],
+        },
+        toggle: {
+          keyCombinations: _.includes(onAsArray, 'click') && [
+            { keyCode: keyboardKey.Enter },
+            { keyCode: keyboardKey.Spacebar },
+          ],
+        },
+        open: {
+          keyCombinations: _.includes(onAsArray, 'hover') && [
+            { keyCode: keyboardKey.Enter },
+            { keyCode: keyboardKey.Spacebar },
+          ],
         },
       },
     },
