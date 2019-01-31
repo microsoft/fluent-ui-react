@@ -18,7 +18,7 @@ import IntegrateCustomComponents from './views/IntegrateCustomComponents'
 const Router = () => (
   <BrowserRouter basename={__BASENAME__}>
     <Switch>
-      <Route exact path="/maximize/:exampleName" component={ExternalExampleLayout} />
+      <Route exact path="/maximize/:exampleName/:rtl?" component={ExternalExampleLayout} />
       <Switch>
         <DocsLayout exact path="/" component={Introduction} />
         <DocsLayout exact path="/:type/:name" component={DocsRoot} sidebar />

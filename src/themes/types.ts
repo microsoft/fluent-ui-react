@@ -227,6 +227,7 @@ export type AnimationProp =
       iterationCount?: string
       playState?: string
       timingFunction?: string
+      keyframeParams?: object
     }
   | string
 // ========================================================
@@ -243,8 +244,8 @@ export type StaticStyle = StaticStyleRenderable | StaticStyleFunction
 
 export type StaticStyles = StaticStyle[]
 
-export interface ThemeAnimation {
-  keyframe: any
+export interface ThemeAnimation<KP = {}> {
+  keyframe: ((KP) => object) | object | string
   delay?: string
   direction?: string
   duration?: string
@@ -252,6 +253,7 @@ export interface ThemeAnimation {
   iterationCount?: string
   playState?: string
   timingFunction?: string
+  keyframeParams?: KP
 }
 
 // ========================================================

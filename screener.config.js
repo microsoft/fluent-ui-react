@@ -30,9 +30,10 @@ const screenerConfig = {
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
     .map(examplePath => {
       const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
+      const rtl = nameWithExtension.endsWith('.rtl.tsx')
 
       return {
-        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}`,
+        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`,
         name: nameWithExtension,
       }
     }),

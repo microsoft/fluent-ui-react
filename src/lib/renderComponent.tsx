@@ -200,10 +200,7 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
           rtl,
         )
 
-        const unhandledProps = getUnhandledProps(
-          { handledProps: [...handledProps, ...accessibility.handledProps] },
-          props,
-        )
+        const unhandledProps = getUnhandledProps({ handledProps }, props)
 
         const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
 
