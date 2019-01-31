@@ -44,7 +44,7 @@ describe('Popup', () => {
     return popup.find(`#${contentId}`)
   }
 
-  type ExpectPopupToOPenAndCloseParams = {
+  type ExpectPopupToOpenAndCloseParams = {
     onProp: PopupEvents
     keyboardKeyToOpen: keyboardKey
     keyboardKeyToClose: keyboardKey
@@ -54,7 +54,7 @@ describe('Popup', () => {
     onProp,
     keyboardKeyToOpen,
     keyboardKeyToClose,
-  }: ExpectPopupToOPenAndCloseParams) => {
+  }: ExpectPopupToOpenAndCloseParams) => {
     const popup = mountWithProvider(
       <Popup
         trigger={<span id={triggerId}> text to trigger popup </span>}
