@@ -3,6 +3,11 @@ import { domEvent } from 'test/utils'
 
 describe('eventStack', () => {
   describe('sub', () => {
+    test('makes subscription to be non-empty', () => {
+      const clickSubscription = EventStack.subscribe('click', jest.fn())
+      expect(clickSubscription.isEmpty).toBe(false)
+    })
+
     test('subscribes for single target', () => {
       const handler = jest.fn()
 
@@ -47,6 +52,13 @@ describe('eventStack', () => {
   })
 
   describe('unsub', () => {
+    test('makes subscription to be empty', () => {
+      const clickSubscription = EventStack.subscribe('click', jest.fn())
+      clickSubscription.unsubscribe()
+
+      expect(clickSubscription.isEmpty).toBe(true)
+    })
+
     test('unsubscribes and destroys eventTarget if it is empty', () => {
       const handler = jest.fn()
 
