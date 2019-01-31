@@ -17,12 +17,21 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
         iterationCount,
         playState,
         timingFunction,
+        keyframeParams,
       } = animations[animationName]
+
+      const animationThemeKeyframeParams = keyframeParams || {}
+      const animationPropKeyframeParams = (animation as any).keyframeParams
+
+      const mergedKeyframeParams =
+        typeof animation === 'string' || !animationPropKeyframeParams
+          ? animationThemeKeyframeParams
+          : { ...animationThemeKeyframeParams, ...(animationPropKeyframeParams || {}) }
 
       const evaluatedKeyframe =
         typeof keyframe === 'string'
           ? keyframe
-          : theme.renderer.renderKeyframe(callable(keyframe), {})
+          : theme.renderer.renderKeyframe(callable(keyframe), mergedKeyframeParams)
 
       if (typeof animation === 'string') {
         animationCSSProp = {
