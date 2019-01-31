@@ -10,11 +10,8 @@ export interface FlexProps {
   /** Defines if container should be inline element. */
   inline?: boolean
 
-  /** Sets horizontal flow for the container. */
-  row?: boolean
-
-  /** Sets vertical flow for the container. */
-  column?: boolean
+  /** Sets flow direction to vertical. */
+  vertical?: boolean
 
   /** Allows overflow items to wrap on the next container's line. */
   wrap?: boolean
@@ -49,9 +46,6 @@ export interface FlexProps {
 class Flex extends UIComponent<ReactProps<FlexProps>, any> {
   static Item: any
 
-  static Row: any
-  static Column: any
-
   static Gap: any
 
   static displayName = 'Flex'
@@ -68,8 +62,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
 
     inline: PropTypes.bool,
 
-    row: PropTypes.bool,
-    column: PropTypes.bool,
+    vertical: PropTypes.bool,
 
     wrap: PropTypes.bool,
 
@@ -88,20 +81,20 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
   }
 
   renderChildren = () => {
-    const { column, gap, children } = this.props
+    const { vertical, gap, children } = this.props
 
     let isFirst = true
     return React.Children.map(children, (child: React.ReactElement<any>) => {
       const childElement =
         (child.type as any) && (child.type as any).__isFlexItem
           ? React.cloneElement(child, {
-              flexDirection: column ? 'column' : 'row',
+              flexDirection: vertical ? 'column' : 'row',
             })
           : child
 
       return (
         <>
-          {!isFirst && gap ? <Flex.Gap gap={gap} column={column} /> : void (isFirst = false)}
+          {!isFirst && gap ? <Flex.Gap gap={gap} column={vertical} /> : void (isFirst = false)}
           {childElement}
         </>
       )
@@ -117,23 +110,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>, any> {
   }
 }
 
-class FlexRow extends Flex {}
-class FlexColumn extends Flex {}
-
-FlexRow.defaultProps = {
-  ...Flex.defaultProps,
-  row: true,
-} as any
-
-FlexColumn.defaultProps = {
-  ...Flex.defaultProps,
-  column: true,
-} as any
-
 Flex.Item = FlexItem
-
-Flex.Row = FlexRow
-Flex.Column = FlexColumn
 
 Flex.Gap = ({ gap, column }) => <div style={column ? { height: gap } : { width: gap }} />
 

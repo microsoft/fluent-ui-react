@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Flex, Segment } from '@stardust-ui/react'
+import { Flex as Row, Segment } from '@stardust-ui/react'
 
 const FlexExampleShorthand = () => (
   <>
-    <Flex.Column gap={30} center debug>
+    <Row vertical gap={30} hAlign="center" vAlign="center" debug>
       {[
         [
           { hAlign: 'start', vAlign: 'start' },
@@ -12,7 +12,7 @@ const FlexExampleShorthand = () => (
         ],
         [
           { hAlign: 'center', vAlign: 'start' },
-          { center: true },
+          { hAlign: 'center', vAlign: 'center' },
           { hAlign: 'center', vAlign: 'end' },
         ],
         [
@@ -21,19 +21,19 @@ const FlexExampleShorthand = () => (
           { hAlign: 'end', vAlign: 'end' },
         ],
       ].map(rowOfAlignmentProps => (
-        <Flex.Row gap={30}>
+        <Row gap={30}>
           {rowOfAlignmentProps.map((alignmentProps: any) => (
-            <Flex
+            <Row
               inline
               {...alignmentProps}
               style={{ width: '100px', height: '100px', border: '1px dashed grey' }}
             >
               <Segment styles={{ width: '30px', height: '30px' }} />
-            </Flex>
+            </Row>
           ))}
-        </Flex.Row>
+        </Row>
       ))}
-    </Flex.Column>
+    </Row>
   </>
 )
 

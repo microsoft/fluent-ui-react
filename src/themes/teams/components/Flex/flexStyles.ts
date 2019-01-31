@@ -11,16 +11,15 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, any> = {
 
       ...(p.inline && { display: 'inline-flex' }),
 
-      ...(p.row && { flexDirection: 'row' }),
-      ...(p.column && { flexDirection: 'column' }),
+      ...(p.vertical && { flexDirection: 'column' }),
 
       // TODO note - too much copypaste!!
       ...(p.hAlign &&
-        (p.column
+        (p.vertical
           ? { alignItems: toFlexAlignment(p.hAlign) }
           : { justifyContent: toFlexAlignment(p.hAlign) })),
       ...(p.vAlign &&
-        (p.column
+        (p.vertical
           ? { justifyContent: toFlexAlignment(p.vAlign) }
           : { alignItems: toFlexAlignment(p.vAlign) })),
 
