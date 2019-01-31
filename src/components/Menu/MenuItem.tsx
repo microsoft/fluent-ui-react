@@ -278,12 +278,12 @@ class MenuItem extends AutoControlledComponent<ReactProps<MenuItemProps>, MenuIt
   }
 
   private updateOutsideClickSubscription() {
-    this.outsideClickSubscription.unsubscribe()
-
-    if (this.props.menu && this.state.menuOpen) {
+    if (this.props.menu && this.state.menuOpen && this.outsideClickSubscription.isEmpty) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe('click', this.outsideClickHandler)
       })
+    } else {
+      this.outsideClickSubscription.unsubscribe()
     }
   }
 
