@@ -1,6 +1,8 @@
 const _ = require('lodash')
 const glob = require('glob')
 const path = require('path')
+const fs = require('fs')
+const Steps = require('screener-runner/src/steps')
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
@@ -28,15 +30,27 @@ const screenerConfig = {
   // screenshot every example in maximized mode
   states: glob
     .sync('docs/src/examples/**/*.tsx', { ignore: ['**/index.tsx', '**/*.knobs.tsx'] })
-    .map(examplePath => {
-      const { name: nameWithoutExtension, base: nameWithExtension } = path.parse(examplePath)
+    .reduce((states, examplePath) => {
+      const { name: nameWithoutExtension, base: nameWithExtension, dir } = path.parse(examplePath)
       const rtl = nameWithExtension.endsWith('.rtl.tsx')
+      const url = `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`
 
-      return {
-        url: `http://localhost:8080/maximize/${_.kebabCase(nameWithoutExtension)}/${rtl}`,
+      states.push({
+        url,
         name: nameWithExtension,
-      }
-    }),
+        // https://github.com/screener-io/screener-runner
+        steps: fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)
+          ? getSteps(dir, nameWithoutExtension).end()
+          : undefined,
+      })
+
+      return states
+    }, []),
+}
+
+function getSteps(dir, nameWithoutExtension) {
+  const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)
+  return stepTests.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
 }
 
 if (process.env.CI) {

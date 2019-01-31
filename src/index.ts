@@ -34,6 +34,7 @@ export {
   DividerProps,
   DividerPropsWithDefaults,
 } from './components/Divider/Divider'
+export { default as Dialog, DialogProps } from './components/Dialog/Dialog'
 
 export { default as Dropdown, DropdownProps } from './components/Dropdown/Dropdown'
 

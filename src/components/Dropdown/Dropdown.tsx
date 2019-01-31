@@ -136,6 +136,9 @@ export interface DropdownProps extends UIComponentProps<DropdownProps, DropdownS
   /** Controls appearance of toggle indicator that shows/hides items list. */
   toggleIndicator?: ShorthandValue
 
+  /** Controls appearance of the trigger button if it's a selection dropdown and not a search. */
+  triggerButton?: ShorthandValue
+
   /** Sets currently selected value(s) (controlled mode). */
   value?: ShorthandValue | ShorthandValue[]
 }
@@ -196,6 +199,7 @@ export default class Dropdown extends AutoControlledComponent<
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
     toggleIndicator: customPropTypes.itemShorthand,
+    triggerButton: customPropTypes.itemShorthand,
     value: PropTypes.oneOfType([
       customPropTypes.itemShorthand,
       customPropTypes.collectionShorthand,
@@ -217,6 +221,7 @@ export default class Dropdown extends AutoControlledComponent<
       return `${item}`
     },
     toggleIndicator: {},
+    triggerButton: {},
   }
 
   static autoControlledProps = ['searchQuery', 'value']
@@ -328,26 +333,27 @@ export default class Dropdown extends AutoControlledComponent<
     styles: ComponentSlotStylesInput,
     getToggleButtonProps: (options?: GetToggleButtonPropsOptions) => any,
   ): JSX.Element {
-    const { placeholder, itemToString, multiple } = this.props
+    const { placeholder, itemToString, multiple, triggerButton } = this.props
     const { value } = this.state
     const content = value && !multiple ? itemToString(value) : placeholder
-
     return (
       <Ref innerRef={this.buttonRef}>
-        <Button
-          content={content}
-          fluid
-          styles={styles.button}
-          {...getToggleButtonProps({
-            onFocus: () => {
-              this.setState({ focused: true })
-            },
-            onBlur: () => {
-              this.setState({ focused: false })
-            },
-            'aria-label': content,
-          })}
-        />
+        {Button.create(triggerButton, {
+          defaultProps: {
+            content,
+            fluid: true,
+            styles: styles.button,
+            ...getToggleButtonProps({
+              onFocus: () => {
+                this.setState({ focused: true })
+              },
+              onBlur: () => {
+                this.setState({ focused: false })
+              },
+              'aria-label': content,
+            }),
+          },
+        })}
       </Ref>
     )
   }
