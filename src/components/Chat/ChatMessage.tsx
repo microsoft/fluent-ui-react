@@ -92,6 +92,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     author: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
+    onBlur: PropTypes.func,
     onFocus: PropTypes.func,
   }
 
