@@ -1,7 +1,24 @@
-import { Chat, Provider, Avatar, toolbarButtonBehavior } from '@stardust-ui/react'
+import {
+  Chat,
+  Provider,
+  Avatar,
+  toolbarButtonBehavior,
+  Accessibility,
+  toolbarBehavior,
+} from '@stardust-ui/react'
 import * as React from 'react'
 
+const popoverBehavior: Accessibility = (props: any) => {
+  const behavior = toolbarBehavior(props)
+
+  behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
+    return root.querySelector('[aria-label="thumbs up"]')
+  }
+
+  return behavior
+}
 const actionMenu = {
+  accessibility: popoverBehavior,
   iconOnly: true,
   items: [
     {
