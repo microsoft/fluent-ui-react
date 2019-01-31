@@ -17,7 +17,7 @@ import MenuItem from './MenuItem'
 import { menuBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
-import { ComponentVariablesObject } from '../../themes/types'
+import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import { ReactProps, ShorthandCollection, ShorthandValue } from '../../../types/utils'
 import MenuDivider from './MenuDivider'
 
@@ -139,7 +139,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     },
   })
 
-  renderItems = (variables: ComponentVariablesObject) => {
+  renderItems = (styles: ComponentSlotStylesPrepared, variables: ComponentVariablesObject) => {
     const {
       iconOnly,
       items,
@@ -166,6 +166,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
             secondary,
             vertical,
             variables,
+            styles: styles.divider,
           },
         })
       }
@@ -190,7 +191,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
+  renderComponent({ ElementType, classes, accessibility, styles, variables, unhandledProps }) {
     const { children } = this.props
     return (
       <ElementType
@@ -199,7 +200,7 @@ class Menu extends AutoControlledComponent<ReactProps<MenuProps>, MenuState> {
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(variables)}
+        {childrenExist(children) ? children : this.renderItems(styles, variables)}
       </ElementType>
     )
   }

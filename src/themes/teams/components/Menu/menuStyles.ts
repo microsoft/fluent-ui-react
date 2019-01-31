@@ -2,6 +2,11 @@ import { pxToRem } from '../../../../lib'
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
+import {
+  verticalPillsBottomMargin,
+  horizontalPillsRightMargin,
+  verticalPointingBottomMargin,
+} from './menuItemStyles'
 
 type MenuPropsAndState = MenuProps & MenuState
 
@@ -42,4 +47,15 @@ export default {
       listStyleType: 'none',
     }
   },
+  divider: ({ props: { pointing, vertical, pills } }) => ({
+    ...(pointing &&
+      vertical && {
+        marginBottom: verticalPointingBottomMargin,
+      }),
+    ...(pills && {
+      ...(vertical
+        ? { margin: `0 0 ${verticalPillsBottomMargin} 0` }
+        : { margin: `0 ${horizontalPillsRightMargin} 0 0` }),
+    }),
+  }),
 } as ComponentSlotStylesInput<MenuPropsAndState, MenuVariables>
