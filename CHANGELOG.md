@@ -36,8 +36,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove popup trigger button default role @jurokapsiar ([#806](https://github.com/stardust-ui/react/pull/806))
 - Improve `Dropdown` component styles @Bugaa92 ([#786](https://github.com/stardust-ui/react/pull/786))
 - Preserve outside click subscription on `Popup` and `MenuItem` component updates @kuzhelov ([#803](https://github.com/stardust-ui/react/pull/803))
+- Exports `Menu`'s variables as `MenuItem` and `MenuDivider`'s variables in `Teams` theme @mnajdova ([#814](https://github.com/stardust-ui/react/pull/814))
 - Fix `Avatar` - Add white circle border in contrast theme @bcalvery ([#795](https://github.com/stardust-ui/react/pull/795))
-- `MenuDivider` not shown on horizontal `Menu` @mnajdova ([#813](https://github.com/stardust-ui/react/pull/813))
+- Dix `MenuDivider` not shown on horizontal `Menu` @mnajdova ([#813](https://github.com/stardust-ui/react/pull/813))
 
 <!--------------------------------[ v0.19.1 ]------------------------------- -->
 ## [v0.19.1](https://github.com/stardust-ui/react/tree/v0.19.1) (2019-01-29)
