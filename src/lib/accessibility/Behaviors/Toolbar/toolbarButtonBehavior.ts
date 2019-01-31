@@ -42,15 +42,6 @@ const toolbarButtonBehavior: Accessibility = (props: any) => ({
     },
   },
 
-  handledProps: [
-    'aria-label',
-    'aria-labelledby',
-    'aria-describedby',
-    'aria-disabled',
-    'aria-expanded',
-    'aria-haspopup',
-  ],
-
   keyActions: {
     wrapper: {
       performClick: {
