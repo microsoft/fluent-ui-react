@@ -2,7 +2,7 @@ import { AvatarVariables } from '../../../teams/components/Avatar/avatarVariable
 import { Partial } from 'types/utils'
 
 export default (siteVariables: any): Partial<AvatarVariables> => ({
-  avatarBorderColor: 'white',
+  avatarBorderColor: siteVariables.white,
   avatarBorderWidth: 2,
   statusBorderColor: siteVariables.black,
 })
