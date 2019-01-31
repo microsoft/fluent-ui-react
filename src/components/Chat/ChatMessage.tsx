@@ -123,6 +123,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
 
     this.changeFocusState(shouldPreserveFocusState)
+    _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   changeFocusState = (isFocused: boolean) => {
