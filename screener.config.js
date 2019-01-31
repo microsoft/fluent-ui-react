@@ -42,6 +42,7 @@ const screenerConfig = {
         base: exampleNameWithExtension,
         dir: exampleDir,
       } = path.parse(examplePath)
+
       const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
       const url = `http://${SCREENER_HOST_URL}/maximize/${_.kebabCase(
         exampleNameWithoutExtension,
