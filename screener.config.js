@@ -38,6 +38,7 @@ const screenerConfig = {
       states.push({
         url,
         name: nameWithExtension,
+        // https://github.com/screener-io/screener-runner
         steps: fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)
           ? getSteps(dir, nameWithoutExtension).end()
           : undefined,
@@ -49,9 +50,7 @@ const screenerConfig = {
 
 function getSteps(dir, nameWithoutExtension) {
   const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)
-  return stepTests.reduce((stepsAcc, steps) => {
-    return steps(stepsAcc)
-  }, new Steps())
+  return stepTests.reduce((stepsAcc, steps) => steps(stepsAcc), new Steps())
 }
 
 if (process.env.CI) {
