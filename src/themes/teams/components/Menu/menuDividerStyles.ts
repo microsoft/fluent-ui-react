@@ -7,7 +7,6 @@ const menuDividerStyles: ComponentSlotStylesInput<MenuDividerProps, MenuVariable
     const borderColor = p.primary ? v.primaryBorderColor : v.borderColor
     const borderType = p.vertical ? 'borderTop' : 'borderLeft'
 
-    // TODO add margins depending on the type of the Menu
     return {
       [borderType]: `1px solid ${borderColor}`,
       ...(!p.vertical && {

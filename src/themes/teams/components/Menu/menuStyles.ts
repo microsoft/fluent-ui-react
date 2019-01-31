@@ -42,4 +42,13 @@ export default {
       listStyleType: 'none',
     }
   },
+  divider: ({ props: { pointing, vertical, pills, underlined } }) => ({
+    ...(pointing &&
+      vertical && {
+        marginBottom: `${pxToRem(12)}`,
+      }),
+    ...(pills && {
+      ...(vertical ? { margin: `0 0 ${pxToRem(5)} 0` } : { margin: `0 ${pxToRem(8)} 0 0` }),
+    }),
+  }),
 } as ComponentSlotStylesInput<MenuPropsAndState, MenuVariables>
