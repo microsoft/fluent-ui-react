@@ -1,6 +1,7 @@
 import { pxToRem } from '../../../../lib'
 
 export interface ChatMessageVariables {
+  actionsBoxShadow: string
   width: string
   backgroundColor: string
   backgroundColorMine: string
@@ -14,6 +15,7 @@ export interface ChatMessageVariables {
 }
 
 export default (siteVars): ChatMessageVariables => ({
+  actionsBoxShadow: siteVars.shadowLevel1,
   width: '100%',
   backgroundColor: siteVars.white,
   backgroundColorMine: '#E5E5F1',

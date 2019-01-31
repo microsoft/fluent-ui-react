@@ -22,8 +22,10 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 
 export interface ChatMessageSlotClassNames {
+  actions: string
   author: string
   timestamp: string
 }
@@ -37,6 +39,9 @@ export interface ChatMessageProps
    * @default chatMessageBehavior
    * */
   accessibility?: Accessibility
+
+  /** Author of the message. */
+  actions?: ShorthandValue
 
   /** Author of the message. */
   author?: ShorthandValue
@@ -74,6 +79,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+    actions: customPropTypes.itemShorthand,
     author: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
@@ -109,7 +115,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { author, children, content, timestamp } = this.props
+    const { actions, author, children, content, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -126,6 +132,14 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
+            {Box.create(actions, {
+              defaultProps: {
+                [IS_FOCUSABLE_ATTRIBUTE]: true,
+                className: ChatMessage.slotClassNames.actions,
+                styles: styles.actions,
+              },
+            })}
+
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -151,6 +165,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
 ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 ChatMessage.slotClassNames = {
+  actions: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
 }
