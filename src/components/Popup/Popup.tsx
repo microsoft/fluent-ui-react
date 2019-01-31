@@ -226,9 +226,7 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
   }
 
   private updateOutsideClickSubscription() {
-    this.outsideClickSubscription.unsubscribe()
-
-    if (this.state.open) {
+    if (this.state.open && this.outsideClickSubscription.isEmpty) {
       setTimeout(() => {
         this.outsideClickSubscription = EventStack.subscribe(
           'click',
@@ -247,6 +245,8 @@ export default class Popup extends AutoControlledComponent<ReactProps<PopupProps
           },
         )
       })
+    } else {
+      this.outsideClickSubscription.unsubscribe()
     }
   }
 
