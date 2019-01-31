@@ -46,7 +46,8 @@ const screenerConfig = {
       const rtl = exampleNameWithExtension.endsWith('.rtl.tsx')
       const url = `http://${SCREENER_HOST_URL}/maximize/${_.kebabCase(
         exampleNameWithoutExtension,
-      )}/${rtl}`
+const exampleUrl = _.kebabCase(exampleNameWithoutExtension)
+const url = `http://${SCREENER_HOST_URL}/maximize/${exampleUrl}/${rtl}`
 
       states.push({
         url,
