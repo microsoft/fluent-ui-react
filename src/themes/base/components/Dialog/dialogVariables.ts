@@ -8,8 +8,6 @@ export interface DialogVariables {
 
   contentMargin: string
 
-  headerFontSize: string
-  headerFontWeight: number
   headerMargin: string
 
   overlayBackground: string
@@ -24,8 +22,6 @@ export default (siteVariables): DialogVariables => ({
 
   contentMargin: `0 0 ${pxToRem(20)} 0`,
 
-  headerFontSize: pxToRem(20),
-  headerFontWeight: 700,
   headerMargin: `0 0 ${pxToRem(20)} 0`,
 
   overlayBackground: 'rgba(0,0,0,.33)',

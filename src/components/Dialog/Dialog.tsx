@@ -17,6 +17,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../../types/utils'
 import Button, { ButtonProps } from '../Button/Button'
 import Box, { BoxProps } from '../Box/Box'
+import Header from '../Header/Header'
 import Portal from '../Portal/Portal'
 import Ref from '../Ref/Ref'
 
@@ -193,8 +194,9 @@ class Dialog extends AutoControlledComponent<ReactProps<DialogProps>, DialogStat
           {...accessibility.keyHandlers.popup}
           {...unhandledProps}
         >
-          {Box.create(header, {
+          {Header.create(header, {
             defaultProps: {
+              as: 'h2',
               styles: styles.header,
             },
           })}

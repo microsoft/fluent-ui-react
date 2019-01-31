@@ -20,8 +20,6 @@ export default {
     margin: v.contentMargin,
   }),
   header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
-    fontSize: v.headerFontSize,
-    fontWeight: v.headerFontWeight,
     margin: v.headerMargin,
   }),
   overlay: ({ props: p, variables: v }: DialogStyleParams): ICSSInJSStyle => ({
