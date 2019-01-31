@@ -44,11 +44,17 @@ describe('Popup', () => {
     return popup.find(`#${contentId}`)
   }
 
-  const openAndClosePopup = (
-    keyboardKeyToOpen: keyboardKey,
-    keyboardKeyToClose: keyboardKey,
-    onProp: PopupEvents,
-  ) => {
+  type ExpectPopupToOPenAndCloseParams = {
+    onProp: PopupEvents
+    keyboardKeyToOpen: keyboardKey
+    keyboardKeyToClose: keyboardKey
+  }
+
+  const expectPopupToOpenAndClose = ({
+    onProp,
+    keyboardKeyToOpen,
+    keyboardKeyToClose,
+  }: ExpectPopupToOPenAndCloseParams) => {
     const popup = mountWithProvider(
       <Popup
         trigger={<span id={triggerId}> text to trigger popup </span>}
@@ -162,16 +168,32 @@ describe('Popup', () => {
 
   describe('open/close popup by keyboard', () => {
     test(`toggle popup with Enter key`, () => {
-      openAndClosePopup(keyboardKey.Enter, keyboardKey.Enter, 'click')
+      expectPopupToOpenAndClose({
+        onProp: 'click',
+        keyboardKeyToOpen: keyboardKey.Enter,
+        keyboardKeyToClose: keyboardKey.Enter,
+      })
     })
     test(`toggle popup with Space key`, () => {
-      openAndClosePopup(keyboardKey.Enter, keyboardKey.Spacebar, 'click')
+      expectPopupToOpenAndClose({
+        onProp: 'click',
+        keyboardKeyToOpen: keyboardKey.Spacebar,
+        keyboardKeyToClose: keyboardKey.Spacebar,
+      })
     })
     test(`open popup with Enter key and close it with escape key`, () => {
-      openAndClosePopup(keyboardKey.Enter, keyboardKey.Escape, 'hover')
+      expectPopupToOpenAndClose({
+        onProp: 'hover',
+        keyboardKeyToOpen: keyboardKey.Enter,
+        keyboardKeyToClose: keyboardKey.Escape,
+      })
     })
     test(`open popup with Space key and close it with escape key`, () => {
-      openAndClosePopup(keyboardKey.Spacebar, keyboardKey.Escape, 'hover')
+      expectPopupToOpenAndClose({
+        onProp: 'hover',
+        keyboardKeyToOpen: keyboardKey.Spacebar,
+        keyboardKeyToClose: keyboardKey.Escape,
+      })
     })
   })
 })
