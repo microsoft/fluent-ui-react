@@ -4,29 +4,29 @@ import { Icon, Label } from '@stardust-ui/react'
 const IconExampleSpace = () => (
   <div>
     <p>
-      <Label content="Default" />
+      <Label>Default</Label>
       <Icon name="call-video" />
-      <Label content="Default" />
+      <Label>Default</Label>
     </p>
     <p>
-      <Label content="Before" />
+      <Label>Before</Label>
       <Icon name="call-video" xSpacing="before" />
-      <Label content="Before" />
+      <Label>Before</Label>
     </p>
     <p>
-      <Label content="After" />
+      <Label>After</Label>
       <Icon name="call-video" xSpacing="after" />
-      <Label content="After" />
+      <Label>After</Label>
     </p>
     <p>
-      <Label content="Both" />
+      <Label>Both</Label>
       <Icon name="call-video" xSpacing="both" />
-      <Label content="Both" />
+      <Label>Both</Label>
     </p>
     <p>
-      <Label content="None" />
+      <Label>None</Label>
       <Icon name="call-video" xSpacing="none" />
-      <Label content="None" />
+      <Label>None</Label>
     </p>
   </div>
 )
