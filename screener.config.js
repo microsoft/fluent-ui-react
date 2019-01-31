@@ -38,20 +38,20 @@ const screenerConfig = {
       states.push({
         url,
         name: nameWithExtension,
+        steps: fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)
+          ? getSteps(dir, nameWithoutExtension).end()
+          : undefined,
       })
-      if (fs.existsSync(`${dir}/${nameWithoutExtension}.steps.js`)) {
-        const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)(Steps)
-        stepTests.forEach(test => {
-          states.push({
-            url,
-            name: `${nameWithExtension}: ${test.name}`,
-            steps: test.steps,
-          })
-        })
-      }
 
       return states
     }, []),
+}
+
+function getSteps(dir, nameWithoutExtension) {
+  const stepTests = require(`./${dir}/${nameWithoutExtension}.steps`)
+  return stepTests.reduce((stepsAcc, steps) => {
+    return steps(stepsAcc)
+  }, new Steps())
 }
 
 if (process.env.CI) {
