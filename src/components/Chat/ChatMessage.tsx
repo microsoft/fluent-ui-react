@@ -22,6 +22,7 @@ import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibil
 
 import Text from '../Text/Text'
 import Box from '../Box/Box'
+import Label from '../Label/Label'
 
 export interface ChatMessageSlotClassNames {
   author: string
@@ -46,6 +47,12 @@ export interface ChatMessageProps
 
   /** Timestamp of the message. */
   timestamp?: ShorthandValue
+
+  /** Badge attached to the message. */
+  badge?: ShorthandValue
+
+  /** A message can format the badge to appear on the start, end, top or on the bottom of the message. */
+  badgePosition?: 'start' | 'end' | 'top' | 'bottom'
 
   /**
    * Called after user's focus.
@@ -83,6 +90,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
+    badgePosition: 'end',
   }
 
   public state = {
@@ -109,9 +117,13 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { author, children, content, timestamp } = this.props
+    const { author, children, content, timestamp, badge, badgePosition } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
+    const badgeElement = Label.create(badge, {
+      defaultProps: { circular: true, styles: styles.badge },
+    })
+    const badgeBeforeContent = badgePosition === 'start' || badgePosition === 'top'
 
     return (
       <ElementType
@@ -126,6 +138,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
+            {badgeBeforeContent && badgeElement}
             {Text.create(author, {
               defaultProps: {
                 size: 'small',
@@ -142,6 +155,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
               },
             })}
             {Box.create(content, { defaultProps: { styles: styles.content } })}
+            {!badgeBeforeContent && badgeElement}
           </>
         )}
       </ElementType>
