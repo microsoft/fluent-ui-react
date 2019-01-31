@@ -47,7 +47,7 @@ export default {
       listStyleType: 'none',
     }
   },
-  divider: ({ props: { pointing, vertical, pills, underlined } }) => ({
+  divider: ({ props: { pointing, vertical, pills } }) => ({
     ...(pointing &&
       vertical && {
         marginBottom: verticalPointingBottomMargin,
