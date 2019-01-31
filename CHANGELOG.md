@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove handledProps from behaviors @jurokapsiar ([#805](https://github.com/stardust-ui/react/pull/805))
 - Add `create` shorthand factory to `Header` component @layershifter ([#809](https://github.com/stardust-ui/react/pull/809))
 - Add `keyframeParams` prop in the `Animation` component and the `animation` prop @mnajdova ([#794](https://github.com/stardust-ui/react/pull/794))
+- Add `actionMenu` prop to `ChatMessage` component @layershifter ([#811](https://github.com/stardust-ui/react/pull/811))
 
 ### Fixes
 - Handle `onClick` and `onFocus` on ListItems correctly @layershifter ([#779](https://github.com/stardust-ui/react/pull/779))
