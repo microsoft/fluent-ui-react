@@ -298,10 +298,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
         : pointing && vertical
         ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
         : {
-            paddingTop: v.horizontalPaddingTop,
-            paddingBottom: v.horizontalPaddingBottom,
-            paddingLeft: v.horizontalPaddingLeft,
-            paddingRight: v.horizontalPaddingRight,
+            padding: v.horizontalPadding,
           }),
 
       ...(iconOnly && {

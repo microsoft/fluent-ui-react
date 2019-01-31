@@ -24,10 +24,7 @@ export interface MenuVariables {
 
   lineHeightBase: string
 
-  horizontalPaddingLeft: string
-  horizontalPaddingRight: string
-  horizontalPaddingTop: string
-  horizontalPaddingBottom: string
+  horizontalPadding: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -56,9 +53,6 @@ export default (siteVars: any): MenuVariables => {
 
     lineHeightBase: siteVars.lineHeightMedium,
 
-    horizontalPaddingLeft: pxToRem(18),
-    horizontalPaddingRight: pxToRem(18),
-    horizontalPaddingTop: pxToRem(14),
-    horizontalPaddingBottom: pxToRem(14),
+    horizontalPadding: `${pxToRem(14)} ${pxToRem(18)} ${pxToRem(14)} ${pxToRem(18)}`,
   }
 }
