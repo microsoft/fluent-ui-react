@@ -8,7 +8,7 @@ const fs = require('fs')
 const { default: config } = require('./config')
 const Steps = require('screener-runner/src/steps')
 
-const SCREENER_URL = `http://${config.server_host}:${config.perf_port}`
+const SCREENER_URL = `http://${config.server_host}:${config.server_port}`
 
 // https://github.com/screener-io/screener-runner
 const screenerConfig = {
