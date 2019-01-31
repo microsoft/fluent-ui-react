@@ -1,6 +1,53 @@
-import { Chat, Provider, Avatar } from '@stardust-ui/react'
+import { Chat, Provider, Avatar, toolbarButtonBehavior } from '@stardust-ui/react'
 import * as React from 'react'
-import ChatMessageWithPopover from './ChatMessageWithPopover'
+
+const actionMenu = {
+  iconOnly: true,
+  items: [
+    {
+      key: 'smile',
+      icon: 'smile',
+      className: 'smile-emoji',
+      accessibility: toolbarButtonBehavior,
+      'aria-label': 'smile one',
+    },
+    {
+      key: 'smile2',
+      icon: 'smile',
+      className: 'smile-emoji',
+      accessibility: toolbarButtonBehavior,
+      'aria-label': 'smile two',
+    },
+    {
+      key: 'smile3',
+      icon: 'smile',
+      className: 'smile-emoji',
+      accessibility: toolbarButtonBehavior,
+      'aria-label': 'smile three',
+    },
+    {
+      key: 'a',
+      icon: 'thumbs up',
+      accessibility: toolbarButtonBehavior,
+      'aria-label': 'thumbs up',
+    },
+    {
+      key: 'c',
+      icon: 'ellipsis horizontal',
+      accessibility: toolbarButtonBehavior,
+      'aria-label': 'more options',
+      indicator: false,
+      menu: {
+        pills: true,
+        items: [
+          { key: 'bookmark', icon: 'folder', content: 'Save this message' },
+          { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+          { key: 'translate', icon: 'translate', content: 'Translate' },
+        ],
+      },
+    },
+  ],
+}
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -12,25 +59,37 @@ const ChatWithPopover = () => (
     theme={{
       componentStyles: {
         ChatMessage: {
-          root: ({ theme: { siteVariables } }) => ({
-            position: 'relative',
-
-            '&.focused .actions': {
-              opacity: 1,
-            },
-            ':hover .actions': {
-              opacity: 1,
-            },
+          root: ({ props: p, theme: { siteVariables } }) => ({
             '& a': {
               color: siteVariables.brand,
             },
+
+            '& .smile-emoji': {
+              position: 'absolute',
+              opacity: 0,
+              zIndex: -1,
+            },
+
+            '&:hover .smile-emoji': {
+              position: 'inherit',
+              opacity: 1,
+              zIndex: 'initial',
+            },
+            ...(p.focused && {
+              '& .smile-emoji': {
+                position: 'inherit',
+                opacity: 1,
+                zIndex: 'initial',
+              },
+            }),
           }),
         },
         Menu: {
           root: {
             background: '#fff',
-            boxShadow: '0px 2px 4px #ddd',
-            borderRadius: '.3rem',
+            transition: 'opacity 0.2s',
+            position: 'absolute',
+
             '& a:focus': {
               textDecoration: 'none',
               color: 'inherit',
@@ -47,17 +106,62 @@ const ChatWithPopover = () => (
       items={[
         {
           key: 'a',
-          message: { content: <ChatMessageWithPopover /> },
+          message: {
+            content: (
+              <Chat.Message
+                actionMenu={actionMenu}
+                author="Jane Doe"
+                content={{
+                  content: (
+                    <div>
+                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                    </div>
+                  ),
+                }}
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+          },
           gutter: { content: <Avatar {...janeAvatar} /> },
         },
         {
           key: 'b',
-          message: { content: <ChatMessageWithPopover /> },
+          message: {
+            content: (
+              <Chat.Message
+                actionMenu={actionMenu}
+                author="Jane Doe"
+                content={{
+                  content: (
+                    <div>
+                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                    </div>
+                  ),
+                }}
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+          },
           gutter: { content: <Avatar {...janeAvatar} /> },
         },
         {
           key: 'c',
-          message: { content: <ChatMessageWithPopover /> },
+          message: {
+            content: (
+              <Chat.Message
+                actionMenu={actionMenu}
+                author="Jane Doe"
+                content={{
+                  content: (
+                    <div>
+                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                    </div>
+                  ),
+                }}
+                timestamp="Yesterday, 10:15 PM"
+              />
+            ),
+          },
           gutter: { content: <Avatar {...janeAvatar} /> },
         },
       ]}

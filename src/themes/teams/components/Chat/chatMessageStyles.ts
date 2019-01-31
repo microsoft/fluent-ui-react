@@ -1,12 +1,19 @@
 import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { default as ChatMessage, ChatMessageProps } from '../../../../components/Chat/ChatMessage'
+import {
+  default as ChatMessage,
+  ChatMessageProps,
+  ChatMessageState,
+} from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
 
-const chatMessageActionsClassNameSelector = `& .${ChatMessage.slotClassNames.actions}`
+const chatMessageActionsClassNameSelector = `& .${ChatMessage.slotClassNames.actionMenu}`
 
-const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageVariables> = {
+const chatMessageStyles: ComponentSlotStylesInput<
+  ChatMessageProps & ChatMessageState,
+  ChatMessageVariables
+> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     display: 'inline-block',
     paddingLeft: v.padding,
@@ -27,9 +34,6 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
       ...(p.isFromKeyboard && {
         outline: `.2rem solid ${v.contentFocusOutlineColor}`,
       }),
-      [chatMessageActionsClassNameSelector]: {
-        opacity: 1,
-      },
     },
     ':hover': {
       [chatMessageActionsClassNameSelector]: {
@@ -38,14 +42,14 @@ const chatMessageStyles: ComponentSlotStylesInput<ChatMessageProps, ChatMessageV
     },
   }),
 
-  actions: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionsBoxShadow,
+    opacity: p.focused ? 1 : 0,
     position: 'absolute',
-    top: '-20px',
-    right: '5px',
-    opacity: 0,
+    right: v.actionsPositionRight,
+    top: v.actionsPositionTop,
   }),
 
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({

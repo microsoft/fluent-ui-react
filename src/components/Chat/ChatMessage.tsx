@@ -17,15 +17,16 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../../types/utils'
-import { chatMessageBehavior } from '../../lib/accessibility'
+import { chatMessageBehavior, toolbarBehavior } from '../../lib/accessibility'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
 import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
-import Text from '../Text/Text'
 import Box from '../Box/Box'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
+import Menu from '../Menu/Menu'
+import Text from '../Text/Text'
 
 export interface ChatMessageSlotClassNames {
-  actions: string
+  actionMenu: string
   author: string
   timestamp: string
 }
@@ -40,8 +41,8 @@ export interface ChatMessageProps
    * */
   accessibility?: Accessibility
 
-  /** Author of the message. */
-  actions?: ShorthandValue
+  /** Menu with actions of the message. */
+  actionMenu?: ShorthandValue
 
   /** Author of the message. */
   author?: ShorthandValue
@@ -57,10 +58,18 @@ export interface ChatMessageProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
+  onBlur?: (event: React.FocusEvent<HTMLElement>, data: ChatMessageProps) => void
+
+  /**
+   * Called after user's focus.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 }
 
 export interface ChatMessageState {
+  focused: boolean
   isFromKeyboard: boolean
 }
 
@@ -79,7 +88,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   static propTypes = {
     ...commonPropTypes.createCommon({ content: 'shorthand' }),
     accessibility: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-    actions: customPropTypes.itemShorthand,
+    actionMenu: customPropTypes.itemShorthand,
     author: customPropTypes.itemShorthand,
     mine: PropTypes.bool,
     timestamp: customPropTypes.itemShorthand,
@@ -92,13 +101,8 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 
   public state = {
+    focused: false,
     isFromKeyboard: false,
-  }
-
-  private handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   protected actionHandlers: AccessibilityActionHandlers = {
@@ -108,6 +112,25 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     },
   }
 
+  private handleFocus = (e: React.SyntheticEvent) => {
+    this.changeFocusState(true)
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
+
+  handleBlur = (e: React.FocusEvent) => {
+    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget as Node)
+
+    this.changeFocusState(shouldPreserveFocusState)
+  }
+
+  changeFocusState = (isFocused: boolean) => {
+    if (this.state.focused !== isFocused) {
+      this.setState({ focused: isFocused })
+    }
+  }
+
   renderComponent({
     ElementType,
     classes,
@@ -115,7 +138,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
     unhandledProps,
     styles,
   }: RenderResultConfig<ChatMessageProps>) {
-    const { actions, author, children, content, timestamp } = this.props
+    const { actionMenu, author, children, content, timestamp } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
 
@@ -125,6 +148,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
         {...accessibility.keyHandlers.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
+        onBlur={this.handleBlur}
         onFocus={this.handleFocus}
         className={className}
       >
@@ -132,11 +156,12 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
           children
         ) : (
           <>
-            {Box.create(actions, {
+            {Menu.create(actionMenu, {
               defaultProps: {
                 [IS_FOCUSABLE_ATTRIBUTE]: true,
-                className: ChatMessage.slotClassNames.actions,
-                styles: styles.actions,
+                accessibility: toolbarBehavior,
+                className: ChatMessage.slotClassNames.actionMenu,
+                styles: styles.actionMenu,
               },
             })}
 
@@ -165,7 +190,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
 
 ChatMessage.create = createShorthandFactory(ChatMessage, 'content')
 ChatMessage.slotClassNames = {
-  actions: `${ChatMessage.className}__actions`,
+  actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,
   timestamp: `${ChatMessage.className}__timestamp`,
 }
