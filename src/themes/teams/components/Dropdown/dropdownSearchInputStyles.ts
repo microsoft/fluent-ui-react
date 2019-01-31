@@ -6,6 +6,8 @@ const dropdownSearchInputStyles: ComponentSlotStylesInput<
   DropdownSearchInputProps,
   DropdownVariables
 > = {
+  root: {},
+
   input: ({ variables: v }): ICSSInJSStyle => ({
     width: '100%',
     backgroundColor: v.backgroundColor,
