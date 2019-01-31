@@ -40,14 +40,7 @@ const tabBehavior: Accessibility = (props: any) => ({
       [IS_FOCUSABLE_ATTRIBUTE]: !props['disabled'],
     },
   },
-  handledProps: [
-    'aria-label',
-    'aria-labelledby',
-    'aria-describedby',
-    'aria-controls',
-    'aria-selected',
-    'aria-disabled',
-  ],
+
   keyActions: {
     wrapper: {
       performClick: {

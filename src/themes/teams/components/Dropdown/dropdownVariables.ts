@@ -1,42 +1,44 @@
 import { pxToRem } from '../../../../lib'
 export interface DropdownVariables {
   backgroundColor: string
-  borderBottom: string
-  borderColor: string
   borderColorFocus: string
   borderRadius: string
-  borderRadiusFocus: string
+  borderBottom: string
   color: string
   comboboxPaddingButton: string
-  comboboxPaddingInput: string
   comboboxFlexBasis: string
   listBackgroundColor: string
+  listBorderRadius: string
+  listPadding: string
+  listBoxShadow: string
+  listMaxHeight: string
   listItemBackgroundColor: string
   listItemBackgroundColorActive: string
   listItemColorActive: string
-  listMaxHeight: string
+  selectedItemsMaxHeight: string
   toggleIndicatorSize: string
   width: string
 }
 
-const [_2px_asRem, _3px_asRem, _6px_asRem, _12px_asRem] = [2, 3, 6, 12].map(v => pxToRem(v))
+const [_2px_asRem, _3px_asRem, _12px_asRem] = [2, 3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.gray10,
-  borderRadius: _3px_asRem,
+  borderRadius: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
   borderBottom: `${_2px_asRem} solid transparent`,
-  borderColor: 'transparent',
   borderColorFocus: siteVars.brand,
-  borderRadiusFocus: `${_3px_asRem} ${_3px_asRem} ${_2px_asRem} ${_2px_asRem}`,
   color: siteVars.bodyColor,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
-  comboboxPaddingInput: `${_6px_asRem} ${_12px_asRem}`,
   comboboxFlexBasis: '50px',
   listBackgroundColor: siteVars.white,
+  listBorderRadius: _3px_asRem,
+  listPadding: `${pxToRem(8)} 0`,
+  listBoxShadow: `0 .2rem .6rem 0 ${siteVars.gray06}`,
+  listMaxHeight: '20rem',
   listItemBackgroundColor: siteVars.white,
   listItemBackgroundColorActive: siteVars.brand,
   listItemColorActive: siteVars.white,
-  listMaxHeight: '20rem',
+  selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
 })

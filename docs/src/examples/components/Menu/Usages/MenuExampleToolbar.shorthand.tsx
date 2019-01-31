@@ -69,8 +69,7 @@ const items = [
     key: 'menuButton',
     icon: {
       name: 'more',
-      circular: true,
-      size: 'small',
+      variables: { outline: true },
     },
     accessibility: toolbarButtonBehavior,
     'aria-label': 'More options',

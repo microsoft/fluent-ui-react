@@ -31,6 +31,7 @@ export interface ListItemProps extends UIComponentProps, ContentComponentProps<a
   important?: boolean
   media?: any
 
+  index?: number
   /** A list item can indicate that it can be selected. */
   selectable?: boolean
 
@@ -85,6 +86,7 @@ class ListItem extends UIComponent<ReactProps<ListItemProps>, ListItemState> {
     media: PropTypes.any,
 
     selectable: PropTypes.bool,
+    index: PropTypes.number,
     selected: PropTypes.bool,
 
     truncateContent: PropTypes.bool,
