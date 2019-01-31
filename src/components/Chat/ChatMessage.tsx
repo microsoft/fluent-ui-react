@@ -120,7 +120,7 @@ class ChatMessage extends UIComponent<ReactProps<ChatMessageProps>, ChatMessageS
   }
 
   handleBlur = (e: React.FocusEvent) => {
-    const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget as Node)
+    const shouldPreserveFocusState = _.invoke(e, 'currentTarget.contains', e.relatedTarget)
 
     this.changeFocusState(shouldPreserveFocusState)
   }
