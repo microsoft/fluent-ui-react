@@ -3,6 +3,7 @@ import * as React from 'react'
 
 import {
   childrenExist,
+  createShorthandFactory,
   customPropTypes,
   UIComponent,
   UIComponentProps,
@@ -38,6 +39,8 @@ export interface HeaderProps
  *    In addition to that, both will be displayed in the list of headings.
  */
 class Header extends UIComponent<ReactProps<HeaderProps>, any> {
+  static create: Function
+
   static className = 'ui-header'
 
   static displayName = 'Header'
@@ -83,5 +86,7 @@ class Header extends UIComponent<ReactProps<HeaderProps>, any> {
     )
   }
 }
+
+Header.create = createShorthandFactory(Header, 'content')
 
 export default Header

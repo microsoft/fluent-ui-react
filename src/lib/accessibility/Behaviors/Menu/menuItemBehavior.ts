@@ -48,15 +48,6 @@ const menuItemBehavior: Accessibility = (props: any) => ({
     },
   },
 
-  handledProps: [
-    'aria-label',
-    'aria-labelledby',
-    'aria-describedby',
-    'aria-expanded',
-    'aria-haspopup',
-    'aria-disabled',
-  ],
-
   keyActions: {
     wrapper: {
       performClick: {

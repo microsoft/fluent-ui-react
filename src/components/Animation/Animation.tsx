@@ -55,6 +55,9 @@ export interface AnimationProps
   /** The animation-iteration-count property specifies the number of times an animation should run. */
   iterationCount?: string
 
+  /** Custom parameters for the keyframe defined for the animation. */
+  keyframeParams?: object
+
   /**
    * The playState property specifies whether the animation is running or paused. It can have the following values:
    * - paused - Specifies that the animation is paused
@@ -98,6 +101,7 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
     duration: PropTypes.string,
     fillMode: PropTypes.string,
     iterationCount: PropTypes.string,
+    keyframeParams: PropTypes.object,
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
   }
@@ -107,6 +111,7 @@ class Animation extends UIComponent<ReactPropsStrict<AnimationProps>, any> {
 
     const animation: AnimationProp = {
       name,
+      keyframeParams: this.props.keyframeParams,
       duration: this.props.duration,
       delay: this.props.delay,
       iterationCount: this.props.iterationCount,
