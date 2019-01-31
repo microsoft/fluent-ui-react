@@ -7,8 +7,10 @@ import {
   Position,
   Alignment,
 } from 'src/components/Popup/positioningHelper'
-import Popup from 'src/components/Popup/Popup'
+import Popup, { PopupEvents } from 'src/components/Popup/Popup'
 import { mountWithProvider } from '../../../utils'
+import * as keyboardKey from 'keyboard-key'
+import { ReactWrapper } from 'enzyme'
 
 type PositionTestInput = {
   align: Alignment
@@ -18,6 +20,8 @@ type PositionTestInput = {
 }
 
 describe('Popup', () => {
+  const triggerId = 'triggerElement'
+  const contentId = 'contentId'
   const testPopupPosition = ({
     align,
     position,
@@ -35,6 +39,36 @@ describe('Popup', () => {
     expectedPlacement,
   }: PositionTestInput & { rtl?: never }) =>
     testPopupPosition({ align, position, expectedPlacement, rtl: true })
+
+  const getPopupContent = (popup: ReactWrapper) => {
+    return popup.find(`#${contentId}`)
+  }
+
+  type ExpectPopupToOpenAndCloseParams = {
+    onProp: PopupEvents
+    keyboardKeyToOpen: keyboardKey
+    keyboardKeyToClose: keyboardKey
+  }
+
+  const expectPopupToOpenAndClose = ({
+    onProp,
+    keyboardKeyToOpen,
+    keyboardKeyToClose,
+  }: ExpectPopupToOpenAndCloseParams) => {
+    const popup = mountWithProvider(
+      <Popup
+        trigger={<span id={triggerId}> text to trigger popup </span>}
+        content={<span id={contentId} />}
+        on={onProp}
+      />,
+    )
+    const popupTriggerElement = popup.find(`#${triggerId}`)
+    popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
+    expect(getPopupContent(popup).length).toBe(1)
+
+    popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
+    expect(getPopupContent(popup).length).toBe(0)
+  }
 
   describe('handles Popup position correctly in ltr', () => {
     testPopupPosition({ position: 'above', align: 'start', expectedPlacement: 'top-start' })
@@ -129,6 +163,37 @@ describe('Popup', () => {
 
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+  })
+
+  describe('open/close popup by keyboard', () => {
+    test(`toggle popup with Enter key`, () => {
+      expectPopupToOpenAndClose({
+        onProp: 'click',
+        keyboardKeyToOpen: keyboardKey.Enter,
+        keyboardKeyToClose: keyboardKey.Enter,
+      })
+    })
+    test(`toggle popup with Space key`, () => {
+      expectPopupToOpenAndClose({
+        onProp: 'click',
+        keyboardKeyToOpen: keyboardKey.Spacebar,
+        keyboardKeyToClose: keyboardKey.Spacebar,
+      })
+    })
+    test(`open popup with Enter key and close it with escape key`, () => {
+      expectPopupToOpenAndClose({
+        onProp: 'hover',
+        keyboardKeyToOpen: keyboardKey.Enter,
+        keyboardKeyToClose: keyboardKey.Escape,
+      })
+    })
+    test(`open popup with Space key and close it with escape key`, () => {
+      expectPopupToOpenAndClose({
+        onProp: 'hover',
+        keyboardKeyToOpen: keyboardKey.Spacebar,
+        keyboardKeyToClose: keyboardKey.Escape,
+      })
     })
   })
 })
