@@ -9,7 +9,6 @@ process.env.PATH =
 require('./build/gulp/tasks/dll')
 require('./build/gulp/tasks/dist')
 require('./build/gulp/tasks/docs')
-require('./build/gulp/tasks/generate')
 require('./build/gulp/tasks/screener')
 require('./build/gulp/tasks/stats')
 require('./build/gulp/tasks/git')
