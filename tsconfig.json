@@ -1,4 +1,4 @@
 {
   "extends": "./build/tsconfig.common.json",
-  "include": ["src", "docs/src", "build", "gulp", "perf/src", "test", "types"]
+  "include": ["packages", "docs/src", "build", "gulp", "perf/src", "types"]
 }
