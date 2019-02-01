@@ -26,6 +26,10 @@ class MenuDivider extends UIComponent<ReactProps<MenuDividerProps>, any> {
 
   static className = 'ui-menu__divider'
 
+  static defaultProps = {
+    as: 'li',
+  }
+
   static propTypes = {
     ...commonPropTypes.createCommon({ content: false, children: false, color: true }),
     primary: PropTypes.bool,
