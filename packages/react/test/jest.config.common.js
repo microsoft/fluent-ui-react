@@ -12,4 +12,9 @@ module.exports = {
     'src/(.*)$': `${__dirname}/../src/$1`,
     'test/(.*)$': `${__dirname}/../test/$1`,
   },
+  globals: {
+    'ts-jest': {
+      tsConfig: `./build/tsconfig.test.json`,
+    },
+  },
 }
