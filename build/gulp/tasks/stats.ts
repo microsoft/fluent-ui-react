@@ -3,6 +3,8 @@ import { task, parallel, series } from 'gulp'
 import * as _ from 'lodash'
 import * as webpack from 'webpack'
 import * as stableStringify from 'json-stable-stringify-without-jsonify'
+import { argv } from 'yargs'
+import * as rp from 'request-promise-native'
 
 import config from '../../../config'
 
@@ -121,3 +123,20 @@ task(
     'build:stats:bundle',
   ),
 )
+
+task('stats:save', async () => {
+  const data = _.pick(argv, ['name'])
+  const bundleStats = require(paths.docsSrc('bundleStats.json'))[UNRELEASED_VERSION_STRING]
+
+  const options = {
+    method: 'POST',
+    uri: process.env.STATS_URI,
+    body: {
+      ...data,
+      bundleSize: bundleStats,
+    },
+    json: true,
+  }
+  const ret = await rp(options)
+  console.log(ret)
+})
