@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Extendable } from 'types/utils'
+import { Extendable } from 'src/types'
 
 export interface ComponentPropExtraProps {
   children?: JSX.Element[]
