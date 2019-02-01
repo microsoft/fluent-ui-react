@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, Text, Icon } from '@stardust-ui/react'
-import { ShorthandValue } from 'utils'
+import { ShorthandValue } from 'src/types'
 
 export interface LogoProps {
   companyName?: string

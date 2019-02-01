@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.common.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "paths": {
+      "@stardust-ui/react": ["packages/react/src"],
+      "*": ["*", "types/*", "packages/react/*"]
+    }
+  },
+  "include": ["../packages", "../docs/src", "../types"]
+}

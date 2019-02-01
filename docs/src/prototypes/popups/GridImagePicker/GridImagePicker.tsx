@@ -2,7 +2,7 @@ import { Grid, Input, gridBehavior } from '@stardust-ui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ShorthandValue } from '../../../../../types/utils'
+import { ShorthandValue } from 'src/types'
 import GridImagePickerItem, { GridPickerItemProps } from './GridImagePickerItem'
 
 export interface GridPickerProps {
